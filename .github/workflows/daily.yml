@@ -1,1 +1,43 @@
 
+name: Daily news to Snapchat
+
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Render cards but don't post"
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          STORIES_PER_DAY: "3"
+        run: python news_bot.py
+
+      - name: Keep today's cards for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cards
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
