@@ -29,11 +29,8 @@ from PIL import Image, ImageDraw, ImageFont, features
 # Saudi Arabic sources. Run once with DRY_RUN=1 and check the per-feed counts
 # in the log — delete any that report 0 items and keep the rest.
 FEEDS = [
-    ("عكاظ",          "https://www.okaz.com.sa/rssFeed/190"),
-    ("المدينة",        "https://www.al-madina.com/rssFeed/193"),
-    ("اليوم",          "https://www.alyaum.com/rssFeed/1005"),
-    ("الشرق الأوسط",   "https://aawsat.com/feed"),
-    ("العربية",        "https://www.alarabiya.net/.mrss/ar/saudi-today.xml"),
+    ("اليوم",        "https://www.alyaum.com/rssFeed/1005"),
+    ("الشرق الأوسط", "https://aawsat.com/feed"),
 ]
 
 STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "3"))
