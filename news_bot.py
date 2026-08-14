@@ -43,8 +43,8 @@ LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "30"))
 MAX_HEADLINES_TO_MODEL = 60
 
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-AYRSHARE_API_KEY = os.getenv("AYRSHARE_API_KEY", "")
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
+AYRSHARE_API_KEY = os.getenv("AYRSHARE_API_KEY", "").strip()
 DRY_RUN = os.getenv("DRY_RUN", "").strip() not in ("", "0", "false", "False")
 
 OUT_DIR = Path(os.getenv("OUT_DIR", "out"))
