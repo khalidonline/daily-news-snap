@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
 """
-Daily world-news -> Snapchat Story bot.
+موجز الأخبار السعودية اليومي -> سناب شات
+Daily Saudi news brief -> Snapchat.
 
-Pipeline:
-  1. fetch   : pull recent items from world-news RSS feeds
-  2. pick    : Claude ranks them and writes a Snapchat-sized summary
-  3. render  : each story becomes a 1080x1920 PNG card
-  4. post    : cards are uploaded and published as Snapchat Stories
-
-Run with DRY_RUN=1 to do everything except posting (cards land in ./out).
+Same pipeline as before, in Arabic:
+  fetch Saudi RSS -> Claude picks + summarizes in Arabic -> RTL card -> Snapchat
 """
 
 import base64
 import json
 import os
 import re
+import subprocess
 import sys
-import textwrap
 import urllib.request
 import urllib.error
 from datetime import datetime, timedelta, timezone
@@ -24,18 +20,20 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, features
 
 # --------------------------------------------------------------------------
 # Config
 # --------------------------------------------------------------------------
 
+# Saudi Arabic sources. Run once with DRY_RUN=1 and check the per-feed counts
+# in the log — delete any that report 0 items and keep the rest.
 FEEDS = [
-    ("BBC",        "https://feeds.bbci.co.uk/news/world/rss.xml"),
-    ("Al Jazeera", "https://www.aljazeera.com/xml/rss/all.xml"),
-    ("The Guardian", "https://www.theguardian.com/world/rss"),
-    ("NPR",        "https://feeds.npr.org/1004/rss.xml"),
-    ("France 24",  "https://www.france24.com/en/rss"),
+    ("عكاظ",          "https://www.okaz.com.sa/rssFeed/190"),
+    ("المدينة",        "https://www.al-madina.com/rssFeed/193"),
+    ("اليوم",          "https://www.alyaum.com/rssFeed/1005"),
+    ("الشرق الأوسط",   "https://aawsat.com/feed"),
+    ("العربية",        "https://www.alarabiya.net/.mrss/ar/saudi-today.xml"),
 ]
 
 STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "3"))
@@ -47,15 +45,12 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
 AYRSHARE_API_KEY = os.getenv("AYRSHARE_API_KEY", "").strip()
 DRY_RUN = os.getenv("DRY_RUN", "").strip() not in ("", "0", "false", "False")
 
-# "github"   — commit the card to this repo, hand Ayrshare the raw URL (free)
-# "ayrshare" — use Ayrshare's Media API (needs a Premium/Business plan)
 MEDIA_MODE = os.getenv("MEDIA_MODE", "github").strip()
 CARDS_DIR = "cards"
 
 OUT_DIR = Path(os.getenv("OUT_DIR", "out"))
 W, H = 1080, 1920
 
-# Palette
 BG_TOP = (14, 17, 26)
 BG_BOTTOM = (28, 34, 52)
 ACCENT = (255, 215, 64)
@@ -63,6 +58,40 @@ TEXT = (245, 246, 250)
 MUTED = (150, 158, 178)
 
 USER_AGENT = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
+
+AR_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+             "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
+AR_DAYS = ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس",
+           "الجمعة", "السبت", "الأحد"]
+AR_DIGITS = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
+
+
+# --------------------------------------------------------------------------
+# Arabic text shaping
+# --------------------------------------------------------------------------
+# Arabic letters change shape by position and run right-to-left. Pillow does
+# this natively IF it was built with libraqm. If not, we do it ourselves with
+# arabic-reshaper + python-bidi. Doing BOTH would double-reverse the text,
+# so we pick exactly one path.
+
+HAS_RAQM = features.check("raqm")
+
+if not HAS_RAQM:
+    import arabic_reshaper
+    from bidi.algorithm import get_display
+
+
+def ar(text):
+    """Return (text_to_draw, draw_kwargs) for a piece of Arabic text."""
+    if HAS_RAQM:
+        return text, {"direction": "rtl", "language": "ar"}
+    return get_display(arabic_reshaper.reshape(text)), {}
+
+
+def arabic_date():
+    now = datetime.now()
+    return (f"{AR_DAYS[now.weekday()]}، {now.day} {AR_MONTHS[now.month - 1]}"
+            .translate(AR_DIGITS))
 
 
 # --------------------------------------------------------------------------
@@ -101,18 +130,17 @@ def _parse_date(raw):
 
 
 def fetch_headlines():
-    """Return a list of recent {source, title, summary, link} dicts."""
     cutoff = datetime.now(timezone.utc) - timedelta(hours=LOOKBACK_HOURS)
     items, seen = [], set()
 
     for source, url in FEEDS:
         try:
             root = ET.fromstring(_http_get(url))
-        except Exception as exc:                      # one bad feed shouldn't kill the run
+        except Exception as exc:
             print(f"  ! {source}: {exc}", file=sys.stderr)
+            print(f"  {source}: 0 items (failed)")
             continue
 
-        # RSS 2.0 <item> and Atom <entry>
         entries = root.iter("item") if root.find(".//item") is not None else \
             root.iter("{http://www.w3.org/2005/Atom}entry")
 
@@ -129,7 +157,7 @@ def fetch_headlines():
             if not title:
                 continue
 
-            key = re.sub(r"[^a-z0-9]", "", title.lower())[:60]
+            key = re.sub(r"\s", "", title)[:60]
             if key in seen:
                 continue
 
@@ -154,24 +182,27 @@ def fetch_headlines():
 
 
 # --------------------------------------------------------------------------
-# 2. Pick + summarize
+# 2. Pick + summarize (Arabic)
 # --------------------------------------------------------------------------
 
-SYSTEM_PROMPT = """You are the editor of a daily world-news Snapchat Story.
+SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُنشر على سناب شات.
 
-You will receive today's headlines. Pick the {n} most globally significant and \
-genuinely interesting stories. Prefer hard news with real-world consequence over \
-celebrity, sport, opinion, or listicles. Do not pick two stories about the same event.
+ستصلك عناوين اليوم. اختر {n} أخبار سعودية فقط — أي خبر يهم القارئ داخل المملكة \
+العربية السعودية: قرارات حكومية، اقتصاد، مشاريع، تعليم، صحة، مجتمع، طقس مؤثر.
 
-For each story write:
-- headline: max 55 characters, punchy, no clickbait, no trailing period
-- summary: 2 short sentences, max 190 characters total, plain language, no jargon
-- source: the outlet name given to you
-- Never state anything the provided headline and blurb do not support.
+استبعد تماماً: الأخبار الدولية التي لا علاقة لها بالسعودية، وأخبار المشاهير \
+والفن، والرياضة إلا إذا كانت حدثاً وطنياً كبيراً، والمقالات والآراء.
+لا تختر خبرين عن الحدث نفسه.
 
-Also write one caption: max 120 characters, the text that accompanies the Story post.
+لكل خبر اكتب:
+- headline: عنوان لا يتجاوز ٥٥ حرفاً، واضح ومباشر، بدون نقطة في نهايته
+- summary: جملتان قصيرتان، لا تتجاوزان ١٩٠ حرفاً، بلغة عربية فصحى بسيطة
+- source: اسم المصدر كما ورد لك
+- لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 
-Respond with JSON only. No markdown, no backticks, no preamble:
+واكتب أيضاً caption واحداً: لا يتجاوز ١٢٠ حرفاً، نص المنشور المرافق.
+
+أجب بصيغة JSON فقط. بدون markdown وبدون أي مقدمة:
 {{"caption": "...", "stories": [{{"headline": "...", "summary": "...", "source": "..."}}]}}"""
 
 
@@ -186,9 +217,9 @@ def summarize(items):
 
     payload = {
         "model": CLAUDE_MODEL,
-        "max_tokens": 1500,
+        "max_tokens": 2000,
         "system": SYSTEM_PROMPT.format(n=STORIES_PER_DAY),
-        "messages": [{"role": "user", "content": f"Today's headlines:\n\n{feed_text}"}],
+        "messages": [{"role": "user", "content": f"عناوين اليوم:\n\n{feed_text}"}],
     }
 
     req = urllib.request.Request(
@@ -212,32 +243,46 @@ def summarize(items):
 
 
 # --------------------------------------------------------------------------
-# 3. Render
+# 3. Render (right-to-left)
 # --------------------------------------------------------------------------
 
-FONT_CANDIDATES = [
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans-{w}.ttf",
-    "/usr/share/fonts/truetype/liberation/LiberationSans-{w}.ttf",
-    "/System/Library/Fonts/Supplemental/Arial{w2}.ttf",
-]
+def _find_arabic_font(bold):
+    """Locate an Arabic-capable font, preferring bundled, then system."""
+    bundled = Path("fonts") / ("NotoNaskhArabic-Bold.ttf" if bold
+                               else "NotoNaskhArabic-Regular.ttf")
+    if bundled.exists():
+        return str(bundled)
+
+    for path in [
+        "/usr/share/fonts/truetype/noto/NotoNaskhArabic-{}.ttf",
+        "/usr/share/fonts/truetype/noto/NotoSansArabic-{}.ttf",
+    ]:
+        candidate = path.format("Bold" if bold else "Regular")
+        if os.path.exists(candidate):
+            return candidate
+
+    # last resort: ask fontconfig for anything that covers Arabic
+    try:
+        query = ":lang=ar:weight=" + ("bold" if bold else "regular")
+        out = subprocess.run(["fc-match", "-f", "%{file}", query],
+                             capture_output=True, text=True, check=True)
+        if out.stdout.strip():
+            return out.stdout.strip()
+    except Exception:
+        pass
+    raise SystemExit("No Arabic font found — install fonts-noto-core or bundle one in fonts/")
 
 
 def load_font(size, bold=False):
-    for tpl in FONT_CANDIDATES:
-        path = tpl.format(w="Bold" if bold else "", w2=" Bold" if bold else "")
-        path = path.replace("DejaVuSans-.ttf", "DejaVuSans.ttf") \
-                   .replace("LiberationSans-.ttf", "LiberationSans-Regular.ttf")
-        if os.path.exists(path):
-            return ImageFont.truetype(path, size)
-    return ImageFont.load_default(size)
+    return ImageFont.truetype(_find_arabic_font(bold), size)
 
 
-def _wrap(draw, text, font, max_width):
-    """Greedy word wrap that measures real pixel width."""
+def _wrap(draw, text, font, max_width, kw):
     words, lines, line = text.split(), [], ""
     for word in words:
         trial = f"{line} {word}".strip()
-        if draw.textlength(trial, font=font) <= max_width or not line:
+        shaped, _ = ar(trial)
+        if draw.textlength(shaped, font=font, **kw) <= max_width or not line:
             line = trial
         else:
             lines.append(line)
@@ -248,18 +293,16 @@ def _wrap(draw, text, font, max_width):
 
 
 def render_brief(stories, out_path):
-    """All of today's stories on ONE 1080x1920 card (single-image post)."""
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
 
     for y in range(H):
         t = y / H
-        draw.line(
-            [(0, y), (W, y)],
-            fill=tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)),
-        )
+        draw.line([(0, y), (W, y)],
+                  fill=tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)))
 
     margin = 80
+    right = W - margin           # everything is anchored to the RIGHT edge
     max_w = W - 2 * margin
 
     f_kicker = load_font(34, bold=True)
@@ -269,94 +312,44 @@ def render_brief(stories, out_path):
     f_num = load_font(40, bold=True)
     f_foot = load_font(30)
 
-    # header
-    draw.rectangle([margin, 210, margin + 110, 220], fill=ACCENT)
-    draw.text((margin, 258), datetime.now().strftime("%A, %d %B").upper(),
-              font=f_kicker, fill=ACCENT)
-    draw.text((margin, 316), "WORLD BRIEF", font=f_title, fill=TEXT)
+    _, kw = ar("م")               # shared draw kwargs
+
+    def rtl(xy, text, font, fill, anchor="ra"):
+        shaped, k = ar(text)
+        draw.text(xy, shaped, font=font, fill=fill, anchor=anchor, **k)
+
+    # header (accent bar now on the right)
+    draw.rectangle([right - 110, 210, right, 220], fill=ACCENT)
+    rtl((right, 258), arabic_date(), f_kicker, ACCENT)
+    rtl((right, 316), "موجز السعودية", f_title, TEXT)
 
     y = 470
     for i, story in enumerate(stories, 1):
         if i > 1:
-            draw.line([(margin, y), (W - margin, y)], fill=(58, 66, 90), width=2)
+            draw.line([(margin, y), (right, y)], fill=(58, 66, 90), width=2)
             y += 54
 
-        draw.text((margin, y), f"{i:02d}", font=f_num, fill=ACCENT)
-        text_x = margin + 78
+        rtl((right, y), str(i).translate(AR_DIGITS), f_num, ACCENT)
+        text_right = right - 78
         text_w = max_w - 78
 
-        for line in _wrap(draw, story["headline"], f_head, text_w):
-            draw.text((text_x, y), line, font=f_head, fill=TEXT)
+        for line in _wrap(draw, story["headline"], f_head, text_w, kw):
+            rtl((text_right, y), line, f_head, TEXT)
             y += 64
 
         y += 16
-        for line in _wrap(draw, story["summary"], f_body, text_w):
-            draw.text((text_x, y), line, font=f_body, fill=(206, 212, 228))
+        for line in _wrap(draw, story["summary"], f_body, text_w, kw):
+            rtl((text_right, y), line, f_body, (206, 212, 228))
             y += 50
 
         y += 10
-        draw.text((text_x, y), story.get("source", "").upper(),
-                  font=f_foot, fill=MUTED)
+        rtl((text_right, y), story.get("source", ""), f_foot, MUTED)
         y += 68
 
-    draw.line([(margin, H - 190), (W - margin, H - 190)], fill=(58, 66, 90), width=2)
-    draw.text((margin, H - 155), "DAILY WORLD BRIEF", font=f_foot, fill=ACCENT)
-    draw.text((W - margin, H - 155), f"{len(stories)} STORIES",
-              font=f_foot, fill=MUTED, anchor="ra")
-
-    img.save(out_path, "PNG", optimize=True)
-    return out_path
-
-
-def render_card(story, index, total, out_path):
-    img = Image.new("RGB", (W, H), BG_TOP)
-    draw = ImageDraw.Draw(img)
-
-    # vertical gradient
-    for y in range(H):
-        t = y / H
-        draw.line(
-            [(0, y), (W, y)],
-            fill=tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)),
-        )
-
-    margin = 90
-    max_w = W - 2 * margin
-
-    f_kicker = load_font(38, bold=True)
-    f_head = load_font(78, bold=True)
-    f_body = load_font(46)
-    f_foot = load_font(34)
-
-    # header
-    draw.rectangle([margin, 240, margin + 110, 250], fill=ACCENT)
-    draw.text((margin, 290), datetime.now().strftime("%A, %d %B").upper(),
-              font=f_kicker, fill=ACCENT)
-    draw.text((W - margin, 290), f"{index}/{total}", font=f_kicker,
-              fill=MUTED, anchor="ra")
-
-    # headline + summary, vertically centred in the safe zone between
-    # Snapchat's top profile chrome and the bottom swipe-up area
-    head_lines = _wrap(draw, story["headline"], f_head, max_w)
-    body_lines = _wrap(draw, story["summary"], f_body, max_w)
-    block_h = len(head_lines) * 96 + 50 + len(body_lines) * 66
-    y = max(430, (H - block_h) // 2 - 40)
-
-    for line in head_lines:
-        draw.text((margin, y), line, font=f_head, fill=TEXT)
-        y += 96
-
-    y += 50
-    for line in body_lines:
-        draw.text((margin, y), line, font=f_body, fill=(214, 219, 232))
-        y += 66
-
-    # footer
-    draw.line([(margin, H - 250), (W - margin, H - 250)], fill=(60, 68, 92), width=2)
-    draw.text((margin, H - 210), story.get("source", "").upper(),
-              font=f_foot, fill=ACCENT)
-    draw.text((W - margin, H - 210), "DAILY WORLD BRIEF",
-              font=f_foot, fill=MUTED, anchor="ra")
+    draw.line([(margin, H - 190), (right, H - 190)], fill=(58, 66, 90), width=2)
+    rtl((right, H - 155), "الموجز اليومي", f_foot, ACCENT)
+    rtl((margin, H - 155), f"{len(stories)} أخبار".translate(AR_DIGITS),
+        f_foot, MUTED, anchor="la")
 
     img.save(out_path, "PNG", optimize=True)
     return out_path
@@ -367,13 +360,7 @@ def render_card(story, index, total, out_path):
 # --------------------------------------------------------------------------
 
 def publish_via_github(png_path):
-    """Commit the card into this repo and return its raw.githubusercontent URL.
-
-    Free alternative to Ayrshare's Media API. The repo must be PUBLIC, or
-    Snapchat can't fetch the image.
-    """
     import shutil
-    import subprocess
     import time
 
     repo = os.getenv("GITHUB_REPOSITORY")
@@ -394,13 +381,11 @@ def publish_via_github(png_path):
     try:
         git("commit", "-m", f"card {dest.name}")
     except subprocess.CalledProcessError:
-        pass                                   # nothing changed; fine
+        pass
     git("push")
 
     url = f"https://raw.githubusercontent.com/{repo}/{branch}/{CARDS_DIR}/{dest.name}"
-
-    # give the raw CDN a moment, then confirm it's actually reachable
-    for attempt in range(6):
+    for _ in range(6):
         time.sleep(3)
         try:
             urllib.request.urlopen(
@@ -417,10 +402,8 @@ def _ayrshare(path_, payload):
     req = urllib.request.Request(
         f"https://api.ayrshare.com/api/{path_}",
         data=json.dumps(payload).encode(),
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {AYRSHARE_API_KEY}",
-        },
+        headers={"Content-Type": "application/json",
+                 "Authorization": f"Bearer {AYRSHARE_API_KEY}"},
     )
     try:
         with urllib.request.urlopen(req, timeout=120) as resp:
@@ -430,7 +413,6 @@ def _ayrshare(path_, payload):
 
 
 def upload_media(png_path):
-    """Upload a local PNG, return the hosted URL Ayrshare gives back."""
     b64 = base64.b64encode(Path(png_path).read_bytes()).decode()
     res = _ayrshare("media/upload", {
         "file": f"data:image/png;base64,{b64}",
@@ -447,8 +429,6 @@ def post_story(caption, media_urls):
         "post": caption,
         "platforms": ["snapchat"],
         "mediaUrls": media_urls,
-        # omit snapChatOptions -> posts as a Story.
-        # For permanent, discoverable posts use video + {"spotlight": true}.
     })
 
 
@@ -456,6 +436,7 @@ def post_story(caption, media_urls):
 
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"    Arabic shaping via {'libraqm' if HAS_RAQM else 'arabic-reshaper'}")
 
     print("1/4 fetching feeds...")
     items = fetch_headlines()
@@ -466,7 +447,7 @@ def main():
     print("2/4 summarizing...")
     result = summarize(items)
     stories = result["stories"][:STORIES_PER_DAY]
-    caption = result.get("caption", "Today's world brief")
+    caption = result.get("caption", "موجز اليوم")
     for s in stories:
         print(f"    • {s['headline']}  ({s.get('source')})")
 
@@ -481,11 +462,7 @@ def main():
     print("4/4 posting to Snapchat...")
     if not AYRSHARE_API_KEY:
         raise SystemExit("AYRSHARE_API_KEY is not set")
-
-    if MEDIA_MODE == "github":
-        url = publish_via_github(card)
-    else:
-        url = upload_media(card)
+    url = publish_via_github(card) if MEDIA_MODE == "github" else upload_media(card)
     print(f"    media: {url}")
     print("   ", post_story(caption, [url]))
 
