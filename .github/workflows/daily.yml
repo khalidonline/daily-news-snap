@@ -2,7 +2,7 @@ name: Daily news to Snapchat
 
 on:
   # schedule:
-  #   - cron: "30 6 * * *"
+  #   - cron: "30 6 * * *"     # paused — uncomment to go live again
   workflow_dispatch:
     inputs:
       dry_run:
@@ -11,7 +11,7 @@ on:
         default: false
 
 permissions:
-  contents: write        # needed so the bot can commit the card
+  contents: write
 
 jobs:
   publish:
@@ -20,6 +20,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install Arabic fonts
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-core
 
       - uses: actions/setup-python@v5
         with:
