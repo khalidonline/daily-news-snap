@@ -217,7 +217,7 @@ def summarize(items):
 
     payload = {
         "model": CLAUDE_MODEL,
-        "max_tokens": 2000,
+        "max_tokens": 4000,
         "system": SYSTEM_PROMPT.format(n=STORIES_PER_DAY),
         "messages": [{"role": "user", "content": f"عناوين اليوم:\n\n{feed_text}"}],
     }
@@ -237,9 +237,15 @@ def summarize(items):
     except urllib.error.HTTPError as exc:
         raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
 
-    text = "".join(b.get("text", "") for b in data.get("content", [])).strip()
-    text = re.sub(r"^```(?:json)?|```$", "", text, flags=re.MULTILINE).strip()
-    return json.loads(text)
+text = "".join(b.get("text", "") for b in data.get("content", [])).strip()
+
+    if data.get("stop_reason") == "max_tokens":
+        raise SystemExit("Claude's reply was truncated — raise max_tokens")
+
+    start, end = text.find("{"), text.rfind("}")
+    if start == -1 or end == -1:
+        raise SystemExit(f"No JSON in reply: {text[:300]}")
+    return json.loads(text[start:end + 1])
 
 
 # --------------------------------------------------------------------------
