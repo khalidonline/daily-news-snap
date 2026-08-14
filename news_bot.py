@@ -47,6 +47,11 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
 AYRSHARE_API_KEY = os.getenv("AYRSHARE_API_KEY", "").strip()
 DRY_RUN = os.getenv("DRY_RUN", "").strip() not in ("", "0", "false", "False")
 
+# "github"   — commit the card to this repo, hand Ayrshare the raw URL (free)
+# "ayrshare" — use Ayrshare's Media API (needs a Premium/Business plan)
+MEDIA_MODE = os.getenv("MEDIA_MODE", "github").strip()
+CARDS_DIR = "cards"
+
 OUT_DIR = Path(os.getenv("OUT_DIR", "out"))
 W, H = 1080, 1920
 
@@ -195,8 +200,11 @@ def summarize(items):
             "anthropic-version": "2023-06-01",
         },
     )
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        data = json.loads(resp.read())
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            data = json.loads(resp.read())
+    except urllib.error.HTTPError as exc:
+        raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
 
     text = "".join(b.get("text", "") for b in data.get("content", [])).strip()
     text = re.sub(r"^```(?:json)?|```$", "", text, flags=re.MULTILINE).strip()
@@ -237,6 +245,67 @@ def _wrap(draw, text, font, max_width):
     if line:
         lines.append(line)
     return lines
+
+
+def render_brief(stories, out_path):
+    """All of today's stories on ONE 1080x1920 card (single-image post)."""
+    img = Image.new("RGB", (W, H), BG_TOP)
+    draw = ImageDraw.Draw(img)
+
+    for y in range(H):
+        t = y / H
+        draw.line(
+            [(0, y), (W, y)],
+            fill=tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)),
+        )
+
+    margin = 80
+    max_w = W - 2 * margin
+
+    f_kicker = load_font(34, bold=True)
+    f_title = load_font(64, bold=True)
+    f_head = load_font(52, bold=True)
+    f_body = load_font(36)
+    f_num = load_font(40, bold=True)
+    f_foot = load_font(30)
+
+    # header
+    draw.rectangle([margin, 210, margin + 110, 220], fill=ACCENT)
+    draw.text((margin, 258), datetime.now().strftime("%A, %d %B").upper(),
+              font=f_kicker, fill=ACCENT)
+    draw.text((margin, 316), "WORLD BRIEF", font=f_title, fill=TEXT)
+
+    y = 470
+    for i, story in enumerate(stories, 1):
+        if i > 1:
+            draw.line([(margin, y), (W - margin, y)], fill=(58, 66, 90), width=2)
+            y += 54
+
+        draw.text((margin, y), f"{i:02d}", font=f_num, fill=ACCENT)
+        text_x = margin + 78
+        text_w = max_w - 78
+
+        for line in _wrap(draw, story["headline"], f_head, text_w):
+            draw.text((text_x, y), line, font=f_head, fill=TEXT)
+            y += 64
+
+        y += 16
+        for line in _wrap(draw, story["summary"], f_body, text_w):
+            draw.text((text_x, y), line, font=f_body, fill=(206, 212, 228))
+            y += 50
+
+        y += 10
+        draw.text((text_x, y), story.get("source", "").upper(),
+                  font=f_foot, fill=MUTED)
+        y += 68
+
+    draw.line([(margin, H - 190), (W - margin, H - 190)], fill=(58, 66, 90), width=2)
+    draw.text((margin, H - 155), "DAILY WORLD BRIEF", font=f_foot, fill=ACCENT)
+    draw.text((W - margin, H - 155), f"{len(stories)} STORIES",
+              font=f_foot, fill=MUTED, anchor="ra")
+
+    img.save(out_path, "PNG", optimize=True)
+    return out_path
 
 
 def render_card(story, index, total, out_path):
@@ -297,6 +366,53 @@ def render_card(story, index, total, out_path):
 # 4. Post
 # --------------------------------------------------------------------------
 
+def publish_via_github(png_path):
+    """Commit the card into this repo and return its raw.githubusercontent URL.
+
+    Free alternative to Ayrshare's Media API. The repo must be PUBLIC, or
+    Snapchat can't fetch the image.
+    """
+    import shutil
+    import subprocess
+    import time
+
+    repo = os.getenv("GITHUB_REPOSITORY")
+    branch = os.getenv("GITHUB_REF_NAME", "main")
+    if not repo:
+        raise SystemExit("GITHUB_REPOSITORY unset — MEDIA_MODE=github only works in Actions")
+
+    Path(CARDS_DIR).mkdir(exist_ok=True)
+    dest = Path(CARDS_DIR) / Path(png_path).name
+    shutil.copyfile(png_path, dest)
+
+    def git(*args):
+        subprocess.run(["git", *args], check=True, capture_output=True)
+
+    git("config", "user.name", "news-bot")
+    git("config", "user.email", "news-bot@users.noreply.github.com")
+    git("add", str(dest))
+    try:
+        git("commit", "-m", f"card {dest.name}")
+    except subprocess.CalledProcessError:
+        pass                                   # nothing changed; fine
+    git("push")
+
+    url = f"https://raw.githubusercontent.com/{repo}/{branch}/{CARDS_DIR}/{dest.name}"
+
+    # give the raw CDN a moment, then confirm it's actually reachable
+    for attempt in range(6):
+        time.sleep(3)
+        try:
+            urllib.request.urlopen(
+                urllib.request.Request(url, method="HEAD",
+                                       headers={"User-Agent": USER_AGENT}),
+                timeout=15)
+            return url
+        except urllib.error.HTTPError:
+            continue
+    raise SystemExit(f"Card not reachable at {url} — is the repo public?")
+
+
 def _ayrshare(path_, payload):
     req = urllib.request.Request(
         f"https://api.ayrshare.com/api/{path_}",
@@ -354,22 +470,24 @@ def main():
     for s in stories:
         print(f"    • {s['headline']}  ({s.get('source')})")
 
-    print("3/4 rendering cards...")
+    print("3/4 rendering card...")
     stamp = datetime.now().strftime("%Y-%m-%d")
-    paths = [
-        render_card(s, i + 1, len(stories), OUT_DIR / f"{stamp}-{i + 1}.png")
-        for i, s in enumerate(stories)
-    ]
+    card = render_brief(stories, OUT_DIR / f"{stamp}-brief.png")
 
     if DRY_RUN:
-        print(f"4/4 DRY_RUN — nothing posted. Cards in {OUT_DIR.resolve()}")
+        print(f"4/4 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
         return
 
     print("4/4 posting to Snapchat...")
     if not AYRSHARE_API_KEY:
         raise SystemExit("AYRSHARE_API_KEY is not set")
-    urls = [upload_media(p) for p in paths]
-    print("   ", post_story(caption, urls))
+
+    if MEDIA_MODE == "github":
+        url = publish_via_github(card)
+    else:
+        url = upload_media(card)
+    print(f"    media: {url}")
+    print("   ", post_story(caption, [url]))
 
 
 if __name__ == "__main__":
