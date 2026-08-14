@@ -234,7 +234,7 @@ def summarize(items):
     except urllib.error.HTTPError as exc:
         raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
 
-text = "".join(b.get("text", "") for b in data.get("content", [])).strip()
+    text = "".join(b.get("text", "") for b in data.get("content", [])).strip()
 
     if data.get("stop_reason") == "max_tokens":
         raise SystemExit("Claude's reply was truncated — raise max_tokens")
