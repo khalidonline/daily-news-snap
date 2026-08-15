@@ -37,7 +37,7 @@ FEEDS = [
     ("الشرق الأوسط", "https://aawsat.com/feed"),
 ]
 
-STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "3"))
+STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "4"))
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "30"))
 MAX_HEADLINES_TO_MODEL = 60
 
@@ -269,7 +269,7 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 
 لكل خبر اكتب:
 - headline: عنوان لا يتجاوز ٥٥ حرفاً، واضح ومباشر، بدون نقطة في نهايته
-- summary: جملتان قصيرتان، لا تتجاوزان ١٩٠ حرفاً، بلغة عربية فصحى بسيطة
+- summary: جملتان قصيرتان، لا تتجاوزان ١٥٠ حرفاً، بلغة عربية فصحى بسيطة
 - source: اسم المصدر كما ورد لك
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 
@@ -427,7 +427,12 @@ def _brief_layout(draw, stories, scale, max_w, kw):
         height += line_h
 
     for i, story in enumerate(stories):
-        add("gap", "", None, int((30 if i == 0 else 62) * scale), None, 0)
+        if i:
+            add("gap", "", None, int(40 * scale), None, 0)
+            add("rule", "", None, 2, None, 0)
+            add("gap", "", None, int(40 * scale), None, 0)
+        else:
+            add("gap", "", None, int(30 * scale), None, 0)
 
         first = True
         for line in _wrap(draw, story["headline"], f_head, max_w - 44, kw):
@@ -493,6 +498,10 @@ def render_brief(stories, out_path):
     y = TOP
     for block in blocks:
         if block["kind"] == "gap":
+            y += block["lh"]
+            continue
+        if block["kind"] == "rule":
+            draw.line([(margin, y), (right, y)], fill=(58, 66, 90), width=2)
             y += block["lh"]
             continue
         if block["kind"] == "head" and block["first"]:
