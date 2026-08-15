@@ -33,11 +33,8 @@ from fontTools.ttLib import TTFont
 # Saudi Arabic sources. Run once with DRY_RUN=1 and check the per-feed counts
 # in the log — delete any that report 0 items and keep the rest.
 FEEDS = [
-    ("عكاظ",          "https://www.okaz.com.sa/rssFeed/190"),
-    ("المدينة",        "https://www.al-madina.com/rssFeed/193"),
-    ("اليوم",          "https://www.alyaum.com/rssFeed/1005"),
-    ("الشرق الأوسط",   "https://aawsat.com/feed"),
-    ("العربية",        "https://www.alarabiya.net/.mrss/ar/saudi-today.xml"),
+    ("اليوم",        "https://www.alyaum.com/rssFeed/1005"),
+    ("الشرق الأوسط", "https://aawsat.com/feed"),
 ]
 
 STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "3"))
@@ -297,31 +294,49 @@ def summarize(items, already_posted=()):
         user_msg += ("\n\nأخبار نُشرت بالفعل خلال الأيام الماضية — لا تخترها ولا "
                      f"تختر خبراً عن الحدث نفسه:\n{covered}")
 
-    payload = {
-        "model": CLAUDE_MODEL,
-        "max_tokens": 2000,
-        "system": SYSTEM_PROMPT.format(n=STORIES_PER_DAY),
-        "messages": [{"role": "user", "content": user_msg}],
-    }
+    budget = int(os.getenv("MAX_TOKENS", "8000"))
 
-    req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages",
-        data=json.dumps(payload).encode(),
-        headers={
-            "content-type": "application/json",
-            "x-api-key": ANTHROPIC_API_KEY,
-            "anthropic-version": "2023-06-01",
-        },
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            data = json.loads(resp.read())
-    except urllib.error.HTTPError as exc:
-        raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
+    for _ in range(3):
+        payload = {
+            "model": CLAUDE_MODEL,
+            "max_tokens": budget,
+            "system": SYSTEM_PROMPT.format(n=STORIES_PER_DAY),
+            "messages": [{"role": "user", "content": user_msg}],
+        }
 
-    text = "".join(b.get("text", "") for b in data.get("content", [])).strip()
-    text = re.sub(r"^```(?:json)?|```$", "", text, flags=re.MULTILINE).strip()
-    return json.loads(text)
+        req = urllib.request.Request(
+            "https://api.anthropic.com/v1/messages",
+            data=json.dumps(payload).encode(),
+            headers={
+                "content-type": "application/json",
+                "x-api-key": ANTHROPIC_API_KEY,
+                "anthropic-version": "2023-06-01",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                data = json.loads(resp.read())
+        except urllib.error.HTTPError as exc:
+            raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
+
+        if data.get("stop_reason") == "max_tokens":
+            if budget < 32000:
+                budget = min(32000, budget * 2)
+                print(f"  ! reply truncated — retrying with max_tokens={budget}")
+                continue
+            raise SystemExit("Reply truncated even at 32000 tokens")
+
+        text = "".join(b.get("text", "") for b in data.get("content", [])
+                       if b.get("type") == "text").strip()
+        text = re.sub(r"</?cite[^>]*>", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"^```(?:json)?|```$", "", text, flags=re.MULTILINE).strip()
+
+        start, end = text.find("{"), text.rfind("}")
+        if start == -1 or end == -1:
+            raise SystemExit(f"No JSON in reply: {text[:300]}")
+        return json.loads(text[start:end + 1])
+
+    raise SystemExit("Could not get a complete reply from Claude")
 
 
 # --------------------------------------------------------------------------
