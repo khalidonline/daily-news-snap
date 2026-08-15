@@ -304,12 +304,12 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
 الشكل المطلوب:
 - title: عنوان لا يتجاوز ٤٥ حرفاً. يقول ما حدث، لا اسم الموضوع فقط. يجوز أن \
 يتضمن رقماً محورياً مع وحدته.
-- lead: جملة واحدة، لا تتجاوز ١٣٠ حرفاً، تلخّص الخلاصة الأهم. لو لم يقرأ \
+- lead: جملة واحدة، لا تتجاوز ١٢٠ حرفاً، تلخّص الخلاصة الأهم. لو لم يقرأ \
 القارئ سوى هذه الجملة، ماذا يجب أن يعرف؟
 - points: {n} نقاط. كل نقطة:
   - heading: ٣ إلى ٥ كلمات تقول فكرة، لا عنواناً محايداً.
     ✗ "تراجع بعد ذروة الصيف"   ✓ "الهدوء الصيفي لم يدم"
-  - text: جملتان أو ثلاث، حتى ٢٢٠ حرفاً. الجملة الأولى تقول ماذا حدث، \
+  - text: جملتان قصيرتان، حتى ١٧٠ حرفاً — الإيجاز مطلوب. الجملة الأولى تقول ماذا حدث، \
 والثانية تقول لماذا يهم أو ما الذي يترتب عليه.
 - caption: نص المنشور المرافق، لا يتجاوز ١٢٠ حرفاً
 - image_queries: ثلاث عبارات إنجليزية للبحث عن صورة، مرتبة من الأدق إلى الأعم.
@@ -498,8 +498,8 @@ def _build_layout(draw, brief, scale, max_w, kw):
     f_head = load_font(int(40 * scale), bold=True)
     f_body = load_font(int(34 * scale))
 
-    lh_title, lh_lead = int(72 * scale), int(54 * scale)
-    lh_head, lh_body = int(50 * scale), int(48 * scale)
+    lh_title, lh_lead = int(78 * scale), int(62 * scale)
+    lh_head, lh_body = int(58 * scale), int(56 * scale)
 
     blocks, height = [], 0
 
@@ -514,19 +514,19 @@ def _build_layout(draw, brief, scale, max_w, kw):
 
     lead = brief.get("lead", "").strip()
     if lead:
-        add("gap", "", None, int(28 * scale), None, 0)
+        add("gap", "", None, int(34 * scale), None, 0)
         for line in _wrap(draw, lead, f_lead, max_w - 24, kw):
             add("lead", line, f_lead, lh_lead, (255, 236, 170), 24)
 
     for i, point in enumerate(brief.get("points", [])):
-        add("gap", "", None, int((56 if i == 0 else 46) * scale), None, 0)
+        add("gap", "", None, int((70 if i == 0 else 62) * scale), None, 0)
 
         first = True
         for line in _wrap(draw, point["heading"], f_head, max_w - 44, kw):
             add("head", line, f_head, lh_head, ACCENT, 44, first)
             first = False
 
-        add("gap", "", None, int(8 * scale), None, 0)
+        add("gap", "", None, int(14 * scale), None, 0)
         for line in _wrap(draw, point["text"], f_body, max_w - 44, kw):
             add("body", line, f_body, lh_body, (206, 212, 228), 44)
 
@@ -593,7 +593,7 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
     scale, blocks = 1.0, None
     while blocks is None:
         trial = dict(brief, points=points)
-        for candidate in (1.0, 0.94, 0.88, 0.82, 0.76, 0.70):
+        for candidate in (1.0, 0.96, 0.92, 0.88):
             trial_blocks, height = _build_layout(draw, trial, candidate, max_w, kw)
             if height <= available:
                 scale, blocks = candidate, trial_blocks
@@ -604,7 +604,7 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
                 print(f"  ! content too long — trimmed to {len(points)} points")
             else:
                 print("  ! content overflows even at minimum size")
-                scale, blocks = 0.70, trial_blocks
+                scale, blocks = 0.88, trial_blocks
     if scale < 1.0:
         print(f"  layout scaled to {int(scale * 100)}% to fit")
 
