@@ -15,11 +15,11 @@ on:
         description: "Where the photo comes from"
         type: choice
         options:
+          - none
           - openverse
           - article
           - stock
-          - none
-        default: openverse
+        default: none
 
 permissions:
   contents: write
