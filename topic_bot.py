@@ -77,6 +77,20 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
 - اكتب النطاقات بالكلمات: "من 8700 إلى 9400 دولار" وليس "8700-9400".
 - لا تستخدم الشرطة بين رقمين أو اسمين (اكتب "شنغهاي إلى نيويورك").
 
+قواعد اللهجة والمصطلح — اكتب بلسان سعودي رسمي:
+- قل "المملكة" لا "السعودية" في كل مرة، و"المواطنين" و"المقيمين" حين يلزم.
+- استخدم الأسماء الرسمية للجهات: "المركز الوطني للنخيل والتمور"، "الهيئة العامة \
+للإحصاء"، "وكالة الأنباء السعودية (واس)".
+- استخدم أسماء المناطق كما تُستخدم محلياً: القصيم، المنطقة الشرقية، عسير، جازان.
+- العملة ريال، واذكر "مليار ريال" لا "مليار دولار" إن كان المصدر بالريال.
+- تجنّب التعابير المصرية أو الشامية أو المترجمة حرفياً عن الإنجليزية.
+- التواريخ ميلادية بالأشهر العربية المعروفة في المملكة: يناير، فبراير، مارس...
+- نبرة رصينة قريبة من نشرات "أرقام" و"واس": خبرية، بلا حماس، بلا مبالغة.
+
+ممنوع منعاً باتاً:
+- أي وسوم أو أقواس مراجع داخل النص مثل <cite> أو [1] أو (المصدر: ...).
+- النص يجب أن يكون نصاً عربياً نظيفاً فقط. ضع أسماء المصادر في حقل sources وحده.
+
 قواعد الدقة:
 - اعتمد فقط على ما وجدته في البحث. لا تستخرج أرقاماً من ذاكرتك.
 - إذا تضاربت المعلومات، قل ذلك واذكر التقديرين.
@@ -115,6 +129,23 @@ def warn_about_bare_numbers(brief):
             print(f"  ! bare number {match.group()!r} in "
                   f"{point.get('heading')!r} — followed by {next_word!r}, "
                   f"no unit given")
+
+
+CITE_RE = re.compile(r"</?cite[^>]*>", re.IGNORECASE)
+TAG_RE = re.compile(r"<[^>]{1,80}>")
+
+
+def strip_markup(value):
+    """Remove citation tags and stray markup the model sometimes emits."""
+    if isinstance(value, str):
+        cleaned = CITE_RE.sub("", value)
+        cleaned = TAG_RE.sub("", cleaned)
+        return re.sub(r"\s{2,}", " ", cleaned).strip()
+    if isinstance(value, list):
+        return [strip_markup(v) for v in value]
+    if isinstance(value, dict):
+        return {k: strip_markup(v) for k, v in value.items()}
+    return value
 
 
 def research(topic):
@@ -172,7 +203,7 @@ def research(topic):
             raise SystemExit(f"No JSON in reply: {text[:300]}")
 
         print(f"    {searches} web searches used")
-        return json.loads(text[start:end + 1])
+        return strip_markup(json.loads(text[start:end + 1]))
 
     raise SystemExit("Research didn't finish after 4 continuations")
 
@@ -180,6 +211,49 @@ def research(topic):
 # --------------------------------------------------------------------------
 # Render
 # --------------------------------------------------------------------------
+
+def _build_layout(draw, brief, scale, max_w, kw):
+    """Measure the whole card before drawing any of it.
+    Returns (blocks, total_height) where each block carries its own font."""
+    f_title = load_font(int(58 * scale), bold=True)
+    f_lead = load_font(int(38 * scale))
+    f_head = load_font(int(40 * scale), bold=True)
+    f_body = load_font(int(34 * scale))
+
+    lh_title, lh_lead = int(72 * scale), int(54 * scale)
+    lh_head, lh_body = int(50 * scale), int(48 * scale)
+
+    blocks, height = [], 0
+
+    def add(kind, text, font, line_h, fill, indent, first=False):
+        nonlocal height
+        blocks.append({"kind": kind, "text": text, "font": font, "lh": line_h,
+                       "fill": fill, "indent": indent, "first": first})
+        height += line_h
+
+    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
+        add("title", line, f_title, lh_title, TEXT, 0)
+
+    lead = brief.get("lead", "").strip()
+    if lead:
+        add("gap", "", None, int(28 * scale), None, 0)
+        for line in _wrap(draw, lead, f_lead, max_w - 24, kw):
+            add("lead", line, f_lead, lh_lead, (255, 236, 170), 24)
+
+    for i, point in enumerate(brief.get("points", [])):
+        add("gap", "", None, int((56 if i == 0 else 46) * scale), None, 0)
+
+        first = True
+        for line in _wrap(draw, point["heading"], f_head, max_w - 44, kw):
+            add("head", line, f_head, lh_head, ACCENT, 44, first)
+            first = False
+
+        add("gap", "", None, int(8 * scale), None, 0)
+        for line in _wrap(draw, point["text"], f_body, max_w - 44, kw):
+            add("body", line, f_body, lh_body, (206, 212, 228), 44)
+
+    return blocks, height
+
 
 def render_topic(brief, out_path):
     img = Image.new("RGB", (W, H), BG_TOP)
@@ -195,53 +269,62 @@ def render_topic(brief, out_path):
     max_w = W - 2 * margin
     _, kw = ar("م")
 
-    f_kicker = load_font(32, bold=True)
-    f_title = load_font(58, bold=True)
-    f_lead = load_font(38)
-    f_head = load_font(40, bold=True)
-    f_body = load_font(34)
-    f_foot = load_font(28)
+    TOP, BOTTOM = 330, H - 250
+    available = BOTTOM - TOP
+
+    # Shrink to fit. Only drop a point if even the smallest size overflows.
+    points = list(brief.get("points", []))[:POINTS]
+    scale, blocks = 1.0, None
+    while blocks is None:
+        trial = dict(brief, points=points)
+        for candidate in (1.0, 0.94, 0.88, 0.82, 0.76, 0.70):
+            trial_blocks, height = _build_layout(draw, trial, candidate, max_w, kw)
+            if height <= available:
+                scale, blocks = candidate, trial_blocks
+                break
+        if blocks is None:
+            if len(points) > 2:
+                points = points[:-1]
+                print(f"  ! content too long — trimmed to {len(points)} points")
+            else:
+                print("  ! content overflows even at minimum size")
+                scale, blocks = 0.70, trial_blocks
+    if scale < 1.0:
+        print(f"  layout scaled to {int(scale * 100)}% to fit")
 
     def rtl(xy, text, font, fill, anchor="ra"):
         shaped, k = ar(text)
         draw.text(xy, shaped, font=font, fill=fill, anchor=anchor, **k)
 
     draw.rectangle([right - 110, 200, right, 210], fill=ACCENT)
-    rtl((right, 246), f"تحليل: {arabic_date()}", f_kicker, ACCENT)
+    rtl((right, 246), f"تحليل: {arabic_date()}",
+        load_font(int(32 * scale), bold=True), ACCENT)
 
-    y = 320
-    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
-        rtl((right, y), line, f_title, TEXT)
-        y += 72
+    y = TOP
+    lead_top = lead_bottom = None
+    for block in blocks:
+        if block["kind"] == "gap":
+            y += block["lh"]
+            continue
+        if block["kind"] == "lead":
+            if lead_top is None:
+                lead_top = y - 6
+            lead_bottom = y + block["lh"] - 14
+        if block["kind"] == "head" and block["first"]:
+            r = max(5, int(7 * scale))
+            draw.ellipse([right - 18, y + int(16 * scale),
+                          right - 18 + 2 * r, y + int(16 * scale) + 2 * r],
+                         fill=ACCENT)
+        rtl((right - block["indent"], y), block["text"], block["font"], block["fill"])
+        y += block["lh"]
 
-    lead = brief.get("lead", "").strip()
-    if lead:
-        y += 28
-        lead_lines = _wrap(draw, lead, f_lead, max_w - 24, kw)
-        bar_top = y - 6
-        for line in lead_lines:
-            rtl((right - 24, y), line, f_lead, (255, 236, 170))
-            y += 54
-        draw.rectangle([right - 6, bar_top, right, y - 16], fill=ACCENT)
+    if lead_top is not None:
+        draw.rectangle([right - 6, lead_top, right, lead_bottom], fill=ACCENT)
 
-    y += 56
-    for point in brief["points"][:POINTS]:
-        draw.ellipse([right - 16, y + 14, right - 4, y + 26], fill=ACCENT)
-        head_right = right - 40
-
-        for line in _wrap(draw, point["heading"], f_head, max_w - 40, kw):
-            rtl((head_right, y), line, f_head, ACCENT)
-            y += 50
-
-        y += 6
-        for line in _wrap(draw, point["text"], f_body, max_w - 40, kw):
-            rtl((head_right, y), line, f_body, (206, 212, 228))
-            y += 48
-        y += 40
-
+    f_foot = load_font(28)
     draw.line([(margin, H - 200), (right, H - 200)], fill=(58, 66, 90), width=2)
     sources = "، ".join(brief.get("sources", [])[:4])
-    rtl((right, H - 165), f"المصادر: {sources}"[:80], f_foot, MUTED)
+    rtl((right, H - 165), f"المصادر: {sources}", f_foot, MUTED)
     rtl((right, H - 120), "بحث آلي: راجع المصادر", f_foot, ACCENT)
 
     img.save(out_path, "PNG", optimize=True)
