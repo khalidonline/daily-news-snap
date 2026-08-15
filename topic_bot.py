@@ -15,6 +15,7 @@ Reuses the fetch/post/render plumbing from news_bot.py.
 import json
 import os
 import re
+import urllib.parse
 import urllib.request
 import urllib.error
 from datetime import datetime
@@ -31,6 +32,87 @@ from news_bot import (
 
 TOPIC = os.getenv("TOPIC", "").strip()
 TOPIC_MODEL = os.getenv("TOPIC_MODEL", "claude-opus-5")
+PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
+HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
+
+
+def _pexels_search(query, per_page=12):
+    url = (f"https://api.pexels.com/v1/search?per_page={per_page}"
+           f"&orientation=landscape&query={urllib.parse.quote(query)}")
+    req = urllib.request.Request(url, headers={"Authorization": PEXELS_API_KEY})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read()).get("photos", [])
+    except urllib.error.HTTPError as exc:
+        print(f"  ! Pexels {exc.code} for {query!r}")
+        return []
+    except Exception as exc:
+        print(f"  ! Pexels error for {query!r}: {exc}")
+        return []
+
+
+def _score(photo, terms):
+    """How well does this photo's own description match what we asked for?"""
+    alt = (photo.get("alt") or "").lower()
+    if not alt:
+        return 0
+    hits = sum(1 for t in terms if t in alt)
+    # a short, on-point caption beats a long one that happens to contain the word
+    return hits * 10 - len(alt.split()) * 0.05
+
+
+def fetch_photo(queries, out_path):
+    """Fetch a licence-clear photo from Pexels, trying each query in turn and
+    picking the result whose description best matches. Returns a path or None.
+
+    Pexels images are free to use commercially without attribution. Never pull
+    photos from news sites — those are licensed to the publisher.
+    """
+    if not PEXELS_API_KEY:
+        print("  ! PEXELS_API_KEY not set — rendering without a photo")
+        return None
+
+    if isinstance(queries, str):
+        queries = [queries]
+    queries = [q.strip() for q in queries if q and q.strip()]
+    if not queries:
+        return None
+
+    best, best_score, best_query = None, -999, None
+    for query in queries:
+        terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
+        photos = _pexels_search(query)
+        if not photos:
+            print(f"    no results for {query!r}")
+            continue
+
+        for photo in photos:
+            score = _score(photo, terms)
+            if score > best_score:
+                best, best_score, best_query = photo, score, query
+
+        # a clear match on an early (more specific) query wins outright
+        if best_score >= 10:
+            break
+
+    if best is None:
+        print("  ! no photo found — rendering without one")
+        return None
+
+    if best_score < 10:
+        print(f"  ! weak photo match — using a generic image for {best_query!r}")
+
+    src = best["src"].get("large2x") or best["src"]["large"]
+    try:
+        with urllib.request.urlopen(src, timeout=60) as resp:
+            Path(out_path).write_bytes(resp.read())
+    except Exception as exc:
+        print(f"  ! photo download failed: {exc}")
+        return None
+
+    print(f"    photo: {best.get('alt') or '(no description)'} "
+          f"— {best.get('photographer')} / Pexels [{best_query}]")
+    return str(out_path)
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "6"))
 POINTS = int(os.getenv("POINTS", "3"))
 
@@ -55,6 +137,12 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
   - text: جملتان أو ثلاث، حتى ٢٢٠ حرفاً. الجملة الأولى تقول ماذا حدث، \
 والثانية تقول لماذا يهم أو ما الذي يترتب عليه.
 - caption: نص المنشور المرافق، لا يتجاوز ١٢٠ حرفاً
+- image_queries: ثلاث عبارات إنجليزية للبحث عن صورة، مرتبة من الأدق إلى الأعم.
+  كل عبارة من كلمتين إلى أربع، وتصف شيئاً ملموساً يمكن تصويره — لا فكرة مجردة.
+  ✗ "economic growth" أو "market analysis" (لا يمكن تصويرها)
+  ✓ ["ripe dates closeup", "date palm harvest", "date fruit market"]
+  الأولى تصف جوهر الموضوع نفسه، والثانية أوسع، والثالثة أعم ما يمكن.
+  لا تذكر أشخاصاً بأعينهم ولا شعارات ولا علامات تجارية.
 - sources: أسماء المصادر (٢ إلى ٤). إن كان المصدر أجنبياً فاكتبه بالعربية.
 
 قواعد الأسلوب — اكتب بأسلوب موقع "أرقام" الاقتصادي:
@@ -102,7 +190,7 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
 
 أجب بصيغة JSON فقط، بدون markdown وبدون مقدمة:
 {{"title": "...", "lead": "...", "points": [{{"heading": "...", "text": "..."}}], \
-"caption": "...", "sources": ["...", "..."]}}"""
+"caption": "...", "image_queries": ["...", "...", "..."], "sources": ["...", "..."]}}"""
 
 
 UNIT_WORDS = ("نقطة", "نقاط", "دولار", "دولاراً", "ريال", "ريالاً", "يورو",
@@ -255,7 +343,41 @@ def _build_layout(draw, brief, scale, max_w, kw):
     return blocks, height
 
 
-def render_topic(brief, out_path):
+def _draw_hero(img, photo_path):
+    """Top-of-card photo, cropped to fill, fading into the background."""
+    try:
+        photo = Image.open(photo_path).convert("RGB")
+    except Exception as exc:
+        print(f"  ! couldn't open photo: {exc}")
+        return 0
+
+    target_ratio = W / HERO_HEIGHT
+    w, h = photo.size
+    if w / h > target_ratio:                     # too wide — crop sides
+        new_w = int(h * target_ratio)
+        photo = photo.crop(((w - new_w) // 2, 0, (w - new_w) // 2 + new_w, h))
+    else:                                        # too tall — crop bottom
+        new_h = int(w / target_ratio)
+        photo = photo.crop((0, 0, w, new_h))
+    photo = photo.resize((W, HERO_HEIGHT), Image.LANCZOS)
+
+    # darken overall so the accent bar and kicker stay readable on top
+    overlay = Image.new("RGB", (W, HERO_HEIGHT), BG_TOP)
+    photo = Image.blend(photo, overlay, 0.38)
+    img.paste(photo, (0, 0))
+
+    # fade the bottom third into the card background
+    fade_h = 260
+    fade = Image.new("L", (1, fade_h))
+    for i in range(fade_h):
+        fade.putpixel((0, i), int(255 * (i / fade_h) ** 1.4))
+    mask = fade.resize((W, fade_h))
+    img.paste(Image.new("RGB", (W, fade_h), BG_TOP),
+              (0, HERO_HEIGHT - fade_h), mask)
+    return HERO_HEIGHT
+
+
+def render_topic(brief, out_path, photo_path=None):
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
 
@@ -264,12 +386,16 @@ def render_topic(brief, out_path):
         draw.line([(0, y), (W, y)],
                   fill=tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)))
 
+    hero = _draw_hero(img, photo_path) if photo_path else 0
+    draw = ImageDraw.Draw(img)
+
     margin = 80
     right = W - margin
     max_w = W - 2 * margin
     _, kw = ar("م")
 
-    TOP, BOTTOM = 330, H - 250
+    TOP = (hero - 40) if hero else 330
+    BOTTOM = H - 250
     available = BOTTOM - TOP
 
     # Shrink to fit. Only drop a point if even the smallest size overflows.
@@ -296,8 +422,9 @@ def render_topic(brief, out_path):
         shaped, k = ar(text)
         draw.text(xy, shaped, font=font, fill=fill, anchor=anchor, **k)
 
-    draw.rectangle([right - 110, 200, right, 210], fill=ACCENT)
-    rtl((right, 246), f"تحليل: {arabic_date()}",
+    kicker_y = 96 if hero else 200
+    draw.rectangle([right - 110, kicker_y, right, kicker_y + 10], fill=ACCENT)
+    rtl((right, kicker_y + 46), f"تحليل: {arabic_date()}",
         load_font(int(32 * scale), bold=True), ACCENT)
 
     y = TOP
@@ -348,7 +475,8 @@ def main():
     print("2/3 rendering card...")
     slug = re.sub(r"[^\w]+", "-", TOPIC, flags=re.UNICODE)[:40].strip("-")
     stamp = datetime.now().strftime("%Y-%m-%d")
-    card = render_topic(brief, OUT_DIR / f"{stamp}-{slug}.png")
+    photo = fetch_photo(brief.get("image_queries", []), OUT_DIR / "hero.jpg")
+    card = render_topic(brief, OUT_DIR / f"{stamp}-{slug}.png", photo)
 
     if DRY_RUN:
         print(f"3/3 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
