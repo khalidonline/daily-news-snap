@@ -83,14 +83,17 @@ if not HAS_RAQM:
     from bidi.algorithm import get_display
 
 # Characters models commonly emit that many Arabic fonts don't include.
-# Mapped to equivalents that are present nearly everywhere.
+# Mapped to equivalents present in essentially every font.
 CHAR_FIXES = {
     "٪": "%", "٬": ",", "٫": ".", "؊": "-",
-    "—": "-", "–": "-", "―": "-", "−": "-",
+    "—": "-", "–": "-", "―": "-", "−": "-", "‐": "-", "‑": "-",
     "•": "،", "·": "،", "…": "...", "‎": "", "‏": "",
     "“": '"', "”": '"', "„": '"', "‘": "'", "’": "'",
     "\u00a0": " ", "\u200b": "", "\u2066": "", "\u2069": "",
 }
+
+# If the font can't draw these, meaning gets mangled — so we refuse to use it.
+REQUIRED_CHARS = "0123456789%-.,:()اب"
 
 _missing_reported = set()
 
@@ -110,22 +113,21 @@ def _font_charset(path):
 
 
 def sanitize(text):
-    """Normalize odd characters, then drop anything the font can't draw."""
+    """Normalize odd characters. NEVER deletes — a dropped '-' turns
+    '8700-9400' into '87009400', which is a wrong number nobody notices.
+    Anything unmappable is left in place to render as a visible box."""
     for bad, good in CHAR_FIXES.items():
         text = text.replace(bad, good)
 
     charset = _font_charset(_find_arabic_font(False))
-    if charset is None:
-        return text
-
-    out = []
-    for ch in text:
-        if ch in " \n\t" or ord(ch) in charset:
-            out.append(ch)
-        elif ch not in _missing_reported:
-            _missing_reported.add(ch)
-            print(f"  ! font has no glyph for {ch!r} (U+{ord(ch):04X}) — removed")
-    return "".join(out)
+    if charset is not None:
+        for ch in text:
+            if ch not in " \n\t" and ord(ch) not in charset \
+                    and ch not in _missing_reported:
+                _missing_reported.add(ch)
+                print(f"  ! font has no glyph for {ch!r} (U+{ord(ch):04X}) "
+                      f"— will render as a box")
+    return text
 
 
 def ar(text):
@@ -294,31 +296,54 @@ def summarize(items):
 # 3. Render (right-to-left)
 # --------------------------------------------------------------------------
 
+FONT_FAMILY = os.getenv("FONT_FAMILY", "NotoNaskhArabic").strip()
+
+_font_cache = {}
+
+
+def _candidate_paths(bold):
+    weight = "Bold" if bold else "Regular"
+    yield Path("fonts") / f"{FONT_FAMILY}-{weight}.ttf"
+    for directory in ("/usr/share/fonts/truetype/noto",
+                      "/usr/share/fonts/truetype",
+                      "/usr/share/fonts"):
+        yield Path(directory) / f"{FONT_FAMILY}-{weight}.ttf"
+
+
+def _covers_required(path):
+    charset = _font_charset(str(path))
+    if charset is None:
+        return True                       # unreadable table — don't block on it
+    missing = [c for c in REQUIRED_CHARS if ord(c) not in charset]
+    if missing:
+        print(f"  ! {path} is missing {''.join(missing)!r} — falling back")
+        return False
+    return True
+
+
 def _find_arabic_font(bold):
-    """Locate an Arabic-capable font, preferring bundled, then system."""
-    bundled = Path("fonts") / ("NotoNaskhArabic-Bold.ttf" if bold
-                               else "NotoNaskhArabic-Regular.ttf")
-    if bundled.exists():
-        return str(bundled)
+    """Locate an Arabic font that can actually draw digits, % and dashes."""
+    if bold in _font_cache:
+        return _font_cache[bold]
 
-    for path in [
-        "/usr/share/fonts/truetype/noto/NotoNaskhArabic-{}.ttf",
-        "/usr/share/fonts/truetype/noto/NotoSansArabic-{}.ttf",
-    ]:
-        candidate = path.format("Bold" if bold else "Regular")
-        if os.path.exists(candidate):
-            return candidate
+    for candidate in _candidate_paths(bold):
+        if candidate.exists() and _covers_required(candidate):
+            print(f"  font ({'bold' if bold else 'regular'}): {candidate}")
+            _font_cache[bold] = str(candidate)
+            return str(candidate)
 
-    # last resort: ask fontconfig for anything that covers Arabic
     try:
         query = ":lang=ar:weight=" + ("bold" if bold else "regular")
         out = subprocess.run(["fc-match", "-f", "%{file}", query],
                              capture_output=True, text=True, check=True)
         if out.stdout.strip():
-            return out.stdout.strip()
+            print(f"  font ({'bold' if bold else 'regular'}): {out.stdout.strip()} (fallback)")
+            _font_cache[bold] = out.stdout.strip()
+            return _font_cache[bold]
     except Exception:
         pass
-    raise SystemExit("No Arabic font found — install fonts-noto-core or bundle one in fonts/")
+    raise SystemExit(f"No usable Arabic font for {FONT_FAMILY} — "
+                     "install fonts-noto-core or bundle one in fonts/")
 
 
 def load_font(size, bold=False):
