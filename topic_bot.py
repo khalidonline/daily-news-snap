@@ -524,8 +524,25 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 
     f_foot = load_font(28)
     draw.line([(margin, H - 200), (right, H - 200)], fill=(58, 66, 90), width=2)
-    sources = "، ".join(brief.get("sources", [])[:4])
-    rtl((right, H - 165), f"المصادر: {sources}", f_foot, MUTED)
+
+    # drop sources until the line fits, rather than letting it run off the edge
+    names = list(brief.get("sources", []))[:4]
+    credit_w = draw.textlength(ar(f"الصورة: {photo_credit}")[0], font=f_foot, **kw) \
+        if photo_credit else 0
+    room = max_w - credit_w - 40
+    while names:
+        label = f"المصادر: {'، '.join(names)}"
+        if draw.textlength(ar(label)[0], font=f_foot, **kw) <= room or len(names) == 1:
+            break
+        names.pop()
+    label = f"المصادر: {'، '.join(names)}"
+    while names and draw.textlength(ar(label)[0], font=f_foot, **kw) > room:
+        names[0] = names[0][:-4] + "..."       # last resort: shorten the name
+        label = f"المصادر: {'، '.join(names)}"
+        if len(names[0]) <= 8:
+            break
+
+    rtl((right, H - 165), label, f_foot, MUTED)
     rtl((right, H - 120), "بحث آلي: راجع المصادر", f_foot, ACCENT)
     if photo_credit:
         rtl((margin, H - 120), f"الصورة: {photo_credit}", f_foot, MUTED,
