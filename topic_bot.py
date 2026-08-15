@@ -26,7 +26,7 @@ from PIL import Image, ImageDraw
 from news_bot import (
     ANTHROPIC_API_KEY, CLAUDE_MODEL, DRY_RUN, MEDIA_MODE, OUT_DIR,
     W, H, BG_TOP, BG_BOTTOM, ACCENT, TEXT, MUTED, AR_DIGITS,
-    ar, arabic_date, load_font, _wrap,
+    ar, load_font, _wrap,
     publish_via_github, upload_media, post_story,
 )
 
@@ -38,7 +38,9 @@ HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
 
 USER_AGENT = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
-IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "openverse").strip()
+KICKER = os.getenv("KICKER", "ملخص تنفيذي")
+
+IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "none").strip()
 # openverse (free, no key) | article (publisher photo) | stock (Pexels, needs key) | none
 
 OG_IMAGE_RE = re.compile(
@@ -611,7 +613,7 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 
     kicker_y = 96 if hero else 200
     draw.rectangle([right - 110, kicker_y, right, kicker_y + 10], fill=ACCENT)
-    rtl((right, kicker_y + 46), f"تحليل: {arabic_date()}",
+    rtl((right, kicker_y + 46), KICKER,
         load_font(int(32 * scale), bold=True), ACCENT)
 
     y = TOP
@@ -655,10 +657,9 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
         if len(names[0]) <= 8:
             break
 
-    rtl((right, H - 165), label, f_foot, MUTED)
-    rtl((right, H - 120), "بحث آلي: راجع المصادر", f_foot, ACCENT)
+    rtl((right, H - 155), label, f_foot, MUTED)
     if photo_credit:
-        rtl((margin, H - 120), f"الصورة: {photo_credit}", f_foot, MUTED,
+        rtl((margin, H - 155), f"الصورة: {photo_credit}", f_foot, MUTED,
             anchor="la")
 
     img.save(out_path, "PNG", optimize=True)
