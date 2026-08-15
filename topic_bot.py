@@ -150,44 +150,49 @@ def fetch_openverse_photo(queries, out_path):
     if not queries:
         return None, None
 
-    best, best_score, best_query = None, -999, None
+    candidates = []
     for query in queries:
         terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
         results = _openverse_search(query)
         if not results:
-            print(f"    no Openverse results for {query!r}")
             continue
         for item in results:
-            score = _ov_score(item, terms)
-            if score > best_score:
-                best, best_score, best_query = item, score, query
-        if best_score >= 10:
+            candidates.append((_ov_score(item, terms), query, item))
+        if any(c[0] >= 10 for c in candidates):
             break
 
-    if best is None:
+    if not candidates:
         print("  ! no openly licensed photo found")
         return None, None
 
-    data = None
-    for field in ("url", "thumbnail"):
-        src = best.get(field)
-        if not src:
-            continue
-        try:
-            req = urllib.request.Request(src, headers={"User-Agent": USER_AGENT})
-            with urllib.request.urlopen(req, timeout=60) as resp:
-                candidate = resp.read()
-            if len(candidate) < 8_000:
-                print(f"  ! {field} too small ({len(candidate)} bytes) — trying next")
+    candidates.sort(key=lambda c: -c[0])
+
+    # work down the ranked list — one dead host shouldn't cost us the photo
+    data, best, best_score, best_query = None, None, 0, None
+    for score, query, item in candidates[:5]:
+        for field in ("url", "thumbnail"):
+            link = item.get(field)
+            if not link:
                 continue
-            data = candidate
+            try:
+                req = urllib.request.Request(link,
+                                             headers={"User-Agent": USER_AGENT})
+                with urllib.request.urlopen(req, timeout=45) as resp:
+                    payload = resp.read()
+            except Exception as exc:
+                print(f"  ! {field} failed ({exc}) — trying the next image")
+                continue
+            if len(payload) < 8_000:
+                continue
+            data, best, best_score, best_query = payload, item, score, query
             if field == "thumbnail":
-                print("    (original host refused; using Openverse thumbnail)")
+                print("    (using Openverse thumbnail — original host refused)")
             break
-        except Exception as exc:
-            print(f"  ! {field} download failed: {exc}")
+        if data:
+            break
 
     if data is None:
+        print("  ! every Openverse candidate failed to download")
         return None, None
     Path(out_path).write_bytes(data)
 
