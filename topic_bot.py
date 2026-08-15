@@ -36,7 +36,8 @@ PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
 
 
-IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "stock").strip()   # stock | article
+IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "openverse").strip()
+# openverse (free, no key) | article (publisher photo) | stock (Pexels, needs key) | none
 
 OG_IMAGE_RE = re.compile(
     r'<meta[^>]+(?:property|name)=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
@@ -96,6 +97,89 @@ DOMAIN_CREDITS = {
     "okaz.com.sa": "عكاظ",
     "alyaum.com": "اليوم",
 }
+
+
+def _openverse_search(query, page_size=12):
+    """Search Openverse for openly licensed images. No API key needed."""
+    url = ("https://api.openverse.org/v1/images/"
+           f"?q={urllib.parse.quote(query)}&page_size={page_size}"
+           "&license_type=commercial,modification&mature=false")
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read()).get("results", [])
+    except Exception as exc:
+        print(f"  ! Openverse error for {query!r}: {exc}")
+        return []
+
+
+def _ov_score(item, terms):
+    text = " ".join(filter(None, [
+        item.get("title") or "",
+        " ".join(t.get("name", "") for t in item.get("tags") or []),
+    ])).lower()
+    if not text:
+        return 0
+    hits = sum(1 for t in terms if t in text)
+    wide = (item.get("width") or 0) >= (item.get("height") or 1)
+    return hits * 10 + (3 if wide else 0)
+
+
+def fetch_openverse_photo(queries, out_path):
+    """Fetch an openly licensed photo. Returns (path, credit) or (None, None).
+
+    Only commercial-use, modification-allowed licences are requested, and the
+    creator and licence are returned so the card can credit them.
+    """
+    if isinstance(queries, str):
+        queries = [queries]
+    queries = [q.strip() for q in queries if q and q.strip()]
+    if not queries:
+        return None, None
+
+    best, best_score, best_query = None, -999, None
+    for query in queries:
+        terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
+        results = _openverse_search(query)
+        if not results:
+            print(f"    no Openverse results for {query!r}")
+            continue
+        for item in results:
+            score = _ov_score(item, terms)
+            if score > best_score:
+                best, best_score, best_query = item, score, query
+        if best_score >= 10:
+            break
+
+    if best is None:
+        print("  ! no openly licensed photo found")
+        return None, None
+
+    src = best.get("url")
+    if not src:
+        return None, None
+    try:
+        req = urllib.request.Request(src, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = resp.read()
+        if len(data) < 15_000:
+            print("  ! image too small — skipping")
+            return None, None
+        Path(out_path).write_bytes(data)
+    except Exception as exc:
+        print(f"  ! photo download failed: {exc}")
+        return None, None
+
+    creator = (best.get("creator") or "").strip() or best.get("source", "Openverse")
+    licence = (best.get("license") or "").upper()
+    version = best.get("license_version") or ""
+    credit = f"{creator} / CC {licence} {version}".strip()
+
+    print(f"    photo: {best.get('title') or '(untitled)'} — {credit} "
+          f"[{best_query}]")
+    if best_score < 10:
+        print("  ! weak match — the image may be only loosely related")
+    return str(out_path), credit
 
 
 def _pexels_search(query, per_page=12):
@@ -569,15 +653,23 @@ def main():
     print("2/3 rendering card...")
     slug = re.sub(r"[^\w]+", "-", TOPIC, flags=re.UNICODE)[:40].strip("-")
     stamp = datetime.now().strftime("%Y-%m-%d")
+    queries = brief.get("image_queries", [])
+    hero = OUT_DIR / "hero.jpg"
     photo, credit = None, None
+
     if IMAGE_SOURCE == "article":
-        photo, domain = fetch_article_photo(brief.get("source_url", ""),
-                                            OUT_DIR / "hero.jpg")
+        photo, domain = fetch_article_photo(brief.get("source_url", ""), hero)
         if domain:
             credit = DOMAIN_CREDITS.get(domain, domain)
-    if photo is None:
-        photo = fetch_photo(brief.get("image_queries", []), OUT_DIR / "hero.jpg")
+    elif IMAGE_SOURCE == "stock":
+        photo = fetch_photo(queries, hero)
         credit = "Pexels" if photo else None
+    elif IMAGE_SOURCE == "openverse":
+        photo, credit = fetch_openverse_photo(queries, hero)
+
+    # Openverse needs no key, so it is always the fallback
+    if photo is None and IMAGE_SOURCE != "none":
+        photo, credit = fetch_openverse_photo(queries, hero)
 
     card = render_topic(brief, OUT_DIR / f"{stamp}-{slug}.png", photo, credit)
 
