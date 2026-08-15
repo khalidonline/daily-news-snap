@@ -18,9 +18,11 @@ import urllib.error
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
+from functools import lru_cache
 from xml.etree import ElementTree as ET
 
 from PIL import Image, ImageDraw, ImageFont, features
+from fontTools.ttLib import TTFont
 
 # --------------------------------------------------------------------------
 # Config
@@ -29,8 +31,11 @@ from PIL import Image, ImageDraw, ImageFont, features
 # Saudi Arabic sources. Run once with DRY_RUN=1 and check the per-feed counts
 # in the log — delete any that report 0 items and keep the rest.
 FEEDS = [
-    ("اليوم",        "https://www.alyaum.com/rssFeed/1005"),
-    ("الشرق الأوسط", "https://aawsat.com/feed"),
+    ("عكاظ",          "https://www.okaz.com.sa/rssFeed/190"),
+    ("المدينة",        "https://www.al-madina.com/rssFeed/193"),
+    ("اليوم",          "https://www.alyaum.com/rssFeed/1005"),
+    ("الشرق الأوسط",   "https://aawsat.com/feed"),
+    ("العربية",        "https://www.alarabiya.net/.mrss/ar/saudi-today.xml"),
 ]
 
 STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "3"))
@@ -60,7 +65,7 @@ AR_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو",
              "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
 AR_DAYS = ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس",
            "الجمعة", "السبت", "الأحد"]
-AR_DIGITS = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
+AR_DIGITS = str.maketrans("0123456789", "0123456789")   # digits stay Latin
 
 
 # --------------------------------------------------------------------------
@@ -77,9 +82,55 @@ if not HAS_RAQM:
     import arabic_reshaper
     from bidi.algorithm import get_display
 
+# Characters models commonly emit that many Arabic fonts don't include.
+# Mapped to equivalents that are present nearly everywhere.
+CHAR_FIXES = {
+    "٪": "%", "٬": ",", "٫": ".", "؊": "-",
+    "—": "-", "–": "-", "―": "-", "−": "-",
+    "•": "،", "·": "،", "…": "...", "‎": "", "‏": "",
+    "“": '"', "”": '"', "„": '"', "‘": "'", "’": "'",
+    "\u00a0": " ", "\u200b": "", "\u2066": "", "\u2069": "",
+}
+
+_missing_reported = set()
+
+
+@lru_cache(maxsize=8)
+def _font_charset(path):
+    """Every codepoint the font can actually draw, or None if unreadable."""
+    try:
+        font = TTFont(path, fontNumber=0, lazy=True)
+        chars = set()
+        for table in font["cmap"].tables:
+            chars.update(table.cmap.keys())
+        return frozenset(chars)
+    except Exception as exc:
+        print(f"  ! couldn't read glyph table of {path}: {exc}")
+        return None
+
+
+def sanitize(text):
+    """Normalize odd characters, then drop anything the font can't draw."""
+    for bad, good in CHAR_FIXES.items():
+        text = text.replace(bad, good)
+
+    charset = _font_charset(_find_arabic_font(False))
+    if charset is None:
+        return text
+
+    out = []
+    for ch in text:
+        if ch in " \n\t" or ord(ch) in charset:
+            out.append(ch)
+        elif ch not in _missing_reported:
+            _missing_reported.add(ch)
+            print(f"  ! font has no glyph for {ch!r} (U+{ord(ch):04X}) — removed")
+    return "".join(out)
+
 
 def ar(text):
     """Return (text_to_draw, draw_kwargs) for a piece of Arabic text."""
+    text = sanitize(text)
     if HAS_RAQM:
         return text, {"direction": "rtl", "language": "ar"}
     return get_display(arabic_reshaper.reshape(text)), {}
@@ -214,7 +265,7 @@ def summarize(items):
 
     payload = {
         "model": CLAUDE_MODEL,
-        "max_tokens": 4000,
+        "max_tokens": 2000,
         "system": SYSTEM_PROMPT.format(n=STORIES_PER_DAY),
         "messages": [{"role": "user", "content": f"عناوين اليوم:\n\n{feed_text}"}],
     }
@@ -235,14 +286,8 @@ def summarize(items):
         raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
 
     text = "".join(b.get("text", "") for b in data.get("content", [])).strip()
-
-    if data.get("stop_reason") == "max_tokens":
-        raise SystemExit("Claude's reply was truncated — raise max_tokens")
-
-    start, end = text.find("{"), text.rfind("}")
-    if start == -1 or end == -1:
-        raise SystemExit(f"No JSON in reply: {text[:300]}")
-    return json.loads(text[start:end + 1])
+    text = re.sub(r"^```(?:json)?|```$", "", text, flags=re.MULTILINE).strip()
+    return json.loads(text)
 
 
 # --------------------------------------------------------------------------

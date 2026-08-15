@@ -152,7 +152,7 @@ def render_topic(brief, out_path):
         draw.text(xy, shaped, font=font, fill=fill, anchor=anchor, **k)
 
     draw.rectangle([right - 110, 200, right, 210], fill=ACCENT)
-    rtl((right, 246), f"تحليل • {arabic_date()}", f_kicker, ACCENT)
+    rtl((right, 246), f"تحليل: {arabic_date()}", f_kicker, ACCENT)
 
     y = 320
     for line in _wrap(draw, brief["title"], f_title, max_w, kw):
@@ -175,9 +175,9 @@ def render_topic(brief, out_path):
         y += 40
 
     draw.line([(margin, H - 200), (right, H - 200)], fill=(58, 66, 90), width=2)
-    sources = "  •  ".join(brief.get("sources", [])[:4])
+    sources = "، ".join(brief.get("sources", [])[:4])
     rtl((right, H - 165), f"المصادر: {sources}"[:80], f_foot, MUTED)
-    rtl((right, H - 120), "بحث آلي — راجع المصادر", f_foot, ACCENT)
+    rtl((right, H - 120), "بحث آلي: راجع المصادر", f_foot, ACCENT)
 
     img.save(out_path, "PNG", optimize=True)
     return out_path
