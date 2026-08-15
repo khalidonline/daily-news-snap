@@ -39,6 +39,7 @@ jobs:
           TOPIC: ${{ inputs.topic }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
+          FONT_FAMILY: "Cairo"
           POINTS: "4"
           MAX_SEARCHES: "6"
         run: python topic_bot.py
