@@ -1,8 +1,12 @@
-name: Daily news to Snapchat
+name: News brief to Snapchat
 
 on:
-  # schedule:
-  #   - cron: "30 6 * * *"     # paused — uncomment to go live again
+  schedule:
+    # KSA is UTC+3 all year (no DST), so these are 07:00 / 13:00 / 17:00 / 22:00 KSA
+    - cron: "0 4 * * *"
+    - cron: "0 10 * * *"
+    - cron: "0 14 * * *"
+    - cron: "0 19 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -13,6 +17,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: news-brief          # never let two runs post at once
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -21,12 +29,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Arabic fonts
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-core
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
 
       - run: pip install -r requirements.txt
 
@@ -35,16 +41,18 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-          STORIES_PER_DAY: "3"
           MEDIA_MODE: "github"
-          FONT_FAMILY: "Cairo"
+          FONT_FAMILY: "Almarai"
+          STORIES_PER_DAY: "4"
+          LOOKBACK_HOURS: "14"
+          REMEMBER_DAYS: "3"
         run: python news_bot.py
 
-      - name: Keep today's card for review
+      - name: Keep the card for review
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cards
+          name: card-${{ github.run_id }}
           path: out/*.png
           retention-days: 7
           if-no-files-found: ignore
