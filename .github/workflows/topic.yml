@@ -1,0 +1,53 @@
+name: Topic brief to Snapchat
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "الموضوع — the topic to research"
+        type: string
+        required: true
+      dry_run:
+        description: "Render the card but don't post"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Arabic fonts
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-core
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Research and post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
+          TOPIC: ${{ inputs.topic }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          MEDIA_MODE: "github"
+          POINTS: "4"
+          MAX_SEARCHES: "6"
+        run: python topic_bot.py
+
+      - name: Keep the card for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topic-card
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
