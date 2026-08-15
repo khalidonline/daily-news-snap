@@ -102,14 +102,25 @@ DOMAIN_CREDITS = {
 
 
 def _openverse_search(query, page_size=12):
-    """Search Openverse for openly licensed images. No API key needed."""
+    """Search Openverse for openly licensed images. No API key needed.
+
+    Anonymous access is rate limited, so a 429 here is normal on repeat runs.
+    """
     url = ("https://api.openverse.org/v1/images/"
            f"?q={urllib.parse.quote(query)}&page_size={page_size}"
            "&license_type=commercial,modification&mature=false")
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read()).get("results", [])
+            results = json.loads(resp.read()).get("results", [])
+        print(f"    Openverse: {len(results)} results for {query!r}")
+        return results
+    except urllib.error.HTTPError as exc:
+        if exc.code == 429:
+            print("  ! Openverse rate limited (anonymous quota) — try again later")
+        else:
+            print(f"  ! Openverse HTTP {exc.code} for {query!r}")
+        return []
     except Exception as exc:
         print(f"  ! Openverse error for {query!r}: {exc}")
         return []
@@ -157,20 +168,28 @@ def fetch_openverse_photo(queries, out_path):
         print("  ! no openly licensed photo found")
         return None, None
 
-    src = best.get("url")
-    if not src:
+    data = None
+    for field in ("url", "thumbnail"):
+        src = best.get(field)
+        if not src:
+            continue
+        try:
+            req = urllib.request.Request(src, headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                candidate = resp.read()
+            if len(candidate) < 8_000:
+                print(f"  ! {field} too small ({len(candidate)} bytes) — trying next")
+                continue
+            data = candidate
+            if field == "thumbnail":
+                print("    (original host refused; using Openverse thumbnail)")
+            break
+        except Exception as exc:
+            print(f"  ! {field} download failed: {exc}")
+
+    if data is None:
         return None, None
-    try:
-        req = urllib.request.Request(src, headers={"User-Agent": USER_AGENT})
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            data = resp.read()
-        if len(data) < 15_000:
-            print("  ! image too small — skipping")
-            return None, None
-        Path(out_path).write_bytes(data)
-    except Exception as exc:
-        print(f"  ! photo download failed: {exc}")
-        return None, None
+    Path(out_path).write_bytes(data)
 
     creator = (best.get("creator") or "").strip() or best.get("source", "Openverse")
     licence = (best.get("license") or "").upper()
@@ -672,9 +691,20 @@ def main():
     elif IMAGE_SOURCE == "openverse":
         photo, credit = fetch_openverse_photo(queries, hero)
 
-    # Openverse needs no key, so it is always the fallback
+    # cascade through the remaining sources rather than giving up
     if photo is None and IMAGE_SOURCE != "none":
-        photo, credit = fetch_openverse_photo(queries, hero)
+        if IMAGE_SOURCE != "openverse":
+            photo, credit = fetch_openverse_photo(queries, hero)
+        if photo is None and IMAGE_SOURCE != "article":
+            print("    falling back to the article photo...")
+            photo, domain = fetch_article_photo(brief.get("source_url", ""), hero)
+            credit = DOMAIN_CREDITS.get(domain, domain) if domain else None
+        if photo is None and PEXELS_API_KEY and IMAGE_SOURCE != "stock":
+            print("    falling back to Pexels...")
+            photo = fetch_photo(queries, hero)
+            credit = "Pexels" if photo else None
+        if photo is None:
+            print("  ! no photo from any source — card will be text only")
 
     card = render_topic(brief, OUT_DIR / f"{stamp}-{slug}.png", photo, credit)
 
