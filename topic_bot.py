@@ -36,6 +36,8 @@ PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
 
 
+USER_AGENT = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
+
 IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "openverse").strip()
 # openverse (free, no key) | article (publisher photo) | stock (Pexels, needs key) | none
 
@@ -358,6 +360,9 @@ def warn_about_bare_numbers(brief):
     for point in brief.get("points", []):
         text = point.get("text", "")
         for match in re.finditer(r"\d[\d,\.]*", text):
+            token = match.group()
+            if re.fullmatch(r"(19|20)\d{2}", token):
+                continue                      # a year needs no unit
             tail = text[match.end():]
             if tail.startswith("%"):
                 continue
