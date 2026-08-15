@@ -38,7 +38,8 @@ jobs:
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           TOPIC: ${{ inputs.topic }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-          MEDIA_MODE: "github" FONT_FAMILY: "Almarai"
+          MEDIA_MODE: "github" 
+          FONT_FAMILY: "Almarai"
           POINTS: "3"
           MAX_SEARCHES: "6"
         run: python topic_bot.py
