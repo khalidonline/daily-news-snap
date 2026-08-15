@@ -69,6 +69,8 @@ AR_DAYS = ["الاثنين", "الثلاثاء", "الأربعاء", "الخمي
            "الجمعة", "السبت", "الأحد"]
 AR_DIGITS = str.maketrans("0123456789", "0123456789")   # digits stay Latin
 
+BRIEF_TITLE = os.getenv("BRIEF_TITLE", "ملخص الأخبار")
+
 
 # --------------------------------------------------------------------------
 # Arabic text shaping
@@ -395,8 +397,7 @@ def render_brief(stories, out_path):
 
     # header (accent bar now on the right)
     draw.rectangle([right - 110, 210, right, 220], fill=ACCENT)
-    rtl((right, 258), arabic_date(), f_kicker, ACCENT)
-    rtl((right, 316), "موجز السعودية", f_title, TEXT)
+    rtl((right, 262), BRIEF_TITLE, f_title, TEXT)
 
     y = 470
     for i, story in enumerate(stories, 1):
@@ -421,10 +422,6 @@ def render_brief(stories, out_path):
         rtl((text_right, y), story.get("source", ""), f_foot, MUTED)
         y += 68
 
-    draw.line([(margin, H - 190), (right, H - 190)], fill=(58, 66, 90), width=2)
-    rtl((right, H - 155), "الموجز اليومي", f_foot, ACCENT)
-    rtl((margin, H - 155), f"{len(stories)} أخبار".translate(AR_DIGITS),
-        f_foot, MUTED, anchor="la")
 
     img.save(out_path, "PNG", optimize=True)
     return out_path
@@ -467,8 +464,8 @@ def publish_via_github(png_path):
 
     url = ("https://raw.githubusercontent.com/"
            f"{repo}/{branch}/{CARDS_DIR}/{urllib.parse.quote(dest.name)}")
-    for _ in range(6):
-        time.sleep(3)
+    for delay in (0, 2, 3, 5, 8, 10):
+        time.sleep(delay)
         try:
             urllib.request.urlopen(
                 urllib.request.Request(url, method="HEAD",
