@@ -13,6 +13,8 @@ import os
 import re
 import subprocess
 import sys
+import hashlib
+import urllib.parse
 import urllib.request
 import urllib.error
 from datetime import datetime, timedelta, timezone
@@ -442,7 +444,13 @@ def publish_via_github(png_path):
         raise SystemExit("GITHUB_REPOSITORY unset — MEDIA_MODE=github only works in Actions")
 
     Path(CARDS_DIR).mkdir(exist_ok=True)
-    dest = Path(CARDS_DIR) / Path(png_path).name
+
+    # Arabic filenames can't go in a URL unencoded, and git/CDN handling of
+    # them varies — commit under an ASCII name instead.
+    stem = Path(png_path).stem
+    ascii_stem = re.sub(r"[^A-Za-z0-9._-]+", "-", stem).strip("-")
+    digest = hashlib.md5(stem.encode("utf-8")).hexdigest()[:8]
+    dest = Path(CARDS_DIR) / f"{ascii_stem or 'card'}-{digest}.png"
     shutil.copyfile(png_path, dest)
 
     def git(*args):
@@ -457,7 +465,8 @@ def publish_via_github(png_path):
         pass
     git("push")
 
-    url = f"https://raw.githubusercontent.com/{repo}/{branch}/{CARDS_DIR}/{dest.name}"
+    url = ("https://raw.githubusercontent.com/"
+           f"{repo}/{branch}/{CARDS_DIR}/{urllib.parse.quote(dest.name)}")
     for _ in range(6):
         time.sleep(3)
         try:
