@@ -11,6 +11,15 @@ on:
         description: "Render the card but don't post"
         type: boolean
         default: true
+      image_source:
+        description: "Where the photo comes from"
+        type: choice
+        options:
+          - openverse
+          - article
+          - stock
+          - none
+        default: openverse
 
 permissions:
   contents: write
@@ -36,9 +45,11 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           TOPIC: ${{ inputs.topic }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-          MEDIA_MODE: "github" 
+          MEDIA_MODE: "github"
+          IMAGE_SOURCE: ${{ inputs.image_source }}
           FONT_FAMILY: "Almarai"
           POINTS: "3"
           MAX_SEARCHES: "6"
