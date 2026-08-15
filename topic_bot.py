@@ -36,6 +36,68 @@ PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
 
 
+IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "stock").strip()   # stock | article
+
+OG_IMAGE_RE = re.compile(
+    r'<meta[^>]+(?:property|name)=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
+    re.IGNORECASE)
+OG_IMAGE_ALT_RE = re.compile(
+    r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property|name)=["\']og:image["\']',
+    re.IGNORECASE)
+
+
+def fetch_article_photo(url, out_path):
+    """Pull the lead photo an article publishes in its og:image tag.
+
+    IMPORTANT: that photo belongs to the publisher. Only use this for sources
+    whose terms permit republication, and always show the credit the card
+    renders from the returned domain.
+    Returns (path, domain) or (None, None).
+    """
+    if not url:
+        return None, None
+
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            html = resp.read(400_000).decode("utf-8", "ignore")
+    except Exception as exc:
+        print(f"  ! couldn't read {url}: {exc}")
+        return None, None
+
+    match = OG_IMAGE_RE.search(html) or OG_IMAGE_ALT_RE.search(html)
+    if not match:
+        print(f"  ! no og:image on {url}")
+        return None, None
+
+    img_url = urllib.parse.urljoin(url, match.group(1))
+    domain = urllib.parse.urlparse(url).netloc.replace("www.", "")
+    try:
+        req = urllib.request.Request(img_url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = resp.read()
+        if len(data) < 15_000:
+            print("  ! og:image too small — probably a logo, skipping")
+            return None, None
+        Path(out_path).write_bytes(data)
+    except Exception as exc:
+        print(f"  ! photo download failed: {exc}")
+        return None, None
+
+    print(f"    photo: article image from {domain}")
+    return str(out_path), domain
+
+
+DOMAIN_CREDITS = {
+    "spa.gov.sa": "واس",
+    "argaam.com": "أرقام",
+    "aawsat.com": "الشرق الأوسط",
+    "alarabiya.net": "العربية",
+    "okaz.com.sa": "عكاظ",
+    "alyaum.com": "اليوم",
+}
+
+
 def _pexels_search(query, per_page=12):
     url = (f"https://api.pexels.com/v1/search?per_page={per_page}"
            f"&orientation=landscape&query={urllib.parse.quote(query)}")
@@ -114,6 +176,7 @@ def fetch_photo(queries, out_path):
           f"— {best.get('photographer')} / Pexels [{best_query}]")
     return str(out_path)
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "6"))
+MAX_TOKENS = int(os.getenv("MAX_TOKENS", "16000"))
 POINTS = int(os.getenv("POINTS", "3"))
 
 
@@ -144,6 +207,8 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
   الأولى تصف جوهر الموضوع نفسه، والثانية أوسع، والثالثة أعم ما يمكن.
   لا تذكر أشخاصاً بأعينهم ولا شعارات ولا علامات تجارية.
 - sources: أسماء المصادر (٢ إلى ٤). إن كان المصدر أجنبياً فاكتبه بالعربية.
+- source_url: رابط الخبر الرسمي الأدق الذي اعتمدت عليه (يفضَّل مصدر حكومي سعودي \
+مثل واس أو موقع الجهة المعنية). ضع الرابط كاملاً كما ظهر في البحث.
 
 قواعد الأسلوب — اكتب بأسلوب موقع "أرقام" الاقتصادي:
 - ابدأ الجملة بالجهة صاحبة الخبر: "أعلنت أرامكو"، "رفع صندوق النقد توقعاته".
@@ -190,7 +255,8 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
 
 أجب بصيغة JSON فقط، بدون markdown وبدون مقدمة:
 {{"title": "...", "lead": "...", "points": [{{"heading": "...", "text": "..."}}], \
-"caption": "...", "image_queries": ["...", "...", "..."], "sources": ["...", "..."]}}"""
+"caption": "...", "image_queries": ["...", "...", "..."], \
+"source_url": "...", "sources": ["...", "..."]}}"""
 
 
 UNIT_WORDS = ("نقطة", "نقاط", "دولار", "دولاراً", "ريال", "ريالاً", "يورو",
@@ -242,12 +308,13 @@ def research(topic):
 
     messages = [{"role": "user", "content": f"الموضوع: {topic}"}]
     searches = 0
+    budget = MAX_TOKENS
 
-    # Claude may return stop_reason="pause_turn" mid-research; continue it.
-    for _ in range(4):
+    # pause_turn continuations plus up to one budget retry
+    for _ in range(6):
         payload = {
             "model": TOPIC_MODEL,
-            "max_tokens": 4000,
+            "max_tokens": budget,
             "system": SYSTEM_PROMPT.format(n=POINTS),
             "messages": messages,
             "tools": [{
@@ -280,7 +347,14 @@ def research(topic):
             continue
 
         if data.get("stop_reason") == "max_tokens":
-            raise SystemExit("Reply truncated — raise max_tokens")
+            if budget < 32000:
+                budget = min(32000, budget * 2)
+                print(f"  ! reply truncated — retrying with max_tokens={budget}")
+                messages = [{"role": "user", "content": f"الموضوع: {topic}"}]
+                continue
+            raise SystemExit(
+                "Reply truncated even at 32000 tokens — lower MAX_SEARCHES "
+                "or narrow the topic")
 
         text = "".join(b.get("text", "") for b in content
                        if b.get("type") == "text").strip()
@@ -377,7 +451,7 @@ def _draw_hero(img, photo_path):
     return HERO_HEIGHT
 
 
-def render_topic(brief, out_path, photo_path=None):
+def render_topic(brief, out_path, photo_path=None, photo_credit=None):
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
 
@@ -453,6 +527,9 @@ def render_topic(brief, out_path, photo_path=None):
     sources = "، ".join(brief.get("sources", [])[:4])
     rtl((right, H - 165), f"المصادر: {sources}", f_foot, MUTED)
     rtl((right, H - 120), "بحث آلي: راجع المصادر", f_foot, ACCENT)
+    if photo_credit:
+        rtl((margin, H - 120), f"الصورة: {photo_credit}", f_foot, MUTED,
+            anchor="la")
 
     img.save(out_path, "PNG", optimize=True)
     return out_path
@@ -475,8 +552,17 @@ def main():
     print("2/3 rendering card...")
     slug = re.sub(r"[^\w]+", "-", TOPIC, flags=re.UNICODE)[:40].strip("-")
     stamp = datetime.now().strftime("%Y-%m-%d")
-    photo = fetch_photo(brief.get("image_queries", []), OUT_DIR / "hero.jpg")
-    card = render_topic(brief, OUT_DIR / f"{stamp}-{slug}.png", photo)
+    photo, credit = None, None
+    if IMAGE_SOURCE == "article":
+        photo, domain = fetch_article_photo(brief.get("source_url", ""),
+                                            OUT_DIR / "hero.jpg")
+        if domain:
+            credit = DOMAIN_CREDITS.get(domain, domain)
+    if photo is None:
+        photo = fetch_photo(brief.get("image_queries", []), OUT_DIR / "hero.jpg")
+        credit = "Pexels" if photo else None
+
+    card = render_topic(brief, OUT_DIR / f"{stamp}-{slug}.png", photo, credit)
 
     if DRY_RUN:
         print(f"3/3 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
