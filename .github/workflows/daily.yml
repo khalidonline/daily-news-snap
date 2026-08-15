@@ -37,6 +37,7 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           STORIES_PER_DAY: "3"
           MEDIA_MODE: "github"
+          FONT_FAMILY: "Cairo"
         run: python news_bot.py
 
       - name: Keep today's card for review
