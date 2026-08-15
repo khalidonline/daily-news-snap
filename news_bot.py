@@ -69,7 +69,29 @@ AR_DAYS = ["الاثنين", "الثلاثاء", "الأربعاء", "الخمي
            "الجمعة", "السبت", "الأحد"]
 AR_DIGITS = str.maketrans("0123456789", "0123456789")   # digits stay Latin
 
-BRIEF_TITLE = os.getenv("BRIEF_TITLE", "ملخص الأخبار")
+BRIEF_TITLE = os.getenv("BRIEF_TITLE", "ملخص تنفيذي - أخبار السعودية")
+
+STATE_FILE = Path("state/posted.json")
+REMEMBER_DAYS = int(os.getenv("REMEMBER_DAYS", "3"))
+
+
+def load_posted():
+    """Headlines already posted recently, so repeat runs don't repeat news."""
+    try:
+        data = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=REMEMBER_DAYS)).isoformat()
+    return [e for e in data if e.get("at", "") >= cutoff]
+
+
+def save_posted(previous, stories):
+    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    now = datetime.now(timezone.utc).isoformat()
+    entries = previous + [{"headline": s["headline"], "at": now} for s in stories]
+    STATE_FILE.write_text(json.dumps(entries, ensure_ascii=False, indent=1),
+                          encoding="utf-8")
+    return STATE_FILE
 
 
 # --------------------------------------------------------------------------
@@ -260,7 +282,7 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 {{"caption": "...", "stories": [{{"headline": "...", "summary": "...", "source": "..."}}]}}"""
 
 
-def summarize(items):
+def summarize(items, already_posted=()):
     if not ANTHROPIC_API_KEY:
         raise SystemExit("ANTHROPIC_API_KEY is not set")
 
@@ -269,11 +291,17 @@ def summarize(items):
         for i in items[:MAX_HEADLINES_TO_MODEL]
     )
 
+    user_msg = f"عناوين اليوم:\n\n{feed_text}"
+    if already_posted:
+        covered = "\n".join(f"- {h}" for h in already_posted)
+        user_msg += ("\n\nأخبار نُشرت بالفعل خلال الأيام الماضية — لا تخترها ولا "
+                     f"تختر خبراً عن الحدث نفسه:\n{covered}")
+
     payload = {
         "model": CLAUDE_MODEL,
         "max_tokens": 2000,
         "system": SYSTEM_PROMPT.format(n=STORIES_PER_DAY),
-        "messages": [{"role": "user", "content": f"عناوين اليوم:\n\n{feed_text}"}],
+        "messages": [{"role": "user", "content": user_msg}],
     }
 
     req = urllib.request.Request(
@@ -369,6 +397,35 @@ def _wrap(draw, text, font, max_width, kw):
     return lines
 
 
+def _brief_layout(draw, stories, scale, max_w, kw):
+    """Measure the story blocks before drawing, same approach as the topic card."""
+    f_head = load_font(int(46 * scale), bold=True)
+    f_body = load_font(int(34 * scale))
+    lh_head, lh_body = int(60 * scale), int(56 * scale)
+
+    blocks, height = [], 0
+
+    def add(kind, text, font, line_h, fill, indent, first=False):
+        nonlocal height
+        blocks.append({"kind": kind, "text": text, "font": font, "lh": line_h,
+                       "fill": fill, "indent": indent, "first": first})
+        height += line_h
+
+    for i, story in enumerate(stories):
+        add("gap", "", None, int((30 if i == 0 else 62) * scale), None, 0)
+
+        first = True
+        for line in _wrap(draw, story["headline"], f_head, max_w - 44, kw):
+            add("head", line, f_head, lh_head, ACCENT, 44, first)
+            first = False
+
+        add("gap", "", None, int(14 * scale), None, 0)
+        for line in _wrap(draw, story["summary"], f_body, max_w - 44, kw):
+            add("body", line, f_body, lh_body, (206, 212, 228), 44)
+
+    return blocks, height
+
+
 def render_brief(stories, out_path):
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
@@ -381,47 +438,55 @@ def render_brief(stories, out_path):
     margin = 80
     right = W - margin           # everything is anchored to the RIGHT edge
     max_w = W - 2 * margin
-
-    f_kicker = load_font(34, bold=True)
-    f_title = load_font(64, bold=True)
-    f_head = load_font(52, bold=True)
-    f_body = load_font(36)
-    f_num = load_font(40, bold=True)
-    f_foot = load_font(30)
-
-    _, kw = ar("م")               # shared draw kwargs
+    _, kw = ar("م")
 
     def rtl(xy, text, font, fill, anchor="ra"):
         shaped, k = ar(text)
         draw.text(xy, shaped, font=font, fill=fill, anchor=anchor, **k)
 
-    # header (accent bar now on the right)
-    draw.rectangle([right - 110, 210, right, 220], fill=ACCENT)
-    rtl((right, 262), BRIEF_TITLE, f_title, TEXT)
+    # header
+    draw.rectangle([right - 110, 200, right, 210], fill=ACCENT)
+    title_size = 64
+    while title_size > 34:
+        f_title = load_font(title_size, bold=True)
+        if draw.textlength(ar(BRIEF_TITLE)[0], font=f_title, **kw) <= max_w:
+            break
+        title_size -= 2
+    rtl((right, 262 + (64 - title_size) // 3), BRIEF_TITLE, f_title, TEXT)
 
-    y = 470
-    for i, story in enumerate(stories, 1):
-        if i > 1:
-            draw.line([(margin, y), (right, y)], fill=(58, 66, 90), width=2)
-            y += 54
+    TOP, BOTTOM = 400, H - 180
+    available = BOTTOM - TOP
 
-        rtl((right, y), str(i).translate(AR_DIGITS), f_num, ACCENT)
-        text_right = right - 78
-        text_w = max_w - 78
+    shown = list(stories)
+    scale, blocks = 1.0, None
+    while blocks is None:
+        for candidate in (1.0, 0.96, 0.92, 0.88):
+            trial_blocks, height = _brief_layout(draw, shown, candidate, max_w, kw)
+            if height <= available:
+                scale, blocks = candidate, trial_blocks
+                break
+        if blocks is None:
+            if len(shown) > 2:
+                shown = shown[:-1]
+                print(f"  ! content too long — trimmed to {len(shown)} stories")
+            else:
+                print("  ! content overflows even at minimum size")
+                scale, blocks = 0.88, trial_blocks
+    if scale < 1.0:
+        print(f"  layout scaled to {int(scale * 100)}% to fit")
 
-        for line in _wrap(draw, story["headline"], f_head, text_w, kw):
-            rtl((text_right, y), line, f_head, TEXT)
-            y += 64
-
-        y += 16
-        for line in _wrap(draw, story["summary"], f_body, text_w, kw):
-            rtl((text_right, y), line, f_body, (206, 212, 228))
-            y += 50
-
-        y += 10
-        rtl((text_right, y), story.get("source", ""), f_foot, MUTED)
-        y += 68
-
+    y = TOP
+    for block in blocks:
+        if block["kind"] == "gap":
+            y += block["lh"]
+            continue
+        if block["kind"] == "head" and block["first"]:
+            r = max(5, int(7 * scale))
+            draw.ellipse([right - 18, y + int(18 * scale),
+                          right - 18 + 2 * r, y + int(18 * scale) + 2 * r],
+                         fill=ACCENT)
+        rtl((right - block["indent"], y), block["text"], block["font"], block["fill"])
+        y += block["lh"]
 
     img.save(out_path, "PNG", optimize=True)
     return out_path
@@ -430,6 +495,32 @@ def render_brief(stories, out_path):
 # --------------------------------------------------------------------------
 # 4. Post
 # --------------------------------------------------------------------------
+
+def _git(*args):
+    import subprocess as _sp
+    _sp.run(["git", *args], check=True, capture_output=True)
+
+
+def _git_identity():
+    _git("config", "user.name", "news-bot")
+    _git("config", "user.email", "news-bot@users.noreply.github.com")
+
+
+def commit_and_push(path, message):
+    """Commit one file. Used for the card and for the posted-history state."""
+    import subprocess as _sp
+    try:
+        _git_identity()
+        _git("add", str(path))
+        try:
+            _git("commit", "-m", message)
+        except _sp.CalledProcessError:
+            return                      # nothing changed
+        _git("pull", "--rebase", "--autostash")
+        _git("push")
+    except Exception as exc:
+        print(f"  ! couldn't commit {path}: {exc}")
+
 
 def publish_via_github(png_path):
     import shutil
@@ -524,14 +615,18 @@ def main():
     print(f"    {len(items)} unique recent items")
 
     print("2/4 summarizing...")
-    result = summarize(items)
+    posted = load_posted()
+    if posted:
+        print(f"    skipping {len(posted)} stories posted in the last "
+              f"{REMEMBER_DAYS} days")
+    result = summarize(items, [e["headline"] for e in posted])
     stories = result["stories"][:STORIES_PER_DAY]
     caption = result.get("caption", "موجز اليوم")
     for s in stories:
         print(f"    • {s['headline']}  ({s.get('source')})")
 
     print("3/4 rendering card...")
-    stamp = datetime.now().strftime("%Y-%m-%d")
+    stamp = datetime.now().strftime("%Y-%m-%d-%H%M")
     card = render_brief(stories, OUT_DIR / f"{stamp}-brief.png")
 
     if DRY_RUN:
@@ -543,7 +638,13 @@ def main():
         raise SystemExit("AYRSHARE_API_KEY is not set")
     url = publish_via_github(card) if MEDIA_MODE == "github" else upload_media(card)
     print(f"    media: {url}")
-    print("   ", post_story(caption, [url]))
+    response = post_story(caption, [url])
+    print("   ", response)
+
+    # only record them as covered once the post actually went out
+    if str(response.get("status", "")).lower() != "error":
+        state = save_posted(posted, stories)
+        commit_and_push(state, f"posted {stamp}")
 
 
 if __name__ == "__main__":
