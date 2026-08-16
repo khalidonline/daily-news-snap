@@ -18,7 +18,7 @@ import re
 import urllib.parse
 import urllib.request
 import urllib.error
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -28,9 +28,127 @@ from news_bot import (
     W, H, BG_TOP, BG_BOTTOM, ACCENT, TEXT, MUTED, AR_DIGITS,
     ar, load_font, _wrap,
     publish_via_github, upload_media, post_story,
+    fetch_headlines, commit_and_push,
 )
 
 TOPIC = os.getenv("TOPIC", "").strip()
+TOPICS_FILE = Path(os.getenv("TOPICS_FILE", "topics.txt"))
+
+
+def load_topics():
+    """Topics from topics.txt, ignoring blanks and # comments."""
+    try:
+        lines = TOPICS_FILE.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return []
+    return [ln.strip() for ln in lines
+            if ln.strip() and not ln.strip().startswith("#")]
+
+
+USED_FILE = Path("state/topics_used.json")
+COOLDOWN_DAYS = int(os.getenv("COOLDOWN_DAYS", "21"))
+HARD_COOLDOWN_DAYS = int(os.getenv("HARD_COOLDOWN_DAYS", "5"))
+SELECT_MODEL = os.getenv("SELECT_MODEL", "claude-sonnet-5")
+
+
+def load_used():
+    """Topics covered recently, so the picker doesn't repeat itself."""
+    try:
+        data = json.loads(USED_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    cutoff = (datetime.now() - timedelta(days=COOLDOWN_DAYS)).isoformat()
+    return [e for e in data if e.get("at", "") >= cutoff]
+
+
+def save_used(previous, topic):
+    USED_FILE.parent.mkdir(parents=True, exist_ok=True)
+    entries = previous + [{"topic": topic, "at": datetime.now().isoformat()}]
+    USED_FILE.write_text(json.dumps(entries, ensure_ascii=False, indent=1),
+                         encoding="utf-8")
+    return USED_FILE
+
+
+SELECT_PROMPT = """أنت محرر تختار موضوع اليوم لموجز يُنشر على سناب شات لجمهور سعودي.
+
+ستصلك قائمة مواضيع مرقّمة، وعناوين أخبار الأمس. اختر الموضوع الأكثر ارتباطاً \
+بما يشغل الناس الآن بناءً على تلك العناوين.
+
+معايير الاختيار:
+- الموضوع الذي تلمسه أخبار الأمس مباشرة يسبق غيره.
+- الموضوع الذي يجيب على سؤال يطرحه الناس بعد قراءة تلك الأخبار.
+- إن لم يرتبط أي موضوع بالأخبار، اختر الأكثر أهمية للقارئ السعودي عموماً.
+- المواضيع في قائمة "استُخدمت مؤخراً" ليست ممنوعة: يجوز إعادة أحدها إذا كانت \
+أخبار الأمس تعيده بقوة إلى الواجهة وتضيف إليه جديداً. غير ذلك، فضّل موضوعاً جديداً.
+
+أجب بصيغة JSON فقط: {"index": رقم الموضوع, "why": "سبب الاختيار في جملة قصيرة"}"""
+
+
+def choose_topic():
+    """Pick the topic that best fits yesterday's news."""
+    topics = load_topics()
+    if not topics:
+        return ""
+
+    used = load_used()
+    hard_cutoff = (datetime.now() - timedelta(days=HARD_COOLDOWN_DAYS)).isoformat()
+    blocked = {e["topic"] for e in used if e.get("at", "") >= hard_cutoff}
+    recent = {e["topic"] for e in used} - blocked
+
+    available = [(i, t) for i, t in enumerate(topics) if t not in blocked]
+    if not available:
+        available = list(enumerate(topics))
+
+    print(f"    {len(available)} topics available "
+          f"({len(blocked)} on cooldown, {len(recent)} recently used)")
+    print("    reading yesterday's headlines to pick a topic...")
+    try:
+        items = fetch_headlines()
+    except Exception as exc:
+        print(f"  ! couldn't fetch headlines ({exc}) — falling back to rotation")
+        items = []
+
+    if not items or not ANTHROPIC_API_KEY:
+        index, topic = available[datetime.now().toordinal() % len(available)]
+        print(f"    fallback rotation -> {topic}")
+        return topic
+
+    listing = "\n".join(f"{i}. {t}" for i, t in available)
+    headlines = "\n".join(f"- {i['title']}" for i in items[:50])
+    recent_list = "\n".join(f"- {t}" for t in recent) or "لا يوجد"
+
+    payload = {
+        "model": SELECT_MODEL,
+        "max_tokens": 500,
+        "system": SELECT_PROMPT,
+        "messages": [{"role": "user", "content":
+                      f"المواضيع المتاحة:\n{listing}\n\n"
+                      f"عناوين الأمس:\n{headlines}\n\n"
+                      f"استُخدمت مؤخراً:\n{recent_list}"}],
+    }
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/messages",
+        data=json.dumps(payload).encode(),
+        headers={"content-type": "application/json",
+                 "x-api-key": ANTHROPIC_API_KEY,
+                 "anthropic-version": "2023-06-01"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=90) as resp:
+            data = json.loads(resp.read())
+        text = "".join(b.get("text", "") for b in data.get("content", [])
+                       if b.get("type") == "text")
+        start, end = text.find("{"), text.rfind("}")
+        choice = json.loads(text[start:end + 1])
+        topic = topics[int(choice["index"])]
+        print(f"    chose: {topic}")
+        print(f"    why:   {choice.get('why', '')}")
+        return topic
+    except Exception as exc:
+        print(f"  ! topic selection failed ({exc}) — falling back to rotation")
+        index, topic = available[datetime.now().toordinal() % len(available)]
+        print(f"    fallback rotation -> {topic}")
+        return topic
 TOPIC_MODEL = os.getenv("TOPIC_MODEL", "claude-opus-5")
 PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
@@ -296,16 +414,16 @@ POINTS = int(os.getenv("POINTS", "3"))
 # Research
 # --------------------------------------------------------------------------
 
-SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" تكتب موجزاً يُنشر على سناب شات.
+SYSTEM_PROMPT = """أنت تكتب موجزاً يُنشر على سناب شات لجمهور سعودي عام.
 
-سيعطيك المستخدم موضوعاً. ابحث في الإنترنت، ثم اكتب موجزاً بأسلوب أرقام: دقيق، \
-موثّق، خبري، بلا مبالغة — يفهمه قارئ ذكي لا يعرف الموضوع مسبقاً.
+سيعطيك المستخدم موضوعاً. ابحث في الإنترنت، ثم اكتب موجزاً يوقف القارئ عن التمرير: \
+دقيق وموثّق، لكن بلغة قريبة وسهلة — لا لغة تقارير ولا بيانات رسمية.
 
 الشكل المطلوب:
 - title: عنوان لا يتجاوز ٤٥ حرفاً. يقول ما حدث، لا اسم الموضوع فقط. يجوز أن \
 يتضمن رقماً محورياً مع وحدته.
-- lead: جملة واحدة، لا تتجاوز ١٢٠ حرفاً، تلخّص الخلاصة الأهم. لو لم يقرأ \
-القارئ سوى هذه الجملة، ماذا يجب أن يعرف؟
+- lead: جملة واحدة، لا تتجاوز ١٢٠ حرفاً. اجعلها الجملة التي تجعل القارئ \
+يكمل: أهم ما في الموضوع، بصياغة تمسّه هو.
 - points: {n} نقاط. كل نقطة:
   - heading: ٣ إلى ٥ كلمات تقول فكرة، لا عنواناً محايداً.
     ✗ "تراجع بعد ذروة الصيف"   ✓ "الهدوء الصيفي لم يدم"
@@ -322,25 +440,20 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
 - source_url: رابط الخبر الرسمي الأدق الذي اعتمدت عليه (يفضَّل مصدر حكومي سعودي \
 مثل واس أو موقع الجهة المعنية). ضع الرابط كاملاً كما ظهر في البحث.
 
-قواعد الأسلوب — اكتب بأسلوب موقع "أرقام" الاقتصادي:
-- ابدأ الجملة بالجهة صاحبة الخبر: "أعلنت أرامكو"، "رفع صندوق النقد توقعاته".
-- انسب كل رقم لمصدره داخل الجملة نفسها: "وفق بيانات درويري"، "بحسب بيان الشركة".
-- جمل خبرية مكتملة ومترابطة. لا عبارات مبتورة ولا أسلوب برقيات.
-- استخدم المصطلح الاقتصادي الدقيق كما هو، واشرحه بثلاث كلمات إن كان غير شائع.
-- ممنوع الصفات الترويجية: هائل، مذهل، ضخم، تاريخي، غير مسبوق.
-- ممنوع لغة الإثارة والتعجب. الخبر يقنع بدقته لا بنبرته.
+قواعد الأسلوب — قريبة من الناس، لا رسمية:
+- ابدأ بما يهم القارئ شخصياً، لا بالجهة التي أصدرت الخبر.
+  ✗ "أعلنت الهيئة العامة للعقار تعديلاً على..."  ✓ "إيجارك قد يتغير السنة الجاية، وهذا السبب"
+- خاطب القارئ مباشرة حين يناسب: "إذا كنت تفكر في شراء سيارة الآن..."
+- جمل قصيرة. تجنّب التراكيب الطويلة والمبني للمجهول.
+- استخدم كلمات الحياة اليومية بدل المصطلح المؤسسي: "تكلفة" لا "الكلفة التشغيلية".
+- فصحى مبسّطة قريبة من كلام الناس في السعودية. ليست عامية كاملة، وليست لغة بيانات.
+- يجوز أن يكون العنوان سؤالاً أو مفارقة تجذب الانتباه — بشرط أن يكون صادقاً ولا يبالغ.
+- ممنوع الحشو: "تجدر الإشارة"، "في هذا السياق"، "من الجدير بالذكر"، "وفي الختام".
+- ممنوع الصفات الترويجية: هائل، مذهل، ضخم، تاريخي، غير مسبوق، ثورة.
 - لا تبدأ أكثر من نقطة واحدة برقم. الأرقام تدعم الفكرة ولا تحل محلها.
-- كل نقطة تضيف زاوية جديدة. لا تكرر الفكرة بأرقام مختلفة.
-- النقطة الأخيرة تذكر الأثر المتوقع على السوق أو المستثمر أو المستورد.
+- كل نقطة تضيف زاوية جديدة، والأخيرة تجيب: ماذا يعني هذا لي؟
+- انسب كل رقم لمصدره بعبارة قصيرة: "وفق أرقام وزارة..."، "بحسب تقرير...".
 - لا تستخدم مصطلحاً مهنياً دون شرحه في نفس الجملة.
-
-قواعد الأرقام:
-- كل رقم تليه وحدته مباشرة: "4,547 نقطة" أو "9,400 دولار للحاوية" أو "14%".
-- عند ذكر مؤشر لأول مرة عرّفه في ٣ كلمات: "مؤشر درويري لأسعار الحاويات".
-- كل رقم يحتاج تاريخاً أو فترة: "في 23 يوليو" أو "خلال أغسطس".
-- إذا لم تعرف وحدة الرقم أو تاريخه بيقين، احذفه.
-- اكتب النطاقات بالكلمات: "من 8700 إلى 9400 دولار" وليس "8700-9400".
-- لا تستخدم الشرطة بين رقمين أو اسمين (اكتب "شنغهاي إلى نيويورك").
 
 قواعد اللهجة والمصطلح — اكتب بلسان سعودي رسمي:
 - قل "المملكة" لا "السعودية" في كل مرة، و"المواطنين" و"المقيمين" حين يلزم.
@@ -350,7 +463,7 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
 - العملة ريال، واذكر "مليار ريال" لا "مليار دولار" إن كان المصدر بالريال.
 - تجنّب التعابير المصرية أو الشامية أو المترجمة حرفياً عن الإنجليزية.
 - التواريخ ميلادية بالأشهر العربية المعروفة في المملكة: يناير، فبراير، مارس...
-- نبرة رصينة قريبة من نشرات "أرقام" و"واس": خبرية، بلا حماس، بلا مبالغة.
+- استخدم المفردات السعودية المألوفة، وتجنّب التعابير المصرية أو الشامية.
 
 ممنوع منعاً باتاً:
 - أي وسوم أو أقواس مراجع داخل النص مثل <cite> أو [1] أو (المصدر: ...).
@@ -361,9 +474,9 @@ SYSTEM_PROMPT = """أنت محرر اقتصادي في موقع "أرقام" ت�
 - إذا تضاربت المعلومات، قل ذلك واذكر التقديرين.
 - إذا لم تجد ما يكفي، اجعل title هو "لا توجد معلومات كافية" واشرح السبب.
 
-قبل أن تجيب، اسأل نفسك: هل يمكن نشر هذا النص في "أرقام" كما هو؟ هل كل رقم \
-منسوب لمصدره وله وحدة وتاريخ؟ هل خلا النص من الصفات الترويجية؟ إن كان الجواب \
-لا، أعد الكتابة.
+قبل أن تجيب، اقرأه كأنك رأيته في سناب شات: هل توقفت عنده أم مررت؟ هل يبدو \
+كلاماً بشرياً أم بياناً رسمياً؟ وهل كل رقم منسوب لمصدره وله وحدة وتاريخ؟ \
+إن كان أحد الجوابين لا، أعد الكتابة.
 
 أجب بصيغة JSON فقط، بدون markdown وبدون مقدمة:
 {{"title": "...", "lead": "...", "points": [{{"heading": "...", "text": "..."}}], \
@@ -670,19 +783,20 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 # --------------------------------------------------------------------------
 
 def main():
-    if not TOPIC:
-        raise SystemExit("TOPIC is not set — pass a topic to research")
+    topic = TOPIC or choose_topic()
+    if not topic:
+        raise SystemExit(f"No topic given and none found in {TOPICS_FILE}")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"1/3 researching: {TOPIC}")
-    brief = research(TOPIC)
+    print(f"1/3 researching: {topic}")
+    brief = research(topic)
     print(f"    {brief['title']}")
     warn_about_bare_numbers(brief)
     for p in brief["points"]:
         print(f"    • {p['heading']}")
 
     print("2/3 rendering card...")
-    slug = re.sub(r"[^\w]+", "-", TOPIC, flags=re.UNICODE)[:40].strip("-")
+    slug = re.sub(r"[^\w]+", "-", topic, flags=re.UNICODE)[:40].strip("-")
     stamp = datetime.now().strftime("%Y-%m-%d")
     queries = brief.get("image_queries", [])
     hero = OUT_DIR / "hero.jpg"
@@ -722,7 +836,12 @@ def main():
     print("3/3 posting to Snapchat...")
     url = publish_via_github(card) if MEDIA_MODE == "github" else upload_media(card)
     print(f"    media: {url}")
-    print("   ", post_story(brief.get("caption", TOPIC), [url]))
+    response = post_story(brief.get("caption", topic), [url])
+    print("   ", response)
+
+    if str(response.get("status", "")).lower() != "error":
+        used_file = save_used(load_used(), topic)
+        commit_and_push(used_file, f"topic: {slug}")
 
 
 if __name__ == "__main__":
