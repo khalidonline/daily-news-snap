@@ -40,7 +40,7 @@ FEEDS = [
     ("بي بي سي",     "https://feeds.bbci.co.uk/arabic/rss.xml"),
 ]
 
-STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "4"))
+STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "1"))
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "30"))
 MAX_HEADLINES_TO_MODEL = 60
 
@@ -55,11 +55,24 @@ CARDS_DIR = "cards"
 OUT_DIR = Path(os.getenv("OUT_DIR", "out"))
 W, H = 1080, 1920
 
-BG_TOP = (14, 17, 26)
-BG_BOTTOM = (28, 34, 52)
-ACCENT = (255, 215, 64)
-TEXT = (245, 246, 250)
-MUTED = (150, 158, 178)
+THEME = os.getenv("THEME", "dark").strip()          # dark | light
+
+if THEME == "light":
+    BG_TOP = (238, 232, 227)
+    BG_BOTTOM = (232, 225, 219)
+    ACCENT = (183, 28, 44)          # red, used sparingly
+    TEXT = (26, 24, 22)
+    MUTED = (140, 130, 122)
+    BODY = (58, 54, 50)
+    RULE = (206, 197, 189)
+else:
+    BG_TOP = (14, 17, 26)
+    BG_BOTTOM = (28, 34, 52)
+    ACCENT = (255, 215, 64)
+    TEXT = (245, 246, 250)
+    MUTED = (150, 158, 178)
+    BODY = (206, 212, 228)
+    RULE = (58, 66, 90)
 
 USER_AGENT = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
@@ -70,6 +83,9 @@ AR_DAYS = ["الاثنين", "الثلاثاء", "الأربعاء", "الخمي
 AR_DIGITS = str.maketrans("0123456789", "0123456789")   # digits stay Latin
 
 BRIEF_TITLE = os.getenv("BRIEF_TITLE", "ملخص تنفيذي - أخبار السعودية")
+BRAND = os.getenv("BRAND", "ملخص تنفيذي")
+PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
+HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
 
 STATE_FILE = Path("state/posted.json")
 REMEMBER_DAYS = int(os.getenv("REMEMBER_DAYS", "3"))
@@ -305,14 +321,19 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 
 لكل خبر اكتب:
 - headline: عنوان لا يتجاوز ٥٥ حرفاً، واضح ومباشر، بدون نقطة في نهايته
-- summary: جملتان قصيرتان، لا تتجاوزان ١٥٠ حرفاً، بلغة عربية فصحى بسيطة
+- summary: جملتان قصيرتان، لا تتجاوزان ١٥٠ حرفاً، بلغة عربية بسيطة
+- takeaway: جملة واحدة قصيرة تقول للقارئ لماذا يهمه هذا الخبر (حتى ٩٠ حرفاً)
 - source: اسم المصدر كما ورد لك
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 
-واكتب أيضاً caption واحداً: لا يتجاوز ١٢٠ حرفاً، نص المنشور المرافق.
+واكتب أيضاً:
+- caption: نص المنشور المرافق، لا يتجاوز ١٢٠ حرفاً
+- image_queries: ثلاث عبارات إنجليزية للبحث عن صورة للخبر الأول، مرتبة من الأدق
+  إلى الأعم. كل عبارة تصف مشهداً ملموساً يمكن تصويره، لا فكرة مجردة.
+  ✓ ["riyadh city skyline", "desert heat wave", "thermometer summer"]
 
 أجب بصيغة JSON فقط. بدون markdown وبدون أي مقدمة:
-{{"caption": "...", "stories": [{{"headline": "...", "summary": "...", "source": "..."}}]}}"""
+{{"caption": "...", "image_queries": ["...", "...", "..."], "stories": [{{"headline": "...", "summary": "...", "takeaway": "...", "source": "..."}}]}}"""
 
 
 def summarize(items, already_posted=()):
@@ -470,14 +491,15 @@ def _brief_layout(draw, stories, scale, max_w, kw):
         else:
             add("gap", "", None, int(30 * scale), None, 0)
 
+        head_fill = TEXT if THEME == "light" else ACCENT
         first = True
         for line in _wrap(draw, story["headline"], f_head, max_w - 44, kw):
-            add("head", line, f_head, lh_head, ACCENT, 44, first)
+            add("head", line, f_head, lh_head, head_fill, 44, first)
             first = False
 
         add("gap", "", None, int(14 * scale), None, 0)
         for line in _wrap(draw, story["summary"], f_body, max_w - 44, kw):
-            add("body", line, f_body, lh_body, (206, 212, 228), 44)
+            add("body", line, f_body, lh_body, BODY, 44)
 
     return blocks, height
 
@@ -537,7 +559,7 @@ def render_brief(stories, out_path):
             y += block["lh"]
             continue
         if block["kind"] == "rule":
-            draw.line([(margin, y), (right, y)], fill=(58, 66, 90), width=2)
+            draw.line([(margin, y), (right, y)], fill=RULE, width=2)
             y += block["lh"]
             continue
         if block["kind"] == "head" and block["first"]:
@@ -580,6 +602,354 @@ def commit_and_push(path, message):
         _git("push")
     except Exception as exc:
         print(f"  ! couldn't commit {path}: {exc}")
+
+
+IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "none").strip()
+# openverse (free, no key) | article (publisher photo) | stock (Pexels, needs key) | none
+
+OG_IMAGE_RE = re.compile(
+    r'<meta[^>]+(?:property|name)=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
+    re.IGNORECASE)
+OG_IMAGE_ALT_RE = re.compile(
+    r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property|name)=["\']og:image["\']',
+    re.IGNORECASE)
+
+
+def fetch_article_photo(url, out_path):
+    """Pull the lead photo an article publishes in its og:image tag.
+
+    IMPORTANT: that photo belongs to the publisher. Only use this for sources
+    whose terms permit republication, and always show the credit the card
+    renders from the returned domain.
+    Returns (path, domain) or (None, None).
+    """
+    if not url:
+        return None, None
+
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            html = resp.read(400_000).decode("utf-8", "ignore")
+    except Exception as exc:
+        print(f"  ! couldn't read {url}: {exc}")
+        return None, None
+
+    match = OG_IMAGE_RE.search(html) or OG_IMAGE_ALT_RE.search(html)
+    if not match:
+        print(f"  ! no og:image on {url}")
+        return None, None
+
+    img_url = urllib.parse.urljoin(url, match.group(1))
+    domain = urllib.parse.urlparse(url).netloc.replace("www.", "")
+    try:
+        req = urllib.request.Request(img_url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = resp.read()
+        if len(data) < 15_000:
+            print("  ! og:image too small — probably a logo, skipping")
+            return None, None
+        Path(out_path).write_bytes(data)
+    except Exception as exc:
+        print(f"  ! photo download failed: {exc}")
+        return None, None
+
+    print(f"    photo: article image from {domain}")
+    return str(out_path), domain
+
+
+DOMAIN_CREDITS = {
+    "spa.gov.sa": "واس",
+    "argaam.com": "أرقام",
+    "aawsat.com": "الشرق الأوسط",
+    "alarabiya.net": "العربية",
+    "okaz.com.sa": "عكاظ",
+    "alyaum.com": "اليوم",
+}
+
+
+def _openverse_search(query, page_size=12):
+    """Search Openverse for openly licensed images. No API key needed.
+
+    Anonymous access is rate limited, so a 429 here is normal on repeat runs.
+    """
+    url = ("https://api.openverse.org/v1/images/"
+           f"?q={urllib.parse.quote(query)}&page_size={page_size}"
+           "&license_type=commercial,modification&mature=false")
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            results = json.loads(resp.read()).get("results", [])
+        print(f"    Openverse: {len(results)} results for {query!r}")
+        return results
+    except urllib.error.HTTPError as exc:
+        if exc.code == 429:
+            print("  ! Openverse rate limited (anonymous quota) — try again later")
+        else:
+            print(f"  ! Openverse HTTP {exc.code} for {query!r}")
+        return []
+    except Exception as exc:
+        print(f"  ! Openverse error for {query!r}: {exc}")
+        return []
+
+
+def _ov_score(item, terms):
+    text = " ".join(filter(None, [
+        item.get("title") or "",
+        " ".join(t.get("name", "") for t in item.get("tags") or []),
+    ])).lower()
+    if not text:
+        return 0
+    hits = sum(1 for t in terms if t in text)
+    wide = (item.get("width") or 0) >= (item.get("height") or 1)
+    return hits * 10 + (3 if wide else 0)
+
+
+def fetch_openverse_photo(queries, out_path):
+    """Fetch an openly licensed photo. Returns (path, credit) or (None, None).
+
+    Only commercial-use, modification-allowed licences are requested, and the
+    creator and licence are returned so the card can credit them.
+    """
+    if isinstance(queries, str):
+        queries = [queries]
+    queries = [q.strip() for q in queries if q and q.strip()]
+    if not queries:
+        return None, None
+
+    candidates = []
+    for query in queries:
+        terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
+        results = _openverse_search(query)
+        if not results:
+            continue
+        for item in results:
+            candidates.append((_ov_score(item, terms), query, item))
+        if any(c[0] >= 10 for c in candidates):
+            break
+
+    if not candidates:
+        print("  ! no openly licensed photo found")
+        return None, None
+
+    candidates.sort(key=lambda c: -c[0])
+
+    # work down the ranked list — one dead host shouldn't cost us the photo
+    data, best, best_score, best_query = None, None, 0, None
+    for score, query, item in candidates[:5]:
+        for field in ("url", "thumbnail"):
+            link = item.get(field)
+            if not link:
+                continue
+            try:
+                req = urllib.request.Request(link,
+                                             headers={"User-Agent": USER_AGENT})
+                with urllib.request.urlopen(req, timeout=45) as resp:
+                    payload = resp.read()
+            except Exception as exc:
+                print(f"  ! {field} failed ({exc}) — trying the next image")
+                continue
+            if len(payload) < 8_000:
+                continue
+            data, best, best_score, best_query = payload, item, score, query
+            if field == "thumbnail":
+                print("    (using Openverse thumbnail — original host refused)")
+            break
+        if data:
+            break
+
+    if data is None:
+        print("  ! every Openverse candidate failed to download")
+        return None, None
+    Path(out_path).write_bytes(data)
+
+    creator = (best.get("creator") or "").strip() or best.get("source", "Openverse")
+    licence = (best.get("license") or "").upper()
+    version = best.get("license_version") or ""
+    credit = f"{creator} / CC {licence} {version}".strip()
+
+    print(f"    photo: {best.get('title') or '(untitled)'} — {credit} "
+          f"[{best_query}]")
+    if best_score < 10:
+        print("  ! weak match — the image may be only loosely related")
+    return str(out_path), credit
+
+
+def _pexels_search(query, per_page=12):
+    url = (f"https://api.pexels.com/v1/search?per_page={per_page}"
+           f"&orientation=landscape&query={urllib.parse.quote(query)}")
+    req = urllib.request.Request(url, headers={"Authorization": PEXELS_API_KEY})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read()).get("photos", [])
+    except urllib.error.HTTPError as exc:
+        print(f"  ! Pexels {exc.code} for {query!r}")
+        return []
+    except Exception as exc:
+        print(f"  ! Pexels error for {query!r}: {exc}")
+        return []
+
+
+def _score(photo, terms):
+    """How well does this photo's own description match what we asked for?"""
+    alt = (photo.get("alt") or "").lower()
+    if not alt:
+        return 0
+    hits = sum(1 for t in terms if t in alt)
+    # a short, on-point caption beats a long one that happens to contain the word
+    return hits * 10 - len(alt.split()) * 0.05
+
+
+def fetch_photo(queries, out_path):
+    """Fetch a licence-clear photo from Pexels, trying each query in turn and
+    picking the result whose description best matches. Returns a path or None.
+
+    Pexels images are free to use commercially without attribution. Never pull
+    photos from news sites — those are licensed to the publisher.
+    """
+    if not PEXELS_API_KEY:
+        print("  ! PEXELS_API_KEY not set — rendering without a photo")
+        return None
+
+    if isinstance(queries, str):
+        queries = [queries]
+    queries = [q.strip() for q in queries if q and q.strip()]
+    if not queries:
+        return None
+
+    best, best_score, best_query = None, -999, None
+    for query in queries:
+        terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
+        photos = _pexels_search(query)
+        if not photos:
+            print(f"    no results for {query!r}")
+            continue
+
+        for photo in photos:
+            score = _score(photo, terms)
+            if score > best_score:
+                best, best_score, best_query = photo, score, query
+
+        # a clear match on an early (more specific) query wins outright
+        if best_score >= 10:
+            break
+
+    if best is None:
+        print("  ! no photo found — rendering without one")
+        return None
+
+    if best_score < 10:
+        print(f"  ! weak photo match — using a generic image for {best_query!r}")
+
+    src = best["src"].get("large2x") or best["src"]["large"]
+    try:
+        with urllib.request.urlopen(src, timeout=60) as resp:
+            Path(out_path).write_bytes(resp.read())
+    except Exception as exc:
+        print(f"  ! photo download failed: {exc}")
+        return None
+
+    print(f"    photo: {best.get('alt') or '(no description)'} "
+          f"— {best.get('photographer')} / Pexels [{best_query}]")
+    return str(out_path)
+MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "6"))
+MAX_TOKENS = int(os.getenv("MAX_TOKENS", "16000"))
+POINTS = int(os.getenv("POINTS", "3"))
+
+
+# --------------------------------------------------------------------------
+# Light "story" card — cream background, one photo, very little text
+# --------------------------------------------------------------------------
+
+def _rounded(img, radius):
+    """Round the corners of a photo, as in the reference layout."""
+    mask = Image.new("L", img.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, *img.size], radius, fill=255)
+    out = Image.new("RGBA", img.size)
+    out.paste(img, (0, 0), mask)
+    return out
+
+
+def render_story(brief, out_path, photo_path=None, photo_credit=None):
+    """Light card: photo, a short paragraph, one line in red. Centred."""
+    bg, ink, red, muted = BG_TOP, TEXT, ACCENT, MUTED
+
+    img = Image.new("RGB", (W, H), bg)
+    draw = ImageDraw.Draw(img)
+
+    margin = 96
+    max_w = W - 2 * margin
+    centre = W // 2
+    _, kw = ar("\u0645")
+
+    def mid(xy, text, font, fill):
+        shaped, k = ar(text)
+        draw.text(xy, shaped, font=font, fill=fill, anchor="ma", **k)
+
+    y = 150
+
+    f_brand = load_font(30, bold=True)
+    mid((centre, y), BRAND, f_brand, muted)
+    y += 90
+
+    if photo_path:
+        try:
+            photo = Image.open(photo_path).convert("RGB")
+            box_w = W - 2 * margin
+            box_h = int(box_w * 0.78)
+            pw, ph = photo.size
+            if pw / ph > box_w / box_h:
+                new_w = int(ph * box_w / box_h)
+                photo = photo.crop(((pw - new_w) // 2, 0,
+                                    (pw - new_w) // 2 + new_w, ph))
+            else:
+                new_h = int(pw * box_h / box_w)
+                photo = photo.crop((0, 0, pw, new_h))
+            photo = photo.resize((box_w, box_h), Image.LANCZOS)
+            rounded = _rounded(photo, 36)
+            img.paste(rounded, (margin, y), rounded)
+            y += box_h + 70
+        except Exception as exc:
+            print(f"  ! couldn't place photo: {exc}")
+
+    f_title = load_font(60, bold=True)
+    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
+        mid((centre, y), line, f_title, ink)
+        y += 78
+    y += 30
+
+    f_body = load_font(44)
+    points = brief.get("points", [])
+    body = brief.get("body")
+    if body is None:
+        body = brief.get("lead", "").strip()
+        if points:
+            body = f"{body} {points[0].get('text', '').strip()}".strip()
+    body = body.strip()
+
+    for line in _wrap(draw, body, f_body, max_w, kw):
+        mid((centre, y), line, f_body, ink)
+        y += 64
+    y += 44
+
+    punch = brief.get("punch")
+    if punch is None:
+        punch = points[-1].get("text", "") if len(points) > 1 else ""
+    punch = punch.strip()
+
+    f_punch = load_font(44, bold=True)
+    for line in _wrap(draw, punch, f_punch, max_w, kw):
+        mid((centre, y), line, f_punch, red)
+        y += 66
+
+    f_foot = load_font(26)
+    names = "\u060c ".join(brief.get("sources", [])[:3])
+    if photo_credit:
+        names = f"{names} \u2014 {photo_credit}" if names else photo_credit
+    if names:
+        mid((centre, H - 130), names[:90], f_foot, muted)
+
+    img.save(out_path, "PNG", optimize=True)
+    return out_path
 
 
 def publish_via_github(png_path):
@@ -694,7 +1064,29 @@ def main():
 
     print("3/4 rendering card...")
     stamp = datetime.now().strftime("%Y-%m-%d-%H%M")
-    card = render_brief(stories, OUT_DIR / f"{stamp}-brief.png")
+
+    if len(stories) == 1:
+        story = stories[0]
+        photo, credit = None, None
+        if IMAGE_SOURCE != "none":
+            photo, credit = fetch_openverse_photo(
+                result.get("image_queries", []), OUT_DIR / "hero.jpg")
+            if photo is None and PEXELS_API_KEY:
+                print("    falling back to Pexels...")
+                photo = fetch_photo(result.get("image_queries", []),
+                                    OUT_DIR / "hero.jpg")
+                credit = "Pexels" if photo else None
+            if photo is None:
+                print("  ! no photo found — card will be text only")
+
+        card = render_story({
+            "title": story["headline"],
+            "body": story.get("summary", ""),
+            "punch": story.get("takeaway", ""),
+            "sources": [story.get("source", "")],
+        }, OUT_DIR / f"{stamp}-brief.png", photo, credit)
+    else:
+        card = render_brief(stories, OUT_DIR / f"{stamp}-brief.png")
 
     if DRY_RUN:
         print(f"4/4 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
