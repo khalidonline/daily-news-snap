@@ -60,18 +60,20 @@ THEME = os.getenv("THEME", "dark").strip()          # dark | light
 if THEME == "light":
     BG_TOP = (238, 232, 227)
     BG_BOTTOM = (232, 225, 219)
-    ACCENT = (183, 28, 44)          # red, used sparingly
-    TEXT = (26, 24, 22)
+    ACCENT = (183, 28, 44)          # red, only for the takeaway line
+    BRAND_INK = (13, 35, 66)        # navy, for the bar and the label
+    TEXT = (24, 56, 97)             # blue, headline and body
+    BODY = (40, 72, 112)
     MUTED = (140, 130, 122)
-    BODY = (58, 54, 50)
     RULE = (206, 197, 189)
 else:
     BG_TOP = (14, 17, 26)
     BG_BOTTOM = (28, 34, 52)
     ACCENT = (255, 215, 64)
+    BRAND_INK = (255, 215, 64)
     TEXT = (245, 246, 250)
-    MUTED = (150, 158, 178)
     BODY = (206, 212, 228)
+    MUTED = (150, 158, 178)
     RULE = (58, 66, 90)
 
 USER_AGENT = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
@@ -279,7 +281,7 @@ def fetch_headlines():
 
 SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُنشر على سناب شات.
 
-ستصلك عناوين اليوم. اختر {n} أخبار مهمة، بأولوية للسعودية. المعيار صارم: \
+ستصلك عناوين اليوم. اختر {n} أخبار سعودية مهمة فقط. المعيار صارم: \
 الخبر الكبير الذي يستحق أن يتوقف له القارئ، لا مجرد خبر اليوم.
 
 اختر فقط ما يستوفي واحداً من هذه على الأقل:
@@ -303,20 +305,13 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 الأولوية عند الاختيار: القرار الرسمي أولاً، ثم الأثر على أكبر عدد من الناس، \
 ثم حجم الرقم.
 
-ترتيب الاختيار — اتبعه بهذا الترتيب:
-1. ابدأ بالأخبار السعودية المهمة، وخذ منها كل ما يستوفي المعيار.
-2. إن لم تكتمل {n}، أضف الأخبار الإقليمية أو العالمية المرتبطة مباشرة بالمملكة: \
-قرار يمسها، اتفاقية معها، أسواق النفط، الحج والعمرة، استثمارات سعودية في الخارج، \
-أو قرار دولي يؤثر على الاقتصاد السعودي.
-3. إن لم تكتمل بعد، أضف أهم أخبار الشرق الأوسط.
+النطاق: السعودية فقط. الخبر يجب أن يقع داخل المملكة أو يخصّها مباشرة \
+(قرار حكومي سعودي، جهة سعودية، سوق سعودي، حدث على أرض المملكة).
 
-استبعد الأخبار العالمية التي لا صلة لها بالمملكة ولا بالشرق الأوسط، مهما كانت \
-كبيرة. النطاق هو: السعودية، ثم ما يمسّها، ثم المنطقة — ولا شيء خارج ذلك.
+استبعد كل ما عدا ذلك: الأخبار الإقليمية والعالمية التي لا تخصّ المملكة \
+مباشرة، مهما كانت كبيرة.
 
-يجب أن تعيد {n} أخبار بالضبط. المعيار يبقى صارماً داخل كل مستوى: وسّع النطاق \
-الجغرافي داخل هذه الحدود، ولا تخفض مستوى الأهمية.
-
-رتّب الأخبار في القائمة: السعودية أولاً، ثم المرتبطة بها، ثم الإقليمية.
+يجب أن تعيد {n} خبراً. اختر الأهم والأكبر أثراً على الناس داخل المملكة.
 لا تختر خبرين عن الحدث نفسه.
 
 لكل خبر اكتب:
@@ -872,6 +867,7 @@ def _rounded(img, radius):
 def render_story(brief, out_path, photo_path=None, photo_credit=None):
     """Light card: photo, a short paragraph, one line in red. Centred."""
     bg, ink, red, muted = BG_TOP, TEXT, ACCENT, MUTED
+    body_ink = BODY
 
     img = Image.new("RGB", (W, H), bg)
     draw = ImageDraw.Draw(img)
@@ -881,15 +877,29 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     centre = W // 2
     _, kw = ar("\u0645")
 
+    right = W - margin
+
     def mid(xy, text, font, fill):
         shaped, k = ar(text)
         draw.text(xy, shaped, font=font, fill=fill, anchor="ma", **k)
 
-    y = 150
+    def rtl(xy, text, font, fill):
+        shaped, k = ar(text)
+        draw.text(xy, shaped, font=font, fill=fill, anchor="ra", **k)
 
-    f_brand = load_font(30, bold=True)
-    mid((centre, y), BRAND, f_brand, muted)
-    y += 90
+    # header: short bar on the right, label beneath it
+    y = 170
+    draw.rectangle([right - 110, y, right, y + 10], fill=BRAND_INK)
+    f_brand = load_font(32, bold=True)
+    rtl((right, y + 46), BRAND, f_brand, BRAND_INK)
+    y += 150
+
+    # headline, centred, above the photo
+    f_title = load_font(60, bold=True)
+    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
+        mid((centre, y), line, f_title, ink)
+        y += 78
+    y += 46
 
     if photo_path:
         try:
@@ -907,15 +917,9 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
             photo = photo.resize((box_w, box_h), Image.LANCZOS)
             rounded = _rounded(photo, 36)
             img.paste(rounded, (margin, y), rounded)
-            y += box_h + 70
+            y += box_h + 64
         except Exception as exc:
             print(f"  ! couldn't place photo: {exc}")
-
-    f_title = load_font(60, bold=True)
-    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
-        mid((centre, y), line, f_title, ink)
-        y += 78
-    y += 30
 
     f_body = load_font(44)
     points = brief.get("points", [])
@@ -927,7 +931,7 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     body = body.strip()
 
     for line in _wrap(draw, body, f_body, max_w, kw):
-        mid((centre, y), line, f_body, ink)
+        mid((centre, y), line, f_body, body_ink)
         y += 64
     y += 44
 
