@@ -33,6 +33,17 @@ from news_bot import (
 
 TOPIC = os.getenv("TOPIC", "").strip()
 TOPICS_FILE = Path(os.getenv("TOPICS_FILE", "topics.txt"))
+VOICE_FILE = Path(os.getenv("VOICE_FILE", "voice.txt"))
+
+
+def load_voice():
+    """Sample lines showing the register to imitate. Empty file = no examples."""
+    try:
+        lines = VOICE_FILE.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return []
+    return [ln.strip() for ln in lines
+            if ln.strip() and not ln.strip().startswith("#")]
 
 
 def load_topics():
@@ -446,10 +457,12 @@ SYSTEM_PROMPT = """أنت تكتب موجزاً يُنشر على سناب شا�
 - خاطب القارئ مباشرة حين يناسب: "إذا كنت تفكر في شراء سيارة الآن..."
 - جمل قصيرة. تجنّب التراكيب الطويلة والمبني للمجهول.
 - استخدم كلمات الحياة اليومية بدل المصطلح المؤسسي: "تكلفة" لا "الكلفة التشغيلية".
-- فصحى مبسّطة قريبة من كلام الناس في السعودية. ليست عامية كاملة، وليست لغة بيانات.
+- إن وُجدت أمثلة نبرة في نهاية هذه التعليمات فهي المرجع الأول للمستوى اللغوي.
+  وإن لم توجد، فاكتب بفصحى مبسّطة قريبة من كلام الناس في السعودية.
 - يجوز أن يكون العنوان سؤالاً أو مفارقة تجذب الانتباه — بشرط أن يكون صادقاً ولا يبالغ.
 - ممنوع الحشو: "تجدر الإشارة"، "في هذا السياق"، "من الجدير بالذكر"، "وفي الختام".
 - ممنوع الصفات الترويجية: هائل، مذهل، ضخم، تاريخي، غير مسبوق، ثورة.
+- استخدم أفعالاً محايدة: تتغير، ترتفع، تنخفض، تزيد. وتجنّب الأفعال المبالِغة مثل: تقفز، تنهار، تشتعل، تتهاوى، تنفجر.
 - لا تبدأ أكثر من نقطة واحدة برقم. الأرقام تدعم الفكرة ولا تحل محلها.
 - كل نقطة تضيف زاوية جديدة، والأخيرة تجيب: ماذا يعني هذا لي؟
 - انسب كل رقم لمصدره بعبارة قصيرة: "وفق أرقام وزارة..."، "بحسب تقرير...".
@@ -543,12 +556,22 @@ def research(topic):
     searches = 0
     budget = MAX_TOKENS
 
+    system = SYSTEM_PROMPT.format(n=POINTS)
+    voice = load_voice()
+    if voice:
+        samples = "\n".join(f"- {v}" for v in voice[:15])
+        system += ("\n\nأمثلة على النبرة المطلوبة — احتذِ بمستواها اللغوي "
+                   "وإيقاعها وطريقة مخاطبتها للقارئ. لا تنسخ عباراتها ولا "
+                   "تستخدمها كما هي، بل اكتب بنفس الروح عن موضوعك:\n"
+                   f"{samples}")
+        print(f"    voice: {len(voice)} sample lines from {VOICE_FILE}")
+
     # pause_turn continuations plus up to one budget retry
     for _ in range(6):
         payload = {
             "model": TOPIC_MODEL,
             "max_tokens": budget,
-            "system": SYSTEM_PROMPT.format(n=POINTS),
+            "system": system,
             "messages": messages,
             "tools": [{
                 "type": "web_search_20250305",
