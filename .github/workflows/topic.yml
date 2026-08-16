@@ -1,16 +1,18 @@
 name: Topic brief to Snapchat
 
 on:
+  schedule:
+    - cron: "0 6 * * *"        # 09:00 KSA daily
   workflow_dispatch:
     inputs:
       topic:
-        description: "الموضوع — the topic to research"
+        description: "الموضوع — leave blank to use today's topic from topics.txt"
         type: string
-        required: true
+        required: false
       dry_run:
         description: "Render the card but don't post"
         type: boolean
-        default: true
+        default: false
       image_source:
         description: "Where the photo comes from"
         type: choice
@@ -45,6 +47,11 @@ jobs:
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           TOPIC: ${{ inputs.topic }}
+          TOPICS_FILE: "topics.txt"
+          COOLDOWN_DAYS: "21"
+          HARD_COOLDOWN_DAYS: "5"
+          SELECT_MODEL: "claude-sonnet-5"
+          LOOKBACK_HOURS: "30"
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
           IMAGE_SOURCE: ${{ inputs.image_source }}
