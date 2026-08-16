@@ -17,11 +17,11 @@ on:
         description: "Where the photo comes from"
         type: choice
         options:
-          - none
           - openverse
+          - none
           - article
           - stock
-        default: none
+        default: openverse
 
 permissions:
   contents: write
@@ -48,6 +48,10 @@ jobs:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           TOPIC: ${{ inputs.topic }}
           TOPICS_FILE: "topics.txt"
+          VOICE_FILE: "voice.txt"
+          THEME: "light"
+          BRAND: "ملخص تنفيذي"
+          FONT_FAMILY: "NotoNaskhArabic"
           COOLDOWN_DAYS: "21"
           HARD_COOLDOWN_DAYS: "5"
           SELECT_MODEL: "claude-sonnet-5"
@@ -55,7 +59,6 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
           IMAGE_SOURCE: ${{ inputs.image_source }}
-          FONT_FAMILY: "Almarai"
           POINTS: "3"
           MAX_SEARCHES: "6"
         run: python topic_bot.py
