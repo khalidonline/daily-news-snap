@@ -174,6 +174,17 @@ USER_AGENT = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
 KICKER = os.getenv("KICKER", "ملخص تنفيذي")
 
+THEME = os.getenv("THEME", "dark").strip()          # dark | light
+BRAND = os.getenv("BRAND", "ملخص تنفيذي")
+
+# light theme: cream background, black text, one red line for the takeaway
+LIGHT = {
+    "bg": (238, 232, 227),
+    "text": (26, 24, 22),
+    "accent": (183, 28, 44),
+    "muted": (140, 130, 122),
+}
+
 IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "none").strip()
 # openverse (free, no key) | article (publisher photo) | stock (Pexels, needs key) | none
 
@@ -813,6 +824,99 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 
 
 # --------------------------------------------------------------------------
+# Light "story" card — cream background, one photo, very little text
+# --------------------------------------------------------------------------
+
+def _rounded(img, radius):
+    """Round the corners of a photo, as in the reference layout."""
+    mask = Image.new("L", img.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, *img.size], radius, fill=255)
+    out = Image.new("RGBA", img.size)
+    out.paste(img, (0, 0), mask)
+    return out
+
+
+def render_story(brief, out_path, photo_path=None, photo_credit=None):
+    """Light card: photo, a short paragraph, one line in red. Centred."""
+    bg, ink = LIGHT["bg"], LIGHT["text"]
+    red, muted = LIGHT["accent"], LIGHT["muted"]
+
+    img = Image.new("RGB", (W, H), bg)
+    draw = ImageDraw.Draw(img)
+
+    margin = 96
+    max_w = W - 2 * margin
+    centre = W // 2
+    _, kw = ar("\u0645")
+
+    def mid(xy, text, font, fill):
+        shaped, k = ar(text)
+        draw.text(xy, shaped, font=font, fill=fill, anchor="ma", **k)
+
+    y = 150
+
+    f_brand = load_font(30, bold=True)
+    mid((centre, y), BRAND, f_brand, muted)
+    y += 90
+
+    if photo_path:
+        try:
+            photo = Image.open(photo_path).convert("RGB")
+            box_w = W - 2 * margin
+            box_h = int(box_w * 0.78)
+            pw, ph = photo.size
+            if pw / ph > box_w / box_h:
+                new_w = int(ph * box_w / box_h)
+                photo = photo.crop(((pw - new_w) // 2, 0,
+                                    (pw - new_w) // 2 + new_w, ph))
+            else:
+                new_h = int(pw * box_h / box_w)
+                photo = photo.crop((0, 0, pw, new_h))
+            photo = photo.resize((box_w, box_h), Image.LANCZOS)
+            rounded = _rounded(photo, 36)
+            img.paste(rounded, (margin, y), rounded)
+            y += box_h + 70
+        except Exception as exc:
+            print(f"  ! couldn't place photo: {exc}")
+
+    f_title = load_font(60, bold=True)
+    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
+        mid((centre, y), line, f_title, ink)
+        y += 78
+    y += 30
+
+    f_body = load_font(44)
+    body = brief.get("lead", "").strip()
+    points = brief.get("points", [])
+    if points:
+        body = f"{body} {points[0].get('text', '').strip()}".strip()
+
+    for line in _wrap(draw, body, f_body, max_w, kw):
+        mid((centre, y), line, f_body, ink)
+        y += 64
+    y += 44
+
+    punch = ""
+    if len(points) > 1:
+        punch = points[-1].get("text", "").strip()
+
+    f_punch = load_font(44, bold=True)
+    for line in _wrap(draw, punch, f_punch, max_w, kw):
+        mid((centre, y), line, f_punch, red)
+        y += 66
+
+    f_foot = load_font(26)
+    names = "\u060c ".join(brief.get("sources", [])[:3])
+    if photo_credit:
+        names = f"{names} \u2014 {photo_credit}" if names else photo_credit
+    if names:
+        mid((centre, H - 130), names[:90], f_foot, muted)
+
+    img.save(out_path, "PNG", optimize=True)
+    return out_path
+
+
+# --------------------------------------------------------------------------
 
 def main():
     topic = TOPIC or choose_topic()
@@ -859,7 +963,8 @@ def main():
         if photo is None:
             print("  ! no photo from any source — card will be text only")
 
-    card = render_topic(brief, OUT_DIR / f"{stamp}-{slug}.png", photo, credit)
+    renderer = render_story if THEME == "light" else render_topic
+    card = renderer(brief, OUT_DIR / f"{stamp}-{slug}.png", photo, credit)
 
     if DRY_RUN:
         print(f"3/3 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
