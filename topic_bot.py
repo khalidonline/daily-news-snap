@@ -48,12 +48,17 @@ def load_voice():
 
 def load_topics():
     """Topics from topics.txt, ignoring blanks and # comments."""
-    try:
-        lines = TOPICS_FILE.read_text(encoding="utf-8").splitlines()
-    except FileNotFoundError:
+    if not TOPICS_FILE.exists():
+        here = sorted(p.name for p in Path(".").iterdir() if p.is_file())
+        print(f"  ! {TOPICS_FILE} not found. Files here: {', '.join(here)}")
         return []
-    return [ln.strip() for ln in lines
-            if ln.strip() and not ln.strip().startswith("#")]
+    lines = TOPICS_FILE.read_text(encoding="utf-8").splitlines()
+    topics = [ln.strip() for ln in lines
+              if ln.strip() and not ln.strip().startswith("#")]
+    if not topics:
+        print(f"  ! {TOPICS_FILE} has {len(lines)} lines but none usable "
+              "— are they all comments?")
+    return topics
 
 
 USED_FILE = Path("state/topics_used.json")
