@@ -6,7 +6,7 @@ on:
     - cron: "0 4 * * *"
     - cron: "0 10 * * *"
     - cron: "0 14 * * *"
-   # - cron: "0 19 * * *"
+    - cron: "0 19 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -42,8 +42,11 @@ jobs:
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
-          FONT_FAMILY: "Almarai"
-          STORIES_PER_DAY: "4"
+          FONT_FAMILY: "NotoNaskhArabic"
+          THEME: "light"
+          STORIES_PER_DAY: "1"
+          IMAGE_SOURCE: "openverse"
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           LOOKBACK_HOURS: "14"
           REMEMBER_DAYS: "3"
         run: python news_bot.py
