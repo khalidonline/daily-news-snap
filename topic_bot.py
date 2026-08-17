@@ -800,7 +800,9 @@ def main():
         print("    forcing a generated image (IMAGE_SOURCE=generate)")
         photo, credit = fetch_generated_photo(brief.get("image_prompt", ""), hero)
         if photo is None:
-            print("    generation failed — falling back to the normal sources")
+            print("  ! generation failed and IMAGE_SOURCE=generate, so no other")
+            print("    source is used — you asked to test generation specifically.")
+            return
 
     if photo is None:
         photo, credit = fetch_local_photo(queries_ar, queries, hero)
