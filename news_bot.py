@@ -215,6 +215,22 @@ CHAR_FIXES = {
 # If the font can't draw these, meaning gets mangled — so we refuse to use it.
 REQUIRED_CHARS = "0123456789%-.,:()اب"
 
+# Arabic misspellings the models produce now and then. Add as you spot them —
+# the key is the wrong form, the value the correct one.
+COMMON_TYPOS = {
+    "باطولة": "بطولة",
+    "باطولات": "بطولات",
+    "إنشاء الله": "إن شاء الله",
+    "لاكن": "لكن",
+    "إنما": "إنما",
+    "هاذا": "هذا",
+    "هاذه": "هذه",
+    "الذى": "الذي",
+    "التى": "التي",
+    "علي أن": "على أن",
+    "إلي أن": "إلى أن",
+}
+
 _missing_reported = set()
 
 
@@ -238,6 +254,11 @@ def sanitize(text):
     Anything unmappable is left in place to render as a visible box."""
     for bad, good in CHAR_FIXES.items():
         text = text.replace(bad, good)
+
+    for wrong, right in COMMON_TYPOS.items():
+        if wrong in text:
+            print(f"  · fixed spelling: {wrong} -> {right}")
+            text = text.replace(wrong, right)
 
     charset = _font_charset(_find_arabic_font(False))
     if charset is not None:
@@ -404,6 +425,7 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 - item: رقم الخبر كما ورد في القائمة المرقّمة (رقم فقط)
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 - اكتب كل الأرقام بالأرقام اللاتينية (2027, 306, 13) لا بالأرقام العربية الهندية.
+- راجع الإملاء قبل الإجابة. الأخطاء الشائعة: "باطولة" والصحيح "بطولة"، "التى" والصحيح "التي"، "الذى" والصحيح "الذي".
 
 - image_queries: ثلاث عبارات إنجليزية للبحث عن صورة لهذا الخبر تحديداً، مرتبة
   من الأدق إلى الأعم. كل عبارة تصف مشهداً ملموساً يمكن تصويره، لا فكرة مجردة.
