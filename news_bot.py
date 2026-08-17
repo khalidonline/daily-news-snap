@@ -1521,6 +1521,100 @@ def prune_old_cards():
     return removed
 
 
+# --------------------------------------------------------------------------
+# Generated images (fal.ai / Seedream) — illustration only, never for news
+# --------------------------------------------------------------------------
+
+IMAGE_GEN = os.getenv("IMAGE_GEN", "byteplus").strip()      # byteplus | fal
+
+FAL_KEY = os.getenv("FAL_KEY", "").strip()
+FAL_MODEL = os.getenv("FAL_MODEL", "fal-ai/bytedance/seedream/v4/text-to-image")
+
+# BytePlus ModelArk. Confirm the host and model id in your console — the region
+# in the URL differs between accounts.
+ARK_KEY = os.getenv("ARK_API_KEY", "").strip()
+# an unset GitHub repo variable arrives as "", so fall back explicitly
+ARK_URL = os.getenv("ARK_URL", "").strip() or \
+    "https://ark.ap-southeast.bytepluses.com/api/v3/images/generations"
+ARK_MODEL = os.getenv("ARK_MODEL", "").strip() or "seedream-4-0-250828"
+ALLOW_GENERATED = os.getenv("ALLOW_GENERATED", "0").strip() not in ("", "0", "false", "False")
+GENERATED_CREDIT = "صورة مولّدة بالذكاء الاصطناعي"
+
+# appended to every prompt — the constraints matter more than the description
+GEN_GUARD = (
+    "Editorial illustration, photographic style, Saudi Arabian setting. "
+    "No people's faces, no recognisable individuals, no crowds. "
+    "No logos, brands, flags, emblems or written text of any kind. "
+    "No weapons, uniforms, police or military. "
+    "Natural daylight, neutral and calm, documentary feel, wide shot."
+)
+
+
+def fetch_generated_photo(prompt, out_path):
+    """Generate an illustration. Returns (path, credit) or (None, None).
+
+    Only ever called for topic cards. A generated image on a news card would
+    imply photography of a real event, so news never reaches this.
+    """
+    if not ALLOW_GENERATED:
+        return None, None
+    prompt = (prompt or "").strip()
+    if not prompt:
+        return None, None
+
+    full = f"{prompt}. {GEN_GUARD}"
+
+    if IMAGE_GEN == "fal":
+        if not FAL_KEY:
+            print("  ! FAL_KEY not set — skipping image generation")
+            return None, None
+        url = f"https://fal.run/{FAL_MODEL}"
+        headers = {"Authorization": f"Key {FAL_KEY}",
+                   "Content-Type": "application/json"}
+        payload = {"prompt": full,
+                   "image_size": {"width": 1280, "height": 960},
+                   "num_images": 1}
+    else:
+        if not ARK_KEY:
+            print("  ! ARK_API_KEY not set — skipping image generation")
+            return None, None
+        url = ARK_URL
+        headers = {"Authorization": f"Bearer {ARK_KEY}",
+                   "Content-Type": "application/json"}
+        payload = {"model": ARK_MODEL, "prompt": full,
+                   "size": "2K", "response_format": "url",
+                   "watermark": False}
+
+    req = urllib.request.Request(url, data=json.dumps(payload).encode(),
+                                 headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=180) as resp:
+            data = json.loads(resp.read())
+    except urllib.error.HTTPError as exc:
+        print(f"  ! {IMAGE_GEN} {exc.code}: {exc.read().decode()[:250]}")
+        return None, None
+    except Exception as exc:
+        print(f"  ! image generation failed: {exc}")
+        return None, None
+
+    # fal returns {"images":[{"url":...}]}, ModelArk returns {"data":[{"url":...}]}
+    items = data.get("images") or data.get("data") or []
+    link = items[0].get("url") if items else None
+    if not link:
+        print(f"  ! no image in the response: {str(data)[:250]}")
+        return None, None
+
+    try:
+        with urllib.request.urlopen(link, timeout=120) as resp:
+            Path(out_path).write_bytes(resp.read())
+    except Exception as exc:
+        print(f"  ! couldn't download the generated image: {exc}")
+        return None, None
+
+    print(f"    photo: generated via {IMAGE_GEN} — {prompt[:60]}")
+    return str(out_path), GENERATED_CREDIT
+
+
 def publish_via_github(png_path):
     import shutil
     import time
