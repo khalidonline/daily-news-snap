@@ -111,12 +111,20 @@ BLOCKED_IMAGE_TERMS = (
 )
 
 
+_BLOCKED_RE = re.compile(
+    r"\b(" + "|".join(re.escape(t) for t in BLOCKED_IMAGE_TERMS) + r")\b",
+    re.IGNORECASE)
+
+
 def _image_is_safe(text):
-    """Reject candidates whose description touches conflict or sensitive themes."""
-    low = (text or "").lower()
-    hit = next((t for t in BLOCKED_IMAGE_TERMS if t in low), None)
-    if hit:
-        print(f"  ! skipped an image ({hit!r} in its description)")
+    """Reject candidates whose description touches conflict or sensitive themes.
+
+    Whole words only — substring matching rejected 'warehouse' for containing
+    'war', which quietly killed every result on ordinary searches.
+    """
+    match = _BLOCKED_RE.search(text or "")
+    if match:
+        print(f"  ! skipped an image ({match.group(0)!r} in its description)")
         return False
     return True
 
@@ -1203,6 +1211,12 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     scale = layout["scale"]
     f_title, f_body, f_punch = layout["fonts"]
     title_lines, body_lines, punch_lines = layout["lines"]
+
+    # with no photo the block would sit at the top and leave the card empty
+    start_y = HEADER_END
+    if not photo_path or not layout["photo_h"]:
+        start_y = max(HEADER_END,
+                      HEADER_END + (available - layout["height"]) // 2 - 40)
     if scale < 1.0 or layout["photo_h"] != base_photo_h:
         print(f"    layout: text {int(scale * 100)}%, "
               f"photo {layout['photo_h']}px")
@@ -1212,7 +1226,7 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     draw.rectangle([right - 110, y, right, y + 10], fill=BRAND_INK)
     rtl((right, y + 46), BRAND, load_font(32, bold=True), BRAND_INK)
 
-    y = HEADER_END
+    y = start_y
     for line in title_lines:
         mid((centre, y), line, f_title, ink)
         y += int(78 * scale)
@@ -1351,9 +1365,15 @@ def _spa_text(item):
     ]))
 
 
+_BLOCKED_AR_RE = re.compile(
+    r"(?<![\u0621-\u064A])(" + "|".join(re.escape(t) for t in BLOCKED_AR_TERMS)
+    + r")(?![\u0621-\u064A])")
+
+
 def _spa_safe(text):
-    low = (text or "")
-    hit = next((t for t in BLOCKED_AR_TERMS if t in low), None)
+    """Whole-word matching, so a blocked root doesn't reject an innocent word."""
+    match = _BLOCKED_AR_RE.search(text or "")
+    hit = match.group(0) if match else None
     if hit:
         print(f"  ! skipped an SPA image ({hit!r} in its caption)")
         return False
