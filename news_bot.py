@@ -41,6 +41,9 @@ FEEDS = [
 ]
 
 STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "1"))
+# ask for several ranked candidates so we can skip any we can't illustrate
+CANDIDATES = int(os.getenv("CANDIDATES", "5"))
+REQUIRE_PHOTO = os.getenv("REQUIRE_PHOTO", "1").strip() not in ("", "0", "false")
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "30"))
 MAX_HEADLINES_TO_MODEL = 60
 
@@ -88,9 +91,72 @@ BRIEF_TITLE = os.getenv("BRIEF_TITLE", "ملخص تنفيذي - أخبار ال�
 BRAND = os.getenv("BRAND", "ملخص تنفيذي")
 PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
+MIN_PHOTO_SCORE = int(os.getenv("MIN_PHOTO_SCORE", "10"))
+
+# A wrong photo is worse than no photo. Anything whose own description mentions
+# these is rejected outright — they turn a neutral story into a claim.
+BLOCKED_IMAGE_TERMS = (
+    "weapon", "weapons", "gun", "guns", "rifle", "rifles", "pistol", "firearm",
+    "soldier", "soldiers", "military", "army", "armed", "troops", "war",
+    "combat", "battle", "tank", "missile", "bomb", "explosion", "airstrike",
+    "police", "arrest", "handcuff", "prison", "jail", "detention",
+    "protest", "riot", "demonstration", "clash", "violence", "blood",
+    "injured", "casualty", "funeral", "grave", "refugee", "terror",
+    "smoking", "alcohol", "beer", "wine", "bikini", "lingerie",
+)
+
+
+def _image_is_safe(text):
+    """Reject candidates whose description touches conflict or sensitive themes."""
+    low = (text or "").lower()
+    hit = next((t for t in BLOCKED_IMAGE_TERMS if t in low), None)
+    if hit:
+        print(f"  ! skipped an image ({hit!r} in its description)")
+        return False
+    return True
 
 STATE_FILE = Path("state/posted.json")
+QUOTA_FILE = Path("state/quota.json")
+MONTHLY_POST_LIMIT = int(os.getenv("MONTHLY_POST_LIMIT", "0"))   # 0 = no limit
+# "0" = hybrid: build the card and commit it, but don't publish to Snapchat
+POST_ENABLED = os.getenv("POST_TO_SNAPCHAT", "1").strip() not in ("", "0", "false", "False")
 REMEMBER_DAYS = int(os.getenv("REMEMBER_DAYS", "3"))
+
+
+def quota_used():
+    """How many posts we've published in the current calendar month."""
+    month = datetime.now().strftime("%Y-%m")
+    try:
+        data = json.loads(QUOTA_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return month, 0
+    return month, int(data.get(month, 0))
+
+
+def quota_ok():
+    """False when this month's self-imposed posting limit is already reached."""
+    if MONTHLY_POST_LIMIT <= 0:
+        return True
+    month, used = quota_used()
+    if used >= MONTHLY_POST_LIMIT:
+        print(f"  ! monthly limit reached ({used}/{MONTHLY_POST_LIMIT} posts in "
+              f"{month}) — not posting. Raise MONTHLY_POST_LIMIT to allow more.")
+        return False
+    print(f"    quota: {used}/{MONTHLY_POST_LIMIT} posts used this month")
+    return True
+
+
+def quota_bump():
+    """Record one published post. Returns the file so it can be committed."""
+    month, used = quota_used()
+    try:
+        data = json.loads(QUOTA_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        data = {}
+    data[month] = used + 1
+    QUOTA_FILE.parent.mkdir(parents=True, exist_ok=True)
+    QUOTA_FILE.write_text(json.dumps(data, indent=1), encoding="utf-8")
+    return QUOTA_FILE
 
 
 def load_posted():
@@ -311,7 +377,8 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 استبعد كل ما عدا ذلك: الأخبار الإقليمية والعالمية التي لا تخصّ المملكة \
 مباشرة، مهما كانت كبيرة.
 
-يجب أن تعيد {n} خبراً. اختر الأهم والأكبر أثراً على الناس داخل المملكة.
+أعد {n} أخبار مرتبة من الأهم إلى الأقل. سيُنشر خبر واحد فقط، والبقية بدائل \
+تُستخدم إذا تعذّر إيجاد صورة مناسبة للخبر الأول.
 لا تختر خبرين عن الحدث نفسه.
 
 لكل خبر اكتب:
@@ -321,14 +388,27 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 - source: اسم المصدر كما ورد لك
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 
-واكتب أيضاً:
-- caption: نص المنشور المرافق، لا يتجاوز ١٢٠ حرفاً
-- image_queries: ثلاث عبارات إنجليزية للبحث عن صورة للخبر الأول، مرتبة من الأدق
-  إلى الأعم. كل عبارة تصف مشهداً ملموساً يمكن تصويره، لا فكرة مجردة.
+- image_queries: ثلاث عبارات إنجليزية للبحث عن صورة لهذا الخبر تحديداً، مرتبة
+  من الأدق إلى الأعم. كل عبارة تصف مشهداً ملموساً يمكن تصويره، لا فكرة مجردة.
   ✓ ["riyadh city skyline", "desert heat wave", "thermometer summer"]
+- image_queries_ar: عبارتان أو ثلاث بالعربية للبحث في أرشيف الصور السعودي،
+  كلمات مفتاحية قصيرة لا جمل، مرتبة من الأدق إلى الأعم.
+  ✓ ["الرياض أبراج", "مدارس طلاب", "حرارة صيف"]
+  نفس القيود: مشاهد محايدة فقط، بلا أشخاص أو جنود أو شرطة أو عنف.
+  اطلب مشاهد محايدة يمكن تصويرها: مبانٍ، مكاتب، طرق، مدن، وثائق، أجهزة،
+  مطارات، أسواق، طبيعة، لوحات إرشادية.
+  ممنوع منعاً باتاً طلب صور: أشخاص بوجوه واضحة، جنود، أسلحة، شرطة، جيوش،
+  احتجاجات، حوادث، إصابات، سجون، أو أي مشهد عنف أو نزاع — حتى لو كان الخبر
+  عن أمن أو مخالفات أو قرارات عقابية. في هذه الحالات اطلب مشهداً محايداً
+  تماماً مثل "government building exterior" أو "airport terminal hall".
+
+
+واكتب أيضاً caption واحداً: نص المنشور المرافق، لا يتجاوز ١٢٠ حرفاً.
 
 أجب بصيغة JSON فقط. بدون markdown وبدون أي مقدمة:
-{{"caption": "...", "image_queries": ["...", "...", "..."], "stories": [{{"headline": "...", "summary": "...", "takeaway": "...", "source": "..."}}]}}"""
+{{"caption": "...", "stories": [{{"headline": "...", "summary": "...", \
+"takeaway": "...", "source": "...", "image_queries": ["...", "...", "..."], \
+"image_queries_ar": ["...", "..."]}}]}}"""
 
 
 def summarize(items, already_posted=()):
@@ -352,7 +432,7 @@ def summarize(items, already_posted=()):
         payload = {
             "model": CLAUDE_MODEL,
             "max_tokens": budget,
-            "system": SYSTEM_PROMPT.format(n=STORIES_PER_DAY),
+            "system": SYSTEM_PROMPT.format(n=CANDIDATES),
             "messages": [{"role": "user", "content": user_msg}],
         }
 
@@ -718,6 +798,12 @@ def fetch_openverse_photo(queries, out_path):
         if not results:
             continue
         for item in results:
+            described = " ".join(filter(None, [
+                item.get("title") or "",
+                " ".join(t.get("name", "") for t in item.get("tags") or []),
+            ]))
+            if not _image_is_safe(described):
+                continue
             candidates.append((_ov_score(item, terms), query, item))
         if any(c[0] >= 10 for c in candidates):
             break
@@ -727,6 +813,10 @@ def fetch_openverse_photo(queries, out_path):
         return None, None
 
     candidates.sort(key=lambda c: -c[0])
+    if candidates[0][0] < MIN_PHOTO_SCORE:
+        print(f"  ! best match scored {candidates[0][0]:.0f}, below "
+              f"{MIN_PHOTO_SCORE} — posting without a photo instead")
+        return None, None
 
     # work down the ranked list — one dead host shouldn't cost us the photo
     data, best, best_score, best_query = None, None, 0, None
@@ -764,8 +854,6 @@ def fetch_openverse_photo(queries, out_path):
 
     print(f"    photo: {best.get('title') or '(untitled)'} — {credit} "
           f"[{best_query}]")
-    if best_score < 10:
-        print("  ! weak match — the image may be only loosely related")
     return str(out_path), credit
 
 
@@ -820,6 +908,8 @@ def fetch_photo(queries, out_path):
             continue
 
         for photo in photos:
+            if not _image_is_safe(photo.get("alt")):
+                continue
             score = _score(photo, terms)
             if score > best_score:
                 best, best_score, best_query = photo, score, query
@@ -832,8 +922,10 @@ def fetch_photo(queries, out_path):
         print("  ! no photo found — rendering without one")
         return None
 
-    if best_score < 10:
-        print(f"  ! weak photo match — using a generic image for {best_query!r}")
+    if best_score < MIN_PHOTO_SCORE:
+        print(f"  ! best Pexels match scored {best_score:.0f} — "
+              "posting without a photo instead")
+        return None
 
     src = best["src"].get("large2x") or best["src"]["large"]
     try:
@@ -894,8 +986,26 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     rtl((right, y + 46), BRAND, f_brand, BRAND_INK)
     y += 150
 
-    # headline, centred, above the photo
     f_title = load_font(60, bold=True)
+    if not photo_path:
+        # nothing to fill the middle — centre the text block instead
+        f_body_m = load_font(44)
+        f_punch_m = load_font(44, bold=True)
+        pts = brief.get("points", [])
+        body_m = brief.get("body")
+        if body_m is None:
+            body_m = brief.get("lead", "")
+            if pts:
+                body_m = f"{body_m} {pts[0].get('text', '')}"
+        punch_m = brief.get("punch")
+        if punch_m is None:
+            punch_m = pts[-1].get("text", "") if len(pts) > 1 else ""
+        block = (len(_wrap(draw, brief["title"], f_title, max_w, kw)) * 78 + 46
+                 + len(_wrap(draw, body_m.strip(), f_body_m, max_w, kw)) * 64 + 44
+                 + len(_wrap(draw, punch_m.strip(), f_punch_m, max_w, kw)) * 66)
+        y = max(y, (H - block) // 2 - 60)
+
+    # headline, centred, above the photo
     for line in _wrap(draw, brief["title"], f_title, max_w, kw):
         mid((centre, y), line, f_title, ink)
         y += 78
@@ -956,6 +1066,148 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     return out_path
 
 
+# --------------------------------------------------------------------------
+# منصة الصور السعودية (SPA) — official Saudi photography, CC BY-SA 4.0
+# --------------------------------------------------------------------------
+
+SPA_BASE = "https://cc.spa.gov.sa"
+SPA_YEARS = int(os.getenv("SPA_YEARS", "3"))
+SPA_CREDIT = os.getenv("SPA_CREDIT", "واس / CC BY-SA 4.0")
+
+# the English blocklist won't catch Arabic captions
+BLOCKED_AR_TERMS = (
+    "جندي", "جنود", "عسكري", "عسكرية", "سلاح", "أسلحة", "بندقية", "مدفع",
+    "حرب", "قتال", "اشتباك", "غارة", "قصف", "انفجار", "صاروخ",
+    "شرطة", "اعتقال", "توقيف", "سجن", "سجين", "محكمة",
+    "احتجاج", "مظاهرة", "عنف", "دماء", "إصابة", "مصاب", "جنازة", "عزاء",
+    "حادث", "حريق", "كارثة", "ضحايا", "قتلى",
+)
+
+
+def _ticks(dt):
+    """.NET ticks — what the SPA search API expects for dates."""
+    return int((dt - datetime(1, 1, 1)).total_seconds() * 10_000_000)
+
+
+def _spa_search(term, count=16):
+    """Search the Saudi Photos platform. Returns raw result dicts."""
+    now = datetime.now()
+    model = {
+        "DataLangId": 1058,                       # Arabic
+        "CategoryId": 0,
+        "SearchText": f' "*{term}*"',
+        "SearchTextCompareType": 1,
+        "FromDate": _ticks(now - timedelta(days=365 * SPA_YEARS)),
+        "ToDate": _ticks(now),
+        "GetCount": count,
+    }
+    url = (f"{SPA_BASE}/Utility/SearchPaging?langChar=ar"
+           f"&searchModel={urllib.parse.quote(json.dumps(model, ensure_ascii=False))}"
+           "&pageNumber=1")
+    req = urllib.request.Request(url, headers={
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            results = json.loads(resp.read())
+        print(f"    SPA: {len(results)} results for {term!r}")
+        return results if isinstance(results, list) else []
+    except Exception as exc:
+        print(f"  ! SPA search failed for {term!r}: {exc}")
+        return []
+
+
+def _spa_text(item):
+    return " ".join(filter(None, [
+        item.get("title") or "",
+        " ".join(item.get("keywords") or []),
+        item.get("parantName") or "",
+    ]))
+
+
+def _spa_safe(text):
+    low = (text or "")
+    hit = next((t for t in BLOCKED_AR_TERMS if t in low), None)
+    if hit:
+        print(f"  ! skipped an SPA image ({hit!r} in its caption)")
+        return False
+    return _image_is_safe(text)
+
+
+def _spa_score(item, terms):
+    """Overlap between the caption and what we asked for."""
+    text = _spa_text(item)
+    if not text:
+        return 0
+    hits = sum(1 for t in terms if t and t in text)
+    recent = 3 if "2025" in text or "2026" in text else 0
+    return hits * 10 + recent
+
+
+def _spa_image_urls(item):
+    """Full size first, thumbnail as a fallback."""
+    thumb = item.get("thumbnailUrl") or ""
+    if not thumb:
+        return []
+    urls = []
+    if "_th." in thumb:
+        urls.append(SPA_BASE + thumb.replace("_th.", "."))
+    urls.append(SPA_BASE + thumb)
+    return urls
+
+
+def fetch_spa_photo(queries_ar, out_path):
+    """Fetch an official Saudi photo. Returns (path, credit) or (None, None).
+
+    Images are CC BY-SA 4.0 — the credit line is not optional.
+    """
+    if isinstance(queries_ar, str):
+        queries_ar = [queries_ar]
+    queries_ar = [q.strip() for q in queries_ar if q and q.strip()]
+    if not queries_ar:
+        return None, None
+
+    candidates = []
+    for query in queries_ar:
+        terms = [t for t in re.split(r"\s+", query) if len(t) > 2]
+        for item in _spa_search(query):
+            if not _spa_safe(_spa_text(item)):
+                continue
+            candidates.append((_spa_score(item, terms), query, item))
+        if any(c[0] >= MIN_PHOTO_SCORE for c in candidates):
+            break
+
+    if not candidates:
+        print("  ! no SPA photo found")
+        return None, None
+
+    candidates.sort(key=lambda c: -c[0])
+    if candidates[0][0] < MIN_PHOTO_SCORE:
+        print(f"  ! best SPA match scored {candidates[0][0]:.0f}, below "
+              f"{MIN_PHOTO_SCORE} — skipping")
+        return None, None
+
+    for score, query, item in candidates[:5]:
+        for link in _spa_image_urls(item):
+            try:
+                req = urllib.request.Request(link,
+                                             headers={"User-Agent": USER_AGENT})
+                with urllib.request.urlopen(req, timeout=45) as resp:
+                    data = resp.read()
+            except Exception as exc:
+                print(f"  ! SPA download failed ({exc}) — trying next")
+                continue
+            if len(data) < 15_000:
+                continue
+            Path(out_path).write_bytes(data)
+            print(f"    photo: {item.get('title', '')[:70]} [{query}]")
+            return str(out_path), SPA_CREDIT
+
+    print("  ! every SPA candidate failed to download")
+    return None, None
+
+
 def publish_via_github(png_path):
     import shutil
     import time
@@ -980,7 +1232,10 @@ def publish_via_github(png_path):
 
     git("config", "user.name", "news-bot")
     git("config", "user.email", "news-bot@users.noreply.github.com")
-    git("add", str(dest))
+    latest = Path(CARDS_DIR) / "latest.png"
+    shutil.copyfile(png_path, latest)
+
+    git("add", str(dest), str(latest))
     try:
         git("commit", "-m", f"card {dest.name}")
     except subprocess.CalledProcessError:
@@ -1054,46 +1309,72 @@ def main():
         print(f"    skipping {len(posted)} stories posted in the last "
               f"{REMEMBER_DAYS} days")
     result = summarize(items, [e["headline"] for e in posted])
-    stories = result.get("stories", [])[:STORIES_PER_DAY]
+    stories = result.get("stories", [])[:CANDIDATES]
     caption = result.get("caption", "موجز اليوم")
 
     if not stories:
         print("    no stories returned — not posting this run")
         return
-    if len(stories) < STORIES_PER_DAY:
-        print(f"  ! only {len(stories)} of {STORIES_PER_DAY} returned — the "
-              "feeds may be thin right now")
+
     for s in stories:
         print(f"    • {s['headline']}  ({s.get('source')})")
 
-    print("3/4 rendering card...")
+    print("3/4 finding a photo and rendering...")
     stamp = datetime.now().strftime("%Y-%m-%d-%H%M")
+    hero = OUT_DIR / "hero.jpg"
 
-    if len(stories) == 1:
-        story = stories[0]
+    chosen, photo, credit = None, None, None
+    for i, story in enumerate(stories, 1):
+        if IMAGE_SOURCE == "none":
+            chosen = story
+            break
+        print(f"    [{i}/{len(stories)}] {story['headline']}")
         photo, credit = None, None
-        if IMAGE_SOURCE != "none":
-            photo, credit = fetch_openverse_photo(
-                result.get("image_queries", []), OUT_DIR / "hero.jpg")
-            if photo is None and PEXELS_API_KEY:
-                print("    falling back to Pexels...")
-                photo = fetch_photo(result.get("image_queries", []),
-                                    OUT_DIR / "hero.jpg")
-                credit = "Pexels" if photo else None
-            if photo is None:
-                print("  ! no photo found — card will be text only")
+        if IMAGE_SOURCE in ("spa", "openverse"):
+            photo, credit = fetch_spa_photo(story.get("image_queries_ar", []), hero)
+        if photo is None:
+            photo, credit = fetch_openverse_photo(story.get("image_queries", []), hero)
+        if photo is None and PEXELS_API_KEY:
+            photo = fetch_photo(story.get("image_queries", []), hero)
+            credit = "Pexels" if photo else None
+        if photo:
+            chosen = story
+            break
+        print("      no usable photo — trying the next story")
 
-        card = render_story({
-            "title": story["headline"],
-            "body": story.get("summary", ""),
-            "punch": story.get("takeaway", ""),
-            "sources": [story.get("source", "")],
-        }, OUT_DIR / f"{stamp}-brief.png", photo, credit)
-    else:
-        card = render_brief(stories, OUT_DIR / f"{stamp}-brief.png")
+    if chosen is None:
+        if REQUIRE_PHOTO:
+            print(f"  ! none of the {len(stories)} stories could be illustrated "
+                  "— not posting this run")
+            return
+        chosen, photo, credit = stories[0], None, None
+
+    stories = [chosen]
+    card = render_story({
+        "title": chosen["headline"],
+        "body": chosen.get("summary", ""),
+        "punch": chosen.get("takeaway", ""),
+        "sources": [chosen.get("source", "")],
+    }, OUT_DIR / f"{stamp}-brief.png", photo, credit)
 
     if DRY_RUN:
         print(f"4/4 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
+        return
+
+    if not POST_ENABLED:
+        print("4/4 hybrid mode — publishing the card, not posting to Snapchat")
+        url = publish_via_github(card)
+        repo = os.getenv("GITHUB_REPOSITORY", "")
+        branch = os.getenv("GITHUB_REF_NAME", "main")
+        print(f"    today's card: {url}")
+        if repo:
+            print("    always-latest link: https://raw.githubusercontent.com/"
+                  f"{repo}/{branch}/{CARDS_DIR}/latest.png")
+        # still record it, so the next run doesn't pick the same story
+        commit_and_push(save_posted(posted, stories), f"card {stamp}")
+        return
+
+    if not quota_ok():
         return
 
     print("4/4 posting to Snapchat...")
@@ -1108,6 +1389,7 @@ def main():
     if str(response.get("status", "")).lower() != "error":
         state = save_posted(posted, stories)
         commit_and_push(state, f"posted {stamp}")
+        commit_and_push(quota_bump(), f"quota {stamp}")
 
 
 if __name__ == "__main__":
