@@ -23,17 +23,24 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from news_bot import (
-    ANTHROPIC_API_KEY, CLAUDE_MODEL, DRY_RUN, MEDIA_MODE, OUT_DIR,
-    W, H, BG_TOP, BG_BOTTOM, ACCENT, TEXT, MUTED, AR_DIGITS,
-    ar, load_font, _wrap,
-    publish_via_github, upload_media, post_story,
-    fetch_headlines, commit_and_push, quota_ok, quota_bump,
-    POST_ENABLED, CARDS_DIR,
-    THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
-    DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
-    render_story,
-)
+try:
+    from news_bot import (
+        ANTHROPIC_API_KEY, CLAUDE_MODEL, DRY_RUN, MEDIA_MODE, OUT_DIR,
+        W, H, BG_TOP, BG_BOTTOM, ACCENT, TEXT, MUTED, AR_DIGITS,
+        ar, load_font, _wrap,
+        publish_via_github, upload_media, post_story,
+        fetch_headlines, commit_and_push, quota_ok, quota_bump,
+        POST_ENABLED, CARDS_DIR,
+        THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
+        DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
+        render_story,
+    )
+except ImportError as exc:
+    raise SystemExit(
+        f"news_bot.py is missing something topic_bot needs ({exc}).\n"
+        "The two files must be uploaded together — get the latest news_bot.py "
+        "into the repo and run again."
+    )
 
 TOPIC = os.getenv("TOPIC", "").strip()
 TOPICS_FILE = Path(os.getenv("TOPICS_FILE", "topics.txt"))
