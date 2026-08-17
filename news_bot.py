@@ -116,6 +116,13 @@ _BLOCKED_RE = re.compile(
     re.IGNORECASE)
 
 
+def _clear_generated_marker(path):
+    """A real photo overwrites the file, so drop any stale marker."""
+    marker = Path(str(path) + ".generated")
+    if marker.exists():
+        marker.unlink()
+
+
 def _image_is_safe(text):
     """Reject candidates whose description touches conflict or sensitive themes.
 
@@ -784,6 +791,7 @@ def fetch_article_photo(url, out_path):
         if len(data) < 15_000:
             print("  ! og:image too small — probably a logo, skipping")
             return None, None
+        _clear_generated_marker(out_path)
         Path(out_path).write_bytes(data)
     except Exception as exc:
         print(f"  ! photo download failed: {exc}")
@@ -918,6 +926,7 @@ def fetch_openverse_photo(queries, out_path):
     if data is None:
         print("  ! every Openverse candidate failed to download")
         return None, None
+    _clear_generated_marker(out_path)
     Path(out_path).write_bytes(data)
 
     creator = (best.get("creator") or "").strip() or best.get("source", "Openverse")
@@ -1124,6 +1133,9 @@ def render_number(brief, out_path, photo_credit=None):
     sources = "، ".join(brief.get("sources", [])[:3])
     if sources:
         parts.append(f"المصدر: {sources}")
+    # a generated image must always be labelled, whatever was passed in
+    if photo_path and Path(str(photo_path) + ".generated").exists():
+        photo_credit = GENERATED_CREDIT
     if photo_credit:
         parts.append(f"الصورة: {photo_credit}")
     if parts:
@@ -1271,20 +1283,32 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
 
     # credit, always clear of the text above it
     f_foot = load_font(26)
-    parts = []
+    # a generated image must always be labelled, whatever was passed in
+    if photo_path and Path(str(photo_path) + ".generated").exists():
+        photo_credit = GENERATED_CREDIT
+
+    def fit(text):
+        while text and draw.textlength(ar(text)[0], font=f_foot, **kw) > max_w:
+            text = text.rsplit("، ", 1)[0] if "، " in text else text[:-4]
+        return text
+
+    lines = []
     sources = "، ".join(brief.get("sources", [])[:3])
     if sources:
-        parts.append(f"المصدر: {sources}")
+        lines.append(fit(f"المصدر: {sources}"))
     if photo_credit:
-        parts.append(f"الصورة: {photo_credit}")
-    names = "   •   ".join(parts)
-    if names:
-        while names and draw.textlength(ar(names)[0], font=f_foot, **kw) > max_w:
-            names = names.rsplit("، ", 1)[0] if "، " in names else names[:-4]
+        # its own line, so a long source list can never truncate it away
+        lines.append(fit(f"الصورة: {photo_credit}"))
+
+    if lines:
         rule_w = 260
-        draw.line([(centre - rule_w // 2, H - 176),
-                   (centre + rule_w // 2, H - 176)], fill=RULE, width=2)
-        mid((centre, H - 130), names, f_foot, muted)
+        top = H - 176 if len(lines) == 1 else H - 206
+        draw.line([(centre - rule_w // 2, top),
+                   (centre + rule_w // 2, top)], fill=RULE, width=2)
+        y = top + 46
+        for line in lines:
+            mid((centre, y), line, f_foot, muted)
+            y += 40
 
     img.save(out_path, "PNG", optimize=True)
     return out_path
@@ -1366,6 +1390,12 @@ def _spa_search(term, count=16):
     return results if isinstance(results, list) else []
 
 
+# titles that signal a posed portrait or a protocol shot, not a scene
+PORTRAIT_HINTS = ("معالي", "سمو", "سموه", "الأمير", "وزير", "الوزير", "رئيس",
+                  "المدير التنفيذي", "يستقبل", "يلتقي", "يبحث مع", "خلال لقائه",
+                  "يرأس", "يدشن", "يفتتح", "مؤتمر صحفي", "كلمة")
+
+
 def _spa_text(item):
     return " ".join(filter(None, [
         item.get("title") or "",
@@ -1396,7 +1426,11 @@ def _spa_score(item, terms):
         return 0
     hits = sum(1 for t in terms if t and t in text)
     recent = 3 if "2025" in text or "2026" in text else 0
-    return hits * 10 + recent
+    score = hits * 10 + recent
+    title = item.get("title") or ""
+    if any(h in title for h in PORTRAIT_HINTS):
+        score -= 20          # a person announcing a thing isn't a photo of it
+    return score
 
 
 def _spa_image_urls(item):
@@ -1467,6 +1501,7 @@ def fetch_spa_photo(queries_ar, out_path):
                 continue
             if len(data) < 15_000:
                 continue
+            _clear_generated_marker(out_path)
             Path(out_path).write_bytes(data)
             print(f"    photo: {item.get('title', '')[:70]} [{query}]")
             return str(out_path), SPA_CREDIT
@@ -1542,6 +1577,7 @@ def fetch_local_photo(queries_ar, queries_en, out_path):
         return None, None
 
     import shutil as _shutil
+    _clear_generated_marker(out_path)
     _shutil.copyfile(best["path"], out_path)
     print(f"    photo: {best['path'].name} from your library "
           f"(matched {best_score // 10} tag(s))")
@@ -1587,15 +1623,32 @@ ARK_KEY = os.getenv("ARK_API_KEY", "").strip()
 # an unset GitHub repo variable arrives as "", so fall back explicitly
 ARK_URL = os.getenv("ARK_URL", "").strip() or \
     "https://ark.ap-southeast.bytepluses.com/api/v3/images/generations"
-ARK_MODEL = os.getenv("ARK_MODEL", "").strip() or "seedream-4-0-250828"
+def _clean_model_id(raw, fallback):
+    """Accept a pasted code snippet as well as a bare id.
+
+    model="seedream-4-5-251128"  ->  seedream-4-5-251128
+    """
+    value = (raw or "").strip()
+    if not value:
+        return fallback
+    if "=" in value:
+        value = value.split("=", 1)[1]
+    return value.strip().strip('"').strip("'").strip() or fallback
+
+
+ARK_MODEL = _clean_model_id(os.getenv("ARK_MODEL"), "seedream-4-0-250828")
 ALLOW_GENERATED = os.getenv("ALLOW_GENERATED", "0").strip() not in ("", "0", "false", "False")
 GENERATED_CREDIT = "صورة مولّدة بالذكاء الاصطناعي"
 
 # appended to every prompt — the constraints matter more than the description
 GEN_GUARD = (
     "Editorial illustration, photographic style, Saudi Arabian setting. "
+    "CRITICAL: absolutely no text, letters, words, numbers, characters, "
+    "signage, billboards, shop signs, building signs, banners, licence plates "
+    "or any written script anywhere in the image, in any language. "
+    "Buildings and vehicles must be completely unmarked and unbranded. "
+    "No logos, brands, flags or emblems. "
     "No people's faces, no recognisable individuals, no crowds. "
-    "No logos, brands, flags, emblems or written text of any kind. "
     "No weapons, uniforms, police or military. "
     "Natural daylight, neutral and calm, documentary feel, wide shot."
 )
@@ -1635,6 +1688,7 @@ def fetch_generated_photo(prompt, out_path):
         payload = {"model": ARK_MODEL, "prompt": full,
                    "size": "2K", "response_format": "url",
                    "watermark": False}
+        print(f"    generating via byteplus, model={ARK_MODEL}")
 
     req = urllib.request.Request(url, data=json.dumps(payload).encode(),
                                  headers=headers)
@@ -1642,7 +1696,13 @@ def fetch_generated_photo(prompt, out_path):
         with urllib.request.urlopen(req, timeout=180) as resp:
             data = json.loads(resp.read())
     except urllib.error.HTTPError as exc:
-        print(f"  ! {IMAGE_GEN} {exc.code}: {exc.read().decode()[:250]}")
+        body = exc.read().decode()[:250]
+        print(f"  ! {IMAGE_GEN} {exc.code}: {body}")
+        if "ModelNotOpen" in body or "not activated" in body:
+            print(f"    the account hasn't activated {ARK_MODEL!r}.")
+            print("    Activate it in the Ark Console, or set the ARK_MODEL repo")
+            print("    variable to the id of a model you HAVE activated —")
+            print("    the display name (ByteDance-Seedream-4.5) is not the id.")
         return None, None
     except Exception as exc:
         print(f"  ! image generation failed: {exc}")
@@ -1662,6 +1722,7 @@ def fetch_generated_photo(prompt, out_path):
         print(f"  ! couldn't download the generated image: {exc}")
         return None, None
 
+    Path(str(out_path) + ".generated").write_text("1", encoding="utf-8")
     print(f"    photo: generated via {IMAGE_GEN} — {prompt[:60]}")
     return str(out_path), GENERATED_CREDIT
 
