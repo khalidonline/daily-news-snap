@@ -34,6 +34,7 @@ try:
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
+        REQUIRE_PHOTO,
         render_story,
     )
 except ImportError as exc:
@@ -833,6 +834,10 @@ def main():
             credit = "Pexels" if photo else None
         if photo is None:
             photo, credit = fetch_generated_photo(brief.get("image_prompt", ""), hero)
+        if photo is None and REQUIRE_PHOTO:
+            print("  ! no photo from any source — not publishing a bare card.")
+            print("    set REQUIRE_PHOTO=0 to allow text-only topic cards.")
+            return
         if photo is None:
             print("  ! no photo from any source — card will be text only")
 
