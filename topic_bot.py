@@ -391,6 +391,10 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 - image_queries: ثلاث عبارات إنجليزية للبحث عن صورة لهذا الخبر تحديداً، مرتبة
   من الأدق إلى الأعم. كل عبارة تصف مشهداً ملموساً يمكن تصويره، لا فكرة مجردة.
   ✓ ["riyadh city skyline", "desert heat wave", "thermometer summer"]
+- image_queries_ar: عبارتان أو ثلاث بالعربية للبحث في أرشيف الصور السعودي،
+  كلمات مفتاحية قصيرة لا جمل، مرتبة من الأدق إلى الأعم.
+  ✓ ["الرياض أبراج", "مدارس طلاب", "حرارة صيف"]
+  نفس القيود: مشاهد محايدة فقط، بلا أشخاص أو جنود أو شرطة أو عنف.
   اطلب مشاهد محايدة يمكن تصويرها: مبانٍ، مكاتب، طرق، مدن، وثائق، أجهزة،
   مطارات، أسواق، طبيعة، لوحات إرشادية.
   ممنوع منعاً باتاً طلب صور: أشخاص بوجوه واضحة، جنود، أسلحة، شرطة، جيوش،
@@ -403,7 +407,8 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 
 أجب بصيغة JSON فقط. بدون markdown وبدون أي مقدمة:
 {{"caption": "...", "stories": [{{"headline": "...", "summary": "...", \
-"takeaway": "...", "source": "...", "image_queries": ["...", "...", "..."]}}]}}"""
+"takeaway": "...", "source": "...", "image_queries": ["...", "...", "..."], \
+"image_queries_ar": ["...", "..."]}}]}}"""
 
 
 def summarize(items, already_posted=()):
@@ -1061,6 +1066,148 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     return out_path
 
 
+# --------------------------------------------------------------------------
+# منصة الصور السعودية (SPA) — official Saudi photography, CC BY-SA 4.0
+# --------------------------------------------------------------------------
+
+SPA_BASE = "https://cc.spa.gov.sa"
+SPA_YEARS = int(os.getenv("SPA_YEARS", "3"))
+SPA_CREDIT = os.getenv("SPA_CREDIT", "واس / CC BY-SA 4.0")
+
+# the English blocklist won't catch Arabic captions
+BLOCKED_AR_TERMS = (
+    "جندي", "جنود", "عسكري", "عسكرية", "سلاح", "أسلحة", "بندقية", "مدفع",
+    "حرب", "قتال", "اشتباك", "غارة", "قصف", "انفجار", "صاروخ",
+    "شرطة", "اعتقال", "توقيف", "سجن", "سجين", "محكمة",
+    "احتجاج", "مظاهرة", "عنف", "دماء", "إصابة", "مصاب", "جنازة", "عزاء",
+    "حادث", "حريق", "كارثة", "ضحايا", "قتلى",
+)
+
+
+def _ticks(dt):
+    """.NET ticks — what the SPA search API expects for dates."""
+    return int((dt - datetime(1, 1, 1)).total_seconds() * 10_000_000)
+
+
+def _spa_search(term, count=16):
+    """Search the Saudi Photos platform. Returns raw result dicts."""
+    now = datetime.now()
+    model = {
+        "DataLangId": 1058,                       # Arabic
+        "CategoryId": 0,
+        "SearchText": f' "*{term}*"',
+        "SearchTextCompareType": 1,
+        "FromDate": _ticks(now - timedelta(days=365 * SPA_YEARS)),
+        "ToDate": _ticks(now),
+        "GetCount": count,
+    }
+    url = (f"{SPA_BASE}/Utility/SearchPaging?langChar=ar"
+           f"&searchModel={urllib.parse.quote(json.dumps(model, ensure_ascii=False))}"
+           "&pageNumber=1")
+    req = urllib.request.Request(url, headers={
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            results = json.loads(resp.read())
+        print(f"    SPA: {len(results)} results for {term!r}")
+        return results if isinstance(results, list) else []
+    except Exception as exc:
+        print(f"  ! SPA search failed for {term!r}: {exc}")
+        return []
+
+
+def _spa_text(item):
+    return " ".join(filter(None, [
+        item.get("title") or "",
+        " ".join(item.get("keywords") or []),
+        item.get("parantName") or "",
+    ]))
+
+
+def _spa_safe(text):
+    low = (text or "")
+    hit = next((t for t in BLOCKED_AR_TERMS if t in low), None)
+    if hit:
+        print(f"  ! skipped an SPA image ({hit!r} in its caption)")
+        return False
+    return _image_is_safe(text)
+
+
+def _spa_score(item, terms):
+    """Overlap between the caption and what we asked for."""
+    text = _spa_text(item)
+    if not text:
+        return 0
+    hits = sum(1 for t in terms if t and t in text)
+    recent = 3 if "2025" in text or "2026" in text else 0
+    return hits * 10 + recent
+
+
+def _spa_image_urls(item):
+    """Full size first, thumbnail as a fallback."""
+    thumb = item.get("thumbnailUrl") or ""
+    if not thumb:
+        return []
+    urls = []
+    if "_th." in thumb:
+        urls.append(SPA_BASE + thumb.replace("_th.", "."))
+    urls.append(SPA_BASE + thumb)
+    return urls
+
+
+def fetch_spa_photo(queries_ar, out_path):
+    """Fetch an official Saudi photo. Returns (path, credit) or (None, None).
+
+    Images are CC BY-SA 4.0 — the credit line is not optional.
+    """
+    if isinstance(queries_ar, str):
+        queries_ar = [queries_ar]
+    queries_ar = [q.strip() for q in queries_ar if q and q.strip()]
+    if not queries_ar:
+        return None, None
+
+    candidates = []
+    for query in queries_ar:
+        terms = [t for t in re.split(r"\s+", query) if len(t) > 2]
+        for item in _spa_search(query):
+            if not _spa_safe(_spa_text(item)):
+                continue
+            candidates.append((_spa_score(item, terms), query, item))
+        if any(c[0] >= MIN_PHOTO_SCORE for c in candidates):
+            break
+
+    if not candidates:
+        print("  ! no SPA photo found")
+        return None, None
+
+    candidates.sort(key=lambda c: -c[0])
+    if candidates[0][0] < MIN_PHOTO_SCORE:
+        print(f"  ! best SPA match scored {candidates[0][0]:.0f}, below "
+              f"{MIN_PHOTO_SCORE} — skipping")
+        return None, None
+
+    for score, query, item in candidates[:5]:
+        for link in _spa_image_urls(item):
+            try:
+                req = urllib.request.Request(link,
+                                             headers={"User-Agent": USER_AGENT})
+                with urllib.request.urlopen(req, timeout=45) as resp:
+                    data = resp.read()
+            except Exception as exc:
+                print(f"  ! SPA download failed ({exc}) — trying next")
+                continue
+            if len(data) < 15_000:
+                continue
+            Path(out_path).write_bytes(data)
+            print(f"    photo: {item.get('title', '')[:70]} [{query}]")
+            return str(out_path), SPA_CREDIT
+
+    print("  ! every SPA candidate failed to download")
+    return None, None
+
+
 def publish_via_github(png_path):
     import shutil
     import time
@@ -1182,7 +1329,11 @@ def main():
             chosen = story
             break
         print(f"    [{i}/{len(stories)}] {story['headline']}")
-        photo, credit = fetch_openverse_photo(story.get("image_queries", []), hero)
+        photo, credit = None, None
+        if IMAGE_SOURCE in ("spa", "openverse"):
+            photo, credit = fetch_spa_photo(story.get("image_queries_ar", []), hero)
+        if photo is None:
+            photo, credit = fetch_openverse_photo(story.get("image_queries", []), hero)
         if photo is None and PEXELS_API_KEY:
             photo = fetch_photo(story.get("image_queries", []), hero)
             credit = "Pexels" if photo else None
