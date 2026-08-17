@@ -1912,26 +1912,54 @@ def main():
     hero = OUT_DIR / "hero.jpg"
 
     chosen, photo, credit = None, None, None
+    def _article(story):
+        link = story.get("link")
+        if not link:
+            return None, None
+        photo, domain = fetch_article_photo(link, hero)
+        if photo and not domain:
+            domain = urllib.parse.urlparse(link).netloc.replace("www.", "")
+        return photo, (DOMAIN_CREDITS.get(domain, domain) if domain else None)
+
+    def _spa(story):
+        return fetch_spa_photo(story.get("image_queries_ar", []), hero)
+
+    def _openverse(story):
+        return fetch_openverse_photo(story.get("image_queries", []), hero)
+
+    def _stock(story):
+        if not PEXELS_API_KEY:
+            return None, None
+        found = fetch_photo(story.get("image_queries", []), hero)
+        return found, ("Pexels" if found else None)
+
+    def _local(story):
+        return fetch_local_photo(story.get("image_queries_ar", []),
+                                 story.get("image_queries", []), hero)
+
+    SOURCES = {"article": _article, "spa": _spa,
+               "openverse": _openverse, "stock": _stock}
+
+    # whatever the workflow selected goes first, then the rest in a sensible
+    # order. The local library is always tried first — it's curated.
+    order = ["article", "spa", "openverse", "stock"]
+    if IMAGE_SOURCE in order:
+        order.remove(IMAGE_SOURCE)
+        order.insert(0, IMAGE_SOURCE)
+    print(f"    photo order: local, {', '.join(order)}")
+
     for i, story in enumerate(stories, 1):
         if IMAGE_SOURCE == "none":
             chosen = story
             break
         print(f"    [{i}/{len(stories)}] {story['headline']}")
-        photo, credit = None, None
-        photo, credit = fetch_local_photo(story.get("image_queries_ar", []),
-                                          story.get("image_queries", []), hero)
-        if photo is None and story.get("link"):
-            photo, domain = fetch_article_photo(story["link"], hero)
-            if photo and not domain:
-                domain = urllib.parse.urlparse(story["link"]).netloc.replace("www.", "")
-            credit = DOMAIN_CREDITS.get(domain, domain) if domain else None
-        if photo is None and IMAGE_SOURCE in ("spa", "openverse"):
-            photo, credit = fetch_spa_photo(story.get("image_queries_ar", []), hero)
-        if photo is None:
-            photo, credit = fetch_openverse_photo(story.get("image_queries", []), hero)
-        if photo is None and PEXELS_API_KEY:
-            photo = fetch_photo(story.get("image_queries", []), hero)
-            credit = "Pexels" if photo else None
+
+        photo, credit = _local(story)
+        for name in order:
+            if photo is not None:
+                break
+            photo, credit = SOURCES[name](story)
+
         if photo:
             chosen = story
             break
