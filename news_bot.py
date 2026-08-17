@@ -116,6 +116,37 @@ _BLOCKED_RE = re.compile(
     re.IGNORECASE)
 
 
+def looks_like_a_graphic(path):
+    """True for logo cards, infographics and other flat artwork.
+
+    SPA's archive mixes branded graphics in with photographs; a logo card is
+    mostly flat white with a small mark in the middle, so it reads very
+    differently from a photo at the pixel level.
+    """
+    try:
+        img = Image.open(path).convert("RGB")
+    except Exception:
+        return False
+
+    small = img.resize((120, 120))
+    pixels = list(small.getdata())
+    total = len(pixels)
+
+    near_white = sum(1 for r, g, b in pixels if r > 235 and g > 235 and b > 235)
+    if near_white / total > 0.55:
+        print(f"  ! looks like a logo card ({near_white * 100 // total}% white)")
+        return True
+
+    # flat artwork has little tonal variation; photographs have plenty
+    lum = [0.299 * r + 0.587 * g + 0.114 * b for r, g, b in pixels]
+    mean = sum(lum) / total
+    spread = (sum((v - mean) ** 2 for v in lum) / total) ** 0.5
+    if spread < 22:
+        print(f"  ! looks like flat artwork (contrast spread {spread:.0f})")
+        return True
+    return False
+
+
 def _clear_generated_marker(path):
     """A real photo overwrites the file, so drop any stale marker."""
     marker = Path(str(path) + ".generated")
@@ -748,6 +779,8 @@ def commit_and_push(path, message):
 
 
 IMAGE_SOURCE = os.getenv("IMAGE_SOURCE", "none").strip()
+if IMAGE_SOURCE == "pexels":            # friendlier alias for "stock"
+    IMAGE_SOURCE = "stock"
 # openverse (free, no key) | article (publisher photo) | stock (Pexels, needs key) | none
 
 OG_IMAGE_RE = re.compile(
@@ -793,6 +826,9 @@ def fetch_article_photo(url, out_path):
             return None, None
         _clear_generated_marker(out_path)
         Path(out_path).write_bytes(data)
+        if looks_like_a_graphic(out_path):
+            print("  ! the article's image is a graphic, not a photo — skipping")
+            return None, None
     except Exception as exc:
         print(f"  ! photo download failed: {exc}")
         return None, None
@@ -1391,6 +1427,9 @@ def _spa_search(term, count=16):
 
 
 # titles that signal a posed portrait or a protocol shot, not a scene
+GRAPHIC_HINTS = ("شعار", "لوجو", "إنفوجرافيك", "انفوجرافيك", "رسم توضيحي",
+                 "تصميم", "بطاقة", "غلاف", "هوية بصرية", "بيان", "إعلان")
+
 PORTRAIT_HINTS = ("معالي", "سمو", "سموه", "الأمير", "وزير", "الوزير", "رئيس",
                   "المدير التنفيذي", "يستقبل", "يلتقي", "يبحث مع", "خلال لقائه",
                   "يرأس", "يدشن", "يفتتح", "مؤتمر صحفي", "كلمة")
@@ -1430,6 +1469,8 @@ def _spa_score(item, terms):
     title = item.get("title") or ""
     if any(h in title for h in PORTRAIT_HINTS):
         score -= 20          # a person announcing a thing isn't a photo of it
+    if any(h in title for h in GRAPHIC_HINTS):
+        score -= 30          # logo cards and infographics aren't photographs
     return score
 
 
@@ -1503,6 +1544,8 @@ def fetch_spa_photo(queries_ar, out_path):
                 continue
             _clear_generated_marker(out_path)
             Path(out_path).write_bytes(data)
+            if looks_like_a_graphic(out_path):
+                break                    # try the next candidate instead
             print(f"    photo: {item.get('title', '')[:70]} [{query}]")
             return str(out_path), SPA_CREDIT
 
