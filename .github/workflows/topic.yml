@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
     inputs:
       topic:
-        description: "الموضوع — leave blank to use today's topic from topics.txt"
+        description: "الموضوع — اكتب موضوعاً محدداً، أو اتركه فارغاً"
+        type: string
+        required: false
+      season:
+        description: "موسم — اسم موسم من seasons.txt (مثل: الدوري، كأس آسيا، رمضان)"
         type: string
         required: false
       dry_run:
@@ -47,17 +51,20 @@ jobs:
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           TOPIC: ${{ inputs.topic }}
+          FORCE_SEASON: ${{ inputs.season }}
           TOPICS_FILE: "topics.txt"
           VOICE_FILE: "voice.txt"
           THEME: "light"
           BRAND: "ملخص تنفيذي"
-          FONT_FAMILY: "NotoNaskhArabic"
+          FONT_FAMILY: "Almarai"
           COOLDOWN_DAYS: "21"
           HARD_COOLDOWN_DAYS: "5"
           SELECT_MODEL: "claude-sonnet-5"
           LOOKBACK_HOURS: "30"
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
+          POST_TO_SNAPCHAT: "0"   # 0 = hybrid, 1 = post automatically
+          MONTHLY_POST_LIMIT: "60"
           IMAGE_SOURCE: ${{ inputs.image_source }}
           POINTS: "3"
           MAX_SEARCHES: "6"
