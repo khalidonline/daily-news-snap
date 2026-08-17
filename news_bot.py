@@ -95,6 +95,15 @@ HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
 MIN_PHOTO_SCORE = int(os.getenv("MIN_PHOTO_SCORE", "10"))
 # Openverse/Pexels are global libraries: without this, a US classroom passes
 # for a Saudi school story. Article photos and SPA are Saudi by definition.
+# a photo has to match at least this many of the query words. One weak match
+# plus a Saudi mention got a WIPO meeting onto a story about insurance rules.
+MIN_TERM_HITS = int(os.getenv("MIN_TERM_HITS", "2"))
+
+# generic officialdom: true of a thousand events, specific to none
+MEETING_HINTS = ("conference", "meeting", "delegation", "summit", "panel",
+                 "signing ceremony", "press conference", "forum", "assembly",
+                 "session", "committee", "podium", "speech", "award ceremony")
+
 REQUIRE_SAUDI_CONTEXT = os.getenv("REQUIRE_SAUDI_CONTEXT", "1").strip() \
     not in ("", "0", "false", "False")
 
@@ -920,7 +929,12 @@ def fetch_openverse_photo(queries, out_path):
                 continue
             if REQUIRE_SAUDI_CONTEXT and _geo_adjust(described) <= 0:
                 continue
-            candidates.append((_ov_score(item, terms), query, item))
+            if _term_hits(described, terms) < MIN_TERM_HITS:
+                continue
+            score = _ov_score(item, terms)
+            if any(h in described.lower() for h in MEETING_HINTS):
+                score -= 15
+            candidates.append((score, query, item))
         if any(c[0] >= 10 for c in candidates):
             break
 
@@ -1000,6 +1014,11 @@ FOREIGN_HINTS = ("barcelona", "madrid", "london", "paris", "berlin", "rome",
                  "wembley", "eiffel", "colosseum")
 
 
+def _term_hits(text, terms):
+    low = (text or "").lower()
+    return sum(1 for t in terms if t and t in low)
+
+
 def _geo_adjust(text):
     """+ for Saudi context, - for a recognisable foreign landmark."""
     low = (text or "").lower()
@@ -1050,7 +1069,11 @@ def fetch_photo(queries, out_path):
                 continue
             if REQUIRE_SAUDI_CONTEXT and _geo_adjust(photo.get("alt")) <= 0:
                 continue
+            if _term_hits(photo.get("alt"), terms) < MIN_TERM_HITS:
+                continue
             score = _score(photo, terms)
+            if any(h in (photo.get("alt") or "").lower() for h in MEETING_HINTS):
+                score -= 15
             if score > best_score:
                 best, best_score, best_query = photo, score, query
 
