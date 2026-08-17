@@ -18,7 +18,7 @@ import re
 import urllib.parse
 import urllib.request
 import urllib.error
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -28,7 +28,8 @@ from news_bot import (
     W, H, BG_TOP, BG_BOTTOM, ACCENT, TEXT, MUTED, AR_DIGITS,
     ar, load_font, _wrap,
     publish_via_github, upload_media, post_story,
-    fetch_headlines, commit_and_push,
+    fetch_headlines, commit_and_push, quota_ok, quota_bump,
+    POST_ENABLED, CARDS_DIR,
     THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
     DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
     render_story,
@@ -64,10 +65,156 @@ def load_topics():
     return topics
 
 
+# --------------------------------------------------------------------------
+# Seasonal calendar — Ramadan, Hajj, National Day, back to school, LEAP...
+# --------------------------------------------------------------------------
+
+SEASONS_FILE = Path(os.getenv("SEASONS_FILE", "seasons.txt"))
+
+try:                                    # optional: only needed for hijri dates
+    from hijri_converter import Hijri as _Hijri, Gregorian as _Gregorian
+    HIJRI_OK = True
+except ImportError:
+    try:
+        from hijridate import Hijri as _Hijri, Gregorian as _Gregorian
+        HIJRI_OK = True
+    except ImportError:
+        HIJRI_OK = False
+
+
+def load_seasons():
+    """Parse seasons.txt into [{name, spec, before, after, topics}]."""
+    try:
+        lines = SEASONS_FILE.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return []
+
+    seasons, current = [], None
+    for raw in lines:
+        line = raw.strip()
+        if not line or (line.startswith("#") and not line.startswith("##")):
+            continue
+        if line.startswith("##"):
+            parts = [p.strip() for p in line.lstrip("#").split("|")]
+            if len(parts) < 2:
+                continue
+            current = {
+                "name": parts[0],
+                "spec": parts[1],
+                "before": int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else 0,
+                "after": int(parts[3]) if len(parts) > 3 and parts[3].isdigit() else 0,
+                "topics": [],
+            }
+            seasons.append(current)
+        elif current is not None:
+            current["topics"].append(line)
+    return [s for s in seasons if s["topics"]]
+
+
+def _hijri_to_gregorian(month, day, today):
+    """The Gregorian date of a hijri month/day, for whichever hijri year
+    lands nearest today. Returns None if the converter isn't installed."""
+    if not HIJRI_OK:
+        return None
+    try:
+        this_hijri_year = _Gregorian(today.year, today.month, today.day) \
+            .to_hijri().year
+    except Exception:
+        return None
+
+    best = None
+    for year in (this_hijri_year - 1, this_hijri_year, this_hijri_year + 1):
+        try:
+            g = _Hijri(year, month, day).to_gregorian()
+        except Exception:
+            continue
+        candidate = date(g.year, g.month, g.day)
+        if best is None or abs((candidate - today).days) < abs((best - today).days):
+            best = candidate
+    return best
+
+
+def _season_window(season, today):
+    """Return (start, end) dates for this season in the current cycle."""
+    spec = season["spec"]
+    before = timedelta(days=season["before"])
+    after = timedelta(days=season["after"])
+
+    if spec.startswith("hijri"):
+        try:
+            month, day = (int(x) for x in spec.split()[1].split("-"))
+        except (ValueError, IndexError):
+            return None
+        peak = _hijri_to_gregorian(month, day, today)
+        if peak is None:
+            return None
+        return peak - before, peak + after
+
+    if spec.startswith("weekday"):
+        names = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+        try:
+            want = names.index(spec.split()[1].lower()[:3])
+        except (ValueError, IndexError):
+            return None
+        return (today, today) if today.weekday() == want else None
+
+    if spec.startswith("greg"):
+        body = spec.split(None, 1)[1] if " " in spec else ""
+
+        def parse_part(text, fallback_year):
+            """Accept MM-DD or YYYY-MM-DD."""
+            bits = [int(x) for x in text.split("-")]
+            if len(bits) == 3:
+                return date(bits[0], bits[1], bits[2]), True
+            return date(fallback_year, bits[0], bits[1]), False
+
+        try:
+            if ".." in body:                       # a date range
+                a, b = body.split("..")
+                start, a_fixed = parse_part(a, today.year)
+                end, b_fixed = parse_part(b, today.year)
+                if not (a_fixed or b_fixed) and end < start:   # wraps new year
+                    if today >= start:
+                        end = date(today.year + 1, end.month, end.day)
+                    else:
+                        start = date(today.year - 1, start.month, start.day)
+                return start - before, end + after
+
+            peak, fixed = parse_part(body, today.year)
+            if not fixed and (peak - today).days < -90:
+                peak = date(today.year + 1, peak.month, peak.day)
+            return peak - before, peak + after
+        except (ValueError, IndexError):
+            return None
+    return None
+
+
+def active_seasons(today=None):
+    """Seasons whose window contains today, soonest peak first."""
+    today = today or date.today()
+    live = []
+    for season in load_seasons():
+        window = _season_window(season, today)
+        if not window:
+            if season["spec"].startswith("hijri") and not HIJRI_OK:
+                print(f"  ! {season['name']}: hijri dates need the "
+                      "hijri-converter package")
+            continue
+        start, end = window
+        if start <= today <= end:
+            live.append((abs((start - today).days), season))
+    live.sort(key=lambda s: s[0])
+    return [s for _, s in live]
+
+
 USED_FILE = Path("state/topics_used.json")
 COOLDOWN_DAYS = int(os.getenv("COOLDOWN_DAYS", "21"))
 HARD_COOLDOWN_DAYS = int(os.getenv("HARD_COOLDOWN_DAYS", "5"))
 SELECT_MODEL = os.getenv("SELECT_MODEL", "claude-sonnet-5")
+# when a season is running, prefer its topics over the general list
+SEASON_PRIORITY = os.getenv("SEASON_PRIORITY", "1").strip() not in ("", "0", "false")
+# manual runs can force a season by name, ignoring the calendar
+FORCE_SEASON = os.getenv("FORCE_SEASON", "").strip()
 
 
 def load_used():
@@ -114,9 +261,44 @@ def choose_topic():
     blocked = {e["topic"] for e in used if e.get("at", "") >= hard_cutoff}
     recent = {e["topic"] for e in used} - blocked
 
-    available = [(i, t) for i, t in enumerate(topics) if t not in blocked]
-    if not available:
+    # a running season takes precedence — its topics are only useful now
+    season_pool = []
+
+    if FORCE_SEASON:
+        want = FORCE_SEASON.lower()
+        matches = [s for s in load_seasons()
+                   if want in s["name"].lower() or s["name"].lower() in want]
+        if matches:
+            for season in matches:
+                print(f"    forced season: {season['name']} "
+                      f"({len(season['topics'])} topics)")
+                season_pool.extend(season["topics"])
+        else:
+            print(f"  ! no season matching {FORCE_SEASON!r}. Available:")
+            for s in load_seasons():
+                print(f"      - {s['name']}")
+
+    if SEASON_PRIORITY and not season_pool:
+        live = active_seasons()
+        if len(live) > 3:
+            # too many overlapping windows dilutes the pool — keep the nearest
+            live = live[:3]
+        for season in live:
+            fresh = [t for t in season["topics"] if t not in blocked]
+            if fresh:
+                print(f"    season: {season['name']} ({len(fresh)} topics available)")
+                season_pool.extend(fresh)
+        if live and not season_pool:
+            print("    season topics all used recently — falling back to the "
+                  "general list")
+
+    if season_pool:
+        topics = season_pool
         available = list(enumerate(topics))
+    else:
+        available = [(i, t) for i, t in enumerate(topics) if t not in blocked]
+        if not available:
+            available = list(enumerate(topics))
 
     print(f"    {len(available)} topics available "
           f"({len(blocked)} on cooldown, {len(recent)} recently used)")
@@ -206,6 +388,12 @@ SYSTEM_PROMPT = """أنت تكتب موجزاً يُنشر على سناب شا�
   ✓ ["ripe dates closeup", "date palm harvest", "date fruit market"]
   الأولى تصف جوهر الموضوع نفسه، والثانية أوسع، والثالثة أعم ما يمكن.
   لا تذكر أشخاصاً بأعينهم ولا شعارات ولا علامات تجارية.
+  اطلب مشاهد محايدة يمكن تصويرها: مبانٍ، مكاتب، طرق، مدن، وثائق، أجهزة،
+  مطارات، أسواق، طبيعة، لوحات إرشادية.
+  ممنوع منعاً باتاً طلب صور: أشخاص بوجوه واضحة، جنود، أسلحة، شرطة، جيوش،
+  احتجاجات، حوادث، إصابات، سجون، أو أي مشهد عنف أو نزاع — حتى لو كان الخبر
+  عن أمن أو مخالفات أو قرارات عقابية. في هذه الحالات اطلب مشهداً محايداً
+  تماماً مثل "government building exterior" أو "airport terminal hall".
 - sources: أسماء المصادر (٢ إلى ٤). إن كان المصدر أجنبياً فاكتبه بالعربية.
 - source_url: رابط الخبر الرسمي الأدق الذي اعتمدت عليه (يفضَّل مصدر حكومي سعودي \
 مثل واس أو موقع الجهة المعنية). ضع الرابط كاملاً كما ظهر في البحث.
@@ -620,6 +808,21 @@ def main():
         print(f"3/3 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
         return
 
+    if not POST_ENABLED:
+        print("3/3 hybrid mode — publishing the card, not posting to Snapchat")
+        url = publish_via_github(card)
+        repo = os.getenv("GITHUB_REPOSITORY", "")
+        branch = os.getenv("GITHUB_REF_NAME", "main")
+        print(f"    today's card: {url}")
+        if repo:
+            print("    always-latest link: https://raw.githubusercontent.com/"
+                  f"{repo}/{branch}/{CARDS_DIR}/latest.png")
+        commit_and_push(save_used(load_used(), topic), f"topic: {slug}")
+        return
+
+    if not quota_ok():
+        return
+
     print("3/3 posting to Snapchat...")
     url = publish_via_github(card) if MEDIA_MODE == "github" else upload_media(card)
     print(f"    media: {url}")
@@ -629,6 +832,7 @@ def main():
     if str(response.get("status", "")).lower() != "error":
         used_file = save_used(load_used(), topic)
         commit_and_push(used_file, f"topic: {slug}")
+        commit_and_push(quota_bump(), f"quota {stamp}")
 
 
 if __name__ == "__main__":
