@@ -21,11 +21,12 @@ on:
         description: "Where the photo comes from"
         type: choice
         options:
+          - spa
           - openverse
           - none
           - article
           - stock
-        default: openverse
+        default: spa
 
 permissions:
   contents: write
