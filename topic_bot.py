@@ -812,6 +812,9 @@ def main():
         pass
     elif IMAGE_SOURCE == "article":
         photo, domain = fetch_article_photo(brief.get("source_url", ""), hero)
+        if photo and not domain:
+            domain = urllib.parse.urlparse(brief.get("source_url", "")).netloc \
+                .replace("www.", "")
         if domain:
             credit = DOMAIN_CREDITS.get(domain, domain)
     elif IMAGE_SOURCE == "stock":
