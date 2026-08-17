@@ -13,6 +13,16 @@ on:
         description: "Render the card but don't post"
         type: boolean
         default: false
+      image_source:
+        description: "مصدر الصورة — لا يوجد توليد آلي في الأخبار"
+        type: choice
+        options:
+          - spa
+          - article
+          - openverse
+          - stock
+          - none
+        default: spa
 
 permissions:
   contents: write
@@ -50,7 +60,7 @@ jobs:
           CANDIDATES: "5"
           REQUIRE_PHOTO: "1"
           MIN_PHOTO_SCORE: "10"
-          IMAGE_SOURCE: "spa"
+          IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           LOOKBACK_HOURS: "14"
           REMEMBER_DAYS: "3"
