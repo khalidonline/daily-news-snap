@@ -795,6 +795,15 @@ def fetch_article_photo(url, out_path):
 
 DOMAIN_CREDITS = {
     "spa.gov.sa": "واس",
+    "sabq.org": "صحيفة سبق",
+    "makkahnewspaper.com": "صحيفة مكة",
+    "al-madina.com": "المدينة",
+    "aleqt.com": "الاقتصادية",
+    "argaam.com": "أرقام",
+    "alriyadh.com": "الرياض",
+    "alwatan.com.sa": "الوطن",
+    "alarabiya.net": "العربية",
+    "alekhbariya.net": "الإخبارية",
     "argaam.com": "أرقام",
     "aawsat.com": "الشرق الأوسط",
     "alarabiya.net": "العربية",
@@ -1786,6 +1795,8 @@ def main():
                                           story.get("image_queries", []), hero)
         if photo is None and story.get("link"):
             photo, domain = fetch_article_photo(story["link"], hero)
+            if photo and not domain:
+                domain = urllib.parse.urlparse(story["link"]).netloc.replace("www.", "")
             credit = DOMAIN_CREDITS.get(domain, domain) if domain else None
         if photo is None and IMAGE_SOURCE in ("spa", "openverse"):
             photo, credit = fetch_spa_photo(story.get("image_queries_ar", []), hero)
