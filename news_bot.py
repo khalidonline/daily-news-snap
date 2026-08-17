@@ -54,6 +54,7 @@ DRY_RUN = os.getenv("DRY_RUN", "").strip() not in ("", "0", "false", "False")
 
 MEDIA_MODE = os.getenv("MEDIA_MODE", "github").strip()
 CARDS_DIR = "cards"
+KEEP_CARDS_DAYS = int(os.getenv("KEEP_CARDS_DAYS", "30"))   # 0 = keep forever
 
 OUT_DIR = Path(os.getenv("OUT_DIR", "out"))
 W, H = 1080, 1920
@@ -389,8 +390,14 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 لكل خبر اكتب:
 - headline: عنوان لا يتجاوز ٥٥ حرفاً، واضح ومباشر، بدون نقطة في نهايته
 - summary: جملتان قصيرتان، لا تتجاوزان ١٥٠ حرفاً، بلغة عربية بسيطة
-- takeaway: جملة واحدة قصيرة تقول للقارئ لماذا يهمه هذا الخبر (حتى ٩٠ حرفاً)
+- takeaway: جملة واحدة قصيرة (حتى ٩٠ حرفاً) تقول شيئاً بنفسها، لا تعد بمعلومة.
+  ممنوع التشويق: لا تكتب "أرقام تكشف..." أو "إليك ما يجب أن تعرفه" أو
+  "تفاصيل مهمة عن..." — القارئ لن يفتح رابطاً، هذه آخر جملة يقرأها.
+  ✗ "أرقام تكشف أي مناطق المملكة الأكثر أماناً على الطريق"
+  ✓ "إذا تقود يومياً بين المدن، الفرق بين المناطق يوصل للضعف"
+  ✓ "يهمك إذا كنت مستأجراً: المهلة تبدأ من تاريخ الإشعار لا من التوقيع"
 - source: اسم المصدر كما ورد لك
+- item: رقم الخبر كما ورد في القائمة المرقّمة (رقم فقط)
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 - اكتب كل الأرقام بالأرقام اللاتينية (2027, 306, 13) لا بالأرقام العربية الهندية.
 
@@ -416,7 +423,7 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 
 أجب بصيغة JSON فقط. بدون markdown وبدون أي مقدمة:
 {{"caption": "...", "stories": [{{"headline": "...", "summary": "...", \
-"takeaway": "...", "source": "...", "image_queries": ["...", "...", "..."], \
+"takeaway": "...", "source": "...", "item": 0, "image_queries": ["...", "...", "..."], \
 "image_queries_ar": ["...", "..."]}}]}}"""
 
 
@@ -424,9 +431,10 @@ def summarize(items, already_posted=()):
     if not ANTHROPIC_API_KEY:
         raise SystemExit("ANTHROPIC_API_KEY is not set")
 
+    shortlist = items[:MAX_HEADLINES_TO_MODEL]
     feed_text = "\n".join(
-        f"[{i['source']}] {i['title']} — {i['summary']}"
-        for i in items[:MAX_HEADLINES_TO_MODEL]
+        f"{n}. [{i['source']}] {i['title']} — {i['summary']}"
+        for n, i in enumerate(shortlist, 1)
     )
 
     user_msg = f"عناوين اليوم:\n\n{feed_text}"
@@ -475,7 +483,17 @@ def summarize(items, already_posted=()):
         start, end = text.find("{"), text.rfind("}")
         if start == -1 or end == -1:
             raise SystemExit(f"No JSON in reply: {text[:300]}")
-        return json.loads(text[start:end + 1])
+        result = json.loads(text[start:end + 1])
+
+        # map each story back to the article it came from
+        for story in result.get("stories", []):
+            try:
+                idx = int(story.get("item", 0)) - 1
+            except (TypeError, ValueError):
+                idx = -1
+            if 0 <= idx < len(shortlist):
+                story["link"] = shortlist[idx].get("link", "")
+        return result
 
     raise SystemExit("Could not get a complete reply from Claude")
 
@@ -1114,9 +1132,13 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
 
     # credit, always clear of the text above it
     f_foot = load_font(26)
-    names = "، ".join(brief.get("sources", [])[:3])
+    parts = []
+    sources = "، ".join(brief.get("sources", [])[:3])
+    if sources:
+        parts.append(f"المصدر: {sources}")
     if photo_credit:
-        names = f"{names} — {photo_credit}" if names else photo_credit
+        parts.append(f"الصورة: {photo_credit}")
+    names = "   •   ".join(parts)
     if names:
         while names and draw.textlength(ar(names)[0], font=f_foot, **kw) > max_w:
             names = names.rsplit("، ", 1)[0] if "، " in names else names[:-4]
@@ -1305,6 +1327,103 @@ def fetch_spa_photo(queries_ar, out_path):
     return None, None
 
 
+# --------------------------------------------------------------------------
+# Local image library — your own licensed images, matched by tags
+# --------------------------------------------------------------------------
+
+IMAGES_DIR = Path(os.getenv("IMAGES_DIR", "images"))
+IMAGES_INDEX = Path(os.getenv("IMAGES_INDEX", "images/images.txt"))
+
+
+def load_local_images():
+    """Parse images/images.txt.
+
+    One image per line:
+        filename.jpg | كلمات, مفتاحية, english, keywords | credit (optional)
+
+    Lines starting with # are ignored. The credit field is optional — leave it
+    out for images you licensed yourself and don't need to attribute.
+    """
+    try:
+        lines = IMAGES_INDEX.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return []
+
+    entries = []
+    for raw in lines:
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = [p.strip() for p in line.split("|")]
+        if len(parts) < 2:
+            continue
+        path = IMAGES_DIR / parts[0]
+        if not path.exists():
+            print(f"  ! {path} listed in the index but not on disk")
+            continue
+        tags = [t.strip().lower() for t in parts[1].split(",") if t.strip()]
+        entries.append({
+            "path": path,
+            "tags": tags,
+            "credit": parts[2] if len(parts) > 2 and parts[2] else None,
+        })
+    return entries
+
+
+def fetch_local_photo(queries_ar, queries_en, out_path):
+    """Pick the best match from your own library. Returns (path, credit)."""
+    library = load_local_images()
+    if not library:
+        return None, None
+
+    terms = []
+    for q in list(queries_ar or []) + list(queries_en or []):
+        terms.extend(t.lower() for t in re.split(r"[\s,]+", str(q)) if len(t) > 2)
+    if not terms:
+        return None, None
+
+    best, best_score = None, 0
+    for entry in library:
+        score = sum(10 for t in terms
+                    if any(t in tag or tag in t for tag in entry["tags"]))
+        if score > best_score:
+            best, best_score = entry, score
+
+    if best is None or best_score < MIN_PHOTO_SCORE:
+        print(f"    local library: no match ({len(library)} images indexed)")
+        return None, None
+
+    import shutil as _shutil
+    _shutil.copyfile(best["path"], out_path)
+    print(f"    photo: {best['path'].name} from your library "
+          f"(matched {best_score // 10} tag(s))")
+    return str(out_path), best.get("credit")
+
+
+def prune_old_cards():
+    """Delete committed cards older than KEEP_CARDS_DAYS so the folder
+    doesn't grow forever. latest.png is always kept."""
+    if KEEP_CARDS_DAYS <= 0:
+        return 0
+    folder = Path(CARDS_DIR)
+    if not folder.exists():
+        return 0
+    cutoff = datetime.now() - timedelta(days=KEEP_CARDS_DAYS)
+    removed = 0
+    for card in folder.glob("*.png"):
+        if card.name == "latest.png":
+            continue
+        stamp = card.name[:10]                  # cards are named YYYY-MM-DD-...
+        try:
+            when = datetime.strptime(stamp, "%Y-%m-%d")
+        except ValueError:
+            continue
+        if when < cutoff:
+            card.unlink()
+            removed += 1
+    return removed
+
+
 def publish_via_github(png_path):
     import shutil
     import time
@@ -1332,7 +1451,10 @@ def publish_via_github(png_path):
     latest = Path(CARDS_DIR) / "latest.png"
     shutil.copyfile(png_path, latest)
 
-    git("add", str(dest), str(latest))
+    removed = prune_old_cards()
+    git("add", "-A", CARDS_DIR)
+    if removed:
+        print(f"    pruned {removed} card(s) older than {KEEP_CARDS_DAYS} days")
     try:
         git("commit", "-m", f"card {dest.name}")
     except subprocess.CalledProcessError:
@@ -1427,7 +1549,12 @@ def main():
             break
         print(f"    [{i}/{len(stories)}] {story['headline']}")
         photo, credit = None, None
-        if IMAGE_SOURCE in ("spa", "openverse"):
+        photo, credit = fetch_local_photo(story.get("image_queries_ar", []),
+                                          story.get("image_queries", []), hero)
+        if photo is None and story.get("link"):
+            photo, domain = fetch_article_photo(story["link"], hero)
+            credit = DOMAIN_CREDITS.get(domain, domain) if domain else None
+        if photo is None and IMAGE_SOURCE in ("spa", "openverse"):
             photo, credit = fetch_spa_photo(story.get("image_queries_ar", []), hero)
         if photo is None:
             photo, credit = fetch_openverse_photo(story.get("image_queries", []), hero)
