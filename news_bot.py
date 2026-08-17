@@ -93,6 +93,10 @@ BRAND = os.getenv("BRAND", "ملخص تنفيذي")
 PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
 MIN_PHOTO_SCORE = int(os.getenv("MIN_PHOTO_SCORE", "10"))
+# Openverse/Pexels are global libraries: without this, a US classroom passes
+# for a Saudi school story. Article photos and SPA are Saudi by definition.
+REQUIRE_SAUDI_CONTEXT = os.getenv("REQUIRE_SAUDI_CONTEXT", "1").strip() \
+    not in ("", "0", "false", "False")
 
 # A wrong photo is worse than no photo. Anything whose own description mentions
 # these is rejected outright — they turn a neutral story into a claim.
@@ -831,12 +835,15 @@ def fetch_openverse_photo(queries, out_path):
             ]))
             if not _image_is_safe(described):
                 continue
+            if REQUIRE_SAUDI_CONTEXT and _geo_adjust(described) <= 0:
+                continue
             candidates.append((_ov_score(item, terms), query, item))
         if any(c[0] >= 10 for c in candidates):
             break
 
     if not candidates:
-        print("  ! no openly licensed photo found")
+        note = " with Saudi context" if REQUIRE_SAUDI_CONTEXT else ""
+        print(f"  ! no openly licensed photo found{note}")
         return None, None
 
     candidates.sort(key=lambda c: -c[0])
@@ -957,6 +964,8 @@ def fetch_photo(queries, out_path):
         for photo in photos:
             if not _image_is_safe(photo.get("alt")):
                 continue
+            if REQUIRE_SAUDI_CONTEXT and _geo_adjust(photo.get("alt")) <= 0:
+                continue
             score = _score(photo, terms)
             if score > best_score:
                 best, best_score, best_query = photo, score, query
@@ -1001,6 +1010,91 @@ def _rounded(img, radius):
     out = Image.new("RGBA", img.size)
     out.paste(img, (0, 0), mask)
     return out
+
+
+def render_number(brief, out_path, photo_credit=None):
+    """Card built around one dominant figure — for stories where the number
+    IS the story (a budget line, a report total, a percentage change)."""
+    bg, ink, red, muted = BG_TOP, TEXT, ACCENT, MUTED
+    body_ink = BODY
+
+    img = Image.new("RGB", (W, H), bg)
+    draw = ImageDraw.Draw(img)
+
+    margin = 96
+    max_w = W - 2 * margin
+    centre = W // 2
+    right = W - margin
+    _, kw = ar("م")
+
+    def mid(xy, text, font, fill):
+        shaped, k = ar(text)
+        draw.text(xy, shaped, font=font, fill=fill, anchor="ma", **k)
+
+    def rtl(xy, text, font, fill):
+        shaped, k = ar(text)
+        draw.text(xy, shaped, font=font, fill=fill, anchor="ra", **k)
+
+    figure = str(brief.get("figure", "")).strip()
+    label = str(brief.get("figure_label", "")).strip()
+    body = (brief.get("body") or "").strip()
+    punch = (brief.get("punch") or "").strip()
+
+    # header
+    y = 170
+    draw.rectangle([right - 110, y, right, y + 10], fill=BRAND_INK)
+    rtl((right, y + 46), BRAND, load_font(32, bold=True), BRAND_INK)
+
+    y = 330
+    f_title = load_font(52, bold=True)
+    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
+        mid((centre, y), line, f_title, ink)
+        y += 68
+    y += 70
+
+    # the figure, as large as it can be while still fitting
+    size = 240
+    while size > 90:
+        f_num = load_font(size, bold=True)
+        if draw.textlength(ar(figure)[0], font=f_num, **kw) <= max_w:
+            break
+        size -= 10
+    mid((centre, y), figure, f_num, BRAND_INK)
+    y += int(size * 1.12)
+
+    if label:
+        f_label = load_font(40, bold=True)
+        for line in _wrap(draw, label, f_label, max_w, kw):
+            mid((centre, y), line, f_label, muted)
+            y += 54
+    y += 60
+
+    f_body = load_font(42)
+    for line in _wrap(draw, body, f_body, max_w, kw):
+        mid((centre, y), line, f_body, body_ink)
+        y += 60
+    y += 44
+
+    f_punch = load_font(42, bold=True)
+    for line in _wrap(draw, punch, f_punch, max_w, kw):
+        mid((centre, y), line, f_punch, red)
+        y += 62
+
+    f_foot = load_font(26)
+    parts = []
+    sources = "، ".join(brief.get("sources", [])[:3])
+    if sources:
+        parts.append(f"المصدر: {sources}")
+    if photo_credit:
+        parts.append(f"الصورة: {photo_credit}")
+    if parts:
+        rule_w = 260
+        draw.line([(centre - rule_w // 2, H - 176),
+                   (centre + rule_w // 2, H - 176)], fill=RULE, width=2)
+        mid((centre, H - 130), "   •   ".join(parts), f_foot, muted)
+
+    img.save(out_path, "PNG", optimize=True)
+    return out_path
 
 
 def render_story(brief, out_path, photo_path=None, photo_credit=None):
@@ -1142,6 +1236,9 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     if names:
         while names and draw.textlength(ar(names)[0], font=f_foot, **kw) > max_w:
             names = names.rsplit("، ", 1)[0] if "، " in names else names[:-4]
+        rule_w = 260
+        draw.line([(centre - rule_w // 2, H - 176),
+                   (centre + rule_w // 2, H - 176)], fill=RULE, width=2)
         mid((centre, H - 130), names, f_foot, muted)
 
     img.save(out_path, "PNG", optimize=True)
