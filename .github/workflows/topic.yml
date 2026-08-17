@@ -59,6 +59,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          REQUIRE_PHOTO: "1"         # 0 = allow text-only cards
           ALLOW_GENERATED: "1"       # topic cards only — never news
           IMAGE_GEN: "byteplus"      # byteplus | fal
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
