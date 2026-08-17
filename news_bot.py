@@ -195,6 +195,11 @@ if not HAS_RAQM:
 # Characters models commonly emit that many Arabic fonts don't include.
 # Mapped to equivalents present in essentially every font.
 CHAR_FIXES = {
+    # digits stay Latin no matter what the model writes
+    "٠": "0", "١": "1", "٢": "2", "٣": "3", "٤": "4",
+    "٥": "5", "٦": "6", "٧": "7", "٨": "8", "٩": "9",
+    "۰": "0", "۱": "1", "۲": "2", "۳": "3", "۴": "4",
+    "۵": "5", "۶": "6", "۷": "7", "۸": "8", "۹": "9",
     "٪": "%", "٬": ",", "٫": ".", "؊": "-",
     "—": "-", "–": "-", "―": "-", "−": "-", "‐": "-", "‑": "-",
     "•": "،", "·": "،", "…": "...", "‎": "", "‏": "",
@@ -387,10 +392,14 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 - takeaway: جملة واحدة قصيرة تقول للقارئ لماذا يهمه هذا الخبر (حتى ٩٠ حرفاً)
 - source: اسم المصدر كما ورد لك
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
+- اكتب كل الأرقام بالأرقام اللاتينية (2027, 306, 13) لا بالأرقام العربية الهندية.
 
 - image_queries: ثلاث عبارات إنجليزية للبحث عن صورة لهذا الخبر تحديداً، مرتبة
   من الأدق إلى الأعم. كل عبارة تصف مشهداً ملموساً يمكن تصويره، لا فكرة مجردة.
-  ✓ ["riyadh city skyline", "desert heat wave", "thermometer summer"]
+  ✓ ["riyadh city skyline", "saudi arabia desert heat", "arabian gulf port"]
+  كل عبارة إنجليزية يجب أن تتضمن "saudi" أو اسم مدينة سعودية (riyadh, jeddah,
+  dammam, mecca, medina, khobar) — وإلا سيأتي البحث بصور من دول أخرى.
+  ✗ "football stadium" (يعطي ملاعب أوروبية)   ✓ "riyadh stadium"
 - image_queries_ar: عبارتان أو ثلاث بالعربية للبحث في أرشيف الصور السعودي،
   كلمات مفتاحية قصيرة لا جمل، مرتبة من الأدق إلى الأعم.
   ✓ ["الرياض أبراج", "مدارس طلاب", "حرارة صيف"]
@@ -776,7 +785,7 @@ def _ov_score(item, terms):
         return 0
     hits = sum(1 for t in terms if t in text)
     wide = (item.get("width") or 0) >= (item.get("height") or 1)
-    return hits * 10 + (3 if wide else 0)
+    return hits * 10 + (3 if wide else 0) + _geo_adjust(text)
 
 
 def fetch_openverse_photo(queries, out_path):
@@ -872,6 +881,26 @@ def _pexels_search(query, per_page=12):
         return []
 
 
+SAUDI_HINTS = ("saudi", "riyadh", "jeddah", "dammam", "mecca", "makkah",
+               "medina", "madinah", "khobar", "arabia", "arabian", "gulf")
+
+# well-known places that would misrepresent a Saudi story
+FOREIGN_HINTS = ("barcelona", "madrid", "london", "paris", "berlin", "rome",
+                 "tokyo", "beijing", "moscow", "new york", "dubai", "doha",
+                 "abu dhabi", "kuwait", "cairo", "istanbul", "camp nou",
+                 "wembley", "eiffel", "colosseum")
+
+
+def _geo_adjust(text):
+    """+ for Saudi context, - for a recognisable foreign landmark."""
+    low = (text or "").lower()
+    if any(h in low for h in FOREIGN_HINTS) and not any(h in low for h in SAUDI_HINTS):
+        return -25
+    if any(h in low for h in SAUDI_HINTS):
+        return 8
+    return 0
+
+
 def _score(photo, terms):
     """How well does this photo's own description match what we asked for?"""
     alt = (photo.get("alt") or "").lower()
@@ -879,7 +908,7 @@ def _score(photo, terms):
         return 0
     hits = sum(1 for t in terms if t in alt)
     # a short, on-point caption beats a long one that happens to contain the word
-    return hits * 10 - len(alt.split()) * 0.05
+    return hits * 10 - len(alt.split()) * 0.05 + _geo_adjust(alt)
 
 
 def fetch_photo(queries, out_path):
@@ -957,7 +986,8 @@ def _rounded(img, radius):
 
 
 def render_story(brief, out_path, photo_path=None, photo_credit=None):
-    """Light card: photo, a short paragraph, one line in red. Centred."""
+    """Light card: photo, a short paragraph, one line in red. Centred.
+    Everything is measured before it is drawn, so nothing can overflow."""
     bg, ink, red, muted = BG_TOP, TEXT, ACCENT, MUTED
     body_ink = BODY
 
@@ -967,9 +997,8 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     margin = 96
     max_w = W - 2 * margin
     centre = W // 2
-    _, kw = ar("\u0645")
-
     right = W - margin
+    _, kw = ar("م")
 
     def mid(xy, text, font, fill):
         shaped, k = ar(text)
@@ -979,43 +1008,86 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
         shaped, k = ar(text)
         draw.text(xy, shaped, font=font, fill=fill, anchor="ra", **k)
 
-    # header: short bar on the right, label beneath it
+    # what we have to fit
+    points = brief.get("points", [])
+    body = brief.get("body")
+    if body is None:
+        body = brief.get("lead", "").strip()
+        if points:
+            body = f"{body} {points[0].get('text', '').strip()}".strip()
+    body = (body or "").strip()
+
+    punch = brief.get("punch")
+    if punch is None:
+        punch = points[-1].get("text", "") if len(points) > 1 else ""
+    punch = (punch or "").strip()
+
+    HEADER_END = 320                      # below the bar and the label
+    FOOTER_TOP = H - 200                  # above the credit line
+
+    def measure(scale, photo_h):
+        f_title = load_font(int(60 * scale), bold=True)
+        f_body = load_font(int(44 * scale))
+        f_punch = load_font(int(44 * scale), bold=True)
+        title_lines = _wrap(draw, brief["title"], f_title, max_w, kw)
+        body_lines = _wrap(draw, body, f_body, max_w, kw) if body else []
+        punch_lines = _wrap(draw, punch, f_punch, max_w, kw) if punch else []
+        height = (len(title_lines) * int(78 * scale) + int(46 * scale)
+                  + (photo_h + int(64 * scale) if photo_h else 0)
+                  + len(body_lines) * int(64 * scale) + int(44 * scale)
+                  + len(punch_lines) * int(66 * scale))
+        return {
+            "fonts": (f_title, f_body, f_punch),
+            "lines": (title_lines, body_lines, punch_lines),
+            "scale": scale, "photo_h": photo_h, "height": height,
+        }
+
+    available = FOOTER_TOP - HEADER_END
+    base_photo_h = int((W - 2 * margin) * 0.78) if photo_path else 0
+
+    layout = None
+    for photo_frac in (1.0, 0.86, 0.72, 0.6):
+        for scale in (1.0, 0.94, 0.88, 0.82):
+            trial = measure(scale, int(base_photo_h * photo_frac))
+            if trial["height"] <= available:
+                layout = trial
+                break
+        if layout:
+            break
+
+    if layout is None:                    # still too long — trim the body
+        while body and len(body) > 80:
+            body = body.rsplit(" ", 1)[0]
+            trial = measure(0.82, int(base_photo_h * 0.6))
+            if trial["height"] <= available:
+                layout = trial
+                body = body.rstrip(" ،.") + "."
+                break
+        layout = layout or measure(0.82, int(base_photo_h * 0.6))
+        print("  ! card content trimmed to fit")
+
+    scale = layout["scale"]
+    f_title, f_body, f_punch = layout["fonts"]
+    title_lines, body_lines, punch_lines = layout["lines"]
+    if scale < 1.0 or layout["photo_h"] != base_photo_h:
+        print(f"    layout: text {int(scale * 100)}%, "
+              f"photo {layout['photo_h']}px")
+
+    # header
     y = 170
     draw.rectangle([right - 110, y, right, y + 10], fill=BRAND_INK)
-    f_brand = load_font(32, bold=True)
-    rtl((right, y + 46), BRAND, f_brand, BRAND_INK)
-    y += 150
+    rtl((right, y + 46), BRAND, load_font(32, bold=True), BRAND_INK)
 
-    f_title = load_font(60, bold=True)
-    if not photo_path:
-        # nothing to fill the middle — centre the text block instead
-        f_body_m = load_font(44)
-        f_punch_m = load_font(44, bold=True)
-        pts = brief.get("points", [])
-        body_m = brief.get("body")
-        if body_m is None:
-            body_m = brief.get("lead", "")
-            if pts:
-                body_m = f"{body_m} {pts[0].get('text', '')}"
-        punch_m = brief.get("punch")
-        if punch_m is None:
-            punch_m = pts[-1].get("text", "") if len(pts) > 1 else ""
-        block = (len(_wrap(draw, brief["title"], f_title, max_w, kw)) * 78 + 46
-                 + len(_wrap(draw, body_m.strip(), f_body_m, max_w, kw)) * 64 + 44
-                 + len(_wrap(draw, punch_m.strip(), f_punch_m, max_w, kw)) * 66)
-        y = max(y, (H - block) // 2 - 60)
-
-    # headline, centred, above the photo
-    for line in _wrap(draw, brief["title"], f_title, max_w, kw):
+    y = HEADER_END
+    for line in title_lines:
         mid((centre, y), line, f_title, ink)
-        y += 78
-    y += 46
+        y += int(78 * scale)
+    y += int(46 * scale)
 
-    if photo_path:
+    if photo_path and layout["photo_h"]:
         try:
             photo = Image.open(photo_path).convert("RGB")
-            box_w = W - 2 * margin
-            box_h = int(box_w * 0.78)
+            box_w, box_h = W - 2 * margin, layout["photo_h"]
             pw, ph = photo.size
             if pw / ph > box_w / box_h:
                 new_w = int(ph * box_w / box_h)
@@ -1027,40 +1099,28 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
             photo = photo.resize((box_w, box_h), Image.LANCZOS)
             rounded = _rounded(photo, 36)
             img.paste(rounded, (margin, y), rounded)
-            y += box_h + 64
+            y += box_h + int(64 * scale)
         except Exception as exc:
             print(f"  ! couldn't place photo: {exc}")
 
-    f_body = load_font(44)
-    points = brief.get("points", [])
-    body = brief.get("body")
-    if body is None:
-        body = brief.get("lead", "").strip()
-        if points:
-            body = f"{body} {points[0].get('text', '').strip()}".strip()
-    body = body.strip()
-
-    for line in _wrap(draw, body, f_body, max_w, kw):
+    for line in body_lines:
         mid((centre, y), line, f_body, body_ink)
-        y += 64
-    y += 44
+        y += int(64 * scale)
+    y += int(44 * scale)
 
-    punch = brief.get("punch")
-    if punch is None:
-        punch = points[-1].get("text", "") if len(points) > 1 else ""
-    punch = punch.strip()
-
-    f_punch = load_font(44, bold=True)
-    for line in _wrap(draw, punch, f_punch, max_w, kw):
+    for line in punch_lines:
         mid((centre, y), line, f_punch, red)
-        y += 66
+        y += int(66 * scale)
 
+    # credit, always clear of the text above it
     f_foot = load_font(26)
-    names = "\u060c ".join(brief.get("sources", [])[:3])
+    names = "، ".join(brief.get("sources", [])[:3])
     if photo_credit:
-        names = f"{names} \u2014 {photo_credit}" if names else photo_credit
+        names = f"{names} — {photo_credit}" if names else photo_credit
     if names:
-        mid((centre, H - 130), names[:90], f_foot, muted)
+        while names and draw.textlength(ar(names)[0], font=f_foot, **kw) > max_w:
+            names = names.rsplit("، ", 1)[0] if "، " in names else names[:-4]
+        mid((centre, H - 130), names, f_foot, muted)
 
     img.save(out_path, "PNG", optimize=True)
     return out_path
@@ -1105,17 +1165,37 @@ def _spa_search(term, count=16):
            f"&searchModel={urllib.parse.quote(json.dumps(model, ensure_ascii=False))}"
            "&pageNumber=1")
     req = urllib.request.Request(url, headers={
-        "User-Agent": USER_AGENT,
-        "Accept": "application/json",
+        "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                       "AppleWebKit/537.36 (KHTML, like Gecko) "
+                       "Chrome/126.0 Safari/537.36"),
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "ar,en;q=0.9",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": f"{SPA_BASE}/ar/search",
     })
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
-            results = json.loads(resp.read())
-        print(f"    SPA: {len(results)} results for {term!r}")
-        return results if isinstance(results, list) else []
-    except Exception as exc:
-        print(f"  ! SPA search failed for {term!r}: {exc}")
+            status = resp.status
+            ctype = resp.headers.get("Content-Type", "?")
+            raw = resp.read()
+    except urllib.error.HTTPError as exc:
+        print(f"  ! SPA HTTP {exc.code} for {term!r}")
         return []
+    except Exception as exc:
+        print(f"  ! SPA request failed for {term!r}: {exc}")
+        return []
+
+    try:
+        results = json.loads(raw.decode("utf-8-sig"))
+    except Exception:
+        head = raw[:200].decode("utf-8", "ignore").replace("\n", " ").strip()
+        print(f"  ! SPA returned non-JSON for {term!r} "
+              f"(status {status}, type {ctype}, {len(raw)} bytes)")
+        print(f"    body starts: {head!r}")
+        return []
+
+    print(f"    SPA: {len(results)} results for {term!r}")
+    return results if isinstance(results, list) else []
 
 
 def _spa_text(item):
