@@ -33,7 +33,7 @@ try:
         POST_ENABLED, CARDS_DIR,
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
-        fetch_spa_photo,
+        fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
         render_story,
     )
 except ImportError as exc:
@@ -398,6 +398,9 @@ SYSTEM_PROMPT = """أنت تكتب موجزاً يُنشر على سناب شا�
   لا تذكر أشخاصاً بأعينهم ولا شعارات ولا علامات تجارية.
 - image_queries_ar: ثلاث كلمات مفتاحية عربية مفردة للبحث في أرشيف الصور
   السعودي — كلمة واحدة لكل عنصر، لا عبارات. ✓ ["الرياض", "كهرباء", "صيف"]
+- image_prompt: وصف إنجليزي من جملة واحدة لصورة توضيحية تُولّد آلياً إن لم
+  تتوفر صورة حقيقية. صف مشهداً سعودياً ملموساً بلا أشخاص ولا شعارات ولا نصوص.
+  ✓ "a modern Saudi apartment living room with a wall air conditioner unit"
   اطلب مشاهد محايدة يمكن تصويرها: مبانٍ، مكاتب، طرق، مدن، وثائق، أجهزة،
   مطارات، أسواق، طبيعة، لوحات إرشادية.
   ممنوع منعاً باتاً طلب صور: أشخاص بوجوه واضحة، جنود، أسلحة، شرطة، جيوش،
@@ -452,7 +455,7 @@ SYSTEM_PROMPT = """أنت تكتب موجزاً يُنشر على سناب شا�
 أجب بصيغة JSON فقط، بدون markdown وبدون مقدمة:
 {{"title": "...", "lead": "...", "points": [{{"heading": "...", "text": "..."}}], \
 "caption": "...", "image_queries": ["...", "...", "..."], \
-"image_queries_ar": ["...", "..."], "source_url": "...", "sources": ["...", "..."]}}"""
+"image_queries_ar": ["...", "..."], "image_prompt": "...", "source_url": "...", "sources": ["...", "..."]}}"""
 
 
 UNIT_WORDS = ("نقطة", "نقاط", "دولار", "دولاراً", "ريال", "ريالاً", "يورو",
@@ -788,8 +791,19 @@ def main():
     photo, credit = None, None
 
     queries_ar = brief.get("image_queries_ar", [])
+    photo, credit = None, None
 
-    if IMAGE_SOURCE in ("spa", "openverse"):
+    # "generate" forces the AI image, skipping the real sources — for testing
+    if IMAGE_SOURCE == "generate":
+        print("    forcing a generated image (IMAGE_SOURCE=generate)")
+        photo, credit = fetch_generated_photo(brief.get("image_prompt", ""), hero)
+        if photo is None:
+            print("    generation failed — falling back to the normal sources")
+
+    if photo is None:
+        photo, credit = fetch_local_photo(queries_ar, queries, hero)
+
+    if photo is None and IMAGE_SOURCE in ("spa", "openverse"):
         photo, credit = fetch_spa_photo(queries_ar, hero)
 
     if photo is not None:
@@ -816,6 +830,8 @@ def main():
             print("    falling back to Pexels...")
             photo = fetch_photo(queries, hero)
             credit = "Pexels" if photo else None
+        if photo is None:
+            photo, credit = fetch_generated_photo(brief.get("image_prompt", ""), hero)
         if photo is None:
             print("  ! no photo from any source — card will be text only")
 
