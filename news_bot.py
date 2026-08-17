@@ -400,9 +400,9 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
   كل عبارة إنجليزية يجب أن تتضمن "saudi" أو اسم مدينة سعودية (riyadh, jeddah,
   dammam, mecca, medina, khobar) — وإلا سيأتي البحث بصور من دول أخرى.
   ✗ "football stadium" (يعطي ملاعب أوروبية)   ✓ "riyadh stadium"
-- image_queries_ar: عبارتان أو ثلاث بالعربية للبحث في أرشيف الصور السعودي،
-  كلمات مفتاحية قصيرة لا جمل، مرتبة من الأدق إلى الأعم.
-  ✓ ["الرياض أبراج", "مدارس طلاب", "حرارة صيف"]
+- image_queries_ar: ثلاث كلمات مفتاحية عربية مفردة للبحث في أرشيف الصور
+  السعودي — كلمة واحدة لكل عنصر، لا عبارات. البحث لا يطابق الجمل.
+  ✓ ["منى", "الحجاج", "المشاعر"]   ✗ ["مخيمات منى", "المشاعر المقدسة"]
   نفس القيود: مشاهد محايدة فقط، بلا أشخاص أو جنود أو شرطة أو عنف.
   اطلب مشاهد محايدة يمكن تصويرها: مبانٍ، مكاتب، طرق، مدن، وثائق، أجهزة،
   مطارات، أسواق، طبيعة، لوحات إرشادية.
@@ -1185,6 +1185,10 @@ def _spa_search(term, count=16):
         print(f"  ! SPA request failed for {term!r}: {exc}")
         return []
 
+    if status == 204 or not raw.strip():
+        print(f"    SPA: 0 results for {term!r}")
+        return []
+
     try:
         results = json.loads(raw.decode("utf-8-sig"))
     except Exception:
@@ -1248,13 +1252,26 @@ def fetch_spa_photo(queries_ar, out_path):
     if not queries_ar:
         return None, None
 
-    candidates = []
+    # "*مخيمات منى*" matches the exact phrase and finds nothing; single
+    # words do the work. Try the phrase, then each word in it.
+    searches = []
     for query in queries_ar:
-        terms = [t for t in re.split(r"\s+", query) if len(t) > 2]
-        for item in _spa_search(query):
+        words = [w for w in re.split(r"\s+", query) if len(w) > 2]
+        if len(words) > 1:
+            searches.append((query, words))          # phrase first
+        for word in words:
+            searches.append((word, words))           # then each word
+    seen_terms = set()
+
+    candidates = []
+    for term, terms in searches:
+        if term in seen_terms:
+            continue
+        seen_terms.add(term)
+        for item in _spa_search(term):
             if not _spa_safe(_spa_text(item)):
                 continue
-            candidates.append((_spa_score(item, terms), query, item))
+            candidates.append((_spa_score(item, terms), term, item))
         if any(c[0] >= MIN_PHOTO_SCORE for c in candidates):
             break
 
