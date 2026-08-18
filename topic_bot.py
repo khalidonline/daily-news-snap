@@ -34,6 +34,7 @@ try:
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
+        ksa_stamp,
         _clean_model_id,
         REQUIRE_PHOTO,
         render_story,
@@ -260,15 +261,16 @@ SELECT_PROMPT = """أنت محرر تختار موضوع اليوم لموجز �
 أجب بصيغة JSON فقط: {"index": رقم الموضوع, "why": "سبب الاختيار في جملة قصيرة"}"""
 
 
-def choose_topic():
+def choose_topic(exclude=()):
     """Pick the topic that best fits yesterday's news."""
     topics = load_topics()
     if not topics:
         return ""
 
     used = load_used()
+    exclude = set(exclude)
     hard_cutoff = (datetime.now() - timedelta(days=HARD_COOLDOWN_DAYS)).isoformat()
-    blocked = {e["topic"] for e in used if e.get("at", "") >= hard_cutoff}
+    blocked = {e["topic"] for e in used if e.get("at", "") >= hard_cutoff} | exclude
     recent = {e["topic"] for e in used} - blocked
 
     # a running season takes precedence — its topics are only useful now
@@ -361,6 +363,8 @@ def choose_topic():
         print(f"    fallback rotation -> {topic}")
         return topic
 TOPIC_MODEL = _clean_model_id(os.getenv("TOPIC_MODEL"), "claude-opus-5")
+# how many topics to try before giving up on finding a photo
+TOPIC_ATTEMPTS = int(os.getenv("TOPIC_ATTEMPTS", "").strip() or "3")
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "6"))
 MAX_TOKENS = int(os.getenv("MAX_TOKENS", "16000"))
 POINTS = int(os.getenv("POINTS", "3"))
@@ -784,12 +788,9 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 
 # --------------------------------------------------------------------------
 
-def main():
-    topic = TOPIC or choose_topic()
-    if not topic:
-        raise SystemExit(f"No topic given and none found in {TOPICS_FILE}")
-
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+def build_card(topic):
+    """Research one topic and find it a photo.
+    Returns (brief, photo, credit) — photo is None if nothing was found."""
     print(f"1/3 researching: {topic}")
     brief = research(topic)
     print(f"    {brief['title']}")
@@ -797,77 +798,94 @@ def main():
     print(f"    body:     {brief.get('body', '')[:80]}...")
     print(f"    takeaway: {brief.get('takeaway', '')[:80]}")
 
-    print("2/3 rendering card...")
-    slug = re.sub(r"[^\w]+", "-", topic, flags=re.UNICODE)[:40].strip("-")
-    stamp = datetime.now().strftime("%Y-%m-%d")
     queries = brief.get("image_queries", [])
+    queries_ar = brief.get("image_queries_ar", [])
     hero = OUT_DIR / "hero.jpg"
     photo, credit = None, None
 
-    queries_ar = brief.get("image_queries_ar", [])
-    photo, credit = None, None
+    print("2/3 finding a photo...")
 
     # "generate" forces the AI image, skipping the real sources — for testing
     if IMAGE_SOURCE == "generate":
         print("    forcing a generated image (IMAGE_SOURCE=generate)")
         photo, credit = fetch_generated_photo(brief.get("image_prompt", ""), hero)
-        if photo is None:
-            print("  ! generation failed and IMAGE_SOURCE=generate, so no other")
-            print("    source is used — you asked to test generation specifically.")
-            return
+        return brief, photo, credit
 
-    if photo is None:
-        photo, credit = fetch_local_photo(queries_ar, queries, hero)
+    photo, credit = fetch_local_photo(queries_ar, queries, hero)
 
     if photo is None and IMAGE_SOURCE in ("spa", "openverse"):
         photo, credit = fetch_spa_photo(queries_ar, hero)
 
-    if photo is not None:
-        pass
-    elif IMAGE_SOURCE == "article":
+    if photo is None and IMAGE_SOURCE == "article":
         photo, domain = fetch_article_photo(brief.get("source_url", ""), hero)
         if photo and not domain:
             domain = urllib.parse.urlparse(brief.get("source_url", "")).netloc \
                 .replace("www.", "")
-        if domain:
-            credit = DOMAIN_CREDITS.get(domain, domain)
-    elif IMAGE_SOURCE == "stock":
+        credit = DOMAIN_CREDITS.get(domain, domain) if domain else None
+    elif photo is None and IMAGE_SOURCE == "stock":
         photo = fetch_photo(queries, hero)
         credit = "Pexels" if photo else None
-    elif IMAGE_SOURCE == "openverse":
+    elif photo is None and IMAGE_SOURCE == "openverse":
         photo, credit = fetch_openverse_photo(queries, hero)
 
-    # cascade through the remaining sources rather than giving up
     if photo is None and IMAGE_SOURCE != "none":
         if IMAGE_SOURCE != "openverse":
             photo, credit = fetch_openverse_photo(queries, hero)
         if photo is None and IMAGE_SOURCE != "article":
-            print("    falling back to the article photo...")
+            print("    trying the article photo...")
             photo, domain = fetch_article_photo(brief.get("source_url", ""), hero)
             credit = DOMAIN_CREDITS.get(domain, domain) if domain else None
         if photo is None and PEXELS_API_KEY and IMAGE_SOURCE != "stock":
-            print("    falling back to Pexels...")
+            print("    trying Pexels...")
             photo = fetch_photo(queries, hero)
             credit = "Pexels" if photo else None
         if photo is None:
             photo, credit = fetch_generated_photo(brief.get("image_prompt", ""), hero)
-        if photo is None and REQUIRE_PHOTO:
-            print("  ! no photo from any source — not publishing a bare card.")
-            print("    set REQUIRE_PHOTO=0 to allow text-only topic cards.")
-            return
-        if photo is None:
-            print("  ! no photo from any source — card will be text only")
 
-    renderer = render_story if THEME == "light" else render_topic
+    return brief, photo, credit
+
+
+def main():
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    tried, brief, photo, credit, topic = [], None, None, None, None
+
+    for attempt in range(1, TOPIC_ATTEMPTS + 1):
+        topic = TOPIC or choose_topic(exclude=tried)
+        if not topic:
+            raise SystemExit(f"No topic given and none found in {TOPICS_FILE}")
+        if attempt > 1:
+            print(f"--- attempt {attempt} of {TOPIC_ATTEMPTS} ---")
+
+        brief, photo, credit = build_card(topic)
+
+        if photo is not None or not REQUIRE_PHOTO or IMAGE_SOURCE == "none":
+            break
+
+        tried.append(topic)
+        if TOPIC or IMAGE_SOURCE == "generate":
+            break                       # a forced topic or a generation test
+        if attempt < TOPIC_ATTEMPTS:
+            print(f"  ! no photo for {topic!r} — trying a different topic")
+
+    if photo is None and REQUIRE_PHOTO and IMAGE_SOURCE != "none":
+        print(f"  ! tried {len(tried)} topic(s) and found no photo — "
+              "not publishing a bare card.")
+        return
+
+    print("3/3 rendering card...")
+    slug = re.sub(r"[^\w]+", "-", topic, flags=re.UNICODE)[:40].strip("-")
+    stamp = ksa_stamp()
     brief.setdefault("punch", brief.get("takeaway", ""))
+    renderer = render_story if THEME == "light" else render_topic
     card = renderer(brief, OUT_DIR / f"{stamp}-{slug}.png", photo, credit)
 
     if DRY_RUN:
-        print(f"3/3 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
+        print(f"    DRY_RUN — nothing published. Card at {Path(card).resolve()}")
         return
 
     if not POST_ENABLED:
-        print("3/3 hybrid mode — publishing the card, not posting to Snapchat")
+        print("    hybrid mode — publishing the card, not posting to Snapchat")
         url = publish_via_github(card)
         repo = os.getenv("GITHUB_REPOSITORY", "")
         branch = os.getenv("GITHUB_REF_NAME", "main")
@@ -881,15 +899,14 @@ def main():
     if not quota_ok():
         return
 
-    print("3/3 posting to Snapchat...")
+    print("    posting to Snapchat...")
     url = publish_via_github(card) if MEDIA_MODE == "github" else upload_media(card)
     print(f"    media: {url}")
     response = post_story(brief.get("caption", topic), [url])
     print("   ", response)
 
     if str(response.get("status", "")).lower() != "error":
-        used_file = save_used(load_used(), topic)
-        commit_and_push(used_file, f"topic: {slug}")
+        commit_and_push(save_used(load_used(), topic), f"topic: {slug}")
         commit_and_push(quota_bump(), f"quota {stamp}")
 
 
