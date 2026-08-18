@@ -75,7 +75,7 @@ jobs:
           TOPICS_FILE: "topics.txt"
           VOICE_FILE: "voice.txt"
           THEME: "light"
-          BRAND: "ملخص تنفيذي"
+          BRAND: "ملخص تنفيذي - معلومة"
           FONT_FAMILY: "Almarai"
           REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
           MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
