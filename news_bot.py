@@ -33,11 +33,18 @@ from fontTools.ttLib import TTFont
 # Saudi Arabic sources. Run once with DRY_RUN=1 and check the per-feed counts
 # in the log — delete any that report 0 items and keep the rest.
 FEEDS = [
-    # Saudi first — these fill tier 1
-    ("اليوم",        "https://www.alyaum.com/rssFeed/1005"),
-    ("الشرق الأوسط", "https://aawsat.com/feed"),
-    # regional and world, for when Saudi news doesn't fill the card
-    ("بي بي سي",     "https://feeds.bbci.co.uk/arabic/rss.xml"),
+    # business, finance and technology — the core of the feed now
+    ("بي بي سي للأعمال",   "https://feeds.bbci.co.uk/news/business/rss.xml"),
+    ("بي بي سي للتقنية",   "https://feeds.bbci.co.uk/news/technology/rss.xml"),
+    ("تك كرانش",           "https://techcrunch.com/feed/"),
+    ("ذا فيرج",            "https://www.theverge.com/rss/index.xml"),
+    ("إنجادجيت",           "https://www.engadget.com/rss.xml"),
+    ("سي إن بي سي",        "https://www.cnbc.com/id/100003114/device/rss/rss.html"),
+    ("سي إن بي سي للتقنية", "https://www.cnbc.com/id/19854910/device/rss/rss.html"),
+    # regional and Saudi, kept for stories that matter close to home
+    ("الشرق الأوسط",       "https://aawsat.com/feed"),
+    ("اليوم",              "https://www.alyaum.com/rssFeed/1005"),
+    ("بي بي سي عربي",      "https://feeds.bbci.co.uk/arabic/rss.xml"),
 ]
 
 STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "1"))
@@ -444,37 +451,48 @@ def fetch_headlines():
 # 2. Pick + summarize (Arabic)
 # --------------------------------------------------------------------------
 
-SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُنشر على سناب شات.
+SYSTEM_PROMPT = """أنت محرر موجز أخبار يومي يُنشر على سناب شات لجمهور سعودي.
+تكتب بالعربية دائماً، حتى لو كان الخبر الأصلي بالإنجليزية.
 
-ستصلك عناوين اليوم. اختر {n} أخبار سعودية مهمة فقط. المعيار صارم: \
+ستصلك عناوين اليوم، بعضها بالإنجليزية. اختر {n} أخبار مهمة. المعيار صارم: \
 الخبر الكبير الذي يستحق أن يتوقف له القارئ، لا مجرد خبر اليوم.
 
 اختر فقط ما يستوفي واحداً من هذه على الأقل:
-- قرار رسمي أو نظام أو لائحة جديدة صادرة عن جهة حكومية
-- إعلان يمس حياة عدد كبير من الناس: أسعار، رسوم، تأشيرات، مواعيد الدراسة، الإجازات
-- حدث اقتصادي كبير: صفقة أو اكتتاب أو مشروع باستثمار ضخم أو نتائج شركة كبرى
-- تحذير أو تنبيه رسمي يمس السلامة أو الحركة أو الصحة العامة
-- حدث وطني أو دولي كبير يخص المملكة مباشرة
+- إطلاق منتج أو ميزة من شركة تقنية يعرفها الناس ويستخدمونها
+- صفقة أو استحواذ أو اكتتاب أو نتائج مالية لشركة كبرى
+- قرار اقتصادي عالمي: فائدة، تضخم، نفط، عملات، أسواق
+- تغيير في سياسة شركة كبرى يمسّ المستخدمين: أسعار، خصوصية، اشتراكات
+- أزمة أو دعوى قضائية أو تحقيق يواجه شركة معروفة
+- قرار حكومي سعودي أو خليجي كبير في الاقتصاد أو التقنية
 
 استبعد تماماً:
-- الأنشطة الروتينية والفعاليات المحلية الصغيرة والمهرجانات والمسابقات
-- التصريحات العامة والزيارات البروتوكولية التي لا يتبعها قرار
-- أخبار الشركات الصغيرة والإعلانات التجارية
-- المقالات والتحليلات والآراء
-- المشاهير والفن
-- الرياضة، إلا إذا كانت حدثاً وطنياً كبيراً
+- السياسة الحزبية والانتخابات والحروب والصراعات
+- الجريمة والحوادث والكوارث
+- الرياضة والمشاهير والفن
+- الشركات الصغيرة والشركات الناشئة المجهولة والإعلانات التجارية
+- المقالات والتحليلات والآراء والمراجعات
+- الشائعات والتسريبات غير المؤكدة ("يُقال إن"، "مصادر تشير")
 
-اختبار الأهمية: هل سيظل هذا الخبر مهماً لشخص في مدينة أخرى بعد أسبوع؟ \
-إن كان الجواب لا، فاستبعده.
+اختبار الأهمية: هل يعرف القارئ الشركة أو يستخدم منتجها؟ وهل تغيّر هذا الخبر
+شيئاً ملموساً؟ إن كان الجواب لا للسؤالين، فاستبعده.
 
-الأولوية عند الاختيار: القرار الرسمي أولاً، ثم الأثر على أكبر عدد من الناس، \
-ثم حجم الرقم.
+النطاق: العالم كله، بتركيز واضح على الأعمال والاقتصاد والمال والتقنية.
 
-النطاق: السعودية فقط. الخبر يجب أن يقع داخل المملكة أو يخصّها مباشرة \
-(قرار حكومي سعودي، جهة سعودية، سوق سعودي، حدث على أرض المملكة).
+الأولوية بهذا الترتيب:
+1. أخبار شركات التقنية الكبرى التي يعرفها الناس ويستخدمون منتجاتها:
+   جوجل، آبل، ميتا، سناب، أوبن إيه آي، أمازون، مايكروسوفت، إنفيديا، تسلا،
+   تيك توك، نتفليكس، سامسونج، أنثروبيك. إطلاق منتج، صفقة، نتائج مالية،
+   تسريح موظفين، دعوى قضائية، تغيير يمسّ المستخدم.
+2. أخبار الاقتصاد والمال العالمية: أسعار الفائدة، التضخم، أسواق الأسهم،
+   النفط، صفقات الاستحواذ الكبرى، أزمات الشركات.
+3. أخبار الأعمال والتقنية السعودية والخليجية.
+4. أي خبر عالمي كبير له أثر اقتصادي واضح.
 
-استبعد كل ما عدا ذلك: الأخبار الإقليمية والعالمية التي لا تخصّ المملكة \
-مباشرة، مهما كانت كبيرة.
+المعيار: هل يعرف القارئ السعودي هذه الشركة أو يستخدم منتجها؟ وهل الخبر
+يغيّر شيئاً ملموساً؟ إن كان الجواب لا للسؤالين، استبعده.
+
+استبعد: السياسة الحزبية، الحروب والصراعات، الجريمة، الرياضة، المشاهير
+والفن، والأخبار المحلية في دول أخرى التي لا أثر لها خارج حدودها.
 
 أعد {n} أخبار مرتبة من الأهم إلى الأقل. سيُنشر خبر واحد فقط، والبقية بدائل \
 تُستخدم إذا تعذّر إيجاد صورة مناسبة للخبر الأول.
@@ -491,6 +509,7 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
   ✓ "يهمك إذا كنت مستأجراً: المهلة تبدأ من تاريخ الإشعار لا من التوقيع"
 - source: اسم المصدر كما ورد لك
 - item: رقم الخبر كما ورد في القائمة المرقّمة (رقم فقط)
+- scope: "saudi" إذا كان الخبر سعودياً أو خليجياً، و"world" لغير ذلك
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 - اكتب كل الأرقام بالأرقام اللاتينية (2027, 306, 13) لا بالأرقام العربية الهندية.
 - راجع الإملاء قبل الإجابة. الأخطاء الشائعة: "باطولة" والصحيح "بطولة"، "التى" والصحيح "التي"، "الذى" والصحيح "الذي".
@@ -498,9 +517,11 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 - image_queries: ثلاث عبارات إنجليزية للبحث عن صورة لهذا الخبر تحديداً، مرتبة
   من الأدق إلى الأعم. كل عبارة تصف مشهداً ملموساً يمكن تصويره، لا فكرة مجردة.
   ✓ ["riyadh city skyline", "saudi arabia desert heat", "arabian gulf port"]
-  كل عبارة إنجليزية يجب أن تتضمن "saudi" أو اسم مدينة سعودية (riyadh, jeddah,
-  dammam, mecca, medina, khobar) — وإلا سيأتي البحث بصور من دول أخرى.
-  ✗ "football stadium" (يعطي ملاعب أوروبية)   ✓ "riyadh stadium"
+  إذا كان scope = "saudi" فيجب أن تتضمن كل عبارة "saudi" أو اسم مدينة سعودية
+  (riyadh, jeddah, dammam, mecca, medina, khobar) — وإلا سيأتي البحث بصور من
+  دول أخرى. ✗ "football stadium"   ✓ "riyadh stadium"
+  وإذا كان scope = "world" فاذكر الشركة أو المكان الحقيقي بدلاً من ذلك.
+  ✓ ["google headquarters building", "smartphone app icons", "stock exchange screen"]
 - image_queries_ar: ثلاث كلمات مفتاحية عربية مفردة للبحث في أرشيف الصور
   السعودي — كلمة واحدة لكل عنصر، لا عبارات. البحث لا يطابق الجمل.
   ✓ ["منى", "الحجاج", "المشاعر"]   ✗ ["مخيمات منى", "المشاعر المقدسة"]
@@ -517,7 +538,7 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار سعودي يومي يُ�
 
 أجب بصيغة JSON فقط. بدون markdown وبدون أي مقدمة:
 {{"caption": "...", "stories": [{{"headline": "...", "summary": "...", \
-"takeaway": "...", "source": "...", "item": 0, "image_queries": ["...", "...", "..."], \
+"takeaway": "...", "source": "...", "item": 0, "scope": "world", "image_queries": ["...", "...", "..."], \
 "image_queries_ar": ["...", "..."]}}]}}"""
 
 
@@ -915,7 +936,7 @@ def _ov_score(item, terms):
     return hits * 10 + (3 if wide else 0) + _geo_adjust(text)
 
 
-def fetch_openverse_photo(queries, out_path):
+def fetch_openverse_photo(queries, out_path, need_saudi=None):
     """Fetch an openly licensed photo. Returns (path, credit) or (None, None).
 
     Only commercial-use, modification-allowed licences are requested, and the
@@ -940,7 +961,8 @@ def fetch_openverse_photo(queries, out_path):
             ]))
             if not _image_is_safe(described):
                 continue
-            if REQUIRE_SAUDI_CONTEXT and _geo_adjust(described) <= 0:
+            want_saudi = REQUIRE_SAUDI_CONTEXT if need_saudi is None else need_saudi
+            if want_saudi and _geo_adjust(described) <= 0:
                 continue
             if _term_hits(described, terms) < MIN_TERM_HITS:
                 continue
@@ -1052,7 +1074,7 @@ def _score(photo, terms):
     return hits * 10 - len(alt.split()) * 0.05 + _geo_adjust(alt)
 
 
-def fetch_photo(queries, out_path):
+def fetch_photo(queries, out_path, need_saudi=None):
     """Fetch a licence-clear photo from Pexels, trying each query in turn and
     picking the result whose description best matches. Returns a path or None.
 
@@ -1080,7 +1102,8 @@ def fetch_photo(queries, out_path):
         for photo in photos:
             if not _image_is_safe(photo.get("alt")):
                 continue
-            if REQUIRE_SAUDI_CONTEXT and _geo_adjust(photo.get("alt")) <= 0:
+            want_saudi = REQUIRE_SAUDI_CONTEXT if need_saudi is None else need_saudi
+            if want_saudi and _geo_adjust(photo.get("alt")) <= 0:
                 continue
             if _term_hits(photo.get("alt"), terms) < MIN_TERM_HITS:
                 continue
@@ -1927,15 +1950,22 @@ def main():
         return photo, (DOMAIN_CREDITS.get(domain, domain) if domain else None)
 
     def _spa(story):
+        # SPA is a Saudi archive — pointless for a story about Google
+        if story.get("scope", "world") != "saudi":
+            return None, None
         return fetch_spa_photo(story.get("image_queries_ar", []), hero)
 
     def _openverse(story):
-        return fetch_openverse_photo(story.get("image_queries", []), hero)
+        saudi = story.get("scope", "world") == "saudi"
+        return fetch_openverse_photo(story.get("image_queries", []), hero,
+                                     need_saudi=saudi)
 
     def _stock(story):
         if not PEXELS_API_KEY:
             return None, None
-        found = fetch_photo(story.get("image_queries", []), hero)
+        saudi = story.get("scope", "world") == "saudi"
+        found = fetch_photo(story.get("image_queries", []), hero,
+                            need_saudi=saudi)
         return found, ("Pexels" if found else None)
 
     def _local(story):
