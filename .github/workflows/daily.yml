@@ -57,6 +57,7 @@ jobs:
           POST_TO_SNAPCHAT: "0"   # 0 = hybrid, 1 = post automatically
           MONTHLY_POST_LIMIT: "60"
           BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
+          BRAND: "ملخص تنفيذي - خبر"
           FONT_FAMILY: "Almarai"
           REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
           MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
