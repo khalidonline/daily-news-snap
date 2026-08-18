@@ -1700,6 +1700,53 @@ def ksa_stamp():
     return f"{now.strftime('%Y-%m-%d')}-{hour}{suffix}"
 
 
+# --------------------------------------------------------------------------
+# Telegram notifications — the card lands on your phone, ready to post
+# --------------------------------------------------------------------------
+
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "").strip()
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+
+
+def notify(text, photo_path=None):
+    """Send a message, with the card attached when there is one.
+    Silent no-op if the secrets aren't set."""
+    if not (TELEGRAM_TOKEN and TELEGRAM_CHAT_ID):
+        return
+
+    base = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
+    try:
+        if photo_path and Path(photo_path).exists():
+            boundary = "----snapnews" + hashlib.md5(text.encode()).hexdigest()[:12]
+            data = Path(photo_path).read_bytes()
+            parts = []
+            for name, value in (("chat_id", TELEGRAM_CHAT_ID), ("caption", text)):
+                parts.append(
+                    f"--{boundary}\r\n"
+                    f'Content-Disposition: form-data; name="{name}"\r\n\r\n'
+                    f"{value}\r\n".encode())
+            parts.append(
+                f"--{boundary}\r\n"
+                f'Content-Disposition: form-data; name="photo"; '
+                f'filename="card.png"\r\n'
+                f"Content-Type: image/png\r\n\r\n".encode())
+            body = b"".join(parts) + data + f"\r\n--{boundary}--\r\n".encode()
+            req = urllib.request.Request(
+                f"{base}/sendPhoto", data=body,
+                headers={"Content-Type":
+                         f"multipart/form-data; boundary={boundary}"})
+        else:
+            body = urllib.parse.urlencode({
+                "chat_id": TELEGRAM_CHAT_ID, "text": text}).encode()
+            req = urllib.request.Request(f"{base}/sendMessage", data=body)
+
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            ok = json.loads(resp.read()).get("ok")
+        print(f"    telegram: {'sent' if ok else 'rejected'}")
+    except Exception as exc:
+        print(f"  ! telegram notification failed: {exc}")
+
+
 def prune_old_cards():
     """Delete committed cards older than KEEP_CARDS_DAYS so the folder
     doesn't grow forever. latest.png is always kept."""
@@ -2018,6 +2065,8 @@ def main():
         if REQUIRE_PHOTO:
             print(f"  ! none of the {len(stories)} stories could be illustrated "
                   "— not posting this run")
+            notify(f"⚠️ {ksa_stamp()} — no card: none of the "
+                   f"{len(stories)} stories had a usable photo")
             return
         chosen, photo, credit = stories[0], None, None
 
@@ -2044,6 +2093,8 @@ def main():
                   f"{repo}/{branch}/{CARDS_DIR}/latest.png")
         # still record it, so the next run doesn't pick the same story
         commit_and_push(save_posted(posted, stories), f"card {stamp}")
+        notify(f"📰 {stamp}\n{chosen['headline']}\n\n{chosen.get('takeaway', '')}",
+               card)
         return
 
     if not quota_ok():
@@ -2062,6 +2113,9 @@ def main():
         state = save_posted(posted, stories)
         commit_and_push(state, f"posted {stamp}")
         commit_and_push(quota_bump(), f"quota {stamp}")
+        notify(f"✅ posted {stamp}\n{chosen['headline']}", card)
+    else:
+        notify(f"❌ {stamp} — Snapchat post failed: {str(response)[:200]}")
 
 
 if __name__ == "__main__":
