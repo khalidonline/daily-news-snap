@@ -85,7 +85,7 @@ if THEME == "light":
     BG_TOP = (238, 232, 227)
     BG_BOTTOM = (232, 225, 219)
     ACCENT = (183, 28, 44)          # red, only for the takeaway line
-    BRAND_INK = (13, 35, 66)        # navy, for the bar and the label
+    BRAND_INK = (11, 61, 46)        # deep emerald, for the bar and the label
     TEXT = (24, 56, 97)             # blue, headline and body
     BODY = (40, 72, 112)
     MUTED = (140, 130, 122)
