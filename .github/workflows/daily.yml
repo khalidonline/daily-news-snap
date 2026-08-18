@@ -2,11 +2,11 @@ name: News brief to Snapchat
 
 on:
   schedule:
-    # KSA is UTC+3 all year (no DST), so these are 07:00 / 13:00 / 17:00 / 22:00 KSA
-    - cron: "0 4 * * *"
-    - cron: "0 10 * * *"
-    - cron: "0 14 * * *"
-    - cron: "0 19 * * *"
+    # KSA is UTC+3. Weighted toward US hours, when tech and market news breaks.
+    - cron: "0 4 * * *"     # 07:00 KSA — overnight US news
+    - cron: "0 9 * * *"     # 12:00 KSA — Gulf/Europe morning
+    - cron: "0 14 * * *"    # 17:00 KSA — US market open
+    - cron: "0 18 * * *"    # 21:00 KSA — US afternoon, most announcements
   workflow_dispatch:
     inputs:
       dry_run:
@@ -65,7 +65,7 @@ jobs:
           REQUIRE_PHOTO: "1"
           IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-          LOOKBACK_HOURS: "14"
+          LOOKBACK_HOURS: "10"
           REMEMBER_DAYS: "3"
         run: python news_bot.py
 
