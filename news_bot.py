@@ -1708,15 +1708,20 @@ GENERATED_CREDIT = "صورة مولّدة بالذكاء الاصطناعي"
 
 # appended to every prompt — the constraints matter more than the description
 GEN_GUARD = (
-    "Editorial illustration, photographic style, Saudi Arabian setting. "
+    "Editorial photograph, Saudi Arabian setting. "
+    "ONE single coherent real location — either an interior or an exterior, "
+    "never both. Every object must sit where it plausibly belongs: furniture "
+    "indoors, vehicles on roads. No collage, no floating or composited items, "
+    "no impossible juxtapositions. "
     "CRITICAL: absolutely no text, letters, words, numbers, characters, "
-    "signage, billboards, shop signs, building signs, banners, licence plates "
-    "or any written script anywhere in the image, in any language. "
-    "Buildings and vehicles must be completely unmarked and unbranded. "
+    "signage, billboards, shop signs, building signs, banners, book pages with "
+    "writing, screens with writing, or any written script anywhere in the "
+    "image, in any language. Notebooks and papers must be blank. "
+    "Buildings and vehicles completely unmarked and unbranded. "
     "No logos, brands, flags or emblems. "
     "No people's faces, no recognisable individuals, no crowds. "
     "No weapons, uniforms, police or military. "
-    "Natural daylight, neutral and calm, documentary feel, wide shot."
+    "Natural daylight, neutral and calm, documentary feel, realistic photo."
 )
 
 
