@@ -34,17 +34,17 @@ from fontTools.ttLib import TTFont
 # in the log — delete any that report 0 items and keep the rest.
 FEEDS = [
     # business, finance and technology — the core of the feed now
-    ("بي بي سي للأعمال",   "https://feeds.bbci.co.uk/news/business/rss.xml"),
-    ("بي بي سي للتقنية",   "https://feeds.bbci.co.uk/news/technology/rss.xml"),
-    ("تك كرانش",           "https://techcrunch.com/feed/"),
-    ("ذا فيرج",            "https://www.theverge.com/rss/index.xml"),
-    ("إنجادجيت",           "https://www.engadget.com/rss.xml"),
-    ("سي إن بي سي",        "https://www.cnbc.com/id/100003114/device/rss/rss.html"),
-    ("سي إن بي سي للتقنية", "https://www.cnbc.com/id/19854910/device/rss/rss.html"),
+    ("BBC Business",   "https://feeds.bbci.co.uk/news/business/rss.xml"),
+    ("BBC Technology",   "https://feeds.bbci.co.uk/news/technology/rss.xml"),
+    ("TechCrunch",           "https://techcrunch.com/feed/"),
+    ("The Verge",            "https://www.theverge.com/rss/index.xml"),
+    ("Engadget",           "https://www.engadget.com/rss.xml"),
+    ("CNBC",        "https://www.cnbc.com/id/100003114/device/rss/rss.html"),
+    ("CNBC Tech", "https://www.cnbc.com/id/19854910/device/rss/rss.html"),
     # regional and Saudi, kept for stories that matter close to home
     ("الشرق الأوسط",       "https://aawsat.com/feed"),
     ("اليوم",              "https://www.alyaum.com/rssFeed/1005"),
-    ("بي بي سي عربي",      "https://feeds.bbci.co.uk/arabic/rss.xml"),
+    ("BBC عربي",      "https://feeds.bbci.co.uk/arabic/rss.xml"),
 ]
 
 STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "1"))
@@ -480,8 +480,8 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار يومي يُنشر عل�
 
 الأولوية بهذا الترتيب:
 1. أخبار شركات التقنية الكبرى التي يعرفها الناس ويستخدمون منتجاتها:
-   جوجل، آبل، ميتا، سناب، أوبن إيه آي، أمازون، مايكروسوفت، إنفيديا، تسلا،
-   تيك توك، نتفليكس، سامسونج، أنثروبيك. إطلاق منتج، صفقة، نتائج مالية،
+   Google، Apple، Meta، Snap، OpenAI، Amazon، Microsoft، NVIDIA، Tesla،
+   TikTok، Netflix، Samsung، Anthropic. إطلاق منتج، صفقة، نتائج مالية،
    تسريح موظفين، دعوى قضائية، تغيير يمسّ المستخدم.
 2. أخبار الاقتصاد والمال العالمية: أسعار الفائدة، التضخم، أسواق الأسهم،
    النفط، صفقات الاستحواذ الكبرى، أزمات الشركات.
@@ -512,6 +512,11 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار يومي يُنشر عل�
 - scope: "saudi" إذا كان الخبر سعودياً أو خليجياً، و"world" لغير ذلك
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 - اكتب كل الأرقام بالأرقام اللاتينية (2027, 306, 13) لا بالأرقام العربية الهندية.
+- اكتب أسماء الشركات والمنتجات بالإنجليزية كما هي، لا تنقلها حرفياً للعربية:
+  ✓ NVIDIA، OpenAI، Google، Meta، Snap، Apple، Microsoft، TikTok، Tesla
+  ✗ إنفيديا، أوبن إيه آي، جوجل، ميتا، سناب، آبل، مايكروسوفت
+  وكذلك أسماء المصادر الأجنبية: CNBC، Reuters، TechCrunch، The Verge، BBC.
+  أما الجهات العربية والسعودية فتُكتب بالعربية كالمعتاد.
 - راجع الإملاء قبل الإجابة. الأخطاء الشائعة: "باطولة" والصحيح "بطولة"، "التى" والصحيح "التي"، "الذى" والصحيح "الذي".
 
 - image_queries: ثلاث عبارات إنجليزية للبحث عن صورة لهذا الخبر تحديداً، مرتبة
