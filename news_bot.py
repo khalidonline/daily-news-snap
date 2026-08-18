@@ -47,7 +47,20 @@ REQUIRE_PHOTO = os.getenv("REQUIRE_PHOTO", "1").strip() not in ("", "0", "false"
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "30"))
 MAX_HEADLINES_TO_MODEL = 60
 
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+def _clean_model_id(raw, fallback):
+    """Accept a pasted code snippet as well as a bare id.
+
+    model="seedream-4-5-251128"  ->  seedream-4-5-251128
+    """
+    value = (raw or "").strip()
+    if not value:
+        return fallback
+    if "=" in value:
+        value = value.split("=", 1)[1]
+    return value.strip().strip('"').strip("'").strip() or fallback
+
+
+CLAUDE_MODEL = _clean_model_id(os.getenv("CLAUDE_MODEL"), "claude-sonnet-5")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
 AYRSHARE_API_KEY = os.getenv("AYRSHARE_API_KEY", "").strip()
 DRY_RUN = os.getenv("DRY_RUN", "").strip() not in ("", "0", "false", "False")
@@ -92,20 +105,20 @@ BRIEF_TITLE = os.getenv("BRIEF_TITLE", "ملخص تنفيذي - أخبار ال�
 BRAND = os.getenv("BRAND", "ملخص تنفيذي")
 PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 HERO_HEIGHT = int(os.getenv("HERO_HEIGHT", "620"))
-MIN_PHOTO_SCORE = int(os.getenv("MIN_PHOTO_SCORE", "10"))
+MIN_PHOTO_SCORE = int(os.getenv("MIN_PHOTO_SCORE", "").strip() or "10")
 # Openverse/Pexels are global libraries: without this, a US classroom passes
 # for a Saudi school story. Article photos and SPA are Saudi by definition.
 # a photo has to match at least this many of the query words. One weak match
 # plus a Saudi mention got a WIPO meeting onto a story about insurance rules.
-MIN_TERM_HITS = int(os.getenv("MIN_TERM_HITS", "2"))
+MIN_TERM_HITS = int(os.getenv("MIN_TERM_HITS", "").strip() or "2")
 
 # generic officialdom: true of a thousand events, specific to none
 MEETING_HINTS = ("conference", "meeting", "delegation", "summit", "panel",
                  "signing ceremony", "press conference", "forum", "assembly",
                  "session", "committee", "podium", "speech", "award ceremony")
 
-REQUIRE_SAUDI_CONTEXT = os.getenv("REQUIRE_SAUDI_CONTEXT", "1").strip() \
-    not in ("", "0", "false", "False")
+REQUIRE_SAUDI_CONTEXT = (os.getenv("REQUIRE_SAUDI_CONTEXT", "").strip() or "1") \
+    not in ("0", "false", "False")
 
 # A wrong photo is worse than no photo. Anything whose own description mentions
 # these is rejected outright — they turn a neutral story into a claim.
@@ -1689,19 +1702,6 @@ ARK_KEY = os.getenv("ARK_API_KEY", "").strip()
 # an unset GitHub repo variable arrives as "", so fall back explicitly
 ARK_URL = os.getenv("ARK_URL", "").strip() or \
     "https://ark.ap-southeast.bytepluses.com/api/v3/images/generations"
-def _clean_model_id(raw, fallback):
-    """Accept a pasted code snippet as well as a bare id.
-
-    model="seedream-4-5-251128"  ->  seedream-4-5-251128
-    """
-    value = (raw or "").strip()
-    if not value:
-        return fallback
-    if "=" in value:
-        value = value.split("=", 1)[1]
-    return value.strip().strip('"').strip("'").strip() or fallback
-
-
 ARK_MODEL = _clean_model_id(os.getenv("ARK_MODEL"), "seedream-4-0-250828")
 ALLOW_GENERATED = os.getenv("ALLOW_GENERATED", "0").strip() not in ("", "0", "false", "False")
 GENERATED_CREDIT = "صورة مولّدة بالذكاء الاصطناعي"
