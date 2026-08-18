@@ -1691,6 +1691,15 @@ def fetch_local_photo(queries_ar, queries_en, out_path):
     return str(out_path), best.get("credit")
 
 
+def ksa_stamp():
+    """Date plus the run hour in KSA time, e.g. 2026-08-18-7am.
+    Runners are UTC, so a 07:00 KSA run would otherwise be stamped 0400."""
+    now = datetime.now(timezone.utc) + timedelta(hours=3)
+    hour = now.hour % 12 or 12
+    suffix = "am" if now.hour < 12 else "pm"
+    return f"{now.strftime('%Y-%m-%d')}-{hour}{suffix}"
+
+
 def prune_old_cards():
     """Delete committed cards older than KEEP_CARDS_DAYS so the folder
     doesn't grow forever. latest.png is always kept."""
@@ -1941,7 +1950,7 @@ def main():
         print(f"    • {s['headline']}  ({s.get('source')})")
 
     print("3/4 finding a photo and rendering...")
-    stamp = datetime.now().strftime("%Y-%m-%d-%H%M")
+    stamp = ksa_stamp()
     hero = OUT_DIR / "hero.jpg"
 
     chosen, photo, credit = None, None, None
