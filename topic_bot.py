@@ -34,6 +34,7 @@ try:
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
+        _clean_model_id,
         REQUIRE_PHOTO,
         render_story,
     )
@@ -219,7 +220,7 @@ def active_seasons(today=None):
 USED_FILE = Path("state/topics_used.json")
 COOLDOWN_DAYS = int(os.getenv("COOLDOWN_DAYS", "21"))
 HARD_COOLDOWN_DAYS = int(os.getenv("HARD_COOLDOWN_DAYS", "5"))
-SELECT_MODEL = os.getenv("SELECT_MODEL", "claude-sonnet-5")
+SELECT_MODEL = _clean_model_id(os.getenv("SELECT_MODEL"), "claude-sonnet-5")
 # when a season is running, prefer its topics over the general list
 SEASON_PRIORITY = os.getenv("SEASON_PRIORITY", "1").strip() not in ("", "0", "false")
 # manual runs can force a season by name, ignoring the calendar
@@ -359,7 +360,7 @@ def choose_topic():
         index, topic = available[datetime.now().toordinal() % len(available)]
         print(f"    fallback rotation -> {topic}")
         return topic
-TOPIC_MODEL = os.getenv("TOPIC_MODEL", "claude-opus-5")
+TOPIC_MODEL = _clean_model_id(os.getenv("TOPIC_MODEL"), "claude-opus-5")
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "6"))
 MAX_TOKENS = int(os.getenv("MAX_TOKENS", "16000"))
 POINTS = int(os.getenv("POINTS", "3"))
