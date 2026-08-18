@@ -61,7 +61,7 @@ jobs:
           MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
           THEME: "light"
           STORIES_PER_DAY: "1"
-          CANDIDATES: "5"
+          CANDIDATES: "8"
           REQUIRE_PHOTO: "1"
           IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
