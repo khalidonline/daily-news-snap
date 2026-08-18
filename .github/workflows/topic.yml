@@ -33,7 +33,7 @@ on:
           - openverse
           - none
           - article
-          - stock
+          - stock   # Pexels
         default: spa
 
 permissions:
@@ -67,13 +67,16 @@ jobs:
           ARK_MODEL: ${{ vars.ARK_MODEL }}
           FAL_KEY: ${{ secrets.FAL_KEY }}
           TOPIC: ${{ inputs.topic }}
-          TOPIC_MODEL: ${{ inputs.model }}
+          TOPIC_MODEL: ${{ inputs.model || 'claude-opus-5' }}
           FORCE_SEASON: ${{ inputs.season }}
           TOPICS_FILE: "topics.txt"
           VOICE_FILE: "voice.txt"
           THEME: "light"
           BRAND: "ملخص تنفيذي"
           FONT_FAMILY: "Almarai"
+          REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
+          MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
+          MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
           COOLDOWN_DAYS: "21"
           HARD_COOLDOWN_DAYS: "5"
           SELECT_MODEL: "claude-haiku-4-5-20251001"
