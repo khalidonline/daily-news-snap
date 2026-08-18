@@ -34,7 +34,7 @@ try:
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
-        ksa_stamp,
+        ksa_stamp, notify,
         _clean_model_id,
         REQUIRE_PHOTO,
         render_story,
@@ -871,6 +871,8 @@ def main():
     if photo is None and REQUIRE_PHOTO and IMAGE_SOURCE != "none":
         print(f"  ! tried {len(tried)} topic(s) and found no photo — "
               "not publishing a bare card.")
+        notify(f"⚠️ {ksa_stamp()} — no topic card: tried {len(tried)} "
+               "topic(s) and none had a usable photo")
         return
 
     print("3/3 rendering card...")
@@ -894,6 +896,8 @@ def main():
             print("    always-latest link: https://raw.githubusercontent.com/"
                   f"{repo}/{branch}/{CARDS_DIR}/latest.png")
         commit_and_push(save_used(load_used(), topic), f"topic: {slug}")
+        notify(f"💡 {stamp}\n{brief['title']}\n\n{brief.get('takeaway', '')}",
+               card)
         return
 
     if not quota_ok():
@@ -908,6 +912,9 @@ def main():
     if str(response.get("status", "")).lower() != "error":
         commit_and_push(save_used(load_used(), topic), f"topic: {slug}")
         commit_and_push(quota_bump(), f"quota {stamp}")
+        notify(f"✅ posted {stamp}\n{brief['title']}", card)
+    else:
+        notify(f"❌ {stamp} — Snapchat post failed: {str(response)[:200]}")
 
 
 if __name__ == "__main__":
