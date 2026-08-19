@@ -226,11 +226,12 @@ def research(story):
 
     messages = [{"role": "user", "content": f"القصة: {story}"}]
     searches = 0
+    budget = MAX_TOKENS
 
     for _ in range(6):
         payload = {
             "model": STORY_MODEL,
-            "max_tokens": MAX_TOKENS,
+            "max_tokens": budget,
             "system": SYSTEM_PROMPT.format(n=STORY_FRAMES),
             "messages": messages,
             "tools": [{"type": "web_search_20250305", "name": "web_search",
@@ -256,13 +257,31 @@ def research(story):
             messages.append({"role": "assistant", "content": data["content"]})
             continue
 
+        # A six-frame story researched by Opus is the longest reply any bot
+        # asks for, so it is the one most likely to hit the ceiling. Without
+        # this the truncated JSON went straight into json.loads and the run
+        # died with a raw traceback, after paying for all the web searches.
+        if data.get("stop_reason") == "max_tokens":
+            if budget < 32000:
+                budget = min(32000, budget * 2)
+                print(f"  ! reply truncated — retrying with max_tokens={budget}")
+                messages = [{"role": "user", "content": f"القصة: {story}"}]
+                continue
+            raise SystemExit(
+                "Reply truncated even at 32000 tokens — lower MAX_SEARCHES "
+                "or ask for fewer STORY_FRAMES")
+
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text")
         print(f"    {searches} web searches used")
         start, end = text.find("{"), text.rfind("}")
-        if start == -1:
+        if start == -1 or end == -1:
             raise SystemExit(f"No JSON in reply: {text[:300]}")
-        return json.loads(text[start:end + 1])
+        try:
+            return json.loads(text[start:end + 1])
+        except json.JSONDecodeError as exc:
+            raise SystemExit(f"Reply wasn't valid JSON ({exc}): "
+                             f"{text[start:start + 300]}")
 
     raise SystemExit("Gave up after too many continuations")
 
