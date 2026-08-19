@@ -2651,10 +2651,22 @@ def _card_destination(png_path):
 
     Arabic filenames can't go in a URL unencoded, and git/CDN handling of
     them varies — commit under an ASCII name instead.
+
+    The digest covers the card's BYTES as well as its name. Hashing the name
+    alone made the filename a function of the KSA hour, so two stories run in
+    the same hour produced identical names for all six frames and the second
+    silently overwrote the first — it happened on 2026-08-19, where the riyal
+    story's cards were replaced by the China story's. Including the content
+    also keeps this idempotent: republishing the same card reuses its name
+    instead of littering cards/ with copies.
     """
     stem = Path(png_path).stem
     ascii_stem = re.sub(r"[^A-Za-z0-9._-]+", "-", stem).strip("-")
-    digest = hashlib.md5(stem.encode("utf-8")).hexdigest()[:8]
+    try:
+        content = Path(png_path).read_bytes()
+    except Exception:
+        content = b""          # unreadable: fall back to name-only, as before
+    digest = hashlib.md5(stem.encode("utf-8") + content).hexdigest()[:8]
     return Path(CARDS_DIR) / f"{ascii_stem or 'card'}-{digest}.png"
 
 

@@ -126,6 +126,10 @@ others. Expect roughly 120 posts a month against that 145.
 - Openverse blocklist matched `war` inside `warehouse`, rejecting everything.
 - `find_all_photos` was capped at 4 frames while the renderer drew 6.
 - Duplicate keys in a workflow `env:` block fail the whole workflow file.
+- Two stories in one KSA hour used to overwrite each other's cards: the
+  filename digest was `md5(stem)` and `ksa_stamp()` only resolves to the hour.
+  It hashes the file's bytes too now — keep it that way, and keep it
+  idempotent so republishing reuses the name rather than adding a copy.
 - `git push` from three bots on one branch loses races. Push through
   `_git_push()`, which rebases and retries — a bare push raised
   `CalledProcessError` and killed the run after the card was already built.
