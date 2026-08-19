@@ -14,7 +14,8 @@ import random
 import sys
 from pathlib import Path
 
-from news_bot import render_story, notify, OUT_DIR, ksa_stamp
+from news_bot import (render_story, notify, commit_and_push,
+                      OUT_DIR, CARDS_DIR, ksa_stamp)
 
 # صيغ مختلفة — السؤال المحدد يجلب ردوداً أكثر من السؤال المفتوح
 PROMPTS = [
@@ -47,8 +48,9 @@ PROMPTS = [
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    if len(sys.argv) > 1:                       # a question typed by hand
-        card = {"title": sys.argv[1],
+    typed = sys.argv[1].strip() if len(sys.argv) > 1 else ""
+    if typed:                                   # a question typed by hand
+        card = {"title": typed,
                 "body": "رد على هذا السناب بموضوعك أو سؤالك.",
                 "punch": "الأكثر طلباً ننشره أول.",
                 "sources": []}
@@ -60,7 +62,22 @@ def main():
     render_story(card, path, None, None)
 
     print(f"    {card['title']}")
-    print(f"    card: {Path(path).resolve()}")
+
+    # in Actions, commit the card so there's a link — but don't touch
+    # latest.png, which belongs to the news and topic cards
+    repo = os.getenv("GITHUB_REPOSITORY", "")
+    if repo:
+        import shutil
+        Path(CARDS_DIR).mkdir(exist_ok=True)
+        dest = Path(CARDS_DIR) / f"{stamp}-ask.png"
+        shutil.copyfile(path, dest)
+        commit_and_push(dest, f"ask card {stamp}")
+        branch = os.getenv("GITHUB_REF_NAME", "main")
+        print(f"    card: https://raw.githubusercontent.com/"
+              f"{repo}/{branch}/{CARDS_DIR}/{dest.name}")
+    else:
+        print(f"    card: {Path(path).resolve()}")
+
     notify(f"❓ {stamp} — بطاقة سؤال المتابعين\n{card['title']}", str(path))
 
 
