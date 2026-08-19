@@ -1,0 +1,36 @@
+name: Ask followers card
+
+on:
+  workflow_dispatch:
+    inputs:
+      question:
+        description: "السؤال — اتركه فارغاً لاختيار صيغة جاهزة"
+        type: string
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  ask:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Build the card
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          THEME: "light"
+          BRAND: "ملخص تنفيذي - سؤال"
+          FONT_FAMILY: "Almarai"
+        run: python ask_card.py "${{ inputs.question }}"
