@@ -1125,7 +1125,13 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
                                         for h in MEETING_HINTS):
                 score -= 15
             candidates.append((score, query, item))
-        if any(c[0] >= 10 for c in candidates):
+        # Stop only once something is good enough to actually publish. This
+        # used to break at a hardcoded 10, so raising MIN_PHOTO_SCORE — the
+        # obvious thing to do after a bad photo — made the search worse: it
+        # still stopped at the mediocre match, then rejected it against the
+        # higher bar and returned nothing, and REQUIRE_PHOTO turned that into
+        # no card at all. Same rule as fetch_spa_photo.
+        if any(c[0] >= MIN_PHOTO_SCORE for c in candidates):
             break
 
     if not candidates:
@@ -1268,8 +1274,10 @@ def fetch_photo(queries, out_path, need_saudi=None):
             if score > best_score:
                 best, best_score, best_query = photo, score, query
 
-        # a clear match on an early (more specific) query wins outright
-        if best_score >= 10:
+        # A clear match on an early (more specific) query wins outright — but
+        # only if it clears the publish bar, or we'd stop searching while
+        # holding something we're about to reject. See fetch_openverse_photo.
+        if best_score >= MIN_PHOTO_SCORE:
             break
 
     if best is None:
@@ -1277,8 +1285,10 @@ def fetch_photo(queries, out_path, need_saudi=None):
         return None
 
     if best_score < MIN_PHOTO_SCORE:
-        print(f"  ! best Pexels match scored {best_score:.0f} — "
-              "posting without a photo instead")
+        # one decimal: the length tiebreak makes near-misses land just under
+        # the bar, and "scored 30, below 30" reads like a bug
+        print(f"  ! best Pexels match scored {best_score:.1f}, below "
+              f"{MIN_PHOTO_SCORE} — posting without a photo instead")
         return None
 
     src = best["src"].get("large2x") or best["src"]["large"]
