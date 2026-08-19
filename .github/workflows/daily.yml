@@ -28,8 +28,10 @@ permissions:
   contents: write
 
 concurrency:
-  group: news-brief          # never let two runs post at once
-  cancel-in-progress: false
+  # runs are 6 hours apart, so an overlap means the earlier one is stuck.
+  # cancel it rather than queueing behind it forever.
+  group: news-brief
+  cancel-in-progress: true
 
 jobs:
   publish:
