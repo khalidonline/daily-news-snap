@@ -1789,6 +1789,52 @@ def notify(text, photo_path=None):
         print(f"  ! telegram notification failed: {exc}")
 
 
+def notify_album(text, photo_paths):
+    """Send several photos as one Telegram album, captioned on the first.
+    Falls back to a single photo if the album call fails."""
+    paths = [p for p in (photo_paths or []) if p and Path(p).exists()]
+    if not (TELEGRAM_TOKEN and TELEGRAM_CHAT_ID) or not paths:
+        return
+    if len(paths) == 1:
+        return notify(text, paths[0])
+
+    boundary = "----snapalbum" + hashlib.md5(text.encode()).hexdigest()[:12]
+    media = []
+    parts = []
+    for n, path in enumerate(paths[:10]):        # Telegram allows up to 10
+        name = f"photo{n}"
+        item = {"type": "photo", "media": f"attach://{name}"}
+        if n == 0:
+            item["caption"] = text
+        media.append(item)
+        parts.append(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="{name}"; '
+            f'filename="{Path(path).name}"\r\n'
+            f"Content-Type: image/png\r\n\r\n".encode()
+            + Path(path).read_bytes() + b"\r\n")
+
+    head = []
+    for key, value in (("chat_id", TELEGRAM_CHAT_ID),
+                       ("media", json.dumps(media, ensure_ascii=False))):
+        head.append(f"--{boundary}\r\n"
+                    f'Content-Disposition: form-data; name="{key}"\r\n\r\n'
+                    f"{value}\r\n".encode())
+
+    body = b"".join(head) + b"".join(parts) + f"--{boundary}--\r\n".encode()
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMediaGroup",
+        data=body,
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            ok = json.loads(resp.read()).get("ok")
+        print(f"    telegram: album of {len(paths)} {'sent' if ok else 'rejected'}")
+    except Exception as exc:
+        print(f"  ! telegram album failed ({exc}) — sending one photo instead")
+        notify(text, paths[0])
+
+
 def prune_old_cards():
     """Delete committed cards older than KEEP_CARDS_DAYS so the folder
     doesn't grow forever. latest.png is always kept."""
