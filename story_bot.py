@@ -48,6 +48,9 @@ STORY_MODEL = _clean_model_id(os.getenv("STORY_MODEL"), "claude-opus-5")
 MAX_TOKENS = int(os.getenv("MAX_TOKENS", "").strip() or "16000")
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "").strip() or "6")
 BRAND = os.getenv("BRAND", "ملخص تنفيذي - قصة")
+# generated filler hurts a story more than it helps — off by default here
+ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "0").strip() \
+    not in ("", "0", "false", "False")
 COOLDOWN_DAYS = int(os.getenv("STORY_COOLDOWN_DAYS", "").strip() or "60")
 
 SYSTEM_PROMPT = """أنت تكتب قصة قصيرة تُنشر على سناب شات لجمهور سعودي، في أربع لقطات.
@@ -55,11 +58,27 @@ SYSTEM_PROMPT = """أنت تكتب قصة قصيرة تُنشر على سناب 
 القصة ليست خبراً ولا مقالاً. لها بداية ومنعطف ورقم ونهاية تترك أثراً.
 ابحث في الإنترنت أولاً، ثم اكتب. كل ما تكتبه يجب أن يكون صحيحاً وموثقاً.
 
-اللقطات الأربع:
-1. البداية — أين ومتى بدأت، بتفصيل ملموس يعلق في الذهن (مكان، مبلغ، عمر).
-2. المنعطف — اللحظة أو القرار الذي غيّر المسار. هنا المفاجأة.
-3. الرقم — حجم ما صارت إليه اليوم، برقم واحد كبير ووحدته ومصدره.
-4. الخلاصة — ماذا يعني هذا للقارئ الآن. ليست عبرة وعظية، بل ملاحظة ذكية.
+اللقطات الأربع — قصة لها بطل وتوتر، لا قائمة معلومات:
+
+1. البطل والمشهد — من هو، وأين كان، وما الذي كان يواجهه.
+   ضع القارئ في المكان. ابدأ بالشخص لا بالتاريخ.
+   ✗ "سنة 1945، جدة. محطة وقود واحدة تبيع قطع غيار."
+   ✓ "عبداللطيف جميل كان يبيع البنزين وقطع الغيار في محطة واحدة بجدة،
+      والسيارات في المملكة كلها بالمئات."
+
+2. المنعطف — اللحظة التي كان يمكن أن تمر عادية ثم غيّرت كل شيء.
+   يجب أن يشعر القارئ بالمخاطرة أو المفارقة. اربطها باللقطة الأولى بأداة
+   سرد: "وفي تلك السنة"، "لكن"، "ما توقّع أحد أن".
+
+3. النتيجة — ما صار إليه، برقم واحد كبير بمصدره وتاريخه.
+   واربطه بالبداية ليظهر حجم المسافة: "من محطة واحدة إلى ...".
+
+4. المعنى — لماذا تستحق هذه القصة أن تُروى اليوم؟ ملاحظة ذكية عن السبب
+   وراء النجاح أو الفشل، لا تلخيص لما سبق ولا عبارة وعظية.
+
+اختبار قبل أن تسلّم: هل يمكن قراءة اللقطات الأربع بالترتيب فتُقرأ كحكاية
+متصلة؟ إن كانت كل لقطة تصلح للوقوف وحدها بلا ترتيب، فهي معلومات لا قصة.
+أعد الكتابة.
 
 قواعد الكتابة:
 - عربية بسيطة قريبة من كلام الناس، لا لغة كتب.
@@ -81,11 +100,17 @@ SYSTEM_PROMPT = """أنت تكتب قصة قصيرة تُنشر على سناب 
 - heading: سطر قصير جداً (حتى ٣٠ حرفاً) — يظهر كبيراً
 - text: جملة أو جملتان (حتى ١٦٠ حرفاً)
 - image_keywords: من كلمتين إلى أربع كلمات إنجليزية بسيطة للبحث عن صورة
-  حقيقية تخص القصة. اسم الشركة أو الشخص أو المنتج أو المكان — لا وصف مشهد.
-  الصور الحقيقية من الأرشيف أفضل من الصور المولّدة، فاختر ما يُرجّح وجوده.
-  ✓ ["Steve Jobs", "Macintosh computer", "Apple logo", "Apple headquarters"]
-  ✗ ["a garage in California in 1976 with two young men assembling boards"]
-  نوّع بين اللقطات: شخص، منتج، مبنى، شعار — أي صورة تخص القصة تفي بالغرض.
+  حقيقية. أسماء علم فقط: اسم الشخص أو الشركة أو المنتج أو المكان.
+  ✓ ["Steve Jobs", "Macintosh 128K", "Apple Park"]
+  ✗ ["a garage in California in 1976"]   ✗ ["office building", "modern desk"]
+
+  اللقطة الأولى: صورة البطل نفسه. ضع اسمه الكامل أولاً في القائمة.
+  القصة عن شخص تبدأ بوجهه، لا بمشهد عام للمدينة أو المبنى.
+  ✓ ["Abdul Latif Jameel", "Sulaiman Al Rajhi", "Ali Al-Naimi"]
+
+  بقية اللقطات: المنتج أو الشركة أو المكان المذكور في تلك اللقطة تحديداً.
+  لا تضع كلمات عامة (مكتب، مبنى، موظفون) — الصورة العامة أسوأ من لا شيء
+  لأنها تبدو حشواً. اختر ما تتوقع وجوده فعلاً في أرشيف صور.
 
 واكتب أيضاً:
 - title: عنوان القصة كاملاً (حتى ٤٥ حرفاً) — يظهر في اللقطة الأولى
@@ -312,10 +337,12 @@ def find_photo(spec, out_path):
         photo, _ = fetch_openverse_photo([keyword], out_path, need_saudi=False,
                                          min_hits=1, subject_mode=True)
 
-    if photo is None:
-        # nothing in the archive — generate something simple about the subject
+    if photo is None and ALLOW_STORY_GENERATION:
+        # Nothing in the archive. Generating a building or an office produces
+        # filler with invented signage, so ask for something plain instead.
         subject = keywords[0] if keywords else spec.get("heading", "")
-        prompt = f"A clear editorial photograph of {subject}"
+        prompt = (f"A plain, unbranded photograph relating to {subject}. "
+                  "No buildings with signs, no offices, no logos, no text.")
         photo, _ = fetch_generated_photo(prompt, out_path)
     return photo
 
@@ -331,7 +358,9 @@ def find_all_photos(brief):
         print(f"    frame {n}: {', '.join(spec.get('image_keywords', [])[:4])}")
         photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg")
         if photo is None:
-            print(f"  ! frame {n} has no picture — not publishing this story")
+            print(f"  ! frame {n} found no real photo for "
+                  f"{', '.join(spec.get('image_keywords', [])[:3])}")
+            print("    a story with filler pictures is worse than no story")
             return None
         photos.append(photo)
     return photos
