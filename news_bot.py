@@ -970,7 +970,8 @@ def _ov_score(item, terms):
     return hits * 10 + (3 if wide else 0) + _geo_adjust(text)
 
 
-def fetch_openverse_photo(queries, out_path, need_saudi=None):
+def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
+                          subject_mode=False):
     """Fetch an openly licensed photo. Returns (path, credit) or (None, None).
 
     Only commercial-use, modification-allowed licences are requested, and the
@@ -998,10 +999,14 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None):
             want_saudi = REQUIRE_SAUDI_CONTEXT if need_saudi is None else need_saudi
             if want_saudi and _geo_adjust(described) <= 0:
                 continue
-            if _term_hits(described, terms) < MIN_TERM_HITS:
+            want_hits = MIN_TERM_HITS if min_hits is None else min_hits
+            if _term_hits(described, terms) < want_hits:
                 continue
             score = _ov_score(item, terms)
-            if any(h in described.lower() for h in MEETING_HINTS):
+            # a keynote photo IS the story when searching for a person or a
+            # company, so only penalise generic event shots for news
+            if not subject_mode and any(h in described.lower()
+                                        for h in MEETING_HINTS):
                 score -= 15
             candidates.append((score, query, item))
         if any(c[0] >= 10 for c in candidates):
@@ -2058,14 +2063,18 @@ def bundle_upload(card_path):
 
 
 def _bundle_post(caption, card_path):
-    """Upload the card, then publish it as a Snapchat Story."""
+    """Upload the card(s), then publish as a Snapchat Story.
+    card_path may be one path or a list of paths (a multi-frame story)."""
     if not (BUNDLE_API_KEY and BUNDLE_TEAM_ID):
         raise SystemExit("BUNDLE_API_KEY and BUNDLE_TEAM_ID must both be set")
     if not card_path:
         return {"status": "error", "message": "bundle.social needs the card file"}
 
+    cards = [card_path] if isinstance(card_path, (str, Path)) else list(card_path)
+
     try:
-        upload_id = bundle_upload(card_path)
+        upload_ids = [bundle_upload(c) for c in cards]
+        upload_id = upload_ids[0]
     except urllib.error.HTTPError as exc:
         body = exc.read().decode()[:400]
         print(f"  ! bundle.social upload {exc.code}: {body}")
@@ -2079,6 +2088,7 @@ def _bundle_post(caption, card_path):
         return {"status": "error", "message": str(exc)}
     if not upload_id:
         return {"status": "error", "message": "no upload id returned"}
+    upload_ids = [u for u in upload_ids if u]
 
     payload = {
         "teamId": BUNDLE_TEAM_ID,
@@ -2088,7 +2098,7 @@ def _bundle_post(caption, card_path):
         "status": "SCHEDULED",
         "socialAccountTypes": ["SNAPCHAT"],
         "data": {"SNAPCHAT": {"type": "STORY", "text": caption,
-                              "uploadIds": [upload_id]}},
+                              "uploadIds": upload_ids}},
     }
     req = urllib.request.Request(
         f"{BUNDLE_BASE.rstrip('/')}/post", data=json.dumps(payload).encode(),
