@@ -57,6 +57,7 @@ jobs:
           STORY_FRAMES: "6"          # 4 to 7
           ALLOW_GENERATED: "1"
           ALLOW_STORY_GENERATION: "0"   # real photos only for stories
+          STORY_ALLOW_REPEAT: "1"       # reuse a photo rather than lose the story
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
