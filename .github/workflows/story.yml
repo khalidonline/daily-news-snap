@@ -54,6 +54,7 @@ jobs:
           FONT_FAMILY: "Almarai"
           IMAGE_SOURCE: "openverse"
           STORY_MODEL: "claude-opus-5"
+          STORY_FRAMES: "6"          # 4 to 7
           ALLOW_GENERATED: "1"
           ALLOW_STORY_GENERATION: "0"   # real photos only for stories
           IMAGE_GEN: "byteplus"
