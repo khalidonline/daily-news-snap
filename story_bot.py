@@ -54,6 +54,9 @@ STORY_FRAMES = max(4, min(7, int(os.getenv("STORY_FRAMES", "").strip() or "6")))
 # generated filler hurts a story more than it helps — off by default here
 ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "0").strip() \
     not in ("", "0", "false", "False")
+# rather than lose a researched story, let a frame borrow another frame's photo
+STORY_ALLOW_REPEAT = os.getenv("STORY_ALLOW_REPEAT", "1").strip() \
+    not in ("0", "false", "False")
 COOLDOWN_DAYS = int(os.getenv("STORY_COOLDOWN_DAYS", "").strip() or "60")
 
 SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لجمهور سعودي، في {n} لقطات.
@@ -138,6 +141,11 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   حقيقية. أسماء علم فقط: اسم الشخص أو الشركة أو المنتج أو المكان.
   ✓ ["Steve Jobs", "Macintosh 128K", "Apple Park"]
   ✗ ["a garage in California in 1976"]   ✗ ["office building", "modern desk"]
+
+  مهم: اختر أسماء يُرجّح وجود صور لها في أرشيف مفتوح المصدر. الأشخاص
+  والشركات والمنتجات المشهورة لها صور؛ الأشخاص المغمورون وأحداث بعينها
+  غالباً لا. إن كان البطل نادر الصور، أضف اسم منتجه أو شركته أو مدينته
+  ككلمة ثانية في نفس اللقطة — بطاقة بلا صورة تُلغي القصة كلها.
 
   اللقطة الأولى: صورة البطل نفسه. ضع اسمه الكامل أولاً في القائمة.
   القصة عن شخص تبدأ بوجهه، لا بمشهد عام للمدينة أو المبنى.
@@ -432,21 +440,54 @@ def find_photo(spec, out_path):
 
 
 def find_all_photos(brief):
-    """Every frame gets its own picture. Returns a list of 4, or None if any
-    frame came up empty — a frame without a picture is not published."""
-    photos = []
-    for n, frame in enumerate(brief.get("frames", [])[:STORY_FRAMES], 1):
+    """A picture for every frame, trying progressively wider searches.
+
+    1. the frame's own keywords
+    2. the story's subject (from the title and the first frame)
+    3. reuse a photo already found for another frame
+
+    Only if all three fail for some frame is the story abandoned — a story
+    costs a research call, so it is worth widening the net before giving up.
+    """
+    frames = brief.get("frames", [])[:STORY_FRAMES]
+    # subject terms: whatever the first frame and the title name
+    fallback = list(brief.get("image_keywords", []))
+    if frames:
+        fallback += list(frames[0].get("image_keywords", []))
+    fallback = [k for k in dict.fromkeys(fallback) if k][:3]
+
+    photos, missing = [], []
+    for n, frame in enumerate(frames, 1):
         spec = dict(frame)
-        if not spec.get("image_keywords"):
-            spec["image_keywords"] = brief.get("image_keywords", [])
-        print(f"    frame {n}: {', '.join(spec.get('image_keywords', [])[:4])}")
+        keywords = [k for k in (spec.get("image_keywords") or []) if k]
+        print(f"    frame {n}: {', '.join(keywords[:4]) or '(no keywords)'}")
+
         photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg")
+
+        if photo is None and fallback:
+            print(f"      widening to the story subject: {', '.join(fallback)}")
+            photo = find_photo({"image_keywords": fallback},
+                               OUT_DIR / f"story-frame-{n}.jpg")
+
         if photo is None:
-            print(f"  ! frame {n} found no real photo for "
-                  f"{', '.join(spec.get('image_keywords', [])[:3])}")
-            print("    a story with filler pictures is worse than no story")
-            return None
+            missing.append(n)
         photos.append(photo)
+
+    # last resort: borrow a picture from a frame that found one
+    found = [p for p in photos if p]
+    if missing and found and STORY_ALLOW_REPEAT:
+        import shutil as _shutil
+        for n in missing:
+            source = found[(n - 1) % len(found)]
+            target = OUT_DIR / f"story-frame-{n}.jpg"
+            _shutil.copyfile(source, target)
+            photos[n - 1] = str(target)
+            print(f"  · frame {n} reuses the picture from another frame")
+        missing = []
+
+    if missing:
+        print(f"  ! frames {missing} found no picture at all")
+        return None
     return photos
 
 
@@ -467,7 +508,8 @@ def main():
     print("2/3 finding a picture for every frame...")
     photos = find_all_photos(brief)
     if photos is None:
-        notify(f"⚠️ {ksa_stamp()} — story skipped: a frame had no picture")
+        notify(f"⚠️ {ksa_stamp()} — story skipped: no picture found\n"
+               f"{story}")
         return
     stamp = ksa_stamp()
     frames = build_frames(brief, stamp, photos)
