@@ -180,6 +180,23 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 - text: من جملتين إلى أربع جمل (١٢٠ إلى ٢٨٠ حرفاً).
   خذ راحتك: القصة المضغوطة تفقد معناها. اشرح السبب والنتيجة،
   لا العناوين فقط. لكن بلا حشو — كل جملة تضيف شيئاً جديداً.
+- punch: اتركها فارغة "" في أغلب اللقطات.
+  لا تملأها إلا إذا كان في اللقطة لحظة واحدة تستحق أن تقف وحدها: اقتباس قيل
+  فعلاً، أو حكم، أو انقلاب في المسار. تُعرض بالأحمر وحدها تحت النص، ولذلك
+  تُقرأ كأنها ذروة اللقطة — فإن وضعت فيها كلاماً عادياً بدت البطاقة كأنها
+  تصيح بلا سبب.
+  جملة واحدة قصيرة (حتى ٧٠ حرفاً). ولا تكرر ما في text بصياغة أخرى:
+  هي جملة جديدة، لا خلاصة.
+  ✗ "وهكذا نجح المشروع" (تلخيص، وليس لحظة)
+  ✗ "كانت تلك بداية التغيير" (كلام عام لا يقول شيئاً)
+  ✗ إعادة صياغة آخر جملة في text
+  ✓ "قالوا له: لا أحد يشتري سيارة في بلد بلا طرق معبّدة."
+  ✓ "خسر كل شيء في ثمانية عشر شهراً."
+  ✓ "الرقم لم يتغير منذ ذلك اليوم: 3.75"
+  في القصة كلها: لقطة واحدة أو لقطتان على الأكثر تحمل punch، والبقية "".
+  إن وضعتها في كل لقطة فقدت أثرها وصارت زخرفة — القوة في ندرتها.
+  واللقطة الأخيرة نصها ملوّن أصلاً، فنادراً ما تحتاجها.
+
 - image_keywords: من كلمتين إلى أربع كلمات إنجليزية بسيطة للبحث عن صورة
   حقيقية. أسماء علم فقط: اسم الشخص أو الشركة أو المنتج أو المكان.
   ✓ ["Steve Jobs", "Macintosh 128K", "Apple Park"]
@@ -252,7 +269,7 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 
 أجب بصيغة JSON فقط:
 {{"title": "...", "caption": "...", \
-"frames": [{{"heading": "...", "text": "...", \
+"frames": [{{"heading": "...", "text": "...", "punch": "", \
 "image_keywords": ["...", "...", "..."], "image_keywords_ar": ["..."]}}], \
 "sources": ["..."], "image_queries": ["..."], "image_queries_ar": ["..."], \
 "image_prompt": "..."}}"""
@@ -365,8 +382,11 @@ def research(story):
     raise SystemExit("Gave up after too many continuations")
 
 
+PUNCH_GAP = 58          # space above the punch, so it reads as its own beat
+
+
 def render_frame(path, kicker, counter, big, big_size, sub=None,
-                 sub_colour=None, photo=None, footer=None):
+                 sub_colour=None, photo=None, footer=None, punch=None):
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
     margin, centre, right = 96, W // 2, W - 96
@@ -417,10 +437,29 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         mid(y, line, f_big, TEXT)
         y += int(size * 1.25)
 
+    bottom = (H - 260 if footer else H - 180)
+
+    # The punch is the one line on the frame that must not be squeezed, so it
+    # is measured before the body and the body gets what is left. Sizing it
+    # after the body would let a long paragraph shrink the very line the
+    # frame is built around.
+    punch = (punch or "").strip()
+    punch_lines, f_punch, punch_gap = [], None, 0
+    if punch:
+        punch_size = 46
+        while punch_size > 32:
+            f_punch = load_font(punch_size, bold=True)
+            punch_lines = _wrap(draw, punch, f_punch, max_w, kw)
+            punch_gap = int(punch_size * 1.34)
+            if len(punch_lines) <= 2:
+                break
+            punch_size -= 2
+    punch_block = (len(punch_lines) * punch_gap + PUNCH_GAP) if punch_lines else 0
+
     if sub:
         y += 46
         # longer frames are allowed now, so shrink until the text fits the space
-        available = (H - 260 if footer else H - 180) - y
+        available = bottom - y - punch_block
         sub_size, line_gap = 42, 60
         while sub_size > 28:
             f_sub = load_font(sub_size, bold=sub_colour == ACCENT)
@@ -432,6 +471,12 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         for line in lines:
             mid(y, line, f_sub, sub_colour or BODY)
             y += line_gap
+
+    if punch_lines:
+        y += PUNCH_GAP
+        for line in punch_lines:
+            mid(y, line, f_punch, ACCENT)
+            y += punch_gap
 
     if footer:
         f_foot = load_font(26)
@@ -522,13 +567,17 @@ def build_frames(brief, stamp, photos):
 
     for n, frame in enumerate(frames, 1):
         last = n == total
+        punch = (frame.get("punch") or "").strip()
         # the opening frame leads with the story title, the rest with their beat
         heading = brief["title"] if n == 1 else frame.get("heading", "")
+        # The closing frame is normally red throughout. If it also carries a
+        # punch, the body goes back to ordinary ink so the red still marks one
+        # line — a frame that is entirely red emphasises nothing.
         paths.append(render_frame(
             OUT_DIR / f"{stamp}-story-{n}.png", BRAND, f"{n} / {total}",
             heading, 60, sub=frame.get("text", ""),
-            sub_colour=ACCENT if last else None,
-            photo=photos[n - 1],
+            sub_colour=ACCENT if (last and not punch) else None,
+            photo=photos[n - 1], punch=punch,
             footer=(f"المصدر: {sources}" if sources else None) if last else None))
 
     return [str(p) for p in paths]
