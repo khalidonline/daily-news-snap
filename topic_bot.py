@@ -228,6 +228,9 @@ def _season_window(season, today):
     return None
 
 
+_HIJRI_WARNED = False
+
+
 def active_seasons(today=None):
     """Seasons whose window contains today, soonest peak first."""
     today = today or date.today()
@@ -236,8 +239,11 @@ def active_seasons(today=None):
         window = _season_window(season, today)
         if not window:
             if season["spec"].startswith("hijri") and not HIJRI_OK:
-                print(f"  ! {season['name']}: hijri dates need the "
-                      "hijri-converter package")
+                global _HIJRI_WARNED
+                if not _HIJRI_WARNED:
+                    _HIJRI_WARNED = True
+                    print("  ! hijri seasons (رمضان، الأعياد، الحج) need the "
+                          "hijri-converter package — skipping them")
             continue
         start, end = window
         if start <= today <= end:
@@ -307,13 +313,34 @@ def score_topics(items, blocked, recent, forced_pool=None):
     Returns a sorted list of {topic, score, reasons, driver}."""
     headline_text = " ".join(i.get("title", "") for i in items).lower()
 
-    in_season = {}
+    # narrower windows beat broad ones: Cityscape (4 days) should outrank
+    # موسم الرياض (5+ months) when both are live
+    in_season, season_bonus = {}, {}
+    today = date.today()
     for season in active_seasons():
+        spec = season["spec"]
+        if spec.startswith("weekday"):
+            bonus = 0          # a weekly slot recurs; a dated event doesn't
+        else:
+            # measure the event itself, not the lead-in we added around it
+            bare = dict(season, before=0, after=0)
+            window = _season_window(bare, today) or _season_window(season, today)
+            span = (window[1] - window[0]).days if window else 999
+            bonus = 12 if span <= 14 else (6 if span <= 45 else 0)
         for name in season["topics"]:
-            in_season.setdefault(name, season["name"])
+            if name not in in_season or bonus > season_bonus.get(name, 0):
+                in_season[name] = season["name"]
+                season_bonus[name] = bonus
+
+    # topics.txt entries plus any topic that exists only inside a season
+    entries = list(load_topics())
+    known = {e["topic"] for e in entries}
+    for name in in_season:
+        if name not in known:
+            entries.append({"topic": name, "triggers": []})
 
     scored = []
-    for entry in load_topics():
+    for entry in entries:
         name = entry["topic"]
         if name in blocked:
             continue
@@ -330,7 +357,8 @@ def score_topics(items, blocked, recent, forced_pool=None):
         season = in_season.get(name)
         if season:
             monthly = season in MONTHLY_SEASONS
-            score += SCORE_MONTHLY if monthly else SCORE_SEASON
+            score += (SCORE_MONTHLY if monthly else SCORE_SEASON) \
+                + season_bonus.get(name, 0)
             reasons.append(("الدورة الشهرية: " if monthly else "موسم: ") + season)
 
         if name in recent:
