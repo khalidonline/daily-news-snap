@@ -55,6 +55,7 @@ jobs:
           IMAGE_SOURCE: "openverse"
           STORY_MODEL: "claude-opus-5"
           ALLOW_GENERATED: "1"
+          ALLOW_STORY_GENERATION: "0"   # real photos only for stories
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
