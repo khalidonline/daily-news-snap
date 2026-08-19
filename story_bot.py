@@ -87,6 +87,25 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 إن طلبت لقطات أقل من ٦، ادمج العقبة مع المشهد الأول والثمن مع المنعطف.
 إن طلبت ٧، افصل المنعطف عن نتيجته المباشرة.
 
+قاعدة التسليم بين اللقطات — الأهم في القصة:
+
+- كل اسم (شخص، شركة، مكان، منتج) يجب أن يُقدَّم عند أول ذكر له: من هو،
+  وما علاقته بالبطل. لا يظهر اسم فجأة كأن القارئ يعرفه.
+  ✗ اللقطة 3: "Fairchild أرسلت لوسون ليفحص النموذج" — ومن أين جاءت Fairchild؟
+  ✓ اللقطة 2 تنتهي بـ: "وفي 1970 دخل Jerry Lawson شركة Fairchild لصناعة
+     الرقائق، مهندساً في قسم المبيعات."
+     ثم اللقطة 3 تبدأ بـ: "وهناك وصله نموذج غريب..."
+
+- كل لقطة تبدأ بما يربطها بالتي قبلها: ضمير، أو إشارة، أو أداة سرد.
+  "وهناك"، "وبعد سنتين"، "لكن المشكلة أن"، "هذا الجهاز".
+
+- اللقطة التي تبدأ باسم جديد بلا تمهيد تكسر القصة. اقرأ كل لقطة وحدها
+  واسأل: هل فيها اسم لم يُشرح من قبل؟ إن كان الجواب نعم، أضف التمهيد
+  في اللقطة السابقة لا في هذه.
+
+- نهاية كل لقطة تفتح سؤالاً تجيب عنه التي بعدها. القارئ ينتقل لأنه يريد
+  أن يعرف، لا لأن هناك لقطة أخرى.
+
 الربط بين اللقطات:
 - كل لقطة تكمل التي قبلها. استخدم أدوات السرد: "لكن"، "وفي تلك السنة"،
   "ما توقّع أحد"، "وهنا".
@@ -310,13 +329,61 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
     return path
 
 
+# words that introduce a name: "شركة X", "جهاز Y", "مدينة Z"
+INTRODUCERS = ("شركة", "مؤسسة", "مصنع", "بنك", "متجر", "جهاز", "منتج", "طراز",
+               "مدينة", "قرية", "ميناء", "مطار", "جامعة", "مهندس", "مؤسس",
+               "رئيس", "مدير", "شريك", "منافس", "علامة", "مشروع", "صندوق",
+               "لعبة", "سيارة", "طائرة", "تطبيق", "موقع", "برنامج")
+
+
+def warn_about_unintroduced_names(brief):
+    """Flag proper names dropped into the middle of a story with no
+    introduction — a reader meeting 'Fairchild' in frame 3 has lost the thread.
+
+    A name is treated as introduced if an Arabic descriptor sits just before it
+    (شركة Fairchild) or if it already appeared earlier. Latin script only;
+    Arabic names are left to the prompt.
+    """
+    frames = brief.get("frames", [])
+    seen = set(re.findall(r"\b[A-Z][A-Za-z0-9&.\-]{2,}", brief.get("title", "")))
+    ignore = {"The", "And", "For", "USA", "US", "UK", "AI", "TV", "CEO", "GDP"}
+    flagged = 0
+
+    for n, frame in enumerate(frames, 1):
+        text = f"{frame.get('heading', '')} {frame.get('text', '')}"
+        names = set(re.findall(r"\b[A-Z][A-Za-z0-9&.\-]{2,}", text)) - ignore
+
+        for name in sorted(names - seen):
+            if n == 1:
+                continue
+            # is it introduced right here?
+            window = text[max(0, text.find(name) - 24):text.find(name)]
+            if any(word in window for word in INTRODUCERS):
+                continue
+            flagged += 1
+            print(f"  ? {name} appears in frame {n} with no introduction — "
+                  "the previous frame should hand it over")
+        seen |= names
+
+    if not flagged and len(frames) > 1:
+        print("    handshakes: every name is introduced before use")
+
+
 def build_frames(brief, stamp, photos):
     """Render one frame per beat. The last frame carries the sources."""
     frames = brief.get("frames", [])[:STORY_FRAMES]
     if len(frames) < 4:
         raise SystemExit(f"expected at least 4 frames, got {len(frames)}")
 
-    sources = "، ".join(brief.get("sources", [])[:3])
+    if len(photos) < len(frames):
+        raise SystemExit(f"{len(frames)} frames but only {len(photos)} photos")
+
+    # source names only — a raw URL in the footer looks like a mistake
+    names = []
+    for src in brief.get("sources", [])[:3]:
+        src = re.sub(r"^https?://(www\.)?", "", str(src)).split("/")[0]
+        names.append(src)
+    sources = "، ".join(names)
     total = len(frames)
     paths = []
 
@@ -328,7 +395,7 @@ def build_frames(brief, stamp, photos):
             OUT_DIR / f"{stamp}-story-{n}.png", BRAND, f"{n} / {total}",
             heading, 60, sub=frame.get("text", ""),
             sub_colour=ACCENT if last else None,
-            photo=photos[n - 1] if n - 1 < len(photos) else None,
+            photo=photos[n - 1],
             footer=(f"المصدر: {sources}" if sources else None) if last else None))
 
     return [str(p) for p in paths]
@@ -368,7 +435,7 @@ def find_all_photos(brief):
     """Every frame gets its own picture. Returns a list of 4, or None if any
     frame came up empty — a frame without a picture is not published."""
     photos = []
-    for n, frame in enumerate(brief.get("frames", [])[:4], 1):
+    for n, frame in enumerate(brief.get("frames", [])[:STORY_FRAMES], 1):
         spec = dict(frame)
         if not spec.get("image_keywords"):
             spec["image_keywords"] = brief.get("image_keywords", [])
@@ -395,6 +462,7 @@ def main():
     print(f"    {brief['title']}")
     for n, f in enumerate(brief.get("frames", []), 1):
         print(f"    {n}. {f.get('heading', '')} — {f.get('text', '')[:60]}")
+    warn_about_unintroduced_names(brief)
 
     print("2/3 finding a picture for every frame...")
     photos = find_all_photos(brief)
