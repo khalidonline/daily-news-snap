@@ -86,7 +86,7 @@ jobs:
           LOOKBACK_HOURS: "30"
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
-          POST_TO_SNAPCHAT: "0"   # 0 = hybrid, 1 = post automatically
+          POST_TO_SNAPCHAT: "1"   # 0 = hybrid, 1 = post automatically
           MONTHLY_POST_LIMIT: "60"
           IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
           POINTS: "3"
