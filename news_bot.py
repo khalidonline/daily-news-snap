@@ -162,9 +162,65 @@ BLOCKED_IMAGE_TERMS = (
 )
 
 
-_BLOCKED_RE = re.compile(
-    r"\b(" + "|".join(re.escape(t) for t in BLOCKED_IMAGE_TERMS) + r")\b",
-    re.IGNORECASE)
+# the English blocklist won't catch an Arabic caption, and since stories now
+# search Openverse in Arabic too, Arabic captions arrive from every source
+# rather than only from SPA
+BLOCKED_AR_TERMS = (
+    "جندي", "جنود", "عسكري", "عسكرية", "سلاح", "أسلحة", "بندقية", "مدفع",
+    "حرب", "قتال", "اشتباك", "غارة", "قصف", "انفجار", "صاروخ",
+    "شرطة", "اعتقال", "توقيف", "سجن", "سجين", "محكمة",
+    "احتجاج", "مظاهرة", "عنف", "دماء", "إصابة", "مصاب", "جنازة", "عزاء",
+    "حادث", "حريق", "كارثة", "ضحايا", "قتلى",
+)
+
+# Artwork is not evidence. A story about a real person or a real place needs a
+# photograph of it — political art, a propaganda poster or a caricature is
+# somebody's argument about the subject, and putting it on the card passes
+# that argument off as a record. The pixel check catches flat logo cards; this
+# catches artwork that is photographic enough to survive it.
+NOT_A_PHOTOGRAPH_TERMS = (
+    "propaganda", "poster", "posters", "caricature", "caricatures",
+    "cartoon", "cartoons", "illustration", "illustrations", "illustrated",
+    "drawing", "drawings", "artwork", "painting", "paintings", "sketch",
+    "engraving", "lithograph", "woodcut", "etching", "mural", "clipart",
+)
+
+# NOT "رسم" or "رسوم" on their own: those are the ordinary words for a fee,
+# and "الرسوم الجمركية" (customs duties) is core business vocabulary — the
+# same trap as 'war' inside 'warehouse'. Only unambiguous forms here.
+NOT_A_PHOTOGRAPH_AR = (
+    "كاريكاتير", "كاريكاتور", "كاريكاتيري",
+    "بروباغندا", "بروباجندا", "دعاية", "دعائية",
+    "ملصق", "ملصقات", "رسمة", "رسومات",
+    "رسم توضيحي", "رسوم متحركة", "رسم كرتوني", "لوحة زيتية",
+)
+
+
+def _latin_word_re(terms):
+    return re.compile(r"\b(" + "|".join(re.escape(t) for t in terms) + r")\b",
+                      re.IGNORECASE)
+
+
+def _arabic_word_re(terms):
+    """Arabic has no \\b, so bound the match with the Arabic letter range —
+    otherwise a blocked word rejects every word that merely contains it.
+
+    Arabic also glues its article and prepositions onto the front of a word,
+    and a caption almost always uses them: 'الجنود' not 'جنود', 'بالسلاح' not
+    'سلاح'. Bounding on the letter range alone meant the article defeated
+    every term in the list, so the most common form of each one walked
+    straight through. Allow the usual proclitics before the match.
+    """
+    prefix = r"(?:لل|[وفبكل]?ال|[وفبكل])?"
+    return re.compile(r"(?<![ء-ي])" + prefix + r"("
+                      + "|".join(re.escape(t) for t in terms)
+                      + r")(?![ء-ي])")
+
+
+_BLOCKED_RE = _latin_word_re(BLOCKED_IMAGE_TERMS)
+_BLOCKED_AR_RE = _arabic_word_re(BLOCKED_AR_TERMS)
+_ARTWORK_RE = _latin_word_re(NOT_A_PHOTOGRAPH_TERMS)
+_ARTWORK_AR_RE = _arabic_word_re(NOT_A_PHOTOGRAPH_AR)
 
 
 def looks_like_a_graphic(path):
@@ -206,15 +262,24 @@ def _clear_generated_marker(path):
 
 
 def _image_is_safe(text):
-    """Reject candidates whose description touches conflict or sensitive themes.
+    """Reject candidates whose description touches conflict or sensitive
+    themes, or says the thing is artwork rather than a photograph.
 
     Whole words only — substring matching rejected 'warehouse' for containing
     'war', which quietly killed every result on ordinary searches.
     """
-    match = _BLOCKED_RE.search(text or "")
-    if match:
-        print(f"  ! skipped an image ({match.group(0)!r} in its description)")
-        return False
+    text = text or ""
+    for pattern in (_BLOCKED_RE, _BLOCKED_AR_RE):
+        match = pattern.search(text)
+        if match:
+            print(f"  ! skipped an image ({match.group(0)!r} in its description)")
+            return False
+    for pattern in (_ARTWORK_RE, _ARTWORK_AR_RE):
+        match = pattern.search(text)
+        if match:
+            print(f"  ! skipped artwork, not a photograph "
+                  f"({match.group(0)!r} in its description)")
+            return False
     return True
 
 STATE_FILE = Path("state/posted.json")
@@ -1620,15 +1685,6 @@ SPA_BASE = "https://cc.spa.gov.sa"
 SPA_YEARS = int(os.getenv("SPA_YEARS", "3"))
 SPA_CREDIT = os.getenv("SPA_CREDIT", "واس / CC BY-SA 4.0")
 
-# the English blocklist won't catch Arabic captions
-BLOCKED_AR_TERMS = (
-    "جندي", "جنود", "عسكري", "عسكرية", "سلاح", "أسلحة", "بندقية", "مدفع",
-    "حرب", "قتال", "اشتباك", "غارة", "قصف", "انفجار", "صاروخ",
-    "شرطة", "اعتقال", "توقيف", "سجن", "سجين", "محكمة",
-    "احتجاج", "مظاهرة", "عنف", "دماء", "إصابة", "مصاب", "جنازة", "عزاء",
-    "حادث", "حريق", "كارثة", "ضحايا", "قتلى",
-)
-
 
 def _ticks(dt):
     """.NET ticks — what the SPA search API expects for dates."""
@@ -1705,18 +1761,8 @@ def _spa_text(item):
     ]))
 
 
-_BLOCKED_AR_RE = re.compile(
-    r"(?<![\u0621-\u064A])(" + "|".join(re.escape(t) for t in BLOCKED_AR_TERMS)
-    + r")(?![\u0621-\u064A])")
-
-
 def _spa_safe(text):
-    """Whole-word matching, so a blocked root doesn't reject an innocent word."""
-    match = _BLOCKED_AR_RE.search(text or "")
-    hit = match.group(0) if match else None
-    if hit:
-        print(f"  ! skipped an SPA image ({hit!r} in its caption)")
-        return False
+    """SPA captions are Arabic; _image_is_safe checks both languages now."""
     return _image_is_safe(text)
 
 
