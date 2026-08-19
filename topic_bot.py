@@ -48,6 +48,17 @@ except ImportError as exc:
 
 TOPIC = os.getenv("TOPIC", "").strip()
 TOPICS_FILE = Path(os.getenv("TOPICS_FILE", "topics.txt"))
+REQUESTS_FILE = Path(os.getenv("REQUESTS_FILE", "requests.txt"))
+
+
+def load_requests():
+    """Topics followers asked for. These outrank everything else."""
+    try:
+        lines = REQUESTS_FILE.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return []
+    return [ln.strip() for ln in lines
+            if ln.strip() and not ln.strip().startswith("#")]
 VOICE_FILE = Path(os.getenv("VOICE_FILE", "voice.txt"))
 
 
@@ -298,6 +309,7 @@ SELECT_PROMPT = """أنت محرر تختار موضوع اليوم لموجز �
 أجب بصيغة JSON فقط: {"index": رقم الموضوع, "why": "سبب الاختيار في جملة قصيرة"}"""
 
 
+SCORE_REQUEST = int(os.getenv("SCORE_REQUEST", "").strip() or "60")
 SCORE_TRIGGER = int(os.getenv("SCORE_TRIGGER", "").strip() or "40")
 SCORE_SEASON = int(os.getenv("SCORE_SEASON", "").strip() or "30")
 SCORE_MONTHLY = int(os.getenv("SCORE_MONTHLY", "").strip() or "20")
@@ -332,9 +344,14 @@ def score_topics(items, blocked, recent, forced_pool=None):
                 in_season[name] = season["name"]
                 season_bonus[name] = bonus
 
-    # topics.txt entries plus any topic that exists only inside a season
+    # topics.txt entries, season-only topics, and anything followers asked for
     entries = list(load_topics())
     known = {e["topic"] for e in entries}
+    requested = set(load_requests())
+    for name in requested:
+        if name not in known:
+            entries.append({"topic": name, "triggers": []})
+            known.add(name)
     for name in in_season:
         if name not in known:
             entries.append({"topic": name, "triggers": []})
@@ -348,6 +365,10 @@ def score_topics(items, blocked, recent, forced_pool=None):
             continue
 
         score, reasons = 0, []
+
+        if name in requested:
+            score += SCORE_REQUEST
+            reasons.append("طلبه متابع")
 
         hits = [t for t in entry["triggers"] if t and t in headline_text]
         if hits:
