@@ -62,3 +62,16 @@ jobs:
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
         run: python story_bot.py
+
+      # A dry run returns before it notifies, and this is the only workflow
+      # with no artifact — so a story dry run used to produce nothing you
+      # could look at anywhere. Six frames are worth inspecting before they
+      # go out as a series.
+      - name: Keep the frames for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-frames-${{ github.run_id }}
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
