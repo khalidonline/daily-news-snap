@@ -955,6 +955,36 @@ def _git_identity():
     _git("config", "user.email", "news-bot@users.noreply.github.com")
 
 
+def _git_push(attempts=3):
+    """Push, rebasing onto anything that landed in the meantime.
+
+    Three bots share one branch and each run pushes more than once, so losing
+    a race is an ordinary event rather than an error. A bare `git push` raised
+    CalledProcessError and killed the run *after* the research call and the
+    rendering had already been paid for. Returns True if the push landed.
+    """
+    import subprocess as _sp
+    for attempt in range(1, attempts + 1):
+        try:
+            _git("push")
+            return True
+        except _sp.CalledProcessError as exc:
+            detail = (exc.stderr or b"").decode("utf-8", "ignore").strip()
+            if attempt == attempts:
+                print(f"  ! push failed after {attempts} attempts: "
+                      f"{detail.splitlines()[-1][:160] if detail else '?'}")
+                return False
+            print(f"  · push rejected — rebasing and retrying "
+                  f"({attempt}/{attempts - 1})")
+            try:
+                _git("pull", "--rebase", "--autostash")
+            except _sp.CalledProcessError as pull_exc:
+                pull_detail = (pull_exc.stderr or b"").decode("utf-8", "ignore")
+                print(f"  ! rebase failed: {pull_detail.strip()[:160]}")
+                return False
+    return False
+
+
 def commit_and_push(path, message):
     """Commit one file. Used for the card and for the posted-history state."""
     import subprocess as _sp
@@ -966,7 +996,7 @@ def commit_and_push(path, message):
         except _sp.CalledProcessError:
             return                      # nothing changed
         _git("pull", "--rebase", "--autostash")
-        _git("push")
+        _git_push()
     except Exception as exc:
         print(f"  ! couldn't commit {path}: {exc}")
 
@@ -2115,7 +2145,26 @@ def fetch_generated_photo(prompt, out_path):
     return str(out_path), GENERATED_CREDIT
 
 
-def publish_via_github(png_path):
+def _card_destination(png_path):
+    """Where a card lands in cards/.
+
+    Arabic filenames can't go in a URL unencoded, and git/CDN handling of
+    them varies — commit under an ASCII name instead.
+    """
+    stem = Path(png_path).stem
+    ascii_stem = re.sub(r"[^A-Za-z0-9._-]+", "-", stem).strip("-")
+    digest = hashlib.md5(stem.encode("utf-8")).hexdigest()[:8]
+    return Path(CARDS_DIR) / f"{ascii_stem or 'card'}-{digest}.png"
+
+
+def publish_many_via_github(png_paths):
+    """Commit every card in ONE commit and return their public URLs.
+
+    A story is six frames. Publishing them one at a time meant six commits,
+    six pushes and six waits for the CDN inside a 15-minute job — six chances
+    to lose a race with another bot, and minutes of the budget spent waiting.
+    They all land in one commit now, so one CDN check covers the set.
+    """
     import shutil
     import time
 
@@ -2124,47 +2173,54 @@ def publish_via_github(png_path):
     if not repo:
         raise SystemExit("GITHUB_REPOSITORY unset — MEDIA_MODE=github only works in Actions")
 
+    paths = [png_paths] if isinstance(png_paths, (str, Path)) else list(png_paths)
+    if not paths:
+        return []
+
     Path(CARDS_DIR).mkdir(exist_ok=True)
+    dests = []
+    for png_path in paths:
+        dest = _card_destination(png_path)
+        shutil.copyfile(png_path, dest)
+        dests.append(dest)
 
-    # Arabic filenames can't go in a URL unencoded, and git/CDN handling of
-    # them varies — commit under an ASCII name instead.
-    stem = Path(png_path).stem
-    ascii_stem = re.sub(r"[^A-Za-z0-9._-]+", "-", stem).strip("-")
-    digest = hashlib.md5(stem.encode("utf-8")).hexdigest()[:8]
-    dest = Path(CARDS_DIR) / f"{ascii_stem or 'card'}-{digest}.png"
-    shutil.copyfile(png_path, dest)
-
-    def git(*args):
-        subprocess.run(["git", *args], check=True, capture_output=True)
-
-    git("config", "user.name", "news-bot")
-    git("config", "user.email", "news-bot@users.noreply.github.com")
-    latest = Path(CARDS_DIR) / "latest.png"
-    shutil.copyfile(png_path, latest)
+    _git_identity()
+    # latest.png points at the last frame, which is the one worth landing on
+    shutil.copyfile(paths[-1], Path(CARDS_DIR) / "latest.png")
 
     removed = prune_old_cards()
-    git("add", "-A", CARDS_DIR)
+    _git("add", "-A", CARDS_DIR)
     if removed:
         print(f"    pruned {removed} card(s) older than {KEEP_CARDS_DAYS} days")
+    label = dests[0].name if len(dests) == 1 else f"{len(dests)} cards, {dests[0].name}"
     try:
-        git("commit", "-m", f"card {dest.name}")
+        _git("commit", "-m", f"card {label}")
     except subprocess.CalledProcessError:
         pass
-    git("push")
+    if not _git_push():
+        raise SystemExit("Couldn't push the card(s) — the URLs below would 404")
 
-    url = ("https://raw.githubusercontent.com/"
-           f"{repo}/{branch}/{CARDS_DIR}/{urllib.parse.quote(dest.name)}")
+    urls = ["https://raw.githubusercontent.com/"
+            f"{repo}/{branch}/{CARDS_DIR}/{urllib.parse.quote(d.name)}"
+            for d in dests]
+
+    # one commit, so if the last file is live the whole set is
     for delay in (0, 2, 3, 5, 8, 10):
         time.sleep(delay)
         try:
             urllib.request.urlopen(
-                urllib.request.Request(url, method="HEAD",
+                urllib.request.Request(urls[-1], method="HEAD",
                                        headers={"User-Agent": USER_AGENT}),
                 timeout=15)
-            return url
+            return urls
         except urllib.error.HTTPError:
             continue
-    raise SystemExit(f"Card not reachable at {url} — is the repo public?")
+    raise SystemExit(f"Card not reachable at {urls[-1]} — is the repo public?")
+
+
+def publish_via_github(png_path):
+    """One card, one URL. Thin wrapper so existing callers are unchanged."""
+    return publish_many_via_github([png_path])[0]
 
 
 def _ayrshare(path_, payload):

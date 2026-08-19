@@ -28,7 +28,7 @@ try:
         ANTHROPIC_API_KEY, DRY_RUN, OUT_DIR, CARDS_DIR, W, H,
         BG_TOP, TEXT, BODY, ACCENT, MUTED, BRAND_INK, RULE,
         ar, load_font, _wrap, _rounded, _clean_model_id,
-        commit_and_push, publish_via_github, post_story, post_ok,
+        commit_and_push, publish_many_via_github, post_story, post_ok,
         describe_failure, notify, notify_album, deliver_unposted, ksa_stamp,
         quota_ok, quota_bump,
         POST_ENABLED, POST_PROVIDER, MEDIA_MODE, upload_media,
@@ -569,7 +569,7 @@ def main():
 
     if not POST_ENABLED:
         print("3/3 hybrid mode — publishing the frames, not posting")
-        urls = [publish_via_github(f) for f in frames]
+        urls = publish_many_via_github(frames)
         for u in urls:
             print(f"    {u}")
         commit_and_push(save_used(load_used(), story), f"story: {slug}")
@@ -584,8 +584,8 @@ def main():
     print("3/3 posting the story to Snapchat...")
     urls = []
     if POST_PROVIDER != "bundle":
-        urls = [publish_via_github(f) if MEDIA_MODE == "github"
-                else upload_media(f) for f in frames]
+        urls = (publish_many_via_github(frames) if MEDIA_MODE == "github"
+                else [upload_media(f) for f in frames])
 
     response = post_story(brief.get("caption", story), urls, frames)
     print("   ", response)
