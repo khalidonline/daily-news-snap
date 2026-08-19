@@ -1997,13 +1997,32 @@ def upload_media(png_path):
     return url
 
 
+def describe_failure(response):
+    """A short, readable reason — not the whole API response."""
+    if not isinstance(response, dict):
+        return str(response)[:200]
+    for key in ("message", "error", "errors", "status"):
+        value = response.get(key)
+        if value:
+            return f"{key}: {str(value)[:200]}"
+    return str(response)[:200]
+
+
 def post_ok(response):
-    """True when the post really went out, whichever provider sent it."""
+    """True when the post really went out, whichever provider sent it.
+
+    bundle.social always returns error/errors keys, set to None and {} on
+    success — so check the values, never the presence of the keys.
+    """
     if not isinstance(response, dict):
         return False
-    if str(response.get("status", "")).lower() == "error":
+    if str(response.get("status", "")).lower() in ("error", "failed"):
         return False
-    return "error" not in response and "errors" not in response
+    if response.get("error"):
+        return False
+    if response.get("errors"):
+        return False
+    return True
 
 
 def _multipart(fields, file_field, filename, data, mime="image/png"):
@@ -2287,7 +2306,8 @@ def main():
         commit_and_push(quota_bump(), f"quota {stamp}")
         notify(f"✅ posted {stamp}\n{chosen['headline']}", card)
     else:
-        notify(f"❌ {stamp} — Snapchat post failed: {str(response)[:200]}")
+        notify(f"❌ {stamp} — Snapchat post failed\n"
+               f"{describe_failure(response)}")
 
 
 if __name__ == "__main__":
