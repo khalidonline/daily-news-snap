@@ -1407,10 +1407,25 @@ def _wikipedia_lead_files(term):
         # so an exact title match jumps the queue
         pages.sort(key=lambda p: (p.get("title", "").strip().lower()
                                   != term.strip().lower()))
+        # The lead image is exempt from the term-hit check below, because it
+        # is the article's own picture. That only holds if the article is
+        # really about what we asked for — so require the title to carry every
+        # word of the query. Searching for "علي النعيمي" otherwise returned the
+        # article for a different النعيمي and, with it, a photograph of the
+        # wrong man.
+        wanted = [w for w in re.split(r"\W+", term.lower()) if len(w) > 2]
+        # whole words, not substrings: an Arabic name fragment turns up inside
+        # unrelated words, which is how a different النعيمي got matched
+        checks = [(_latin_word_re([w]) if w.isascii() else _arabic_word_re([w]))
+                  for w in wanted]
         for page in pages:
             name = page.get("pageimage")
-            if name:
-                titles.append(f"File:{name}")
+            title = (page.get("title") or "").lower()
+            if not name or not checks:
+                continue
+            if not all(rx.search(title) for rx in checks):
+                continue
+            titles.append(f"File:{name}")
     if titles:
         print(f"    Wikipedia lead image(s) for {term!r}: {len(titles)}")
     return titles
@@ -1462,7 +1477,13 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
             if (info.get("width") or 0) >= (info.get("height") or 1):
                 score += 3
             if from_article:
-                score += 12
+                # The article title had to carry every word of the query to
+                # get here, so this really is a picture of the subject. That
+                # beats a filename that merely happens to contain the words:
+                # searching "علي النعيمي" scored a different النعيمي above the
+                # correct man, because _term_hits matches substrings and short
+                # Arabic tokens turn up inside unrelated words.
+                score += 25
             if not subject_mode and any(h in described.lower()
                                         for h in MEETING_HINTS):
                 score -= 15
@@ -1504,6 +1525,64 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
             return str(out_path), credit
 
     print("  ! every Commons candidate failed to download")
+    return None, None
+
+
+def fetch_commons_portrait(name, out_path):
+    """A free photograph of a named person, or (None, None).
+
+    Deliberately stricter than fetch_commons_photo. A portrait of the wrong
+    person is worse than no portrait: nothing downstream would catch it, and
+    the card would put a stranger's face on someone else's story. Searching
+    "علي النعيمي" returned a different النعيمي precisely this way, because the
+    ordinary term scoring matches substrings and a short Arabic token turns up
+    inside unrelated words.
+
+    Two ways in, both requiring the whole name:
+      1. the lead image of an article whose title carries every word of it
+      2. a Commons file whose own description names the person in full
+    """
+    name = (name or "").strip()
+    parts = [p for p in re.split(r"\W+", name) if len(p) > 2]
+    if not parts:
+        return None, None
+    checks = [(_latin_word_re([p]) if p.isascii() else _arabic_word_re([p]))
+              for p in parts]
+
+    candidates = []
+    for page, info in _commons_fileinfo(_wikipedia_lead_files(name)):
+        candidates.append((2, page, info))          # the subject's own article
+    for page, info in _commons_search(name):
+        described = _commons_described(page, info)
+        if all(rx.search(described) for rx in checks):
+            candidates.append((1, page, info))
+
+    for rank, page, info in sorted(candidates, key=lambda c: -c[0])[:6]:
+        if (info.get("mime") or "").startswith("image/svg"):
+            continue
+        if not _commons_licence_ok(info):
+            continue
+        if not _image_is_safe(_commons_described(page, info)):
+            continue
+        for link in (info.get("thumburl"), info.get("url")):
+            if not link:
+                continue
+            try:
+                req = urllib.request.Request(
+                    link, headers={"User-Agent": PUBLIC_API_UA})
+                with urllib.request.urlopen(req, timeout=60) as resp:
+                    data = resp.read()
+            except Exception:
+                continue
+            if len(data) < 15_000:
+                continue
+            _clear_generated_marker(out_path)
+            Path(out_path).write_bytes(data)
+            if looks_like_a_graphic(out_path):
+                break
+            credit = _commons_credit(info)
+            print(f"    portrait: {page.get('title', '')[:60]} — {credit}")
+            return str(out_path), credit
     return None, None
 
 

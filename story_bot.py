@@ -34,6 +34,7 @@ try:
         quota_ok, quota_bump,
         POST_ENABLED, POST_PROVIDER, MEDIA_MODE, upload_media,
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
+        fetch_commons_photo, fetch_commons_portrait,
         fetch_generated_photo, IMAGE_SOURCE,
     )
 except ImportError as exc:
@@ -274,6 +275,74 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 "sources": ["..."], "image_queries": ["..."], "image_queries_ar": ["..."], \
 "image_prompt": "..."}}"""
 
+# --------------------------------------------------------------------------
+# Is this story about a person, and can we show their face?
+# --------------------------------------------------------------------------
+# A person-led story with no portrait is not worth researching: the reader
+# meets the protagonist in frame 2 and there is nothing to show them. The
+# check costs two image searches; the research call it avoids is an Opus
+# request with web search, so failing early is much the cheaper mistake.
+
+SKIPPED_FILE = Path("state/stories_skipped.json")
+# short: a portrait may appear later, and more often the name simply did not
+# search well — this is not a verdict on the story
+STORY_SKIP_DAYS = int(os.getenv("STORY_SKIP_DAYS", "").strip() or "14")
+STORY_ATTEMPTS = int(os.getenv("STORY_ATTEMPTS", "").strip() or "5")
+# one quiet miss is routine; a run of them means the sources are down or the
+# list has drifted, and that is worth a message
+PORTRAIT_ALERT_AFTER = int(os.getenv("PORTRAIT_ALERT_AFTER", "").strip() or "3")
+
+# An Arabic head of two or three words looks exactly like a person's name, so
+# these are what separate "جواز السفر" and "جدة التاريخية" from "علي النعيمي".
+NOT_A_PERSON = {
+    # generic subjects
+    "صندوق", "جواز", "أزمة", "الطيران", "شركة", "بنك", "مصرف", "مجموعة",
+    "مؤسسة", "هيئة", "وزارة", "سوق", "بورصة", "متجر", "مصنع", "جامعة",
+    "مطار", "ميناء", "طريق", "جسر", "قطار", "مترو", "برج", "قصة", "تاريخ",
+    "الأخوان", "الإخوان", "عائلة", "أسرة", "جيل", "أول", "صناعة", "تجارة",
+    # places that appear as heads in their own right
+    "الرياض", "جدة", "مكة", "المدينة", "الدمام", "الخبر", "العلا", "نيوم",
+    "سنغافورة", "نيويورك", "دبي", "لندن", "طوكيو", "باريس", "الصين",
+    "السعودية", "المملكة", "الخليج", "أمريكا", "اليابان",
+    # adjectives that follow a subject, never a surname
+    "التاريخية", "المدني", "العامة", "الوطني", "الدولي", "العالمي",
+    "الحديثة", "القديمة", "الكبرى", "الجديد", "الجديدة",
+}
+# a head carrying one of these is a phrase, not a name
+_PARTICLES = {"في", "من", "إلى", "على", "عن", "مع", "بين", "حول", "بعد", "قبل"}
+# a question is never a name — "كيف أفلست دولة؟" parses as three plain Arabic
+# words and would otherwise sail through
+_QUESTIONS = {"كيف", "لماذا", "ماذا", "متى", "أين", "هل", "كم", "أي", "لِمَ"}
+
+_LATIN_NAME = re.compile(r"^[A-Z][A-Za-z.'\-]+(?: [A-Z][A-Za-z.'\-]+){1,3}$")
+_ARABIC_WORD = re.compile(r"^[\u0621-\u064A]{2,}$")
+
+
+def person_name(story):
+    """The person a story is about, or "" when it is about something else.
+
+    Deliberately cautious. A miss just means no pre-check, which is what the
+    bot did before; a false positive would skip a good story about a company
+    because no portrait of it exists.
+    """
+    head = re.sub(r"^\s*قصة\s+", "", str(story or "").strip())
+    head = head.split(":")[0].split("؟")[0].strip(" -—،")
+    if not head:
+        return ""
+
+    if _LATIN_NAME.match(head):          # "Steve Jobs", "Mary Allen Wilkes"
+        return head                      # one word is a company: NVIDIA, Tesla
+
+    words = head.split()
+    if not 2 <= len(words) <= 4:
+        return ""
+    if any(w in _PARTICLES or w in _QUESTIONS or w in NOT_A_PERSON
+           for w in words):
+        return ""
+    if all(_ARABIC_WORD.match(w) for w in words):
+        return head                      # "علي النعيمي", "محمد بن لادن"
+    return ""
+
 
 def load_stories():
     try:
@@ -302,11 +371,13 @@ def save_used(previous, story):
     return USED_FILE
 
 
-def choose_story():
+def choose_story(exclude=()):
     stories = load_stories()
     if not stories:
         return ""
     used = {e["story"] for e in load_used()}
+    used |= {e["story"] for e in load_skipped()}
+    used |= set(exclude)
     fresh = [s for s in stories if s not in used]
     if not fresh:
         print("    every story used recently — starting the cycle again")
@@ -314,6 +385,68 @@ def choose_story():
     pick = fresh[datetime.now().toordinal() % len(fresh)]
     print(f"    {len(fresh)} of {len(stories)} stories available")
     return pick
+
+
+def load_skipped():
+    """Stories passed over recently because no portrait could be found."""
+    try:
+        data = json.loads(SKIPPED_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    cutoff = (datetime.now() - timedelta(days=STORY_SKIP_DAYS)).isoformat()
+    return [e for e in data if e.get("at", "") >= cutoff]
+
+
+def mark_skipped(story, name):
+    """Remember the miss, so tomorrow's run doesn't spend the same searches
+    rediscovering that this person has no picture."""
+    SKIPPED_FILE.parent.mkdir(parents=True, exist_ok=True)
+    entries = load_skipped() + [{"story": story, "name": name,
+                                 "at": datetime.now().isoformat()}]
+    SKIPPED_FILE.write_text(json.dumps(entries, ensure_ascii=False, indent=1),
+                            encoding="utf-8")
+    return SKIPPED_FILE
+
+
+def find_portrait(name, out_path):
+    """A real photograph of this person, or None.
+
+    Commons goes first and matters most: its second lookup is the lead image
+    of the person's own article, which is where a portrait actually lives.
+    """
+    photo, _ = fetch_local_photo([], [name], out_path)
+    if photo:
+        return photo
+    photo, _ = fetch_commons_portrait(name, out_path)
+    return photo
+
+
+def pick_story():
+    """Choose a story we can actually illustrate.
+
+    Person-led stories are checked for a portrait before anything is spent on
+    research. Stories about a company, a city or a product are returned as-is
+    — there is no single face to look for, and their pictures are found the
+    ordinary way once the frames exist.
+
+    Returns (story, misses).
+    """
+    tried, misses = [], 0
+    for _ in range(STORY_ATTEMPTS):
+        story = choose_story(exclude=tried)
+        if not story:
+            break
+        name = person_name(story)
+        if not name:
+            return story, misses
+        print(f"    checking for a portrait of {name}...")
+        if find_portrait(name, OUT_DIR / "portrait.jpg"):
+            return story, misses
+        print(f"  · no portrait for {name} — trying another story")
+        commit_and_push(mark_skipped(story, name), f"no portrait: {name}")
+        tried.append(story)
+        misses += 1
+    return "", misses
 
 
 def research(story):
@@ -739,9 +872,25 @@ def find_all_photos(brief):
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    story = STORY or choose_story()
+    # A story typed by hand is run as asked — the portrait check exists to
+    # spend the research budget well, not to overrule a deliberate choice.
+    misses = 0
+    if STORY:
+        story = STORY
+    else:
+        story, misses = pick_story()
+
     if not story:
-        raise SystemExit(f"No story given and none found in {STORIES_FILE}")
+        print(f"  ! no story with a usable portrait after {STORY_ATTEMPTS} tries")
+        notify(f"⚠️ {ksa_stamp()} — no story published: {misses} candidates in "
+               "a row had no portrait. Check the image sources, or add "
+               "stories that aren't about a person.")
+        return
+
+    # one quiet miss is routine; a run of them means something is wrong
+    if misses >= PORTRAIT_ALERT_AFTER:
+        notify(f"⚠️ {ksa_stamp()} — skipped {misses} stories in a row for want "
+               f"of a portrait before settling on:\n{story}")
 
     print(f"1/3 researching: {story}")
     brief = research(story)
