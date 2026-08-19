@@ -59,8 +59,18 @@ photo, body, red takeaway, thin rule, sources.
 ## Image sources, in order
 
 local `images/` folder → article's own photo → SPA (cc.spa.gov.sa) →
-Openverse → Pexels → generated (topic cards only). Each is filtered for
-safety, relevance and Saudi context where appropriate.
+Wikimedia Commons → Library of Congress → Openverse → Pexels → generated
+(topic cards only). Each is filtered for safety, relevance and Saudi context
+where appropriate.
+
+Commons and LoC need no key. Commons does two lookups per keyword — a direct
+file search, and the lead image of any matching Wikipedia article (`ar` then
+`en`), which is where portraits of people live. Its credit line comes from the
+file's own licence metadata and is not optional. LoC is public-domain
+photography, useful for historical subjects; only items whose rights advisory
+says "no known restrictions" are used, because `access_restricted` is
+unreliable. **Both reject the project's browser-style `USER_AGENT`** — they
+need `PUBLIC_API_UA`, which names the project and a contact.
 
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish

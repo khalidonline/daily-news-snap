@@ -19,6 +19,8 @@ on:
         options:
           - spa
           - article
+          - commons          # Wikimedia Commons
+          - loc              # Library of Congress
           - openverse
           - stock   # Pexels
           - none

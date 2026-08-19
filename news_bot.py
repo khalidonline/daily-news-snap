@@ -1280,6 +1280,370 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
     return str(out_path), credit
 
 
+# --------------------------------------------------------------------------
+# Wikimedia Commons — freely licensed media, no key
+# --------------------------------------------------------------------------
+# Two lookups per keyword, because they find different things. Searching
+# Commons finds places, buildings and objects. Asking Wikipedia for an
+# article's lead image finds people: a portrait is usually filed against the
+# person's article rather than under a caption anyone would search for.
+
+# Both Wikimedia and the Library of Congress want a descriptive agent naming
+# the project and a contact. USER_AGENT above is a browser-ish string, and LoC
+# answers it with a flat 403 — verified, not guessed.
+PUBLIC_API_UA = ("daily-news-snap/1.0 "
+                 "(https://github.com/khalidonline/daily-news-snap) Python-urllib")
+
+# ar first: a Saudi subject is far more likely to have an Arabic article, and
+# its lead image is the one a Saudi reader would recognise.
+WIKI_LANGS = tuple(l for l in (os.getenv("WIKI_LANGS", "").strip()
+                               or "ar,en").split(",") if l.strip())
+
+COMMONS_API = "https://commons.wikimedia.org/w/api.php"
+
+# Commons is free-content only, but "free" there still covers licences we
+# can't use: match what we ask Openverse for — commercial use and modification.
+_BAD_LICENCE = re.compile(
+    r"(non-?commercial|no-?derivat|\bnc\b|\bnd\b|fair\s*use)", re.IGNORECASE)
+
+
+def _wiki_get(url, params, timeout=30, label="wikimedia"):
+    query = urllib.parse.urlencode(params)
+    req = urllib.request.Request(f"{url}?{query}", headers={
+        "User-Agent": PUBLIC_API_UA, "Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return json.loads(resp.read())
+    except urllib.error.HTTPError as exc:
+        print(f"  ! {label} HTTP {exc.code}")
+    except Exception as exc:
+        print(f"  ! {label} request failed: {exc}")
+    return {}
+
+
+def _commons_meta(info, key):
+    """One extmetadata value, or ''. The values arrive as HTML."""
+    field = (info.get("extmetadata") or {}).get(key) or {}
+    return _clean(str(field.get("value", "")))
+
+
+def _commons_licence_ok(info):
+    licence = " ".join(_commons_meta(info, k) for k in
+                       ("License", "LicenseShortName", "UsageTerms"))
+    if not licence.strip():
+        return False               # unknown licence — never guess in our favour
+    return not _BAD_LICENCE.search(licence)
+
+
+def _commons_credit(info):
+    """Most Commons files are CC BY-SA: the credit line is not optional."""
+    artist = _commons_meta(info, "Artist") or _commons_meta(info, "Credit")
+    artist = re.sub(r"\s+", " ", artist).strip(" ,;·-")
+    if len(artist) > 60:                     # some Artist fields are a paragraph
+        artist = artist[:60].rsplit(" ", 1)[0].rstrip(" ,;")
+    licence = _commons_meta(info, "LicenseShortName").strip()
+    return " / ".join(p for p in (artist, licence) if p) or "Wikimedia Commons"
+
+
+def _commons_described(page, info):
+    """Everything the file says about itself, for the safety and match checks."""
+    return " ".join(filter(None, [
+        page.get("title", "").replace("File:", ""),
+        _commons_meta(info, "ObjectName"),
+        _commons_meta(info, "ImageDescription"),
+        _commons_meta(info, "Categories").replace("|", " "),
+    ]))
+
+
+def _commons_fileinfo(titles):
+    """imageinfo + licence metadata for File: titles. Titles missing here are
+    hosted locally on a Wikipedia rather than on Commons, which usually means
+    they are not freely licensed — dropping them is the point."""
+    titles = [t for t in titles if t][:20]
+    if not titles:
+        return []
+    data = _wiki_get(COMMONS_API, {
+        "action": "query", "format": "json", "titles": "|".join(titles),
+        "prop": "imageinfo",
+        "iiprop": "url|extmetadata|size|mime", "iiurlwidth": "1600",
+    }, label="Commons")
+    pages = (data.get("query") or {}).get("pages", {})
+    out = []
+    for page in pages.values():
+        if "missing" in page or not page.get("imageinfo"):
+            continue
+        out.append((page, page["imageinfo"][0]))
+    return out
+
+
+def _commons_search(term, limit=12):
+    data = _wiki_get(COMMONS_API, {
+        "action": "query", "format": "json", "generator": "search",
+        "gsrsearch": term, "gsrnamespace": "6", "gsrlimit": str(limit),
+        "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime",
+        "iiurlwidth": "1600",
+    }, label="Commons")
+    pages = (data.get("query") or {}).get("pages", {})
+    found = [(p, p["imageinfo"][0]) for p in pages.values() if p.get("imageinfo")]
+    print(f"    Commons: {len(found)} files for {term!r}")
+    return found
+
+
+def _wikipedia_lead_files(term):
+    """File: titles of the lead images of articles matching this term.
+
+    A portrait of a person is almost never captioned with a phrase anyone
+    would search for, but it is nearly always the lead image of their article.
+    """
+    titles = []
+    for lang in WIKI_LANGS:
+        data = _wiki_get(f"https://{lang}.wikipedia.org/w/api.php", {
+            "action": "query", "format": "json", "generator": "search",
+            "gsrsearch": term, "gsrnamespace": "0", "gsrlimit": "3",
+            "redirects": "1", "prop": "pageimages", "piprop": "name",
+        }, label=f"{lang}.wikipedia")
+        pages = list((data.get("query") or {}).get("pages", {}).values())
+        # search ranks a loosely related article first often enough to matter,
+        # so an exact title match jumps the queue
+        pages.sort(key=lambda p: (p.get("title", "").strip().lower()
+                                  != term.strip().lower()))
+        for page in pages:
+            name = page.get("pageimage")
+            if name:
+                titles.append(f"File:{name}")
+    if titles:
+        print(f"    Wikipedia lead image(s) for {term!r}: {len(titles)}")
+    return titles
+
+
+def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
+                        subject_mode=False):
+    """Fetch a freely licensed photo from Wikimedia Commons.
+
+    Returns (path, credit) or (None, None). Same signature as
+    fetch_openverse_photo so the two are interchangeable.
+    """
+    if isinstance(queries, str):
+        queries = [queries]
+    queries = [q.strip() for q in queries if q and q.strip()]
+    if not queries:
+        return None, None
+
+    want_saudi = REQUIRE_SAUDI_CONTEXT if need_saudi is None else need_saudi
+    want_hits = MIN_TERM_HITS if min_hits is None else min_hits
+
+    candidates = []
+    for query in queries:
+        terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
+        found = _commons_search(query)
+        lead = _commons_fileinfo(_wikipedia_lead_files(query))
+        for page, _info in lead:
+            page["_lead"] = True      # scored differently: see below
+        found += lead
+
+        for page, info in found:
+            if (info.get("mime") or "").startswith("image/svg"):
+                continue                      # a diagram, never a photograph
+            if not _commons_licence_ok(info):
+                continue
+            described = _commons_described(page, info)
+            if not _image_is_safe(described):
+                continue
+            if want_saudi and _geo_adjust(described) <= 0:
+                continue
+            hits = _term_hits(described, terms)
+            # A lead image is the article's own picture of the subject, so it
+            # is on-topic even when its filename shares no words with the
+            # query — that is exactly the portrait case this source is for.
+            from_article = page.get("_lead", False)
+            if not from_article and hits < want_hits:
+                continue
+            score = hits * 10 + _geo_adjust(described)
+            if (info.get("width") or 0) >= (info.get("height") or 1):
+                score += 3
+            if from_article:
+                score += 12
+            if not subject_mode and any(h in described.lower()
+                                        for h in MEETING_HINTS):
+                score -= 15
+            candidates.append((score, query, page, info))
+
+        if any(c[0] >= MIN_PHOTO_SCORE for c in candidates):
+            break
+
+    if not candidates:
+        print("  ! no Commons photo found")
+        return None, None
+
+    candidates.sort(key=lambda c: -c[0])
+    if candidates[0][0] < MIN_PHOTO_SCORE:
+        print(f"  ! best Commons match scored {candidates[0][0]:.0f}, below "
+              f"{MIN_PHOTO_SCORE} — skipping")
+        return None, None
+
+    for score, query, page, info in candidates[:5]:
+        # thumburl is a resized copy; originals run to tens of megabytes
+        for link in (info.get("thumburl"), info.get("url")):
+            if not link:
+                continue
+            try:
+                req = urllib.request.Request(link, headers={"User-Agent": PUBLIC_API_UA})
+                with urllib.request.urlopen(req, timeout=60) as resp:
+                    data = resp.read()
+            except Exception as exc:
+                print(f"  ! Commons download failed ({exc}) — trying next")
+                continue
+            if len(data) < 15_000:
+                continue
+            _clear_generated_marker(out_path)
+            Path(out_path).write_bytes(data)
+            if looks_like_a_graphic(out_path):
+                break                        # try the next candidate instead
+            credit = _commons_credit(info)
+            print(f"    photo: {page.get('title', '')[:70]} — {credit} [{query}]")
+            return str(out_path), credit
+
+    print("  ! every Commons candidate failed to download")
+    return None, None
+
+
+# --------------------------------------------------------------------------
+# Library of Congress — public domain photography, no key
+# --------------------------------------------------------------------------
+# Strong on historical subjects, which is where an open-licence search usually
+# comes back empty. The API is slow and drops connections often enough that
+# every call here is best-effort.
+
+LOC_SEARCH = "https://www.loc.gov/photos/"
+LOC_CREDIT = "Library of Congress"
+
+# access_restricted is not the signal it looks like — items whose advisory
+# reads "No known restrictions on publication" still come back True. The
+# advisory text is what actually says whether we may publish, so require it
+# to say so, and reject anything hedged.
+_LOC_CLEAR = re.compile(r"no known restrictions", re.IGNORECASE)
+_LOC_HEDGED = re.compile(
+    r"(may be restricted|not been evaluated|not evaluated|permission|"
+    r"rights status|contact)", re.IGNORECASE)
+
+
+def _loc_search(term, limit=12):
+    url = (f"{LOC_SEARCH}?q={urllib.parse.quote(term)}"
+           f"&fo=json&c={limit}&at=results")
+    req = urllib.request.Request(url, headers={"User-Agent": PUBLIC_API_UA,
+                                               "Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            results = json.loads(resp.read()).get("results", [])
+    except Exception as exc:
+        print(f"  ! Library of Congress unavailable for {term!r}: {exc}")
+        return []
+    print(f"    Library of Congress: {len(results)} results for {term!r}")
+    return results
+
+
+def _loc_may_publish(item):
+    advisory = " ".join(str(item.get(k) or "") for k in
+                        ("rights_advisory", "rights", "rights_information"))
+    if not _LOC_CLEAR.search(advisory):
+        return False
+    return not _LOC_HEDGED.search(advisory)
+
+
+def _loc_image_url(result, item):
+    """The service copy. image_url is a 150px thumbnail — unusable on a card."""
+    link = item.get("service_medium") or ""
+    if not link:
+        for candidate in (result.get("image_url") or []):
+            if candidate.lower().split("#")[0].endswith((".jpg", ".jpeg")):
+                link = candidate
+                break
+    link = link.split("#")[0]
+    # some records point at a shared placeholder graphic instead of a scan
+    if not link or link.lower().endswith(".gif"):
+        return ""
+    return link
+
+
+def fetch_loc_photo(queries, out_path, need_saudi=None, min_hits=None,
+                    subject_mode=False):
+    """Fetch a public domain photo from the Library of Congress.
+
+    Returns (path, credit) or (None, None). Only items whose own rights
+    statement says there are no known restrictions are used.
+    """
+    if isinstance(queries, str):
+        queries = [queries]
+    queries = [q.strip() for q in queries if q and q.strip()]
+    if not queries:
+        return None, None
+
+    want_saudi = REQUIRE_SAUDI_CONTEXT if need_saudi is None else need_saudi
+    want_hits = MIN_TERM_HITS if min_hits is None else min_hits
+
+    candidates = []
+    for query in queries:
+        terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
+        for result in _loc_search(query):
+            item = result.get("item") or {}
+            if not _loc_may_publish(item):
+                continue
+            described = " ".join(filter(None, [
+                str(result.get("title") or ""),
+                " ".join(str(s) for s in (result.get("subject") or [])),
+                str(item.get("summary") or ""),
+            ]))
+            if not _image_is_safe(described):
+                continue
+            if want_saudi and _geo_adjust(described) <= 0:
+                continue
+            hits = _term_hits(described, terms)
+            if hits < want_hits:
+                continue
+            score = hits * 10 + _geo_adjust(described)
+            if not subject_mode and any(h in described.lower()
+                                        for h in MEETING_HINTS):
+                score -= 15
+            link = _loc_image_url(result, item)
+            if link:
+                candidates.append((score, query, result, link))
+
+        if any(c[0] >= MIN_PHOTO_SCORE for c in candidates):
+            break
+
+    if not candidates:
+        print("  ! no Library of Congress photo found")
+        return None, None
+
+    candidates.sort(key=lambda c: -c[0])
+    if candidates[0][0] < MIN_PHOTO_SCORE:
+        print(f"  ! best Library of Congress match scored "
+              f"{candidates[0][0]:.0f}, below {MIN_PHOTO_SCORE} — skipping")
+        return None, None
+
+    for score, query, result, link in candidates[:5]:
+        try:
+            req = urllib.request.Request(link,
+                                         headers={"User-Agent": PUBLIC_API_UA})
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                data = resp.read()
+        except Exception as exc:
+            print(f"  ! LoC download failed ({exc}) — trying next")
+            continue
+        if len(data) < 15_000:
+            continue
+        _clear_generated_marker(out_path)
+        Path(out_path).write_bytes(data)
+        if looks_like_a_graphic(out_path):
+            continue
+        print(f"    photo: {str(result.get('title'))[:70]} — "
+              f"{LOC_CREDIT} [{query}]")
+        return str(out_path), LOC_CREDIT
+
+    print("  ! every Library of Congress candidate failed to download")
+    return None, None
+
+
 def _pexels_search(query, per_page=12):
     url = (f"https://api.pexels.com/v1/search?per_page={per_page}"
            f"&orientation=landscape&query={urllib.parse.quote(query)}")
@@ -2507,6 +2871,16 @@ def main():
             return None, None
         return fetch_spa_photo(story.get("image_queries_ar", []), hero)
 
+    def _commons(story):
+        saudi = story.get("scope", "world") == "saudi"
+        return fetch_commons_photo(story.get("image_queries", []), hero,
+                                   need_saudi=saudi)
+
+    def _loc(story):
+        saudi = story.get("scope", "world") == "saudi"
+        return fetch_loc_photo(story.get("image_queries", []), hero,
+                               need_saudi=saudi)
+
     def _openverse(story):
         saudi = story.get("scope", "world") == "saudi"
         return fetch_openverse_photo(story.get("image_queries", []), hero,
@@ -2524,12 +2898,16 @@ def main():
         return fetch_local_photo(story.get("image_queries_ar", []),
                                  story.get("image_queries", []), hero)
 
-    SOURCES = {"article": _article, "spa": _spa,
-               "openverse": _openverse, "stock": _stock}
+    SOURCES = {"article": _article, "spa": _spa, "commons": _commons,
+               "loc": _loc, "openverse": _openverse, "stock": _stock}
 
     # whatever the workflow selected goes first, then the rest in a sensible
     # order. The local library is always tried first — it's curated.
-    order = ["article", "spa", "openverse", "stock"]
+    # Commons and the Library of Congress sit ahead of Openverse: both are
+    # curated collections with real licence metadata, and between them they
+    # cover the two cases Openverse is worst at — a named person, and a
+    # subject that only exists in historical photography.
+    order = ["article", "spa", "commons", "loc", "openverse", "stock"]
     if IMAGE_SOURCE in order:
         order.remove(IMAGE_SOURCE)
         order.insert(0, IMAGE_SOURCE)
