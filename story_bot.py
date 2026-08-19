@@ -12,6 +12,7 @@
     python story_bot.py "قصة NVIDIA"
 """
 
+import hashlib
 import json
 import os
 import re
@@ -158,6 +159,14 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   بقية اللقطات: المنتج أو الشركة أو المكان المذكور في تلك اللقطة تحديداً.
   لا تضع كلمات عامة (مكتب، مبنى، موظفون) — الصورة العامة أسوأ من لا شيء
   لأنها تبدو حشواً. اختر ما تتوقع وجوده فعلاً في أرشيف صور.
+
+  الكلمة تسمّي شيئاً مذكوراً في هذه اللقطة، لا مزاجاً ولا جواً عاماً.
+  ولا تطلب لقطة قريبة أو مادة أو ملمساً (texture) لمجرد أنها تبدو جميلة:
+  الصورة الواسعة المرتبطة باللقطة أفضل من لقطة قريبة لا علاقة لها بها.
+  القارئ يقرأ الصورة مع النص، فإن لم تكن منه بدت زينة مقحمة.
+  ✗ ["dust texture", "close-up circuit board", "vintage paper", "old machinery"]
+  ✓ ["Fairchild Semiconductor", "Channel F console", "San Jose factory"]
+  اسأل نفسك: هل هذه الكلمة اسم شيء ورد في نص هذه اللقطة؟ إن كان لا، غيّرها.
 
 واكتب أيضاً:
 - title: عنوان القصة كاملاً (حتى ٤٥ حرفاً) — يظهر في اللقطة الأولى
@@ -455,25 +464,62 @@ def build_frames(brief, stamp, photos):
     return [str(p) for p in paths]
 
 
-def find_photo(spec, out_path):
+def _photo_digest(path):
+    """Content hash, so the same picture found twice is recognised as the same.
+
+    Frames write to different filenames, so identical pictures can only be
+    caught by their bytes.
+    """
+    try:
+        return hashlib.md5(Path(path).read_bytes()).hexdigest()
+    except Exception:
+        return None
+
+
+def find_photo(spec, out_path, seen=()):
     """One photo for one frame, searched by subject.
 
     Any real photograph about the story serves — the person, the product, the
     building, the logo. A single keyword match is enough here, because we are
     searching for a subject rather than matching a described scene.
+
+    Anything already used elsewhere in this story is refused and the search
+    carries on: the same picture on two frames of one series reads as a
+    mistake, and the reader notices it before they notice the text.
     """
+    def take(result):
+        photo = result[0] if isinstance(result, tuple) else result
+        if not photo:
+            return None
+        if _photo_digest(photo) in seen:
+            print("      (that picture is already on an earlier frame "
+                  "— looking further)")
+            return None
+        return photo
+
     keywords = [k for k in (spec.get("image_keywords") or []) if k]
     if not keywords:
         keywords = spec.get("image_queries") or []
+    keywords_ar = [k for k in (spec.get("image_keywords_ar") or []) if k]
 
-    photo, _ = fetch_local_photo([], keywords, out_path)
+    photo = take(fetch_local_photo([], keywords, out_path))
 
     # try each keyword on its own — "Steve Jobs" finds more than a long phrase
     for keyword in keywords:
         if photo:
             break
-        photo, _ = fetch_openverse_photo([keyword], out_path, need_saudi=False,
-                                         min_hits=1, subject_mode=True)
+        photo = take(fetch_openverse_photo([keyword], out_path, need_saudi=False,
+                                           min_hits=1, subject_mode=True))
+
+    # Openverse indexes Arabic titles and tags too, and a Saudi subject is
+    # often catalogued only in Arabic — so the Latin pass can come back empty
+    # on a story that does have pictures. Worth asking in Arabic before
+    # settling for generated filler or a repeat.
+    for keyword in keywords_ar:
+        if photo:
+            break
+        photo = take(fetch_openverse_photo([keyword], out_path, need_saudi=False,
+                                           min_hits=1, subject_mode=True))
 
     if photo is None and ALLOW_STORY_GENERATION:
         # Nothing in the archive. Generating a building or an office produces
@@ -481,16 +527,20 @@ def find_photo(spec, out_path):
         subject = keywords[0] if keywords else spec.get("heading", "")
         prompt = (f"A plain, unbranded photograph relating to {subject}. "
                   "No buildings with signs, no offices, no logos, no text.")
-        photo, _ = fetch_generated_photo(prompt, out_path)
+        photo = take(fetch_generated_photo(prompt, out_path))
     return photo
 
 
 def find_all_photos(brief):
     """A picture for every frame, trying progressively wider searches.
 
-    1. the frame's own keywords
+    1. the frame's own keywords, in English then in Arabic
     2. the story's subject (from the title and the first frame)
-    3. reuse a photo already found for another frame
+    3. repeat a photo already used on another frame
+
+    No two frames get the same picture unless step 3 is reached, and step 3
+    is a visible flaw rather than a neutral fallback — a six-frame story with
+    the same photograph twice looks like nobody checked it.
 
     Only if all three fail for some frame is the story abandoned — a story
     costs a research call, so it is worth widening the net before giving up.
@@ -501,34 +551,51 @@ def find_all_photos(brief):
     if frames:
         fallback += list(frames[0].get("image_keywords", []))
     fallback = [k for k in dict.fromkeys(fallback) if k][:3]
+    # the model gives Arabic keywords for the story, not per frame — they are
+    # the same for every frame, so the dedup below is what keeps them useful
+    fallback_ar = [k for k in (brief.get("image_queries_ar") or []) if k][:3]
 
     photos, missing = [], []
+    used = set()                      # digests of pictures already in the story
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
+        spec.setdefault("image_keywords_ar", fallback_ar)
         keywords = [k for k in (spec.get("image_keywords") or []) if k]
         print(f"    frame {n}: {', '.join(keywords[:4]) or '(no keywords)'}")
 
-        photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg")
+        photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg", used)
 
         if photo is None and fallback:
             print(f"      widening to the story subject: {', '.join(fallback)}")
-            photo = find_photo({"image_keywords": fallback},
-                               OUT_DIR / f"story-frame-{n}.jpg")
+            photo = find_photo({"image_keywords": fallback,
+                                "image_keywords_ar": fallback_ar},
+                               OUT_DIR / f"story-frame-{n}.jpg", used)
 
         if photo is None:
             missing.append(n)
+        else:
+            used.add(_photo_digest(photo))
         photos.append(photo)
 
-    # last resort: borrow a picture from a frame that found one
+    # Last resort. Every picture here is already on another frame, so this is
+    # a repeat however it is spread — spread it anyway, so one photograph
+    # doesn't end up carrying three frames, and say so loudly.
     found = [p for p in photos if p]
     if missing and found and STORY_ALLOW_REPEAT:
         import shutil as _shutil
+        owner = {p: i + 1 for i, p in enumerate(photos) if p}
+        uses = {p: 1 for p in found}          # each already appears once
         for n in missing:
-            source = found[(n - 1) % len(found)]
+            source = min(found, key=lambda p: uses[p])
+            uses[source] += 1
             target = OUT_DIR / f"story-frame-{n}.jpg"
             _shutil.copyfile(source, target)
             photos[n - 1] = str(target)
-            print(f"  · frame {n} reuses the picture from another frame")
+            print(f"  ! frame {n} has no photo of its own — repeating the one "
+                  f"from frame {owner[source]}")
+        print(f"  ! {len(missing)} of {len(frames)} frames show a repeated "
+              f"picture. Add keywords for those beats in stories.txt, or set "
+              f"STORY_ALLOW_REPEAT=0 to skip the story instead.")
         missing = []
 
     if missing:
