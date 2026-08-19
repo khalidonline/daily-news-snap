@@ -294,6 +294,62 @@ if not HAS_RAQM:
     import arabic_reshaper
     from bidi.algorithm import get_display
 
+    # The reshaper rewrites text into Arabic Presentation Forms (U+FE70-FEFF).
+    # Almarai and Cairo ship the initial/medial/final forms but NOT the
+    # isolated ones — so ا إ أ ء د ذ ر ز و ة ي, every letter that doesn't join
+    # to its left, came out as an empty box. A whole card of tofu, and the
+    # glyph warning below never fired because it was checking the text before
+    # reshaping. use_unshaped_instead_of_isolated falls back to the plain
+    # letter, which every Arabic font has. Verified: with this set, Almarai
+    # and Cairo have zero gaps across all four positions, the lam-alef
+    # ligatures and the harakat.
+    # delete_harakat defaults to True, which would silently strip the
+    # diacritics libraqm keeps — the two paths must agree, and sanitize()
+    # promises never to delete.
+    _RESHAPER = arabic_reshaper.ArabicReshaper(configuration={
+        "use_unshaped_instead_of_isolated": True,
+        "delete_harakat": False,
+    })
+
+# Zero-width joiners and marks are meant to be invisible; a font having no
+# glyph for them is normal and not worth warning about.
+_INVISIBLE = {0x200B, 0x200C, 0x200D, 0x200E, 0x200F, 0x2066, 0x2069, 0xFEFF}
+
+
+def _shape(text):
+    """The exact string that gets handed to Pillow, on whichever path is live."""
+    if HAS_RAQM:
+        return text
+    return get_display(_RESHAPER.reshape(text))
+
+
+# Every Arabic letter in all four positions, both lam-alef ligatures, and the
+# harakat — enough to prove a font can carry a card before we render one.
+_SHAPING_PROBES = tuple(
+    [c for ch in "ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىي"
+     for c in (ch, ch + "ب", "ب" + ch + "ب", "ب" + ch)]
+    + ["ل" + a for a in "اأإآ"] + ["بل" + a for a in "اأإآ"]
+    + ["ب" + h for h in "ًٌٍَُِّْ"]
+)
+
+
+def _shaping_gaps(font_path):
+    """Codepoints this font can't draw once the text has been shaped.
+
+    Checking the raw text is not enough: on the reshaper path what reaches
+    Pillow is a different set of codepoints entirely, and that is where the
+    holes are.
+    """
+    charset = _font_charset(str(font_path))
+    if charset is None:
+        return set()                  # unreadable table — don't block on it
+    gaps = set()
+    for probe in _SHAPING_PROBES:
+        for ch in _shape(probe):
+            if ch != " " and ord(ch) not in charset and ord(ch) not in _INVISIBLE:
+                gaps.add(ch)
+    return gaps
+
 # Characters models commonly emit that many Arabic fonts don't include.
 # Mapped to equivalents present in essentially every font.
 CHAR_FIXES = {
@@ -375,23 +431,32 @@ def sanitize(text):
             print(f"  · fixed spelling: {wrong} -> {right}")
             text = text.replace(wrong, right)
 
-    charset = _font_charset(_find_arabic_font(False))
-    if charset is not None:
-        for ch in text:
-            if ch not in " \n\t" and ord(ch) not in charset \
-                    and ch not in _missing_reported:
-                _missing_reported.add(ch)
-                print(f"  ! font has no glyph for {ch!r} (U+{ord(ch):04X}) "
-                      f"— will render as a box")
     return text
+
+
+def _warn_about_missing_glyphs(shaped):
+    """Report anything that will render as a box. Runs on the SHAPED string —
+    checking the text before shaping missed a card's worth of tofu once,
+    because the reshaper had turned it into codepoints the font lacked."""
+    charset = _font_charset(_find_arabic_font(False))
+    if charset is None:
+        return
+    for ch in shaped:
+        if ch in " \n\t" or ord(ch) in _INVISIBLE or ch in _missing_reported:
+            continue
+        if ord(ch) not in charset:
+            _missing_reported.add(ch)
+            print(f"  ! font has no glyph for {ch!r} (U+{ord(ch):04X}) "
+                  f"— will render as a box")
 
 
 def ar(text):
     """Return (text_to_draw, draw_kwargs) for a piece of Arabic text."""
-    text = sanitize(text)
+    shaped = _shape(sanitize(text))
+    _warn_about_missing_glyphs(shaped)
     if HAS_RAQM:
-        return text, {"direction": "rtl", "language": "ar"}
-    return get_display(arabic_reshaper.reshape(text)), {}
+        return shaped, {"direction": "rtl", "language": "ar"}
+    return shaped, {}
 
 
 def arabic_date():
@@ -685,13 +750,24 @@ FONT_FAMILY = os.getenv("FONT_FAMILY", "NotoNaskhArabic").strip()
 _font_cache = {}
 
 
+# NotoNaskhArabic is the safety net: it is bundled in fonts/ and is the one
+# family verified to have no gaps on either shaping path. It is only reached
+# if the configured family fails the check below, which would otherwise mean
+# publishing a card full of boxes.
+FONT_FALLBACK = "NotoNaskhArabic"
+
+
 def _candidate_paths(bold):
     weight = "Bold" if bold else "Regular"
-    yield Path("fonts") / f"{FONT_FAMILY}-{weight}.ttf"
-    for directory in ("/usr/share/fonts/truetype/noto",
-                      "/usr/share/fonts/truetype",
-                      "/usr/share/fonts"):
-        yield Path(directory) / f"{FONT_FAMILY}-{weight}.ttf"
+    families = [FONT_FAMILY]
+    if FONT_FALLBACK != FONT_FAMILY:
+        families.append(FONT_FALLBACK)
+    for family in families:
+        yield Path("fonts") / f"{family}-{weight}.ttf"
+        for directory in ("/usr/share/fonts/truetype/noto",
+                          "/usr/share/fonts/truetype",
+                          "/usr/share/fonts"):
+            yield Path(directory) / f"{family}-{weight}.ttf"
 
 
 def _covers_required(path):
@@ -702,11 +778,22 @@ def _covers_required(path):
     if missing:
         print(f"  ! {path} is missing {''.join(missing)!r} — falling back")
         return False
+
+    # A font can hold every letter we asked for and still have no glyph for
+    # the form the shaper asks it to draw. That is invisible until you look
+    # at the card, so it is checked here instead.
+    gaps = _shaping_gaps(path)
+    if gaps:
+        shown = "".join(sorted(gaps))[:12]
+        print(f"  ! {path} can't draw {len(gaps)} shaped form(s) ({shown}) "
+              f"— text would render as boxes, falling back")
+        return False
     return True
 
 
 def _find_arabic_font(bold):
-    """Locate an Arabic font that can actually draw digits, % and dashes."""
+    """Locate an Arabic font that can actually draw digits, % and dashes,
+    and that survives whichever shaping path is live in this environment."""
     if bold in _font_cache:
         return _font_cache[bold]
 
