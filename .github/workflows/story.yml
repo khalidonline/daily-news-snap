@@ -1,0 +1,61 @@
+name: Story to Snapchat
+
+on:
+  schedule:
+    - cron: "0 17 * * 4,6"     # 20:00 KSA Thursday and Saturday
+  workflow_dispatch:
+    inputs:
+      story:
+        description: "القصة — اتركها فارغة لاختيار قصة من stories.txt"
+        type: string
+        required: false
+      dry_run:
+        description: "Render only — don't publish"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: story
+  cancel-in-progress: true
+
+jobs:
+  story:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Build and post the story
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: "bundle"
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          POST_TO_SNAPCHAT: "0"      # 0 = hybrid, 1 = post automatically
+          MONTHLY_POST_LIMIT: "145"
+          STORY: ${{ inputs.story }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          MEDIA_MODE: "github"
+          THEME: "light"
+          BRAND: "ملخص تنفيذي - قصة"
+          FONT_FAMILY: "Almarai"
+          IMAGE_SOURCE: "openverse"
+          STORY_MODEL: "claude-opus-5"
+          ALLOW_GENERATED: "1"
+          IMAGE_GEN: "byteplus"
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          ARK_MODEL: ${{ vars.ARK_MODEL }}
+        run: python story_bot.py
