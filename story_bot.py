@@ -121,6 +121,10 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 - كل لقطة فكرة واحدة فقط. جمل قصيرة.
 - كل رقم بوحدته وتاريخه ومصدره. لا تخمّن ولا تقرّب بلا داعٍ.
 - أسماء الشركات والأشخاص الأجانب بالإنجليزية: Apple، Steve Jobs، NVIDIA.
+- أما الأسماء السعودية والعربية فبالعربية دائماً، حتى لو شاع تداولها بحروف
+  لاتينية أو كان اسمها الرسمي بالإنجليزية:
+  ✓ مرايا، أرامكو، نيوم، الدرعية، العلا، طيران ناس
+  ✗ Maraya، Aramco، NEOM، Diriyah، AlUla، flynas
 - الأرقام لاتينية: 1976 لا ١٩٧٦.
 - تجنّب اللغة الرسمية والوعظ. لا "وهكذا نتعلم أن".
 - إن لم تجد مصادر موثوقة للقصة، أعد title = "لا توجد مصادر كافية" واشرح.
@@ -158,7 +162,10 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 واكتب أيضاً:
 - title: عنوان القصة كاملاً (حتى ٤٥ حرفاً) — يظهر في اللقطة الأولى
 - caption: نص المنشور المرافق (حتى ١٢٠ حرفاً)
-- sources: من ٢ إلى ٤ مصادر
+- sources: أسماء المصادر فقط، من ٢ إلى ٤. اسم الجهة أو الموقع،
+  لا عنوان المقال ولا الرابط.
+  ✓ ["الهيئة الملكية للعلا", "UNESCO", "Guinness"]
+  ✗ ["The revival of AlUla's Old Town: courier.unesco.org"]
 - image_queries: ثلاث عبارات إنجليزية لصورة اللقطة الأولى، مشهد ملموس
   بلا أشخاص ولا شعارات ولا نصوص
 - image_queries_ar: ثلاث كلمات عربية مفردة للبحث في أرشيف الصور السعودي
@@ -329,9 +336,16 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             y += line_gap
 
     if footer:
+        f_foot = load_font(26)
+        text = footer
+        while text and draw.textlength(ar(text)[0], font=f_foot, **kw) > max_w:
+            if "، " in text:
+                text = text.rsplit("، ", 1)[0]      # drop the last source
+            else:
+                text = text[:-4]
         draw.line([(centre - 130, H - 206), (centre + 130, H - 206)],
                   fill=RULE, width=2)
-        mid(H - 160, footer, load_font(26), MUTED)
+        mid(H - 160, text, f_foot, MUTED)
 
     img.save(path, "PNG", optimize=True)
     return path
@@ -389,9 +403,22 @@ def build_frames(brief, stamp, photos):
     # source names only — a raw URL in the footer looks like a mistake
     names = []
     for src in brief.get("sources", [])[:3]:
-        src = re.sub(r"^https?://(www\.)?", "", str(src)).split("/")[0]
-        names.append(src)
-    sources = "، ".join(names)
+        src = str(src).strip()
+        # a bare URL: keep the domain, dropping the scheme and the path
+        m = re.match(r"https?://(?:www\.)?([^/\s]+)", src)
+        if m:
+            src = m.group(1)
+        else:
+            # "The revival of AlUla's Old Town: courier.unesco.org" -> domain
+            tail = src.split(":")[-1].strip()
+            if ":" in src and re.search(r"[a-z]+\.[a-z]{2,}", tail):
+                src = tail
+        src = src.rstrip(" .،-").strip()
+        if len(src) > 28:                    # still a sentence — keep it short
+            src = src[:28].rsplit(" ", 1)[0].rstrip(" .،-")
+        if src:
+            names.append(src)
+    sources = "، ".join(dict.fromkeys(names))
     total = len(frames)
     paths = []
 
