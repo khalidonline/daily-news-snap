@@ -512,6 +512,13 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار يومي يُنشر عل�
 - scope: "saudi" إذا كان الخبر سعودياً أو خليجياً، و"world" لغير ذلك
 - لا تذكر أي معلومة غير موجودة في العنوان والوصف المعطى لك. لا تخمّن.
 - اكتب كل الأرقام بالأرقام اللاتينية (2027, 306, 13) لا بالأرقام العربية الهندية.
+- تجنّب اللغة القانونية أو الرسمية حين توجد كلمة طبيعية. اكتب كما يتكلم الناس:
+  ✗ القاصرين، المراهقين     ✓ الأبناء، الصغار، طلاب المدارس، الأعمار الأصغر
+  ✗ ذوي الدخل المحدود        ✓ أصحاب الرواتب المتوسطة
+  ✗ المستفيدين، المنتفعين    ✓ المستخدمين، الناس، العملاء
+  ✗ الشريحة المستهدفة        ✓ من يهمه الأمر، الفئة
+  ✗ يُشترط على المكلفين      ✓ لازم عليك، تحتاج
+  القاعدة: لو ما تقولها لصديقك بهذه الصيغة، فلا تكتبها.
 - اكتب أسماء الشركات والمنتجات بالإنجليزية كما هي، لا تنقلها حرفياً للعربية:
   ✓ NVIDIA، OpenAI، Google، Meta، Snap، Apple، Microsoft، TikTok، Tesla
   ✗ إنفيديا، أوبن إيه آي، جوجل، ميتا، سناب، آبل، مايكروسوفت
@@ -1392,11 +1399,19 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
             text = text.rsplit("، ", 1)[0] if "، " in text else text[:-4]
         return text
 
+    def norm(text):
+        return "".join((text or "").split()).replace("ـ", "").lower()
+
+    src_list = [s for s in brief.get("sources", []) if s][:3]
     lines = []
-    sources = "، ".join(brief.get("sources", [])[:3])
-    if sources:
-        lines.append(fit(f"المصدر: {sources}"))
-    if photo_credit:
+    if src_list:
+        lines.append(fit("المصدر: " + "، ".join(src_list)))
+
+    # when the photo came from the same outlet, one credit line is enough
+    same = photo_credit and any(norm(photo_credit) == norm(s) or
+                                norm(s) in norm(photo_credit)
+                                for s in src_list)
+    if photo_credit and not same:
         # its own line, so a long source list can never truncate it away
         lines.append(fit(f"الصورة: {photo_credit}"))
 
