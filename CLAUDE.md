@@ -83,12 +83,27 @@ giving up while holding something you're about to reject.
 `POST_TO_SNAPCHAT=0` is hybrid mode — build and commit the card, don't post.
 Telegram delivers every finished card to the phone either way.
 
+What actually posts:
+
+| Workflow | Posts to Snapchat |
+|---|---|
+| `news_bot.py` | the 07:00, 17:00 and 21:00 KSA runs |
+| `news_bot.py` | **not** the 12:00 KSA run (`0 9 * * *`) — hybrid |
+| `topic_bot.py` | yes, the 09:00 KSA run |
+| `story_bot.py` | no — hybrid |
+| any manual dispatch | no |
+
+daily.yml picks that per-run with `github.event.schedule`. A manual dispatch
+sets no schedule, so it falls through to hybrid — those are nearly always
+tests, and a test that posts to the profile is expensive to undo.
+
 `MONTHLY_POST_LIMIT` is a self-imposed cap counted in `state/quota.json`, one
 file shared by all three bots. When it blocks a post the card still goes to
 Telegram via `deliver_unposted()` — **a run that builds a card must never end
-without saying so somewhere.** Note the file is shared but each workflow passes
-its own limit, so the moment a second bot leaves hybrid mode they start
-counting each other's posts.
+without saying so somewhere.** Two bots now post, so all three workflows must
+name the **same** cap (145) — the file is shared but each passes its own
+limit, and mismatched numbers mean whichever is lowest silently stops the
+others. Expect roughly 120 posts a month against that 145.
 
 ## Conventions
 

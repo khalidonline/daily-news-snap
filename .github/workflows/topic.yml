@@ -96,8 +96,11 @@ jobs:
           LOOKBACK_HOURS: "30"
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
-          POST_TO_SNAPCHAT: "0"   # 0 = hybrid, 1 = post automatically
-          MONTHLY_POST_LIMIT: "60"
+          POST_TO_SNAPCHAT: "1"   # 0 = hybrid, 1 = post automatically
+          # one cap shared with daily.yml: state/quota.json is a single file,
+          # so the two must name the same number or each would stop the other
+          # at its own limit
+          MONTHLY_POST_LIMIT: "145"
           IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
           POINTS: "3"
           MAX_SEARCHES: "6"
