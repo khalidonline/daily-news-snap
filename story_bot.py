@@ -29,7 +29,8 @@ try:
         BG_TOP, TEXT, BODY, ACCENT, MUTED, BRAND_INK, RULE,
         ar, load_font, _wrap, _rounded, _clean_model_id,
         commit_and_push, publish_via_github, post_story, post_ok,
-        describe_failure, notify, ksa_stamp, quota_ok, quota_bump,
+        describe_failure, notify, notify_album, ksa_stamp,
+        quota_ok, quota_bump,
         POST_ENABLED, POST_PROVIDER, MEDIA_MODE, upload_media,
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
         fetch_generated_photo, IMAGE_SOURCE,
@@ -370,7 +371,8 @@ def main():
         for u in urls:
             print(f"    {u}")
         commit_and_push(save_used(load_used(), story), f"story: {slug}")
-        notify(f"📖 {stamp} — {brief['title']}\n{len(frames)} لقطات", frames[0])
+        notify_album(f"📖 {stamp} — {brief['title']}\n{len(frames)} لقطات",
+                     frames)
         return
 
     if not quota_ok():
@@ -388,7 +390,7 @@ def main():
     if post_ok(response):
         commit_and_push(save_used(load_used(), story), f"story: {slug}")
         commit_and_push(quota_bump(), f"quota {stamp}")
-        notify(f"✅ {stamp} — {brief['title']}", frames[0])
+        notify_album(f"✅ {stamp} — {brief['title']}", frames)
     else:
         notify(f"❌ {stamp} — story post failed\n{describe_failure(response)}")
 
