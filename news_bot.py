@@ -78,6 +78,16 @@ POST_PROVIDER = os.getenv("POST_PROVIDER", "bundle").strip().lower()
 BUNDLE_API_KEY = os.getenv("BUNDLE_API_KEY", "").strip()
 BUNDLE_TEAM_ID = os.getenv("BUNDLE_TEAM_ID", "").strip()
 BUNDLE_BASE = os.getenv("BUNDLE_BASE", "").strip() or "https://api.bundle.social/api/v1"
+
+# Cloudflare sits in front of bundle.social and returns "error code: 1010" to
+# requests without a browser-like fingerprint, so send real headers.
+BUNDLE_HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                   "AppleWebKit/537.36 (KHTML, like Gecko) "
+                   "Chrome/126.0.0.0 Safari/537.36"),
+    "Accept": "application/json",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 ZERNIO_API_KEY = os.getenv("ZERNIO_API_KEY", "").strip()
 ZERNIO_BASE = os.getenv("ZERNIO_BASE", "").strip() or "https://api.zernio.com/v1"
 # the Snapchat account id from your Zernio dashboard; blank = let Zernio pick
@@ -2019,7 +2029,8 @@ def bundle_upload(card_path):
                                     Path(card_path).name, data)
     req = urllib.request.Request(
         f"{BUNDLE_BASE.rstrip('/')}/upload", data=body,
-        headers={"x-api-key": BUNDLE_API_KEY, "Content-Type": content_type})
+        headers={**BUNDLE_HEADERS, "x-api-key": BUNDLE_API_KEY,
+                 "Content-Type": content_type})
     with urllib.request.urlopen(req, timeout=180) as resp:
         result = json.loads(resp.read())
     upload_id = result.get("id") or result.get("uploadId")
@@ -2039,6 +2050,10 @@ def _bundle_post(caption, card_path):
     except urllib.error.HTTPError as exc:
         body = exc.read().decode()[:400]
         print(f"  ! bundle.social upload {exc.code}: {body}")
+        if "1010" in body:
+            print("    (Cloudflare blocked the request — bot protection. If this")
+            print("     persists with browser headers, ask bundle.social to allow")
+            print("     GitHub Actions IPs for your account.)")
         return {"status": "error", "code": exc.code, "message": body}
     except Exception as exc:
         print(f"  ! bundle.social upload failed: {exc}")
@@ -2058,7 +2073,8 @@ def _bundle_post(caption, card_path):
     }
     req = urllib.request.Request(
         f"{BUNDLE_BASE.rstrip('/')}/post", data=json.dumps(payload).encode(),
-        headers={"x-api-key": BUNDLE_API_KEY, "Content-Type": "application/json"})
+        headers={**BUNDLE_HEADERS, "x-api-key": BUNDLE_API_KEY,
+                 "Content-Type": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=180) as resp:
             return json.loads(resp.read() or b"{}")
