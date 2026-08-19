@@ -48,37 +48,51 @@ STORY_MODEL = _clean_model_id(os.getenv("STORY_MODEL"), "claude-opus-5")
 MAX_TOKENS = int(os.getenv("MAX_TOKENS", "").strip() or "16000")
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "").strip() or "6")
 BRAND = os.getenv("BRAND", "ملخص تنفيذي - قصة")
+# 4 is terse, 6 gives a story room to breathe. Snapchat's own guidance
+# favours 5-8 frame stories with a clear beginning, middle and end.
+STORY_FRAMES = max(4, min(7, int(os.getenv("STORY_FRAMES", "").strip() or "6")))
 # generated filler hurts a story more than it helps — off by default here
 ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "0").strip() \
     not in ("", "0", "false", "False")
 COOLDOWN_DAYS = int(os.getenv("STORY_COOLDOWN_DAYS", "").strip() or "60")
 
-SYSTEM_PROMPT = """أنت تكتب قصة قصيرة تُنشر على سناب شات لجمهور سعودي، في أربع لقطات.
+SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لجمهور سعودي، في {n} لقطات.
 
 القصة ليست خبراً ولا مقالاً. لها بداية ومنعطف ورقم ونهاية تترك أثراً.
 ابحث في الإنترنت أولاً، ثم اكتب. كل ما تكتبه يجب أن يكون صحيحاً وموثقاً.
 
-اللقطات الأربع — قصة لها بطل وتوتر، لا قائمة معلومات:
+القصة تُروى في {n} لقطات. لها بطل وتوتر، وليست قائمة معلومات.
 
-1. البطل والمشهد — من هو، وأين كان، وما الذي كان يواجهه.
+البناء:
+1. المشهد الأول — من هو البطل، وأين كان، وما الذي كان يواجهه.
    ضع القارئ في المكان. ابدأ بالشخص لا بالتاريخ.
    ✗ "سنة 1945، جدة. محطة وقود واحدة تبيع قطع غيار."
-   ✓ "عبداللطيف جميل كان يبيع البنزين وقطع الغيار في محطة واحدة بجدة،
-      والسيارات في المملكة كلها بالمئات."
+   ✓ "عبداللطيف جميل كان يبيع البنزين في محطة على طريق مكة القديم، والطرق
+      وقتها غير معبّدة."
 
-2. المنعطف — اللحظة التي كان يمكن أن تمر عادية ثم غيّرت كل شيء.
-   يجب أن يشعر القارئ بالمخاطرة أو المفارقة. اربطها باللقطة الأولى بأداة
-   سرد: "وفي تلك السنة"، "لكن"، "ما توقّع أحد أن".
+2. العقبة — ما الذي كان يقف في الطريق؟ لماذا لم تكن الفكرة سهلة؟
+   هنا يبدأ القارئ يهتم: لأن هناك ما يمكن أن يخسره البطل.
 
-3. النتيجة — ما صار إليه، برقم واحد كبير بمصدره وتاريخه.
-   واربطه بالبداية ليظهر حجم المسافة: "من محطة واحدة إلى ...".
+3. المنعطف — القرار أو اللحظة التي كان يمكن أن تمر عادية ثم غيّرت المسار.
 
-4. المعنى — لماذا تستحق هذه القصة أن تُروى اليوم؟ ملاحظة ذكية عن السبب
-   وراء النجاح أو الفشل، لا تلخيص لما سبق ولا عبارة وعظية.
+4. الثمن — ما الذي كلّفه ذلك؟ رفض، إفلاس وشيك، سخرية، سنوات ضائعة.
+   القصة بلا ثمن لا تُصدّق.
 
-اختبار قبل أن تسلّم: هل يمكن قراءة اللقطات الأربع بالترتيب فتُقرأ كحكاية
-متصلة؟ إن كانت كل لقطة تصلح للوقوف وحدها بلا ترتيب، فهي معلومات لا قصة.
-أعد الكتابة.
+5. النتيجة — رقم واحد كبير بمصدره وتاريخه، مربوط بالبداية:
+   "من أربع سيارات إلى ربع مليون".
+
+6. المعنى — لماذا تستحق هذه القصة أن تُروى اليوم؟ ملاحظة ذكية عن سبب النجاح
+   أو الفشل. ليست تلخيصاً ولا وعظاً.
+
+إن طلبت لقطات أقل من ٦، ادمج العقبة مع المشهد الأول والثمن مع المنعطف.
+إن طلبت ٧، افصل المنعطف عن نتيجته المباشرة.
+
+الربط بين اللقطات:
+- كل لقطة تكمل التي قبلها. استخدم أدوات السرد: "لكن"، "وفي تلك السنة"،
+  "ما توقّع أحد"، "وهنا".
+- اللقطة التي تصلح للوقوف وحدها بلا ترتيب ليست جزءاً من قصة، بل معلومة.
+- اختبار قبل التسليم: اقرأ اللقطات بالترتيب. هل تُقرأ كحكاية متصلة؟
+  إن لم تكن كذلك، أعد الكتابة.
 
 قواعد الكتابة:
 - عربية بسيطة قريبة من كلام الناس، لا لغة كتب.
@@ -98,7 +112,9 @@ SYSTEM_PROMPT = """أنت تكتب قصة قصيرة تُنشر على سناب 
 
 لكل لقطة:
 - heading: سطر قصير جداً (حتى ٣٠ حرفاً) — يظهر كبيراً
-- text: جملة أو جملتان (حتى ١٦٠ حرفاً)
+- text: من جملتين إلى أربع جمل (١٢٠ إلى ٢٨٠ حرفاً).
+  خذ راحتك: القصة المضغوطة تفقد معناها. اشرح السبب والنتيجة،
+  لا العناوين فقط. لكن بلا حشو — كل جملة تضيف شيئاً جديداً.
 - image_keywords: من كلمتين إلى أربع كلمات إنجليزية بسيطة للبحث عن صورة
   حقيقية. أسماء علم فقط: اسم الشخص أو الشركة أو المنتج أو المكان.
   ✓ ["Steve Jobs", "Macintosh 128K", "Apple Park"]
@@ -122,11 +138,11 @@ SYSTEM_PROMPT = """أنت تكتب قصة قصيرة تُنشر على سناب 
 - image_prompt: وصف إنجليزي لمشهد واحد متماسك، بلا نصوص ولا وجوه
 
 أجب بصيغة JSON فقط:
-{"title": "...", "caption": "...", \
-"frames": [{"heading": "...", "text": "...", \
-"image_keywords": ["...", "...", "..."]}], \
+{{"title": "...", "caption": "...", \
+"frames": [{{"heading": "...", "text": "...", \
+"image_keywords": ["...", "...", "..."]}}], \
 "sources": ["..."], "image_queries": ["..."], "image_queries_ar": ["..."], \
-"image_prompt": "..."}"""
+"image_prompt": "..."}}"""
 
 
 def load_stories():
@@ -181,7 +197,7 @@ def research(story):
         payload = {
             "model": STORY_MODEL,
             "max_tokens": MAX_TOKENS,
-            "system": SYSTEM_PROMPT,
+            "system": SYSTEM_PROMPT.format(n=STORY_FRAMES),
             "messages": messages,
             "tools": [{"type": "web_search_20250305", "name": "web_search",
                        "max_uses": MAX_SEARCHES}],
@@ -271,10 +287,19 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
 
     if sub:
         y += 46
-        f_sub = load_font(42, bold=sub_colour == ACCENT)
-        for line in _wrap(draw, sub, f_sub, max_w, kw):
+        # longer frames are allowed now, so shrink until the text fits the space
+        available = (H - 260 if footer else H - 180) - y
+        sub_size, line_gap = 42, 60
+        while sub_size > 28:
+            f_sub = load_font(sub_size, bold=sub_colour == ACCENT)
+            lines = _wrap(draw, sub, f_sub, max_w, kw)
+            line_gap = int(sub_size * 1.42)
+            if len(lines) * line_gap <= available:
+                break
+            sub_size -= 2
+        for line in lines:
             mid(y, line, f_sub, sub_colour or BODY)
-            y += 60
+            y += line_gap
 
     if footer:
         draw.line([(centre - 130, H - 206), (centre + 130, H - 206)],
@@ -286,33 +311,25 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
 
 
 def build_frames(brief, stamp, photos):
-    frames = brief.get("frames", [])[:4]
+    """Render one frame per beat. The last frame carries the sources."""
+    frames = brief.get("frames", [])[:STORY_FRAMES]
     if len(frames) < 4:
-        raise SystemExit(f"expected 4 frames, got {len(frames)}")
+        raise SystemExit(f"expected at least 4 frames, got {len(frames)}")
 
     sources = "، ".join(brief.get("sources", [])[:3])
+    total = len(frames)
     paths = []
 
-    # 1 — the opening, with the photo
-    paths.append(render_frame(
-        OUT_DIR / f"{stamp}-story-1.png", BRAND, "1 / 4",
-        brief["title"], 60, sub=frames[0]["text"], photo=photos[0]))
-
-    # 2 — the turning point
-    paths.append(render_frame(
-        OUT_DIR / f"{stamp}-story-2.png", BRAND, "2 / 4",
-        frames[1]["heading"], 60, sub=frames[1]["text"], photo=photos[1]))
-
-    # 3 — the number, as large as it will go
-    paths.append(render_frame(
-        OUT_DIR / f"{stamp}-story-3.png", BRAND, "3 / 4",
-        frames[2]["heading"], 96, sub=frames[2]["text"], photo=photos[2]))
-
-    # 4 — what it means, plus the sources
-    paths.append(render_frame(
-        OUT_DIR / f"{stamp}-story-4.png", BRAND, "4 / 4",
-        frames[3]["heading"], 60, sub=frames[3]["text"], sub_colour=ACCENT,
-        photo=photos[3], footer=f"المصدر: {sources}" if sources else None))
+    for n, frame in enumerate(frames, 1):
+        last = n == total
+        # the opening frame leads with the story title, the rest with their beat
+        heading = brief["title"] if n == 1 else frame.get("heading", "")
+        paths.append(render_frame(
+            OUT_DIR / f"{stamp}-story-{n}.png", BRAND, f"{n} / {total}",
+            heading, 60, sub=frame.get("text", ""),
+            sub_colour=ACCENT if last else None,
+            photo=photos[n - 1] if n - 1 < len(photos) else None,
+            footer=(f"المصدر: {sources}" if sources else None) if last else None))
 
     return [str(p) for p in paths]
 
