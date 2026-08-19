@@ -29,7 +29,7 @@ try:
         BG_TOP, TEXT, BODY, ACCENT, MUTED, BRAND_INK, RULE,
         ar, load_font, _wrap, _rounded, _clean_model_id,
         commit_and_push, publish_via_github, post_story, post_ok,
-        describe_failure, notify, notify_album, ksa_stamp,
+        describe_failure, notify, notify_album, deliver_unposted, ksa_stamp,
         quota_ok, quota_bump,
         POST_ENABLED, POST_PROVIDER, MEDIA_MODE, upload_media,
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
@@ -578,6 +578,7 @@ def main():
         return
 
     if not quota_ok():
+        deliver_unposted(frames, brief["title"])
         return
 
     print("3/3 posting the story to Snapchat...")

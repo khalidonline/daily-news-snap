@@ -1961,6 +1961,25 @@ def notify_album(text, photo_paths):
         notify(text, paths[0])
 
 
+def deliver_unposted(cards, headline):
+    """Send a card we built but aren't publishing, so it never just vanishes.
+
+    The monthly limit stops the automatic post, not the work — by the time we
+    get here the card is rendered and the research is already paid for. It
+    goes to the phone instead, to be posted by hand. Before this the bots
+    returned silently when the limit hit and the account simply went quiet
+    with nothing said in the log, on Telegram or anywhere else.
+    """
+    month, used = quota_used()
+    note = (f"⏸️ {ksa_stamp()} — لم يُنشر تلقائياً: بلغت حصة الشهر "
+            f"({used}/{MONTHLY_POST_LIMIT} في {month})\n{headline}")
+    paths = [cards] if isinstance(cards, (str, Path)) else [c for c in cards if c]
+    if len(paths) > 1:
+        notify_album(note, paths)
+    else:
+        notify(note, paths[0] if paths else None)
+
+
 def prune_old_cards():
     """Delete committed cards older than KEEP_CARDS_DAYS so the folder
     doesn't grow forever. latest.png is always kept."""
@@ -2360,6 +2379,7 @@ def main():
 
     if not stories:
         print("    no stories returned — not posting this run")
+        notify(f"⚠️ {ksa_stamp()} — no card: the model returned no stories")
         return
 
     for s in stories:
@@ -2467,6 +2487,7 @@ def main():
         return
 
     if not quota_ok():
+        deliver_unposted(card, chosen["headline"])
         return
 
     print("4/4 posting to Snapchat...")

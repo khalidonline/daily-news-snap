@@ -34,7 +34,8 @@ try:
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
-        ksa_stamp, notify, post_ok, describe_failure, POST_PROVIDER,
+        ksa_stamp, notify, deliver_unposted, post_ok, describe_failure,
+        POST_PROVIDER,
         _clean_model_id,
         REQUIRE_PHOTO,
         render_story,
@@ -1072,6 +1073,7 @@ def main():
         return
 
     if not quota_ok():
+        deliver_unposted(card, brief["title"])
         return
 
     print("    posting to Snapchat...")
