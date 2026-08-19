@@ -62,14 +62,29 @@ def load_voice():
 
 
 def load_topics():
-    """Topics from topics.txt, ignoring blanks and # comments."""
+    """Topics from topics.txt.
+
+    Each line is a topic, optionally followed by trigger keywords:
+        الموضوع؟ | تضخم, أسعار, inflation
+    A trigger appearing in yesterday's headlines pushes that topic up.
+    Returns [{"topic": str, "triggers": [str]}].
+    """
     if not TOPICS_FILE.exists():
         here = sorted(p.name for p in Path(".").iterdir() if p.is_file())
         print(f"  ! {TOPICS_FILE} not found. Files here: {', '.join(here)}")
         return []
+
     lines = TOPICS_FILE.read_text(encoding="utf-8").splitlines()
-    topics = [ln.strip() for ln in lines
-              if ln.strip() and not ln.strip().startswith("#")]
+    topics = []
+    for raw in lines:
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        name, _, trig = line.partition("|")
+        topics.append({
+            "topic": name.strip(),
+            "triggers": [t.strip().lower() for t in trig.split(",") if t.strip()],
+        })
     if not topics:
         print(f"  ! {TOPICS_FILE} has {len(lines)} lines but none usable "
               "— are they all comments?")
@@ -160,6 +175,19 @@ def _season_window(season, today):
         if peak is None:
             return None
         return peak - before, peak + after
+
+    if spec.startswith("monthly"):
+        body = spec.split(None, 1)[1] if " " in spec else ""
+        try:
+            if ".." in body:
+                a, b = (int(x) for x in body.split(".."))
+            else:
+                a = b = int(body)
+        except ValueError:
+            return None
+        day = today.day
+        inside = (a <= day <= b) if a <= b else (day >= a or day <= b)
+        return (today, today) if inside else None
 
     if spec.startswith("weekday"):
         names = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
@@ -258,13 +286,82 @@ SELECT_PROMPT = """أنت محرر تختار موضوع اليوم لموجز �
 - المواضيع في قائمة "استُخدمت مؤخراً" ليست ممنوعة: يجوز إعادة أحدها إذا كانت \
 أخبار الأمس تعيده بقوة إلى الواجهة وتضيف إليه جديداً. غير ذلك، فضّل موضوعاً جديداً.
 
+كل موضوع مرفق بأسبابه بين قوسين: ارتباط بأخبار الأمس، أو موسم جارٍ، أو مرحلة من
+الدورة الشهرية (الراتب، الفواتير، منتصف الشهر). رجّح ما يجمع أكثر من سبب.
+
 أجب بصيغة JSON فقط: {"index": رقم الموضوع, "why": "سبب الاختيار في جملة قصيرة"}"""
 
 
+SCORE_TRIGGER = int(os.getenv("SCORE_TRIGGER", "").strip() or "40")
+SCORE_SEASON = int(os.getenv("SCORE_SEASON", "").strip() or "30")
+SCORE_MONTHLY = int(os.getenv("SCORE_MONTHLY", "").strip() or "20")
+SCORE_RECENT = int(os.getenv("SCORE_RECENT", "").strip() or "-25")
+SCORE_UNUSED = int(os.getenv("SCORE_UNUSED", "").strip() or "5")
+
+MONTHLY_SEASONS = ("أيام الراتب", "بداية الشهر والفواتير",
+                   "منتصف الشهر", "قبل الراتب")
+
+
+def score_topics(items, blocked, recent, forced_pool=None):
+    """Score every topic on why it fits today.
+    Returns a sorted list of {topic, score, reasons, driver}."""
+    headline_text = " ".join(i.get("title", "") for i in items).lower()
+
+    in_season = {}
+    for season in active_seasons():
+        for name in season["topics"]:
+            in_season.setdefault(name, season["name"])
+
+    scored = []
+    for entry in load_topics():
+        name = entry["topic"]
+        if name in blocked:
+            continue
+        if forced_pool is not None and name not in forced_pool:
+            continue
+
+        score, reasons = 0, []
+
+        hits = [t for t in entry["triggers"] if t and t in headline_text]
+        if hits:
+            score += SCORE_TRIGGER
+            reasons.append(f"في أخبار الأمس: {'، '.join(hits[:3])}")
+
+        season = in_season.get(name)
+        if season:
+            monthly = season in MONTHLY_SEASONS
+            score += SCORE_MONTHLY if monthly else SCORE_SEASON
+            reasons.append(("الدورة الشهرية: " if monthly else "موسم: ") + season)
+
+        if name in recent:
+            score += SCORE_RECENT
+            reasons.append("نُشر مؤخراً")
+        else:
+            score += SCORE_UNUSED
+
+        if score > 0:
+            scored.append({"topic": name, "score": score, "driver": season or "—",
+                           "reasons": reasons or ["من القائمة العامة"]})
+
+    scored.sort(key=lambda s: -s["score"])
+    return scored
+
+
+def report_shortlist(scored, when):
+    """The plan: date/driver, topic, and why — side by side."""
+    print()
+    print(f"    خطة اختيار الموضوع — {when:%Y-%m-%d}")
+    print(f"    {'الحدث / الدافع':<30}{'الموضوع':<46}السبب")
+    print("    " + "-" * 108)
+    for row in scored[:8]:
+        print(f"    {row['driver'][:28]:<30}{row['topic'][:44]:<46}"
+              f"{row['reasons'][0][:38]}  ({row['score']:+d})")
+    print()
+
+
 def choose_topic(exclude=()):
-    """Pick the topic that best fits yesterday's news."""
-    topics = load_topics()
-    if not topics:
+    """Pick the topic that best fits today's date, season and news."""
+    if not load_topics():
         return ""
 
     used = load_used()
@@ -273,60 +370,43 @@ def choose_topic(exclude=()):
     blocked = {e["topic"] for e in used if e.get("at", "") >= hard_cutoff} | exclude
     recent = {e["topic"] for e in used} - blocked
 
-    # a running season takes precedence — its topics are only useful now
-    season_pool = []
-
+    forced_pool = None
     if FORCE_SEASON:
         want = FORCE_SEASON.lower()
         matches = [s for s in load_seasons()
                    if want in s["name"].lower() or s["name"].lower() in want]
         if matches:
-            for season in matches:
-                print(f"    forced season: {season['name']} "
-                      f"({len(season['topics'])} topics)")
-                season_pool.extend(season["topics"])
+            forced_pool = {t for s in matches for t in s["topics"]}
+            print(f"    forced season(s): {'، '.join(s['name'] for s in matches)}")
         else:
             print(f"  ! no season matching {FORCE_SEASON!r}. Available:")
             for s in load_seasons():
                 print(f"      - {s['name']}")
 
-    if SEASON_PRIORITY and not season_pool:
-        live = active_seasons()
-        if len(live) > 3:
-            # too many overlapping windows dilutes the pool — keep the nearest
-            live = live[:3]
-        for season in live:
-            fresh = [t for t in season["topics"] if t not in blocked]
-            if fresh:
-                print(f"    season: {season['name']} ({len(fresh)} topics available)")
-                season_pool.extend(fresh)
-        if live and not season_pool:
-            print("    season topics all used recently — falling back to the "
-                  "general list")
-
-    if season_pool:
-        topics = season_pool
-        available = list(enumerate(topics))
-    else:
-        available = [(i, t) for i, t in enumerate(topics) if t not in blocked]
-        if not available:
-            available = list(enumerate(topics))
-
-    print(f"    {len(available)} topics available "
-          f"({len(blocked)} on cooldown, {len(recent)} recently used)")
-    print("    reading yesterday's headlines to pick a topic...")
+    print("    reading yesterday's headlines...")
     try:
         items = fetch_headlines()
     except Exception as exc:
-        print(f"  ! couldn't fetch headlines ({exc}) — falling back to rotation")
+        print(f"  ! couldn't fetch headlines ({exc})")
         items = []
 
-    if not items or not ANTHROPIC_API_KEY:
-        index, topic = available[datetime.now().toordinal() % len(available)]
-        print(f"    fallback rotation -> {topic}")
-        return topic
+    scored = score_topics(items, blocked, recent, forced_pool)
+    if not scored:
+        print("  ! everything is on cooldown — ignoring it for this run")
+        scored = score_topics(items, exclude, recent, forced_pool)
+    if not scored:
+        return ""
 
-    listing = "\n".join(f"{i}. {t}" for i, t in available)
+    report_shortlist(scored, datetime.now())
+    shortlist = scored[:8]
+
+    if not items or not ANTHROPIC_API_KEY:
+        print(f"    no headlines to judge by — taking the top score")
+        return shortlist[0]["topic"]
+
+    listing = "\n".join(
+        f"{n}. {row['topic']}  [{'، '.join(row['reasons'])}]"
+        for n, row in enumerate(shortlist))
     headlines = "\n".join(f"- {i['title']}" for i in items[:50])
     recent_list = "\n".join(f"- {t}" for t in recent) or "لا يوجد"
 
@@ -335,7 +415,7 @@ def choose_topic(exclude=()):
         "max_tokens": 500,
         "system": SELECT_PROMPT,
         "messages": [{"role": "user", "content":
-                      f"المواضيع المتاحة:\n{listing}\n\n"
+                      f"المواضيع المرشحة:\n{listing}\n\n"
                       f"عناوين الأمس:\n{headlines}\n\n"
                       f"استُخدمت مؤخراً:\n{recent_list}"}],
     }
@@ -351,17 +431,17 @@ def choose_topic(exclude=()):
             data = json.loads(resp.read())
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text")
-        start, end = text.find("{"), text.rfind("}")
-        choice = json.loads(text[start:end + 1])
-        topic = topics[int(choice["index"])]
+        a, b = text.find("{"), text.rfind("}")
+        choice = json.loads(text[a:b + 1])
+        topic = shortlist[int(choice["index"])]["topic"]
         print(f"    chose: {topic}")
         print(f"    why:   {choice.get('why', '')}")
         return topic
     except Exception as exc:
-        print(f"  ! topic selection failed ({exc}) — falling back to rotation")
-        index, topic = available[datetime.now().toordinal() % len(available)]
-        print(f"    fallback rotation -> {topic}")
-        return topic
+        print(f"  ! selection call failed ({exc}) — taking the top score")
+        return shortlist[0]["topic"]
+
+
 TOPIC_MODEL = _clean_model_id(os.getenv("TOPIC_MODEL"), "claude-opus-5")
 # how many topics to try before giving up on finding a photo
 TOPIC_ATTEMPTS = int(os.getenv("TOPIC_ATTEMPTS", "").strip() or "3")
@@ -456,6 +536,36 @@ SYSTEM_PROMPT = """أنت تكتب موجزاً يُنشر على سناب شا�
 ممنوع منعاً باتاً:
 - أي وسوم أو أقواس مراجع داخل النص مثل <cite> أو [1] أو (المصدر: ...).
 - النص يجب أن يكون نصاً عربياً نظيفاً فقط. ضع أسماء المصادر في حقل sources وحده.
+
+قواعد المقارنات — إذا كان الموضوع يقارن السعودية بسوق آخر:
+- حدّد المنتج بدقة كاملة في العنوان والنص: الطراز والفئة والسعة واللون إن لزم.
+  للمنتجات ذات الإصدارات المتعددة (iPhone 17 / Air / Pro / Pro Max) اذكر أيها
+  بالضبط وبأي سعة تخزين. "سعر iPhone" بلا تحديد مقارنة بلا معنى.
+  ✓ "iPhone 17 سعة 256 جيجابايت"   ✗ "iPhone 17"
+- قارن الشيء نفسه: نفس الطراز ونفس سنة الصنع ونفس الفئة، أو نفس نوع العقار
+  ونفس المنطقة. مقارنة طرازين مختلفين مقارنة خاطئة.
+
+- المصادر: خذ سعر السوق السعودي من متجر Apple السعودية أو جرير أو إكسترا أو
+  الوكيل الرسمي، وسعر السوق الآخر من متجر الشركة الرسمي في ذلك البلد
+  (Apple US مثلاً). لا تعتمد على مواقع مقارنة الأسعار أو المدونات أو المتاجر
+  غير المعتمدة — أرقامها متضاربة وغير رسمية.
+  إن اختلفت أسعار التجزئة بين المتاجر المحلية، اذكر نطاقاً واذكر المتاجر.
+- حوّل كل الأسعار إلى الريال، واذكر أنك حوّلتها وبأي تاريخ للصرف.
+- اذكر تاريخ السعر صراحة. أسعار السيارات والعقار تتغير، وسعر بلا تاريخ عديم القيمة.
+- اذكر سبب الفرق، لأنه جوهر الموضوع: الضريبة، الرسوم الجمركية، الشحن،
+  المواصفات المختلفة، أو الطلب المحلي. الفرق بلا تفسير يضلّل القارئ.
+- إن كان السعر النهائي يشمل ضريبة في سوق ولا يشملها في آخر، قل ذلك.
+- إن لم تجد سعرين موثوقين لنفس الشيء، اجعل title هو "لا توجد بيانات كافية للمقارنة"
+  واشرح السبب. لا تقارن رقماً موثوقاً برقم تقديري.
+- لا تذكر الضمان كسبب للفرق إلا إذا تحققت منه فعلاً. كثير من العلامات العالمية
+  (ومنها Apple) تقدّم ضماناً دولياً، فادعاء "لا ضمان محلي" خطأ شائع.
+  وكذلك لا تفترض فروق المواصفات دون دليل.
+- انتبه إلى ما يشمله السعر المعلن: أسعار أمريكا لا تشمل ضريبة المبيعات
+  (تختلف بين الولايات)، بينما السعر السعودي يشمل ضريبة القيمة المضافة 15%.
+  قارن على أساس واحد وقل للقارئ أيهما تقارن.
+
+- في takeaway: اذكر الخلاصة العملية، لا الرقم فقط.
+  ✓ "الفرق 35% معظمه رسوم وضريبة، فالاستيراد لا يوفر بعد الحساب الكامل"
 
 قواعد الدقة:
 - اعتمد فقط على ما وجدته في البحث. لا تستخرج أرقاماً من ذاكرتك.
