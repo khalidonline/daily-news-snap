@@ -168,6 +168,22 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   ✓ ["Fairchild Semiconductor", "Channel F console", "San Jose factory"]
   اسأل نفسك: هل هذه الكلمة اسم شيء ورد في نص هذه اللقطة؟ إن كان لا، غيّرها.
 
+- image_keywords_ar: نفس أسماء هذه اللقطة بالعربية — من كلمة إلى ثلاث،
+  أسماء علم فقط، لا وصفاً ولا جملة. لكل لقطة كلماتها هي، لا كلمات القصة كلها.
+
+  أرشيف الصور قد لا يفهرس الاسم إلا بالعربية، فيرجع البحث اللاتيني فارغاً
+  عن موضوع له صور فعلاً. هذه القائمة هي ما ينقذ اللقطة في تلك الحالة.
+
+  لكل اسم سعودي أو عربي ضع الاسم العربي هنا دائماً، حتى لو كان للجهة اسم
+  لاتيني رسمي وكتبتَه في image_keywords — الاسم العربي هو ما فُهرست به الصورة:
+  ✓ image_keywords: ["Aramco"]   مع   image_keywords_ar: ["أرامكو"]
+  ✓ image_keywords: ["AlUla"]    مع   image_keywords_ar: ["العلا", "الحِجر"]
+  ✓ image_keywords: ["Abdul Latif Jameel"] مع ["عبداللطيف جميل"]
+  ✗ لقطة عن موضوع سعودي وقائمتها العربية فارغة
+
+  وإن كانت اللقطة عن موضوع أجنبي بحت لا اسم عربي متداول له
+  (Jerry Lawson، Fairchild، Macintosh) فاتركها فارغة: []
+
 واكتب أيضاً:
 - title: عنوان القصة كاملاً (حتى ٤٥ حرفاً) — يظهر في اللقطة الأولى
 - caption: نص المنشور المرافق (حتى ١٢٠ حرفاً)
@@ -183,7 +199,7 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 أجب بصيغة JSON فقط:
 {{"title": "...", "caption": "...", \
 "frames": [{{"heading": "...", "text": "...", \
-"image_keywords": ["...", "...", "..."]}}], \
+"image_keywords": ["...", "...", "..."], "image_keywords_ar": ["..."]}}], \
 "sources": ["..."], "image_queries": ["..."], "image_queries_ar": ["..."], \
 "image_prompt": "..."}}"""
 
@@ -551,17 +567,27 @@ def find_all_photos(brief):
     if frames:
         fallback += list(frames[0].get("image_keywords", []))
     fallback = [k for k in dict.fromkeys(fallback) if k][:3]
-    # the model gives Arabic keywords for the story, not per frame — they are
-    # the same for every frame, so the dedup below is what keeps them useful
+    # story-level Arabic keywords: the same for every frame, so they are only
+    # a backstop for a frame the model gave none of its own
     fallback_ar = [k for k in (brief.get("image_queries_ar") or []) if k][:3]
 
     photos, missing = [], []
     used = set()                      # digests of pictures already in the story
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
-        spec.setdefault("image_keywords_ar", fallback_ar)
+        # An explicit [] is an answer, not a gap: the prompt asks for it when
+        # a beat is purely foreign, and forcing the story's Arabic keywords
+        # onto such a frame is how you attach a Saudi photo to a beat about
+        # Fairchild. Only a missing field falls back. The story-level terms
+        # still get their turn at the widening step below.
+        own_ar = frame.get("image_keywords_ar")
+        spec["image_keywords_ar"] = (fallback_ar if own_ar is None
+                                     else [k for k in own_ar if k])
         keywords = [k for k in (spec.get("image_keywords") or []) if k]
-        print(f"    frame {n}: {', '.join(keywords[:4]) or '(no keywords)'}")
+        line = ", ".join(keywords[:4]) or "(no keywords)"
+        if spec["image_keywords_ar"]:
+            line += f"  |  {', '.join(spec['image_keywords_ar'][:3])}"
+        print(f"    frame {n}: {line}")
 
         photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg", used)
 
