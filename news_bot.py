@@ -345,10 +345,28 @@ def _font_charset(path):
         return None
 
 
+_CITE_WARNED = False
+
+
 def sanitize(text):
     """Normalize odd characters. NEVER deletes — a dropped '-' turns
     '8700-9400' into '87009400', which is a wrong number nobody notices.
     Anything unmappable is left in place to render as a visible box."""
+    # Citation markup from web search leaks into model output, often malformed:
+    # <cite index="14-1,14-2">  or  cite index="3-5  with no closing bracket.
+    if "cite" in text or "index=" in text:
+        before = text
+        text = re.sub(r"</?cite[^>]*>", " ", text, flags=re.IGNORECASE)
+        text = re.sub(r"</?\s*cite\b[^<>]*", " ", text, flags=re.IGNORECASE)
+        text = re.sub(r'index\s*=\s*"?[0-9,\-\s]*"?\s*>?', " ", text)
+        text = text.replace("<", " ").replace(">", " ")
+        text = re.sub(r"\s+([،.؟!:])", r"\1", text)      # no space before punctuation
+        text = re.sub(r"\s{2,}", " ", text).strip()
+        global _CITE_WARNED
+        if text != before and not _CITE_WARNED:
+            _CITE_WARNED = True
+            print("  · stripped citation markup from the text")
+
     for bad, good in CHAR_FIXES.items():
         text = text.replace(bad, good)
 
@@ -541,11 +559,16 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار يومي يُنشر عل�
   ✗ الشريحة المستهدفة        ✓ من يهمه الأمر، الفئة
   ✗ يُشترط على المكلفين      ✓ لازم عليك، تحتاج
   القاعدة: لو ما تقولها لصديقك بهذه الصيغة، فلا تكتبها.
-- اكتب أسماء الشركات والمنتجات بالإنجليزية كما هي، لا تنقلها حرفياً للعربية:
+- اكتب أسماء الشركات والمنتجات الأجنبية بالإنجليزية كما هي:
   ✓ NVIDIA، OpenAI، Google، Meta، Snap، Apple، Microsoft، TikTok، Tesla
   ✗ إنفيديا، أوبن إيه آي، جوجل، ميتا، سناب، آبل، مايكروسوفت
   وكذلك أسماء المصادر الأجنبية: CNBC، Reuters، TechCrunch، The Verge، BBC.
-  أما الجهات العربية والسعودية فتُكتب بالعربية كالمعتاد.
+
+- أما الأسماء السعودية والعربية فتُكتب بالعربية دائماً، حتى لو شاع تداولها
+  بحروف لاتينية أو كان اسمها الرسمي بالإنجليزية:
+  ✓ مرايا، أرامكو، نيوم، الدرعية، العلا، طيران ناس، تمارا، stc
+  ✗ Maraya، Aramco، NEOM، Diriyah، AlUla، flynas
+  الاسم العربي أقرب للقارئ، ويظهر في نص عربي أفضل من اللاتيني.
 - راجع الإملاء قبل الإجابة. الأخطاء الشائعة: "باطولة" والصحيح "بطولة"، "التى" والصحيح "التي"، "الذى" والصحيح "الذي".
 
 - image_queries: ثلاث عبارات إنجليزية للبحث عن صورة لهذا الخبر تحديداً، مرتبة
@@ -626,7 +649,13 @@ def summarize(items, already_posted=()):
 
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text").strip()
+        # Search results carry citation markup and the model sometimes copies
+        # it in, often malformed: <cite index="14-1,14-2>  or  cite index="3-5
         text = re.sub(r"</?cite[^>]*>", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"</?\s*cite\b[^<>]*?/?>?", "", text, flags=re.IGNORECASE)
+        text = re.sub(r'\\bindex\\s*=\\s*"[0-9,\\-\\s]*"?>?', "", text)
+        text = re.sub(r"[<>]", "", text)
+        text = re.sub(r"\s{2,}", " ", text).strip()
         text = re.sub(r"^```(?:json)?|```$", "", text, flags=re.MULTILINE).strip()
 
         start, end = text.find("{"), text.rfind("}")
