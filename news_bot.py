@@ -1425,13 +1425,53 @@ def _commons_credit(info):
 
 
 def _commons_described(page, info):
-    """Everything the file says about itself, for the safety and match checks."""
+    """Everything the file says about itself, for matching a query."""
+    return " ".join(filter(None, [
+        _commons_depicts(page, info),
+        _commons_meta(info, "Categories").replace("|", " "),
+    ]))
+
+
+def _commons_depicts(page, info):
+    """What the picture actually shows — no categories.
+
+    Categories classify the SUBJECT, not the image. A portrait of someone who
+    once served is filed under military categories, and judging it by those
+    rejected a perfectly ordinary headshot: searching Yuan Geng lost his
+    photograph to 'Armed' and 'Army' sitting in his biography.
+    """
     return " ".join(filter(None, [
         page.get("title", "").replace("File:", ""),
         _commons_meta(info, "ObjectName"),
         _commons_meta(info, "ImageDescription"),
-        _commons_meta(info, "Categories").replace("|", " "),
     ]))
+
+
+# Categories are still worth checking, but only against words that describe a
+# scene and could never describe a career. "Army" and "police" say what a
+# person was; "explosion" and "riot" say what is in the frame.
+_AFFILIATION_TERMS = {"military", "army", "armed", "soldier", "soldiers",
+                      "troops", "police"}
+# Commons names categories in the plural — "Riots", "Explosions" — while the
+# blocklist holds singulars, so an optional s is the difference between this
+# check working and doing nothing at all.
+_CATEGORY_BLOCKED_RE = re.compile(
+    r"\b(" + "|".join(re.escape(t) for t in BLOCKED_IMAGE_TERMS
+                      if t not in _AFFILIATION_TERMS) + r")s?\b",
+    re.IGNORECASE)
+
+
+def _commons_safe(page, info):
+    """Reject on what the picture shows, and on categories that can only
+    describe content. Keeps rule 3 without vetoing a soldier's headshot."""
+    if not _image_is_safe(_commons_depicts(page, info)):
+        return False
+    categories = _commons_meta(info, "Categories").replace("|", " ")
+    match = _CATEGORY_BLOCKED_RE.search(categories)
+    if match:
+        print(f"  ! skipped an image ({match.group(0)!r} in its categories)")
+        return False
+    return True
 
 
 def _commons_fileinfo(titles):
@@ -1541,7 +1581,7 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
             if not _commons_licence_ok(info):
                 continue
             described = _commons_described(page, info)
-            if not _image_is_safe(described):
+            if not _commons_safe(page, info):
                 continue
             if want_saudi and _geo_adjust(described) <= 0:
                 continue
@@ -1641,7 +1681,7 @@ def fetch_commons_portrait(name, out_path):
             continue
         if not _commons_licence_ok(info):
             continue
-        if not _image_is_safe(_commons_described(page, info)):
+        if not _commons_safe(page, info):
             continue
         for link in (info.get("thumburl"), info.get("url")):
             if not link:

@@ -126,6 +126,11 @@ others. Expect roughly 120 posts a month against that 145.
 - Openverse blocklist matched `war` inside `warehouse`, rejecting everything.
 - `find_all_photos` was capped at 4 frames while the renderer drew 6.
 - Duplicate keys in a workflow `env:` block fail the whole workflow file.
+- Commons categories classify the SUBJECT, not the picture. Judging safety by
+  them rejected a headshot of someone who had once served, on 'Army' sitting
+  in his biography. Safety now reads title and description; categories are
+  checked only against words that describe a scene and never a career — and
+  in the plural, because that is how Commons names them.
 - Two stories in one KSA hour used to overwrite each other's cards: the
   filename digest was `md5(stem)` and `ksa_stamp()` only resolves to the hour.
   It hashes the file's bytes too now — keep it that way, and keep it
