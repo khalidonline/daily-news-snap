@@ -1386,14 +1386,42 @@ def _commons_licence_ok(info):
     return not _BAD_LICENCE.search(licence)
 
 
+_URL_RE = re.compile(r"(?:https?://|www\.)\S+", re.IGNORECASE)
+# Credit is a provenance blob, not an author field: links, galleries, dates
+# and several labels run together. The name, when it is in there, is labelled.
+# the label is matched case-insensitively, the name is not: the capture
+# relies on capitalisation to know where a name starts and stops
+_CREDIT_AUTHOR_RE = re.compile(
+    r"(?i:photographer|photograph by|author|artist|creator)\s*:?\s*"
+    r"([A-Z][\w.\-']*(?:\s+[A-Z][\w.\-']*){0,2})")
+
+
+def _commons_person(text):
+    """A person's name out of a metadata field, or "".
+
+    Strips links first: some files carry only a URL where the photographer
+    belongs, and printing it puts a raw hyperlink on the card.
+    """
+    text = re.sub(r"\s+", " ", _URL_RE.sub(" ", text or "")).strip(" ,;·-:")
+    if not text:
+        return ""
+    match = _CREDIT_AUTHOR_RE.search(text)
+    if match:
+        return match.group(1).strip(" ,;")
+    if ":" in text:            # still a labelled blob, no name we can trust
+        return ""
+    return text
+
+
 def _commons_credit(info):
     """Most Commons files are CC BY-SA: the credit line is not optional."""
-    artist = _commons_meta(info, "Artist") or _commons_meta(info, "Credit")
-    artist = re.sub(r"\s+", " ", artist).strip(" ,;·-")
+    artist = _commons_person(_commons_meta(info, "Artist")) \
+        or _commons_person(_commons_meta(info, "Credit"))
     if len(artist) > 60:                     # some Artist fields are a paragraph
         artist = artist[:60].rsplit(" ", 1)[0].rstrip(" ,;")
     licence = _commons_meta(info, "LicenseShortName").strip()
-    return " / ".join(p for p in (artist, licence) if p) or "Wikimedia Commons"
+    # never a bare licence with nobody named — say where it came from instead
+    return " / ".join(p for p in (artist or "Wikimedia Commons", licence) if p)
 
 
 def _commons_described(page, info):
