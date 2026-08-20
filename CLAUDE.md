@@ -126,6 +126,11 @@ others. Expect roughly 120 posts a month against that 145.
 - Openverse blocklist matched `war` inside `warehouse`, rejecting everything.
 - `find_all_photos` was capped at 4 frames while the renderer drew 6.
 - Duplicate keys in a workflow `env:` block fail the whole workflow file.
+- Award documents are not named "certificate" on Commons. They are "Genius
+  Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
+  of the White Lion awarded to X". Three reached story frames after
+  "certificate" was blocked. `_DOCUMENT_RE` blocks the noun "award" but spares
+  "award-winning", which is an adjective for a real building.
 - Commons categories classify the SUBJECT, not the picture. Judging safety by
   them rejected a headshot of someone who had once served, on 'Army' sitting
   in his biography. Safety now reads title and description; categories are

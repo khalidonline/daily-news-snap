@@ -231,6 +231,20 @@ def _arabic_word_re(terms):
 _BLOCKED_RE = _latin_word_re(BLOCKED_IMAGE_TERMS)
 _BLOCKED_AR_RE = _arabic_word_re(BLOCKED_AR_TERMS)
 _ARTWORK_RE = _latin_word_re(NOT_A_PHOTOGRAPH_TERMS)
+
+# Commons names award documents in ways the plain word list misses: "Genius
+# Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
+# of the White Lion awarded to Nikola Tesla". Three of them reached story
+# frames after "certificate" was blocked, because none of them says
+# certificate. "award" as a noun is the common thread — but "award-winning"
+# is an adjective describing a real building, so that one form is spared.
+_DOCUMENT_RE = re.compile(
+    r"\bawarded\s+to\b"
+    r"|\baward\b(?!\s*-?\s*winning)"
+    r"|\bdipl[oô]me\b"
+    r"|\bhonorary\s+(?:doctorate|degree|charter|diploma|certificate)\b"
+    r"|\bmedals?\b|\btroph(?:y|ies)\b",
+    re.IGNORECASE)
 _ARTWORK_AR_RE = _arabic_word_re(NOT_A_PHOTOGRAPH_AR)
 
 
@@ -285,7 +299,7 @@ def _image_is_safe(text):
         if match:
             print(f"  ! skipped an image ({match.group(0)!r} in its description)")
             return False
-    for pattern in (_ARTWORK_RE, _ARTWORK_AR_RE):
+    for pattern in (_ARTWORK_RE, _ARTWORK_AR_RE, _DOCUMENT_RE):
         match = pattern.search(text)
         if match:
             print(f"  ! skipped artwork, not a photograph "
