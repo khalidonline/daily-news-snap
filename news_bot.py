@@ -183,6 +183,14 @@ NOT_A_PHOTOGRAPH_TERMS = (
     "cartoon", "cartoons", "illustration", "illustrations", "illustrated",
     "drawing", "drawings", "artwork", "painting", "paintings", "sketch",
     "engraving", "lithograph", "woodcut", "etching", "mural", "clipart",
+    # documents, not photographs. An award certificate photographed at an
+    # angle isn't flat enough for the pixel check and its description says
+    # "certificate", not "poster" — one reached the closing frame of the
+    # Tesla story, made out to two doctors, matched on the word Tesla.
+    # NOT bare "award": that would reject an award-winning building. Award
+    # ceremonies are already handled by MEETING_HINTS as a score penalty.
+    "certificate", "certificates", "diploma", "diplomas",
+    "plaque", "plaques", "award certificate",
 )
 
 # NOT "رسم" or "رسوم" on their own: those are the ordinary words for a fee,
@@ -193,6 +201,9 @@ NOT_A_PHOTOGRAPH_AR = (
     "بروباغندا", "بروباجندا", "دعاية", "دعائية",
     "ملصق", "ملصقات", "رسمة", "رسومات",
     "رسم توضيحي", "رسوم متحركة", "رسم كرتوني", "لوحة زيتية",
+    # NOT "شهادة" on its own — it is the ordinary word for a school or
+    # university qualification and would reject education photos
+    "شهادة تقدير", "شهادة شكر", "دبلوم", "لوحة تذكارية", "درع تكريمي",
 )
 
 
