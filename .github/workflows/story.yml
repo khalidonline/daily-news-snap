@@ -2,7 +2,7 @@ name: Story to Snapchat
 
 on:
   schedule:
-    - cron: "0 17 * * 4,6"     # 20:00 KSA Thursday and Saturday
+    - cron: "0 17 * * *"       # 20:00 KSA daily
   workflow_dispatch:
     inputs:
       story:
@@ -44,7 +44,7 @@ jobs:
           POST_PROVIDER: "bundle"
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          POST_TO_SNAPCHAT: "0"      # 0 = hybrid, 1 = post automatically
+          POST_TO_SNAPCHAT: "1"      # 0 = hybrid, 1 = post automatically
           MONTHLY_POST_LIMIT: "145"
           STORY: ${{ inputs.story }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}

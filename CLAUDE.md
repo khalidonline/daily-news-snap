@@ -9,7 +9,7 @@ run by GitHub Actions on a schedule. Everything is Python + Pillow, no framework
 |---|---|---|
 | `news_bot.py` | One business/tech news story per run, as a single card | 07:00, 12:00, 17:00, 21:00 |
 | `topic_bot.py` | One researched explainer per day, chosen by a scoring system | 09:00 |
-| `story_bot.py` | One narrative told across 6 frames | Thu + Sat 20:00 |
+| `story_bot.py` | One narrative told across 6 frames | 20:00 daily |
 | `ask_card.py` | Asks followers what they want covered | manual only |
 
 `news_bot.py` is also the shared library: rendering, fonts, Arabic shaping,
@@ -87,11 +87,16 @@ What actually posts:
 
 | Workflow | Posts to Snapchat |
 |---|---|
-| `news_bot.py` | the 07:00, 17:00 and 21:00 KSA runs |
-| `news_bot.py` | **not** the 12:00 KSA run (`0 9 * * *`) — hybrid |
+| `news_bot.py` | the 07:00 and 17:00 KSA runs |
+| `news_bot.py` | **not** 12:00 (`0 9 * * *`) or 21:00 (`0 18 * * *`) — hybrid |
 | `topic_bot.py` | yes, the 09:00 KSA run |
-| `story_bot.py` | no — hybrid |
+| `story_bot.py` | yes, the 20:00 KSA run |
 | any manual dispatch | no |
+
+21:00 news is hybrid because the story posts at 20:00 and two posts an hour
+apart crowd the same evening. Four posts a day is also the budget: at ~122 a
+month it fits under the 145 cap and the plan's 150, and a story counts as one
+post however many frames it has.
 
 daily.yml picks that per-run with `github.event.schedule`. A manual dispatch
 sets no schedule, so it falls through to hybrid — those are nearly always
