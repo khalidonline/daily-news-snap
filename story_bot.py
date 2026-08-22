@@ -1040,16 +1040,21 @@ def _curated_logo(frame_no, total, brief, frame):
            "closing frame" if frame_no == total else f"frame {frame_no}")
     dest = OUT_DIR / f"story-frame-{frame_no}.jpg"
     from PIL import Image as _Im
-    img = _Im.open(path)
-    if img.mode in ("RGBA", "LA", "P"):
-        # transparent logo on the renderer's convert("RGB") goes black;
-        # flatten onto the card's cream instead
-        flat = _Im.new("RGB", img.size, BG_TOP)
-        rgba = img.convert("RGBA")
-        flat.paste(rgba, (0, 0), rgba)
-        flat.save(dest, "JPEG", quality=92)
-    else:
-        img.convert("RGB").save(dest, "JPEG", quality=92)
+    img = _Im.open(path).convert("RGBA")
+    # The renderer CROPS photos to fill its box — right for photography,
+    # fatal for a wordmark (the real aramco-current.png is 3840x1081; a
+    # crop-to-fill would slice both ends off the name). Letterbox instead:
+    # compose the logo at ~78% width onto a cream canvas already shaped
+    # like the box, so the renderer's crop changes nothing.
+    BOX_W, BOX_H = 888, 639
+    canvas = _Im.new("RGB", (BOX_W * 2, BOX_H * 2), BG_TOP)
+    scale = min(canvas.width * 0.78 / img.width,
+                canvas.height * 0.78 / img.height)
+    logo = img.resize((max(1, int(img.width * scale)),
+                       max(1, int(img.height * scale))), _Im.LANCZOS)
+    canvas.paste(logo, ((canvas.width - logo.width) // 2,
+                        (canvas.height - logo.height) // 2), logo)
+    canvas.save(dest, "JPEG", quality=92)
     print(f"    frame {frame_no}: using curated logo {path} (era match: {tag})")
     return str(dest)
 
