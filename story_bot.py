@@ -868,6 +868,13 @@ def find_photo(spec, out_path, seen=(), context=""):
     carries on: the same picture on two frames of one series reads as a
     mistake, and the reader notices it before they notice the text.
     """
+    # A frame whose subject has no archive photo at all used to die here and
+    # take the whole story with it — the first gated run rejected everything
+    # for every frame. "neutral" (a real photograph that misleads no one but
+    # proves nothing) is banked and used only if no "yes" ever arrives.
+    neutral = Path(str(out_path) + ".neutral")
+    neutral.unlink(missing_ok=True)
+
     def take(result):
         photo = result[0] if isinstance(result, tuple) else result
         if not photo:
@@ -876,11 +883,25 @@ def find_photo(spec, out_path, seen=(), context=""):
             print("      (that picture is already on an earlier frame "
                   "— looking further)")
             return None
-        # The glance a reviewer would give it, automated: metadata scoring
-        # accepted a perfume vial for an oil story and a chart for a well.
-        # A rejection just continues the search to the next candidate.
-        if context and not photo_shows(photo, context):
-            return None
+        if not context:
+            return photo
+        verdict = photo_shows(photo, context)
+        if verdict == "yes":
+            return photo
+        if verdict == "neutral" and not neutral.exists():
+            import shutil as _sh
+            _sh.copyfile(photo, neutral)      # later fetches overwrite out_path
+        return None
+
+    def settle(photo):
+        """A yes wins; otherwise the banked neutral carries the frame."""
+        if photo is None and neutral.exists():
+            import shutil as _sh
+            _sh.copyfile(neutral, out_path)
+            print("      (no photo shows this beat exactly — using a neutral "
+                  "real photograph instead)")
+            photo = str(out_path)
+        neutral.unlink(missing_ok=True)
         return photo
 
     keywords = [k for k in (spec.get("image_keywords") or []) if k]
@@ -914,7 +935,7 @@ def find_photo(spec, out_path, seen=(), context=""):
         prompt = (f"A plain, unbranded photograph relating to {subject}. "
                   "No buildings with signs, no offices, no logos, no text.")
         photo = take(fetch_generated_photo(prompt, out_path))
-    return photo
+    return settle(photo)
 
 
 def find_all_photos(brief):

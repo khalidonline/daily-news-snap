@@ -2750,30 +2750,33 @@ _VISION_JUDGE = """أنت تفحص صورة قبل وضعها على بطاقة 
 نص اللقطة التي ستحمل الصورة:
 {context}
 
-أجب بكلمة واحدة أولاً: "نعم" أو "لا"، ثم سطر واحد يشرح.
+أجب بكلمة واحدة أولاً بلا أي تنسيق: نعم أو محايدة أو لا، ثم سطر واحد يشرح.
 
-قل "نعم" فقط إذا تحقق الشرطان معاً:
-1. الصورة صورة فوتوغرافية حقيقية — ليست خريطة ولا رسماً بيانياً ولا شهادة
-   ولا ملصقاً ولا لقطة شاشة بواجهة برنامج ولا صورة شخصية عشوائية لغرض آخر.
-2. ما تُظهره الصورة يخص موضوع هذه اللقطة تحديداً، بحيث لو رآها القارئ مع
-   النص لفهم لماذا وُضعت. إن كانت اللقطة تاريخية فصورة الكيان في يومنا
-   الحاضر لا تكفي إلا إن كانت المكان أو الشيء نفسه.
+- نعم: الصورة صورة فوتوغرافية حقيقية، وما تُظهره يخص موضوع هذه اللقطة
+  تحديداً — لو رآها القارئ مع النص لفهم لماذا وُضعت. إن كانت اللقطة
+  تاريخية فصورة الكيان في يومنا الحاضر لا تكفي إلا إن كانت المكان أو
+  الشيء نفسه.
+- محايدة: صورة فوتوغرافية حقيقية لا تضلل أحداً، لكنها عامة — لا تخص هذه
+  اللقطة تحديداً ولا تناقضها. مشهد صامت يمكن أن يرافق النص بلا ادعاء.
+- لا: ليست صورة فوتوغرافية (خريطة، رسم بياني، شهادة، ملصق، لقطة شاشة
+  بواجهة برنامج)، أو تُظهر شيئاً يناقض النص أو يضلل القارئ: شخصاً آخر،
+  مكاناً آخر يوحي بأنه المكان المقصود، شيئاً لا صلة له يبدو كأنه دليل.
 
-عند الشك، قل "لا" — بطاقة بلا صورة أفضل من صورة تضلل."""
+بين نعم ومحايدة اختر الأدق؛ وبين محايدة ولا، ما يضلل فهو لا."""
 
 
-_vision_stats = {"asked": 0, "rejected": 0}
+_vision_stats = {"asked": 0, "rejected": 0, "neutral": 0}
 
 
 def photo_shows(photo_path, context):
     """Does the picture actually show what the frame is about?
 
-    Fail-open by design: no key, gate off, or an API error all return True,
-    so an outage degrades to the old behaviour instead of losing the story.
-    A rejection prints the judge's reason.
+    Returns "yes", "neutral" or "no". Fail-open by design: no key, gate off,
+    or an API error all return "yes", so an outage degrades to the old
+    behaviour instead of losing the story. A rejection prints the reason.
     """
     if not (VISION_GATE and ANTHROPIC_API_KEY):
-        return True
+        return "yes"
     try:
         import io as _io
         img = Image.open(photo_path).convert("RGB")
@@ -2805,21 +2808,29 @@ def photo_shows(photo_path, context):
                        if b.get("type") == "text").strip()
     except Exception as exc:
         print(f"  ! vision gate unavailable ({exc}) — letting the photo through")
-        return True
+        return "yes"
 
     _vision_stats["asked"] += 1
-    verdict = text.lstrip(' "«').startswith("نعم")
-    if not verdict:
+    # The verdict word may arrive dressed — "**نعم**", «نعم», a leading dash.
+    # Take the first verdict token found anywhere in the head of the reply;
+    # startswith() alone once misread every bolded approval as a rejection.
+    head = text[:40]
+    positions = {w: head.find(w) for w in ("نعم", "محايدة", "لا")}
+    found = [(i, w) for w, i in positions.items() if i != -1]
+    verdict = min(found)[1] if found else "لا"
+    if verdict == "لا":
         _vision_stats["rejected"] += 1
-        reason = text.replace("\n", " ")[:140]
-        print(f"  ✂ vision gate rejected the photo: {reason}")
-    return verdict
+        print(f"  ✂ vision gate rejected the photo: {text[:140]}")
+    elif verdict == "محايدة":
+        _vision_stats["neutral"] += 1
+    return {"نعم": "yes", "محايدة": "neutral"}.get(verdict, "no")
 
 
 def vision_gate_summary():
     if _vision_stats["asked"]:
         print(f"    vision gate: {_vision_stats['asked']} checked, "
-              f"{_vision_stats['rejected']} rejected")
+              f"{_vision_stats['rejected']} rejected, "
+              f"{_vision_stats['neutral']} neutral")
 
 ALLOW_GENERATED = os.getenv("ALLOW_GENERATED", "0").strip() not in ("", "0", "false", "False")
 GENERATED_CREDIT = "صورة مولّدة بالذكاء الاصطناعي"

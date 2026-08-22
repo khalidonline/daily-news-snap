@@ -76,9 +76,14 @@ Every story photo passes a **vision gate** before it ships: Haiku looks at
 the downscaled candidate next to the frame's own text and answers whether it
 really shows the subject — the automated version of the glance that kept
 catching certificates, charts and perfume vials that metadata scoring
-accepted. Fail-open: no key or an API error lets the photo through with a
-loud log line, so an outage degrades to the old behaviour. `VISION_GATE=0`
-disables it; a rejection just moves the search to the next candidate.
+accepted. The verdict is three-way: نعم ships, لا moves the search on, and
+محايدة (a real photograph that misleads no one but proves nothing) is banked
+and used only if no نعم ever arrives — the first gated run returned لا for
+every candidate of every frame and killed the whole story after the research
+was paid for. Parse the verdict word loosely: Haiku dresses it in bold or
+quotes, and a strict startswith once read every approval as a rejection.
+Fail-open: no key or an API error lets the photo through with a loud log
+line. `VISION_GATE=0` disables it.
 
 Person-led stories are gated before the research call: no free portrait means
 skip, recorded in `state/stories_skipped.json` for `STORY_SKIP_DAYS` (14) —
