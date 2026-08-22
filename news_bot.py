@@ -1378,6 +1378,13 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
                 continue
             if len(payload) < 8_000:
                 continue
+            # Openverse never ran the graphic check — article, SPA, Commons
+            # and LoC all did, and the one path without it delivered the same
+            # green chart to two stories. Check the bytes before accepting.
+            _clear_generated_marker(out_path)
+            Path(out_path).write_bytes(payload)
+            if looks_like_a_graphic(out_path):
+                break                     # next candidate, not next field
             data, best, best_score, best_query = payload, item, score, query
             if field == "thumbnail":
                 print("    (using Openverse thumbnail — original host refused)")
@@ -1386,7 +1393,7 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
             break
 
     if data is None:
-        print("  ! every Openverse candidate failed to download")
+        print("  ! every usable Openverse candidate failed to download")
         return None, None
     _clear_generated_marker(out_path)
     Path(out_path).write_bytes(data)
@@ -2029,6 +2036,8 @@ def fetch_photo(queries, out_path, need_saudi=None):
     except Exception as exc:
         print(f"  ! photo download failed: {exc}")
         return None
+    if looks_like_a_graphic(out_path):
+        return None                       # Pexels had the same blind spot
 
     print(f"    photo: {best.get('alt') or '(no description)'} "
           f"— {best.get('photographer')} / Pexels [{best_query}]")
@@ -2756,8 +2765,10 @@ _VISION_JUDGE = """أنت تفحص صورة قبل وضعها على بطاقة 
   تحديداً — لو رآها القارئ مع النص لفهم لماذا وُضعت. إن كانت اللقطة
   تاريخية فصورة الكيان في يومنا الحاضر لا تكفي إلا إن كانت المكان أو
   الشيء نفسه.
-- محايدة: صورة فوتوغرافية حقيقية لا تضلل أحداً، لكنها عامة — لا تخص هذه
-  اللقطة تحديداً ولا تناقضها. مشهد صامت يمكن أن يرافق النص بلا ادعاء.
+- محايدة: صورة فوتوغرافية حقيقية من عالم الموضوع نفسه — مكانه أو مجاله أو
+  حقبته — لا تدّعي أنها الحدث لكنها تنتمي إليه. صحراء الظهران للقطة عن
+  الحفر فيها محايدة؛ أما عشب أخضر أو كورنيش حديث ليلاً أو أي منظر جميل
+  لا يربطه بالموضوع شيء فليس محايداً — إنه حشو، وجوابه لا.
 - لا: ليست صورة فوتوغرافية (خريطة، رسم بياني، شهادة، ملصق، لقطة شاشة
   بواجهة برنامج)، أو تُظهر شيئاً يناقض النص أو يضلل القارئ: شخصاً آخر،
   مكاناً آخر يوحي بأنه المكان المقصود، شيئاً لا صلة له يبدو كأنه دليل.

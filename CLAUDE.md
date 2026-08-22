@@ -244,6 +244,12 @@ others. Expect roughly 120 posts a month against that 145.
 - `git push` from three bots on one branch loses races. Push through
   `_git_push()`, which rebases and retries — a bare push raised
   `CalledProcessError` and killed the run after the card was already built.
+- Openverse and Pexels were the only two photo sources that never ran
+  `looks_like_a_graphic` on their downloads — article, SPA, Commons and LoC
+  all did. The one unchecked path delivered the same green chart to two
+  stories, sailing past a pixel check that had just been strengthened for
+  paths that never call it. Every fetcher checks its bytes now; keep it that
+  way when adding a source.
 - Openverse and Pexels stopped searching at a hardcoded score of 10 but
   published against `MIN_PHOTO_SCORE`. Raising that variable — the obvious
   move after a bad photo — made the search *worse*: it still stopped at the
