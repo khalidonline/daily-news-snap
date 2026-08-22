@@ -191,6 +191,9 @@ NOT_A_PHOTOGRAPH_TERMS = (
     # ceremonies are already handled by MEETING_HINTS as a score penalty.
     "certificate", "certificates", "diploma", "diplomas",
     "plaque", "plaques", "award certificate",
+    # a labelled location map reached a story frame — a map is a diagram,
+    # however useful. NOT "mapping"/"mapped": whole-word matching covers that.
+    "map", "maps", "atlas", "cartography",
 )
 
 # NOT "رسم" or "رسوم" on their own: those are the ordinary words for a fee,
@@ -204,6 +207,7 @@ NOT_A_PHOTOGRAPH_AR = (
     # NOT "شهادة" on its own — it is the ordinary word for a school or
     # university qualification and would reject education photos
     "شهادة تقدير", "شهادة شكر", "دبلوم", "لوحة تذكارية", "درع تكريمي",
+    "خريطة", "خرائط",
 )
 
 

@@ -67,7 +67,9 @@ the title. Per frame: at most two new proper nouns, each with a descriptor;
 one fact per sentence; neutral verbs (أتلفت لا سحقت). `punch` is an optional
 red line under the body — one or two per story, the closing frame is its best
 home. Each frame carries its own `image_keywords` (things, not concepts —
-"Shekou industrial zone", never "Cultural Revolution") and `image_keywords_ar`
+"Shekou industrial zone", never "Cultural Revolution"; for historical beats,
+the thing plus its place or year — "Dammam No. 7 1938", never "Aramco",
+whose archive photos are its modern jets) and `image_keywords_ar`
 (the Arabic name is often the only one the archive knows).
 
 Person-led stories are gated before the research call: no free portrait means
