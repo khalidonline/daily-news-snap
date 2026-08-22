@@ -2775,22 +2775,27 @@ _VISION_JUDGE = """أنت تفحص صورة قبل وضعها على بطاقة 
 
 أجب بكلمة واحدة أولاً بلا أي تنسيق: نعم أو محايدة أو لا، ثم سطر واحد يشرح.
 
-- نعم: الصورة صورة فوتوغرافية حقيقية، وما تُظهره يخص موضوع هذه اللقطة
-  تحديداً — لو رآها القارئ مع النص لفهم لماذا وُضعت. إن كانت اللقطة
-  تاريخية فصورة الكيان في يومنا الحاضر لا تكفي إلا إن كانت المكان أو
-  الشيء نفسه.
-- محايدة: صورة فوتوغرافية حقيقية من عالم الموضوع نفسه — مكانه أو مجاله أو
-  حقبته — لا تدّعي أنها الحدث لكنها تنتمي إليه. صحراء الظهران للقطة عن
-  الحفر فيها محايدة؛ أما عشب أخضر أو كورنيش حديث ليلاً أو أي منظر جميل
-  لا يربطه بالموضوع شيء فليس محايداً — إنه حشو، وجوابه لا.
+- نعم: صورة فوتوغرافية حقيقية لشخصٍ أو مكانٍ أو شيءٍ يسمّيه نص اللقطة —
+  حتى لو لم تُظهر الحدث الموصوف نفسه أو لحظته. لا تطلب صورة "اللحظة":
+  الأرشيف نادراً ما يملكها. صورة شخصٍ يسمّيه النص هي "نعم" دائماً.
+  ✓ يجب أن تكون "نعم": صورة Max Steineke في السعودية 1938 للقطة نصها
+    يسمّي Steineke — الحكم كان "محايد" فنُشرت صورة جوية حديثة بدلاً منه.
+- محايدة: صورة فوتوغرافية حقيقية من موضوع القصة لكنها تُظهر شيئاً لا
+  يسمّيه نص هذه اللقطة: المقر الحديث للشركة على لقطة عن الثلاثينات،
+  صحراء المنطقة على لقطة عن اجتماع. أما عشب أخضر أو كورنيش ليلي أو أي
+  منظر جميل لا يربطه بالموضوع شيء فليس محايداً — إنه حشو، وجوابه لا.
 - لا: ليست صورة فوتوغرافية (خريطة، رسم بياني، شهادة، ملصق، لقطة شاشة
   بواجهة برنامج)، أو تُظهر شيئاً يناقض النص أو يضلل القارئ: شخصاً آخر،
   مكاناً آخر يوحي بأنه المكان المقصود، شيئاً لا صلة له يبدو كأنه دليل.
 
-بين نعم ومحايدة اختر الأدق؛ وبين محايدة ولا، ما يضلل فهو لا."""
+بين نعم ومحايدة: إن سمّى النص ما في الصورة فهي نعم. وبين محايدة ولا،
+ما يضلل فهو لا."""
 
 
 _vision_stats = {"asked": 0, "rejected": 0, "neutral": 0}
+# AramcoCoreArea.jpg was downloaded and judged five times in one run — same
+# bytes, same context, five vision calls. In-memory only, per process.
+_gate_cache = {}
 
 
 def photo_shows(photo_path, context):
@@ -2802,6 +2807,15 @@ def photo_shows(photo_path, context):
     """
     if not (VISION_GATE and ANTHROPIC_API_KEY):
         return "yes"
+    try:
+        raw = Path(photo_path).read_bytes()
+        cache_key = (hashlib.md5(raw).hexdigest(),
+                     hashlib.md5(context[:600].encode()).hexdigest())
+        if cache_key in _gate_cache:
+            print("      (gate verdict cached)")
+            return _gate_cache[cache_key]
+    except Exception:
+        cache_key = None
     try:
         import io as _io
         img = Image.open(photo_path).convert("RGB")
@@ -2848,7 +2862,10 @@ def photo_shows(photo_path, context):
         print(f"  ✂ vision gate rejected the photo: {text[:140]}")
     elif verdict == "محايدة":
         _vision_stats["neutral"] += 1
-    return {"نعم": "yes", "محايدة": "neutral"}.get(verdict, "no")
+    result = {"نعم": "yes", "محايدة": "neutral"}.get(verdict, "no")
+    if cache_key:
+        _gate_cache[cache_key] = result
+    return result
 
 
 def vision_gate_summary():
