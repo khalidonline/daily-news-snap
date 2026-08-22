@@ -860,7 +860,8 @@ def _photo_digest(path):
         return None
 
 
-def find_photo(spec, out_path, seen=(), context="", allow_neutral=True):
+def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
+               bank=None):
     """One photo for one frame, searched by subject.
 
     Any real photograph about the story serves — the person, the product, the
@@ -871,14 +872,26 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True):
     carries on: the same picture on two frames of one series reads as a
     mistake, and the reader notices it before they notice the text.
     """
-    # A frame whose subject has no archive photo at all used to die here and
-    # take the whole story with it — the first gated run rejected everything
-    # for every frame. "neutral" (a real photograph that misleads no one but
-    # proves nothing) is banked and used only if no "yes" ever arrives.
-    neutral = Path(str(out_path) + ".neutral")
-    neutral.unlink(missing_ok=True)
+    # Neutrals are BANKED, never settled here. "First banked neutral" used
+    # to be copied into the slot as soon as this pass ended, which made it
+    # the de-facto selector: it pre-empted widening, the curated logo and
+    # the repeat, and a modern aerial shipped while the protagonist's own
+    # 1938 portrait sat in hand. find_all_photos owns the ladder now; this
+    # function returns a yes or nothing, and hands the bank back tiered by
+    # which keyword found each candidate — a frame's own Latin keyword
+    # (tier 0, most specific) beats its own Arabic (tier 1); within a tier,
+    # first found wins.
+    # Stale cleanup only when this pass may bank: the widening pass
+    # (allow_neutral=False) runs on the same slot AFTER the own-keyword pass,
+    # and cleaning here destroyed the bank rung 4 was about to use — the
+    # drill caught the neutral file vanishing between rungs.
+    if allow_neutral:
+        for stale in Path(out_path).parent.glob(
+                Path(out_path).name + ".neutral*"):
+            stale.unlink()
+    bank_local = {}
 
-    def take(result):
+    def take(result, tier=0):
         photo = result[0] if isinstance(result, tuple) else result
         if not photo:
             return None
@@ -891,27 +904,25 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True):
         verdict = photo_shows(photo, context)
         if verdict == "yes":
             return photo
-        # A widened search must not bank neutrals: story-level fallback plus
-        # a generic Arabic single («صحراء») pulled global results, the gate
-        # called them harmless, and a Tunisian tourism photo shipped on a
-        # Saudi story. Only a frame's OWN keywords may settle for neutral —
-        # widening either finds the real thing or falls through to the loud
-        # repeat of a correct photo.
-        if allow_neutral and verdict == "neutral" and not neutral.exists():
+        # Widened searches must not bank neutrals at all: story-level
+        # fallback plus a generic Arabic single («صحراء») once pulled a
+        # Tunisian tourism photo onto a Saudi story.
+        if allow_neutral and verdict == "neutral" and tier not in bank_local:
             import shutil as _sh
-            _sh.copyfile(photo, neutral)      # later fetches overwrite out_path
+            kept = Path(f"{out_path}.neutral{tier}")
+            _sh.copyfile(photo, kept)         # later fetches overwrite out_path
+            bank_local[tier] = kept
         return None
 
     def settle(photo):
-        """A yes wins; otherwise the banked neutral carries the frame."""
-        if photo is None and neutral.exists():
-            import shutil as _sh
-            _sh.copyfile(neutral, out_path)
-            print("      (no photo shows this beat exactly — using a neutral "
-                  "real photograph instead)")
-            photo = str(out_path)
-        neutral.unlink(missing_ok=True)
-        return photo
+        """A yes wins outright; otherwise report the bank and return None."""
+        if photo is not None:
+            for kept in bank_local.values():
+                kept.unlink(missing_ok=True)
+            return photo
+        if bank is not None:
+            bank.extend(sorted(bank_local.items()))
+        return None
 
     keywords = [k for k in (spec.get("image_keywords") or []) if k]
     if not keywords:
@@ -934,7 +945,7 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True):
         if photo:
             break
         photo = take(fetch_commons_photo([keyword], out_path, need_saudi=False,
-                                         min_hits=1, subject_mode=True))
+                                         min_hits=1, subject_mode=True), tier=1)
     # LoC is an English-language archive — Arabic keywords would be wasted
     for keyword in keywords:
         if photo:
@@ -957,7 +968,7 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True):
         if photo:
             break
         photo = take(fetch_openverse_photo([keyword], out_path, need_saudi=False,
-                                           min_hits=1, subject_mode=True))
+                                           min_hits=1, subject_mode=True), tier=1)
 
     if photo is None and ALLOW_STORY_GENERATION:
         # Nothing in the archive. Generating a building or an office produces
@@ -1087,6 +1098,9 @@ def find_all_photos(brief):
 
     photos, missing = [], []
     used = set()                      # digests of pictures already in the story
+    # at most ONE logo-carried frame besides the closing frame: a story that
+    # is half logos is a worse failure than one honest repeat
+    logo_extra_used = False
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
         # An explicit [] is an answer, not a gap: the prompt asks for it when
@@ -1104,23 +1118,46 @@ def find_all_photos(brief):
         print(f"    frame {n}: {line}")
 
         context = f"{frame.get('heading', '')}\n{frame.get('text', '')}".strip()
-        photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg", used, context)
+        slot = OUT_DIR / f"story-frame-{n}.jpg"
+        bank = []
+        # rung 1: the frame's own keywords, yes-or-bank
+        photo = find_photo(spec, slot, used, context, bank=bank)
 
+        # rung 2: widened story subject, yes only
         if photo is None and fallback:
             print(f"      widening to the story subject: {', '.join(fallback)}")
             photo = find_photo({"image_keywords": fallback,
                                 "image_keywords_ar": fallback_ar},
-                               OUT_DIR / f"story-frame-{n}.jpg", used, context,
-                               allow_neutral=False)
+                               slot, used, context, allow_neutral=False)
 
-        # curated logo before the repeat fallback; a single logo may serve
-        # more than one frame (the spec allows it), so logo frames stay out
-        # of the `used` digests that the no-repeat rule checks
+        # rung 3: curated logo (frame-position rules live in _curated_logo);
+        # capped at one non-closing frame per story
         from_logo = False
         if photo is None:
-            photo = _curated_logo(n, len(frames), brief, frame)
-            from_logo = photo is not None
+            if n == len(frames) or not logo_extra_used:
+                photo = _curated_logo(n, len(frames), brief, frame)
+                from_logo = photo is not None
+                if from_logo and n != len(frames):
+                    logo_extra_used = True
+            else:
+                print(f"    frame {n}: logo rung skipped — one non-closing "
+                      "logo already carried this story")
 
+        # rung 4: best banked neutral, only now that the logo rung has had
+        # its turn — tier 0 (own Latin keyword) beats tier 1 (own Arabic)
+        if photo is None and bank:
+            tier, kept = bank[0]
+            import shutil as _sh
+            _sh.copyfile(kept, slot)
+            photo = str(slot)
+            tname = {0: "own Latin keyword", 1: "own Arabic keyword"}.get(
+                tier, f"tier {tier}")
+            print(f"    frame {n}: best banked neutral carries the frame "
+                  f"({tname}) — logo rung was unavailable or ineligible")
+        for _, kept in bank:
+            kept.unlink(missing_ok=True)
+
+        # rung 5 is the loud repeat below
         if photo is None:
             missing.append(n)
         elif not from_logo:
