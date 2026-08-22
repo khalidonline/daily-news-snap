@@ -14,6 +14,7 @@ story_bot يبني ست لقطات ويرسلها لتيليجرام دون نش
 import json
 import os
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -126,16 +127,24 @@ def frames_to_video(frames, out_path):
     # last duration as written; the listing above is complete.
     listing.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
+    # GitHub's runner image does NOT ship ffmpeg on PATH — the first live run
+    # proved it. imageio-ffmpeg carries a static binary and installs from a
+    # wheel in seconds, so it is the fallback everywhere.
+    ffmpeg = shutil.which("ffmpeg")
+    if not ffmpeg:
+        try:
+            import imageio_ffmpeg
+            ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+        except ImportError:
+            raise SystemExit("no ffmpeg on PATH and imageio-ffmpeg not "
+                             "installed — pip install imageio-ffmpeg")
+    cmd = [ffmpeg, "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
            "-i", str(listing),
            "-vf", "fps=30,format=yuv420p,scale=1080:1920",
            "-c:v", "libx264", "-preset", "medium", "-movflags", "+faststart",
            str(out_path)]
     try:
         subprocess.run(cmd, check=True, capture_output=True, text=True)
-    except FileNotFoundError:
-        raise SystemExit("ffmpeg not found — it is preinstalled on GitHub "
-                         "runners; install it to publish from elsewhere")
     except subprocess.CalledProcessError as exc:
         raise SystemExit(f"ffmpeg failed: {exc.stderr[-400:]}")
     finally:

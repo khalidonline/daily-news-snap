@@ -36,7 +36,9 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - run: pip install -r requirements.txt
+      # imageio-ffmpeg: the runner image has no ffmpeg on PATH, and the
+      # story ships as one MP4 — this wheel carries a static binary
+      - run: pip install -r requirements.txt imageio-ffmpeg
 
       - name: Publish the cards
         env:
