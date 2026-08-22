@@ -2,7 +2,7 @@ name: Story to Snapchat
 
 on:
   schedule:
-    - cron: "0 17 * * *"       # 20:00 KSA daily
+    - cron: "0 11 * * *"       # 14:00 KSA daily
   workflow_dispatch:
     inputs:
       story:

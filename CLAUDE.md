@@ -9,7 +9,7 @@ run by GitHub Actions on a schedule. Everything is Python + Pillow, no framework
 |---|---|---|
 | `news_bot.py` | One business/tech news story per run, as a single card | 07:00, 12:00, 17:00, 21:00 |
 | `topic_bot.py` | One researched explainer per day, chosen by a scoring system | 09:00 |
-| `story_bot.py` | One narrative told across 6 frames | 20:00 daily |
+| `story_bot.py` | One narrative told across 6 frames | 14:00 daily |
 | `ask_card.py` | Asks followers what they want covered | manual only |
 
 `news_bot.py` is also the shared library: rendering, fonts, Arabic shaping,
