@@ -34,7 +34,7 @@ try:
         quota_ok, quota_bump,
         POST_ENABLED, POST_PROVIDER, MEDIA_MODE, upload_media,
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
-        fetch_commons_photo, fetch_commons_portrait,
+        fetch_commons_photo, fetch_commons_portrait, fetch_loc_photo,
         fetch_generated_photo, IMAGE_SOURCE,
         photo_shows, vision_gate_summary,
     )
@@ -381,7 +381,10 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   ✗ ["The revival of AlUla's Old Town: courier.unesco.org"]
 - image_queries: ثلاث عبارات إنجليزية لصورة اللقطة الأولى، مشهد ملموس
   بلا أشخاص ولا شعارات ولا نصوص
-- image_queries_ar: ثلاث كلمات عربية مفردة للبحث في أرشيف الصور السعودي
+- image_queries_ar: أسماء علم عربية للبحث في أرشيف الصور السعودي — من
+  كلمة إلى ثلاث، بنفس معيار image_keywords_ar. لا كلمات عامة ولا فئات.
+  ✗ «صحراء» على لقطة البطل أعادت صورة سياحية من تونس
+  ✓ ["الظهران", "بئر الدمام", "الملك عبدالعزيز"]
 - image_prompt: وصف إنجليزي لمشهد واحد متماسك، بلا نصوص ولا وجوه
 
 أجب بصيغة JSON فقط:
@@ -857,7 +860,7 @@ def _photo_digest(path):
         return None
 
 
-def find_photo(spec, out_path, seen=(), context=""):
+def find_photo(spec, out_path, seen=(), context="", allow_neutral=True):
     """One photo for one frame, searched by subject.
 
     Any real photograph about the story serves — the person, the product, the
@@ -888,7 +891,13 @@ def find_photo(spec, out_path, seen=(), context=""):
         verdict = photo_shows(photo, context)
         if verdict == "yes":
             return photo
-        if verdict == "neutral" and not neutral.exists():
+        # A widened search must not bank neutrals: story-level fallback plus
+        # a generic Arabic single («صحراء») pulled global results, the gate
+        # called them harmless, and a Tunisian tourism photo shipped on a
+        # Saudi story. Only a frame's OWN keywords may settle for neutral —
+        # widening either finds the real thing or falls through to the loud
+        # repeat of a correct photo.
+        if allow_neutral and verdict == "neutral" and not neutral.exists():
             import shutil as _sh
             _sh.copyfile(photo, neutral)      # later fetches overwrite out_path
         return None
@@ -910,6 +919,28 @@ def find_photo(spec, out_path, seen=(), context=""):
     keywords_ar = [k for k in (spec.get("image_keywords_ar") or []) if k]
 
     photo = take(fetch_local_photo([], keywords, out_path))
+
+    # Commons and LoC come BEFORE Openverse: historical Saudi subjects are
+    # their territory, and the correct Steineke photo Openverse surfaced was
+    # itself Wikimedia-hosted. Same one-keyword-at-a-time shape as the
+    # Openverse loops below; the credit each returns is dropped by take(),
+    # exactly as it already is for Openverse frames.
+    for keyword in keywords:
+        if photo:
+            break
+        photo = take(fetch_commons_photo([keyword], out_path, need_saudi=False,
+                                         min_hits=1, subject_mode=True))
+    for keyword in keywords_ar:
+        if photo:
+            break
+        photo = take(fetch_commons_photo([keyword], out_path, need_saudi=False,
+                                         min_hits=1, subject_mode=True))
+    # LoC is an English-language archive — Arabic keywords would be wasted
+    for keyword in keywords:
+        if photo:
+            break
+        photo = take(fetch_loc_photo([keyword], out_path, need_saudi=False,
+                                     min_hits=1, subject_mode=True))
 
     # try each keyword on its own — "Steve Jobs" finds more than a long phrase
     for keyword in keywords:
@@ -990,7 +1021,8 @@ def find_all_photos(brief):
             print(f"      widening to the story subject: {', '.join(fallback)}")
             photo = find_photo({"image_keywords": fallback,
                                 "image_keywords_ar": fallback_ar},
-                               OUT_DIR / f"story-frame-{n}.jpg", used, context)
+                               OUT_DIR / f"story-frame-{n}.jpg", used, context,
+                               allow_neutral=False)
 
         if photo is None:
             missing.append(n)

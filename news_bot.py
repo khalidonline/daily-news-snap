@@ -1371,8 +1371,22 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
             try:
                 req = urllib.request.Request(link,
                                              headers={"User-Agent": USER_AGENT})
-                with urllib.request.urlopen(req, timeout=45) as resp:
-                    payload = resp.read()
+                try:
+                    with urllib.request.urlopen(req, timeout=45) as resp:
+                        payload = resp.read()
+                except urllib.error.HTTPError as exc:
+                    if exc.code != 429:
+                        raise
+                    # Anonymous Openverse rate-limits in short bursts: the
+                    # Steineke photo was FOUND and then lost to two 429s,
+                    # while the same query succeeded a minute later on the
+                    # next frame. One brief pause and one retry of the same
+                    # URL; a second 429 counts as failure exactly as before.
+                    import time as _t
+                    print(f"  ! {field} hit 429 — pausing 3s and retrying once")
+                    _t.sleep(3)
+                    with urllib.request.urlopen(req, timeout=45) as resp:
+                        payload = resp.read()
             except Exception as exc:
                 print(f"  ! {field} failed ({exc}) — trying the next image")
                 continue
