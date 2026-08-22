@@ -72,6 +72,14 @@ the thing plus its place or year — "Dammam No. 7 1938", never "Aramco",
 whose archive photos are its modern jets) and `image_keywords_ar`
 (the Arabic name is often the only one the archive knows).
 
+Every story photo passes a **vision gate** before it ships: Haiku looks at
+the downscaled candidate next to the frame's own text and answers whether it
+really shows the subject — the automated version of the glance that kept
+catching certificates, charts and perfume vials that metadata scoring
+accepted. Fail-open: no key or an API error lets the photo through with a
+loud log line, so an outage degrades to the old behaviour. `VISION_GATE=0`
+disables it; a rejection just moves the search to the next candidate.
+
 Person-led stories are gated before the research call: no free portrait means
 skip, recorded in `state/stories_skipped.json` for `STORY_SKIP_DAYS` (14) —
 deliberately shorter than the 60-day publish cooldown, because a missing

@@ -36,6 +36,7 @@ try:
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
         fetch_commons_photo, fetch_commons_portrait,
         fetch_generated_photo, IMAGE_SOURCE,
+        photo_shows, vision_gate_summary,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -856,7 +857,7 @@ def _photo_digest(path):
         return None
 
 
-def find_photo(spec, out_path, seen=()):
+def find_photo(spec, out_path, seen=(), context=""):
     """One photo for one frame, searched by subject.
 
     Any real photograph about the story serves — the person, the product, the
@@ -874,6 +875,11 @@ def find_photo(spec, out_path, seen=()):
         if _photo_digest(photo) in seen:
             print("      (that picture is already on an earlier frame "
                   "— looking further)")
+            return None
+        # The glance a reviewer would give it, automated: metadata scoring
+        # accepted a perfume vial for an oil story and a chart for a well.
+        # A rejection just continues the search to the next candidate.
+        if context and not photo_shows(photo, context):
             return None
         return photo
 
@@ -956,13 +962,14 @@ def find_all_photos(brief):
             line += f"  |  {', '.join(spec['image_keywords_ar'][:3])}"
         print(f"    frame {n}: {line}")
 
-        photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg", used)
+        context = f"{frame.get('heading', '')}\n{frame.get('text', '')}".strip()
+        photo = find_photo(spec, OUT_DIR / f"story-frame-{n}.jpg", used, context)
 
         if photo is None and fallback:
             print(f"      widening to the story subject: {', '.join(fallback)}")
             photo = find_photo({"image_keywords": fallback,
                                 "image_keywords_ar": fallback_ar},
-                               OUT_DIR / f"story-frame-{n}.jpg", used)
+                               OUT_DIR / f"story-frame-{n}.jpg", used, context)
 
         if photo is None:
             missing.append(n)
@@ -992,8 +999,10 @@ def find_all_photos(brief):
         missing = []
 
     if missing:
+        vision_gate_summary()
         print(f"  ! frames {missing} found no picture at all")
         return None
+    vision_gate_summary()
     return photos
 
 

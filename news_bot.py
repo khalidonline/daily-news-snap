@@ -2732,6 +2732,95 @@ ARK_KEY = os.getenv("ARK_API_KEY", "").strip()
 ARK_URL = os.getenv("ARK_URL", "").strip() or \
     "https://ark.ap-southeast.bytepluses.com/api/v3/images/generations"
 ARK_MODEL = _clean_model_id(os.getenv("ARK_MODEL"), "seedream-4-0-250828")
+
+# --------------------------------------------------------------------------
+# Vision gate — a small model looks at the chosen photo before it ships
+# --------------------------------------------------------------------------
+# Every photo failure a human caught in review — a certificate, a chart, a
+# perfume vial on an oil story, the Golden Gate on a boardroom beat — was
+# obvious in one glance and invisible to text-metadata scoring. This is that
+# glance, automated. Haiku-class: pennies per story.
+
+VISION_MODEL = _clean_model_id(os.getenv("VISION_MODEL"),
+                               "claude-haiku-4-5-20251001")
+VISION_GATE = os.getenv("VISION_GATE", "").strip() not in ("0", "false", "False")
+
+_VISION_JUDGE = """أنت تفحص صورة قبل وضعها على بطاقة قصة تُنشر لجمهور عام.
+
+نص اللقطة التي ستحمل الصورة:
+{context}
+
+أجب بكلمة واحدة أولاً: "نعم" أو "لا"، ثم سطر واحد يشرح.
+
+قل "نعم" فقط إذا تحقق الشرطان معاً:
+1. الصورة صورة فوتوغرافية حقيقية — ليست خريطة ولا رسماً بيانياً ولا شهادة
+   ولا ملصقاً ولا لقطة شاشة بواجهة برنامج ولا صورة شخصية عشوائية لغرض آخر.
+2. ما تُظهره الصورة يخص موضوع هذه اللقطة تحديداً، بحيث لو رآها القارئ مع
+   النص لفهم لماذا وُضعت. إن كانت اللقطة تاريخية فصورة الكيان في يومنا
+   الحاضر لا تكفي إلا إن كانت المكان أو الشيء نفسه.
+
+عند الشك، قل "لا" — بطاقة بلا صورة أفضل من صورة تضلل."""
+
+
+_vision_stats = {"asked": 0, "rejected": 0}
+
+
+def photo_shows(photo_path, context):
+    """Does the picture actually show what the frame is about?
+
+    Fail-open by design: no key, gate off, or an API error all return True,
+    so an outage degrades to the old behaviour instead of losing the story.
+    A rejection prints the judge's reason.
+    """
+    if not (VISION_GATE and ANTHROPIC_API_KEY):
+        return True
+    try:
+        import io as _io
+        img = Image.open(photo_path).convert("RGB")
+        img.thumbnail((800, 800))          # vision cost scales with pixels
+        buf = _io.BytesIO()
+        img.save(buf, "JPEG", quality=80)
+        b64 = base64.b64encode(buf.getvalue()).decode()
+
+        payload = {
+            "model": VISION_MODEL,
+            "max_tokens": 150,
+            "messages": [{"role": "user", "content": [
+                {"type": "image", "source": {"type": "base64",
+                                             "media_type": "image/jpeg",
+                                             "data": b64}},
+                {"type": "text",
+                 "text": _VISION_JUDGE.format(context=context[:600])},
+            ]}],
+        }
+        req = urllib.request.Request(
+            "https://api.anthropic.com/v1/messages",
+            data=json.dumps(payload).encode(),
+            headers={"content-type": "application/json",
+                     "x-api-key": ANTHROPIC_API_KEY,
+                     "anthropic-version": "2023-06-01"})
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = json.loads(resp.read())
+        text = "".join(b.get("text", "") for b in data.get("content", [])
+                       if b.get("type") == "text").strip()
+    except Exception as exc:
+        print(f"  ! vision gate unavailable ({exc}) — letting the photo through")
+        return True
+
+    _vision_stats["asked"] += 1
+    verdict = text.lstrip(' "«').startswith("نعم")
+    if not verdict:
+        _vision_stats["rejected"] += 1
+        reason = text.replace("\n", " ")[:140]
+        print(f"  ✂ vision gate rejected the photo: {reason}")
+    return verdict
+
+
+def vision_gate_summary():
+    if _vision_stats["asked"]:
+        print(f"    vision gate: {_vision_stats['asked']} checked, "
+              f"{_vision_stats['rejected']} rejected")
+
 ALLOW_GENERATED = os.getenv("ALLOW_GENERATED", "0").strip() not in ("", "0", "false", "False")
 GENERATED_CREDIT = "صورة مولّدة بالذكاء الاصطناعي"
 
