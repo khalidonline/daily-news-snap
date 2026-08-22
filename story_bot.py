@@ -931,6 +931,19 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
 
     photo = take(fetch_local_photo([], keywords, out_path))
 
+    # SPA before Commons: the official Saudi archive is the likeliest holder
+    # of modern Saudi corporate frames (the Aramco Tadawul-listing frame is
+    # exactly SPA material) and is already licensed for this project. One
+    # call with the whole Arabic list, mirroring news_bot's call site — the
+    # fetcher iterates phrase-then-words internally, so this IS the
+    # per-keyword narrowest-first shape, with one quiet log line when the
+    # archive has nothing. Saudi state media holds nothing on foreign
+    # subjects; no language detection — having Arabic keywords at all is the
+    # only signal (the widened pass carries the story-level image_queries_ar
+    # in as keywords_ar, so that case is covered too).
+    if photo is None and keywords_ar:
+        photo = take(fetch_spa_photo(keywords_ar, out_path), tier=1)
+
     # Commons and LoC come BEFORE Openverse: historical Saudi subjects are
     # their territory, and the correct Steineke photo Openverse surfaced was
     # itself Wikimedia-hosted. Same one-keyword-at-a-time shape as the
@@ -981,6 +994,63 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
 
 
 LOGOS_DIR = Path(os.getenv("LOGOS_DIR", "images/logos"))
+# Owner's policy, decided 2026-08: showing a company's CURRENT logo when
+# covering that company is ordinary editorial imagery — the bot may fetch
+# and cache it without per-company approval. Historical/era marks stay
+# manual: no mechanism can verify a file labelled 1938 is the 1938 mark.
+# Empty-string fallback as everywhere — GitHub passes "" for unset vars.
+LOGO_AUTO_CURRENT = (os.getenv("LOGO_AUTO_CURRENT", "").strip() or "1") == "1"
+
+
+def _logo_slug(name):
+    """Deterministic, collision-safe-enough slug from a subject keyword:
+    lowercase, punctuation stripped, spaces to hyphens. If two companies
+    ever collide, first-writer-wins — acceptable at ~400 stories, and not
+    worth engineering around."""
+    s = re.sub(r"[^\w\s-]", "", name.strip().lower())
+    return re.sub(r"[\s_]+", "-", s).strip("-")
+
+
+def _auto_current_logo(brief, frame, frame_no):
+    """Fetch + cache the subject's current logo — once per company EVER.
+
+    Uses logo_fetch's title-verified article-infobox path (never search:
+    search is how furniture and wrong-entity files got in). The file and
+    index.json are committed like any other state, so the next run finds
+    them in the folder and no fetch fires."""
+    latin = ([k for k in (brief.get("image_keywords") or []) if k]
+             or [k for k in (frame.get("image_keywords") or []) if k])
+    arabic = ([k for k in (brief.get("image_queries_ar") or []) if k]
+              or [k for k in (frame.get("image_keywords_ar") or []) if k])
+    names = ([latin[0]] if latin else []) + ([arabic[0]] if arabic else [])
+    if not names:
+        return None
+    slug = _logo_slug(names[0])
+    if not slug:
+        return None
+    dest = LOGOS_DIR / f"{slug}-current.png"
+    if dest.exists():
+        return dest
+    try:
+        from logo_fetch import fetch_current, update_index
+    except ImportError as exc:
+        print(f"    ! logo self-fill unavailable ({exc})")
+        return None
+    LOGOS_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        got = fetch_current(slug, names)
+    except Exception as exc:
+        print(f"    ! current-logo fetch failed for {slug}: {exc}")
+        got = None
+    if not got:
+        # a story must never die on a logo — the ladder falls through to
+        # best-neutral/repeat exactly as if the folder were empty
+        print(f"    frame {frame_no}: no fetchable current logo for {slug}")
+        return None
+    update_index(slug, names)
+    commit_and_push(LOGOS_DIR, f"curated logo: {slug}-current (auto)")
+    print(f"    frame {frame_no}: fetched + cached current logo for {slug}")
+    return Path(got)
 
 
 def _curated_logo(frame_no, total, brief, frame):
@@ -999,9 +1069,7 @@ def _curated_logo(frame_no, total, brief, frame):
     try:
         files = sorted(LOGOS_DIR.glob("*.png"))
     except OSError:
-        return None
-    if not files:
-        return None
+        files = []
 
     # what this story talks about, in both scripts
     hay = " ".join(filter(None, [
@@ -1031,6 +1099,11 @@ def _curated_logo(frame_no, total, brief, frame):
         if key is None:
             continue
         candidates.setdefault(slug, []).append((key, f))
+    if not candidates and LOGO_AUTO_CURRENT:
+        fetched = _auto_current_logo(brief, frame, frame_no)
+        if fetched is not None:
+            candidates = {fetched.stem.rsplit("-", 1)[0]:
+                          [(float("inf"), fetched)]}
     if not candidates:
         return None
 
@@ -1101,6 +1174,7 @@ def find_all_photos(brief):
     # at most ONE logo-carried frame besides the closing frame: a story that
     # is half logos is a worse failure than one honest repeat
     logo_extra_used = False
+    logo_slots = set()
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
         # An explicit [] is an answer, not a gap: the prompt asks for it when
@@ -1162,12 +1236,19 @@ def find_all_photos(brief):
             missing.append(n)
         elif not from_logo:
             used.add(_photo_digest(photo))
+        else:
+            logo_slots.add(n)
         photos.append(photo)
 
     # Last resort. Every picture here is already on another frame, so this is
     # a repeat however it is spread — spread it anyway, so one photograph
-    # doesn't end up carrying three frames, and say so loudly.
-    found = [p for p in photos if p]
+    # doesn't end up carrying three frames, and say so loudly. Photographs
+    # only: a repeat of a logo frame is another logo-carried frame, which
+    # the one-extra cap exists to prevent — the NVIDIA drill (zero
+    # photographs story-wide) dressed even the protagonist frame in a logo
+    # this way. With no photographs at all the frames stay missing and the
+    # story is skipped, which rule 1 prefers to an all-logo slideshow.
+    found = [p for i, p in enumerate(photos, 1) if p and i not in logo_slots]
     if missing and found and STORY_ALLOW_REPEAT:
         import shutil as _shutil
         owner = {p: i + 1 for i, p in enumerate(photos) if p}

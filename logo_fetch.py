@@ -115,35 +115,27 @@ def fetch_current(slug, names):
                   f"({_commons_meta(info, 'LicenseShortName') or 'no licence tag'})")
             return dest
         # Not on Commons: the normal case for a trademarked company logo,
-        # hosted locally on the wiki as non-free. Using one on a card is an
-        # editorial and licence decision the OWNER takes, so it goes to
-        # review like the historical candidates — never into the folder
-        # unseen. The rename is the approval.
+        # hosted locally on the wiki as non-free. These used to go to
+        # Telegram for review — that refusal was the manual-approval design,
+        # and the owner's LOGO_AUTO_CURRENT policy supersedes it: a current
+        # logo on a story about its company is ordinary editorial imagery.
+        # The title-verification above still stands — the file title must
+        # carry the subject's name, the rule that keeps wiki furniture and
+        # wrong-entity files out.
         review.extend(pairs)
 
-    if review:
-        import tempfile as _tf
-        tmp = Path(_tf.mkdtemp(prefix=f"logo-current-{slug}-"))
-        got = []
-        for lang, title in review[:3]:
-            link = _local_file_url(lang, title)
-            if not link:
-                continue
-            dest = tmp / title.split(":", 1)[1].replace("/", "_")
-            try:
-                _download(link, dest)
-                got.append(str(dest))
-                print(f"  candidate (non-free, {lang}.wikipedia): {title}")
-            except Exception as exc:
-                print(f"  ! download failed for {title}: {exc}")
-        if got:
-            notify_album(
-                f"الشعار الحالي لـ {slug} غير متاح بترخيص حر — للمراجعة. "
-                f"الموافقة = إعادة تسميته إلى images/logos/{slug}-current.png",
-                got)
-            print(f"  sent {len(got)} current-logo candidate(s) to Telegram "
-                  f"(files kept in {tmp})")
-            return None
+    for lang, title in review[:3]:
+        link = _local_file_url(lang, title)
+        if not link:
+            continue
+        dest = LOGOS_DIR / f"{slug}-current.png"
+        try:
+            _download(link, dest)
+        except Exception as exc:
+            print(f"  ! download failed for {title}: {exc}")
+            continue
+        print(f"  saved {dest}  <- {title}  (non-free, {lang}.wikipedia)")
+        return dest
     print("  ! no usable article logo found for the current logo")
     return None
 

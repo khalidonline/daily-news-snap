@@ -116,10 +116,17 @@ protagonist frame (2) never takes one. Curated files bypass the logo pixel
 check and the vision gate **by provenance** (they never pass through either);
 a logo arriving from archive search is still rejected exactly as before —
 filler on a news card, but an era-matched curated logo on a story frame is a
-deliberate editorial choice. The folder is populated by `logo_fetch.py`
-(manual only): the current logo lands automatically from the subject's own
-title-verified article; historical candidates go to Telegram for review, and
-renaming one into the folder is the approval.
+deliberate editorial choice. The folder is self-filling for CURRENT logos
+(`LOGO_AUTO_CURRENT`, default on): when the ladder reaches the logo rung and
+the slug has no file, story_bot fetches the subject's current logo through
+`logo_fetch.py`'s title-verified article-infobox path (never search; non-free
+wiki-hosted files are accepted, but the file title must carry the subject's
+name) and commits it — one fetch per company ever. The slug comes from the
+first story-level keyword: lowercased, punctuation stripped, spaces to
+hyphens; collisions are first-writer-wins. Historical/era logos stay manual —
+no mechanism can verify a file labelled 1938 is the 1938 mark — via
+`logo_fetch.py` candidates sent to Telegram; renaming one into the folder is
+the approval.
 
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish
