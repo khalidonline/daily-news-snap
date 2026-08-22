@@ -42,6 +42,11 @@ CAPTION = os.getenv("CAPTION", "").strip()
 # also the dwell time asked for in the first place. 6 frames = 60s, which is
 # Snapchat's ceiling, hence the <= below rather than <.
 FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "10")
+# A 60.00s video sits exactly on Snapchat's ceiling, and Snapchat shaves the
+# tail — the republished Aramco story lost the end of frame 6 even with clean
+# 10s alignment. The last frame surrenders this margin so the video ends
+# inside the limit; every earlier frame keeps its full snap.
+TAIL_MARGIN = int(os.getenv("TAIL_MARGIN", "").strip() or "1")
 
 # 2026-08-22-2pm-story-3-fe471e27.png
 _FRAME_RE = re.compile(
@@ -113,20 +118,24 @@ def frames_to_video(frames, out_path):
     count varies, and a malformed filter graph fails with an error message
     that says nothing about which frame broke it.
     """
-    total = len(frames) * FRAME_SECONDS
-    if total > 60:                       # exactly 60 is allowed: 6 x 10s
-        raise SystemExit(f"{len(frames)} frames x {FRAME_SECONDS}s = {total}s, "
-                         "over Snapchat's 60s video limit — lower FRAME_SECONDS")
+    durations = [FRAME_SECONDS] * len(frames)
+    durations[-1] = max(2, int(FRAME_SECONDS - TAIL_MARGIN))
+    total = sum(durations)
+    if total > 60:
+        raise SystemExit(f"frames add up to {total}s, over Snapchat's 60s "
+                         "video limit — lower FRAME_SECONDS")
     listing = Path(out_path).with_suffix(".txt")
+    # Every frame becomes repeated ONE-SECOND entries. Measured on ffmpeg 7,
+    # the concat demuxer holds the final frame for the PREVIOUS entry's
+    # duration and ignores its own ([10,10,9] plays 30s, [8,8,4] plays 24s) —
+    # equal durations masked this until the last frame needed a shorter hold.
+    # With every entry at 1s the quirk has nothing to distort. Durations must
+    # therefore stay whole seconds.
     lines = []
-    for frame in frames:
-        lines.append(f"file '{Path(frame).resolve()}'")
-        lines.append(f"duration {FRAME_SECONDS}")
-    # Deliberately NO trailing repeat of the last file. The widely-copied
-    # concat recipe repeats it "so the last duration isn't dropped" — measured
-    # on ffmpeg 7, the repeat itself adds a full extra cycle (56s instead of
-    # 48), with or without its own duration line. Modern ffmpeg honours the
-    # last duration as written; the listing above is complete.
+    for frame, dur in zip(frames, durations):
+        for _ in range(int(dur)):
+            lines.append(f"file '{Path(frame).resolve()}'")
+            lines.append("duration 1")
     listing.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     # GitHub's runner image does NOT ship ffmpeg on PATH — the first live run
@@ -152,8 +161,8 @@ def frames_to_video(frames, out_path):
     finally:
         listing.unlink(missing_ok=True)
     size = Path(out_path).stat().st_size
-    print(f"    video: {len(frames)} frames x {FRAME_SECONDS}s = {total}s, "
-          f"{size:,} bytes")
+    print(f"    video: {len(frames)} frames, {total:g}s "
+          f"(last frame {durations[-1]:g}s), {size:,} bytes")
     return str(out_path)
 
 
