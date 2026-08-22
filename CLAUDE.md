@@ -145,6 +145,11 @@ others. Expect roughly 120 posts a month against that 145.
 - Openverse blocklist matched `war` inside `warehouse`, rejecting everything.
 - `find_all_photos` was capped at 4 frames while the renderer drew 6.
 - Duplicate keys in a workflow `env:` block fail the whole workflow file.
+- `choose_story()` picked with `ordinal % len(fresh)`. The ordinal advances by
+  one a day, so consecutive days took consecutive lines — and `stories.txt` is
+  grouped by section, so a daily story walked down one theme: seven
+  businessmen, then seven cities. It hashes the date now. Invisible at two a
+  week, dominant at one a day.
 - A portrait found by Commons *search* must carry the name in the FILE TITLE,
   not just somewhere in the description. Anyone by that name in a caption was
   enough before, which offered a US embassy reception for "Robert Plath" and a

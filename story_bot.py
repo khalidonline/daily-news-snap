@@ -451,7 +451,14 @@ def choose_story(exclude=()):
     if not fresh:
         print("    every story used recently — starting the cycle again")
         fresh = stories
-    pick = fresh[datetime.now().toordinal() % len(fresh)]
+    # Hash the date rather than use the ordinal directly. The ordinal advances
+    # by one a day, so consecutive days took consecutive entries — and
+    # stories.txt is grouped by section, so a daily story walked straight down
+    # one theme: seven businessmen in a row, then seven cities. Invisible at
+    # two a week, dominant at one a day. Still deterministic per day, so a
+    # retry inside one run picks the same story.
+    seed = hashlib.md5(datetime.now().date().isoformat().encode()).hexdigest()
+    pick = fresh[int(seed, 16) % len(fresh)]
     print(f"    {len(fresh)} of {len(stories)} stories available")
     return pick
 
