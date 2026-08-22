@@ -170,6 +170,12 @@ others. Expect roughly 120 posts a month against that 145.
   filename digest was `md5(stem)` and `ksa_stamp()` only resolves to the hour.
   It hashes the file's bytes too now — keep it that way, and keep it
   idempotent so republishing reuses the name rather than adding a copy.
+- bundle.social allows ONE upload per Snapchat post — "Max 1 upload(s)
+  allowed". The six-upload story path had never run live (story was always
+  hybrid), so it failed on the first real publish. Stories therefore post as
+  one MP4, FRAME_SECONDS per frame, built by publish_cards.py. And the
+  widely-copied ffmpeg concat recipe of repeating the last file adds a full
+  extra cycle on ffmpeg 7 (56s instead of 48) — don't repeat it.
 - news_bot's Claude call had a fixed 120s timeout and started at 8000 tokens.
   Eight candidates in Arabic overran that, so it retried at 16000 and the
   longer generation blew the timeout — and a socket timeout is not an

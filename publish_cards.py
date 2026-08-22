@@ -14,6 +14,7 @@ story_bot يبني ست لقطات ويرسلها لتيليجرام دون نش
 import json
 import os
 import re
+import subprocess
 from pathlib import Path
 
 try:
@@ -32,6 +33,12 @@ except ImportError as exc:
 
 STAMP = os.getenv("CARDS_STAMP", "").strip()
 CAPTION = os.getenv("CAPTION", "").strip()
+# bundle.social allows ONE upload per Snapchat post, so a six-frame story goes
+# up as a single video — which also finally gives each frame a dwell time the
+# viewer can actually read in, instead of Snapchat's own image timing.
+# 8s x 6 frames = 48s, safely inside Snapchat's 60s video limit; 10 would
+# land exactly on the limit, and exactly-on-the-limit is where uploads fail.
+FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "8")
 
 # 2026-08-22-2pm-story-3-fe471e27.png
 _FRAME_RE = re.compile(
@@ -96,6 +103,49 @@ def load_caption(stamp, frame_count):
             or f"قصة في {frame_count} لقطات")
 
 
+def frames_to_video(frames, out_path):
+    """One MP4 from the frames, FRAME_SECONDS each. Returns the path.
+
+    Uses the concat demuxer rather than one -loop input per frame: the frame
+    count varies, and a malformed filter graph fails with an error message
+    that says nothing about which frame broke it.
+    """
+    total = len(frames) * FRAME_SECONDS
+    if total > 60:
+        raise SystemExit(f"{len(frames)} frames x {FRAME_SECONDS}s = {total}s, "
+                         "over Snapchat's 60s video limit — lower FRAME_SECONDS")
+    listing = Path(out_path).with_suffix(".txt")
+    lines = []
+    for frame in frames:
+        lines.append(f"file '{Path(frame).resolve()}'")
+        lines.append(f"duration {FRAME_SECONDS}")
+    # Deliberately NO trailing repeat of the last file. The widely-copied
+    # concat recipe repeats it "so the last duration isn't dropped" — measured
+    # on ffmpeg 7, the repeat itself adds a full extra cycle (56s instead of
+    # 48), with or without its own duration line. Modern ffmpeg honours the
+    # last duration as written; the listing above is complete.
+    listing.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
+           "-i", str(listing),
+           "-vf", "fps=30,format=yuv420p,scale=1080:1920",
+           "-c:v", "libx264", "-preset", "medium", "-movflags", "+faststart",
+           str(out_path)]
+    try:
+        subprocess.run(cmd, check=True, capture_output=True, text=True)
+    except FileNotFoundError:
+        raise SystemExit("ffmpeg not found — it is preinstalled on GitHub "
+                         "runners; install it to publish from elsewhere")
+    except subprocess.CalledProcessError as exc:
+        raise SystemExit(f"ffmpeg failed: {exc.stderr[-400:]}")
+    finally:
+        listing.unlink(missing_ok=True)
+    size = Path(out_path).stat().st_size
+    print(f"    video: {len(frames)} frames x {FRAME_SECONDS}s = {total}s, "
+          f"{size:,} bytes")
+    return str(out_path)
+
+
 def main():
     stamp, frames = find_story(STAMP)
     if not frames:
@@ -115,14 +165,19 @@ def main():
         deliver_unposted(frames, caption)
         return
 
-    # bundle.social uploads the files itself; the others need public URLs,
-    # and these cards are already committed so they already have them
+    # One upload per Snapchat post is all bundle.social accepts — six frames
+    # posted as six images would be six posts against the plan. As one video
+    # it is a single post, and each frame holds for FRAME_SECONDS.
+    media = frames
+    if len(frames) > 1:
+        media = [frames_to_video(frames, Path(CARDS_DIR) / f"{stamp}-story.mp4")]
+
     urls = []
     if POST_PROVIDER != "bundle":
-        urls = (publish_many_via_github(frames) if MEDIA_MODE == "github"
-                else [upload_media(f) for f in frames])
+        urls = (publish_many_via_github(media) if MEDIA_MODE == "github"
+                else [upload_media(f) for f in media])
 
-    response = post_story(caption, urls, frames)
+    response = post_story(caption, urls, media)
     print("   ", response)
 
     if post_ok(response):

@@ -2970,8 +2970,11 @@ def _multipart(fields, file_field, filename, data, mime="image/png"):
 def bundle_upload(card_path):
     """Upload the card to bundle.social. Returns the upload id."""
     data = Path(card_path).read_bytes()
+    # stories go up as one MP4 now — an MP4 declared image/png gets rejected
+    mime = ("video/mp4" if str(card_path).lower().endswith(".mp4")
+            else "image/png")
     body, content_type = _multipart({"teamId": BUNDLE_TEAM_ID}, "file",
-                                    Path(card_path).name, data)
+                                    Path(card_path).name, data, mime=mime)
     req = urllib.request.Request(
         f"{BUNDLE_BASE.rstrip('/')}/upload", data=body,
         headers={**BUNDLE_HEADERS, "x-api-key": BUNDLE_API_KEY,
