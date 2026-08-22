@@ -1,0 +1,54 @@
+name: Publish built cards
+
+# Posts a story that story_bot already built, exactly as it was reviewed.
+# No research call, no image search, no re-rendering — the frames in cards/
+# are the frames that go out. Manual only: this is the review step.
+
+on:
+  workflow_dispatch:
+    inputs:
+      stamp:
+        description: "الطابع الزمني للقصة — اتركه فارغاً لآخر قصة بُنيت (مثال: 2026-08-22-2pm)"
+        type: string
+        required: false
+      dry_run:
+        description: "اعرض ما سيُنشر دون نشره"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-cards
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Publish the cards
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: "bundle"
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+          MEDIA_MODE: "github"
+          # one cap shared with the other workflows — see CLAUDE.md
+          MONTHLY_POST_LIMIT: "145"
+          CARDS_STAMP: ${{ inputs.stamp }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+        run: python publish_cards.py

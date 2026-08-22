@@ -11,6 +11,7 @@ run by GitHub Actions on a schedule. Everything is Python + Pillow, no framework
 | `topic_bot.py` | One researched explainer per day, chosen by a scoring system | 09:00 |
 | `story_bot.py` | One narrative told across 6 frames | 14:00 daily |
 | `ask_card.py` | Asks followers what they want covered | manual only |
+| `publish_cards.py` | Posts a story already built, unchanged | manual only |
 
 `news_bot.py` is also the shared library: rendering, fonts, Arabic shaping,
 image sources, posting, Telegram. The other bots import from it. **If you change
@@ -104,6 +105,12 @@ one sentence), **التوقف** (would a thumb stop on it). The third rejects th
 true-but-expected — routine results, incremental updates, meetings held — and
 says plainly that the stopping comes from the news, not from the wording. A
 teaser headline on an ordinary story loses the reader twice.
+
+A story is hybrid, so it is read before it goes out. To publish the frames you
+reviewed, dispatch **Publish built cards** — `publish_cards.py` posts what is
+already in `cards/`, with no research call and no re-rendering. Re-dispatching
+`story.yml` would *not* do this: it researches again and produces different
+frames.
 
 daily.yml picks that per-run with `github.event.schedule`. Breaking news goes out by dispatching that workflow with **post** ticked — that is what the retired 17:00 slot was traded for. Ticking **dry run** as well wins: the run returns before posting. A manual dispatch
 sets no schedule, so it falls through to hybrid — those are nearly always

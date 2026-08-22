@@ -986,6 +986,14 @@ def main():
 
     if not POST_ENABLED:
         print("3/3 hybrid mode — publishing the frames, not posting")
+        # The caption lives only in the brief, and the brief is gone once this
+        # run ends. publish_cards.py needs it to post these frames later
+        # without researching the story again, so leave it beside them.
+        (Path(CARDS_DIR) / f"{stamp}-story.json").write_text(
+            json.dumps({"title": brief.get("title", ""),
+                        "caption": brief.get("caption", ""),
+                        "story": story}, ensure_ascii=False, indent=1),
+            encoding="utf-8")
         urls = publish_many_via_github(frames)
         for u in urls:
             print(f"    {u}")
