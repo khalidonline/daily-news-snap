@@ -176,9 +176,13 @@ others. Expect roughly 120 posts a month against that 145.
   one MP4, FRAME_SECONDS per frame, built by publish_cards.py. Snapchat then
   splits that video into 10-SECOND snaps: FRAME_SECONDS must stay 10 so each
   snap is exactly one frame — at 8s the segments straddled frames and viewers
-  tapping through skipped one entirely. And the
-  widely-copied ffmpeg concat recipe of repeating the last file adds a full
-  extra cycle on ffmpeg 7 (56s instead of 48) — don't repeat it.
+  tapping through skipped one entirely. A video at exactly 60s gets its tail
+  shaved by Snapchat, so the last frame gives up TAIL_MARGIN (1s) and the
+  video runs 59s. And ffmpeg 7's concat demuxer is a minefield for stills:
+  repeating the last file adds a full extra cycle, and the final entry is
+  held for the PREVIOUS entry's duration, not its own — [10,10,9] plays 30s,
+  measured. publish_cards emits every frame as repeated 1-second entries,
+  which sidesteps all of it; keep durations whole seconds.
 - news_bot's Claude call had a fixed 120s timeout and started at 8000 tokens.
   Eight candidates in Arabic overran that, so it retried at 16000 and the
   longer generation blew the timeout — and a socket timeout is not an
