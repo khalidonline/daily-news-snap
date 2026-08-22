@@ -35,11 +35,13 @@ except ImportError as exc:
 STAMP = os.getenv("CARDS_STAMP", "").strip()
 CAPTION = os.getenv("CAPTION", "").strip()
 # bundle.social allows ONE upload per Snapchat post, so a six-frame story goes
-# up as a single video — which also finally gives each frame a dwell time the
-# viewer can actually read in, instead of Snapchat's own image timing.
-# 8s x 6 frames = 48s, safely inside Snapchat's 60s video limit; 10 would
-# land exactly on the limit, and exactly-on-the-limit is where uploads fail.
-FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "8")
+# up as a single video. Snapchat then splits a long story video into
+# 10-SECOND snaps — at 8s per frame those segments straddled two frames each,
+# and a viewer tapping through snaps jumped clean over frame 5 of the first
+# published story. 10s per frame makes each snap exactly one frame, which is
+# also the dwell time asked for in the first place. 6 frames = 60s, which is
+# Snapchat's ceiling, hence the <= below rather than <.
+FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "10")
 
 # 2026-08-22-2pm-story-3-fe471e27.png
 _FRAME_RE = re.compile(
@@ -112,7 +114,7 @@ def frames_to_video(frames, out_path):
     that says nothing about which frame broke it.
     """
     total = len(frames) * FRAME_SECONDS
-    if total > 60:
+    if total > 60:                       # exactly 60 is allowed: 6 x 10s
         raise SystemExit(f"{len(frames)} frames x {FRAME_SECONDS}s = {total}s, "
                          "over Snapchat's 60s video limit — lower FRAME_SECONDS")
     listing = Path(out_path).with_suffix(".txt")

@@ -173,7 +173,10 @@ others. Expect roughly 120 posts a month against that 145.
 - bundle.social allows ONE upload per Snapchat post — "Max 1 upload(s)
   allowed". The six-upload story path had never run live (story was always
   hybrid), so it failed on the first real publish. Stories therefore post as
-  one MP4, FRAME_SECONDS per frame, built by publish_cards.py. And the
+  one MP4, FRAME_SECONDS per frame, built by publish_cards.py. Snapchat then
+  splits that video into 10-SECOND snaps: FRAME_SECONDS must stay 10 so each
+  snap is exactly one frame — at 8s the segments straddled frames and viewers
+  tapping through skipped one entirely. And the
   widely-copied ffmpeg concat recipe of repeating the last file adds a full
   extra cycle on ffmpeg 7 (56s instead of 48) — don't repeat it.
 - news_bot's Claude call had a fixed 120s timeout and started at 8000 tokens.
