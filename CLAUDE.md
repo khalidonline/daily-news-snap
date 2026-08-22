@@ -7,7 +7,7 @@ run by GitHub Actions on a schedule. Everything is Python + Pillow, no framework
 
 | File | What it does | Schedule (KSA) |
 |---|---|---|
-| `news_bot.py` | One business/tech news story per run, as a single card | 07:00, 12:00, 17:00, 21:00 |
+| `news_bot.py` | One business/tech news story per run, as a single card | 07:00, 12:00, 21:00 |
 | `topic_bot.py` | One researched explainer per day, chosen by a scoring system | 09:00 |
 | `story_bot.py` | One narrative told across 6 frames | 14:00 daily |
 | `ask_card.py` | Asks followers what they want covered | manual only |
@@ -87,8 +87,9 @@ What actually posts:
 
 | Workflow | Posts to Snapchat |
 |---|---|
-| `news_bot.py` | the 07:00, 17:00 and 21:00 KSA runs |
+| `news_bot.py` | the 07:00 and 21:00 KSA runs |
 | `news_bot.py` | **not** the 12:00 KSA run (`0 9 * * *`) — hybrid |
+| a manual news run | only when the **post** input is ticked |
 | `topic_bot.py` | yes, the 09:00 KSA run |
 | `story_bot.py` | no — hybrid, so six frames get read before they go out |
 | any manual dispatch | no |
@@ -104,7 +105,7 @@ true-but-expected — routine results, incremental updates, meetings held — an
 says plainly that the stopping comes from the news, not from the wording. A
 teaser headline on an ordinary story loses the reader twice.
 
-daily.yml picks that per-run with `github.event.schedule`. A manual dispatch
+daily.yml picks that per-run with `github.event.schedule`. Breaking news goes out by dispatching that workflow with **post** ticked — that is what the retired 17:00 slot was traded for. Ticking **dry run** as well wins: the run returns before posting. A manual dispatch
 sets no schedule, so it falls through to hybrid — those are nearly always
 tests, and a test that posts to the profile is expensive to undo.
 

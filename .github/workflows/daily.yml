@@ -5,12 +5,15 @@ on:
     # KSA is UTC+3. Weighted toward US hours, when tech and market news breaks.
     - cron: "0 4 * * *"     # 07:00 KSA — overnight US news
     - cron: "0 9 * * *"     # 12:00 KSA — Gulf/Europe morning
-    - cron: "0 14 * * *"    # 17:00 KSA — US market open
     - cron: "0 18 * * *"    # 21:00 KSA — US afternoon, most announcements
   workflow_dispatch:
     inputs:
       dry_run:
         description: "Render the card but don't post"
+        type: boolean
+        default: false
+      post:
+        description: "انشر فوراً — للأخبار العاجلة. اتركه فارغاً للتجربة"
         type: boolean
         default: false
       image_source:
@@ -65,11 +68,12 @@ jobs:
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
-          # Post on every scheduled run except 12:00 KSA ("0 9 * * *"), which
-          # stays hybrid. A manual dispatch sets no github.event.schedule, so
-          # it falls to "0" — those are nearly always tests, and a test that
-          # posts to the profile is expensive to undo.
-          POST_TO_SNAPCHAT: ${{ (github.event_name == 'schedule' && github.event.schedule != '0 9 * * *') && '1' || '0' }}
+          # Scheduled runs post except 12:00 KSA ("0 9 * * *"), which stays
+          # hybrid. A manual run posts ONLY when "post" is ticked: the default
+          # is still no, because a test that reaches the profile is expensive
+          # to undo, and that tick is how a breaking story goes out off
+          # schedule now that 17:00 is gone.
+          POST_TO_SNAPCHAT: ${{ ((github.event_name == 'schedule' && github.event.schedule != '0 9 * * *') || (github.event_name == 'workflow_dispatch' && inputs.post)) && '1' || '0' }}
           # one cap shared with topic.yml — see the note there
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
