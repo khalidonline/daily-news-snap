@@ -57,6 +57,26 @@ Card header: short bar top-right, label beneath it (`ملخص تنفيذي - خ�
 news, `- معلومة` for topics, `- قصة` for stories), then centred headline,
 photo, body, red takeaway, thin rule, sources.
 
+## Stories
+
+The prompt builds six beats: العالم والمشكلة (no protagonist, ≤1 proper noun),
+البطل (the protagonist arrives, first portrait), المنعطف, الثمن, النتيجة,
+الحكم. The closing frame passes a verdict — on the protagonist, resting on
+what won't change back, no setbacks or footnotes, and never a restatement of
+the title. Per frame: at most two new proper nouns, each with a descriptor;
+one fact per sentence; neutral verbs (أتلفت لا سحقت). `punch` is an optional
+red line under the body — one or two per story, the closing frame is its best
+home. Each frame carries its own `image_keywords` (things, not concepts —
+"Shekou industrial zone", never "Cultural Revolution") and `image_keywords_ar`
+(the Arabic name is often the only one the archive knows).
+
+Person-led stories are gated before the research call: no free portrait means
+skip, recorded in `state/stories_skipped.json` for `STORY_SKIP_DAYS` (14) —
+deliberately shorter than the 60-day publish cooldown, because a missing
+portrait is not a verdict on the story. `choose_story()` hashes the date so a
+daily cadence doesn't walk down one section of `stories.txt`. No photo repeats
+within a story; repeats are a loud last resort.
+
 ## Image sources, in order
 
 local `images/` folder → article's own photo → SPA (cc.spa.gov.sa) →
@@ -104,13 +124,22 @@ the company, does anything change), **القرب** (does the effect reach Riyadh
 one sentence), **التوقف** (would a thumb stop on it). The third rejects the
 true-but-expected — routine results, incremental updates, meetings held — and
 says plainly that the stopping comes from the news, not from the wording. A
-teaser headline on an ordinary story loses the reader twice.
+teaser headline on an ordinary story loses the reader twice. Saudi economy,
+Saudi/Gulf real estate and Saudi travel are named beats; labour news (أعداد
+العمالة، التوطين، تصاريح العمل) is excluded — in news only, an explainer on
+employment rights is still topic_bot territory.
 
 A story is hybrid, so it is read before it goes out. To publish the frames you
 reviewed, dispatch **Publish built cards** — `publish_cards.py` posts what is
 already in `cards/`, with no research call and no re-rendering. Re-dispatching
 `story.yml` would *not* do this: it researches again and produces different
-frames.
+frames. **Name the stamp** unless you are sure nothing newer landed: blank
+picks the newest story, and a scheduled run may have built one since the one
+you reviewed. `cards/{stamp}-story.json` is the sidecar: caption, title, and
+the authoritative frame list the publisher posts. The six frames ship as one
+MP4 (ffmpeg comes from the `imageio-ffmpeg` wheel — **runners have no ffmpeg
+on PATH**), ten seconds a frame, last frame one second short — see the bitten
+list for why every word of that sentence is load-bearing.
 
 daily.yml picks that per-run with `github.event.schedule`. Breaking news goes out by dispatching that workflow with **post** ticked — that is what the retired 17:00 slot was traded for. Ticking **dry run** as well wins: the run returns before posting. A manual dispatch
 sets no schedule, so it falls through to hybrid — those are nearly always
@@ -119,8 +148,8 @@ tests, and a test that posts to the profile is expensive to undo.
 `MONTHLY_POST_LIMIT` is a self-imposed cap counted in `state/quota.json`, one
 file shared by all three bots. When it blocks a post the card still goes to
 Telegram via `deliver_unposted()` — **a run that builds a card must never end
-without saying so somewhere.** Two bots now post, so all three workflows must
-name the **same** cap (145) — the file is shared but each passes its own
+without saying so somewhere.** Every workflow that can post — daily, topic,
+story, publish — must name the **same** cap (145): the file is shared but each passes its own
 limit, and mismatched numbers mean whichever is lowest silently stops the
 others. Expect roughly 120 posts a month against that 145.
 
@@ -130,6 +159,9 @@ others. Expect roughly 120 posts a month against that 145.
   because of a real failure — say what the failure was.
 - Prompts live in `SYSTEM_PROMPT` strings and are in Arabic. They carry worked
   ✗/✓ examples drawn from cards that actually went wrong. Keep that pattern.
+  Some rules span bots and must stay in sync when edited: comparing figures
+  (components of one index aren't rivals) is in all three; Saudi regulation
+  (name the rule that governs the advice) is in topic and story only.
 - Every env var has a fallback for empty values — GitHub passes `""` for an
   unset repo variable, which would otherwise disable a filter silently.
 - Before finishing: `python -m py_compile` each bot, and confirm
@@ -166,6 +198,11 @@ others. Expect roughly 120 posts a month against that 145.
   in his biography. Safety now reads title and description; categories are
   checked only against words that describe a scene and never a career — and
   in the plural, because that is how Commons names them.
+- Two story runs fired in one KSA hour (GitHub replays stale crons after an
+  edit) and left two full frame sets under one stamp. A glob then stitched a
+  story out of both runs — the first publish attempt shipped that mix to
+  ffmpeg. The sidecar now records the run's own frame list and the publisher
+  posts exactly that; with duplicates and no sidecar it refuses.
 - Two stories in one KSA hour used to overwrite each other's cards: the
   filename digest was `md5(stem)` and `ksa_stamp()` only resolves to the hour.
   It hashes the file's bytes too now — keep it that way, and keep it

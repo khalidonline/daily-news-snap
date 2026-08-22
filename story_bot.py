@@ -996,12 +996,22 @@ def main():
         # The caption lives only in the brief, and the brief is gone once this
         # run ends. publish_cards.py needs it to post these frames later
         # without researching the story again, so leave it beside them.
+        urls = publish_many_via_github(frames)
+        # The frame list goes in too, by final committed name. Two runs in one
+        # KSA hour leave two sets under one stamp (content-hashed names, so
+        # neither overwrites) and a glob would stitch a story out of both.
+        # The sidecar is written by the run that owns it, after the names are
+        # final, so the publisher can post exactly this set.
+        from news_bot import _card_destination
         (Path(CARDS_DIR) / f"{stamp}-story.json").write_text(
             json.dumps({"title": brief.get("title", ""),
                         "caption": brief.get("caption", ""),
-                        "story": story}, ensure_ascii=False, indent=1),
+                        "story": story,
+                        "frames": [_card_destination(f).name for f in frames]},
+                       ensure_ascii=False, indent=1),
             encoding="utf-8")
-        urls = publish_many_via_github(frames)
+        commit_and_push(Path(CARDS_DIR) / f"{stamp}-story.json",
+                        f"story sidecar {stamp}")
         for u in urls:
             print(f"    {u}")
         commit_and_push(save_used(load_used(), story), f"story: {slug}")

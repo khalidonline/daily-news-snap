@@ -64,14 +64,28 @@ def _stamp_key(stamp):
     return (date, h)
 
 
+def _sidecar_frames(stamp):
+    """The exact frame files the run recorded, if its sidecar names them."""
+    try:
+        data = json.loads((Path(CARDS_DIR) / f"{stamp}-story.json")
+                          .read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    frames = [Path(CARDS_DIR) / n for n in data.get("frames", [])]
+    return frames if frames and all(f.exists() for f in frames) else []
+
+
 def find_story(stamp=""):
     """The frames of one story, in order. Returns (stamp, [paths])."""
     groups = {}
+    dupes = set()
     for path in Path(CARDS_DIR).glob("*-story-*.png"):
         match = _FRAME_RE.match(path.name)
         if match:
-            groups.setdefault(match.group("stamp"), {})[
-                int(match.group("n"))] = path
+            st, n = match.group("stamp"), int(match.group("n"))
+            if n in groups.get(st, {}):
+                dupes.add(st)
+            groups.setdefault(st, {})[n] = path
     if not groups:
         return "", []
 
@@ -83,6 +97,22 @@ def find_story(stamp=""):
         chosen = stamp
     else:
         chosen = available[-1]
+
+    # The sidecar's own list wins outright: it is the one record of which
+    # files belong to one run.
+    recorded = _sidecar_frames(chosen)
+    if recorded:
+        return chosen, [str(f) for f in recorded]
+
+    # Two runs in the same KSA hour leave two files per frame number, and
+    # picking by glob order would stitch a story out of both — the very first
+    # publish attempt did exactly that. Without a sidecar to arbitrate,
+    # refusing is the only honest answer.
+    if chosen in dupes:
+        raise SystemExit(
+            f"{chosen}: more than one file per frame number — two runs share "
+            "this stamp and no sidecar names the real set. Delete the stale "
+            "set from cards/ (git log shows which commit owns which files).")
 
     frames = groups[chosen]
     order = sorted(frames)
