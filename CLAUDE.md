@@ -87,16 +87,22 @@ What actually posts:
 
 | Workflow | Posts to Snapchat |
 |---|---|
-| `news_bot.py` | the 07:00 and 17:00 KSA runs |
-| `news_bot.py` | **not** 12:00 (`0 9 * * *`) or 21:00 (`0 18 * * *`) — hybrid |
+| `news_bot.py` | the 07:00, 17:00 and 21:00 KSA runs |
+| `news_bot.py` | **not** the 12:00 KSA run (`0 9 * * *`) — hybrid |
 | `topic_bot.py` | yes, the 09:00 KSA run |
-| `story_bot.py` | yes, the 20:00 KSA run |
+| `story_bot.py` | no — hybrid, so six frames get read before they go out |
 | any manual dispatch | no |
 
-21:00 news is hybrid because the story posts at 20:00 and two posts an hour
-apart crowd the same evening. Four posts a day is also the budget: at ~122 a
-month it fits under the 145 cap and the plan's 150, and a story counts as one
-post however many frames it has.
+About 122 posts a month, under the 145 cap and the plan's 150. A story counts
+as one post however many frames it has — it is hybrid today, so it costs
+nothing against the quota.
+
+News selection runs three tests in order: **الأهمية** (does the reader know
+the company, does anything change), **القرب** (does the effect reach Riyadh in
+one sentence), **التوقف** (would a thumb stop on it). The third rejects the
+true-but-expected — routine results, incremental updates, meetings held — and
+says plainly that the stopping comes from the news, not from the wording. A
+teaser headline on an ordinary story loses the reader twice.
 
 daily.yml picks that per-run with `github.event.schedule`. A manual dispatch
 sets no schedule, so it falls through to hybrid — those are nearly always

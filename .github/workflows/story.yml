@@ -44,7 +44,9 @@ jobs:
           POST_PROVIDER: "bundle"
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          POST_TO_SNAPCHAT: "1"      # 0 = hybrid, 1 = post automatically
+          # hybrid on purpose: six frames get read before they go out.
+          # Telegram delivers them; posting is a manual decision.
+          POST_TO_SNAPCHAT: "0"      # 0 = hybrid, 1 = post automatically
           MONTHLY_POST_LIMIT: "145"
           STORY: ${{ inputs.story }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}

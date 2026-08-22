@@ -65,13 +65,11 @@ jobs:
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
-          # Two scheduled runs post: 07:00 and 17:00 KSA. 12:00 ("0 9 * * *")
-          # and 21:00 ("0 18 * * *") stay hybrid — 21:00 because the story now
-          # posts at 20:00 and two posts an hour apart crowd the same evening.
-          # A manual dispatch sets no github.event.schedule, so it falls to
-          # "0": those are nearly always tests, and a test that reaches the
-          # profile is expensive to undo.
-          POST_TO_SNAPCHAT: ${{ (github.event_name == 'schedule' && github.event.schedule != '0 9 * * *' && github.event.schedule != '0 18 * * *') && '1' || '0' }}
+          # Post on every scheduled run except 12:00 KSA ("0 9 * * *"), which
+          # stays hybrid. A manual dispatch sets no github.event.schedule, so
+          # it falls to "0" — those are nearly always tests, and a test that
+          # posts to the profile is expensive to undo.
+          POST_TO_SNAPCHAT: ${{ (github.event_name == 'schedule' && github.event.schedule != '0 9 * * *') && '1' || '0' }}
           # one cap shared with topic.yml — see the note there
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
