@@ -151,6 +151,12 @@ others. Expect roughly 120 posts a month against that 145.
   filename digest was `md5(stem)` and `ksa_stamp()` only resolves to the hour.
   It hashes the file's bytes too now — keep it that way, and keep it
   idempotent so republishing reuses the name rather than adding a copy.
+- news_bot's Claude call had a fixed 120s timeout and started at 8000 tokens.
+  Eight candidates in Arabic overran that, so it retried at 16000 and the
+  longer generation blew the timeout — and a socket timeout is not an
+  HTTPError, so it escaped the handler and killed the run. Timeouts scale
+  with the budget now and are retried. Keep the API timeout × 2 under the
+  workflow's `timeout-minutes`.
 - `git push` from three bots on one branch loses races. Push through
   `_git_push()`, which rebases and retries — a bare push raised
   `CalledProcessError` and killed the run after the card was already built.

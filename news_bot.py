@@ -833,9 +833,11 @@ def summarize(items, already_posted=()):
         user_msg += ("\n\nأخبار نُشرت بالفعل خلال الأيام الماضية — لا تخترها ولا "
                      f"تختر خبراً عن الحدث نفسه:\n{covered}")
 
-    budget = int(os.getenv("MAX_TOKENS", "8000"))
+    # 8000 was not enough for CANDIDATES stories in Arabic, so every run paid
+    # for a truncated reply and then a second, longer one. Start where it fits.
+    budget = int(os.getenv("MAX_TOKENS", "").strip() or "16000")
 
-    for _ in range(3):
+    for attempt in range(4):
         payload = {
             "model": CLAUDE_MODEL,
             "max_tokens": budget,
@@ -852,11 +854,22 @@ def summarize(items, already_posted=()):
                 "anthropic-version": "2023-06-01",
             },
         )
+        # Generation time scales with the budget. A fixed 120s could not
+        # finish a 16000-token reply, and the socket timeout is not an
+        # HTTPError, so it escaped the handler below and killed the run
+        # before a card had been built.
+        timeout = min(360, max(180, budget // 45))
         try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
                 data = json.loads(resp.read())
         except urllib.error.HTTPError as exc:
             raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
+        except (TimeoutError, urllib.error.URLError, OSError) as exc:
+            if attempt < 3:
+                print(f"  ! Claude call failed ({exc}) — retrying "
+                      f"({attempt + 1}/3)")
+                continue
+            raise SystemExit(f"Claude unreachable after 4 attempts: {exc}")
 
         if data.get("stop_reason") == "max_tokens":
             if budget < 32000:

@@ -38,7 +38,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15      # room for a retry if Claude is slow
 
     steps:
       - uses: actions/checkout@v4
