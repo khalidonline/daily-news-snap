@@ -839,13 +839,19 @@ def build_frames(brief, stamp, photos):
 
 
 def _photo_digest(path):
-    """Content hash, so the same picture found twice is recognised as the same.
+    """Perceptual hash, so the same picture found twice reads as the same.
 
-    Frames write to different filenames, so identical pictures can only be
-    caught by their bytes.
+    Byte-hashing missed a real repeat: frames 1 and 6 of one story fetched
+    the same image through different downloads — a re-encode, different
+    bytes — and md5 called them distinct. A 16x16 average hash sees the
+    picture, not the file.
     """
     try:
-        return hashlib.md5(Path(path).read_bytes()).hexdigest()
+        from PIL import Image
+        img = Image.open(path).convert("L").resize((16, 16))
+        px = list(img.getdata())
+        mean = sum(px) / len(px)
+        return "".join("1" if v > mean else "0" for v in px)
     except Exception:
         return None
 

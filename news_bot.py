@@ -280,6 +280,22 @@ def looks_like_a_graphic(path):
     if spread < 22:
         print(f"  ! looks like flat artwork (contrast spread {spread:.0f})")
         return True
+
+    # A two-tone graphic sails past BOTH checks above: white under 55%, and
+    # two flat colours far apart give a big luminance spread. What it cannot
+    # fake is tonal SPREAD — it piles its pixels into two luminance bins.
+    # (Counting distinct colours was the first attempt and flagged every
+    # black-and-white photograph, which quantizes to a handful of greys.
+    # Measured on shipped cards: the green-and-white chart that reached a
+    # frame concentrates 95% of pixels in its top two bins; real photos,
+    # including the 1938 monochromes, stay at or under 41%.)
+    bins = [0] * 32
+    for v in lum:
+        bins[int(v) >> 3] += 1
+    top2 = sum(sorted(bins, reverse=True)[:2]) / total
+    if top2 > 0.70:
+        print(f"  ! looks like a graphic ({top2:.0%} of pixels in two tones)")
+        return True
     return False
 
 
