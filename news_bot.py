@@ -1722,8 +1722,12 @@ def fetch_commons_portrait(name, out_path):
     for page, info in _commons_fileinfo(_wikipedia_lead_files(name)):
         candidates.append((2, page, info))          # the subject's own article
     for page, info in _commons_search(name):
-        described = _commons_described(page, info)
-        if all(rx.search(described) for rx in checks):
+        # The name must be in the FILE TITLE, not merely somewhere in the
+        # description. Anyone by that name appearing in a caption was enough
+        # before, which put a US embassy reception under "Robert Plath" and a
+        # football match under "Jack Bogle". A photograph of someone else is
+        # the one failure nothing downstream can catch.
+        if all(rx.search(page.get("title", "")) for rx in checks):
             candidates.append((1, page, info))
 
     for rank, page, info in sorted(candidates, key=lambda c: -c[0])[:6]:

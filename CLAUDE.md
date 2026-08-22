@@ -145,6 +145,12 @@ others. Expect roughly 120 posts a month against that 145.
 - Openverse blocklist matched `war` inside `warehouse`, rejecting everything.
 - `find_all_photos` was capped at 4 frames while the renderer drew 6.
 - Duplicate keys in a workflow `env:` block fail the whole workflow file.
+- A portrait found by Commons *search* must carry the name in the FILE TITLE,
+  not just somewhere in the description. Anyone by that name in a caption was
+  enough before, which offered a US embassy reception for "Robert Plath" and a
+  football match for "Jack Bogle". A photograph of the wrong person is the one
+  failure nothing downstream catches. Portraits from a title-verified article
+  lead are reliable; the search fallback is not, and is now held to the title.
 - Award documents are not named "certificate" on Commons. They are "Genius
   Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
   of the White Lion awarded to X". Three reached story frames after
