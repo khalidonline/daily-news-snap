@@ -108,6 +108,19 @@ says "no known restrictions" are used, because `access_restricted` is
 unreliable. **Both reject the project's browser-style `USER_AGENT`** — they
 need `PUBLIC_API_UA`, which names the project and a contact.
 
+**Curated logos** (stories only): `images/logos/<slug>-<era>.png`, where era
+is a 4-digit year or `current`; `index.json` maps slugs to Arabic/Latin names
+for matching. A logo is the fallback between the widened search and the loud
+repeat — frame 1 takes the oldest era, the closing frame takes `current`, the
+protagonist frame (2) never takes one. Curated files bypass the logo pixel
+check and the vision gate **by provenance** (they never pass through either);
+a logo arriving from archive search is still rejected exactly as before —
+filler on a news card, but an era-matched curated logo on a story frame is a
+deliberate editorial choice. The folder is populated by `logo_fetch.py`
+(manual only): the current logo lands automatically from the subject's own
+title-verified article; historical candidates go to Telegram for review, and
+renaming one into the folder is the approval.
+
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish
 threshold must stay the same number** — stopping below the publish bar means

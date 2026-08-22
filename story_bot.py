@@ -969,6 +969,90 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True):
     return settle(photo)
 
 
+LOGOS_DIR = Path(os.getenv("LOGOS_DIR", "images/logos"))
+
+
+def _curated_logo(frame_no, total, brief, frame):
+    """An era-matched curated logo for this frame, or None.
+
+    Deliberate editorial fallback, not photography: rule 3 rejects logo cards
+    that ARRIVE FROM ARCHIVE SEARCH (filler on a news card), and that pixel
+    check is untouched — files never enter through it here. Provenance is the
+    carve-out: only files sitting in images/logos/, placed there by the owner
+    (renaming a reviewed candidate into the folder is the approval step), are
+    eligible. The vision gate is skipped for the same reason — it would say
+    "not a real photograph", which is true and beside the point.
+    """
+    if frame_no == 2:
+        return None            # the protagonist frame shows a face, never a logo
+    try:
+        files = sorted(LOGOS_DIR.glob("*.png"))
+    except OSError:
+        return None
+    if not files:
+        return None
+
+    # what this story talks about, in both scripts
+    hay = " ".join(filter(None, [
+        str(brief.get("story", "")),
+        str(brief.get("title", "")),
+        " ".join(brief.get("image_keywords", []) or []),
+        " ".join(brief.get("image_queries_ar", []) or []),
+        " ".join(frame.get("image_keywords", []) or []),
+        " ".join(frame.get("image_keywords_ar", []) or []),
+    ])).lower()
+
+    try:
+        aliases = json.loads((LOGOS_DIR / "index.json").read_text("utf-8"))
+    except Exception:
+        aliases = {}
+
+    candidates = {}                       # slug -> [(era_key, path)]
+    for f in files:
+        stem = f.stem
+        if "-" not in stem:
+            continue
+        slug, era = stem.rsplit("-", 1)
+        names = [slug] + list(aliases.get(slug, []))
+        if not any(len(nm) >= 3 and nm.lower() in hay for nm in names):
+            continue
+        key = float("inf") if era == "current" else             int(era) if era.isdigit() and len(era) == 4 else None
+        if key is None:
+            continue
+        candidates.setdefault(slug, []).append((key, f))
+    if not candidates:
+        return None
+
+    eras = sorted(next(iter(candidates.values())))
+    # era by frame position only: opening takes the oldest, the closing frame
+    # takes -current (or the newest on file), middle frames interpolate
+    if len(eras) == 1:
+        _, path = eras[0]
+    elif frame_no == 1:
+        _, path = eras[0]
+    elif frame_no == total:
+        _, path = eras[-1]
+    else:
+        idx = round((frame_no - 1) / max(total - 1, 1) * (len(eras) - 1))
+        _, path = eras[idx]
+
+    tag = ("opening frame" if frame_no == 1 else
+           "closing frame" if frame_no == total else f"frame {frame_no}")
+    dest = OUT_DIR / f"story-frame-{frame_no}.jpg"
+    from PIL import Image as _Im
+    img = _Im.open(path)
+    if img.mode in ("RGBA", "LA", "P"):
+        # transparent logo on the renderer's convert("RGB") goes black;
+        # flatten onto the card's cream instead
+        flat = _Im.new("RGB", img.size, BG_TOP)
+        rgba = img.convert("RGBA")
+        flat.paste(rgba, (0, 0), rgba)
+        flat.save(dest, "JPEG", quality=92)
+    else:
+        img.convert("RGB").save(dest, "JPEG", quality=92)
+    print(f"    frame {frame_no}: using curated logo {path} (era match: {tag})")
+    return str(dest)
+
 def find_all_photos(brief):
     """A picture for every frame, trying progressively wider searches.
 
@@ -1024,9 +1108,17 @@ def find_all_photos(brief):
                                OUT_DIR / f"story-frame-{n}.jpg", used, context,
                                allow_neutral=False)
 
+        # curated logo before the repeat fallback; a single logo may serve
+        # more than one frame (the spec allows it), so logo frames stay out
+        # of the `used` digests that the no-repeat rule checks
+        from_logo = False
+        if photo is None:
+            photo = _curated_logo(n, len(frames), brief, frame)
+            from_logo = photo is not None
+
         if photo is None:
             missing.append(n)
-        else:
+        elif not from_logo:
             used.add(_photo_digest(photo))
         photos.append(photo)
 
