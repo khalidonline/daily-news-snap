@@ -300,10 +300,135 @@ def looks_like_a_graphic(path):
 
 
 def _clear_generated_marker(path):
-    """A real photo overwrites the file, so drop any stale marker."""
-    marker = Path(str(path) + ".generated")
-    if marker.exists():
-        marker.unlink()
+    """A real photo overwrites the file, so drop any stale marker.
+
+    Also clears the .exempt provenance marker for the same reason: every
+    archive fetcher calls this before writing, so a curated local photo
+    followed by an archive fetch into the same slot can never keep the
+    local file's cooldown exemption.
+    """
+    for suffix in (".generated", ".exempt"):
+        marker = Path(str(path) + suffix)
+        if marker.exists():
+            marker.unlink()
+
+
+# --------------------------------------------------------------------------
+# Cross-run photo cooldown — state/photos_used.json
+# --------------------------------------------------------------------------
+# Two cards published the SAME DAY carried the same واس corniche photo:
+# dedup existed only within one story run, and news, topic and story shared
+# no photo memory. One registry now, same discipline as quota.json — one
+# file, all bots, pushed immediately so the 07:00 run's photos are visible
+# to the 09:00 run. Digests are the 16x16 perceptual hash, which already
+# treats a re-encode of one picture as the same picture.
+PHOTO_REUSE_DAYS = int(os.getenv("PHOTO_REUSE_DAYS", "").strip() or "7")
+PHOTOS_USED_FILE = Path("state/photos_used.json")
+# set when the exhaustion path had to reuse a recent photo — the bots
+# prepend it to their Telegram delivery so the owner sees the flaw
+RECENT_REUSE_WARNING = ""
+
+
+def _photo_digest(path):
+    """Perceptual hash, so the same picture found twice reads as the same.
+
+    Byte-hashing missed a real repeat: frames 1 and 6 of one story fetched
+    the same image through different downloads — a re-encode, different
+    bytes — and md5 called them distinct. A 16x16 average hash sees the
+    picture, not the file.
+    """
+    try:
+        img = Image.open(path).convert("L").resize((16, 16))
+        px = list(img.getdata())
+        mean = sum(px) / len(px)
+        return "".join("1" if v > mean else "0" for v in px)
+    except Exception:
+        return ""
+
+
+def load_photos_used():
+    """Registry entries younger than PHOTO_REUSE_DAYS; older ones pruned."""
+    try:
+        data = json.loads(PHOTOS_USED_FILE.read_text(encoding="utf-8"))
+        entries = data.get("entries", [])
+    except Exception:
+        return []
+    cutoff = (datetime.now(timezone.utc)
+              - timedelta(days=PHOTO_REUSE_DAYS)).isoformat()
+    return [e for e in entries if e.get("at", "") >= cutoff]
+
+
+def photo_recently_used(path):
+    d = _photo_digest(path)
+    return bool(d) and any(e.get("d") == d for e in load_photos_used())
+
+
+def _recent_reject(out_path):
+    """True when this just-accepted photo was on a recent post.
+
+    The fetcher then returns empty and the chain continues with the next
+    keyword or source — the same behaviour as the within-story seen set.
+    The rejected file is kept aside so the exhaustion path can still use
+    it: a repeated photo is a flaw, a dead run is worse.
+    """
+    if not photo_recently_used(out_path):
+        return False
+    keep = Path(str(out_path) + ".recentkeep")
+    if not keep.exists():
+        import shutil as _sh
+        _sh.copyfile(out_path, keep)
+    print("      (photo used on a recent post — looking further)")
+    return True
+
+
+def recent_fallback(out_path):
+    """The kept-aside recent photo, accepted loudly, or None."""
+    global RECENT_REUSE_WARNING
+    keep = Path(str(out_path) + ".recentkeep")
+    if not keep.exists():
+        return None
+    import shutil as _sh
+    _sh.copyfile(keep, out_path)
+    keep.unlink(missing_ok=True)
+    RECENT_REUSE_WARNING = "⚠️ الصورة ظهرت على منشور حديث — لم يوجد بديل\n"
+    print("  ! every fresh photo exhausted — reusing a RECENT one")
+    return str(out_path)
+
+
+def recent_warning():
+    """Read the flag through a function so importers see mutations."""
+    return RECENT_REUSE_WARNING
+
+
+def register_photos(paths, by):
+    """Record accepted card photos, one write and one push for the run.
+
+    Local-library photos and curated logos carry a .exempt marker and are
+    skipped — a portrait legitimately reappears when its story re-runs, and
+    the curated logo repeats by design. DRY_RUN writes the file locally but
+    never pushes, so tests stay off the shared state.
+    """
+    entries = load_photos_used()
+    known = {e.get("d") for e in entries}
+    added = False
+    for path in paths:
+        if not path or Path(str(path) + ".exempt").exists():
+            continue
+        d = _photo_digest(path)
+        if not d or d in known:
+            continue
+        known.add(d)
+        entries.append({"d": d, "at": datetime.now(timezone.utc).isoformat(),
+                        "by": by})
+        added = True
+    if not added:
+        return
+    PHOTOS_USED_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PHOTOS_USED_FILE.write_text(
+        json.dumps({"entries": entries}, ensure_ascii=False, indent=1),
+        encoding="utf-8")
+    if not DRY_RUN:
+        commit_and_push(PHOTOS_USED_FILE, f"photos used {ksa_stamp()}")
 
 
 def _image_is_safe(text):
@@ -1286,6 +1411,8 @@ def fetch_article_photo(url, out_path):
         print(f"  ! photo download failed: {exc}")
         return None, None
 
+    if _recent_reject(out_path):
+        return None, None
     print(f"    photo: article image from {domain}")
     return str(out_path), domain
 
@@ -1461,6 +1588,8 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
     version = best.get("license_version") or ""
     credit = f"{creator} / CC {licence} {version}".strip()
 
+    if _recent_reject(out_path):
+        return None, None
     print(f"    photo: {best.get('title') or '(untitled)'} — {credit} "
           f"[{best_query}]")
     return str(out_path), credit
@@ -1774,6 +1903,8 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
             Path(out_path).write_bytes(data)
             if looks_like_a_graphic(out_path):
                 break                        # try the next candidate instead
+            if _recent_reject(out_path):
+                continue
             credit = _commons_credit(info)
             print(f"    photo: {page.get('title', '')[:70]} — {credit} [{query}]")
             return str(out_path), credit
@@ -1973,6 +2104,8 @@ def fetch_loc_photo(queries, out_path, need_saudi=None, min_hits=None,
         Path(out_path).write_bytes(data)
         if looks_like_a_graphic(out_path):
             continue
+        if _recent_reject(out_path):
+            continue
         print(f"    photo: {str(result.get('title'))[:70]} — "
               f"{LOC_CREDIT} [{query}]")
         return str(out_path), LOC_CREDIT
@@ -2097,6 +2230,8 @@ def fetch_photo(queries, out_path, need_saudi=None):
     if looks_like_a_graphic(out_path):
         return None                       # Pexels had the same blind spot
 
+    if _recent_reject(out_path):
+        return None
     print(f"    photo: {best.get('alt') or '(no description)'} "
           f"— {best.get('photographer')} / Pexels [{best_query}]")
     return str(out_path)
@@ -2645,6 +2780,8 @@ def fetch_spa_photo(queries_ar, out_path):
             Path(out_path).write_bytes(data)
             if looks_like_a_graphic(out_path):
                 break                    # try the next candidate instead
+            if _recent_reject(out_path):
+                continue
             print(f"    photo: {item.get('title', '')[:70]} [{query}]")
             return str(out_path), SPA_CREDIT
 
@@ -2721,6 +2858,10 @@ def fetch_local_photo(queries_ar, queries_en, out_path):
     import shutil as _shutil
     _clear_generated_marker(out_path)
     _shutil.copyfile(best["path"], out_path)
+    # curated library photos are exempt from the cross-run cooldown: the
+    # owner chose them, and dropping a good photo into images/ is exactly
+    # how a recurring subject sidesteps the cooldown by design
+    Path(str(out_path) + ".exempt").write_text("local", encoding="utf-8")
     print(f"    photo: {best['path'].name} from your library "
           f"(matched {best_score // 10} tag(s))")
     return str(out_path), best.get("credit")
@@ -3538,6 +3679,9 @@ def main():
     hero = OUT_DIR / "hero.jpg"
 
     chosen, photo, credit = None, None, None
+    recent_candidate = None
+    Path(str(hero) + ".recentkeep").unlink(missing_ok=True)
+
     def _article(story):
         link = story.get("link")
         if not link:
@@ -3610,7 +3754,16 @@ def main():
         if photo:
             chosen = story
             break
+        if recent_candidate is None and \
+                Path(str(hero) + ".recentkeep").exists():
+            recent_candidate = story        # remember whose search kept it
         print("      no usable photo — trying the next story")
+
+    if chosen is None and recent_candidate is not None:
+        # every story exhausted its fresh options — a repeated photo is a
+        # flaw, a dead run is worse
+        photo, credit = recent_fallback(hero), None
+        chosen = recent_candidate
 
     if chosen is None:
         if REQUIRE_PHOTO:
@@ -3629,6 +3782,11 @@ def main():
         "sources": [chosen.get("source", "")],
     }, OUT_DIR / f"{stamp}-brief.png", photo, credit)
 
+    if photo:
+        # registered even on hybrid runs: the card reached Telegram and may
+        # be published later — its photo is spent either way
+        register_photos([photo], "news")
+
     if DRY_RUN:
         print(f"4/4 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
         return
@@ -3644,8 +3802,8 @@ def main():
                   f"{repo}/{branch}/{CARDS_DIR}/latest.png")
         # still record it, so the next run doesn't pick the same story
         commit_and_push(save_posted(posted, stories), f"card {stamp}")
-        notify(f"📰 {stamp}\n{chosen['headline']}\n\n{chosen.get('takeaway', '')}",
-               card)
+        notify(f"{RECENT_REUSE_WARNING}📰 {stamp}\n{chosen['headline']}\n\n"
+               f"{chosen.get('takeaway', '')}", card)
         return
 
     if not quota_ok():
@@ -3669,7 +3827,7 @@ def main():
         state = save_posted(posted, stories)
         commit_and_push(state, f"posted {stamp}")
         commit_and_push(quota_bump(), f"quota {stamp}")
-        notify(f"✅ posted {stamp}\n{chosen['headline']}", card)
+        notify(f"{RECENT_REUSE_WARNING}✅ posted {stamp}\n{chosen['headline']}", card)
     else:
         notify(f"❌ {stamp} — Snapchat post failed\n"
                f"{describe_failure(response)}")

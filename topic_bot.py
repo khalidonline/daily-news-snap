@@ -33,6 +33,7 @@ try:
         POST_ENABLED, CARDS_DIR,
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
         draw_brand_badge, seal_photo, closing_seal,
+        register_photos, recent_fallback, recent_warning,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
         ksa_stamp, notify, deliver_unposted, post_ok, describe_failure,
@@ -1029,6 +1030,7 @@ def build_card(topic):
     queries = brief.get("image_queries", [])
     queries_ar = brief.get("image_queries_ar", [])
     hero = OUT_DIR / "hero.jpg"
+    Path(str(hero) + ".recentkeep").unlink(missing_ok=True)
     photo, credit = None, None
 
     print("2/3 finding a photo...")
@@ -1067,6 +1069,9 @@ def build_card(topic):
             print("    trying Pexels...")
             photo = fetch_photo(queries, hero)
             credit = "Pexels" if photo else None
+        if photo is None:
+            # a recent real photo beats generated filler — accept it loudly
+            photo, credit = recent_fallback(hero), None
         if photo is None:
             photo, credit = fetch_generated_photo(brief.get("image_prompt", ""), hero)
 
@@ -1110,6 +1115,11 @@ def main():
     renderer = render_story if THEME == "light" else render_topic
     card = renderer(brief, OUT_DIR / f"{stamp}-{slug}.png", photo, credit)
 
+    if photo:
+        # hybrid and dry runs register too (dry writes locally, no push):
+        # the photo reached Telegram and is spent
+        register_photos([photo], "topic")
+
     if DRY_RUN:
         print(f"    DRY_RUN — nothing published. Card at {Path(card).resolve()}")
         return
@@ -1124,8 +1134,8 @@ def main():
             print("    always-latest link: https://raw.githubusercontent.com/"
                   f"{repo}/{branch}/{CARDS_DIR}/latest.png")
         commit_and_push(save_used(load_used(), topic), f"topic: {slug}")
-        notify(f"💡 {stamp}\n{brief['title']}\n\n{brief.get('takeaway', '')}",
-               card)
+        notify(f"{recent_warning()}💡 {stamp}\n{brief['title']}\n\n"
+               f"{brief.get('takeaway', '')}", card)
         return
 
     if not quota_ok():

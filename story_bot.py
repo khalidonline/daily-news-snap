@@ -37,7 +37,8 @@ try:
         fetch_commons_photo, fetch_commons_portrait, fetch_loc_photo,
         fetch_generated_photo, IMAGE_SOURCE,
         photo_shows, vision_gate_summary, draw_brand_badge, seal_photo,
-        closing_seal,
+        closing_seal, _photo_digest, register_photos, recent_fallback,
+        recent_warning,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -911,23 +912,6 @@ def build_frames(brief, stamp, photos):
     return [str(p) for p in paths]
 
 
-def _photo_digest(path):
-    """Perceptual hash, so the same picture found twice reads as the same.
-
-    Byte-hashing missed a real repeat: frames 1 and 6 of one story fetched
-    the same image through different downloads — a re-encode, different
-    bytes — and md5 called them distinct. A 16x16 average hash sees the
-    picture, not the file.
-    """
-    try:
-        from PIL import Image
-        img = Image.open(path).convert("L").resize((16, 16))
-        px = list(img.getdata())
-        mean = sum(px) / len(px)
-        return "".join("1" if v > mean else "0" for v in px)
-    except Exception:
-        return None
-
 
 def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
                bank=None):
@@ -1208,6 +1192,8 @@ def _curated_logo(frame_no, total, brief, frame):
     canvas.paste(logo, ((canvas.width - logo.width) // 2,
                         (canvas.height - logo.height) // 2), logo)
     canvas.save(dest, "JPEG", quality=92)
+    # curated logos repeat by design — exempt from the cross-run cooldown
+    Path(str(dest) + ".exempt").write_text("logo", encoding="utf-8")
     print(f"    frame {frame_no}: using curated logo {path} (era match: {tag})")
     return str(dest)
 
@@ -1300,6 +1286,11 @@ def find_all_photos(brief):
         for _, kept in bank:
             kept.unlink(missing_ok=True)
 
+        # rung 4.5: a photo rejected only for being on a recent post beats
+        # a within-story repeat
+        if photo is None:
+            photo = recent_fallback(slot)
+
         # rung 5 is the loud repeat below
         if photo is None:
             missing.append(n)
@@ -1340,6 +1331,7 @@ def find_all_photos(brief):
         print(f"  ! frames {missing} found no picture at all")
         return None
     vision_gate_summary()
+    register_photos(photos, "story")
     return photos
 
 
@@ -1413,7 +1405,8 @@ def main():
         for u in urls:
             print(f"    {u}")
         commit_and_push(save_used(load_used(), story), f"story: {slug}")
-        notify_album(f"📖 {stamp} — {brief['title']}\n{len(frames)} لقطات",
+        notify_album(f"{recent_warning()}📖 {stamp} — {brief['title']}\n"
+                     f"{len(frames)} لقطات",
                      frames)
         return
 

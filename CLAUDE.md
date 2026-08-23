@@ -132,6 +132,17 @@ no mechanism can verify a file labelled 1938 is the 1938 mark — via
 `logo_fetch.py` candidates sent to Telegram; renaming one into the folder is
 the approval.
 
+`state/photos_used.json` is a cross-run cooldown shared by all three bots:
+an accepted card photo's perceptual digest is registered (pushed at once, so
+the 07:00 run's photos bind the 09:00 run) and re-fetching it within
+`PHOTO_REUSE_DAYS` (7) is rejected mid-search like a within-story repeat.
+Exempt: the local `images/` library and curated logos — so a recurring
+subject (Tadawul milestones, budget days) is best served by dropping one
+good photo into `images/`, which guarantees relevance and sidesteps the
+cooldown by design. If every source exhausts and only a recent photo
+remains, it ships with a loud ⚠️ prefix on the Telegram delivery — a
+repeat is a flaw, a dead run is worse.
+
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish
 threshold must stay the same number** — stopping below the publish bar means
