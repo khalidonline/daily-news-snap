@@ -912,7 +912,14 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         mid(y, line, f_big, TEXT)
         y += int(size * 1.25)
 
-    bottom = (H - 260 if footer else H - 180)
+    # The closing seal's band is reserved BEFORE any text is sized — the
+    # Mrsool 6/6 frame drew the seal over the punch's last line because the
+    # old floor (H-260) sat BELOW the seal's own top edge. The seal is
+    # 120px; the band adds breathing room above it, and body/punch flow in
+    # the space that remains ABOVE the band, never into it.
+    SEAL_SIZE, SEAL_AIR = 120, 36
+    seal_centre = (H - 276) if footer else (H - 166)
+    bottom = seal_centre - SEAL_SIZE // 2 - SEAL_AIR
 
     # The punch is the one line on the frame that must not be squeezed, so it
     # is measured before the body and the body gets what is left. Sizing it
@@ -943,6 +950,12 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             if len(lines) * line_gap <= available:
                 break
             sub_size -= 2
+        if len(lines) * line_gap > available:
+            # the seal band wins its space; a cramped body is reviewable,
+            # an overlapped seal is not — say it loudly for the review pass
+            print(f"  ! frame text overflows the seal band even at minimum "
+                  f"size ({len(lines)} lines, {available}px available) — "
+                  f"REVIEW THIS FRAME")
         for line in lines:
             mid(y, line, f_sub, sub_colour or BODY)
             y += line_gap
@@ -953,6 +966,9 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             mid(y, line, f_punch, ACCENT)
             y += punch_gap
 
+    # mark 3 sits in its reserved band on EVERY frame — drawn last, after
+    # the text that was sized to stay above it
+    closing_seal(img, seal_centre)
     if footer:
         f_foot = load_font(26)
         text = footer
@@ -961,7 +977,6 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
                 text = text.rsplit("، ", 1)[0]      # drop the last source
             else:
                 text = text[:-4]
-        closing_seal(img, H - 276)
         mid(H - 160, text, f_foot, MUTED)
 
     img.save(path, "PNG", optimize=True)
