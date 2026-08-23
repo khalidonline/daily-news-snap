@@ -199,7 +199,10 @@ others. Expect roughly 120 posts a month against that 145.
   ✗/✓ examples drawn from cards that actually went wrong. Keep that pattern.
   Some rules span bots and must stay in sync when edited: comparing figures
   (components of one index aren't rivals) is in all three; Saudi regulation
-  (name the rule that governs the advice) is in topic and story only.
+  (name the rule that governs the advice) is in topic and story only;
+  government finance (report the number and its source, never a verdict on
+  the state's performance or pace, no taxpayer framing, one quarter is not
+  a trend) is in all three.
 - Every env var has a fallback for empty values — GitHub passes `""` for an
   unset repo variable, which would otherwise disable a filter silently.
 - Before finishing: `python -m py_compile` each bot, and confirm
