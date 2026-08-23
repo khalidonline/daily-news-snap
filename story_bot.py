@@ -463,14 +463,47 @@ def person_name(story):
     return ""
 
 
+# Aliases: the archive searches ITS name for a person, not the story's —
+# «علي النعيمي» found nothing while "Ali Al-Naimi" carries a lead portrait,
+# and every Commons file of Sarah Breedlove is titled "Madam C. J. Walker".
+# A story line may carry the archive's names after a pipe, same extension
+# pattern as topics.txt:
+#     قصة علي النعيمي | Ali Al-Naimi
+# The left side stays the story everywhere (display, choose_story identity,
+# used/skipped state keys); aliases feed only the portrait pre-check and the
+# research call. Built by load_stories, looked up by exact story text.
+_STORY_ALIASES = {}
+_ALIASES_LOADED = False
+
+
 def load_stories():
+    global _ALIASES_LOADED
     try:
         lines = STORIES_FILE.read_text(encoding="utf-8").splitlines()
     except FileNotFoundError:
         print(f"  ! {STORIES_FILE} not found")
         return []
-    return [ln.strip() for ln in lines
-            if ln.strip() and not ln.strip().startswith("#")]
+    stories = []
+    _STORY_ALIASES.clear()
+    _ALIASES_LOADED = True
+    for ln in lines:
+        ln = ln.strip()
+        if not ln or ln.startswith("#"):
+            continue
+        head, _, tail = ln.partition("|")
+        head = head.strip()
+        aliases = [a.strip() for a in tail.split(",") if a.strip()]
+        if aliases:
+            _STORY_ALIASES[head] = aliases
+        stories.append(head)
+    return stories
+
+
+def story_aliases(story):
+    """The archive's names for this story's subject, possibly empty."""
+    if not _ALIASES_LOADED:
+        load_stories()          # a manual STORY env value skips choose_story
+    return _STORY_ALIASES.get(str(story or "").strip(), [])
 
 
 def load_used():
@@ -566,7 +599,14 @@ def pick_story():
         if not name:
             return story, misses
         print(f"    checking for a portrait of {name}...")
-        if find_portrait(name, OUT_DIR / "portrait.jpg"):
+        found = None
+        for cand in [name] + story_aliases(story):
+            if find_portrait(cand, OUT_DIR / "portrait.jpg"):
+                found = cand
+                break
+        if found:
+            if found != name:
+                print(f"    portrait resolved via alias: {found}")
             return story, misses
         print(f"  · no portrait for {name} — trying another story")
         commit_and_push(mark_skipped(story, name), f"no portrait: {name}")
@@ -579,7 +619,11 @@ def research(story):
     if not ANTHROPIC_API_KEY:
         raise SystemExit("ANTHROPIC_API_KEY is not set")
 
-    messages = [{"role": "user", "content": f"القصة: {story}"}]
+    # aliases ride along so image_keywords inherit the searchable name
+    aliases = story_aliases(story)
+    subject = (f"{story} (أسماء أخرى: {', '.join(aliases)})" if aliases
+               else story)
+    messages = [{"role": "user", "content": f"القصة: {subject}"}]
     searches = 0
     budget = MAX_TOKENS
 
@@ -620,7 +664,8 @@ def research(story):
             if budget < 32000:
                 budget = min(32000, budget * 2)
                 print(f"  ! reply truncated — retrying with max_tokens={budget}")
-                messages = [{"role": "user", "content": f"القصة: {story}"}]
+                messages = [{"role": "user",
+                             "content": f"القصة: {subject}"}]
                 continue
             raise SystemExit(
                 "Reply truncated even at 32000 tokens — lower MAX_SEARCHES "

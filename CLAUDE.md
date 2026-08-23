@@ -22,7 +22,10 @@ a shared function, check all three bots still import cleanly.**
 - `topics.txt` — ~275 explainer topics, optional `| trigger, keywords` per line
 - `seasons.txt` — 46 seasons: Ramadan/Hajj (hijri), monthly payday cycle,
   exhibitions, a weekly football slot. Format: `## name | spec | before | after`
-- `stories.txt` — 74 narrative subjects
+- `stories.txt` — 74 narrative subjects, optional `| alias, alias` per
+  line: the archive's names for the subject (stage names, business names,
+  transliterations) — the portrait pre-check and the research call try
+  them, because archives catalogue people under names the story may not use
 - `requests.txt` — topics followers asked for; these outrank everything
 - `voice.txt` — sample lines the writing should imitate
 
