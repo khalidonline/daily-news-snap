@@ -2,10 +2,11 @@ name: News brief to Snapchat
 
 on:
   schedule:
-    # KSA is UTC+3. Weighted toward US hours, when tech and market news breaks.
+    # KSA is UTC+3. The evening belongs to breaking.yml now: a watcher that
+    # posts a confirmed breaking card the moment it lands, and a 20:00 KSA
+    # fallback that posts the day's strongest story if nothing broke.
     - cron: "0 4 * * *"     # 07:00 KSA — overnight US news
     - cron: "0 9 * * *"     # 12:00 KSA — Gulf/Europe morning
-    - cron: "0 18 * * *"    # 21:00 KSA — US afternoon, most announcements
   workflow_dispatch:
     inputs:
       dry_run:
@@ -71,8 +72,8 @@ jobs:
           # Scheduled runs post except 12:00 KSA ("0 9 * * *"), which stays
           # hybrid. A manual run posts ONLY when "post" is ticked: the default
           # is still no, because a test that reaches the profile is expensive
-          # to undo, and that tick is how a breaking story goes out off
-          # schedule now that 17:00 is gone.
+          # to undo. The tick remains the human override for breaking news;
+          # the automated evening path lives in breaking.yml.
           POST_TO_SNAPCHAT: ${{ ((github.event_name == 'schedule' && github.event.schedule != '0 9 * * *') || (github.event_name == 'workflow_dispatch' && inputs.post)) && '1' || '0' }}
           # one cap shared with topic.yml — see the note there
           MONTHLY_POST_LIMIT: "145"
