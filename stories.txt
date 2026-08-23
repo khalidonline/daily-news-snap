@@ -99,3 +99,67 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة
 حسن الشربتلي وجيل التجار الأوائل في جدة
 من هم أول الموظفين السعوديين في أرامكو؟
+# ===== Saudi-flavor story batch (added 2026-08-24) =====
+
+# @pool: saudi
+
+# Things Saudis touch daily
+قصة الشماغ ومصانعه في إنجلترا | ghutra, shemagh, keffiyeh
+قصة القهوة السعودية | Saudi coffee, Arabic coffee
+قصة التمر السعودي وتحوله لصناعة | Saudi dates industry
+قصة المكيّف الذي جعل مدن الخليج ممكنة | air conditioning, Willis Carrier
+قصة ماء زمزم وكيف يُعبأ ويوزّع | Zamzam water
+قصة الكبسة ورحلة الرز إلى الجزيرة العربية | Kabsa, basmati rice trade
+قصة العباءة السعودية وتحولها لصناعة أزياء | abaya fashion industry
+
+# Saudi company origins
+قصة مكتبة جرير من متجر صغير إلى عملاق | Jarir Bookstore, Jarir Marketing
+قصة مصرف الراجحي من صرافة إلى أكبر بنك | Al Rajhi Bank
+قصة طيران ناس وثورة الطيران الاقتصادي | flynas
+قصة المراعي من مزرعة إلى أكبر شركة ألبان | Almarai
+قصة صافولا | Savola Group
+قصة هنقرستيشن وحرب تطبيقات التوصيل | HungerStation
+قصة مرسول وتوسعه | Mrsool
+قصة العثيم وتجارة التجزئة | Al Othaim Markets
+قصة بنده والتجزئة السعودية | Panda Retail
+قصة نادك للأغذية | NADEC
+قصة زين السعودية وسوق الاتصالات | Zain KSA
+قصة موبايلي | Mobily, Etihad Etisalat
+قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC
+قصة سليمان الراجحي وأكبر وقف خاص | Sulaiman Al Rajhi
+قصة صالح كامل ودلة البركة | Saleh Kamel, Dallah Al Baraka
+
+# Collective financial memory
+قصة انهيار سوق الأسهم السعودية 2006 | Saudi stock market crash 2006
+قصة سوق المناخ في الكويت 1982 | Souk Al-Manakh
+قصة أزمة النقد في الثمانينات وأثرها على الخليج
+قصة طفرة النفط الأولى في السبعينات وتغيير المملكة | 1970s oil boom
+قصة تأسيس مؤسسة النقد ساما | SAMA, Saudi Central Bank
+قصة ربط الريال بالدولار وقصته | riyal dollar peg
+
+# Global giants' Saudi chapter
+قصة استحواذ أوبر على كريم | Uber Careem acquisition
+قصة كريم من فكرة إلى مليارات | Careem
+قصة دخول لوسيد ومصنعها في السعودية | Lucid Motors, KAEC
+قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia
+قصة ستاربكس عبر الشايع | Starbucks, Alshaya
+قصة أمازون واستحواذها على سوق دوت كوم | Souq.com, Amazon
+قصة نون ومنافسة التجارة الإلكترونية | noon
+قصة صندوق الاستثمارات العامة واستثماراته العالمية | PIF, Public Investment Fund
+قصة استثمار صندوق الاستثمارات في Uber | PIF Uber stake
+
+# Firsts
+قصة أول بث للتلفزيون السعودي 1965 | Saudi TV 1965
+قصة سكة حديد الرياض الدمام 1951 | Riyadh Dammam railway
+قصة افتتاح أول جامعة سعودية | King Saud University 1957
+قصة أول سيارة تدخل الجزيرة العربية
+قصة أول مطار في جدة وتطور الطيران المدني | Jeddah airport history
+قصة أول عملة ورقية سعودية | first Saudi banknote, Hajj receipt
+
+# @pool: general
+
+قصة نوكيا من مصنع ورق إلى الهواتف | Nokia
+قصة ليغو من ورشة نجارة | LEGO
+قصة IKEA من قرية سويدية | IKEA, Ingvar Kamprad
+قصة Rolex وصناعة الفخامة | Rolex
+قصة Samsung من متجر بقالة | Samsung
