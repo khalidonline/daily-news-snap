@@ -2118,27 +2118,66 @@ def _rounded(img, radius):
     return out
 
 
-# The badge is on unless the owner turns it off; GitHub passes "" for an
-# unset variable, which must not silently hide a brand mark.
+# The three brand marks, all drawn from the owner's circular badge asset
+# (images/brand/badge.png, 1000x1000 RGBA). The badge is on unless the owner
+# turns it off; GitHub passes "" for an unset variable, which must not
+# silently hide a brand mark. A missing asset logs loudly and draws nothing
+# rather than inventing a stand-in — a placeholder monogram shipped to a
+# live card once, which is exactly what this rule exists to prevent.
 BRAND_BADGE = (os.getenv("BRAND_BADGE", "").strip() or "1") != "0"
+BADGE_FILE = Path(os.getenv("BADGE_FILE", "").strip()
+                  or "images/brand/badge.png")
+_badge_cache = {}
 
 
-def draw_brand_badge(draw, margin=96, y=170):
-    """Top-left monogram — the second brand mark, mirroring the header bar.
-
-    Identity, not state: it keeps BRAND_INK even on a breaking card, whose
-    red belongs to the header and takeaway alone. Same position and size on
-    every card of every bot; on topic cards it sits over the hero photo,
-    which is why it is a solid box and not bare type.
-    """
+def brand_badge(size, alpha=255):
+    """The circular badge at `size` px, circle-masked, or None."""
     if not BRAND_BADGE:
-        return
-    size = 56
-    draw.rounded_rectangle([margin, y, margin + size, y + size],
-                           radius=14, fill=BRAND_INK)
-    shaped, k = ar("م")
-    draw.text((margin + size // 2, y + size // 2 + 2), shaped,
-              font=load_font(30, bold=True), fill=BG_TOP, anchor="mm", **k)
+        return None
+    key = (size, alpha)
+    if key not in _badge_cache:
+        try:
+            src = Image.open(BADGE_FILE).convert("RGBA")                        .resize((size, size), Image.LANCZOS)
+        except Exception as exc:
+            print(f"  ! brand badge unavailable ({exc}) — cards go unmarked")
+            _badge_cache[key] = None
+            return None
+        mask = Image.new("L", (size * 4, size * 4), 0)
+        ImageDraw.Draw(mask).ellipse([0, 0, size * 4 - 1, size * 4 - 1],
+                                     fill=255)
+        mask = mask.resize((size, size), Image.LANCZOS)
+        if alpha < 255:
+            mask = mask.point(lambda v: v * alpha // 255)
+        src.putalpha(mask)
+        _badge_cache[key] = src
+    return _badge_cache[key]
+
+
+def draw_brand_badge(img, xy=(96, 128), size=150):
+    """Mark 1 — the badge top-left on every card of every bot."""
+    badge = brand_badge(size)
+    if badge:
+        img.paste(badge, xy, badge)
+
+
+def seal_photo(img, box_right, box_bottom, size=120, inset=26):
+    """Mark 2 — translucent seal inside the photo box, bottom-right.
+
+    Only ever called when a photo exists; 55% alpha so it reads as a
+    watermark, not a sticker. Applies to every photo without exception —
+    agency press graphics that carry their own logos included.
+    """
+    badge = brand_badge(size, alpha=140)          # 55% of 255
+    if badge:
+        img.paste(badge, (box_right - inset - size,
+                          box_bottom - inset - size), badge)
+
+
+def closing_seal(img, centre_y, size=120):
+    """Mark 3 — full-strength badge centred where the footer rule was."""
+    badge = brand_badge(size)
+    if badge:
+        img.paste(badge, (W // 2 - size // 2, centre_y - size // 2), badge)
 
 
 def _draw_header(draw, rtl, right, y=170):
@@ -2154,7 +2193,6 @@ def _draw_header(draw, rtl, right, y=170):
         label, colour = f"{BRAND} عاجل", ACCENT
     draw.rectangle([right - 110, y, right, y + 10], fill=colour)
     rtl((right, y + 46), label, load_font(32, bold=True), colour)
-    draw_brand_badge(draw)
 
 
 def render_number(brief, out_path, photo_credit=None):
@@ -2187,6 +2225,7 @@ def render_number(brief, out_path, photo_credit=None):
 
     # header
     _draw_header(draw, rtl, right)
+    draw_brand_badge(img)
 
     y = 330
     f_title = load_font(52, bold=True)
@@ -2234,9 +2273,7 @@ def render_number(brief, out_path, photo_credit=None):
     if photo_credit:
         parts.append(f"الصورة: {photo_credit}")
     if parts:
-        rule_w = 260
-        draw.line([(centre - rule_w // 2, H - 176),
-                   (centre + rule_w // 2, H - 176)], fill=RULE, width=2)
+        closing_seal(img, H - 246)
         mid((centre, H - 130), "   •   ".join(parts), f_foot, muted)
 
     img.save(out_path, "PNG", optimize=True)
@@ -2281,7 +2318,10 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
     punch = (punch or "").strip()
 
     HEADER_END = 320                      # below the bar and the label
-    FOOTER_TOP = H - 200                  # above the credit line
+    # the closing seal's height is RESERVED here, before any text sizing —
+    # fitting the body first and squeezing the seal in after is how marks
+    # end up on top of text
+    FOOTER_TOP = H - 340                  # above the closing seal + credits
 
     def measure(scale, photo_h):
         f_title = load_font(int(60 * scale), bold=True)
@@ -2339,6 +2379,7 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
 
     # header
     _draw_header(draw, rtl, right)
+    draw_brand_badge(img)
 
     y = start_y
     for line in title_lines:
@@ -2361,6 +2402,7 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
             photo = photo.resize((box_w, box_h), Image.LANCZOS)
             rounded = _rounded(photo, 36)
             img.paste(rounded, (margin, y), rounded)
+            seal_photo(img, margin + box_w, y + box_h)
             y += box_h + int(64 * scale)
         except Exception as exc:
             print(f"  ! couldn't place photo: {exc}")
@@ -2402,10 +2444,8 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
         lines.append(fit(f"الصورة: {photo_credit}"))
 
     if lines:
-        rule_w = 260
         top = H - 176 if len(lines) == 1 else H - 206
-        draw.line([(centre - rule_w // 2, top),
-                   (centre + rule_w // 2, top)], fill=RULE, width=2)
+        closing_seal(img, top - 70)
         y = top + 46
         for line in lines:
             mid((centre, y), line, f_foot, muted)

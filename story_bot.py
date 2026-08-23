@@ -36,7 +36,8 @@ try:
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
         fetch_commons_photo, fetch_commons_portrait, fetch_loc_photo,
         fetch_generated_photo, IMAGE_SOURCE,
-        photo_shows, vision_gate_summary, draw_brand_badge,
+        photo_shows, vision_gate_summary, draw_brand_badge, seal_photo,
+        closing_seal,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -726,10 +727,10 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
     shaped, k = ar(kicker)
     draw.text((right, 216), shaped, font=load_font(32, bold=True),
               fill=BRAND_INK, anchor="ra", **k)
-    draw_brand_badge(draw)
-    # the badge took the corner, so the frame counter tucks in under it
+    draw_brand_badge(img)
+    # the badge holds the corner, so the frame counter tucks in under it
     shaped, k = ar(counter)
-    draw.text((margin, 246), shaped, font=load_font(28), fill=MUTED,
+    draw.text((margin, 292), shaped, font=load_font(28), fill=MUTED,
               anchor="la", **k)
 
     y = 420
@@ -747,6 +748,7 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             pic = pic.resize((box_w, box_h), Image.LANCZOS)
             rounded = _rounded(pic, 36)
             img.paste(rounded, (margin, y), rounded)
+            seal_photo(img, margin + box_w, y + box_h)
             y += box_h + 80
         except Exception as exc:
             print(f"  ! couldn't place photo: {exc}")
@@ -813,8 +815,7 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
                 text = text.rsplit("، ", 1)[0]      # drop the last source
             else:
                 text = text[:-4]
-        draw.line([(centre - 130, H - 206), (centre + 130, H - 206)],
-                  fill=RULE, width=2)
+        closing_seal(img, H - 276)
         mid(H - 160, text, f_foot, MUTED)
 
     img.save(path, "PNG", optimize=True)

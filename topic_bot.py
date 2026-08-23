@@ -32,7 +32,7 @@ try:
         fetch_headlines, commit_and_push, quota_ok, quota_bump,
         POST_ENABLED, CARDS_DIR,
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
-        draw_brand_badge,
+        draw_brand_badge, seal_photo, closing_seal,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
         ksa_stamp, notify, deliver_unposted, post_ok, describe_failure,
@@ -919,7 +919,11 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 
     hero = _draw_hero(img, photo_path) if photo_path else 0
     draw = ImageDraw.Draw(img)
-    draw_brand_badge(draw)
+    draw_brand_badge(img)
+    if hero:
+        # mark 2 applies to the hero like any photo — press graphics with
+        # their own agency logos included, no special casing
+        seal_photo(img, W, HERO_HEIGHT)
 
     margin = 80
     right = W - margin
@@ -927,7 +931,8 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
     _, kw = ar("م")
 
     TOP = (hero - 40) if hero else 330
-    BOTTOM = H - 250
+    # closing-seal height RESERVED before text sizing — see news_bot
+    BOTTOM = H - 360
     available = BOTTOM - TOP
 
     # Shrink to fit. Only drop a point if even the smallest size overflows.
@@ -981,7 +986,7 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
         draw.rectangle([right - 6, lead_top, right, lead_bottom], fill=ACCENT)
 
     f_foot = load_font(28)
-    draw.line([(margin, H - 200), (right, H - 200)], fill=(58, 66, 90), width=2)
+    closing_seal(img, H - 270)
 
     # drop sources until the line fits, rather than letting it run off the edge
     names = list(brief.get("sources", []))[:4]
