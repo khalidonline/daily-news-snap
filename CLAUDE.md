@@ -280,6 +280,17 @@ others. Expect roughly 91 posts a month against that 145.
   football match for "Jack Bogle". A photograph of the wrong person is the one
   failure nothing downstream catches. Portraits from a title-verified article
   lead are reliable; the search fallback is not, and is now held to the title.
+- The Mrsool story put a stranger's face on frame 2, captioned as the
+  founder. The pre-check verified a real portrait EXISTED (title-verified),
+  then the render fetched AGAIN through generic caption-matching search and
+  took a different photo. Second wrong-person incident. The rule now:
+  **identity is not subject to widening** — widening may relax relevance,
+  never identity. Person frames fetch only through provenance that verifies
+  who is in the picture (the cached pre-check portrait, images/, or
+  fetch_commons_portrait's title-verified routes); the generic search,
+  widened pass, neutral bank and recent-photo rescue are all forbidden on
+  them, and the fallback is the company logo (allowed on the hero frame for
+  exactly this case) then repeat/text-only. Never a caption-matched face.
 - Award documents are not named "certificate" on Commons. They are "Genius
   Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
   of the White Lion awarded to X". Three reached story frames after

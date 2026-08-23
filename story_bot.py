@@ -687,6 +687,14 @@ def mark_skipped(story, name):
     return SKIPPED_FILE
 
 
+# The portrait the pre-check verified, cached so the render REUSES it for
+# the person frame instead of re-searching. The pre-check and the render
+# used to fetch independently: the pre-check verified a real portrait
+# existed, then find_photo fetched AGAIN through generic caption-matching
+# search — which is how a stranger's face reached the Mrsool hero frame.
+_VERIFIED_PORTRAIT = {"name": "", "path": ""}
+
+
 def find_portrait(name, out_path):
     """A real photograph of this person, or None.
 
@@ -740,6 +748,10 @@ def pick_story():
         if found:
             if found != name:
                 print(f"    portrait resolved via alias: {found}")
+            import shutil as _sh
+            keep = OUT_DIR / "portrait-verified.jpg"
+            _sh.copyfile(OUT_DIR / "portrait.jpg", keep)
+            _VERIFIED_PORTRAIT.update(name=found, path=str(keep))
             return story, misses
         print(f"  · no portrait for {name} — trying another story")
         commit_and_push(mark_skipped(story, name), f"no portrait: {name}")
@@ -1043,6 +1055,45 @@ def build_frames(brief, stamp, photos):
 
 
 
+def _person_frame_photo(frame, out_path, seen):
+    """A photo for a frame whose text NAMES a person — identity first.
+
+    Only provenance that verifies WHO is in the picture is allowed here:
+    the pre-check's cached portrait, the owner's local library, and
+    fetch_commons_portrait (article-lead or name-in-FILE-TITLE search).
+    Generic keyword search is forbidden on person frames — captions
+    matching a name is exactly how a stranger's face was captioned as
+    Mrsool's founder. No vision gate either: the gate judges relevance,
+    not identity, and a verified portrait of the named person is
+    definitionally right.
+    """
+    import shutil as _sh
+    keywords = [k for k in (frame.get("image_keywords") or []) if k]
+    keywords_ar = [k for k in (frame.get("image_keywords_ar") or []) if k]
+    hay = " ".join(keywords + keywords_ar + [frame.get("text", "")]).lower()
+
+    # the portrait the pre-check already verified, if this frame names them
+    cached = _VERIFIED_PORTRAIT
+    if cached["path"] and Path(cached["path"]).exists():
+        name_l = cached["name"].lower()
+        if name_l and (name_l in hay
+                       or any(name_l in k.lower() for k in keywords)):
+            if _photo_digest(cached["path"]) not in seen:
+                _sh.copyfile(cached["path"], out_path)
+                print("    person frame: reusing the pre-check's verified "
+                      f"portrait of {cached['name']}")
+                return str(out_path)
+
+    for kw in keywords + keywords_ar:
+        photo, _ = fetch_local_photo([kw], [kw], out_path)
+        if photo and _photo_digest(photo) not in seen:
+            return photo
+        photo, _ = fetch_commons_portrait(kw, out_path)
+        if photo and _photo_digest(photo) not in seen:
+            return photo
+    return None
+
+
 def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
                bank=None):
     """One photo for one frame, searched by subject.
@@ -1307,7 +1358,7 @@ def _auto_current_logo(brief, frame, frame_no):
     return Path(got)
 
 
-def _curated_logo(frame_no, total, brief, frame):
+def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
     """An era-matched curated logo for this frame, or None.
 
     Deliberate editorial fallback, not photography: rule 3 rejects logo cards
@@ -1318,8 +1369,11 @@ def _curated_logo(frame_no, total, brief, frame):
     eligible. The vision gate is skipped for the same reason — it would say
     "not a real photograph", which is true and beside the point.
     """
-    if frame_no == 2:
-        return None            # the protagonist frame shows a face, never a logo
+    if frame_no == 2 and not allow_hero:
+        # the protagonist frame shows a face, never a logo — EXCEPT when the
+        # person ladder itself asks, having found no verified portrait:
+        # then the logo is the honest fallback (Mrsool incident)
+        return None
     try:
         files = sorted(LOGOS_DIR.glob("*.png"))
     except OSError:
@@ -1417,13 +1471,27 @@ def find_all_photos(brief):
     # Frame 2 names the protagonist and frame 1 the setting — a person's name
     # is the more findable of the two, so it goes first. (Before the structure
     # was rewritten the protagonist was in frame 1, and this only read frame 1.)
+    # Identity is not subject to widening: a person's name used as a
+    # WIDENING keyword fetches caption-matched strangers onto whatever
+    # frame is short a photo — that is how the Mrsool founder's frame-1
+    # neighbour picked up a random face. Names belonging to person frames
+    # are stripped from the widening pool entirely; they may only ever
+    # fetch through the title-verified portrait path.
+    person_kws = {k.lower() for f in frames
+                  if (f.get("subject_kind") or "").strip().lower() == "person"
+                  for k in ((f.get("image_keywords") or [])
+                            + (f.get("image_keywords_ar") or [])) if k}
     fallback = list(brief.get("image_keywords", []))
     for frame in frames[1:2] + frames[0:1]:
+        if (frame.get("subject_kind") or "").strip().lower() == "person":
+            continue
         fallback += [k for k in (frame.get("image_keywords") or []) if k][:2]
-    fallback = [k for k in dict.fromkeys(fallback) if k][:3]
+    fallback = [k for k in dict.fromkeys(fallback)
+                if k and k.lower() not in person_kws][:3]
     # story-level Arabic keywords: the same for every frame, so they are only
     # a backstop for a frame the model gave none of its own
-    fallback_ar = [k for k in (brief.get("image_queries_ar") or []) if k][:3]
+    fallback_ar = [k for k in (brief.get("image_queries_ar") or [])
+                   if k and k.lower() not in person_kws][:3]
 
     photos, missing = [], []
     used = set()                      # digests of pictures already in the story
@@ -1450,28 +1518,42 @@ def find_all_photos(brief):
         context = f"{frame.get('heading', '')}\n{frame.get('text', '')}".strip()
         slot = OUT_DIR / f"story-frame-{n}.jpg"
         bank = []
-        # rung 1: the frame's own keywords, yes-or-bank
-        photo = find_photo(spec, slot, used, context, bank=bank)
-
-        # rung 2: widened story subject, yes only
-        if photo is None and fallback:
-            print(f"      widening to the story subject: {', '.join(fallback)}")
-            photo = find_photo({"image_keywords": fallback,
-                                "image_keywords_ar": fallback_ar},
-                               slot, used, context, allow_neutral=False)
-
-        # The fallback ladder is keyed by what the MODEL says the frame is
-        # about — inferring kind from frame text in image code was rejected
-        # as unreliable, and an unsure model writes "abstract", whose floor
+        # The ladder is keyed by what the MODEL says the frame is about —
+        # inferring kind from frame text in image code was rejected as
+        # unreliable, and an unsure model writes "abstract", whose floor
         # is text-only: uncertainty never becomes a confident wrong mark.
         kind = (frame.get("subject_kind") or "abstract").strip().lower()
+
+        if kind == "person":
+            # Identity is not subject to widening. Only provenance-verified
+            # portraits may carry a frame whose text names a person; the
+            # generic search, the widened pass, the neutral bank and the
+            # recent-photo rescue are all forbidden here — each is a way
+            # for "a photo that matched the name somewhere" to become a
+            # stranger's face captioned as the protagonist.
+            photo = _person_frame_photo(frame, slot, used)
+        else:
+            # rung 1: the frame's own keywords, yes-or-bank
+            photo = find_photo(spec, slot, used, context, bank=bank)
+
+            # rung 2: widened story subject, yes only
+            if photo is None and fallback:
+                print(f"      widening to the story subject: "
+                      f"{', '.join(fallback)}")
+                photo = find_photo({"image_keywords": fallback,
+                                    "image_keywords_ar": fallback_ar},
+                                   slot, used, context, allow_neutral=False)
         from_mark = False               # logo/flag/generated: not repeatable
 
         # company: current logo (auto-fetch rung inside), capped at one
         # non-closing frame per story. Never a flag, never generation.
-        if photo is None and kind == "company":
+        # A PERSON frame with no verified portrait falls here too — owner's
+        # rule from the Mrsool incident: a logo on the hero frame is
+        # honest, a wrong face is not.
+        if photo is None and kind in ("company", "person"):
             if n == len(frames) or not logo_extra_used:
-                logo = _curated_logo(n, len(frames), brief, frame)
+                logo = _curated_logo(n, len(frames), brief, frame,
+                                     allow_hero=(kind == "person"))
                 if logo is not None:
                     photo, from_mark = logo, True
                     if n != len(frames):
@@ -1509,8 +1591,10 @@ def find_all_photos(brief):
             if gen is not None:
                 photo, from_mark = gen, True
 
-        # a photo rejected only for being on a recent post beats a repeat
-        if photo is None:
+        # a photo rejected only for being on a recent post beats a repeat —
+        # except on person frames, where an unverified photo of anything
+        # (least of all a face) must never land
+        if photo is None and kind != "person":
             photo = recent_fallback(slot)
 
         # below this line: the loud repeat, then the text-only floor
