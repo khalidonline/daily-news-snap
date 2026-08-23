@@ -1082,7 +1082,8 @@ def build_frames(brief, stamp, photos):
             # rule 2: a generated image is never unlabelled
             foot = f"{foot} • {GENERATED_CREDIT}" if foot else GENERATED_CREDIT
         paths.append(render_frame(
-            OUT_DIR / f"{stamp}-story-{n}.png", BRAND, f"{n} / {total}",
+            OUT_DIR / f"{stamp}-story-{n:02d}.png", BRAND,
+            f"{n} / {total}",
             heading, 60, sub=frame.get("text", ""),
             sub_colour=ACCENT if (last and not punch) else None,
             photo=photo, punch=punch, footer=foot))
