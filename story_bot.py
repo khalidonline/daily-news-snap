@@ -1481,59 +1481,33 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
     return str(dest)
 
 def find_all_photos(brief):
-    """A picture for every frame, trying progressively wider searches.
+    """A picture for a frame that has one; a text-only frame otherwise.
 
-    1. the frame's own keywords, in English then in Arabic
-    2. the story's subject (from the title and the first frame)
-    3. repeat a photo already used on another frame
-
-    No two frames get the same picture unless step 3 is reached, and step 3
-    is a visible flaw rather than a neutral fallback — a six-frame story with
-    the same photograph twice looks like nobody checked it.
-
-    Only if all three fail for some frame is the story abandoned — a story
-    costs a research call, so it is worth widening the net before giving up.
+    The owner's inversion (2026-08): a photo is NOT required on every
+    frame — the writing carries a frame alone. Per frame: the frame's OWN
+    keywords, relevance-verified, then the kind-specific mark (subject
+    logo / flag / gated generation), then TEXT-ONLY as a first-class
+    floor. The widened story-subject pass, the neutral bank, the
+    recent-photo rescue and the in-story repeat are gone — each existed
+    to scrape up "some photo", and decks came back with sponsor stadiums
+    and triplicate skylines instead of honest bare frames.
     """
     frames = brief.get("frames", [])[:STORY_FRAMES]
-    # Subject terms, for widening a frame that found nothing on its own.
-    # Frame 2 names the protagonist and frame 1 the setting — a person's name
-    # is the more findable of the two, so it goes first. (Before the structure
-    # was rewritten the protagonist was in frame 1, and this only read frame 1.)
-    # Identity is not subject to widening: a person's name used as a
-    # WIDENING keyword fetches caption-matched strangers onto whatever
-    # frame is short a photo — that is how the Mrsool founder's frame-1
-    # neighbour picked up a random face. Names belonging to person frames
-    # are stripped from the widening pool entirely; they may only ever
-    # fetch through the title-verified portrait path.
-    person_kws = {k.lower() for f in frames
-                  if (f.get("subject_kind") or "").strip().lower() == "person"
-                  for k in ((f.get("image_keywords") or [])
-                            + (f.get("image_keywords_ar") or [])) if k}
-    fallback = list(brief.get("image_keywords", []))
-    for frame in frames[1:2] + frames[0:1]:
-        if (frame.get("subject_kind") or "").strip().lower() == "person":
-            continue
-        fallback += [k for k in (frame.get("image_keywords") or []) if k][:2]
-    fallback = [k for k in dict.fromkeys(fallback)
-                if k and k.lower() not in person_kws][:3]
-    # story-level Arabic keywords: the same for every frame, so they are only
-    # a backstop for a frame the model gave none of its own
-    fallback_ar = [k for k in (brief.get("image_queries_ar") or [])
-                   if k and k.lower() not in person_kws][:3]
-
-    photos, missing = [], []
+    # story-level Arabic names, the backstop for a frame with a MISSING
+    # Arabic list (an explicit [] is an answer) — still the story's own
+    # vocabulary, not a widening to another subject
+    fallback_ar = [k for k in (brief.get("image_queries_ar") or []) if k][:3]
+    photos = []
     used = set()                      # digests of pictures already in the story
     # at most ONE logo-carried frame besides the closing frame: a story that
     # is half logos is a worse failure than one honest repeat
     logo_extra_used = False
-    mark_slots = set()
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
         # An explicit [] is an answer, not a gap: the prompt asks for it when
         # a beat is purely foreign, and forcing the story's Arabic keywords
         # onto such a frame is how you attach a Saudi photo to a beat about
-        # Fairchild. Only a missing field falls back. The story-level terms
-        # still get their turn at the widening step below.
+        # Fairchild. Only a missing field falls back.
         own_ar = frame.get("image_keywords_ar")
         spec["image_keywords_ar"] = (fallback_ar if own_ar is None
                                      else [k for k in own_ar if k])
@@ -1545,132 +1519,73 @@ def find_all_photos(brief):
 
         context = f"{frame.get('heading', '')}\n{frame.get('text', '')}".strip()
         slot = OUT_DIR / f"story-frame-{n}.jpg"
-        bank = []
         # The ladder is keyed by what the MODEL says the frame is about —
         # inferring kind from frame text in image code was rejected as
         # unreliable, and an unsure model writes "abstract", whose floor
         # is text-only: uncertainty never becomes a confident wrong mark.
         kind = (frame.get("subject_kind") or "abstract").strip().lower()
+        tier = None
 
         if kind == "person":
-            # Identity is not subject to widening. Only provenance-verified
-            # portraits may carry a frame whose text names a person; the
-            # generic search, the widened pass, the neutral bank and the
-            # recent-photo rescue are all forbidden here — each is a way
-            # for "a photo that matched the name somewhere" to become a
-            # stranger's face captioned as the protagonist.
+            # Identity is not subject to widening: only provenance-verified
+            # portraits may carry a frame whose text names a person, and a
+            # person frame without one goes TEXT-ONLY — never a logo, never
+            # a generic face (owner's inversion, 2026-08).
             photo = _person_frame_photo(frame, slot, used)
+            if photo:
+                tier = "verified portrait"
         else:
-            # rung 1: the frame's own keywords, yes-or-bank
-            photo = find_photo(spec, slot, used, context, bank=bank)
+            # the frame's OWN keywords, relevance-verified — the only photo
+            # search left. The widened story-subject pass, the neutral bank,
+            # the recent-photo rescue and the in-story repeat are GONE from
+            # stories: each existed to scrape up "some photo", and decks
+            # came back with sponsor stadiums and triplicate skylines. A
+            # text-only frame beats a loosely-relevant photo, and since
+            # text-only always succeeds, everything that ranked below it is
+            # unreachable — removed rather than left as dead rungs.
+            photo = find_photo(spec, slot, used, context,
+                               allow_neutral=False)
+            if photo:
+                tier = "relevant photo"
 
-            # rung 2: widened story subject, yes only
-            if photo is None and fallback:
-                print(f"      widening to the story subject: "
-                      f"{', '.join(fallback)}")
-                photo = find_photo({"image_keywords": fallback,
-                                    "image_keywords_ar": fallback_ar},
-                                   slot, used, context, allow_neutral=False)
-        from_mark = False               # logo/flag/generated: not repeatable
-
-        # company: current logo (auto-fetch rung inside), capped at one
-        # non-closing frame per story. Never a flag, never generation.
-        # A PERSON frame with no verified portrait falls here too — owner's
-        # rule from the Mrsool incident: a logo on the hero frame is
-        # honest, a wrong face is not.
-        if photo is None and kind in ("company", "product", "person"):
+        # company/product: the story subject's OWN logo (auto-fetched,
+        # title-verified) — never a sponsor's. Capped at one non-closing
+        # logo frame per story.
+        if photo is None and kind in ("company", "product"):
             if n == len(frames) or not logo_extra_used:
-                logo = _curated_logo(n, len(frames), brief, frame,
-                                     allow_hero=(kind == "person"))
+                logo = _curated_logo(n, len(frames), brief, frame)
                 if logo is not None:
-                    photo, from_mark = logo, True
+                    photo, tier = logo, "subject logo"
                     if n != len(frames):
                         logo_extra_used = True
             else:
                 print(f"    frame {n}: logo rung skipped — one non-closing "
                       "logo already carried this story")
 
-        # place_country: the curated flag — countries only, a city never
-        # borrows its country's flag, and a missing flag file just falls
-        # through to the photo rungs below
+        # place_country: the curated flag — countries only
         if photo is None and kind == "place_country":
             flag = _curated_flag(n, frame)
             if flag is not None:
-                photo, from_mark = flag, True
+                photo, tier = flag, "curated flag"
 
-        # banked neutral: a real photograph from the story's own subject —
-        # every kind accepts it once its own mark rung has had its turn
-        if photo is None and bank:
-            tier, kept = bank[0]
-            import shutil as _sh
-            _sh.copyfile(kept, slot)
-            photo = str(slot)
-            tname = {0: "own Latin keyword", 1: "own Arabic keyword"}.get(
-                tier, f"tier {tier}")
-            print(f"    frame {n}: best banked neutral carries the frame "
-                  f"({tname})")
-        for _, kept in bank:
-            kept.unlink(missing_ok=True)
-
-        # abstract only: gated, labelled generation — the single kind
-        # allowed to reach it, and it beats a repeat for a concept frame
+        # abstract only: gated, labelled generation
         if photo is None and kind == "abstract":
             gen = _generated_frame(frame, slot)
             if gen is not None:
-                photo, from_mark = gen, True
+                photo, tier = gen, "generated (labelled)"
 
-        # a photo rejected only for being on a recent post beats a repeat —
-        # except on person frames, where an unverified photo of anything
-        # (least of all a face) must never land
-        if photo is None and kind != "person":
-            photo = recent_fallback(slot)
-
-        # below this line: the loud repeat, then the text-only floor
+        # the floor — a first-class frame, not a failure
         if photo is None:
-            missing.append(n)
-        elif from_mark:
-            mark_slots.add(n)           # never enters the repeat pool
-        else:
+            tier = "text-only (no relevant photo)"
+        elif tier == "relevant photo" or tier == "verified portrait":
             used.add(_photo_digest(photo))
+        print(f"    frame {n}: {tier}")
         photos.append(photo)
 
-    # Next-to-last resort: repeat a photo already on another frame — spread
-    # so one photograph never carries three frames, and said loudly.
-    # Photographs only: a repeat of a mark frame (logo, flag, generated)
-    # would mint a second mark, which their caps and gates exist to prevent.
-    # Abstract frames never take repeats — their ladder ends at generation
-    # and then the text-only floor, because a concept frame repeating a
-    # photo of some OTHER specific thing is a wrong image, not a fallback.
-    found = [p for i, p in enumerate(photos, 1) if p and i not in mark_slots]
-    kinds = [(f.get("subject_kind") or "abstract").strip().lower()
-             for f in frames]
-    if missing and found and STORY_ALLOW_REPEAT:
-        import shutil as _shutil
-        owner = {p: i + 1 for i, p in enumerate(photos) if p}
-        uses = {p: 1 for p in found}          # each already appears once
-        still = []
-        for n in missing:
-            if kinds[n - 1] == "abstract":
-                still.append(n)
-                continue
-            source = min(found, key=lambda p: uses[p])
-            uses[source] += 1
-            target = OUT_DIR / f"story-frame-{n}.jpg"
-            _shutil.copyfile(source, target)
-            photos[n - 1] = str(target)
-            print(f"  ! frame {n} has no photo of its own — repeating the one "
-                  f"from frame {owner[source]}")
-        if len(missing) != len(still):
-            print(f"  ! {len(missing) - len(still)} of {len(frames)} frames "
-                  f"show a repeated picture. Add keywords for those beats in "
-                  f"stories.txt, or set STORY_ALLOW_REPEAT=0 to keep them "
-                  f"text-only instead.")
-        missing = still
-
-    if missing:
-        # the honourable floor, not a failure: a setup or concept frame may
-        # run text-only rather than carry a faked or misleading image
-        print(f"    frames {missing} carry no image — text-only floor")
+    text_only = [i for i, ph in enumerate(photos, 1) if ph is None]
+    if text_only:
+        print(f"    text-only frames this deck: {text_only} — a choice, "
+              "not a breakage")
     vision_gate_summary()
     register_photos(photos, "story")
     return photos

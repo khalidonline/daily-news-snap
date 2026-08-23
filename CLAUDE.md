@@ -153,18 +153,22 @@ cooldown by design. If every source exhausts and only a recent photo
 remains, it ships with a loud ⚠️ prefix on the Telegram delivery — a
 repeat is a flaw, a dead run is worse.
 
-**Subject-kind ladder** (stories): the model tags every frame with
-`subject_kind` — company / place_country / place_city / person / abstract —
-and an unsure model writes `abstract`, whose floor is text-only, so
-uncertainty never becomes a wrong mark. After the normal search fails:
-company → curated/auto logo (capped, never frame 2); place_country →
-curated flag from `images/flags/<iso>.png` (countries only, owner-stocked,
-bot never downloads there; flags bypass pixel check and vision gate by
-provenance, like logos); place_city and person → real photos only; abstract
-→ gated, LABELLED generation (`ALLOW_STORY_GENERATION`, default on — the
-one kind allowed to generate; the gate also rejects flags, maps and
-country-identifying markers; generated images skip the photo cooldown).
-Then a repeat (never for abstract, never of a mark frame), then text-only.
+**Subject-kind ladder** (stories) — inverted 2026-08 by owner decision: a
+photo is NOT required on every frame; the writing carries a frame alone.
+Per frame: the frame's OWN keywords, relevance-verified — then the
+kind-specific mark — then TEXT-ONLY as a first-class floor, logged
+per-frame so a mostly-text deck reads as a choice, not a breakage. The
+widened story-subject pass, the neutral bank, the recent-photo rescue and
+the in-story repeat are REMOVED from stories: each existed to scrape up
+"some photo", and decks came back with sponsor stadiums and triplicate
+skylines instead of honest bare frames. Kinds (`subject_kind`, unsure →
+abstract): company/product → the SUBJECT'S own curated/auto logo (never a
+sponsor's, capped at one non-closing frame); place_country → curated flag
+from `images/flags/<iso>.png` (countries only, owner-stocked, provenance
+carve-out); person → verified portrait or text-only, never a logo or a
+generic face; abstract → gated LABELLED generation
+(`ALLOW_STORY_GENERATION`, default on; the gate also rejects flags, maps
+and country markers; generated images skip the photo cooldown).
 
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish
