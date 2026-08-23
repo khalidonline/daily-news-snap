@@ -7,7 +7,8 @@ run by GitHub Actions on a schedule. Everything is Python + Pillow, no framework
 
 | File | What it does | Schedule (KSA) |
 |---|---|---|
-| `news_bot.py` | One business/tech news story per run, as a single card | 07:00, 12:00, 21:00 |
+| `news_bot.py` | One business/tech news story per run, as a single card | 07:00, 12:00 |
+| `breaking_watch.py` | Breaking-news watcher (08:00–19:30, every 30 min) + 20:00 fallback news post | see breaking.yml |
 | `topic_bot.py` | One researched explainer per day, chosen by a scoring system | 09:00 |
 | `story_bot.py` | One narrative told across 6 frames | 14:00 daily |
 | `ask_card.py` | Asks followers what they want covered | manual only |
@@ -146,14 +147,27 @@ What actually posts:
 
 | Workflow | Posts to Snapchat |
 |---|---|
-| `news_bot.py` | the 07:00 and 21:00 KSA runs |
+| `news_bot.py` | the 07:00 KSA run |
 | `news_bot.py` | **not** the 12:00 KSA run (`0 9 * * *`) — hybrid |
 | a manual news run | only when the **post** input is ticked |
 | `topic_bot.py` | yes, the 09:00 KSA run |
+| `breaking_watch.py` watcher | at most ONE confirmed breaking card a day, the moment it lands |
+| `breaking_watch.py` 20:00 KSA | posts the day's strongest story — unless a breaking card posted today, then hybrid |
 | `story_bot.py` | no — hybrid, so six frames get read before they go out |
-| any manual dispatch | no |
+| any manual dispatch | no (breaking.yml's manual dispatch defaults dry_run ON) |
 
-About 122 posts a month, under the 145 cap and the plan's 150. A story counts
+The evening is two-tier, fully documented in breaking.yml: a watcher every
+30 minutes 08:00–19:30 KSA — Haiku classifies with two budgeted searches,
+default refusal — and a confirmed event is PINNED into news_bot
+(`PINNED_EVENT`), which re-verifies with search through the normal prompt
+and ABORTS without posting if it can't confirm. `state/breaking.json`
+holds the one-per-day cap, the cycle lock, and the event fingerprint that
+stops one event posting twice in different words; quiet cycles write
+nothing. The script guards its own time window because stale crons replay.
+Breaking OR the 20:00 fallback posts each evening, never both.
+
+About 91 posts a month (07:00 news + 09:00 topic + one evening card),
+under the 145 cap and the plan's 150. A story counts
 as one post however many frames it has — it is hybrid today, so it costs
 nothing against the quota.
 
@@ -179,7 +193,10 @@ MP4 (ffmpeg comes from the `imageio-ffmpeg` wheel — **runners have no ffmpeg
 on PATH**), ten seconds a frame, last frame one second short — see the bitten
 list for why every word of that sentence is load-bearing.
 
-daily.yml picks that per-run with `github.event.schedule`. Breaking news goes out by dispatching that workflow with **post** ticked — that is what the retired 17:00 slot was traded for. Ticking **dry run** as well wins: the run returns before posting. A manual dispatch
+daily.yml picks that per-run with `github.event.schedule`. Breaking news is
+automated now (the watcher above); dispatching daily.yml with **post** ticked
+remains the human override. Ticking **dry run** as well wins: the run returns
+before posting. A manual dispatch
 sets no schedule, so it falls through to hybrid — those are nearly always
 tests, and a test that posts to the profile is expensive to undo.
 
@@ -187,9 +204,9 @@ tests, and a test that posts to the profile is expensive to undo.
 file shared by all three bots. When it blocks a post the card still goes to
 Telegram via `deliver_unposted()` — **a run that builds a card must never end
 without saying so somewhere.** Every workflow that can post — daily, topic,
-story, publish — must name the **same** cap (145): the file is shared but each passes its own
+story, publish, breaking — must name the **same** cap (145): the file is shared but each passes its own
 limit, and mismatched numbers mean whichever is lowest silently stops the
-others. Expect roughly 120 posts a month against that 145.
+others. Expect roughly 91 posts a month against that 145.
 
 ## Conventions
 
