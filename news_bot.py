@@ -2890,23 +2890,106 @@ GEN_GUARD = (
     "image, in any language. Notebooks and papers must be blank. "
     "Buildings and vehicles completely unmarked and unbranded. "
     "No logos, brands, flags or emblems. "
+    "No money, banknotes, coins or currency of any kind. "
     "No people's faces, no recognisable individuals, no crowds. "
     "No weapons, uniforms, police or military. "
     "Natural daylight, neutral and calm, documentary feel, realistic photo."
 )
 
 
+# The 09:00 KSA topic run of 2026-08-24 live-posted a budget card whose
+# generated image showed FAKE Saudi banknotes — invented note design, a face
+# on the currency, pseudo-Arabic gibberish printed across it. Properly
+# labelled, still hand-deleted: imitation currency imagery is legally
+# sensitive in Saudi Arabia, and garbled Arabic wrecks the brand. Two
+# defences, deliberately redundant: the prompt scrub below keeps money out
+# of the ask, and _GEN_JUDGE checks what actually came back.
+_MONEY_RE = re.compile(
+    r"(?i)\b(?:riyals?|banknotes?|cash|money|currenc(?:y|ies)|bills?)\b"
+    r"|ريال|عملات|عملة|نقود|أوراق نقدية")
+
+# NOT photo_shows: fetched photographs fail by being irrelevant, generated
+# images fail by containing fabrications. Text presence alone disqualifies —
+# generators cannot render Arabic, so ANY text will be garbled or fake;
+# never try to judge whether the text "looks okay".
+_GEN_JUDGE = """هل تحتوي الصورة على أيٍّ من التالي؟
+1) نصوص أو حروف من أي نوع (لافتة، ورقة مكتوبة، شعار، أرقام)
+2) وجه إنسان
+3) عملات أو أوراق نقدية أو ما يشبهها
+4) كتابة عربية مشوّهة أو حروف بلا معنى
+أجب: "نظيفة" أو اذكر ما وجدت."""
+
+
+def generated_image_clean(photo_path):
+    """(True, "") for a clean generated image, else (False, reason).
+
+    FAIL-CLOSED, unlike photo_shows: a fetched photo that skips its gate is
+    a real photograph at worst mis-matched, but an unchecked generated image
+    is how fake riyals reached a live post. The run already holds the same
+    API key for research, so in practice this only bites on a transient
+    error — and then the card falls back to its no-photo behaviour.
+    """
+    if not ANTHROPIC_API_KEY:
+        print("  ! no API key to check a generated image — rejecting it")
+        return False, "no key to verify"
+    try:
+        import io as _io
+        img = Image.open(photo_path).convert("RGB")
+        img.thumbnail((800, 800))
+        buf = _io.BytesIO()
+        img.save(buf, "JPEG", quality=80)
+        b64 = base64.b64encode(buf.getvalue()).decode()
+        payload = {
+            "model": VISION_MODEL,
+            "max_tokens": 150,
+            "messages": [{"role": "user", "content": [
+                {"type": "image", "source": {"type": "base64",
+                                             "media_type": "image/jpeg",
+                                             "data": b64}},
+                {"type": "text", "text": _GEN_JUDGE},
+            ]}],
+        }
+        req = urllib.request.Request(
+            "https://api.anthropic.com/v1/messages",
+            data=json.dumps(payload).encode(),
+            headers={"content-type": "application/json",
+                     "x-api-key": ANTHROPIC_API_KEY,
+                     "anthropic-version": "2023-06-01"})
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = json.loads(resp.read())
+        text = "".join(b.get("text", "") for b in data.get("content", [])
+                       if b.get("type") == "text").strip()
+    except Exception as exc:
+        print(f"  ! generation gate unavailable ({exc}) — rejecting the image")
+        return False, "gate unavailable"
+    # the verdict word may arrive dressed, same as photo_shows verdicts
+    if "نظيفة" in text[:40]:
+        return True, ""
+    return False, text[:200]
+
+
 def fetch_generated_photo(prompt, out_path):
     """Generate an illustration. Returns (path, credit) or (None, None).
 
-    Only ever called for topic cards. A generated image on a news card would
-    imply photography of a real event, so news never reaches this.
+    Only ever called for topic cards (and story frames when the owner turns
+    ALLOW_STORY_GENERATION on). A generated image on a news card would imply
+    photography of a real event, so news never reaches this. Every output
+    passes generated_image_clean before it can be used: one regeneration on
+    rejection, then a clean give-up — a card must never carry a failed
+    generation.
     """
     if not ALLOW_GENERATED:
         return None, None
     prompt = (prompt or "").strip()
     if not prompt:
         return None, None
+
+    if _MONEY_RE.search(prompt):
+        prompt = _MONEY_RE.sub("", prompt)
+        prompt = re.sub(r"\s{2,}", " ", prompt).strip(" .,،")
+        prompt += (". No money, no banknotes, no currency, "
+                   "no documents with text")
+        print("    image prompt asked for money — scrubbed")
 
     full = f"{prompt}. {GEN_GUARD}"
 
@@ -2932,37 +3015,64 @@ def fetch_generated_photo(prompt, out_path):
                    "watermark": False}
         print(f"    generating via byteplus, model={ARK_MODEL}")
 
-    req = urllib.request.Request(url, data=json.dumps(payload).encode(),
-                                 headers=headers)
-    try:
-        with urllib.request.urlopen(req, timeout=180) as resp:
-            data = json.loads(resp.read())
-    except urllib.error.HTTPError as exc:
-        body = exc.read().decode()[:250]
-        print(f"  ! {IMAGE_GEN} {exc.code}: {body}")
-        if "ModelNotOpen" in body or "not activated" in body:
-            print(f"    the account hasn't activated {ARK_MODEL!r}.")
-            print("    Activate it in the Ark Console, or set the ARK_MODEL repo")
-            print("    variable to the id of a model you HAVE activated —")
-            print("    the display name (ByteDance-Seedream-4.5) is not the id.")
-        return None, None
-    except Exception as exc:
-        print(f"  ! image generation failed: {exc}")
-        return None, None
+    def _generate(ask):
+        pay = dict(payload)
+        pay["prompt"] = ask
+        req = urllib.request.Request(url, data=json.dumps(pay).encode(),
+                                     headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                data = json.loads(resp.read())
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode()[:250]
+            print(f"  ! {IMAGE_GEN} {exc.code}: {body}")
+            if "ModelNotOpen" in body or "not activated" in body:
+                print(f"    the account hasn't activated {ARK_MODEL!r}.")
+                print("    Activate it in the Ark Console, or set the ARK_MODEL repo")
+                print("    variable to the id of a model you HAVE activated —")
+                print("    the display name (ByteDance-Seedream-4.5) is not the id.")
+            return False
+        except Exception as exc:
+            print(f"  ! image generation failed: {exc}")
+            return False
+        # fal returns {"images":[{"url":...}]}, ModelArk {"data":[{"url":...}]}
+        items = data.get("images") or data.get("data") or []
+        link = items[0].get("url") if items else None
+        if not link:
+            print(f"  ! no image in the response: {str(data)[:250]}")
+            return False
+        try:
+            with urllib.request.urlopen(link, timeout=120) as resp:
+                Path(out_path).write_bytes(resp.read())
+        except Exception as exc:
+            print(f"  ! couldn't download the generated image: {exc}")
+            return False
+        return True
 
-    # fal returns {"images":[{"url":...}]}, ModelArk returns {"data":[{"url":...}]}
-    items = data.get("images") or data.get("data") or []
-    link = items[0].get("url") if items else None
-    if not link:
-        print(f"  ! no image in the response: {str(data)[:250]}")
+    if not _generate(full):
         return None, None
-
-    try:
-        with urllib.request.urlopen(link, timeout=120) as resp:
-            Path(out_path).write_bytes(resp.read())
-    except Exception as exc:
-        print(f"  ! couldn't download the generated image: {exc}")
+    ok, reason = generated_image_clean(out_path)
+    if not ok and reason == "no key to verify":
+        # a retry would be just as unverifiable — don't pay for it
+        print("  ! generation gave up (nothing can pass the gate without a key)")
+        Path(out_path).unlink(missing_ok=True)
+        Path(str(out_path) + ".generated").unlink(missing_ok=True)
         return None, None
+    if not ok:
+        print(f"  ! generated image rejected: {reason}")
+        print("    regenerating once")
+        retry = (f"{full} The previous attempt contained: {reason}. "
+                 "Absolutely no text of any kind, no faces, no money or "
+                 "banknotes.")
+        if _generate(retry):
+            ok, reason = generated_image_clean(out_path)
+            if not ok:
+                print(f"  ! generated image rejected: {reason}")
+        if not ok:
+            print("  ! generation gave up after retry")
+            Path(out_path).unlink(missing_ok=True)
+            Path(str(out_path) + ".generated").unlink(missing_ok=True)
+            return None, None
 
     Path(str(out_path) + ".generated").write_text("1", encoding="utf-8")
     print(f"    photo: generated via {IMAGE_GEN} — {prompt[:60]}")
