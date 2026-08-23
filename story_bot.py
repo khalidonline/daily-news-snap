@@ -36,7 +36,7 @@ try:
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
         fetch_commons_photo, fetch_commons_portrait, fetch_loc_photo,
         fetch_generated_photo, IMAGE_SOURCE,
-        photo_shows, vision_gate_summary,
+        photo_shows, vision_gate_summary, draw_brand_badge,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -726,8 +726,10 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
     shaped, k = ar(kicker)
     draw.text((right, 216), shaped, font=load_font(32, bold=True),
               fill=BRAND_INK, anchor="ra", **k)
+    draw_brand_badge(draw)
+    # the badge took the corner, so the frame counter tucks in under it
     shaped, k = ar(counter)
-    draw.text((margin, 216), shaped, font=load_font(28), fill=MUTED,
+    draw.text((margin, 246), shaped, font=load_font(28), fill=MUTED,
               anchor="la", **k)
 
     y = 420

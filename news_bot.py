@@ -2118,6 +2118,29 @@ def _rounded(img, radius):
     return out
 
 
+# The badge is on unless the owner turns it off; GitHub passes "" for an
+# unset variable, which must not silently hide a brand mark.
+BRAND_BADGE = (os.getenv("BRAND_BADGE", "").strip() or "1") != "0"
+
+
+def draw_brand_badge(draw, margin=96, y=170):
+    """Top-left monogram — the second brand mark, mirroring the header bar.
+
+    Identity, not state: it keeps BRAND_INK even on a breaking card, whose
+    red belongs to the header and takeaway alone. Same position and size on
+    every card of every bot; on topic cards it sits over the hero photo,
+    which is why it is a solid box and not bare type.
+    """
+    if not BRAND_BADGE:
+        return
+    size = 56
+    draw.rounded_rectangle([margin, y, margin + size, y + size],
+                           radius=14, fill=BRAND_INK)
+    shaped, k = ar("م")
+    draw.text((margin + size // 2, y + size // 2 + 2), shaped,
+              font=load_font(30, bold=True), fill=BG_TOP, anchor="mm", **k)
+
+
 def _draw_header(draw, rtl, right, y=170):
     """Bar + label, shared by both news renderers.
 
@@ -2131,6 +2154,7 @@ def _draw_header(draw, rtl, right, y=170):
         label, colour = f"{BRAND} عاجل", ACCENT
     draw.rectangle([right - 110, y, right, y + 10], fill=colour)
     rtl((right, y + 46), label, load_font(32, bold=True), colour)
+    draw_brand_badge(draw)
 
 
 def render_number(brief, out_path, photo_credit=None):

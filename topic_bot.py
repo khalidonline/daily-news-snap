@@ -32,6 +32,7 @@ try:
         fetch_headlines, commit_and_push, quota_ok, quota_bump,
         POST_ENABLED, CARDS_DIR,
         THEME, BRAND, USER_AGENT, IMAGE_SOURCE, PEXELS_API_KEY,
+        draw_brand_badge,
         DOMAIN_CREDITS, fetch_article_photo, fetch_openverse_photo, fetch_photo,
         fetch_spa_photo, fetch_local_photo, fetch_generated_photo,
         ksa_stamp, notify, deliver_unposted, post_ok, describe_failure,
@@ -918,6 +919,7 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 
     hero = _draw_hero(img, photo_path) if photo_path else 0
     draw = ImageDraw.Draw(img)
+    draw_brand_badge(draw)
 
     margin = 80
     right = W - margin
