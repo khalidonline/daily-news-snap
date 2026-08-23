@@ -54,7 +54,6 @@ jobs:
           THEME: "light"
           BRAND: "ملخص تنفيذي - قصة"
           FONT_FAMILY: "Almarai"
-          IMAGE_SOURCE: "openverse"
           STORY_MODEL: "claude-opus-5"
           STORY_FRAMES: "6"          # 4 to 7
           ALLOW_GENERATED: "1"
