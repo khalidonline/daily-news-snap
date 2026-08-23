@@ -38,7 +38,7 @@ try:
         fetch_generated_photo, IMAGE_SOURCE, GENERATED_CREDIT,
         photo_shows, vision_gate_summary, draw_brand_badge, seal_photo,
         closing_seal, _photo_digest, register_photos, recent_fallback,
-        recent_warning, same_picture,
+        recent_warning, same_picture, brand_badge,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -683,11 +683,13 @@ def load_skipped():
     return [e for e in data if e.get("at", "") >= cutoff]
 
 
-def mark_skipped(story, name):
+def mark_skipped(story, name, reason="no_portrait"):
     """Remember the miss, so tomorrow's run doesn't spend the same searches
-    rediscovering that this person has no picture."""
+    rediscovering it. One review queue for the owner: the reason code says
+    whether it was a missing portrait or a logo-less, mostly-blank deck."""
     SKIPPED_FILE.parent.mkdir(parents=True, exist_ok=True)
     entries = load_skipped() + [{"story": story, "name": name,
+                                 "reason": reason,
                                  "at": datetime.now().isoformat()}]
     SKIPPED_FILE.write_text(json.dumps(entries, ensure_ascii=False, indent=1),
                             encoding="utf-8")
@@ -907,7 +909,17 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             break
         size -= 8
     if not photo:
-        y = (H - len(lines) * int(size * 1.25)) // 2 - 140
+        # Designed text-only: the photo zone carries a large, low-contrast
+        # brand watermark so the frame reads as composed, not broken — a
+        # centred heading on a sea of beige was the failure the owner
+        # flagged. Falls back to plain centring only if the badge asset
+        # is missing.
+        wm = brand_badge(500, alpha=30)
+        if wm is not None:
+            img.paste(wm, ((W - 500) // 2, y + 40), wm)
+            y += 500 + 130
+        else:
+            y = (H - len(lines) * int(size * 1.25)) // 2 - 140
     for line in lines:
         mid(y, line, f_big, TEXT)
         y += int(size * 1.25)
@@ -1480,6 +1492,13 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
     print(f"    frame {frame_no}: using curated logo {path} (era match: {tag})")
     return str(dest)
 
+# more blank frames than this and the deck is skipped, not shipped —
+# "don't ship a mostly-empty deck", not "skip on a single gap"
+STORY_MAX_BLANK_FRAMES = int(
+    os.getenv("STORY_MAX_BLANK_FRAMES", "").strip() or "2")
+_LAST_SKIP = ""
+
+
 def find_all_photos(brief):
     """A picture for a frame that has one; a text-only frame otherwise.
 
@@ -1496,12 +1515,24 @@ def find_all_photos(brief):
     # story-level Arabic names, the backstop for a frame with a MISSING
     # Arabic list (an explicit [] is an answer) — still the story's own
     # vocabulary, not a widening to another subject
-    fallback_ar = [k for k in (brief.get("image_queries_ar") or []) if k][:3]
+    fallback_ar = [k for k in (brief.get("image_queries_ar") or [])
+                   if k][:3]
+    # the general-photo pool: story subject terms, with person-frame names
+    # stripped — identity is not subject to widening (Mrsool incident)
+    person_kws = {k.lower() for f in frames
+                  if (f.get("subject_kind") or "").strip().lower() == "person"
+                  for k in ((f.get("image_keywords") or [])
+                            + (f.get("image_keywords_ar") or [])) if k}
+    fallback = list(brief.get("image_keywords", []))
+    for frame in frames[1:2] + frames[0:1]:
+        if (frame.get("subject_kind") or "").strip().lower() == "person":
+            continue
+        fallback += [k for k in (frame.get("image_keywords") or []) if k][:2]
+    fallback = [k for k in dict.fromkeys(fallback)
+                if k and k.lower() not in person_kws][:3]
+    fallback_ar = [k for k in fallback_ar if k.lower() not in person_kws]
     photos = []
     used = set()                      # digests of pictures already in the story
-    # at most ONE logo-carried frame besides the closing frame: a story that
-    # is half logos is a worse failure than one honest repeat
-    logo_extra_used = False
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
         # An explicit [] is an answer, not a gap: the prompt asks for it when
@@ -1520,72 +1551,83 @@ def find_all_photos(brief):
         context = f"{frame.get('heading', '')}\n{frame.get('text', '')}".strip()
         slot = OUT_DIR / f"story-frame-{n}.jpg"
         # The ladder is keyed by what the MODEL says the frame is about —
-        # inferring kind from frame text in image code was rejected as
-        # unreliable, and an unsure model writes "abstract", whose floor
-        # is text-only: uncertainty never becomes a confident wrong mark.
+        # an unsure model writes "abstract". Order per the owner's revision
+        # after the blank-deck incident: a WRONG photo is worse than a
+        # logo, but a bare beige frame is a scroll-past — so the subject's
+        # logo is the PRIMARY fallback, an on-topic general photo next,
+        # and text-only is the LAST resort, not the default.
         kind = (frame.get("subject_kind") or "abstract").strip().lower()
         tier = None
 
         if kind == "person":
-            # Identity is not subject to widening: only provenance-verified
-            # portraits may carry a frame whose text names a person, and a
-            # person frame without one goes TEXT-ONLY — never a logo, never
-            # a generic face (owner's inversion, 2026-08).
+            # identity first, always: verified portrait or no face at all
             photo = _person_frame_photo(frame, slot, used)
             if photo:
                 tier = "verified portrait"
         else:
-            # the frame's OWN keywords, relevance-verified — the only photo
-            # search left. The widened story-subject pass, the neutral bank,
-            # the recent-photo rescue and the in-story repeat are GONE from
-            # stories: each existed to scrape up "some photo", and decks
-            # came back with sponsor stadiums and triplicate skylines. A
-            # text-only frame beats a loosely-relevant photo, and since
-            # text-only always succeeds, everything that ranked below it is
-            # unreachable — removed rather than left as dead rungs.
             photo = find_photo(spec, slot, used, context,
                                allow_neutral=False)
             if photo:
                 tier = "relevant photo"
 
-        # company/product: the story subject's OWN logo (auto-fetched,
-        # title-verified) — never a sponsor's. Capped at one non-closing
-        # logo frame per story.
-        if photo is None and kind in ("company", "product"):
-            if n == len(frames) or not logo_extra_used:
-                logo = _curated_logo(n, len(frames), brief, frame)
-                if logo is not None:
-                    photo, tier = logo, "subject logo"
-                    if n != len(frames):
-                        logo_extra_used = True
-            else:
-                print(f"    frame {n}: logo rung skipped — one non-closing "
-                      "logo already carried this story")
-
-        # place_country: the curated flag — countries only
+        # country frames keep their flag ahead of the logo
         if photo is None and kind == "place_country":
             flag = _curated_flag(n, frame)
             if flag is not None:
                 photo, tier = flag, "curated flag"
 
-        # abstract only: gated, labelled generation
+        # THE primary fallback: the story subject's own logo (curated or
+        # auto-fetched, never a sponsor's) — for every kind, person frames
+        # included (a company story's hero on the logo beats a blank).
+        # The one-extra cap is gone: most photoless frames SHOULD land
+        # here, and a logo-heavy deck now beats an empty one by design.
+        if photo is None:
+            logo = _curated_logo(n, len(frames), brief, frame,
+                                 allow_hero=True)
+            if logo is not None:
+                photo, tier = logo, "subject logo"
+
+        # general on-topic photo, gate-verified against this frame's text —
+        # never for person frames (identity is not subject to widening)
+        if photo is None and kind != "person" and fallback:
+            print(f"      widening to the story subject: "
+                  f"{', '.join(fallback)}")
+            photo = find_photo({"image_keywords": fallback,
+                                "image_keywords_ar": fallback_ar},
+                               slot, used, context, allow_neutral=False)
+            if photo:
+                tier = "general photo (last resort)"
+
+        # abstract may still generate, gated and labelled, before text-only
         if photo is None and kind == "abstract":
             gen = _generated_frame(frame, slot)
             if gen is not None:
                 photo, tier = gen, "generated (labelled)"
 
-        # the floor — a first-class frame, not a failure
+        # the true last resort — rendered with the designed watermark
+        # treatment, never a bare beige frame
         if photo is None:
-            tier = "text-only (no relevant photo)"
-        elif tier == "relevant photo" or tier == "verified portrait":
+            tier = "text-only (designed, last resort)"
+        elif tier in ("relevant photo", "verified portrait",
+                      "general photo (last resort)"):
             used.add(_photo_digest(photo))
         print(f"    frame {n}: {tier}")
         photos.append(photo)
 
     text_only = [i for i, ph in enumerate(photos, 1) if ph is None]
+    if len(text_only) > STORY_MAX_BLANK_FRAMES:
+        # mostly-blank decks don't ship (owner's rule): the caller records
+        # the skip and advances to the next story rather than losing the slot
+        vision_gate_summary()
+        print(f"  ! {len(text_only)} of {len(frames)} frames have no visual "
+              f"(no photo, no logo) — skipping this story, not shipping it")
+        global _LAST_SKIP
+        _LAST_SKIP = (f"logo unavailable, {len(text_only)}/{len(frames)} "
+                      "frames would be blank")
+        return None
     if text_only:
-        print(f"    text-only frames this deck: {text_only} — a choice, "
-              "not a breakage")
+        print(f"    text-only frames this deck: {text_only} — designed "
+              "watermark treatment, within the blank budget")
     vision_gate_summary()
     register_photos(photos, "story")
     return photos
@@ -1614,15 +1656,43 @@ def main():
         notify(f"⚠️ {ksa_stamp()} — skipped {misses} stories in a row for want "
                f"of a portrait before settling on:\n{story}")
 
-    print(f"1/3 researching: {story}")
-    brief = research(story)
-    print(f"    {brief['title']}")
-    for n, f in enumerate(brief.get("frames", []), 1):
-        print(f"    {n}. {f.get('heading', '')} — {f.get('text', '')[:60]}")
-    warn_about_unintroduced_names(brief)
+    # A skip discovered at the photo stage advances to the next eligible
+    # story in the SAME run — the slot is never lost to one unillustrable
+    # subject. The skip file doubles as the exclusion, exactly like the
+    # portrait gate: mark_skipped writes it, the next pick avoids it.
+    photos = None
+    for attempt in range(2):
+        print(f"1/3 researching: {story}")
+        brief = research(story)
+        print(f"    {brief['title']}")
+        for n, f in enumerate(brief.get("frames", []), 1):
+            print(f"    {n}. {f.get('heading', '')} — {f.get('text', '')[:60]}")
+        warn_about_unintroduced_names(brief)
 
-    print("2/3 finding a picture for every frame...")
-    photos = find_all_photos(brief)   # text-only floor: never None now
+        print("2/3 finding a picture for every frame...")
+        photos = find_all_photos(brief)
+        if photos is not None:
+            break
+        reason = _LAST_SKIP or "insufficient visuals"
+        commit_and_push(
+            mark_skipped(story, brief.get("title", story),
+                         reason="no_logo_insufficient_visuals"),
+            f"story skipped (visuals): {story[:40]}")
+        notify(f"⚠️ {ksa_stamp()} — story skipped: {story}\n"
+               f"{reason}. Flagged for review in stories_skipped.json.")
+        if STORY:
+            print("  ! manual story skipped for insufficient visuals — "
+                  "not advancing (explicit input)")
+            return
+        story, misses = pick_story()
+        if not story:
+            print("  ! no eligible story left this run — ending without "
+                  "publishing rather than shipping a blank deck")
+            return
+    if photos is None:
+        notify(f"⚠️ {ksa_stamp()} — no story published: two candidates in a "
+               "row could not be illustrated. Both are flagged for review.")
+        return
     stamp = ksa_stamp()
     frames = build_frames(brief, stamp, photos)
     print(f"    {len(frames)} frames written")

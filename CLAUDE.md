@@ -153,22 +153,25 @@ cooldown by design. If every source exhausts and only a recent photo
 remains, it ships with a loud ⚠️ prefix on the Telegram delivery — a
 repeat is a flaw, a dead run is worse.
 
-**Subject-kind ladder** (stories) — inverted 2026-08 by owner decision: a
-photo is NOT required on every frame; the writing carries a frame alone.
-Per frame: the frame's OWN keywords, relevance-verified — then the
-kind-specific mark — then TEXT-ONLY as a first-class floor, logged
-per-frame so a mostly-text deck reads as a choice, not a breakage. The
-widened story-subject pass, the neutral bank, the recent-photo rescue and
-the in-story repeat are REMOVED from stories: each existed to scrape up
-"some photo", and decks came back with sponsor stadiums and triplicate
-skylines instead of honest bare frames. Kinds (`subject_kind`, unsure →
-abstract): company/product → the SUBJECT'S own curated/auto logo (never a
-sponsor's, capped at one non-closing frame); place_country → curated flag
-from `images/flags/<iso>.png` (countries only, owner-stocked, provenance
-carve-out); person → verified portrait or text-only, never a logo or a
-generic face; abstract → gated LABELLED generation
-(`ALLOW_STORY_GENERATION`, default on; the gate also rejects flags, maps
-and country markers; generated images skip the photo cooldown).
+**Story frame ladder** (revised twice in 2026-08; this is current): a
+WRONG photo is worse than a logo, but a bare beige frame is a
+scroll-past. Per frame: the frame's OWN keywords, relevance-verified →
+(country frames: the curated flag from `images/flags/<iso>.png`) → the
+STORY SUBJECT'S logo as the PRIMARY fallback for every kind, person
+frames included — curated or auto-fetched, never a sponsor's, no cap —
+→ a gate-verified on-topic general photo from the story-subject pool
+(person-frame names stripped; never for person frames) → gated LABELLED
+generation for abstract → text-only as the LAST resort, rendered with a
+large low-contrast brand watermark in the photo zone so it reads
+designed, not broken. Each frame logs its tier. The neutral bank, the
+recent-photo rescue and the in-story repeat stay removed. If more than
+`STORY_MAX_BLANK_FRAMES` (2) frames end with no visual, the story is
+SKIPPED, recorded in `state/stories_skipped.json` with reason
+`no_logo_insufficient_visuals` (same review queue as portrait skips),
+Telegram is told, and the run advances to the next eligible story —
+never a mostly-blank deck, never a lost slot. Dropping a curated logo
+into `images/logos/` un-skips a story; manual rescue is opt-in, not the
+normal path.
 
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish
