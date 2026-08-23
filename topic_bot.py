@@ -791,11 +791,27 @@ def research(topic):
                 "anthropic-version": "2023-06-01",
             },
         )
-        try:
-            with urllib.request.urlopen(req, timeout=300) as resp:
-                data = json.loads(resp.read())
-        except urllib.error.HTTPError as exc:
-            raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
+        data = None
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=300) as resp:
+                    data = json.loads(resp.read())
+                break
+            except urllib.error.HTTPError as exc:
+                raise SystemExit(f"Claude API {exc.code}: "
+                                 f"{exc.read().decode()[:400]}")
+            except (TimeoutError, urllib.error.URLError, OSError) as exc:
+                # RemoteDisconnected and friends are OSErrors, not
+                # HTTPErrors — the same bite news_bot's summarize took:
+                # a dropped socket escaped the handler and killed the run
+                # after minutes of paid research. Retry the same request.
+                if attempt == 2:
+                    raise SystemExit(
+                        f"Claude unreachable after 3 attempts: {exc}")
+                print(f"  ! Claude call failed ({exc}) — retrying "
+                      f"({attempt + 1}/2)")
+                import time as _t
+                _t.sleep(8)
 
         content = data.get("content", [])
         searches += sum(1 for b in content if b.get("type") == "server_tool_use")
