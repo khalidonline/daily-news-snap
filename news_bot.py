@@ -2441,15 +2441,28 @@ def _spa_score(item, terms):
     return score
 
 
+# SPA moved its media to a CDN (observed 2026-08): the old
+# cc.spa.gov.sa/media/... paths now return a 70-byte HTML "Page not found"
+# stub WITH HTTP 200, so every candidate died at the size check and the
+# 09:00 topic run lost its best source without a single error line. The
+# search API still advertises the old relative paths; the same path on the
+# CDN serves the _th thumbnail at ~1000px — card quality — while the
+# full-size name 404s there. Try CDN full-size first anyway (cheap, and
+# right if it ever returns), then the CDN thumbnail, then the legacy host
+# in case the move reverts.
+SPA_CDN = "https://cc-cdn.spa.gov.sa/mashaa"
+
+
 def _spa_image_urls(item):
-    """Full size first, thumbnail as a fallback."""
+    """Working URLs for one search item, best first — see the SPA_CDN note."""
     thumb = item.get("thumbnailUrl") or ""
     if not thumb:
         return []
     urls = []
-    if "_th." in thumb:
-        urls.append(SPA_BASE + thumb.replace("_th.", "."))
-    urls.append(SPA_BASE + thumb)
+    for base in (SPA_CDN, SPA_BASE):
+        if "_th." in thumb:
+            urls.append(base + thumb.replace("_th.", "."))
+        urls.append(base + thumb)
     return urls
 
 
