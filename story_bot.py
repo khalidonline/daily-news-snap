@@ -1550,7 +1550,7 @@ def find_all_photos(brief):
         # A PERSON frame with no verified portrait falls here too — owner's
         # rule from the Mrsool incident: a logo on the hero frame is
         # honest, a wrong face is not.
-        if photo is None and kind in ("company", "person"):
+        if photo is None and kind in ("company", "product", "person"):
             if n == len(frames) or not logo_extra_used:
                 logo = _curated_logo(n, len(frames), brief, frame,
                                      allow_hero=(kind == "person"))

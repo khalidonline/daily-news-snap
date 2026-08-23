@@ -291,6 +291,19 @@ others. Expect roughly 91 posts a month against that 145.
   widened pass, neutral bank and recent-photo rescue are all forbidden on
   them, and the fallback is the company logo (allowed on the hero frame for
   exactly this case) then repeat/text-only. Never a caption-matched face.
+- The same photo shipped on multiple cards (a corniche on three posts) and
+  on two frames of ONE story (Mrsool 1/2): dedup lived only inside one
+  story run. `state/photos_used.json` is the cross-run cooldown now —
+  perceptual digests, all bots, pushed immediately; exempt: `images/`,
+  curated logos, flags, generated images. Exact-digest dedupe cannot see a
+  re-CROPPED variant of the same scene — if near-duplicates recur, the fix
+  is a hamming-distance threshold, not a new hash.
+- Photoless frames used to fall to one blind rule. The subject-kind ladder
+  keys the fallback on what the MODEL says the frame is about; an unsure
+  model says "abstract", whose floor is text-only. Flags are for
+  place_country ONLY (a city never borrows its country's flag), and
+  abstract is the only kind that may reach generation — gated, labelled,
+  never registered in the cooldown.
 - Award documents are not named "certificate" on Commons. They are "Genius
   Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
   of the White Lion awarded to X". Three reached story frames after
