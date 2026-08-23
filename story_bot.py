@@ -35,7 +35,7 @@ try:
         POST_ENABLED, POST_PROVIDER, MEDIA_MODE, upload_media,
         fetch_local_photo, fetch_spa_photo, fetch_openverse_photo,
         fetch_commons_photo, fetch_commons_portrait, fetch_loc_photo,
-        fetch_generated_photo, IMAGE_SOURCE,
+        fetch_generated_photo, IMAGE_SOURCE, GENERATED_CREDIT,
         photo_shows, vision_gate_summary, draw_brand_badge, seal_photo,
         closing_seal, _photo_digest, register_photos, recent_fallback,
         recent_warning,
@@ -57,7 +57,10 @@ BRAND = os.getenv("BRAND", "ملخص تنفيذي - قصة")
 # favours 5-8 frame stories with a clear beginning, middle and end.
 STORY_FRAMES = max(4, min(7, int(os.getenv("STORY_FRAMES", "").strip() or "6")))
 # generated filler hurts a story more than it helps — off by default here
-ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "0").strip() \
+# Default ON by owner decision (2026-08): abstract frames — and ONLY
+# abstract frames — may fall to gated, labelled generation instead of dying
+# text-only. Flip this one flag off if generated frames disappoint.
+ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "1").strip() \
     not in ("", "0", "false", "False")
 # rather than lose a researched story, let a frame borrow another frame's photo
 STORY_ALLOW_REPEAT = os.getenv("STORY_ALLOW_REPEAT", "1").strip() \
@@ -325,6 +328,21 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   بالأحمر. حين تحمل اللقطة الأخيرة punch يعود نصها إلى اللون العادي،
   فيبقى الأحمر على سطر واحد لا على البطاقة كلها.
 
+- subject_kind: نوع موضوع هذه اللقطة تحديداً — كلمة واحدة من:
+  "company" (شركة أو منتج) | "place_country" (دولة) |
+  "place_city" (مدينة أو منطقة) | "person" (شخص) |
+  "abstract" (مفهوم أو سياسة أو حقبة أو مشهد عام).
+  القصة الواحدة تخلط الأنواع: لقطة البطل person ولقطة الختام company.
+  قاعدة الأمان: إن لم تكن متأكداً فاكتب "abstract" — الشك لا يتحول
+  أبداً إلى علم دولة خاطئ أو شعار شركة خاطئ.
+  ✓ لقطة عن Steve Jobs نفسه: "person"
+  ✓ لقطة ختام عن Apple: "company"
+  ✓ لقطة عن الصين وسياساتها: "place_country"
+  ✓ لقطة عن حي شكو في شينزن: "place_city"
+  ✓ «قرية صيد صغيرة» أو «الإصلاح الاقتصادي»: "abstract"
+  ✗ لقطة عن «الانفتاح الصيني» موسومة "place_country" — المفهوم abstract
+    وإن ورد اسم البلد في النص
+
 - image_keywords: من كلمتين إلى أربع كلمات إنجليزية بسيطة للبحث عن صورة
   حقيقية. أسماء علم فقط: اسم الشخص أو الشركة أو المنتج أو المكان.
   ✓ ["Steve Jobs", "Macintosh 128K", "Apple Park"]
@@ -413,6 +431,7 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 أجب بصيغة JSON فقط:
 {{"title": "...", "caption": "...", \
 "frames": [{{"heading": "...", "text": "...", "punch": "", \
+"subject_kind": "...", \
 "image_keywords": ["...", "...", "..."], "image_keywords_ar": ["..."]}}], \
 "sources": ["..."], "image_queries": ["..."], "image_queries_ar": ["..."], \
 "image_prompt": "..."}}"""
@@ -902,12 +921,16 @@ def build_frames(brief, stamp, photos):
         # The closing frame is normally red throughout. If it also carries a
         # punch, the body goes back to ordinary ink so the red still marks one
         # line — a frame that is entirely red emphasises nothing.
+        foot = (f"المصدر: {sources}" if sources else None) if last else None
+        photo = photos[n - 1]
+        if photo and Path(str(photo) + ".generated").exists():
+            # rule 2: a generated image is never unlabelled
+            foot = f"{foot} • {GENERATED_CREDIT}" if foot else GENERATED_CREDIT
         paths.append(render_frame(
             OUT_DIR / f"{stamp}-story-{n}.png", BRAND, f"{n} / {total}",
             heading, 60, sub=frame.get("text", ""),
             sub_colour=ACCENT if (last and not punch) else None,
-            photo=photos[n - 1], punch=punch,
-            footer=(f"المصدر: {sources}" if sources else None) if last else None))
+            photo=photo, punch=punch, footer=foot))
 
     return [str(p) for p in paths]
 
@@ -1036,17 +1059,88 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
         photo = take(fetch_openverse_photo([keyword], out_path, need_saudi=False,
                                            min_hits=1, subject_mode=True), tier=1)
 
-    if photo is None and ALLOW_STORY_GENERATION:
-        # Nothing in the archive. Generating a building or an office produces
-        # filler with invented signage, so ask for something plain instead.
-        subject = keywords[0] if keywords else spec.get("heading", "")
-        prompt = (f"A plain, unbranded photograph relating to {subject}. "
-                  "No buildings with signs, no offices, no logos, no text.")
-        photo = take(fetch_generated_photo(prompt, out_path))
+    # generation is not a search result: it lives in find_all_photos'
+    # kind ladder, reachable only from abstract frames
     return settle(photo)
 
 
 LOGOS_DIR = Path(os.getenv("LOGOS_DIR", "images/logos"))
+FLAGS_DIR = Path(os.getenv("FLAGS_DIR", "images/flags"))
+# Country names as they appear in frame keywords/headings, mapped to the
+# ISO-3166 filename in images/flags/. Curated and small on purpose: a name
+# missing here just means the country frame falls to its text-only floor.
+# Cities never borrow their country's flag — the map holds countries only.
+_COUNTRY_ISO = {
+    "السعودية": "sa", "saudi": "sa",
+    "الصين": "cn", "china": "cn", "chinese": "cn",
+    "أمريكا": "us", "الولايات المتحدة": "us", "united states": "us",
+    "اليابان": "jp", "japan": "jp",
+    "الهند": "in", "india": "in",
+    "بريطانيا": "gb", "المملكة المتحدة": "gb", "britain": "gb",
+    "الإمارات": "ae", "uae": "ae", "emirates": "ae",
+    "مصر": "eg", "egypt": "eg",
+    "كوريا": "kr", "korea": "kr",
+    "ألمانيا": "de", "germany": "de",
+    "فرنسا": "fr", "france": "fr",
+    "سنغافورة": "sg", "singapore": "sg",
+}
+
+
+def _letterbox_graphic(src, dest):
+    """Compose a flat graphic (logo, flag) onto a cream canvas shaped like
+    the photo box, so the renderer's crop-to-fill changes nothing."""
+    from PIL import Image as _Im
+    img = _Im.open(src).convert("RGBA")
+    BOX_W, BOX_H = 888, 639
+    canvas = _Im.new("RGB", (BOX_W * 2, BOX_H * 2), BG_TOP)
+    scale = min(canvas.width * 0.78 / img.width,
+                canvas.height * 0.78 / img.height)
+    scaled = img.resize((max(1, int(img.width * scale)),
+                         max(1, int(img.height * scale))), _Im.LANCZOS)
+    canvas.paste(scaled, ((canvas.width - scaled.width) // 2,
+                          (canvas.height - scaled.height) // 2), scaled)
+    canvas.save(dest, "JPEG", quality=92)
+    # provenance carve-out, same as curated logos: a flag IS a flat graphic
+    # by design, so it never meets the pixel check or the vision gate, and
+    # it repeats across stories by design — exempt from the cooldown
+    Path(str(dest) + ".exempt").write_text("curated", encoding="utf-8")
+    return str(dest)
+
+
+def _curated_flag(frame_no, frame):
+    """images/flags/<iso>.png for a place_country frame, or None."""
+    hay = " ".join(filter(None, [
+        str(frame.get("heading", "")),
+        " ".join(frame.get("image_keywords") or []),
+        " ".join(frame.get("image_keywords_ar") or []),
+    ])).lower()
+    for name, iso in _COUNTRY_ISO.items():
+        if name in hay:
+            src = FLAGS_DIR / f"{iso}.png"
+            if not src.exists():
+                print(f"    frame {frame_no}: no flag on file for "
+                      f"{iso} — falling through")
+                return None
+            dest = OUT_DIR / f"story-frame-{frame_no}.jpg"
+            print(f"    frame {frame_no}: using curated flag {src}")
+            return _letterbox_graphic(src, dest)
+    return None
+
+
+def _generated_frame(frame, slot):
+    """Gated, labelled generation — the abstract kind's last rung before
+    text-only. fetch_generated_photo carries the whole defence: prompt
+    scrub, the vision gate (text/faces/currency/flags/maps), one retry,
+    clean give-up, and the .generated marker the renderer labels from."""
+    if not ALLOW_STORY_GENERATION:
+        return None
+    subject = ((frame.get("image_keywords") or [""])[0]
+               or frame.get("heading", ""))
+    prompt = (f"A plain, unbranded photograph relating to {subject}. "
+              "No buildings with signs, no offices, no logos, no text, "
+              "no faces, no flags, no country-identifying features, no maps.")
+    photo, _ = fetch_generated_photo(prompt, slot)
+    return photo
 # Owner's policy, decided 2026-08: showing a company's CURRENT logo when
 # covering that company is ordinary editorial imagery — the bot may fetch
 # and cache it without per-company approval. Historical/era marks stay
@@ -1229,7 +1323,7 @@ def find_all_photos(brief):
     # at most ONE logo-carried frame besides the closing frame: a story that
     # is half logos is a worse failure than one honest repeat
     logo_extra_used = False
-    logo_slots = set()
+    mark_slots = set()
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
         # An explicit [] is an answer, not a gap: the prompt asks for it when
@@ -1259,21 +1353,36 @@ def find_all_photos(brief):
                                 "image_keywords_ar": fallback_ar},
                                slot, used, context, allow_neutral=False)
 
-        # rung 3: curated logo (frame-position rules live in _curated_logo);
-        # capped at one non-closing frame per story
-        from_logo = False
-        if photo is None:
+        # The fallback ladder is keyed by what the MODEL says the frame is
+        # about — inferring kind from frame text in image code was rejected
+        # as unreliable, and an unsure model writes "abstract", whose floor
+        # is text-only: uncertainty never becomes a confident wrong mark.
+        kind = (frame.get("subject_kind") or "abstract").strip().lower()
+        from_mark = False               # logo/flag/generated: not repeatable
+
+        # company: current logo (auto-fetch rung inside), capped at one
+        # non-closing frame per story. Never a flag, never generation.
+        if photo is None and kind == "company":
             if n == len(frames) or not logo_extra_used:
-                photo = _curated_logo(n, len(frames), brief, frame)
-                from_logo = photo is not None
-                if from_logo and n != len(frames):
-                    logo_extra_used = True
+                logo = _curated_logo(n, len(frames), brief, frame)
+                if logo is not None:
+                    photo, from_mark = logo, True
+                    if n != len(frames):
+                        logo_extra_used = True
             else:
                 print(f"    frame {n}: logo rung skipped — one non-closing "
                       "logo already carried this story")
 
-        # rung 4: best banked neutral, only now that the logo rung has had
-        # its turn — tier 0 (own Latin keyword) beats tier 1 (own Arabic)
+        # place_country: the curated flag — countries only, a city never
+        # borrows its country's flag, and a missing flag file just falls
+        # through to the photo rungs below
+        if photo is None and kind == "place_country":
+            flag = _curated_flag(n, frame)
+            if flag is not None:
+                photo, from_mark = flag, True
+
+        # banked neutral: a real photograph from the story's own subject —
+        # every kind accepts it once its own mark rung has had its turn
         if photo is None and bank:
             tier, kept = bank[0]
             import shutil as _sh
@@ -1282,38 +1391,49 @@ def find_all_photos(brief):
             tname = {0: "own Latin keyword", 1: "own Arabic keyword"}.get(
                 tier, f"tier {tier}")
             print(f"    frame {n}: best banked neutral carries the frame "
-                  f"({tname}) — logo rung was unavailable or ineligible")
+                  f"({tname})")
         for _, kept in bank:
             kept.unlink(missing_ok=True)
 
-        # rung 4.5: a photo rejected only for being on a recent post beats
-        # a within-story repeat
+        # abstract only: gated, labelled generation — the single kind
+        # allowed to reach it, and it beats a repeat for a concept frame
+        if photo is None and kind == "abstract":
+            gen = _generated_frame(frame, slot)
+            if gen is not None:
+                photo, from_mark = gen, True
+
+        # a photo rejected only for being on a recent post beats a repeat
         if photo is None:
             photo = recent_fallback(slot)
 
-        # rung 5 is the loud repeat below
+        # below this line: the loud repeat, then the text-only floor
         if photo is None:
             missing.append(n)
-        elif not from_logo:
-            used.add(_photo_digest(photo))
+        elif from_mark:
+            mark_slots.add(n)           # never enters the repeat pool
         else:
-            logo_slots.add(n)
+            used.add(_photo_digest(photo))
         photos.append(photo)
 
-    # Last resort. Every picture here is already on another frame, so this is
-    # a repeat however it is spread — spread it anyway, so one photograph
-    # doesn't end up carrying three frames, and say so loudly. Photographs
-    # only: a repeat of a logo frame is another logo-carried frame, which
-    # the one-extra cap exists to prevent — the NVIDIA drill (zero
-    # photographs story-wide) dressed even the protagonist frame in a logo
-    # this way. With no photographs at all the frames stay missing and the
-    # story is skipped, which rule 1 prefers to an all-logo slideshow.
-    found = [p for i, p in enumerate(photos, 1) if p and i not in logo_slots]
+    # Next-to-last resort: repeat a photo already on another frame — spread
+    # so one photograph never carries three frames, and said loudly.
+    # Photographs only: a repeat of a mark frame (logo, flag, generated)
+    # would mint a second mark, which their caps and gates exist to prevent.
+    # Abstract frames never take repeats — their ladder ends at generation
+    # and then the text-only floor, because a concept frame repeating a
+    # photo of some OTHER specific thing is a wrong image, not a fallback.
+    found = [p for i, p in enumerate(photos, 1) if p and i not in mark_slots]
+    kinds = [(f.get("subject_kind") or "abstract").strip().lower()
+             for f in frames]
     if missing and found and STORY_ALLOW_REPEAT:
         import shutil as _shutil
         owner = {p: i + 1 for i, p in enumerate(photos) if p}
         uses = {p: 1 for p in found}          # each already appears once
+        still = []
         for n in missing:
+            if kinds[n - 1] == "abstract":
+                still.append(n)
+                continue
             source = min(found, key=lambda p: uses[p])
             uses[source] += 1
             target = OUT_DIR / f"story-frame-{n}.jpg"
@@ -1321,15 +1441,17 @@ def find_all_photos(brief):
             photos[n - 1] = str(target)
             print(f"  ! frame {n} has no photo of its own — repeating the one "
                   f"from frame {owner[source]}")
-        print(f"  ! {len(missing)} of {len(frames)} frames show a repeated "
-              f"picture. Add keywords for those beats in stories.txt, or set "
-              f"STORY_ALLOW_REPEAT=0 to skip the story instead.")
-        missing = []
+        if len(missing) != len(still):
+            print(f"  ! {len(missing) - len(still)} of {len(frames)} frames "
+                  f"show a repeated picture. Add keywords for those beats in "
+                  f"stories.txt, or set STORY_ALLOW_REPEAT=0 to keep them "
+                  f"text-only instead.")
+        missing = still
 
     if missing:
-        vision_gate_summary()
-        print(f"  ! frames {missing} found no picture at all")
-        return None
+        # the honourable floor, not a failure: a setup or concept frame may
+        # run text-only rather than carry a faked or misleading image
+        print(f"    frames {missing} carry no image — text-only floor")
     vision_gate_summary()
     register_photos(photos, "story")
     return photos
@@ -1366,11 +1488,7 @@ def main():
     warn_about_unintroduced_names(brief)
 
     print("2/3 finding a picture for every frame...")
-    photos = find_all_photos(brief)
-    if photos is None:
-        notify(f"⚠️ {ksa_stamp()} — story skipped: no picture found\n"
-               f"{story}")
-        return
+    photos = find_all_photos(brief)   # text-only floor: never None now
     stamp = ksa_stamp()
     frames = build_frames(brief, stamp, photos)
     print(f"    {len(frames)} frames written")

@@ -414,6 +414,9 @@ def register_photos(paths, by):
     for path in paths:
         if not path or Path(str(path) + ".exempt").exists():
             continue
+        # a generation is unique each time — cooldown would be noise
+        if Path(str(path) + ".generated").exists():
+            continue
         d = _photo_digest(path)
         if not d or d in known:
             continue
@@ -3162,7 +3165,7 @@ GEN_GUARD = (
     "writing, screens with writing, or any written script anywhere in the "
     "image, in any language. Notebooks and papers must be blank. "
     "Buildings and vehicles completely unmarked and unbranded. "
-    "No logos, brands, flags or emblems. "
+    "No logos, brands, flags or emblems. No maps. "
     "No money, banknotes, coins or currency of any kind. "
     "No people's faces, no recognisable individuals, no crowds. "
     "No weapons, uniforms, police or military. "
@@ -3190,6 +3193,7 @@ _GEN_JUDGE = """هل تحتوي الصورة على أيٍّ من التالي؟
 2) وجه إنسان
 3) عملات أو أوراق نقدية أو ما يشبهها
 4) كتابة عربية مشوّهة أو حروف بلا معنى
+5) علم دولة أو خريطة أو معلم شهير يدل على بلد بعينه
 أجب: "نظيفة" أو اذكر ما وجدت."""
 
 

@@ -58,7 +58,8 @@ jobs:
           STORY_MODEL: "claude-opus-5"
           STORY_FRAMES: "6"          # 4 to 7
           ALLOW_GENERATED: "1"
-          ALLOW_STORY_GENERATION: "0"   # real photos only for stories
+          # abstract frames only, gated + labelled — see the kind ladder
+          ALLOW_STORY_GENERATION: "1"
           STORY_ALLOW_REPEAT: "1"       # reuse a photo rather than lose the story
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}

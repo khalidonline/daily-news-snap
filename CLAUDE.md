@@ -32,8 +32,10 @@ a shared function, check all three bots still import cleanly.**
 
 ## Rules that must not be broken
 
-1. **Every card and every frame has a picture.** No text-only output. If a
-   frame can't get one, the story is skipped rather than published bare.
+1. **Every news and topic card has a picture.** Story frames prefer one,
+   and get a subject-kind fallback ladder — but a frame that exhausts its
+   ladder runs **text-only as a deliberate floor** rather than carry a
+   faked or misleading image. Text-only is honourable; a wrong image is not.
 2. **No generated images for news or stories.** Generation is topic-cards only,
    last resort, and always labelled `صورة مولّدة بالذكاء الاصطناعي`.
 3. **No misleading photos.** Blocklists reject weapons/military/police/protest
@@ -142,6 +144,19 @@ good photo into `images/`, which guarantees relevance and sidesteps the
 cooldown by design. If every source exhausts and only a recent photo
 remains, it ships with a loud ⚠️ prefix on the Telegram delivery — a
 repeat is a flaw, a dead run is worse.
+
+**Subject-kind ladder** (stories): the model tags every frame with
+`subject_kind` — company / place_country / place_city / person / abstract —
+and an unsure model writes `abstract`, whose floor is text-only, so
+uncertainty never becomes a wrong mark. After the normal search fails:
+company → curated/auto logo (capped, never frame 2); place_country →
+curated flag from `images/flags/<iso>.png` (countries only, owner-stocked,
+bot never downloads there; flags bypass pixel check and vision gate by
+provenance, like logos); place_city and person → real photos only; abstract
+→ gated, LABELLED generation (`ALLOW_STORY_GENERATION`, default on — the
+one kind allowed to generate; the gate also rejects flags, maps and
+country-identifying markers; generated images skip the photo cooldown).
+Then a repeat (never for abstract, never of a mark frame), then text-only.
 
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish
