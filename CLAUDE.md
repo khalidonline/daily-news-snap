@@ -296,14 +296,24 @@ others. Expect roughly 91 posts a month against that 145.
   story run. `state/photos_used.json` is the cross-run cooldown now —
   perceptual digests, all bots, pushed immediately; exempt: `images/`,
   curated logos, flags, generated images. Exact-digest dedupe cannot see a
-  re-CROPPED variant of the same scene — if near-duplicates recur, the fix
-  is a hamming-distance threshold, not a new hash.
+  re-CROPPED variant of the same scene — confirmed live when one orange
+  Riyadh skyline landed on frames 1, 5 AND 6 of the Mrsool deck as three
+  crops with three digests. Near-dup detection is hamming distance on the
+  same ahash now (`PHOTO_HAMMING_THRESHOLD`, 8 of 256 bits), applied to
+  both the within-story seen set and the cross-run registry.
 - Photoless frames used to fall to one blind rule. The subject-kind ladder
   keys the fallback on what the MODEL says the frame is about; an unsure
   model says "abstract", whose floor is text-only. Flags are for
   place_country ONLY (a city never borrows its country's flag), and
   abstract is the only kind that may reach generation — gated, labelled,
   never registered in the cooldown.
+- Mrsool sponsored Al-Nassr, and the sponsor's dressing room and stadium
+  landed on three frames of the delivery-app story — adjacent entities in
+  the research context (sponsors, partners, venues) leak into image
+  keywords, and archive files genuinely NAMED after the sponsor ("Mrsool
+  Park") pass every name filter honestly. The prompt rule: a keyword names
+  what THIS frame's text is about — the story's subject, never its
+  sponsor/partner/investor/venue context.
 - Award documents are not named "certificate" on Commons. They are "Genius
   Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
   of the White Lion awarded to X". Three reached story frames after

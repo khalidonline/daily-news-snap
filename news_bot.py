@@ -346,6 +346,25 @@ def _photo_digest(path):
         return ""
 
 
+# Exact-digest equality missed three re-crops of one orange Riyadh skyline
+# on a single deck (Mrsool frames 1/5/6): a crop shifts the 16x16 grid and
+# bits flip. Near-duplicate detection is hamming distance on the SAME
+# ahash. Tuned on real fixtures: re-crops of one scene score 9-23 bits
+# (a 5% crop already scores 9, so the first-guess threshold of 8 missed
+# actual re-crops), while genuinely different photos score 47+ — even two
+# different Riyadh skylines differ by 47. 32 sits in the middle of that
+# gap with margin on both sides.
+PHOTO_HAMMING_THRESHOLD = int(
+    os.getenv("PHOTO_HAMMING_THRESHOLD", "").strip() or "32")
+
+
+def same_picture(d1, d2):
+    """True when two ahash digests are the same picture, re-crops included."""
+    if not d1 or not d2 or len(d1) != len(d2):
+        return False
+    return sum(a != b for a, b in zip(d1, d2)) <= PHOTO_HAMMING_THRESHOLD
+
+
 def load_photos_used():
     """Registry entries younger than PHOTO_REUSE_DAYS; older ones pruned."""
     try:
@@ -360,7 +379,8 @@ def load_photos_used():
 
 def photo_recently_used(path):
     d = _photo_digest(path)
-    return bool(d) and any(e.get("d") == d for e in load_photos_used())
+    return bool(d) and any(same_picture(d, e.get("d", ""))
+                           for e in load_photos_used())
 
 
 def _recent_reject(out_path):
@@ -418,7 +438,7 @@ def register_photos(paths, by):
         if Path(str(path) + ".generated").exists():
             continue
         d = _photo_digest(path)
-        if not d or d in known:
+        if not d or any(same_picture(d, k) for k in known):
             continue
         known.add(d)
         entries.append({"d": d, "at": datetime.now(timezone.utc).isoformat(),

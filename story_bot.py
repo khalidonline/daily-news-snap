@@ -38,7 +38,7 @@ try:
         fetch_generated_photo, IMAGE_SOURCE, GENERATED_CREDIT,
         photo_shows, vision_gate_summary, draw_brand_badge, seal_photo,
         closing_seal, _photo_digest, register_photos, recent_fallback,
-        recent_warning,
+        recent_warning, same_picture,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -347,6 +347,13 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   حقيقية. أسماء علم فقط: اسم الشخص أو الشركة أو المنتج أو المكان.
   ✓ ["Steve Jobs", "Macintosh 128K", "Apple Park"]
   ✗ ["a garage in California in 1976"]   ✗ ["office building", "modern desk"]
+
+  الكلمة تسمّي شيئاً يتحدث عنه نص هذه اللقطة نفسها — موضوع القصة، لا
+  كيانات مجاورة له في البحث: الراعي والشريك والمستثمر والعميل والملعب
+  ليسوا موضوع القصة، ولا يدخلون الكلمات إلا إذا كان نص اللقطة عنهم هم.
+  قصة عن الشركة X لا تأخذ ملعب النادي الذي رعته X صورةً لأي لقطة.
+  ✗ قصة عن تطبيق مرسول، وإطار صورته «نادي النصر» لأن مرسول رعى النادي
+  ✓ إطار صورته «مرسول» أو شعارها، أو المدينة/المشهد الذي يصفه النص
 
   مهم: اختر أسماء يُرجّح وجود صور لها في أرشيف مفتوح المصدر. الأشخاص
   والشركات والمنتجات المشهورة لها صور؛ الأشخاص المغمورون وأحداث بعينها
@@ -1078,18 +1085,23 @@ def _person_frame_photo(frame, out_path, seen):
         name_l = cached["name"].lower()
         if name_l and (name_l in hay
                        or any(name_l in k.lower() for k in keywords)):
-            if _photo_digest(cached["path"]) not in seen:
+            if not any(same_picture(_photo_digest(cached["path"]), s0)
+                       for s0 in seen):
                 _sh.copyfile(cached["path"], out_path)
                 print("    person frame: reusing the pre-check's verified "
                       f"portrait of {cached['name']}")
                 return str(out_path)
 
+    def fresh(photo):
+        d = _photo_digest(photo)
+        return not any(same_picture(d, s0) for s0 in seen)
+
     for kw in keywords + keywords_ar:
         photo, _ = fetch_local_photo([kw], [kw], out_path)
-        if photo and _photo_digest(photo) not in seen:
+        if photo and fresh(photo):
             return photo
         photo, _ = fetch_commons_portrait(kw, out_path)
-        if photo and _photo_digest(photo) not in seen:
+        if photo and fresh(photo):
             return photo
     return None
 
@@ -1129,7 +1141,8 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
         photo = result[0] if isinstance(result, tuple) else result
         if not photo:
             return None
-        if _photo_digest(photo) in seen:
+        d = _photo_digest(photo)
+        if any(same_picture(d, s0) for s0 in seen):
             print("      (that picture is already on an earlier frame "
                   "— looking further)")
             return None
