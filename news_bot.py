@@ -2118,6 +2118,21 @@ def _rounded(img, radius):
     return out
 
 
+def _draw_header(draw, rtl, right, y=170):
+    """Bar + label, shared by both news renderers.
+
+    Breaking variant — keyed off pinned-event mode, NOT a separate
+    renderer: when the watcher pinned an event the card announces itself
+    with the عاجل label and the accent red replaces the emerald. The 20:00
+    fallback and every scheduled run keep the normal label and colour.
+    """
+    label, colour = BRAND, BRAND_INK
+    if PINNED_EVENT:
+        label, colour = f"{BRAND} عاجل", ACCENT
+    draw.rectangle([right - 110, y, right, y + 10], fill=colour)
+    rtl((right, y + 46), label, load_font(32, bold=True), colour)
+
+
 def render_number(brief, out_path, photo_credit=None):
     """Card built around one dominant figure — for stories where the number
     IS the story (a budget line, a report total, a percentage change)."""
@@ -2147,9 +2162,7 @@ def render_number(brief, out_path, photo_credit=None):
     punch = (brief.get("punch") or "").strip()
 
     # header
-    y = 170
-    draw.rectangle([right - 110, y, right, y + 10], fill=BRAND_INK)
-    rtl((right, y + 46), BRAND, load_font(32, bold=True), BRAND_INK)
+    _draw_header(draw, rtl, right)
 
     y = 330
     f_title = load_font(52, bold=True)
@@ -2301,9 +2314,7 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
               f"photo {layout['photo_h']}px")
 
     # header
-    y = 170
-    draw.rectangle([right - 110, y, right, y + 10], fill=BRAND_INK)
-    rtl((right, y + 46), BRAND, load_font(32, bold=True), BRAND_INK)
+    _draw_header(draw, rtl, right)
 
     y = start_y
     for line in title_lines:
