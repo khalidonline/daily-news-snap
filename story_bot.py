@@ -515,6 +515,11 @@ def person_name(story):
 # used/skipped state keys); aliases feed only the portrait pre-check and the
 # research call. Built by load_stories, looked up by exact story text.
 _STORY_ALIASES = {}
+# Pools: a `# @pool: <name>` marker line assigns every subsequent story to
+# that pool until the next marker; lines before any marker are "general"
+# (the original list is general by default). Ordinary # lines stay
+# comments — the batch's category labels are not stories.
+_STORY_POOLS = {}
 _ALIASES_LOADED = False
 
 
@@ -527,18 +532,33 @@ def load_stories():
         return []
     stories = []
     _STORY_ALIASES.clear()
+    _STORY_POOLS.clear()
     _ALIASES_LOADED = True
+    pool = "general"
     for ln in lines:
         ln = ln.strip()
-        if not ln or ln.startswith("#"):
+        if not ln:
+            continue
+        if ln.startswith("#"):
+            m = re.match(r"#\s*@pool:\s*(\w+)", ln)
+            if m:
+                pool = m.group(1).strip().lower()
             continue
         head, _, tail = ln.partition("|")
         head = head.strip()
         aliases = [a.strip() for a in tail.split(",") if a.strip()]
         if aliases:
             _STORY_ALIASES[head] = aliases
+        _STORY_POOLS[head] = pool
         stories.append(head)
     return stories
+
+
+def story_pool(story):
+    """The pool a story line belongs to; unknown lines count as general."""
+    if not _ALIASES_LOADED:
+        load_stories()
+    return _STORY_POOLS.get(str(story or "").strip(), "general")
 
 
 def story_aliases(story):
@@ -565,15 +585,73 @@ def save_used(previous, story):
     return USED_FILE
 
 
-def choose_story(exclude=()):
+# The weekly mix: 4 Saudi-flavour stories and 3 general ones per ISO week.
+# The two targets should sum to 7 — one story a day. A skipped day is worse
+# than an imperfect ratio (owner's rule), so an exhausted pool borrows from
+# the other, loudly, and the count goes to the pool the story actually came
+# from. Manual STORY= runs bypass all of this by design.
+SAUDI_PER_WEEK = int(os.getenv("SAUDI_PER_WEEK", "").strip() or "4")
+GENERAL_PER_WEEK = int(os.getenv("GENERAL_PER_WEEK", "").strip() or "3")
+MIX_FILE = Path("state/story_mix.json")
+
+
+def _iso_week():
+    y, w, _ = datetime.now().isocalendar()
+    return f"{y}-W{w:02d}"
+
+
+def load_mix():
+    """This week's counts; a new week resets them."""
+    week = _iso_week()
+    try:
+        mix = json.loads(MIX_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        mix = {}
+    if mix.get("week") != week:
+        mix = {"week": week, "saudi": 0, "general": 0}
+    return mix
+
+
+def bump_mix(pool):
+    mix = load_mix()
+    mix[pool] = mix.get(pool, 0) + 1
+    MIX_FILE.parent.mkdir(parents=True, exist_ok=True)
+    MIX_FILE.write_text(json.dumps(mix, ensure_ascii=False, indent=1),
+                        encoding="utf-8")
+    commit_and_push(MIX_FILE, f"story mix {ksa_stamp()}")
+
+
+def choose_pool(mix):
+    """Which pool this scheduled run should draw from.
+
+    Furthest behind its target RATIO wins, which spreads the mix through
+    the week instead of front-loading one pool; ties go to saudi.
+    """
+    targets = {"saudi": max(SAUDI_PER_WEEK, 1),
+               "general": max(GENERAL_PER_WEEK, 1)}
+    behind = {p: mix.get(p, 0) / t for p, t in targets.items()}
+    if all(mix.get(p, 0) >= t for p, t in targets.items()):
+        print(f"    both pools at weekly target ({mix}) — over-quota run")
+    return "saudi" if behind["saudi"] <= behind["general"] else "general"
+
+
+def choose_story(exclude=(), pool=None):
     stories = load_stories()
     if not stories:
         return ""
     used = {e["story"] for e in load_used()}
     used |= {e["story"] for e in load_skipped()}
     used |= set(exclude)
+    if pool:
+        stories = [s for s in stories if _STORY_POOLS.get(s, "general") == pool]
+        if not stories:
+            return ""
     fresh = [s for s in stories if s not in used]
     if not fresh:
+        if pool:
+            # never repeat an old story to hold the ratio — the caller
+            # borrows from the other pool instead
+            return ""
         print("    every story used recently — starting the cycle again")
         fresh = stories
     # Hash the date rather than use the ordinal directly. The ordinal advances
@@ -633,8 +711,21 @@ def pick_story():
     Returns (story, misses).
     """
     tried, misses = [], 0
+    mix = load_mix()
+    pool = choose_pool(mix)
+    print(f"    weekly mix {mix['week']}: saudi {mix.get('saudi', 0)}"
+          f"/{SAUDI_PER_WEEK}, general {mix.get('general', 0)}"
+          f"/{GENERAL_PER_WEEK} — drawing from {pool}")
     for _ in range(STORY_ATTEMPTS):
-        story = choose_story(exclude=tried)
+        story = choose_story(exclude=tried, pool=pool)
+        if not story:
+            other = "general" if pool == "saudi" else "saudi"
+            print(f"  ! {pool} pool exhausted this week — drew from {other}")
+            pool, story = other, choose_story(exclude=tried, pool=other)
+        if not story:
+            # both pools dry: fall back to the unrestricted chooser, which
+            # may recycle — a skipped day is worse than an imperfect ratio
+            story = choose_story(exclude=tried)
         if not story:
             break
         name = person_name(story)
@@ -1539,6 +1630,9 @@ def main():
         for u in urls:
             print(f"    {u}")
         commit_and_push(save_used(load_used(), story), f"story: {slug}")
+        if not STORY:
+            # count the pool the story ACTUALLY came from
+            bump_mix(story_pool(story))
         notify_album(f"{recent_warning()}📖 {stamp} — {brief['title']}\n"
                      f"{len(frames)} لقطات",
                      frames)
@@ -1559,6 +1653,9 @@ def main():
 
     if post_ok(response):
         commit_and_push(save_used(load_used(), story), f"story: {slug}")
+        if not STORY:
+            # count the pool the story ACTUALLY came from
+            bump_mix(story_pool(story))
         commit_and_push(quota_bump(), f"quota {stamp}")
         notify_album(f"✅ {stamp} — {brief['title']}", frames)
     else:

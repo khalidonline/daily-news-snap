@@ -23,7 +23,9 @@ a shared function, check all three bots still import cleanly.**
 - `topics.txt` — ~275 explainer topics, optional `| trigger, keywords` per line
 - `seasons.txt` — 46 seasons: Ramadan/Hajj (hijri), monthly payday cycle,
   exhibitions, a weekly football slot. Format: `## name | spec | before | after`
-- `stories.txt` — 74 narrative subjects, optional `| alias, alias` per
+- `stories.txt` — ~122 narrative subjects in pools: a `# @pool: saudi` /
+  `# @pool: general` marker assigns every following line until the next
+  marker; lines before any marker are general. Optional `| alias, alias` per
   line: the archive's names for the subject (stage names, business names,
   transliterations) — the portrait pre-check and the research call try
   them, because archives catalogue people under names the story may not use
@@ -95,7 +97,13 @@ Person-led stories are gated before the research call: no free portrait means
 skip, recorded in `state/stories_skipped.json` for `STORY_SKIP_DAYS` (14) —
 deliberately shorter than the 60-day publish cooldown, because a missing
 portrait is not a verdict on the story. `choose_story()` hashes the date so a
-daily cadence doesn't walk down one section of `stories.txt`. No photo repeats
+daily cadence doesn't walk down one section of `stories.txt`. Scheduled
+runs draw 4 saudi + 3 general a week (`SAUDI_PER_WEEK`/`GENERAL_PER_WEEK`,
+should sum to 7; counts in `state/story_mix.json`, ISO-week reset), picking
+whichever pool is furthest behind its ratio; an exhausted pool borrows from
+the other — loudly, crediting the pool the story actually came from —
+because a skipped day is worse than an imperfect ratio. Manual STORY= runs
+bypass the mix entirely. No photo repeats
 within a story; repeats are a loud last resort.
 
 ## Image sources, in order
