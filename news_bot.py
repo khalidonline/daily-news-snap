@@ -332,6 +332,11 @@ QUOTA_FILE = Path("state/quota.json")
 MONTHLY_POST_LIMIT = int(os.getenv("MONTHLY_POST_LIMIT", "0"))   # 0 = no limit
 # "0" = hybrid: build the card and commit it, but don't publish to Snapchat
 POST_ENABLED = os.getenv("POST_TO_SNAPCHAT", "1").strip() not in ("", "0", "false", "False")
+# Breaking-news mode: when set, the run is about THIS event and nothing else.
+# breaking_watch.py sets it after its classifier confirms an event; the model
+# re-verifies through the normal prompt and the run ABORTS if it can't —
+# a watcher false positive must die here, not print a thin card.
+PINNED_EVENT = os.getenv("PINNED_EVENT", "").strip()
 REMEMBER_DAYS = int(os.getenv("REMEMBER_DAYS", "3"))
 
 
@@ -858,7 +863,7 @@ SYSTEM_PROMPT = """أنت محرر موجز أخبار يومي يُنشر عل�
 "image_queries_ar": ["...", "..."]}}]}}"""
 
 
-def summarize(items, already_posted=()):
+def summarize(items, already_posted=(), pinned=""):
     if not ANTHROPIC_API_KEY:
         raise SystemExit("ANTHROPIC_API_KEY is not set")
 
@@ -868,7 +873,19 @@ def summarize(items, already_posted=()):
         for n, i in enumerate(shortlist, 1)
     )
 
-    user_msg = f"عناوين اليوم:\n\n{feed_text}"
+    if pinned:
+        # same prompt, same rules — only the input changes: one event to
+        # verify and write, instead of a feed to choose from
+        user_msg = (
+            f"حدث عاجل مثبّت: {pinned}\n\n"
+            "تحقق منه بالبحث الآن قبل الكتابة: مصدران مستقلان على الأقل "
+            "يؤكدانه، وإن كان حكومياً أو تنظيمياً فمصدر رسمي (واس، تداول، "
+            "الوزارة المعنية، بيان الجهة نفسها). إن تأكد فاكتب خبراً واحداً "
+            "عنه بكل القواعد أعلاه (stories بعنصر واحد). وإن لم تستطع "
+            'تأكيده الآن فأعد {"stories": [], "reason": "ما الذي ينقص"} — '
+            "ولا تكتب عن أي حدث آخر بدلاً منه.")
+    else:
+        user_msg = f"عناوين اليوم:\n\n{feed_text}"
     if already_posted:
         covered = "\n".join(f"- {h}" for h in already_posted)
         user_msg += ("\n\nأخبار نُشرت بالفعل خلال الأيام الماضية — لا تخترها ولا "
@@ -885,6 +902,12 @@ def summarize(items, already_posted=()):
             "system": SYSTEM_PROMPT.format(n=CANDIDATES),
             "messages": [{"role": "user", "content": user_msg}],
         }
+        if pinned:
+            # the feed run needs no tools (candidates arrive in the message);
+            # a pinned event has no feed item behind it, so the model must be
+            # able to search to confirm it
+            payload["tools"] = [{"type": "web_search_20250305",
+                                 "name": "web_search", "max_uses": 3}]
 
         req = urllib.request.Request(
             "https://api.anthropic.com/v1/messages",
@@ -3401,22 +3424,33 @@ def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"    Arabic shaping via {'libraqm' if HAS_RAQM else 'arabic-reshaper'}")
 
-    print("1/4 fetching feeds...")
-    items = fetch_headlines()
-    if len(items) < 5:
-        raise SystemExit(f"Only {len(items)} items fetched — aborting rather than posting thin.")
-    print(f"    {len(items)} unique recent items")
+    if PINNED_EVENT:
+        print(f"1/4 pinned event — skipping feeds: {PINNED_EVENT[:90]}")
+        items = []
+    else:
+        print("1/4 fetching feeds...")
+        items = fetch_headlines()
+        if len(items) < 5:
+            raise SystemExit(f"Only {len(items)} items fetched — aborting rather than posting thin.")
+        print(f"    {len(items)} unique recent items")
 
     print("2/4 summarizing...")
     posted = load_posted()
     if posted:
         print(f"    skipping {len(posted)} stories posted in the last "
               f"{REMEMBER_DAYS} days")
-    result = summarize(items, [e["headline"] for e in posted])
+    result = summarize(items, [e["headline"] for e in posted],
+                       pinned=PINNED_EVENT)
     stories = result.get("stories", [])[:CANDIDATES]
     caption = result.get("caption", "موجز اليوم")
 
     if not stories:
+        if PINNED_EVENT:
+            reason = result.get("reason", "بلا سبب مذكور")
+            print(f"    pinned event NOT confirmed — aborting: {reason}")
+            notify(f"🚨❌ {ksa_stamp()} — الحدث المثبّت لم يتأكد فلم يُنشر\n"
+                   f"{PINNED_EVENT[:150]}\nالسبب: {reason}")
+            raise SystemExit("pinned event unconfirmed — no card, nothing posted")
         print("    no stories returned — not posting this run")
         notify(f"⚠️ {ksa_stamp()} — no card: the model returned no stories")
         return

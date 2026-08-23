@@ -1,0 +1,102 @@
+name: Breaking news watch
+
+# THE evening news schedule lives here, in one place:
+#
+#   */30 5-16 UTC  (every 30 min, 08:00–19:30 KSA) — the watcher. A small
+#                  model scans the beats; at most ONE breaking card a day
+#                  posts, the moment the full pipeline confirms the event.
+#                  Quiet cycles exit in seconds and commit nothing.
+#   0 17 UTC       (20:00 KSA) — the fallback. If a breaking card already
+#                  posted today it runs hybrid (build + Telegram, no post);
+#                  otherwise it posts the day's strongest story, exactly as
+#                  the retired 21:00 slot did.
+#
+# daily.yml keeps only 07:00 (posts) and 12:00 (hybrid); its manual
+# dispatch with the post tick remains the human override.
+
+on:
+  schedule:
+    - cron: "*/30 5-16 * * *"
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+    inputs:
+      role:
+        description: "watch = دورة مراقبة، fallback = موعد الثامنة"
+        type: choice
+        options:
+          - watch
+          - fallback
+        default: watch
+      dry_run:
+        description: "Classify and build only — never post"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  # never cancel a run that may be mid-post; the state lock in
+  # breaking_watch.py is what prevents double work
+  group: breaking
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Watch or fall back
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: "bundle"
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '' }}
+          MEDIA_MODE: "github"
+          # POST_TO_SNAPCHAT is decided by breaking_watch.py per role —
+          # the watcher posts only a confirmed pinned event, the fallback
+          # posts only when no breaking card went out today
+          # one cap shared with every posting workflow — see CLAUDE.md
+          MONTHLY_POST_LIMIT: "145"
+          BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
+          BRAND: "ملخص تنفيذي - خبر"
+          FONT_FAMILY: "Almarai"
+          REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
+          MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
+          MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
+          THEME: "light"
+          STORIES_PER_DAY: "1"
+          CANDIDATES: "8"
+          REQUIRE_PHOTO: "1"
+          IMAGE_SOURCE: "spa"
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          LOOKBACK_HOURS: "10"
+          REMEMBER_DAYS: "3"
+          WATCH_MODEL: ${{ vars.WATCH_MODEL }}
+        run: >
+          python breaking_watch.py
+          ${{ (github.event.schedule == '0 17 * * *' ||
+               inputs.role == 'fallback') && 'fallback' || 'watch' }}
+
+      - name: Keep the card for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: breaking-card-${{ github.run_id }}
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
