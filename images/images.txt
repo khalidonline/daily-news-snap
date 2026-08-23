@@ -1,0 +1,8 @@
+# Your own image library — one line per image:
+#     filename.jpg | keywords, كلمات مفتاحية | credit (optional)
+# The pipeline checks this folder before any web search, so a portrait here
+# unblocks a person-led story that Commons cannot illustrate.
+
+jack-bogle.jpg | Jack Bogle, John Bogle, بوغل | BillCramer / CC BY-SA 4.0
+sarah-breedlove.jpg | Sarah Breedlove, Madam C.J. Walker, بريدلوف | Addison Norton Scurlock / Public domain
+ali-alnaimi.jpg | علي النعيمي, Ali Al-Naimi, النعيمي | Paradoxicalengineer / CC BY-SA 3.0
