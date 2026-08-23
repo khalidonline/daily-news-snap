@@ -160,8 +160,8 @@ scroll-past. Per frame: the frame's OWN keywords, relevance-verified →
 STORY SUBJECT'S logo as the PRIMARY fallback for every kind, person
 frames included — curated or auto-fetched, never a sponsor's, no cap —
 → a gate-verified on-topic general photo from the story-subject pool
-(person-frame names stripped; never for person frames) → gated LABELLED
-generation for abstract → text-only as the LAST resort, rendered with a
+(person-frame names stripped; never for person frames) → text-only as the
+LAST resort, rendered with a
 large low-contrast brand watermark in the photo zone so it reads
 designed, not broken. Each frame logs its tier. The neutral bank, the
 recent-photo rescue and the in-story repeat stay removed. If more than
@@ -171,7 +171,20 @@ SKIPPED, recorded in `state/stories_skipped.json` with reason
 Telegram is told, and the run advances to the next eligible story —
 never a mostly-blank deck, never a lost slot. Dropping a curated logo
 into `images/logos/` un-skips a story; manual rescue is opt-in, not the
-normal path.
+normal path. Story GENERATION is OFF (2026-08: every generated frame was
+junk — the fake desert Mercedes closed the SAVOLA deck); the code stays
+dormant behind `ALLOW_STORY_GENERATION`/`ALLOW_GENERATED`, both "0" in
+code default and story.yml.
+
+**Pinterest is declined as a source** (owner asked; recorded so it isn't
+re-proposed): its content is overwhelmingly copyrighted re-pins with no
+reuse licence — publishing them breaks the licence-clean rule the whole
+pipeline enforces; its API manages your own pins, not third-party image
+search, so it cannot slot into the ladder; and its mislabeled /
+watermarked / AI-generated rate is the opposite of the title-verified,
+licence-checked discipline used everywhere else. Wanting more real-photo
+coverage means more CURATED `images/` seeds for recurring beats, not an
+unlicensed source.
 
 Each source tries its queries narrowest first and stops at the first result
 scoring `MIN_PHOTO_SCORE` or better. **That stop threshold and the publish

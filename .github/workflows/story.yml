@@ -56,9 +56,12 @@ jobs:
           FONT_FAMILY: "Almarai"
           STORY_MODEL: "claude-opus-5"
           STORY_FRAMES: "6"          # 4 to 7
-          ALLOW_GENERATED: "1"
-          # abstract frames only, gated + labelled — see the kind ladder
-          ALLOW_STORY_GENERATION: "1"
+          # generation is OFF for stories (owner decision, 2026-08: every
+          # generated frame was junk — fake desert Mercedes on SAVOLA).
+          # The ladder falls to the subject logo instead. Both flags stay
+          # "0"; the code is dormant, re-enable by flipping these.
+          ALLOW_GENERATED: "0"
+          ALLOW_STORY_GENERATION: "0"
           STORY_ALLOW_REPEAT: "1"       # reuse a photo rather than lose the story
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}

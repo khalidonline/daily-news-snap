@@ -57,10 +57,12 @@ BRAND = os.getenv("BRAND", "ملخص تنفيذي - قصة")
 # favours 5-8 frame stories with a clear beginning, middle and end.
 STORY_FRAMES = max(4, min(7, int(os.getenv("STORY_FRAMES", "").strip() or "6")))
 # generated filler hurts a story more than it helps — off by default here
-# Default ON by owner decision (2026-08): abstract frames — and ONLY
-# abstract frames — may fall to gated, labelled generation instead of dying
-# text-only. Flip this one flag off if generated frames disappoint.
-ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "1").strip() \
+# OFF by owner decision (2026-08): generated frames disappointed on every
+# deck that used them — a fake weathered Mercedes in a generic desert
+# closed the SAVOLA story. The ladder falls to the subject's logo instead.
+# The generation code (gate, prompt, label) stays dormant behind this flag
+# for a future licensed generator; the default and the shipped yaml are OFF.
+ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "0").strip() \
     not in ("", "0", "false", "False")
 # rather than lose a researched story, let a frame borrow another frame's photo
 STORY_ALLOW_REPEAT = os.getenv("STORY_ALLOW_REPEAT", "1").strip() \
