@@ -63,7 +63,7 @@
 
 # التقنية
 من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره
-Gary Kildall: الرجل الذي كاد نظامه يسبق Microsoft
+قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى | Digital Research, Gary Kildall
 Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل
 Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة
 Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي
@@ -75,7 +75,7 @@ Masaru Ibuka: الشريك الأهدأ الذي بنى Sony مع Morita
 
 # الأعمال والمال
 Malcom McLean: سائق شاحنة غيّر التجارة العالمية بصندوق حديد
-Frank McNamara: نسي محفظته في مطعم فاخترع البطاقة الائتمانية
+قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية | Diners Club, Frank McNamara
 Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك
 Benjamin Graham: أستاذ Warren Buffett الذي وضع قواعد الاستثمار
 Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير
@@ -85,7 +85,7 @@ Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك
 قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا | Madam C.J. Walker, Sarah Breedlove
 
 # السفر والطيران
-Robert Plath: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد
+قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد | Travelpro, Robert Plath
 Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747
 Herb Kelleher: أسس Southwest على منديل ورقي
 Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة
