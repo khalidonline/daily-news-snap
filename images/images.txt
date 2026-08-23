@@ -6,3 +6,8 @@
 jack-bogle.jpg | Jack Bogle, John Bogle, بوغل | BillCramer / CC BY-SA 4.0
 sarah-breedlove.jpg | Sarah Breedlove, Madam C.J. Walker, مدام سي جيه ووكر, ووكر | Addison Norton Scurlock / Public domain
 ali-alnaimi.jpg | علي النعيمي, Ali Al-Naimi, النعيمي | Paradoxicalengineer / CC BY-SA 3.0
+
+# seeded beats — recurring abstract subjects, see docs/seeding-images.md
+ministry-of-finance.jpg | وزارة المالية, المالية, الميزانية, الإيرادات, ministry of finance, budget | Albreeze / CC BY-SA 3.0
+kafd-financial-district.jpg | تداول, المؤشر, السوق المالية, الأسهم, tadawul, KAFD, stock market | Ahmed / CC BY-SA 4.0
+riyadh-skyline.jpg | العقار, الإسكان, الإيجارات, عقارات, real estate, housing, Riyadh skyline | B.alotaby / CC BY-SA 4.0
