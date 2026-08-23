@@ -1531,8 +1531,21 @@ def find_all_photos(brief):
         if (frame.get("subject_kind") or "").strip().lower() == "person":
             continue
         fallback += [k for k in (frame.get("image_keywords") or []) if k][:2]
+    # Dominant story kind: a story with any company/product frame is a
+    # COMPANY story (logo-primary, tight search); one with none is
+    # HISTORICAL/ABSTRACT — an event, era or concept whose correct primary
+    # visual is archival photography, where "no logo" is expected and must
+    # not drive the skip. The bourse story (Amsterdam, 1602) skipped as
+    # "logo unavailable" — wrong failure class entirely.
+    kinds_all = [(f.get("subject_kind") or "abstract").strip().lower()
+                 for f in frames]
+    story_has_company = any(k in ("company", "product") for k in kinds_all)
+    if not story_has_company:
+        print("    story kind: historical/abstract — archival photos are "
+              "the primary visual; the logo rung is N/A")
     fallback = [k for k in dict.fromkeys(fallback)
-                if k and k.lower() not in person_kws][:3]
+                if k and k.lower() not in person_kws
+                ][:5 if not story_has_company else 3]
     fallback_ar = [k for k in fallback_ar if k.lower() not in person_kws]
     photos = []
     used = set()                      # digests of pictures already in the story
@@ -1562,14 +1575,21 @@ def find_all_photos(brief):
         kind = (frame.get("subject_kind") or "abstract").strip().lower()
         tier = None
 
+        bank = []
         if kind == "person":
             # identity first, always: verified portrait or no face at all
             photo = _person_frame_photo(frame, slot, used)
             if photo:
                 tier = "verified portrait"
         else:
+            # Historical stories BANK neutrals: a period photo of the
+            # story's world that doesn't show this beat's exact subject is
+            # precisely the right archival fallback for a 1602 frame — the
+            # bank was removed because COMPANY decks abused it (sponsor
+            # stadiums), so it returns kind-aware: no-company stories only.
             photo = find_photo(spec, slot, used, context,
-                               allow_neutral=False)
+                               allow_neutral=not story_has_company,
+                               bank=bank if not story_has_company else None)
             if photo:
                 tier = "relevant photo"
 
@@ -1579,12 +1599,12 @@ def find_all_photos(brief):
             if flag is not None:
                 photo, tier = flag, "curated flag"
 
-        # THE primary fallback: the story subject's own logo (curated or
-        # auto-fetched, never a sponsor's) — for every kind, person frames
-        # included (a company story's hero on the logo beats a blank).
-        # The one-extra cap is gone: most photoless frames SHOULD land
-        # here, and a logo-heavy deck now beats an empty one by design.
-        if photo is None:
+        # THE primary fallback on COMPANY stories: the subject's own logo
+        # (curated or auto-fetched, never a sponsor's) — every kind, person
+        # frames included. Historical stories never consult it: there is
+        # no subject logo to fetch, and the auto-slug would go hunting a
+        # modern namesake's mark for a 1602 story.
+        if photo is None and story_has_company:
             logo = _curated_logo(n, len(frames), brief, frame,
                                  allow_hero=True)
             if logo is not None:
@@ -1601,6 +1621,17 @@ def find_all_photos(brief):
             if photo:
                 tier = "general photo (last resort)"
 
+        # historical stories: the banked archival neutral carries the
+        # frame before text-only — a real period photograph of the story's
+        # world, tiered by which of the frame's own keywords found it
+        if photo is None and bank:
+            btier, kept = bank[0]
+            import shutil as _sh
+            _sh.copyfile(kept, slot)
+            photo, tier = str(slot), "archival neutral (story's world)"
+        for _, kept in bank:
+            kept.unlink(missing_ok=True)
+
         # abstract may still generate, gated and labelled, before text-only
         if photo is None and kind == "abstract":
             gen = _generated_frame(frame, slot)
@@ -1612,7 +1643,8 @@ def find_all_photos(brief):
         if photo is None:
             tier = "text-only (designed, last resort)"
         elif tier in ("relevant photo", "verified portrait",
-                      "general photo (last resort)"):
+                      "general photo (last resort)",
+                      "archival neutral (story's world)"):
             used.add(_photo_digest(photo))
         print(f"    frame {n}: {tier}")
         photos.append(photo)
@@ -1625,8 +1657,12 @@ def find_all_photos(brief):
         print(f"  ! {len(text_only)} of {len(frames)} frames have no visual "
               f"(no photo, no logo) — skipping this story, not shipping it")
         global _LAST_SKIP
-        _LAST_SKIP = (f"logo unavailable, {len(text_only)}/{len(frames)} "
-                      "frames would be blank")
+        if story_has_company:
+            _LAST_SKIP = (f"logo unavailable, {len(text_only)}/{len(frames)} "
+                          "frames would be blank")
+        else:
+            _LAST_SKIP = (f"no archival photos found, {len(text_only)}"
+                          f"/{len(frames)} frames would be blank")
         return None
     if text_only:
         print(f"    text-only frames this deck: {text_only} — designed "
