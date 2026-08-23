@@ -1370,7 +1370,13 @@ def _auto_current_logo(brief, frame, frame_no):
              or [k for k in (frame.get("image_keywords") or []) if k])
     arabic = ([k for k in (brief.get("image_queries_ar") or []) if k]
               or [k for k in (frame.get("image_keywords_ar") or []) if k])
-    names = ([latin[0]] if latin else []) + ([arabic[0]] if arabic else [])
+    # The Arabic search term is only an IDENTITY if the story's own title
+    # carries it — Savola's first Arabic term was «جدة», and storing it as
+    # an alias made every Jeddah story match the Savola logo. Search
+    # vocabulary is not a name.
+    title = str(brief.get("title", "")) + " " + str(brief.get("story", ""))
+    names = ([latin[0]] if latin else []) + \
+            ([arabic[0]] if arabic and arabic[0] in title else [])
     if not names:
         return None
     slug = _logo_slug(names[0])
@@ -1422,15 +1428,21 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
     except OSError:
         files = []
 
-    # what this story talks about, in both scripts
-    hay = " ".join(filter(None, [
-        str(brief.get("story", "")),
-        str(brief.get("title", "")),
-        " ".join(brief.get("image_keywords", []) or []),
-        " ".join(brief.get("image_queries_ar", []) or []),
-        " ".join(frame.get("image_keywords", []) or []),
-        " ".join(frame.get("image_keywords_ar", []) or []),
-    ])).lower()
+    # The story's SUBJECT identity — names, not a keyword haystack. The
+    # old matcher checked every alias as a SUBSTRING of all the story's
+    # keywords, and one poisoned alias («جدة», stored as a "name" for
+    # Savola because it was Savola's first Arabic search term) put the
+    # SAVOLA logo on the Jameel/Toyota story: any Jeddah story matched a
+    # food company. A logo may only ever belong to the story's own
+    # subject, so matching is exact identity now: the file's slug or one
+    # of its index aliases must EQUAL a declared subject name (story-level
+    # keywords or the stories.txt aliases) — never merely appear inside
+    # the keyword soup.
+    subject_names = [k for k in (brief.get("image_keywords") or []) if k][:3]
+    subject_names += story_aliases(str(brief.get("story", "")))
+    subject_names = [n for n in dict.fromkeys(subject_names) if n]
+    subject_slugs = {_logo_slug(n) for n in subject_names if _logo_slug(n)}
+    subject_lc = {n.strip().casefold() for n in subject_names}
 
     try:
         aliases = json.loads((LOGOS_DIR / "index.json").read_text("utf-8"))
@@ -1443,8 +1455,11 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
         if "-" not in stem:
             continue
         slug, era = stem.rsplit("-", 1)
-        names = [slug] + list(aliases.get(slug, []))
-        if not any(len(nm) >= 3 and nm.lower() in hay for nm in names):
+        file_names = aliases.get(slug, [])
+        if not (slug in subject_slugs
+                or any(a.strip().casefold() in subject_lc
+                       for a in file_names)
+                or any(_logo_slug(a) in subject_slugs for a in file_names)):
             continue
         key = float("inf") if era == "current" else             int(era) if era.isdigit() and len(era) == 4 else None
         if key is None:
@@ -1492,7 +1507,8 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
     canvas.save(dest, "JPEG", quality=92)
     # curated logos repeat by design — exempt from the cross-run cooldown
     Path(str(dest) + ".exempt").write_text("logo", encoding="utf-8")
-    print(f"    frame {frame_no}: using curated logo {path} (era match: {tag})")
+    print(f"    frame {frame_no}: logo {path} for story slug(s) "
+          f"{sorted(subject_slugs) or ['(auto)']} (era match: {tag})")
     return str(dest)
 
 # more blank frames than this and the deck is skipped, not shipped —
@@ -1703,6 +1719,9 @@ def main():
     for attempt in range(2):
         print(f"1/3 researching: {story}")
         brief = research(story)
+        # the stories.txt line rides along so the logo rung can check the
+        # owner's declared aliases as subject identity
+        brief["story"] = story
         print(f"    {brief['title']}")
         for n, f in enumerate(brief.get("frames", []), 1):
             print(f"    {n}. {f.get('heading', '')} — {f.get('text', '')[:60]}")

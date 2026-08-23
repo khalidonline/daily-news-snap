@@ -334,6 +334,15 @@ others. Expect roughly 91 posts a month against that 145.
   Park") pass every name filter honestly. The prompt rule: a keyword names
   what THIS frame's text is about — the story's subject, never its
   sponsor/partner/investor/venue context.
+- The SAVOLA logo shipped on the Jameel/Toyota story. The auto-logo rung
+  had stored Savola's first Arabic SEARCH TERM («جدة») as an index alias,
+  and the matcher checked aliases as substrings of the story's keyword
+  soup — so every Jeddah story matched a food company. Logo matching is
+  exact identity now: the file's slug or alias must EQUAL a declared
+  subject name (story keywords or the line's aliases), a miss NEVER
+  borrows another company's cached file, the slug→file pairing is logged
+  on every use, and only names carried by the story's own title may be
+  written to the index — search vocabulary is not a name.
 - Award documents are not named "certificate" on Commons. They are "Genius
   Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
   of the White Lion awarded to X". Three reached story frames after
