@@ -3850,11 +3850,11 @@ def main():
 
     if DRY_RUN:
         print(f"4/4 DRY_RUN — nothing posted. Card at {Path(card).resolve()}")
-        # a held card written only to disk/artifact is a card never seen —
-        # send it, with how to approve it (dispatch daily with post ticked)
-        notify(f"{RECENT_REUSE_WARNING}🟡 {stamp} — بطاقة محجوزة "
-               f"(تجربة، لم تُنشر)\n{chosen['headline']}\n"
-               "للنشر: شغّل daily يدوياً مع تفعيل post — أو تجاهلها.",
+        # the post flag gates PUBLISHING only — it never gates reporting.
+        # A held card written only to disk/artifact is a card never seen.
+        notify(f"{RECENT_REUSE_WARNING}[DRY RUN] would have posted: "
+               f"{chosen['headline']}\n({stamp} — البطاقة مرفقة؛ "
+               "للنشر فعلاً شغّل daily مع تفعيل post)",
                card)
         return
 

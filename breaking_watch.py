@@ -233,6 +233,15 @@ def _watch():
 
     state = load_state()
     if rc == 0:
+        if DRY_RUN:
+            # the pipeline already sent the [DRY RUN] card message; the
+            # watcher must not claim a publish that never happened, nor
+            # burn the daily cap on a rehearsal
+            state["lock_at"] = ""
+            save_state(state)
+            print("dry run: card built and reported — nothing posted, "
+                  "cap untouched")
+            return
         state.update(posted=True, lock_at="",
                      stamps=state.get("stamps", []) + [ksa_stamp()])
         save_state(state)

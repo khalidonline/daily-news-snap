@@ -1147,6 +1147,8 @@ def main():
 
     if DRY_RUN:
         print(f"    DRY_RUN — nothing published. Card at {Path(card).resolve()}")
+        notify(f"[DRY RUN] would have posted: {brief['title']}\n"
+               f"({stamp} — تجربة، البطاقة مرفقة)", card)
         return
 
     if not POST_ENABLED:

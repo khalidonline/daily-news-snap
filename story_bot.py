@@ -1935,6 +1935,9 @@ def main():
 
     if DRY_RUN:
         print(f"    DRY_RUN — nothing published. Frames in {OUT_DIR.resolve()}")
+        notify_album(f"[DRY RUN] would have published: {brief['title']}\n"
+                     f"{len(frames)} لقطات — تجربة، لم تُنشر",
+                     frames, as_documents=True)
         return
 
     slug = re.sub(r"[^\w]+", "-", story, flags=re.UNICODE)[:40].strip("-")
