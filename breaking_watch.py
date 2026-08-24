@@ -162,6 +162,9 @@ def _watch():
     # must be safe to fire at any time, twice
     if not WATCH_START_H <= hour <= WATCH_END_H:
         print(f"outside the watch window ({now:%H:%M} KSA) — exiting")
+        notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: خارج نافذة المراقبة "
+               f"({now:%H:%M} بتوقيت السعودية؛ النافذة 08:00–19:30). "
+               "لم يُفحص شيء — بعد الثامنة مساءً موعد الاحتياطي هو الذي يعمل.")
         return
 
     state = load_state()
