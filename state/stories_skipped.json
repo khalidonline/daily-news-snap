@@ -58,5 +58,11 @@
   "name": "اليوم الذي أُحرقت فيه 150 ألف جهاز",
   "reason": "no_logo_insufficient_visuals",
   "at": "2026-08-24T20:56:12.768247"
+ },
+ {
+  "story": "<story title> | subject:samsung | logo:samsung.com",
+  "name": "150 ألف جوال احترقت في يوم واحد",
+  "reason": "no_logo_insufficient_visuals",
+  "at": "2026-08-24T21:01:12.009837"
  }
 ]
