@@ -663,6 +663,24 @@ def choose_pool(mix):
     return "saudi" if behind["saudi"] <= behind["general"] else "general"
 
 
+def _subject_keys(line):
+    """Every identity the line's ENTITY answers to: declared domain,
+    Latin aliases, or the bare head. Two entries about one subject (a
+    Zain story filed under two different lines) must retire together —
+    marking one used retires the subject, and equivalence is by key-set
+    INTERSECTION, because one sibling may declare a domain the other
+    doesn't."""
+    keys = set()
+    d = story_logo_domain(line)
+    if d:
+        keys.add(d)
+    keys |= {a.strip().casefold() for a in story_aliases(line)
+             if a.isascii()}
+    if not keys:
+        keys.add(line.split("|")[0].split(":")[0].strip().casefold())
+    return keys
+
+
 def choose_story(exclude=(), pool=None):
     stories = load_stories()
     if not stories:
@@ -684,7 +702,11 @@ def choose_story(exclude=(), pool=None):
         stories = [s for s in stories if _STORY_POOLS.get(s, "general") == pool]
         if not stories:
             return ""
-    fresh = [s for s in stories if s not in used]
+    used_subjects = set()
+    for u in used:
+        used_subjects |= _subject_keys(u)
+    fresh = [s for s in stories
+             if s not in used and not (_subject_keys(s) & used_subjects)]
     if not fresh:
         if pool:
             # never repeat an old story to hold the ratio — the caller
@@ -748,7 +770,7 @@ def find_portrait(name, out_path):
     return photo
 
 
-def pick_story():
+def pick_story(exclude=()):
     """Choose a story we can actually illustrate.
 
     Person-led stories are checked for a portrait before anything is spent on
@@ -758,7 +780,7 @@ def pick_story():
 
     Returns (story, misses).
     """
-    tried, misses = [], 0
+    tried, misses = list(exclude), 0
     mix = load_mix()
     pool = choose_pool(mix)
     print(f"    weekly mix {mix['week']}: saudi {mix.get('saudi', 0)}"
@@ -829,24 +851,33 @@ def research(story):
                      "anthropic-version": "2023-06-01"},
         )
         data = None
-        for attempt in range(3):
+        for attempt in range(4):
             try:
                 with urllib.request.urlopen(req, timeout=600) as resp:
                     data = json.loads(resp.read())
                 break
             except urllib.error.HTTPError as exc:
-                raise SystemExit(f"Claude API {exc.code}: "
-                                 f"{exc.read().decode()[:400]}")
+                body = exc.read().decode()[:400]
+                # 429 and 529 (overloaded) are transient: exponential
+                # backoff with jitter, four attempts, then give up — a
+                # momentary API brownout must not cost a whole run.
+                if exc.code in (429, 503, 529) and attempt < 3:
+                    import random
+                    import time as _t
+                    wait = (2 ** (attempt + 1)) + random.uniform(0, 1.5)
+                    print(f"  ! Claude API {exc.code} (transient) — "
+                          f"backing off {wait:.0f}s ({attempt + 1}/3)")
+                    _t.sleep(wait)
+                    continue
+                raise RuntimeError(f"Claude API {exc.code}: {body}")
             except (TimeoutError, urllib.error.URLError, OSError) as exc:
                 # RemoteDisconnected and friends are OSErrors, not
-                # HTTPErrors — the same bite news_bot's summarize took:
-                # a dropped socket escaped the handler and killed the run
-                # after minutes of paid research. Retry the same request.
-                if attempt == 2:
-                    raise SystemExit(
-                        f"Claude unreachable after 3 attempts: {exc}")
+                # HTTPErrors — a dropped socket must not escape unhandled.
+                if attempt == 3:
+                    raise RuntimeError(
+                        f"Claude unreachable after 4 attempts: {exc}")
                 print(f"  ! Claude call failed ({exc}) — retrying "
-                      f"({attempt + 1}/2)")
+                      f"({attempt + 1}/3)")
                 import time as _t
                 _t.sleep(8)
 
@@ -1828,9 +1859,23 @@ def main():
     # subject. The skip file doubles as the exclusion, exactly like the
     # portrait gate: mark_skipped writes it, the next pick avoids it.
     photos = None
-    for attempt in range(2):
+    failed_this_run = []
+    for attempt in range(3):
         print(f"1/3 researching: {story}")
-        brief = research(story)
+        try:
+            brief = research(story)
+        except RuntimeError as exc:
+            # a transient API failure is not the story's fault: it returns
+            # to the pool untouched — not used, not skipped — and the run
+            # moves to the next candidate instead of dying
+            print(f"  ! research failed for this candidate: {exc}")
+            failed_this_run.append(story)
+            if STORY:
+                raise SystemExit(f"manual story research failed: {exc}")
+            story, misses = pick_story(exclude=failed_this_run)
+            if not story:
+                break
+            continue
         # the stories.txt line rides along so the logo rung can check the
         # owner's declared aliases as subject identity
         brief["story"] = story
@@ -1854,15 +1899,15 @@ def main():
             print("  ! manual story skipped for insufficient visuals — "
                   "not advancing (explicit input)")
             return
-        story, misses = pick_story()
+        story, misses = pick_story(exclude=failed_this_run)
         if not story:
             print("  ! no eligible story left this run — ending without "
                   "publishing rather than shipping a blank deck")
-            return
+            break
     if photos is None:
-        notify(f"⚠️ {ksa_stamp()} — no story published: two candidates in a "
-               "row could not be illustrated. Both are flagged for review.")
-        return
+        notify(f"⚠️ {ksa_stamp()} — no story published this run: every "
+               "candidate failed research or could not be illustrated.")
+        raise SystemExit("run produced nothing")
     stamp = ksa_stamp()
     frames = build_frames(brief, stamp, photos)
     print(f"    {len(frames)} frames written")

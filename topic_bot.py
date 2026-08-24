@@ -792,24 +792,33 @@ def research(topic):
             },
         )
         data = None
-        for attempt in range(3):
+        for attempt in range(4):
             try:
                 with urllib.request.urlopen(req, timeout=300) as resp:
                     data = json.loads(resp.read())
                 break
             except urllib.error.HTTPError as exc:
-                raise SystemExit(f"Claude API {exc.code}: "
-                                 f"{exc.read().decode()[:400]}")
+                body = exc.read().decode()[:400]
+                # 429 and 529 (overloaded) are transient: exponential
+                # backoff with jitter, four attempts, then give up — a
+                # momentary API brownout must not cost a whole run.
+                if exc.code in (429, 503, 529) and attempt < 3:
+                    import random
+                    import time as _t
+                    wait = (2 ** (attempt + 1)) + random.uniform(0, 1.5)
+                    print(f"  ! Claude API {exc.code} (transient) — "
+                          f"backing off {wait:.0f}s ({attempt + 1}/3)")
+                    _t.sleep(wait)
+                    continue
+                raise RuntimeError(f"Claude API {exc.code}: {body}")
             except (TimeoutError, urllib.error.URLError, OSError) as exc:
                 # RemoteDisconnected and friends are OSErrors, not
-                # HTTPErrors — the same bite news_bot's summarize took:
-                # a dropped socket escaped the handler and killed the run
-                # after minutes of paid research. Retry the same request.
-                if attempt == 2:
-                    raise SystemExit(
-                        f"Claude unreachable after 3 attempts: {exc}")
+                # HTTPErrors — a dropped socket must not escape unhandled.
+                if attempt == 3:
+                    raise RuntimeError(
+                        f"Claude unreachable after 4 attempts: {exc}")
                 print(f"  ! Claude call failed ({exc}) — retrying "
-                      f"({attempt + 1}/2)")
+                      f"({attempt + 1}/3)")
                 import time as _t
                 _t.sleep(8)
 

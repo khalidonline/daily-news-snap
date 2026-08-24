@@ -100,7 +100,14 @@ Person-led stories are gated before the research call: no free portrait means
 skip, recorded in `state/stories_skipped.json` for `STORY_SKIP_DAYS` (14) —
 deliberately shorter than the 60-day publish cooldown, because a missing
 portrait is not a verdict on the story. `choose_story()` hashes the date so a
-daily cadence doesn't walk down one section of `stories.txt`. Scheduled
+daily cadence doesn't walk down one section of `stories.txt`, and it
+retires SUBJECTS, not titles: a used line retires every line sharing its
+entity (domain or Latin aliases, matched by key-set intersection) — the
+Zain story reselected itself through a sibling line once. 429/529/503
+from the API back off exponentially with jitter (4 attempts); a research
+failure benches only that candidate for the run — never marked used or
+skipped — and the run moves on, exiting non-zero only when the whole run
+produced nothing. Scheduled
 runs draw 4 saudi + 3 general a week (`SAUDI_PER_WEEK`/`GENERAL_PER_WEEK`,
 should sum to 7; counts in `state/story_mix.json`, ISO-week reset), picking
 whichever pool is furthest behind its ratio; an exhausted pool borrows from

@@ -1081,7 +1081,16 @@ def summarize(items, already_posted=(), pinned=""):
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 data = json.loads(resp.read())
         except urllib.error.HTTPError as exc:
-            raise SystemExit(f"Claude API {exc.code}: {exc.read().decode()[:500]}")
+            body = exc.read().decode()[:500]
+            if exc.code in (429, 503, 529) and attempt < 3:
+                import random
+                import time as _t
+                wait = (2 ** (attempt + 1)) + random.uniform(0, 1.5)
+                print(f"  ! Claude API {exc.code} (transient) — backing "
+                      f"off {wait:.0f}s ({attempt + 1}/3)")
+                _t.sleep(wait)
+                continue
+            raise SystemExit(f"Claude API {exc.code}: {body}")
         except (TimeoutError, urllib.error.URLError, OSError) as exc:
             if attempt < 3:
                 print(f"  ! Claude call failed ({exc}) — retrying "
