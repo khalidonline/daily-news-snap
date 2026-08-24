@@ -228,8 +228,7 @@ What actually posts:
 | `news_bot.py` | **not** the 12:00 KSA run (`0 9 * * *`) — hybrid |
 | a manual news run | only when the **post** input is ticked |
 | `topic_bot.py` | yes, the 09:00 KSA run |
-| `breaking_watch.py` watcher | at most ONE confirmed breaking card a day, the moment it lands |
-| `breaking_watch.py` 20:00 KSA | posts the day's strongest story — unless a breaking card posted today, then hybrid |
+| `breaking_watch.py` watcher | at most ONE confirmed breaking card a day — and most days NOTHING: there is no evening fallback |
 | `story_bot.py` | no — hybrid, so six frames get read before they go out |
 | any manual dispatch | no (breaking.yml's manual dispatch defaults dry_run ON) |
 
@@ -241,7 +240,11 @@ and ABORTS without posting if it can't confirm. `state/breaking.json`
 holds the one-per-day cap, the cycle lock, and the event fingerprint that
 stops one event posting twice in different words; quiet cycles write
 nothing. The script guards its own time window because stale crons replay.
-Breaking OR the 20:00 fallback posts each evening, never both. Every
+The 20:00 fallback is RETIRED: no breaking card unless something clears
+the gates, and most evenings nothing posts — silence is a result. The
+breaking card alone wears «خبر عاجل» and the red header; scheduled news
+cards stay «خبر» — if a candidate doesn't deserve the عاجل label, it
+isn't breaking and must not post as breaking. Every
 watcher cycle sends exactly one Telegram line — quiet (⚪️ with the
 classifier's reason), error (🔴, never swallowed), or the breaking
 card itself — because a working watcher and a dead one must never look
@@ -249,8 +252,8 @@ the same (both used to look like nothing). Dry-run news cards are sent
 too (🟡 held, with how to approve): the artifact steps keep files 7
 days in Actions, and a held card only on disk is a card never seen.
 
-About 91 posts a month (07:00 news + 09:00 topic + one evening card),
-under the 145 cap and the plan's 150. A story counts
+About 61 posts a month (07:00 news + 09:00 topic), plus the rare
+confirmed breaking card — well under the 145 cap and the plan's 150. A story counts
 as one post however many frames it has — it is hybrid today, so it costs
 nothing against the quota.
 
@@ -289,7 +292,7 @@ Telegram via `deliver_unposted()` — **a run that builds a card must never end
 without saying so somewhere.** Every workflow that can post — daily, topic,
 story, publish, breaking — must name the **same** cap (145): the file is shared but each passes its own
 limit, and mismatched numbers mean whichever is lowest silently stops the
-others. Expect roughly 91 posts a month against that 145.
+others. Expect roughly 61 posts a month against that 145.
 
 ## Conventions
 

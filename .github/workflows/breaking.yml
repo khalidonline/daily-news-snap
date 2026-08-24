@@ -5,28 +5,19 @@ name: Breaking news watch
 #   */30 5-16 UTC  (every 30 min, 08:00–19:30 KSA) — the watcher. A small
 #                  model scans the beats; at most ONE breaking card a day
 #                  posts, the moment the full pipeline confirms the event.
-#                  Quiet cycles exit in seconds and commit nothing.
-#   0 17 UTC       (20:00 KSA) — the fallback. If a breaking card already
-#                  posted today it runs hybrid (build + Telegram, no post);
-#                  otherwise it posts the day's strongest story, exactly as
-#                  the retired 21:00 slot did.
+#                  Quiet cycles exit in seconds, commit nothing, and send
+#                  one Telegram line — silence is a result, not a failure.
 #
-# daily.yml keeps only 07:00 (posts) and 12:00 (hybrid); its manual
-# dispatch with the post tick remains the human override.
+# There is NO evening fallback post (owner decision): no breaking card
+# unless something clears the gates, and most days that means nothing
+# posts in the evening. daily.yml keeps 07:00 (posts) and 12:00 (hybrid);
+# its manual dispatch with the post tick remains the human override.
 
 on:
   schedule:
     - cron: "*/30 5-16 * * *"
-    - cron: "0 17 * * *"
   workflow_dispatch:
     inputs:
-      role:
-        description: "watch = دورة مراقبة، fallback = موعد الثامنة"
-        type: choice
-        options:
-          - watch
-          - fallback
-        default: watch
       dry_run:
         description: "Classify and build only — never post"
         type: boolean
@@ -87,10 +78,7 @@ jobs:
           LOOKBACK_HOURS: "10"
           REMEMBER_DAYS: "3"
           WATCH_MODEL: ${{ vars.WATCH_MODEL }}
-        run: >
-          python breaking_watch.py
-          ${{ (github.event.schedule == '0 17 * * *' ||
-               inputs.role == 'fallback') && 'fallback' || 'watch' }}
+        run: python breaking_watch.py watch
 
       - name: Keep the card for review
         if: always()

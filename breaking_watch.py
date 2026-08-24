@@ -10,9 +10,9 @@
 مثبّت (PINNED_EVENT): النموذج الكبير يعيد التحقق ويكتب بكل قواعد
 البطاقة، وإن لم يتأكد الحدث يموت التشغيل هناك دون نشر.
 
-الثامنة مساءً: إن كانت بطاقة عاجلة نُشرت اليوم، يعمل news_bot مهجّناً
-(بناء وتيليجرام دون نشر — المساء أخذ بطاقته)؛ وإلا فينشر أقوى خبر اليوم
-كما كان موعد التاسعة يفعل. جدول المساء كله مكتوب في breaking.yml.
+لا احتياطي مسائي: لا بطاقة عاجلة إلا إذا اجتاز حدثٌ البوابات كلها —
+ومعظم الأيام لا يُنشر مساءً شيء، وهذا هو المقصود. الصمت نتيجة لا عطل،
+والمراقب يرسل سطراً في كل دورة على أي حال.
 """
 
 import hashlib
@@ -271,28 +271,15 @@ def _watch():
         print("pinned pipeline aborted — lock released, fingerprint kept")
 
 
-def fallback():
-    state = load_state()
-    today = ksa_now().date().isoformat()
-    already = state.get("date") == today and state.get("posted")
-    if already:
-        print("a breaking card already posted today — the 20:00 run goes "
-              "hybrid (build + Telegram, no post)")
-    else:
-        print("no breaking post today — the 20:00 run posts the day's "
-              "strongest story, as the old 21:00 slot did")
-    rc = _run_news_bot({"POST_TO_SNAPCHAT": "0" if already else "1"})
-    sys.exit(rc)
-
-
 def main():
     role = (sys.argv[1] if len(sys.argv) > 1 else "watch").strip().lower()
-    if role == "fallback":
-        fallback()
-    elif role == "watch":
+    if role == "watch":
         watch()
     else:
-        raise SystemExit(f"unknown role {role!r} — use 'watch' or 'fallback'")
+        # the 20:00 fallback is RETIRED (owner decision): no breaking card
+        # unless something clears the gates — most evenings, nothing posts
+        raise SystemExit(f"unknown role {role!r} — only 'watch' exists; "
+                         "the evening fallback was retired")
 
 
 if __name__ == "__main__":
