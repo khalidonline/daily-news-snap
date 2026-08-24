@@ -612,6 +612,58 @@ def story_logo_domain(story):
     return _STORY_LOGO_DOMAIN.get(str(story or "").strip(), "")
 
 
+def resolve_story_input(raw):
+    """A manual STORY input becomes a first-class story.
+
+    The box's contents were matched against loaded heads by EXACT string
+    equality — five Samsung dispatches missed five ways, and inline
+    `| logo:...` tokens the owner typed were silently ignored. Resolution
+    order now: exact head -> unique containment match against the loaded
+    heads (inheriting the line's declared identity) -> standalone parse of
+    any inline `| alias, logo:, subject:` tokens, so what the owner typed
+    carries its own identity even for a story that has no line at all.
+    """
+    raw = (raw or "").strip()
+    if not raw:
+        return raw
+    stories = load_stories()
+    if raw in _STORY_POOLS:
+        return raw
+    head, _, tail = raw.partition("|")
+    head = head.strip()
+    low = head.casefold()
+    cands = [h for h in stories
+             if low and (low in h.casefold() or h.casefold() in low)]
+    if len(cands) > 1:
+        # duplicate-subject siblings resolve to the first; genuinely
+        # different lines stay ambiguous and the input is used as typed
+        keys = _subject_keys(cands[0])
+        if all(_subject_keys(c) & keys for c in cands[1:]):
+            cands = cands[:1]
+    if len(cands) == 1:
+        print(f"    manual story resolved to its stories.txt line: "
+              f"{cands[0][:60]}")
+        return cands[0]
+    if cands:
+        print(f"    manual story matches {len(cands)} different lines — "
+              "using the input as typed")
+    aliases = []
+    for tok in (t.strip() for t in tail.split(",") if t.strip()):
+        if tok.lower().startswith("logo:"):
+            _STORY_LOGO_DOMAIN[head] = tok[5:].strip().lower()
+        elif tok.lower().startswith("subject:"):
+            _STORY_SUBJECT[head] = tok[8:].strip().lower()
+        else:
+            aliases.append(tok)
+    if aliases:
+        _STORY_ALIASES[head] = aliases
+    if tail:
+        print(f"    manual story carries inline identity: "
+              f"aliases={aliases or []}, "
+              f"domain={_STORY_LOGO_DOMAIN.get(head, '(none)')}")
+    return head
+
+
 def story_pool(story):
     """The pool a story line belongs to; unknown lines count as general."""
     if not _ALIASES_LOADED:
@@ -1918,7 +1970,7 @@ def main():
     # spend the research budget well, not to overrule a deliberate choice.
     misses = 0
     if STORY:
-        story = STORY
+        story = resolve_story_input(STORY)
     else:
         story, misses = pick_story()
 
