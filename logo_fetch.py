@@ -134,6 +134,10 @@ def fetch_current(slug, names, require_domain=None):
     review = []
     for name in names:
         pairs = _article_logo_files(name, require_domain=require_domain)
+        # prefer the file whose title is closest to '<name> logo': the
+        # Samsung article lists 'Samsung Galaxy logo.svg' before its own
+        # wordmark, and a sub-brand's mark is not the company's
+        pairs.sort(key=lambda lt: len(lt[1].split()))
         if not pairs:
             continue
         # Commons-hosted (freely licensed): save automatically.

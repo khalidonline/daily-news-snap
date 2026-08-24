@@ -1567,14 +1567,20 @@ def _auto_current_logo(brief, frame, frame_no):
     dest = LOGOS_DIR / f"{domain}-current.png"
     if dest.exists():
         return dest
-    latin = ([k for k in (brief.get("image_keywords") or []) if k]
-             or [k for k in (frame.get("image_keywords") or []) if k])
-    arabic = ([k for k in (brief.get("image_queries_ar") or []) if k]
-              or [k for k in (frame.get("image_keywords_ar") or []) if k])
-    title = str(brief.get("title", "")) + " " + str(brief.get("story", ""))
-    names = ([latin[0]] if latin else []) + \
-            ([arabic[0]] if arabic and arabic[0] in title else [])
+    # The lookup names are the DECLARED identity: the line's own aliases.
+    # They were the model's image_keywords once, and the model emits search
+    # phrases ('Samsung Electronics 1938 grocery store') whose every word
+    # the title-verification then demands — no article matches, the fetch
+    # returns nothing, and the deck ships logo-less while the domain sat
+    # there correct the whole time. Traced live on the Samsung run.
+    line = str(brief.get("story", ""))
+    names = [a for a in story_aliases(line) if a.isascii()]
+    title = str(brief.get("title", "")) + " " + line
+    names += [a for a in story_aliases(line)
+              if not a.isascii() and a in title]
     if not names:
+        print(f"    frame {frame_no}: logo domain {domain} declared but the "
+              "line has no alias to search the article by")
         return None
     try:
         from logo_fetch import fetch_current, update_index
