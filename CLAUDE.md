@@ -359,6 +359,15 @@ others. Expect roughly 91 posts a month against that 145.
   borrows another company's cached file, the slug→file pairing is logged
   on every use, and only names carried by the story's own title may be
   written to the index — search vocabulary is not a name.
+- A Riyadh Air aircraft shipped in a Zain licensing story: the frame's own
+  keywords carried a background entity, and the gate only checked "is this
+  a real relevant image", not "is this an image of the SUBJECT". On company
+  stories every image query is now bound to the declared subject entity —
+  never built from an individual frame's text — the gate is told «القصة عن
+  X» and answers لا to anything belonging to another brand, and one correct
+  subject image plus logos (capped) plus typographic frames is the whole
+  deck. The publisher verifies sidecar indices are exactly 1..N (explicit
+  index, never listing order) and refuses gaps or duplicates.
 - Award documents are not named "certificate" on Commons. They are "Genius
   Nikola Tesla Award", "Diplôme de Participation", "Honorary Charter", "Order
   of the White Lion awarded to X". Three reached story frames after

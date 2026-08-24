@@ -1627,6 +1627,22 @@ def find_all_photos(brief):
     kinds_all = [(f.get("subject_kind") or "abstract").strip().lower()
                  for f in frames]
     story_has_company = any(k in ("company", "product") for k in kinds_all)
+    # IMAGE-SUBJECT BINDING (owner rule, after a Riyadh Air aircraft
+    # shipped in a Zain licensing story): on a company story, every image
+    # query is scoped to the DECLARED subject entity — never built from an
+    # individual frame's text, where background entities lurk. One correct
+    # subject image is enough; typographic frames carry the rest.
+    subject_line = str(brief.get("story", ""))
+    subj_lat = [a for a in story_aliases(subject_line) if a.isascii()]
+    subj_ar = [a for a in story_aliases(subject_line) if not a.isascii()]
+    if not subj_lat:
+        subj_lat = [k for k in (brief.get("image_keywords") or []) if k][:1]
+    subject_name = (subj_lat or subj_ar or [""])[0]
+    subject_spec = {"image_keywords": subj_lat[:2],
+                    "image_keywords_ar": subj_ar[:2]}
+    if story_has_company:
+        print(f"    image queries bound to subject: "
+              f"{subject_name or '(none declared)'}")
     if not story_has_company:
         print("    story kind: historical/abstract — archival photos are "
               "the primary visual; the logo rung is N/A")
@@ -1650,10 +1666,14 @@ def find_all_photos(brief):
         spec["image_keywords_ar"] = (fallback_ar if own_ar is None
                                      else [k for k in own_ar if k])
         keywords = [k for k in (spec.get("image_keywords") or []) if k]
-        line = ", ".join(keywords[:4]) or "(no keywords)"
-        if spec["image_keywords_ar"]:
-            line += f"  |  {', '.join(spec['image_keywords_ar'][:3])}"
-        print(f"    frame {n}: {line}")
+        if story_has_company:
+            print(f"    frame {n}: (queries bound to subject — frame "
+                  f"keywords ignored)")
+        else:
+            line = ", ".join(keywords[:4]) or "(no keywords)"
+            if spec["image_keywords_ar"]:
+                line += f"  |  {', '.join(spec['image_keywords_ar'][:3])}"
+            print(f"    frame {n}: {line}")
 
         context = f"{frame.get('heading', '')}\n{frame.get('text', '')}".strip()
         slot = OUT_DIR / f"story-frame-{n}.jpg"
@@ -1673,6 +1693,11 @@ def find_all_photos(brief):
             if photo:
                 tier = "verified portrait"
         else:
+            if story_has_company:
+                # frame keywords are ignored by design: the query IS the
+                # subject, and the gate hears the subject too
+                spec = dict(spec, **subject_spec)
+                context = f"القصة عن {subject_name}.\n{context}"
             # Historical stories BANK neutrals: a period photo of the
             # story's world that doesn't show this beat's exact subject is
             # precisely the right archival fallback for a 1602 frame — the
@@ -1709,7 +1734,8 @@ def find_all_photos(brief):
 
         # general on-topic photo, gate-verified against this frame's text —
         # never for person frames (identity is not subject to widening)
-        if photo is None and kind != "person" and fallback:
+        if photo is None and kind != "person" and fallback \
+                and not story_has_company:
             print(f"      widening to the story subject: "
                   f"{', '.join(fallback)}")
             photo = find_photo({"image_keywords": fallback,

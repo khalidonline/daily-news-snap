@@ -102,6 +102,18 @@ def find_story(stamp=""):
     # files belong to one run.
     recorded = _sidecar_frames(chosen)
     if recorded:
+        # frames post by EXPLICIT index, and the set must be exactly 1..N —
+        # a gap or duplicate means a mixed or torn run; refuse rather than
+        # ship a deck with a hole in it
+        nums = []
+        for f in recorded:
+            m = _FRAME_RE.match(f.name)
+            if m:
+                nums.append(int(m.group("n")))
+        if sorted(nums) != list(range(1, len(recorded) + 1)):
+            raise SystemExit(f"{chosen}: sidecar frames are {sorted(nums)}, "
+                             f"expected 1..{len(recorded)} — refusing")
+        recorded = [f for _, f in sorted(zip(nums, recorded))]
         return chosen, [str(f) for f in recorded]
 
     # Two runs in the same KSA hour leave two files per frame number, and
