@@ -38,7 +38,29 @@ def _download(url, dest):
         Path(dest).write_bytes(resp.read())
 
 
-def _article_logo_files(name):
+def _page_references_domain(lang, page, domain):
+    """Does the article's external-link set carry the declared domain?
+
+    The domain is the company's identity per the stories.txt `logo:` field;
+    an article that never links it is some other entity with a similar
+    name, and its infobox file must not be taken.
+    """
+    try:
+        data = _wiki_get(f"https://{lang}.wikipedia.org/w/api.php", {
+            "action": "query", "format": "json",
+            "pageids": str(page.get("pageid", "")),
+            "prop": "extlinks", "ellimit": "200",
+        }, label=f"{lang}.wikipedia extlinks")
+        for pg in (data.get("query") or {}).get("pages", {}).values():
+            for el in pg.get("extlinks", []) or []:
+                if domain in str(el.get("*", "")).lower():
+                    return True
+    except Exception as exc:
+        print(f"  ! extlinks check failed ({exc}) — treating as no match")
+    return False
+
+
+def _article_logo_files(name, require_domain=None):
     """File: titles containing logo/شعار from the subject's OWN article.
 
     pageimages was the first attempt and returned the article's lead PHOTO —
@@ -64,6 +86,11 @@ def _article_logo_files(name):
         for page in pages:
             title = (page.get("title") or "").lower()
             if not checks or not all(rx.search(title) for rx in checks):
+                continue
+            if require_domain and not _page_references_domain(
+                    lang, page, require_domain):
+                print(f"  ! {page.get('title')}: article does not reference "
+                      f"{require_domain} — wrong entity, skipping")
                 continue
             for im in page.get("images", []) or []:
                 t = im.get("title", "")
@@ -91,7 +118,7 @@ def _local_file_url(lang, title):
     return None
 
 
-def fetch_current(slug, names):
+def fetch_current(slug, names, require_domain=None):
     """The subject's current logo, from its own article's infobox files.
 
     Commons renders SVG sources to PNG at thumburl, so no rasterising
@@ -99,7 +126,7 @@ def fetch_current(slug, names):
     """
     review = []
     for name in names:
-        pairs = _article_logo_files(name)
+        pairs = _article_logo_files(name, require_domain=require_domain)
         if not pairs:
             continue
         # Commons-hosted (freely licensed): save automatically.

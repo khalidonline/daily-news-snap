@@ -344,6 +344,9 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   ✓ «قرية صيد صغيرة» أو «الإصلاح الاقتصادي»: "abstract"
   ✗ لقطة عن «الانفتاح الصيني» موسومة "place_country" — المفهوم abstract
     وإن ورد اسم البلد في النص
+  والجهات والمؤسسات الرسمية (وزارة، هيئة، جامعة) عاملها "company" —
+  شعارها الرسمي أو صورة مبناها يقومان مقام العلامة التجارية. أما
+  التقنيات والأحداث التاريخية فـ"abstract" وصورها أرشيفية من حقبتها.
 
 - image_keywords: من كلمتين إلى أربع كلمات إنجليزية بسيطة للبحث عن صورة
   حقيقية. أسماء علم فقط: اسم الشخص أو الشركة أو المنتج أو المكان.
@@ -529,6 +532,10 @@ _STORY_ALIASES = {}
 # (the original list is general by default). Ordinary # lines stay
 # comments — the batch's category labels are not stories.
 _STORY_POOLS = {}
+# explicit `logo:domain.com` tokens from the alias tail — the ONLY identity
+# the auto-logo fetch will accept. Title-derived slugs are dead: they are
+# how a wrong company's mark gets guessed onto a story.
+_STORY_LOGO_DOMAIN = {}
 _ALIASES_LOADED = False
 
 
@@ -555,12 +562,24 @@ def load_stories():
             continue
         head, _, tail = ln.partition("|")
         head = head.strip()
-        aliases = [a.strip() for a in tail.split(",") if a.strip()]
+        aliases = []
+        for tok in (t.strip() for t in tail.split(",") if t.strip()):
+            if tok.lower().startswith("logo:"):
+                _STORY_LOGO_DOMAIN[head] = tok[5:].strip().lower()
+            else:
+                aliases.append(tok)
         if aliases:
             _STORY_ALIASES[head] = aliases
         _STORY_POOLS[head] = pool
         stories.append(head)
     return stories
+
+
+def story_logo_domain(story):
+    """The explicitly declared logo domain for a story line, or ""."""
+    if not _ALIASES_LOADED:
+        load_stories()
+    return _STORY_LOGO_DOMAIN.get(str(story or "").strip(), "")
 
 
 def story_pool(story):
@@ -1360,31 +1379,32 @@ def _logo_slug(name):
 
 
 def _auto_current_logo(brief, frame, frame_no):
-    """Fetch + cache the subject's current logo — once per company EVER.
+    """Fetch + cache the subject's current logo — domain-declared only.
 
-    Uses logo_fetch's title-verified article-infobox path (never search:
-    search is how furniture and wrong-entity files got in). The file and
-    index.json are committed like any other state, so the next run finds
-    them in the folder and no fetch fires."""
+    The domain comes from an explicit `| logo:domain.com` field on the
+    stories.txt line; it is the identity AND the cache key. No domain, no
+    fetch — deriving a slug from display keywords is how a wrong company's
+    mark gets guessed onto a story. The matched article must reference the
+    domain, so the title-verified file provably belongs to the declared
+    company.
+    """
+    domain = story_logo_domain(brief.get("story", ""))
+    if not domain:
+        print(f"    frame {frame_no}: no `logo:` domain declared for this "
+              "story — auto-fetch is off (curated files still match)")
+        return None
+    dest = LOGOS_DIR / f"{domain}-current.png"
+    if dest.exists():
+        return dest
     latin = ([k for k in (brief.get("image_keywords") or []) if k]
              or [k for k in (frame.get("image_keywords") or []) if k])
     arabic = ([k for k in (brief.get("image_queries_ar") or []) if k]
               or [k for k in (frame.get("image_keywords_ar") or []) if k])
-    # The Arabic search term is only an IDENTITY if the story's own title
-    # carries it — Savola's first Arabic term was «جدة», and storing it as
-    # an alias made every Jeddah story match the Savola logo. Search
-    # vocabulary is not a name.
     title = str(brief.get("title", "")) + " " + str(brief.get("story", ""))
     names = ([latin[0]] if latin else []) + \
             ([arabic[0]] if arabic and arabic[0] in title else [])
     if not names:
         return None
-    slug = _logo_slug(names[0])
-    if not slug:
-        return None
-    dest = LOGOS_DIR / f"{slug}-current.png"
-    if dest.exists():
-        return dest
     try:
         from logo_fetch import fetch_current, update_index
     except ImportError as exc:
@@ -1392,18 +1412,17 @@ def _auto_current_logo(brief, frame, frame_no):
         return None
     LOGOS_DIR.mkdir(parents=True, exist_ok=True)
     try:
-        got = fetch_current(slug, names)
+        got = fetch_current(domain, names, require_domain=domain)
     except Exception as exc:
-        print(f"    ! current-logo fetch failed for {slug}: {exc}")
+        print(f"    ! current-logo fetch failed for {domain}: {exc}")
         got = None
     if not got:
-        # a story must never die on a logo — the ladder falls through to
-        # best-neutral/repeat exactly as if the folder were empty
-        print(f"    frame {frame_no}: no fetchable current logo for {slug}")
+        # a story must never die on a logo — fall through to text-only
+        print(f"    frame {frame_no}: no fetchable current logo for {domain}")
         return None
-    update_index(slug, names)
-    commit_and_push(LOGOS_DIR, f"curated logo: {slug}-current (auto)")
-    print(f"    frame {frame_no}: fetched + cached current logo for {slug}")
+    update_index(domain, names + [domain])
+    commit_and_push(LOGOS_DIR, f"curated logo: {domain}-current (auto)")
+    print(f"    frame {frame_no}: fetched + cached current logo for {domain}")
     return Path(got)
 
 
@@ -1443,6 +1462,10 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
     subject_names = [n for n in dict.fromkeys(subject_names) if n]
     subject_slugs = {_logo_slug(n) for n in subject_names if _logo_slug(n)}
     subject_lc = {n.strip().casefold() for n in subject_names}
+    domain = story_logo_domain(brief.get("story", ""))
+    if domain:
+        subject_slugs.add(domain)
+        subject_lc.add(domain)
 
     try:
         aliases = json.loads((LOGOS_DIR / "index.json").read_text("utf-8"))
@@ -1511,6 +1534,9 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
           f"{sorted(subject_slugs) or ['(auto)']} (era match: {tag})")
     return str(dest)
 
+# at most this many frames may carry the subject's logo — the owner's
+# rule after a deck papered 4/6 frames with one mark
+LOGO_MAX_FRAMES = int(os.getenv("LOGO_MAX_FRAMES", "").strip() or "2")
 # more blank frames than this and the deck is skipped, not shipped —
 # "don't ship a mostly-empty deck", not "skip on a single gap"
 STORY_MAX_BLANK_FRAMES = int(
@@ -1565,6 +1591,10 @@ def find_all_photos(brief):
     fallback_ar = [k for k in fallback_ar if k.lower() not in person_kws]
     photos = []
     used = set()                      # digests of pictures already in the story
+    # one mark papering most of a deck is a fail, not a pass (owner rule:
+    # the same logo on 4/6 frames reads as filler) — beyond the cap the
+    # frame takes the designed text-only treatment instead
+    logo_frames = 0
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
         # An explicit [] is an answer, not a gap: the prompt asks for it when
@@ -1621,10 +1651,16 @@ def find_all_photos(brief):
         # no subject logo to fetch, and the auto-slug would go hunting a
         # modern namesake's mark for a 1602 story.
         if photo is None and story_has_company:
-            logo = _curated_logo(n, len(frames), brief, frame,
-                                 allow_hero=True)
-            if logo is not None:
-                photo, tier = logo, "subject logo"
+            if logo_frames >= LOGO_MAX_FRAMES:
+                print(f"    frame {n}: logo cap reached "
+                      f"({LOGO_MAX_FRAMES}) — text-only beats papering "
+                      "the deck with one mark")
+            else:
+                logo = _curated_logo(n, len(frames), brief, frame,
+                                     allow_hero=True)
+                if logo is not None:
+                    photo, tier = logo, "subject logo"
+                    logo_frames += 1
 
         # general on-topic photo, gate-verified against this frame's text —
         # never for person frames (identity is not subject to widening)

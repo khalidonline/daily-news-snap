@@ -25,7 +25,10 @@ a shared function, check all three bots still import cleanly.**
   exhibitions, a weekly football slot. Format: `## name | spec | before | after`
 - `stories.txt` — ~122 narrative subjects in pools: a `# @pool: saudi` /
   `# @pool: general` marker assigns every following line until the next
-  marker; lines before any marker are general. Optional `| alias, alias` per
+  marker; lines before any marker are general. A `logo:domain.com` token in
+the tail declares the subject's logo identity — the ONLY thing the
+auto-logo fetch accepts (title-derived slugs are dead; the article must
+reference the domain). Optional `| alias, alias` per
   line: the archive's names for the subject (stage names, business names,
   transliterations) — the portrait pre-check and the research call try
   them, because archives catalogue people under names the story may not use
@@ -158,7 +161,11 @@ WRONG photo is worse than a logo, but a bare beige frame is a
 scroll-past. Per frame: the frame's OWN keywords, relevance-verified →
 (country frames: the curated flag from `images/flags/<iso>.png`) → the
 STORY SUBJECT'S logo as the PRIMARY fallback for every kind, person
-frames included — curated or auto-fetched, never a sponsor's, no cap —
+frames included — curated, or auto-fetched only when the line declares
+`logo:domain.com` (identity and cache key; the matched article must
+reference the domain) — capped at `LOGO_MAX_FRAMES` (2): one mark
+papering 4/6 frames is a fail, beyond the cap frames go designed
+text-only —
 → a gate-verified on-topic general photo from the story-subject pool
 (person-frame names stripped; never for person frames) → text-only as the
 LAST resort, rendered with a
