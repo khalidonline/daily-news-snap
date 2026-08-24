@@ -176,7 +176,16 @@ recent-photo rescue and the in-story repeat stay removed. If more than
 SKIPPED, recorded in `state/stories_skipped.json` with reason
 `no_logo_insufficient_visuals` (same review queue as portrait skips),
 Telegram is told, and the run advances to the next eligible story —
-never a mostly-blank deck, never a lost slot. Dropping a curated logo
+never a mostly-blank deck, never a lost slot. TYPOGRAPHIC frames count
+as illustrated (owner decision): a photoless frame whose text carries a
+strong figure — a number with unit, a year — sets it huge in the photo
+zone over the faint watermark; such frames don't count toward the blank
+budget. `preflight_stories.py` (manual) checks every line's illustration
+coverage offline — portrait for person lines, logo identity (curated or
+`logo:domain.com`-fetchable), or an archive probe — writes verdicts to
+`state/story_coverage.json`, and `choose_story` skips recorded failures:
+they are the curation worklist (add a logo domain, drop a curated file,
+or retire the line). Unchecked lines are never blocked. Dropping a curated logo
 into `images/logos/` un-skips a story; manual rescue is opt-in, not the
 normal path. Story GENERATION is OFF (2026-08: every generated frame was
 junk — the fake desert Mercedes closed the SAVOLA deck); the code stays

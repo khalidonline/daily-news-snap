@@ -670,6 +670,16 @@ def choose_story(exclude=(), pool=None):
     used = {e["story"] for e in load_used()}
     used |= {e["story"] for e in load_skipped()}
     used |= set(exclude)
+    # the preflight's verdicts: a line RECORDED as failing coverage is not
+    # eligible — it sits on the curation worklist until the owner adds a
+    # logo:domain, drops a curated file, or retires it. Lines the preflight
+    # has never seen are not blocked.
+    try:
+        cov = json.loads(Path("state/story_coverage.json")
+                         .read_text("utf-8")).get("entries", {})
+        used |= {ln for ln, e in cov.items() if e.get("pass") is False}
+    except Exception:
+        pass
     if pool:
         stories = [s for s in stories if _STORY_POOLS.get(s, "general") == pool]
         if not stories:
@@ -879,6 +889,26 @@ def research(story):
 
 PUNCH_GAP = 58          # space above the punch, so it reads as its own beat
 
+# a figure worth setting HUGE on a typographic frame: a number with its
+# unit, a percentage, or a four-digit year
+_FIGURE_RE = re.compile(
+    r"(\d[\d,.]*\s*(?:%|مليار|مليون|ألف|ريال|دولار)|\b(?:1[89]|20)\d{2}\b)")
+
+
+def _frame_figure(text, punch=""):
+    """The frame's strongest figure, for the typographic treatment.
+
+    Owner decision (2026-08): an interior frame may be typographic — a
+    number, a date, a pull line set large where the photo would be — and
+    counts as ILLUSTRATED. The figure comes from the frame's own text, so
+    it can never be wrong the way a guessed image can.
+    """
+    for source in (punch or "", text or ""):
+        m = _FIGURE_RE.search(source)
+        if m:
+            return m.group(1).strip()
+    return ""
+
 
 def render_frame(path, kicker, counter, big, big_size, sub=None,
                  sub_colour=None, photo=None, footer=None, punch=None):
@@ -930,17 +960,32 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             break
         size -= 8
     if not photo:
-        # Designed text-only: the photo zone carries a large, low-contrast
-        # brand watermark so the frame reads as composed, not broken — a
-        # centred heading on a sea of beige was the failure the owner
-        # flagged. Falls back to plain centring only if the badge asset
-        # is missing.
-        wm = brand_badge(500, alpha=30)
-        if wm is not None:
-            img.paste(wm, ((W - 500) // 2, y + 40), wm)
+        # Designed text-only. First choice: the TYPOGRAPHIC treatment —
+        # the frame's own strongest figure (a number, a year) set huge in
+        # the photo zone; it reads as a deliberate numeric frame and can
+        # never be wrong the way a guessed image can. Otherwise the large
+        # low-contrast brand watermark keeps the zone composed. Plain
+        # centring only if the badge asset is missing too.
+        figure = _frame_figure(sub, punch)
+        if figure:
+            wm = brand_badge(430, alpha=18)
+            if wm is not None:
+                img.paste(wm, ((W - 430) // 2, y + 75), wm)
+            fig_size = 210
+            f_fig = load_font(fig_size, bold=True)
+            while fig_size > 90 and draw.textlength(
+                    ar(figure)[0], font=f_fig, **kw) > max_w - 80:
+                fig_size -= 12
+                f_fig = load_font(fig_size, bold=True)
+            mid(y + 290 - fig_size // 2, figure, f_fig, TEXT)
             y += 500 + 130
         else:
-            y = (H - len(lines) * int(size * 1.25)) // 2 - 140
+            wm = brand_badge(500, alpha=30)
+            if wm is not None:
+                img.paste(wm, ((W - 500) // 2, y + 40), wm)
+                y += 500 + 130
+            else:
+                y = (H - len(lines) * int(size * 1.25)) // 2 - 140
     for line in lines:
         mid(y, line, f_big, TEXT)
         y += int(size * 1.25)
@@ -1701,7 +1746,12 @@ def find_all_photos(brief):
         print(f"    frame {n}: {tier}")
         photos.append(photo)
 
-    text_only = [i for i, ph in enumerate(photos, 1) if ph is None]
+    # typographic frames count as illustrated (owner decision): a frame
+    # whose text carries a strong figure renders it huge in the photo zone
+    text_only = [i for i, ph in enumerate(photos, 1)
+                 if ph is None and not _frame_figure(
+                     frames[i - 1].get("text", ""),
+                     frames[i - 1].get("punch", ""))]
     if len(text_only) > STORY_MAX_BLANK_FRAMES:
         # mostly-blank decks don't ship (owner's rule): the caller records
         # the skip and advances to the next story rather than losing the slot
