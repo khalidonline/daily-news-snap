@@ -2961,28 +2961,39 @@ def notify(text, photo_path=None):
         print(f"  ! telegram notification failed: {exc}")
 
 
-def notify_album(text, photo_paths):
-    """Send several photos as one Telegram album, captioned on the first.
-    Falls back to a single photo if the album call fails."""
+def notify_album(text, photo_paths, as_documents=False):
+    """Send several images as one Telegram album, captioned on the first.
+
+    as_documents=True sends FILES rather than photos: Telegram preserves
+    the exact filename and full quality. Photos get recompressed and
+    renamed with an epoch-ms prefix on download, which scrambled the
+    owner's frame order (1787589023931_...-story-06.png) — for anything
+    uploaded onward by hand, documents with index-FIRST names are the fix.
+    """
     paths = [p for p in (photo_paths or []) if p and Path(p).exists()]
     if not (TELEGRAM_TOKEN and TELEGRAM_CHAT_ID) or not paths:
         return
-    if len(paths) == 1:
+    if len(paths) == 1 and not as_documents:
         return notify(text, paths[0])
 
     boundary = "----snapalbum" + hashlib.md5(text.encode()).hexdigest()[:12]
     media = []
     parts = []
+    kind = "document" if as_documents else "photo"
     for n, path in enumerate(paths[:10]):        # Telegram allows up to 10
         name = f"photo{n}"
-        item = {"type": "photo", "media": f"attach://{name}"}
+        item = {"type": kind, "media": f"attach://{name}"}
         if n == 0:
             item["caption"] = text
         media.append(item)
+        # the frame index comes FIRST in the delivered filename, so any
+        # download sorts 01..06 lexically whatever the client prepends
+        fname = (f"{n + 1:02d}-{Path(path).name}" if as_documents
+                 else Path(path).name)
         parts.append(
             f"--{boundary}\r\n"
             f'Content-Disposition: form-data; name="{name}"; '
-            f'filename="{Path(path).name}"\r\n'
+            f'filename="{fname}"\r\n'
             f"Content-Type: image/png\r\n\r\n".encode()
             + Path(path).read_bytes() + b"\r\n")
 

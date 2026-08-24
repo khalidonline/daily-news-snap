@@ -68,6 +68,10 @@ ALLOW_STORY_GENERATION = os.getenv("ALLOW_STORY_GENERATION", "0").strip() \
 STORY_ALLOW_REPEAT = os.getenv("STORY_ALLOW_REPEAT", "1").strip() \
     not in ("0", "false", "False")
 COOLDOWN_DAYS = int(os.getenv("STORY_COOLDOWN_DAYS", "").strip() or "60")
+# a SUBJECT stays retired longer than its line: two entries about one
+# entity must not produce two decks months apart feeling like reruns
+SUBJECT_COOLDOWN_DAYS = int(
+    os.getenv("SUBJECT_COOLDOWN_DAYS", "").strip() or "90")
 
 # The frame-continuation style (connector openings, hanging thoughts, a bare
 # pivot line before the turn, a near-empty verdict frame) is modelled on a
@@ -536,6 +540,9 @@ _STORY_POOLS = {}
 # the auto-logo fetch will accept. Title-derived slugs are dead: they are
 # how a wrong company's mark gets guessed onto a story.
 _STORY_LOGO_DOMAIN = {}
+# explicit `subject:key` tokens — the canonical entity key for dedupe,
+# for lines whose identity isn't obvious from aliases
+_STORY_SUBJECT = {}
 _ALIASES_LOADED = False
 
 
@@ -566,6 +573,8 @@ def load_stories():
         for tok in (t.strip() for t in tail.split(",") if t.strip()):
             if tok.lower().startswith("logo:"):
                 _STORY_LOGO_DOMAIN[head] = tok[5:].strip().lower()
+            elif tok.lower().startswith("subject:"):
+                _STORY_SUBJECT[head] = tok[8:].strip().lower()
             else:
                 aliases.append(tok)
         if aliases:
@@ -671,6 +680,11 @@ def _subject_keys(line):
     INTERSECTION, because one sibling may declare a domain the other
     doesn't."""
     keys = set()
+    if not _ALIASES_LOADED:
+        load_stories()
+    subj = _STORY_SUBJECT.get(str(line or "").strip(), "")
+    if subj:
+        keys.add(subj)
     d = story_logo_domain(line)
     if d:
         keys.add(d)
@@ -703,8 +717,15 @@ def choose_story(exclude=(), pool=None):
         if not stories:
             return ""
     used_subjects = set()
-    for u in used:
-        used_subjects |= _subject_keys(u)
+    try:
+        cutoff = (datetime.now()
+                  - timedelta(days=SUBJECT_COOLDOWN_DAYS)).isoformat()
+        for e in json.loads(USED_FILE.read_text(encoding="utf-8")):
+            if e.get("at", "") >= cutoff:
+                used_subjects |= _subject_keys(e.get("story", ""))
+    except Exception:
+        for u in used:
+            used_subjects |= _subject_keys(u)
     fresh = [s for s in stories
              if s not in used and not (_subject_keys(s) & used_subjects)]
     if not fresh:
@@ -1946,8 +1967,9 @@ def main():
             # count the pool the story ACTUALLY came from
             bump_mix(story_pool(story))
         notify_album(f"{recent_warning()}📖 {stamp} — {brief['title']}\n"
-                     f"{len(frames)} لقطات",
-                     frames)
+                     f"{len(frames)} لقطات — الملفات مرقّمة 01..N للرفع "
+                     "بالترتيب",
+                     frames, as_documents=True)
         return
 
     if not quota_ok():
