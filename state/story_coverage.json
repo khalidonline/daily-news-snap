@@ -1,0 +1,342 @@
+{
+ "entries": {
+  "قصة الشماغ ومصانعه في إنجلترا": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:04.228530",
+   "anchors": [
+    "archive:ghutra"
+   ],
+   "pass": true
+  },
+  "قصة القهوة السعودية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:05.128681",
+   "anchors": [
+    "archive:Saudi coffee"
+   ],
+   "pass": true
+  },
+  "قصة التمر السعودي وتحوله لصناعة": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:06.236328",
+   "person": "التمر السعودي وتحوله لصناعة",
+   "anchors": [
+    "archive:Saudi dates industry"
+   ],
+   "pass": true
+  },
+  "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:11.898744",
+   "anchors": [
+    "archive:air conditioning"
+   ],
+   "pass": true
+  },
+  "قصة ماء زمزم وكيف يُعبأ ويوزّع": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:12.773056",
+   "anchors": [
+    "archive:Zamzam water"
+   ],
+   "pass": true
+  },
+  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:13.654084",
+   "anchors": [
+    "archive:Kabsa"
+   ],
+   "pass": true
+  },
+  "قصة العباءة السعودية وتحولها لصناعة أزياء": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:14.664193",
+   "anchors": [
+    "archive:abaya fashion industry"
+   ],
+   "pass": true
+  },
+  "قصة مكتبة جرير من متجر صغير إلى عملاق": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:15.465947",
+   "anchors": [
+    "archive:Jarir Bookstore"
+   ],
+   "pass": true
+  },
+  "قصة مصرف الراجحي من صرافة إلى أكبر بنك": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:16.369931",
+   "anchors": [
+    "archive:Al Rajhi Bank"
+   ],
+   "pass": true
+  },
+  "قصة طيران ناس وثورة الطيران الاقتصادي": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:17.096683",
+   "anchors": [
+    "archive:flynas"
+   ],
+   "pass": true
+  },
+  "قصة المراعي من مزرعة إلى أكبر شركة ألبان": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:18.212808",
+   "anchors": [
+    "archive:Almarai"
+   ],
+   "pass": true
+  },
+  "قصة صافولا": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:19.034383",
+   "anchors": [
+    "logo:curated"
+   ],
+   "pass": true
+  },
+  "قصة هنقرستيشن وحرب تطبيقات التوصيل": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:19.034917",
+   "person": "هنقرستيشن وحرب تطبيقات التوصيل",
+   "anchors": [
+    "archive:HungerStation"
+   ],
+   "pass": true
+  },
+  "قصة مرسول وتوسعه": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:25.013542",
+   "person": "مرسول وتوسعه",
+   "anchors": [
+    "portrait:Mrsool"
+   ],
+   "pass": true
+  },
+  "قصة العثيم وتجارة التجزئة": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:31.802827",
+   "person": "العثيم وتجارة التجزئة",
+   "anchors": [
+    "portrait:Al Othaim Markets"
+   ],
+   "pass": true
+  },
+  "قصة بنده والتجزئة السعودية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:37.660555",
+   "anchors": [
+    "archive:Panda Retail"
+   ],
+   "pass": true
+  },
+  "قصة نادك للأغذية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:38.390646",
+   "person": "نادك للأغذية",
+   "anchors": [
+    "portrait:NADEC"
+   ],
+   "pass": true
+  },
+  "قصة زين السعودية وسوق الاتصالات": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:43.678414",
+   "anchors": [
+    "archive:Zain KSA"
+   ],
+   "pass": true
+  },
+  "قصة موبايلي": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:44.594535",
+   "anchors": [
+    "archive:Mobily"
+   ],
+   "pass": true
+  },
+  "قصة سابك من فكرة إلى عملاق بتروكيماويات": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:45.861453",
+   "anchors": [
+    "archive:SABIC"
+   ],
+   "pass": true
+  },
+  "قصة سليمان الراجحي وأكبر وقف خاص": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:47.163859",
+   "anchors": [
+    "archive:Sulaiman Al Rajhi"
+   ],
+   "pass": true
+  },
+  "قصة صالح كامل ودلة البركة": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:48.058610",
+   "person": "صالح كامل ودلة البركة",
+   "anchors": [
+    "portrait:Saleh Kamel"
+   ],
+   "pass": true
+  },
+  "قصة انهيار سوق الأسهم السعودية 2006": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:55.276649",
+   "anchors": [
+    "archive:Saudi stock market crash 2006"
+   ],
+   "pass": true
+  },
+  "قصة سوق المناخ في الكويت 1982": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:56.268351",
+   "anchors": [
+    "archive:Souk Al-Manakh"
+   ],
+   "pass": true
+  },
+  "قصة أزمة النقد في الثمانينات وأثرها على الخليج": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:57.167696",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة طفرة النفط الأولى في السبعينات وتغيير المملكة": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:57.947128",
+   "anchors": [
+    "archive:1970s oil boom"
+   ],
+   "pass": true
+  },
+  "قصة تأسيس مؤسسة النقد ساما": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:34:59.011726",
+   "anchors": [
+    "archive:SAMA"
+   ],
+   "pass": true
+  },
+  "قصة ربط الريال بالدولار وقصته": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:00.261327",
+   "person": "ربط الريال بالدولار وقصته",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة استحواذ أوبر على كريم": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:06.656299",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة كريم من فكرة إلى مليارات": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:08.513465",
+   "anchors": [
+    "archive:Careem"
+   ],
+   "pass": true
+  },
+  "قصة دخول لوسيد ومصنعها في السعودية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:09.925707",
+   "anchors": [
+    "archive:Lucid Motors"
+   ],
+   "pass": true
+  },
+  "قصة ماكدونالدز في السعودية وعائلات الامتياز": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:11.010931",
+   "anchors": [
+    "archive:McDonald's Saudi Arabia"
+   ],
+   "pass": true
+  },
+  "قصة ستاربكس عبر الشايع": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:11.973142",
+   "person": "ستاربكس عبر الشايع",
+   "anchors": [
+    "portrait:Starbucks"
+   ],
+   "pass": true
+  },
+  "قصة أمازون واستحواذها على سوق دوت كوم": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:19.971301",
+   "anchors": [
+    "archive:Souq.com"
+   ],
+   "pass": true
+  },
+  "قصة نون ومنافسة التجارة الإلكترونية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:21.007454",
+   "person": "نون ومنافسة التجارة الإلكترونية",
+   "anchors": [
+    "portrait:noon"
+   ],
+   "pass": true
+  },
+  "قصة صندوق الاستثمارات العامة واستثماراته العالمية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:28.763032",
+   "anchors": [
+    "archive:PIF"
+   ],
+   "pass": true
+  },
+  "قصة استثمار صندوق الاستثمارات في Uber": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:29.873758",
+   "anchors": [
+    "archive:PIF Uber stake"
+   ],
+   "pass": true
+  },
+  "قصة سكة حديد الرياض الدمام 1951": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:30.812281",
+   "anchors": [
+    "archive:Riyadh Dammam railway"
+   ],
+   "pass": true
+  },
+  "قصة افتتاح أول جامعة سعودية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:31.912425",
+   "anchors": [
+    "archive:King Saud University 1957"
+   ],
+   "pass": true
+  },
+  "قصة أول سيارة تدخل الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:32.858393",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة أول مطار في جدة وتطور الطيران المدني": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:33.702613",
+   "anchors": [
+    "archive:Jeddah airport history"
+   ],
+   "pass": true
+  },
+  "قصة أول عملة ورقية سعودية": {
+   "pool": "saudi",
+   "at": "2026-08-24T17:35:34.774435",
+   "anchors": [
+    "archive:first Saudi banknote"
+   ],
+   "pass": true
+  }
+ },
+ "checked_at": "2026-08-24T17:35:35.934630"
+}
