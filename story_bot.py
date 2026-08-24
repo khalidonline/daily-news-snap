@@ -1594,9 +1594,33 @@ def _curated_logo(frame_no, total, brief, frame, allow_hero=False):
         return None
 
     eras = sorted(next(iter(candidates.values())))
-    # era by frame position only: opening takes the oldest, the closing frame
-    # takes -current (or the newest on file), middle frames interpolate
-    if len(eras) == 1:
+    # ERA MATCHING IS MANDATORY (owner rule): a current mark must never sit
+    # on a frame set decades earlier. The frame's own text names its year;
+    # when it does, pick the nearest era file — and if only "current"
+    # exists for a frame >=20 years back, refuse: the typographic frame is
+    # always preferable to an anachronism.
+    m = re.search(r"\b(1[89]\d\d|20[0-2]\d)\b",
+                  str(frame.get("text", "")) + " "
+                  + str(frame.get("heading", "")))
+    frame_year = int(m.group(1)) if m else None
+    if frame_year is not None:
+        this_year = datetime.now().year
+        dated = [(k, p2) for k, p2 in eras if k != float("inf")]
+        if dated:
+            key, path = min(dated, key=lambda e: abs(e[0] - frame_year))
+            if abs(key - frame_year) > 25 and this_year - frame_year >= 20:
+                print(f"    frame {frame_no}: nearest era mark ({int(key)}) "
+                      f"is {abs(int(key) - frame_year)}y off a {frame_year} "
+                      "frame — refusing, typographic beats an anachronism")
+                return None
+        elif this_year - frame_year >= 20:
+            print(f"    frame {frame_no}: only a CURRENT mark exists for a "
+                  f"{frame_year} frame — refusing, typographic beats an "
+                  "anachronism")
+            return None
+        else:
+            _, path = eras[-1]
+    elif len(eras) == 1:
         _, path = eras[0]
     elif frame_no == 1:
         _, path = eras[0]
@@ -1745,6 +1769,17 @@ def find_all_photos(brief):
             if photo:
                 tier = "verified portrait"
         else:
+            # asset priority, cheapest and safest first (owner rule): on a
+            # company story the BRAND MARK leads — deterministic identity,
+            # zero search risk — with the era rule inside refusing any
+            # anachronistic placement; photos come second
+            if story_has_company and photo is None:
+                if logo_frames < LOGO_MAX_FRAMES:
+                    lead = _curated_logo(n, len(frames), brief, frame,
+                                         allow_hero=True)
+                    if lead is not None:
+                        photo, tier = lead, "subject logo"
+                        logo_frames += 1
             if story_has_company:
                 # frame keywords are ignored by design: the query IS the
                 # subject, and the gate hears the subject too
@@ -1772,17 +1807,10 @@ def find_all_photos(brief):
         # frames included. Historical stories never consult it: there is
         # no subject logo to fetch, and the auto-slug would go hunting a
         # modern namesake's mark for a 1602 story.
-        if photo is None and story_has_company:
-            if logo_frames >= LOGO_MAX_FRAMES:
-                print(f"    frame {n}: logo cap reached "
-                      f"({LOGO_MAX_FRAMES}) — text-only beats papering "
-                      "the deck with one mark")
-            else:
-                logo = _curated_logo(n, len(frames), brief, frame,
-                                     allow_hero=True)
-                if logo is not None:
-                    photo, tier = logo, "subject logo"
-                    logo_frames += 1
+        if photo is None and story_has_company \
+                and logo_frames >= LOGO_MAX_FRAMES:
+            print(f"    frame {n}: logo cap reached ({LOGO_MAX_FRAMES}) "
+                  "— photos or typographic carry the rest")
 
         # general on-topic photo, gate-verified against this frame's text —
         # never for person frames (identity is not subject to widening)

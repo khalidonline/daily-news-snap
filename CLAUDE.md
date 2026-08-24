@@ -163,7 +163,16 @@ cooldown by design. If every source exhausts and only a recent photo
 remains, it ships with a loud ⚠️ prefix on the Telegram delivery — a
 repeat is a flaw, a dead run is worse.
 
-**Story frame ladder** (revised twice in 2026-08; this is current): a
+**Story frame ladder** (revised thrice in 2026-08; this is current).
+Asset priority on a company story, cheapest and safest first: the BRAND
+MARK leads (explicit `logo:domain.com` only, era-matched — the frame's
+own year picks the nearest era file, and a current mark NEVER sits on a
+frame >=20 years back: typographic beats an anachronism, enforced in
+_curated_logo and echoed in the vision judge, which rejects clearly
+modern photos on dated frames — the طوكيو-1983 failure class), then
+subject-bound photos (product/building/portrait as the archive serves
+them), then the typographic frame. Historical marks (Samsung first
+logo.svg) are excluded from the current-cache by filename era-words. a
 WRONG photo is worse than a logo, but a bare beige frame is a
 scroll-past. Per frame: the frame's OWN keywords, relevance-verified →
 (country frames: the curated flag from `images/flags/<iso>.png`) → the

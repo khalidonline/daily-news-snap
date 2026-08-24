@@ -96,6 +96,13 @@ def _article_logo_files(name, require_domain=None):
                 t = im.get("title", "")
                 if not ("logo" in t.lower() or "شعار" in t):
                     continue
+                # this fetch caches the CURRENT mark: a file the article
+                # labels as a historical logo (Samsung first logo.svg)
+                # must never become <slug>-current.png — era marks stay
+                # manual, era matching is mandatory
+                if _re.search(r"\b(first|old|former|original|19\d\d|"
+                              r"20[01]\d)\b", t.lower()):
+                    continue
                 # The file title must carry the subject's name too — every
                 # article's file list includes Commons-logo.svg and friends,
                 # wiki furniture that says "logo" and belongs to nobody.
