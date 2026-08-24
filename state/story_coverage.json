@@ -336,7 +336,598 @@
     "archive:first Saudi banknote"
    ],
    "pass": true
+  },
+  "كيف تأسست Apple في مرآب، ومن باع حصته مبكراً": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:49.092155",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة NVIDIA: من رقائق الألعاب إلى أغلى شركة في العالم": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:49.854027",
+   "anchors": [
+    "archive:NVIDIA"
+   ],
+   "pass": true
+  },
+  "لماذا سقطت Nokia رغم أنها كانت الأولى عالمياً؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:50.784472",
+   "anchors": [],
+   "pass": false
+  },
+  "كيف بدأت Amazon كمتجر كتب على الإنترنت": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:51.700694",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:52.605427",
+   "anchors": [
+    "archive:Netflix"
+   ],
+   "pass": true
+  },
+  "كيف رفض Yahoo شراء Google بمليون دولار": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:53.391667",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Snapchat: فكرة رُفضت ثم صارت شركة بمليارات": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:54.303374",
+   "anchors": [
+    "archive:Snapchat"
+   ],
+   "pass": true
+  },
+  "كيف تحولت Microsoft من بيع الأنظمة إلى السحابة": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:55.368835",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Tesla: الشركة التي كادت تفلس مرتين": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:56.691693",
+   "anchors": [
+    "archive:Tesla"
+   ],
+   "pass": true
+  },
+  "لماذا اختفت BlackBerry من السوق؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:57.857639",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة OpenAI: من مختبر بحثي إلى أشهر منتج تقني": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:58.783834",
+   "anchors": [
+    "archive:OpenAI"
+   ],
+   "pass": true
+  },
+  "كيف بنت TSMC احتكاراً على رقائق العالم": {
+   "pool": "general",
+   "at": "2026-08-24T17:37:59.707502",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:00.666217",
+   "anchors": [
+    "archive:Samsung"
+   ],
+   "pass": true
+  },
+  "كيف خسرت Kodak السوق الذي اخترعته بنفسها": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:01.664342",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:02.440713",
+   "anchors": [
+    "archive:أرامكو"
+   ],
+   "pass": true
+  },
+  "كيف نشأت أول بورصة في العالم؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:03.174275",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:04.310594",
+   "anchors": [
+    "archive:أزمة 2008"
+   ],
+   "pass": true
+  },
+  "لماذا ارتبط الريال السعودي بالدولار وكيف؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:05.239120",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:06.156333",
+   "anchors": [
+    "archive:صندوق الاستثمارات العامة"
+   ],
+   "pass": true
+  },
+  "كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:07.259768",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة البيتكوين: من ورقة بحثية إلى أصل بتريليونات": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:08.170368",
+   "anchors": [
+    "archive:البيتكوين"
+   ],
+   "pass": true
+  },
+  "كيف أفلست دولة؟ قصص التخلف عن السداد": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:08.969413",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة الذهب: لماذا ظل مخزناً للقيمة آلاف السنين؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:09.842740",
+   "anchors": [
+    "archive:الذهب"
+   ],
+   "pass": true
+  },
+  "كيف بدأت فكرة البطاقة الائتمانية؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:11.035924",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:11.993813",
+   "anchors": [
+    "archive:الرياض"
+   ],
+   "pass": true
+  },
+  "كيف بُنيت دبي على الرمل في خمسين سنة؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:12.968937",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة سنغافورة: من ميناء فقير إلى أغنى دول آسيا": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:13.974381",
+   "anchors": [
+    "archive:سنغافورة"
+   ],
+   "pass": true
+  },
+  "كيف تحولت العلا من واحة إلى وجهة عالمية؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:15.682782",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة جدة التاريخية: بوابة الحج منذ قرون": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:16.601916",
+   "anchors": [
+    "archive:جدة التاريخية"
+   ],
+   "pass": true
+  },
+  "لماذا صارت طوكيو أكبر مدينة في العالم؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:17.518291",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة نيويورك: كيف صارت عاصمة المال؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:18.353325",
+   "anchors": [
+    "archive:نيويورك"
+   ],
+   "pass": true
+  },
+  "كيف بنت الصين مدناً كاملة في سنوات؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:20.166235",
+   "anchors": [],
+   "pass": false
+  },
+  "من هو مؤسس أرامكو الحقيقي؟ قصة الاكتشاف الأول": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:21.517331",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Steve Jobs: الطرد من شركته ثم العودة": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:22.744542",
+   "person": "Steve Jobs",
+   "anchors": [
+    "portrait:Steve Jobs"
+   ],
+   "pass": true
+  },
+  "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:27.102968",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Warren Buffett: أول استثمار في سن الحادية عشرة": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:28.110265",
+   "person": "Warren Buffett",
+   "anchors": [
+    "portrait:Warren Buffett"
+   ],
+   "pass": true
+  },
+  "كيف بنى Elon Musk أربع شركات بمليارات في وقت واحد": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:31.946200",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة رجل الأعمال السعودي الذي بدأ ببقالة صغيرة": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:32.625824",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:33.358089",
+   "anchors": [],
+   "pass": false
+  },
+  "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:34.417516",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:35.364510",
+   "anchors": [
+    "archive:Emirates"
+   ],
+   "pass": true
+  },
+  "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:36.881037",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:37.927136",
+   "anchors": [
+    "archive:جواز السفر"
+   ],
+   "pass": true
+  },
+  "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:39.330065",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:40.535727",
+   "anchors": [
+    "archive:Digital Research"
+   ],
+   "pass": true
+  },
+  "Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:41.931645",
+   "person": "Radia Perlman",
+   "anchors": [
+    "portrait:Radia Perlman"
+   ],
+   "pass": true
+  },
+  "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:47.894404",
+   "person": "Shuji Nakamura",
+   "anchors": [
+    "portrait:Shuji Nakamura"
+   ],
+   "pass": true
+  },
+  "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:52.881572",
+   "person": "Jerry Lawson",
+   "anchors": [
+    "portrait:Jerry Lawson"
+   ],
+   "pass": true
+  },
+  "Hedy Lamarr: ممثلة سجّلت براءة اختراع صارت أساس الواي فاي": {
+   "pool": "general",
+   "at": "2026-08-24T17:38:58.842601",
+   "person": "Hedy Lamarr",
+   "anchors": [
+    "portrait:Hedy Lamarr"
+   ],
+   "pass": true
+  },
+  "Ajay Bhatt: مخترع منفذ USB الذي لم يربح منه شيئاً": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:04.338514",
+   "person": "Ajay Bhatt",
+   "anchors": [
+    "portrait:Ajay Bhatt"
+   ],
+   "pass": true
+  },
+  "Philo Farnsworth: اخترع التلفزيون في مزرعة وخسر حقوقه": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:08.875377",
+   "person": "Philo Farnsworth",
+   "anchors": [
+    "portrait:Philo Farnsworth"
+   ],
+   "pass": true
+  },
+  "Mary Allen Wilkes: أول من استخدم حاسوباً في بيتها عام 1965": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:13.236476",
+   "person": "Mary Allen Wilkes",
+   "anchors": [
+    "portrait:Mary Allen Wilkes"
+   ],
+   "pass": true
+  },
+  "Masaru Ibuka: الشريك الأهدأ الذي بنى Sony مع Morita": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:18.742013",
+   "person": "Masaru Ibuka",
+   "anchors": [
+    "portrait:Masaru Ibuka"
+   ],
+   "pass": true
+  },
+  "Malcom McLean: سائق شاحنة غيّر التجارة العالمية بصندوق حديد": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:23.027627",
+   "person": "Malcom McLean",
+   "anchors": [
+    "portrait:Malcom McLean"
+   ],
+   "pass": true
+  },
+  "قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:27.535179",
+   "anchors": [
+    "archive:Diners Club"
+   ],
+   "pass": true
+  },
+  "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:28.488985",
+   "person": "Muriel Siebert",
+   "anchors": [
+    "portrait:Muriel Siebert"
+   ],
+   "pass": true
+  },
+  "Benjamin Graham: أستاذ Warren Buffett الذي وضع قواعد الاستثمار": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:32.757334",
+   "person": "Benjamin Graham",
+   "anchors": [
+    "portrait:Benjamin Graham"
+   ],
+   "pass": true
+  },
+  "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:36.892220",
+   "person": "Jack Bogle",
+   "anchors": [
+    "portrait:Jack Bogle"
+   ],
+   "pass": true
+  },
+  "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:36.893832",
+   "person": "Amancio Ortega",
+   "anchors": [
+    "portrait:Amancio Ortega"
+   ],
+   "pass": true
+  },
+  "Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:42.458143",
+   "person": "Muhammad Yunus",
+   "anchors": [
+    "portrait:Muhammad Yunus"
+   ],
+   "pass": true
+  },
+  "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:47.401297",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:48.274004",
+   "person": "مدام سي جيه ووكر",
+   "anchors": [
+    "portrait:مدام سي جيه ووكر"
+   ],
+   "pass": true
+  },
+  "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:48.279920",
+   "anchors": [
+    "archive:Travelpro"
+   ],
+   "pass": true
+  },
+  "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:49.501588",
+   "person": "Juan Trippe",
+   "anchors": [
+    "portrait:Juan Trippe"
+   ],
+   "pass": true
+  },
+  "Herb Kelleher: أسس Southwest على منديل ورقي": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:54.202927",
+   "person": "Herb Kelleher",
+   "anchors": [
+    "portrait:Herb Kelleher"
+   ],
+   "pass": true
+  },
+  "Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة": {
+   "pool": "general",
+   "at": "2026-08-24T17:39:59.443914",
+   "person": "Fred Smith",
+   "anchors": [
+    "portrait:Fred Smith"
+   ],
+   "pass": true
+  },
+  "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:04.627854",
+   "person": "علي النعيمي",
+   "anchors": [
+    "portrait:علي النعيمي"
+   ],
+   "pass": true
+  },
+  "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:04.629043",
+   "person": "سليمان الراجحي",
+   "anchors": [
+    "portrait:سليمان الراجحي"
+   ],
+   "pass": true
+  },
+  "يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:10.533946",
+   "person": "يوسف بن أحمد كانو",
+   "anchors": [
+    "portrait:يوسف بن أحمد كانو"
+   ],
+   "pass": true
+  },
+  "جميل للسيارات ووكالة تويوتا": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:15.784642",
+   "person": "جميل للسيارات ووكالة تويوتا",
+   "anchors": [
+    "portrait:Abdul Latif Jameel"
+   ],
+   "pass": true
+  },
+  "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:22.296068",
+   "person": "محمد بن لادن",
+   "anchors": [
+    "portrait:محمد بن لادن"
+   ],
+   "pass": true
+  },
+  "حسن الشربتلي وجيل التجار الأوائل في جدة": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:27.436691",
+   "anchors": [],
+   "pass": false
+  },
+  "من هم أول الموظفين السعوديين في أرامكو؟": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:28.166231",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة نوكيا من مصنع ورق إلى الهواتف": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:28.847486",
+   "anchors": [
+    "archive:Nokia"
+   ],
+   "pass": true
+  },
+  "قصة ليغو من ورشة نجارة": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:29.614518",
+   "anchors": [
+    "archive:LEGO"
+   ],
+   "pass": true
+  },
+  "قصة IKEA من قرية سويدية": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:30.562463",
+   "anchors": [
+    "archive:IKEA"
+   ],
+   "pass": true
+  },
+  "قصة Rolex وصناعة الفخامة": {
+   "pool": "general",
+   "at": "2026-08-24T17:40:31.603746",
+   "anchors": [],
+   "pass": false
+  },
+  "قصة Samsung من متجر بقالة": {
+   "pool": "general",
+   "at": "2026-08-24T17:45:58.825101",
+   "anchors": [
+    "archive:Samsung"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-24T17:35:35.934630"
+ "checked_at": "2026-08-24T17:46:01.665652"
 }
