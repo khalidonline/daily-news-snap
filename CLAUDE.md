@@ -241,7 +241,13 @@ and ABORTS without posting if it can't confirm. `state/breaking.json`
 holds the one-per-day cap, the cycle lock, and the event fingerprint that
 stops one event posting twice in different words; quiet cycles write
 nothing. The script guards its own time window because stale crons replay.
-Breaking OR the 20:00 fallback posts each evening, never both.
+Breaking OR the 20:00 fallback posts each evening, never both. Every
+watcher cycle sends exactly one Telegram line — quiet (⚪️ with the
+classifier's reason), error (🔴, never swallowed), or the breaking
+card itself — because a working watcher and a dead one must never look
+the same (both used to look like nothing). Dry-run news cards are sent
+too (🟡 held, with how to approve): the artifact steps keep files 7
+days in Actions, and a held card only on disk is a card never seen.
 
 About 91 posts a month (07:00 news + 09:00 topic + one evening card),
 under the 145 cap and the plan's 150. A story counts

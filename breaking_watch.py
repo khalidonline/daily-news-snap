@@ -142,6 +142,19 @@ def _run_news_bot(extra_env):
 
 
 def watch():
+    # Every run reports — a working watcher and a dead one must never
+    # produce the same observable output (nothing). One Telegram line per
+    # cycle, whatever happened; errors are sent, not swallowed.
+    try:
+        _watch()
+    except SystemExit:
+        raise
+    except Exception as exc:
+        notify(f"🔴 {ksa_stamp()} — مراقب العاجل تعطّل: {exc}")
+        raise
+
+
+def _watch():
     now = ksa_now()
     hour = now.hour + now.minute / 60
     # the cron already stops outside the window, but GitHub replays stale
@@ -157,6 +170,8 @@ def watch():
         if state.get("posted") and \
                 len(state.get("stamps", [])) >= MAX_BREAKING_PER_DAY:
             print("today's breaking post already went out — quiet cycle")
+            notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: بطاقة اليوم العاجلة "
+                   "نُشرت — دورة هادئة")
             return
         lock = state.get("lock_at", "")
         if lock:
@@ -166,26 +181,43 @@ def watch():
                 held = 0
             if held < LOCK_MINUTES * 60:
                 print("another live cycle holds the lock — quiet cycle")
+                notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: دورة أخرى تعمل "
+                       "الآن (قفل) — خرجت")
                 return
 
     verdict = classify(now)
     if verdict:
         print("verdict:", json.dumps(verdict, ensure_ascii=False))
-    if not verdict or not verdict.get("breaking"):
+    if not verdict:
+        print("no breaking news this cycle (classifier unavailable)")
+        notify(f"🔴 {ksa_stamp()} — مراقب العاجل: تعذّر التصنيف هذه الدورة "
+               "(خطأ في الاستدعاء) — عومل كلا عاجل")
+        return
+    if not verdict.get("breaking"):
         print("no breaking news this cycle")
+        n_src = len(verdict.get("sources") or [])
+        reason = (verdict.get("reason") or "").strip()[:120]
+        notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: لا عاجل — "
+               f"{reason or 'لا حدث يجتاز الشروط'}"
+               + (f" (مصادر مفحوصة: {n_src})" if n_src else ""))
         return
     # the prompt gates on these too, but a gate the code doesn't hold is a
     # gate a malformed reply walks through
     if len(verdict.get("sources") or []) < 2:
         print("  ! breaking=true with fewer than two sources — refused")
+        notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: مرشح واحد رُفض "
+               "(أقل من مصدرين) — لا نشر")
         return
     event = (verdict.get("event") or "").strip()
     if not event:
         print("  ! breaking=true with an empty event — refused")
+        notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: حكم مشوّه رُفض — لا نشر")
         return
     fp = event_fp(event)
     if state.get("date") == today and state.get("event_fp") == fp:
         print("same event already handled today — quiet cycle")
+        notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: الحدث نفسه سبق فحصه "
+               f"اليوم — لا تكرار\n{event[:100]}")
         return
 
     # acquire the cycle lock BEFORE the expensive pipeline
