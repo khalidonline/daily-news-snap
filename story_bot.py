@@ -543,6 +543,12 @@ _STORY_LOGO_DOMAIN = {}
 # explicit `subject:key` tokens — the canonical entity key for dedupe,
 # for lines whose identity isn't obvious from aliases
 _STORY_SUBJECT = {}
+# saudi-pool lines with NO identity at all (no Latin alias, no subject:,
+# no logo:) — excluded from selection and listed once at load, never
+# discovered mid-run: with subject binding on, such a line has nothing
+# to search on and cannot be illustrated
+_UNIDENTIFIED = set()
+_UNIDENTIFIED_ANNOUNCED = False
 _ALIASES_LOADED = False
 
 
@@ -581,6 +587,21 @@ def load_stories():
             _STORY_ALIASES[head] = aliases
         _STORY_POOLS[head] = pool
         stories.append(head)
+    global _UNIDENTIFIED_ANNOUNCED
+    _UNIDENTIFIED.clear()
+    for head in stories:
+        if _STORY_POOLS.get(head) != "saudi":
+            continue
+        if (_STORY_LOGO_DOMAIN.get(head) or _STORY_SUBJECT.get(head)
+                or any(a.isascii() for a in _STORY_ALIASES.get(head, []))):
+            continue
+        _UNIDENTIFIED.add(head)
+    if _UNIDENTIFIED and not _UNIDENTIFIED_ANNOUNCED:
+        _UNIDENTIFIED_ANNOUNCED = True
+        print(f"  ! {len(_UNIDENTIFIED)} saudi entr(y/ies) carry no subject "
+              "identity — excluded from selection until fixed:")
+        for head in sorted(_UNIDENTIFIED):
+            print(f"      - {head[:70]}")
     return stories
 
 
@@ -712,6 +733,7 @@ def choose_story(exclude=(), pool=None):
         used |= {ln for ln, e in cov.items() if e.get("pass") is False}
     except Exception:
         pass
+    used |= _UNIDENTIFIED
     if pool:
         stories = [s for s in stories if _STORY_POOLS.get(s, "general") == pool]
         if not stories:
@@ -1677,6 +1699,7 @@ def find_all_photos(brief):
     to scrape up "some photo", and decks came back with sponsor stadiums
     and triplicate skylines instead of honest bare frames.
     """
+    global _LAST_SKIP
     frames = brief.get("frames", [])[:STORY_FRAMES]
     # story-level Arabic names, the backstop for a frame with a MISSING
     # Arabic list (an explicit [] is an answer) — still the story's own
@@ -1716,9 +1739,16 @@ def find_all_photos(brief):
     subject_name = (subj_lat or subj_ar or [""])[0]
     subject_spec = {"image_keywords": subj_lat[:2],
                     "image_keywords_ar": subj_ar[:2]}
+    if story_has_company and not subject_name:
+        # binding is on and there is nothing to bind to: frame keywords
+        # are ignored by design, so this story cannot be illustrated —
+        # skip it loudly instead of discovering that mid-run
+        print("  ! company story with NO declared subject — skipping "
+              "(add aliases / subject: / logo: to its stories.txt line)")
+        _LAST_SKIP = "no subject declared on the stories.txt line"
+        return None
     if story_has_company:
-        print(f"    image queries bound to subject: "
-              f"{subject_name or '(none declared)'}")
+        print(f"    image queries bound to subject: {subject_name}")
     if not story_has_company:
         print("    story kind: historical/abstract — archival photos are "
               "the primary visual; the logo rung is N/A")
@@ -1761,6 +1791,7 @@ def find_all_photos(brief):
         # and text-only is the LAST resort, not the default.
         kind = (frame.get("subject_kind") or "abstract").strip().lower()
         tier = None
+        photo = None          # every rung below may only FILL, never assume
 
         bank = []
         if kind == "person":
@@ -1790,10 +1821,11 @@ def find_all_photos(brief):
             # precisely the right archival fallback for a 1602 frame — the
             # bank was removed because COMPANY decks abused it (sponsor
             # stadiums), so it returns kind-aware: no-company stories only.
-            photo = find_photo(spec, slot, used, context,
-                               allow_neutral=not story_has_company,
-                               bank=bank if not story_has_company else None)
-            if photo:
+            if photo is None:
+                photo = find_photo(spec, slot, used, context,
+                                   allow_neutral=not story_has_company,
+                                   bank=bank if not story_has_company else None)
+            if photo and tier is None:
                 tier = "relevant photo"
 
         # country frames keep their flag ahead of the logo
@@ -1864,7 +1896,6 @@ def find_all_photos(brief):
         vision_gate_summary()
         print(f"  ! {len(text_only)} of {len(frames)} frames have no visual "
               f"(no photo, no logo) — skipping this story, not shipping it")
-        global _LAST_SKIP
         if story_has_company:
             _LAST_SKIP = (f"logo unavailable, {len(text_only)}/{len(frames)} "
                           "frames would be blank")
