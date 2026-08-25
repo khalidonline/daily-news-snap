@@ -466,30 +466,6 @@
    "anchors": [],
    "pass": false
   },
-  "قصة تأسيس مؤسسة النقد ساما": {
-   "pool": "saudi",
-   "at": "2026-08-25T16:28:32.303140",
-   "thash": "aa9bd57c75",
-   "files": [
-    "File:Sufis Performing Sama before Shaykh Nizam al-Din Awliya (CBL Per 163.6).jpg",
-    "File:Bank SA.jpg",
-    "File:Saudi Central Bank Logo.png"
-   ],
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "entity:P18:Casa'l conceyu llangreu.jpg",
-    "archive:SAMA:1",
-    "archive:Saudi Central Bank:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "entity:P18",
-    "archive:SAMA",
-    "archive:Saudi Central Bank"
-   ],
-   "pass": true
-  },
   "قصة ربط الريال بالدولار وقصته": {
    "pool": "saudi",
    "at": "2026-08-25T16:28:35.891452",
@@ -2548,7 +2524,31 @@
     "archive:Google"
    ],
    "pass": true
+  },
+  "قصة تأسيس مؤسسة النقد ساما": {
+   "pool": "saudi",
+   "at": "2026-08-25T16:31:49.073714",
+   "thash": "aa9bd57c75",
+   "files": [
+    "File:Sufis Performing Sama before Shaykh Nizam al-Din Awliya (CBL Per 163.6).jpg",
+    "File:Bank SA.jpg",
+    "File:Saudi Central Bank Logo.png"
+   ],
+   "images": 4,
+   "era_ok": 3,
+   "evidence": [
+    "logo:p154:Logo Saudi Arabian Monetary Authority.svg:current",
+    "archive:SAMA:1",
+    "archive:Saudi Central Bank:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "logo:p154",
+    "archive:SAMA",
+    "archive:Saudi Central Bank"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T16:30:09.999697"
+ "checked_at": "2026-08-25T16:31:53.521053"
 }
