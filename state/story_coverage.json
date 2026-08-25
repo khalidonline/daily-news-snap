@@ -314,27 +314,6 @@
    ],
    "pass": true
   },
-  "قصة صالح كامل ودلة البركة": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:10:38.486512",
-   "thash": "c85bf2481d",
-   "person": "صالح كامل",
-   "files": [
-    "File:Boeing 737-9LBER (BBJ3) Dallah Al-Baraka VP-BDB (10767078823).jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "portrait:Dallah Al Baraka",
-    "archive:Dallah Al Baraka:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "portrait:Dallah Al Baraka",
-    "archive:Dallah Al Baraka"
-   ],
-   "pass": true
-  },
   "قصة انهيار سوق الأسهم السعودية 2006": {
    "pool": "saudi",
    "at": "2026-08-25T17:10:54.768034",
@@ -2463,7 +2442,26 @@
    "readiness": "NOT READY",
    "anchors": [],
    "pass": false
+  },
+  "قصة صالح كامل ودلة البركة": {
+   "pool": "saudi",
+   "at": "2026-08-25T17:16:54.248102",
+   "thash": "c85bf2481d",
+   "person": "صالح كامل",
+   "files": [
+    "File:Boeing 737-9LBER (BBJ3) Dallah Al-Baraka VP-BDB (10767078823).jpg"
+   ],
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "archive:Dallah Al Baraka:1"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "archive:Dallah Al Baraka"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T17:12:48.138612"
+ "checked_at": "2026-08-25T17:17:02.282063"
 }
