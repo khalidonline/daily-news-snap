@@ -4,7 +4,8 @@
     python breaking_watch.py            # دورة مراقبة (كل ٣٠ دقيقة نهاراً)
     python breaking_watch.py fallback   # موعد الثامنة مساءً الاحتياطي
 
-الدورة رخيصة: نموذج صغير يمسح أخبار الساعات الأخيرة ويصنّف فقط — الأصل
+الدورة رخيصة: فحص الخلاصات أولاً (بلا نموذج) — إن لم يظهر جديد منذ آخر
+دورة انتهت الدورة هنا. وإن ظهر، نموذج صغير يصنّف والعناوين أمامه — الأصل
 الرفض، ومعظم الدورات تنتهي بسطر واحد ولا تلمس الحالة ولا تكلّف commit.
 إن تأكد حدث عاجل، تُقفل الدورة القفل ثم تشغّل news_bot كاملاً والحدث
 مثبّت (PINNED_EVENT): النموذج الكبير يعيد التحقق ويكتب بكل قواعد
@@ -21,7 +22,9 @@ import os
 import subprocess
 import sys
 import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 try:
@@ -41,6 +44,27 @@ WATCH_START_H, WATCH_END_H = 8.0, 19.5      # KSA; 20:00 belongs to fallback
 WATCH_MODEL = os.getenv("WATCH_MODEL", "").strip() or "claude-haiku-4-5-20251001"
 WATCH_MAX_TOKENS = int(os.getenv("WATCH_MAX_TOKENS", "").strip() or "1200")
 WATCH_MAX_SEARCHES = int(os.getenv("WATCH_MAX_SEARCHES", "").strip() or "2")
+
+# Feed-diff pre-filter: the one irreducible cost of a watching cycle was
+# the classifier call itself — it did its own discovery, so it had to run
+# every 30 minutes even when nothing had been published anywhere. The
+# feeds answer "did anything new appear?" deterministically first, and
+# the model is only paid when the answer is yes. Google News (ar-SA)
+# aggregates the sources that 403 direct fetches (Argaam, CNBC Arabia,
+# Asharq Business); Asharq Al-Awsat serves its economy feed directly.
+WATCH_FEED_DIFF = (os.getenv("WATCH_FEED_DIFF", "").strip() or "1") != "0"
+WATCH_FEEDS = [u.strip() for u in
+               (os.getenv("WATCH_FEEDS", "").strip() or
+                "https://news.google.com/rss/headlines/section/topic/"
+                "BUSINESS?hl=ar&gl=SA&ceid=SA:ar,"
+                "https://news.google.com/rss/headlines/section/topic/"
+                "TECHNOLOGY?hl=ar&gl=SA&ceid=SA:ar,"
+                "https://aawsat.com/feed/economy").split(",") if u.strip()]
+# 45 = the 30-minute cadence plus margin for cron jitter: a story landing
+# just after one cycle's sweep must still be inside the next cycle's window
+WATCH_FEED_WINDOW_MIN = int(
+    os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "45")
+FEED_UA = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
 BEATS = ("الاقتصاد السعودي، العقار السعودي والخليجي، السفر والسياحة "
          "السعودية، أخبار الأعمال والتقنية الكبرى")
@@ -125,7 +149,65 @@ def event_fp(event):
     return hashlib.md5(" ".join(words).encode()).hexdigest()[:16]
 
 
-def classify(now):
+def _feed_entry_time(item):
+    """The item's own timestamp, or None when it doesn't carry a usable
+    one. RSS pubDate is RFC822; Atom updated/published is ISO."""
+    for tag in ("pubDate", "updated", "published",
+                "{http://www.w3.org/2005/Atom}updated",
+                "{http://www.w3.org/2005/Atom}published"):
+        el = item.find(tag)
+        if el is None or not (el.text or "").strip():
+            continue
+        raw = el.text.strip()
+        try:
+            dt = parsedate_to_datetime(raw)
+        except (TypeError, ValueError):
+            try:
+                dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+            except ValueError:
+                continue
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+    return None
+
+
+def feed_fresh_items():
+    """(fresh_titles, feeds_ok). Stateless by design: an item is fresh if
+    its own timestamp falls inside the last cycle's window, so quiet
+    cycles keep committing nothing — a seen-set would need a state push
+    every 30 minutes. The costs of that choice are accepted: an item
+    WITHOUT a parseable date counts as fresh (a date-less feed must not
+    blind the watcher), and a re-dated repost buys one extra classifier
+    call, which the classifier itself refuses. Feeds are checked in full,
+    not head-first — Google News topic feeds are relevance-ordered."""
+    cutoff = (datetime.now(timezone.utc)
+              - timedelta(minutes=WATCH_FEED_WINDOW_MIN))
+    fresh, feeds_ok = [], 0
+    for url in WATCH_FEEDS:
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": FEED_UA})
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                root = ET.fromstring(resp.read())
+        except Exception as exc:
+            print(f"  ! feed unreachable ({exc}): {url}")
+            continue
+        feeds_ok += 1
+        items = (root.findall(".//item")
+                 or root.findall(".//{http://www.w3.org/2005/Atom}entry"))
+        for item in items:
+            el = (item.find("title")
+                  or item.find("{http://www.w3.org/2005/Atom}title"))
+            title = (el.text or "").strip() if el is not None else ""
+            if not title:
+                continue
+            when = _feed_entry_time(item)
+            if when is None or when >= cutoff:
+                fresh.append(title)
+    return fresh, feeds_ok > 0
+
+
+def classify(now, fresh_titles=None):
     """One small-model call with tightly budgeted search. None on error —
     and None is treated as 'not breaking': a broken classifier must fail
     quiet, never fail posting."""
@@ -135,6 +217,12 @@ def classify(now):
     user = (f"الآن {now:%Y-%m-%d %H:%M} بتوقيت السعودية. امسح أخبار "
             f"الساعات الأخيرة في هذه الملفات: {BEATS}. "
             f"ابحث بحثاً أو بحثين موجهين لليوم فقط، ثم أصدر الحكم.")
+    if fresh_titles:
+        # the pre-filter already found what appeared; the searches now
+        # verify a known candidate instead of rediscovering the field
+        listing = "\n".join(f"- {t}" for t in fresh_titles[:12])
+        user += ("\n\nعناوين ظهرت في الخلاصات منذ الدورة الماضية — "
+                 "قيّمها أولاً، وابحث للتحقق لا للاكتشاف:\n" + listing)
     payload = {
         "model": WATCH_MODEL,
         "max_tokens": WATCH_MAX_TOKENS,
@@ -214,7 +302,26 @@ def _watch():
                        "الآن (قفل) — خرجت")
                 return
 
-    verdict = classify(now)
+    fresh_titles = None
+    if WATCH_FEED_DIFF:
+        fresh_titles, feeds_ok = feed_fresh_items()
+        if not feeds_ok:
+            # every feed failed: fail OPEN into the model call — a broken
+            # pre-filter must not blind the watcher, same doctrine as the
+            # vision gate
+            print("  ! every feed failed — pre-filter skipped, "
+                  "classifying anyway")
+            fresh_titles = None
+        elif not fresh_titles:
+            print("no new feed items this cycle — classifier not called")
+            notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: لا جديد في "
+                   f"الخلاصات منذ آخر دورة (نافذة "
+                   f"{WATCH_FEED_WINDOW_MIN} دقيقة) — لم يُستدعَ المصنّف")
+            return
+        else:
+            print(f"  {len(fresh_titles)} fresh feed item(s) — classifying")
+
+    verdict = classify(now, fresh_titles)
     if verdict:
         print("verdict:", json.dumps(verdict, ensure_ascii=False))
     if not verdict:
