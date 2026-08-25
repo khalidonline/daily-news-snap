@@ -198,6 +198,10 @@ def check_line(line):
     terms = _subject_terms(line)
     if terms:
         import time
+        # aggregate across both terms, deduped by file title — breaking
+        # at the first term with ANY hit kept Souk Al-Manakh THIN while
+        # its second alias held the photo that made it READY
+        seen_titles = set()
         for term in terms[:2]:
             hits = None
             for attempt in (1, 2):
@@ -208,13 +212,16 @@ def check_line(line):
                 except Exception:
                     errors += 1
                     time.sleep(2 if attempt == 1 else 0)
-            if hits:
-                n = min(len(hits), 2)
+            fresh_hits = [h for h in (hits or [])
+                          if str(h) not in seen_titles]
+            seen_titles.update(str(h) for h in (hits or []))
+            if fresh_hits:
                 anchors.append(f"archive:{term}")
-                evidence.append(f"archive:{term}:{len(hits)}")
-                images += n
-                era_ok += n         # archives serve the subject's own era
-                break
+                evidence.append(f"archive:{term}:{len(fresh_hits)}")
+                images += min(len(fresh_hits), 2)
+                era_ok += min(len(fresh_hits), 2)
+            if images >= 4:
+                break               # enough — spare the archive
         time.sleep(0.4)             # politeness between lines
     elif not anchors:
         # concept line with no probeable subject: illustrability is a
