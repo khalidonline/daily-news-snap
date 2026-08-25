@@ -233,6 +233,25 @@ def wikidata_p154_logo(names, domain):
     return None
 
 
+def _renders_as_a_mark(path):
+    """The black-bar class: a mark that rasterizes to a flat block or a
+    bar is not a logo anyone can read on the cream card (Lucid, Tokyo)."""
+    try:
+        import image_precheck as ipc
+        why = ipc.guard_render(ipc.Candidate(path=str(path), caption="",
+                                             slot="logo"))
+    except Exception:
+        return True
+    if why:
+        print(f"  ! fetched mark rejected: {why}")
+        try:
+            Path(path).unlink()
+        except OSError:
+            pass
+        return False
+    return True
+
+
 def fetch_current(slug, names, require_domain=None):
     """The subject's current logo, from its own article's infobox files.
 
@@ -257,6 +276,8 @@ def fetch_current(slug, names, require_domain=None):
             link = info.get("thumburl") or info.get("url")
             dest = LOGOS_DIR / f"{slug}-current.png"
             _download(link, dest)
+            if not _renders_as_a_mark(dest):
+                continue
             print(f"  saved {dest}  <- {page['title']}  "
                   f"({_commons_meta(info, 'LicenseShortName') or 'no licence tag'})")
             return dest
@@ -279,6 +300,8 @@ def fetch_current(slug, names, require_domain=None):
             _download(link, dest)
         except Exception as exc:
             print(f"  ! download failed for {title}: {exc}")
+            continue
+        if not _renders_as_a_mark(dest):
             continue
         print(f"  saved {dest}  <- {title}  (non-free, {lang}.wikipedia)")
         return dest

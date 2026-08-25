@@ -538,7 +538,15 @@ def person_name(story):
     bot did before; a false positive would skip a good story about a company
     because no portrait of it exists.
     """
-    head = re.sub(r"^\s*قصة\s+", "", str(story or "").strip())
+    key = str(story or "").strip()
+    if not _ALIASES_LOADED:
+        load_stories()
+    declared = _STORY_PERSONS.get(key)
+    if declared is not None:
+        # a typed line is authoritative: its first person, or NO person —
+        # the heuristic once read «نون» as a name and probed a portrait
+        return declared[0] if declared else ""
+    head = re.sub(r"^\s*قصة\s+", "", key)
     head = head.split(":")[0].split("؟")[0].strip(" -—،")
     if not head:
         return ""
@@ -583,6 +591,8 @@ _STORY_SUBJECT = {}
 # no logo:) — excluded from selection and listed once at load, never
 # discovered mid-run: with subject binding on, such a line has nothing
 # to search on and cannot be illustrated
+_STORY_PERSONS = {}      # head -> declared person aliases ([] = none, typed)
+_STORY_CONTEXT = {}      # head -> corroborating context tokens
 _UNIDENTIFIED = set()
 _UNIDENTIFIED_ANNOUNCED = False
 _DUPES_ANNOUNCED = False
@@ -599,6 +609,8 @@ def load_stories():
     stories = []
     _STORY_ALIASES.clear()
     _STORY_POOLS.clear()
+    _STORY_PERSONS.clear()
+    _STORY_CONTEXT.clear()
     _ALIASES_LOADED = True
     pool = "general"
     for ln in lines:
@@ -610,18 +622,43 @@ def load_stories():
             if m:
                 pool = m.group(1).strip().lower()
             continue
-        head, _, tail = ln.partition("|")
-        head = head.strip()
-        aliases = []
-        for tok in (t.strip() for t in tail.split(",") if t.strip()):
-            if tok.lower().startswith("logo:"):
-                _STORY_LOGO_DOMAIN[head] = tok[5:].strip().lower()
-            elif tok.lower().startswith("subject:"):
-                _STORY_SUBJECT[head] = tok[8:].strip().lower()
-            else:
-                aliases.append(tok)
-        if aliases:
-            _STORY_ALIASES[head] = aliases
+        segments = [seg.strip() for seg in ln.split("|")]
+        head = segments[0]
+        aliases, persons, context = [], [], []
+        for seg in segments[1:]:
+            kind = seg.split(":", 1)[0].strip().lower() if ":" in seg else ""
+            if kind in ("person", "شخص"):
+                persons += [v.strip() for v in
+                            seg.split(":", 1)[1].split(",") if v.strip()]
+                continue
+            if kind in ("entity", "كيان", "company"):
+                aliases += [v.strip() for v in
+                            seg.split(":", 1)[1].split(",") if v.strip()]
+                continue
+            if kind in ("context", "سياق"):
+                context += [v.strip() for v in
+                            seg.split(":", 1)[1].split(",") if v.strip()]
+                continue
+            # legacy untyped segment: comma tokens with subject:/logo:
+            for tok in (t.strip() for t in seg.split(",") if t.strip()):
+                if tok.lower().startswith("logo:"):
+                    _STORY_LOGO_DOMAIN[head] = tok[5:].strip().lower()
+                elif tok.lower().startswith("subject:"):
+                    _STORY_SUBJECT[head] = tok[8:].strip().lower()
+                else:
+                    aliases.append(tok)
+        # a declared person is also a searchable identity
+        if aliases or persons:
+            _STORY_ALIASES[head] = persons + aliases
+        if persons:
+            _STORY_PERSONS[head] = persons
+        elif any(seg.split(":", 1)[0].strip().lower()
+                 in ("entity", "كيان", "company") for seg in segments[1:]):
+            # typed line that declares entities and NO person: the story
+            # has no portrait slot at all (the NaDeC Base Nagaoka class)
+            _STORY_PERSONS[head] = []
+        if context:
+            _STORY_CONTEXT[head] = context
         _STORY_POOLS[head] = pool
         stories.append(head)
     global _UNIDENTIFIED_ANNOUNCED

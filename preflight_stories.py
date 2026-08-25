@@ -41,6 +41,7 @@ try:
                             wikidata_entity_files)
     from news_bot import _owner_rejected
     from news_bot import _commons_search, _image_is_safe, commit_and_push
+    import image_precheck as ipc
 except ImportError as exc:
     raise SystemExit(f"a bot module is missing something preflight needs "
                      f"({exc}) — the files move together")
@@ -144,11 +145,19 @@ def _classify(entry):
         # is a deck SHAPE (curated mark + typographic floor), not a
         # defect, and bad archive hits must not promote it to READY
         entry["readiness"] = "LOGO-ONLY"
-    elif images == 1:
+    elif images < ipc.READY_MIN_UNIQUE:
         entry["readiness"] = "THIN"
     else:
         entry["readiness"] = "READY"
     return entry
+
+
+def _ipc_story(line):
+    """The line as an image_precheck Story, for the homonym guard."""
+    person = person_name(line)
+    return ipc.Story(title=line.split("|")[0].strip(),
+                     person_aliases=[person] if person else [],
+                     entity_aliases=list(story_aliases(line)))
 
 
 def check_line(line):
@@ -251,10 +260,13 @@ def check_line(line):
     terms = _subject_terms(line)
     if terms:
         import time
+        ipc_story = _ipc_story(line)
         # aggregate across both terms, deduped by file title — breaking
         # at the first term with ANY hit kept Souk Al-Manakh THIN while
-        # its second alias held the photo that made it READY
-        seen_titles = set()
+        # its second alias held the photo that made it READY. The seen
+        # set is seeded with the ENTITY's files: one picture, one count
+        # (the owner's dedupe-before-counting rule).
+        seen_titles = {ipc.normalize(f) for _, f in entity_files}
         for term in terms[:2]:
             hits = None
             for attempt in (1, 2):
@@ -283,9 +295,23 @@ def check_line(line):
                                           "Categories"))
                 with contextlib.redirect_stdout(io.StringIO()):
                     return _image_is_safe(f"{page.get('title', '')} {desc}")
+            def _on_subject(h):
+                pg = h[0] if isinstance(h, tuple) else h
+                cand = ipc.Candidate(path=pg.get("title", ""),
+                                     caption=pg.get("title", ""),
+                                     slot="archive", matched_on=term)
+                why = ipc.guard_homonym(cand, ipc_story)
+                if why:
+                    print(f"      ✗ {pg.get('title', '')[:50]}: {why}")
+                return not why
             fresh_hits = [h for h in (hits or [])
-                          if str(h) not in seen_titles and _countable(h)]
-            seen_titles.update(str(h) for h in (hits or []))
+                          if ipc.normalize((h[0] if isinstance(h, tuple)
+                                            else h).get("title", ""))
+                          not in seen_titles
+                          and _countable(h) and _on_subject(h)]
+            seen_titles.update(
+                ipc.normalize((h[0] if isinstance(h, tuple) else h)
+                              .get("title", "")) for h in (hits or []))
             if fresh_hits:
                 anchors.append(f"archive:{term}")
                 evidence.append(f"archive:{term}:{len(fresh_hits)}")

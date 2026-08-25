@@ -92,10 +92,10 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 
 # السعودية والخليج
 علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi
-سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته | Sulaiman Al Rajhi
+سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته | person: سليمان الراجحي, Sulaiman Al Rajhi | entity: مصرف الراجحي
 يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط | Yusuf bin Ahmed Kanoo, YBA Kanoo
 قصة عبداللطيف جميل للسيارات ووكالة تويوتا | Abdul Latif Jameel, Toyota Saudi Arabia, logo:alj.com
-صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء | Saleh Al Rajhi
+صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء | person: صالح الراجحي, Saleh Al Rajhi | entity: مصرف الراجحي
 محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة | Mohammed bin Laden, Saudi Binladin Group
 حسن الشربتلي وجيل التجار الأوائل في جدة | Hassan Sharbatly
 من هم أول الموظفين السعوديين في أرامكو؟ | Aramco, أرامكو
@@ -118,15 +118,15 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة طيران ناس وثورة الطيران الاقتصادي | flynas
 قصة المراعي من مزرعة إلى أكبر شركة ألبان | Almarai
 قصة صافولا | Savola Group
-قصة هنقرستيشن وحرب تطبيقات التوصيل | HungerStation
+قصة هنقرستيشن وحرب تطبيقات التوصيل | entity: HungerStation | context: توصيل, delivery, Saudi
 قصة مرسول وتوسعه | Mrsool
 قصة العثيم وتجارة التجزئة | Al Othaim Markets
 قصة بنده والتجزئة السعودية | Panda Retail
-قصة نادك للأغذية | NADEC
+قصة نادك للأغذية | entity: نادك, NADEC | context: dairy, food, Saudi
 قصة زين السعودية ودخولها سوق الاتصالات | Zain KSA, subject:zain-ksa, logo:sa.zain.com
 قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC
 قصة سليمان الراجحي وأكبر وقف خاص | Sulaiman Al Rajhi
-قصة صالح كامل ودلة البركة | Saleh Kamel, Dallah Al Baraka
+قصة صالح كامل ودلة البركة | person: صالح كامل, Saleh Kamel | entity: دلة البركة, Dallah Al Baraka
 
 # Collective financial memory
 قصة انهيار سوق الأسهم السعودية 2006 | Saudi stock market crash 2006
@@ -142,7 +142,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia
 قصة ستاربكس عبر الشايع | Starbucks, Alshaya
 قصة أمازون واستحواذها على سوق دوت كوم | Souq.com, Amazon
-قصة نون ومنافسة التجارة الإلكترونية | noon
+قصة نون ومنافسة التجارة الإلكترونية | entity: noon | context: ecommerce, Saudi, Emaar
 قصة صندوق الاستثمارات العامة واستثماراته العالمية | PIF, Public Investment Fund
 قصة استثمار صندوق الاستثمارات في Uber | PIF Uber stake
 
