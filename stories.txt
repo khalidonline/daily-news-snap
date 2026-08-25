@@ -17,7 +17,7 @@
 لماذا اختفت BlackBerry من السوق؟
 قصة OpenAI: من مختبر بحثي إلى أشهر منتج تقني
 كيف بنت TSMC احتكاراً على رقائق العالم
-قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات | Samsung, logo:samsung.com
+قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات | Samsung, Samsung Electronics, subject:samsung-electronics, logo:samsung.com
 كيف خسرت Kodak السوق الذي اخترعته بنفسها
 
 # — المال والاقتصاد —
@@ -160,4 +160,3 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة ليغو من ورشة نجارة | LEGO
 قصة IKEA من قرية سويدية | IKEA, Ingvar Kamprad
 قصة Rolex وصناعة الفخامة | Rolex
-قصة Samsung من متجر بقالة | Samsung, logo:samsung.com

@@ -277,6 +277,14 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   بمقارنته ببند آخر.
 - المقارنة الصحيحة تكون بين الشيء ونفسه عبر الزمن، أو بينه وبين نظيره في
   سوق آخر.
+- القصة تتبع كياناً واحداً مسمّى وتثبت عليه. المجموعة الأم وشركتها التابعة
+  كيانان مختلفان: لا تضع رقم تأسيس الأم بجوار رقم إيرادات التابعة كأنهما
+  خط واحد إلا إذا سمّيت الانتقال بين الكيانين صراحة في النص نفسه.
+  ✗ «بدأت بثلاثين ألف وون (1938) واليوم إيراداتها 333.6 تريليون وون» —
+    الأول لشركة التجارة الأم والثاني لشركة الإلكترونيات التابعة،
+    والقارئ يظنهما شركة واحدة.
+  ✓ «من شركة التجارة الأم وُلدت شركة الإلكترونيات عام 1969 — وهي وحدها
+    التي بلغت إيراداتها 333.6 تريليون وون في 2024»
 
 الأنظمة والقواعد السعودية:
 - إذا كان الموضوع يمسّ مجالاً تنظّمه الدولة — الإيجارات، الرواتب، مكافأة
@@ -310,6 +318,10 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 
 لكل لقطة:
 - heading: سطر قصير جداً (حتى ٣٠ حرفاً) — يظهر كبيراً
+  والعنوان يصف لقطته هي: حدثَها وزمنَها. لا تسحب خطّاف لقطة لاحقة إلى
+  لقطة مبكرة مهما كان أقوى — الخطّاف القوي يبقى في لقطته هو.
+  ✗ لقطة 1938 عن تاجر سمك مجفف عنوانها «150 ألف جهاز احترقت في يوم
+    واحد» — هذا حدث 1995 ومكانه اللقطة الرابعة حيث يقع.
 - text: من جملتين إلى أربع جمل (١٢٠ إلى ٢٨٠ حرفاً).
   خذ راحتك: القصة المضغوطة تفقد معناها. اشرح السبب والنتيجة،
   لا العناوين فقط. لكن بلا حشو — كل جملة تضيف شيئاً جديداً.
@@ -549,6 +561,7 @@ _STORY_SUBJECT = {}
 # to search on and cannot be illustrated
 _UNIDENTIFIED = set()
 _UNIDENTIFIED_ANNOUNCED = False
+_DUPES_ANNOUNCED = False
 _ALIASES_LOADED = False
 
 
@@ -602,6 +615,28 @@ def load_stories():
               "identity — excluded from selection until fixed:")
         for head in sorted(_UNIDENTIFIED):
             print(f"      - {head[:70]}")
+    # duplicate subjects, same one-pass report: siblings retire together
+    # on use (by design), but two live lines for one subject mean the
+    # chooser can select either — the worklist is to merge or split them
+    global _DUPES_ANNOUNCED
+    if not _DUPES_ANNOUNCED:
+        _DUPES_ANNOUNCED = True
+        groups = []
+        for head in stories:
+            keys = set(_subject_keys(head))
+            for g in groups:
+                if g["keys"] & keys:
+                    g["heads"].append(head)
+                    g["keys"] |= keys
+                    break
+            else:
+                groups.append({"keys": keys, "heads": [head]})
+        dupes = [g for g in groups if len(g["heads"]) > 1]
+        if dupes:
+            print(f"  ! {len(dupes)} subject(s) hold more than one line:")
+            for g in dupes:
+                for h in g["heads"]:
+                    print(f"      - {h[:70]}")
     return stories
 
 
@@ -1227,6 +1262,32 @@ def warn_about_unintroduced_names(brief):
         print("    handshakes: every name is introduced before use")
 
 
+def warn_about_misplaced_hooks(brief):
+    """Frame 1 of the Samsung deck (1938, a dried-fish merchant) wore
+    «150 ألف جهاز احترقت في يوم واحد» — frame 4's 1995 event hoisted
+    forward as a teaser. A heading describes its own frame: any number
+    in a heading that is absent from the frame's own text but present in
+    another frame's text is a hoisted hook."""
+    frames = brief.get("frames", [])
+    flagged = 0
+    for n, frame in enumerate(frames, 1):
+        heading = str(frame.get("heading", ""))
+        body = f"{frame.get('text', '')} {frame.get('punch', '')}"
+        for num in sorted(set(re.findall(r"\d[\d,.]*", heading))):
+            if num in body:
+                continue
+            others = [m for m, fr in enumerate(frames, 1) if m != n
+                      and num in f"{fr.get('text', '')} "
+                                 f"{fr.get('punch', '')}"]
+            if others:
+                flagged += 1
+                print(f"  ? frame {n} heading carries «{num}», which "
+                      f"belongs to frame {others[0]} — a hoisted hook; "
+                      "the hook stays on its own frame")
+    if not flagged and frames:
+        print("    hooks: every heading describes its own frame")
+
+
 def build_frames(brief, stamp, photos):
     """Render one frame per beat. The last frame carries the sources."""
     frames = brief.get("frames", [])[:STORY_FRAMES]
@@ -1818,8 +1879,9 @@ def find_all_photos(brief):
     used = set()                      # digests of pictures already in the story
     # one mark papering most of a deck is a fail, not a pass (owner rule:
     # the same logo on 4/6 frames reads as filler) — beyond the cap the
-    # frame takes the designed text-only treatment instead
-    logo_frames = 0
+    # frame takes the designed text-only treatment instead. Frame NUMBERS,
+    # not a count: placement discipline needs to know WHERE the marks sit.
+    logo_slots = []
     for n, frame in enumerate(frames, 1):
         spec = dict(frame)
         # An explicit [] is an answer, not a gap: the prompt asks for it when
@@ -1862,13 +1924,30 @@ def find_all_photos(brief):
             # company story the BRAND MARK leads — deterministic identity,
             # zero search risk — with the era rule inside refusing any
             # anachronistic placement; photos come second
-            if story_has_company and photo is None:
-                if logo_frames < LOGO_MAX_FRAMES:
+            if story_has_company and photo is None \
+                    and len(logo_slots) < LOGO_MAX_FRAMES:
+                # placement discipline (owner rules, Samsung 5+6 deck):
+                # two identical marks on consecutive frames read as
+                # filler, so a second mark needs a gap; and the closing
+                # frame is NOT a preferred slot — it takes a mark only
+                # when the deck would otherwise carry none. The cap is a
+                # ceiling, not a target: one well-placed mark beats two
+                # crowded ones.
+                adjacent = bool(logo_slots) and n - logo_slots[-1] < 2
+                closing_second = n == len(frames) and bool(logo_slots)
+                if adjacent:
+                    print(f"    frame {n}: logo slot refused — adjacent "
+                          f"to frame {logo_slots[-1]}'s mark")
+                elif closing_second:
+                    print(f"    frame {n}: logo slot refused — closing "
+                          f"frame, deck already marked on frame "
+                          f"{logo_slots[-1]}")
+                else:
                     lead = _curated_logo(n, len(frames), brief, frame,
                                          allow_hero=True)
                     if lead is not None:
                         photo, tier = lead, "subject logo"
-                        logo_frames += 1
+                        logo_slots.append(n)
             if story_has_company:
                 # frame keywords are ignored by design: the query IS the
                 # subject, and the gate hears the subject too
@@ -1898,7 +1977,7 @@ def find_all_photos(brief):
         # no subject logo to fetch, and the auto-slug would go hunting a
         # modern namesake's mark for a 1602 story.
         if photo is None and story_has_company \
-                and logo_frames >= LOGO_MAX_FRAMES:
+                and len(logo_slots) >= LOGO_MAX_FRAMES:
             print(f"    frame {n}: logo cap reached ({LOGO_MAX_FRAMES}) "
                   "— photos or typographic carry the rest")
 
@@ -2021,6 +2100,7 @@ def main():
         for n, f in enumerate(brief.get("frames", []), 1):
             print(f"    {n}. {f.get('heading', '')} — {f.get('text', '')[:60]}")
         warn_about_unintroduced_names(brief)
+        warn_about_misplaced_hooks(brief)
 
         print("2/3 finding a picture for every frame...")
         photos = find_all_photos(brief)
@@ -2111,7 +2191,8 @@ def main():
             # count the pool the story ACTUALLY came from
             bump_mix(story_pool(story))
         commit_and_push(quota_bump(), f"quota {stamp}")
-        notify_album(f"✅ {stamp} — {brief['title']}", frames)
+        notify_album(f"✅ {stamp} — {brief['title']}", frames,
+                     as_documents=True)
     else:
         notify(f"❌ {stamp} — story post failed\n{describe_failure(response)}")
 

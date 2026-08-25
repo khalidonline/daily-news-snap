@@ -19,8 +19,10 @@
 import hashlib
 import json
 import os
+import random
 import subprocess
 import sys
+import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
@@ -237,16 +239,26 @@ def classify(now, fresh_titles=None):
         headers={"content-type": "application/json",
                  "x-api-key": ANTHROPIC_API_KEY,
                  "anthropic-version": "2023-06-01"})
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            data = json.loads(resp.read())
-        text = "".join(b.get("text", "") for b in data.get("content", [])
-                       if b.get("type") == "text").strip()
-        start, end = text.find("{"), text.rfind("}")
-        return json.loads(text[start:end + 1])
-    except Exception as exc:
-        print(f"  ! classifier failed ({exc}) — treating as not breaking")
-        return None
+    # a 529 at the wrong minute used to become a silent "not breaking"
+    # for the whole cycle — transient failures get three attempts before
+    # the quiet verdict (the 🔴 line still reports a final failure)
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                data = json.loads(resp.read())
+            text = "".join(b.get("text", "") for b in data.get("content", [])
+                           if b.get("type") == "text").strip()
+            start, end = text.find("{"), text.rfind("}")
+            return json.loads(text[start:end + 1])
+        except Exception as exc:
+            if attempt < 2:
+                wait = (15, 45)[attempt] + random.uniform(0, 10)
+                print(f"  ! classifier attempt {attempt + 1} failed "
+                      f"({exc}) — retrying in {wait:.0f}s")
+                time.sleep(wait)
+                continue
+            print(f"  ! classifier failed ({exc}) — treating as not breaking")
+            return None
 
 
 def _run_news_bot(extra_env):
@@ -389,6 +401,11 @@ def _watch():
         state["lock_at"] = ""
         save_state(state)
         print("pinned pipeline aborted — lock released, fingerprint kept")
+        # the one exit that said nothing: in a dry run the pipeline's own
+        # card message never comes (nothing was built), so this line is
+        # the cycle's only report
+        notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: الحدث المثبّت لم يجتز "
+               f"التحقق الكامل — أُلغي دون نشر\n{event[:100]}")
 
 
 def main():

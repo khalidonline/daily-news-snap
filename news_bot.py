@@ -3032,7 +3032,9 @@ def deliver_unposted(cards, headline):
             f"({used}/{MONTHLY_POST_LIMIT} في {month})\n{headline}")
     paths = [cards] if isinstance(cards, (str, Path)) else [c for c in cards if c]
     if len(paths) > 1:
-        notify_album(note, paths)
+        # multi-frame deliveries are for hand-upload: documents with
+        # index-first names, or the download scrambles the order
+        notify_album(note, paths, as_documents=True)
     else:
         notify(note, paths[0] if paths else None)
 
