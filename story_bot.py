@@ -1574,7 +1574,7 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
     # photo the farming frames were asking for — six gate rejections,
     # six blank frames, a skipped story with the right seed on disk.
     photo, tried_local = None, []
-    for _ in range(3):
+    for _ in range(6):     # a 5-seed subject needs the walk to reach them all
         cand, _lc = fetch_local_photo([], keywords, out_path,
                                       exclude=tried_local)
         if not cand:
