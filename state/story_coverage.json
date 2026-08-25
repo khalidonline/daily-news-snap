@@ -328,16 +328,18 @@
   },
   "قصة سوق المناخ في الكويت 1982": {
    "pool": "saudi",
-   "at": "2026-08-25T14:57:23.921899",
-   "thash": "9f862bbc7d",
+   "at": "2026-08-25T15:03:21.816413",
+   "thash": "b628a3f16e",
    "historical": 1982,
-   "readiness": "THIN",
-   "images": 1,
+   "readiness": "READY",
+   "images": 3,
    "evidence": [
-    "archive:Souk Al-Manakh:1"
+    "archive:Souk Al-Manakh:1",
+    "archive:Kuwait Stock Exchange:3"
    ],
    "anchors": [
-    "archive:Souk Al-Manakh"
+    "archive:Souk Al-Manakh",
+    "archive:Kuwait Stock Exchange"
    ],
    "pass": true
   },
@@ -1907,5 +1909,5 @@
    "pass": true
   }
  },
- "checked_at": "2026-08-25T14:58:28.606336"
+ "checked_at": "2026-08-25T15:03:23.734238"
 }
