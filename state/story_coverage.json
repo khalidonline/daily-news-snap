@@ -1,29 +1,5 @@
 {
  "entries": {
-  "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:09:43.388749",
-   "thash": "999a1b170e",
-   "files": [
-    "File:McQuay AIR CONDITIONING AIR CONDITIONER OUTDOOR UNIT.jpg",
-    "File:Willis Carrier 1915.jpg",
-    "File:Willis Carrier 1915 (cropped).jpg"
-   ],
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "entity:P18:TECO MA-750B in Nangang 20110217.jpg",
-    "archive:air conditioning:1",
-    "archive:Willis Carrier:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "entity:P18",
-    "archive:air conditioning",
-    "archive:Willis Carrier"
-   ],
-   "pass": true
-  },
   "قصة ماء زمزم وكيف يُعبأ ويوزّع": {
    "pool": "saudi",
    "at": "2026-08-25T17:09:46.712845",
@@ -41,17 +17,6 @@
     "archive:Zamzam water"
    ],
    "pass": true
-  },
-  "قصة العباءة السعودية وتحولها لصناعة أزياء": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:09:53.247765",
-   "thash": "6ae2b01585",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
   },
   "قصة مصرف الراجحي من صرافة إلى أكبر بنك": {
    "pool": "saudi",
@@ -93,25 +58,6 @@
    ],
    "pass": true
   },
-  "قصة المراعي من مزرعة إلى أكبر شركة ألبان": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:10:03.076690",
-   "thash": "c5c04585b4",
-   "files": [
-    "File:Almarai cpp2 web.jpg",
-    "File:Almarai reefers web.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "archive:Almarai:2"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Almarai"
-   ],
-   "pass": true
-  },
   "قصة هنقرستيشن وحرب تطبيقات التوصيل": {
    "pool": "saudi",
    "at": "2026-08-25T17:10:08.687720",
@@ -145,28 +91,6 @@
    "readiness": "NOT READY",
    "anchors": [],
    "pass": false
-  },
-  "قصة نادك للأغذية": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:10:26.307546",
-   "thash": "87998769f3",
-   "files": [
-    "File:NADEC-New-logo-.png",
-    "File:NaDeC Base Nagaoka.jpg",
-    "File:بدر بن عبدالله بن الكحيل.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "archive:NADEC:3",
-    "archive:نادك:1"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "archive:NADEC",
-    "archive:نادك"
-   ],
-   "pass": true
   },
   "قصة زين السعودية وسوق الاتصالات": {
    "pool": "saudi",
@@ -217,24 +141,6 @@
    "readiness": "THIN",
    "anchors": [
     "archive:Sulaiman Al Rajhi"
-   ],
-   "pass": true
-  },
-  "قصة انهيار سوق الأسهم السعودية 2006": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:10:54.768034",
-   "thash": "f2385a10af",
-   "files": [
-    "File:انهيار سوق الاسهم السعودي.jpg"
-   ],
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "archive:Saudi stock market crash 2006:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Saudi stock market crash 2006"
    ],
    "pass": true
   },
@@ -452,21 +358,6 @@
    "readiness": "THIN",
    "anchors": [
     "archive:Riyadh Dammam railway"
-   ],
-   "pass": true
-  },
-  "قصة أول سيارة تدخل الجزيرة العربية": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:11:50.370053",
-   "thash": "37e4127397",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
    ],
    "pass": true
   },
@@ -688,29 +579,6 @@
     "logo:p154",
     "entity:P18",
     "archive:TSMC"
-   ],
-   "pass": true
-  },
-  "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": {
-   "pool": "general",
-   "at": "2026-08-25T17:04:52.371020",
-   "thash": "4395bb0489",
-   "files": [
-    "File:Photo of samsung newest phone a15.jpg",
-    "File:Samsung Galaxy A8 2018 logo.png"
-   ],
-   "images": 4,
-   "era_ok": 3,
-   "evidence": [
-    "logo:curated:current",
-    "entity:P18:Samsung headquarters.jpg",
-    "archive:Samsung:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "logo:curated",
-    "entity:P18",
-    "archive:Samsung"
    ],
    "pass": true
   },
@@ -1254,47 +1122,6 @@
    "readiness": "THIN",
    "anchors": [
     "typographic:policy"
-   ],
-   "pass": true
-  },
-  "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره": {
-   "pool": "general",
-   "at": "2026-08-25T17:06:40.100231",
-   "thash": "227dec37b8",
-   "files": [
-    "File:Douglas Engelbart in 2008.jpg",
-    "File:SRI Douglas Engelbart 1968.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "entity:P18:Douglas Engelbart in 2008.jpg",
-    "archive:Douglas Engelbart:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "entity:P18",
-    "archive:Douglas Engelbart"
-   ],
-   "pass": true
-  },
-  "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": {
-   "pool": "general",
-   "at": "2026-08-25T17:06:43.118494",
-   "thash": "9ed8f6a3c2",
-   "files": [
-    "File:Gary kildall801lighthouse.jpg"
-   ],
-   "images": 2,
-   "era_ok": 1,
-   "evidence": [
-    "logo:p154:Digital Research Logo.svg:current",
-    "archive:Gary Kildall:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "logo:p154",
-    "archive:Gary Kildall"
    ],
    "pass": true
   },
@@ -2152,25 +1979,6 @@
    "anchors": [],
    "pass": false
   },
-  "قصة صالح كامل ودلة البركة": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:16:54.248102",
-   "thash": "c85bf2481d",
-   "person": "صالح كامل",
-   "files": [
-    "File:Boeing 737-9LBER (BBJ3) Dallah Al-Baraka VP-BDB (10767078823).jpg"
-   ],
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "archive:Dallah Al Baraka:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Dallah Al Baraka"
-   ],
-   "pass": true
-  },
   "قصة تأسيس مؤسسة النقد ساما": {
    "pool": "saudi",
    "at": "2026-08-25T18:28:38.259717",
@@ -2357,26 +2165,6 @@
    ],
    "pass": true
   },
-  "قصة الشماغ ومصانعه في إنجلترا": {
-   "pool": "saudi",
-   "at": "2026-08-25T18:51:10.458764",
-   "thash": "71f364dc22",
-   "files": [
-    "File:Keffiyeh-frieze.png"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "library:saudi-shemagh.jpg",
-    "archive:ghutra:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:saudi-shemagh.jpg",
-    "archive:ghutra"
-   ],
-   "pass": true
-  },
   "قصة القهوة السعودية": {
    "pool": "saudi",
    "at": "2026-08-25T18:51:15.339113",
@@ -2398,26 +2186,6 @@
     "library:saudi-coffee-dallah.jpg",
     "archive:Saudi coffee",
     "archive:Arabic coffee"
-   ],
-   "pass": true
-  },
-  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
-   "pool": "saudi",
-   "at": "2026-08-25T18:51:23.251776",
-   "thash": "ecbb2e38a6",
-   "files": [
-    "File:The Union Minister for Commerce & Industry and Textiles, Shri Anand Sharma releasing a book on Basmati Rice, in New Delhi on February 24, 2012.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "library:kabsa-dish.jpg",
-    "archive:basmati rice trade:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:kabsa-dish.jpg",
-    "archive:basmati rice trade"
    ],
    "pass": true
   },
@@ -2502,7 +2270,268 @@
     "archive:العثيم"
    ],
    "pass": true
+  },
+  "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": {
+   "pool": "general",
+   "at": "2026-08-25T19:08:47.153124",
+   "thash": "4395bb0489",
+   "files": [
+    "File:Photo of samsung newest phone a15.jpg",
+    "File:Samsung Galaxy A8 2018 logo.png"
+   ],
+   "images": 6,
+   "era_ok": 5,
+   "evidence": [
+    "library:samsung-1938-store.jpg",
+    "library:samsung-chips.jpg",
+    "logo:curated:current",
+    "entity:P18:Samsung headquarters.jpg",
+    "archive:Samsung:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:samsung-1938-store.jpg",
+    "library:samsung-chips.jpg",
+    "logo:curated",
+    "entity:P18",
+    "archive:Samsung"
+   ],
+   "pass": true
+  },
+  "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره": {
+   "pool": "general",
+   "at": "2026-08-25T19:08:51.550646",
+   "thash": "227dec37b8",
+   "files": [
+    "File:Douglas Engelbart in 2008.jpg",
+    "File:SRI Douglas Engelbart 1968.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:engelbart-mouse-1968.jpg",
+    "entity:P18:Douglas Engelbart in 2008.jpg",
+    "archive:Douglas Engelbart:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:engelbart-mouse-1968.jpg",
+    "entity:P18",
+    "archive:Douglas Engelbart"
+   ],
+   "pass": true
+  },
+  "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": {
+   "pool": "general",
+   "at": "2026-08-25T19:08:55.570367",
+   "thash": "9ed8f6a3c2",
+   "files": [
+    "File:Gary kildall801lighthouse.jpg"
+   ],
+   "images": 4,
+   "era_ok": 3,
+   "evidence": [
+    "library:kildall-1977-faire.jpg",
+    "library:eight-inch-floppy.jpg",
+    "logo:p154:Digital Research Logo.svg:current",
+    "archive:Gary Kildall:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:kildall-1977-faire.jpg",
+    "library:eight-inch-floppy.jpg",
+    "logo:p154",
+    "archive:Gary Kildall"
+   ],
+   "pass": true
+  },
+  "قصة الشماغ ومصانعه في إنجلترا": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:00.316204",
+   "thash": "71f364dc22",
+   "files": [
+    "File:Keffiyeh-frieze.png"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:saudi-shemagh.jpg",
+    "library:lancashire-mill-1945.jpg",
+    "archive:ghutra:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:saudi-shemagh.jpg",
+    "library:lancashire-mill-1945.jpg",
+    "archive:ghutra"
+   ],
+   "pass": true
+  },
+  "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:05.551211",
+   "thash": "999a1b170e",
+   "files": [
+    "File:McQuay AIR CONDITIONING AIR CONDITIONER OUTDOOR UNIT.jpg",
+    "File:Willis Carrier 1915.jpg",
+    "File:Willis Carrier 1915 (cropped).jpg"
+   ],
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "library:willis-carrier-1915.jpg",
+    "entity:P18:TECO MA-750B in Nangang 20110217.jpg",
+    "archive:air conditioning:1",
+    "archive:Willis Carrier:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:willis-carrier-1915.jpg",
+    "entity:P18",
+    "archive:air conditioning",
+    "archive:Willis Carrier"
+   ],
+   "pass": true
+  },
+  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:09.617806",
+   "thash": "ecbb2e38a6",
+   "files": [
+    "File:The Union Minister for Commerce & Industry and Textiles, Shri Anand Sharma releasing a book on Basmati Rice, in New Delhi on February 24, 2012.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:kabsa-dish.jpg",
+    "library:kabsa-communal.jpg",
+    "archive:basmati rice trade:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:kabsa-dish.jpg",
+    "library:kabsa-communal.jpg",
+    "archive:basmati rice trade"
+   ],
+   "pass": true
+  },
+  "قصة العباءة السعودية وتحولها لصناعة أزياء": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:14.112781",
+   "thash": "6ae2b01585",
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "library:saudi-abaya-modern.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:saudi-abaya-modern.jpg"
+   ],
+   "pass": true
+  },
+  "قصة المراعي من مزرعة إلى أكبر شركة ألبان": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:16.070666",
+   "thash": "c5c04585b4",
+   "files": [
+    "File:Almarai cpp2 web.jpg",
+    "File:Almarai reefers web.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:almarai-production.jpg",
+    "archive:Almarai:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:almarai-production.jpg",
+    "archive:Almarai"
+   ],
+   "pass": true
+  },
+  "قصة نادك للأغذية": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:20.025304",
+   "thash": "87998769f3",
+   "files": [
+    "File:NADEC-New-logo-.png",
+    "File:NaDeC Base Nagaoka.jpg",
+    "File:بدر بن عبدالله بن الكحيل.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:nadec-fields.jpg",
+    "archive:NADEC:3",
+    "archive:نادك:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:nadec-fields.jpg",
+    "archive:NADEC",
+    "archive:نادك"
+   ],
+   "pass": true
+  },
+  "قصة صالح كامل ودلة البركة": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:25.127351",
+   "thash": "c85bf2481d",
+   "person": "صالح كامل",
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "portrait:صالح كامل",
+    "library:saudi-coffee-dallah.jpg",
+    "library:saleh-kamel-portrait.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "portrait:صالح كامل",
+    "library:saudi-coffee-dallah.jpg",
+    "library:saleh-kamel-portrait.jpg"
+   ],
+   "pass": true
+  },
+  "قصة انهيار سوق الأسهم السعودية 2006": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:29.133407",
+   "thash": "f2385a10af",
+   "files": [
+    "File:انهيار سوق الاسهم السعودي.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:kafd-financial-district.jpg",
+    "library:tasi-crash-2006.jpg",
+    "archive:Saudi stock market crash 2006:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:kafd-financial-district.jpg",
+    "library:tasi-crash-2006.jpg",
+    "archive:Saudi stock market crash 2006"
+   ],
+   "pass": true
+  },
+  "قصة أول سيارة تدخل الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-25T19:09:31.216364",
+   "thash": "37e4127397",
+   "images": 0,
+   "era_ok": 0,
+   "evidence": [
+    "typographic:policy"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "typographic:policy"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T18:52:32.450286"
+ "checked_at": "2026-08-25T19:09:31.217583"
 }
