@@ -2367,54 +2367,6 @@
    ],
    "pass": true
   },
-  "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
-   "pool": "saudi",
-   "at": "2026-08-25T19:09:05.551211",
-   "thash": "999a1b170e",
-   "files": [
-    "File:McQuay AIR CONDITIONING AIR CONDITIONER OUTDOOR UNIT.jpg",
-    "File:Willis Carrier 1915.jpg",
-    "File:Willis Carrier 1915 (cropped).jpg"
-   ],
-   "images": 5,
-   "era_ok": 5,
-   "evidence": [
-    "library:willis-carrier-1915.jpg",
-    "entity:P18:TECO MA-750B in Nangang 20110217.jpg",
-    "archive:air conditioning:1",
-    "archive:Willis Carrier:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:willis-carrier-1915.jpg",
-    "entity:P18",
-    "archive:air conditioning",
-    "archive:Willis Carrier"
-   ],
-   "pass": true
-  },
-  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
-   "pool": "saudi",
-   "at": "2026-08-25T19:09:09.617806",
-   "thash": "ecbb2e38a6",
-   "files": [
-    "File:The Union Minister for Commerce & Industry and Textiles, Shri Anand Sharma releasing a book on Basmati Rice, in New Delhi on February 24, 2012.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "library:kabsa-dish.jpg",
-    "library:kabsa-communal.jpg",
-    "archive:basmati rice trade:1"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:kabsa-dish.jpg",
-    "library:kabsa-communal.jpg",
-    "archive:basmati rice trade"
-   ],
-   "pass": true
-  },
   "قصة العباءة السعودية وتحولها لصناعة أزياء": {
    "pool": "saudi",
    "at": "2026-08-25T19:09:14.112781",
@@ -2531,7 +2483,47 @@
     "typographic:policy"
    ],
    "pass": true
+  },
+  "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
+   "pool": "saudi",
+   "at": "2026-08-25T22:51:21.127947",
+   "thash": "999a1b170e",
+   "files": [
+    "File:Air conditioner 2.jpg",
+    "File:McQuay AIR CONDITIONING AIR CONDITIONER OUTDOOR UNIT.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:willis-carrier-1915.jpg",
+    "entity:P18:TECO MA-750B in Nangang 20110217.jpg",
+    "archive:air conditioning:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:willis-carrier-1915.jpg",
+    "entity:P18",
+    "archive:air conditioning"
+   ],
+   "pass": true
+  },
+  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-25T22:51:24.076304",
+   "thash": "ecbb2e38a6",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:kabsa-dish.jpg",
+    "library:kabsa-communal.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:kabsa-dish.jpg",
+    "library:kabsa-communal.jpg"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T19:09:31.217583"
+ "checked_at": "2026-08-25T22:51:28.723770"
 }
