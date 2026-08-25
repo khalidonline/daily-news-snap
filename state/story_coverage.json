@@ -2503,21 +2503,31 @@
   },
   "قصة دخول لوسيد ومصنعها في السعودية": {
    "pool": "saudi",
-   "at": "2026-08-25T23:06:42.587568",
+   "at": "2026-08-26T00:41:30.556981",
    "thash": "e62dff820a",
    "files": [
-    "File:Lucid Air Dream edition, IAA Open Space 2023, Munich (P1120054).jpg",
-    "File:Lucid Air Saudi Arabia Front 4.jpg"
+    "File:Lucid Air Saudi Arabia Front 4.jpg",
+    "File:Lucid Motors, IAA Open Space 2023, Munich (P1120049).jpg"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 9,
+   "era_ok": 8,
    "evidence": [
+    "library:lucid-air-saudi-1.jpg",
+    "library:lucid-air-saudi-2.jpg",
+    "library:lucid-air-saudi-3.jpg",
+    "library:lucid-air-saudi-4.jpg",
+    "library:lucid-air-dream.jpg",
     "logo:fetchable:current",
     "entity:P18:Lucid Showroom Miami Worldcenter 29 June 2023 - 2.jpg",
-    "archive:Lucid Motors:3"
+    "archive:Lucid Motors:2"
    ],
    "readiness": "READY",
    "anchors": [
+    "library:lucid-air-saudi-1.jpg",
+    "library:lucid-air-saudi-2.jpg",
+    "library:lucid-air-saudi-3.jpg",
+    "library:lucid-air-saudi-4.jpg",
+    "library:lucid-air-dream.jpg",
     "logo:fetchable",
     "entity:P18",
     "archive:Lucid Motors"
@@ -2525,5 +2535,5 @@
    "pass": true
   }
  },
- "checked_at": "2026-08-25T23:06:47.949717"
+ "checked_at": "2026-08-26T00:41:34.881190"
 }
