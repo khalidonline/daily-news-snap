@@ -477,7 +477,7 @@ def register_photos(paths, by):
         if marker.exists():
             # only the library registers (flagged, for its short window);
             # curated logos and flags repeat by design and stay out
-            if marker.read_text(encoding="utf-8").strip() != "local":
+            if not marker.read_text(encoding="utf-8").startswith("local"):
                 continue
             is_lib = True
         # a generation is unique each time — cooldown would be noise
@@ -2963,7 +2963,7 @@ def load_local_images():
 
 
 def fetch_local_photo(queries_ar, queries_en, out_path,
-                      respect_cooldown=True):
+                      respect_cooldown=True, exclude=()):
     """Pick the best match from your own library. Returns (path, credit).
 
     respect_cooldown=False is for PERSON identity fetches only: a
@@ -3003,6 +3003,8 @@ def fetch_local_photo(queries_ar, queries_en, out_path,
 
     best = None
     for best_score, entry in scored:
+        if entry["path"].name in exclude:
+            continue
         if respect_cooldown and _library_recently_used(entry["path"]):
             print(f"    local library: {entry['path'].name} rests "
                   f"(used within {LIBRARY_REUSE_DAYS} day(s)) — "
@@ -3021,7 +3023,10 @@ def fetch_local_photo(queries_ar, queries_en, out_path,
     # curated library photos are exempt from the cross-run cooldown: the
     # owner chose them, and dropping a good photo into images/ is exactly
     # how a recurring subject sidesteps the cooldown by design
-    Path(str(out_path) + ".exempt").write_text("local", encoding="utf-8")
+    # the marker names the served file so a caller can walk PAST a
+    # gate-rejected candidate to the library's next match
+    Path(str(out_path) + ".exempt").write_text(
+        f"local:{best['path'].name}", encoding="utf-8")
     print(f"    photo: {best['path'].name} from your library "
           f"(matched {best_score // 10} tag(s))")
     return str(out_path), best.get("credit")

@@ -1565,7 +1565,25 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
         keywords = spec.get("image_queries") or []
     keywords_ar = [k for k in (spec.get("image_keywords_ar") or []) if k]
 
-    photo = take(fetch_local_photo([], keywords, out_path))
+    # The library rung walks its RANKED candidates through the gate.
+    # One best-scored offer used to be the library's whole say: the
+    # coffee deck's dallah (top score, wrong angle) eclipsed the harvest
+    # photo the farming frames were asking for — six gate rejections,
+    # six blank frames, a skipped story with the right seed on disk.
+    photo, tried_local = None, []
+    for _ in range(3):
+        cand, _lc = fetch_local_photo([], keywords, out_path,
+                                      exclude=tried_local)
+        if not cand:
+            break
+        photo = take(cand)
+        if photo:
+            break
+        try:
+            marker = Path(str(out_path) + ".exempt").read_text("utf-8")
+            tried_local.append(marker.split(":", 1)[1].strip())
+        except Exception:
+            break
 
     # SPA before Commons: the official Saudi archive is the likeliest holder
     # of modern Saudi corporate frames (the Aramco Tadawul-listing frame is
