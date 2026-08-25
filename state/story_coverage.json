@@ -586,25 +586,6 @@
    "anchors": [],
    "pass": false
   },
-  "قصة أول عملة ورقية سعودية": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:11:52.314320",
-   "thash": "32f5cf4888",
-   "files": [
-    "File:1968 Saudi 10 Riyal.jpg",
-    "File:Banknotes saudi arabian.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "archive:first Saudi banknote:3"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:first Saudi banknote"
-   ],
-   "pass": true
-  },
   "كيف تأسست Apple في مرآب، ومن باع حصته مبكراً": {
    "pool": "general",
    "at": "2026-08-25T17:02:56.894178",
@@ -2203,30 +2184,6 @@
    ],
    "pass": true
   },
-  "قصة كريم من الفكرة إلى استحواذ أوبر": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:11:09.645345",
-   "thash": "8c6d73d778",
-   "files": [
-    "File:Careem logo new 2023.png",
-    "File:Hinomaru Kotsu 6186 JPN Taxi with Uber Taxi advertise.jpg",
-    "File:Self driving Uber prototype in San Francisco.jpg"
-   ],
-   "images": 4,
-   "era_ok": 3,
-   "evidence": [
-    "logo:fetchable:current",
-    "archive:Careem:1",
-    "archive:Uber:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "logo:fetchable",
-    "archive:Careem",
-    "archive:Uber"
-   ],
-   "pass": true
-  },
   "قصة عبداللطيف جميل للسيارات ووكالة تويوتا": {
    "pool": "general",
    "at": "2026-08-25T17:09:02.903692",
@@ -2393,27 +2350,6 @@
    ],
    "pass": true
   },
-  "قصة تأسيس مؤسسة النقد ساما": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:11:02.942942",
-   "thash": "aa9bd57c75",
-   "files": [
-    "File:Bank SA.jpg",
-    "File:Saudi Central Bank Logo.png"
-   ],
-   "images": 3,
-   "era_ok": 2,
-   "evidence": [
-    "logo:p154:Logo Saudi Arabian Monetary Authority.svg:current",
-    "archive:Saudi Central Bank:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "logo:p154",
-    "archive:Saudi Central Bank"
-   ],
-   "pass": true
-  },
   "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
    "pool": "saudi",
    "at": "2026-08-25T17:09:49.459016",
@@ -2461,7 +2397,77 @@
     "archive:Dallah Al Baraka"
    ],
    "pass": true
+  },
+  "قصة تأسيس مؤسسة النقد ساما": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:28:38.259717",
+   "thash": "aa9bd57c75",
+   "files": [
+    "File:Bank SA.jpg",
+    "File:Saudi Central Bank Logo.png"
+   ],
+   "images": 4,
+   "era_ok": 3,
+   "evidence": [
+    "library:sama-history-hq.jpg",
+    "logo:p154:Logo Saudi Arabian Monetary Authority.svg:current",
+    "archive:Saudi Central Bank:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:sama-history-hq.jpg",
+    "logo:p154",
+    "archive:Saudi Central Bank"
+   ],
+   "pass": true
+  },
+  "قصة كريم من الفكرة إلى استحواذ أوبر": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:28:43.170064",
+   "thash": "8c6d73d778",
+   "files": [
+    "File:Careem logo new 2023.png",
+    "File:Hinomaru Kotsu 6186 JPN Taxi with Uber Taxi advertise.jpg",
+    "File:Self driving Uber prototype in San Francisco.jpg"
+   ],
+   "images": 5,
+   "era_ok": 4,
+   "evidence": [
+    "library:careem-founders-2012.jpg",
+    "logo:p154:Careem Logo Ar.svg:current",
+    "archive:Careem:1",
+    "archive:Uber:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:careem-founders-2012.jpg",
+    "logo:p154",
+    "archive:Careem",
+    "archive:Uber"
+   ],
+   "pass": true
+  },
+  "قصة أول عملة ورقية سعودية": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:28:51.822868",
+   "thash": "32f5cf4888",
+   "files": [
+    "File:1968 Saudi 10 Riyal.jpg",
+    "File:Banknotes saudi arabian.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:first-hajj-receipt.png",
+    "archive:first Saudi banknote:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:first-hajj-receipt.png",
+    "archive:first Saudi banknote"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T17:17:02.282063"
+ "checked_at": "2026-08-25T18:28:54.654911"
 }
