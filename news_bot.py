@@ -2973,16 +2973,26 @@ def fetch_local_photo(queries_ar, queries_en, out_path,
     if not library:
         return None, None
 
-    terms = []
-    for q in list(queries_ar or []) + list(queries_en or []):
-        terms.extend(t.lower() for t in re.split(r"[\s,]+", str(q)) if len(t) > 2)
-    if not terms:
+    # EXACT identity matching (the Savola lesson, relearned here: the
+    # substring matcher let 'saudi' inside 'Saudi Central Bank' put the
+    # SAMA headquarters on the coffee story's person frame). A tag
+    # matches when it EQUALS a query phrase, or a single-word tag
+    # equals a query word — never by containment.
+    phrases = {str(q).strip().casefold()
+               for q in list(queries_ar or []) + list(queries_en or [])
+               if str(q).strip()}
+    words = set()
+    for q in phrases:
+        words |= {t for t in re.split(r"[\s,]+", q) if len(t) > 2}
+    if not phrases:
         return None, None
 
     scored = []
     for entry in library:
-        score = sum(10 for t in terms
-                    if any(t in tag or tag in t for tag in entry["tags"]))
+        tags = {t.casefold() for t in entry["tags"]}
+        score = sum(10 for tag in tags
+                    if tag in phrases
+                    or (" " not in tag and tag in words))
         if score >= MIN_PHOTO_SCORE:
             scored.append((score, entry))
     scored.sort(key=lambda se: -se[0])
