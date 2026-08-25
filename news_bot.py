@@ -256,6 +256,7 @@ _DOCUMENT_RE = re.compile(
     r"|\bhonorary\s+(?:doctorate|degree|charter|diploma|certificate)\b"
     r"|\bmedals?\b|\btroph(?:y|ies)\b"
     r"|\byearbooks?\b|\bprint edition\b|\bfront pages?\b"
+    r"|\bregulations?\b|\bdirective\b"
     r"|\bmicroform\b|\bfolio\b",
     re.IGNORECASE)
 _ARTWORK_AR_RE = _arabic_word_re(NOT_A_PHOTOGRAPH_AR)
@@ -1869,7 +1870,12 @@ def _owner_rejected(title):
             pass
         _rejected_cache = entries
     t = str(title or "").removeprefix("File:").replace("_", " ").casefold()
-    return t in _rejected_cache
+    if t in _rejected_cache:
+        return True
+    # a trailing * vetoes by prefix: two Deir Jarir photos were vetoed
+    # and two OTHERS surfaced — a wrong-subject family needs one line
+    return any(r.endswith("*") and t.startswith(r[:-1])
+               for r in _rejected_cache)
 
 
 def _commons_search(term, limit=12):
