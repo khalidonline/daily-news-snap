@@ -327,6 +327,10 @@ def _clear_generated_marker(path):
 # to the 09:00 run. Digests are the 16x16 perceptual hash, which already
 # treats a re-encode of one picture as the same picture.
 PHOTO_REUSE_DAYS = int(os.getenv("PHOTO_REUSE_DAYS", "").strip() or "7")
+# the library's OWN short window — the total exemption let one seeded
+# Riyadh skyline front the 7am news card and the 9am topic card of a
+# single morning, invisibly (exempt files were never registered either)
+LIBRARY_REUSE_DAYS = int(os.getenv("LIBRARY_REUSE_DAYS", "").strip() or "2")
 PHOTOS_USED_FILE = Path("state/photos_used.json")
 # set when the exhaustion path had to reuse a recent photo — the bots
 # prepend it to their Telegram delivery so the owner sees the flaw
@@ -387,6 +391,26 @@ def photo_recently_used(path):
                            for e in load_photos_used())
 
 
+def _library_recently_used(src_path):
+    """The library rests LIBRARY_REUSE_DAYS, not the archives' seven.
+
+    Seeded photos exist to return quickly on recurring beats — the full
+    cooldown would defeat their purpose — but never twice in one
+    morning across two bots. A match against a non-library entry blocks
+    for the full window as usual."""
+    d = _photo_digest(src_path)
+    if not d:
+        return False
+    cutoff = (datetime.now(timezone.utc)
+              - timedelta(days=LIBRARY_REUSE_DAYS)).isoformat()
+    for e in load_photos_used():
+        if not same_picture(d, e.get("d", "")):
+            continue
+        if not e.get("lib") or e.get("at", "") >= cutoff:
+            return True
+    return False
+
+
 def _recent_reject(out_path):
     """True when this just-accepted photo was on a recent post.
 
@@ -436,8 +460,16 @@ def register_photos(paths, by):
     known = {e.get("d") for e in entries}
     added = False
     for path in paths:
-        if not path or Path(str(path) + ".exempt").exists():
+        if not path:
             continue
+        marker = Path(str(path) + ".exempt")
+        is_lib = False
+        if marker.exists():
+            # only the library registers (flagged, for its short window);
+            # curated logos and flags repeat by design and stay out
+            if marker.read_text(encoding="utf-8").strip() != "local":
+                continue
+            is_lib = True
         # a generation is unique each time — cooldown would be noise
         if Path(str(path) + ".generated").exists():
             continue
@@ -445,8 +477,11 @@ def register_photos(paths, by):
         if not d or any(same_picture(d, k) for k in known):
             continue
         known.add(d)
-        entries.append({"d": d, "at": datetime.now(timezone.utc).isoformat(),
-                        "by": by})
+        entry = {"d": d, "at": datetime.now(timezone.utc).isoformat(),
+                 "by": by}
+        if is_lib:
+            entry["lib"] = True
+        entries.append(entry)
         added = True
     if not added:
         return
@@ -2883,8 +2918,13 @@ def load_local_images():
     return entries
 
 
-def fetch_local_photo(queries_ar, queries_en, out_path):
-    """Pick the best match from your own library. Returns (path, credit)."""
+def fetch_local_photo(queries_ar, queries_en, out_path,
+                      respect_cooldown=True):
+    """Pick the best match from your own library. Returns (path, credit).
+
+    respect_cooldown=False is for PERSON identity fetches only: a
+    verified portrait legitimately reappears when its story re-runs,
+    and identity beats variety there."""
     library = load_local_images()
     if not library:
         return None, None
@@ -2895,15 +2935,30 @@ def fetch_local_photo(queries_ar, queries_en, out_path):
     if not terms:
         return None, None
 
-    best, best_score = None, 0
+    scored = []
     for entry in library:
         score = sum(10 for t in terms
                     if any(t in tag or tag in t for tag in entry["tags"]))
-        if score > best_score:
-            best, best_score = entry, score
+        if score >= MIN_PHOTO_SCORE:
+            scored.append((score, entry))
+    scored.sort(key=lambda se: -se[0])
 
-    if best is None or best_score < MIN_PHOTO_SCORE:
+    if not scored:
         print(f"    local library: no match ({len(library)} images indexed)")
+        return None, None
+
+    best = None
+    for best_score, entry in scored:
+        if respect_cooldown and _library_recently_used(entry["path"]):
+            print(f"    local library: {entry['path'].name} rests "
+                  f"(used within {LIBRARY_REUSE_DAYS} day(s)) — "
+                  "trying the next match")
+            continue
+        best = entry
+        break
+    if best is None:
+        print("    local library: every matching photo rests under the "
+              "short cooldown — falling through to the archives")
         return None, None
 
     import shutil as _shutil

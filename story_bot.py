@@ -917,7 +917,8 @@ def find_portrait(name, out_path):
     Commons goes first and matters most: its second lookup is the lead image
     of the person's own article, which is where a portrait actually lives.
     """
-    photo, _ = fetch_local_photo([], [name], out_path)
+    photo, _ = fetch_local_photo([], [name], out_path,
+                                 respect_cooldown=False)
     if photo:
         return photo
     photo, _ = fetch_commons_portrait(name, out_path)
@@ -1422,7 +1423,8 @@ def _person_frame_photo(frame, out_path, seen):
     context = (f"{frame.get('heading', '')}\n"
                f"{frame.get('text', '')}").strip()
     for kw in keywords + keywords_ar:
-        photo, _ = fetch_local_photo([kw], [kw], out_path)
+        photo, _ = fetch_local_photo([kw], [kw], out_path,
+                                     respect_cooldown=False)
         if photo and fresh(photo):
             return photo
         photo, _ = fetch_commons_portrait(kw, out_path)
