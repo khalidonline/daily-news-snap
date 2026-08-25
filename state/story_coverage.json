@@ -2401,24 +2401,6 @@
    ],
    "pass": true
   },
-  "قصة التمر السعودي وتحوله لصناعة": {
-   "pool": "saudi",
-   "at": "2026-08-25T18:51:20.483748",
-   "thash": "a4b91ac5d5",
-   "person": "التمر السعودي وتحوله لصناعة",
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "portrait:التمر السعودي وتحوله لصناعة",
-    "library:saudi-dates-market.jpg"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "portrait:التمر السعودي وتحوله لصناعة",
-    "library:saudi-dates-market.jpg"
-   ],
-   "pass": true
-  },
   "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
    "pool": "saudi",
    "at": "2026-08-25T18:51:23.251776",
@@ -2461,30 +2443,6 @@
    ],
    "pass": true
   },
-  "قصة العثيم وتجارة التجزئة": {
-   "pool": "saudi",
-   "at": "2026-08-25T18:51:31.379532",
-   "thash": "b0405b98ec",
-   "person": "العثيم وتجارة التجزئة",
-   "files": [
-    "File:Abdullah Al-Othaim Markets Logo.jpg",
-    "File:Othaim Markets in Manfuha, Riyadh.JPG"
-   ],
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "portrait:العثيم وتجارة التجزئة",
-    "library:othaim-branch.jpg",
-    "archive:Al Othaim Markets:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "portrait:العثيم وتجارة التجزئة",
-    "library:othaim-branch.jpg",
-    "archive:Al Othaim Markets"
-   ],
-   "pass": true
-  },
   "قصة افتتاح أول جامعة سعودية": {
    "pool": "saudi",
    "at": "2026-08-25T18:51:34.003221",
@@ -2499,7 +2457,52 @@
     "library:ksu-gate.jpg"
    ],
    "pass": true
+  },
+  "قصة التمر السعودي وتحوله لصناعة": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:52:22.588746",
+   "thash": "d9bc6375df",
+   "files": [
+    "File:Phoenix dactylifera, date palm 7026.jpg",
+    "File:Phoenix dactylifera, date palm Half Moon Cay 7027.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:saudi-dates-market.jpg",
+    "archive:التمر:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:saudi-dates-market.jpg",
+    "archive:التمر"
+   ],
+   "pass": true
+  },
+  "قصة العثيم وتجارة التجزئة": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:52:29.655672",
+   "thash": "017d27e2fd",
+   "files": [
+    "File:Abdullah Al-Othaim Markets Logo.jpg",
+    "File:Othaim Markets in Manfuha, Riyadh.JPG",
+    "File:عبدالعزيز العثيم.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:othaim-branch.jpg",
+    "archive:Al Othaim Markets:2",
+    "archive:العثيم:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:othaim-branch.jpg",
+    "archive:Al Othaim Markets",
+    "archive:العثيم"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T18:51:35.645029"
+ "checked_at": "2026-08-25T18:52:32.450286"
 }
