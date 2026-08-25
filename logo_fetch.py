@@ -125,6 +125,51 @@ def _local_file_url(lang, title):
     return None
 
 
+def wikidata_p154_logo(names, domain):
+    """Probe: the subject's Wikidata logo (P154), the entity verified by
+    its official website (P856) HOST equalling the declared domain —
+    substring matching would verify Samsung Galaxy (P856
+    samsung.com/global/galaxy/) as readily as Samsung Electronics, so
+    candidates are walked in wbsearchentities ranked order and the
+    first host-verified one wins. Statements with an end date (P582,
+    how Wikidata marks superseded logos) are passed over. Probe-only:
+    returns the Commons filename or None, downloads nothing."""
+    from urllib.parse import urlparse
+
+    def _host(u):
+        return (urlparse(str(u)).hostname or "").lower()
+
+    for name in [n for n in names if n][:2]:
+        se = _wiki_get("https://www.wikidata.org/w/api.php",
+                       {"action": "wbsearchentities", "format": "json",
+                        "language": "en", "type": "item",
+                        "search": name, "limit": "5"},
+                       label="wikidata") or {}
+        ids = [c.get("id") for c in se.get("search", []) if c.get("id")]
+        if not ids:
+            continue
+        ent = _wiki_get("https://www.wikidata.org/w/api.php",
+                        {"action": "wbgetentities", "format": "json",
+                         "ids": "|".join(ids), "props": "claims"},
+                        label="wikidata") or {}
+        entities = ent.get("entities", {})
+        for qid in ids:
+            claims = entities.get(qid, {}).get("claims", {})
+            sites = [c.get("mainsnak", {}).get("datavalue", {})
+                      .get("value", "") for c in claims.get("P856", [])]
+            if not any(_host(u) == domain or _host(u) == "www." + domain
+                       or _host(u).endswith("." + domain) for u in sites):
+                continue
+            for c in claims.get("P154", []):
+                if "P582" in (c.get("qualifiers") or {}):
+                    continue
+                v = c.get("mainsnak", {}).get("datavalue", {}).get("value")
+                if v:
+                    return str(v)
+            return None
+    return None
+
+
 def fetch_current(slug, names, require_domain=None):
     """The subject's current logo, from its own article's infobox files.
 

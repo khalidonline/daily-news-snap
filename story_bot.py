@@ -874,6 +874,25 @@ def choose_story(exclude=(), pool=None):
     # one theme: seven businessmen in a row, then seven cities. Invisible at
     # two a week, dominant at one a day. Still deterministic per day, so a
     # retry inside one run picks the same story.
+    # readiness preference (owner rule: prefer, NEVER block — a hard
+    # block on a NOT READY-heavy pool would starve selection back into
+    # consecutive skips): READY first, then THIN and unaudited together,
+    # NOT READY last. The pick stays hash-deterministic inside the tier.
+    try:
+        _cov = json.loads(Path("state/story_coverage.json")
+                          .read_text("utf-8")).get("entries", {})
+        _rank = {"READY": 0, "THIN": 1, "NOT READY": 2}
+        _best = min(_rank.get(_cov.get(s2, {}).get("readiness"), 1)
+                    for s2 in fresh)
+        tier = [s2 for s2 in fresh
+                if _rank.get(_cov.get(s2, {}).get("readiness"), 1) == _best]
+        if tier and len(tier) < len(fresh):
+            print(f"    readiness: picking among {len(tier)} "
+                  f"{'READY' if _best == 0 else 'THIN/unaudited' if _best == 1 else 'NOT READY'} "
+                  "entr(y/ies)")
+            fresh = tier
+    except Exception:
+        pass
     seed = hashlib.md5(datetime.now().date().isoformat().encode()).hexdigest()
     pick = fresh[int(seed, 16) % len(fresh)]
     print(f"    {len(fresh)} of {len(stories)} stories available")
