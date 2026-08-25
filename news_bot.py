@@ -261,8 +261,12 @@ def looks_like_a_graphic(path):
     """
     try:
         img = Image.open(path).convert("RGB")
-    except Exception:
-        return False
+    except Exception as exc:
+        # fail CLOSED: a file PIL cannot decode (an SVG chart from
+        # Openverse reached four Samsung frames this way) is not a
+        # photograph — declaring it "not a graphic" passed it onward
+        print(f"  ! undecodable image ({exc}) — rejecting")
+        return True
 
     small = img.resize((120, 120))
     pixels = list(small.getdata())
@@ -2456,6 +2460,15 @@ def render_number(brief, out_path, photo_credit=None):
 def render_story(brief, out_path, photo_path=None, photo_credit=None):
     """Light card: photo, a short paragraph, one line in red. Centred.
     Everything is measured before it is drawn, so nothing can overflow."""
+    if photo_path:
+        try:
+            Image.open(photo_path).close()
+        except Exception as exc:
+            # layout is decided by a successfully-opened image, never a
+            # truthy path (the Samsung SVG lesson): unreadable means the
+            # card reflows as photoless, not a blank hole mid-card
+            print(f"  ! photo unreadable ({exc}) — rendering photoless")
+            photo_path = None
     bg, ink, red, muted = BG_TOP, TEXT, ACCENT, MUTED
     body_ink = BODY
 
@@ -3161,7 +3174,15 @@ def photo_shows(photo_path, context):
         buf = _io.BytesIO()
         img.save(buf, "JPEG", quality=80)
         b64 = base64.b64encode(buf.getvalue()).decode()
-
+    except Exception as exc:
+        # a fail-open that can't tell "gate is down" from "file is
+        # broken" is not a fail-open: this failure is the FILE's, and
+        # the verdict is a rejection — the API outage path stays below
+        print(f"  ✂ vision gate: unreadable image ({exc}) — rejected")
+        if cache_key:
+            _gate_cache[cache_key] = "no"
+        return "no"
+    try:
         payload = {
             "model": VISION_MODEL,
             "max_tokens": 150,

@@ -155,6 +155,15 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
      التي أتلفت سياراتها عادت تبيعها"
    ✓ ختام يقول ما لم يكن القارئ يعرفه قبل أن يقرأ القصة
 
+   والحكم يُكتب بصيغة الحاضر. لقطة ختام تؤرّخ نفسها بسنة ماضية («منذ
+   2006 وهي الأولى...») صارت لقطة تاريخية سادسة لا حكماً — الحكم يقف
+   في اليوم وينظر إلى ما لن يعود كما كان. ولا يعني الحاضرُ رقماً
+   حديثاً: حصة سوقية أو إيراد آخر سنة إحصاءة لا حكم.
+   ✗ «منذ 2006 تتصدر مبيعات التلفاز عالمياً» (مؤرّخة في الماضي)
+   ✗ «حصتها اليوم 31% من سوق الهواتف» (إحصاءة حاضرة، لا حكم)
+   ✓ «المحل الذي باع السمك المجفف صار يصنع ذاكرة العالم» (حاضر، بلا
+     رقم، ولا يعود كما كان)
+
    ولا تعطِ رقماً واحداً معنيين متضادين. إن كان الرقم في لقطة النتيجة دليل
    نجاح فلا يصير في لقطة الحكم دليل تراجع — القارئ يقرأ اللقطتين متتاليتين،
    فيظن أنك ناقضت نفسك ويخرج بلا خلاصة.
@@ -1096,9 +1105,19 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
               anchor="la", **k)
 
     y = 420
+    pic = None
     if photo:
         try:
             pic = Image.open(photo).convert("RGB")
+        except Exception as exc:
+            # layout is decided by a successfully-opened image, never by
+            # a truthy path: the Samsung SVG deck rendered four bare
+            # frames because an unreadable "photo" blocked the designed
+            # floor below
+            print(f"  ! photo unreadable ({exc}) — taking the designed "
+                  "floor instead")
+    if pic is not None:
+        try:
             box_w, box_h = max_w, int(max_w * 0.72)
             pw, ph = pic.size
             if pw / ph > box_w / box_h:
@@ -1122,7 +1141,7 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         if len(lines) <= (2 if photo else 3):
             break
         size -= 8
-    if not photo:
+    if pic is None:
         # Designed text-only. First choice: the TYPOGRAPHIC treatment —
         # the frame's own strongest figure (a number, a year) set huge in
         # the photo zone; it reads as a deliberate numeric frame and can
