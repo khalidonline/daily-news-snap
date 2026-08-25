@@ -159,6 +159,13 @@ BLOCKED_IMAGE_TERMS = (
     "protest", "riot", "demonstration", "clash", "violence", "blood",
     "injured", "casualty", "funeral", "grave", "refugee", "terror",
     "smoking", "alcohol", "beer", "wine", "bikini", "lingerie",
+    # political figures: a business/econ account has no card where a
+    # named politician is the picture — Arafat sailed through every
+    # existing list onto the shemagh story's candidates. Surnames only,
+    # high precision; the vision gate remains the judge of anyone else.
+    "arafat", "netanyahu", "erdogan", "assad", "putin", "zelensky",
+    "trump", "biden", "obama", "khamenei", "khomeini", "gaddafi",
+    "saddam", "mussolini", "hitler", "stalin",
 )
 
 
@@ -247,7 +254,9 @@ _DOCUMENT_RE = re.compile(
     r"|\baward\b(?!\s*-?\s*winning)"
     r"|\bdipl[oô]me\b"
     r"|\bhonorary\s+(?:doctorate|degree|charter|diploma|certificate)\b"
-    r"|\bmedals?\b|\btroph(?:y|ies)\b",
+    r"|\bmedals?\b|\btroph(?:y|ies)\b"
+    r"|\byearbooks?\b|\bprint edition\b|\bfront pages?\b"
+    r"|\bmicroform\b|\bfolio\b",
     re.IGNORECASE)
 _ARTWORK_AR_RE = _arabic_word_re(NOT_A_PHOTOGRAPH_AR)
 
@@ -1836,6 +1845,33 @@ def _commons_fileinfo(titles):
     return out
 
 
+_REJECTED_FILE = Path("images/rejected.txt")
+_rejected_cache = None
+
+
+def _owner_rejected(title):
+    """True for a Commons file title the owner has vetoed by review.
+
+    images/rejected.txt is a content file: one title per line, with or
+    without the File: prefix, # comments allowed. A rejected file never
+    reaches a card, a probe count, or a portrait slot again — rejecting
+    a candidate in the catalogue must be a decision made once."""
+    global _rejected_cache
+    if _rejected_cache is None:
+        entries = set()
+        try:
+            for ln in _REJECTED_FILE.read_text("utf-8").splitlines():
+                ln = ln.split("#")[0].strip()
+                if ln:
+                    entries.add(ln.removeprefix("File:")
+                                .replace("_", " ").casefold())
+        except Exception:
+            pass
+        _rejected_cache = entries
+    t = str(title or "").removeprefix("File:").replace("_", " ").casefold()
+    return t in _rejected_cache
+
+
 def _commons_search(term, limit=12):
     data = _wiki_get(COMMONS_API, {
         "action": "query", "format": "json", "generator": "search",
@@ -1844,7 +1880,8 @@ def _commons_search(term, limit=12):
         "iiurlwidth": "1600",
     }, label="Commons")
     pages = (data.get("query") or {}).get("pages", {})
-    found = [(p, p["imageinfo"][0]) for p in pages.values() if p.get("imageinfo")]
+    found = [(p, p["imageinfo"][0]) for p in pages.values()
+             if p.get("imageinfo") and not _owner_rejected(p.get("title"))]
     print(f"    Commons: {len(found)} files for {term!r}")
     return found
 
@@ -1888,6 +1925,7 @@ def _wikipedia_lead_files(term):
             titles.append(f"File:{name}")
     if titles:
         print(f"    Wikipedia lead image(s) for {term!r}: {len(titles)}")
+    titles = [t for t in titles if not _owner_rejected(t)]
     return titles
 
 

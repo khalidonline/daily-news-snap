@@ -104,7 +104,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 # @pool: saudi
 
 # Things Saudis touch daily
-قصة الشماغ ومصانعه في إنجلترا | ghutra, shemagh, keffiyeh
+قصة الشماغ ومصانعه في إنجلترا | ghutra, shemagh, شماغ
 قصة القهوة السعودية | Saudi coffee, Arabic coffee
 قصة التمر السعودي وتحوله لصناعة | Saudi dates industry
 قصة المكيّف الذي جعل مدن الخليج ممكنة | air conditioning, Willis Carrier

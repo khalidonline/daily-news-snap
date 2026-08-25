@@ -881,7 +881,9 @@ def choose_story(exclude=(), pool=None):
     try:
         _cov = json.loads(Path("state/story_coverage.json")
                           .read_text("utf-8")).get("entries", {})
-        _rank = {"READY": 0, "THIN": 1, "NOT READY": 2}
+        # LOGO-ONLY is a legitimate deck shape (mark + typographic),
+        # not a defect: it shares THIN's tier
+        _rank = {"READY": 0, "THIN": 1, "LOGO-ONLY": 1, "NOT READY": 2}
         _best = min(_rank.get(_cov.get(s2, {}).get("readiness"), 1)
                     for s2 in fresh)
         tier = [s2 for s2 in fresh

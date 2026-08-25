@@ -125,6 +125,69 @@ def _local_file_url(lang, title):
     return None
 
 
+def wikidata_entity_files(names, domain=None):
+    """Subject-bound Commons files straight from the Wikidata ENTITY:
+    P18 (image) and P154 (logo). String search matched a Sufi painting
+    and a Polish river to SAMA and the founder's son to Jameel; the
+    entity's own claims cannot. Verification: P856 host equality when a
+    domain is declared, exact label/alias match otherwise — a homonym
+    that merely ranks high never qualifies. Returns [(prop, filename)]."""
+    from urllib.parse import urlparse
+
+    def _host(u):
+        return (urlparse(str(u)).hostname or "").lower()
+
+    wanted = {str(n).casefold() for n in names if n}
+    for name in [n for n in names if n][:2]:
+        se = _wiki_get("https://www.wikidata.org/w/api.php",
+                       {"action": "wbsearchentities", "format": "json",
+                        "language": "en", "type": "item",
+                        "search": name, "limit": "5"},
+                       label="wikidata") or {}
+        ids = [c.get("id") for c in se.get("search", []) if c.get("id")]
+        if not ids:
+            continue
+        ent = _wiki_get("https://www.wikidata.org/w/api.php",
+                        {"action": "wbgetentities", "format": "json",
+                         "ids": "|".join(ids),
+                         "props": "claims|labels|aliases"},
+                        label="wikidata") or {}
+        entities = ent.get("entities", {})
+        for qid in ids:
+            e = entities.get(qid, {})
+            claims = e.get("claims", {})
+            if domain:
+                sites = [c.get("mainsnak", {}).get("datavalue", {})
+                          .get("value", "") for c in claims.get("P856", [])]
+                ok = any(_host(u) == domain or _host(u) == "www." + domain
+                         or _host(u).endswith("." + domain) for u in sites)
+            else:
+                labels = {v.get("value", "").casefold()
+                          for v in e.get("labels", {}).values()}
+                labels |= {a.get("value", "").casefold()
+                           for al in e.get("aliases", {}).values()
+                           for a in al}
+                # single-word aliases are the homonym class: 'SAMA'
+                # label-matched the Asturian town of Sama. Without a
+                # domain to verify against, only a multi-word alias may
+                # claim an entity by label.
+                ok = bool(labels & {w for w in wanted
+                                    if len(w.split()) >= 2})
+            if not ok:
+                continue
+            out = []
+            for prop in ("P18", "P154"):
+                for c in claims.get(prop, []):
+                    if "P582" in (c.get("qualifiers") or {}):
+                        continue
+                    v = c.get("mainsnak", {}).get("datavalue", {}).get("value")
+                    if v:
+                        out.append((prop, str(v)))
+                        break
+            return out
+    return []
+
+
 def wikidata_p154_logo(names, domain):
     """Probe: the subject's Wikidata logo (P154), the entity verified by
     its official website (P856) HOST equalling the declared domain —

@@ -1,0 +1,161 @@
+# Commons files vetoed by owner review of the readiness catalogue
+# (2026-08-25). One title per line; File: prefix optional. A file
+# listed here never reaches a card, a probe count, or a portrait slot.
+
+# الشماغ — Palestinian keffiyeh, not the red Saudi shemagh; political figure
+ArafatEconomicForum (cropped).jpg
+Keffiyeh-corner.png
+
+# ماء زمزم — poor quality, not Snapchat-grade
+Zamzam water flask 20200514 105648.jpg
+Zamzam water plant.jpg
+
+# الكبسة — poor quality
+Kabsa.jpg
+Kabsa (6486384335).jpg
+
+# جرير — Deir Jarir is a Palestinian village, not the bookstore
+Deir Jarir 2017.jpg
+Deir Jarir 2019.jpg
+
+# بنده — Panda Express is a US restaurant chain
+Panda Express (Lockport, Illinois) 1.jpg
+Panda Express (Weber Road; Bolingbrook, Illinois) 1.jpg
+
+# سابك — a dog named Sabic; a Dutch office for a Saudi origin story
+Ben Sabic under a bridge 02.jpg
+SABIC Sittard.jpg
+
+# طفرة النفط — containment booms, not an oil boom
+AT LOG BOOM ON SAN JUAN RIVER, IN A REMOTE AREA OF MONUMENT VALLEY. BOOM WAS SITE OF CLEAN-UP OPERATIONS FOLLOWING... - NARA - 545667.jpg
+PART OF BOOM SYSTEM OF THE NORTH EAST PETROLEUM TANKER TERMINAL AT TIVERTON. THE LARGEST SUCH TERMINAL IN THE... - NARA - 547677.jpg
+
+# ساما — acronym collisions
+Rzeka Sama.jpg
+Sufis Performing Sama (CBL Per 163.6).jpg
+
+# ماكدونالدز السعودية — summit photos, irrelevant
+WTTC Global Summit Saudi Arabia 2022 - DSC 4776 (52536304035).jpg
+WTTC Global Summit Saudi Arabia 2022 - DSC 4780 (52536120224).jpg
+
+# سوق دوت كوم — physical souq markets
+Luxor Souq R01.jpg
+Souq Waqif, Doha, Catar, 2013-08-05, DD 107.JPG
+
+# نون — homonyms
+Samuel D. Ehrhart - An International High Noon Divorce (1906).jpg
+Sun at noon.jpg
+
+# صندوق الاستثمارات — Pif is an Italian TV presenter
+Pif, Leopolda 5 25 ottobre 2014 - 15008659404.jpg
+Pif, Leopolda 5 25 ottobre 2014 - 15443115698.jpg
+
+# صالح كامل — 3rd photo irrelevant (owner verdict)
+Kamel Saleh 2005.jpg
+
+# Apple — the fruit
+Red Apple.jpg
+
+# Nokia — office interior, not the story
+Nokia Networks Munich Office, April 2017 -02.jpg
+
+# Amazon — the river
+Amazon River ESA17276564.tiff
+
+# Snapchat — both irrelevant (owner verdict)
+Snap on smartphone.jpg
+Snapchat User Location.jpeg
+
+# Tesla — the scientist and his airport, not the company
+Belgrade Nikola Tesla Airport Tower 2023.jpg
+Nikola Tesla, with his equipment EDIT.jpg
+
+# أرامكو — residential compound patio, irrelevant on all three lines
+ARAMCO Compound-Patio by Persian Gulf.jpg
+
+# الطيران المدني — cargo plane with a Russian carrier alongside
+Saudi Airlines Cargo & Volga Dnepr on taxyway November.jpg
+
+# عبداللطيف جميل — these show his son, not the founder
+Abdul Latif Jameel Commons Photograph10.png
+Abdul Latif Jameel Commons Photograph11.jpg
+
+# Malcom McLean — thesis scan and an unrecognisable railing shot (owner verdict)
+California Digital Library (IA theologicalindex00malcrich).pdf
+Malcolm McLean at railing, Port Newark, 1957 (7312751706).jpg
+
+# صالح الراجحي — the "portrait" is فهد بن صالح الراجحي, his son
+فهد بن صالح الراجحي.jpg
+
+# ---- pass-2 review additions (2026-08-25) ----
+
+# UPS — uninterruptible power supplies, not the courier
+MGE Uninterruptible Power Supply at NERSC.jpg
+UPS - uninterruptible power supply.JPG
+Uninterruptible power supply.jpg
+
+# طفرة النفط — more containment-boom variants from the same NARA set
+DR. GEORGE RICE (IN YELLOW JACKET) WAS EPA'S ON-SCENE COORDINATOR FOR THE CLEAN-UP OF THE SAN JUAN RIVER OIL SPILL. A... - NARA - 545672.jpg
+PART OF THE BOOM SYSTEM OF THE NORTH EAST PETROLEUM TANKER TERMINAL AT TIVERTON. THE LARGEST TANKER TERMINAL IN THE... - NARA - 547668.jpg
+
+# صافولا — Finnish politician and namesakes, not the Saudi food group
+Mikko-Savola official portrait 2023.jpg
+Mikko Savola 2015.JPG
+Mikko Savola 441A8473.jpg
+Albin Savola.jpeg
+
+# Jack Bogle — 19th-century novel scans; his real photo stays available
+Mutual Fund sales growth from 2004 to 2013.jpg
+
+# Fred Smith — a bassist and a baseball player, not FedEx's founder
+Fred Smith bassist 2014.jpg
+Fred V. Smith (baseball) LCCN2014703469.jpg
+Fred V. Smith (baseball) LCCN2014703469 (cropped).jpg
+
+# Amancio Ortega — officials, arms and holding-company marks, not him
+Maeztu Lleons 2015 02.jpg
+Pontegadea Sociedad Limitada.png
+Amancio Ortega Gaona signature.png
+
+# سليمان الراجحي — the colleges banner, an unrelated signing, and his son
+Sulaiman Al-Rajhi Colleges.png
+KPMG signing.jpg
+Abdullah bin sulaiman al rajhi.jpg
+
+# أول جامعة سعودية — Aligarh (India), wrong university
+Syedna Taher Saifuddin and King ibn Saud at Aligarh Muslim University.jpg
+
+# مرسول — the sponsored stadium is not the company (naming-rights deal)
+Entire King Saud University Stadium.jpg
+Inside King Saud University Stadium.jpg
+Mrsool Park Locker Room.jpg
+Players tunnel - King Saud University Stadium.jpg
+
+# Emirates — the archipelago is Dubai scenery, not the airline
+Artificial Archipelagos, Dubai, United Arab Emirates ISS022-E-024940 lrg.jpg
+
+# Muhammad Yunus — a concert venue
+Muhammad Yunus-Schlachthof Wiesbaden.jpg
+
+# IKEA — warehouse equipment
+Jungheinrich pallet jack in IKEA Copenhagen.jpg
+
+# ماكدونالدز السعودية — more summit-stage shots
+WTTC Global Summit Saudi Arabia 2022 - DSC 4779 (52536303930).jpg
+WTTC Global Summit Saudi Arabia 2022 - DSC 4788 (52535830631).jpg
+
+# Ajay Bhatt — an unrelated event appearance mistaken for him
+RRM Ajay Bhatt with participants of MILAN Village (cropped).jpg
+
+# الأخوان McDonald — an actress card and two sawmills
+Ada McDonald, from the Actresses series (N245) issued by Kinney Brothers to promote Sweet Caporal Cigarettes MET DP859094.jpg
+DSC01075 - McDonald Brothers' Sawmill (44329341661).jpg
+Nova Scotia DGJ 8062 - McDonalds' Brothers' Sawmill (4905755835).jpg
+
+# صالح كامل — Bourguiba-era shots and unrelated Tunisian scenes
+Habib Bourguiba, Mohamed Mzali, Moncef Cheikh-Rouhou, Sheikh Abdullah Salah Kamel.jpg
+Naissance du projet de réaménagement des lagunes des berges du Lac.jpg
+One ordinary day in the field.jpg
+
+# المكيّف — foreign-labelled schematic
+Climatizacao-automotiva-air-conditioning.jpg

@@ -35,9 +35,11 @@ try:
     from story_bot import (
         load_stories, story_aliases, story_pool, story_logo_domain,
         person_name, find_portrait, _logo_slug, LOGOS_DIR, OUT_DIR,
-        _STORY_SUBJECT,
+        _STORY_SUBJECT, _subject_keys,
     )
-    from logo_fetch import _article_logo_files, wikidata_p154_logo
+    from logo_fetch import (_article_logo_files, wikidata_p154_logo,
+                            wikidata_entity_files)
+    from news_bot import _owner_rejected
     from news_bot import _commons_search, _image_is_safe, commit_and_push
 except ImportError as exc:
     raise SystemExit(f"a bot module is missing something preflight needs "
@@ -121,6 +123,34 @@ def _curated_logo_eras(line):
     return eras
 
 
+def _classify(entry):
+    """Class from the entry's own counts — re-runnable after the
+    cross-subject disqualifier subtracts generic files."""
+    images = entry.get("images", 0)
+    era_ok = entry.get("era_ok", 0)
+    evidence = entry.get("evidence", [])
+    historical = "historical" in entry
+    logo_images = sum(1 for x in evidence if x.startswith("logo:"))
+    entry.pop("era_gap", None)
+    if "typographic:policy" in evidence:
+        entry["readiness"] = "THIN"
+    elif images <= 0:
+        entry["readiness"] = "NOT READY"
+    elif historical and era_ok <= 0:
+        entry["readiness"] = "NOT READY"
+        entry["era_gap"] = True     # assets exist, all wrong-era marks
+    elif images == logo_images:
+        # modern companies are nearly absent from free archives — that
+        # is a deck SHAPE (curated mark + typographic floor), not a
+        # defect, and bad archive hits must not promote it to READY
+        entry["readiness"] = "LOGO-ONLY"
+    elif images == 1:
+        entry["readiness"] = "THIN"
+    else:
+        entry["readiness"] = "READY"
+    return entry
+
+
 def check_line(line):
     """The readiness audit for one line — every probe, one entry.
 
@@ -195,6 +225,29 @@ def check_line(line):
 
     # -- archive photos, evidence-only: errors are never verdicts
     errors = 0
+    # the ENTITY's own images first (P18/P154): subject-bound by claim,
+    # immune to the acronym collisions that string search served up
+    entity_files = []
+    latin = [a for a in story_aliases(line) if a.isascii()]
+    if latin:
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                entity_files = wikidata_entity_files(
+                    latin, story_logo_domain(line) or None)
+        except Exception:
+            entity_files = []
+        for prop, fname in entity_files:
+            if _owner_rejected(fname):
+                continue
+            if prop == "P18":
+                anchors.append("entity:P18")
+                evidence.append(f"entity:P18:{fname[:90]}")
+                images += 1
+                era_ok += 1
+            elif prop == "P154" and "logo" not in " ".join(evidence):
+                anchors.append("logo:p154")
+                evidence.append(f"logo:p154:{fname[:90]}:current")
+                images += 1
     terms = _subject_terms(line)
     if terms:
         import time
@@ -238,6 +291,10 @@ def check_line(line):
                 evidence.append(f"archive:{term}:{len(fresh_hits)}")
                 images += min(len(fresh_hits), 2)
                 era_ok += min(len(fresh_hits), 2)
+                for h in fresh_hits[:2]:
+                    pg = h[0] if isinstance(h, tuple) else h
+                    entry.setdefault("files", []).append(
+                        pg.get("title", ""))
             if images >= 4:
                 break               # enough — spare the archive
         time.sleep(0.4)             # politeness between lines
@@ -249,19 +306,10 @@ def check_line(line):
         evidence.append("typographic:policy")
 
     # -- classification
-    if "typographic:policy" in evidence:
-        entry["readiness"] = "THIN"
-    elif images == 0:
-        entry["readiness"] = "NOT READY"
-    elif historical and era_ok == 0:
-        entry["readiness"] = "NOT READY"
-        entry["era_gap"] = True     # assets exist, all wrong-era marks
-    elif images == 1:
-        entry["readiness"] = "THIN"
-    else:
-        entry["readiness"] = "READY"
     entry["images"] = images
+    entry["era_ok"] = era_ok
     entry["evidence"] = evidence
+    _classify(entry)
     entry["anchors"] = anchors
     if anchors:
         entry["pass"] = True
@@ -316,6 +364,45 @@ def main():
         mark = entry.get("readiness", "?ERR")
         print(f"[{i}/{len(stories)}] {mark:<9} {line[:52]}"
               f"  {entry.get('evidence', [])[:2]}")
+    # CROSS-SUBJECT DISQUALIFIER (owner rule, pass-2 review): a file
+    # offered as a candidate for 3+ UNRELATED subjects is generic by
+    # definition — speaker icons, solid rectangles, stock placeholders
+    # recurred across McLean, Wilkes and Al-Naimi. Same-subject
+    # repetition (the Aramco trio share their subject keys) stays legal.
+    title_holders = {}
+    for line in stories:
+        for t in cov["entries"].get(line, {}).get("files", []):
+            if t:
+                title_holders.setdefault(t, []).append(line)
+    generic = set()
+    for t, holders in title_holders.items():
+        groups = []
+        for ln in holders:
+            keys = set(_subject_keys(ln))
+            for g in groups:
+                if g & keys:
+                    g |= keys
+                    break
+            else:
+                groups.append(set(keys))
+        if len(groups) >= 3:
+            generic.add(t)
+    if generic:
+        print(f"\n  ! {len(generic)} generic file(s) disqualified "
+              "(candidates for 3+ unrelated subjects):")
+        for t in sorted(generic):
+            print(f"      - {t[:70]}")
+        for line in stories:
+            e = cov["entries"].get(line, {})
+            hit = [t for t in e.get("files", []) if t in generic]
+            if not hit:
+                continue
+            e["images"] = max(0, e.get("images", 0) - len(hit))
+            e["era_ok"] = max(0, e.get("era_ok", 0) - len(hit))
+            e["files"] = [t for t in e.get("files", []) if t not in generic]
+            e.setdefault("evidence", []).append(
+                f"generic-disqualified:{len(hit)}")
+            _classify(e)
     # entries for lines no longer in the file are left in place — they
     # cost nothing and return if the line does
     cov["checked_at"] = datetime.now().isoformat()
@@ -323,14 +410,14 @@ def main():
     COVERAGE_FILE.write_text(json.dumps(cov, ensure_ascii=False, indent=1),
                              encoding="utf-8")
 
-    buckets = {"READY": [], "THIN": [], "NOT READY": []}
+    buckets = {"READY": [], "LOGO-ONLY": [], "THIN": [], "NOT READY": []}
     for line in stories:
         e = cov["entries"].get(line, {})
         buckets.setdefault(e.get("readiness", "THIN"), []).append(line)
     print(f"\n=== readiness ({len(stories)} entries, "
           f"{fresh_probes} probed fresh) ===")
-    for klass in ("READY", "THIN", "NOT READY"):
-        print(f"\n{klass} — {len(buckets[klass])}")
+    for klass in ("READY", "LOGO-ONLY", "THIN", "NOT READY"):
+        print(f"\n{klass} — {len(buckets.get(klass, []))}")
         for line in buckets[klass]:
             print(f"  - {line[:64]}")
     work = {}
