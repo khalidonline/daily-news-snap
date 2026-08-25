@@ -1487,9 +1487,12 @@ def _person_frame_photo(frame, out_path, seen):
             return photo
         photo, _ = fetch_commons_portrait(kw, out_path)
         if photo and fresh(photo):
-            if photo_shows(photo, context) == "no":
-                print(f"    person frame: gate vetoed the '{kw}' "
-                      "result — right route, wrong picture")
+            if photo_shows(photo, context) != "yes":
+                # a NEUTRAL portrait is not a portrait: محايدة means the
+                # picture does not show the person — File:FruitColors.jpg
+                # shipped as a farmer's face through that gap
+                print(f"    person frame: gate did not confirm the "
+                      f"'{kw}' result — right route, unproven picture")
                 continue
             return photo
     return None
@@ -1576,7 +1579,16 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
                                       exclude=tried_local)
         if not cand:
             break
-        photo = take(cand)
+        d0 = _photo_digest(cand)
+        if any(same_picture(d0, s0) for s0 in seen):
+            photo = None
+        else:
+            v = photo_shows(cand, context) if context else "yes"
+            # the OWNER curated this file for this beat: a real,
+            # subject-bound photo that merely proves nothing (محايدة)
+            # still beats a blank frame — only an actively misleading
+            # لا refuses a seed
+            photo = cand if v in ("yes", "neutral") else None
         if photo:
             break
         try:

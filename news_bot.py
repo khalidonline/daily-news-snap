@@ -3013,8 +3013,8 @@ def fetch_local_photo(queries_ar, queries_en, out_path,
         best = entry
         break
     if best is None:
-        print("    local library: every matching photo rests under the "
-              "short cooldown — falling through to the archives")
+        print("    local library: no further candidate (resting or "
+              "already tried this frame) — falling through to the archives")
         return None, None
 
     import shutil as _shutil
