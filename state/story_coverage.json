@@ -1,57 +1,5 @@
 {
  "entries": {
-  "قصة الشماغ ومصانعه في إنجلترا": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:09:29.982085",
-   "thash": "71f364dc22",
-   "files": [
-    "File:Keffiyeh-frieze.png"
-   ],
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "archive:ghutra:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:ghutra"
-   ],
-   "pass": true
-  },
-  "قصة القهوة السعودية": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:09:34.068190",
-   "thash": "ed641d9a18",
-   "files": [
-    "File:A dallah a traditional Arabic coffee pot with cups and coffee beans.jpg",
-    "File:Arabic coffee being served during a wedding in Qatar.png",
-    "File:Roasted coffee beans.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "archive:Saudi coffee:3",
-    "archive:Arabic coffee:1"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "archive:Saudi coffee",
-    "archive:Arabic coffee"
-   ],
-   "pass": true
-  },
-  "قصة التمر السعودي وتحوله لصناعة": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:09:37.416792",
-   "thash": "a4b91ac5d5",
-   "person": "التمر السعودي وتحوله لصناعة",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
    "pool": "saudi",
    "at": "2026-08-25T17:09:43.388749",
@@ -164,26 +112,6 @@
    ],
    "pass": true
   },
-  "قصة صافولا": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:10:06.122479",
-   "thash": "8b9e8828a7",
-   "files": [
-    "File:Savola Group .jpg"
-   ],
-   "images": 2,
-   "era_ok": 1,
-   "evidence": [
-    "logo:curated:current",
-    "archive:Savola Group:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "logo:curated",
-    "archive:Savola Group"
-   ],
-   "pass": true
-  },
   "قصة هنقرستيشن وحرب تطبيقات التوصيل": {
    "pool": "saudi",
    "at": "2026-08-25T17:10:08.687720",
@@ -206,28 +134,6 @@
    "readiness": "NOT READY",
    "anchors": [],
    "pass": false
-  },
-  "قصة العثيم وتجارة التجزئة": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:10:17.559089",
-   "thash": "b0405b98ec",
-   "person": "العثيم وتجارة التجزئة",
-   "files": [
-    "File:Abdullah Al-Othaim Markets Logo.jpg",
-    "File:Othaim Markets in Manfuha, Riyadh.JPG"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "portrait:Al Othaim Markets",
-    "archive:Al Othaim Markets:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "portrait:Al Othaim Markets",
-    "archive:Al Othaim Markets"
-   ],
-   "pass": true
   },
   "قصة بنده والتجزئة السعودية": {
    "pool": "saudi",
@@ -549,17 +455,6 @@
    ],
    "pass": true
   },
-  "قصة افتتاح أول جامعة سعودية": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:11:48.628924",
-   "thash": "62368bdbb3",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "قصة أول سيارة تدخل الجزيرة العربية": {
    "pool": "saudi",
    "at": "2026-08-25T17:11:50.370053",
@@ -652,44 +547,6 @@
     "logo:fetchable",
     "entity:P18",
     "archive:Nokia"
-   ],
-   "pass": true
-  },
-  "كيف بدأت Amazon كمتجر كتب على الإنترنت": {
-   "pool": "general",
-   "at": "2026-08-25T17:03:17.057607",
-   "thash": "0c03cc0846",
-   "images": 1,
-   "era_ok": 0,
-   "evidence": [
-    "logo:p154:Amazon 2024.svg:current"
-   ],
-   "readiness": "LOGO-ONLY",
-   "anchors": [
-    "logo:p154"
-   ],
-   "pass": true
-  },
-  "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": {
-   "pool": "general",
-   "at": "2026-08-25T17:03:55.301046",
-   "thash": "227d9f9436",
-   "files": [
-    "File:Netflix and Moodle.JPG",
-    "File:Netflix headquarters.jpg"
-   ],
-   "images": 4,
-   "era_ok": 3,
-   "evidence": [
-    "logo:fetchable:current",
-    "entity:P18:Netflix headquarters.jpg",
-    "archive:Netflix:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "logo:fetchable",
-    "entity:P18",
-    "archive:Netflix"
    ],
    "pass": true
   },
@@ -1054,25 +911,6 @@
    ],
    "pass": true
   },
-  "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": {
-   "pool": "general",
-   "at": "2026-08-25T17:05:19.489496",
-   "thash": "4d0c95ae3e",
-   "files": [
-    "File:Boulevard Riyadh City.jpg",
-    "File:Riyadh Front, 2023.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "archive:Riyadh:3"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Riyadh"
-   ],
-   "pass": true
-  },
   "كيف بُنيت دبي على الرمل في خمسين سنة؟": {
    "pool": "general",
    "at": "2026-08-25T17:05:24.453197",
@@ -1184,29 +1022,6 @@
    "anchors": [
     "archive:Tokyo",
     "archive:طوكيو"
-   ],
-   "pass": true
-  },
-  "قصة نيويورك: كيف صارت عاصمة المال؟": {
-   "pool": "general",
-   "at": "2026-08-25T17:05:47.380828",
-   "thash": "5f22f7d247",
-   "files": [
-    "File:September 14 2001.jpg",
-    "File:Long Island City New York May 2015 panorama 3.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "entity:P18:NYSCapitolPanorama.jpg",
-    "archive:New York:1",
-    "archive:نيويورك:1"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "entity:P18",
-    "archive:New York",
-    "archive:نيويورك"
    ],
    "pass": true
   },
@@ -1700,30 +1515,6 @@
    "readiness": "THIN",
    "anchors": [
     "archive:Diners Club"
-   ],
-   "pass": true
-  },
-  "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": {
-   "pool": "general",
-   "at": "2026-08-25T17:07:47.268262",
-   "thash": "1804d474a8",
-   "person": "Muriel Siebert",
-   "files": [
-    "File:60s Muriel Siebert advertisement.jpg",
-    "File:Muriel Siebert advertisement.jpg"
-   ],
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "portrait:Muriel Siebert",
-    "entity:P18:Muriel Siebert advertisement (cropped).jpg",
-    "archive:Muriel Siebert:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "portrait:Muriel Siebert",
-    "entity:P18",
-    "archive:Muriel Siebert"
    ],
    "pass": true
   },
@@ -2350,24 +2141,6 @@
    ],
    "pass": true
   },
-  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:09:49.459016",
-   "thash": "ecbb2e38a6",
-   "files": [
-    "File:The Union Minister for Commerce & Industry and Textiles, Shri Anand Sharma releasing a book on Basmati Rice, in New Delhi on February 24, 2012.jpg"
-   ],
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "archive:basmati rice trade:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:basmati rice trade"
-   ],
-   "pass": true
-  },
   "قصة مكتبة جرير من متجر صغير إلى عملاق": {
    "pool": "saudi",
    "at": "2026-08-25T17:09:54.821847",
@@ -2467,7 +2240,266 @@
     "archive:first Saudi banknote"
    ],
    "pass": true
+  },
+  "كيف بدأت Amazon كمتجر كتب على الإنترنت": {
+   "pool": "general",
+   "at": "2026-08-25T18:50:35.044130",
+   "thash": "0c03cc0846",
+   "images": 4,
+   "era_ok": 3,
+   "evidence": [
+    "library:amazon-bezos-early.jpg",
+    "library:amazon-garage-recreation.jpg",
+    "logo:p154:Amazon 2024.svg:current",
+    "entity:P18:Amazon Tower I topped out, June 2015.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:amazon-bezos-early.jpg",
+    "library:amazon-garage-recreation.jpg",
+    "logo:p154",
+    "entity:P18"
+   ],
+   "pass": true
+  },
+  "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": {
+   "pool": "general",
+   "at": "2026-08-25T18:50:48.299285",
+   "thash": "227d9f9436",
+   "files": [
+    "File:Netflix and Moodle.JPG",
+    "File:Netflix headquarters.jpg"
+   ],
+   "images": 5,
+   "era_ok": 4,
+   "evidence": [
+    "library:netflix-red-envelopes.jpg",
+    "logo:fetchable:current",
+    "entity:P18:Netflix headquarters.jpg",
+    "archive:Netflix:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:netflix-red-envelopes.jpg",
+    "logo:fetchable",
+    "entity:P18",
+    "archive:Netflix"
+   ],
+   "pass": true
+  },
+  "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": {
+   "pool": "general",
+   "at": "2026-08-25T18:50:55.870250",
+   "thash": "4d0c95ae3e",
+   "files": [
+    "File:Boulevard Riyadh City.jpg",
+    "File:Riyadh Front, 2023.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:riyadh-skyline.jpg",
+    "library:old-riyadh-souq.jpg",
+    "archive:Riyadh:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:riyadh-skyline.jpg",
+    "library:old-riyadh-souq.jpg",
+    "archive:Riyadh"
+   ],
+   "pass": true
+  },
+  "قصة نيويورك: كيف صارت عاصمة المال؟": {
+   "pool": "general",
+   "at": "2026-08-25T18:50:59.589667",
+   "thash": "5f22f7d247",
+   "files": [
+    "File:Long Island City New York May 2015 panorama 3.jpg",
+    "File:September 14 2001.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:nyse-floor.jpg",
+    "entity:P18:NYSCapitolPanorama.jpg",
+    "archive:New York:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:nyse-floor.jpg",
+    "entity:P18",
+    "archive:New York"
+   ],
+   "pass": true
+  },
+  "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": {
+   "pool": "general",
+   "at": "2026-08-25T18:51:03.986725",
+   "thash": "1804d474a8",
+   "person": "Muriel Siebert",
+   "files": [
+    "File:60s Muriel Siebert advertisement.jpg",
+    "File:Muriel Siebert advertisement.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "portrait:Muriel Siebert",
+    "entity:P18:Muriel Siebert advertisement (cropped).jpg",
+    "archive:Muriel Siebert:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "portrait:Muriel Siebert",
+    "entity:P18",
+    "archive:Muriel Siebert"
+   ],
+   "pass": true
+  },
+  "قصة الشماغ ومصانعه في إنجلترا": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:51:10.458764",
+   "thash": "71f364dc22",
+   "files": [
+    "File:Keffiyeh-frieze.png"
+   ],
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:saudi-shemagh.jpg",
+    "archive:ghutra:1"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:saudi-shemagh.jpg",
+    "archive:ghutra"
+   ],
+   "pass": true
+  },
+  "قصة القهوة السعودية": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:51:15.339113",
+   "thash": "ed641d9a18",
+   "files": [
+    "File:A dallah a traditional Arabic coffee pot with cups and coffee beans.jpg",
+    "File:Arabic coffee being served during a wedding in Qatar.png",
+    "File:Roasted coffee beans.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:saudi-coffee-dallah.jpg",
+    "archive:Saudi coffee:3",
+    "archive:Arabic coffee:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:saudi-coffee-dallah.jpg",
+    "archive:Saudi coffee",
+    "archive:Arabic coffee"
+   ],
+   "pass": true
+  },
+  "قصة التمر السعودي وتحوله لصناعة": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:51:20.483748",
+   "thash": "a4b91ac5d5",
+   "person": "التمر السعودي وتحوله لصناعة",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "portrait:التمر السعودي وتحوله لصناعة",
+    "library:saudi-dates-market.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "portrait:التمر السعودي وتحوله لصناعة",
+    "library:saudi-dates-market.jpg"
+   ],
+   "pass": true
+  },
+  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:51:23.251776",
+   "thash": "ecbb2e38a6",
+   "files": [
+    "File:The Union Minister for Commerce & Industry and Textiles, Shri Anand Sharma releasing a book on Basmati Rice, in New Delhi on February 24, 2012.jpg"
+   ],
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:kabsa-dish.jpg",
+    "archive:basmati rice trade:1"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:kabsa-dish.jpg",
+    "archive:basmati rice trade"
+   ],
+   "pass": true
+  },
+  "قصة صافولا": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:51:28.210825",
+   "thash": "8b9e8828a7",
+   "files": [
+    "File:Savola Group .jpg"
+   ],
+   "images": 3,
+   "era_ok": 2,
+   "evidence": [
+    "library:savola-hq.jpg",
+    "logo:curated:current",
+    "archive:Savola Group:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:savola-hq.jpg",
+    "logo:curated",
+    "archive:Savola Group"
+   ],
+   "pass": true
+  },
+  "قصة العثيم وتجارة التجزئة": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:51:31.379532",
+   "thash": "b0405b98ec",
+   "person": "العثيم وتجارة التجزئة",
+   "files": [
+    "File:Abdullah Al-Othaim Markets Logo.jpg",
+    "File:Othaim Markets in Manfuha, Riyadh.JPG"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "portrait:العثيم وتجارة التجزئة",
+    "library:othaim-branch.jpg",
+    "archive:Al Othaim Markets:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "portrait:العثيم وتجارة التجزئة",
+    "library:othaim-branch.jpg",
+    "archive:Al Othaim Markets"
+   ],
+   "pass": true
+  },
+  "قصة افتتاح أول جامعة سعودية": {
+   "pool": "saudi",
+   "at": "2026-08-25T18:51:34.003221",
+   "thash": "62368bdbb3",
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "library:ksu-gate.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:ksu-gate.jpg"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T18:28:54.654911"
+ "checked_at": "2026-08-25T18:51:35.645029"
 }
