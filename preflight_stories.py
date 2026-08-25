@@ -38,7 +38,7 @@ try:
         _STORY_SUBJECT,
     )
     from logo_fetch import _article_logo_files, wikidata_p154_logo
-    from news_bot import _commons_search, commit_and_push
+    from news_bot import _commons_search, _image_is_safe, commit_and_push
 except ImportError as exc:
     raise SystemExit(f"a bot module is missing something preflight needs "
                      f"({exc}) — the files move together")
@@ -212,8 +212,26 @@ def check_line(line):
                 except Exception:
                     errors += 1
                     time.sleep(2 if attempt == 1 else 0)
+            # count only what the RUNTIME would accept: the same
+            # title/description safety+document+artwork filters, photos
+            # only (a PDF thesis cover titled 'Saudi Arabia: a kingdom
+            # in decline' counted as the dates story's coverage; a
+            # sufi-manuscript painting counted for SAMA)
+            def _countable(h):
+                page = h[0] if isinstance(h, tuple) else h
+                info = (h[1] if isinstance(h, tuple)
+                        else (page.get("imageinfo") or [{}])[0])
+                mime = str(info.get("mime") or "")
+                if not mime.startswith("image/") or "svg" in mime:
+                    return False
+                meta = info.get("extmetadata") or {}
+                desc = " ".join(str((meta.get(k) or {}).get("value", ""))
+                                for k in ("ImageDescription", "ObjectName",
+                                          "Categories"))
+                with contextlib.redirect_stdout(io.StringIO()):
+                    return _image_is_safe(f"{page.get('title', '')} {desc}")
             fresh_hits = [h for h in (hits or [])
-                          if str(h) not in seen_titles]
+                          if str(h) not in seen_titles and _countable(h)]
             seen_titles.update(str(h) for h in (hits or []))
             if fresh_hits:
                 anchors.append(f"archive:{term}")
