@@ -185,8 +185,15 @@ def check_line(line):
     if name:
         entry["person"] = name
         found = None
+        # slot/alias typing (image_precheck rule): on a TYPED line only
+        # declared person aliases may fill the portrait slot — the
+        # entity alias 'Dallah Al Baraka' once probed as a portrait
+        from story_bot import _STORY_PERSONS
+        declared = _STORY_PERSONS.get(str(line).strip())
+        cands = (declared if declared is not None
+                 else [name] + story_aliases(line))
         with contextlib.redirect_stdout(io.StringIO()):
-            for cand in [name] + story_aliases(line):
+            for cand in cands:
                 try:
                     if find_portrait(cand, OUT_DIR / "preflight.jpg"):
                         found = cand
