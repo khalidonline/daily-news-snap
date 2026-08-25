@@ -336,6 +336,13 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 - text: من جملتين إلى أربع جمل (١٢٠ إلى ٢٨٠ حرفاً).
   خذ راحتك: القصة المضغوطة تفقد معناها. اشرح السبب والنتيجة،
   لا العناوين فقط. لكن بلا حشو — كل جملة تضيف شيئاً جديداً.
+  واللحظة الواحدة تُروى مرة واحدة في القصة كلها. إن ختمت لقطةٌ بلحظةٍ
+  (وفاة المؤسس، توقيع الصفقة) فاللقطة التالية تبدأ مما بعدها ولا
+  تعيد روايتها بصياغة أخرى.
+  ✗ اللقطة الرابعة تختم «توفي سنة 1987 قبل أن تصل شركته إلى المركز
+    الأول» ثم الخامسة تفتتح بإعادة وفاته — اللحظة نفسها مرتين.
+  ✓ الخامسة تبدأ بما فعله الابن الوارث سنة 1988 — الموت وقع في
+    الرابعة، والخامسة تكمل.
 - punch: اتركها فارغة "" في أغلب اللقطات.
   لا تملأها إلا إذا كان في اللقطة لحظة واحدة تستحق أن تقف وحدها: اقتباس قيل
   فعلاً، أو حكم، أو انقلاب في المسار. تُعرض بالأحمر وحدها تحت النص، ولذلك
@@ -386,6 +393,12 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
   قصة عن الشركة X لا تأخذ ملعب النادي الذي رعته X صورةً لأي لقطة.
   ✗ قصة عن تطبيق مرسول، وإطار صورته «نادي النصر» لأن مرسول رعى النادي
   ✓ إطار صورته «مرسول» أو شعارها، أو المدينة/المشهد الذي يصفه النص
+
+  وفي لقطة عن شخص، image_keywords أسماء أشخاص فقط — لا فنادق ولا قاعات
+  ولا أماكن الإعلان: مسار الصور في لقطات الأشخاص يبحث عن بورتريه لكل
+  كلمة، واسم المكان يعود مبنىً بصورته الحديثة.
+  ✗ ["Lee Byung-chul", "Hotel Okura Tokyo"] على لقطة إعلان 1983 —
+    عادت الكلمة الثانية برجاً زجاجياً بُني سنة 2019.
 
   مهم: اختر أسماء يُرجّح وجود صور لها في أرشيف مفتوح المصدر. الأشخاص
   والشركات والمنتجات المشهورة لها صور؛ الأشخاص المغمورون وأحداث بعينها
@@ -1375,9 +1388,14 @@ def _person_frame_photo(frame, out_path, seen):
     fetch_commons_portrait (article-lead or name-in-FILE-TITLE search).
     Generic keyword search is forbidden on person frames — captions
     matching a name is exactly how a stranger's face was captioned as
-    Mrsool's founder. No vision gate either: the gate judges relevance,
-    not identity, and a verified portrait of the named person is
-    definitionally right.
+    Mrsool's founder. The Commons route's results DO pass the vision
+    gate now: the old exemption ("a verified portrait of the named
+    person is definitionally right") rode on every keyword naming a
+    person, and the model put 'Hotel Okura Tokyo' on a person frame —
+    the article-lead route returned the hotel's 2019 glass tower
+    stamped as a portrait, exempt from the one check whose era clause
+    was written for exactly that picture. Identity provenance is
+    unchanged; the gate is a veto on top, never a widening.
     """
     import shutil as _sh
     keywords = [k for k in (frame.get("image_keywords") or []) if k]
@@ -1401,12 +1419,18 @@ def _person_frame_photo(frame, out_path, seen):
         d = _photo_digest(photo)
         return not any(same_picture(d, s0) for s0 in seen)
 
+    context = (f"{frame.get('heading', '')}\n"
+               f"{frame.get('text', '')}").strip()
     for kw in keywords + keywords_ar:
         photo, _ = fetch_local_photo([kw], [kw], out_path)
         if photo and fresh(photo):
             return photo
         photo, _ = fetch_commons_portrait(kw, out_path)
         if photo and fresh(photo):
+            if photo_shows(photo, context) == "no":
+                print(f"    person frame: gate vetoed the '{kw}' "
+                      "result — right route, wrong picture")
+                continue
             return photo
     return None
 
