@@ -320,6 +320,8 @@ SYSTEM_PROMPT = """أنت تكتب قصة تُنشر على سناب شات لج
 - heading: سطر قصير جداً (حتى ٣٠ حرفاً) — يظهر كبيراً
   والعنوان يصف لقطته هي: حدثَها وزمنَها. لا تسحب خطّاف لقطة لاحقة إلى
   لقطة مبكرة مهما كان أقوى — الخطّاف القوي يبقى في لقطته هو.
+  والأرقام والسنوات تبقى في text لا في العنوان: العنوان يصفها بالكلمات
+  ولا يسحبها إليه — لقطة نصّها بلا رقم ولا سنة تفقد معالجتها البصرية.
   ✗ لقطة 1938 عن تاجر سمك مجفف عنوانها «150 ألف جهاز احترقت في يوم
     واحد» — هذا حدث 1995 ومكانه اللقطة الرابعة حيث يقع.
 - text: من جملتين إلى أربع جمل (١٢٠ إلى ٢٨٠ حرفاً).
@@ -1056,7 +1058,7 @@ _FIGURE_RE = re.compile(
     r"(\d[\d,.]*\s*(?:%|مليار|مليون|ألف|ريال|دولار)|\b(?:1[89]|20)\d{2}\b)")
 
 
-def _frame_figure(text, punch=""):
+def _frame_figure(text, punch="", heading=""):
     """The frame's strongest figure, for the typographic treatment.
 
     Owner decision (2026-08): an interior frame may be typographic — a
@@ -1064,7 +1066,7 @@ def _frame_figure(text, punch=""):
     counts as ILLUSTRATED. The figure comes from the frame's own text, so
     it can never be wrong the way a guessed image can.
     """
-    for source in (punch or "", text or ""):
+    for source in (punch or "", text or "", heading or ""):
         m = _FIGURE_RE.search(source)
         if m:
             return m.group(1).strip()
@@ -1127,7 +1129,10 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         # never be wrong the way a guessed image can. Otherwise the large
         # low-contrast brand watermark keeps the zone composed. Plain
         # centring only if the badge asset is missing too.
-        figure = _frame_figure(sub, punch)
+        # the heading is the LAST source: the 11am Samsung deck moved its
+        # years into headings and every frame lost its numeral — a
+        # heading-carried figure still beats an empty photo zone
+        figure = _frame_figure(sub, punch, heading=big)
         if figure:
             wm = brand_badge(430, alpha=18)
             if wm is not None:
@@ -2026,7 +2031,8 @@ def find_all_photos(brief):
     text_only = [i for i, ph in enumerate(photos, 1)
                  if ph is None and not _frame_figure(
                      frames[i - 1].get("text", ""),
-                     frames[i - 1].get("punch", ""))]
+                     frames[i - 1].get("punch", ""),
+                     frames[i - 1].get("heading", ""))]
     if len(text_only) > STORY_MAX_BLANK_FRAMES:
         # mostly-blank decks don't ship (owner's rule): the caller records
         # the skip and advances to the next story rather than losing the slot
