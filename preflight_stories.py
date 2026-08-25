@@ -40,7 +40,8 @@ try:
     from logo_fetch import (_article_logo_files, wikidata_p154_logo,
                             wikidata_entity_files)
     from news_bot import _owner_rejected
-    from news_bot import _commons_search, _image_is_safe, commit_and_push
+    from news_bot import (_commons_search, _image_is_safe, commit_and_push,
+                          load_local_images)
     import image_precheck as ipc
 except ImportError as exc:
     raise SystemExit(f"a bot module is missing something preflight needs "
@@ -203,6 +204,19 @@ def check_line(line):
         if found:
             anchors.append(f"portrait:{found}")
             evidence.append(f"portrait:{found}")
+            images += 1
+            era_ok += 1
+
+    # -- the owner's seeded library: tag-matched images/ photos are the
+    # strongest coverage there is (chosen by hand for this exact beat) —
+    # the audit was blind to them, so seeding never moved a class
+    lib_terms = {t.casefold() for t in _subject_terms(line)}
+    lib_terms |= {a.casefold() for a in story_aliases(line)}
+    for entry_img in load_local_images():
+        tags = {t.casefold() for t in entry_img.get("tags", [])}
+        if any(t in tag or tag in t for t in lib_terms for tag in tags):
+            anchors.append(f"library:{entry_img['path'].name}")
+            evidence.append(f"library:{entry_img['path'].name}")
             images += 1
             era_ok += 1
 
