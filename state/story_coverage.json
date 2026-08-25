@@ -100,29 +100,6 @@
    ],
    "pass": true
   },
-  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
-   "pool": "saudi",
-   "at": "2026-08-25T16:27:17.547997",
-   "thash": "ecbb2e38a6",
-   "files": [
-    "File:Kabsa ingredients.png",
-    "File:The Union Minister for Commerce & Industry and Textiles, Shri Anand Sharma releasing a book on Basmati Rice, in New Delhi on February 24, 2012.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "entity:P18:Machboos (cropped).JPG",
-    "archive:Kabsa:1",
-    "archive:basmati rice trade:1"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "entity:P18",
-    "archive:Kabsa",
-    "archive:basmati rice trade"
-   ],
-   "pass": true
-  },
   "قصة العباءة السعودية وتحولها لصناعة أزياء": {
    "pool": "saudi",
    "at": "2026-08-25T16:27:20.827193",
@@ -133,25 +110,6 @@
    "readiness": "NOT READY",
    "anchors": [],
    "pass": false
-  },
-  "قصة مكتبة جرير من متجر صغير إلى عملاق": {
-   "pool": "saudi",
-   "at": "2026-08-25T16:27:22.672336",
-   "thash": "9ad30faa0e",
-   "files": [
-    "File:Deir Jarir 2076.jpg",
-    "File:Deir Jarir 2109.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "archive:Jarir Bookstore:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "archive:Jarir Bookstore"
-   ],
-   "pass": true
   },
   "قصة مصرف الراجحي من صرافة إلى أكبر بنك": {
    "pool": "saudi",
@@ -2548,7 +2506,36 @@
     "archive:Saudi Central Bank"
    ],
    "pass": true
+  },
+  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-25T16:37:59.877622",
+   "thash": "ecbb2e38a6",
+   "files": [
+    "File:The Union Minister for Commerce & Industry and Textiles, Shri Anand Sharma releasing a book on Basmati Rice, in New Delhi on February 24, 2012.jpg"
+   ],
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "archive:basmati rice trade:1"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "archive:basmati rice trade"
+   ],
+   "pass": true
+  },
+  "قصة مكتبة جرير من متجر صغير إلى عملاق": {
+   "pool": "saudi",
+   "at": "2026-08-25T16:38:03.792768",
+   "thash": "9ad30faa0e",
+   "images": 0,
+   "era_ok": 0,
+   "evidence": [],
+   "readiness": "NOT READY",
+   "anchors": [],
+   "pass": false
   }
  },
- "checked_at": "2026-08-25T16:31:53.521053"
+ "checked_at": "2026-08-25T16:38:07.035920"
 }
