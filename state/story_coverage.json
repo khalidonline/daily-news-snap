@@ -209,29 +209,6 @@
    ],
    "pass": true
   },
-  "قصة دخول لوسيد ومصنعها في السعودية": {
-   "pool": "saudi",
-   "at": "2026-08-25T17:11:15.147058",
-   "thash": "3b068bfacd",
-   "files": [
-    "File:Lucid Air Dream edition, IAA Open Space 2023, Munich (P1120054).jpg",
-    "File:Lucid Air Saudi Arabia Front 4.jpg"
-   ],
-   "images": 4,
-   "era_ok": 3,
-   "evidence": [
-    "entity:P18:Lucid Showroom Miami Worldcenter 29 June 2023 - 2.jpg",
-    "logo:p154:Lucid Motors logo.svg:current",
-    "archive:Lucid Motors:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "entity:P18",
-    "logo:p154",
-    "archive:Lucid Motors"
-   ],
-   "pass": true
-  },
   "قصة ماكدونالدز في السعودية وعائلات الامتياز": {
    "pool": "saudi",
    "at": "2026-08-25T17:11:17.750874",
@@ -2523,7 +2500,30 @@
     "library:kabsa-communal.jpg"
    ],
    "pass": true
+  },
+  "قصة دخول لوسيد ومصنعها في السعودية": {
+   "pool": "saudi",
+   "at": "2026-08-25T23:06:42.587568",
+   "thash": "e62dff820a",
+   "files": [
+    "File:Lucid Air Dream edition, IAA Open Space 2023, Munich (P1120054).jpg",
+    "File:Lucid Air Saudi Arabia Front 4.jpg"
+   ],
+   "images": 4,
+   "era_ok": 3,
+   "evidence": [
+    "logo:fetchable:current",
+    "entity:P18:Lucid Showroom Miami Worldcenter 29 June 2023 - 2.jpg",
+    "archive:Lucid Motors:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "logo:fetchable",
+    "entity:P18",
+    "archive:Lucid Motors"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-25T22:51:28.723770"
+ "checked_at": "2026-08-25T23:06:47.949717"
 }
