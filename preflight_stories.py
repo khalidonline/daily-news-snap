@@ -87,6 +87,14 @@ def _curated_logo_exists(line):
 
 
 AUDIT_TTL_DAYS = int(os.getenv("AUDIT_TTL_DAYS", "").strip() or "30")
+
+
+def _norm_img_name(name):
+    """A filename reduced to its comparable core: the seeded
+    willis-carrier-1915.jpg and Commons' 'Willis Carrier 1915.jpg' (and
+    its '(cropped)' sibling) are one picture and must count once."""
+    stem = str(name).removeprefix("File:").rsplit(".", 1)[0]
+    return re.sub(r"[^a-z0-9\u0600-\u06ff]+", "", stem.casefold())
 _YEAR_RE = re.compile(r"\b(1[89]\d\d|20[0-2]\d)\b")
 
 
@@ -212,6 +220,7 @@ def check_line(line):
     # the audit was blind to them, so seeding never moved a class
     lib_terms = {t.casefold() for t in _subject_terms(line)}
     lib_terms |= {a.casefold() for a in story_aliases(line)}
+    lib_norms = set()
     for entry_img in load_local_images():
         tags = {t.casefold() for t in entry_img.get("tags", [])}
         if any(t in tag or tag in t for t in lib_terms for tag in tags):
@@ -219,6 +228,11 @@ def check_line(line):
             evidence.append(f"library:{entry_img['path'].name}")
             images += 1
             era_ok += 1
+            lib_norms.add(_norm_img_name(entry_img["path"].name))
+
+    def _same_as_seed(title):
+        n = _norm_img_name(title)
+        return any(n and l and (l in n or n in l) for l in lib_norms)
 
     # -- the brand mark: one asset class, counted once
     domain = story_logo_domain(line)
@@ -267,7 +281,7 @@ def check_line(line):
         except Exception:
             entity_files = []
         for prop, fname in entity_files:
-            if _owner_rejected(fname):
+            if _owner_rejected(fname) or _same_as_seed(fname):
                 continue
             if prop == "P18":
                 anchors.append("entity:P18")
@@ -329,6 +343,9 @@ def check_line(line):
                           if ipc.normalize((h[0] if isinstance(h, tuple)
                                             else h).get("title", ""))
                           not in seen_titles
+                          and not _same_as_seed(
+                              (h[0] if isinstance(h, tuple) else h)
+                              .get("title", ""))
                           and _countable(h) and _on_subject(h)]
             seen_titles.update(
                 ipc.normalize((h[0] if isinstance(h, tuple) else h)
