@@ -14,7 +14,7 @@ riyadh-skyline.jpg | العقار, الإسكان, الإيجارات, عقار�
 careem-founders-2012.jpg | كريم, Careem, مؤسسو كريم, Mudassir Sheikha, Magnus Olsson, founders | Careem — blog.careem.com
 sama-history-hq.jpg | ساما, SAMA, مؤسسة النقد, Saudi Central Bank, البنك المركزي | SAMA — sama.gov.sa
 first-hajj-receipt.png | أول عملة, عملة ورقية, Hajj receipt, first Saudi banknote, إيصال الحجاج | SAMA — أرشيف العملة التاريخي
-silver-riyal.png | الريال الفضي, silver riyal, الريال السعودي المعدني, تاريخ الريال | SAMA — أرشيف العملة التاريخي
+silver-riyal.png | الريال الفضي, silver riyal, الريال السعودي المعدني, تاريخ الريال, ربط الريال | SAMA — أرشيف العملة التاريخي
 saudi-shemagh.jpg | الشماغ, شماغ, ghutra, shemagh | Saudipedia
 saudi-coffee-dallah.jpg | القهوة السعودية, دلة, Saudi coffee, Arabic coffee | Saudipedia
 kabsa-dish.jpg | الكبسة, كبسة, Kabsa | Saudipedia
@@ -120,30 +120,30 @@ alrajhi-1996.jpg | مصرف الراجحي, Al Rajhi Bank, 1996 | Arbwiki / CC B
 alrajhi-ebranch.jpg | مصرف الراجحي, Al Rajhi Bank | Arbwiki / CC BY-SA 4.0 — Wikimedia Commons
 binladin-sign.jpg | Saudi Binladin Group, بن لادن, مقاولات | No machine-readable author provided. Ber / CC BY 2.5 — Wikimedia Commons
 ibnsaud-shemagh.jpg | الشماغ, شماغ, الملك عبدالعزيز | Wikimedia Commons / Public domain — Wikimedia Commons
-arabic-coffee-cup.jpg | القهوة السعودية, فنجان | Abdulla Al Muhairi / CC BY 2.0 — Wikimedia Commons
-coffee-majlis.jpg | القهوة السعودية, مجلس, ضيافة | Canbel / CC BY-SA 4.0 — Wikimedia Commons
-dallah-dates.jpg | القهوة السعودية, دلة | Slywire / CC BY-SA 4.0 — Wikimedia Commons
+arabic-coffee-cup.jpg | القهوة السعودية, فنجان, Saudi coffee | Abdulla Al Muhairi / CC BY 2.0 — Wikimedia Commons
+coffee-majlis.jpg | القهوة السعودية, مجلس, ضيافة, Saudi coffee | Canbel / CC BY-SA 4.0 — Wikimedia Commons
+dallah-dates.jpg | القهوة السعودية, دلة, Saudi coffee | Slywire / CC BY-SA 4.0 — Wikimedia Commons
 date-palms-desert.jpg | التمر, نخيل | No machine-readable author provided. MPF / CC BY 2.5 — Wikimedia Commons
 date-palms-oasis.jpg | التمر, نخيل, واحة | Krzysztof Ziarnek, Kenraiz / CC BY-SA 4.0 — Wikimedia Commons
-ac-units-wall.jpg | المكيف, تكييف, مكيفات | Aaaatu / CC BY-SA 4.0 — Wikimedia Commons
+ac-units-wall.jpg | المكيف, تكييف, مكيفات, air conditioning | Aaaatu / CC BY-SA 4.0 — Wikimedia Commons
 magna-mine-ac.jpg | المكيف, Willis Carrier, تاريخ التكييف | It was likely created by Carrier Corpora / Public domain — Wikimedia Commons
-zamzam-bottling.jpg | زمزم, ماء زمزم, تعبئة | Mohammed Adow of Al Jazeera English / CC BY-SA 2.0 — Wikimedia Commons
-zamzam-bottle.jpg | زمزم, ماء زمزم | Max Ronnersjö / CC BY-SA 3.0 — Wikimedia Commons
-zamzam-cart.jpg | زمزم, توزيع | Al Jazeera English / CC BY-SA 2.0 — Wikimedia Commons
-zamzam-cups.jpg | زمزم, تراث | Tpinar / CC BY-SA 4.0 — Wikimedia Commons
-kabsa-platter.jpg | الكبسة, كبسة | Vengolis / CC BY-SA 3.0 — Wikimedia Commons
+zamzam-bottling.jpg | زمزم, ماء زمزم, تعبئة, Zamzam water | Mohammed Adow of Al Jazeera English / CC BY-SA 2.0 — Wikimedia Commons
+zamzam-bottle.jpg | زمزم, ماء زمزم, Zamzam water | Max Ronnersjö / CC BY-SA 3.0 — Wikimedia Commons
+zamzam-cart.jpg | زمزم, توزيع, Zamzam water | Al Jazeera English / CC BY-SA 2.0 — Wikimedia Commons
+zamzam-cups.jpg | زمزم, تراث, Zamzam water | Tpinar / CC BY-SA 4.0 — Wikimedia Commons
+kabsa-platter.jpg | الكبسة, كبسة, Kabsa | Vengolis / CC BY-SA 3.0 — Wikimedia Commons
 flynas-jeddah.jpg | flynas, طيران ناس, جدة | CAPTAIN RAJU / CC BY-SA 4.0 — Wikimedia Commons
 almarai-hq.jpg | المراعي, Almarai | D3NMARK06 (talk) / CC BY-SA 3.0 — Wikimedia Commons
 almarai-fleet.jpg | المراعي, Almarai, أسطول | الملك المصري / CC BY-SA 4.0 — Wikimedia Commons
 nadec-farm-gate.jpg | نادك, NADEC, مزرعة | Thoufiq313 / CC BY-SA 4.0 — Wikimedia Commons
 sabic-plant.jpg | سابك, SABIC, مصنع, بتروكيماويات | Snoopywv / CC BY-SA 3.0 — Wikimedia Commons
-saudi-10riyal-1968.jpg | أول عملة, ريال, ساما, عملة ورقية | Saudi Arabian Monetary Agency / Public domain — Wikimedia Commons
+saudi-10riyal-1968.jpg | أول عملة, ريال, ساما, عملة ورقية, first Saudi banknote | Saudi Arabian Monetary Agency / Public domain — Wikimedia Commons
 mcdonalds-jeddah.jpg | ماكدونالدز, McDonald's Saudi Arabia, جدة | Arbitrarily0 / CC BY-SA 3.0 — Wikimedia Commons
-riyadh-dammam-train.jpg | سكة حديد, قطار الرياض الدمام | Lijorijo at Malayalam Wikipedia / CC BY-SA 3.0 — Wikimedia Commons
-railway-construction-1951.jpg | سكة حديد الرياض الدمام, 1951, بناء | John C. Tarvin / Public domain — Wikimedia Commons
-king-golden-spike.jpg | سكة حديد, الملك عبدالعزيز, 1951 | Aramco / Public domain — Wikimedia Commons
-sar-train-modern.jpg | سكة حديد, قطار سار | Ahmed / CC BY-SA 4.0 — Wikimedia Commons
-railway-workers-1951.jpg | سكة حديد, عمال, 1951 | Unknown authorUnknown author / Public domain — Wikimedia Commons
+riyadh-dammam-train.jpg | سكة حديد, قطار الرياض الدمام, Riyadh Dammam railway | Lijorijo at Malayalam Wikipedia / CC BY-SA 3.0 — Wikimedia Commons
+railway-construction-1951.jpg | سكة حديد الرياض الدمام, 1951, بناء, Riyadh Dammam railway | John C. Tarvin / Public domain — Wikimedia Commons
+king-golden-spike.jpg | سكة حديد, الملك عبدالعزيز, 1951, Riyadh Dammam railway | Aramco / Public domain — Wikimedia Commons
+sar-train-modern.jpg | سكة حديد, قطار سار, Riyadh Dammam railway | Ahmed / CC BY-SA 4.0 — Wikimedia Commons
+railway-workers-1951.jpg | سكة حديد, عمال, 1951, Riyadh Dammam railway | Unknown authorUnknown author / Public domain — Wikimedia Commons
 riyal-100-1961.jpg | الريال, ربط الريال, عملة, 1961 | Монетарное Агентство Саудовской Аравии / Public domain — Wikimedia Commons
 riyal-1-1984.jpg | الريال, ربط الريال بالدولار, 1984 | Монетарное Агентство Сауд. Аравии / Public domain — Wikimedia Commons
 rolex-emerald.jpg | Rolex, رولكس | Matt C / CC BY 2.0 — Wikimedia Commons
