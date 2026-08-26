@@ -2,6 +2,8 @@ import importlib
 import sys
 import types
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from unittest.mock import patch
 
 
@@ -47,6 +49,22 @@ class BreakingFeedTests(unittest.TestCase):
             fresh, feeds_ok = bw.feed_fresh_items()
         self.assertTrue(feeds_ok)
         self.assertEqual(["Saudi breaking headline"], fresh)
+
+    def test_feed_scan_reports_item_and_fresh_counts(self):
+        bw = _load_module()
+        bw.WATCH_FEEDS = ["https://example.test/rss"]
+        rss = (
+            b"<rss><channel><item>"
+            b"<title>Saudi breaking headline</title>"
+            b"<pubDate>Wed, 26 Aug 2099 12:00:00 GMT</pubDate>"
+            b"</item></channel></rss>"
+        )
+        output = StringIO()
+        with patch.object(
+            bw.urllib.request, "urlopen", return_value=_Response(rss)
+        ), redirect_stdout(output):
+            bw.feed_fresh_items()
+        self.assertIn("1 item(s), 1 fresh", output.getvalue())
 
     def test_default_feed_window_covers_scheduler_delay(self):
         bw = _load_module()
