@@ -95,7 +95,13 @@ def merge_logo_aliases(index, slug, aliases):
 
 
 def add_logo_domain_to_story_text(text, story, domain):
-    """Add a verified domain only to the unique exact story record."""
+    """Add a verified domain as its own parseable story-metadata segment.
+
+    Typed metadata segments such as ``entity:`` consume comma-separated values.
+    Therefore ``entity: Foo, logo:example.com`` is *not* a logo declaration to
+    story_bot. Normalize any existing same-domain logo token and always write
+    ``| logo:domain`` as a standalone segment so runtime resolution sees it.
+    """
     domain = str(domain).strip().casefold()
     matches = []
     lines = text.splitlines(keepends=True)
@@ -111,12 +117,14 @@ def add_logo_domain_to_story_text(text, story, domain):
     ending = "\n" if lines[number].endswith("\n") else ""
     body = lines[number].rstrip("\r\n")
     domains = re.findall(r"(?:^|[,|]\s*)logo:([^,|\s]+)", body, flags=re.I)
-    if domains:
-        if {item.casefold() for item in domains} != {domain}:
-            raise LogoIdentityConflict(f"existing logo domain conflicts with {domain}")
-        return text
-    separator = ", " if "|" in body else " | "
-    lines[number] = f"{body}{separator}logo:{domain}{ending}"
+    if domains and {item.casefold() for item in domains} != {domain}:
+        raise LogoIdentityConflict(f"existing logo domain conflicts with {domain}")
+
+    # Remove any existing logo token, including the historical malformed form
+    # embedded after a typed entity/person segment, then append one canonical
+    # standalone segment. This also makes the operation idempotent.
+    body = re.sub(r"\s*(?:,|\|)\s*logo:[^,|\s]+", "", body, flags=re.I).rstrip()
+    lines[number] = f"{body} | logo:{domain}{ending}"
     return "".join(lines)
 
 
