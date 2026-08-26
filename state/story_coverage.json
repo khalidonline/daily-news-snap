@@ -2514,27 +2514,6 @@
    ],
    "pass": true
   },
-  "لماذا ارتبط الريال السعودي بالدولار وكيف؟": {
-   "pool": "general",
-   "at": "2026-08-26T12:02:43.607047",
-   "thash": "d10f75fb52",
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "library:silver-riyal.png",
-    "library:saudi-10riyal-1968.jpg",
-    "library:riyal-100-1961.jpg",
-    "library:riyal-1-1984.jpg"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:silver-riyal.png",
-    "library:saudi-10riyal-1968.jpg",
-    "library:riyal-100-1961.jpg",
-    "library:riyal-1-1984.jpg"
-   ],
-   "pass": true
-  },
   "قصة القهوة السعودية": {
    "pool": "saudi",
    "at": "2026-08-26T12:02:44.681589",
@@ -2635,30 +2614,6 @@
    ],
    "pass": true
   },
-  "قصة ربط الريال بالدولار وقصته": {
-   "pool": "saudi",
-   "at": "2026-08-26T12:02:56.669656",
-   "thash": "d10f75fb52",
-   "person": "ربط الريال بالدولار وقصته",
-   "images": 5,
-   "era_ok": 5,
-   "evidence": [
-    "portrait:ربط الريال بالدولار وقصته",
-    "library:silver-riyal.png",
-    "library:saudi-10riyal-1968.jpg",
-    "library:riyal-100-1961.jpg",
-    "library:riyal-1-1984.jpg"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "portrait:ربط الريال بالدولار وقصته",
-    "library:silver-riyal.png",
-    "library:saudi-10riyal-1968.jpg",
-    "library:riyal-100-1961.jpg",
-    "library:riyal-1-1984.jpg"
-   ],
-   "pass": true
-  },
   "قصة سكة حديد الرياض الدمام 1951": {
    "pool": "saudi",
    "at": "2026-08-26T12:02:57.780343",
@@ -2736,7 +2691,49 @@
     "archive:first Saudi banknote"
    ],
    "pass": true
+  },
+  "لماذا ارتبط الريال السعودي بالدولار وكيف؟": {
+   "pool": "general",
+   "at": "2026-08-26T12:03:32.999486",
+   "thash": "d10f75fb52",
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "pass": true
+  },
+  "قصة ربط الريال بالدولار وقصته": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:03:33.947108",
+   "thash": "d10f75fb52",
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-26T12:03:03.203459"
+ "checked_at": "2026-08-26T12:03:35.051632"
 }
