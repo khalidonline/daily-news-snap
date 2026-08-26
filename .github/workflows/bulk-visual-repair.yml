@@ -75,6 +75,38 @@ jobs:
             rc=$?
             set -e
 
+            # A zero-progress first chunk is not a catalogue-wide no-progress
+            # result. Probe later unresolved rows one at a time so hard logo-only
+            # identities cannot starve independently repairable photo/story rows.
+            # Only a complete unresolved pass with no safe write may remain rc=2.
+            if [ "$rc" -eq 2 ]; then
+              mapfile -t later_stories < <(
+                PYTHONPATH=. python - <<'PY'
+          import os
+          from tools.bulk_visual_board import build_board, repair_backlog
+
+          backlog = repair_backlog(build_board())
+          skip = max(0, int(os.environ.get("BATCH_STORIES", "15")))
+          for row in backlog[skip:]:
+              print(row.story)
+          PY
+              )
+              scan_rc=2
+              for story in "${later_stories[@]}"; do
+                set +e
+                PYTHONPATH=. python tools/bulk_visual_repair.py \
+                  --story "$story" \
+                  --batch-stories 1 \
+                  --max-candidates-per-beat "$MAX_CANDIDATES"
+                story_rc=$?
+                set -e
+                if [ "$story_rc" -eq 3 ]; then scan_rc=3; break; fi
+                if [ "$story_rc" -eq 10 ]; then scan_rc=10; break; fi
+              done
+              if [ "$scan_rc" -eq 10 ]; then rc=10; fi
+              if [ "$scan_rc" -eq 3 ]; then exit 3; fi
+            fi
+
             python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py
             PYTHONPATH=. python tools/build_runtime_review.py
 
