@@ -27,7 +27,7 @@ The repair pipeline will call the same runtime-facing functions used by producti
 Every batch begins by rebuilding a machine-readable board for all stories with:
 
 - story text / exact key
-- aliases, person/entity metadata, subject key, and logo domain
+- aliases, person/entity metadata, subject key, and logo identity/domain
 - approved photo filenames
 - approved logo filenames
 - missing-photo count
@@ -48,22 +48,30 @@ It will:
 2. repair deterministic metadata/logo gaps first;
 3. repair photo gaps in bounded batches;
 4. validate every candidate before registration;
-5. update local files, `images/images.txt`, `images/relevance.json`, and logo index data only for accepted candidates;
+5. update local files, `images/images.txt`, `images/relevance.json`, story identity metadata, and logo index data only for accepted candidates;
 6. rebuild runtime coverage after each batch;
-7. stop only at 123/123 PASS or when no safe progress is possible;
+7. stop only at 123/123 PASS or when a full pass makes zero safe changes;
 8. emit a structured unresolved report for any remaining stories.
 
 The orchestrator is resumable and idempotent. Re-running it must skip already-satisfied stories and must not redownload or duplicate accepted assets.
 
-### 2. Deterministic logo repair
+### 2. Canonical logo identity resolution
 
 Logo repair runs before photo sourcing because it is cheap and low-risk.
 
-For each `NEEDS LOGO` story, the pipeline will first inspect existing story metadata and `images/logos/index.json` for a unique exact company/entity association. If one existing local logo is unambiguously tied to the story subject, the pipeline may add the missing alias/domain association without downloading anything.
+The accepted logo identity for a story is an explicit editorial association, never a loose keyword guess. Resolution order is:
 
-If no local logo is usable, the pipeline may fetch a logo only when the story has an explicitly declared company identity / logo domain. The saved file must live under `images/logos/`, decode locally, and be indexed under the declared domain. The system must never infer a logo domain from a loose search keyword.
+1. existing `logo:` declaration in `stories.txt`;
+2. exact existing association in `images/logos/index.json` for a declared story entity/alias;
+3. an exact canonical organization/product/brand that is central to the story and can be verified from authoritative source metadata.
 
-Stories with no defensible company/entity logo identity remain unresolved rather than receiving a guessed mark.
+When rule 3 is needed, the pipeline may add an explicit `logo:` identity to the story only when one canonical identity is defensible and unambiguous. Examples of acceptable relationships include a company story's own mark, a founder biography's central company when the story is specifically about founding/building/returning to that company, or a product/topic with a canonical official mark. A merely adjacent employer, sponsor, investor, city business, or generic institution is not enough.
+
+For topic/history/place stories with no company, the pipeline may use an official institutional or product identity only when it is directly central to the story and would be editorially understandable without explanation. If multiple plausible marks exist or the relationship is contextual rather than central, the story remains `LOGO_IDENTITY_MISSING` until the source resolver can establish a stronger canonical identity; it does not receive an arbitrary logo.
+
+For each `NEEDS LOGO` story, the pipeline first inspects existing local logos. If one local file is unambiguously tied to the accepted identity, it adds the missing index/story association without downloading anything.
+
+If no local logo is usable, the pipeline may fetch a logo only for the accepted explicit identity/domain. The saved file must live under `images/logos/`, decode locally, and be indexed under that identity. The system must never derive a logo domain from a generic image-search term.
 
 ### 3. Candidate photo sourcing
 
@@ -71,7 +79,7 @@ Photo repair works from each story's exact deficit (1–4 photos). Candidate dis
 
 Preferred order:
 
-1. existing local library files not yet counted, if they have a reviewable provenance and exact story/entity match;
+1. existing local library files not yet counted, if they have reviewable provenance and an exact story/entity match;
 2. Wikimedia Commons / other sources with machine-readable reuse metadata;
 3. Library of Congress or comparable public institutional archives;
 4. Openverse results with explicit source/license metadata;
@@ -87,7 +95,7 @@ Candidate queries are derived from the story metadata and editorial structure, n
 
 For company stories, the source planner should prefer a sequence such as founder/origin, early operation/product, turning point, and later/modern result.
 
-For biography stories, it should prefer exact person identity, early work, invention/company/product, and legacy/context.
+For biography stories, it should prefer exact person, early work, invention/company/product, and legacy/context.
 
 For place/history/topic stories, it should prefer distinct visual beats that directly document the subject rather than four near-identical establishing shots.
 
@@ -103,28 +111,31 @@ A candidate is registered only after all of the following pass:
 - exact SHA is not already present;
 - perceptual dHash is not within the existing duplicate threshold of another counted image;
 - the file is not a logo/flat graphic being smuggled into the photo pool;
-- exact story/person/entity relevance is confirmed;
+- source metadata establishes the intended subject/context;
+- automated relevance review does not contradict that source metadata;
 - the resulting verdict is `DIRECT` or `STRONG_CONTEXT`.
 
 `WEAK_GENERIC` and `WRONG_ENTITY` never count.
 
-For person stories, exact identity is mandatory. If identity cannot be established confidently, reject the candidate.
+For person stories, exact identity is mandatory but is established from trustworthy source metadata, not facial recognition. The source page/file caption/title/structured metadata must explicitly identify the exact person. The image relevance model may reject an obvious mismatch or unsuitable image, but model face recognition is never used as the sole proof of identity. If the source metadata does not explicitly identify the person, reject the candidate.
 
-The automated relevance decision should reuse the project's existing vision/relevance machinery where possible and record a reason and source metadata for every accepted/rejected candidate. A transient model/API failure is not an approval; the candidate remains unreviewed and does not count.
+For non-person assets, authoritative captions/descriptions and exact entity/source-page context provide the primary identity evidence. The automated relevance reviewer returns a structured decision containing `verdict` (`DIRECT`, `STRONG_CONTEXT`, `WEAK_GENERIC`, `WRONG_ENTITY`), a short reason, and whether the source metadata is sufficient. Missing/invalid/ambiguous model output fails closed.
+
+A transient model/API failure is not an approval; the candidate remains unreviewed and does not count.
 
 ### 6. Asset registration
 
-Accepted photos are saved as stable local files under `images/` with deterministic, collision-resistant names based on story slug / subject / source beat. `images/images.txt` receives tags and credit. `images/relevance.json` receives the exact story verdict and source URL.
+Accepted photos are saved as stable local files under `images/` with deterministic, collision-resistant names based on story slug / subject / source beat. `images/images.txt` receives tags and credit. `images/relevance.json` receives the exact story verdict, source URL, source title/caption where available, and validation reason.
 
 The pipeline must preserve existing curated relevance entries. It must never rebuild the ledger in a way that erases hand-curated non-`rt-*` verdicts such as the Jack Bogle repairs.
 
-Accepted logos are saved under `images/logos/` and indexed by exact declared identity/domain.
+Accepted logos are saved under `images/logos/` and indexed by exact accepted identity/domain. When the pipeline adds a new canonical logo identity to a story, that mapping is committed as explicit story metadata so future runtime runs do not need to rediscover it.
 
 ### 7. Batch size and commit strategy
 
 One workflow run may repair many stories, but writes are committed in bounded batches so progress survives timeouts or external-source failures.
 
-Default batch target: 10–20 stories or a comparable asset-count cap per commit.
+Default batch target is 15 stories, configurable by an environment/input value. A batch may end earlier if it reaches a configured asset cap or runtime deadline.
 
 After each batch:
 
@@ -137,19 +148,19 @@ A source outage for one story must not abort unrelated repairs. The pipeline rec
 
 ### 8. GitHub Actions workflow
 
-Add a workflow such as `.github/workflows/bulk-visual-repair.yml` with manual dispatch and optional bounded repeat mode.
+Add `.github/workflows/bulk-visual-repair.yml` with manual dispatch. Inputs are limited to safe operational controls such as batch size and maximum passes; they must not include switches that weaken relevance, dedupe, or runtime thresholds.
 
 The workflow will:
 
-- check out `repair/story-visual-coverage` (or the explicitly dispatched branch);
+- check out the explicitly dispatched repair branch;
 - install dependencies;
 - run the bulk repair orchestrator;
 - run the runtime/relevance test suite;
 - rebuild and upload the full coverage/review artifact;
-- commit validated asset/ledger/index changes in bounded batches;
+- commit validated asset/ledger/index/story-metadata changes in bounded batches;
 - expose a final summary with PASS count and unresolved stories.
 
-The workflow must be safe to rerun after GitHub `startup_failure`: no duplicate assets, duplicate index lines, or destructive ledger rewrites.
+The workflow is safe to rerun after GitHub `startup_failure`: no duplicate assets, duplicate index lines, or destructive ledger rewrites.
 
 ### 9. Completion gate
 
@@ -166,13 +177,15 @@ The catalogue is complete only when a fresh authoritative board reports:
 
 A green workflow alone is insufficient if the final board is below 123/123.
 
+If a full automated pass makes zero safe changes while PASS is below 123, the workflow exits non-zero with the unresolved report. Implementation then improves source adapters or explicit canonical identity rules for those unresolved classes; it does not relax acceptance criteria.
+
 ### 10. Renderer verification
 
 The production runtime contract already enforces that a PASS story's approved photo pool is consumed by the renderer. The bulk project will retain and expand automated regression tests for that behavior.
 
-We will not require 123 manual renders. Instead, after 123/123 runtime PASS, run a representative end-to-end sample across story types (for example: company, biography, Saudi company/person, historical topic, place/travel) and inspect their six-frame artifacts. The sample is a renderer sanity check, while the authoritative catalogue completion metric remains 123/123 runtime PASS plus renderer-contract tests.
+We will not require 123 manual renders. Instead, after 123/123 runtime PASS, run a representative end-to-end sample across story types: at minimum one company story, one biography, one Saudi company/person story, one historical/topic story, and one place/travel story. Inspect all six frames for each sampled story.
 
-If a sampled render reveals a new class of renderer bug, fix the renderer contract and add a regression before declaring the catalogue finished.
+The sample is a renderer sanity check, while the authoritative catalogue completion metric remains 123/123 runtime PASS plus renderer-contract tests. If a sampled render reveals a new class of renderer bug, fix the renderer contract and add a regression before declaring the catalogue finished.
 
 ## Failure handling
 
@@ -180,9 +193,9 @@ The pipeline distinguishes:
 
 - `SOURCE_UNAVAILABLE`: candidate host/API unavailable;
 - `NO_SAFE_CANDIDATE`: searches exhausted without a defensible relevant image;
-- `IDENTITY_UNPROVEN`: person/entity identity cannot be verified;
+- `IDENTITY_UNPROVEN`: person/entity identity cannot be established from source metadata;
 - `DUPLICATE_ONLY`: candidates duplicate already-counted visuals;
-- `LOGO_IDENTITY_MISSING`: no defensible logo entity/domain exists;
+- `LOGO_IDENTITY_MISSING`: no defensible canonical logo identity/domain exists;
 - `VALIDATION_ERROR`: decode/dimension/relevance validation failed;
 - `EXTERNAL_API_ERROR`: temporary model/source API failure.
 
@@ -190,27 +203,29 @@ These states do not become PASS. They are written to the unresolved artifact wit
 
 ## Tests
 
-Implementation follows TDD for new behavior. Tests should cover at minimum:
+Implementation follows TDD for new behavior. Tests cover at minimum:
 
 - backlog ordering and deficit computation from runtime coverage;
 - idempotent reruns;
 - deterministic existing-logo association;
-- refusal to guess logo domains;
+- canonical-logo resolver accepts a unique central identity and refuses ambiguous/context-only identities;
+- refusal to infer logo domains from loose search keywords;
 - candidate SHA/dHash duplicate rejection;
 - rejection of `WEAK_GENERIC` / `WRONG_ENTITY` / unreviewed assets;
-- exact-person identity fail-closed behavior;
+- exact-person identity requires explicit source metadata and fails closed without it;
 - preservation of existing relevance ledger entries;
 - batch continuation after one story/source fails;
+- zero-progress exit below 123/123;
 - final 123/123 completion assertion against a generated board;
 - renderer contract still places four distinct approved photos while preserving a relevant logo.
 
 ## Rollout
 
-Phase 1: implement orchestrator skeleton, board generation, deterministic logo repairs, idempotency, and tests.
+Phase 1: implement orchestrator skeleton, board generation, canonical logo repair, idempotency, and tests.
 
 Phase 2: add tiered photo discovery + strict validation + provenance recording.
 
-Phase 3: run bulk workflow repeatedly until no automatic safe progress remains; improve source adapters only for unresolved classes, without weakening acceptance rules.
+Phase 3: run bulk workflow repeatedly until no automatic safe progress remains; improve source adapters or canonical identity resolution only for unresolved classes, without weakening acceptance rules.
 
 Phase 4: reach a fresh 123/123 authoritative runtime board, then run representative end-to-end renders and inspect artifacts.
 
