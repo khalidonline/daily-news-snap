@@ -4,7 +4,7 @@
   "assets": {
     "edison-stock-ticker.jpg": {
       "stories": {
-        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "WEAK_GENERIC"
+        "Jack Bogle": "WEAK_GENERIC"
       },
       "note": "Generic stock-market artifact; it does not explain a Bogle/Vanguard/index-fund beat."
     }
