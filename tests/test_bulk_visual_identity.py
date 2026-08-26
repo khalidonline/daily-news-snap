@@ -1,11 +1,14 @@
 import tempfile
 import unittest
+from io import BytesIO
 from pathlib import Path
+from urllib.error import HTTPError
 from unittest.mock import patch
 
 from PIL import Image
 
 from tools.bulk_visual_identity import (
+    _json_get,
     choose_unique_logo_slug,
     corroborated_org_qids,
     discover_wikidata_logo_for_terms,
@@ -90,6 +93,62 @@ class BulkVisualIdentityTests(unittest.TestCase):
             lambda prop, qid: [],
         )
         self.assertEqual(got, ["APPLE"])
+
+    def test_untyped_biography_detects_exact_human_then_corroborates_company(self):
+        story = "Fred Smith biography"
+
+        def claim(value):
+            return {"mainsnak": {"datavalue": {"value": value}}}
+
+        def fake(url):
+            if "wbsearchentities" in url:
+                if "Fred%20Smith" in url:
+                    return {"search": [{"id": "QFRED", "label": "Fred Smith", "aliases": []}]}
+                if "FedEx" in url:
+                    return {"search": [{"id": "QFEDEX", "label": "FedEx", "aliases": []}]}
+                return {"search": []}
+            if "Special:EntityData/QFRED" in url:
+                return {"entities": {"QFRED": {
+                    "labels": {"en": {"value": "Fred Smith"}},
+                    "aliases": {"en": []},
+                    "claims": {
+                        "P31": [claim({"id": "Q5"})],
+                        "P108": [claim({"id": "QFEDEX"})],
+                    },
+                }}}
+            if "Special:EntityData/QFEDEX" in url:
+                return {"entities": {"QFEDEX": {
+                    "labels": {"en": {"value": "FedEx"}},
+                    "aliases": {"en": [{"value": "Federal Express"}]},
+                    "claims": {
+                        "P154": [claim("FedEx Corporation - 2016 Logo.svg")],
+                        "P856": [claim("https://www.fedex.com/")],
+                    },
+                }}}
+            if "sparql" in url:
+                return {"results": {"bindings": []}}
+            raise AssertionError(url)
+
+        with patch("tools.bulk_visual_identity.sb.story_aliases",
+                   return_value={"Fred Smith", "FedEx"}), \
+             patch.dict("tools.bulk_visual_identity.sb._STORY_PERSONS", {}, clear=True), \
+             patch("tools.bulk_visual_identity.sr.approved_runtime_visuals", return_value=([], [])), \
+             patch("tools.bulk_visual_identity.nb.load_local_images", return_value=[]):
+            logo = discover_verified_logo_identity(story, fake)
+
+        self.assertIsNotNone(logo)
+        self.assertEqual("fedex.com", logo.domain)
+        self.assertEqual("FedEx", logo.entity_label)
+
+    def test_json_get_retries_transient_wikidata_429(self):
+        error = HTTPError(
+            "https://www.wikidata.org/w/api.php", 429, "Too Many Requests",
+            {"Retry-After": "0"}, None,
+        )
+        with patch("tools.bulk_visual_identity.urlopen",
+                   side_effect=[error, BytesIO(b'{"ok": true}')]) as opened:
+            self.assertEqual({"ok": True}, _json_get("https://www.wikidata.org/w/api.php"))
+        self.assertEqual(2, opened.call_count)
 
     def test_commons_download_uses_raster_thumb_and_guard(self):
         with tempfile.TemporaryDirectory() as td:
