@@ -1,5 +1,5 @@
 {
-  "run_nonce": "2026-08-26-bogle-repair-1",
+  "run_nonce": "2026-08-26-bogle-repair-2",
   "assets": [
     {
       "filename": "bogle-vanguard-1959.jpg",
@@ -13,9 +13,11 @@
       "filename": "bogle-vanguard-1989.jpg",
       "url": "https://corporate.vanguard.com/content/dam/corp/articles/images/50-years-50-facts-indexing/50_facts_fact_5.png",
       "tags": ["Jack Bogle", "Vanguard", "The Vanguard Group"],
-      "credit": "Vanguard — 50 years of indexing, John C. Bogle pictured in 1989",
+      "credit": "Vanguard — 50 years of indexing, John C. Bogle pictured in 1989; cropped to the photographic panel",
       "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
-      "verdict": "DIRECT"
+      "verdict": "DIRECT",
+      "crop_box": [0.0, 0.0, 0.35, 1.0],
+      "replace_existing": true
     },
     {
       "filename": "bogle-vanguard-founder.jpg",
