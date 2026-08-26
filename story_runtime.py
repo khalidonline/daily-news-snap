@@ -19,7 +19,12 @@ from pathlib import Path
 import image_precheck as ipc
 import news_bot as nb
 import story_bot as sb
-from runtime_relevance import asset_countable, runtime_pass, runtime_status
+from runtime_relevance import (
+    asset_countable,
+    runtime_contract_slots,
+    runtime_pass,
+    runtime_status,
+)
 
 
 def _matches_story(entry, story):
@@ -140,6 +145,114 @@ def _filtered_index(story, approved_paths):
     return dest
 
 
+def _approved_match_index(photo, approved_paths):
+    """Which approved source is this rendered/selected photo, if any?"""
+    if not photo:
+        return None
+    try:
+        candidate = Path(photo).resolve()
+    except (OSError, TypeError, ValueError):
+        candidate = None
+    for i, approved in enumerate(approved_paths):
+        try:
+            if candidate is not None and candidate == Path(approved).resolve():
+                return i
+        except (OSError, TypeError, ValueError):
+            pass
+
+    try:
+        digest = sb._photo_digest(photo)
+    except Exception:
+        return None
+    if digest is None:
+        return None
+    for i, approved in enumerate(approved_paths):
+        try:
+            if sb.same_picture(digest, sb._photo_digest(approved)):
+                return i
+        except Exception:
+            continue
+    return None
+
+
+def _is_logo_visual(photo):
+    """story_bot marks rendered logo cards with a sidecar exemption."""
+    if not photo:
+        return False
+    try:
+        return Path(str(photo) + ".exempt").exists()
+    except (OSError, TypeError, ValueError):
+        return False
+
+
+def _enforce_approved_photo_contract(brief, selected, approved_paths):
+    """Make a runtime PASS visible: at least four frames use approved photos.
+
+    ``story_bot`` remains responsible for frame-aware portrait/logo/search
+    choices. This final runtime pass only replaces slots selected by the shared
+    contract planner, using the same distinct approved pool that opened the
+    gate. That keeps person identity protected and preserves one logo while
+    preventing typography or an extra logo from hiding an already-reviewed
+    photo library.
+    """
+    if selected is None:
+        return None
+    selected = list(selected)
+    approved_paths = [Path(p) for p in approved_paths]
+    target = min(4, len(brief.get("frames", [])), len(approved_paths))
+    if target <= 0:
+        return selected
+
+    matched = []
+    used_approved = set()
+    approved_flags = []
+    for photo in selected:
+        idx = _approved_match_index(photo, approved_paths)
+        if idx is not None and idx not in used_approved:
+            approved_flags.append(True)
+            used_approved.add(idx)
+            matched.append(idx)
+        else:
+            approved_flags.append(False)
+            matched.append(None)
+
+    logo_flags = [_is_logo_visual(photo) for photo in selected]
+    slots = runtime_contract_slots(
+        brief, selected, approved_flags, logo_flags, target=target
+    )
+    need = max(0, target - sum(approved_flags))
+    if len(slots) < need:
+        raise SystemExit(
+            "runtime photo contract could not place four approved photos "
+            "without overwriting a protected person frame or the deck's "
+            "only logo"
+        )
+
+    unused = [p for i, p in enumerate(approved_paths) if i not in used_approved]
+    injected = []
+    for slot, path in zip(slots, unused):
+        selected[slot] = str(path)
+        injected.append(str(path))
+        print(f"    runtime photo contract: frame {slot + 1} <- {path.name}")
+
+    final_matches = set()
+    for photo in selected:
+        idx = _approved_match_index(photo, approved_paths)
+        if idx is not None:
+            final_matches.add(idx)
+    if len(final_matches) < target:
+        raise SystemExit(
+            f"runtime photo contract failed closed: rendered selection has "
+            f"{len(final_matches)} approved distinct photos, needs {target}"
+        )
+
+    if injected:
+        sb.register_photos(injected, "story-runtime-approved")
+    print(f"    runtime photo contract: {len(final_matches)} approved photos "
+          "will appear in the rendered deck")
+    return selected
+
+
 def main():
     if sb.STORY:
         story = sb.resolve_story_input(sb.STORY)
@@ -165,7 +278,22 @@ def main():
     print(f"    runtime gate PASS: {story}")
     print("    approved photos: " + ", ".join(p.name for p in photos))
     print("    logo(s): " + ", ".join(p.name for p in logos))
-    sb.main()
+
+    # The renderer used to be allowed to pass the gate and then hide the very
+    # photo pool that justified PASS behind logos and typographic cards. Wrap
+    # only this runtime invocation: story_bot keeps its ordinary selector, and
+    # the shared contract corrects the final selection before build_frames().
+    original_find_all = sb.find_all_photos
+
+    def runtime_find_all(brief):
+        selected = original_find_all(brief)
+        return _enforce_approved_photo_contract(brief, selected, photos)
+
+    sb.find_all_photos = runtime_find_all
+    try:
+        sb.main()
+    finally:
+        sb.find_all_photos = original_find_all
 
 
 if __name__ == "__main__":

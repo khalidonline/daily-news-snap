@@ -1,12 +1,941 @@
 {
-  "version": 1,
-  "policy": "Only DIRECT and STRONG_CONTEXT count. Unreviewed rt-* assets fail closed.",
+  "version": 2,
+  "policy": "Only DIRECT and STRONG_CONTEXT count. Unreviewed rt-* assets fail closed. Graphics, homonyms, generic filler and wrong entities do not count.",
   "assets": {
+    "bogle-vanguard-1959.jpg": {
+      "stories": {
+        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
+      },
+      "source_url": "https://investor.vanguard.com/content/retail/public/us/en/about-us/_jcr_content/root/container/container_1884309581_30279271/container_890438166/image.coreimg.jpeg/1773702033665/vg20250421-bogle-morgan-welch-1959.jpeg"
+    },
+    "bogle-vanguard-1989.jpg": {
+      "stories": {
+        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
+      },
+      "source_url": "https://corporate.vanguard.com/content/dam/corp/articles/images/50-years-50-facts-indexing/50_facts_fact_5.png"
+    },
+    "bogle-vanguard-founder.jpg": {
+      "stories": {
+        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
+      },
+      "source_url": "https://corporate.vanguard.com/content/dam/corp/what-we-care-about/images/ethics-and-integrity/WWCA_Ethics_John.jpg"
+    },
     "edison-stock-ticker.jpg": {
       "stories": {
         "Jack Bogle": "WEAK_GENERIC"
       },
-      "note": "Generic stock-market artifact; it does not explain a Bogle/Vanguard/index-fund beat."
+      "note": "Generic market artifact; not a Bogle/Vanguard/index-fund beat."
+    },
+    "rt-abdul-latif-jameel-1.jpg": {
+      "stories": {
+        "قصة عبداللطيف جميل للسيارات ووكالة تويوتا": "STRONG_CONTEXT"
+      }
+    },
+    "rt-abdul-latif-jameel-2.jpg": {
+      "stories": {
+        "قصة عبداللطيف جميل للسيارات ووكالة تويوتا": "STRONG_CONTEXT"
+      }
+    },
+    "rt-air-conditioning-1.jpg": {
+      "stories": {
+        "قصة المكيّف الذي جعل مدن الخليج ممكنة": "STRONG_CONTEXT"
+      }
+    },
+    "rt-air-conditioning-2.jpg": {
+      "stories": {
+        "قصة المكيّف الذي جعل مدن الخليج ممكنة": "STRONG_CONTEXT"
+      }
+    },
+    "rt-ajay-bhatt-1.jpg": {
+      "stories": {
+        "Ajay Bhatt: مخترع منفذ USB الذي لم يربح منه شيئاً": "DIRECT"
+      }
+    },
+    "rt-ajay-bhatt-2.jpg": {
+      "stories": {
+        "Ajay Bhatt: مخترع منفذ USB الذي لم يربح منه شيئاً": "DIRECT"
+      }
+    },
+    "rt-al-othaim-markets-1.jpg": {
+      "stories": {
+        "قصة العثيم وتجارة التجزئة": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-al-othaim-markets-2.jpg": {
+      "stories": {
+        "قصة العثيم وتجارة التجزئة": "DIRECT"
+      }
+    },
+    "rt-al-rajhi-bank-1.jpg": {
+      "stories": {
+        "قصة مصرف الراجحي من صرافة إلى أكبر بنك": "DIRECT"
+      }
+    },
+    "rt-al-rajhi-bank-2.jpg": {
+      "stories": {
+        "قصة مصرف الراجحي من صرافة إلى أكبر بنك": "DIRECT"
+      }
+    },
+    "rt-almarai-1.jpg": {
+      "stories": {
+        "قصة المراعي من مزرعة إلى أكبر شركة ألبان": "DIRECT"
+      }
+    },
+    "rt-almarai-2.jpg": {
+      "stories": {
+        "قصة المراعي من مزرعة إلى أكبر شركة ألبان": "DIRECT"
+      }
+    },
+    "rt-alula-1.jpg": {
+      "stories": {
+        "كيف تحولت العلا من واحة إلى وجهة عالمية؟": "DIRECT"
+      }
+    },
+    "rt-alula-2.jpg": {
+      "stories": {
+        "كيف تحولت العلا من واحة إلى وجهة عالمية؟": "DIRECT"
+      }
+    },
+    "rt-amancio-ortega-1.jpg": {
+      "stories": {
+        "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً": "STRONG_CONTEXT"
+      }
+    },
+    "rt-amancio-ortega-2.jpg": {
+      "stories": {
+        "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً": "STRONG_CONTEXT"
+      }
+    },
+    "rt-amazon-1.jpg": {
+      "stories": {
+        "كيف بدأت Amazon كمتجر كتب على الإنترنت": "DIRECT",
+        "قصة أمازون واستحواذها على سوق دوت كوم": "DIRECT"
+      }
+    },
+    "rt-amsterdam-stock-exchange-1.jpg": {
+      "stories": {
+        "كيف نشأت أول بورصة في العالم؟": "DIRECT"
+      }
+    },
+    "rt-amsterdam-stock-exchange-2.jpg": {
+      "stories": {
+        "كيف نشأت أول بورصة في العالم؟": "DIRECT"
+      }
+    },
+    "rt-apple-1.jpg": {
+      "stories": {
+        "كيف تأسست Apple في مرآب، ومن باع حصته مبكراً": "DIRECT"
+      }
+    },
+    "rt-apple-2.jpg": {
+      "stories": {
+        "كيف تأسست Apple في مرآب، ومن باع حصته مبكراً": "DIRECT"
+      }
+    },
+    "rt-apple-3.jpg": {
+      "stories": {
+        "كيف تأسست Apple في مرآب، ومن باع حصته مبكراً": "DIRECT"
+      }
+    },
+    "rt-aramco-1.jpg": {
+      "stories": {
+        "قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ": "WEAK_GENERIC",
+        "من هو مؤسس أرامكو الحقيقي؟ قصة الاكتشاف الأول": "WEAK_GENERIC",
+        "من هم أول الموظفين السعوديين في أرامكو؟": "WEAK_GENERIC"
+      },
+      "note": "Unidentified historical Saudi man; not verified as the person in any mapped Aramco story."
+    },
+    "rt-aramco-2.jpg": {
+      "stories": {
+        "قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ": "STRONG_CONTEXT",
+        "من هو مؤسس أرامكو الحقيقي؟ قصة الاكتشاف الأول": "STRONG_CONTEXT",
+        "من هم أول الموظفين السعوديين في أرامكو؟": "STRONG_CONTEXT"
+      }
+    },
+    "rt-benjamin-graham-1.jpg": {
+      "stories": {
+        "Benjamin Graham: أستاذ Warren Buffett الذي وضع قواعد الاستثمار": "DIRECT"
+      }
+    },
+    "rt-benjamin-graham-2.jpg": {
+      "stories": {
+        "Benjamin Graham: أستاذ Warren Buffett الذي وضع قواعد الاستثمار": "DIRECT"
+      }
+    },
+    "rt-bitcoin-1.jpg": {
+      "stories": {
+        "قصة البيتكوين: من ورقة بحثية إلى أصل بتريليونات": "DIRECT"
+      }
+    },
+    "rt-bitcoin-2.jpg": {
+      "stories": {
+        "قصة البيتكوين: من ورقة بحثية إلى أصل بتريليونات": "STRONG_CONTEXT"
+      }
+    },
+    "rt-careem-1.jpg": {
+      "stories": {
+        "قصة كريم من الفكرة إلى استحواذ أوبر": "WEAK_GENERIC",
+        "قصة استثمار صندوق الاستثمارات في Uber": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-diners-club-1.jpg": {
+      "stories": {
+        "قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية": "WEAK_GENERIC"
+      },
+      "note": "Modern branded arena does not explain the origin of Diners Club."
+    },
+    "rt-douglas-engelbart-1.jpg": {
+      "stories": {
+        "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره": "DIRECT"
+      }
+    },
+    "rt-douglas-engelbart-2.jpg": {
+      "stories": {
+        "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره": "DIRECT"
+      }
+    },
+    "rt-dubai-1.jpg": {
+      "stories": {
+        "كيف بُنيت دبي على الرمل في خمسين سنة؟": "WEAK_GENERIC"
+      }
+    },
+    "rt-dubai-2.jpg": {
+      "stories": {
+        "كيف بُنيت دبي على الرمل في خمسين سنة؟": "DIRECT"
+      }
+    },
+    "rt-dubai-3.jpg": {
+      "stories": {
+        "كيف بُنيت دبي على الرمل في خمسين سنة؟": "DIRECT"
+      }
+    },
+    "rt-dubai-4.jpg": {
+      "stories": {
+        "كيف بُنيت دبي على الرمل في خمسين سنة؟": "DIRECT"
+      }
+    },
+    "rt-elon-musk-1.jpg": {
+      "stories": {
+        "كيف بنى Elon Musk أربع شركات بمليارات في وقت واحد": "DIRECT"
+      }
+    },
+    "rt-elon-musk-2.jpg": {
+      "stories": {
+        "كيف بنى Elon Musk أربع شركات بمليارات في وقت واحد": "DIRECT"
+      }
+    },
+    "rt-elon-musk-3.jpg": {
+      "stories": {
+        "كيف بنى Elon Musk أربع شركات بمليارات في وقت واحد": "DIRECT"
+      }
+    },
+    "rt-emirates-1.jpg": {
+      "stories": {
+        "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": "DIRECT"
+      }
+    },
+    "rt-emirates-2.jpg": {
+      "stories": {
+        "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": "DIRECT"
+      }
+    },
+    "rt-emirates-3.jpg": {
+      "stories": {
+        "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": "DIRECT"
+      }
+    },
+    "rt-first-saudi-banknote-1.jpg": {
+      "stories": {
+        "قصة أول عملة ورقية سعودية": "WEAK_GENERIC"
+      },
+      "note": "Later one-riyal note; not verified as the first Saudi paper-money issue."
+    },
+    "rt-flynas-1.jpg": {
+      "stories": {
+        "قصة طيران ناس وثورة الطيران الاقتصادي": "DIRECT"
+      }
+    },
+    "rt-flynas-2.jpg": {
+      "stories": {
+        "قصة طيران ناس وثورة الطيران الاقتصادي": "DIRECT"
+      }
+    },
+    "rt-fred-smith-1.jpg": {
+      "stories": {
+        "Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة": "STRONG_CONTEXT"
+      }
+    },
+    "rt-fred-smith-2.jpg": {
+      "stories": {
+        "Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة": "STRONG_CONTEXT"
+      }
+    },
+    "rt-ghutra-1.jpg": {
+      "stories": {
+        "قصة الشماغ ومصانعه في إنجلترا": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-google-1.jpg": {
+      "stories": {
+        "كيف رفض Yahoo شراء Google بمليون دولار": "WEAK_GENERIC",
+        "قصة Google: السهم الذي جعل الطاهي مليونيراً": "WEAK_GENERIC"
+      }
+    },
+    "rt-google-3.jpg": {
+      "stories": {
+        "كيف رفض Yahoo شراء Google بمليون دولار": "DIRECT",
+        "قصة Google: السهم الذي جعل الطاهي مليونيراً": "DIRECT"
+      }
+    },
+    "rt-hedy-lamarr-1.jpg": {
+      "stories": {
+        "Hedy Lamarr: ممثلة سجّلت براءة اختراع صارت أساس الواي فاي": "DIRECT"
+      }
+    },
+    "rt-hedy-lamarr-2.jpg": {
+      "stories": {
+        "Hedy Lamarr: ممثلة سجّلت براءة اختراع صارت أساس الواي فاي": "DIRECT"
+      }
+    },
+    "rt-herb-kelleher-1.jpg": {
+      "stories": {
+        "Herb Kelleher: أسس Southwest على منديل ورقي": "DIRECT"
+      }
+    },
+    "rt-herb-kelleher-2.jpg": {
+      "stories": {
+        "Herb Kelleher: أسس Southwest على منديل ورقي": "DIRECT"
+      }
+    },
+    "rt-ikea-1.jpg": {
+      "stories": {
+        "قصة IKEA من قرية سويدية": "DIRECT"
+      }
+    },
+    "rt-ikea-2.jpg": {
+      "stories": {
+        "قصة IKEA من قرية سويدية": "DIRECT"
+      }
+    },
+    "rt-ikea-3.jpg": {
+      "stories": {
+        "قصة IKEA من قرية سويدية": "DIRECT"
+      }
+    },
+    "rt-ikea-4.jpg": {
+      "stories": {
+        "قصة IKEA من قرية سويدية": "DIRECT"
+      }
+    },
+    "rt-jack-ma-1.jpg": {
+      "stories": {
+        "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
+      }
+    },
+    "rt-jack-ma-2.jpg": {
+      "stories": {
+        "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
+      }
+    },
+    "rt-jack-ma-3.jpg": {
+      "stories": {
+        "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
+      }
+    },
+    "rt-jeddah-1.jpg": {
+      "stories": {
+        "قصة جدة التاريخية: بوابة الحج منذ قرون": "WEAK_GENERIC",
+        "قصة أول مطار في جدة وتطور الطيران المدني": "WEAK_GENERIC"
+      }
+    },
+    "rt-jeddah-2.jpg": {
+      "stories": {
+        "قصة جدة التاريخية: بوابة الحج منذ قرون": "STRONG_CONTEXT",
+        "قصة أول مطار في جدة وتطور الطيران المدني": "WEAK_GENERIC"
+      }
+    },
+    "rt-jerry-lawson-1.jpg": {
+      "stories": {
+        "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي": "DIRECT"
+      }
+    },
+    "rt-jerry-lawson-2.jpg": {
+      "stories": {
+        "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي": "STRONG_CONTEXT"
+      }
+    },
+    "rt-juan-trippe-1.jpg": {
+      "stories": {
+        "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": "DIRECT"
+      }
+    },
+    "rt-juan-trippe-2.jpg": {
+      "stories": {
+        "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": "DIRECT"
+      }
+    },
+    "rt-kodak-1.jpg": {
+      "stories": {
+        "كيف خسرت Kodak السوق الذي اخترعته بنفسها": "DIRECT"
+      }
+    },
+    "rt-kodak-2.jpg": {
+      "stories": {
+        "كيف خسرت Kodak السوق الذي اخترعته بنفسها": "DIRECT"
+      }
+    },
+    "rt-lego-1.jpg": {
+      "stories": {
+        "قصة ليغو من ورشة نجارة": "DIRECT"
+      }
+    },
+    "rt-lego-2.jpg": {
+      "stories": {
+        "قصة ليغو من ورشة نجارة": "DIRECT"
+      }
+    },
+    "rt-lucid-motors-1.jpg": {
+      "stories": {
+        "قصة دخول لوسيد ومصنعها في السعودية": "DIRECT"
+      }
+    },
+    "rt-lucid-motors-2.jpg": {
+      "stories": {
+        "قصة دخول لوسيد ومصنعها في السعودية": "DIRECT"
+      }
+    },
+    "rt-madam-c-j-walker-1.jpg": {
+      "stories": {
+        "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا": "STRONG_CONTEXT"
+      }
+    },
+    "rt-maersk-1.jpg": {
+      "stories": {
+        "كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟": "DIRECT"
+      }
+    },
+    "rt-maersk-2.jpg": {
+      "stories": {
+        "كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟": "DIRECT"
+      }
+    },
+    "rt-maersk-3.jpg": {
+      "stories": {
+        "كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟": "DIRECT"
+      }
+    },
+    "rt-mary-allen-wilkes-1.jpg": {
+      "stories": {
+        "Mary Allen Wilkes: أول من استخدم حاسوباً في بيتها عام 1965": "DIRECT"
+      }
+    },
+    "rt-mary-allen-wilkes-2.jpg": {
+      "stories": {
+        "Mary Allen Wilkes: أول من استخدم حاسوباً في بيتها عام 1965": "DIRECT"
+      }
+    },
+    "rt-masaru-ibuka-1.jpg": {
+      "stories": {
+        "Masaru Ibuka: الشريك الأهدأ الذي بنى Sony مع Morita": "DIRECT"
+      }
+    },
+    "rt-masaru-ibuka-2.jpg": {
+      "stories": {
+        "Masaru Ibuka: الشريك الأهدأ الذي بنى Sony مع Morita": "DIRECT"
+      }
+    },
+    "rt-mcdonald-brothers-1.jpg": {
+      "stories": {
+        "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟": "STRONG_CONTEXT"
+      }
+    },
+    "rt-mcdonald-brothers-2.jpg": {
+      "stories": {
+        "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟": "DIRECT"
+      }
+    },
+    "rt-mcdonald-brothers-3.jpg": {
+      "stories": {
+        "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟": "DIRECT"
+      }
+    },
+    "rt-microsoft-1.jpg": {
+      "stories": {
+        "كيف تحولت Microsoft من بيع الأنظمة إلى السحابة": "DIRECT",
+        "قصة Microsoft: الشركة التي صنعت آلاف المليونيرات في بلدة واحدة": "DIRECT"
+      }
+    },
+    "rt-microsoft-2.jpg": {
+      "stories": {
+        "كيف تحولت Microsoft من بيع الأنظمة إلى السحابة": "DIRECT",
+        "قصة Microsoft: الشركة التي صنعت آلاف المليونيرات في بلدة واحدة": "DIRECT"
+      }
+    },
+    "rt-microsoft-3.jpg": {
+      "stories": {
+        "كيف تحولت Microsoft من بيع الأنظمة إلى السحابة": "DIRECT",
+        "قصة Microsoft: الشركة التي صنعت آلاف المليونيرات في بلدة واحدة": "DIRECT"
+      }
+    },
+    "rt-mohammed-bin-laden-1.jpg": {
+      "stories": {
+        "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة": "DIRECT"
+      }
+    },
+    "rt-mohammed-bin-laden-2.jpg": {
+      "stories": {
+        "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة": "DIRECT"
+      }
+    },
+    "rt-muhammad-yunus-1.jpg": {
+      "stories": {
+        "Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك": "DIRECT"
+      }
+    },
+    "rt-muhammad-yunus-2.jpg": {
+      "stories": {
+        "Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك": "DIRECT"
+      }
+    },
+    "rt-muriel-siebert-1.jpg": {
+      "stories": {
+        "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": "DIRECT"
+      }
+    },
+    "rt-muriel-siebert-2.jpg": {
+      "stories": {
+        "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": "STRONG_CONTEXT"
+      }
+    },
+    "rt-muriel-siebert-3.jpg": {
+      "stories": {
+        "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": "STRONG_CONTEXT"
+      }
+    },
+    "rt-nadec-1.jpg": {
+      "stories": {
+        "قصة نادك للأغذية": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-netflix-1.jpg": {
+      "stories": {
+        "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": "DIRECT"
+      }
+    },
+    "rt-netflix-2.jpg": {
+      "stories": {
+        "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": "STRONG_CONTEXT"
+      }
+    },
+    "rt-new-york-2.jpg": {
+      "stories": {
+        "قصة نيويورك: كيف صارت عاصمة المال؟": "WEAK_GENERIC"
+      }
+    },
+    "rt-new-york-3.jpg": {
+      "stories": {
+        "قصة نيويورك: كيف صارت عاصمة المال؟": "WEAK_GENERIC"
+      }
+    },
+    "rt-nokia-1.jpg": {
+      "stories": {
+        "لماذا سقطت Nokia رغم أنها كانت الأولى عالمياً؟": "DIRECT",
+        "قصة نوكيا من مصنع ورق إلى الهواتف": "DIRECT"
+      }
+    },
+    "rt-nokia-2.jpg": {
+      "stories": {
+        "لماذا سقطت Nokia رغم أنها كانت الأولى عالمياً؟": "DIRECT",
+        "قصة نوكيا من مصنع ورق إلى الهواتف": "DIRECT"
+      }
+    },
+    "rt-nvidia-1.jpg": {
+      "stories": {
+        "قصة NVIDIA: من رقائق الألعاب إلى أغلى شركة في العالم": "DIRECT",
+        "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم": "DIRECT"
+      }
+    },
+    "rt-nvidia-2.jpg": {
+      "stories": {
+        "قصة NVIDIA: من رقائق الألعاب إلى أغلى شركة في العالم": "DIRECT",
+        "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم": "DIRECT"
+      }
+    },
+    "rt-openai-1.jpg": {
+      "stories": {
+        "قصة OpenAI: من مختبر بحثي إلى أشهر منتج تقني": "DIRECT"
+      }
+    },
+    "rt-philo-farnsworth-1.jpg": {
+      "stories": {
+        "Philo Farnsworth: اخترع التلفزيون في مزرعة وخسر حقوقه": "DIRECT"
+      }
+    },
+    "rt-pif-1.jpg": {
+      "stories": {
+        "قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي": "WRONG_ENTITY",
+        "قصة صندوق الاستثمارات العامة واستثماراته العالمية": "WRONG_ENTITY",
+        "قصة استثمار صندوق الاستثمارات في Uber": "WRONG_ENTITY"
+      },
+      "note": "Bad homonym/provenance: the source credit resolves to Italian TV personality Pif, not Saudi PIF."
+    },
+    "rt-pif-2.jpg": {
+      "stories": {
+        "قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي": "WEAK_GENERIC",
+        "قصة صندوق الاستثمارات العامة واستثماراته العالمية": "WEAK_GENERIC",
+        "قصة استثمار صندوق الاستثمارات في Uber": "WEAK_GENERIC"
+      }
+    },
+    "rt-pif-3.jpg": {
+      "stories": {
+        "قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي": "DIRECT",
+        "قصة صندوق الاستثمارات العامة واستثماراته العالمية": "DIRECT",
+        "قصة استثمار صندوق الاستثمارات في Uber": "STRONG_CONTEXT"
+      },
+      "note": "Verified Public Investment Fund Tower, Riyadh (Z thomas / CC BY 4.0)."
+    },
+    "rt-pif-uber-stake-1.jpg": {
+      "stories": {
+        "قصة استثمار صندوق الاستثمارات في Uber": "WRONG_ENTITY"
+      },
+      "note": "Japanese Uber taxi; not evidence of the Saudi PIF investment."
+    },
+    "rt-pif-uber-stake-2.jpg": {
+      "stories": {
+        "قصة استثمار صندوق الاستثمارات في Uber": "WEAK_GENERIC"
+      },
+      "note": "Generic Uber vehicle; does not document the PIF investment."
+    },
+    "rt-publix-1.jpg": {
+      "stories": {
+        "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل": "DIRECT"
+      }
+    },
+    "rt-publix-2.jpg": {
+      "stories": {
+        "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل": "STRONG_CONTEXT"
+      }
+    },
+    "rt-publix-3.jpg": {
+      "stories": {
+        "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل": "STRONG_CONTEXT"
+      }
+    },
+    "rt-radia-perlman-1.jpg": {
+      "stories": {
+        "Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل": "DIRECT"
+      }
+    },
+    "rt-radia-perlman-2.jpg": {
+      "stories": {
+        "Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل": "DIRECT"
+      }
+    },
+    "rt-radia-perlman-3.jpg": {
+      "stories": {
+        "Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل": "DIRECT"
+      }
+    },
+    "rt-riyadh-1.jpg": {
+      "stories": {
+        "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": "STRONG_CONTEXT",
+        "قصة سكة حديد الرياض الدمام 1951": "WEAK_GENERIC"
+      }
+    },
+    "rt-riyadh-2.jpg": {
+      "stories": {
+        "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": "STRONG_CONTEXT",
+        "قصة سكة حديد الرياض الدمام 1951": "WEAK_GENERIC"
+      }
+    },
+    "rt-riyadh-dammam-railway-1.jpg": {
+      "stories": {
+        "قصة سكة حديد الرياض الدمام 1951": "DIRECT"
+      }
+    },
+    "rt-riyadh-dammam-railway-2.jpg": {
+      "stories": {
+        "قصة سكة حديد الرياض الدمام 1951": "DIRECT"
+      }
+    },
+    "rt-rolex-1.jpg": {
+      "stories": {
+        "قصة Rolex وصناعة الفخامة": "DIRECT"
+      }
+    },
+    "rt-rolex-2.jpg": {
+      "stories": {
+        "قصة Rolex وصناعة الفخامة": "DIRECT"
+      }
+    },
+    "rt-sabic-1.jpg": {
+      "stories": {
+        "قصة سابك من فكرة إلى عملاق بتروكيماويات": "DIRECT"
+      }
+    },
+    "rt-saleh-al-rajhi-1.jpg": {
+      "stories": {
+        "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته": "WRONG_ENTITY",
+        "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء": "DIRECT"
+      }
+    },
+    "rt-saleh-al-rajhi-2.jpg": {
+      "stories": {
+        "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته": "WRONG_ENTITY",
+        "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء": "DIRECT"
+      }
+    },
+    "rt-sama-1.jpg": {
+      "stories": {
+        "قصة تأسيس مؤسسة النقد ساما": "DIRECT"
+      }
+    },
+    "rt-sama-2.jpg": {
+      "stories": {
+        "قصة تأسيس مؤسسة النقد ساما": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-samsung-1.jpg": {
+      "stories": {
+        "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": "DIRECT"
+      }
+    },
+    "rt-samsung-2.jpg": {
+      "stories": {
+        "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": "DIRECT"
+      }
+    },
+    "rt-samsung-3.jpg": {
+      "stories": {
+        "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-saudi-coffee-1.jpg": {
+      "stories": {
+        "قصة القهوة السعودية": "STRONG_CONTEXT"
+      }
+    },
+    "rt-saudi-coffee-2.jpg": {
+      "stories": {
+        "قصة القهوة السعودية": "STRONG_CONTEXT"
+      }
+    },
+    "rt-saudi-dates-industry-1.jpg": {
+      "stories": {
+        "قصة التمر السعودي وتحوله لصناعة": "STRONG_CONTEXT"
+      }
+    },
+    "rt-saudi-dates-industry-2.jpg": {
+      "stories": {
+        "قصة التمر السعودي وتحوله لصناعة": "STRONG_CONTEXT"
+      }
+    },
+    "rt-saudi-stock-market-crash-1.jpg": {
+      "stories": {
+        "قصة انهيار سوق الأسهم السعودية 2006": "WEAK_GENERIC"
+      }
+    },
+    "rt-saudia-1.jpg": {
+      "stories": {
+        "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم": "DIRECT"
+      }
+    },
+    "rt-saudia-2.jpg": {
+      "stories": {
+        "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم": "DIRECT"
+      }
+    },
+    "rt-savola-group-1.jpg": {
+      "stories": {
+        "قصة صافولا": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-shuji-nakamura-1.jpg": {
+      "stories": {
+        "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة": "DIRECT"
+      }
+    },
+    "rt-shuji-nakamura-2.jpg": {
+      "stories": {
+        "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة": "DIRECT"
+      }
+    },
+    "rt-singapore-1.jpg": {
+      "stories": {
+        "قصة سنغافورة: من ميناء فقير إلى أغنى دول آسيا": "DIRECT"
+      }
+    },
+    "rt-singapore-2.jpg": {
+      "stories": {
+        "قصة سنغافورة: من ميناء فقير إلى أغنى دول آسيا": "DIRECT"
+      }
+    },
+    "rt-souk-al-manakh-1.jpg": {
+      "stories": {
+        "قصة سوق المناخ في الكويت 1982": "DIRECT"
+      }
+    },
+    "rt-souk-al-manakh-2.jpg": {
+      "stories": {
+        "قصة سوق المناخ في الكويت 1982": "DIRECT"
+      }
+    },
+    "rt-souk-al-manakh-3.jpg": {
+      "stories": {
+        "قصة سوق المناخ في الكويت 1982": "DIRECT"
+      }
+    },
+    "rt-starbucks-2.jpg": {
+      "stories": {
+        "قصة ستاربكس عبر الشايع": "STRONG_CONTEXT"
+      }
+    },
+    "rt-steve-jobs-1.jpg": {
+      "stories": {
+        "قصة Steve Jobs: الطرد من شركته ثم العودة": "DIRECT"
+      }
+    },
+    "rt-steve-jobs-2.jpg": {
+      "stories": {
+        "قصة Steve Jobs: الطرد من شركته ثم العودة": "DIRECT"
+      }
+    },
+    "rt-sulaiman-al-rajhi-1.jpg": {
+      "stories": {
+        "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته": "DIRECT",
+        "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء": "WRONG_ENTITY",
+        "قصة سليمان الراجحي وأكبر وقف خاص": "DIRECT"
+      }
+    },
+    "rt-tesla-1.jpg": {
+      "stories": {
+        "قصة Tesla: الشركة التي كادت تفلس مرتين": "DIRECT"
+      }
+    },
+    "rt-tokyo-1.jpg": {
+      "stories": {
+        "لماذا صارت طوكيو أكبر مدينة في العالم؟": "DIRECT"
+      }
+    },
+    "rt-tokyo-2.jpg": {
+      "stories": {
+        "لماذا صارت طوكيو أكبر مدينة في العالم؟": "DIRECT"
+      }
+    },
+    "rt-tsmc-1.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      }
+    },
+    "rt-tsmc-2.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      }
+    },
+    "rt-ups-1.jpg": {
+      "stories": {
+        "قصة UPS: الشركة التي يملكها سائقوها": "STRONG_CONTEXT"
+      }
+    },
+    "rt-warren-buffett-1.jpg": {
+      "stories": {
+        "قصة Warren Buffett: أول استثمار في سن الحادية عشرة": "DIRECT"
+      }
+    },
+    "rt-warren-buffett-2.jpg": {
+      "stories": {
+        "قصة Warren Buffett: أول استثمار في سن الحادية عشرة": "DIRECT"
+      }
+    },
+    "rt-yahoo-1.jpg": {
+      "stories": {
+        "كيف رفض Yahoo شراء Google بمليون دولار": "DIRECT",
+        "قصة Google: السهم الذي جعل الطاهي مليونيراً": "WEAK_GENERIC"
+      }
+    },
+    "rt-yahoo-2.jpg": {
+      "stories": {
+        "كيف رفض Yahoo شراء Google بمليون دولار": "WEAK_GENERIC",
+        "قصة Google: السهم الذي جعل الطاهي مليونيراً": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-yahoo-3.jpg": {
+      "stories": {
+        "كيف رفض Yahoo شراء Google بمليون دولار": "WEAK_GENERIC",
+        "قصة Google: السهم الذي جعل الطاهي مليونيراً": "WEAK_GENERIC"
+      },
+      "note": "Graphic/logo/diagram; not counted as one of the four story photos."
+    },
+    "rt-yusuf-bin-ahmed-kanoo-1.jpg": {
+      "stories": {
+        "يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط": "WRONG_ENTITY"
+      },
+      "note": "Wrong person: Flex CEO Revathi Advaithi, not Yusuf bin Ahmed Kanoo."
+    },
+    "rt-zamzam-water-1.jpg": {
+      "stories": {
+        "قصة ماء زمزم وكيف يُعبأ ويوزّع": "STRONG_CONTEXT"
+      }
+    },
+    "rt-قصة-أزمة-2008-كيف-بدأت-1.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "STRONG_CONTEXT"
+      }
+    },
+    "rt-قصة-أزمة-2008-كيف-بدأت-2.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "WEAK_GENERIC"
+      },
+      "note": "COVID-19 recovery-spending chart from 2021-22, not the 2008 crisis."
+    },
+    "rt-قصة-أول-سيارة-تدخل-الجزي-1.jpg": {
+      "stories": {
+        "قصة أول سيارة تدخل الجزيرة العربية": "WEAK_GENERIC"
+      }
+    },
+    "rt-قصة-أول-سيارة-تدخل-الجزي-2.jpg": {
+      "stories": {
+        "قصة أول سيارة تدخل الجزيرة العربية": "WEAK_GENERIC"
+      },
+      "note": "1886 Benz is automobile-history context, not evidence of the first car entering Arabia."
+    },
+    "rt-قصة-جواز-السفر-كيف-بدأت-1.jpg": {
+      "stories": {
+        "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": "STRONG_CONTEXT"
+      }
+    },
+    "rt-قصة-جواز-السفر-كيف-بدأت-2.jpg": {
+      "stories": {
+        "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": "STRONG_CONTEXT"
+      }
+    },
+    "rt-كيف-غي-رت-شركات-الطيران-1.jpg": {
+      "stories": {
+        "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": "STRONG_CONTEXT"
+      }
+    },
+    "rt-كيف-غي-رت-شركات-الطيران-2.jpg": {
+      "stories": {
+        "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": "STRONG_CONTEXT"
+      }
+    },
+    "rt-لماذا-تختلف-أسعار-التذاك-1.jpg": {
+      "stories": {
+        "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "STRONG_CONTEXT"
+      }
+    },
+    "rt-لماذا-تختلف-أسعار-التذاك-2.jpg": {
+      "stories": {
+        "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
+      }
     }
   }
 }

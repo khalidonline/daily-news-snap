@@ -94,3 +94,50 @@ def runtime_status(photo_count: int, logo_count: int) -> str:
 
 def runtime_pass(photo_count: int, logo_count: int) -> bool:
     return runtime_status(photo_count, logo_count) == "PASS"
+
+
+def runtime_contract_slots(brief: dict, selected: list,
+                           approved_flags: list[bool],
+                           logo_flags: list[bool], target: int = 4) -> list[int]:
+    """Pick frame slots that must be replaced by approved local photos.
+
+    The runtime gate is not merely an availability audit: once a story passes,
+    at least ``target`` frames must actually consume distinct approved photos.
+    One existing logo is protected (the latest placement is preferred), and an
+    unapproved person frame is never overwritten because identity has a stricter
+    provenance requirement. Earlier story beats are filled before later ones so
+    the photo pool carries the narrative instead of being saved for the end.
+
+    Returns zero-based frame indexes. The caller owns the actual photo mapping
+    and must fail closed if fewer slots are available than needed.
+    """
+    frames = list(brief.get("frames", []))
+    n = min(len(frames), len(selected), len(approved_flags), len(logo_flags))
+    if n <= 0:
+        return []
+
+    target = max(0, min(int(target), n))
+    have = sum(1 for flag in approved_flags[:n] if flag)
+    need = max(0, target - have)
+    if need == 0:
+        return []
+
+    logo_slots = [i for i in range(n)
+                  if logo_flags[i] and not approved_flags[i]]
+    protected_logo = max(logo_slots) if logo_slots else None
+
+    protected_people = {
+        i for i in range(n)
+        if (str(frames[i].get("subject_kind", "")).strip().lower() == "person"
+            and not approved_flags[i])
+    }
+
+    candidates = []
+    order = list(range(min(4, n))) + list(range(min(4, n), n))
+    for i in order:
+        if approved_flags[i] or i in protected_people or i == protected_logo:
+            continue
+        candidates.append(i)
+        if len(candidates) == need:
+            break
+    return candidates

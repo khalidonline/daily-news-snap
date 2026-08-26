@@ -1,0 +1,31 @@
+{
+  "run_nonce": "2026-08-26-bogle-repair-2",
+  "assets": [
+    {
+      "filename": "bogle-vanguard-1959.jpg",
+      "url": "https://investor.vanguard.com/content/retail/public/us/en/about-us/_jcr_content/root/container/container_1884309581_30279271/container_890438166/image.coreimg.jpeg/1773702033665/vg20250421-bogle-morgan-welch-1959.jpeg",
+      "tags": ["Jack Bogle", "Vanguard", "The Vanguard Group"],
+      "credit": "Vanguard — official history page, Jack Bogle with colleagues (1959)",
+      "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "bogle-vanguard-1989.jpg",
+      "url": "https://corporate.vanguard.com/content/dam/corp/articles/images/50-years-50-facts-indexing/50_facts_fact_5.png",
+      "tags": ["Jack Bogle", "Vanguard", "The Vanguard Group"],
+      "credit": "Vanguard — 50 years of indexing, John C. Bogle pictured in 1989; cropped to the photographic panel",
+      "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
+      "verdict": "DIRECT",
+      "crop_box": [0.0, 0.0, 0.35, 1.0],
+      "replace_existing": true
+    },
+    {
+      "filename": "bogle-vanguard-founder.jpg",
+      "url": "https://corporate.vanguard.com/content/dam/corp/what-we-care-about/images/ethics-and-integrity/WWCA_Ethics_John.jpg",
+      "tags": ["Jack Bogle", "Vanguard", "The Vanguard Group"],
+      "credit": "Vanguard — official ethics and integrity page, founder John C. Bogle",
+      "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
+      "verdict": "DIRECT"
+    }
+  ]
+}
