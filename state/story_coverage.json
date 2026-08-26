@@ -2549,36 +2549,6 @@
    ],
    "pass": true
   },
-  "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": {
-   "pool": "general",
-   "at": "2026-08-26T13:38:32.774576",
-   "thash": "b6c3fe15e0",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
-  "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": {
-   "pool": "general",
-   "at": "2026-08-26T13:38:32.781421",
-   "thash": "245a53a412",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
   "قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية": {
    "pool": "general",
    "at": "2026-08-26T13:38:32.783625",
@@ -2655,27 +2625,6 @@
    "readiness": "THIN",
    "anchors": [
     "library:jarir-early-branch.jpg"
-   ],
-   "pass": true
-  },
-  "قصة طيران ناس وثورة الطيران الاقتصادي": {
-   "pool": "saudi",
-   "at": "2026-08-26T13:38:45.185541",
-   "thash": "c00c11b524",
-   "files": [
-    "File:Female flight attendants Flynas 2023.jpg",
-    "File:Flynas aircraft A320 neo.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "library:flynas-jeddah.jpg",
-    "archive:flynas:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:flynas-jeddah.jpg",
-    "archive:flynas"
    ],
    "pass": true
   },
@@ -2803,7 +2752,74 @@
     "library:jeddah-balad.jpg"
    ],
    "pass": true
+  },
+  "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": {
+   "pool": "general",
+   "at": "2026-08-26T13:39:37.383505",
+   "thash": "ae623e26a8",
+   "files": [
+    "File:Boeing737-800Ryanair.JPG",
+    "File:Easyjet A319 G-EZEZ AMS 2016-09-04.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:lowcost-easyjet.jpg",
+    "archive:الطيران الاقتصادي:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:lowcost-easyjet.jpg",
+    "archive:الطيران الاقتصادي"
+   ],
+   "pass": true
+  },
+  "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": {
+   "pool": "general",
+   "at": "2026-08-26T13:39:38.714925",
+   "thash": "06b63da8b7",
+   "files": [
+    "File:الصفحة الأخيرة من جواز السفر المصري بعد تحديثها.png",
+    "File:ختم جواز السفر الأردني 2025.jpg"
+   ],
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "library:rolling-suitcases.jpg",
+    "library:passport-visa-china.jpg",
+    "library:passport-visa-czech.jpg",
+    "archive:جواز السفر:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:rolling-suitcases.jpg",
+    "library:passport-visa-china.jpg",
+    "library:passport-visa-czech.jpg",
+    "archive:جواز السفر"
+   ],
+   "pass": true
+  },
+  "قصة طيران ناس وثورة الطيران الاقتصادي": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:39:40.154904",
+   "thash": "c00c11b524",
+   "files": [
+    "File:Female flight attendants Flynas 2023.jpg",
+    "File:Flynas aircraft A320 neo.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:flynas-jeddah.jpg",
+    "archive:flynas:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:flynas-jeddah.jpg",
+    "archive:flynas"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-26T13:39:02.942821"
+ "checked_at": "2026-08-26T13:39:42.433821"
 }
