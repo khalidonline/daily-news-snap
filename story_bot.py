@@ -1573,7 +1573,7 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
     # coffee deck's dallah (top score, wrong angle) eclipsed the harvest
     # photo the farming frames were asking for — six gate rejections,
     # six blank frames, a skipped story with the right seed on disk.
-    photo, tried_local = None, []
+    photo, tried_local = None, list(spec.get("lib_exclude") or [])
     for _ in range(6):     # a 5-seed subject needs the walk to reach them all
         cand, _lc = fetch_local_photo([], keywords, out_path,
                                       exclude=tried_local)
@@ -2006,6 +2006,26 @@ def find_all_photos(brief):
         return None
     if story_has_company:
         print(f"    image queries bound to subject: {subject_name}")
+    # A PORTRAIT-tagged library file serves PERSON frames only — the
+    # runtime face of image_precheck's slot/alias typing. The Bogle
+    # world-frame took the story's only portrait through the general
+    # rung, and the protagonist frame then met its own face as a
+    # forbidden repeat: one portrait, spent on the wrong frame.
+    person_names_all = {n.casefold() for n in
+                        (_STORY_PERSONS.get(subject_line.strip()) or [])}
+    pn = person_name(subject_line)
+    if pn:
+        person_names_all.add(pn.casefold())
+    portrait_files = []
+    if person_names_all:
+        from news_bot import load_local_images
+        for entry_img in load_local_images():
+            tags = {t.casefold() for t in entry_img.get("tags", [])}
+            if tags & person_names_all:
+                portrait_files.append(entry_img["path"].name)
+        if portrait_files:
+            print(f"    portrait-class library files reserved for person "
+                  f"frames: {portrait_files}")
     if not story_has_company:
         print("    story kind: historical/abstract — archival photos are "
               "the primary visual; the logo rung is N/A")
@@ -2097,6 +2117,8 @@ def find_all_photos(brief):
             # bank was removed because COMPANY decks abused it (sponsor
             # stadiums), so it returns kind-aware: no-company stories only.
             if photo is None:
+                if portrait_files:
+                    spec = dict(spec, lib_exclude=portrait_files)
                 photo = find_photo(spec, slot, used, context,
                                    allow_neutral=not story_has_company,
                                    bank=bank if not story_has_company else None)
