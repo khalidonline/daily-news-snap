@@ -88,7 +88,7 @@ Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك | Mu
 قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد | Travelpro, Robert Plath
 Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747 | Juan Trippe, Pan Am
 Herb Kelleher: أسس Southwest على منديل ورقي | Herb Kelleher, Southwest Airlines
-Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة | Fred Smith, FedEx
+Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة | Fred Smith, FedEx, logo:fedex.com
 
 # السعودية والخليج
 علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi
@@ -157,7 +157,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 
 قصة نوكيا من مصنع ورق إلى الهواتف | Nokia
 قصة ليغو من ورشة نجارة | LEGO
-قصة IKEA من قرية سويدية | IKEA, Ingvar Kamprad
+قصة IKEA من قرية سويدية | IKEA, Ingvar Kamprad, logo:ikea.com
 قصة Rolex وصناعة الفخامة | Rolex
 قصة UPS: الشركة التي يملكها سائقوها | UPS, logo:ups.com
 قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل | Publix, logo:publix.com

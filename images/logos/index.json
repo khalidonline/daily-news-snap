@@ -1,125 +1,137 @@
 {
- "aramco": [
-  "أرامكو",
-  "Aramco"
- ],
- "nvidia": [
-  "NVIDIA"
- ],
- "savola-group": [
-  "Savola Group",
-  "صافولا"
- ],
- "spacex": [
-  "SpaceX",
-  "سبيس إكس"
- ],
- "next-computer": [
-  "NeXT Computer"
- ],
- "samsung.com": [
-  "Samsung",
-  "samsung.com"
- ],
- "careem.com": [
-  "Careem",
-  "Uber",
-  "careem.com"
- ],
- "apple.com": [
-  "Apple",
-  "Ronald Wayne",
-  "Steve Jobs",
-  "apple.com"
- ],
- "mrsool": [
-  "Mrsool",
-  "مرسول"
- ],
- "al-othaim-markets": [
-  "Al Othaim Markets",
-  "العثيم",
-  "أسواق عبدالله العثيم"
- ],
- "nvidia.com": [
-  "NVIDIA",
-  "nvidia.com"
- ],
- "nokia.com": [
-  "Nokia",
-  "nokia.com"
- ],
- "amazon.com": [
-  "Amazon",
-  "amazon.com"
- ],
- "netflix.com": [
-  "Netflix",
-  "netflix.com"
- ],
- "yahoo.com": [
-  "Yahoo",
-  "Google",
-  "yahoo.com"
- ],
- "snap.com": [
-  "Snapchat",
-  "Snap",
-  "snap.com"
- ],
- "microsoft.com": [
-  "Microsoft",
-  "microsoft.com"
- ],
- "tesla.com": [
-  "Tesla",
-  "tesla.com"
- ],
- "blackberry.com": [
-  "BlackBerry",
-  "blackberry.com"
- ],
- "openai.com": [
-  "OpenAI",
-  "openai.com"
- ],
- "tsmc.com": [
-  "TSMC",
-  "tsmc.com"
- ],
- "kodak.com": [
-  "Kodak",
-  "kodak.com"
- ],
- "aramco.com": [
-  "Aramco",
-  "aramco.com"
- ],
- "maersk.com": [
-  "Maersk",
-  "maersk.com"
- ],
- "alibaba.com": [
-  "Jack Ma",
-  "Alibaba",
-  "alibaba.com"
- ],
- "emirates.com": [
-  "Emirates",
-  "emirates.com"
- ],
- "vanguard.com": [
-  "Jack Bogle",
-  "Vanguard",
-  "The Vanguard Group",
-  "vanguard.com"
- ],
- "ups.com": [
-  "UPS",
-  "ups.com"
- ],
- "publix.com": [
-  "Publix",
-  "publix.com"
- ]
+  "aramco": [
+    "أرامكو",
+    "Aramco"
+  ],
+  "nvidia": [
+    "NVIDIA"
+  ],
+  "savola-group": [
+    "Savola Group",
+    "صافولا"
+  ],
+  "spacex": [
+    "SpaceX",
+    "سبيس إكس"
+  ],
+  "next-computer": [
+    "NeXT Computer"
+  ],
+  "samsung.com": [
+    "Samsung",
+    "samsung.com"
+  ],
+  "careem.com": [
+    "Careem",
+    "Uber",
+    "careem.com"
+  ],
+  "apple.com": [
+    "Apple",
+    "Ronald Wayne",
+    "Steve Jobs",
+    "apple.com"
+  ],
+  "mrsool": [
+    "Mrsool",
+    "مرسول"
+  ],
+  "al-othaim-markets": [
+    "Al Othaim Markets",
+    "العثيم",
+    "أسواق عبدالله العثيم"
+  ],
+  "nvidia.com": [
+    "NVIDIA",
+    "nvidia.com"
+  ],
+  "nokia.com": [
+    "Nokia",
+    "nokia.com"
+  ],
+  "amazon.com": [
+    "Amazon",
+    "amazon.com"
+  ],
+  "netflix.com": [
+    "Netflix",
+    "netflix.com"
+  ],
+  "yahoo.com": [
+    "Yahoo",
+    "Google",
+    "yahoo.com"
+  ],
+  "snap.com": [
+    "Snapchat",
+    "Snap",
+    "snap.com"
+  ],
+  "microsoft.com": [
+    "Microsoft",
+    "microsoft.com"
+  ],
+  "tesla.com": [
+    "Tesla",
+    "tesla.com"
+  ],
+  "blackberry.com": [
+    "BlackBerry",
+    "blackberry.com"
+  ],
+  "openai.com": [
+    "OpenAI",
+    "openai.com"
+  ],
+  "tsmc.com": [
+    "TSMC",
+    "tsmc.com"
+  ],
+  "kodak.com": [
+    "Kodak",
+    "kodak.com"
+  ],
+  "aramco.com": [
+    "Aramco",
+    "aramco.com"
+  ],
+  "maersk.com": [
+    "Maersk",
+    "maersk.com"
+  ],
+  "alibaba.com": [
+    "Jack Ma",
+    "Alibaba",
+    "alibaba.com"
+  ],
+  "emirates.com": [
+    "Emirates",
+    "emirates.com"
+  ],
+  "vanguard.com": [
+    "Jack Bogle",
+    "Vanguard",
+    "The Vanguard Group",
+    "vanguard.com"
+  ],
+  "ups.com": [
+    "UPS",
+    "ups.com"
+  ],
+  "publix.com": [
+    "Publix",
+    "publix.com"
+  ],
+  "fedex.com": [
+    "FedEx",
+    "FedEx Corporation",
+    "FEDEX CORPORATE SERVICES, INC. (Collierville, TN)",
+    "Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة",
+    "fedex.com"
+  ],
+  "ikea.com": [
+    "IKEA",
+    "قصة IKEA من قرية سويدية",
+    "ikea.com"
+  ]
 }
