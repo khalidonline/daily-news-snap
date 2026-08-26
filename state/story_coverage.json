@@ -2,48 +2,73 @@
  "entries": {
   "كيف تأسست Apple في مرآب، ومن باع حصته مبكراً": {
    "pool": "general",
-   "at": "2026-08-26T11:50:46.047341",
+   "at": "2026-08-26T15:25:11.267901",
    "thash": "da5d75069e",
-   "files": [
-    "File:Ronald-Wayne.webp",
-    "File:RonaldWayneMacworld2009.jpg"
-   ],
-   "images": 5,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 5,
    "evidence": [
     "library:apple-kottke-wayne.jpg",
-    "logo:fetchable:current",
-    "entity:P18:Apple park cupertino 2019.jpg",
-    "archive:Ronald Wayne:3"
+    "library:rt-apple-1.jpg",
+    "library:rt-apple-2.jpg",
+    "library:rt-apple-3.jpg",
+    "logo:curated:current",
+    "entity:P18:Apple park cupertino 2019.jpg"
    ],
+   "local_photos": [
+    "apple-kottke-wayne.jpg",
+    "rt-apple-1.jpg",
+    "rt-apple-2.jpg",
+    "rt-apple-3.jpg"
+   ],
+   "local_logos": [
+    "apple.com-1976.png",
+    "apple.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:apple-kottke-wayne.jpg",
-    "logo:fetchable",
-    "entity:P18",
-    "archive:Ronald Wayne"
+    "library:rt-apple-1.jpg",
+    "library:rt-apple-2.jpg",
+    "library:rt-apple-3.jpg",
+    "logo:curated",
+    "entity:P18"
    ],
    "pass": true
   },
   "قصة NVIDIA: من رقائق الألعاب إلى أغلى شركة في العالم": {
    "pool": "general",
-   "at": "2026-08-26T11:50:53.472499",
+   "at": "2026-08-26T15:25:15.089760",
    "thash": "0599023c25",
    "files": [
     "File:CeBIT 2005 Nvidia Stand.jpg",
     "File:NVIDIA Headquarters.jpg"
    ],
-   "images": 5,
-   "era_ok": 4,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
     "library:nvidia-soc-die.jpg",
+    "library:rt-nvidia-1.jpg",
+    "library:rt-nvidia-2.jpg",
     "logo:curated:current",
     "entity:P18:NVIDIA Headquarters.jpg",
     "archive:NVIDIA:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "nvidia-soc-die.jpg",
+    "rt-nvidia-1.jpg",
+    "rt-nvidia-2.jpg"
+   ],
+   "local_logos": [
+    "nvidia-current.png",
+    "nvidia.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:nvidia-soc-die.jpg",
+    "library:rt-nvidia-1.jpg",
+    "library:rt-nvidia-2.jpg",
     "logo:curated",
     "entity:P18",
     "archive:NVIDIA"
@@ -52,24 +77,37 @@
   },
   "لماذا سقطت Nokia رغم أنها كانت الأولى عالمياً؟": {
    "pool": "general",
-   "at": "2026-08-26T11:50:56.547584",
+   "at": "2026-08-26T15:25:18.012691",
    "thash": "5c237e2d09",
    "files": [
     "File:Midpoint Nokia Karaportti.jpg",
     "File:Nokia headquarters in Espoo.jpg"
    ],
-   "images": 5,
-   "era_ok": 4,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
     "library:nokia-7110.jpg",
-    "logo:fetchable:current",
+    "library:rt-nokia-1.jpg",
+    "library:rt-nokia-2.jpg",
+    "logo:curated:current",
     "entity:P18:Nokia headquarters in Espoo.jpg",
     "archive:Nokia:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "nokia-7110.jpg",
+    "rt-nokia-1.jpg",
+    "rt-nokia-2.jpg"
+   ],
+   "local_logos": [
+    "nokia.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:nokia-7110.jpg",
-    "logo:fetchable",
+    "library:rt-nokia-1.jpg",
+    "library:rt-nokia-2.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Nokia"
    ],
@@ -77,45 +115,68 @@
   },
   "كيف بدأت Amazon كمتجر كتب على الإنترنت": {
    "pool": "general",
-   "at": "2026-08-26T11:51:14.393170",
+   "at": "2026-08-26T15:25:21.401387",
    "thash": "0c03cc0846",
-   "images": 4,
-   "era_ok": 3,
+   "images": 5,
+   "era_ok": 4,
    "evidence": [
     "library:amazon-bezos-early.jpg",
     "library:amazon-garage-recreation.jpg",
-    "logo:p154:Amazon 2024.svg:current",
+    "library:rt-amazon-1.jpg",
+    "logo:curated:current",
     "entity:P18:Amazon Tower I topped out, June 2015.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "amazon-bezos-early.jpg",
+    "rt-amazon-1.jpg"
+   ],
+   "local_logos": [
+    "amazon.com-current.png"
+   ],
+   "runtime_status": "NEEDS 2 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:amazon-bezos-early.jpg",
     "library:amazon-garage-recreation.jpg",
-    "logo:p154",
+    "library:rt-amazon-1.jpg",
+    "logo:curated",
     "entity:P18"
    ],
    "pass": true
   },
   "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": {
    "pool": "general",
-   "at": "2026-08-26T11:51:22.029267",
+   "at": "2026-08-26T15:25:24.446068",
    "thash": "227d9f9436",
    "files": [
     "File:Netflix and Moodle.JPG",
     "File:Netflix headquarters.jpg"
    ],
-   "images": 5,
-   "era_ok": 4,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
     "library:netflix-red-envelopes.jpg",
-    "logo:fetchable:current",
+    "library:rt-netflix-1.jpg",
+    "library:rt-netflix-2.jpg",
+    "logo:curated:current",
     "entity:P18:Netflix headquarters.jpg",
     "archive:Netflix:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "netflix-red-envelopes.jpg",
+    "rt-netflix-1.jpg",
+    "rt-netflix-2.jpg"
+   ],
+   "local_logos": [
+    "netflix.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:netflix-red-envelopes.jpg",
-    "logo:fetchable",
+    "library:rt-netflix-1.jpg",
+    "library:rt-netflix-2.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Netflix"
    ],
@@ -123,22 +184,46 @@
   },
   "كيف رفض Yahoo شراء Google بمليون دولار": {
    "pool": "general",
-   "at": "2026-08-26T11:51:28.629970",
+   "at": "2026-08-26T15:25:27.749424",
    "thash": "5ae6261330",
    "files": [
     "File:IMG yahoo labs.jpg",
     "File:Yahoo! Games Logo (2013-2016).png"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 10,
+   "era_ok": 9,
    "evidence": [
-    "logo:p154:Yahoo! (2019).svg:current",
+    "library:rt-yahoo-1.jpg",
+    "library:rt-yahoo-2.jpg",
+    "library:rt-yahoo-3.jpg",
+    "library:rt-google-1.jpg",
+    "library:rt-google-2.jpg",
+    "library:rt-google-3.jpg",
+    "logo:curated:current",
     "entity:P18:Yahoo Headquarters.jpg",
     "archive:Yahoo:3"
    ],
+   "local_photos": [
+    "rt-yahoo-1.jpg",
+    "rt-yahoo-2.jpg",
+    "rt-yahoo-3.jpg",
+    "rt-google-1.jpg",
+    "rt-google-2.jpg",
+    "rt-google-3.jpg"
+   ],
+   "local_logos": [
+    "yahoo.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
-    "logo:p154",
+    "library:rt-yahoo-1.jpg",
+    "library:rt-yahoo-2.jpg",
+    "library:rt-yahoo-3.jpg",
+    "library:rt-google-1.jpg",
+    "library:rt-google-2.jpg",
+    "library:rt-google-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Yahoo"
    ],
@@ -146,39 +231,61 @@
   },
   "قصة Snapchat: فكرة رُفضت ثم صارت شركة بمليارات": {
    "pool": "general",
-   "at": "2026-08-26T11:51:38.827200",
+   "at": "2026-08-26T15:25:30.498063",
    "thash": "e1b7e37f8e",
    "images": 2,
    "era_ok": 1,
    "evidence": [
     "library:snapchat-filter-phone.jpg",
-    "logo:fetchable:current"
+    "logo:curated:current"
    ],
+   "local_photos": [
+    "snapchat-filter-phone.jpg"
+   ],
+   "local_logos": [
+    "snap.com-current.png"
+   ],
+   "runtime_status": "NEEDS 3 MORE PHOTOS",
    "readiness": "THIN",
    "anchors": [
     "library:snapchat-filter-phone.jpg",
-    "logo:fetchable"
+    "logo:curated"
    ],
    "pass": true
   },
   "كيف تحولت Microsoft من بيع الأنظمة إلى السحابة": {
    "pool": "general",
-   "at": "2026-08-26T11:51:44.725111",
+   "at": "2026-08-26T15:25:34.674034",
    "thash": "92ffea7cde",
    "files": [
     "File:Building92microsoft.jpg",
     "File:Microsoft Atlanta.jpg"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
-    "logo:fetchable:current",
+    "library:rt-microsoft-1.jpg",
+    "library:rt-microsoft-2.jpg",
+    "library:rt-microsoft-3.jpg",
+    "logo:curated:current",
     "entity:P18:Aerial Microsoft West Campus August 2009.jpg",
     "archive:Microsoft:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-microsoft-1.jpg",
+    "rt-microsoft-2.jpg",
+    "rt-microsoft-3.jpg"
+   ],
+   "local_logos": [
+    "microsoft.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
-    "logo:fetchable",
+    "library:rt-microsoft-1.jpg",
+    "library:rt-microsoft-2.jpg",
+    "library:rt-microsoft-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Microsoft"
    ],
@@ -186,64 +293,96 @@
   },
   "لماذا اختفت BlackBerry من السوق؟": {
    "pool": "general",
-   "at": "2026-08-26T11:51:59.869381",
+   "at": "2026-08-26T15:25:41.811737",
    "thash": "c097018dc9",
    "images": 3,
    "era_ok": 2,
    "evidence": [
     "library:blackberry-bold.jpg",
     "library:blackberry-campus.jpg",
-    "logo:fetchable:current"
+    "logo:curated:current"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "blackberry-bold.jpg",
+    "blackberry-campus.jpg"
+   ],
+   "local_logos": [
+    "blackberry.com-current.png"
+   ],
+   "runtime_status": "NEEDS 2 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:blackberry-bold.jpg",
     "library:blackberry-campus.jpg",
-    "logo:fetchable"
+    "logo:curated"
    ],
    "pass": true
   },
   "قصة OpenAI: من مختبر بحثي إلى أشهر منتج تقني": {
    "pool": "general",
-   "at": "2026-08-26T11:52:06.320494",
+   "at": "2026-08-26T15:25:44.988921",
    "thash": "acc3d4bba1",
-   "images": 2,
-   "era_ok": 1,
+   "images": 3,
+   "era_ok": 2,
    "evidence": [
-    "logo:fetchable:current",
+    "library:rt-openai-1.jpg",
+    "logo:curated:current",
     "entity:P18:Pioneer Building, San Francisco (2019) -1.jpg"
    ],
+   "local_photos": [
+    "rt-openai-1.jpg"
+   ],
+   "local_logos": [
+    "openai.com-current.png"
+   ],
+   "runtime_status": "NEEDS 3 MORE PHOTOS",
    "readiness": "THIN",
    "anchors": [
-    "logo:fetchable",
+    "library:rt-openai-1.jpg",
+    "logo:curated",
     "entity:P18"
    ],
    "pass": true
   },
   "كيف بنت TSMC احتكاراً على رقائق العالم": {
    "pool": "general",
-   "at": "2026-08-26T11:52:12.145501",
+   "at": "2026-08-26T15:25:48.055016",
    "thash": "6ceb95adb2",
    "files": [
     "File:TSMC AP2 building May 2025.jpg",
     "File:TSMC Fab5.JPG"
    ],
-   "images": 7,
-   "era_ok": 6,
+   "images": 9,
+   "era_ok": 8,
    "evidence": [
     "library:tsmc-fab14.jpg",
     "library:tsmc-fab18.jpg",
     "library:tsmc-rnd.jpg",
-    "logo:p154:TSMC wordmark.svg:current",
+    "library:rt-tsmc-1.jpg",
+    "library:rt-tsmc-2.jpg",
+    "logo:curated:current",
     "entity:P18:TSMC Fab5.JPG",
     "archive:TSMC:2"
    ],
+   "local_photos": [
+    "tsmc-fab14.jpg",
+    "tsmc-fab18.jpg",
+    "tsmc-rnd.jpg",
+    "rt-tsmc-1.jpg",
+    "rt-tsmc-2.jpg"
+   ],
+   "local_logos": [
+    "tsmc.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:tsmc-fab14.jpg",
     "library:tsmc-fab18.jpg",
     "library:tsmc-rnd.jpg",
-    "logo:p154",
+    "library:rt-tsmc-1.jpg",
+    "library:rt-tsmc-2.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:TSMC"
    ],
@@ -251,25 +390,42 @@
   },
   "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": {
    "pool": "general",
-   "at": "2026-08-26T11:52:18.920639",
+   "at": "2026-08-26T15:25:50.883783",
    "thash": "4395bb0489",
    "files": [
     "File:Photo of samsung newest phone a15.jpg",
     "File:Samsung Galaxy A8 2018 logo.png"
    ],
-   "images": 6,
-   "era_ok": 5,
+   "images": 9,
+   "era_ok": 8,
    "evidence": [
     "library:samsung-1938-store.jpg",
     "library:samsung-chips.jpg",
+    "library:rt-samsung-1.jpg",
+    "library:rt-samsung-2.jpg",
+    "library:rt-samsung-3.jpg",
     "logo:curated:current",
     "entity:P18:Samsung headquarters.jpg",
     "archive:Samsung:3"
    ],
+   "local_photos": [
+    "samsung-1938-store.jpg",
+    "samsung-chips.jpg",
+    "rt-samsung-1.jpg",
+    "rt-samsung-2.jpg",
+    "rt-samsung-3.jpg"
+   ],
+   "local_logos": [
+    "samsung.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:samsung-1938-store.jpg",
     "library:samsung-chips.jpg",
+    "library:rt-samsung-1.jpg",
+    "library:rt-samsung-2.jpg",
+    "library:rt-samsung-3.jpg",
     "logo:curated",
     "entity:P18",
     "archive:Samsung"
@@ -278,51 +434,83 @@
   },
   "كيف خسرت Kodak السوق الذي اخترعته بنفسها": {
    "pool": "general",
-   "at": "2026-08-26T11:52:22.301427",
+   "at": "2026-08-26T15:25:54.321075",
    "thash": "3dc9e79c14",
    "files": [
     "File:2016 Kodak 355 X Instamatic 1.jpg",
     "File:Eastman Kodak HQ 1900.jpg"
    ],
-   "images": 6,
-   "era_ok": 5,
+   "images": 8,
+   "era_ok": 7,
    "evidence": [
     "library:kodak-tmax.jpg",
     "library:kodak-m38.jpg",
     "library:kodak-film-pile.jpg",
-    "logo:fetchable:current",
+    "library:rt-kodak-1.jpg",
+    "library:rt-kodak-2.jpg",
+    "logo:curated:current",
     "archive:Kodak:3"
    ],
+   "local_photos": [
+    "kodak-tmax.jpg",
+    "kodak-m38.jpg",
+    "kodak-film-pile.jpg",
+    "rt-kodak-1.jpg",
+    "rt-kodak-2.jpg"
+   ],
+   "local_logos": [
+    "kodak.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:kodak-tmax.jpg",
     "library:kodak-m38.jpg",
     "library:kodak-film-pile.jpg",
-    "logo:fetchable",
+    "library:rt-kodak-1.jpg",
+    "library:rt-kodak-2.jpg",
+    "logo:curated",
     "archive:Kodak"
    ],
    "pass": true
   },
   "قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ": {
    "pool": "general",
-   "at": "2026-08-26T11:52:28.286909",
+   "at": "2026-08-26T15:25:57.197192",
    "thash": "2d091fc55d",
    "files": [
     "File:AramcoCoreArea.jpg",
     "File:Aramco Company Car.jpg"
    ],
-   "images": 9,
-   "era_ok": 8,
+   "images": 12,
+   "era_ok": 11,
    "evidence": [
     "library:aramco-1951-truck.jpg",
     "library:aramco-1951-camp.jpg",
     "library:aramco-1951-car.jpg",
     "library:aramco-1935-lisafah.jpg",
     "library:aramco-1935-hufof.jpg",
+    "library:rt-aramco-1.jpg",
+    "library:rt-aramco-2.jpg",
+    "library:rt-aramco-1.jpg",
     "logo:curated:current",
     "entity:P18:AramcoCoreArea.jpg",
     "archive:Aramco:2"
    ],
+   "local_photos": [
+    "aramco-1951-truck.jpg",
+    "aramco-1951-camp.jpg",
+    "aramco-1951-car.jpg",
+    "aramco-1935-lisafah.jpg",
+    "aramco-1935-hufof.jpg",
+    "rt-aramco-1.jpg",
+    "rt-aramco-2.jpg"
+   ],
+   "local_logos": [
+    "aramco-current.png",
+    "aramco.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:aramco-1951-truck.jpg",
@@ -330,6 +518,9 @@
     "library:aramco-1951-car.jpg",
     "library:aramco-1935-lisafah.jpg",
     "library:aramco-1935-hufof.jpg",
+    "library:rt-aramco-1.jpg",
+    "library:rt-aramco-2.jpg",
+    "library:rt-aramco-1.jpg",
     "logo:curated",
     "entity:P18",
     "archive:Aramco"
@@ -338,23 +529,35 @@
   },
   "كيف نشأت أول بورصة في العالم؟": {
    "pool": "general",
-   "at": "2026-08-26T11:52:31.437130",
+   "at": "2026-08-26T15:26:00.164307",
    "thash": "004a1f7f60",
    "files": [
     "File:Euronext Amsterdam.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "library:amsterdam-exchange-engraving.jpg",
     "library:amsterdam-exchange-courtyard.jpg",
+    "library:rt-amsterdam-stock-exchange-1.jpg",
+    "library:rt-amsterdam-stock-exchange-2.jpg",
     "entity:P18:20220525.Amsterdam.-028.jpg",
     "archive:Amsterdam Stock Exchange:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "amsterdam-exchange-engraving.jpg",
+    "amsterdam-exchange-courtyard.jpg",
+    "rt-amsterdam-stock-exchange-1.jpg",
+    "rt-amsterdam-stock-exchange-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:amsterdam-exchange-engraving.jpg",
     "library:amsterdam-exchange-courtyard.jpg",
+    "library:rt-amsterdam-stock-exchange-1.jpg",
+    "library:rt-amsterdam-stock-exchange-2.jpg",
     "entity:P18",
     "archive:Amsterdam Stock Exchange"
    ],
@@ -362,61 +565,91 @@
   },
   "قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي": {
    "pool": "general",
-   "at": "2026-08-26T11:52:34.082923",
+   "at": "2026-08-26T15:26:05.228084",
    "thash": "77703f8edd",
    "files": [
-    "File:Pif (November 2014).jpg",
-    "File:KAFD seen from North east side of Riyadh City.jpg",
-    "File:Public Investment Fund Tower 20260128 2.jpg"
+    "File:Pif (November 2014).jpg"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 8,
+   "era_ok": 7,
    "evidence": [
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-2.jpg",
+    "library:rt-pif-3.jpg",
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg",
     "logo:p154:Public Investment Fund (Saudi Arabia) logo.svg:current",
-    "archive:PIF:1",
-    "archive:Public Investment Fund:2"
+    "archive:PIF:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-pif-1.jpg",
+    "rt-pif-2.jpg",
+    "rt-pif-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-2.jpg",
+    "library:rt-pif-3.jpg",
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg",
     "logo:p154",
-    "archive:PIF",
-    "archive:Public Investment Fund"
+    "archive:PIF"
    ],
    "pass": true
   },
   "قصة البيتكوين: من ورقة بحثية إلى أصل بتريليونات": {
    "pool": "general",
-   "at": "2026-08-26T11:52:38.686884",
+   "at": "2026-08-26T15:26:11.772920",
    "thash": "f02df161de",
    "files": [
     "File:Bitcoin, Wroclaw (P1180334).jpg",
     "File:Bitcoin-core-v0.10.0.png"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "library:bitcoin-whitepaper.jpg",
     "library:bitcoin-coin-keyboard.jpg",
+    "library:rt-bitcoin-1.jpg",
+    "library:rt-bitcoin-2.jpg",
     "archive:Bitcoin:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "bitcoin-whitepaper.jpg",
+    "bitcoin-coin-keyboard.jpg",
+    "rt-bitcoin-1.jpg",
+    "rt-bitcoin-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:bitcoin-whitepaper.jpg",
     "library:bitcoin-coin-keyboard.jpg",
+    "library:rt-bitcoin-1.jpg",
+    "library:rt-bitcoin-2.jpg",
     "archive:Bitcoin"
    ],
    "pass": true
   },
   "كيف أفلست دولة؟ قصص التخلف عن السداد": {
    "pool": "general",
-   "at": "2026-08-26T11:52:42.149855",
+   "at": "2026-08-26T15:26:15.083641",
    "thash": "bc3617ddd1",
    "images": 0,
    "era_ok": 0,
    "evidence": [
     "typographic:policy"
    ],
-   "readiness": "THIN",
+   "local_photos": [],
+   "local_logos": [],
+   "runtime_status": "NEEDS 4 MORE PHOTOS + LOGO",
+   "readiness": "NOT READY",
    "anchors": [
     "typographic:policy"
    ],
@@ -424,14 +657,17 @@
   },
   "قصة الذهب: لماذا ظل مخزناً للقيمة آلاف السنين؟": {
    "pool": "general",
-   "at": "2026-08-26T11:52:42.154803",
+   "at": "2026-08-26T15:26:15.087800",
    "thash": "6cdabd7bea",
    "images": 0,
    "era_ok": 0,
    "evidence": [
     "typographic:policy"
    ],
-   "readiness": "THIN",
+   "local_photos": [],
+   "local_logos": [],
+   "runtime_status": "NEEDS 4 MORE PHOTOS + LOGO",
+   "readiness": "NOT READY",
    "anchors": [
     "typographic:policy"
    ],
@@ -439,149 +675,226 @@
   },
   "كيف بُنيت دبي على الرمل في خمسين سنة؟": {
    "pool": "general",
-   "at": "2026-08-26T11:52:45.151439",
+   "at": "2026-08-26T15:26:17.848889",
    "thash": "2a5ad27803",
    "files": [
     "File:DubaiCollage.jpg",
-    "File:The Dubai Frame Observation Deck in Dubai, United Arab Emirates.jpg",
-    "File:From Al Garhoud Bridge, Dubai UAE.jpg",
-    "File:Old Cultural Dubai Area.jpg"
+    "File:The Dubai Frame Observation Deck in Dubai, United Arab Emirates.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
-    "archive:Dubai:2",
-    "archive:دبي:2"
+    "library:rt-dubai-1.jpg",
+    "library:rt-dubai-2.jpg",
+    "library:rt-dubai-3.jpg",
+    "library:rt-dubai-4.jpg",
+    "archive:Dubai:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-dubai-1.jpg",
+    "rt-dubai-2.jpg",
+    "rt-dubai-3.jpg",
+    "rt-dubai-4.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
-    "archive:Dubai",
-    "archive:دبي"
+    "library:rt-dubai-1.jpg",
+    "library:rt-dubai-2.jpg",
+    "library:rt-dubai-3.jpg",
+    "library:rt-dubai-4.jpg",
+    "archive:Dubai"
    ],
    "pass": true
   },
   "قصة سنغافورة: من ميناء فقير إلى أغنى دول آسيا": {
    "pool": "general",
-   "at": "2026-08-26T11:52:49.223831",
+   "at": "2026-08-26T15:26:21.879962",
    "thash": "8d0a784daf",
    "files": [
     "File:1 singapore national day parade 2011 fireworks.jpg",
     "File:Skyline of the Central Business District of Singapore with Esplanade Bridge in the evening.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "library:singapore-flyer-aerial.jpg",
     "library:singapore-skyline-dusk.jpg",
+    "library:rt-singapore-1.jpg",
+    "library:rt-singapore-2.jpg",
     "archive:Singapore:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "singapore-flyer-aerial.jpg",
+    "singapore-skyline-dusk.jpg",
+    "rt-singapore-1.jpg",
+    "rt-singapore-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:singapore-flyer-aerial.jpg",
     "library:singapore-skyline-dusk.jpg",
+    "library:rt-singapore-1.jpg",
+    "library:rt-singapore-2.jpg",
     "archive:Singapore"
    ],
    "pass": true
   },
   "كيف تحولت العلا من واحة إلى وجهة عالمية؟": {
    "pool": "general",
-   "at": "2026-08-26T11:52:52.509389",
+   "at": "2026-08-26T15:26:26.193271",
    "thash": "7734136788",
    "files": [
     "File:Banyan Tree AlUla.jpg",
     "File:Banyan Tree AlUla pool.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:alula-camel.jpg",
     "library:alula-petroglyph.jpg",
     "library:alula-oldtown.jpg",
+    "library:rt-alula-1.jpg",
+    "library:rt-alula-2.jpg",
     "archive:AlUla:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "alula-camel.jpg",
+    "alula-petroglyph.jpg",
+    "alula-oldtown.jpg",
+    "rt-alula-1.jpg",
+    "rt-alula-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:alula-camel.jpg",
     "library:alula-petroglyph.jpg",
     "library:alula-oldtown.jpg",
+    "library:rt-alula-1.jpg",
+    "library:rt-alula-2.jpg",
     "archive:AlUla"
    ],
    "pass": true
   },
   "قصة جدة التاريخية: بوابة الحج منذ قرون": {
    "pool": "general",
-   "at": "2026-08-26T11:52:55.109046",
+   "at": "2026-08-26T15:26:28.872949",
    "thash": "4b989f5c88",
    "files": [
     "File:Jeddah Corniche 36.jpg",
     "File:Jeddah Fahne.JPG"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "library:jeddah-port.jpg",
     "library:jeddah-balad.jpg",
     "library:flynas-jeddah.jpg",
     "library:mcdonalds-jeddah.jpg",
+    "library:rt-jeddah-1.jpg",
+    "library:rt-jeddah-2.jpg",
     "archive:Jeddah:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "jeddah-port.jpg",
+    "jeddah-balad.jpg",
+    "flynas-jeddah.jpg",
+    "mcdonalds-jeddah.jpg",
+    "rt-jeddah-1.jpg",
+    "rt-jeddah-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:jeddah-port.jpg",
     "library:jeddah-balad.jpg",
     "library:flynas-jeddah.jpg",
     "library:mcdonalds-jeddah.jpg",
+    "library:rt-jeddah-1.jpg",
+    "library:rt-jeddah-2.jpg",
     "archive:Jeddah"
    ],
    "pass": true
   },
   "لماذا صارت طوكيو أكبر مدينة في العالم؟": {
    "pool": "general",
-   "at": "2026-08-26T11:52:57.904764",
+   "at": "2026-08-26T15:26:31.824173",
    "thash": "56b9071524",
    "files": [
     "File:Exterior view of the illuminated facade of Maison Hermès, Ginza, Tokyo, Japan.jpg",
     "File:Minato City, Tokyo, Japan.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:tokyo-1935-delivery.jpg",
     "library:tokyo-trains.jpg",
     "library:tokyo-shibuya.jpg",
+    "library:rt-tokyo-1.jpg",
+    "library:rt-tokyo-2.jpg",
     "archive:Tokyo:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "tokyo-1935-delivery.jpg",
+    "tokyo-trains.jpg",
+    "tokyo-shibuya.jpg",
+    "rt-tokyo-1.jpg",
+    "rt-tokyo-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:tokyo-1935-delivery.jpg",
     "library:tokyo-trains.jpg",
     "library:tokyo-shibuya.jpg",
+    "library:rt-tokyo-1.jpg",
+    "library:rt-tokyo-2.jpg",
     "archive:Tokyo"
    ],
    "pass": true
   },
   "قصة نيويورك: كيف صارت عاصمة المال؟": {
    "pool": "general",
-   "at": "2026-08-26T11:53:02.545789",
+   "at": "2026-08-26T15:26:35.501743",
    "thash": "5f22f7d247",
    "files": [
     "File:Long Island City New York May 2015 panorama 3.jpg",
     "File:September 14 2001.jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "library:nyse-floor.jpg",
     "library:nyc-aerial.jpg",
     "library:nyc-empire-dusk.jpg",
+    "library:rt-new-york-2.jpg",
+    "library:rt-new-york-3.jpg",
     "entity:P18:NYSCapitolPanorama.jpg",
     "archive:New York:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "nyse-floor.jpg",
+    "nyc-aerial.jpg",
+    "nyc-empire-dusk.jpg",
+    "rt-new-york-2.jpg",
+    "rt-new-york-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:nyse-floor.jpg",
     "library:nyc-aerial.jpg",
     "library:nyc-empire-dusk.jpg",
+    "library:rt-new-york-2.jpg",
+    "library:rt-new-york-3.jpg",
     "entity:P18",
     "archive:New York"
    ],
@@ -589,14 +902,17 @@
   },
   "كيف بنت الصين مدناً كاملة في سنوات؟": {
    "pool": "general",
-   "at": "2026-08-26T11:53:06.711865",
+   "at": "2026-08-26T15:26:39.735152",
    "thash": "1ac690b22a",
    "images": 0,
    "era_ok": 0,
    "evidence": [
     "typographic:policy"
    ],
-   "readiness": "THIN",
+   "local_photos": [],
+   "local_logos": [],
+   "runtime_status": "NEEDS 4 MORE PHOTOS + LOGO",
+   "readiness": "NOT READY",
    "anchors": [
     "typographic:policy"
    ],
@@ -604,24 +920,41 @@
   },
   "من هو مؤسس أرامكو الحقيقي؟ قصة الاكتشاف الأول": {
    "pool": "general",
-   "at": "2026-08-26T11:53:06.718459",
+   "at": "2026-08-26T15:26:39.739223",
    "thash": "a91ee26ab0",
    "files": [
     "File:AramcoCoreArea.jpg",
     "File:Aramco Company Car.jpg"
    ],
-   "images": 9,
-   "era_ok": 8,
+   "images": 12,
+   "era_ok": 11,
    "evidence": [
     "library:aramco-1951-truck.jpg",
     "library:aramco-1951-camp.jpg",
     "library:aramco-1951-car.jpg",
     "library:aramco-1935-lisafah.jpg",
     "library:aramco-1935-hufof.jpg",
+    "library:rt-aramco-1.jpg",
+    "library:rt-aramco-2.jpg",
+    "library:rt-aramco-1.jpg",
     "logo:curated:current",
     "entity:P18:Max Steineke in Saudi Arabia 1938.jpg",
     "archive:Aramco:2"
    ],
+   "local_photos": [
+    "aramco-1951-truck.jpg",
+    "aramco-1951-camp.jpg",
+    "aramco-1951-car.jpg",
+    "aramco-1935-lisafah.jpg",
+    "aramco-1935-hufof.jpg",
+    "rt-aramco-1.jpg",
+    "rt-aramco-2.jpg"
+   ],
+   "local_logos": [
+    "aramco-current.png",
+    "aramco.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:aramco-1951-truck.jpg",
@@ -629,6 +962,9 @@
     "library:aramco-1951-car.jpg",
     "library:aramco-1935-lisafah.jpg",
     "library:aramco-1935-hufof.jpg",
+    "library:rt-aramco-1.jpg",
+    "library:rt-aramco-2.jpg",
+    "library:rt-aramco-1.jpg",
     "logo:curated",
     "entity:P18",
     "archive:Aramco"
@@ -637,27 +973,39 @@
   },
   "قصة Steve Jobs: الطرد من شركته ثم العودة": {
    "pool": "general",
-   "at": "2026-08-26T11:53:11.408451",
+   "at": "2026-08-26T15:26:43.895621",
    "thash": "a96a5d10bb",
    "person": "Steve Jobs",
    "files": [
     "File:Steve Jobs Headshot 2010-CROP.jpg",
     "File:Steve Jobs and Bill Gates (522695099).jpg"
    ],
-   "images": 6,
-   "era_ok": 5,
+   "images": 8,
+   "era_ok": 7,
    "evidence": [
     "portrait:Steve Jobs",
     "library:jobs-macintosh-1984.jpg",
     "library:jobs-macworld-2005.jpg",
+    "library:rt-steve-jobs-1.jpg",
+    "library:rt-steve-jobs-2.jpg",
     "logo:p154:Steve Jobs 2015 film Logo.png:current",
     "archive:Steve Jobs:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "jobs-macintosh-1984.jpg",
+    "jobs-macworld-2005.jpg",
+    "rt-steve-jobs-1.jpg",
+    "rt-steve-jobs-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Steve Jobs",
     "library:jobs-macintosh-1984.jpg",
     "library:jobs-macworld-2005.jpg",
+    "library:rt-steve-jobs-1.jpg",
+    "library:rt-steve-jobs-2.jpg",
     "logo:p154",
     "archive:Steve Jobs"
    ],
@@ -665,26 +1013,43 @@
   },
   "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": {
    "pool": "general",
-   "at": "2026-08-26T11:53:14.312996",
+   "at": "2026-08-26T15:26:47.147960",
    "thash": "b38c344b5d",
    "files": [
     "File:31. ISC-Symposium-Jack Ma-HSGN 028-01561.jpg",
     "File:Jack Ma (292160777).jpg"
    ],
-   "images": 6,
-   "era_ok": 5,
+   "images": 9,
+   "era_ok": 8,
    "evidence": [
     "library:jackma-wef.jpg",
     "library:jackma-2008.jpg",
-    "logo:fetchable:current",
+    "library:rt-jack-ma-1.jpg",
+    "library:rt-jack-ma-2.jpg",
+    "library:rt-jack-ma-3.jpg",
+    "logo:curated:current",
     "entity:P18:Alibaba Group provisional office at Xiong'an (20180503164635).jpg",
     "archive:Jack Ma:3"
    ],
+   "local_photos": [
+    "jackma-wef.jpg",
+    "jackma-2008.jpg",
+    "rt-jack-ma-1.jpg",
+    "rt-jack-ma-2.jpg",
+    "rt-jack-ma-3.jpg"
+   ],
+   "local_logos": [
+    "alibaba.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:jackma-wef.jpg",
     "library:jackma-2008.jpg",
-    "logo:fetchable",
+    "library:rt-jack-ma-1.jpg",
+    "library:rt-jack-ma-2.jpg",
+    "library:rt-jack-ma-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Jack Ma"
    ],
@@ -692,27 +1057,39 @@
   },
   "قصة Warren Buffett: أول استثمار في سن الحادية عشرة": {
    "pool": "general",
-   "at": "2026-08-26T11:53:25.073589",
+   "at": "2026-08-26T15:26:51.640952",
    "thash": "b9269409ab",
    "person": "Warren Buffett",
    "files": [
     "File:Warren Buffett KU Visit.jpg",
     "File:Warren Buffett at the 2015 SelectUSA Investment Summit.jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "portrait:Warren Buffett",
     "library:buffett-2015.jpg",
     "library:buffett-2010.jpg",
+    "library:rt-warren-buffett-1.jpg",
+    "library:rt-warren-buffett-2.jpg",
     "entity:P18:Warren Buffett KU Visit.jpg",
     "archive:Warren Buffett:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "buffett-2015.jpg",
+    "buffett-2010.jpg",
+    "rt-warren-buffett-1.jpg",
+    "rt-warren-buffett-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Warren Buffett",
     "library:buffett-2015.jpg",
     "library:buffett-2010.jpg",
+    "library:rt-warren-buffett-1.jpg",
+    "library:rt-warren-buffett-2.jpg",
     "entity:P18",
     "archive:Warren Buffett"
    ],
@@ -720,22 +1097,36 @@
   },
   "كيف بنى Elon Musk أربع شركات بمليارات في وقت واحد": {
    "pool": "general",
-   "at": "2026-08-26T11:53:28.238098",
+   "at": "2026-08-26T15:26:54.567023",
    "thash": "5ec8157dcf",
    "files": [
     "File:Elon Musk Colorado 2022 (cropped2).jpg",
     "File:Elon Musk Royal Society (crop2).jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:musk-2015.jpg",
+    "library:rt-elon-musk-1.jpg",
+    "library:rt-elon-musk-2.jpg",
+    "library:rt-elon-musk-3.jpg",
     "entity:P18:Elon Musk (54816836217) (cropped 2) (b).jpg",
     "archive:Elon Musk:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "musk-2015.jpg",
+    "rt-elon-musk-1.jpg",
+    "rt-elon-musk-2.jpg",
+    "rt-elon-musk-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:musk-2015.jpg",
+    "library:rt-elon-musk-1.jpg",
+    "library:rt-elon-musk-2.jpg",
+    "library:rt-elon-musk-3.jpg",
     "entity:P18",
     "archive:Elon Musk"
    ],
@@ -743,14 +1134,17 @@
   },
   "قصة رجل الأعمال السعودي الذي بدأ ببقالة صغيرة": {
    "pool": "general",
-   "at": "2026-08-26T11:53:31.795686",
+   "at": "2026-08-26T15:26:57.772036",
    "thash": "7d01044369",
    "images": 0,
    "era_ok": 0,
    "evidence": [
     "typographic:policy"
    ],
-   "readiness": "THIN",
+   "local_photos": [],
+   "local_logos": [],
+   "runtime_status": "NEEDS 4 MORE PHOTOS + LOGO",
+   "readiness": "NOT READY",
    "anchors": [
     "typographic:policy"
    ],
@@ -758,22 +1152,37 @@
   },
   "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": {
    "pool": "general",
-   "at": "2026-08-26T11:53:35.143105",
+   "at": "2026-08-26T15:27:02.787410",
    "thash": "de535e535b",
    "files": [
     "File:Emirates Airbus A380-861 A6-EER MUC 2015 01.jpg",
     "File:Emirates Airbus A380-861 A6-EER MUC 2015 04.jpg"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
-    "logo:p154:Emirates banner logo.svg:current",
+    "library:rt-emirates-1.jpg",
+    "library:rt-emirates-2.jpg",
+    "library:rt-emirates-3.jpg",
+    "logo:curated:current",
     "entity:P18:A6-EDY A380 Emirates 31 jan 2013 jfk (8442269364) (cropped).jpg",
     "archive:Emirates:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-emirates-1.jpg",
+    "rt-emirates-2.jpg",
+    "rt-emirates-3.jpg"
+   ],
+   "local_logos": [
+    "emirates.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
-    "logo:p154",
+    "library:rt-emirates-1.jpg",
+    "library:rt-emirates-2.jpg",
+    "library:rt-emirates-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Emirates"
    ],
@@ -781,26 +1190,39 @@
   },
   "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره": {
    "pool": "general",
-   "at": "2026-08-26T11:53:47.398587",
+   "at": "2026-08-26T15:27:09.074163",
    "thash": "227dec37b8",
    "files": [
     "File:Douglas Engelbart in 2008.jpg",
     "File:SRI Douglas Engelbart 1968.jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "library:engelbart-mouse-1968.jpg",
     "library:engelbart-sommer.jpg",
     "library:engelbart-mouse-2008.jpg",
+    "library:rt-douglas-engelbart-1.jpg",
+    "library:rt-douglas-engelbart-2.jpg",
     "entity:P18:Douglas Engelbart in 2008.jpg",
     "archive:Douglas Engelbart:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "engelbart-mouse-1968.jpg",
+    "engelbart-sommer.jpg",
+    "engelbart-mouse-2008.jpg",
+    "rt-douglas-engelbart-1.jpg",
+    "rt-douglas-engelbart-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:engelbart-mouse-1968.jpg",
     "library:engelbart-sommer.jpg",
     "library:engelbart-mouse-2008.jpg",
+    "library:rt-douglas-engelbart-1.jpg",
+    "library:rt-douglas-engelbart-2.jpg",
     "entity:P18",
     "archive:Douglas Engelbart"
    ],
@@ -808,46 +1230,73 @@
   },
   "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": {
    "pool": "general",
-   "at": "2026-08-26T11:53:50.230852",
+   "at": "2026-08-26T15:27:12.168390",
    "thash": "9ed8f6a3c2",
-   "images": 4,
-   "era_ok": 3,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
     "library:kildall-1977-faire.jpg",
     "library:eight-inch-floppy.jpg",
     "library:digital-research-badge.jpg",
+    "library:rt-microsoft-1.jpg",
+    "library:rt-microsoft-2.jpg",
+    "library:rt-microsoft-3.jpg",
     "logo:p154:Digital Research Logo.svg:current"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "kildall-1977-faire.jpg",
+    "eight-inch-floppy.jpg",
+    "digital-research-badge.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:kildall-1977-faire.jpg",
     "library:eight-inch-floppy.jpg",
     "library:digital-research-badge.jpg",
+    "library:rt-microsoft-1.jpg",
+    "library:rt-microsoft-2.jpg",
+    "library:rt-microsoft-3.jpg",
     "logo:p154"
    ],
    "pass": true
   },
   "Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل": {
    "pool": "general",
-   "at": "2026-08-26T11:53:53.224429",
+   "at": "2026-08-26T15:27:14.877242",
    "thash": "9e4f5acc66",
    "person": "Radia Perlman",
    "files": [
-    "File:Radia Perlman.png",
-    "File:Radia Perlman (2009).jpg"
+    "File:Radia Perlman (2009).jpg",
+    "File:Radia Perlman 2009.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "portrait:Radia Perlman",
     "library:perlman-2017.jpg",
+    "library:rt-radia-perlman-1.jpg",
+    "library:rt-radia-perlman-2.jpg",
+    "library:rt-radia-perlman-3.jpg",
     "entity:P18:Radia Perlman 2009.jpg",
-    "archive:Radia Perlman:3"
+    "archive:Radia Perlman:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "perlman-2017.jpg",
+    "rt-radia-perlman-1.jpg",
+    "rt-radia-perlman-2.jpg",
+    "rt-radia-perlman-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Radia Perlman",
     "library:perlman-2017.jpg",
+    "library:rt-radia-perlman-1.jpg",
+    "library:rt-radia-perlman-2.jpg",
+    "library:rt-radia-perlman-3.jpg",
     "entity:P18",
     "archive:Radia Perlman"
    ],
@@ -855,25 +1304,36 @@
   },
   "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة": {
    "pool": "general",
-   "at": "2026-08-26T11:53:55.602065",
+   "at": "2026-08-26T15:27:18.680056",
    "thash": "0eacab3948",
    "person": "Shuji Nakamura",
    "files": [
     "File:Professor Shuji Nakamura (Cropped).jpg",
     "File:Shuji Nakamura 20141007.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "portrait:Shuji Nakamura",
     "library:nakamura-ucsb.jpg",
+    "library:rt-shuji-nakamura-1.jpg",
+    "library:rt-shuji-nakamura-2.jpg",
     "entity:P18:Professor Shuji Nakamura (Cropped).jpg",
     "archive:Shuji Nakamura:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "nakamura-ucsb.jpg",
+    "rt-shuji-nakamura-1.jpg",
+    "rt-shuji-nakamura-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Shuji Nakamura",
     "library:nakamura-ucsb.jpg",
+    "library:rt-shuji-nakamura-1.jpg",
+    "library:rt-shuji-nakamura-2.jpg",
     "entity:P18",
     "archive:Shuji Nakamura"
    ],
@@ -881,51 +1341,74 @@
   },
   "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي": {
    "pool": "general",
-   "at": "2026-08-26T11:53:58.586118",
+   "at": "2026-08-26T15:27:27.288827",
    "thash": "6fa4119d0c",
    "person": "Jerry Lawson",
    "files": [
     "File:Drew Verbis and Jerry Lawson at KJZZ.png",
     "File:Fairchild-Channel-F.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "portrait:Jerry Lawson",
     "library:lawson-kjzz.jpg",
+    "library:rt-jerry-lawson-1.jpg",
+    "library:rt-jerry-lawson-2.jpg",
     "archive:Jerry Lawson:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "lawson-kjzz.jpg",
+    "rt-jerry-lawson-1.jpg",
+    "rt-jerry-lawson-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Jerry Lawson",
     "library:lawson-kjzz.jpg",
+    "library:rt-jerry-lawson-1.jpg",
+    "library:rt-jerry-lawson-2.jpg",
     "archive:Jerry Lawson"
    ],
    "pass": true
   },
   "Hedy Lamarr: ممثلة سجّلت براءة اختراع صارت أساس الواي فاي": {
    "pool": "general",
-   "at": "2026-08-26T11:54:01.109564",
+   "at": "2026-08-26T15:27:29.921807",
    "thash": "f88b2e0fd0",
    "person": "Hedy Lamarr",
    "files": [
     "File:Hedy Lamarr Publicity Photo for The Heavenly Body 1944.jpg",
     "File:Hedy Lamarr in The Heavenly Body 1944.jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "portrait:Hedy Lamarr",
     "library:lamarr-1949.jpg",
     "library:lamarr-1940.jpg",
+    "library:rt-hedy-lamarr-1.jpg",
+    "library:rt-hedy-lamarr-2.jpg",
     "entity:P18:Hedy Lamarr Publicity Photo for The Heavenly Body 1944.jpg",
     "archive:Hedy Lamarr:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "lamarr-1949.jpg",
+    "lamarr-1940.jpg",
+    "rt-hedy-lamarr-1.jpg",
+    "rt-hedy-lamarr-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Hedy Lamarr",
     "library:lamarr-1949.jpg",
     "library:lamarr-1940.jpg",
+    "library:rt-hedy-lamarr-1.jpg",
+    "library:rt-hedy-lamarr-2.jpg",
     "entity:P18",
     "archive:Hedy Lamarr"
    ],
@@ -933,23 +1416,33 @@
   },
   "Ajay Bhatt: مخترع منفذ USB الذي لم يربح منه شيئاً": {
    "pool": "general",
-   "at": "2026-08-26T11:54:04.799409",
+   "at": "2026-08-26T15:27:33.027293",
    "thash": "298beb78ff",
    "person": "Ajay Bhatt",
    "files": [
     "File:Ajay Bhatt at Intel ISEF.jpg",
     "File:USB co-inventor Ajay Bhatt.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "portrait:Ajay Bhatt",
+    "library:rt-ajay-bhatt-1.jpg",
+    "library:rt-ajay-bhatt-2.jpg",
     "entity:P18:Ajay Bhatt at Intel ISEF.jpg",
     "archive:Ajay Bhatt:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-ajay-bhatt-1.jpg",
+    "rt-ajay-bhatt-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Ajay Bhatt",
+    "library:rt-ajay-bhatt-1.jpg",
+    "library:rt-ajay-bhatt-2.jpg",
     "entity:P18",
     "archive:Ajay Bhatt"
    ],
@@ -957,24 +1450,32 @@
   },
   "Philo Farnsworth: اخترع التلفزيون في مزرعة وخسر حقوقه": {
    "pool": "general",
-   "at": "2026-08-26T11:54:10.726044",
+   "at": "2026-08-26T15:27:35.621967",
    "thash": "f3865f2b7a",
    "person": "Philo Farnsworth",
    "files": [
     "File:Philo T Farnsworth.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 5,
+   "era_ok": 5,
    "evidence": [
     "portrait:Philo Farnsworth",
     "library:farnsworth-lab-plaque.jpg",
+    "library:rt-philo-farnsworth-1.jpg",
     "entity:P18:Philo T Farnsworth.jpg",
     "archive:Philo Farnsworth:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "farnsworth-lab-plaque.jpg",
+    "rt-philo-farnsworth-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Philo Farnsworth",
     "library:farnsworth-lab-plaque.jpg",
+    "library:rt-philo-farnsworth-1.jpg",
     "entity:P18",
     "archive:Philo Farnsworth"
    ],
@@ -982,7 +1483,7 @@
   },
   "Mary Allen Wilkes: أول من استخدم حاسوباً في بيتها عام 1965": {
    "pool": "general",
-   "at": "2026-08-26T11:54:13.501199",
+   "at": "2026-08-26T15:27:38.461747",
    "thash": "83899d70a3",
    "historical": 1965,
    "person": "Mary Allen Wilkes",
@@ -990,16 +1491,26 @@
     "File:Mary Allen Wilkes - LINC at Home - 1965.jpg",
     "File:Mary Allen Wilkes Portrait.jpeg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "portrait:Mary Allen Wilkes",
+    "library:rt-mary-allen-wilkes-1.jpg",
+    "library:rt-mary-allen-wilkes-2.jpg",
     "entity:P18:Mary Allen Wilkes Portrait.jpeg",
     "archive:Mary Allen Wilkes:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-mary-allen-wilkes-1.jpg",
+    "rt-mary-allen-wilkes-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Mary Allen Wilkes",
+    "library:rt-mary-allen-wilkes-1.jpg",
+    "library:rt-mary-allen-wilkes-2.jpg",
     "entity:P18",
     "archive:Mary Allen Wilkes"
    ],
@@ -1007,27 +1518,39 @@
   },
   "Masaru Ibuka: الشريك الأهدأ الذي بنى Sony مع Morita": {
    "pool": "general",
-   "at": "2026-08-26T11:54:19.094655",
+   "at": "2026-08-26T15:27:40.910941",
    "thash": "ab4aa18032",
    "person": "Masaru Ibuka",
    "files": [
     "File:Ibuka Masaru.jpg",
     "File:Ibuka Masaru (1964).jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "portrait:Masaru Ibuka",
     "library:ibuka-1966.jpg",
     "library:ibuka-sony-products.jpg",
+    "library:rt-masaru-ibuka-1.jpg",
+    "library:rt-masaru-ibuka-2.jpg",
     "entity:P18:Ibuka Masaru.jpg",
     "archive:Masaru Ibuka:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "ibuka-1966.jpg",
+    "ibuka-sony-products.jpg",
+    "rt-masaru-ibuka-1.jpg",
+    "rt-masaru-ibuka-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Masaru Ibuka",
     "library:ibuka-1966.jpg",
     "library:ibuka-sony-products.jpg",
+    "library:rt-masaru-ibuka-1.jpg",
+    "library:rt-masaru-ibuka-2.jpg",
     "entity:P18",
     "archive:Masaru Ibuka"
    ],
@@ -1035,27 +1558,42 @@
   },
   "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": {
    "pool": "general",
-   "at": "2026-08-26T11:54:32.246258",
+   "at": "2026-08-26T15:27:49.204061",
    "thash": "1804d474a8",
    "person": "Muriel Siebert",
    "files": [
     "File:60s Muriel Siebert advertisement.jpg",
     "File:Muriel Siebert advertisement.jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 9,
+   "era_ok": 9,
    "evidence": [
     "portrait:Muriel Siebert",
     "library:siebert-ad-60s.jpg",
     "library:siebert-desk.jpg",
+    "library:rt-muriel-siebert-1.jpg",
+    "library:rt-muriel-siebert-2.jpg",
+    "library:rt-muriel-siebert-3.jpg",
     "entity:P18:Muriel Siebert advertisement (cropped).jpg",
     "archive:Muriel Siebert:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "siebert-ad-60s.jpg",
+    "siebert-desk.jpg",
+    "rt-muriel-siebert-1.jpg",
+    "rt-muriel-siebert-2.jpg",
+    "rt-muriel-siebert-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Muriel Siebert",
     "library:siebert-ad-60s.jpg",
     "library:siebert-desk.jpg",
+    "library:rt-muriel-siebert-1.jpg",
+    "library:rt-muriel-siebert-2.jpg",
+    "library:rt-muriel-siebert-3.jpg",
     "entity:P18",
     "archive:Muriel Siebert"
    ],
@@ -1063,27 +1601,41 @@
   },
   "Benjamin Graham: أستاذ Warren Buffett الذي وضع قواعد الاستثمار": {
    "pool": "general",
-   "at": "2026-08-26T11:54:34.901942",
+   "at": "2026-08-26T15:27:52.781469",
    "thash": "8bc6472364",
    "person": "Benjamin Graham",
    "files": [
     "File:Benjamin Graham (1894-1976) in 1950.jpg",
     "File:Benjamin Graham (1894-1976) portrait on 23 March 1950.jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 10,
+   "era_ok": 10,
    "evidence": [
     "portrait:Benjamin Graham",
     "library:buffett-2015.jpg",
     "library:buffett-2010.jpg",
+    "library:rt-warren-buffett-1.jpg",
+    "library:rt-warren-buffett-2.jpg",
+    "library:rt-benjamin-graham-1.jpg",
+    "library:rt-benjamin-graham-2.jpg",
     "entity:P18:Benjamin Graham (1894-1976) in 1950.jpg",
     "archive:Benjamin Graham:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-benjamin-graham-1.jpg",
+    "rt-benjamin-graham-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Benjamin Graham",
     "library:buffett-2015.jpg",
     "library:buffett-2010.jpg",
+    "library:rt-warren-buffett-1.jpg",
+    "library:rt-warren-buffett-2.jpg",
+    "library:rt-benjamin-graham-1.jpg",
+    "library:rt-benjamin-graham-2.jpg",
     "entity:P18",
     "archive:Benjamin Graham"
    ],
@@ -1091,50 +1643,67 @@
   },
   "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً": {
    "pool": "general",
-   "at": "2026-08-26T11:54:43.811487",
+   "at": "2026-08-26T15:27:59.818715",
    "thash": "24f870f2e6",
    "person": "Amancio Ortega",
-   "files": [
-    "File:Lefties Inditex Marineda City.jpg",
-    "File:Sede de inditex arteixo.jpg"
-   ],
    "images": 4,
    "era_ok": 4,
    "evidence": [
     "portrait:Amancio Ortega",
     "library:inditex-sign.jpg",
-    "archive:Inditex:2"
+    "library:rt-amancio-ortega-1.jpg",
+    "library:rt-amancio-ortega-2.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "inditex-sign.jpg",
+    "rt-amancio-ortega-1.jpg",
+    "rt-amancio-ortega-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Amancio Ortega",
     "library:inditex-sign.jpg",
-    "archive:Inditex"
+    "library:rt-amancio-ortega-1.jpg",
+    "library:rt-amancio-ortega-2.jpg"
    ],
    "pass": true
   },
   "Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك": {
    "pool": "general",
-   "at": "2026-08-26T11:54:47.088335",
+   "at": "2026-08-26T15:28:02.310282",
    "thash": "6fb0a8890f",
    "person": "Muhammad Yunus",
    "files": [
     "File:Muhammad Yunus - World Economic Forum Annual Meeting 2012.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "portrait:Muhammad Yunus",
     "library:grameen-hq.jpg",
     "library:grameen-branch.jpg",
+    "library:rt-muhammad-yunus-1.jpg",
+    "library:rt-muhammad-yunus-2.jpg",
     "entity:P18:Muhammad Yunus (cropped).jpg",
     "archive:Muhammad Yunus:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "grameen-hq.jpg",
+    "grameen-branch.jpg",
+    "rt-muhammad-yunus-1.jpg",
+    "rt-muhammad-yunus-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Muhammad Yunus",
     "library:grameen-hq.jpg",
     "library:grameen-branch.jpg",
+    "library:rt-muhammad-yunus-1.jpg",
+    "library:rt-muhammad-yunus-2.jpg",
     "entity:P18",
     "archive:Muhammad Yunus"
    ],
@@ -1142,53 +1711,74 @@
   },
   "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟": {
    "pool": "general",
-   "at": "2026-08-26T11:54:50.535474",
+   "at": "2026-08-26T15:28:05.491927",
    "thash": "72ffc80074",
    "files": [
-    "File:McDonalds Museum.jpg",
-    "File:Ray Kroc 1976.jpg",
-    "File:Ray Kroc 1978.jpg"
+    "File:McDonalds Museum.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "library:mcdonalds-jeddah.jpg",
-    "archive:McDonald brothers:1",
-    "archive:Ray Kroc:3"
+    "library:mcdonalds-riyadh-first.jpg",
+    "library:rt-mcdonald-brothers-1.jpg",
+    "library:rt-mcdonald-brothers-2.jpg",
+    "library:rt-mcdonald-brothers-3.jpg",
+    "archive:McDonald brothers:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-mcdonald-brothers-1.jpg",
+    "rt-mcdonald-brothers-2.jpg",
+    "rt-mcdonald-brothers-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:mcdonalds-jeddah.jpg",
-    "archive:McDonald brothers",
-    "archive:Ray Kroc"
+    "library:mcdonalds-riyadh-first.jpg",
+    "library:rt-mcdonald-brothers-1.jpg",
+    "library:rt-mcdonald-brothers-2.jpg",
+    "library:rt-mcdonald-brothers-3.jpg",
+    "archive:McDonald brothers"
    ],
    "pass": true
   },
   "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا": {
    "pool": "general",
-   "at": "2026-08-26T11:54:53.783436",
+   "at": "2026-08-26T15:28:07.853100",
    "thash": "e6714cd63a",
    "person": "مدام سي جيه ووكر",
    "files": [
     "File:Madam C.J. Walker Memorial Highway sign.jpg",
     "File:Madam C. J. Walker by Addison N. Scurlock.jpg"
    ],
-   "images": 7,
-   "era_ok": 7,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "portrait:مدام سي جيه ووكر",
     "library:sarah-breedlove.jpg",
     "library:walker-ad.jpg",
     "library:walker-factory.jpg",
+    "library:rt-madam-c-j-walker-1.jpg",
     "entity:P18:Madam C. J. Walker by Addison N. Scurlock.jpg",
     "archive:Madam C.J. Walker:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "sarah-breedlove.jpg",
+    "walker-ad.jpg",
+    "walker-factory.jpg",
+    "rt-madam-c-j-walker-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:مدام سي جيه ووكر",
     "library:sarah-breedlove.jpg",
     "library:walker-ad.jpg",
     "library:walker-factory.jpg",
+    "library:rt-madam-c-j-walker-1.jpg",
     "entity:P18",
     "archive:Madam C.J. Walker"
    ],
@@ -1196,25 +1786,36 @@
   },
   "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": {
    "pool": "general",
-   "at": "2026-08-26T11:55:00.551525",
+   "at": "2026-08-26T15:28:14.484032",
    "thash": "e011b83cb0",
    "person": "Juan Trippe",
    "files": [
     "File:Juan Trippe with Stratocruiser.jpg",
     "File:Juan Trippe with Stratocruiser (cropped).jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "portrait:Juan Trippe",
     "library:trippe-pair.jpg",
+    "library:rt-juan-trippe-1.jpg",
+    "library:rt-juan-trippe-2.jpg",
     "entity:P18:Juan Trippe with Stratocruiser (cropped).jpg",
     "archive:Juan Trippe:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "trippe-pair.jpg",
+    "rt-juan-trippe-1.jpg",
+    "rt-juan-trippe-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Juan Trippe",
     "library:trippe-pair.jpg",
+    "library:rt-juan-trippe-1.jpg",
+    "library:rt-juan-trippe-2.jpg",
     "entity:P18",
     "archive:Juan Trippe"
    ],
@@ -1222,27 +1823,39 @@
   },
   "Herb Kelleher: أسس Southwest على منديل ورقي": {
    "pool": "general",
-   "at": "2026-08-26T11:55:03.165232",
+   "at": "2026-08-26T15:28:17.008705",
    "thash": "fd529920c8",
    "person": "Herb Kelleher",
    "files": [
-    "File:Herb Kelleher.jpg",
-    "File:Herb Kelleher (131125herb).jpg"
+    "File:Herb Kelleher (131125herb).jpg",
+    "File:Herb Kelleher (cropped).jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 8,
+   "era_ok": 8,
    "evidence": [
     "portrait:Herb Kelleher",
     "library:kelleher-portrait.jpg",
     "library:southwest-737.jpg",
+    "library:rt-herb-kelleher-1.jpg",
+    "library:rt-herb-kelleher-2.jpg",
     "entity:P18:Herb Kelleher (131125herb).jpg",
-    "archive:Herb Kelleher:3"
+    "archive:Herb Kelleher:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "kelleher-portrait.jpg",
+    "southwest-737.jpg",
+    "rt-herb-kelleher-1.jpg",
+    "rt-herb-kelleher-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Herb Kelleher",
     "library:kelleher-portrait.jpg",
     "library:southwest-737.jpg",
+    "library:rt-herb-kelleher-1.jpg",
+    "library:rt-herb-kelleher-2.jpg",
     "entity:P18",
     "archive:Herb Kelleher"
    ],
@@ -1250,33 +1863,39 @@
   },
   "Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة": {
    "pool": "general",
-   "at": "2026-08-26T11:55:05.779654",
+   "at": "2026-08-26T15:28:19.598070",
    "thash": "e7e6c69fee",
    "person": "Fred Smith",
-   "files": [
-    "File:FedEx Heathrow.jpg",
-    "File:FedEx Super Hub ~` 27 - panoramio.jpg"
-   ],
    "images": 5,
    "era_ok": 5,
    "evidence": [
     "portrait:Fred Smith",
     "library:fedex-truck.jpg",
     "library:fedex-planes.jpg",
-    "archive:FedEx:3"
+    "library:rt-fred-smith-1.jpg",
+    "library:rt-fred-smith-2.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "fedex-truck.jpg",
+    "fedex-planes.jpg",
+    "rt-fred-smith-1.jpg",
+    "rt-fred-smith-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Fred Smith",
     "library:fedex-truck.jpg",
     "library:fedex-planes.jpg",
-    "archive:FedEx"
+    "library:rt-fred-smith-1.jpg",
+    "library:rt-fred-smith-2.jpg"
    ],
    "pass": true
   },
   "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط": {
    "pool": "general",
-   "at": "2026-08-26T11:55:09.159673",
+   "at": "2026-08-26T15:28:22.799654",
    "thash": "3f5e6101cc",
    "person": "علي النعيمي",
    "files": [
@@ -1291,7 +1910,13 @@
     "entity:P18:Min-oil-Naimi-05.JPG",
     "archive:Ali Al-Naimi:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "ali-alnaimi.jpg",
+    "naimi-panel.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:علي النعيمي",
     "library:ali-alnaimi.jpg",
@@ -1303,47 +1928,76 @@
   },
   "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته": {
    "pool": "general",
-   "at": "2026-08-26T11:55:11.615902",
+   "at": "2026-08-26T15:28:25.337063",
    "thash": "8d4c4675ae",
    "person": "سليمان الراجحي",
    "files": [
     "File:Suliman Alrajhi in Makkah.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 9,
+   "era_ok": 9,
    "evidence": [
     "portrait:سليمان الراجحي",
     "library:alrajhi-1985.jpg",
     "library:alrajhi-1996.jpg",
     "library:alrajhi-ebranch.jpg",
+    "library:waqf-sulaiman-signing.jpg",
+    "library:rt-sulaiman-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-2.jpg",
     "archive:Sulaiman Al Rajhi:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "alrajhi-1985.jpg",
+    "alrajhi-1996.jpg",
+    "alrajhi-ebranch.jpg",
+    "waqf-sulaiman-signing.jpg",
+    "rt-sulaiman-al-rajhi-1.jpg",
+    "rt-saleh-al-rajhi-1.jpg",
+    "rt-saleh-al-rajhi-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:سليمان الراجحي",
     "library:alrajhi-1985.jpg",
     "library:alrajhi-1996.jpg",
     "library:alrajhi-ebranch.jpg",
+    "library:waqf-sulaiman-signing.jpg",
+    "library:rt-sulaiman-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-2.jpg",
     "archive:Sulaiman Al Rajhi"
    ],
    "pass": true
   },
   "قصة عبداللطيف جميل للسيارات ووكالة تويوتا": {
    "pool": "general",
-   "at": "2026-08-26T11:55:24.468087",
+   "at": "2026-08-26T15:28:30.561498",
    "thash": "391ba52e0e",
    "files": [
     "File:Headquarter of Toyota Motor Corporation 3.JPG",
     "File:Toyota Auris, GIMS 2018, Le Grand-Saconnex (1X7A1634).jpg"
    ],
-   "images": 3,
-   "era_ok": 2,
+   "images": 5,
+   "era_ok": 4,
    "evidence": [
+    "library:rt-abdul-latif-jameel-1.jpg",
+    "library:rt-abdul-latif-jameel-2.jpg",
     "logo:fetchable:current",
     "archive:Toyota Saudi Arabia:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-abdul-latif-jameel-1.jpg",
+    "rt-abdul-latif-jameel-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
+    "library:rt-abdul-latif-jameel-1.jpg",
+    "library:rt-abdul-latif-jameel-2.jpg",
     "logo:fetchable",
     "archive:Toyota Saudi Arabia"
    ],
@@ -1351,53 +2005,80 @@
   },
   "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء": {
    "pool": "general",
-   "at": "2026-08-26T11:55:30.507402",
+   "at": "2026-08-26T15:28:36.218769",
    "thash": "38706d52e8",
    "person": "صالح الراجحي",
    "files": [
     "File:Saleh Abdulaziz Al Rajhi.jpg",
     "File:Saleh Abdulaziz Alrajhi.jpg"
    ],
-   "images": 6,
-   "era_ok": 6,
+   "images": 9,
+   "era_ok": 9,
    "evidence": [
-    "portrait:Saleh Al Rajhi",
+    "portrait:صالح الراجحي",
     "library:alrajhi-1985.jpg",
     "library:alrajhi-1996.jpg",
     "library:alrajhi-ebranch.jpg",
+    "library:rt-sulaiman-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-2.jpg",
     "archive:Saleh Al Rajhi:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "alrajhi-1985.jpg",
+    "alrajhi-1996.jpg",
+    "alrajhi-ebranch.jpg",
+    "rt-sulaiman-al-rajhi-1.jpg",
+    "rt-saleh-al-rajhi-1.jpg",
+    "rt-saleh-al-rajhi-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
-    "portrait:Saleh Al Rajhi",
+    "portrait:صالح الراجحي",
     "library:alrajhi-1985.jpg",
     "library:alrajhi-1996.jpg",
     "library:alrajhi-ebranch.jpg",
+    "library:rt-sulaiman-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-1.jpg",
+    "library:rt-saleh-al-rajhi-2.jpg",
     "archive:Saleh Al Rajhi"
    ],
    "pass": true
   },
   "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة": {
    "pool": "general",
-   "at": "2026-08-26T11:55:38.348875",
+   "at": "2026-08-26T15:28:38.567883",
    "thash": "e53e446ffb",
    "person": "محمد بن لادن",
    "files": [
     "File:FaqeehBinLaden.png",
     "File:Muhammad bin Ladin.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "portrait:محمد بن لادن",
     "library:binladin-sign.jpg",
+    "library:rt-mohammed-bin-laden-1.jpg",
+    "library:rt-mohammed-bin-laden-2.jpg",
     "entity:P18:Muhammad bin Ladin.jpg",
     "archive:Mohammed bin Laden:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "binladin-sign.jpg",
+    "rt-mohammed-bin-laden-1.jpg",
+    "rt-mohammed-bin-laden-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:محمد بن لادن",
     "library:binladin-sign.jpg",
+    "library:rt-mohammed-bin-laden-1.jpg",
+    "library:rt-mohammed-bin-laden-2.jpg",
     "entity:P18",
     "archive:Mohammed bin Laden"
    ],
@@ -1405,23 +2086,40 @@
   },
   "من هم أول الموظفين السعوديين في أرامكو؟": {
    "pool": "general",
-   "at": "2026-08-26T11:55:46.680773",
+   "at": "2026-08-26T15:28:47.535252",
    "thash": "d2eece9fb9",
    "files": [
     "File:AramcoCoreArea.jpg",
     "File:Aramco Company Car.jpg"
    ],
-   "images": 8,
-   "era_ok": 7,
+   "images": 11,
+   "era_ok": 10,
    "evidence": [
     "library:aramco-1951-truck.jpg",
     "library:aramco-1951-camp.jpg",
     "library:aramco-1951-car.jpg",
     "library:aramco-1935-lisafah.jpg",
     "library:aramco-1935-hufof.jpg",
+    "library:rt-aramco-1.jpg",
+    "library:rt-aramco-2.jpg",
+    "library:rt-aramco-1.jpg",
     "logo:curated:current",
     "archive:Aramco:2"
    ],
+   "local_photos": [
+    "aramco-1951-truck.jpg",
+    "aramco-1951-camp.jpg",
+    "aramco-1951-car.jpg",
+    "aramco-1935-lisafah.jpg",
+    "aramco-1935-hufof.jpg",
+    "rt-aramco-1.jpg",
+    "rt-aramco-2.jpg"
+   ],
+   "local_logos": [
+    "aramco-current.png",
+    "aramco.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:aramco-1951-truck.jpg",
@@ -1429,6 +2127,9 @@
     "library:aramco-1951-car.jpg",
     "library:aramco-1935-lisafah.jpg",
     "library:aramco-1935-hufof.jpg",
+    "library:rt-aramco-1.jpg",
+    "library:rt-aramco-2.jpg",
+    "library:rt-aramco-1.jpg",
     "logo:curated",
     "archive:Aramco"
    ],
@@ -1436,62 +2137,83 @@
   },
   "قصة الشماغ ومصانعه في إنجلترا": {
    "pool": "saudi",
-   "at": "2026-08-26T11:55:49.759698",
+   "at": "2026-08-26T15:28:50.672889",
    "thash": "71f364dc22",
    "files": [
     "File:Keffiyeh-frieze.png"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 5,
+   "era_ok": 5,
    "evidence": [
     "library:saudi-shemagh.jpg",
     "library:lancashire-mill-1945.jpg",
     "library:ibnsaud-shemagh.jpg",
+    "library:rt-ghutra-1.jpg",
     "archive:ghutra:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "saudi-shemagh.jpg",
+    "ibnsaud-shemagh.jpg",
+    "rt-ghutra-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:saudi-shemagh.jpg",
     "library:lancashire-mill-1945.jpg",
     "library:ibnsaud-shemagh.jpg",
+    "library:rt-ghutra-1.jpg",
     "archive:ghutra"
    ],
    "pass": true
   },
   "قصة التمر السعودي وتحوله لصناعة": {
    "pool": "saudi",
-   "at": "2026-08-26T11:55:56.619622",
+   "at": "2026-08-26T15:28:56.957185",
    "thash": "d9bc6375df",
-   "files": [
-    "File:Phoenix dactylifera, date palm 7026.jpg",
-    "File:Phoenix dactylifera, date palm Half Moon Cay 7027.jpg"
-   ],
    "images": 5,
    "era_ok": 5,
    "evidence": [
     "library:saudi-dates-market.jpg",
     "library:date-palms-desert.jpg",
     "library:date-palms-oasis.jpg",
-    "archive:التمر:3"
+    "library:rt-saudi-dates-industry-1.jpg",
+    "library:rt-saudi-dates-industry-2.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "saudi-dates-market.jpg",
+    "date-palms-desert.jpg",
+    "date-palms-oasis.jpg",
+    "rt-saudi-dates-industry-1.jpg",
+    "rt-saudi-dates-industry-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:saudi-dates-market.jpg",
     "library:date-palms-desert.jpg",
     "library:date-palms-oasis.jpg",
-    "archive:التمر"
+    "library:rt-saudi-dates-industry-1.jpg",
+    "library:rt-saudi-dates-industry-2.jpg"
    ],
    "pass": true
   },
   "قصة العباءة السعودية وتحولها لصناعة أزياء": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:14.071639",
+   "at": "2026-08-26T15:29:08.528656",
    "thash": "6ae2b01585",
    "images": 1,
    "era_ok": 1,
    "evidence": [
     "library:saudi-abaya-modern.jpg"
    ],
+   "local_photos": [
+    "saudi-abaya-modern.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:saudi-abaya-modern.jpg"
@@ -1500,26 +2222,39 @@
   },
   "قصة مصرف الراجحي من صرافة إلى أكبر بنك": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:19.180401",
+   "at": "2026-08-26T15:29:13.365678",
    "thash": "fa7b13efda",
    "files": [
     "File:ATM AL RAJHI BANK.JPG",
     "File:Arrajhi Bank Office Madinah.JPG"
    ],
-   "images": 6,
-   "era_ok": 5,
+   "images": 8,
+   "era_ok": 7,
    "evidence": [
     "library:alrajhi-1985.jpg",
     "library:alrajhi-1996.jpg",
     "library:alrajhi-ebranch.jpg",
+    "library:rt-al-rajhi-bank-1.jpg",
+    "library:rt-al-rajhi-bank-2.jpg",
     "logo:p154:Al Rajhi Bank Logo.svg:current",
     "archive:Al Rajhi Bank:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "alrajhi-1985.jpg",
+    "alrajhi-1996.jpg",
+    "alrajhi-ebranch.jpg",
+    "rt-al-rajhi-bank-1.jpg",
+    "rt-al-rajhi-bank-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:alrajhi-1985.jpg",
     "library:alrajhi-1996.jpg",
     "library:alrajhi-ebranch.jpg",
+    "library:rt-al-rajhi-bank-1.jpg",
+    "library:rt-al-rajhi-bank-2.jpg",
     "logo:p154",
     "archive:Al Rajhi Bank"
    ],
@@ -1527,54 +2262,72 @@
   },
   "قصة المراعي من مزرعة إلى أكبر شركة ألبان": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:24.265101",
+   "at": "2026-08-26T15:29:18.391528",
    "thash": "c5c04585b4",
    "files": [
     "File:Almarai cpp2 web.jpg",
     "File:Almarai reefers web.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:almarai-production.jpg",
     "library:almarai-hq.jpg",
     "library:almarai-fleet.jpg",
+    "library:rt-almarai-1.jpg",
+    "library:rt-almarai-2.jpg",
     "archive:Almarai:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "almarai-production.jpg",
+    "almarai-hq.jpg",
+    "almarai-fleet.jpg",
+    "rt-almarai-1.jpg",
+    "rt-almarai-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:almarai-production.jpg",
     "library:almarai-hq.jpg",
     "library:almarai-fleet.jpg",
+    "library:rt-almarai-1.jpg",
+    "library:rt-almarai-2.jpg",
     "archive:Almarai"
    ],
    "pass": true
   },
   "قصة صافولا": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:27.056047",
+   "at": "2026-08-26T15:29:21.241843",
    "thash": "8b9e8828a7",
-   "files": [
-    "File:Savola Group .jpg"
-   ],
    "images": 3,
    "era_ok": 2,
    "evidence": [
     "library:savola-hq.jpg",
-    "logo:curated:current",
-    "archive:Savola Group:1"
+    "library:rt-savola-group-1.jpg",
+    "logo:curated:current"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "savola-hq.jpg",
+    "rt-savola-group-1.jpg"
+   ],
+   "local_logos": [
+    "savola-group-current.png"
+   ],
+   "runtime_status": "NEEDS 2 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:savola-hq.jpg",
-    "logo:curated",
-    "archive:Savola Group"
+    "library:rt-savola-group-1.jpg",
+    "logo:curated"
    ],
    "pass": true
   },
   "قصة مرسول وتوسعه": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:31.417464",
+   "at": "2026-08-26T15:29:27.151679",
    "thash": "61a82e6940",
    "person": "مرسول وتوسعه",
    "images": 1,
@@ -1582,6 +2335,11 @@
    "evidence": [
     "logo:curated:current"
    ],
+   "local_photos": [],
+   "local_logos": [
+    "mrsool-current.png"
+   ],
+   "runtime_status": "NEEDS 4 MORE PHOTOS",
    "readiness": "LOGO-ONLY",
    "anchors": [
     "logo:curated"
@@ -1590,22 +2348,35 @@
   },
   "قصة العثيم وتجارة التجزئة": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:38.539520",
+   "at": "2026-08-26T15:29:34.126943",
    "thash": "017d27e2fd",
    "files": [
     "File:Abdullah Al-Othaim Markets Logo.jpg",
     "File:Othaim Markets in Manfuha, Riyadh.JPG"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 6,
+   "era_ok": 5,
    "evidence": [
     "library:othaim-branch.jpg",
+    "library:rt-al-othaim-markets-1.jpg",
+    "library:rt-al-othaim-markets-2.jpg",
     "logo:curated:current",
     "archive:Al Othaim Markets:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "othaim-branch.jpg",
+    "rt-al-othaim-markets-1.jpg",
+    "rt-al-othaim-markets-2.jpg"
+   ],
+   "local_logos": [
+    "al-othaim-markets-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:othaim-branch.jpg",
+    "library:rt-al-othaim-markets-1.jpg",
+    "library:rt-al-othaim-markets-2.jpg",
     "logo:curated",
     "archive:Al Othaim Markets"
    ],
@@ -1613,30 +2384,39 @@
   },
   "قصة نادك للأغذية": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:42.591248",
+   "at": "2026-08-26T15:29:39.250929",
    "thash": "87998769f3",
    "files": [
     "File:NADEC-New-logo-.png",
     "File:Nadec Farm Entrance gate .jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 5,
+   "era_ok": 5,
    "evidence": [
     "library:nadec-fields.jpg",
     "library:nadec-farm-gate.jpg",
+    "library:rt-nadec-1.jpg",
     "archive:NADEC:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "nadec-fields.jpg",
+    "nadec-farm-gate.jpg",
+    "rt-nadec-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:nadec-fields.jpg",
     "library:nadec-farm-gate.jpg",
+    "library:rt-nadec-1.jpg",
     "archive:NADEC"
    ],
    "pass": true
   },
   "قصة صالح كامل ودلة البركة": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:53.959601",
+   "at": "2026-08-26T15:29:51.364421",
    "thash": "c85bf2481d",
    "person": "صالح كامل",
    "images": 4,
@@ -1647,7 +2427,14 @@
     "library:saleh-kamel-portrait.jpg",
     "library:dallah-dates.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "saudi-coffee-dallah.jpg",
+    "saleh-kamel-portrait.jpg",
+    "dallah-dates.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:صالح كامل",
     "library:saudi-coffee-dallah.jpg",
@@ -1658,59 +2445,79 @@
   },
   "قصة انهيار سوق الأسهم السعودية 2006": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:57.013562",
+   "at": "2026-08-26T15:29:54.447009",
    "thash": "f2385a10af",
    "files": [
     "File:انهيار سوق الاسهم السعودي.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
     "library:kafd-financial-district.jpg",
     "library:tasi-crash-2006.jpg",
+    "library:rt-saudi-stock-market-crash-1.jpg",
     "archive:Saudi stock market crash 2006:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "tasi-crash-2006.jpg",
+    "rt-saudi-stock-market-crash-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:kafd-financial-district.jpg",
     "library:tasi-crash-2006.jpg",
+    "library:rt-saudi-stock-market-crash-1.jpg",
     "archive:Saudi stock market crash 2006"
    ],
    "pass": true
   },
   "قصة سوق المناخ في الكويت 1982": {
    "pool": "saudi",
-   "at": "2026-08-26T11:56:58.877249",
+   "at": "2026-08-26T15:29:56.163246",
    "thash": "b628a3f16e",
    "historical": 1982,
    "files": [
-    "File:Souq Almanakh.jpg",
-    "File:KUWAIT BOLSA - stock market.jpg",
-    "File:Kuwait Stock Exchange.jpg"
+    "File:Souq Almanakh.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
-    "archive:Souk Al-Manakh:1",
-    "archive:Kuwait Stock Exchange:2"
+    "library:rt-souk-al-manakh-1.jpg",
+    "library:rt-souk-al-manakh-2.jpg",
+    "library:rt-souk-al-manakh-3.jpg",
+    "archive:Souk Al-Manakh:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-souk-al-manakh-1.jpg",
+    "rt-souk-al-manakh-2.jpg",
+    "rt-souk-al-manakh-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
-    "archive:Souk Al-Manakh",
-    "archive:Kuwait Stock Exchange"
+    "library:rt-souk-al-manakh-1.jpg",
+    "library:rt-souk-al-manakh-2.jpg",
+    "library:rt-souk-al-manakh-3.jpg",
+    "archive:Souk Al-Manakh"
    ],
    "pass": true
   },
   "قصة أزمة النقد في الثمانينات وأثرها على الخليج": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:03.183704",
+   "at": "2026-08-26T15:29:59.875485",
    "thash": "b78e696687",
    "images": 0,
    "era_ok": 0,
    "evidence": [
     "typographic:policy"
    ],
-   "readiness": "THIN",
+   "local_photos": [],
+   "local_logos": [],
+   "runtime_status": "NEEDS 4 MORE PHOTOS + LOGO",
+   "readiness": "NOT READY",
    "anchors": [
     "typographic:policy"
    ],
@@ -1718,14 +2525,17 @@
   },
   "قصة طفرة النفط الأولى في السبعينات وتغيير المملكة": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:03.190445",
+   "at": "2026-08-26T15:29:59.885354",
    "thash": "2d60e7f6d4",
    "images": 1,
    "era_ok": 1,
    "evidence": [
     "library:aramco-1951-truck.jpg"
    ],
-   "readiness": "THIN",
+   "local_photos": [],
+   "local_logos": [],
+   "runtime_status": "NEEDS 4 MORE PHOTOS + LOGO",
+   "readiness": "NOT READY",
    "anchors": [
     "library:aramco-1951-truck.jpg"
    ],
@@ -1733,78 +2543,114 @@
   },
   "قصة تأسيس مؤسسة النقد ساما": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:05.017343",
+   "at": "2026-08-26T15:30:01.673924",
    "thash": "aa9bd57c75",
-   "files": [
-    "File:Bank SA.jpg",
-    "File:Saudi Central Bank Logo.png"
-   ],
    "images": 4,
    "era_ok": 3,
    "evidence": [
     "library:sama-history-hq.jpg",
-    "logo:p154:Logo Saudi Arabian Monetary Authority.svg:current",
-    "archive:Saudi Central Bank:2"
+    "library:rt-sama-1.jpg",
+    "library:rt-sama-2.jpg",
+    "logo:p154:Logo Saudi Arabian Monetary Authority.svg:current"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "sama-history-hq.jpg",
+    "rt-sama-1.jpg",
+    "rt-sama-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:sama-history-hq.jpg",
-    "logo:p154",
-    "archive:Saudi Central Bank"
+    "library:rt-sama-1.jpg",
+    "library:rt-sama-2.jpg",
+    "logo:p154"
    ],
    "pass": true
   },
   "قصة كريم من الفكرة إلى استحواذ أوبر": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:10.095678",
+   "at": "2026-08-26T15:30:06.837373",
    "thash": "8c6d73d778",
    "files": [
     "File:Careem logo new 2023.png"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
     "library:careem-founders-2012.jpg",
     "library:careem-decade-founders.jpg",
-    "logo:fetchable:current",
+    "library:rt-careem-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg",
+    "logo:curated:current",
     "archive:Careem:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "careem-founders-2012.jpg",
+    "careem-decade-founders.jpg",
+    "rt-careem-1.jpg"
+   ],
+   "local_logos": [
+    "careem.com-2014.png",
+    "careem.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:careem-founders-2012.jpg",
     "library:careem-decade-founders.jpg",
-    "logo:fetchable",
+    "library:rt-careem-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg",
+    "logo:curated",
     "archive:Careem"
    ],
    "pass": true
   },
   "قصة دخول لوسيد ومصنعها في السعودية": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:14.545902",
+   "at": "2026-08-26T15:30:09.260839",
    "thash": "e62dff820a",
    "files": [
     "File:Lucid Air Saudi Arabia Front 4.jpg",
     "File:Lucid Motors, IAA Open Space 2023, Munich (P1120049).jpg"
    ],
-   "images": 9,
-   "era_ok": 8,
+   "images": 11,
+   "era_ok": 10,
    "evidence": [
     "library:lucid-air-saudi-1.jpg",
     "library:lucid-air-saudi-2.jpg",
     "library:lucid-air-saudi-3.jpg",
     "library:lucid-air-saudi-4.jpg",
     "library:lucid-air-dream.jpg",
+    "library:rt-lucid-motors-1.jpg",
+    "library:rt-lucid-motors-2.jpg",
     "logo:fetchable:current",
     "entity:P18:Lucid Showroom Miami Worldcenter 29 June 2023 - 2.jpg",
     "archive:Lucid Motors:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "lucid-air-saudi-1.jpg",
+    "lucid-air-saudi-2.jpg",
+    "lucid-air-saudi-3.jpg",
+    "lucid-air-saudi-4.jpg",
+    "lucid-air-dream.jpg",
+    "rt-lucid-motors-1.jpg",
+    "rt-lucid-motors-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:lucid-air-saudi-1.jpg",
     "library:lucid-air-saudi-2.jpg",
     "library:lucid-air-saudi-3.jpg",
     "library:lucid-air-saudi-4.jpg",
     "library:lucid-air-dream.jpg",
+    "library:rt-lucid-motors-1.jpg",
+    "library:rt-lucid-motors-2.jpg",
     "logo:fetchable",
     "entity:P18",
     "archive:Lucid Motors"
@@ -1813,219 +2659,343 @@
   },
   "قصة ستاربكس عبر الشايع": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:20.784701",
+   "at": "2026-08-26T15:30:15.402821",
    "thash": "69527a1cef",
    "person": "ستاربكس عبر الشايع",
    "files": [
     "File:STARBUCKS COFFEE PRODUCTS IN CHINA (11).jpg",
-    "File:Starbucks Coffee restaurant.png",
-    "File:Masjid Alshaya Zahra enterance side - panoramio.jpg",
-    "File:Masjid Alshaya zahra block 02 - panoramio.jpg"
+    "File:Starbucks Coffee restaurant.png"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
     "portrait:Starbucks",
-    "archive:Starbucks:3",
-    "archive:Alshaya:3"
+    "library:rt-starbucks-2.jpg",
+    "archive:Starbucks:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-starbucks-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Starbucks",
-    "archive:Starbucks",
-    "archive:Alshaya"
+    "library:rt-starbucks-2.jpg",
+    "archive:Starbucks"
    ],
    "pass": true
   },
   "قصة أمازون واستحواذها على سوق دوت كوم": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:31.929917",
+   "at": "2026-08-26T15:30:22.023741",
    "thash": "ba28aad951",
-   "images": 2,
-   "era_ok": 2,
+   "images": 4,
+   "era_ok": 3,
    "evidence": [
     "library:amazon-bezos-early.jpg",
-    "library:amazon-garage-recreation.jpg"
+    "library:amazon-garage-recreation.jpg",
+    "library:rt-amazon-1.jpg",
+    "logo:curated:current"
    ],
+   "local_photos": [
+    "amazon-bezos-early.jpg",
+    "rt-amazon-1.jpg"
+   ],
+   "local_logos": [
+    "amazon.com-current.png"
+   ],
+   "runtime_status": "NEEDS 2 MORE PHOTOS",
    "readiness": "THIN",
    "anchors": [
     "library:amazon-bezos-early.jpg",
-    "library:amazon-garage-recreation.jpg"
+    "library:amazon-garage-recreation.jpg",
+    "library:rt-amazon-1.jpg",
+    "logo:curated"
    ],
    "pass": true
   },
   "قصة صندوق الاستثمارات العامة واستثماراته العالمية": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:40.558244",
+   "at": "2026-08-26T15:30:29.541345",
    "thash": "77703f8edd",
    "files": [
-    "File:Pif (November 2014).jpg",
-    "File:KAFD seen from North east side of Riyadh City.jpg",
-    "File:Public Investment Fund Tower 20260128 1.jpg"
+    "File:Pif (November 2014).jpg"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 8,
+   "era_ok": 7,
    "evidence": [
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-2.jpg",
+    "library:rt-pif-3.jpg",
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg",
     "logo:p154:Public Investment Fund (Saudi Arabia) logo.svg:current",
-    "archive:PIF:1",
-    "archive:Public Investment Fund:2"
+    "archive:PIF:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-pif-1.jpg",
+    "rt-pif-2.jpg",
+    "rt-pif-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-2.jpg",
+    "library:rt-pif-3.jpg",
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg",
     "logo:p154",
-    "archive:PIF",
-    "archive:Public Investment Fund"
+    "archive:PIF"
    ],
    "pass": true
   },
   "قصة استثمار صندوق الاستثمارات في Uber": {
    "pool": "saudi",
-   "at": "2026-08-26T11:57:44.750633",
+   "at": "2026-08-26T15:30:32.866180",
    "thash": "bb39f9ebe1",
-   "files": [
-    "File:Hinomaru Kotsu 6186 JPN Taxi with Uber Taxi advertise.jpg",
-    "File:Self driving Uber prototype in San Francisco.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
-    "archive:Uber:2"
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-2.jpg",
+    "library:rt-pif-3.jpg",
+    "library:rt-careem-1.jpg",
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg"
    ],
+   "local_photos": [
+    "rt-pif-1.jpg",
+    "rt-pif-2.jpg",
+    "rt-pif-3.jpg",
+    "rt-careem-1.jpg",
+    "rt-pif-uber-stake-1.jpg",
+    "rt-pif-uber-stake-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
    "readiness": "THIN",
    "anchors": [
-    "archive:Uber"
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-2.jpg",
+    "library:rt-pif-3.jpg",
+    "library:rt-careem-1.jpg",
+    "library:rt-pif-1.jpg",
+    "library:rt-pif-uber-stake-1.jpg",
+    "library:rt-pif-uber-stake-2.jpg"
    ],
    "pass": true
   },
   "قصة نوكيا من مصنع ورق إلى الهواتف": {
    "pool": "general",
-   "at": "2026-08-26T11:57:56.218149",
+   "at": "2026-08-26T15:30:44.680084",
    "thash": "8600483364",
    "files": [
     "File:Midpoint Nokia Karaportti.jpg",
     "File:Nokia headquarters in Espoo.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 6,
+   "era_ok": 5,
    "evidence": [
     "library:nokia-7110.jpg",
+    "library:rt-nokia-1.jpg",
+    "library:rt-nokia-2.jpg",
+    "logo:curated:current",
     "archive:Nokia:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "nokia-7110.jpg",
+    "rt-nokia-1.jpg",
+    "rt-nokia-2.jpg"
+   ],
+   "local_logos": [
+    "nokia.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:nokia-7110.jpg",
+    "library:rt-nokia-1.jpg",
+    "library:rt-nokia-2.jpg",
+    "logo:curated",
     "archive:Nokia"
    ],
    "pass": true
   },
   "قصة ليغو من ورشة نجارة": {
    "pool": "general",
-   "at": "2026-08-26T11:57:59.450054",
+   "at": "2026-08-26T15:30:47.784852",
    "thash": "dacf4c2257",
    "files": [
     "File:Lego in 1957.jpg",
     "File:Pile of light gray LEGO bricks at a LEGO store.jpg"
    ],
-   "images": 2,
-   "era_ok": 2,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
+    "library:rt-lego-1.jpg",
+    "library:rt-lego-2.jpg",
     "archive:LEGO:3"
    ],
+   "local_photos": [
+    "rt-lego-1.jpg",
+    "rt-lego-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
+    "library:rt-lego-1.jpg",
+    "library:rt-lego-2.jpg",
     "archive:LEGO"
    ],
    "pass": true
   },
   "قصة IKEA من قرية سويدية": {
    "pool": "general",
-   "at": "2026-08-26T11:58:02.666480",
+   "at": "2026-08-26T15:30:50.743779",
    "thash": "f288870f72",
    "files": [
     "File:IKEA, Rostov-on-Don, Russia.jpg",
-    "File:IKEA store, Interior design, Living room, Rostov-on-Don, Russia.jpg",
-    "File:Ingvar Kamprad (cropped).jpg",
-    "File:Ingvar Kamprad Haparanda June 2010.jpg"
+    "File:Self-serve aisle in IKEA Torp Uddevalla - Cinematic edit.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
+    "library:rt-ikea-1.jpg",
+    "library:rt-ikea-2.jpg",
+    "library:rt-ikea-3.jpg",
+    "library:rt-ikea-4.jpg",
     "entity:P18:Ingvar Kamprad (cropped).jpg",
-    "archive:IKEA:3",
-    "archive:Ingvar Kamprad:3"
+    "archive:IKEA:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-ikea-1.jpg",
+    "rt-ikea-2.jpg",
+    "rt-ikea-3.jpg",
+    "rt-ikea-4.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
+    "library:rt-ikea-1.jpg",
+    "library:rt-ikea-2.jpg",
+    "library:rt-ikea-3.jpg",
+    "library:rt-ikea-4.jpg",
     "entity:P18",
-    "archive:IKEA",
-    "archive:Ingvar Kamprad"
+    "archive:IKEA"
    ],
    "pass": true
   },
   "قصة Rolex وصناعة الفخامة": {
    "pool": "general",
-   "at": "2026-08-26T11:58:08.197946",
+   "at": "2026-08-26T15:30:55.286162",
    "thash": "76c5b080eb",
    "files": [
     "File:Rolex 2019.jpg",
     "File:Rolex Cosmograph Daytona.png"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:rolex-emerald.jpg",
     "library:rolex-gmt.jpg",
     "library:rolex-geneva.jpg",
+    "library:rt-rolex-1.jpg",
+    "library:rt-rolex-2.jpg",
     "archive:Rolex:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rolex-emerald.jpg",
+    "rolex-gmt.jpg",
+    "rolex-geneva.jpg",
+    "rt-rolex-1.jpg",
+    "rt-rolex-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:rolex-emerald.jpg",
     "library:rolex-gmt.jpg",
     "library:rolex-geneva.jpg",
+    "library:rt-rolex-1.jpg",
+    "library:rt-rolex-2.jpg",
     "archive:Rolex"
    ],
    "pass": true
   },
   "قصة UPS: الشركة التي يملكها سائقوها": {
    "pool": "general",
-   "at": "2026-08-26T11:58:11.373073",
+   "at": "2026-08-26T15:30:58.144073",
    "thash": "910122e7f8",
-   "images": 2,
-   "era_ok": 1,
+   "images": 3,
+   "era_ok": 2,
    "evidence": [
-    "logo:p154:United Parcel Service logo 2014.svg:current",
+    "library:rt-ups-1.jpg",
+    "logo:curated:current",
     "entity:P18:UPS Airlines B767-300F (N328UP) landing at San Jose International Airport.jpg"
    ],
+   "local_photos": [
+    "rt-ups-1.jpg"
+   ],
+   "local_logos": [
+    "ups.com-current.png"
+   ],
+   "runtime_status": "NEEDS 3 MORE PHOTOS",
    "readiness": "THIN",
    "anchors": [
-    "logo:p154",
+    "library:rt-ups-1.jpg",
+    "logo:curated",
     "entity:P18"
    ],
    "pass": true
   },
   "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل": {
    "pool": "general",
-   "at": "2026-08-26T11:58:18.786873",
+   "at": "2026-08-26T15:31:02.106186",
    "thash": "c8f11d2cd0",
    "files": [
-    "File:Iconic Publix Scale 2023.jpg",
-    "File:Publix distribution center - Jacksonville, FL.jpg"
+    "File:Publix distribution center - Jacksonville, FL.jpg",
+    "File:Publix surfside fl.jpg"
    ],
-   "images": 6,
-   "era_ok": 5,
+   "images": 9,
+   "era_ok": 8,
    "evidence": [
     "library:publix-checkout.jpg",
     "library:publix-sign.jpg",
-    "logo:p154:Publix Retail Logo.png:current",
+    "library:rt-publix-1.jpg",
+    "library:rt-publix-2.jpg",
+    "library:rt-publix-3.jpg",
+    "logo:curated:current",
     "entity:P18:Publix surfside fl.jpg",
     "archive:Publix:2"
    ],
+   "local_photos": [
+    "publix-checkout.jpg",
+    "publix-sign.jpg",
+    "rt-publix-1.jpg",
+    "rt-publix-2.jpg",
+    "rt-publix-3.jpg"
+   ],
+   "local_logos": [
+    "publix.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:publix-checkout.jpg",
     "library:publix-sign.jpg",
-    "logo:p154",
+    "library:rt-publix-1.jpg",
+    "library:rt-publix-2.jpg",
+    "library:rt-publix-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Publix"
    ],
@@ -2033,23 +3003,37 @@
   },
   "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم": {
    "pool": "general",
-   "at": "2026-08-26T11:58:25.713082",
+   "at": "2026-08-26T15:31:05.431655",
    "thash": "0599023c25",
    "files": [
     "File:CeBIT 2005 Nvidia Stand.jpg",
     "File:NVIDIA Headquarters.jpg"
    ],
-   "images": 5,
-   "era_ok": 4,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
     "library:nvidia-soc-die.jpg",
+    "library:rt-nvidia-1.jpg",
+    "library:rt-nvidia-2.jpg",
     "logo:curated:current",
     "entity:P18:NVIDIA Headquarters.jpg",
     "archive:NVIDIA:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "nvidia-soc-die.jpg",
+    "rt-nvidia-1.jpg",
+    "rt-nvidia-2.jpg"
+   ],
+   "local_logos": [
+    "nvidia-current.png",
+    "nvidia.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:nvidia-soc-die.jpg",
+    "library:rt-nvidia-1.jpg",
+    "library:rt-nvidia-2.jpg",
     "logo:curated",
     "entity:P18",
     "archive:NVIDIA"
@@ -2058,22 +3042,37 @@
   },
   "قصة Microsoft: الشركة التي صنعت آلاف المليونيرات في بلدة واحدة": {
    "pool": "general",
-   "at": "2026-08-26T11:58:28.780844",
+   "at": "2026-08-26T15:31:09.193546",
    "thash": "92ffea7cde",
    "files": [
     "File:Building92microsoft.jpg",
     "File:Microsoft Atlanta.jpg"
    ],
-   "images": 4,
-   "era_ok": 3,
+   "images": 7,
+   "era_ok": 6,
    "evidence": [
-    "logo:fetchable:current",
+    "library:rt-microsoft-1.jpg",
+    "library:rt-microsoft-2.jpg",
+    "library:rt-microsoft-3.jpg",
+    "logo:curated:current",
     "entity:P18:Aerial Microsoft West Campus August 2009.jpg",
     "archive:Microsoft:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "rt-microsoft-1.jpg",
+    "rt-microsoft-2.jpg",
+    "rt-microsoft-3.jpg"
+   ],
+   "local_logos": [
+    "microsoft.com-current.png"
+   ],
+   "runtime_status": "NEEDS 1 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
-    "logo:fetchable",
+    "library:rt-microsoft-1.jpg",
+    "library:rt-microsoft-2.jpg",
+    "library:rt-microsoft-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Microsoft"
    ],
@@ -2081,20 +3080,43 @@
   },
   "قصة Google: السهم الذي جعل الطاهي مليونيراً": {
    "pool": "general",
-   "at": "2026-08-26T11:58:35.235335",
+   "at": "2026-08-26T15:31:13.301338",
    "thash": "9e0bef042e",
    "files": [
     "File:Google shopping søk.jpg",
     "File:Googleplex HQ (cropped).jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 9,
+   "era_ok": 8,
    "evidence": [
+    "library:rt-yahoo-1.jpg",
+    "library:rt-yahoo-2.jpg",
+    "library:rt-yahoo-3.jpg",
+    "library:rt-google-1.jpg",
+    "library:rt-google-3.jpg",
+    "logo:curated:current",
     "entity:P18:Google Knowledge Panel.png",
     "archive:Google:2"
    ],
+   "local_photos": [
+    "rt-yahoo-1.jpg",
+    "rt-yahoo-2.jpg",
+    "rt-yahoo-3.jpg",
+    "rt-google-1.jpg",
+    "rt-google-3.jpg"
+   ],
+   "local_logos": [
+    "yahoo.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
+    "library:rt-yahoo-1.jpg",
+    "library:rt-yahoo-2.jpg",
+    "library:rt-yahoo-3.jpg",
+    "library:rt-google-1.jpg",
+    "library:rt-google-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Google"
    ],
@@ -2102,54 +3124,82 @@
   },
   "قصة القهوة السعودية": {
    "pool": "saudi",
-   "at": "2026-08-26T12:02:44.681589",
+   "at": "2026-08-26T15:28:54.223842",
    "thash": "ed641d9a18",
    "files": [
     "File:A dallah a traditional Arabic coffee pot with cups and coffee beans.jpg",
     "File:Arabic coffee being served during a wedding in Qatar.png"
    ],
-   "images": 7,
-   "era_ok": 7,
+   "images": 9,
+   "era_ok": 9,
    "evidence": [
     "library:saudi-coffee-dallah.jpg",
     "library:jazan-coffee-harvest.jpg",
     "library:arabic-coffee-cup.jpg",
     "library:coffee-majlis.jpg",
     "library:dallah-dates.jpg",
+    "library:rt-saudi-coffee-1.jpg",
+    "library:rt-saudi-coffee-2.jpg",
     "archive:Saudi coffee:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "saudi-coffee-dallah.jpg",
+    "jazan-coffee-harvest.jpg",
+    "arabic-coffee-cup.jpg",
+    "coffee-majlis.jpg",
+    "dallah-dates.jpg",
+    "rt-saudi-coffee-1.jpg",
+    "rt-saudi-coffee-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:saudi-coffee-dallah.jpg",
     "library:jazan-coffee-harvest.jpg",
     "library:arabic-coffee-cup.jpg",
     "library:coffee-majlis.jpg",
     "library:dallah-dates.jpg",
+    "library:rt-saudi-coffee-1.jpg",
+    "library:rt-saudi-coffee-2.jpg",
     "archive:Saudi coffee"
    ],
    "pass": true
   },
   "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
    "pool": "saudi",
-   "at": "2026-08-26T12:02:47.590400",
+   "at": "2026-08-26T15:28:58.767203",
    "thash": "999a1b170e",
    "files": [
     "File:McQuay AIR CONDITIONING AIR CONDITIONER OUTDOOR UNIT.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:willis-carrier-1915.jpg",
     "library:ac-units-wall.jpg",
     "library:magna-mine-ac.jpg",
+    "library:rt-air-conditioning-1.jpg",
+    "library:rt-air-conditioning-2.jpg",
     "entity:P18:TECO MA-750B in Nangang 20110217.jpg",
     "archive:air conditioning:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "willis-carrier-1915.jpg",
+    "ac-units-wall.jpg",
+    "magna-mine-ac.jpg",
+    "rt-air-conditioning-1.jpg",
+    "rt-air-conditioning-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:willis-carrier-1915.jpg",
     "library:ac-units-wall.jpg",
     "library:magna-mine-ac.jpg",
+    "library:rt-air-conditioning-1.jpg",
+    "library:rt-air-conditioning-2.jpg",
     "entity:P18",
     "archive:air conditioning"
    ],
@@ -2157,33 +3207,44 @@
   },
   "قصة ماء زمزم وكيف يُعبأ ويوزّع": {
    "pool": "saudi",
-   "at": "2026-08-26T12:02:50.412788",
+   "at": "2026-08-26T15:29:01.722085",
    "thash": "b743f0ec72",
    "files": [
     "File:Zamzamwill.JPG"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "library:zamzam-bottling.jpg",
     "library:zamzam-bottle.jpg",
     "library:zamzam-cart.jpg",
     "library:zamzam-cups.jpg",
+    "library:rt-zamzam-water-1.jpg",
     "archive:Zamzam water:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "zamzam-bottling.jpg",
+    "zamzam-bottle.jpg",
+    "zamzam-cart.jpg",
+    "zamzam-cups.jpg",
+    "rt-zamzam-water-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:zamzam-bottling.jpg",
     "library:zamzam-bottle.jpg",
     "library:zamzam-cart.jpg",
     "library:zamzam-cups.jpg",
+    "library:rt-zamzam-water-1.jpg",
     "archive:Zamzam water"
    ],
    "pass": true
   },
   "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
    "pool": "saudi",
-   "at": "2026-08-26T12:02:52.822823",
+   "at": "2026-08-26T15:29:04.496948",
    "thash": "ecbb2e38a6",
    "images": 3,
    "era_ok": 3,
@@ -2192,7 +3253,13 @@
     "library:kabsa-communal.jpg",
     "library:kabsa-platter.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "kabsa-dish.jpg",
+    "kabsa-platter.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:kabsa-dish.jpg",
     "library:kabsa-communal.jpg",
@@ -2202,85 +3269,126 @@
   },
   "قصة سكة حديد الرياض الدمام 1951": {
    "pool": "saudi",
-   "at": "2026-08-26T12:02:57.780343",
+   "at": "2026-08-26T15:30:34.505626",
    "thash": "3ec442a77d",
    "historical": 1951,
    "files": [
     "File:Dammam–Riyadh line, 1951.png",
     "File:King Abdulaziz, Dammam–Riyadh line opening.png"
    ],
-   "images": 7,
-   "era_ok": 7,
+   "images": 11,
+   "era_ok": 11,
    "evidence": [
     "library:riyadh-dammam-train.jpg",
     "library:railway-construction-1951.jpg",
     "library:king-golden-spike.jpg",
     "library:sar-train-modern.jpg",
     "library:railway-workers-1951.jpg",
+    "library:rt-riyadh-1.jpg",
+    "library:rt-riyadh-2.jpg",
+    "library:rt-riyadh-dammam-railway-1.jpg",
+    "library:rt-riyadh-dammam-railway-2.jpg",
     "archive:Riyadh Dammam railway:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "riyadh-dammam-train.jpg",
+    "railway-construction-1951.jpg",
+    "king-golden-spike.jpg",
+    "sar-train-modern.jpg",
+    "railway-workers-1951.jpg",
+    "rt-riyadh-1.jpg",
+    "rt-riyadh-2.jpg",
+    "rt-riyadh-dammam-railway-1.jpg",
+    "rt-riyadh-dammam-railway-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:riyadh-dammam-train.jpg",
     "library:railway-construction-1951.jpg",
     "library:king-golden-spike.jpg",
     "library:sar-train-modern.jpg",
     "library:railway-workers-1951.jpg",
+    "library:rt-riyadh-1.jpg",
+    "library:rt-riyadh-2.jpg",
+    "library:rt-riyadh-dammam-railway-1.jpg",
+    "library:rt-riyadh-dammam-railway-2.jpg",
     "archive:Riyadh Dammam railway"
    ],
    "pass": true
   },
   "قصة أول سيارة تدخل الجزيرة العربية": {
    "pool": "saudi",
-   "at": "2026-08-26T12:02:59.528507",
+   "at": "2026-08-26T15:30:39.366624",
    "thash": "aa558a4bd2",
    "files": [
     "File:15-05-23-Berlin-Sachsendamm-Tesla-RalfR-N3S 7354.jpg",
     "File:1885Benz.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:king-abdulaziz-cars.jpg",
     "library:ibnsaud-shemagh.jpg",
     "library:king-golden-spike.jpg",
+    "library:rt-قصة-أول-سيارة-تدخل-الجزي-1.jpg",
+    "library:rt-قصة-أول-سيارة-تدخل-الجزي-2.jpg",
     "archive:أول سيارة:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "king-abdulaziz-cars.jpg",
+    "rt-قصة-أول-سيارة-تدخل-الجزي-1.jpg",
+    "rt-قصة-أول-سيارة-تدخل-الجزي-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:king-abdulaziz-cars.jpg",
     "library:ibnsaud-shemagh.jpg",
     "library:king-golden-spike.jpg",
+    "library:rt-قصة-أول-سيارة-تدخل-الجزي-1.jpg",
+    "library:rt-قصة-أول-سيارة-تدخل-الجزي-2.jpg",
     "archive:أول سيارة"
    ],
    "pass": true
   },
   "قصة أول عملة ورقية سعودية": {
    "pool": "saudi",
-   "at": "2026-08-26T12:03:00.828954",
+   "at": "2026-08-26T15:30:42.454396",
    "thash": "32f5cf4888",
    "files": [
     "File:1968 Saudi 10 Riyal.jpg",
     "File:Banknotes saudi arabian.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 5,
+   "era_ok": 5,
    "evidence": [
     "library:first-hajj-receipt.png",
     "library:saudi-10riyal-1968.jpg",
+    "library:rt-first-saudi-banknote-1.jpg",
     "archive:first Saudi banknote:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "first-hajj-receipt.png",
+    "saudi-10riyal-1968.jpg",
+    "rt-first-saudi-banknote-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:first-hajj-receipt.png",
     "library:saudi-10riyal-1968.jpg",
+    "library:rt-first-saudi-banknote-1.jpg",
     "archive:first Saudi banknote"
    ],
    "pass": true
   },
   "لماذا ارتبط الريال السعودي بالدولار وكيف؟": {
    "pool": "general",
-   "at": "2026-08-26T12:03:32.999486",
+   "at": "2026-08-26T15:26:04.280247",
    "thash": "d10f75fb52",
    "images": 4,
    "era_ok": 4,
@@ -2290,7 +3398,14 @@
     "library:riyal-100-1961.jpg",
     "library:riyal-1-1984.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "silver-riyal.png",
+    "riyal-100-1961.jpg",
+    "riyal-1-1984.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:silver-riyal.png",
     "library:saudi-10riyal-1968.jpg",
@@ -2301,7 +3416,7 @@
   },
   "قصة ربط الريال بالدولار وقصته": {
    "pool": "saudi",
-   "at": "2026-08-26T12:03:33.947108",
+   "at": "2026-08-26T15:30:05.778556",
    "thash": "d10f75fb52",
    "images": 4,
    "era_ok": 4,
@@ -2311,7 +3426,14 @@
     "library:riyal-100-1961.jpg",
     "library:riyal-1-1984.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "silver-riyal.png",
+    "riyal-100-1961.jpg",
+    "riyal-1-1984.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:silver-riyal.png",
     "library:saudi-10riyal-1968.jpg",
@@ -2322,7 +3444,7 @@
   },
   "Malcom McLean: سائق شاحنة غيّر التجارة العالمية بصندوق حديد": {
    "pool": "general",
-   "at": "2026-08-26T12:19:45.442730",
+   "at": "2026-08-26T15:27:43.868630",
    "thash": "f8fccac297",
    "person": "Malcom McLean",
    "images": 3,
@@ -2332,7 +3454,13 @@
     "library:t2-tanker-1943.jpg",
     "library:sealand-containers-danang.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "t2-tanker-1943.jpg",
+    "sealand-containers-danang.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Malcom McLean",
     "library:t2-tanker-1943.jpg",
@@ -2342,43 +3470,69 @@
   },
   "قصة Tesla: الشركة التي كادت تفلس مرتين": {
    "pool": "general",
-   "at": "2026-08-26T13:38:13.321369",
+   "at": "2026-08-26T15:25:37.940540",
    "thash": "568752d7c9",
-   "images": 3,
-   "era_ok": 2,
+   "images": 4,
+   "era_ok": 3,
    "evidence": [
     "library:tesla-roadster.jpg",
-    "logo:p154:Tesla Motors.svg:current",
+    "library:rt-tesla-1.jpg",
+    "logo:curated:current",
     "entity:P18:Tesla Visit 3 (9267529364).jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "tesla-roadster.jpg",
+    "rt-tesla-1.jpg"
+   ],
+   "local_logos": [
+    "tesla.com-current.png"
+   ],
+   "runtime_status": "NEEDS 2 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "library:tesla-roadster.jpg",
-    "logo:p154",
+    "library:rt-tesla-1.jpg",
+    "logo:curated",
     "entity:P18"
    ],
    "pass": true
   },
   "كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟": {
    "pool": "general",
-   "at": "2026-08-26T13:38:21.396336",
+   "at": "2026-08-26T15:26:08.769879",
    "thash": "f4895f16d5",
    "files": [
     "File:Computer generated image of the Mærsk Triple E Class (1).jpg",
     "File:Maersk Ahram (1998).jpg"
    ],
-   "images": 5,
-   "era_ok": 4,
+   "images": 8,
+   "era_ok": 7,
    "evidence": [
     "library:maersk-port.jpg",
-    "logo:fetchable:current",
+    "library:rt-maersk-1.jpg",
+    "library:rt-maersk-2.jpg",
+    "library:rt-maersk-3.jpg",
+    "logo:curated:current",
     "entity:P18:Maersk headquarters, 2019 (01).jpg",
     "archive:Maersk:3"
    ],
+   "local_photos": [
+    "maersk-port.jpg",
+    "rt-maersk-1.jpg",
+    "rt-maersk-2.jpg",
+    "rt-maersk-3.jpg"
+   ],
+   "local_logos": [
+    "maersk.com-current.png"
+   ],
+   "runtime_status": "PASS",
    "readiness": "READY",
    "anchors": [
     "library:maersk-port.jpg",
-    "logo:fetchable",
+    "library:rt-maersk-1.jpg",
+    "library:rt-maersk-2.jpg",
+    "library:rt-maersk-3.jpg",
+    "logo:curated",
     "entity:P18",
     "archive:Maersk"
    ],
@@ -2386,14 +3540,17 @@
   },
   "كيف بدأت فكرة البطاقة الائتمانية؟": {
    "pool": "general",
-   "at": "2026-08-26T13:38:27.271004",
+   "at": "2026-08-26T15:26:15.091443",
    "thash": "7f813854ee",
    "images": 0,
    "era_ok": 0,
    "evidence": [
     "typographic:policy"
    ],
-   "readiness": "THIN",
+   "local_photos": [],
+   "local_logos": [],
+   "runtime_status": "NEEDS 4 MORE PHOTOS + LOGO",
+   "readiness": "NOT READY",
    "anchors": [
     "typographic:policy"
    ],
@@ -2401,14 +3558,14 @@
   },
   "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": {
    "pool": "general",
-   "at": "2026-08-26T13:38:27.272608",
+   "at": "2026-08-26T15:26:15.094972",
    "thash": "4d0c95ae3e",
    "files": [
     "File:Boulevard Riyadh City.jpg",
     "File:Riyadh Front, 2023.jpg"
    ],
-   "images": 12,
-   "era_ok": 12,
+   "images": 17,
+   "era_ok": 17,
    "evidence": [
     "library:riyadh-skyline.jpg",
     "library:old-riyadh-souq.jpg",
@@ -2420,9 +3577,24 @@
     "library:riyadh-1975-construction.jpg",
     "library:riyadh-1977-construction.jpg",
     "library:mcdonalds-riyadh-first.jpg",
+    "library:riyadh-departures.jpg",
+    "library:rt-riyadh-1.jpg",
+    "library:rt-riyadh-2.jpg",
+    "library:rt-riyadh-dammam-railway-1.jpg",
+    "library:rt-riyadh-dammam-railway-2.jpg",
     "archive:Riyadh:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "old-riyadh-souq.jpg",
+    "riyadh-1975-construction.jpg",
+    "riyadh-1977-construction.jpg",
+    "mcdonalds-riyadh-first.jpg",
+    "rt-riyadh-1.jpg",
+    "rt-riyadh-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:riyadh-skyline.jpg",
     "library:old-riyadh-souq.jpg",
@@ -2434,58 +3606,84 @@
     "library:riyadh-1975-construction.jpg",
     "library:riyadh-1977-construction.jpg",
     "library:mcdonalds-riyadh-first.jpg",
+    "library:riyadh-departures.jpg",
+    "library:rt-riyadh-1.jpg",
+    "library:rt-riyadh-2.jpg",
+    "library:rt-riyadh-dammam-railway-1.jpg",
+    "library:rt-riyadh-dammam-railway-2.jpg",
     "archive:Riyadh"
    ],
    "pass": true
   },
   "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم": {
    "pool": "general",
-   "at": "2026-08-26T13:38:30.058547",
+   "at": "2026-08-26T15:26:57.775903",
    "thash": "3b40ed49ca",
    "files": [
     "File:Saudia Boeing 777-300 ER 20221121.jpg",
     "File:Saudia Boeing 777-368ER.jpg"
    ],
-   "images": 4,
-   "era_ok": 4,
+   "images": 6,
+   "era_ok": 6,
    "evidence": [
     "library:saudia-dc3-crowd.jpg",
     "library:saudia-707-historic.jpg",
+    "library:rt-saudia-1.jpg",
+    "library:rt-saudia-2.jpg",
     "archive:Saudia:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "saudia-dc3-crowd.jpg",
+    "saudia-707-historic.jpg",
+    "rt-saudia-1.jpg",
+    "rt-saudia-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:saudia-dc3-crowd.jpg",
     "library:saudia-707-historic.jpg",
+    "library:rt-saudia-1.jpg",
+    "library:rt-saudia-2.jpg",
     "archive:Saudia"
    ],
    "pass": true
   },
   "قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية": {
    "pool": "general",
-   "at": "2026-08-26T13:38:32.783625",
+   "at": "2026-08-26T15:27:46.526591",
    "thash": "e3133ae813",
    "files": [
     "File:Diners-club-arena-001.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
     "library:diners-card.jpg",
     "library:diners-first-card-1951.jpg",
+    "library:rt-diners-club-1.jpg",
     "archive:Diners Club:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "diners-card.jpg",
+    "diners-first-card-1951.jpg",
+    "rt-diners-club-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:diners-card.jpg",
     "library:diners-first-card-1951.jpg",
+    "library:rt-diners-club-1.jpg",
     "archive:Diners Club"
    ],
    "pass": true
   },
   "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد": {
    "pool": "general",
-   "at": "2026-08-26T13:38:36.072448",
+   "at": "2026-08-26T15:28:10.661762",
    "thash": "5d7179ef4c",
    "images": 3,
    "era_ok": 3,
@@ -2494,7 +3692,14 @@
     "library:rolling-suitcases.jpg",
     "library:plath-rollaboard.jpg"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "suitcase-before-wheels.jpg",
+    "rolling-suitcases.jpg",
+    "plath-rollaboard.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:suitcase-before-wheels.jpg",
     "library:rolling-suitcases.jpg",
@@ -2504,36 +3709,49 @@
   },
   "يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط": {
    "pool": "general",
-   "at": "2026-08-26T13:38:39.385177",
+   "at": "2026-08-26T15:28:27.617112",
    "thash": "31148bcb3e",
    "person": "يوسف بن أحمد كانو",
    "files": [
     "File:Flex CEO Revathi Advaithi poses for an updated headshot.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
     "portrait:يوسف بن أحمد كانو",
     "library:kanoo-founder.jpg",
+    "library:rt-yusuf-bin-ahmed-kanoo-1.jpg",
     "archive:YBA Kanoo:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "kanoo-founder.jpg",
+    "rt-yusuf-bin-ahmed-kanoo-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "portrait:يوسف بن أحمد كانو",
     "library:kanoo-founder.jpg",
+    "library:rt-yusuf-bin-ahmed-kanoo-1.jpg",
     "archive:YBA Kanoo"
    ],
    "pass": true
   },
   "قصة مكتبة جرير من متجر صغير إلى عملاق": {
    "pool": "saudi",
-   "at": "2026-08-26T13:38:42.031057",
+   "at": "2026-08-26T15:29:10.280104",
    "thash": "9ad30faa0e",
    "images": 1,
    "era_ok": 1,
    "evidence": [
     "library:jarir-early-branch.jpg"
    ],
+   "local_photos": [
+    "jarir-early-branch.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:jarir-early-branch.jpg"
@@ -2542,13 +3760,18 @@
   },
   "قصة بنده والتجزئة السعودية": {
    "pool": "saudi",
-   "at": "2026-08-26T13:38:47.445258",
+   "at": "2026-08-26T15:29:36.720541",
    "thash": "faf7a6e44c",
    "images": 1,
    "era_ok": 1,
    "evidence": [
     "library:panda-historic-store.jpg"
    ],
+   "local_photos": [
+    "panda-historic-store.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:panda-historic-store.jpg"
@@ -2557,49 +3780,66 @@
   },
   "قصة سابك من فكرة إلى عملاق بتروكيماويات": {
    "pool": "saudi",
-   "at": "2026-08-26T13:38:50.006998",
+   "at": "2026-08-26T15:29:45.315066",
    "thash": "5ad72d2e1c",
    "files": [
     "File:SABIC office Sittard.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
     "library:sabic-plant.jpg",
     "library:sabic-jubail.jpg",
+    "library:rt-sabic-1.jpg",
     "archive:SABIC:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "sabic-plant.jpg",
+    "sabic-jubail.jpg",
+    "rt-sabic-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:sabic-plant.jpg",
     "library:sabic-jubail.jpg",
+    "library:rt-sabic-1.jpg",
     "archive:SABIC"
    ],
    "pass": true
   },
   "قصة سليمان الراجحي وأكبر وقف خاص": {
    "pool": "saudi",
-   "at": "2026-08-26T13:38:53.095652",
+   "at": "2026-08-26T15:29:48.735137",
    "thash": "381f94cc76",
    "files": [
     "File:Suliman Alrajhi in Makkah.jpg"
    ],
-   "images": 2,
-   "era_ok": 2,
+   "images": 3,
+   "era_ok": 3,
    "evidence": [
     "library:waqf-sulaiman-signing.jpg",
+    "library:rt-sulaiman-al-rajhi-1.jpg",
     "archive:Sulaiman Al Rajhi:1"
    ],
+   "local_photos": [
+    "waqf-sulaiman-signing.jpg",
+    "rt-sulaiman-al-rajhi-1.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:waqf-sulaiman-signing.jpg",
+    "library:rt-sulaiman-al-rajhi-1.jpg",
     "archive:Sulaiman Al Rajhi"
    ],
    "pass": true
   },
   "قصة ماكدونالدز في السعودية وعائلات الامتياز": {
    "pool": "saudi",
-   "at": "2026-08-26T13:38:55.183776",
+   "at": "2026-08-26T15:30:13.626064",
    "thash": "0819c3f406",
    "images": 2,
    "era_ok": 2,
@@ -2607,6 +3847,12 @@
     "library:mcdonalds-jeddah.jpg",
     "library:mcdonalds-riyadh-first.jpg"
    ],
+   "local_photos": [
+    "mcdonalds-jeddah.jpg",
+    "mcdonalds-riyadh-first.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:mcdonalds-jeddah.jpg",
@@ -2616,7 +3862,7 @@
   },
   "قصة نون ومنافسة التجارة الإلكترونية": {
    "pool": "saudi",
-   "at": "2026-08-26T13:38:56.761319",
+   "at": "2026-08-26T15:30:26.525954",
    "thash": "f349457856",
    "images": 2,
    "era_ok": 2,
@@ -2624,6 +3870,12 @@
     "library:noon-fulfillment.jpg",
     "library:noon-packing.jpg"
    ],
+   "local_photos": [
+    "noon-fulfillment.jpg",
+    "noon-packing.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 2 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:noon-fulfillment.jpg",
@@ -2633,7 +3885,7 @@
   },
   "قصة افتتاح أول جامعة سعودية": {
    "pool": "saudi",
-   "at": "2026-08-26T13:38:59.631066",
+   "at": "2026-08-26T15:30:36.440185",
    "thash": "62368bdbb3",
    "images": 2,
    "era_ok": 2,
@@ -2641,6 +3893,11 @@
     "library:ksu-gate.jpg",
     "library:ksu-students-1957.jpg"
    ],
+   "local_photos": [
+    "ksu-students-1957.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:ksu-gate.jpg",
@@ -2650,141 +3907,213 @@
   },
   "قصة أول مطار في جدة وتطور الطيران المدني": {
    "pool": "saudi",
-   "at": "2026-08-26T13:39:01.266201",
+   "at": "2026-08-26T15:30:40.704673",
    "thash": "0a2c2a1d13",
-   "images": 2,
-   "era_ok": 2,
+   "images": 4,
+   "era_ok": 4,
    "evidence": [
     "library:jeddah-port.jpg",
-    "library:jeddah-balad.jpg"
+    "library:jeddah-balad.jpg",
+    "library:rt-jeddah-1.jpg",
+    "library:rt-jeddah-2.jpg"
    ],
+   "local_photos": [
+    "jeddah-port.jpg",
+    "jeddah-balad.jpg",
+    "rt-jeddah-1.jpg",
+    "rt-jeddah-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:jeddah-port.jpg",
-    "library:jeddah-balad.jpg"
+    "library:jeddah-balad.jpg",
+    "library:rt-jeddah-1.jpg",
+    "library:rt-jeddah-2.jpg"
    ],
    "pass": true
   },
   "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": {
    "pool": "general",
-   "at": "2026-08-26T13:39:37.383505",
+   "at": "2026-08-26T15:27:01.496510",
    "thash": "ae623e26a8",
    "files": [
     "File:Boeing737-800Ryanair.JPG",
     "File:Easyjet A319 G-EZEZ AMS 2016-09-04.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 5,
+   "era_ok": 5,
    "evidence": [
     "library:lowcost-easyjet.jpg",
+    "library:rt-كيف-غي-رت-شركات-الطيران-1.jpg",
+    "library:rt-كيف-غي-رت-شركات-الطيران-2.jpg",
     "archive:الطيران الاقتصادي:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "lowcost-easyjet.jpg",
+    "rt-كيف-غي-رت-شركات-الطيران-1.jpg",
+    "rt-كيف-غي-رت-شركات-الطيران-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:lowcost-easyjet.jpg",
+    "library:rt-كيف-غي-رت-شركات-الطيران-1.jpg",
+    "library:rt-كيف-غي-رت-شركات-الطيران-2.jpg",
     "archive:الطيران الاقتصادي"
    ],
    "pass": true
   },
   "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": {
    "pool": "general",
-   "at": "2026-08-26T13:39:38.714925",
+   "at": "2026-08-26T15:27:07.722961",
    "thash": "06b63da8b7",
    "files": [
     "File:الصفحة الأخيرة من جواز السفر المصري بعد تحديثها.png",
     "File:ختم جواز السفر الأردني 2025.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:rolling-suitcases.jpg",
     "library:passport-visa-china.jpg",
     "library:passport-visa-czech.jpg",
+    "library:rt-قصة-جواز-السفر-كيف-بدأت-1.jpg",
+    "library:rt-قصة-جواز-السفر-كيف-بدأت-2.jpg",
     "archive:جواز السفر:3"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "passport-visa-china.jpg",
+    "passport-visa-czech.jpg",
+    "rt-قصة-جواز-السفر-كيف-بدأت-1.jpg",
+    "rt-قصة-جواز-السفر-كيف-بدأت-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:rolling-suitcases.jpg",
     "library:passport-visa-china.jpg",
     "library:passport-visa-czech.jpg",
+    "library:rt-قصة-جواز-السفر-كيف-بدأت-1.jpg",
+    "library:rt-قصة-جواز-السفر-كيف-بدأت-2.jpg",
     "archive:جواز السفر"
    ],
    "pass": true
   },
   "قصة طيران ناس وثورة الطيران الاقتصادي": {
    "pool": "saudi",
-   "at": "2026-08-26T13:39:40.154904",
+   "at": "2026-08-26T15:29:16.048933",
    "thash": "c00c11b524",
    "files": [
     "File:Female flight attendants Flynas 2023.jpg",
     "File:Flynas aircraft A320 neo.jpg"
    ],
-   "images": 3,
-   "era_ok": 3,
+   "images": 5,
+   "era_ok": 5,
    "evidence": [
     "library:flynas-jeddah.jpg",
+    "library:rt-flynas-1.jpg",
+    "library:rt-flynas-2.jpg",
     "archive:flynas:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "flynas-jeddah.jpg",
+    "rt-flynas-1.jpg",
+    "rt-flynas-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 1 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:flynas-jeddah.jpg",
+    "library:rt-flynas-1.jpg",
+    "library:rt-flynas-2.jpg",
     "archive:flynas"
    ],
    "pass": true
   },
   "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": {
    "pool": "general",
-   "at": "2026-08-26T14:04:24.467952",
+   "at": "2026-08-26T15:26:03.057834",
    "thash": "779d877d6f",
    "files": [
     "File:22 2007-2008 global financial crisis effect in Bristol UK - credit crunch lunch.jpg",
     "File:Global sustainable recovery spending by governments in reponse to Covid-19 compared to green spending labels enacted in post-global financial crisis stimulus plans.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:lehman-2008.jpg",
     "library:foreclosure-2008.jpg",
     "library:wallstreet-2008.jpg",
+    "library:rt-قصة-أزمة-2008-كيف-بدأت-1.jpg",
+    "library:rt-قصة-أزمة-2008-كيف-بدأت-2.jpg",
     "archive:أزمة 2008:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "lehman-2008.jpg",
+    "foreclosure-2008.jpg",
+    "wallstreet-2008.jpg",
+    "rt-قصة-أزمة-2008-كيف-بدأت-1.jpg",
+    "rt-قصة-أزمة-2008-كيف-بدأت-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:lehman-2008.jpg",
     "library:foreclosure-2008.jpg",
     "library:wallstreet-2008.jpg",
+    "library:rt-قصة-أزمة-2008-كيف-بدأت-1.jpg",
+    "library:rt-قصة-أزمة-2008-كيف-بدأت-2.jpg",
     "archive:أزمة 2008"
    ],
    "pass": true
   },
   "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": {
    "pool": "general",
-   "at": "2026-08-26T14:04:26.026094",
+   "at": "2026-08-26T15:27:06.311576",
    "thash": "62cd4d47b0",
    "files": [
     "File:Tickets Price for Mahdia Museum 12082020.jpg",
     "File:السفر والجولات.jpg"
    ],
-   "images": 5,
-   "era_ok": 5,
+   "images": 7,
+   "era_ok": 7,
    "evidence": [
     "library:departure-board.jpg",
     "library:riyadh-departures.jpg",
     "library:checkin-hall.jpg",
+    "library:rt-لماذا-تختلف-أسعار-التذاك-1.jpg",
+    "library:rt-لماذا-تختلف-أسعار-التذاك-2.jpg",
     "archive:أسعار التذاكر:2"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "departure-board.jpg",
+    "riyadh-departures.jpg",
+    "checkin-hall.jpg",
+    "rt-لماذا-تختلف-أسعار-التذاك-1.jpg",
+    "rt-لماذا-تختلف-أسعار-التذاك-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
    "anchors": [
     "library:departure-board.jpg",
     "library:riyadh-departures.jpg",
     "library:checkin-hall.jpg",
+    "library:rt-لماذا-تختلف-أسعار-التذاك-1.jpg",
+    "library:rt-لماذا-تختلف-أسعار-التذاك-2.jpg",
     "archive:أسعار التذاكر"
    ],
    "pass": true
   },
   "حسن الشربتلي وجيل التجار الأوائل في جدة": {
    "pool": "general",
-   "at": "2026-08-26T14:04:27.255948",
+   "at": "2026-08-26T15:28:44.536963",
    "thash": "ec2de122da",
    "person": "حسن الشربتلي",
    "images": 2,
@@ -2793,6 +4122,11 @@
     "portrait:حسن الشربتلي",
     "library:sharbatly-founder.jpg"
    ],
+   "local_photos": [
+    "sharbatly-founder.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "portrait:حسن الشربتلي",
@@ -2802,13 +4136,18 @@
   },
   "قصة هنقرستيشن وحرب تطبيقات التوصيل": {
    "pool": "saudi",
-   "at": "2026-08-26T14:04:29.911817",
+   "at": "2026-08-26T15:29:25.028138",
    "thash": "a35428721e",
    "images": 1,
    "era_ok": 1,
    "evidence": [
     "library:hungerstation-rider.jpg"
    ],
+   "local_photos": [
+    "hungerstation-rider.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:hungerstation-rider.jpg"
@@ -2817,13 +4156,18 @@
   },
   "قصة زين السعودية ودخولها سوق الاتصالات": {
    "pool": "saudi",
-   "at": "2026-08-26T14:16:35.944401",
+   "at": "2026-08-26T15:29:42.139496",
    "thash": "b1ae49dedd",
    "images": 1,
    "era_ok": 1,
    "evidence": [
     "library:zain-ksa-hq.jpg"
    ],
+   "local_photos": [
+    "zain-ksa-hq.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
    "readiness": "THIN",
    "anchors": [
     "library:zain-ksa-hq.jpg"
@@ -2832,7 +4176,7 @@
   },
   "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": {
    "pool": "general",
-   "at": "2026-08-26T14:45:26.798368",
+   "at": "2026-08-26T15:27:56.036048",
    "thash": "3d5c1cee3e",
    "person": "Jack Bogle",
    "files": [
@@ -2844,19 +4188,27 @@
     "portrait:Jack Bogle",
     "library:jack-bogle.jpg",
     "library:edison-stock-ticker.jpg",
-    "logo:p154:Vanguard.svg:current",
+    "logo:curated:current",
     "archive:Jack Bogle:1"
    ],
-   "readiness": "READY",
+   "local_photos": [
+    "jack-bogle.jpg",
+    "edison-stock-ticker.jpg"
+   ],
+   "local_logos": [
+    "vanguard.com-current.png"
+   ],
+   "runtime_status": "NEEDS 2 MORE PHOTOS",
+   "readiness": "THIN",
    "anchors": [
     "portrait:Jack Bogle",
     "library:jack-bogle.jpg",
     "library:edison-stock-ticker.jpg",
-    "logo:p154",
+    "logo:curated",
     "archive:Jack Bogle"
    ],
    "pass": true
   }
  },
- "checked_at": "2026-08-26T14:45:36.780890"
+ "checked_at": "2026-08-26T15:31:16.454168"
 }
