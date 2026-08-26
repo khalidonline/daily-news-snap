@@ -1,0 +1,52 @@
+name: Apply repair assets
+
+on:
+  push:
+    branches:
+      - repair/story-visual-coverage
+    paths:
+      - "repair_assets.json"
+      - "tools/apply_repair_assets.py"
+      - ".github/workflows/apply-repair-assets.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/story-visual-coverage
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Download and register reviewed repair assets
+        run: PYTHONPATH=. python tools/apply_repair_assets.py
+      - name: Verify Jack Bogle runtime coverage
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          import story_runtime as sr
+          story = "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير"
+          photos, logos, status = sr.coverage(story)
+          print("Bogle photos:", [p.name for p in photos])
+          print("Bogle logos:", [p.name for p in logos])
+          print("Bogle status:", status)
+          if status != "PASS":
+              raise SystemExit(f"Jack Bogle did not reach PASS: {status}")
+          PY
+      - name: Commit accepted assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/images.txt images/relevance.json images/bogle-vanguard-*.jpg
+          if git diff --cached --quiet; then
+            echo "No repair asset changes to commit"
+          else
+            git commit -m "assets: repair Jack Bogle runtime coverage"
+            git push origin HEAD:repair/story-visual-coverage
+          fi
