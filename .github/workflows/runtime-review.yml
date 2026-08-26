@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "tools/build_runtime_review.py"
+      - "tools/apply_materialized_review.py"
       - "images/**"
       - "stories.txt"
       - "story_runtime.py"
@@ -12,18 +13,34 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   review:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Apply reviewed materialized verdicts
+        run: PYTHONPATH=. python tools/apply_materialized_review.py
+      - name: Commit relevance ledger if changed
+        shell: bash
+        run: |
+          if git diff --quiet -- images/relevance.json; then
+            echo "relevance ledger already current"
+          else
+            git config user.name "story-visual-review-bot"
+            git config user.email "actions@github.com"
+            git add images/relevance.json
+            git commit -m "images: apply materialized relevance review"
+            git push origin HEAD:${{ github.head_ref || github.ref_name }}
+          fi
       - name: Build runtime review artifact
         run: PYTHONPATH=. python tools/build_runtime_review.py
       - name: Upload runtime review
