@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "policy": "Only DIRECT and STRONG_CONTEXT count. Unreviewed rt-* assets fail closed.",
+  "assets": {
+    "edison-stock-ticker.jpg": {
+      "stories": {
+        "Jack Bogle": "WEAK_GENERIC"
+      },
+      "note": "Generic stock-market artifact; it does not explain a Bogle/Vanguard/index-fund beat."
+    }
+  }
+}

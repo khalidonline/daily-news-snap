@@ -1,0 +1,43 @@
+name: Runtime relevance tests
+
+on:
+  pull_request:
+    paths:
+      - "runtime_relevance.py"
+      - "story_runtime.py"
+      - "tests/test_runtime_relevance.py"
+      - "images/relevance.json"
+      - ".github/workflows/story.yml"
+      - ".github/workflows/runtime-relevance-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Relevance policy unit tests
+        run: python -m unittest -v tests/test_runtime_relevance.py
+      - name: Compile guarded story entrypoint
+        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py
+      - name: Image precheck self-test
+        run: python image_precheck.py --selftest
+      - name: Jack Bogle regression — block insufficient runtime coverage
+        shell: bash
+        run: |
+          set +e
+          output=$(STORY='Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير' DRY_RUN=1 python story_runtime.py 2>&1)
+          code=$?
+          set -e
+          echo "$output"
+          test "$code" -ne 0
+          echo "$output" | grep -q 'story blocked by runtime relevance gate'
+          echo "$output" | grep -q 'NEEDS 3 MORE PHOTOS'
