@@ -3,6 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import story_runtime as sr
 from runtime_relevance import (
     DIRECT,
     STRONG_CONTEXT,
@@ -57,6 +58,56 @@ class RuntimeRelevanceTests(unittest.TestCase):
         self.assertEqual(runtime_status(3, 1), "NEEDS 1 MORE PHOTO")
         self.assertEqual(runtime_status(4, 0), "NEEDS LOGO")
         self.assertEqual(runtime_status(2, 0), "NEEDS 2 MORE PHOTOS + LOGO")
+
+
+class RuntimePhotoContractTests(unittest.TestCase):
+    def test_bogle_shape_consumes_approved_photos_before_text_or_extra_logo(self):
+        self.assertTrue(
+            hasattr(sr, "_runtime_contract_slots"),
+            "runtime photo contract planner is not implemented yet",
+        )
+        brief = {
+            "frames": [
+                {"subject_kind": "company"},
+                {"subject_kind": "person"},
+                {"subject_kind": "company"},
+                {"subject_kind": "abstract"},
+                {"subject_kind": "company"},
+                {"subject_kind": "abstract"},
+            ]
+        }
+        # Mirrors the observed Bogle run: logo, approved portrait, text,
+        # text, logo, text. Three unused approved photos must land on 1/3/4.
+        selected = ["logo-1", "approved-portrait", None, None, "logo-5", None]
+        approved_flags = [False, True, False, False, False, False]
+        logo_flags = [True, False, False, False, True, False]
+        slots = sr._runtime_contract_slots(
+            brief, selected, approved_flags, logo_flags, target=4
+        )
+        self.assertEqual(slots, [0, 2, 3])
+
+    def test_contract_preserves_a_sole_logo_when_other_slots_can_take_photos(self):
+        self.assertTrue(
+            hasattr(sr, "_runtime_contract_slots"),
+            "runtime photo contract planner is not implemented yet",
+        )
+        brief = {
+            "frames": [
+                {"subject_kind": "company"},
+                {"subject_kind": "person"},
+                {"subject_kind": "company"},
+                {"subject_kind": "company"},
+                {"subject_kind": "company"},
+                {"subject_kind": "abstract"},
+            ]
+        }
+        selected = ["only-logo", "approved-portrait", None, None, None, None]
+        approved_flags = [False, True, False, False, False, False]
+        logo_flags = [True, False, False, False, False, False]
+        slots = sr._runtime_contract_slots(
+            brief, selected, approved_flags, logo_flags, target=4
+        )
+        self.assertEqual(slots, [2, 3, 4])
 
 
 if __name__ == "__main__":
