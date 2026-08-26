@@ -2,40 +2,40 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build a resumable strict bulk-repair pipeline that drives the entire 123-story catalogue to the existing runtime requirement of 4 distinct approved local photos plus 1 relevant local logo, without story-by-story manual repair loops or any weakening of relevance rules.
+**Goal:** Build a resumable strict bulk-repair pipeline that drives all 123 Story Bot stories to the existing runtime requirement of 4 distinct approved local photos plus 1 relevant local logo, without story-by-story manual repair loops and without weakening relevance rules.
 
-**Architecture:** Keep `story_runtime.coverage()` as the only PASS/FAIL authority. Add small focused modules for board generation, exact logo identity resolution, source discovery, validation, registration, and orchestration; every accepted candidate must flow through the current runtime relevance/dedupe policy before it can improve coverage. GitHub Actions runs the repair in bounded batches, commits only validated changes, rebuilds the authoritative board after every batch, and stops at 123/123 PASS or a fail-closed no-progress report.
+**Architecture:** `story_runtime.coverage()` remains the only PASS/FAIL authority. Focused modules own board generation, exact identity/logo resolution, source discovery, candidate validation, asset registration, and orchestration. A PR workflow loops through bounded repair batches, validates and pushes each batch, rebuilds the runtime board after every batch, and terminates only at 123/123 PASS or a fail-closed no-progress report.
 
-**Tech Stack:** Python 3.12, Pillow, `urllib.request`, existing `story_runtime.py`, `story_bot.py`, `news_bot.py`, `runtime_relevance.py`, `image_precheck.py`, Python `unittest`, GitHub Actions, Wikimedia Commons/Wikidata, Library of Congress, Openverse, and exact first-party source URLs.
+**Tech Stack:** Python 3.12, Pillow, `urllib.request`, existing `story_runtime.py`, `story_bot.py`, `news_bot.py`, `runtime_relevance.py`, `image_precheck.py`, Python `unittest`, GitHub Actions, Wikimedia Commons/Wikidata, Library of Congress, Openverse, and exact first-party source pages.
 
 **Spec:** `docs/superpowers/specs/2026-08-26-strict-bulk-story-visual-repair-design.md`
 
 ## Global Constraints
 
-- Runtime completion remains exactly 4 distinct relevant usable local photos + at least 1 relevant local logo per story.
-- `story_runtime.coverage()` is authoritative; no parallel repair score may declare PASS.
+- Runtime completion remains 4 distinct relevant usable local photos plus at least 1 relevant local logo per story.
+- `story_runtime.coverage()` is authoritative; no repair-specific score may declare PASS.
 - Only `DIRECT` and `STRONG_CONTEXT` verdicts count.
 - `WEAK_GENERIC`, `WRONG_ENTITY`, and unreviewed `rt-*` assets never count.
 - Exact SHA duplicates and perceptual dHash duplicates within `image_precheck.DHASH_MAX_DISTANCE` count once.
 - Person identity must be supported by trustworthy source metadata; automated face recognition is not an identity proof.
 - First-party assets may be used with source/credit provenance, but must not be described as open-license unless the source says so.
-- A transient source/model/API failure never becomes approval.
-- The bulk pipeline must preserve existing curated non-`rt-*` relevance entries, including the Jack Bogle repair.
-- Re-running the pipeline must be idempotent: no duplicate files, duplicate index rows, duplicate logo aliases, or destructive ledger rewrites.
-- A workflow green check is not catalogue completion unless a fresh authoritative board reports exactly 123 stories and 123 PASS.
-- PR #2 remains draft until the 123/123 completion gate and representative renderer sanity sample pass.
+- A source/model/API failure never becomes approval.
+- Existing curated non-`rt-*` relevance entries, including the Jack Bogle repair, must survive every run.
+- Re-running the pipeline must be idempotent: no duplicate files, index rows, logo aliases, or destructive ledger rewrites.
+- A green workflow is not catalogue completion unless a fresh authoritative board reports exactly 123 stories and 123 PASS.
+- PR #2 stays draft until the 123/123 completion gate and representative renderer sanity sample pass.
 
 ## File Structure
 
-- Create `tools/bulk_visual_board.py` — authoritative coverage rows, backlog ordering, CSV/JSON board output.
-- Create `tools/bulk_visual_identity.py` — exact story/entity/person terms and fail-closed logo identity resolution.
-- Create `tools/bulk_visual_sources.py` — story beat planning plus candidate metadata discovery from structured sources.
+- Create `tools/bulk_visual_board.py` — authoritative coverage rows, backlog ordering, CSV/JSON output.
+- Create `tools/bulk_visual_identity.py` — exact story/person/entity terms and fail-closed logo identity resolution.
+- Create `tools/bulk_visual_sources.py` — story beat planning and structured candidate discovery.
 - Create `tools/bulk_visual_validate.py` — download/decode/photo-vs-graphic/dedupe/identity/relevance validation.
-- Create `tools/bulk_visual_register.py` — atomic/idempotent writes to local files, `images/images.txt`, `images/relevance.json`, logo index, and story metadata when a verified logo domain is added.
-- Create `tools/bulk_visual_repair.py` — resumable batch orchestrator and no-progress/unresolved reporting.
-- Modify `tools/build_runtime_review.py` — consume the shared board instead of rebuilding status independently.
-- Create `.github/workflows/bulk-visual-repair.yml` — bounded repair workflow with tests, commits, and review artifact.
-- Modify `.github/workflows/runtime-relevance-tests.yml` — run bulk unit tests and add catalogue invariants.
+- Create `tools/bulk_visual_register.py` — atomic/idempotent photo, logo, index, ledger, and verified story-metadata writes.
+- Create `tools/bulk_visual_repair.py` — resumable batch orchestrator and unresolved reporting.
+- Modify `tools/build_runtime_review.py` — reuse the shared board.
+- Create `.github/workflows/bulk-visual-repair.yml` — PR-triggered bounded loop plus manual dispatch after the workflow exists on the default branch.
+- Modify `.github/workflows/runtime-relevance-tests.yml` — bulk unit tests and catalogue invariants.
 - Create `tests/test_bulk_visual_board.py`.
 - Create `tests/test_bulk_visual_identity.py`.
 - Create `tests/test_bulk_visual_sources.py`.
@@ -54,8 +54,7 @@
 
 **Interfaces:**
 - Consumes: `story_bot.load_stories()`, `story_runtime.coverage(story)`.
-- Produces: `CoverageRow`, `build_board()`, `repair_backlog()`, `write_board()`.
-- `CoverageRow` fields: `story: str`, `photos: tuple[str, ...]`, `logos: tuple[str, ...]`, `need_photos: int`, `need_logo: bool`, `status: str`.
+- Produces: `CoverageRow`, `build_board()`, `repair_backlog()`, `row_for_story()`, `write_board()`.
 
 - [ ] **Step 1: Write the failing board tests**
 
@@ -69,7 +68,7 @@ from tools.bulk_visual_board import build_board, repair_backlog
 
 class BulkVisualBoardTests(unittest.TestCase):
     @patch("tools.bulk_visual_board.sr.coverage")
-    def test_board_uses_runtime_coverage_without_recomputing_policy(self, coverage):
+    def test_board_uses_runtime_coverage(self, coverage):
         coverage.side_effect = [
             (["a", "b", "c", "d"], ["logo"], "PASS"),
             (["a", "b", "c"], [], "NEEDS 1 MORE PHOTO + LOGO"),
@@ -82,7 +81,7 @@ class BulkVisualBoardTests(unittest.TestCase):
         self.assertTrue(rows[1].need_logo)
 
     @patch("tools.bulk_visual_board.sr.coverage")
-    def test_backlog_orders_cheapest_gaps_first(self, coverage):
+    def test_backlog_orders_smallest_gap_first(self, coverage):
         coverage.side_effect = [
             (["a", "b", "c", "d"], [], "NEEDS LOGO"),
             (["a", "b", "c"], ["logo"], "NEEDS 1 MORE PHOTO"),
@@ -92,15 +91,14 @@ class BulkVisualBoardTests(unittest.TestCase):
         self.assertEqual([r.story for r in repair_backlog(rows)], ["Logo", "One", "Large"])
 ```
 
-- [ ] **Step 2: Run the tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
-Run:
 ```bash
 python -m unittest -v tests/test_bulk_visual_board.py
 ```
 Expected: import failure because `tools.bulk_visual_board` does not exist.
 
-- [ ] **Step 3: Implement the board model using production coverage**
+- [ ] **Step 3: Implement the board model**
 
 ```python
 # tools/bulk_visual_board.py
@@ -140,27 +138,32 @@ def build_board(stories=None):
 
 
 def repair_backlog(rows):
-    failing = [r for r in rows if r.status != "PASS"]
-    return sorted(failing, key=lambda r: (
-        r.need_photos + int(r.need_logo),
-        r.need_photos,
-        int(r.need_logo),
-        r.story.casefold(),
+    failing = [row for row in rows if row.status != "PASS"]
+    return sorted(failing, key=lambda row: (
+        row.need_photos + int(row.need_logo),
+        row.need_photos,
+        int(row.need_logo),
+        row.story.casefold(),
     ))
+
+
+def row_for_story(rows, story):
+    return next(row for row in rows if row.story == story)
 
 
 def write_board(rows, out_dir="out/bulk-visual-repair"):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    data = [asdict(r) for r in rows]
     (out / "board.json").write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        json.dumps([asdict(row) for row in rows], ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     with (out / "board.csv").open("w", newline="", encoding="utf-8-sig") as fh:
         fields = ["story", "photo_count", "logo_count", "need_photos", "need_logo", "status", "photos", "logos"]
-        w = csv.DictWriter(fh, fieldnames=fields)
-        w.writeheader()
+        writer = csv.DictWriter(fh, fieldnames=fields)
+        writer.writeheader()
         for row in rows:
-            w.writerow({
+            writer.writerow({
                 "story": row.story,
                 "photo_count": len(row.photos),
                 "logo_count": len(row.logos),
@@ -173,17 +176,17 @@ def write_board(rows, out_dir="out/bulk-visual-repair"):
     return out / "board.json"
 ```
 
-- [ ] **Step 4: Replace `tools/build_runtime_review.write_status()` internals with `build_board()` output**
+- [ ] **Step 4: Make `tools/build_runtime_review.write_status()` serialize `build_board()` rows**
 
-The review script must import `build_board` and serialize the same rows rather than calling `sr.coverage()` through a second implementation path. Keep the existing `status.csv` column names for artifact compatibility.
+Keep the existing `status.csv` column names so previous review artifacts remain readable. Do not call a second coverage implementation.
 
-- [ ] **Step 5: Run board and existing runtime tests**
+- [ ] **Step 5: Run GREEN and review generation**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_board.py tests/test_runtime_relevance.py
 PYTHONPATH=. python tools/build_runtime_review.py
 ```
-Expected: all tests PASS; `out/runtime-review/status.csv` still contains 123 rows.
+Expected: tests PASS and runtime review still emits 123 status rows.
 
 - [ ] **Step 6: Commit**
 
@@ -201,27 +204,21 @@ git commit -m "feat: add authoritative bulk visual repair board"
 - Create: `tests/test_bulk_visual_identity.py`
 
 **Interfaces:**
-- Consumes: exact story line, `story_bot.story_aliases()`, `story_bot.story_logo_domain()`, approved local photo tags from `news_bot.load_local_images()`, `images/logos/index.json`.
-- Produces: `LogoIdentity(slug, domain, aliases, reason) | None`, `resolve_existing_logo_identity(story)`.
+- Consumes: `story_bot.story_aliases()`, `story_bot.story_logo_domain()`, `story_runtime.approved_runtime_visuals()`, `news_bot.load_local_images()`, `images/logos/index.json`.
+- Produces: `LogoIdentity`, `story_identity_terms(story)`, `choose_unique_logo_slug(names, index)`, `resolve_existing_logo_identity(story)`.
 
-- [ ] **Step 1: Write fail-closed logo identity tests**
+- [ ] **Step 1: Write fail-closed local-logo tests**
 
 ```python
 # tests/test_bulk_visual_identity.py
 import unittest
-from pathlib import Path
-from tempfile import TemporaryDirectory
-
 from tools.bulk_visual_identity import choose_unique_logo_slug
 
 
 class BulkVisualIdentityTests(unittest.TestCase):
     def test_unique_exact_alias_match_is_accepted(self):
         index = {"apple.com": ["Apple", "Steve Jobs", "apple.com"]}
-        self.assertEqual(
-            choose_unique_logo_slug({"Steve Jobs"}, index),
-            "apple.com",
-        )
+        self.assertEqual(choose_unique_logo_slug({"Steve Jobs"}, index), "apple.com")
 
     def test_ambiguous_alias_match_fails_closed(self):
         index = {
@@ -235,12 +232,11 @@ class BulkVisualIdentityTests(unittest.TestCase):
         self.assertIsNone(choose_unique_logo_slug({"Snapdragon"}, index))
 ```
 
-- [ ] **Step 2: Run the tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_identity.py
 ```
-Expected: import failure.
 
 - [ ] **Step 3: Implement exact normalized identity matching**
 
@@ -272,10 +268,10 @@ def norm(value):
 
 
 def choose_unique_logo_slug(names, index):
-    wanted = {norm(n) for n in names if norm(n)}
+    wanted = {norm(name) for name in names if norm(name)}
     matches = []
     for slug, aliases in index.items():
-        hay = {norm(slug), *(norm(a) for a in aliases)}
+        hay = {norm(slug), *(norm(alias) for alias in aliases)}
         if wanted & hay:
             matches.append(slug)
     return matches[0] if len(set(matches)) == 1 else None
@@ -284,10 +280,12 @@ def choose_unique_logo_slug(names, index):
 def story_identity_terms(story):
     terms = set(sb.story_aliases(story))
     terms |= set(sb._STORY_PERSONS.get(str(story).strip()) or [])
+    approved, _ = sr.approved_runtime_visuals(story)
+    approved_names = {path.name for path in approved}
     for entry in nb.load_local_images():
-        if entry["path"].name in {p.name for p in sr.approved_runtime_visuals(story)[0]}:
+        if entry["path"].name in approved_names:
             terms |= set(entry.get("tags", []))
-    return {t for t in terms if str(t).strip()}
+    return {term for term in terms if str(term).strip()}
 
 
 def resolve_existing_logo_identity(story, index_path=LOGO_INDEX):
@@ -299,24 +297,20 @@ def resolve_existing_logo_identity(story, index_path=LOGO_INDEX):
     except Exception:
         return None
     slug = choose_unique_logo_slug(story_identity_terms(story), index)
-    if not slug:
-        return None
-    files = list(LOGO_DIR.glob(f"{slug}-*.png"))
-    if not files:
+    if not slug or not list(LOGO_DIR.glob(f"{slug}-*.png")):
         return None
     return LogoIdentity(slug, slug if "." in slug else "", tuple(index.get(slug, [])), "unique-local-logo-alias")
 ```
 
-- [ ] **Step 4: Add a regression proving the Steve Jobs-style case is resolved only because the logo index explicitly contains the person alias**
+- [ ] **Step 4: Add the Steve Jobs regression with a temporary index fixture**
 
-Use a temporary logo index with `apple.com: ["Apple", "Steve Jobs", "apple.com"]`; do not infer Apple from the word "company" or from generic knowledge.
+The fixture contains `{"apple.com": ["Apple", "Steve Jobs", "apple.com"]}` and verifies that removing `Steve Jobs` makes the person-only lookup unresolved. This proves the resolver is using explicit repository evidence rather than general knowledge.
 
-- [ ] **Step 5: Run tests**
+- [ ] **Step 5: Run GREEN**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_identity.py tests/test_runtime_relevance.py
 ```
-Expected: PASS.
 
 - [ ] **Step 6: Commit**
 
@@ -327,78 +321,94 @@ git commit -m "feat: resolve local story logos fail closed"
 
 ---
 
-### Task 3: Add structured logo discovery for stories with no local logo
+### Task 3: Discover missing logos from structured identity data
 
 **Files:**
 - Modify: `tools/bulk_visual_identity.py`
 - Modify: `tests/test_bulk_visual_identity.py`
 
 **Interfaces:**
-- Consumes: canonical entity aliases from story metadata/approved photo tags, Wikidata search API, Wikidata entity JSON (`P154` logo image and `P856` official website).
-- Produces: `discover_verified_logo_identity(story, opener=urllib.request.urlopen) -> DiscoveredLogo | None` where `DiscoveredLogo` includes `entity_label`, `domain`, `commons_filename`, `source_url`, and `aliases`.
+- Add `DiscoveredLogo(entity_label: str, domain: str, commons_filename: str, source_url: str, aliases: tuple[str, ...])`.
+- Add `discover_wikidata_logo_for_terms(terms, json_get) -> DiscoveredLogo | None`.
+- Add `discover_verified_logo_identity(story, json_get=_json_get) -> DiscoveredLogo | None`.
 
-- [ ] **Step 1: Write mocked Wikidata tests**
+- [ ] **Step 1: Write concrete mocked Wikidata tests**
 
 ```python
-def test_wikidata_logo_requires_exact_entity_label_and_official_site(self):
-    # Fixture search result label is exactly "Apple Inc." and P856 is apple.com.
-    # P154 is Apple_logo_black.svg. Expected: accepted DiscoveredLogo.
-    ...
+from tools.bulk_visual_identity import discover_wikidata_logo_for_terms
 
-def test_wikidata_logo_rejects_search_result_with_only_partial_label(self):
-    # Story term "Amazon" must not accept "Amazon rainforest".
-    ...
 
-def test_wikidata_logo_rejects_entity_without_p154_or_p856(self):
-    ...
+def _apple_json_get(url):
+    if "wbsearchentities" in url:
+        return {"search": [{"id": "Q312", "label": "Apple Inc.", "aliases": ["Apple"]}]}
+    return {
+        "entities": {
+            "Q312": {
+                "labels": {"en": {"value": "Apple Inc."}},
+                "aliases": {"en": [{"value": "Apple"}]},
+                "claims": {
+                    "P154": [{"mainsnak": {"datavalue": {"value": "Apple logo black.svg"}}}],
+                    "P856": [{"mainsnak": {"datavalue": {"value": "https://www.apple.com/"}}}],
+                },
+            }
+        }
+    }
+
+
+def test_wikidata_logo_requires_exact_entity_alias(self):
+    logo = discover_wikidata_logo_for_terms({"Apple"}, _apple_json_get)
+    self.assertEqual(logo.domain, "apple.com")
+    self.assertEqual(logo.commons_filename, "Apple logo black.svg")
+
+
+def test_wikidata_logo_rejects_wrong_sense(self):
+    def fake(url):
+        if "wbsearchentities" in url:
+            return {"search": [{"id": "Q3783", "label": "Amazon River", "aliases": ["Amazon"]}]}
+        return {"entities": {}}
+    self.assertIsNone(discover_wikidata_logo_for_terms({"Amazon.com"}, fake))
+
+
+def test_wikidata_logo_requires_both_logo_and_official_site(self):
+    def fake(url):
+        if "wbsearchentities" in url:
+            return {"search": [{"id": "Q1", "label": "Example Corp", "aliases": ["Example Corp"]}]}
+        return {"entities": {"Q1": {"claims": {"P154": []}}}}
+    self.assertIsNone(discover_wikidata_logo_for_terms({"Example Corp"}, fake))
 ```
 
-The test fixtures must be literal dictionaries in the test file; no network access in unit tests.
-
-- [ ] **Step 2: Run tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_identity.py
 ```
 
-- [ ] **Step 3: Implement Wikidata lookup with exact normalized label/alias matching**
+- [ ] **Step 3: Implement exact Wikidata lookup**
 
-Use:
+Use these endpoints:
 
 ```python
 WIKIDATA_SEARCH = "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&limit=8&search={query}"
 WIKIDATA_ENTITY = "https://www.wikidata.org/wiki/Special:EntityData/{qid}.json"
-COMMONS_FILE = "https://commons.wikimedia.org/wiki/Special:FilePath/{filename}"
 ```
 
-Rules implemented in code:
+Acceptance rules in code:
 
-```python
-# Accept only when one QID has an exact normalized match against a canonical
-# entity term from story metadata or approved-photo tags.
-# Require P154 and P856 on that same QID.
-# Parse hostname from P856; reject non-http(s), blank, or hostname-less values.
-# The logo file is retrieved from Commons via P154, preserving the QID and
-# Commons filename as provenance.
-```
+- one QID must have a normalized label or alias exactly equal to a canonical entity term;
+- the same QID must expose `P154` and `P856`;
+- parse the `P856` hostname and normalize `www.apple.com` to `apple.com`;
+- preserve QID and P154 filename as provenance;
+- partial title matches never count.
 
-Do not use loose title keywords as entity terms. Person-only aliases may not be converted directly into an organization logo; they remain for the next deterministic relation step.
+- [ ] **Step 4: Add unique person-to-organization relation resolution**
 
-- [ ] **Step 4: Add person-to-organization relation resolution only when unique and corroborated**
+For a canonical person QID, collect structured organizations from `P108` employer and Wikidata SPARQL results for `P112` founded-by and `P169` CEO relations. Keep an organization only if its normalized label/aliases intersect explicit story entity aliases or approved-photo tags. Accept only when one organization remains and it has `P154` + `P856`; otherwise return `None`.
 
-For a canonical person QID, inspect structured organization relations in this order:
+- [ ] **Step 5: Download P154 through MediaWiki imageinfo**
 
-1. `P108` employer from the person item;
-2. organizations returned by a Wikidata SPARQL query where `wdt:P112` (founded by) points to the person;
-3. organizations returned where `wdt:P169` (chief executive officer) points to the person.
+Use the Commons API with `prop=imageinfo&iiprop=url&iiurlwidth=1024`. Download `thumburl` when present so SVG logos arrive as a rasterized thumbnail without adding a new SVG dependency; otherwise use `url`. Decode with Pillow and run `image_precheck.guard_render(image_precheck.Candidate(path=str(temp), caption=entity_label, slot="logo"))`. Reject any nonempty guard reason.
 
-Keep an organization only when its label/aliases intersect the tags of the story's already-approved photos or an explicit story entity alias. If exactly one corroborated organization remains and it has `P154` + `P856`, accept it; otherwise return `None`.
-
-- [ ] **Step 5: Add a downloader that saves the verified P154 asset as `<domain>-current.png` and validates it with Pillow / `image_precheck.guard_render()` before registration**
-
-SVG P154 files must be rasterized through the project's existing SVG/image path if available; otherwise reject the candidate rather than adding a new rendering dependency in this task.
-
-- [ ] **Step 6: Run tests**
+- [ ] **Step 6: Run GREEN**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_identity.py
@@ -421,11 +431,10 @@ git commit -m "feat: discover verified story logos from Wikidata"
 - Create: `tests/test_bulk_visual_sources.py`
 
 **Interfaces:**
-- Produces:
-  - `StoryBeat(key: str, queries: tuple[str, ...], required_identity: tuple[str, ...])`
-  - `SourceCandidate(source, source_page, direct_url, title, description, creator, license, license_url, width, height, beat_key, matched_on)`
-  - `plan_story_beats(story) -> list[StoryBeat]`
-  - discovery adapters returning `list[SourceCandidate]` without downloading into `images/`.
+- `StoryBeat(key: str, queries: tuple[str, ...], required_identity: tuple[str, ...])`.
+- `SourceCandidate(source: str, source_id: str, source_page: str, direct_url: str, title: str, description: str, creator: str, license: str, license_url: str, width: int, height: int, beat_key: str, matched_on: str, required_identity: tuple[str, ...])`.
+- `plan_story_beats(story) -> list[StoryBeat]`.
+- `discover_commons()`, `discover_loc()`, `discover_openverse()`, `discover_first_party()` return metadata only and never write to `images/`.
 
 - [ ] **Step 1: Write beat planner tests**
 
@@ -441,57 +450,48 @@ class StoryBeatPlannerTests(unittest.TestCase):
         self.assertEqual(beats[0].key, "person")
         self.assertIn("Jack Bogle", beats[0].required_identity)
 
-    def test_beats_are_distinct_keys(self):
+    def test_company_story_has_four_distinct_beats(self):
         beats = plan_story_beats("قصة NVIDIA: من رقائق الألعاب إلى أغلى شركة في العالم")
-        self.assertEqual(len({b.key for b in beats}), len(beats))
+        self.assertEqual(
+            [beat.key for beat in beats[:4]],
+            ["origin", "early_operation", "turning_point", "modern_result"],
+        )
 ```
 
-- [ ] **Step 2: Run tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_sources.py
 ```
 
-- [ ] **Step 3: Implement data classes and deterministic beat planning**
+- [ ] **Step 3: Implement deterministic beat planning**
 
-Beat order:
+Use these four-beat orders:
 
-```python
-# person story
-person -> early_work -> product_or_company -> legacy
-
-# company/entity story
-origin -> early_operation -> turning_point -> modern_result
-
-# place/history/topic story
-origin_or_early -> subject_detail -> turning_point -> modern_or_legacy
+```text
+person: person, early_work, product_or_company, legacy
+company/entity: origin, early_operation, turning_point, modern_result
+place/history/topic: origin_or_early, subject_detail, turning_point, modern_or_legacy
 ```
 
-Queries must be assembled from exact canonical aliases and beat terms; never from generic words such as `business`, `office`, `city`, `meeting`, or `street` alone.
+Queries are built from exact canonical aliases plus beat-specific terms. Never issue a source query made only of generic words such as `business`, `office`, `city`, `meeting`, or `street`.
 
-- [ ] **Step 4: Add structured discovery adapters**
+- [ ] **Step 4: Implement Commons, Library of Congress, and Openverse metadata adapters**
 
-Implement `discover_commons()`, `discover_loc()`, and `discover_openverse()` as metadata-returning adapters. Each adapter must:
+Each adapter must return a bounded result list with stable source ID, source page, direct image URL, title/description, creator, explicit license metadata when available, dimensions, matched query, and beat identity. Before returning a candidate, reject metadata matching `news_bot.BLOCKED_IMAGE_TERMS`, `BLOCKED_AR_TERMS`, `NOT_A_PHOTOGRAPH_TERMS`, or `NOT_A_PHOTOGRAPH_AR`.
 
-- request only a bounded number of results per query;
-- retain source page/direct URL, title/description, creator, explicit license fields when available, dimensions, and stable source ID;
-- filter `news_bot.BLOCKED_IMAGE_TERMS`, `BLOCKED_AR_TERMS`, `NOT_A_PHOTOGRAPH_TERMS`, and obvious artwork/document metadata before returning candidates;
-- never write directly to `images/`.
+- [ ] **Step 5: Implement first-party discovery only for a verified official domain**
 
-- [ ] **Step 5: Add first-party discovery only for a verified official domain**
+`discover_first_party(beat, domain)` may follow image URLs referenced by an official page. Return a candidate only when the page belongs to the verified official domain and the image URL is same-domain or a CDN URL explicitly referenced by that page. Record both page and image URLs; a naked CDN URL with no first-party page provenance is rejected.
 
-`discover_first_party(beat, domain)` may inspect the verified official site's pages/assets, but every returned candidate must have a direct image URL under the same registrable domain or a first-party CDN referenced by that page, plus the page URL as provenance. If page-to-asset provenance cannot be established, return no candidate.
+- [ ] **Step 6: Add mocked adapter tests**
 
-- [ ] **Step 6: Run source tests with mocked HTTP fixtures**
+Use literal Commons/Openverse/LOC JSON fixtures and assert that an artwork result is filtered while a licensed photograph returns a populated `SourceCandidate` including `source_id`, `source_page`, and `license`.
+
+- [ ] **Step 7: Run GREEN and commit**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_sources.py
-```
-Expected: PASS with zero real network calls.
-
-- [ ] **Step 7: Commit**
-
-```bash
 git add tools/bulk_visual_sources.py tests/test_bulk_visual_sources.py
 git commit -m "feat: add structured story visual source discovery"
 ```
@@ -505,62 +505,107 @@ git commit -m "feat: add structured story visual source discovery"
 - Create: `tests/test_bulk_visual_validate.py`
 
 **Interfaces:**
-- Consumes: `SourceCandidate`, story, existing approved photo paths.
-- Produces: `ValidationResult(accepted: bool, verdict: str, reason: str, temp_path: Path | None, sha256: str, dhash: int | None)`.
-- Main function: `validate_candidate(story, candidate, existing_paths, temp_dir, relevance_fn) -> ValidationResult`.
+- `ValidationResult(accepted: bool, verdict: str, reason: str, temp_path: Path | None, sha256: str, dhash: int | None)`.
+- `validate_candidate(story, candidate, existing_paths, temp_dir, relevance_fn, download_fn) -> ValidationResult`.
 
-- [ ] **Step 1: Write tests for decode, dimensions, graphics, exact duplicates, perceptual duplicates, person identity, and relevance verdicts**
+- [ ] **Step 1: Write concrete validation tests**
 
 ```python
+# tests/test_bulk_visual_validate.py
+import shutil
+import tempfile
+import unittest
+from pathlib import Path
+from PIL import Image
+
+from runtime_relevance import DIRECT, WEAK_GENERIC, WRONG_ENTITY
+from tools.bulk_visual_sources import SourceCandidate
+from tools.bulk_visual_validate import validate_candidate
+
+
+def make_image(path, value=120, fmt="JPEG"):
+    Image.new("RGB", (640, 480), (value, value, value)).save(path, fmt)
+
+
+def candidate(title="Jack Bogle"):
+    return SourceCandidate(
+        source="commons", source_id="Q1", source_page="https://commons.wikimedia.org/wiki/File:Bogle.jpg",
+        direct_url="https://upload.wikimedia.org/bogle.jpg", title=title,
+        description="John C. Bogle at Vanguard", creator="Bill Cramer", license="CC BY-SA 4.0",
+        license_url="https://creativecommons.org/licenses/by-sa/4.0/", width=640, height=480,
+        beat_key="person", matched_on="Jack Bogle", required_identity=("Jack Bogle", "John C. Bogle"),
+    )
+
+
 class BulkVisualValidationTests(unittest.TestCase):
-    def test_wrong_entity_never_accepts(self): ...
-    def test_weak_generic_never_accepts(self): ...
-    def test_exact_duplicate_never_accepts(self): ...
-    def test_perceptual_duplicate_never_accepts(self): ...
-    def test_person_candidate_requires_name_in_trusted_source_metadata(self): ...
-    def test_direct_candidate_accepts_only_after_local_decode(self): ...
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.download_source = self.root / "download.jpg"
+        make_image(self.download_source, 100)
+        self.download = lambda cand, dest: shutil.copy2(self.download_source, dest)
+
+    def test_wrong_entity_never_accepts(self):
+        result = validate_candidate("Jack Bogle story", candidate(), [], self.root, lambda *args: WRONG_ENTITY, self.download)
+        self.assertFalse(result.accepted)
+        self.assertEqual(result.verdict, WRONG_ENTITY)
+
+    def test_weak_generic_never_accepts(self):
+        result = validate_candidate("Jack Bogle story", candidate(), [], self.root, lambda *args: WEAK_GENERIC, self.download)
+        self.assertFalse(result.accepted)
+
+    def test_exact_duplicate_never_accepts(self):
+        existing = self.root / "existing.jpg"
+        shutil.copy2(self.download_source, existing)
+        result = validate_candidate("Jack Bogle story", candidate(), [existing], self.root, lambda *args: DIRECT, self.download)
+        self.assertFalse(result.accepted)
+        self.assertIn("duplicate", result.reason.lower())
+
+    def test_person_candidate_requires_source_metadata_identity(self):
+        result = validate_candidate("Jack Bogle story", candidate(title="Vanguard office"), [], self.root, lambda *args: DIRECT, self.download)
+        self.assertFalse(result.accepted)
+        self.assertIn("identity", result.reason.lower())
+
+    def test_direct_candidate_accepts_after_local_decode(self):
+        result = validate_candidate("Jack Bogle story", candidate(), [], self.root, lambda *args: DIRECT, self.download)
+        self.assertTrue(result.accepted)
+        self.assertEqual(result.verdict, DIRECT)
+        self.assertTrue(result.temp_path.exists())
 ```
 
-Use temporary generated images; no external network calls.
+Add a perceptual-duplicate test using two separately encoded images with identical pixels and assert rejection by dHash even when SHA differs.
 
-- [ ] **Step 2: Run tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_validate.py
 ```
 
-- [ ] **Step 3: Implement local download and physical image checks**
+- [ ] **Step 3: Implement validation in this exact order**
 
-Validation order must be exactly:
+1. download to a unique temporary file;
+2. Pillow decode and RGB conversion;
+3. require at least 300x250 pixels;
+4. run `image_precheck.guard_render()` on an `image_precheck.Candidate` with `slot="archive"`;
+5. reject exact SHA matches;
+6. reject dHash matches within `image_precheck.DHASH_MAX_DISTANCE`;
+7. for person beats, require a canonical person name/alias in trusted source title, description, or structured depicts metadata;
+8. call the relevance adapter;
+9. accept only `DIRECT` or `STRONG_CONTEXT`.
 
-```python
-1. download to a temporary file;
-2. Pillow decode + RGB conversion;
-3. minimum size >= 300x250;
-4. `image_precheck.guard_render()` must not identify a flat/solid/bar graphic;
-5. SHA-256 duplicate rejection;
-6. dHash duplicate rejection using `image_precheck.DHASH_MAX_DISTANCE`;
-7. exact-person metadata proof when the beat is a person beat;
-8. relevance classification;
-9. accept only DIRECT or STRONG_CONTEXT.
-```
+- [ ] **Step 4: Wire fail-closed relevance classification**
 
-- [ ] **Step 4: Implement fail-closed relevance classification**
+The production `relevance_fn` reuses the existing image vision/relevance path with exact story, beat, source metadata, and local image. Unknown verdict, malformed response, exception, timeout, or missing key returns a rejected `EXTERNAL_API_ERROR` or `VALIDATION_ERROR`; it never defaults to `DIRECT`.
 
-Reuse the existing vision/relevance machinery rather than inventing a looser classifier. The adapter supplied as `relevance_fn` must return one of the four runtime verdict strings. Production wiring may call the existing image-vision gate/model with the exact story, beat, candidate title/description, and local image. Any exception, timeout, malformed response, or unknown verdict returns an unaccepted `EXTERNAL_API_ERROR`/`VALIDATION_ERROR`; it never defaults to `DIRECT`.
-
-- [ ] **Step 5: Implement person identity proof from metadata, not face recognition**
-
-For a person beat, require the canonical person name or an explicit canonical alias in a trusted source's title/description/structured depicts metadata. If only a generic company/event caption is present, the candidate may be considered for a non-person contextual beat but must not satisfy the person beat.
-
-- [ ] **Step 6: Run tests and precheck self-test**
+- [ ] **Step 5: Run GREEN and precheck self-test**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_validate.py tests/test_runtime_relevance.py
 python image_precheck.py --selftest
 ```
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add tools/bulk_visual_validate.py tests/test_bulk_visual_validate.py
@@ -576,78 +621,86 @@ git commit -m "feat: validate bulk story visual candidates fail closed"
 - Create: `tests/test_bulk_visual_register.py`
 
 **Interfaces:**
-- Produces:
-  - `register_photo(story, candidate, result, images_dir, index_path, ledger_path) -> Path`
-  - `register_logo(story, discovered_logo, logos_dir, logo_index_path, stories_path) -> Path`
-  - `merge_relevance_entry(doc, filename, story, verdict, source_url, note="") -> dict`.
+- `deterministic_photo_name(story, candidate) -> str`.
+- `merge_relevance_entry(doc, filename, story, verdict, source_url, note="") -> dict`.
+- `append_index_line(path, filename, tags, credit) -> bool`.
+- `merge_logo_aliases(index, slug, aliases) -> dict`.
+- `add_logo_domain_to_story_text(text, story, domain) -> str`.
+- `register_photo(...) -> Path` and `register_logo(...) -> Path`.
 
-- [ ] **Step 1: Write ledger-preservation and idempotency tests**
+- [ ] **Step 1: Write concrete preservation/idempotency tests**
 
 ```python
+# tests/test_bulk_visual_register.py
+import copy
+import tempfile
+import unittest
+from pathlib import Path
+
+from tools.bulk_visual_register import (
+    add_logo_domain_to_story_text,
+    append_index_line,
+    merge_logo_aliases,
+    merge_relevance_entry,
+)
+
+
 class BulkVisualRegistrationTests(unittest.TestCase):
-    def test_register_photo_preserves_existing_bogle_entry(self): ...
-    def test_register_photo_does_not_duplicate_images_txt_line(self): ...
-    def test_register_photo_same_source_is_idempotent(self): ...
-    def test_register_logo_does_not_duplicate_alias(self): ...
-    def test_register_logo_adds_verified_logo_domain_once(self): ...
+    def test_merge_preserves_bogle_entries(self):
+        original = {
+            "assets": {
+                "bogle-vanguard-1959.jpg": {"stories": {"Jack Bogle": "DIRECT"}},
+                "edison-stock-ticker.jpg": {"stories": {"Jack Bogle": "WEAK_GENERIC"}},
+            }
+        }
+        result = merge_relevance_entry(copy.deepcopy(original), "bulk-story-x-origin-abc.jpg", "Story X", "DIRECT", "https://example.com/photo")
+        self.assertEqual(result["assets"]["bogle-vanguard-1959.jpg"], original["assets"]["bogle-vanguard-1959.jpg"])
+        self.assertEqual(result["assets"]["edison-stock-ticker.jpg"], original["assets"]["edison-stock-ticker.jpg"])
+
+    def test_index_line_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "images.txt"
+            self.assertTrue(append_index_line(path, "x.jpg", ["Story X"], "Commons / CC BY 4.0"))
+            self.assertFalse(append_index_line(path, "x.jpg", ["Story X"], "Commons / CC BY 4.0"))
+            self.assertEqual(path.read_text(encoding="utf-8").count("x.jpg"), 1)
+
+    def test_logo_alias_merge_is_idempotent(self):
+        index = {"apple.com": ["Apple"]}
+        first = merge_logo_aliases(index, "apple.com", ["Apple", "Steve Jobs"])
+        second = merge_logo_aliases(first, "apple.com", ["Steve Jobs"])
+        self.assertEqual(second["apple.com"].count("Steve Jobs"), 1)
+
+    def test_verified_logo_domain_is_added_once(self):
+        text = "قصة Steve Jobs: الطرد من شركته ثم العودة | Steve Jobs\n"
+        once = add_logo_domain_to_story_text(text, "قصة Steve Jobs: الطرد من شركته ثم العودة", "apple.com")
+        twice = add_logo_domain_to_story_text(once, "قصة Steve Jobs: الطرد من شركته ثم العودة", "apple.com")
+        self.assertEqual(twice.count("logo:apple.com"), 1)
 ```
 
-The Bogle preservation fixture must include a non-`rt-*` `DIRECT` row and `edison-stock-ticker.jpg: WEAK_GENERIC`, then verify both survive an unrelated registration.
+Add a conflict test where the story already declares `logo:tesla.com` and an attempted `apple.com` update raises `LogoIdentityConflict`.
 
-- [ ] **Step 2: Run tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_register.py
 ```
 
-- [ ] **Step 3: Implement deterministic filenames and atomic file moves**
+- [ ] **Step 3: Implement deterministic filenames and atomic writes**
 
-Photo names:
+Photo filename format is `bulk-<story-slug>-<beat-key>-<source-id-short>.jpg`. Source stable ID or candidate SHA determines the suffix. Write validated image bytes to a sibling temporary path, flush and `os.fsync()`, then replace atomically. If the deterministic destination already exists with different bytes, raise an invariant error rather than overwrite it.
 
-```python
-bulk-<story-slug>-<beat-key>-<source-id-short>.jpg
-```
+- [ ] **Step 4: Implement additive index and ledger writes**
 
-Rules:
-
-- normalize to JPEG only after validation;
-- source candidate stable ID or SHA contributes to filename so reruns resolve to the same path;
-- write to a sibling `.tmp` path, `fsync`, then `Path.replace()`;
-- never replace an existing different file under the same deterministic name.
-
-- [ ] **Step 4: Implement additive `images/images.txt` + ledger updates**
-
-Index line format stays:
-
-```text
-filename.jpg | tag1, tag2 | credit/source description
-```
-
-Ledger entry:
-
-```json
-{
-  "stories": {"<exact story>": "DIRECT"},
-  "source_url": "https://...",
-  "note": "source/license/beat metadata"
-}
-```
-
-Merge with the existing document in place; never reconstruct the full non-`rt-*` ledger from scratch.
+A registered photo adds exactly one `images/images.txt` line and merges exactly one exact-story verdict into the existing ledger. The ledger stores `source_url` and a note containing source, license string when present, and beat key. Never rebuild all non-`rt-*` rows.
 
 - [ ] **Step 5: Implement verified logo registration**
 
-Save under `images/logos/<domain>-current.png`, merge exact entity/person aliases into `images/logos/index.json`, and add `logo:<domain>` to the story metadata only when the domain came from the verified identity resolver. If the story already has a different declared `logo:` domain, fail closed and report `LOGO_IDENTITY_CONFLICT` rather than overwrite it.
+Save a validated raster logo as `images/logos/<domain>-current.png`, merge exact aliases into `images/logos/index.json`, and add `logo:<domain>` to the exact story line only when the identity resolver supplied the verified domain. A conflicting existing logo domain raises `LogoIdentityConflict`.
 
-- [ ] **Step 6: Run tests**
+- [ ] **Step 6: Run GREEN and commit**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_register.py tests/test_apply_repair_assets.py
-```
-
-- [ ] **Step 7: Commit**
-
-```bash
 git add tools/bulk_visual_register.py tests/test_bulk_visual_register.py
 git commit -m "feat: register repaired story visuals idempotently"
 ```
@@ -661,104 +714,105 @@ git commit -m "feat: register repaired story visuals idempotently"
 - Create: `tests/test_bulk_visual_repair.py`
 
 **Interfaces:**
-- Consumes all interfaces from Tasks 1–6.
-- CLI:
+- CLI: `python tools/bulk_visual_repair.py --batch-stories 15 --max-candidates-per-beat 12`, `--board-only`, and `--story "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير"`.
+- Add `BatchResult(progress: int, processed: int, exit_code: int)`.
+- Exit codes: `0` = 123/123 complete; `10` = safe progress made and backlog remains; `2` = no safe progress and backlog remains; `3` = invariant violation.
+- Output: `out/bulk-visual-repair/board.json`, `board.csv`, `attempts.jsonl`, `unresolved.json`.
 
-```text
-python tools/bulk_visual_repair.py --batch-stories 15 --max-candidates-per-beat 12
-python tools/bulk_visual_repair.py --board-only
-python tools/bulk_visual_repair.py --story "<exact story>"
-```
-
-- Produces:
-  - `out/bulk-visual-repair/board.json`
-  - `out/bulk-visual-repair/board.csv`
-  - `out/bulk-visual-repair/attempts.jsonl`
-  - `out/bulk-visual-repair/unresolved.json`
-  - exit code 0 when work completed safely, exit code 2 on no-safe-progress with unresolved stories, exit code 3 on invariant violation.
-
-- [ ] **Step 1: Write orchestrator tests with fake source/validator/register functions**
+- [ ] **Step 1: Write concrete orchestrator tests around a pure row processor**
 
 ```python
+# tests/test_bulk_visual_repair.py
+import unittest
+from tools.bulk_visual_board import CoverageRow
+from tools.bulk_visual_repair import process_rows
+
+
+def row(story, need_photos, need_logo, status):
+    return CoverageRow(story, tuple(), tuple(), need_photos, need_logo, status)
+
+
 class BulkVisualRepairTests(unittest.TestCase):
-    def test_one_story_failure_does_not_abort_next_story(self): ...
-    def test_pass_story_is_skipped(self): ...
-    def test_logo_only_story_is_repaired_before_photo_gap(self): ...
-    def test_rerun_after_partial_progress_does_not_repeat_registered_candidate(self): ...
-    def test_zero_progress_with_failures_returns_no_progress_status(self): ...
+    def test_one_story_failure_does_not_abort_next_story(self):
+        calls = []
+        def repair_photo(story, deficit):
+            calls.append(story)
+            if story == "Broken":
+                raise RuntimeError("source down")
+            return 1
+        result = process_rows(
+            [row("Broken", 1, False, "NEEDS 1 MORE PHOTO"), row("Good", 1, False, "NEEDS 1 MORE PHOTO")],
+            batch_stories=2,
+            repair_logo_fn=lambda story: 0,
+            repair_photos_fn=repair_photo,
+            refresh_fn=lambda story: row(story, 1, False, "NEEDS 1 MORE PHOTO"),
+            attempt_fn=lambda record: None,
+        )
+        self.assertEqual(calls, ["Broken", "Good"])
+        self.assertEqual(result.progress, 1)
+
+    def test_pass_story_is_skipped(self):
+        called = []
+        process_rows(
+            [row("Done", 0, False, "PASS")], 1,
+            lambda story: called.append(story) or 1,
+            lambda story, deficit: called.append(story) or 1,
+            lambda story: row(story, 0, False, "PASS"),
+            lambda record: None,
+        )
+        self.assertEqual(called, [])
+
+    def test_logo_runs_before_photo_for_same_story(self):
+        calls = []
+        process_rows(
+            [row("Mixed", 1, True, "NEEDS 1 MORE PHOTO + LOGO")], 1,
+            lambda story: calls.append("logo") or 1,
+            lambda story, deficit: calls.append("photo") or 1,
+            lambda story: row(story, 1, False, "NEEDS 1 MORE PHOTO"),
+            lambda record: None,
+        )
+        self.assertEqual(calls, ["logo", "photo"])
 ```
 
-- [ ] **Step 2: Run tests and confirm RED**
+Add a test where every repair function returns zero and assert the batch result uses exit code 2, and a second-run PASS-row test that performs no writes.
+
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_repair.py
 ```
 
-- [ ] **Step 3: Implement the deterministic repair loop**
+- [ ] **Step 3: Implement `repair_logo()` and `repair_photos()`**
 
-Core control flow:
+`repair_logo(story)` first tries `resolve_existing_logo_identity()`, then structured Wikidata discovery, then `register_logo()`. `repair_photos(story, deficit)` iterates unrepresented planned beats and source adapters in the specified source order, validates candidates, registers only accepted candidates, rebuilds runtime coverage after each registration, and stops immediately when the story reaches four approved photos.
 
-```python
-board = build_board()
-backlog = repair_backlog(board)
-processed = 0
-progress = 0
+- [ ] **Step 4: Implement `process_rows()` and CLI loop**
 
-for row in backlog:
-    if processed >= args.batch_stories:
-        break
-    if row.need_logo:
-        progress += repair_logo(row.story)
-    fresh = row_for_story(build_board(), row.story)
-    if fresh.need_photos:
-        progress += repair_photos(fresh.story, fresh.need_photos)
-    processed += 1
-    write_board(build_board())
+Catch per-story/source exceptions, append an attempt record, and continue. Rebuild the board after each story. If a newly registered asset is absent from `story_runtime.coverage()` for that exact story, raise the invariant path and exit 3.
 
-final = build_board()
-write_unresolved(final, attempts)
-if all(r.status == "PASS" for r in final):
-    return 0
-if progress == 0:
-    return 2
-return 0
-```
+- [ ] **Step 5: Use explicit attempt records**
 
-A story/source exception must be caught, written as one attempt record, and processing must continue to the next story. Invariant exceptions such as a registered candidate disappearing from runtime coverage must terminate with exit code 3.
-
-- [ ] **Step 4: Implement candidate exhaustion and beat diversity**
-
-For each photo deficit, iterate planned beats that are not already represented by accepted filename metadata. Stop searching a beat after `--max-candidates-per-beat`; accept the first strictly valid candidate, rebuild runtime coverage, then continue only if the deficit remains. Do not add extra files after the runtime story reaches 4 approved photos.
-
-- [ ] **Step 5: Implement attempt records with explicit failure codes**
-
-Each JSONL row must include:
+A concrete accepted attempt record is:
 
 ```json
 {
-  "story": "...",
-  "kind": "photo|logo",
-  "beat": "origin",
+  "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
+  "kind": "photo",
+  "beat": "legacy",
   "source": "commons",
-  "source_page": "https://...",
-  "candidate": "...",
-  "result": "ACCEPTED|SOURCE_UNAVAILABLE|NO_SAFE_CANDIDATE|IDENTITY_UNPROVEN|DUPLICATE_ONLY|LOGO_IDENTITY_MISSING|VALIDATION_ERROR|EXTERNAL_API_ERROR",
-  "reason": "..."
+  "source_page": "https://commons.wikimedia.org/wiki/File:Photo_of_a_John_C._Bogle_By_Bill_Cramer.jpg",
+  "candidate": "Photo of a John C. Bogle By Bill Cramer.jpg",
+  "result": "ACCEPTED",
+  "reason": "DIRECT; identity proved by Commons metadata"
 }
 ```
+
+Allowed failure results are `SOURCE_UNAVAILABLE`, `NO_SAFE_CANDIDATE`, `IDENTITY_UNPROVEN`, `DUPLICATE_ONLY`, `LOGO_IDENTITY_MISSING`, `VALIDATION_ERROR`, and `EXTERNAL_API_ERROR`.
 
 - [ ] **Step 6: Run the full unit suite**
 
 ```bash
-python -m unittest -v \
-  tests/test_bulk_visual_board.py \
-  tests/test_bulk_visual_identity.py \
-  tests/test_bulk_visual_sources.py \
-  tests/test_bulk_visual_validate.py \
-  tests/test_bulk_visual_register.py \
-  tests/test_bulk_visual_repair.py \
-  tests/test_runtime_relevance.py \
-  tests/test_apply_repair_assets.py
+python -m unittest -v tests/test_bulk_visual_board.py tests/test_bulk_visual_identity.py tests/test_bulk_visual_sources.py tests/test_bulk_visual_validate.py tests/test_bulk_visual_register.py tests/test_bulk_visual_repair.py tests/test_runtime_relevance.py tests/test_apply_repair_assets.py
 ```
 
 - [ ] **Step 7: Commit**
@@ -770,30 +824,38 @@ git commit -m "feat: orchestrate strict bulk story visual repair"
 
 ---
 
-### Task 8: Add GitHub Actions batch execution and safe checkpoint commits
+### Task 8: Add a PR workflow that loops batches without user story-by-story actions
 
 **Files:**
 - Create: `.github/workflows/bulk-visual-repair.yml`
 - Modify: `.github/workflows/runtime-relevance-tests.yml`
 
 **Interfaces:**
-- Workflow inputs: `batch_stories` default `15`, `max_candidates_per_beat` default `12`.
-- Secrets: reuse existing Anthropic/source credentials already available to Story workflow where needed; no posting credentials are used.
+- PR defaults: 15 stories per batch, 12 candidates per beat, 12 batches per job.
+- Manual inputs after the workflow is available on the default branch: `batch_stories`, `max_candidates_per_beat`, `max_batches`.
 
-- [ ] **Step 1: Add the workflow**
+- [ ] **Step 1: Add the workflow with both `pull_request` and `workflow_dispatch` triggers**
 
 ```yaml
 name: Bulk visual repair
 
 on:
+  pull_request:
+    paths:
+      - "tools/bulk_visual_*.py"
+      - "tests/test_bulk_visual_*.py"
+      - "images/**"
+      - "stories.txt"
+      - ".github/workflows/bulk-visual-repair.yml"
   workflow_dispatch:
     inputs:
       batch_stories:
-        description: Stories to process in this batch
         required: false
         default: "15"
       max_candidates_per_beat:
-        description: Candidate cap for each story beat
+        required: false
+        default: "12"
+      max_batches:
         required: false
         default: "12"
 
@@ -806,7 +868,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -815,34 +877,41 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Unit tests before writes
         run: python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py tests/test_apply_repair_assets.py
-      - name: Strict bulk repair
+      - name: Repair in bounded pushed batches
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          set +e
-          PYTHONPATH=. python tools/bulk_visual_repair.py \
-            --batch-stories "${{ inputs.batch_stories }}" \
-            --max-candidates-per-beat "${{ inputs.max_candidates_per_beat }}"
-          rc=$?
-          echo "repair_exit=$rc" >> "$GITHUB_ENV"
-          if [ "$rc" -eq 3 ]; then exit "$rc"; fi
-      - name: Verify runtime after writes
-        run: |
-          python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py
-          PYTHONPATH=. python tools/build_runtime_review.py
-      - name: Commit validated repair progress
+          BATCH_STORIES: ${{ inputs.batch_stories || '15' }}
+          MAX_CANDIDATES: ${{ inputs.max_candidates_per_beat || '12' }}
+          MAX_BATCHES: ${{ inputs.max_batches || '12' }}
+          TARGET_BRANCH: ${{ github.head_ref || github.ref_name }}
         shell: bash
         run: |
-          if git diff --quiet -- images stories.txt; then
-            echo "No validated repair changes"
-          else
-            git config user.name "story-visual-repair-bot"
-            git config user.email "actions@github.com"
-            git add images stories.txt
-            git commit -m "assets: bulk repair story visual coverage"
-            git pull --rebase origin "${GITHUB_REF_NAME}"
-            git push origin HEAD:"${GITHUB_REF_NAME}"
-          fi
+          set -euo pipefail
+          for batch in $(seq 1 "$MAX_BATCHES"); do
+            set +e
+            PYTHONPATH=. python tools/bulk_visual_repair.py \
+              --batch-stories "$BATCH_STORIES" \
+              --max-candidates-per-beat "$MAX_CANDIDATES"
+            rc=$?
+            set -e
+
+            python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py
+            PYTHONPATH=. python tools/build_runtime_review.py
+
+            if ! git diff --quiet -- images stories.txt; then
+              git config user.name "story-visual-repair-bot"
+              git config user.email "actions@github.com"
+              git add images stories.txt
+              git commit -m "assets: bulk repair story visual coverage batch ${batch}"
+              git pull --rebase origin "$TARGET_BRANCH"
+              git push origin HEAD:"$TARGET_BRANCH"
+            fi
+
+            if [ "$rc" -eq 0 ]; then exit 0; fi
+            if [ "$rc" -eq 10 ]; then continue; fi
+            exit "$rc"
+          done
+          exit 2
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -851,14 +920,11 @@ jobs:
             out/bulk-visual-repair/**
             out/runtime-review/**
           retention-days: 7
-      - name: Mark unresolved no-progress run
-        if: env.repair_exit == '2'
-        run: exit 2
 ```
 
-- [ ] **Step 2: Expand runtime-relevance CI path filters and tests**
+- [ ] **Step 2: Expand runtime-relevance CI**
 
-Add `tools/bulk_visual_*.py`, `tests/test_bulk_visual_*.py`, `images/logos/**`, and `stories.txt` to path filters. Add a board invariant step that imports `build_board()` and asserts `len(board) == 123` and that every row claiming `PASS` has `need_photos == 0` and `need_logo is False`.
+Add `tools/bulk_visual_*.py`, `tests/test_bulk_visual_*.py`, `images/logos/**`, and `stories.txt` to path filters. Add an invariant step that asserts `len(build_board()) == 123` and every row claiming PASS has `need_photos == 0` and `need_logo is False`.
 
 - [ ] **Step 3: Compile all new modules**
 
@@ -875,30 +941,29 @@ git commit -m "ci: run strict bulk story visual repair"
 
 ---
 
-### Task 9: Run the bulk repair until the authoritative board is 123/123 PASS
+### Task 9: Execute automatic batches until the authoritative board is 123/123 PASS
 
 **Files:**
-- Modify through the pipeline only: `images/**`, `stories.txt` when verified logo metadata is added.
-- No hand-editing of verdicts merely to improve the count.
+- Modify only through pipeline registration: `images/**` and verified `stories.txt` logo metadata.
 
 **Interfaces:**
-- Consumes: Tasks 1–8 production pipeline.
-- Produces: fresh authoritative 123/123 board and unresolved count 0.
+- Consumes Tasks 1–8.
+- Produces a fresh board with 123 rows, 123 PASS, and unresolved count zero.
 
-- [ ] **Step 1: Record the pre-run baseline**
+- [ ] **Step 1: Record the baseline**
 
 ```bash
 PYTHONPATH=. python tools/bulk_visual_repair.py --board-only
 ```
-Record exact PASS count and status distribution from `out/bulk-visual-repair/board.json`.
+Capture the exact status distribution from `out/bulk-visual-repair/board.json`.
 
-- [ ] **Step 2: Execute bounded repair batches**
+- [ ] **Step 2: Let the PR workflow execute bounded batches**
 
-Run `bulk-visual-repair.yml` repeatedly or execute the same CLI locally in an isolated worktree. After each successful batch, inspect the board delta: PASS count must stay flat or rise; no previously PASS story may regress.
+Each batch must push validated progress before beginning the next batch. PASS count must stay flat or rise; a previously PASS story may not regress.
 
-- [ ] **Step 3: Treat no-progress as a source-adapter bug/backlog, not permission to lower standards**
+- [ ] **Step 3: Handle no-progress by improving a narrow source/identity adapter**
 
-When exit code 2 occurs, group `unresolved.json` by failure code and add only the narrow source/identity capability required for that class. Each new capability gets a RED→GREEN test in the relevant module before rerunning the batch.
+When exit code 2 occurs, group `unresolved.json` by failure result. Add only the source/identity capability needed for the dominant unresolved class, with a failing unit test first. Do not mass-approve assets and do not lower thresholds.
 
 - [ ] **Step 4: Run the final completion assertion**
 
@@ -908,8 +973,8 @@ from tools.bulk_visual_board import build_board
 
 board = build_board()
 assert len(board) == 123, len(board)
-failed = [r for r in board if r.status != "PASS"]
-assert not failed, [(r.story, r.status) for r in failed]
+failed = [row for row in board if row.status != "PASS"]
+assert not failed, [(row.story, row.status) for row in failed]
 for row in board:
     assert len(row.photos) >= 4, (row.story, row.photos)
     assert len(row.logos) >= 1, (row.story, row.logos)
@@ -917,7 +982,7 @@ print("123/123 PASS")
 PY
 ```
 
-- [ ] **Step 5: Run all relevance/dedupe regression tests**
+- [ ] **Step 5: Run all relevance/dedupe regressions**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py tests/test_apply_repair_assets.py
@@ -925,7 +990,7 @@ python image_precheck.py --selftest
 PYTHONPATH=. python tools/build_runtime_review.py
 ```
 
-- [ ] **Step 6: Commit final asset state**
+- [ ] **Step 6: Commit any final local asset state if the workflow did not already push it**
 
 ```bash
 git add images stories.txt
@@ -937,46 +1002,30 @@ git commit -m "assets: complete 123 story runtime visual coverage"
 ### Task 10: Verify renderer consumption on a representative sample and finish PR #2
 
 **Files:**
-- Modify production code only if a sampled render exposes a renderer-contract regression.
-- Modify/add tests before any such renderer fix.
+- Modify production code only if a sampled render exposes a general renderer-contract bug.
+- Add a failing regression before any renderer change.
 
 **Interfaces:**
-- Consumes: 123/123 runtime PASS state and existing `story_runtime._enforce_approved_photo_contract()`.
-- Produces: representative six-frame artifacts showing 4 visible relevant photos + relevant logo, plus final PR evidence.
+- Consumes 123/123 runtime PASS and `story_runtime._enforce_approved_photo_contract()`.
+- Produces five representative six-frame artifacts that visibly satisfy 4 photos + logo.
 
-- [ ] **Step 1: Select a deterministic five-story sample**
+- [ ] **Step 1: Select one deterministic sample from each class**
 
-Choose one story from each class after the board is 123/123:
-
-1. technology/company;
-2. biography/person;
-3. Saudi company/person;
-4. historical/abstract topic;
-5. place/travel.
-
-Jack Bogle remains in the biography sample unless another person story exercises a stricter identity edge case.
+Use one technology/company story, one biography/person story, one Saudi company/person story, one historical/abstract topic, and one place/travel story. Keep Jack Bogle in the biography sample unless another person story exercises a stricter identity edge case.
 
 - [ ] **Step 2: Dry-run the five stories through `story_runtime.py`**
 
-For each run, confirm logs contain `runtime photo contract: 4 approved photos will appear in the rendered deck` and a local logo selection.
+Confirm each log contains `runtime photo contract: 4 approved photos will appear in the rendered deck` plus a local logo selection.
 
-- [ ] **Step 3: Inspect the six-frame artifacts**
+- [ ] **Step 3: Inspect all six frames in each sampled artifact**
 
-For each sampled deck verify visually:
+Verify at least four frames visibly contain actual photographs; the photos are distinct and relevant; named-person photos have correct source provenance; at least one relevant local logo/official mark is visible; and no quote card, chart, logo, or flat graphic is being counted as a photo.
 
-- at least four frames visibly contain actual photographs;
-- the photographs are distinct and relevant;
-- the person frame, when present, depicts the correct named person by source provenance;
-- at least one relevant local logo/official mark is visibly present;
-- no quote card, chart, logo, or flat graphic is being counted as one of the four photos.
+- [ ] **Step 4: Fix any newly exposed renderer class with RED→GREEN tests**
 
-- [ ] **Step 4: If a new renderer bug appears, add a focused regression first**
+Use `tests/test_runtime_relevance.py` for slot-contract logic or a new focused renderer test for raster/layout behavior. Do not add a one-story exception for a general renderer defect.
 
-Use `tests/test_runtime_relevance.py` for frame-slot contract logic or a new focused renderer test when the defect is raster/layout-specific. Do not patch a sampled story with a one-off exception when the defect is a general renderer rule.
-
-- [ ] **Step 5: Final verification before completion claim**
-
-Run:
+- [ ] **Step 5: Run final verification**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py tests/test_apply_repair_assets.py
@@ -984,8 +1033,8 @@ python image_precheck.py --selftest
 PYTHONPATH=. python tools/build_runtime_review.py
 ```
 
-Confirm the final runtime review summary says `Stories: 123` and `PASS: 123`.
+The final runtime review must report `Stories: 123` and `PASS: 123`.
 
 - [ ] **Step 6: Update PR #2 evidence and only then mark it ready for merge**
 
-Record the final board artifact/run IDs, representative render run IDs, and any source-adapter limitations encountered. Do not merge while the board is below 123/123 or a sampled deck violates the visible-photo requirement.
+Record the final board artifact/run ID, the five representative render run IDs, and any remaining source-adapter limitations. Do not merge while the board is below 123/123 or any sampled deck violates the visible-photo requirement.
