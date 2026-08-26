@@ -1,0 +1,109 @@
+name: Bulk visual repair
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_stories:
+        description: Maximum stories processed in each bounded batch
+        required: false
+        default: "15"
+      max_candidates_per_beat:
+        description: Maximum candidates discovered for each visual beat
+        required: false
+        default: "12"
+      max_batches:
+        description: Maximum bounded batches attempted by this job
+        required: false
+        default: "12"
+
+permissions:
+  contents: read
+
+jobs:
+  wrong-branch:
+    if: github.ref_name != 'repair/story-visual-coverage'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Run this workflow from branch repair/story-visual-coverage."
+          exit 1
+
+  repair:
+    if: github.ref_name == 'repair/story-visual-coverage'
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/story-visual-coverage
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Unit tests before writes
+        run: python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py tests/test_apply_repair_assets.py
+      - name: Repair in bounded pushed batches
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BATCH_STORIES: ${{ inputs.batch_stories || '15' }}
+          MAX_CANDIDATES: ${{ inputs.max_candidates_per_beat || '12' }}
+          MAX_BATCHES: ${{ inputs.max_batches || '12' }}
+          TARGET_BRANCH: repair/story-visual-coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          for batch in $(seq 1 "$MAX_BATCHES"); do
+            set +e
+            PYTHONPATH=. python tools/bulk_visual_repair.py \
+              --batch-stories "$BATCH_STORIES" \
+              --max-candidates-per-beat "$MAX_CANDIDATES"
+            rc=$?
+            set -e
+
+            python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py
+            PYTHONPATH=. python tools/build_runtime_review.py
+
+            if ! git diff --quiet -- images stories.txt; then
+              git config user.name "story-visual-repair-bot"
+              git config user.email "actions@github.com"
+              git add images stories.txt
+              git commit -m "assets: bulk repair story visual coverage batch ${batch}"
+              git pull --rebase origin "$TARGET_BRANCH"
+              git push origin HEAD:"$TARGET_BRANCH"
+            fi
+
+            if [ "$rc" -eq 0 ]; then exit 0; fi
+            if [ "$rc" -eq 10 ]; then continue; fi
+            exit "$rc"
+          done
+          exit 2
+      - name: Authoritative repair summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Bulk visual repair"
+            echo
+            PYTHONPATH=. python - <<'PY' || echo "Authoritative board generation failed."
+          from tools.bulk_visual_board import build_board
+          board = build_board()
+          passed = sum(row.status == "PASS" for row in board)
+          print(f"Authoritative board: **{passed}/{len(board)} PASS**")
+          for row in board:
+              if row.status != "PASS":
+                  print(f"- {row.story}: {row.status}")
+          PY
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bulk-visual-repair-${{ github.run_id }}
+          path: |
+            out/bulk-visual-repair/**
+            out/runtime-review/**
+          if-no-files-found: warn
+          retention-days: 7
