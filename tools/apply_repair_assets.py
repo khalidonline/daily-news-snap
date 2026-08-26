@@ -57,6 +57,39 @@ def save_jpeg(img, path):
     img.save(path, "JPEG", quality=93, optimize=True)
 
 
+def crop_from_spec(img, spec):
+    """Apply an optional relative crop box ``[left, top, right, bottom]``.
+
+    Repair manifests sometimes point at an official editorial composite where
+    the relevant photograph occupies only part of the source. Cropping here is
+    safer than teaching the renderer source-specific geometry: the runtime sees
+    a normal local photograph and all provenance remains attached to the same
+    reviewed source URL.
+    """
+    box = spec.get("crop_box")
+    if not box:
+        return img
+    if not isinstance(box, list) or len(box) != 4:
+        raise ValueError("crop_box must be [left, top, right, bottom]")
+    try:
+        left, top, right, bottom = [float(v) for v in box]
+    except (TypeError, ValueError):
+        raise ValueError("crop_box values must be numbers")
+    if not (0 <= left < right <= 1 and 0 <= top < bottom <= 1):
+        raise ValueError("crop_box values must be relative coordinates in 0..1")
+    px = (
+        round(img.width * left),
+        round(img.height * top),
+        round(img.width * right),
+        round(img.height * bottom),
+    )
+    cropped = img.crop(px)
+    if cropped.width < 300 or cropped.height < 250:
+        raise ValueError(
+            f"cropped image too small ({cropped.width}x{cropped.height})")
+    return cropped
+
+
 def append_index(filename, tags, credit):
     text = INDEX.read_text(encoding="utf-8") if INDEX.exists() else ""
     lines = [ln for ln in text.splitlines() if ln.strip()]
@@ -86,18 +119,23 @@ def main():
     for spec in manifest.get("assets", []):
         filename = spec["filename"]
         dest = IMAGES / filename
-        if dest.exists():
+        replace_existing = bool(spec.get("replace_existing"))
+        if dest.exists() and not replace_existing:
             print(f"exists: {filename}")
             append_index(filename, spec["tags"], spec["credit"])
             update_ledger(filename, spec["story"], spec["verdict"], spec["url"])
             continue
-        print(f"downloading: {filename}")
+        action = "rebuilding" if dest.exists() else "downloading"
+        print(f"{action}: {filename}")
         img, raw = download(spec["url"])
+        img = crop_from_spec(img, spec)
         # Compare the normalized image to existing files. Exact-source bytes are
         # checked too, but normalization makes PNG/JPEG copies detectable by dhash.
-        exact, perceptual = existing_hashes()
+        # When rebuilding a reviewed asset, exclude its old version from the
+        # duplicate pool so the deterministic replacement can overwrite itself.
+        exact, perceptual = existing_hashes(exclude=dest if dest.exists() else None)
         raw_sha = hashlib.sha256(raw).hexdigest()
-        if raw_sha in exact:
+        if raw_sha in exact and not spec.get("crop_box"):
             raise SystemExit(f"{filename}: exact duplicate of {exact[raw_sha].name}")
         tmp = IMAGES / (filename + ".tmp.jpg")
         save_jpeg(img, tmp)
