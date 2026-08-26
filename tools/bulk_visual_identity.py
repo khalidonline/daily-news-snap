@@ -25,6 +25,7 @@ WIKIDATA_SPARQL = "https://query.wikidata.org/sparql?format=json&query={query}"
 COMMONS_IMAGEINFO = "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url&iiurlwidth=1024&titles=File:{filename}"
 _JSON_CACHE = {}
 _RETRYABLE_HTTP = frozenset({429, 500, 502, 503, 504})
+_WIKIMEDIA_DISAMBIGUATION = "Q4167410"
 
 
 @dataclass(frozen=True)
@@ -157,20 +158,37 @@ def _entity_names(entity):
     return label, aliases
 
 
-def _logo_from_entity(qid, entity):
-    label, aliases = _entity_names(entity)
-    logos = _claim_values(entity, "P154")
-    sites = _claim_values(entity, "P856")
-    if not label or len(set(logos)) != 1 or not sites:
-        return None
+def _site_domains(entity):
+    """Return canonical official-site domains without guessing from a name.
+
+    Wikidata may list regional P856 sites alongside the global site. When one
+    or more claims are not scoped by P1001 (applies to jurisdiction), only
+    those unscoped claims compete for canonical identity. If every site is
+    jurisdiction-scoped, all remain candidates and ambiguity still fails.
+    """
+    claims = list(entity.get("claims", {}).get("P856", []))
+    if not claims:
+        return set()
+    unscoped = [claim for claim in claims if not claim.get("qualifiers", {}).get("P1001")]
+    selected = unscoped or claims
     domains = set()
-    for site in sites:
+    for claim in selected:
+        site = claim.get("mainsnak", {}).get("datavalue", {}).get("value")
+        if not isinstance(site, str) or not site:
+            continue
         hostname = (urlparse(site).hostname or "").casefold().rstrip(".")
         if hostname.startswith("www."):
             hostname = hostname[4:]
         if hostname:
             domains.add(hostname)
-    if len(domains) != 1:
+    return domains
+
+
+def _logo_from_entity(qid, entity):
+    label, aliases = _entity_names(entity)
+    logos = _claim_values(entity, "P154")
+    domains = _site_domains(entity)
+    if not label or len(set(logos)) != 1 or len(domains) != 1:
         return None
     return DiscoveredLogo(
         label, domains.pop(), logos[0],
@@ -178,8 +196,19 @@ def _logo_from_entity(qid, entity):
     )
 
 
+def _canonical_entity(qid, json_get):
+    """Resolve a Wikidata redirect and reject non-entity disambiguation pages."""
+    entities = json_get(WIKIDATA_ENTITY.format(qid=qid)).get("entities", {})
+    if len(entities) != 1:
+        return None, None
+    canonical_qid, entity = next(iter(entities.items()))
+    if _WIKIMEDIA_DISAMBIGUATION in _claim_values(entity, "P31"):
+        return None, None
+    return canonical_qid, entity
+
+
 def discover_wikidata_logo_for_terms(terms, json_get=_json_get):
-    """Find one exact Wikidata identity carrying both a logo and official site."""
+    """Find one exact canonical Wikidata identity with logo and official site."""
     wanted = {norm(term) for term in terms if norm(term)}
     qids = set()
     for term in sorted({str(term).strip() for term in terms if str(term).strip()}):
@@ -188,14 +217,21 @@ def discover_wikidata_logo_for_terms(terms, json_get=_json_get):
             names = {norm(result.get("label")), *map(norm, result.get("aliases", []))}
             if wanted & names and result.get("id"):
                 qids.add(result["id"])
-    # Multiple exact senses are ambiguous even if only one happens to have a logo.
-    if len(qids) != 1:
+
+    canonical = {}
+    for qid in sorted(qids):
+        canonical_qid, entity = _canonical_entity(qid, json_get)
+        if not canonical_qid:
+            continue
+        label, aliases = _entity_names(entity)
+        if wanted & {norm(label), *map(norm, aliases)}:
+            canonical[canonical_qid] = entity
+
+    # Redirects to the same item are one identity; genuinely distinct exact
+    # senses remain ambiguous. Disambiguation pages are navigation, not senses.
+    if len(canonical) != 1:
         return None
-    qid = next(iter(qids))
-    entity = json_get(WIKIDATA_ENTITY.format(qid=qid)).get("entities", {}).get(qid, {})
-    label, aliases = _entity_names(entity)
-    if not wanted & {norm(label), *map(norm, aliases)}:
-        return None
+    qid, entity = next(iter(canonical.items()))
     return _logo_from_entity(qid, entity)
 
 
@@ -226,15 +262,18 @@ def _exact_human_identity(terms, json_get):
     humans = {}
     for term in sorted({str(term).strip() for term in terms if str(term).strip()}):
         qids = _exact_search_qids({term}, json_get)
-        if len(qids) != 1:
+        canonical_qids = set()
+        for qid in qids:
+            canonical_qid, entity = _canonical_entity(qid, json_get)
+            if not canonical_qid or "Q5" not in _claim_values(entity, "P31"):
+                continue
+            label, aliases = _entity_names(entity)
+            if norm(term) not in {norm(label), *map(norm, aliases)}:
+                continue
+            canonical_qids.add(canonical_qid)
+        if len(canonical_qids) != 1:
             continue
-        qid = next(iter(qids))
-        entity = json_get(WIKIDATA_ENTITY.format(qid=qid)).get("entities", {}).get(qid, {})
-        if "Q5" not in _claim_values(entity, "P31"):
-            continue
-        label, aliases = _entity_names(entity)
-        if norm(term) not in {norm(label), *map(norm, aliases)}:
-            continue
+        qid = next(iter(canonical_qids))
         humans.setdefault(qid, set()).add(term)
     if len(humans) != 1:
         return None, set()
@@ -247,11 +286,20 @@ def discover_verified_logo_identity(story, json_get=_json_get):
     key = str(story).strip()
     people = set(sb._STORY_PERSONS.get(key) or ())
     # Direct identity discovery is restricted to declared story metadata.
-    # Approved-photo tags are contextual corroboration, not logo identities.
+    # Evaluate each declared identity independently so a biography's person
+    # does not make its explicitly named company look ambiguous. More than one
+    # verified logo-bearing declared identity still fails closed.
     declared_terms = set(sb.story_aliases(story)) | people
-    direct = discover_wikidata_logo_for_terms(declared_terms, json_get)
-    if direct:
-        return direct
+    direct_matches = {}
+    for term in sorted({str(term).strip() for term in declared_terms if str(term).strip()}):
+        direct = discover_wikidata_logo_for_terms({term}, json_get)
+        if direct:
+            key_tuple = (direct.domain, direct.commons_filename, direct.source_url)
+            direct_matches[key_tuple] = direct
+    if len(direct_matches) == 1:
+        return next(iter(direct_matches.values()))
+    if len(direct_matches) > 1:
+        return None
 
     if people:
         person_qids = _exact_search_qids(people, json_get)
@@ -276,7 +324,8 @@ def discover_verified_logo_identity(story, json_get=_json_get):
 
     def full_entity(qid):
         if qid not in cache:
-            cache[qid] = json_get(WIKIDATA_ENTITY.format(qid=qid)).get("entities", {}).get(qid, {})
+            canonical_qid, entity = _canonical_entity(qid, json_get)
+            cache[qid] = entity if canonical_qid else {}
         return cache[qid]
 
     def simple_entity(qid):
@@ -298,7 +347,11 @@ def discover_verified_logo_identity(story, json_get=_json_get):
     )
     if len(organizations) != 1:
         return None
-    return _logo_from_entity(organizations[0], full_entity(organizations[0]))
+    org_qid = organizations[0]
+    canonical_qid, entity = _canonical_entity(org_qid, json_get)
+    if not canonical_qid:
+        return None
+    return _logo_from_entity(canonical_qid, entity)
 
 
 def _exact_search_qids(terms, json_get):
