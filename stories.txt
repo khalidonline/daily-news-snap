@@ -23,7 +23,7 @@
 # — المال والاقتصاد —
 قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ | Aramco, أرامكو, logo:aramco.com
 كيف نشأت أول بورصة في العالم؟ | Amsterdam Stock Exchange, subject:first-stock-exchange
-قصة أزمة 2008: كيف بدأت وكيف انتهت؟ | subject:crisis-2008
+قصة أزمة 2008: كيف بدأت وكيف انتهت؟ | entity: أزمة 2008 | subject:crisis-2008
 لماذا ارتبط الريال السعودي بالدولار وكيف؟ | entity: ربط الريال | subject:riyal-dollar-peg
 قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي | PIF, Public Investment Fund
 كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟ | entity: Maersk, ميرسك | logo:maersk.com
@@ -54,7 +54,7 @@
 قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم | Saudia, subject:saudi-civil-aviation
 كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟ | entity: الطيران الاقتصادي | subject:low-cost-airlines
 قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي | Emirates, طيران الإمارات, logo:emirates.com
-لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير | subject:airfare-pricing
+لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير | entity: أسعار التذاكر | subject:airfare-pricing
 قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟ | entity: جواز السفر | subject:passport-history
 
 # — أساطير مجهولة —
@@ -97,7 +97,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة عبداللطيف جميل للسيارات ووكالة تويوتا | Abdul Latif Jameel, Toyota Saudi Arabia, logo:alj.com
 صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء | person: صالح الراجحي, Saleh Al Rajhi | entity: مصرف الراجحي
 محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة | Mohammed bin Laden, Saudi Binladin Group
-حسن الشربتلي وجيل التجار الأوائل في جدة | Hassan Sharbatly
+حسن الشربتلي وجيل التجار الأوائل في جدة | person: حسن الشربتلي, Hassan Sharbatly | entity: مجموعة النهلة
 من هم أول الموظفين السعوديين في أرامكو؟ | Aramco, أرامكو
 # ===== Saudi-flavor story batch (added 2026-08-24) =====
 
