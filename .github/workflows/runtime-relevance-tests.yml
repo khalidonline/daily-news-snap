@@ -30,3 +30,14 @@ jobs:
         run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
+      - name: Jack Bogle regression — block insufficient runtime coverage
+        shell: bash
+        run: |
+          set +e
+          output=$(STORY='Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير' DRY_RUN=1 python story_runtime.py 2>&1)
+          code=$?
+          set -e
+          echo "$output"
+          test "$code" -ne 0
+          echo "$output" | grep -q 'story blocked by runtime relevance gate'
+          echo "$output" | grep -q 'NEEDS 3 MORE PHOTOS'
