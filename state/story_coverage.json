@@ -1186,18 +1186,6 @@
    ],
    "pass": true
   },
-  "Malcom McLean: سائق شاحنة غيّر التجارة العالمية بصندوق حديد": {
-   "pool": "general",
-   "at": "2026-08-26T11:54:21.695758",
-   "thash": "f8fccac297",
-   "person": "Malcom McLean",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية": {
    "pool": "general",
    "at": "2026-08-26T11:54:28.653628",
@@ -1403,17 +1391,6 @@
     "archive:Madam C.J. Walker"
    ],
    "pass": true
-  },
-  "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد": {
-   "pool": "general",
-   "at": "2026-08-26T11:54:56.714033",
-   "thash": "5d7179ef4c",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
   },
   "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": {
    "pool": "general",
@@ -2733,7 +2710,44 @@
     "library:riyal-1-1984.jpg"
    ],
    "pass": true
+  },
+  "Malcom McLean: سائق شاحنة غيّر التجارة العالمية بصندوق حديد": {
+   "pool": "general",
+   "at": "2026-08-26T12:19:45.442730",
+   "thash": "f8fccac297",
+   "person": "Malcom McLean",
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "portrait:Malcom McLean",
+    "library:t2-tanker-1943.jpg",
+    "library:sealand-containers-danang.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "portrait:Malcom McLean",
+    "library:t2-tanker-1943.jpg",
+    "library:sealand-containers-danang.jpg"
+   ],
+   "pass": true
+  },
+  "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد": {
+   "pool": "general",
+   "at": "2026-08-26T12:19:47.815629",
+   "thash": "5d7179ef4c",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:suitcase-before-wheels.jpg",
+    "library:rolling-suitcases.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:suitcase-before-wheels.jpg",
+    "library:rolling-suitcases.jpg"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-26T12:03:35.051632"
+ "checked_at": "2026-08-26T12:19:51.276701"
 }
