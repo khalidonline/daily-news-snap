@@ -4,6 +4,7 @@
 Default for an rt-* association is DIRECT only after this script's review pass.
 Exceptions below are the visual decisions from the 15 contact sheets. The
 runtime still fails closed for any future rt-* file absent from the ledger.
+Non-rt curated rulings are preserved across reruns.
 """
 from __future__ import annotations
 import json
@@ -60,12 +61,18 @@ GRAPHICS = {
 
 def main():
     stories = sb.load_stories()
-    assets = {
-        "edison-stock-ticker.jpg": {
-            "stories": {"Jack Bogle": "WEAK_GENERIC"},
-            "note": "Generic market artifact; not a Bogle/Vanguard/index-fund beat.",
-        }
-    }
+    try:
+        old = json.loads(OUT.read_text(encoding="utf-8")).get("assets", {})
+    except Exception:
+        old = {}
+    # Preserve hand-curated/non-materialized decisions. The rt-* set is rebuilt
+    # from this review so stale auto-materialization verdicts cannot survive.
+    assets = {name: row for name, row in old.items() if not name.startswith("rt-")}
+    assets.setdefault("edison-stock-ticker.jpg", {
+        "stories": {"Jack Bogle": "WEAK_GENERIC"},
+        "note": "Generic market artifact; not a Bogle/Vanguard/index-fund beat.",
+    })
+
     for entry in nb.load_local_images():
         name = entry["path"].name
         if not name.startswith("rt-"):
@@ -82,7 +89,6 @@ def main():
         elif name in GRAPHICS:
             assets[name]["note"] = "Graphic/logo/diagram; not counted as one of the four story photos."
 
-    # Story-specific rulings where one tag family matched sibling stories.
     def setv(name, contains, verdict):
         for story in assets.get(name, {}).get("stories", {}):
             if contains in story:
@@ -101,8 +107,6 @@ def main():
     setv("rt-sulaiman-al-rajhi-1.jpg", "صالح الراجحي", "WRONG_ENTITY")
     for name in ("rt-saleh-al-rajhi-1.jpg", "rt-saleh-al-rajhi-2.jpg"):
         setv(name, "سليمان الراجحي", "WRONG_ENTITY")
-    # These two are confirmed Saleh Abdulaziz Al Rajhi portraits on Commons.
-    # Sulaiman's portrait remains direct only on Sulaiman/Waqf lines.
 
     doc = {
         "version": 2,
@@ -111,7 +115,9 @@ def main():
     }
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     counts = {}
-    for row in assets.values():
+    for name, row in assets.items():
+        if not name.startswith("rt-"):
+            continue
         for verdict in row.get("stories", {}).values():
             counts[verdict] = counts.get(verdict, 0) + 1
     print("materialized relevance ledger:", counts)
