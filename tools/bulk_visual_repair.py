@@ -123,6 +123,12 @@ def catalogue_photo_paths():
     return [Path("images") / name for name in sorted(names)]
 
 
+def refresh_runtime_row(story):
+    """Reload story identity metadata before authoritative post-write coverage."""
+    sb.load_stories()
+    return build_board([story])[0]
+
+
 def _strict_relevance(story, candidate, path):
     """Ask the configured vision reviewer; missing/error/invalid output rejects."""
     key = os.environ.get("ANTHROPIC_API_KEY", "")
@@ -253,7 +259,7 @@ def main(argv=None):
     result = process_rows(
         backlog, args.batch_stories, repair_logo,
         lambda story, deficit: repair_photos(story, deficit, args.max_candidates_per_beat),
-        lambda story: build_board([story])[0], append_attempt,
+        refresh_runtime_row, append_attempt,
     )
     final = build_board(stories); write_board(final, OUT_DIR); _write_unresolved(final)
     # Only the complete catalogue may return completion, never a selected story.
