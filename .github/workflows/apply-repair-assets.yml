@@ -1,6 +1,11 @@
 name: Apply repair assets
 
 on:
+  pull_request:
+    paths:
+      - "repair_assets.json"
+      - "tools/apply_repair_assets.py"
+      - ".github/workflows/apply-repair-assets.yml"
   push:
     branches:
       - repair/story-visual-coverage
