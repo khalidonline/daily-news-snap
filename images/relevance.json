@@ -2,6 +2,24 @@
   "version": 2,
   "policy": "Only DIRECT and STRONG_CONTEXT count. Unreviewed rt-* assets fail closed. Graphics, homonyms, generic filler and wrong entities do not count.",
   "assets": {
+    "bogle-vanguard-1959.jpg": {
+      "stories": {
+        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
+      },
+      "source_url": "https://investor.vanguard.com/content/retail/public/us/en/about-us/_jcr_content/root/container/container_1884309581_30279271/container_890438166/image.coreimg.jpeg/1773702033665/vg20250421-bogle-morgan-welch-1959.jpeg"
+    },
+    "bogle-vanguard-1989.jpg": {
+      "stories": {
+        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
+      },
+      "source_url": "https://corporate.vanguard.com/content/dam/corp/articles/images/50-years-50-facts-indexing/50_facts_fact_5.png"
+    },
+    "bogle-vanguard-founder.jpg": {
+      "stories": {
+        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
+      },
+      "source_url": "https://corporate.vanguard.com/content/dam/corp/what-we-care-about/images/ethics-and-integrity/WWCA_Ethics_John.jpg"
+    },
     "edison-stock-ticker.jpg": {
       "stories": {
         "Jack Bogle": "WEAK_GENERIC"
@@ -918,24 +936,6 @@
       "stories": {
         "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
       }
-    },
-    "bogle-vanguard-1959.jpg": {
-      "stories": {
-        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
-      },
-      "source_url": "https://investor.vanguard.com/content/retail/public/us/en/about-us/_jcr_content/root/container/container_1884309581_30279271/container_890438166/image.coreimg.jpeg/1773702033665/vg20250421-bogle-morgan-welch-1959.jpeg"
-    },
-    "bogle-vanguard-1989.jpg": {
-      "stories": {
-        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
-      },
-      "source_url": "https://corporate.vanguard.com/content/dam/corp/articles/images/50-years-50-facts-indexing/50_facts_fact_5.png"
-    },
-    "bogle-vanguard-founder.jpg": {
-      "stories": {
-        "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
-      },
-      "source_url": "https://corporate.vanguard.com/content/dam/corp/what-we-care-about/images/ethics-and-integrity/WWCA_Ethics_John.jpg"
     }
   }
 }
