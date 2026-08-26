@@ -35,7 +35,7 @@ try:
     from story_bot import (
         load_stories, story_aliases, story_pool, story_logo_domain,
         person_name, find_portrait, _logo_slug, LOGOS_DIR, OUT_DIR,
-        _STORY_SUBJECT, _subject_keys,
+        _STORY_SUBJECT, _subject_keys, resolve_runtime_visuals,
     )
     from logo_fetch import (_article_logo_files, wikidata_p154_logo,
                             wikidata_entity_files)
@@ -134,30 +134,29 @@ def _curated_logo_eras(line):
 
 
 def _classify(entry):
-    """Class from the entry's own counts — re-runnable after the
-    cross-subject disqualifier subtracts generic files."""
-    images = entry.get("images", 0)
-    era_ok = entry.get("era_ok", 0)
-    evidence = entry.get("evidence", [])
-    historical = "historical" in entry
-    logo_images = sum(1 for x in evidence if x.startswith("logo:"))
-    entry.pop("era_gap", None)
-    if "typographic:policy" in evidence:
-        entry["readiness"] = "THIN"
-    elif images <= 0:
-        entry["readiness"] = "NOT READY"
-    elif historical and era_ok <= 0:
-        entry["readiness"] = "NOT READY"
-        entry["era_gap"] = True     # assets exist, all wrong-era marks
-    elif images == logo_images:
-        # modern companies are nearly absent from free archives — that
-        # is a deck SHAPE (curated mark + typographic floor), not a
-        # defect, and bad archive hits must not promote it to READY
-        entry["readiness"] = "LOGO-ONLY"
-    elif images < ipc.READY_MIN_UNIQUE:
-        entry["readiness"] = "THIN"
+    """Class from RUNTIME-resolvable local files only (owner doctrine:
+    a smaller truthful READY beats stories producing blank frames)."""
+    photos = entry.get("local_photos", [])
+    logos = entry.get("local_logos", [])
+    n, has_logo = len(photos), bool(logos)
+    need_photos = max(0, 4 - n)
+    if need_photos == 0 and has_logo:
+        entry["runtime_status"] = "PASS"
+    elif need_photos and not has_logo:
+        entry["runtime_status"] = f"NEEDS {need_photos} MORE PHOTOS + LOGO"
+    elif need_photos:
+        entry["runtime_status"] = f"NEEDS {need_photos} MORE PHOTOS"
     else:
+        entry["runtime_status"] = "NEEDS LOGO"
+    entry.pop("era_gap", None)
+    if n == 0 and not has_logo:
+        entry["readiness"] = "NOT READY"
+    elif need_photos == 0 and has_logo:
         entry["readiness"] = "READY"
+    elif n == 0 and has_logo:
+        entry["readiness"] = "LOGO-ONLY"
+    else:
+        entry["readiness"] = "THIN"
     return entry
 
 
@@ -373,6 +372,16 @@ def check_line(line):
     entry["images"] = images
     entry["era_ok"] = era_ok
     entry["evidence"] = evidence
+    # RUNTIME TRUTH (owner rule after the Bogle false-READY): the class
+    # comes from the same resolver the deck generator uses. Probed
+    # evidence above remains as LEADS for the repair queue — it never
+    # inflates the class again.
+    photos, logos = resolve_runtime_visuals(line)
+    entry["local_photos"] = [f.name for f in photos]
+    entry["local_logos"] = [f.name for f in logos]
+    if images > len(photos):
+        print(f"      RUNTIME COVERAGE MISMATCH: declared={images}, "
+              f"resolvable_distinct_local={len(photos)}")
     _classify(entry)
     entry["anchors"] = anchors
     if anchors:

@@ -185,3 +185,180 @@ hungerstation-rider.jpg | هنقرستيشن, HungerStation, مندوب توصي
 sharbatly-founder.jpg | حسن الشربتلي, Hassan Sharbatly, حسن عباس شربتلي | مجموعة النهلة — الصفحة الرسمية (هوية موثقة بمؤسسة حسن عباس شربتلي الخيرية)
 zain-ksa-hq.jpg | زين, Zain KSA, زين السعودية, شركة الاتصالات المتنقلة | Zain KSA — Annual Report 2025
 edison-stock-ticker.jpg | Jack Bogle, Vanguard, سوق الأسهم, stock ticker, وول ستريت | Smithsonian via Wikimedia Commons — Public domain
+
+# materialized runtime assets (runtime-truth doctrine, 2026-08-26)
+rt-apple-1.jpg | Apple, Ronald Wayne | Arne Müseler / CC BY-SA 3.0 de — Wikimedia Commons
+rt-apple-2.jpg | Apple, Ronald Wayne | Rong0517 / CC BY-SA 4.0 — Wikimedia Commons
+rt-apple-3.jpg | Apple, Ronald Wayne | Kottke_Wayne.jpg: Aljawad
+derivative wor / CC BY-SA 3.0 — Wikimedia Commons
+rt-nvidia-1.jpg | NVIDIA | Coolcaesar / CC BY-SA 4.0 — Wikimedia Commons
+rt-nvidia-2.jpg | NVIDIA | Strubbl / CC BY-SA 4.0 — Wikimedia Commons
+rt-nokia-1.jpg | Nokia | Villeke / CC BY-SA 3.0 — Wikimedia Commons
+rt-nokia-2.jpg | Nokia | pikkuanna / CC BY-SA 2.0 — Wikimedia Commons
+rt-amazon-1.jpg | Amazon | SounderBruce / CC BY-SA 2.0 — Wikimedia Commons
+rt-netflix-1.jpg | Netflix | Coolcaesar at English Wikipedia / CC BY-SA 3.0 — Wikimedia Commons
+rt-netflix-2.jpg | Netflix | Bmclayto / CC BY-SA 4.0 — Wikimedia Commons
+rt-yahoo-1.jpg | Yahoo, Google | photographer Coolcaesar / CC BY-SA 3.0 — Wikimedia Commons
+rt-yahoo-2.jpg | Yahoo, Google | Yahoo. You can see why I did this in the / Public domain — Wikimedia Commons
+rt-yahoo-3.jpg | Yahoo, Google | The original uploader was 718 Bot at Eng / Public domain — Wikimedia Commons
+rt-microsoft-1.jpg | Microsoft | Jelson25 / Public domain — Wikimedia Commons
+rt-microsoft-2.jpg | Microsoft | Coolcaesar / CC BY-SA 4.0 — Wikimedia Commons
+rt-microsoft-3.jpg | Microsoft | Tyler Lahti / CC BY-SA 4.0 — Wikimedia Commons
+rt-tesla-1.jpg | Tesla | Windell Oskay from Sunnyvale, CA, USA / CC BY 2.0 — Wikimedia Commons
+rt-openai-1.jpg | OpenAI | HaeB / CC BY-SA 4.0 — Wikimedia Commons
+rt-tsmc-1.jpg | TSMC | Peellden / CC BY-SA 3.0 — Wikimedia Commons
+rt-tsmc-2.jpg | TSMC | 4300streetcar / CC BY 4.0 — Wikimedia Commons
+rt-samsung-1.jpg | Samsung, Samsung Electronics | Oskar Alexanderson / CC BY-SA 2.0 — Wikimedia Commons
+rt-samsung-2.jpg | Samsung, Samsung Electronics | Miguel12345667899 / CC0 — Wikimedia Commons
+rt-samsung-3.jpg | Samsung, Samsung Electronics | Dani4575 / CC BY-SA 4.0 — Wikimedia Commons
+rt-kodak-1.jpg | Kodak | Jacek Halicki / CC BY-SA 4.0 — Wikimedia Commons
+rt-kodak-2.jpg | Kodak | Detroit Publishing Company / Public domain — Wikimedia Commons
+rt-aramco-1.jpg | Aramco, أرامكو | Eagleamn / Public domain — Wikimedia Commons
+rt-aramco-2.jpg | Aramco, أرامكو | Bob Waters / Public domain — Wikimedia Commons
+rt-amsterdam-stock-exchange-1.jpg | Amsterdam Stock Exchange | Bybbisch94, Christian Gebhardt / CC BY-SA 4.0 — Wikimedia Commons
+rt-amsterdam-stock-exchange-2.jpg | Amsterdam Stock Exchange | APK / CC BY-SA 4.0 — Wikimedia Commons
+rt-قصة-أزمة-2008-كيف-بدأت-1.jpg | أزمة 2008 | Marek Ślusarczyk (Tupungato) Photo portf / CC BY 3.0 — Wikimedia Commons
+rt-قصة-أزمة-2008-كيف-بدأت-2.jpg | أزمة 2008 | International Energy Agency / CC BY 4.0 — Wikimedia Commons
+rt-pif-1.jpg | PIF, Public Investment Fund | Alessio Jacona / CC BY-SA 2.0 — Wikimedia Commons
+rt-pif-2.jpg | PIF, Public Investment Fund | B.alotaby / CC BY-SA 4.0 — Wikimedia Commons
+rt-pif-3.jpg | PIF, Public Investment Fund | Z thomas / CC BY 4.0 — Wikimedia Commons
+rt-maersk-1.jpg | Maersk, ميرسك | Bahnfrend / CC BY-SA 4.0 — Wikimedia Commons
+rt-maersk-2.jpg | Maersk, ميرسك | Maersk Line / CC BY-SA 2.0 — Wikimedia Commons
+rt-maersk-3.jpg | Maersk, ميرسك | Niels Johannes / CC BY-SA 4.0 — Wikimedia Commons
+rt-bitcoin-1.jpg | Bitcoin | Matti Blume / CC BY-SA 4.0 — Wikimedia Commons
+rt-bitcoin-2.jpg | Bitcoin | Bitcoin Developers / MIT — Wikimedia Commons
+rt-riyadh-1.jpg | Riyadh, الرياض | Humanized / CC0 — Wikimedia Commons
+rt-riyadh-2.jpg | Riyadh, الرياض | Geektaker / CC BY-SA 4.0 — Wikimedia Commons
+rt-dubai-1.jpg | Dubai, دبي | Compilation by Heitor Carvalho Jorge / CC BY-SA 3.0 — Wikimedia Commons
+rt-dubai-2.jpg | Dubai, دبي | Richard N Horne / CC BY-SA 4.0 — Wikimedia Commons
+rt-dubai-3.jpg | Dubai, دبي | Stefano Vigorelli / CC BY-SA 4.0 — Wikimedia Commons
+rt-dubai-4.jpg | Dubai, دبي | Tonenight / CC BY-SA 4.0 — Wikimedia Commons
+rt-singapore-1.jpg | Singapore, سنغافورة | chensiyuan / CC BY-SA 4.0 — Wikimedia Commons
+rt-singapore-2.jpg | Singapore, سنغافورة | Basile Morin / CC BY-SA 4.0 — Wikimedia Commons
+rt-alula-1.jpg | AlUla, العلا | Uhooep / CC BY-SA 4.0 — Wikimedia Commons
+rt-alula-2.jpg | AlUla, العلا | Uhooep / CC BY-SA 4.0 — Wikimedia Commons
+rt-jeddah-1.jpg | Jeddah, جدة التاريخية | Tahir mq / CC BY-SA 4.0 — Wikimedia Commons
+rt-jeddah-2.jpg | Jeddah, جدة التاريخية | Gregor Rom / CC BY-SA 4.0 — Wikimedia Commons
+rt-tokyo-1.jpg | Tokyo, طوكيو | Basile Morin / CC BY-SA 4.0 — Wikimedia Commons
+rt-tokyo-2.jpg | Tokyo, طوكيو | David Kernan / CC BY 4.0 — Wikimedia Commons
+rt-new-york-2.jpg | New York, نيويورك | King of Hearts / CC BY-SA 3.0 — Wikimedia Commons
+rt-new-york-3.jpg | New York, نيويورك | Journalist 1st Class Preston Keres / Public domain — Wikimedia Commons
+rt-aramco-1.jpg | Aramco, Max Steineke | Wikimedia Commons / CC BY-SA 3.0 — Wikimedia Commons
+rt-steve-jobs-1.jpg | Steve Jobs | Matthew Yohe (talk) / CC BY-SA 3.0 — Wikimedia Commons
+rt-steve-jobs-2.jpg | Steve Jobs | Joi Ito from Inbamura, Japan / CC BY 2.0 — Wikimedia Commons
+rt-jack-ma-1.jpg | Jack Ma, Alibaba | N509FZ / CC BY-SA 4.0 — Wikimedia Commons
+rt-jack-ma-2.jpg | Jack Ma, Alibaba | St. Gallen Symposium / CC BY-SA 4.0 — Wikimedia Commons
+rt-jack-ma-3.jpg | Jack Ma, Alibaba | JD Lasica from Pleasanton, CA, US / CC BY 2.0 — Wikimedia Commons
+rt-warren-buffett-1.jpg | Warren Buffett | Mark Hirschey / CC BY-SA 2.0 — Wikimedia Commons
+rt-warren-buffett-2.jpg | Warren Buffett | USA International Trade Administration / Public domain — Wikimedia Commons
+rt-elon-musk-1.jpg | Elon Musk | Gage Skidmore / CC BY-SA 4.0 — Wikimedia Commons
+rt-elon-musk-2.jpg | Elon Musk | U.S. Air Force / Trevor Cokley / Public domain — Wikimedia Commons
+rt-elon-musk-3.jpg | Elon Musk | Debbie Rowe / CC BY-SA 3.0 — Wikimedia Commons
+rt-saudia-1.jpg | Saudia | Premkudva / CC BY-SA 4.0 — Wikimedia Commons
+rt-saudia-2.jpg | Saudia | Meshari Alawfi / CC BY 4.0 — Wikimedia Commons
+rt-كيف-غي-رت-شركات-الطيران-1.jpg | الطيران الاقتصادي | Curren / CC BY 3.0 — Wikimedia Commons
+rt-كيف-غي-رت-شركات-الطيران-2.jpg | الطيران الاقتصادي | Felix Gottwald - www.felixgottwald.net ( / CC BY-SA 3.0 de — Wikimedia Commons
+rt-emirates-1.jpg | Emirates, طيران الإمارات | Maarten Visser from Capelle aan den IJss / CC BY-SA 2.0 — Wikimedia Commons
+rt-emirates-2.jpg | Emirates, طيران الإمارات | HARRY HUGHES, WIGAN UK User:JulianHerzog / CC BY 4.0 — Wikimedia Commons
+rt-emirates-3.jpg | Emirates, طيران الإمارات | Julian Herzog (Website) / CC BY 4.0 — Wikimedia Commons
+rt-لماذا-تختلف-أسعار-التذاك-1.jpg | أسعار التذاكر | Yamen / CC BY-SA 4.0 — Wikimedia Commons
+rt-لماذا-تختلف-أسعار-التذاك-2.jpg | أسعار التذاكر | Elhossiny50 / CC BY-SA 4.0 — Wikimedia Commons
+rt-قصة-جواز-السفر-كيف-بدأت-1.jpg | جواز السفر | Alhassan Ehab / CC0 — Wikimedia Commons
+rt-قصة-جواز-السفر-كيف-بدأت-2.jpg | جواز السفر | Rakoon / CC0 — Wikimedia Commons
+rt-douglas-engelbart-1.jpg | Douglas Engelbart | Alex Handy from Oakland, Nmibia / CC BY-SA 2.0 — Wikimedia Commons
+rt-douglas-engelbart-2.jpg | Douglas Engelbart | SRI International / CC BY-SA 3.0 — Wikimedia Commons
+rt-radia-perlman-1.jpg | Radia Perlman | Scientist-100 at English Wikipedia / Public domain — Wikimedia Commons
+rt-radia-perlman-2.jpg | Radia Perlman | Intel Free Press / CC BY-SA 2.0 — Wikimedia Commons
+rt-radia-perlman-3.jpg | Radia Perlman | Scientist-100 / CC0 — Wikimedia Commons
+rt-shuji-nakamura-1.jpg | Shuji Nakamura | Glenn Beltz / CC BY 2.0 — Wikimedia Commons
+rt-shuji-nakamura-2.jpg | Shuji Nakamura | 文部科学省 大臣官房人事課 / CC BY 4.0 — Wikimedia Commons
+rt-jerry-lawson-1.jpg | Jerry Lawson | OU133 / CC BY-SA 4.0 — Wikimedia Commons
+rt-jerry-lawson-2.jpg | Jerry Lawson | Evan-Amos / CC BY-SA 3.0 — Wikimedia Commons
+rt-hedy-lamarr-1.jpg | Hedy Lamarr | Unknown authorUnknown author / Public domain — Wikimedia Commons
+rt-hedy-lamarr-2.jpg | Hedy Lamarr | Employee(s) of MGM / Public domain — Wikimedia Commons
+rt-ajay-bhatt-1.jpg | Ajay Bhatt | LepVektor (talk) (Uploads) / Public domain — Wikimedia Commons
+rt-ajay-bhatt-2.jpg | Ajay Bhatt | Intel Free Press / CC BY-SA 2.0 — Wikimedia Commons
+rt-philo-farnsworth-1.jpg | Philo Farnsworth | Harris &amp; Ewing / Public domain — Wikimedia Commons
+rt-mary-allen-wilkes-1.jpg | Mary Allen Wilkes | unknown (work for hire) / CC0 — Wikimedia Commons
+rt-mary-allen-wilkes-2.jpg | Mary Allen Wilkes | Rex B. Wilkes / CC BY-SA 4.0 — Wikimedia Commons
+rt-masaru-ibuka-1.jpg | Masaru Ibuka, Sony | 財界研究社、撮影者不明 / Public domain — Wikimedia Commons
+rt-masaru-ibuka-2.jpg | Masaru Ibuka, Sony | 財界研究社、撮影者不明 / Public domain — Wikimedia Commons
+rt-diners-club-1.jpg | Diners Club, Frank McNamara | Corsin Camichel / CC BY 2.0 — Wikimedia Commons
+rt-muriel-siebert-1.jpg | Muriel Siebert | Muriel Siebert &amp; Co., Inc. / Public domain — Wikimedia Commons
+rt-muriel-siebert-2.jpg | Muriel Siebert | Muriel Siebert &amp; Co., Inc. / Public domain — Wikimedia Commons
+rt-muriel-siebert-3.jpg | Muriel Siebert | Muriel Siebert &amp; Co., Inc. / Public domain — Wikimedia Commons
+rt-benjamin-graham-1.jpg | Benjamin Graham | AnonymousUnknown author / Public domain — Wikimedia Commons
+rt-benjamin-graham-2.jpg | Benjamin Graham | AnonymousUnknown author / Public domain — Wikimedia Commons
+rt-amancio-ortega-1.jpg | Amancio Ortega, Inditex | Ajuanta / CC0 — Wikimedia Commons
+rt-amancio-ortega-2.jpg | Amancio Ortega, Inditex | Nemigo / Public domain — Wikimedia Commons
+rt-muhammad-yunus-1.jpg | Muhammad Yunus, Grameen Bank | University of Salford Press Office / CC BY 2.0 — Wikimedia Commons
+rt-muhammad-yunus-2.jpg | Muhammad Yunus, Grameen Bank | World Economic Forum / CC BY-SA 2.0 — Wikimedia Commons
+rt-mcdonald-brothers-1.jpg | McDonald brothers, Ray Kroc | Bruce Marlin / CC BY-SA 2.5 — Wikimedia Commons
+rt-mcdonald-brothers-2.jpg | McDonald brothers, Ray Kroc | Unknown authorUnknown author / Public domain — Wikimedia Commons
+rt-mcdonald-brothers-3.jpg | McDonald brothers, Ray Kroc | Unknown authorUnknown author / Public domain — Wikimedia Commons
+rt-madam-c-j-walker-1.jpg | Madam C.J. Walker, Sarah Breedlove | Ktkvtsh / CC BY 4.0 — Wikimedia Commons
+rt-juan-trippe-1.jpg | Juan Trippe, Pan Am | Unknown authorUnknown author / Public domain — Wikimedia Commons
+rt-juan-trippe-2.jpg | Juan Trippe, Pan Am | Unknown authorUnknown author / Public domain — Wikimedia Commons
+rt-herb-kelleher-1.jpg | Herb Kelleher, Southwest Airlines | SouthwestArchive / CC BY-SA 4.0 — Wikimedia Commons
+rt-herb-kelleher-2.jpg | Herb Kelleher, Southwest Airlines | Original uploader was en:User:JGHowes at / CC BY-SA 3.0 — Wikimedia Commons
+rt-fred-smith-1.jpg | Fred Smith, FedEx | DanielMichaelPerry / CC0 — Wikimedia Commons
+rt-fred-smith-2.jpg | Fred Smith, FedEx | BigBear_in_IN / CC BY-SA 3.0 — Wikimedia Commons
+rt-sulaiman-al-rajhi-1.jpg | سليمان الراجحي, Sulaiman Al Rajhi, مصرف الراجحي | عمرو / CC BY-SA 4.0 — Wikimedia Commons
+rt-yusuf-bin-ahmed-kanoo-1.jpg | Yusuf bin Ahmed Kanoo, YBA Kanoo | Jeff Singer / CC BY-SA 4.0 — Wikimedia Commons
+rt-abdul-latif-jameel-1.jpg | Abdul Latif Jameel, Toyota Saudi Arabia | Tokumeigakarinoaoshima / CC0 — Wikimedia Commons
+rt-abdul-latif-jameel-2.jpg | Abdul Latif Jameel, Toyota Saudi Arabia | Matti Blume / CC BY-SA 4.0 — Wikimedia Commons
+rt-saleh-al-rajhi-1.jpg | صالح الراجحي, Saleh Al Rajhi, مصرف الراجحي | AbdulAziz / CC BY-SA 4.0 — Wikimedia Commons
+rt-saleh-al-rajhi-2.jpg | صالح الراجحي, Saleh Al Rajhi, مصرف الراجحي | Sami / CC BY-SA 4.0 — Wikimedia Commons
+rt-mohammed-bin-laden-1.jpg | Mohammed bin Laden, Saudi Binladin Group | Saudi Binladin Group / Public domain — Wikimedia Commons
+rt-mohammed-bin-laden-2.jpg | Mohammed bin Laden, Saudi Binladin Group | Alfagih at Arabic Wikipedia / GFDL — Wikimedia Commons
+rt-ghutra-1.jpg | ghutra, shemagh, شماغ | Magnificent Bowtruckle / CC0 — Wikimedia Commons
+rt-saudi-coffee-1.jpg | Saudi coffee, Arabic coffee | Canbel / CC BY-SA 4.0 — Wikimedia Commons
+rt-saudi-coffee-2.jpg | Saudi coffee, Arabic coffee | This video, screenshot or audio excerpt  / CC BY 3.0 — Wikimedia Commons
+rt-saudi-dates-industry-1.jpg | Saudi dates industry, التمر | ImagePerson / CC BY-SA 4.0 — Wikimedia Commons
+rt-saudi-dates-industry-2.jpg | Saudi dates industry, التمر | ImagePerson / CC BY-SA 4.0 — Wikimedia Commons
+rt-air-conditioning-1.jpg | air conditioning, Willis Carrier | Solomon203 / CC BY-SA 3.0 — Wikimedia Commons
+rt-air-conditioning-2.jpg | air conditioning, Willis Carrier | Dinkun Chen / CC BY-SA 4.0 — Wikimedia Commons
+rt-zamzam-water-1.jpg | Zamzam water | Mardetanha / CC BY-SA 3.0 — Wikimedia Commons
+rt-al-rajhi-bank-1.jpg | Al Rajhi Bank | haitham alfalah / CC BY 3.0 — Wikimedia Commons
+rt-al-rajhi-bank-2.jpg | Al Rajhi Bank | Imam Khairul Annas / CC BY-SA 3.0 — Wikimedia Commons
+rt-flynas-1.jpg | flynas | Amiroslaf Dosh / Public domain — Wikimedia Commons
+rt-flynas-2.jpg | flynas | FlyNas / Public domain — Wikimedia Commons
+rt-almarai-1.jpg | Almarai | Ddesiderio / CC BY-SA 3.0 — Wikimedia Commons
+rt-almarai-2.jpg | Almarai | Ddesiderio / CC BY-SA 3.0 — Wikimedia Commons
+rt-savola-group-1.jpg | Savola Group | Serafi.noor / CC BY-SA 4.0 — Wikimedia Commons
+rt-al-othaim-markets-1.jpg | Al Othaim Markets, العثيم | Othaimmarkets.com / CC BY-SA 4.0 — Wikimedia Commons
+rt-al-othaim-markets-2.jpg | Al Othaim Markets, العثيم | على المزارقه / CC BY-SA 4.0 — Wikimedia Commons
+rt-nadec-1.jpg | نادك, NADEC | Zaki8888 / CC BY-SA 3.0 — Wikimedia Commons
+rt-sabic-1.jpg | SABIC | LIZIT at en.wikipedia / CC BY 2.5 — Wikimedia Commons
+rt-saudi-stock-market-crash-1.jpg | Saudi stock market crash 2006 | Kelcoz / CC BY-SA 4.0 — Wikimedia Commons
+rt-souk-al-manakh-1.jpg | Souk Al-Manakh, Kuwait Stock Exchange, سوق المناخ | MOseQar / CC BY-SA 3.0 — Wikimedia Commons
+rt-souk-al-manakh-2.jpg | Souk Al-Manakh, Kuwait Stock Exchange, سوق المناخ | artemuestra / CC BY-SA 2.0 — Wikimedia Commons
+rt-souk-al-manakh-3.jpg | Souk Al-Manakh, Kuwait Stock Exchange, سوق المناخ | me / Public domain — Wikimedia Commons
+rt-sama-1.jpg | SAMA, Saudi Central Bank | Sabadek / CC BY-SA 4.0 — Wikimedia Commons
+rt-sama-2.jpg | SAMA, Saudi Central Bank | Muath.af / CC BY-SA 4.0 — Wikimedia Commons
+rt-careem-1.jpg | Careem, Uber | Careem Technologies / Public domain — Wikimedia Commons
+rt-lucid-motors-1.jpg | Lucid Motors, لوسيد, KAEC | Phillip Pessar / CC BY 2.0 — Wikimedia Commons
+rt-lucid-motors-2.jpg | Lucid Motors, لوسيد, KAEC | Matti Blume / CC BY-SA 4.0 — Wikimedia Commons
+rt-starbucks-2.jpg | Starbucks, Alshaya | TylerMascola / CC0 — Wikimedia Commons
+rt-pif-1.jpg | PIF, Public Investment Fund | Z thomas / CC BY 4.0 — Wikimedia Commons
+rt-pif-uber-stake-1.jpg | PIF Uber stake | Comyu / CC BY-SA 4.0 — Wikimedia Commons
+rt-pif-uber-stake-2.jpg | PIF Uber stake | Dllu / CC BY-SA 4.0 — Wikimedia Commons
+rt-riyadh-dammam-railway-1.jpg | Riyadh Dammam railway | Aramco / Public domain — Wikimedia Commons
+rt-riyadh-dammam-railway-2.jpg | Riyadh Dammam railway | Aramco / Public domain — Wikimedia Commons
+rt-قصة-أول-سيارة-تدخل-الجزي-1.jpg | أول سيارة, سيارات الملك عبدالعزيز | Ralf Roletschek / GFDL 1.2 — Wikimedia Commons
+rt-قصة-أول-سيارة-تدخل-الجزي-2.jpg | أول سيارة, سيارات الملك عبدالعزيز | Supplied by Benz to William Worby Beaumo / Public domain — Wikimedia Commons
+rt-first-saudi-banknote-1.jpg | first Saudi banknote, Hajj receipt | Attila2000 Emilio Nardelli / Public domain — Wikimedia Commons
+rt-lego-1.jpg | LEGO | Father of Rathfelder / CC BY-SA 4.0 — Wikimedia Commons
+rt-lego-2.jpg | LEGO | Grendelkhan / CC BY-SA 4.0 — Wikimedia Commons
+rt-ikea-1.jpg | IKEA, Ingvar Kamprad | Wikimedia Commons / Copyrighted free use — Wikimedia Commons
+rt-ikea-2.jpg | IKEA, Ingvar Kamprad | Vyacheslav Argenberg / CC BY 4.0 — Wikimedia Commons
+rt-ikea-3.jpg | IKEA, Ingvar Kamprad | Vyacheslav Argenberg / CC BY 4.0 — Wikimedia Commons
+rt-ikea-4.jpg | IKEA, Ingvar Kamprad | Ministry of Enterprise, Energy and Commu / CC BY 2.0 — Wikimedia Commons
+rt-rolex-1.jpg | Rolex | Madrox / CC BY-SA 4.0 — Wikimedia Commons
+rt-rolex-2.jpg | Rolex | Matt C / CC BY 2.0 — Wikimedia Commons
+rt-ups-1.jpg | UPS | Dylan Ashe / CC BY-SA 2.0 — Wikimedia Commons
+rt-publix-1.jpg | Publix | Alexf / CC BY-SA 3.0 — Wikimedia Commons
+rt-publix-2.jpg | Publix | Phillip Pessar / CC BY 2.0 — Wikimedia Commons
+rt-publix-3.jpg | Publix | Winnebaggo / CC0 — Wikimedia Commons
+rt-google-1.jpg | Google | Google / CC BY-SA 3.0 — Wikimedia Commons
+rt-google-3.jpg | Google | Asoundd / CC BY-SA 4.0 — Wikimedia Commons

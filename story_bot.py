@@ -864,6 +864,73 @@ def _subject_keys(line):
     return keys
 
 
+def resolve_runtime_visuals(line):
+    """(photo_paths, logo_paths) the RUNTIME can actually serve for this
+    line — the single source of truth the auditor must share.
+
+    Counts only real local files that exist, decode, tag-match by the
+    same exact matcher fetch_local_photo uses, and are DISTINCT (sha256
+    exact + dhash near-dup, via image_precheck). The Bogle lesson: the
+    audit said READY 4 while the deck could resolve exactly one file —
+    routes, remote references and the same photograph counted twice.
+    """
+    import hashlib as _h
+    from news_bot import load_local_images
+    import image_precheck as ipc
+
+    aliases = [a for a in story_aliases(line) if a]
+    persons = _STORY_PERSONS.get(str(line).strip()) or []
+    phrases = {a.casefold() for a in aliases + persons}
+    words = set()
+    for q in phrases:
+        words |= {t for t in q.replace(",", " ").split() if len(t) > 2}
+
+    photos = []
+    for entry in load_local_images():
+        tags = {t.casefold() for t in entry.get("tags", [])}
+        if any(tag in phrases or (" " not in tag and tag in words)
+               for tag in tags):
+            if entry["path"].exists():
+                photos.append(entry["path"])
+
+    # distinct: exact sha then perceptual near-dup
+    kept, hashes, shas = [], [], set()
+    for f in photos:
+        try:
+            digest = _h.sha256(f.read_bytes()).hexdigest()
+        except OSError:
+            continue
+        if digest in shas:
+            continue
+        dh = ipc.dhash(f)
+        if dh is None:
+            continue                      # does not decode -> not a photo
+        if any(bin(dh ^ o).count("1") <= ipc.DHASH_MAX_DISTANCE
+               for o in hashes):
+            continue
+        shas.add(digest)
+        hashes.append(dh)
+        kept.append(f)
+
+    # logos: curated files matching this line's identity, existing on disk
+    logos = []
+    domain = story_logo_domain(line)
+    names = {n.casefold() for n in aliases}
+    slugs = {_logo_slug(n) for n in aliases if _logo_slug(n)}
+    try:
+        index = json.loads((LOGOS_DIR / "index.json").read_text("utf-8"))
+    except Exception:
+        index = {}
+    for f in sorted(LOGOS_DIR.glob("*.png")):
+        if "-" not in f.stem:
+            continue
+        slug = f.stem.rsplit("-", 1)[0]
+        if (slug == domain or slug in slugs
+                or any(a.casefold() in names for a in index.get(slug, []))):
+            logos.append(f)
+    return kept, logos
+
+
 def choose_story(exclude=(), pool=None):
     stories = load_stories()
     if not stories:
