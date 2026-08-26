@@ -360,21 +360,6 @@
    ],
    "pass": true
   },
-  "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": {
-   "pool": "general",
-   "at": "2026-08-26T11:52:34.075579",
-   "thash": "2afd1c9f8a",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
   "قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي": {
    "pool": "general",
    "at": "2026-08-26T11:52:34.082923",
@@ -791,21 +776,6 @@
     "logo:p154",
     "entity:P18",
     "archive:Emirates"
-   ],
-   "pass": true
-  },
-  "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": {
-   "pool": "general",
-   "at": "2026-08-26T11:53:47.387931",
-   "thash": "78dfe66a92",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
    ],
    "pass": true
   },
@@ -1458,17 +1428,6 @@
    ],
    "pass": true
   },
-  "حسن الشربتلي وجيل التجار الأوائل في جدة": {
-   "pool": "general",
-   "at": "2026-08-26T11:55:44.430961",
-   "thash": "36fba0c374",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "من هم أول الموظفين السعوديين في أرامكو؟": {
    "pool": "general",
    "at": "2026-08-26T11:55:46.680773",
@@ -1637,17 +1596,6 @@
     "archive:Savola Group"
    ],
    "pass": true
-  },
-  "قصة هنقرستيشن وحرب تطبيقات التوصيل": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:29.621671",
-   "thash": "a35428721e",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
   },
   "قصة مرسول وتوسعه": {
    "pool": "saudi",
@@ -2819,7 +2767,90 @@
     "archive:flynas"
    ],
    "pass": true
+  },
+  "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": {
+   "pool": "general",
+   "at": "2026-08-26T14:04:24.467952",
+   "thash": "779d877d6f",
+   "files": [
+    "File:22 2007-2008 global financial crisis effect in Bristol UK - credit crunch lunch.jpg",
+    "File:Global sustainable recovery spending by governments in reponse to Covid-19 compared to green spending labels enacted in post-global financial crisis stimulus plans.jpg"
+   ],
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "library:lehman-2008.jpg",
+    "library:foreclosure-2008.jpg",
+    "library:wallstreet-2008.jpg",
+    "archive:أزمة 2008:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:lehman-2008.jpg",
+    "library:foreclosure-2008.jpg",
+    "library:wallstreet-2008.jpg",
+    "archive:أزمة 2008"
+   ],
+   "pass": true
+  },
+  "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": {
+   "pool": "general",
+   "at": "2026-08-26T14:04:26.026094",
+   "thash": "62cd4d47b0",
+   "files": [
+    "File:Tickets Price for Mahdia Museum 12082020.jpg",
+    "File:السفر والجولات.jpg"
+   ],
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "library:departure-board.jpg",
+    "library:riyadh-departures.jpg",
+    "library:checkin-hall.jpg",
+    "archive:أسعار التذاكر:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:departure-board.jpg",
+    "library:riyadh-departures.jpg",
+    "library:checkin-hall.jpg",
+    "archive:أسعار التذاكر"
+   ],
+   "pass": true
+  },
+  "حسن الشربتلي وجيل التجار الأوائل في جدة": {
+   "pool": "general",
+   "at": "2026-08-26T14:04:27.255948",
+   "thash": "ec2de122da",
+   "person": "حسن الشربتلي",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "portrait:حسن الشربتلي",
+    "library:sharbatly-founder.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "portrait:حسن الشربتلي",
+    "library:sharbatly-founder.jpg"
+   ],
+   "pass": true
+  },
+  "قصة هنقرستيشن وحرب تطبيقات التوصيل": {
+   "pool": "saudi",
+   "at": "2026-08-26T14:04:29.911817",
+   "thash": "a35428721e",
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "library:hungerstation-rider.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:hungerstation-rider.jpg"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-26T13:39:42.433821"
+ "checked_at": "2026-08-26T14:04:31.449277"
 }
