@@ -860,46 +860,6 @@
    ],
    "pass": true
   },
-  "قصة نيويورك: كيف صارت عاصمة المال؟": {
-   "pool": "general",
-   "at": "2026-08-26T15:26:35.501743",
-   "thash": "5f22f7d247",
-   "files": [
-    "File:Long Island City New York May 2015 panorama 3.jpg",
-    "File:September 14 2001.jpg"
-   ],
-   "images": 8,
-   "era_ok": 8,
-   "evidence": [
-    "library:nyse-floor.jpg",
-    "library:nyc-aerial.jpg",
-    "library:nyc-empire-dusk.jpg",
-    "library:rt-new-york-2.jpg",
-    "library:rt-new-york-3.jpg",
-    "entity:P18:NYSCapitolPanorama.jpg",
-    "archive:New York:2"
-   ],
-   "local_photos": [
-    "nyse-floor.jpg",
-    "nyc-aerial.jpg",
-    "nyc-empire-dusk.jpg",
-    "rt-new-york-2.jpg",
-    "rt-new-york-3.jpg"
-   ],
-   "local_logos": [],
-   "runtime_status": "NEEDS LOGO",
-   "readiness": "THIN",
-   "anchors": [
-    "library:nyse-floor.jpg",
-    "library:nyc-aerial.jpg",
-    "library:nyc-empire-dusk.jpg",
-    "library:rt-new-york-2.jpg",
-    "library:rt-new-york-3.jpg",
-    "entity:P18",
-    "archive:New York"
-   ],
-   "pass": true
-  },
   "كيف بنت الصين مدناً كاملة في سنوات؟": {
    "pool": "general",
    "at": "2026-08-26T15:26:39.735152",
@@ -1553,49 +1513,6 @@
     "library:rt-masaru-ibuka-2.jpg",
     "entity:P18",
     "archive:Masaru Ibuka"
-   ],
-   "pass": true
-  },
-  "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": {
-   "pool": "general",
-   "at": "2026-08-26T15:27:49.204061",
-   "thash": "1804d474a8",
-   "person": "Muriel Siebert",
-   "files": [
-    "File:60s Muriel Siebert advertisement.jpg",
-    "File:Muriel Siebert advertisement.jpg"
-   ],
-   "images": 9,
-   "era_ok": 9,
-   "evidence": [
-    "portrait:Muriel Siebert",
-    "library:siebert-ad-60s.jpg",
-    "library:siebert-desk.jpg",
-    "library:rt-muriel-siebert-1.jpg",
-    "library:rt-muriel-siebert-2.jpg",
-    "library:rt-muriel-siebert-3.jpg",
-    "entity:P18:Muriel Siebert advertisement (cropped).jpg",
-    "archive:Muriel Siebert:3"
-   ],
-   "local_photos": [
-    "siebert-ad-60s.jpg",
-    "siebert-desk.jpg",
-    "rt-muriel-siebert-1.jpg",
-    "rt-muriel-siebert-2.jpg",
-    "rt-muriel-siebert-3.jpg"
-   ],
-   "local_logos": [],
-   "runtime_status": "NEEDS LOGO",
-   "readiness": "THIN",
-   "anchors": [
-    "portrait:Muriel Siebert",
-    "library:siebert-ad-60s.jpg",
-    "library:siebert-desk.jpg",
-    "library:rt-muriel-siebert-1.jpg",
-    "library:rt-muriel-siebert-2.jpg",
-    "library:rt-muriel-siebert-3.jpg",
-    "entity:P18",
-    "archive:Muriel Siebert"
    ],
    "pass": true
   },
@@ -2657,35 +2574,6 @@
    ],
    "pass": true
   },
-  "قصة ستاربكس عبر الشايع": {
-   "pool": "saudi",
-   "at": "2026-08-26T15:30:15.402821",
-   "thash": "69527a1cef",
-   "person": "ستاربكس عبر الشايع",
-   "files": [
-    "File:STARBUCKS COFFEE PRODUCTS IN CHINA (11).jpg",
-    "File:Starbucks Coffee restaurant.png"
-   ],
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "portrait:Starbucks",
-    "library:rt-starbucks-2.jpg",
-    "archive:Starbucks:3"
-   ],
-   "local_photos": [
-    "rt-starbucks-2.jpg"
-   ],
-   "local_logos": [],
-   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
-   "readiness": "THIN",
-   "anchors": [
-    "portrait:Starbucks",
-    "library:rt-starbucks-2.jpg",
-    "archive:Starbucks"
-   ],
-   "pass": true
-  },
   "قصة أمازون واستحواذها على سوق دوت كوم": {
    "pool": "saudi",
    "at": "2026-08-26T15:30:22.023741",
@@ -3075,50 +2963,6 @@
     "logo:curated",
     "entity:P18",
     "archive:Microsoft"
-   ],
-   "pass": true
-  },
-  "قصة Google: السهم الذي جعل الطاهي مليونيراً": {
-   "pool": "general",
-   "at": "2026-08-26T15:31:13.301338",
-   "thash": "9e0bef042e",
-   "files": [
-    "File:Google shopping søk.jpg",
-    "File:Googleplex HQ (cropped).jpg"
-   ],
-   "images": 9,
-   "era_ok": 8,
-   "evidence": [
-    "library:rt-yahoo-1.jpg",
-    "library:rt-yahoo-2.jpg",
-    "library:rt-yahoo-3.jpg",
-    "library:rt-google-1.jpg",
-    "library:rt-google-3.jpg",
-    "logo:curated:current",
-    "entity:P18:Google Knowledge Panel.png",
-    "archive:Google:2"
-   ],
-   "local_photos": [
-    "rt-yahoo-1.jpg",
-    "rt-yahoo-2.jpg",
-    "rt-yahoo-3.jpg",
-    "rt-google-1.jpg",
-    "rt-google-3.jpg"
-   ],
-   "local_logos": [
-    "yahoo.com-current.png"
-   ],
-   "runtime_status": "PASS",
-   "readiness": "READY",
-   "anchors": [
-    "library:rt-yahoo-1.jpg",
-    "library:rt-yahoo-2.jpg",
-    "library:rt-yahoo-3.jpg",
-    "library:rt-google-1.jpg",
-    "library:rt-google-3.jpg",
-    "logo:curated",
-    "entity:P18",
-    "archive:Google"
    ],
    "pass": true
   },
@@ -4208,7 +4052,158 @@
     "archive:Jack Bogle"
    ],
    "pass": true
+  },
+  "قصة نيويورك: كيف صارت عاصمة المال؟": {
+   "pool": "general",
+   "at": "2026-08-26T15:31:48.156499",
+   "thash": "5f22f7d247",
+   "files": [
+    "File:September 14 2001.jpg"
+   ],
+   "images": 6,
+   "era_ok": 6,
+   "evidence": [
+    "library:nyse-floor.jpg",
+    "library:nyc-aerial.jpg",
+    "library:nyc-empire-dusk.jpg",
+    "library:rt-new-york-2.jpg",
+    "library:rt-new-york-3.jpg",
+    "archive:New York:1"
+   ],
+   "local_photos": [
+    "nyse-floor.jpg",
+    "nyc-aerial.jpg",
+    "nyc-empire-dusk.jpg",
+    "rt-new-york-2.jpg",
+    "rt-new-york-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
+   "anchors": [
+    "library:nyse-floor.jpg",
+    "library:nyc-aerial.jpg",
+    "library:nyc-empire-dusk.jpg",
+    "library:rt-new-york-2.jpg",
+    "library:rt-new-york-3.jpg",
+    "archive:New York"
+   ],
+   "pass": true
+  },
+  "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك": {
+   "pool": "general",
+   "at": "2026-08-26T15:31:52.230611",
+   "thash": "1804d474a8",
+   "person": "Muriel Siebert",
+   "files": [
+    "File:60s Muriel Siebert advertisement.jpg",
+    "File:Muriel Siebert advertisement.jpg"
+   ],
+   "images": 9,
+   "era_ok": 9,
+   "evidence": [
+    "portrait:Muriel Siebert",
+    "library:siebert-ad-60s.jpg",
+    "library:siebert-desk.jpg",
+    "library:rt-muriel-siebert-1.jpg",
+    "library:rt-muriel-siebert-2.jpg",
+    "library:rt-muriel-siebert-3.jpg",
+    "entity:P18:Muriel Siebert advertisement (cropped).jpg",
+    "archive:Muriel Siebert:3"
+   ],
+   "local_photos": [
+    "siebert-ad-60s.jpg",
+    "siebert-desk.jpg",
+    "rt-muriel-siebert-1.jpg",
+    "rt-muriel-siebert-2.jpg",
+    "rt-muriel-siebert-3.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS LOGO",
+   "readiness": "THIN",
+   "anchors": [
+    "portrait:Muriel Siebert",
+    "library:siebert-ad-60s.jpg",
+    "library:siebert-desk.jpg",
+    "library:rt-muriel-siebert-1.jpg",
+    "library:rt-muriel-siebert-2.jpg",
+    "library:rt-muriel-siebert-3.jpg",
+    "entity:P18",
+    "archive:Muriel Siebert"
+   ],
+   "pass": true
+  },
+  "قصة ستاربكس عبر الشايع": {
+   "pool": "saudi",
+   "at": "2026-08-26T15:31:54.758606",
+   "thash": "69527a1cef",
+   "person": "ستاربكس عبر الشايع",
+   "files": [
+    "File:Starbucks Coffee restaurant.png",
+    "File:Starbucks Grande Iced Pumpkin Spice Latte.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "portrait:Starbucks",
+    "library:rt-starbucks-2.jpg",
+    "archive:Starbucks:2"
+   ],
+   "local_photos": [
+    "rt-starbucks-2.jpg"
+   ],
+   "local_logos": [],
+   "runtime_status": "NEEDS 3 MORE PHOTOS + LOGO",
+   "readiness": "THIN",
+   "anchors": [
+    "portrait:Starbucks",
+    "library:rt-starbucks-2.jpg",
+    "archive:Starbucks"
+   ],
+   "pass": true
+  },
+  "قصة Google: السهم الذي جعل الطاهي مليونيراً": {
+   "pool": "general",
+   "at": "2026-08-26T15:32:00.539567",
+   "thash": "9e0bef042e",
+   "files": [
+    "File:Google shopping søk.jpg",
+    "File:Googleplex HQ (cropped).jpg"
+   ],
+   "images": 8,
+   "era_ok": 7,
+   "evidence": [
+    "library:rt-yahoo-1.jpg",
+    "library:rt-yahoo-2.jpg",
+    "library:rt-yahoo-3.jpg",
+    "library:rt-google-1.jpg",
+    "library:rt-google-3.jpg",
+    "logo:curated:current",
+    "archive:Google:2"
+   ],
+   "local_photos": [
+    "rt-yahoo-1.jpg",
+    "rt-yahoo-2.jpg",
+    "rt-yahoo-3.jpg",
+    "rt-google-1.jpg",
+    "rt-google-3.jpg"
+   ],
+   "local_logos": [
+    "yahoo.com-current.png"
+   ],
+   "runtime_status": "PASS",
+   "readiness": "READY",
+   "anchors": [
+    "library:rt-yahoo-1.jpg",
+    "library:rt-yahoo-2.jpg",
+    "library:rt-yahoo-3.jpg",
+    "library:rt-google-1.jpg",
+    "library:rt-google-3.jpg",
+    "logo:curated",
+    "archive:Google"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-26T15:31:16.454168"
+ "checked_at": "2026-08-26T15:32:03.728365"
 }
