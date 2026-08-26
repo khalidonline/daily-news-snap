@@ -11,9 +11,9 @@ class RepairAssetCropTests(unittest.TestCase):
             hasattr(ara, "crop_from_spec"),
             "manifest crop support is not implemented yet",
         )
-        img = Image.new("RGB", (1000, 500), "white")
+        img = Image.new("RGB", (1200, 500), "white")
         cropped = ara.crop_from_spec(img, {"crop_box": [0.0, 0.0, 0.28, 1.0]})
-        self.assertEqual(cropped.size, (280, 500))
+        self.assertEqual(cropped.size, (336, 500))
 
     def test_missing_crop_box_leaves_image_unchanged(self):
         self.assertTrue(hasattr(ara, "crop_from_spec"))
