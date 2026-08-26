@@ -1659,17 +1659,6 @@
    ],
    "pass": true
   },
-  "قصة زين السعودية ودخولها سوق الاتصالات": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:45.257074",
-   "thash": "b1ae49dedd",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "قصة صالح كامل ودلة البركة": {
    "pool": "saudi",
    "at": "2026-08-26T11:56:53.959601",
@@ -2850,7 +2839,22 @@
     "library:hungerstation-rider.jpg"
    ],
    "pass": true
+  },
+  "قصة زين السعودية ودخولها سوق الاتصالات": {
+   "pool": "saudi",
+   "at": "2026-08-26T14:16:35.944401",
+   "thash": "b1ae49dedd",
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "library:zain-ksa-hq.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:zain-ksa-hq.jpg"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-26T14:04:31.449277"
+ "checked_at": "2026-08-26T14:16:39.107815"
 }
