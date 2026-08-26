@@ -62,10 +62,11 @@ WATCH_FEEDS = [u.strip() for u in
                 "https://news.google.com/rss/headlines/section/topic/"
                 "TECHNOLOGY?hl=ar&gl=SA&ceid=SA:ar,"
                 "https://aawsat.com/feed/economy").split(",") if u.strip()]
-# 45 = the 30-minute cadence plus margin for cron jitter: a story landing
-# just after one cycle's sweep must still be inside the next cycle's window
+# The scheduler is nominally every 30 minutes, but hosted cron can start
+# late. Keep a two-hour safety window so delayed runs do not create blind
+# gaps; the classifier still decides whether a fresh headline is breaking.
 WATCH_FEED_WINDOW_MIN = int(
-    os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "45")
+    os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "120")
 FEED_UA = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
 BEATS = ("الاقتصاد السعودي، العقار السعودي والخليجي، السفر والسياحة "
@@ -197,15 +198,19 @@ def feed_fresh_items():
         feeds_ok += 1
         items = (root.findall(".//item")
                  or root.findall(".//{http://www.w3.org/2005/Atom}entry"))
+        fresh_before = len(fresh)
         for item in items:
-            el = (item.find("title")
-                  or item.find("{http://www.w3.org/2005/Atom}title"))
+            el = item.find("title")
+            if el is None:
+                el = item.find("{http://www.w3.org/2005/Atom}title")
             title = (el.text or "").strip() if el is not None else ""
             if not title:
                 continue
             when = _feed_entry_time(item)
             if when is None or when >= cutoff:
                 fresh.append(title)
+        print(f"  feed ok: {len(items)} item(s), "
+              f"{len(fresh) - fresh_before} fresh — {url}")
     return fresh, feeds_ok > 0
 
 
