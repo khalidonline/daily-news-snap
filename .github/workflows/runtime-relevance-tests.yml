@@ -6,9 +6,13 @@ on:
       - "runtime_relevance.py"
       - "story_runtime.py"
       - "tests/test_runtime_relevance.py"
+      - "tools/bulk_visual_*.py"
+      - "tests/test_bulk_visual_*.py"
       - "images/relevance.json"
       - "images/images.txt"
+      - "images/logos/**"
       - "images/bogle-vanguard-*.jpg"
+      - "stories.txt"
       - ".github/workflows/story.yml"
       - ".github/workflows/runtime-relevance-tests.yml"
   workflow_dispatch:
@@ -32,6 +36,18 @@ jobs:
         run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
+      - name: Bulk board invariants
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          from tools.bulk_visual_board import build_board
+
+          board = build_board()
+          assert len(board) == 123, len(board)
+          for row in board:
+              if row.status == "PASS":
+                  assert row.need_photos == 0, (row.story, row.need_photos)
+                  assert row.need_logo is False, (row.story, row.need_logo)
+          PY
       - name: Jack Bogle regression — repaired runtime coverage is PASS
         run: |
           python - <<'PY'

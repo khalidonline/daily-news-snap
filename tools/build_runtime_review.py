@@ -22,6 +22,7 @@ import news_bot as nb
 import story_bot as sb
 import story_runtime as sr
 from runtime_relevance import verdict_for
+from tools.bulk_visual_board import build_board
 
 OUT = Path("out/runtime-review")
 
@@ -42,17 +43,14 @@ def _story_matches(entry, stories):
 
 
 def write_status(stories):
-    rows = []
-    for story in stories:
-        photos, logos, status = sr.coverage(story)
-        rows.append({
-            "story": story,
-            "photo_count": len(photos),
-            "logo_count": len(logos),
-            "status": status,
-            "photos": "; ".join(p.name for p in photos),
-            "logos": "; ".join(p.name for p in logos),
-        })
+    rows = [{
+        "story": row.story,
+        "photo_count": len(row.photos),
+        "logo_count": len(row.logos),
+        "status": row.status,
+        "photos": "; ".join(row.photos),
+        "logos": "; ".join(row.logos),
+    } for row in build_board(stories)]
     with (OUT / "status.csv").open("w", newline="", encoding="utf-8-sig") as fh:
         w = csv.DictWriter(fh, fieldnames=rows[0].keys())
         w.writeheader()
