@@ -88,7 +88,7 @@ class BulkVisualBoardTests(unittest.TestCase):
             (["a"], [], "NEEDS 3 MORE PHOTOS + LOGO"),
         ]
         rows = build_board(["Logo", "One", "Large"])
-        self.assertEqual([r.story for r in repair_backlog(rows)], ["Logo", "One", "Large"])
+        self.assertEqual([row.story for row in repair_backlog(rows)], ["Logo", "One", "Large"])
 ```
 
 - [ ] **Step 2: Run RED**
@@ -128,8 +128,8 @@ def build_board(stories=None):
         photos, logos, status = sr.coverage(story)
         rows.append(CoverageRow(
             story=story,
-            photos=tuple(Path(p).name for p in photos),
-            logos=tuple(Path(p).name for p in logos),
+            photos=tuple(Path(path).name for path in photos),
+            logos=tuple(Path(path).name for path in logos),
             need_photos=max(0, 4 - len(photos)),
             need_logo=not bool(logos),
             status=status,
@@ -230,6 +230,12 @@ class BulkVisualIdentityTests(unittest.TestCase):
     def test_substring_does_not_create_logo_identity(self):
         index = {"snap.com": ["Snap"]}
         self.assertIsNone(choose_unique_logo_slug({"Snapdragon"}, index))
+
+    def test_person_only_match_requires_explicit_index_alias(self):
+        index = {"apple.com": ["Apple", "Steve Jobs", "apple.com"]}
+        self.assertEqual(choose_unique_logo_slug({"Steve Jobs"}, index), "apple.com")
+        index = {"apple.com": ["Apple", "apple.com"]}
+        self.assertIsNone(choose_unique_logo_slug({"Steve Jobs"}, index))
 ```
 
 - [ ] **Step 2: Run RED**
@@ -302,17 +308,13 @@ def resolve_existing_logo_identity(story, index_path=LOGO_INDEX):
     return LogoIdentity(slug, slug if "." in slug else "", tuple(index.get(slug, [])), "unique-local-logo-alias")
 ```
 
-- [ ] **Step 4: Add the Steve Jobs regression with a temporary index fixture**
-
-The fixture contains `{"apple.com": ["Apple", "Steve Jobs", "apple.com"]}` and verifies that removing `Steve Jobs` makes the person-only lookup unresolved. This proves the resolver is using explicit repository evidence rather than general knowledge.
-
-- [ ] **Step 5: Run GREEN**
+- [ ] **Step 4: Run GREEN**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_identity.py tests/test_runtime_relevance.py
 ```
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add tools/bulk_visual_identity.py tests/test_bulk_visual_identity.py
@@ -385,28 +387,35 @@ python -m unittest -v tests/test_bulk_visual_identity.py
 
 - [ ] **Step 3: Implement exact Wikidata lookup**
 
-Use these endpoints:
-
 ```python
 WIKIDATA_SEARCH = "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&limit=8&search={query}"
 WIKIDATA_ENTITY = "https://www.wikidata.org/wiki/Special:EntityData/{qid}.json"
 ```
 
-Acceptance rules in code:
+Acceptance rules: one QID must have a normalized label/alias exactly equal to a canonical entity term; the same QID must expose `P154` and `P856`; normalize the `P856` hostname by stripping only a leading `www.`; preserve the QID and P154 filename as provenance; partial title matches never count.
 
-- one QID must have a normalized label or alias exactly equal to a canonical entity term;
-- the same QID must expose `P154` and `P856`;
-- parse the `P856` hostname and normalize `www.apple.com` to `apple.com`;
-- preserve QID and P154 filename as provenance;
-- partial title matches never count.
+- [ ] **Step 4: Implement unique person-to-organization relation resolution**
 
-- [ ] **Step 4: Add unique person-to-organization relation resolution**
+```python
+def corroborated_org_qids(person_qid, explicit_entity_terms, approved_photo_tags, entity_get, sparql_get):
+    candidates = set(entity_get(person_qid).get("P108", []))
+    candidates |= set(sparql_get("P112", person_qid))
+    candidates |= set(sparql_get("P169", person_qid))
+    wanted = {norm(value) for value in [*explicit_entity_terms, *approved_photo_tags]}
+    kept = []
+    for qid in candidates:
+        entity = entity_get(qid)
+        names = {norm(entity["label"]), *(norm(alias) for alias in entity.get("aliases", []))}
+        if wanted & names:
+            kept.append(qid)
+    return kept
+```
 
-For a canonical person QID, collect structured organizations from `P108` employer and Wikidata SPARQL results for `P112` founded-by and `P169` CEO relations. Keep an organization only if its normalized label/aliases intersect explicit story entity aliases or approved-photo tags. Accept only when one organization remains and it has `P154` + `P856`; otherwise return `None`.
+Production code accepts an organization only when `corroborated_org_qids()` returns exactly one QID and that QID has both P154 and P856.
 
 - [ ] **Step 5: Download P154 through MediaWiki imageinfo**
 
-Use the Commons API with `prop=imageinfo&iiprop=url&iiurlwidth=1024`. Download `thumburl` when present so SVG logos arrive as a rasterized thumbnail without adding a new SVG dependency; otherwise use `url`. Decode with Pillow and run `image_precheck.guard_render(image_precheck.Candidate(path=str(temp), caption=entity_label, slot="logo"))`. Reject any nonempty guard reason.
+Use the Commons API with `prop=imageinfo&iiprop=url&iiurlwidth=1024`. Download `thumburl` when present so SVG logos arrive as rasterized thumbnails without a new SVG dependency; otherwise use `url`. Decode with Pillow and run `image_precheck.guard_render(image_precheck.Candidate(path=str(temp), caption=entity_label, slot="logo"))`. Reject any nonempty guard reason.
 
 - [ ] **Step 6: Run GREEN**
 
@@ -432,16 +441,16 @@ git commit -m "feat: discover verified story logos from Wikidata"
 
 **Interfaces:**
 - `StoryBeat(key: str, queries: tuple[str, ...], required_identity: tuple[str, ...])`.
-- `SourceCandidate(source: str, source_id: str, source_page: str, direct_url: str, title: str, description: str, creator: str, license: str, license_url: str, width: int, height: int, beat_key: str, matched_on: str, required_identity: tuple[str, ...])`.
+- `SourceCandidate(source: str, source_id: str, source_page: str, direct_url: str, title: str, description: str, creator: str, license: str, license_url: str, width: int, height: int, beat_key: str, matched_on: str, required_identity: tuple[str, ...], depicts: tuple[str, ...])`.
 - `plan_story_beats(story) -> list[StoryBeat]`.
-- `discover_commons()`, `discover_loc()`, `discover_openverse()`, `discover_first_party()` return metadata only and never write to `images/`.
+- `discover_commons(beat, limit=12, json_get=_json_get)`, `discover_loc(beat, limit=12, json_get=_json_get)`, `discover_openverse(beat, limit=12, json_get=_json_get)`, and `discover_first_party(beat, domain, limit=12)` return metadata only.
 
 - [ ] **Step 1: Write beat planner tests**
 
 ```python
 # tests/test_bulk_visual_sources.py
 import unittest
-from tools.bulk_visual_sources import plan_story_beats
+from tools.bulk_visual_sources import StoryBeat, discover_commons, plan_story_beats
 
 
 class StoryBeatPlannerTests(unittest.TestCase):
@@ -456,6 +465,50 @@ class StoryBeatPlannerTests(unittest.TestCase):
             [beat.key for beat in beats[:4]],
             ["origin", "early_operation", "turning_point", "modern_result"],
         )
+
+    def test_commons_filters_artwork_and_preserves_license(self):
+        beat = StoryBeat("person", ("Jack Bogle",), ("Jack Bogle", "John C. Bogle"))
+        def fake_json_get(url):
+            return {
+                "query": {
+                    "pages": {
+                        "1": {
+                            "pageid": 1,
+                            "title": "File:John C Bogle 2007.jpg",
+                            "imageinfo": [{
+                                "url": "https://upload.wikimedia.org/bogle.jpg",
+                                "descriptionurl": "https://commons.wikimedia.org/wiki/File:John_C_Bogle_2007.jpg",
+                                "width": 594,
+                                "height": 792,
+                                "extmetadata": {
+                                    "ImageDescription": {"value": "John C. Bogle in 2007"},
+                                    "Artist": {"value": "Bill Cramer"},
+                                    "LicenseShortName": {"value": "CC BY-SA 4.0"},
+                                },
+                            }],
+                        },
+                        "2": {
+                            "pageid": 2,
+                            "title": "File:Jack Bogle illustration.svg",
+                            "imageinfo": [{
+                                "url": "https://upload.wikimedia.org/bogle-art.svg",
+                                "descriptionurl": "https://commons.wikimedia.org/wiki/File:Jack_Bogle_illustration.svg",
+                                "width": 800,
+                                "height": 800,
+                                "extmetadata": {
+                                    "ImageDescription": {"value": "Illustration of Jack Bogle"},
+                                    "LicenseShortName": {"value": "CC BY-SA 4.0"},
+                                },
+                            }],
+                        },
+                    }
+                }
+            }
+        found = discover_commons(beat, json_get=fake_json_get)
+        self.assertEqual(len(found), 1)
+        self.assertEqual(found[0].source_id, "commons:1")
+        self.assertEqual(found[0].license, "CC BY-SA 4.0")
+        self.assertIn("John C. Bogle", found[0].description)
 ```
 
 - [ ] **Step 2: Run RED**
@@ -466,29 +519,17 @@ python -m unittest -v tests/test_bulk_visual_sources.py
 
 - [ ] **Step 3: Implement deterministic beat planning**
 
-Use these four-beat orders:
-
-```text
-person: person, early_work, product_or_company, legacy
-company/entity: origin, early_operation, turning_point, modern_result
-place/history/topic: origin_or_early, subject_detail, turning_point, modern_or_legacy
-```
-
-Queries are built from exact canonical aliases plus beat-specific terms. Never issue a source query made only of generic words such as `business`, `office`, `city`, `meeting`, or `street`.
+Use these orders: person = `person`, `early_work`, `product_or_company`, `legacy`; company/entity = `origin`, `early_operation`, `turning_point`, `modern_result`; place/history/topic = `origin_or_early`, `subject_detail`, `turning_point`, `modern_or_legacy`. Queries combine exact canonical aliases with beat-specific terms and never consist only of generic words such as `business`, `office`, `city`, `meeting`, or `street`.
 
 - [ ] **Step 4: Implement Commons, Library of Congress, and Openverse metadata adapters**
 
-Each adapter must return a bounded result list with stable source ID, source page, direct image URL, title/description, creator, explicit license metadata when available, dimensions, matched query, and beat identity. Before returning a candidate, reject metadata matching `news_bot.BLOCKED_IMAGE_TERMS`, `BLOCKED_AR_TERMS`, `NOT_A_PHOTOGRAPH_TERMS`, or `NOT_A_PHOTOGRAPH_AR`.
+Each adapter returns a bounded list with stable source ID, source page, direct URL, title/description, creator, license metadata when available, dimensions, matched query, required identity, and structured depicts names when the source supplies them. Filter metadata matching `news_bot.BLOCKED_IMAGE_TERMS`, `BLOCKED_AR_TERMS`, `NOT_A_PHOTOGRAPH_TERMS`, or `NOT_A_PHOTOGRAPH_AR` before returning candidates.
 
 - [ ] **Step 5: Implement first-party discovery only for a verified official domain**
 
-`discover_first_party(beat, domain)` may follow image URLs referenced by an official page. Return a candidate only when the page belongs to the verified official domain and the image URL is same-domain or a CDN URL explicitly referenced by that page. Record both page and image URLs; a naked CDN URL with no first-party page provenance is rejected.
+`discover_first_party()` may follow image URLs referenced by an official page. Accept page host only when `host == domain` or `host.endswith("." + domain)`. A candidate image may be same-domain or a CDN URL explicitly referenced by that accepted page. Record both page and direct image URLs; a naked CDN URL with no first-party page provenance is rejected.
 
-- [ ] **Step 6: Add mocked adapter tests**
-
-Use literal Commons/Openverse/LOC JSON fixtures and assert that an artwork result is filtered while a licensed photograph returns a populated `SourceCandidate` including `source_id`, `source_page`, and `license`.
-
-- [ ] **Step 7: Run GREEN and commit**
+- [ ] **Step 6: Run GREEN and commit**
 
 ```bash
 python -m unittest -v tests/test_bulk_visual_sources.py
@@ -516,24 +557,38 @@ import shutil
 import tempfile
 import unittest
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from runtime_relevance import DIRECT, WEAK_GENERIC, WRONG_ENTITY
 from tools.bulk_visual_sources import SourceCandidate
 from tools.bulk_visual_validate import validate_candidate
 
 
-def make_image(path, value=120, fmt="JPEG"):
-    Image.new("RGB", (640, 480), (value, value, value)).save(path, fmt)
+def make_image(path, fmt="JPEG"):
+    image = Image.new("RGB", (640, 480), (230, 230, 230))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((60, 60, 300, 420), fill=(80, 100, 120))
+    draw.ellipse((330, 90, 590, 350), fill=(170, 120, 90))
+    image.save(path, fmt)
 
 
-def candidate(title="Jack Bogle"):
+def candidate(title="Jack Bogle", description="John C. Bogle at Vanguard"):
     return SourceCandidate(
-        source="commons", source_id="Q1", source_page="https://commons.wikimedia.org/wiki/File:Bogle.jpg",
-        direct_url="https://upload.wikimedia.org/bogle.jpg", title=title,
-        description="John C. Bogle at Vanguard", creator="Bill Cramer", license="CC BY-SA 4.0",
-        license_url="https://creativecommons.org/licenses/by-sa/4.0/", width=640, height=480,
-        beat_key="person", matched_on="Jack Bogle", required_identity=("Jack Bogle", "John C. Bogle"),
+        source="commons",
+        source_id="commons:1",
+        source_page="https://commons.wikimedia.org/wiki/File:Bogle.jpg",
+        direct_url="https://upload.wikimedia.org/bogle.jpg",
+        title=title,
+        description=description,
+        creator="Bill Cramer",
+        license="CC BY-SA 4.0",
+        license_url="https://creativecommons.org/licenses/by-sa/4.0/",
+        width=640,
+        height=480,
+        beat_key="person",
+        matched_on="Jack Bogle",
+        required_identity=("Jack Bogle", "John C. Bogle"),
+        depicts=("John C. Bogle",),
     )
 
 
@@ -543,7 +598,7 @@ class BulkVisualValidationTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.download_source = self.root / "download.jpg"
-        make_image(self.download_source, 100)
+        make_image(self.download_source)
         self.download = lambda cand, dest: shutil.copy2(self.download_source, dest)
 
     def test_wrong_entity_never_accepts(self):
@@ -562,8 +617,17 @@ class BulkVisualValidationTests(unittest.TestCase):
         self.assertFalse(result.accepted)
         self.assertIn("duplicate", result.reason.lower())
 
+    def test_perceptual_duplicate_never_accepts(self):
+        existing = self.root / "existing.png"
+        make_image(existing, "PNG")
+        result = validate_candidate("Jack Bogle story", candidate(), [existing], self.root, lambda *args: DIRECT, self.download)
+        self.assertFalse(result.accepted)
+        self.assertIn("duplicate", result.reason.lower())
+
     def test_person_candidate_requires_source_metadata_identity(self):
-        result = validate_candidate("Jack Bogle story", candidate(title="Vanguard office"), [], self.root, lambda *args: DIRECT, self.download)
+        cand = candidate(title="Vanguard office", description="Vanguard headquarters")
+        cand = cand.__class__(**{**cand.__dict__, "depicts": tuple()})
+        result = validate_candidate("Jack Bogle story", cand, [], self.root, lambda *args: DIRECT, self.download)
         self.assertFalse(result.accepted)
         self.assertIn("identity", result.reason.lower())
 
@@ -573,8 +637,6 @@ class BulkVisualValidationTests(unittest.TestCase):
         self.assertEqual(result.verdict, DIRECT)
         self.assertTrue(result.temp_path.exists())
 ```
-
-Add a perceptual-duplicate test using two separately encoded images with identical pixels and assert rejection by dHash even when SHA differs.
 
 - [ ] **Step 2: Run RED**
 
@@ -590,7 +652,7 @@ python -m unittest -v tests/test_bulk_visual_validate.py
 4. run `image_precheck.guard_render()` on an `image_precheck.Candidate` with `slot="archive"`;
 5. reject exact SHA matches;
 6. reject dHash matches within `image_precheck.DHASH_MAX_DISTANCE`;
-7. for person beats, require a canonical person name/alias in trusted source title, description, or structured depicts metadata;
+7. for person beats, require a canonical person name/alias in trusted source title, description, or `candidate.depicts`;
 8. call the relevance adapter;
 9. accept only `DIRECT` or `STRONG_CONTEXT`.
 
@@ -626,7 +688,7 @@ git commit -m "feat: validate bulk story visual candidates fail closed"
 - `append_index_line(path, filename, tags, credit) -> bool`.
 - `merge_logo_aliases(index, slug, aliases) -> dict`.
 - `add_logo_domain_to_story_text(text, story, domain) -> str`.
-- `register_photo(...) -> Path` and `register_logo(...) -> Path`.
+- `register_photo()` and `register_logo()` return the registered `Path`.
 
 - [ ] **Step 1: Write concrete preservation/idempotency tests**
 
@@ -638,6 +700,7 @@ import unittest
 from pathlib import Path
 
 from tools.bulk_visual_register import (
+    LogoIdentityConflict,
     add_logo_domain_to_story_text,
     append_index_line,
     merge_logo_aliases,
@@ -675,9 +738,12 @@ class BulkVisualRegistrationTests(unittest.TestCase):
         once = add_logo_domain_to_story_text(text, "قصة Steve Jobs: الطرد من شركته ثم العودة", "apple.com")
         twice = add_logo_domain_to_story_text(once, "قصة Steve Jobs: الطرد من شركته ثم العودة", "apple.com")
         self.assertEqual(twice.count("logo:apple.com"), 1)
-```
 
-Add a conflict test where the story already declares `logo:tesla.com` and an attempted `apple.com` update raises `LogoIdentityConflict`.
+    def test_conflicting_logo_domain_fails_closed(self):
+        text = "قصة Tesla | Tesla, logo:tesla.com\n"
+        with self.assertRaises(LogoIdentityConflict):
+            add_logo_domain_to_story_text(text, "قصة Tesla", "apple.com")
+```
 
 - [ ] **Step 2: Run RED**
 
@@ -753,28 +819,52 @@ class BulkVisualRepairTests(unittest.TestCase):
 
     def test_pass_story_is_skipped(self):
         called = []
-        process_rows(
-            [row("Done", 0, False, "PASS")], 1,
+        result = process_rows(
+            [row("Done", 0, False, "PASS")],
+            1,
             lambda story: called.append(story) or 1,
             lambda story, deficit: called.append(story) or 1,
             lambda story: row(story, 0, False, "PASS"),
             lambda record: None,
         )
         self.assertEqual(called, [])
+        self.assertEqual(result.progress, 0)
 
     def test_logo_runs_before_photo_for_same_story(self):
         calls = []
         process_rows(
-            [row("Mixed", 1, True, "NEEDS 1 MORE PHOTO + LOGO")], 1,
+            [row("Mixed", 1, True, "NEEDS 1 MORE PHOTO + LOGO")],
+            1,
             lambda story: calls.append("logo") or 1,
             lambda story, deficit: calls.append("photo") or 1,
             lambda story: row(story, 1, False, "NEEDS 1 MORE PHOTO"),
             lambda record: None,
         )
         self.assertEqual(calls, ["logo", "photo"])
-```
 
-Add a test where every repair function returns zero and assert the batch result uses exit code 2, and a second-run PASS-row test that performs no writes.
+    def test_zero_progress_returns_no_progress_exit(self):
+        result = process_rows(
+            [row("Blocked", 1, True, "NEEDS 1 MORE PHOTO + LOGO")],
+            1,
+            lambda story: 0,
+            lambda story, deficit: 0,
+            lambda story: row(story, 1, True, "NEEDS 1 MORE PHOTO + LOGO"),
+            lambda record: None,
+        )
+        self.assertEqual(result.exit_code, 2)
+
+    def test_second_run_pass_row_performs_no_writes(self):
+        writes = []
+        process_rows(
+            [row("Already fixed", 0, False, "PASS")],
+            1,
+            lambda story: writes.append("logo") or 1,
+            lambda story, deficit: writes.append("photo") or 1,
+            lambda story: row(story, 0, False, "PASS"),
+            lambda record: writes.append("attempt"),
+        )
+        self.assertEqual(writes, [])
+```
 
 - [ ] **Step 2: Run RED**
 
@@ -784,15 +874,13 @@ python -m unittest -v tests/test_bulk_visual_repair.py
 
 - [ ] **Step 3: Implement `repair_logo()` and `repair_photos()`**
 
-`repair_logo(story)` first tries `resolve_existing_logo_identity()`, then structured Wikidata discovery, then `register_logo()`. `repair_photos(story, deficit)` iterates unrepresented planned beats and source adapters in the specified source order, validates candidates, registers only accepted candidates, rebuilds runtime coverage after each registration, and stops immediately when the story reaches four approved photos.
+`repair_logo(story)` first tries `resolve_existing_logo_identity()`, then structured Wikidata discovery, then `register_logo()`. `repair_photos(story, deficit)` iterates unrepresented planned beats and source adapters in source order, validates candidates, registers only accepted candidates, rebuilds runtime coverage after each registration, and stops immediately when the story reaches four approved photos.
 
 - [ ] **Step 4: Implement `process_rows()` and CLI loop**
 
-Catch per-story/source exceptions, append an attempt record, and continue. Rebuild the board after each story. If a newly registered asset is absent from `story_runtime.coverage()` for that exact story, raise the invariant path and exit 3.
+Catch per-story/source exceptions, append an attempt record, and continue. Rebuild the board after each story. If a newly registered asset is absent from `story_runtime.coverage()` for that exact story, take the invariant path and exit 3.
 
 - [ ] **Step 5: Use explicit attempt records**
-
-A concrete accepted attempt record is:
 
 ```json
 {
@@ -834,7 +922,7 @@ git commit -m "feat: orchestrate strict bulk story visual repair"
 - PR defaults: 15 stories per batch, 12 candidates per beat, 12 batches per job.
 - Manual inputs after the workflow is available on the default branch: `batch_stories`, `max_candidates_per_beat`, `max_batches`.
 
-- [ ] **Step 1: Add the workflow with both `pull_request` and `workflow_dispatch` triggers**
+- [ ] **Step 1: Add the workflow with both triggers**
 
 ```yaml
 name: Bulk visual repair
@@ -922,9 +1010,23 @@ jobs:
           retention-days: 7
 ```
 
-- [ ] **Step 2: Expand runtime-relevance CI**
+- [ ] **Step 2: Expand runtime-relevance CI with an exact board invariant**
 
-Add `tools/bulk_visual_*.py`, `tests/test_bulk_visual_*.py`, `images/logos/**`, and `stories.txt` to path filters. Add an invariant step that asserts `len(build_board()) == 123` and every row claiming PASS has `need_photos == 0` and `need_logo is False`.
+```yaml
+      - name: Bulk board invariants
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          from tools.bulk_visual_board import build_board
+          board = build_board()
+          assert len(board) == 123, len(board)
+          for row in board:
+              if row.status == "PASS":
+                  assert row.need_photos == 0, (row.story, row.need_photos)
+                  assert row.need_logo is False, (row.story, row.need_logo)
+          PY
+```
+
+Also add `tools/bulk_visual_*.py`, `tests/test_bulk_visual_*.py`, `images/logos/**`, and `stories.txt` to that workflow's path filters.
 
 - [ ] **Step 3: Compile all new modules**
 
@@ -959,9 +1061,9 @@ Capture the exact status distribution from `out/bulk-visual-repair/board.json`.
 
 - [ ] **Step 2: Let the PR workflow execute bounded batches**
 
-Each batch must push validated progress before beginning the next batch. PASS count must stay flat or rise; a previously PASS story may not regress.
+Each batch pushes validated progress before beginning the next batch. PASS count must stay flat or rise; a previously PASS story may not regress.
 
-- [ ] **Step 3: Handle no-progress by improving a narrow source/identity adapter**
+- [ ] **Step 3: Handle no-progress by improving one narrow source/identity adapter**
 
 When exit code 2 occurs, group `unresolved.json` by failure result. Add only the source/identity capability needed for the dominant unresolved class, with a failing unit test first. Do not mass-approve assets and do not lower thresholds.
 
