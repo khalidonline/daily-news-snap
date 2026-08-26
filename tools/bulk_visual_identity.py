@@ -4,6 +4,8 @@ from dataclasses import dataclass
 import json
 from pathlib import Path
 import tempfile
+import time
+from urllib.error import HTTPError
 from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
 
@@ -21,6 +23,8 @@ WIKIDATA_SEARCH = "https://www.wikidata.org/w/api.php?action=wbsearchentities&fo
 WIKIDATA_ENTITY = "https://www.wikidata.org/wiki/Special:EntityData/{qid}.json"
 WIKIDATA_SPARQL = "https://query.wikidata.org/sparql?format=json&query={query}"
 COMMONS_IMAGEINFO = "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url&iiurlwidth=1024&titles=File:{filename}"
+_JSON_CACHE = {}
+_RETRYABLE_HTTP = frozenset({429, 500, 502, 503, 504})
 
 
 @dataclass(frozen=True)
@@ -41,9 +45,26 @@ class DiscoveredLogo:
 
 
 def _json_get(url):
+    cached = _JSON_CACHE.get(url)
+    if cached is not None:
+        return cached
     request = Request(url, headers={"User-Agent": "daily-news-snap/1.0 (logo identity resolver)"})
-    with urlopen(request, timeout=30) as response:
-        return json.load(response)
+    for attempt in range(4):
+        try:
+            with urlopen(request, timeout=30) as response:
+                payload = json.load(response)
+            _JSON_CACHE[url] = payload
+            return payload
+        except HTTPError as exc:
+            if exc.code not in _RETRYABLE_HTTP or attempt == 3:
+                raise
+            retry_after = (exc.headers or {}).get("Retry-After", "")
+            try:
+                delay = max(0.0, min(float(retry_after), 30.0))
+            except (TypeError, ValueError):
+                delay = (2.0, 5.0, 10.0)[attempt]
+            time.sleep(delay)
+    raise RuntimeError("unreachable retry loop")
 
 
 def _bytes_get(url):
@@ -195,6 +216,32 @@ def corroborated_org_qids(person_qid, explicit_entity_terms, approved_photo_tags
     return kept
 
 
+def _exact_human_identity(terms, json_get):
+    """Return one exact human QID and the declared aliases that name it.
+
+    This is only used when the story line was not explicitly typed with
+    ``person:`` metadata. Wikidata P31=Q5 is the structured proof; titles,
+    face recognition, capitalization, and name-shape heuristics never count.
+    """
+    humans = {}
+    for term in sorted({str(term).strip() for term in terms if str(term).strip()}):
+        qids = _exact_search_qids({term}, json_get)
+        if len(qids) != 1:
+            continue
+        qid = next(iter(qids))
+        entity = json_get(WIKIDATA_ENTITY.format(qid=qid)).get("entities", {}).get(qid, {})
+        if "Q5" not in _claim_values(entity, "P31"):
+            continue
+        label, aliases = _entity_names(entity)
+        if norm(term) not in {norm(label), *map(norm, aliases)}:
+            continue
+        humans.setdefault(qid, set()).add(term)
+    if len(humans) != 1:
+        return None, set()
+    qid, matched_terms = next(iter(humans.items()))
+    return qid, matched_terms
+
+
 def discover_verified_logo_identity(story, json_get=_json_get):
     """Resolve a direct entity or one uniquely corroborated person relation."""
     key = str(story).strip()
@@ -206,7 +253,15 @@ def discover_verified_logo_identity(story, json_get=_json_get):
     if direct:
         return direct
 
-    explicit_entities = set(sb.story_aliases(story)) - people
+    if people:
+        person_qids = _exact_search_qids(people, json_get)
+        explicit_entities = set(sb.story_aliases(story)) - people
+    else:
+        detected_qid, detected_terms = _exact_human_identity(declared_terms, json_get)
+        person_qids = {detected_qid} if detected_qid else set()
+        people = set(detected_terms)
+        explicit_entities = set(sb.story_aliases(story)) - people
+
     approved, _ = sr.approved_runtime_visuals(story)
     approved_names = {path.name for path in approved}
     photo_tags = {
@@ -214,7 +269,6 @@ def discover_verified_logo_identity(story, json_get=_json_get):
         for tag in entry.get("tags", [])
     }
 
-    person_qids = _exact_search_qids(people, json_get)
     if len(person_qids) != 1:
         return None
     person_qid = next(iter(person_qids))
