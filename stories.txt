@@ -114,7 +114,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 
 # Saudi company origins
 قصة مكتبة جرير من متجر صغير إلى عملاق | Jarir Bookstore, Jarir Marketing
-قصة مصرف الراجحي من صرافة إلى أكبر بنك | Al Rajhi Bank
+قصة مصرف الراجحي من صرافة إلى أكبر بنك | Al Rajhi Bank, logo:alrajhibank.com.sa
 قصة طيران ناس وثورة الطيران الاقتصادي | flynas
 قصة المراعي من مزرعة إلى أكبر شركة ألبان | Almarai
 قصة صافولا | Savola Group
