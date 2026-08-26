@@ -78,7 +78,7 @@ Malcom McLean: سائق شاحنة غيّر التجارة العالمية بص
 قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية | Diners Club, Frank McNamara
 Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك | Muriel Siebert
 Benjamin Graham: أستاذ Warren Buffett الذي وضع قواعد الاستثمار | Benjamin Graham
-Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير | Jack Bogle, Vanguard
+Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير | person: Jack Bogle | entity: Vanguard, The Vanguard Group | logo:vanguard.com
 Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً | Amancio Ortega, Inditex
 Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك | Muhammad Yunus, Grameen Bank
 الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟ | McDonald brothers, Ray Kroc
