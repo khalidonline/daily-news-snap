@@ -184,23 +184,6 @@
    ],
    "pass": true
   },
-  "قصة Tesla: الشركة التي كادت تفلس مرتين": {
-   "pool": "general",
-   "at": "2026-08-26T11:51:51.510932",
-   "thash": "568752d7c9",
-   "images": 2,
-   "era_ok": 1,
-   "evidence": [
-    "logo:p154:Tesla Motors.svg:current",
-    "entity:P18:Tesla Visit 3 (9267529364).jpg"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "logo:p154",
-    "entity:P18"
-   ],
-   "pass": true
-  },
   "لماذا اختفت BlackBerry من السوق؟": {
    "pool": "general",
    "at": "2026-08-26T11:51:59.869381",
@@ -416,21 +399,6 @@
    ],
    "pass": true
   },
-  "كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟": {
-   "pool": "general",
-   "at": "2026-08-26T11:52:38.683621",
-   "thash": "7d01044369",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
   "قصة البيتكوين: من ورقة بحثية إلى أصل بتريليونات": {
    "pool": "general",
    "at": "2026-08-26T11:52:38.686884",
@@ -481,48 +449,6 @@
    "readiness": "THIN",
    "anchors": [
     "typographic:policy"
-   ],
-   "pass": true
-  },
-  "كيف بدأت فكرة البطاقة الائتمانية؟": {
-   "pool": "general",
-   "at": "2026-08-26T11:52:42.157123",
-   "thash": "7f813854ee",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
-  "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": {
-   "pool": "general",
-   "at": "2026-08-26T11:52:42.158969",
-   "thash": "4d0c95ae3e",
-   "files": [
-    "File:Boulevard Riyadh City.jpg",
-    "File:Riyadh Front, 2023.jpg"
-   ],
-   "images": 6,
-   "era_ok": 6,
-   "evidence": [
-    "library:riyadh-skyline.jpg",
-    "library:old-riyadh-souq.jpg",
-    "library:riyadh-dammam-train.jpg",
-    "library:railway-construction-1951.jpg",
-    "archive:Riyadh:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:riyadh-skyline.jpg",
-    "library:old-riyadh-souq.jpg",
-    "library:riyadh-dammam-train.jpg",
-    "library:railway-construction-1951.jpg",
-    "archive:Riyadh"
    ],
    "pass": true
   },
@@ -845,40 +771,6 @@
    ],
    "pass": true
   },
-  "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم": {
-   "pool": "general",
-   "at": "2026-08-26T11:53:31.802443",
-   "thash": "3b40ed49ca",
-   "files": [
-    "File:Saudia Boeing 777-300 ER 20221121.jpg",
-    "File:Saudia Boeing 777-368ER.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "archive:Saudia:2"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Saudia"
-   ],
-   "pass": true
-  },
-  "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": {
-   "pool": "general",
-   "at": "2026-08-26T11:53:35.138469",
-   "thash": "b6c3fe15e0",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
   "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": {
    "pool": "general",
    "at": "2026-08-26T11:53:35.143105",
@@ -906,21 +798,6 @@
    "pool": "general",
    "at": "2026-08-26T11:53:47.387931",
    "thash": "78dfe66a92",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
-  "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": {
-   "pool": "general",
-   "at": "2026-08-26T11:53:47.394689",
-   "thash": "245a53a412",
    "images": 0,
    "era_ok": 0,
    "evidence": [
@@ -1183,26 +1060,6 @@
     "library:ibuka-sony-products.jpg",
     "entity:P18",
     "archive:Masaru Ibuka"
-   ],
-   "pass": true
-  },
-  "قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية": {
-   "pool": "general",
-   "at": "2026-08-26T11:54:28.653628",
-   "thash": "e3133ae813",
-   "files": [
-    "File:Diners-club-arena-001.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "library:diners-card.jpg",
-    "archive:Diners Club:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:diners-card.jpg",
-    "archive:Diners Club"
    ],
    "pass": true
   },
@@ -1526,27 +1383,6 @@
    ],
    "pass": true
   },
-  "يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط": {
-   "pool": "general",
-   "at": "2026-08-26T11:55:17.602631",
-   "thash": "31148bcb3e",
-   "person": "يوسف بن أحمد كانو",
-   "files": [
-    "File:Flex CEO Revathi Advaithi poses for an updated headshot.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "portrait:يوسف بن أحمد كانو",
-    "archive:YBA Kanoo:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "portrait:يوسف بن أحمد كانو",
-    "archive:YBA Kanoo"
-   ],
-   "pass": true
-  },
   "قصة عبداللطيف جميل للسيارات ووكالة تويوتا": {
    "pool": "general",
    "at": "2026-08-26T11:55:24.468087",
@@ -1728,17 +1564,6 @@
    ],
    "pass": true
   },
-  "قصة مكتبة جرير من متجر صغير إلى عملاق": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:15.914992",
-   "thash": "9ad30faa0e",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "قصة مصرف الراجحي من صرافة إلى أكبر بنك": {
    "pool": "saudi",
    "at": "2026-08-26T11:56:19.180401",
@@ -1763,27 +1588,6 @@
     "library:alrajhi-ebranch.jpg",
     "logo:p154",
     "archive:Al Rajhi Bank"
-   ],
-   "pass": true
-  },
-  "قصة طيران ناس وثورة الطيران الاقتصادي": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:21.706109",
-   "thash": "c00c11b524",
-   "files": [
-    "File:Female flight attendants Flynas 2023.jpg",
-    "File:Flynas aircraft A320 neo.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "library:flynas-jeddah.jpg",
-    "archive:flynas:2"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:flynas-jeddah.jpg",
-    "archive:flynas"
    ],
    "pass": true
   },
@@ -1884,17 +1688,6 @@
    ],
    "pass": true
   },
-  "قصة بنده والتجزئة السعودية": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:40.176182",
-   "thash": "faf7a6e44c",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "قصة نادك للأغذية": {
    "pool": "saudi",
    "at": "2026-08-26T11:56:42.591248",
@@ -1928,44 +1721,6 @@
    "readiness": "NOT READY",
    "anchors": [],
    "pass": false
-  },
-  "قصة سابك من فكرة إلى عملاق بتروكيماويات": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:48.545042",
-   "thash": "5ad72d2e1c",
-   "files": [
-    "File:SABIC office Sittard.jpg"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "library:sabic-plant.jpg",
-    "archive:SABIC:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:sabic-plant.jpg",
-    "archive:SABIC"
-   ],
-   "pass": true
-  },
-  "قصة سليمان الراجحي وأكبر وقف خاص": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:51.606301",
-   "thash": "381f94cc76",
-   "files": [
-    "File:Suliman Alrajhi in Makkah.jpg"
-   ],
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "archive:Sulaiman Al Rajhi:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Sulaiman Al Rajhi"
-   ],
-   "pass": true
   },
   "قصة صالح كامل ودلة البركة": {
    "pool": "saudi",
@@ -2144,21 +1899,6 @@
    ],
    "pass": true
   },
-  "قصة ماكدونالدز في السعودية وعائلات الامتياز": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:18.948466",
-   "thash": "0819c3f406",
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "library:mcdonalds-jeddah.jpg"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:mcdonalds-jeddah.jpg"
-   ],
-   "pass": true
-  },
   "قصة ستاربكس عبر الشايع": {
    "pool": "saudi",
    "at": "2026-08-26T11:57:20.784701",
@@ -2202,17 +1942,6 @@
    ],
    "pass": true
   },
-  "قصة نون ومنافسة التجارة الإلكترونية": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:37.277377",
-   "thash": "f349457856",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [],
-   "readiness": "NOT READY",
-   "anchors": [],
-   "pass": false
-  },
   "قصة صندوق الاستثمارات العامة واستثماراته العالمية": {
    "pool": "saudi",
    "at": "2026-08-26T11:57:40.558244",
@@ -2253,38 +1982,6 @@
    "readiness": "THIN",
    "anchors": [
     "archive:Uber"
-   ],
-   "pass": true
-  },
-  "قصة افتتاح أول جامعة سعودية": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:49.431030",
-   "thash": "62368bdbb3",
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "library:ksu-gate.jpg"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:ksu-gate.jpg"
-   ],
-   "pass": true
-  },
-  "قصة أول مطار في جدة وتطور الطيران المدني": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:51.309408",
-   "thash": "0a2c2a1d13",
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "library:jeddah-port.jpg",
-    "library:jeddah-balad.jpg"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:jeddah-port.jpg",
-    "library:jeddah-balad.jpg"
    ],
    "pass": true
   },
@@ -2731,23 +2428,382 @@
    ],
    "pass": true
   },
-  "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد": {
+  "قصة Tesla: الشركة التي كادت تفلس مرتين": {
    "pool": "general",
-   "at": "2026-08-26T12:19:47.815629",
-   "thash": "5d7179ef4c",
-   "images": 2,
+   "at": "2026-08-26T13:38:13.321369",
+   "thash": "568752d7c9",
+   "images": 3,
    "era_ok": 2,
    "evidence": [
-    "library:suitcase-before-wheels.jpg",
-    "library:rolling-suitcases.jpg"
+    "library:tesla-roadster.jpg",
+    "logo:p154:Tesla Motors.svg:current",
+    "entity:P18:Tesla Visit 3 (9267529364).jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:tesla-roadster.jpg",
+    "logo:p154",
+    "entity:P18"
+   ],
+   "pass": true
+  },
+  "كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:21.396336",
+   "thash": "f4895f16d5",
+   "files": [
+    "File:Computer generated image of the Mærsk Triple E Class (1).jpg",
+    "File:Maersk Ahram (1998).jpg"
+   ],
+   "images": 5,
+   "era_ok": 4,
+   "evidence": [
+    "library:maersk-port.jpg",
+    "logo:fetchable:current",
+    "entity:P18:Maersk headquarters, 2019 (01).jpg",
+    "archive:Maersk:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:maersk-port.jpg",
+    "logo:fetchable",
+    "entity:P18",
+    "archive:Maersk"
+   ],
+   "pass": true
+  },
+  "كيف بدأت فكرة البطاقة الائتمانية؟": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:27.271004",
+   "thash": "7f813854ee",
+   "images": 0,
+   "era_ok": 0,
+   "evidence": [
+    "typographic:policy"
    ],
    "readiness": "THIN",
    "anchors": [
+    "typographic:policy"
+   ],
+   "pass": true
+  },
+  "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:27.272608",
+   "thash": "4d0c95ae3e",
+   "files": [
+    "File:Boulevard Riyadh City.jpg",
+    "File:Riyadh Front, 2023.jpg"
+   ],
+   "images": 12,
+   "era_ok": 12,
+   "evidence": [
+    "library:riyadh-skyline.jpg",
+    "library:old-riyadh-souq.jpg",
+    "library:riyadh-dammam-train.jpg",
+    "library:railway-construction-1951.jpg",
+    "library:king-golden-spike.jpg",
+    "library:sar-train-modern.jpg",
+    "library:railway-workers-1951.jpg",
+    "library:riyadh-1975-construction.jpg",
+    "library:riyadh-1977-construction.jpg",
+    "library:mcdonalds-riyadh-first.jpg",
+    "archive:Riyadh:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:riyadh-skyline.jpg",
+    "library:old-riyadh-souq.jpg",
+    "library:riyadh-dammam-train.jpg",
+    "library:railway-construction-1951.jpg",
+    "library:king-golden-spike.jpg",
+    "library:sar-train-modern.jpg",
+    "library:railway-workers-1951.jpg",
+    "library:riyadh-1975-construction.jpg",
+    "library:riyadh-1977-construction.jpg",
+    "library:mcdonalds-riyadh-first.jpg",
+    "archive:Riyadh"
+   ],
+   "pass": true
+  },
+  "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:30.058547",
+   "thash": "3b40ed49ca",
+   "files": [
+    "File:Saudia Boeing 777-300 ER 20221121.jpg",
+    "File:Saudia Boeing 777-368ER.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:saudia-dc3-crowd.jpg",
+    "library:saudia-707-historic.jpg",
+    "archive:Saudia:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:saudia-dc3-crowd.jpg",
+    "library:saudia-707-historic.jpg",
+    "archive:Saudia"
+   ],
+   "pass": true
+  },
+  "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:32.774576",
+   "thash": "b6c3fe15e0",
+   "images": 0,
+   "era_ok": 0,
+   "evidence": [
+    "typographic:policy"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "typographic:policy"
+   ],
+   "pass": true
+  },
+  "قصة جواز السفر: كيف بدأت فكرة الحدود والتأشيرات؟": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:32.781421",
+   "thash": "245a53a412",
+   "images": 0,
+   "era_ok": 0,
+   "evidence": [
+    "typographic:policy"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "typographic:policy"
+   ],
+   "pass": true
+  },
+  "قصة بطاقة Diners Club: عشاء بلا محفظة أطلق أول بطاقة ائتمانية": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:32.783625",
+   "thash": "e3133ae813",
+   "files": [
+    "File:Diners-club-arena-001.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:diners-card.jpg",
+    "library:diners-first-card-1951.jpg",
+    "archive:Diners Club:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:diners-card.jpg",
+    "library:diners-first-card-1951.jpg",
+    "archive:Diners Club"
+   ],
+   "pass": true
+  },
+  "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:36.072448",
+   "thash": "5d7179ef4c",
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
     "library:suitcase-before-wheels.jpg",
-    "library:rolling-suitcases.jpg"
+    "library:rolling-suitcases.jpg",
+    "library:plath-rollaboard.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:suitcase-before-wheels.jpg",
+    "library:rolling-suitcases.jpg",
+    "library:plath-rollaboard.jpg"
+   ],
+   "pass": true
+  },
+  "يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط": {
+   "pool": "general",
+   "at": "2026-08-26T13:38:39.385177",
+   "thash": "31148bcb3e",
+   "person": "يوسف بن أحمد كانو",
+   "files": [
+    "File:Flex CEO Revathi Advaithi poses for an updated headshot.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "portrait:يوسف بن أحمد كانو",
+    "library:kanoo-founder.jpg",
+    "archive:YBA Kanoo:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "portrait:يوسف بن أحمد كانو",
+    "library:kanoo-founder.jpg",
+    "archive:YBA Kanoo"
+   ],
+   "pass": true
+  },
+  "قصة مكتبة جرير من متجر صغير إلى عملاق": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:42.031057",
+   "thash": "9ad30faa0e",
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "library:jarir-early-branch.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:jarir-early-branch.jpg"
+   ],
+   "pass": true
+  },
+  "قصة طيران ناس وثورة الطيران الاقتصادي": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:45.185541",
+   "thash": "c00c11b524",
+   "files": [
+    "File:Female flight attendants Flynas 2023.jpg",
+    "File:Flynas aircraft A320 neo.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:flynas-jeddah.jpg",
+    "archive:flynas:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:flynas-jeddah.jpg",
+    "archive:flynas"
+   ],
+   "pass": true
+  },
+  "قصة بنده والتجزئة السعودية": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:47.445258",
+   "thash": "faf7a6e44c",
+   "images": 1,
+   "era_ok": 1,
+   "evidence": [
+    "library:panda-historic-store.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:panda-historic-store.jpg"
+   ],
+   "pass": true
+  },
+  "قصة سابك من فكرة إلى عملاق بتروكيماويات": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:50.006998",
+   "thash": "5ad72d2e1c",
+   "files": [
+    "File:SABIC office Sittard.jpg"
+   ],
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:sabic-plant.jpg",
+    "library:sabic-jubail.jpg",
+    "archive:SABIC:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:sabic-plant.jpg",
+    "library:sabic-jubail.jpg",
+    "archive:SABIC"
+   ],
+   "pass": true
+  },
+  "قصة سليمان الراجحي وأكبر وقف خاص": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:53.095652",
+   "thash": "381f94cc76",
+   "files": [
+    "File:Suliman Alrajhi in Makkah.jpg"
+   ],
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:waqf-sulaiman-signing.jpg",
+    "archive:Sulaiman Al Rajhi:1"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:waqf-sulaiman-signing.jpg",
+    "archive:Sulaiman Al Rajhi"
+   ],
+   "pass": true
+  },
+  "قصة ماكدونالدز في السعودية وعائلات الامتياز": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:55.183776",
+   "thash": "0819c3f406",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:mcdonalds-jeddah.jpg",
+    "library:mcdonalds-riyadh-first.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:mcdonalds-jeddah.jpg",
+    "library:mcdonalds-riyadh-first.jpg"
+   ],
+   "pass": true
+  },
+  "قصة نون ومنافسة التجارة الإلكترونية": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:56.761319",
+   "thash": "f349457856",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:noon-fulfillment.jpg",
+    "library:noon-packing.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:noon-fulfillment.jpg",
+    "library:noon-packing.jpg"
+   ],
+   "pass": true
+  },
+  "قصة افتتاح أول جامعة سعودية": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:38:59.631066",
+   "thash": "62368bdbb3",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:ksu-gate.jpg",
+    "library:ksu-students-1957.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:ksu-gate.jpg",
+    "library:ksu-students-1957.jpg"
+   ],
+   "pass": true
+  },
+  "قصة أول مطار في جدة وتطور الطيران المدني": {
+   "pool": "saudi",
+   "at": "2026-08-26T13:39:01.266201",
+   "thash": "0a2c2a1d13",
+   "images": 2,
+   "era_ok": 2,
+   "evidence": [
+    "library:jeddah-port.jpg",
+    "library:jeddah-balad.jpg"
+   ],
+   "readiness": "THIN",
+   "anchors": [
+    "library:jeddah-port.jpg",
+    "library:jeddah-balad.jpg"
    ],
    "pass": true
   }
  },
- "checked_at": "2026-08-26T12:19:51.276701"
+ "checked_at": "2026-08-26T13:39:02.942821"
 }
