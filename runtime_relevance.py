@@ -36,12 +36,28 @@ def _load(path: str | Path = DEFAULT_LEDGER) -> dict:
 
 
 def verdict_for(filename: str, story: str, ledger_path: str | Path = DEFAULT_LEDGER) -> str:
-    """Return the story-specific review verdict, or ``""`` when unreviewed."""
+    """Return the story-specific review verdict, or ``""`` when unreviewed.
+
+    Ledger keys are normally exact story lines. A shorter explicit selector
+    such as ``Jack Bogle`` is also allowed and matches only when that selector
+    is contained in the story line. This keeps the ledger stable if editorial
+    punctuation in a title changes without making verdicts global.
+    """
     row = _load(ledger_path).get("assets", {}).get(Path(filename).name, {})
     stories = row.get("stories", {}) if isinstance(row, dict) else {}
     if not isinstance(stories, dict):
         return ""
-    return str(stories.get(str(story), "")).strip().upper()
+    story_text = str(story).strip()
+    exact = stories.get(story_text)
+    if exact:
+        return str(exact).strip().upper()
+    folded = story_text.casefold()
+    matches = [(len(str(selector)), verdict)
+               for selector, verdict in stories.items()
+               if selector != "*" and str(selector).strip().casefold() in folded]
+    if matches:
+        return str(max(matches, key=lambda item: item[0])[1]).strip().upper()
+    return str(stories.get("*", "")).strip().upper()
 
 
 def asset_countable(filename: str, story: str,
