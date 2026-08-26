@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import story_runtime as sr
+import runtime_relevance as rr
 from runtime_relevance import (
     DIRECT,
     STRONG_CONTEXT,
@@ -63,7 +63,7 @@ class RuntimeRelevanceTests(unittest.TestCase):
 class RuntimePhotoContractTests(unittest.TestCase):
     def test_bogle_shape_consumes_approved_photos_before_text_or_extra_logo(self):
         self.assertTrue(
-            hasattr(sr, "_runtime_contract_slots"),
+            hasattr(rr, "runtime_contract_slots"),
             "runtime photo contract planner is not implemented yet",
         )
         brief = {
@@ -81,14 +81,14 @@ class RuntimePhotoContractTests(unittest.TestCase):
         selected = ["logo-1", "approved-portrait", None, None, "logo-5", None]
         approved_flags = [False, True, False, False, False, False]
         logo_flags = [True, False, False, False, True, False]
-        slots = sr._runtime_contract_slots(
+        slots = rr.runtime_contract_slots(
             brief, selected, approved_flags, logo_flags, target=4
         )
         self.assertEqual(slots, [0, 2, 3])
 
     def test_contract_preserves_a_sole_logo_when_other_slots_can_take_photos(self):
         self.assertTrue(
-            hasattr(sr, "_runtime_contract_slots"),
+            hasattr(rr, "runtime_contract_slots"),
             "runtime photo contract planner is not implemented yet",
         )
         brief = {
@@ -104,7 +104,7 @@ class RuntimePhotoContractTests(unittest.TestCase):
         selected = ["only-logo", "approved-portrait", None, None, None, None]
         approved_flags = [False, True, False, False, False, False]
         logo_flags = [True, False, False, False, False, False]
-        slots = sr._runtime_contract_slots(
+        slots = rr.runtime_contract_slots(
             brief, selected, approved_flags, logo_flags, target=4
         )
         self.assertEqual(slots, [2, 3, 4])
