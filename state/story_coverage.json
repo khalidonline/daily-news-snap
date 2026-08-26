@@ -392,21 +392,6 @@
    ],
    "pass": true
   },
-  "لماذا ارتبط الريال السعودي بالدولار وكيف؟": {
-   "pool": "general",
-   "at": "2026-08-26T11:52:34.080991",
-   "thash": "30e06b0648",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
-   ],
-   "pass": true
-  },
   "قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي": {
    "pool": "general",
    "at": "2026-08-26T11:52:34.082923",
@@ -1726,29 +1711,6 @@
    ],
    "pass": true
   },
-  "قصة القهوة السعودية": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:55:53.748410",
-   "thash": "ed641d9a18",
-   "files": [
-    "File:A dallah a traditional Arabic coffee pot with cups and coffee beans.jpg",
-    "File:Arabic coffee being served during a wedding in Qatar.png"
-   ],
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "library:saudi-coffee-dallah.jpg",
-    "library:jazan-coffee-harvest.jpg",
-    "archive:Saudi coffee:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:saudi-coffee-dallah.jpg",
-    "library:jazan-coffee-harvest.jpg",
-    "archive:Saudi coffee"
-   ],
-   "pass": true
-  },
   "قصة التمر السعودي وتحوله لصناعة": {
    "pool": "saudi",
    "at": "2026-08-26T11:55:56.619622",
@@ -1771,65 +1733,6 @@
     "library:date-palms-desert.jpg",
     "library:date-palms-oasis.jpg",
     "archive:التمر"
-   ],
-   "pass": true
-  },
-  "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:04.511883",
-   "thash": "999a1b170e",
-   "files": [
-    "File:McQuay AIR CONDITIONING AIR CONDITIONER OUTDOOR UNIT.jpg"
-   ],
-   "images": 4,
-   "era_ok": 4,
-   "evidence": [
-    "library:willis-carrier-1915.jpg",
-    "library:magna-mine-ac.jpg",
-    "entity:P18:TECO MA-750B in Nangang 20110217.jpg",
-    "archive:air conditioning:1"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:willis-carrier-1915.jpg",
-    "library:magna-mine-ac.jpg",
-    "entity:P18",
-    "archive:air conditioning"
-   ],
-   "pass": true
-  },
-  "قصة ماء زمزم وكيف يُعبأ ويوزّع": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:07.431235",
-   "thash": "b743f0ec72",
-   "files": [
-    "File:Zamzamwill.JPG"
-   ],
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "archive:Zamzam water:1"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Zamzam water"
-   ],
-   "pass": true
-  },
-  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:56:10.165871",
-   "thash": "ecbb2e38a6",
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "library:kabsa-dish.jpg",
-    "library:kabsa-communal.jpg"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "library:kabsa-dish.jpg",
-    "library:kabsa-communal.jpg"
    ],
    "pass": true
   },
@@ -2207,22 +2110,6 @@
    ],
    "pass": true
   },
-  "قصة ربط الريال بالدولار وقصته": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:10.080352",
-   "thash": "30e06b0648",
-   "person": "ربط الريال بالدولار وقصته",
-   "images": 1,
-   "era_ok": 1,
-   "evidence": [
-    "portrait:ربط الريال بالدولار وقصته"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "portrait:ربط الريال بالدولار وقصته"
-   ],
-   "pass": true
-  },
   "قصة كريم من الفكرة إلى استحواذ أوبر": {
    "pool": "saudi",
    "at": "2026-08-26T11:57:10.095678",
@@ -2392,26 +2279,6 @@
    ],
    "pass": true
   },
-  "قصة سكة حديد الرياض الدمام 1951": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:47.654679",
-   "thash": "3ec442a77d",
-   "historical": 1951,
-   "files": [
-    "File:Dammam–Riyadh line, 1951.png",
-    "File:King Abdulaziz, Dammam–Riyadh line opening.png"
-   ],
-   "images": 2,
-   "era_ok": 2,
-   "evidence": [
-    "archive:Riyadh Dammam railway:2"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "archive:Riyadh Dammam railway"
-   ],
-   "pass": true
-  },
   "قصة افتتاح أول جامعة سعودية": {
    "pool": "saudi",
    "at": "2026-08-26T11:57:49.431030",
@@ -2424,21 +2291,6 @@
    "readiness": "THIN",
    "anchors": [
     "library:ksu-gate.jpg"
-   ],
-   "pass": true
-  },
-  "قصة أول سيارة تدخل الجزيرة العربية": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:51.302231",
-   "thash": "37e4127397",
-   "images": 0,
-   "era_ok": 0,
-   "evidence": [
-    "typographic:policy"
-   ],
-   "readiness": "THIN",
-   "anchors": [
-    "typographic:policy"
    ],
    "pass": true
   },
@@ -2456,27 +2308,6 @@
    "anchors": [
     "library:jeddah-port.jpg",
     "library:jeddah-balad.jpg"
-   ],
-   "pass": true
-  },
-  "قصة أول عملة ورقية سعودية": {
-   "pool": "saudi",
-   "at": "2026-08-26T11:57:53.247802",
-   "thash": "32f5cf4888",
-   "files": [
-    "File:1968 Saudi 10 Riyal.jpg",
-    "File:Banknotes saudi arabian.jpg"
-   ],
-   "images": 3,
-   "era_ok": 3,
-   "evidence": [
-    "library:first-hajj-receipt.png",
-    "archive:first Saudi banknote:3"
-   ],
-   "readiness": "READY",
-   "anchors": [
-    "library:first-hajj-receipt.png",
-    "archive:first Saudi banknote"
    ],
    "pass": true
   },
@@ -2682,7 +2513,230 @@
     "archive:Google"
    ],
    "pass": true
+  },
+  "لماذا ارتبط الريال السعودي بالدولار وكيف؟": {
+   "pool": "general",
+   "at": "2026-08-26T12:02:43.607047",
+   "thash": "d10f75fb52",
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "pass": true
+  },
+  "قصة القهوة السعودية": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:02:44.681589",
+   "thash": "ed641d9a18",
+   "files": [
+    "File:A dallah a traditional Arabic coffee pot with cups and coffee beans.jpg",
+    "File:Arabic coffee being served during a wedding in Qatar.png"
+   ],
+   "images": 7,
+   "era_ok": 7,
+   "evidence": [
+    "library:saudi-coffee-dallah.jpg",
+    "library:jazan-coffee-harvest.jpg",
+    "library:arabic-coffee-cup.jpg",
+    "library:coffee-majlis.jpg",
+    "library:dallah-dates.jpg",
+    "archive:Saudi coffee:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:saudi-coffee-dallah.jpg",
+    "library:jazan-coffee-harvest.jpg",
+    "library:arabic-coffee-cup.jpg",
+    "library:coffee-majlis.jpg",
+    "library:dallah-dates.jpg",
+    "archive:Saudi coffee"
+   ],
+   "pass": true
+  },
+  "قصة المكيّف الذي جعل مدن الخليج ممكنة": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:02:47.590400",
+   "thash": "999a1b170e",
+   "files": [
+    "File:McQuay AIR CONDITIONING AIR CONDITIONER OUTDOOR UNIT.jpg"
+   ],
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "library:willis-carrier-1915.jpg",
+    "library:ac-units-wall.jpg",
+    "library:magna-mine-ac.jpg",
+    "entity:P18:TECO MA-750B in Nangang 20110217.jpg",
+    "archive:air conditioning:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:willis-carrier-1915.jpg",
+    "library:ac-units-wall.jpg",
+    "library:magna-mine-ac.jpg",
+    "entity:P18",
+    "archive:air conditioning"
+   ],
+   "pass": true
+  },
+  "قصة ماء زمزم وكيف يُعبأ ويوزّع": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:02:50.412788",
+   "thash": "b743f0ec72",
+   "files": [
+    "File:Zamzamwill.JPG"
+   ],
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "library:zamzam-bottling.jpg",
+    "library:zamzam-bottle.jpg",
+    "library:zamzam-cart.jpg",
+    "library:zamzam-cups.jpg",
+    "archive:Zamzam water:1"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:zamzam-bottling.jpg",
+    "library:zamzam-bottle.jpg",
+    "library:zamzam-cart.jpg",
+    "library:zamzam-cups.jpg",
+    "archive:Zamzam water"
+   ],
+   "pass": true
+  },
+  "قصة الكبسة ورحلة الرز إلى الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:02:52.822823",
+   "thash": "ecbb2e38a6",
+   "images": 3,
+   "era_ok": 3,
+   "evidence": [
+    "library:kabsa-dish.jpg",
+    "library:kabsa-communal.jpg",
+    "library:kabsa-platter.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:kabsa-dish.jpg",
+    "library:kabsa-communal.jpg",
+    "library:kabsa-platter.jpg"
+   ],
+   "pass": true
+  },
+  "قصة ربط الريال بالدولار وقصته": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:02:56.669656",
+   "thash": "d10f75fb52",
+   "person": "ربط الريال بالدولار وقصته",
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "portrait:ربط الريال بالدولار وقصته",
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "portrait:ربط الريال بالدولار وقصته",
+    "library:silver-riyal.png",
+    "library:saudi-10riyal-1968.jpg",
+    "library:riyal-100-1961.jpg",
+    "library:riyal-1-1984.jpg"
+   ],
+   "pass": true
+  },
+  "قصة سكة حديد الرياض الدمام 1951": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:02:57.780343",
+   "thash": "3ec442a77d",
+   "historical": 1951,
+   "files": [
+    "File:Dammam–Riyadh line, 1951.png",
+    "File:King Abdulaziz, Dammam–Riyadh line opening.png"
+   ],
+   "images": 7,
+   "era_ok": 7,
+   "evidence": [
+    "library:riyadh-dammam-train.jpg",
+    "library:railway-construction-1951.jpg",
+    "library:king-golden-spike.jpg",
+    "library:sar-train-modern.jpg",
+    "library:railway-workers-1951.jpg",
+    "archive:Riyadh Dammam railway:2"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:riyadh-dammam-train.jpg",
+    "library:railway-construction-1951.jpg",
+    "library:king-golden-spike.jpg",
+    "library:sar-train-modern.jpg",
+    "library:railway-workers-1951.jpg",
+    "archive:Riyadh Dammam railway"
+   ],
+   "pass": true
+  },
+  "قصة أول سيارة تدخل الجزيرة العربية": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:02:59.528507",
+   "thash": "aa558a4bd2",
+   "files": [
+    "File:15-05-23-Berlin-Sachsendamm-Tesla-RalfR-N3S 7354.jpg",
+    "File:1885Benz.jpg"
+   ],
+   "images": 5,
+   "era_ok": 5,
+   "evidence": [
+    "library:king-abdulaziz-cars.jpg",
+    "library:ibnsaud-shemagh.jpg",
+    "library:king-golden-spike.jpg",
+    "archive:أول سيارة:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:king-abdulaziz-cars.jpg",
+    "library:ibnsaud-shemagh.jpg",
+    "library:king-golden-spike.jpg",
+    "archive:أول سيارة"
+   ],
+   "pass": true
+  },
+  "قصة أول عملة ورقية سعودية": {
+   "pool": "saudi",
+   "at": "2026-08-26T12:03:00.828954",
+   "thash": "32f5cf4888",
+   "files": [
+    "File:1968 Saudi 10 Riyal.jpg",
+    "File:Banknotes saudi arabian.jpg"
+   ],
+   "images": 4,
+   "era_ok": 4,
+   "evidence": [
+    "library:first-hajj-receipt.png",
+    "library:saudi-10riyal-1968.jpg",
+    "archive:first Saudi banknote:3"
+   ],
+   "readiness": "READY",
+   "anchors": [
+    "library:first-hajj-receipt.png",
+    "library:saudi-10riyal-1968.jpg",
+    "archive:first Saudi banknote"
+   ],
+   "pass": true
   }
  },
- "checked_at": "2026-08-26T11:58:44.043826"
+ "checked_at": "2026-08-26T12:03:03.203459"
 }
