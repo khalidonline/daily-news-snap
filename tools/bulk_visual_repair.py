@@ -167,7 +167,57 @@ def refresh_runtime_row(story):
     return build_board([story])[0]
 
 
-def _strict_relevance(story, candidate, path):
+def _safe_api_error(exc, api_key):
+    """Return bounded Anthropic error details without reflecting credentials."""
+    error_type, message = "", ""
+    try:
+        raw = exc.read(64 * 1024)
+        body = json.loads(raw.decode("utf-8", errors="replace"))
+        error = body.get("error", {}) if isinstance(body, dict) else {}
+        if isinstance(error, dict):
+            error_type = str(error.get("type", ""))
+            message = str(error.get("message", ""))
+    except (AttributeError, OSError, TypeError, ValueError):
+        pass
+    finally:
+        try:
+            exc.close()
+        except (AttributeError, OSError):
+            pass
+    # API responses should never contain the credential, but redact it (and
+    # truncate remote text) rather than trusting that invariant in telemetry.
+    if api_key:
+        error_type = error_type.replace(api_key, "[REDACTED]")
+        message = message.replace(api_key, "[REDACTED]")
+    return error_type[:120], message[:500]
+
+
+def _review_failure_telemetry(story, model, exc, api_key, retryable, attempt):
+    error_type, message = _safe_api_error(exc, api_key)
+    folded = f"{error_type} {message}".casefold()
+    if exc.code == 401:
+        category = "authentication"
+    elif exc.code == 403:
+        category = "permission"
+    elif exc.code == 429:
+        category = "rate_limit"
+    elif 500 <= exc.code <= 599:
+        category = "anthropic_service"
+    elif "model" in folded and any(word in folded for word in ("invalid", "not found", "unavailable")):
+        category = "invalid_model"
+    else:
+        category = "malformed_request_or_client_error"
+    return {
+        "story": story, "kind": "vision-review", "source": "anthropic",
+        "result": "EXTERNAL_API_ERROR", "reason": "Anthropic reviewer HTTP failure",
+        "http_status": exc.code, "api_error_type": error_type,
+        "api_error_message": message, "model": model,
+        "failure_category": category, "retryable": retryable, "attempt": attempt,
+    }
+
+
+def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
+                      sleep=time.sleep, max_attempts=3):
     """Ask the configured vision reviewer; missing/error/invalid output rejects."""
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
@@ -183,7 +233,8 @@ def _strict_relevance(story, candidate, path):
         f"depicts={candidate.depicts!r}; beat={candidate.beat_key!r}. Never infer a person's identity "
         "from their face; source metadata is the identity proof."
     )
-    payload = {"model": os.environ.get("VISION_MODEL", "claude-sonnet-4-20250514"), "max_tokens": 300,
+    model = os.environ.get("VISION_MODEL", "claude-sonnet-4-20250514")
+    payload = {"model": model, "max_tokens": 300,
                "messages": [{"role": "user", "content": [
                    {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
                                                "data": base64.b64encode(buffer.getvalue()).decode()}},
@@ -191,8 +242,26 @@ def _strict_relevance(story, candidate, path):
     request = Request("https://api.anthropic.com/v1/messages", data=json.dumps(payload).encode(),
                       headers={"content-type": "application/json", "x-api-key": key,
                                "anthropic-version": "2023-06-01"})
-    with urlopen(request, timeout=75) as response:
-        body = json.load(response)
+    attempts = max(1, max_attempts)
+    for attempt in range(1, attempts + 1):
+        try:
+            with urlopen(request, timeout=75) as response:
+                body = json.load(response)
+            break
+        except HTTPError as exc:
+            retryable = exc.code == 429 or 500 <= exc.code <= 599
+            # Read the response exactly once before a possible retry. This also
+            # preserves the useful API error details that HTTPError otherwise hides.
+            telemetry_fn(_review_failure_telemetry(
+                story, model, exc, key, retryable, attempt))
+            if not retryable or attempt == attempts:
+                raise
+            header = exc.headers.get("Retry-After") if exc.headers else None
+            try:
+                delay = min(4.0, max(0.0, float(header)))
+            except (TypeError, ValueError):
+                delay = 0.5 * (2 ** (attempt - 1))
+            sleep(delay)
     text = "".join(item.get("text", "") for item in body.get("content", [])
                    if item.get("type") == "text").strip()
     return json.loads(text)
