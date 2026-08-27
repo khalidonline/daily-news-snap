@@ -593,6 +593,7 @@ _STORY_SUBJECT = {}
 # to search on and cannot be illustrated
 _STORY_PERSONS = {}      # head -> declared person aliases ([] = none, typed)
 _STORY_CONTEXT = {}      # head -> corroborating context tokens
+_STORY_INCOMPATIBLE_CONTEXT = {}  # head -> explicit wrong-sense metadata tokens
 _UNIDENTIFIED = set()
 _UNIDENTIFIED_ANNOUNCED = False
 _DUPES_ANNOUNCED = False
@@ -611,6 +612,7 @@ def load_stories():
     _STORY_POOLS.clear()
     _STORY_PERSONS.clear()
     _STORY_CONTEXT.clear()
+    _STORY_INCOMPATIBLE_CONTEXT.clear()
     _ALIASES_LOADED = True
     pool = "general"
     for ln in lines:
@@ -624,20 +626,24 @@ def load_stories():
             continue
         segments = [seg.strip() for seg in ln.split("|")]
         head = segments[0]
-        aliases, persons, context = [], [], []
+        aliases, persons, context, incompatible = [], [], [], []
         for seg in segments[1:]:
             kind = seg.split(":", 1)[0].strip().lower() if ":" in seg else ""
+            typed_value = seg.split(":", 1)[1] if ":" in seg else ""
+            # Semicolons allow canonical names containing commas (Tesla, Inc.)
+            # while retaining the historical comma-separated syntax.
+            typed_items = typed_value.split(";") if ";" in typed_value else typed_value.split(",")
             if kind in ("person", "شخص"):
-                persons += [v.strip() for v in
-                            seg.split(":", 1)[1].split(",") if v.strip()]
+                persons += [v.strip() for v in typed_items if v.strip()]
                 continue
             if kind in ("entity", "كيان", "company"):
-                aliases += [v.strip() for v in
-                            seg.split(":", 1)[1].split(",") if v.strip()]
+                aliases += [v.strip() for v in typed_items if v.strip()]
                 continue
             if kind in ("context", "سياق"):
-                context += [v.strip() for v in
-                            seg.split(":", 1)[1].split(",") if v.strip()]
+                context += [v.strip() for v in typed_items if v.strip()]
+                continue
+            if kind in ("incompatible", "exclude", "استبعاد"):
+                incompatible += [v.strip() for v in typed_items if v.strip()]
                 continue
             # legacy untyped segment: comma tokens with subject:/logo:
             for tok in (t.strip() for t in seg.split(",") if t.strip()):
@@ -659,6 +665,8 @@ def load_stories():
             _STORY_PERSONS[head] = []
         if context:
             _STORY_CONTEXT[head] = context
+        if incompatible:
+            _STORY_INCOMPATIBLE_CONTEXT[head] = incompatible
         _STORY_POOLS[head] = pool
         stories.append(head)
     global _UNIDENTIFIED_ANNOUNCED

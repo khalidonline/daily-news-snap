@@ -13,7 +13,7 @@
 كيف رفض Yahoo شراء Google بمليون دولار | Yahoo, Google, logo:yahoo.com
 قصة Snapchat: فكرة رُفضت ثم صارت شركة بمليارات | Snapchat, Snap, logo:snap.com
 كيف تحولت Microsoft من بيع الأنظمة إلى السحابة | Microsoft, logo:microsoft.com
-قصة Tesla: الشركة التي كادت تفلس مرتين | Tesla, logo:tesla.com
+قصة Tesla: الشركة التي كادت تفلس مرتين | company:Tesla, Inc.; Tesla Motors; Tesla | context:electric vehicles; automobiles; Model S; Model 3; Elon Musk; Gigafactory; company facilities | incompatible:Nikola Tesla; Tesla Polyphase System; Westinghouse-era electrical equipment; Serbian scientific institutions | logo:tesla.com
 لماذا اختفت BlackBerry من السوق؟ | BlackBerry, logo:blackberry.com
 قصة OpenAI: من مختبر بحثي إلى أشهر منتج تقني | OpenAI, logo:openai.com
 كيف بنت TSMC احتكاراً على رقائق العالم | TSMC, logo:tsmc.com
