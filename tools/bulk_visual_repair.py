@@ -28,7 +28,7 @@ from tools.bulk_visual_identity import (
     resolve_existing_logo_identity,
 )
 from tools.bulk_visual_failure_history import (
-    empty_history, load_history, mark_query_set_complete, query_set_complete,
+    empty_history, load_history, persist_query_set_complete, query_set_complete,
     query_set_fingerprint, record_attempt, rejected_source_ids, sanitize_history,
     save_history,
 )
@@ -57,6 +57,8 @@ ALLOWED_FAILURES = frozenset({
     "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
     "SOURCE_RATE_LIMITED",
 })
+_PRODUCTION_HISTORY_SANITIZED = False
+_PRODUCTION_STORIES = None
 
 
 @dataclass(frozen=True)
@@ -68,6 +70,24 @@ class BatchResult:
 
 def _gap(row):
     return row.need_photos + int(row.need_logo)
+
+
+def _catalogue_story_names():
+    global _PRODUCTION_STORIES
+    if _PRODUCTION_STORIES is None:
+        _PRODUCTION_STORIES = tuple(sb.load_stories())
+    return _PRODUCTION_STORIES
+
+
+def _load_advisory_history(history_path=None, *, sanitize_production=False):
+    """Load advisory history and clean the production file at most once/process."""
+    global _PRODUCTION_HISTORY_SANITIZED
+    history = load_history(history_path)
+    if history_path is None and sanitize_production and not _PRODUCTION_HISTORY_SANITIZED:
+        history = sanitize_history(history, _catalogue_story_names())
+        save_history(history)
+        _PRODUCTION_HISTORY_SANITIZED = True
+    return history
 
 
 def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
@@ -132,9 +152,7 @@ def append_attempt(record, path=OUT_DIR / "attempts.jsonl", history_path=None):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(record, ensure_ascii=False) + "\n")
-    history = load_history(history_path)
-    if history_path is None:
-        history = sanitize_history(history, sb.load_stories())
+    history = _load_advisory_history(history_path, sanitize_production=True)
     record_attempt(history, record)
     save_history(history, history_path)
 
@@ -426,10 +444,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
     existing = catalogue_photo_paths()
     duplicate_index = VisualDuplicateIndex.from_paths(existing)
     persist_history = attempt_fn is append_attempt or history_path is not None
-    history = load_history(history_path) if persist_history else empty_history()
-    if persist_history and history_path is None:
-        history = sanitize_history(history, sb.load_stories())
-        save_history(history, history_path)
+    history = (_load_advisory_history(history_path, sanitize_production=True)
+               if persist_history else empty_history())
     seen_source_ids = rejected_source_ids(history, story)
     source_budgets = {}
     beats = plan_story_beats(story)
@@ -511,9 +527,12 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                             "candidate_count": 0})
                 if (persist_history and not discovery_was_incomplete
                         and not budget.exhausted()):
-                    mark_query_set_complete(history, story, beat.key, source,
-                                            query_fingerprint)
-                    save_history(history, history_path)
+                    history = persist_query_set_complete(
+                        story, beat.key, source, query_fingerprint,
+                        path=history_path,
+                        valid_stories=(_catalogue_story_names()
+                                       if history_path is None else None),
+                    )
             for candidate in candidates:
                 if accepted >= deficit:
                     break
@@ -594,7 +613,7 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
 def _write_unresolved(rows, path=OUT_DIR / "unresolved.json"):
     path = Path(path)
     if path.name == "curation-required.json":
-        history = sanitize_history(load_history(), sb.load_stories())
+        history = _load_advisory_history(None, sanitize_production=True)
         write_curation(rows, history, path)
         return
     unresolved = [asdict(row) for row in rows if row.status != "PASS"]
