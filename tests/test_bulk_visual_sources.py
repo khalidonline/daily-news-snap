@@ -27,7 +27,7 @@ class StoryBeatPlannerTests(unittest.TestCase):
     def test_person_story_starts_with_exact_person_identity(self):
         beats = plan_story_beats("Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير")
         self.assertEqual(beats[0].key, "person")
-        self.assertIn("Jack Bogle", beats[0].required_identity)
+        self.assertEqual(beats[0].required_identity, ("Jack Bogle",))
 
     def test_company_story_has_four_distinct_beats(self):
         beats = plan_story_beats("قصة NVIDIA: من رقائق الألعاب إلى أغلى شركة في العالم")
@@ -80,17 +80,48 @@ class StoryBeatPlannerTests(unittest.TestCase):
                                    json_get=lambda _: {"results": [wrong, right]})
         self.assertEqual([item.source_id for item in found], ["openverse:2"])
 
-    def test_source_results_examined_and_requested_are_hard_bounded(self):
+    def test_openverse_anonymous_pagination_is_bounded_and_finds_later_identity(self):
         beat = StoryBeat("person", ("Jerry Lawson photograph",), ("Jerry Lawson",))
         requested, telemetry = [], []
+
+        def response(url):
+            params = parse_qs(urlparse(url).query)
+            requested.append(params)
+            page = int(params.get("page", ["1"])[0])
+            start = (page - 1) * 20
+            if page < 3:
+                return {"page_count": 3,
+                        "results": [self.openverse_item(start + i, "unrelated archive")
+                                    for i in range(20)]}
+            return {"page_count": 3,
+                    "results": [self.openverse_item(start + i, "unrelated archive")
+                                for i in range(7)] +
+                               [self.openverse_item(47, "Jerry Lawson portrait")] +
+                               [self.openverse_item(48 + i, "unrelated archive")
+                                for i in range(12)]}
+
+        found = discover_openverse(beat, limit=1, json_get=response,
+                                   telemetry_fn=telemetry.append)
+        self.assertEqual([item.source_id for item in found], ["openverse:47"])
+        self.assertEqual([params["page_size"] for params in requested],
+                         [["20"], ["20"], ["20"]])
+        self.assertEqual([params["page"] for params in requested],
+                         [["1"], ["2"], ["3"]])
+        self.assertEqual(telemetry[0]["examined_count"], 48)
+        self.assertEqual(telemetry[0]["skipped_count"], 47)
+
+    def test_openverse_respects_reported_page_count(self):
+        beat = StoryBeat("person", ("Jerry Lawson photograph",), ("Jerry Lawson",))
+        requested = []
+
         def response(url):
             requested.append(url)
-            return {"results": [self.openverse_item(i, "unrelated archive")
-                                 for i in range(100)]}
-        self.assertEqual(discover_openverse(beat, limit=12, json_get=response,
-                                            telemetry_fn=telemetry.append), [])
-        self.assertEqual(parse_qs(urlparse(requested[0]).query)["page_size"], ["48"])
-        self.assertEqual(telemetry[0]["examined_count"], 48)
+            return {"page_count": 1,
+                    "results": [self.openverse_item(i, "unrelated archive")
+                                for i in range(20)]}
+
+        self.assertEqual(discover_openverse(beat, limit=12, json_get=response), [])
+        self.assertEqual(len(requested), 1)
 
     def test_commons_filters_artwork_and_preserves_license(self):
         beat = StoryBeat("person", ("Jack Bogle",), ("Jack Bogle", "John C. Bogle"))
