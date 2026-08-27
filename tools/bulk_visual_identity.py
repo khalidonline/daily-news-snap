@@ -56,7 +56,10 @@ class LogoResolution:
 NO_ENTITY_CANDIDATE = "no_entity_candidate"
 AMBIGUOUS_ENTITY_CANDIDATES = "ambiguous_entity_candidates"
 EXACT_ENTITY_NO_LOGO = "exact_entity_no_logo_property"
+MULTIPLE_LOGO_PROPERTIES = "multiple_logo_properties"
 LOGO_NO_OFFICIAL_DOMAIN = "logo_without_verified_official_domain"
+AMBIGUOUS_OFFICIAL_DOMAINS = "ambiguous_official_domains"
+MISSING_CANONICAL_LABEL = "missing_canonical_entity_label"
 PERSON_ORG_RELATION_UNRESOLVED = "person_organization_relationship_absent_or_ambiguous"
 VERIFIED_IDENTITY = "verified_organization_identity"
 
@@ -215,12 +218,18 @@ def _logo_from_entity(qid, entity):
 def _entity_logo_resolution(qid, entity):
     """Explain why an exact entity can or cannot supply a verified logo."""
     label, aliases = _entity_names(entity)
+    if not label:
+        return LogoResolution(None, MISSING_CANONICAL_LABEL, qid)
     logos = set(_claim_values(entity, "P154"))
-    if len(logos) != 1:
+    if not logos:
         return LogoResolution(None, EXACT_ENTITY_NO_LOGO, qid)
+    if len(logos) > 1:
+        return LogoResolution(None, MULTIPLE_LOGO_PROPERTIES, qid)
     domains = _site_domains(entity)
-    if len(domains) != 1:
+    if not domains:
         return LogoResolution(None, LOGO_NO_OFFICIAL_DOMAIN, qid)
+    if len(domains) > 1:
+        return LogoResolution(None, AMBIGUOUS_OFFICIAL_DOMAINS, qid)
     return LogoResolution(
         DiscoveredLogo(label, next(iter(domains)), next(iter(logos)),
                        f"https://www.wikidata.org/wiki/{qid}", tuple(aliases)),
@@ -321,8 +330,7 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
     direct_matches = {}
     exact_entities = {}
     saw_ambiguous = False
-    saw_logo_without_domain = False
-    saw_entity_without_logo = False
+    direct_failures = set()
 
     # Inspect each explicitly declared term independently. This prevents a
     # biography's person from making its declared company look ambiguous,
@@ -351,10 +359,8 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
         if resolved.logo:
             logo = resolved.logo
             direct_matches[(logo.domain, logo.commons_filename, logo.source_url)] = logo
-        elif resolved.reason == LOGO_NO_OFFICIAL_DOMAIN:
-            saw_logo_without_domain = True
         else:
-            saw_entity_without_logo = True
+            direct_failures.add(resolved.reason)
 
     if len(direct_matches) > 1 or saw_ambiguous:
         return LogoResolution(None, AMBIGUOUS_ENTITY_CANDIDATES)
@@ -380,9 +386,11 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
     if len(person_qids) != 1:
         if person_qids or people:
             return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
-        if saw_logo_without_domain:
-            return LogoResolution(None, LOGO_NO_OFFICIAL_DOMAIN)
-        if saw_entity_without_logo or exact_entities:
+        if len(direct_failures) == 1:
+            return LogoResolution(None, next(iter(direct_failures)))
+        if len(direct_failures) > 1:
+            return LogoResolution(None, AMBIGUOUS_ENTITY_CANDIDATES)
+        if exact_entities:
             return LogoResolution(None, EXACT_ENTITY_NO_LOGO)
         return LogoResolution(None, NO_ENTITY_CANDIDATE)
     person_qid = next(iter(person_qids))

@@ -9,12 +9,17 @@ from PIL import Image
 
 from tools.bulk_visual_identity import (
     _json_get,
+    _entity_logo_resolution,
+    AMBIGUOUS_OFFICIAL_DOMAINS,
     choose_unique_logo_slug,
     corroborated_org_qids,
     discover_wikidata_logo_for_terms,
     diagnose_verified_logo_identity,
     AMBIGUOUS_ENTITY_CANDIDATES,
     EXACT_ENTITY_NO_LOGO,
+    LOGO_NO_OFFICIAL_DOMAIN,
+    MISSING_CANONICAL_LABEL,
+    MULTIPLE_LOGO_PROPERTIES,
     PERSON_ORG_RELATION_UNRESOLVED,
     VERIFIED_IDENTITY,
     download_commons_logo,
@@ -23,6 +28,55 @@ from tools.bulk_visual_identity import (
 
 
 class BulkVisualIdentityTests(unittest.TestCase):
+    @staticmethod
+    def _resolution_entity(*, label="Example Corp", aliases=(), logos=(), sites=()):
+        def claim(value):
+            return {"mainsnak": {"datavalue": {"value": value}}}
+
+        return {
+            "labels": {"en": {"value": label}} if label is not None else {},
+            "aliases": {"en": [{"value": alias} for alias in aliases]},
+            "claims": {
+                "P154": [claim(logo) for logo in logos],
+                "P856": [claim(site) for site in sites],
+            },
+        }
+
+    def test_exact_entity_with_zero_logos_reports_missing_property(self):
+        entity = self._resolution_entity(sites=("https://example.com",))
+        self.assertEqual(EXACT_ENTITY_NO_LOGO,
+                         _entity_logo_resolution("Q1", entity).reason)
+
+    def test_exact_entity_with_multiple_logos_reports_ambiguity(self):
+        entity = self._resolution_entity(
+            logos=("Example old.svg", "Example new.svg"),
+            sites=("https://example.com",),
+        )
+        self.assertEqual(MULTIPLE_LOGO_PROPERTIES,
+                         _entity_logo_resolution("Q1", entity).reason)
+
+    def test_logo_with_zero_official_domains_reports_unverified_domain(self):
+        entity = self._resolution_entity(logos=("Example.svg",))
+        self.assertEqual(LOGO_NO_OFFICIAL_DOMAIN,
+                         _entity_logo_resolution("Q1", entity).reason)
+
+    def test_logo_with_competing_domains_reports_domain_ambiguity(self):
+        entity = self._resolution_entity(
+            logos=("Example.svg",),
+            sites=("https://example.com", "https://example.org"),
+        )
+        self.assertEqual(AMBIGUOUS_OFFICIAL_DOMAINS,
+                         _entity_logo_resolution("Q1", entity).reason)
+
+    def test_entity_without_canonical_label_remains_fail_closed(self):
+        entity = self._resolution_entity(
+            label=None, aliases=("Example",), logos=("Example.svg",),
+            sites=("https://example.com",),
+        )
+        result = _entity_logo_resolution("Q1", entity)
+        self.assertIsNone(result.logo)
+        self.assertEqual(MISSING_CANONICAL_LABEL, result.reason)
+
     def test_unique_exact_alias_match_is_accepted(self):
         index = {"apple.com": ["Apple", "Steve Jobs", "apple.com"]}
         self.assertEqual(choose_unique_logo_slug({"Steve Jobs"}, index), "apple.com")
