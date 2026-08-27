@@ -244,6 +244,37 @@ class BulkVisualRepairTests(unittest.TestCase):
             self.assertEqual(first.read_bytes(), second.read_bytes())
         self.assertEqual(open_url.call_count, 2)
 
+    @patch("tools.bulk_visual_repair.urlopen")
+    def test_commons_download_uses_shared_wikimedia_identity(self, open_url):
+        from tools.wikimedia_http import WIKIMEDIA_USER_AGENT, reset_cooldown
+        reset_cooldown()
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value.read.return_value = b"image bytes"
+        open_url.return_value = response
+        candidate = SimpleNamespace(source="commons", source_id="commons:ua-test",
+                                    direct_url="https://upload.wikimedia.org/x.jpg")
+        with tempfile.TemporaryDirectory() as directory:
+            _download(candidate, Path(directory) / "image")
+        self.assertEqual(open_url.call_args.args[0].get_header("User-agent"),
+                         WIKIMEDIA_USER_AGENT)
+
+    @patch("tools.bulk_visual_repair.urlopen")
+    def test_terminal_commons_429_stops_candidate_download_storm(self, open_url):
+        from tools.wikimedia_http import SourceRateLimited, reset_cooldown
+        reset_cooldown()
+        open_url.side_effect = HTTPError("https://upload.wikimedia.org/x.jpg", 429, "rate",
+                                         {"Retry-After": "10"}, None)
+        one = SimpleNamespace(source="commons", source_id="commons:storm-1",
+                              direct_url="https://upload.wikimedia.org/1.jpg")
+        two = SimpleNamespace(source="commons", source_id="commons:storm-2",
+                              direct_url="https://upload.wikimedia.org/2.jpg")
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(SourceRateLimited):
+                _download(one, Path(directory) / "one", sleep=lambda _: None)
+            with self.assertRaises(SourceRateLimited):
+                _download(two, Path(directory) / "two", sleep=lambda _: None)
+        self.assertEqual(open_url.call_count, 1)
+
     @patch("tools.bulk_visual_repair.plan_story_beats")
     @patch("tools.bulk_visual_repair.catalogue_photo_paths", return_value=[])
     @patch("tools.bulk_visual_repair.sb.story_logo_domain", return_value=None)

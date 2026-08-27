@@ -28,6 +28,10 @@ from tools.bulk_visual_identity import (
 
 
 class BulkVisualIdentityTests(unittest.TestCase):
+    def tearDown(self):
+        from tools.wikimedia_http import reset_cooldown
+        reset_cooldown()
+
     @staticmethod
     def _resolution_entity(*, label="Example Corp", aliases=(), logos=(), sites=()):
         def claim(value):
@@ -236,6 +240,17 @@ class BulkVisualIdentityTests(unittest.TestCase):
             self.assertEqual(requested, [source.as_uri()])
             with Image.open(target) as saved:
                 self.assertEqual(saved.format, "PNG")
+
+    @patch("tools.bulk_visual_identity.urlopen")
+    def test_logo_download_uses_shared_wikimedia_identity(self, open_url):
+        from tools.bulk_visual_identity import _bytes_get
+        from tools.wikimedia_http import WIKIMEDIA_USER_AGENT
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value.read.return_value = b"logo"
+        open_url.return_value = response
+        self.assertEqual(_bytes_get("https://upload.wikimedia.org/logo.png"), b"logo")
+        self.assertEqual(open_url.call_args.args[0].get_header("User-agent"),
+                         WIKIMEDIA_USER_AGENT)
 
     @patch("tools.bulk_visual_identity._exact_search_qids", return_value=set())
     @patch("tools.bulk_visual_identity.story_identity_terms")

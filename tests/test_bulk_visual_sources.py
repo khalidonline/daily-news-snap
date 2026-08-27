@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime, timezone
 from urllib.error import HTTPError
 from urllib.parse import parse_qs, urlparse
 from unittest.mock import patch
@@ -12,9 +13,70 @@ from tools.bulk_visual_sources import (
     discover_openverse,
     plan_story_beats,
 )
+from tools.wikimedia_http import (
+    SourceRateLimited, WIKIMEDIA_USER_AGENT, parse_retry_after, reset_cooldown,
+)
 
 
 class StoryBeatPlannerTests(unittest.TestCase):
+    def setUp(self):
+        reset_cooldown()
+
+    def tearDown(self):
+        reset_cooldown()
+
+    def test_retry_after_supports_delta_seconds_and_http_date(self):
+        now = datetime(2026, 8, 27, 12, 0, tzinfo=timezone.utc)
+        self.assertEqual(parse_retry_after("10", now=now), 10)
+        self.assertEqual(parse_retry_after("Thu, 27 Aug 2026 12:00:10 GMT", now=now), 10)
+
+    @patch("tools.bulk_visual_sources.urlopen")
+    def test_commons_discovery_uses_policy_compliant_identity(self, open_url):
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = __import__("io").BytesIO(b'{"query": {}}')
+        open_url.return_value = response
+        _json_get("https://commons.wikimedia.org/w/api.php?test=ua")
+        request = open_url.call_args.args[0]
+        self.assertEqual(request.get_header("User-agent"), WIKIMEDIA_USER_AGENT)
+        self.assertIn("https://github.com/khalidonline/daily-news-snap", WIKIMEDIA_USER_AGENT)
+        self.assertNotIn("Mozilla", WIKIMEDIA_USER_AGENT)
+
+    @patch("tools.bulk_visual_sources.urlopen")
+    def test_commons_retry_after_ten_enters_cooldown_without_sleep_or_retry(self, open_url):
+        open_url.side_effect = HTTPError("https://commons.wikimedia.org/w/api.php", 429,
+                                         "rate", {"Retry-After": "10"}, None)
+        sleeps = []
+        with self.assertRaises(SourceRateLimited) as caught:
+            _json_get("https://commons.wikimedia.org/w/api.php?test=long", sleep=sleeps.append)
+        self.assertEqual(open_url.call_count, 1)
+        self.assertEqual(sleeps, [])
+        self.assertEqual(caught.exception.retry_after_seconds, 10)
+        self.assertFalse(caught.exception.retry_occurred)
+
+    @patch("tools.bulk_visual_sources.urlopen")
+    def test_cooldown_prevents_additional_commons_requests(self, open_url):
+        open_url.side_effect = HTTPError("https://commons.wikimedia.org/w/api.php", 429,
+                                         "rate", {"Retry-After": "60"}, None)
+        with self.assertRaises(SourceRateLimited):
+            _json_get("https://commons.wikimedia.org/w/api.php?test=storm-one", sleep=lambda _: None)
+        with self.assertRaises(SourceRateLimited) as caught:
+            _json_get("https://commons.wikimedia.org/w/api.php?test=storm-two", sleep=lambda _: None)
+        self.assertEqual(open_url.call_count, 1)
+        self.assertFalse(caught.exception.source_cooldown_activated)
+        self.assertTrue(caught.exception.source_cooldown_active)
+        self.assertLessEqual(caught.exception.retry_after_seconds, 30)
+
+    @patch("tools.bulk_visual_sources.urlopen")
+    def test_commons_cooldown_does_not_affect_non_commons_json(self, open_url):
+        from io import BytesIO
+        from tools.wikimedia_http import terminal_rate_limit
+        terminal_rate_limit("discovery", 60)
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(b'{"ok": true}')
+        open_url.return_value = response
+        self.assertEqual(_json_get("https://api.test/not-commons"), {"ok": True})
+        self.assertEqual(open_url.call_count, 1)
+
     @patch("tools.bulk_visual_sources.urlopen")
     def test_json_get_bounds_transient_retries(self, open_url):
         # A dead external API receives one retry, not one long retry loop per

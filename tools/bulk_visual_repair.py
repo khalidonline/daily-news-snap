@@ -33,6 +33,10 @@ from tools.bulk_visual_sources import (
 from tools.bulk_visual_validate import (
     ReviewerConfigurationError, VisualDuplicateIndex, identity_proven, validate_candidate,
 )
+from tools.wikimedia_http import (
+    SMALL_RETRY_ALLOWANCE_SECONDS, SourceRateLimited, parse_retry_after,
+    require_available, terminal_rate_limit, wikimedia_headers,
+)
 
 
 OUT_DIR = Path("out/bulk-visual-repair")
@@ -41,6 +45,7 @@ ALLOWED_FAILURES = frozenset({
     "DUPLICATE_ONLY", "LOGO_IDENTITY_MISSING", "VALIDATION_ERROR",
     "EXTERNAL_API_ERROR",
     "DISCOVERY_IDENTITY_SKIPPED",
+    "SOURCE_RATE_LIMITED",
 })
 
 
@@ -149,10 +154,14 @@ def _download(candidate, destination, *, sleep=time.sleep):
     if candidate.source_id in _DOWNLOAD_CACHE:
         _DOWNLOAD_CACHE.move_to_end(candidate.source_id)
         Path(destination).write_bytes(_DOWNLOAD_CACHE[candidate.source_id]); return
-    request = Request(candidate.direct_url, headers={
-        "User-Agent": "daily-news-snap/1.0 (visual repair; contact: repository maintainers)",
-        "Accept": "image/avif,image/webp,image/jpeg,image/png,*/*;q=0.5",
-    })
+    is_commons = candidate.source == "commons"
+    if is_commons:
+        require_available("download")
+    accept = "image/avif,image/webp,image/jpeg,image/png,*/*;q=0.5"
+    request = Request(candidate.direct_url, headers=(wikimedia_headers(accept=accept)
+                                                     if is_commons else {
+        "User-Agent": "daily-news-snap/1.0 (visual repair)", "Accept": accept}))
+    retried_429 = False
     for attempt in range(3 if candidate.source == "commons" else 2):
         try:
             with urlopen(request, timeout=30) as response:
@@ -163,6 +172,16 @@ def _download(candidate, destination, *, sleep=time.sleep):
             Path(destination).write_bytes(content)
             return
         except HTTPError as exc:
+            if is_commons and exc.code == 429:
+                delay = parse_retry_after((exc.headers or {}).get("Retry-After"))
+                retry_delay = 1.0 if delay is None else delay
+                if (not retried_429 and attempt + 1 < 3 and
+                        retry_delay <= SMALL_RETRY_ALLOWANCE_SECONDS):
+                    retried_429 = True
+                    sleep(retry_delay)
+                    continue
+                raise terminal_rate_limit("download", delay,
+                                          retry_occurred=retried_429) from exc
             if exc.code not in _TRANSIENT_HTTP or attempt + 1 >= (3 if candidate.source == "commons" else 2):
                 raise
             header = exc.headers.get("Retry-After") if exc.headers else None
@@ -377,8 +396,13 @@ def repair_logo(story, attempt_fn=append_attempt):
                     "detail": resolution.detail})
         return 0
     with tempfile.TemporaryDirectory() as td:
-        logo = download_commons_logo(discovered.commons_filename, discovered.entity_label,
-                                     Path(td) / "logo.png")
+        try:
+            logo = download_commons_logo(discovered.commons_filename, discovered.entity_label,
+                                         Path(td) / "logo.png")
+        except SourceRateLimited as exc:
+            attempt_fn({"story": story, "kind": "logo",
+                        "source_page": discovered.source_url, **exc.telemetry()})
+            return 0
         if not logo:
             attempt_fn({"story": story, "kind": "logo", "source": "commons",
                         "source_page": discovered.source_url, "result": "VALIDATION_ERROR",
@@ -422,6 +446,12 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 discovery_seconds = time.monotonic() - discovery_started
             except ReviewerConfigurationError:
                 raise
+            except SourceRateLimited as exc:
+                discovery_seconds = time.monotonic() - discovery_started
+                attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
+                            **exc.telemetry(), "discovery_seconds": discovery_seconds,
+                            "candidate_count": 0})
+                continue
             except Exception as exc:
                 discovery_seconds = time.monotonic() - discovery_started
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key, "source": source,
@@ -472,8 +502,19 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                         return _strict_relevance(item_story, item, path)
                     finally:
                         measured["model_review"] += time.monotonic() - phase_started
-                result = validate_candidate(story, candidate, existing, OUT_DIR / "tmp",
-                                            measured_review, measured_download, duplicate_index)
+                try:
+                    result = validate_candidate(story, candidate, existing, OUT_DIR / "tmp",
+                                                measured_review, measured_download, duplicate_index)
+                except SourceRateLimited as exc:
+                    attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
+                                "source_page": candidate.source_page,
+                                "candidate": candidate.title, **exc.telemetry(),
+                                "discovery_seconds": discovery_seconds,
+                                "validation_seconds": time.monotonic() - validation_started,
+                                "phase_seconds": measured})
+                    # The shared cooldown makes later beats observable without
+                    # generating more network requests; stop this candidate list now.
+                    break
                 validation_seconds = time.monotonic() - validation_started
                 measured.update(result.phase_seconds)
                 record = {"story": story, "kind": "photo", "beat": beat.key, "source": source,

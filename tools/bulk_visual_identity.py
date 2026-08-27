@@ -15,6 +15,10 @@ import image_precheck as ipc
 import news_bot as nb
 import story_bot as sb
 import story_runtime as sr
+from tools.wikimedia_http import (
+    SMALL_RETRY_ALLOWANCE_SECONDS, parse_retry_after, require_available,
+    terminal_rate_limit, wikimedia_headers,
+)
 
 
 LOGO_DIR = Path("images/logos")
@@ -72,7 +76,11 @@ def _json_get(url):
     cached = _JSON_CACHE.get(url)
     if cached is not None:
         return cached
-    request = Request(url, headers={"User-Agent": "daily-news-snap/1.0 (logo identity resolver)"})
+    is_commons = url.startswith("https://commons.wikimedia.org/")
+    if is_commons:
+        require_available("discovery")
+    request = Request(url, headers=wikimedia_headers(accept="application/json"))
+    retried_429 = False
     for attempt in range(4):
         try:
             with urlopen(request, timeout=30) as response:
@@ -80,6 +88,15 @@ def _json_get(url):
             _JSON_CACHE[url] = payload
             return payload
         except HTTPError as exc:
+            if is_commons and exc.code == 429:
+                delay = parse_retry_after((exc.headers or {}).get("Retry-After"))
+                retry_delay = 1.0 if delay is None else delay
+                if not retried_429 and retry_delay <= SMALL_RETRY_ALLOWANCE_SECONDS:
+                    retried_429 = True
+                    time.sleep(retry_delay)
+                    continue
+                raise terminal_rate_limit("discovery", delay,
+                                          retry_occurred=retried_429) from exc
             if exc.code not in _RETRYABLE_HTTP or attempt == 3:
                 raise
             retry_after = (exc.headers or {}).get("Retry-After", "")
@@ -92,9 +109,23 @@ def _json_get(url):
 
 
 def _bytes_get(url):
-    request = Request(url, headers={"User-Agent": "daily-news-snap/1.0 (logo downloader)"})
-    with urlopen(request, timeout=60) as response:
-        return response.read()
+    require_available("download")
+    request = Request(url, headers=wikimedia_headers(accept="image/*,*/*;q=0.5"))
+    retried = False
+    while True:
+        try:
+            with urlopen(request, timeout=60) as response:
+                return response.read()
+        except HTTPError as exc:
+            if exc.code != 429:
+                raise
+            delay = parse_retry_after((exc.headers or {}).get("Retry-After"))
+            retry_delay = 1.0 if delay is None else delay
+            if not retried and retry_delay <= SMALL_RETRY_ALLOWANCE_SECONDS:
+                retried = True
+                time.sleep(retry_delay)
+                continue
+            raise terminal_rate_limit("download", delay, retry_occurred=retried) from exc
 
 
 def norm(value):
