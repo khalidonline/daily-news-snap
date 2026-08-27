@@ -26,6 +26,10 @@ COMMONS_IMAGEINFO = "https://commons.wikimedia.org/w/api.php?action=query&format
 _JSON_CACHE = {}
 _RETRYABLE_HTTP = frozenset({429, 500, 502, 503, 504})
 _WIKIMEDIA_DISAMBIGUATION = "Q4167410"
+_MAX_AMBIGUOUS_TERMS = 8
+_MAX_AMBIGUOUS_CANDIDATES = 8
+_MAX_ENTITY_TYPES = 8
+_MAX_TELEMETRY_TERM_LENGTH = 160
 
 
 @dataclass(frozen=True)
@@ -329,7 +333,7 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
     declared_terms = set(sb.story_aliases(story)) | people
     direct_matches = {}
     exact_entities = {}
-    saw_ambiguous = False
+    ambiguous_terms = []
     direct_failures = set()
 
     # Inspect each explicitly declared term independently. This prevents a
@@ -345,7 +349,21 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
             if norm(term) in {norm(label), *map(norm, aliases)}:
                 canonical[canonical_qid] = entity
         if len(canonical) > 1:
-            saw_ambiguous = True
+            if len(ambiguous_terms) < _MAX_AMBIGUOUS_TERMS:
+                ambiguous_terms.append({
+                    "term": term[:_MAX_TELEMETRY_TERM_LENGTH],
+                    "candidates": [
+                        {
+                            "qid": qid,
+                            "types": sorted(set(_claim_values(entity, "P31")))[
+                                :_MAX_ENTITY_TYPES
+                            ],
+                        }
+                        for qid, entity in sorted(canonical.items())[
+                            :_MAX_AMBIGUOUS_CANDIDATES
+                        ]
+                    ],
+                })
             continue
         if len(canonical) != 1:
             continue
@@ -362,10 +380,30 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
         else:
             direct_failures.add(resolved.reason)
 
-    if len(direct_matches) > 1 or saw_ambiguous:
-        return LogoResolution(None, AMBIGUOUS_ENTITY_CANDIDATES)
+    # Ambiguity is local to the term that produced it. It cannot contribute an
+    # identity, but it also cannot veto a different, independently explicit
+    # term. The complete set of verified identities must still collapse to one.
+    if len(direct_matches) > 1:
+        detail = {
+            "verified_qids": sorted(
+                logo.source_url.rsplit("/", 1)[-1] for logo in direct_matches.values()
+            )[:_MAX_AMBIGUOUS_CANDIDATES],
+        }
+        if ambiguous_terms:
+            detail["ambiguous_terms"] = ambiguous_terms
+        return LogoResolution(
+            None, AMBIGUOUS_ENTITY_CANDIDATES,
+            json.dumps(detail, ensure_ascii=False, sort_keys=True),
+        )
     if len(direct_matches) == 1:
         return LogoResolution(next(iter(direct_matches.values())), VERIFIED_IDENTITY)
+
+    def ambiguity_failure():
+        return LogoResolution(
+            None, AMBIGUOUS_ENTITY_CANDIDATES,
+            json.dumps({"ambiguous_terms": ambiguous_terms},
+                       ensure_ascii=False, sort_keys=True),
+        )
 
     if people:
         person_qids = _exact_search_qids(people, json_get)
@@ -384,6 +422,8 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
     }
 
     if len(person_qids) != 1:
+        if ambiguous_terms:
+            return ambiguity_failure()
         if person_qids or people:
             return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
         if len(direct_failures) == 1:
@@ -420,12 +460,19 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
         person_qid, explicit_entities, photo_tags, simple_entity, relation_qids,
     )
     if len(organizations) != 1:
+        if ambiguous_terms:
+            return ambiguity_failure()
         return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
     org_qid = organizations[0]
     canonical_qid, entity = _canonical_entity(org_qid, json_get)
     if not canonical_qid:
+        if ambiguous_terms:
+            return ambiguity_failure()
         return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
-    return _entity_logo_resolution(canonical_qid, entity)
+    resolution = _entity_logo_resolution(canonical_qid, entity)
+    if not resolution.logo and ambiguous_terms:
+        return ambiguity_failure()
+    return resolution
 
 
 def discover_verified_logo_identity(story, json_get=_json_get):
