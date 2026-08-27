@@ -53,6 +53,25 @@ class BulkVisualRepairTests(unittest.TestCase):
             result = self.call_reviewer(unittest.mock.Mock(return_value=response), [], directory)
         self.assertEqual(result["verdict"], "DIRECT")
 
+    def test_reviewer_requests_anthropic_structured_output(self):
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(json.dumps({"content": [{"type": "text", "text":
+            '{"verdict":"DIRECT","reason":"matches","source_metadata_sufficient":true}'}]}).encode())
+        open_url = unittest.mock.Mock(return_value=response)
+        with tempfile.TemporaryDirectory() as directory:
+            self.call_reviewer(open_url, [], directory)
+        payload = json.loads(open_url.call_args.args[0].data)
+        output_format = payload["output_config"]["format"]
+        self.assertEqual(output_format["type"], "json_schema")
+        schema = output_format["schema"]
+        self.assertEqual(schema["properties"]["verdict"]["enum"],
+                         ["DIRECT", "STRONG_CONTEXT", "WEAK_GENERIC", "WRONG_ENTITY"])
+        self.assertEqual(set(schema["required"]),
+                         {"verdict", "reason", "source_metadata_sufficient"})
+        self.assertFalse(schema["additionalProperties"])
+        self.assertEqual(payload["model"], "configured-model")
+        self.assertEqual(payload["max_tokens"], 300)
+
     def test_reviewer_401_and_403_fail_fast(self):
         for status in (401, 403):
             open_url, telemetry = unittest.mock.Mock(side_effect=self.http_error(status)), []
@@ -123,6 +142,49 @@ class BulkVisualRepairTests(unittest.TestCase):
     def test_malformed_model_response_fails_closed(self):
         response = unittest.mock.MagicMock()
         response.__enter__.return_value = BytesIO(b'{"content":[{"type":"text","text":"not json"}]}')
+        telemetry = []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(json.JSONDecodeError):
+            self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
+        self.assertEqual(telemetry[0]["failure_category"], "invalid_reviewer_output_json")
+        self.assertNotIn("not json", json.dumps(telemetry))
+
+    def test_invalid_envelope_json_has_distinct_bounded_telemetry(self):
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(b'{not envelope json')
+        telemetry = []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(json.JSONDecodeError):
+            self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
+        self.assertEqual(telemetry[0]["failure_category"], "invalid_response_envelope_json")
+        self.assertNotIn("not envelope", json.dumps(telemetry))
+
+    def test_unexpected_response_envelope_fails_closed(self):
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(b'{"content":{"type":"text"}}')
+        telemetry = []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(ValueError):
+            self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
+        self.assertEqual(telemetry[0]["failure_category"], "invalid_reviewer_output_schema")
+
+    def test_missing_or_unexpected_fields_fail_closed(self):
+        outputs = (
+            '{"verdict":"DIRECT","reason":"matches"}',
+            '{"verdict":"DIRECT","reason":"matches","source_metadata_sufficient":true,"extra":1}',
+        )
+        for output in outputs:
+            response = unittest.mock.MagicMock()
+            response.__enter__.return_value = BytesIO(json.dumps(
+                {"content": [{"type": "text", "text": output}]}).encode())
+            telemetry = []
+            with self.subTest(output=output), tempfile.TemporaryDirectory() as directory, \
+                    self.assertRaises(ValueError):
+                self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
+            self.assertEqual(telemetry[0]["failure_category"], "invalid_reviewer_output_schema")
+
+    def test_markdown_fenced_output_is_not_stripped_or_reparsed(self):
+        output = '```json\n{"verdict":"DIRECT","reason":"matches","source_metadata_sufficient":true}\n```'
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(json.dumps(
+            {"content": [{"type": "text", "text": output}]}).encode())
         with tempfile.TemporaryDirectory() as directory, self.assertRaises(json.JSONDecodeError):
             self.call_reviewer(unittest.mock.Mock(return_value=response), [], directory)
 
