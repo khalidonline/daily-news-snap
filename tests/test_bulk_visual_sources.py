@@ -62,8 +62,20 @@ class StoryBeatPlannerTests(unittest.TestCase):
         with self.assertRaises(SourceRateLimited) as caught:
             _json_get("https://commons.wikimedia.org/w/api.php?test=storm-two", sleep=lambda _: None)
         self.assertEqual(open_url.call_count, 1)
-        self.assertTrue(caught.exception.source_cooldown_activated)
+        self.assertFalse(caught.exception.source_cooldown_activated)
+        self.assertTrue(caught.exception.source_cooldown_active)
         self.assertLessEqual(caught.exception.retry_after_seconds, 30)
+
+    @patch("tools.bulk_visual_sources.urlopen")
+    def test_commons_cooldown_does_not_affect_non_commons_json(self, open_url):
+        from io import BytesIO
+        from tools.wikimedia_http import terminal_rate_limit
+        terminal_rate_limit("discovery", 60)
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(b'{"ok": true}')
+        open_url.return_value = response
+        self.assertEqual(_json_get("https://api.test/not-commons"), {"ok": True})
+        self.assertEqual(open_url.call_count, 1)
 
     @patch("tools.bulk_visual_sources.urlopen")
     def test_json_get_bounds_transient_retries(self, open_url):
