@@ -97,6 +97,8 @@ class FinalVisualConvergenceTests(unittest.TestCase):
 
     def test_story_source_strategy_uses_typed_context(self):
         person = [StoryBeat("person", ("Ada Lovelace photograph",), ("Ada Lovelace",), "person")]
+        gulf_person = [StoryBeat("person", ("Saudi founder portrait",), ("Founder",),
+                                 "person", ("saudi", "company"))]
         company = [StoryBeat("origin", ("Acme founding",), ("Acme",), "entity", ("company",))]
         gulf_company = [StoryBeat("origin", ("Acme Saudi founding",), ("Acme",),
                                   "entity", ("company", "saudi"))]
@@ -106,9 +108,12 @@ class FinalVisualConvergenceTests(unittest.TestCase):
                              "entity", ("invention",))]
         fallback = [StoryBeat("origin", ("Subject detail",), ("Subject",), "entity")]
         with patch("tools.bulk_visual_strategy.sb.story_logo_domain", side_effect=lambda story: {
-                "Person": None, "Company": "company.example", "Gulf": "gulf.example",
+                "Person": None, "Gulf Person": "founder.example",
+                "Company": "company.example", "Gulf": "gulf.example",
                 "History": None, "Product": None, "Fallback": None}[story]):
             self.assertEqual(story_source_strategy("Person", person),
+                             ("commons", "loc", "first-party", "openverse"))
+            self.assertEqual(story_source_strategy("Gulf Person", gulf_person),
                              ("commons", "loc", "first-party", "openverse"))
             self.assertEqual(story_source_strategy("Company", company),
                              ("first-party", "commons", "openverse", "loc"))
