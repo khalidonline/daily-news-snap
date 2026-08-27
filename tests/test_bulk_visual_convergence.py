@@ -7,7 +7,8 @@ from unittest.mock import patch
 from tools.bulk_visual_board import CoverageRow
 from tools.bulk_visual_curation import write_curation
 from tools.bulk_visual_failure_history import (
-    empty_history, load_history, sanitize_history,
+    empty_history, load_history, persist_query_set_complete, record_attempt,
+    sanitize_history, save_history,
 )
 from tools.bulk_visual_queue import build_run_queue
 from tools.bulk_visual_repair import append_attempt, process_rows
@@ -53,6 +54,28 @@ class FinalVisualConvergenceTests(unittest.TestCase):
             }, path=attempts, history_path=history_path)
             self.assertEqual(len(load_history(history_path)["diagnostics"]), 1)
         self.assertEqual(production.read_bytes(), before)
+
+    def test_query_completion_merges_latest_deterministic_rejection(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "history.json"
+            history = empty_history()
+            record_attempt(history, {
+                "story": "S", "source": "commons", "source_id": "commons:7",
+                "result": "IDENTITY_UNPROVEN", "reason": "wrong entity",
+            })
+            save_history(history, path)
+            merged = persist_query_set_complete(
+                "S", "origin", "loc", "fingerprint", path=path,
+                valid_stories={"S"},
+            )
+            self.assertEqual(
+                {item["source_id"] for item in merged["candidate_rejections"]},
+                {"commons:7"},
+            )
+            self.assertEqual(merged["complete_query_sets"], [{
+                "story": "S", "beat": "origin", "source": "loc",
+                "fingerprint": "fingerprint",
+            }])
 
     def test_near_pass_queue_orders_logo_then_one_photo_then_mixed(self):
         rows = [row("Large", 3, True), row("Mixed", 1, True),
