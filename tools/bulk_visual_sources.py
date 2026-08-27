@@ -260,17 +260,23 @@ class _Images(HTMLParser):
     def __init__(self):
         super().__init__()
         self.images, self.links, self.title, self._title = [], [], "", False
+        self._link_href, self._link_text = "", []
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "title": self._title = True
         if tag == "img" and attrs.get("src"): self.images.append((attrs["src"], attrs.get("alt", "")))
-        if tag == "a" and attrs.get("href"): self.links.append(attrs["href"])
+        if tag == "a" and attrs.get("href"):
+            self._link_href, self._link_text = attrs["href"], []
         if tag == "meta" and attrs.get("property", "").casefold() in {"og:image", "twitter:image"} and attrs.get("content"):
             self.images.append((attrs["content"], attrs.get("content", "")))
     def handle_endtag(self, tag):
         if tag == "title": self._title = False
+        if tag == "a" and self._link_href:
+            self.links.append((self._link_href, _clean(" ".join(self._link_text))))
+            self._link_href, self._link_text = "", []
     def handle_data(self, data):
         if self._title: self.title += data
+        if self._link_href: self._link_text.append(data)
 
 
 def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_html_get,
@@ -292,13 +298,15 @@ def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_htm
         # Follow a small, deterministic set of official links whose URL carries
         # the requested identity/beat terms. This makes later beats explore
         # actual story pages rather than returning the homepage hero repeatedly.
-        terms = {_fold_token(x) for x in (*beat.required_identity, *beat.queries)}
-        for raw_link in parser.links:
+        terms = _relevance_tokens((*beat.required_identity, *beat.queries, beat.key))
+        for raw_link, anchor in parser.links:
             link = urljoin(current_page, raw_link)
-            link_host = (urlparse(link).hostname or "").casefold()
-            folded_link = _fold_token(link)
-            if (link_host == domain or link_host.endswith("." + domain)) and any(
-                    token and token in folded_link for token in terms):
+            parsed_link = urlparse(link)
+            link_host = (parsed_link.hostname or "").casefold()
+            # Deliberately exclude the hostname: on nvidia.com it would make
+            # the NVIDIA identity token match unrelated links such as /privacy.
+            link_terms = _relevance_tokens((parsed_link.path, parsed_link.query, anchor))
+            if (link_host == domain or link_host.endswith("." + domain)) and terms & link_terms:
                 link = urlunparse(urlparse(link)._replace(fragment=""))
                 if link not in queued and len(pages) < 5:
                     queued.add(link); pages.append(link)
@@ -322,3 +330,15 @@ def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_htm
 
 def _fold_token(value):
     return re.sub(r"[^a-z0-9]+", "-", str(value).casefold()).strip("-")
+
+
+def _relevance_tokens(values):
+    tokens = set()
+    for value in values:
+        for token in _fold_token(value).split("-"):
+            if len(token) < 3:
+                continue
+            # A small normalization makes query "product" match an official
+            # /products/... path without introducing fuzzy identity matching.
+            tokens.add(token[:-1] if token.endswith("s") and len(token) > 4 else token)
+    return tokens

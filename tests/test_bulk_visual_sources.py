@@ -128,17 +128,30 @@ class StoryBeatPlannerTests(unittest.TestCase):
         beat = StoryBeat("modern_result", ("NVIDIA modern product",), ("NVIDIA",))
         pages = {
             "https://nvidia.com/": ('<title>NVIDIA</title><img src="/hero.jpg" alt="NVIDIA campus">'
-                                    '<a href="/nvidia-news">News</a>'),
+                                    '<a href="/privacy">Privacy</a>'
+                                    '<a href="/nvidia-news">News</a>'
+                                    '<a href="/products/gpu">GPU products</a>'),
             "https://nvidia.com/nvidia-news": ('<title>NVIDIA News</title>'
                     '<img src="/hero.jpg" alt="NVIDIA campus"><img src="/gpu.jpg" alt="NVIDIA GPU">'),
+            "https://nvidia.com/products/gpu": ('<title>NVIDIA GPU products</title>'
+                    '<img src="/product.jpg" alt="NVIDIA GPU product">'),
         }
-        found = discover_first_party(beat, "nvidia.com", html_get=lambda url: pages[url])
+        requested = []
+        def get_page(url):
+            requested.append(url)
+            return pages[url]
+        found = discover_first_party(beat, "nvidia.com", html_get=get_page)
+        self.assertNotIn("https://nvidia.com/privacy", requested)
+        self.assertIn("https://nvidia.com/nvidia-news", requested)
+        self.assertIn("https://nvidia.com/products/gpu", requested)
         self.assertEqual([item.direct_url for item in found],
-                         ["https://nvidia.com/hero.jpg", "https://nvidia.com/gpu.jpg"])
+                         ["https://nvidia.com/hero.jpg", "https://nvidia.com/gpu.jpg",
+                          "https://nvidia.com/product.jpg"])
         self.assertIn("NVIDIA GPU", found[1].depicts)
         excluded = discover_first_party(beat, "nvidia.com", html_get=lambda url: pages[url],
                                         excluded_source_ids={found[0].source_id})
-        self.assertEqual([item.direct_url for item in excluded], ["https://nvidia.com/gpu.jpg"])
+        self.assertEqual([item.direct_url for item in excluded],
+                         ["https://nvidia.com/gpu.jpg", "https://nvidia.com/product.jpg"])
 
 
 if __name__ == "__main__":
