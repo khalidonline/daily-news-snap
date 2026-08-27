@@ -5,8 +5,10 @@ traceable candidates; validation and the runtime relevance ledger decide what
 may count.
 """
 
-from dataclasses import dataclass
 from collections import OrderedDict
+from contextlib import contextmanager
+from dataclasses import dataclass
+from functools import wraps
 import hashlib
 from html import unescape
 from html.parser import HTMLParser
@@ -46,7 +48,7 @@ class SourceDiscoveryBudgetExceeded(TimeoutError):
 
 
 class SourceDiscoveryBudget:
-    """Monotonic, per-source request budget shared across every story beat."""
+    """Cumulative active-discovery budget shared across every story beat."""
 
     def __init__(self, source, *, seconds=SOURCE_DISCOVERY_BUDGET_SECONDS,
                  max_requests=SOURCE_MAX_REQUESTS, clock=time.monotonic):
@@ -54,18 +56,41 @@ class SourceDiscoveryBudget:
         self.seconds = float(seconds)
         self.max_requests = int(max_requests)
         self.clock = clock
-        self.started = clock()
+        self._spent = 0.0
+        self._active_started = None
         self.request_count = 0
         self.retry_count = 0
         self.disabled = False
 
     @property
     def elapsed(self):
-        return max(0.0, self.clock() - self.started)
+        active = (max(0.0, self.clock() - self._active_started)
+                  if self._active_started is not None else 0.0)
+        return max(0.0, self._spent + active)
 
     @property
     def remaining(self):
         return max(0.0, self.seconds - self.elapsed)
+
+    @contextmanager
+    def active(self):
+        """Count only time spent inside source discovery, pausing between beats."""
+        if self.disabled or self.request_count >= self.max_requests or self.remaining <= 0:
+            self.disabled = True
+            raise SourceDiscoveryBudgetExceeded(self.source)
+        nested = self._active_started is not None
+        if not nested:
+            self._active_started = self.clock()
+        try:
+            yield self
+        finally:
+            if not nested:
+                started = self._active_started
+                self._active_started = None
+                if started is not None:
+                    self._spent += max(0.0, self.clock() - started)
+                if self._spent >= self.seconds or self.request_count >= self.max_requests:
+                    self.disabled = True
 
     def begin_request(self):
         if self.disabled or self.request_count >= self.max_requests or self.remaining <= 0:
@@ -78,6 +103,18 @@ class SourceDiscoveryBudget:
         if self.elapsed >= self.seconds or self.request_count >= self.max_requests:
             self.disabled = True
         return self.disabled
+
+
+def _budgeted_discovery(func):
+    """Pause a source budget whenever its discovery adapter is not executing."""
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        budget = kwargs.get("budget")
+        if budget is None:
+            return func(*args, **kwargs)
+        with budget.active():
+            return func(*args, **kwargs)
+    return wrapped
 
 
 @dataclass(frozen=True)
@@ -313,6 +350,7 @@ def _report_entity_conflict(telemetry_fn, source, beat, query, reason):
                       "reason": reason[:160]})
 
 
+@_budgeted_discovery
 def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
                      telemetry_fn=None, budget=None):
     found = []
@@ -360,6 +398,7 @@ def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=
     return found
 
 
+@_budgeted_discovery
 def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
                  telemetry_fn=None, budget=None):
     found = []
@@ -402,6 +441,7 @@ def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
     return found
 
 
+@_budgeted_discovery
 def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
                        telemetry_fn=None, budget=None):
     global _OPENVERSE_DISABLED_UNTIL
@@ -488,6 +528,7 @@ class _Images(HTMLParser):
         if self._link_href: self._link_text.append(data)
 
 
+@_budgeted_discovery
 def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_html_get,
                          excluded_source_ids=(), telemetry_fn=None, budget=None):
     """Discover images referenced by a verified official page, never a naked CDN."""
