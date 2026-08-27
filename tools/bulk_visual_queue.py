@@ -18,10 +18,20 @@ def queue_class(row: CoverageRow) -> str:
     return "photo-needed" if row.need_photos else "logo-only"
 
 
+def _priority_band(row: CoverageRow) -> int:
+    if row.need_photos == 0 and row.need_logo:
+        return 0
+    if row.need_photos == 1 and not row.need_logo:
+        return 1
+    if row.need_photos == 1 and row.need_logo:
+        return 2
+    return 3
+
+
 def _sort_key(row: CoverageRow) -> tuple[int, int, int, str]:
     return (
+        _priority_band(row),
         row.need_photos + int(row.need_logo),
-        row.need_photos,
         int(row.need_logo),
         row.story.casefold(),
     )
@@ -68,22 +78,18 @@ def build_run_queue(
     cursor: Mapping[str, str | None],
     limit: int = 12,
 ) -> list[CoverageRow]:
-    """Order unresolved rows by class and rotate each class past its cursor."""
+    """Order unresolved rows by near-PASS band and rotate only within a band."""
 
     limit = max(0, int(limit))
-    all_rows = tuple(rows)
-    classes: dict[str, list[CoverageRow]] = {}
-    for name in QUEUE_CLASSES:
-        members = sorted(
-            (
-                row
-                for row in all_rows
-                if row.status != "PASS" and queue_class(row) == name
-            ),
-            key=_sort_key,
-        )
-        classes[name] = _rotate(members, cursor.get(name))
-    return (classes["photo-needed"] + classes["logo-only"])[:limit]
+    members = sorted((row for row in rows if row.status != "PASS"), key=_sort_key)
+    ordered: list[CoverageRow] = []
+    for priority in range(4):
+        band = [row for row in members if _priority_band(row) == priority]
+        stories = {row.story for row in band}
+        marker = next((cursor.get(queue_class(row)) for row in band
+                       if cursor.get(queue_class(row)) in stories), None)
+        ordered.extend(_rotate(band, marker))
+    return ordered[:limit]
 
 
 def advance_cursor(
