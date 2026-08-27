@@ -5,12 +5,14 @@ from __future__ import annotations
 
 import argparse
 import base64
+from collections import OrderedDict
 from dataclasses import asdict, dataclass
 import json
 import os
 from pathlib import Path
 import tempfile
 import time
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from PIL import Image
@@ -119,10 +121,38 @@ def append_attempt(record, path=OUT_DIR / "attempts.jsonl"):
         handle.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
-def _download(candidate, destination):
-    request = Request(candidate.direct_url, headers={"User-Agent": "daily-news-snap/1.0 (visual repair)"})
-    with urlopen(request, timeout=60) as response:
-        Path(destination).write_bytes(response.read())
+_DOWNLOAD_CACHE = OrderedDict()
+_TRANSIENT_HTTP = frozenset({429, 500, 502, 503, 504})
+
+
+def _download(candidate, destination, *, sleep=time.sleep):
+    """Materialize once per stable source, retrying only bounded transient failures."""
+    if candidate.source_id in _DOWNLOAD_CACHE:
+        _DOWNLOAD_CACHE.move_to_end(candidate.source_id)
+        Path(destination).write_bytes(_DOWNLOAD_CACHE[candidate.source_id]); return
+    request = Request(candidate.direct_url, headers={
+        "User-Agent": "daily-news-snap/1.0 (visual repair; contact: repository maintainers)",
+        "Accept": "image/avif,image/webp,image/jpeg,image/png,*/*;q=0.5",
+    })
+    for attempt in range(3 if candidate.source == "commons" else 2):
+        try:
+            with urlopen(request, timeout=30) as response:
+                content = response.read()
+            _DOWNLOAD_CACHE[candidate.source_id] = content
+            if len(_DOWNLOAD_CACHE) > 16:
+                _DOWNLOAD_CACHE.popitem(last=False)
+            Path(destination).write_bytes(content)
+            return
+        except HTTPError as exc:
+            if exc.code not in _TRANSIENT_HTTP or attempt + 1 >= (3 if candidate.source == "commons" else 2):
+                raise
+            header = exc.headers.get("Retry-After") if exc.headers else None
+            try: delay = min(2.0, max(0.0, float(header)))
+            except (TypeError, ValueError): delay = 0.25 * (2 ** attempt)
+            sleep(delay)
+        except (TimeoutError, URLError):
+            if attempt + 1 >= (3 if candidate.source == "commons" else 2): raise
+            sleep(0.25 * (2 ** attempt))
 
 
 def catalogue_photo_paths():
@@ -212,18 +242,21 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                     ("openverse", discover_openverse)]
         domain = sb.story_logo_domain(story)
         if domain:
-            adapters.append(("first-party", lambda planned, limit:
-                             discover_first_party(planned, domain, limit)))
+            adapters.append(("first-party", lambda planned, limit, **kwargs:
+                             discover_first_party(planned, domain, limit, **kwargs)))
         for source, adapter in adapters:
             if accepted >= deficit:
                 break
             try:
                 discovery_started = time.monotonic()
-                candidates = adapter(beat, max_candidates_per_beat)
+                candidates = adapter(beat, max_candidates_per_beat,
+                                     excluded_source_ids=seen_source_ids)
                 discovery_seconds = time.monotonic() - discovery_started
             except Exception as exc:
+                discovery_seconds = time.monotonic() - discovery_started
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key, "source": source,
-                            "result": "SOURCE_UNAVAILABLE", "reason": f"{exc.__class__.__name__}: {exc}"})
+                            "result": "SOURCE_UNAVAILABLE", "reason": f"{exc.__class__.__name__}: {exc}",
+                            "discovery_seconds": discovery_seconds, "candidate_count": 0})
                 continue
             if not candidates:
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
