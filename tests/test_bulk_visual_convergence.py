@@ -11,7 +11,8 @@ from tools.bulk_visual_failure_history import (
 )
 from tools.bulk_visual_queue import build_run_queue
 from tools.bulk_visual_repair import append_attempt, process_rows
-from tools.bulk_visual_sources import StoryBeat, story_source_strategy
+from tools.bulk_visual_sources import StoryBeat
+from tools.bulk_visual_strategy import story_source_strategy
 
 
 def row(story, need_photos, need_logo, status="NEEDS"):
@@ -81,7 +82,7 @@ class FinalVisualConvergenceTests(unittest.TestCase):
         product = [StoryBeat("origin", ("Widget invention",), ("Widget",),
                              "entity", ("invention",))]
         fallback = [StoryBeat("origin", ("Subject detail",), ("Subject",), "entity")]
-        with patch("tools.bulk_visual_sources.sb.story_logo_domain", side_effect=lambda story: {
+        with patch("tools.bulk_visual_strategy.sb.story_logo_domain", side_effect=lambda story: {
                 "Person": None, "Company": "company.example", "Gulf": "gulf.example",
                 "History": None, "Product": None, "Fallback": None}[story]):
             self.assertEqual(story_source_strategy("Person", person),
