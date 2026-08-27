@@ -17,10 +17,13 @@ import time
 import story_bot as sb
 from tools.bulk_visual_board import CoverageRow, build_board
 from tools.bulk_visual_queue import advance_cursor, build_run_queue, load_cursor, save_cursor
+from tools.bulk_visual_repair import _write_unresolved
 
 
 OUT_DIR = Path("out/bulk-visual-repair")
+FAILURE_HISTORY_PATH = "state/bulk_visual_failure_history.json"
 VISUAL_PATHS = ("images", "stories.txt")
+ATTEMPTED_STATE_PATHS = (*VISUAL_PATHS, FAILURE_HISTORY_PATH)
 TOTAL_STORIES = 123
 
 
@@ -72,12 +75,13 @@ def visual_worktree_status() -> list[str]:
     return [line for line in result.stdout.splitlines() if line.strip()]
 
 
-def restore_visual_worktree() -> None:
-    """Restore tracked visual state and delete assets created by an attempt."""
+def restore_visual_worktree(*, restore_history: bool = True) -> None:
+    """Restore attempted state; normal failures retain advisory diagnostics."""
 
+    paths = ATTEMPTED_STATE_PATHS if restore_history else VISUAL_PATHS
     _git([
         "restore", "--source=HEAD", "--staged", "--worktree", "--",
-        "images", "stories.txt",
+        *paths,
     ])
     _git(["clean", "-fd", "--", "images"])
 
@@ -198,7 +202,7 @@ def commit_checkpoint(
     """Commit and push exactly the durable state allowed for this checkpoint."""
 
     del cursor  # The caller persists it before invoking this side-effect boundary.
-    paths = ["state/bulk_visual_repair_cursor.json"]
+    paths = ["state/bulk_visual_repair_cursor.json", FAILURE_HISTORY_PATH]
     if visual_progress:
         paths = ["images", "stories.txt", *paths]
     _git(["add", "-A", "--", *paths])
@@ -283,6 +287,7 @@ def run_bounded(
 
     def finish(code: int, outcome: str) -> int:
         final = _final_board()
+        _write_unresolved(final, OUT_DIR / "curation-required.json")
         write_summary(RunSummary(
             outcome=outcome,
             start_pass=start_pass,
@@ -336,7 +341,7 @@ def run_bounded(
             accepted_board = candidate_board
             progress_count += 1
         else:
-            restore_visual_worktree()
+            restore_visual_worktree(restore_history=False)
             cursor = advance_cursor(cursor, item)
             if not result.timed_out:
                 no_progress_count += 1
@@ -348,6 +353,7 @@ def run_bounded(
         visual_progress=False,
     )
     final = _final_board()
+    _write_unresolved(final, OUT_DIR / "curation-required.json")
     final_pass = _pass_count(final)
     if final_pass == TOTAL_STORIES and len(final) == TOTAL_STORIES:
         code, outcome = 0, "COMPLETE"

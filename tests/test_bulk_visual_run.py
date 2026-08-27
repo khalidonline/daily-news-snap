@@ -56,6 +56,7 @@ class BulkVisualRunProbeTests(unittest.TestCase):
         runner.restore_visual_worktree()
         self.assertEqual(git.call_args_list[0].args[0], [
             "restore", "--source=HEAD", "--staged", "--worktree", "--", "images", "stories.txt",
+            "state/bulk_visual_failure_history.json",
         ])
         self.assertEqual(git.call_args_list[1].args[0], ["clean", "-fd", "--", "images"])
 
@@ -156,6 +157,28 @@ class BulkVisualRunControllerTests(unittest.TestCase):
         with patch.object(runner, "_initial_and_queue", return_value=([item], [item], {"photo-needed": None, "logo-only": None})), patch.object(runner, "_final_board", return_value=[item]), patch.object(runner, "restore_visual_worktree"), patch.object(runner, "write_summary"):
             self.assertEqual(runner.run_bounded(max_stories=1), 3)
         checkpoint.assert_not_called()
+
+    @patch.object(runner, "run_story_probe")
+    @patch.object(runner, "commit_checkpoint")
+    def test_curation_artifact_uses_complete_final_unresolved_board(self, checkpoint, probe):
+        first, second, untouched = (row("First", 1, False), row("Second", 1, False),
+                                    row("Untouched", 1, True))
+        probe.side_effect = [
+            runner.ProbeResult("First", "photo-needed", 1, 1, 2, 1, False, "NO_PROGRESS"),
+            runner.ProbeResult("Second", "photo-needed", 1, 1, 2, 1, False, "NO_PROGRESS"),
+        ]
+        with patch.object(
+            runner, "_initial_and_queue",
+            return_value=([first, second, untouched], [first, second],
+                          {"photo-needed": None, "logo-only": None}),
+        ), patch.object(runner, "_final_board", return_value=[first, second, untouched]), \
+                patch.object(runner, "restore_visual_worktree"), \
+                patch.object(runner, "_write_unresolved") as write_curation, \
+                patch.object(runner, "write_summary"):
+            runner.run_bounded(max_stories=2)
+        self.assertEqual(write_curation.call_args.args[0], [first, second, untouched])
+        self.assertEqual(write_curation.call_args.args[1],
+                         runner.OUT_DIR / "curation-required.json")
 
     @patch.object(runner, "time")
     def test_soft_deadline_reserves_story_budget(self, fake_time):
