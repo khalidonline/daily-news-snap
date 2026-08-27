@@ -12,6 +12,11 @@ from tools.bulk_visual_identity import (
     choose_unique_logo_slug,
     corroborated_org_qids,
     discover_wikidata_logo_for_terms,
+    diagnose_verified_logo_identity,
+    AMBIGUOUS_ENTITY_CANDIDATES,
+    EXACT_ENTITY_NO_LOGO,
+    PERSON_ORG_RELATION_UNRESOLVED,
+    VERIFIED_IDENTITY,
     download_commons_logo,
     discover_verified_logo_identity,
 )
@@ -178,22 +183,75 @@ class BulkVisualIdentityTests(unittest.TestCase):
             with Image.open(target) as saved:
                 self.assertEqual(saved.format, "PNG")
 
-    @patch("tools.bulk_visual_identity.discover_wikidata_logo_for_terms")
+    @patch("tools.bulk_visual_identity._exact_search_qids", return_value=set())
     @patch("tools.bulk_visual_identity.story_identity_terms")
     @patch("tools.bulk_visual_identity.sb.story_aliases")
     def test_direct_discovery_excludes_incidental_approved_photo_tags(
-            self, aliases, identity_terms, discover):
+            self, aliases, identity_terms, exact_search):
         story = "Canonical company story"
         aliases.return_value = {"Canonical Corp"}
         identity_terms.return_value = {"Canonical Corp", "Incidental Sponsor"}
-        discover.return_value = None
 
         with patch.dict("tools.bulk_visual_identity.sb._STORY_PERSONS", {story: []}, clear=False):
             self.assertIsNone(discover_verified_logo_identity(story))
 
-        discover.assert_called_once()
-        self.assertEqual(discover.call_args.args[0], {"Canonical Corp"})
+        exact_search.assert_called()
         identity_terms.assert_not_called()
+
+    def test_company_resolution_reports_verified_identity(self):
+        with patch("tools.bulk_visual_identity.sb.story_aliases", return_value={"Apple"}), \
+             patch.dict("tools.bulk_visual_identity.sb._STORY_PERSONS", {}, clear=True), \
+             patch("tools.bulk_visual_identity.sr.approved_runtime_visuals", return_value=([], [])), \
+             patch("tools.bulk_visual_identity.nb.load_local_images", return_value=[]):
+            result = diagnose_verified_logo_identity("company", self._apple_json_get)
+        self.assertEqual(VERIFIED_IDENTITY, result.reason)
+        self.assertEqual("apple.com", result.logo.domain)
+
+    def test_place_without_logo_reports_exact_entity_deficiency(self):
+        def fake(url):
+            if "wbsearchentities" in url:
+                return {"search": [{"id": "QPLACE", "label": "New York", "aliases": []}]}
+            return {"entities": {"QPLACE": {
+                "labels": {"en": {"value": "New York"}}, "aliases": {"en": []},
+                "claims": {},
+            }}}
+        with patch("tools.bulk_visual_identity.sb.story_aliases", return_value={"New York"}), \
+             patch.dict("tools.bulk_visual_identity.sb._STORY_PERSONS", {}, clear=True), \
+             patch("tools.bulk_visual_identity.sr.approved_runtime_visuals", return_value=([], [])), \
+             patch("tools.bulk_visual_identity.nb.load_local_images", return_value=[]):
+            result = diagnose_verified_logo_identity("place", fake)
+        self.assertEqual(EXACT_ENTITY_NO_LOGO, result.reason)
+
+    def test_ambiguous_subject_reports_ambiguity(self):
+        def fake(url):
+            if "wbsearchentities" in url:
+                return {"search": [{"id": "Q1", "label": "Mercury"},
+                                   {"id": "Q2", "label": "Mercury"}]}
+            qid = "Q1" if "Q1" in url else "Q2"
+            return {"entities": {qid: {"labels": {"en": {"value": "Mercury"}},
+                                      "aliases": {"en": []}, "claims": {}}}}
+        with patch("tools.bulk_visual_identity.sb.story_aliases", return_value={"Mercury"}), \
+             patch.dict("tools.bulk_visual_identity.sb._STORY_PERSONS", {}, clear=True):
+            result = diagnose_verified_logo_identity("ambiguous", fake)
+        self.assertEqual(AMBIGUOUS_ENTITY_CANDIDATES, result.reason)
+
+    def test_person_without_corroborated_organization_reports_relationship(self):
+        def fake(url):
+            if "wbsearchentities" in url:
+                return {"search": [{"id": "QPERSON", "label": "Jane Founder"}]}
+            if "sparql" in url:
+                return {"results": {"bindings": []}}
+            return {"entities": {"QPERSON": {
+                "labels": {"en": {"value": "Jane Founder"}}, "aliases": {"en": []},
+                "claims": {"P31": [{"mainsnak": {"datavalue": {"value": {"id": "Q5"}}}}]},
+            }}}
+        with patch("tools.bulk_visual_identity.sb.story_aliases", return_value={"Jane Founder"}), \
+             patch.dict("tools.bulk_visual_identity.sb._STORY_PERSONS",
+                        {"person": ["Jane Founder"]}, clear=True), \
+             patch("tools.bulk_visual_identity.sr.approved_runtime_visuals", return_value=([], [])), \
+             patch("tools.bulk_visual_identity.nb.load_local_images", return_value=[]):
+            result = diagnose_verified_logo_identity("person", fake)
+        self.assertEqual(PERSON_ORG_RELATION_UNRESOLVED, result.reason)
 
 
 if __name__ == "__main__":

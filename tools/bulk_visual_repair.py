@@ -22,7 +22,7 @@ import story_bot as sb
 
 from tools.bulk_visual_board import build_board, repair_backlog, write_board
 from tools.bulk_visual_identity import (
-    discover_verified_logo_identity, download_commons_logo,
+    diagnose_verified_logo_identity, download_commons_logo,
     resolve_existing_logo_identity,
 )
 from tools.bulk_visual_register import register_logo, register_photo
@@ -368,10 +368,12 @@ def repair_logo(story, attempt_fn=append_attempt):
             attempt_fn({"story": story, "kind": "logo", "source": "local-index",
                         "candidate": files[0].name, "result": "ACCEPTED", "reason": local.reason})
             return 1
-    discovered = discover_verified_logo_identity(story)
+    resolution = diagnose_verified_logo_identity(story)
+    discovered = resolution.logo
     if not discovered:
         attempt_fn({"story": story, "kind": "logo", "source": "wikidata",
-                    "result": "LOGO_IDENTITY_MISSING", "reason": "no unique verified identity"})
+                    "result": "LOGO_IDENTITY_MISSING", "reason": resolution.reason,
+                    "detail": resolution.detail})
         return 0
     with tempfile.TemporaryDirectory() as td:
         logo = download_commons_logo(discovered.commons_filename, discovered.entity_label,
@@ -379,7 +381,8 @@ def repair_logo(story, attempt_fn=append_attempt):
         if not logo:
             attempt_fn({"story": story, "kind": "logo", "source": "commons",
                         "source_page": discovered.source_url, "result": "VALIDATION_ERROR",
-                        "reason": "logo download/decode/render validation failed"})
+                        "reason": "verified_organization_logo_download_or_render_validation_failed",
+                        "detail": discovered.source_url})
             return 0
         register_logo(logo, story, discovered.domain,
                       (discovered.entity_label, *discovered.aliases))

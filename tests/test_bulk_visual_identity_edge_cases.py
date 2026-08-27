@@ -2,7 +2,6 @@ import unittest
 from unittest.mock import patch
 
 from tools.bulk_visual_identity import (
-    DiscoveredLogo,
     discover_verified_logo_identity,
     discover_wikidata_logo_for_terms,
 )
@@ -31,26 +30,19 @@ def logo_entity(label, domain="example.com", *, aliases=(), extra_sites=()):
 class BulkVisualIdentityEdgeCaseTests(unittest.TestCase):
     def test_declared_aliases_are_verified_individually_before_person_fallback(self):
         story = "Fred Smith biography"
-        fedex = DiscoveredLogo(
-            "FedEx", "fedex.com", "FedEx logo.svg",
-            "https://www.wikidata.org/wiki/QFEDEX", (),
-        )
-
-        def discover(terms, _json_get):
-            if terms == {"FedEx"}:
-                return fedex
-            return None
-
         with patch("tools.bulk_visual_identity.sb.story_aliases",
                    return_value={"Fred Smith", "FedEx"}), \
              patch.dict("tools.bulk_visual_identity.sb._STORY_PERSONS", {}, clear=True), \
-             patch("tools.bulk_visual_identity.discover_wikidata_logo_for_terms",
-                   side_effect=discover), \
+             patch("tools.bulk_visual_identity._exact_search_qids",
+                   side_effect=lambda terms, get: {"QFEDEX"} if terms == {"FedEx"} else set()), \
+             patch("tools.bulk_visual_identity._canonical_entity",
+                   return_value=("QFEDEX", logo_entity("FedEx", "fedex.com"))), \
              patch("tools.bulk_visual_identity._exact_human_identity",
                    return_value=(None, set())):
             got = discover_verified_logo_identity(story, lambda url: {})
 
-        self.assertEqual(fedex, got)
+        self.assertEqual("FedEx", got.entity_label)
+        self.assertEqual("fedex.com", got.domain)
 
     def test_redirect_qids_collapse_to_one_canonical_identity(self):
         entity = logo_entity("IKEA", "ikea.com", aliases=("Ikea",))
