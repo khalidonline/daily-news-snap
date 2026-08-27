@@ -8,6 +8,7 @@ import base64
 from collections import OrderedDict
 from dataclasses import asdict, dataclass
 import hashlib
+import inspect
 import json
 import os
 from pathlib import Path
@@ -27,8 +28,8 @@ from tools.bulk_visual_identity import (
 )
 from tools.bulk_visual_register import register_logo, register_photo
 from tools.bulk_visual_sources import (
-    discover_commons, discover_first_party, discover_loc, discover_openverse,
-    plan_story_beats,
+    SourceDiscoveryBudget, SourceDiscoveryBudgetExceeded, discover_commons,
+    discover_first_party, discover_loc, discover_openverse, plan_story_beats,
 )
 from tools.bulk_visual_validate import (
     ReviewerConfigurationError, VisualDuplicateIndex, identity_proven, validate_candidate,
@@ -45,6 +46,8 @@ ALLOWED_FAILURES = frozenset({
     "DUPLICATE_ONLY", "LOGO_IDENTITY_MISSING", "VALIDATION_ERROR",
     "EXTERNAL_API_ERROR",
     "DISCOVERY_IDENTITY_SKIPPED",
+    "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+    "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
     "SOURCE_RATE_LIMITED",
 })
 
@@ -424,6 +427,7 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
     existing = catalogue_photo_paths()
     duplicate_index = VisualDuplicateIndex.from_paths(existing)
     seen_source_ids = set()
+    source_budgets = {}
     for beat in plan_story_beats(story):
         if accepted >= deficit:
             break
@@ -436,16 +440,34 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
         for source, adapter in adapters:
             if accepted >= deficit:
                 break
+            budget = source_budgets.setdefault(source, SourceDiscoveryBudget(source))
+            if budget.disabled:
+                continue
             try:
                 discovery_started = time.monotonic()
                 def discovery_telemetry(record):
                     attempt_fn({"story": story, "beat": beat.key, **record})
-                candidates = adapter(beat, max_candidates_per_beat,
-                                     excluded_source_ids=seen_source_ids,
-                                     telemetry_fn=discovery_telemetry)
+                adapter_kwargs = {"excluded_source_ids": seen_source_ids,
+                                  "telemetry_fn": discovery_telemetry}
+                # Test/injected adapters retain the small historical protocol;
+                # production adapters receive the enforceable source budget.
+                if inspect.isfunction(adapter):
+                    adapter_kwargs["budget"] = budget
+                candidates = adapter(beat, max_candidates_per_beat, **adapter_kwargs)
                 discovery_seconds = time.monotonic() - discovery_started
             except ReviewerConfigurationError:
                 raise
+            except SourceDiscoveryBudgetExceeded:
+                budget.disabled = True
+                discovery_seconds = time.monotonic() - discovery_started
+                attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
+                            "source": source, "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+                            "reason": "per-source story discovery allowance exhausted",
+                            "elapsed_seconds": round(budget.elapsed, 3),
+                            "request_count": budget.request_count,
+                            "retry_count": budget.retry_count,
+                            "query": (beat.queries[0] if beat.queries else "")[:160]})
+                continue
             except SourceRateLimited as exc:
                 discovery_seconds = time.monotonic() - discovery_started
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
@@ -458,6 +480,14 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                             "result": "SOURCE_UNAVAILABLE", "reason": f"{exc.__class__.__name__}: {exc}",
                             "discovery_seconds": discovery_seconds, "candidate_count": 0})
                 continue
+            if budget.exhausted():
+                attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
+                            "source": source, "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+                            "reason": "per-source story discovery allowance exhausted",
+                            "elapsed_seconds": round(budget.elapsed, 3),
+                            "request_count": budget.request_count,
+                            "retry_count": budget.retry_count,
+                            "query": (beat.queries[0] if beat.queries else "")[:160]})
             if not candidates:
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
                             "source": source, "result": "NO_SAFE_CANDIDATE",

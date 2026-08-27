@@ -81,7 +81,7 @@ Benjamin Graham: أستاذ Warren Buffett الذي وضع قواعد الاست
 Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير | person: Jack Bogle | entity: Vanguard, The Vanguard Group | logo:vanguard.com
 Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً | Amancio Ortega, Inditex
 Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك | Muhammad Yunus, Grameen Bank
-الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟ | McDonald brothers, Ray Kroc
+الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟ | person: McDonald brothers | entity: Ray Kroc, McDonald's | context: restaurant
 قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا | Madam C.J. Walker, Sarah Breedlove
 
 # السفر والطيران

@@ -1,10 +1,13 @@
 import unittest
 from datetime import datetime, timezone
 from urllib.error import HTTPError
+from urllib.error import URLError
 from urllib.parse import parse_qs, urlparse
 from unittest.mock import patch
 
 from tools.bulk_visual_sources import (
+    SourceDiscoveryBudget,
+    SourceDiscoveryBudgetExceeded,
     StoryBeat,
     _json_get,
     discover_commons,
@@ -141,6 +144,65 @@ class StoryBeatPlannerTests(unittest.TestCase):
         found = discover_openverse(beat, limit=1,
                                    json_get=lambda _: {"results": [wrong, right]})
         self.assertEqual([item.source_id for item in found], ["openverse:2"])
+
+    def test_mcdonald_brothers_sawmill_conflict_skips_before_review(self):
+        beat = StoryBeat("person", ("McDonald brothers photograph",),
+                         ("McDonald brothers",), "person", ("restaurant", "Ray Kroc"))
+        telemetry = []
+        found = discover_openverse(
+            beat, json_get=lambda _: {"results": [
+                self.openverse_item(1, "McDonald Brothers' Sawmill")
+            ]}, telemetry_fn=telemetry.append)
+        self.assertEqual(found, [])
+        self.assertEqual(telemetry[0]["result"], "DISCOVERY_ENTITY_CONFLICT_SKIPPED")
+        self.assertIn("sawmill", telemetry[0]["reason"])
+
+    def test_mcdonald_restaurant_context_and_ambiguous_metadata_remain_eligible(self):
+        beat = StoryBeat("person", ("McDonald brothers photograph",),
+                         ("McDonald brothers",), "person", ("restaurant", "Ray Kroc"))
+        items = [self.openverse_item(1, "McDonald brothers at their restaurant",
+                                     tags=("Ray Kroc",)),
+                 self.openverse_item(2, "McDonald brothers archive")]
+        found = discover_openverse(beat, limit=2,
+                                   json_get=lambda _: {"results": items})
+        self.assertEqual([item.source_id for item in found],
+                         ["openverse:1", "openverse:2"])
+
+    def test_same_name_person_explicitly_classified_as_company_is_skipped(self):
+        beat = StoryBeat("person", ("Jerry Lawson photograph",),
+                         ("Jerry Lawson",), "person")
+        telemetry = []
+        found = discover_openverse(
+            beat, json_get=lambda _: {"results": [
+                self.openverse_item(1, "Jerry Lawson Company headquarters")
+            ]}, telemetry_fn=telemetry.append)
+        self.assertEqual(found, [])
+        self.assertEqual(telemetry[0]["result"], "DISCOVERY_ENTITY_CONFLICT_SKIPPED")
+
+    def test_source_budget_bounds_requests_and_retries(self):
+        now = [0.0]
+        budget = SourceDiscoveryBudget("openverse", seconds=18, max_requests=2,
+                                       clock=lambda: now[0])
+        self.assertEqual(budget.begin_request(), 9)
+        now[0] = 9
+        self.assertEqual(budget.begin_request(), 9)
+        with self.assertRaises(SourceDiscoveryBudgetExceeded):
+            budget.begin_request()
+        self.assertEqual(budget.request_count, 2)
+        self.assertTrue(budget.disabled)
+
+    @patch("tools.bulk_visual_sources.urlopen")
+    def test_loc_and_openverse_http_timeouts_are_short_and_retries_bounded(self, open_url):
+        open_url.side_effect = URLError("timed out")
+        for source, url in (("loc", "https://www.loc.gov/photos/?budget-test=loc"),
+                            ("openverse", "https://api.openverse.org/v1/images/?budget-test=ov")):
+            budget = SourceDiscoveryBudget(source)
+            with self.assertRaises(URLError):
+                _json_get(url, budget=budget, sleep=lambda _: None)
+            self.assertEqual(budget.request_count, 2)
+            self.assertEqual(budget.retry_count, 1)
+        self.assertEqual(open_url.call_count, 4)
+        self.assertTrue(all(call.kwargs["timeout"] <= 9 for call in open_url.call_args_list))
 
     def test_openverse_anonymous_pagination_is_bounded_and_finds_later_identity(self):
         beat = StoryBeat("person", ("Jerry Lawson photograph",), ("Jerry Lawson",))

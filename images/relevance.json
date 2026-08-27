@@ -62,6 +62,13 @@
       "source_url": "https://www.flickr.com/photos/31018257@N00/25519026177",
       "note": "openverse; by; origin"
     },
+    "bulk-shuji-nakamura-180-person-adf398a50e03.jpg": {
+      "stories": {
+        "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Professor_Shuji_Nakamura_(Cropped)_(2).jpg",
+      "note": "commons; CC BY 2.0; person"
+    },
     "bulk-story-origin-or-early-572b85c17c0c.jpg": {
       "stories": {
         "قصة نيويورك: كيف صارت عاصمة المال؟": "STRONG_CONTEXT"
@@ -1006,13 +1013,6 @@
       "stories": {
         "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
       }
-    },
-    "bulk-shuji-nakamura-180-person-adf398a50e03.jpg": {
-      "stories": {
-        "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة": "DIRECT"
-      },
-      "source_url": "https://commons.wikimedia.org/wiki/File:Professor_Shuji_Nakamura_(Cropped)_(2).jpg",
-      "note": "commons; CC BY 2.0; person"
     }
   }
 }
