@@ -100,11 +100,11 @@ class StoryBeatPlannerTests(unittest.TestCase):
                                [self.openverse_item(48 + i, "unrelated archive")
                                 for i in range(12)]}
 
-        found = discover_openverse(beat, limit=1, json_get=response,
+        found = discover_openverse(beat, limit=12, json_get=response,
                                    telemetry_fn=telemetry.append)
         self.assertEqual([item.source_id for item in found], ["openverse:47"])
         self.assertEqual([params["page_size"] for params in requested],
-                         [["20"], ["20"], ["20"]])
+                         [["20"], ["20"], ["8"]])
         self.assertEqual([params["page"] for params in requested],
                          [["1"], ["2"], ["3"]])
         self.assertEqual(telemetry[0]["examined_count"], 48)
