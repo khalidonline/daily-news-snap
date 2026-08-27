@@ -978,6 +978,13 @@
       },
       "source_url": "http://www.loc.gov/item/2023630585/",
       "note": "loc; person"
+    },
+    "bulk-story-origin-or-early-572b85c17c0c.jpg": {
+      "stories": {
+        "قصة نيويورك: كيف صارت عاصمة المال؟": "STRONG_CONTEXT"
+      },
+      "source_url": "http://www.loc.gov/item/ny1493/",
+      "note": "loc; origin_or_early"
     }
   }
 }
