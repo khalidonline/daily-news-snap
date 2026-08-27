@@ -30,6 +30,7 @@ _GENERIC = {"business", "office", "city", "meeting", "street"}
 # callers accidentally request a larger candidate limit.
 _MAX_SOURCE_RESULTS_PER_QUERY = 48
 _DISCOVERY_WINDOW_MULTIPLIER = 4
+_OPENVERSE_ANON_PAGE_SIZE = 20
 
 
 @dataclass(frozen=True)
@@ -126,9 +127,10 @@ def _identities(story):
         # Standalone test/manual stories still need an exact, non-generic anchor.
         prefix = str(story).split(":", 1)[0]
         aliases = re.findall(r"[A-Z][A-Za-z.]+(?:\s+[A-Z][A-Za-z.]+)+", prefix)
-    # Both lists are curated declarations.  Keep their spelling and ordering;
-    # never replace aliases with identities mined from the story prose.
-    return tuple(dict.fromkeys((*persons, *aliases)))
+    # Typed person declarations remain the sole required identity for person
+    # stories. Organization aliases can support other subsystems, but must not
+    # make a person photo pass metadata identity proof on the organization alone.
+    return tuple(dict.fromkeys(persons or aliases))
 
 
 def plan_story_beats(story):
@@ -277,36 +279,54 @@ def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_id
         return []
     found = []
     excluded = set(excluded_source_ids)
+    scan_cap = _source_window(limit)
     for query in beat.queries:
-        try:
-            payload = json_get(f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': _source_window(limit)})}")
-        except (HTTPError, URLError, TimeoutError):
-            if json_get is _json_get:
-                _OPENVERSE_DISABLED_UNTIL = time.monotonic() + 60
-            raise
         skipped = examined = 0
-        for item in payload.get("results", [])[:_MAX_SOURCE_RESULTS_PER_QUERY]:
-            examined += 1
-            title, desc = _clean(item.get("title")), _clean(item.get("description"))
-            depicts = tuple(tag.get("name", "") for tag in item.get("tags", []) if isinstance(tag, dict))
-            if not _identity_bearing(beat, title, desc, depicts):
-                skipped += 1
-                continue
-            if (not item.get("id") or not item.get("url") or
-                    not item.get("foreign_landing_url") or
-                    _blocked(title, desc, item.get("tags"))):
-                continue
-            source_id = f"openverse:{item.get('id')}"
-            if source_id in excluded or any(candidate.source_id == source_id for candidate in found):
-                continue
-            found.append(SourceCandidate("openverse", source_id,
-                item["foreign_landing_url"], item["url"], title, desc, _clean(item.get("creator")),
-                _clean(item.get("license")), str(item.get("license_url") or ""),
-                int(item.get("width") or 0), int(item.get("height") or 0), beat.key, query,
-                beat.required_identity, depicts))
-            if len(found) >= limit:
-                _report_discovery_skips(telemetry_fn, "openverse", query, skipped, examined)
-                return found
+        page = 1
+        page_count = None
+        while examined < scan_cap and (page_count is None or page <= page_count):
+            page_size = min(_OPENVERSE_ANON_PAGE_SIZE, scan_cap - examined)
+            try:
+                payload = json_get(f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': page_size, 'page': page})}")
+            except (HTTPError, URLError, TimeoutError):
+                if json_get is _json_get:
+                    _OPENVERSE_DISABLED_UNTIL = time.monotonic() + 60
+                raise
+            try:
+                reported_page_count = int(payload.get("page_count") or 0)
+            except (TypeError, ValueError):
+                reported_page_count = 0
+            if reported_page_count > 0:
+                page_count = reported_page_count
+            items = payload.get("results", [])
+            if not items:
+                break
+            remaining = scan_cap - examined
+            for item in items[:remaining]:
+                examined += 1
+                title, desc = _clean(item.get("title")), _clean(item.get("description"))
+                depicts = tuple(tag.get("name", "") for tag in item.get("tags", []) if isinstance(tag, dict))
+                if not _identity_bearing(beat, title, desc, depicts):
+                    skipped += 1
+                    continue
+                if (not item.get("id") or not item.get("url") or
+                        not item.get("foreign_landing_url") or
+                        _blocked(title, desc, item.get("tags"))):
+                    continue
+                source_id = f"openverse:{item.get('id')}"
+                if source_id in excluded or any(candidate.source_id == source_id for candidate in found):
+                    continue
+                found.append(SourceCandidate("openverse", source_id,
+                    item["foreign_landing_url"], item["url"], title, desc, _clean(item.get("creator")),
+                    _clean(item.get("license")), str(item.get("license_url") or ""),
+                    int(item.get("width") or 0), int(item.get("height") or 0), beat.key, query,
+                    beat.required_identity, depicts))
+                if len(found) >= limit:
+                    _report_discovery_skips(telemetry_fn, "openverse", query, skipped, examined)
+                    return found
+            if len(items) < page_size:
+                break
+            page += 1
         _report_discovery_skips(telemetry_fn, "openverse", query, skipped, examined)
     return found
 
