@@ -985,6 +985,13 @@
       },
       "source_url": "http://www.loc.gov/item/ny1493/",
       "note": "loc; origin_or_early"
+    },
+    "bulk-story-subject-detail-812e9c999133.jpg": {
+      "stories": {
+        "كيف بُنيت دبي على الرمل في خمسين سنة؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/40656982@N00/3549002774",
+      "note": "openverse; by-nc-nd; subject_detail"
     }
   }
 }

@@ -372,3 +372,4 @@ bulk-nvidia-origin-3f7fea19b604.jpg | قصة NVIDIA: الموظفون الذين
 bulk-story-subject-detail-3404da0baf62.jpg | قصة نوكيا من مصنع ورق إلى الهواتف, Nokia | bobfamiliar / by
 bulk-juan-trippe-pan-am-boeing-747-person-ef594091cda2.jpg | Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747, Juan Trippe, Pan Am | leffler, warren k.
 bulk-story-origin-or-early-572b85c17c0c.jpg | قصة نيويورك: كيف صارت عاصمة المال؟, New York, نيويورك | historic american buildings survey
+bulk-story-subject-detail-812e9c999133.jpg | كيف بُنيت دبي على الرمل في خمسين سنة؟, Dubai, دبي | ~W~ / by-nc-nd
