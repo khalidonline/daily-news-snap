@@ -30,7 +30,10 @@ from tools.bulk_visual_register import register_logo, register_photo
 from tools.bulk_visual_sources import (
     SourceDiscoveryBudget, SourceDiscoveryBudgetExceeded, discover_commons,
     discover_first_party, discover_loc, discover_openverse, plan_story_beats,
+    story_source_strategy,
 )
+from tools.bulk_visual_curation import write_curation
+from tools.bulk_visual_history import FailureHistory, remember
 from tools.bulk_visual_validate import (
     ReviewerConfigurationError, VisualDuplicateIndex, identity_proven, validate_candidate,
 )
@@ -49,6 +52,7 @@ ALLOWED_FAILURES = frozenset({
     "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
     "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
     "SOURCE_RATE_LIMITED",
+    "WRONG_ENTITY", "INCOMPATIBLE_ENTITY_SENSE", "INVALID_MEDIA_TYPE",
 })
 
 
@@ -133,6 +137,8 @@ def append_attempt(record, path=OUT_DIR / "attempts.jsonl"):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    if path == OUT_DIR / "attempts.jsonl":
+        remember(record)
 
 
 _DOWNLOAD_CACHE = OrderedDict()
@@ -426,22 +432,28 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
     # catalogue asset. Newly accepted paths are appended below during the run.
     existing = catalogue_photo_paths()
     duplicate_index = VisualDuplicateIndex.from_paths(existing)
-    seen_source_ids = set()
+    history = FailureHistory(story)
+    seen_source_ids = set(history.rejected_source_ids)
     source_budgets = {}
-    for beat in plan_story_beats(story):
+    beats = plan_story_beats(story)
+    for beat in beats:
         if accepted >= deficit:
             break
-        adapters = [("commons", discover_commons), ("loc", discover_loc),
-                    ("openverse", discover_openverse)]
+        available = {"commons": discover_commons, "loc": discover_loc,
+                     "openverse": discover_openverse}
         domain = sb.story_logo_domain(story)
         if domain:
-            adapters.append(("first-party", lambda planned, limit, **kwargs:
-                             discover_first_party(planned, domain, limit, **kwargs)))
+            available["first-party"] = lambda planned, limit, **kwargs: discover_first_party(
+                planned, domain, limit, **kwargs)
+        adapters = [(name, available[name]) for name in story_source_strategy(story, beats)
+                    if name in available]
         for source, adapter in adapters:
             if accepted >= deficit:
                 break
             budget = source_budgets.setdefault(source, SourceDiscoveryBudget(source))
             if budget.disabled:
+                continue
+            if history.query_exhausted(source, beat.key, getattr(beat, "queries", ())):
                 continue
             try:
                 discovery_started = time.monotonic()
@@ -492,6 +504,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
                             "source": source, "result": "NO_SAFE_CANDIDATE",
                             "reason": "discovery returned no candidates",
+                            "query": (getattr(beat, "queries", ("",))[0]
+                                      if getattr(beat, "queries", ()) else "")[:160],
                             "discovery_seconds": discovery_seconds,
                             "candidate_count": 0})
             for candidate in candidates:
@@ -500,7 +514,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 if candidate.source_id in seen_source_ids:
                     attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
                                 "source": source, "source_page": candidate.source_page,
-                                "candidate": candidate.title, "result": "DUPLICATE_ONLY",
+                                "candidate": candidate.title, "source_id": candidate.source_id,
+                                "result": "DUPLICATE_ONLY",
                                 "reason": "candidate source_id already evaluated",
                                 "discovery_seconds": discovery_seconds,
                                 "validation_seconds": 0.0})
@@ -513,7 +528,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                     validation_seconds = time.monotonic() - validation_started
                     attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
                                 "source": source, "source_page": candidate.source_page,
-                                "candidate": candidate.title, "result": "IDENTITY_UNPROVEN",
+                                "candidate": candidate.title, "source_id": candidate.source_id,
+                                "result": "IDENTITY_UNPROVEN",
                                 "reason": "required identity absent from source metadata; fetch skipped",
                                 "discovery_seconds": discovery_seconds,
                                 "validation_seconds": validation_seconds,
@@ -547,9 +563,13 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                     break
                 validation_seconds = time.monotonic() - validation_started
                 measured.update(result.phase_seconds)
+                rejection = result.reason.split(":", 1)[0]
+                if not result.accepted and result.verdict == "WRONG_ENTITY":
+                    rejection = "WRONG_ENTITY"
                 record = {"story": story, "kind": "photo", "beat": beat.key, "source": source,
                           "source_page": candidate.source_page, "candidate": candidate.title,
-                          "result": "ACCEPTED" if result.accepted else result.reason.split(":", 1)[0],
+                          "source_id": candidate.source_id,
+                          "result": "ACCEPTED" if result.accepted else rejection,
                           "reason": f"{result.verdict}; {result.reason}".strip("; "),
                           "discovery_seconds": discovery_seconds,
                           "validation_seconds": validation_seconds,
@@ -601,6 +621,7 @@ def main(argv=None):
                         "reason": str(exc)})
         return 3
     final = build_board(stories); write_board(final, OUT_DIR); _write_unresolved(final)
+    write_curation(final)
     # Only the complete catalogue may return completion, never a selected story.
     if len(final) == 123 and all(row.status == "PASS" for row in final):
         return 0
