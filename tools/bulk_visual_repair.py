@@ -22,19 +22,22 @@ from PIL import Image
 import story_bot as sb
 
 from tools.bulk_visual_board import build_board, repair_backlog, write_board
+from tools.bulk_visual_curation import write_curation
 from tools.bulk_visual_identity import (
     diagnose_verified_logo_identity, download_commons_logo,
     resolve_existing_logo_identity,
 )
 from tools.bulk_visual_failure_history import (
-    load_history, mark_query_set_complete, query_set_complete,
-    query_set_fingerprint, record_attempt, rejected_source_ids, save_history,
+    empty_history, load_history, persist_query_set_complete, query_set_complete,
+    query_set_fingerprint, record_attempt, rejected_source_ids, sanitize_history,
+    save_history,
 )
 from tools.bulk_visual_register import register_logo, register_photo
 from tools.bulk_visual_sources import (
     SourceDiscoveryBudget, SourceDiscoveryBudgetExceeded, discover_commons,
     discover_first_party, discover_loc, discover_openverse, plan_story_beats,
 )
+from tools.bulk_visual_strategy import story_source_strategy
 from tools.bulk_visual_validate import (
     ReviewerConfigurationError, VisualDuplicateIndex, identity_proven, validate_candidate,
 )
@@ -54,6 +57,8 @@ ALLOWED_FAILURES = frozenset({
     "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
     "SOURCE_RATE_LIMITED",
 })
+_PRODUCTION_HISTORY_SANITIZED = False
+_PRODUCTION_STORIES = None
 
 
 @dataclass(frozen=True)
@@ -65,6 +70,24 @@ class BatchResult:
 
 def _gap(row):
     return row.need_photos + int(row.need_logo)
+
+
+def _catalogue_story_names():
+    global _PRODUCTION_STORIES
+    if _PRODUCTION_STORIES is None:
+        _PRODUCTION_STORIES = tuple(sb.load_stories())
+    return _PRODUCTION_STORIES
+
+
+def _load_advisory_history(history_path=None, *, sanitize_production=False):
+    """Load advisory history and clean the production file at most once/process."""
+    global _PRODUCTION_HISTORY_SANITIZED
+    history = load_history(history_path)
+    if history_path is None and sanitize_production and not _PRODUCTION_HISTORY_SANITIZED:
+        history = sanitize_history(history, _catalogue_story_names())
+        save_history(history)
+        _PRODUCTION_HISTORY_SANITIZED = True
+    return history
 
 
 def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
@@ -88,8 +111,6 @@ def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
                 attempt_fn({"story": original.story, "kind": "logo", "source": "orchestrator",
                             "result": "SOURCE_UNAVAILABLE",
                             "reason": f"{exc.__class__.__name__}: {exc}"})
-        # A logo-source outage must not prevent independent photo sources from
-        # repairing the same story (and vice versa).
         if current.need_photos:
             try:
                 writes = int(repair_photos_fn(current.story, current.need_photos) or 0)
@@ -101,8 +122,6 @@ def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
                 attempt_fn({"story": original.story, "kind": "photo", "source": "orchestrator",
                         "result": "SOURCE_UNAVAILABLE",
                         "reason": f"{exc.__class__.__name__}: {exc}"})
-                # Capture any runtime-visible progress made before the source
-                # failed, rather than discarding resumable work.
                 current = refresh_fn(current.story)
         refreshed[original.story] = current
         reduction = max(0, _gap(original) - _gap(current))
@@ -112,10 +131,6 @@ def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
                                "story_runtime.coverage() reported no deficit reduction"),
                     "before_gap": _gap(original), "after_gap": _gap(current),
                     "claimed_writes": claimed, "elapsed_seconds": time.monotonic() - story_started})
-        # Registration functions report writes for observability only. Runtime
-        # coverage is both the progress counter and the invariant authority:
-        # over-claiming (including two writes that close one slot) is just as
-        # unsafe as a wholly invisible registration.
         progress += reduction
         if claimed != reduction:
             invariant = True
@@ -129,7 +144,7 @@ def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
     return BatchResult(progress, processed, 10 if progress and remaining else (2 if remaining else 0))
 
 
-def append_attempt(record, path=OUT_DIR / "attempts.jsonl"):
+def append_attempt(record, path=OUT_DIR / "attempts.jsonl", history_path=None):
     record = dict(record)
     result = record.get("result")
     if result != "ACCEPTED" and result not in ALLOWED_FAILURES:
@@ -137,11 +152,9 @@ def append_attempt(record, path=OUT_DIR / "attempts.jsonl"):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(record, ensure_ascii=False) + "\n")
-    # This durable file is advisory failure memory, never an asset registry or
-    # approval ledger.  In particular ACCEPTED is deliberately ignored.
-    history = load_history()
+    history = _load_advisory_history(history_path, sanitize_production=True)
     record_attempt(history, record)
-    save_history(history)
+    save_history(history, history_path)
 
 
 _DOWNLOAD_CACHE = OrderedDict()
@@ -234,8 +247,6 @@ def _safe_api_error(exc, api_key):
             exc.close()
         except (AttributeError, OSError):
             pass
-    # API responses should never contain the credential, but redact it (and
-    # truncate remote text) rather than trusting that invariant in telemetry.
     if api_key:
         error_type = error_type.replace(api_key, "[REDACTED]")
         message = message.replace(api_key, "[REDACTED]")
@@ -352,8 +363,6 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
             break
         except HTTPError as exc:
             retryable = exc.code == 429 or 500 <= exc.code <= 599
-            # Read the response exactly once before a possible retry. This also
-            # preserves the useful API error details that HTTPError otherwise hides.
             failure = _review_failure_telemetry(story, model, exc, key, retryable, attempt)
             telemetry_fn(failure)
             if failure["failure_category"] == "invalid_model":
@@ -429,24 +438,28 @@ def repair_logo(story, attempt_fn=append_attempt):
     return 1
 
 
-def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_attempt):
+def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_attempt,
+                  history_path=None):
     accepted = 0
-    # A photo relevant to another story still cannot be imported as a second
-    # catalogue asset. Newly accepted paths are appended below during the run.
     existing = catalogue_photo_paths()
     duplicate_index = VisualDuplicateIndex.from_paths(existing)
-    history = load_history()
+    persist_history = attempt_fn is append_attempt or history_path is not None
+    history = (_load_advisory_history(history_path, sanitize_production=True)
+               if persist_history else empty_history())
     seen_source_ids = rejected_source_ids(history, story)
     source_budgets = {}
-    for beat in plan_story_beats(story):
+    beats = plan_story_beats(story)
+    domain = sb.story_logo_domain(story)
+    available = {"commons": discover_commons, "loc": discover_loc,
+                 "openverse": discover_openverse}
+    if domain:
+        available["first-party"] = lambda planned, limit, **kwargs: discover_first_party(
+            planned, domain, limit, **kwargs)
+    adapters = [(name, available[name]) for name in story_source_strategy(story, beats)
+                if name in available]
+    for beat in beats:
         if accepted >= deficit:
             break
-        adapters = [("commons", discover_commons), ("loc", discover_loc),
-                    ("openverse", discover_openverse)]
-        domain = sb.story_logo_domain(story)
-        if domain:
-            adapters.append(("first-party", lambda planned, limit, **kwargs:
-                             discover_first_party(planned, domain, limit, **kwargs)))
         for source, adapter in adapters:
             if accepted >= deficit:
                 break
@@ -469,8 +482,6 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                     attempt_fn({"story": story, "beat": beat.key, **record})
                 adapter_kwargs = {"excluded_source_ids": seen_source_ids,
                                   "telemetry_fn": discovery_telemetry}
-                # Test/injected adapters retain the small historical protocol;
-                # production adapters receive the enforceable source budget.
                 if inspect.isfunction(adapter):
                     adapter_kwargs["budget"] = budget
                 candidates = adapter(beat, max_candidates_per_beat, **adapter_kwargs)
@@ -514,13 +525,14 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                             "reason": "discovery returned no candidates",
                             "discovery_seconds": discovery_seconds,
                             "candidate_count": 0})
-                # Completion means the adapter traversed this entire query set
-                # normally.  Skipped conflicts/identities and every exception
-                # above remain telemetry and are intentionally retryable.
-                if not discovery_was_incomplete and not budget.exhausted():
-                    mark_query_set_complete(history, story, beat.key, source,
-                                            query_fingerprint)
-                    save_history(history)
+                if (persist_history and not discovery_was_incomplete
+                        and not budget.exhausted()):
+                    history = persist_query_set_complete(
+                        story, beat.key, source, query_fingerprint,
+                        path=history_path,
+                        valid_stories=(_catalogue_story_names()
+                                       if history_path is None else None),
+                    )
             for candidate in candidates:
                 if accepted >= deficit:
                     break
@@ -535,8 +547,6 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                     continue
                 seen_source_ids.add(candidate.source_id)
                 validation_started = time.monotonic()
-                # Keep this explicit preflight observable. validate_candidate
-                # repeats the gate so direct callers remain fail closed.
                 if not identity_proven(candidate):
                     validation_seconds = time.monotonic() - validation_started
                     attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
@@ -571,8 +581,6 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                                 "discovery_seconds": discovery_seconds,
                                 "validation_seconds": time.monotonic() - validation_started,
                                 "phase_seconds": measured})
-                    # The shared cooldown makes later beats observable without
-                    # generating more network requests; stop this candidate list now.
                     break
                 validation_seconds = time.monotonic() - validation_started
                 measured.update(result.phase_seconds)
@@ -603,8 +611,13 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
 
 
 def _write_unresolved(rows, path=OUT_DIR / "unresolved.json"):
+    path = Path(path)
+    if path.name == "curation-required.json":
+        history = _load_advisory_history(None, sanitize_production=True)
+        write_curation(rows, history, path)
+        return
     unresolved = [asdict(row) for row in rows if row.status != "PASS"]
-    path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(unresolved, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
@@ -632,7 +645,6 @@ def main(argv=None):
                         "reason": str(exc)})
         return 3
     final = build_board(stories); write_board(final, OUT_DIR); _write_unresolved(final)
-    # Only the complete catalogue may return completion, never a selected story.
     if len(final) == 123 and all(row.status == "PASS" for row in final):
         return 0
     return 3 if result.exit_code == 3 else (10 if result.progress else 2)

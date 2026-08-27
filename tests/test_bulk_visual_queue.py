@@ -14,21 +14,25 @@ def row(story, need_photos, need_logo, status="NEEDS"):
 
 
 class BulkVisualQueueTests(unittest.TestCase):
-    def test_photo_needed_rows_precede_logo_only_rows(self):
+    def test_near_pass_priority_bands(self):
         rows = [
             row("Logo A", 0, True),
             row("Photo B", 2, False),
             row("Mixed C", 1, True),
+            row("Photo D", 1, False),
         ]
         queue = build_run_queue(rows, {"photo-needed": None, "logo-only": None}, 12)
-        self.assertEqual([item.story for item in queue], ["Mixed C", "Photo B", "Logo A"])
-        self.assertEqual(queue_class(queue[0]), "photo-needed")
-        self.assertEqual(queue_class(queue[-1]), "logo-only")
+        self.assertEqual([item.story for item in queue], ["Logo A", "Photo D", "Mixed C", "Photo B"])
+        self.assertEqual(queue_class(queue[0]), "logo-only")
 
-    def test_cursor_rotates_past_previous_hard_prefix(self):
-        rows = [row("A", 1, False), row("B", 1, False), row("C", 1, False)]
-        queue = build_run_queue(rows, {"photo-needed": "B", "logo-only": None}, 3)
-        self.assertEqual([item.story for item in queue], ["C", "A", "B"])
+    def test_cursor_rotates_only_within_equal_priority_band(self):
+        rows = [
+            row("Logo", 0, True),
+            row("A", 1, False), row("B", 1, False), row("C", 1, False),
+            row("Mixed", 1, True),
+        ]
+        queue = build_run_queue(rows, {"photo-needed": "B", "logo-only": None}, 5)
+        self.assertEqual([item.story for item in queue], ["Logo", "C", "A", "B", "Mixed"])
 
     def test_missing_cursor_story_starts_from_deterministic_head(self):
         rows = [row("B", 1, False), row("A", 1, False)]
