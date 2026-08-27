@@ -63,7 +63,7 @@
 
 # التقنية
 من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره | Douglas Engelbart
-قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى | Digital Research, Gary Kildall | logo:digitalresearch.biz
+قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى | CP/M, Digital Research, Gary Kildall | logo:digitalresearch.biz
 Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل | Radia Perlman
 Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة | Shuji Nakamura
 Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي | Jerry Lawson

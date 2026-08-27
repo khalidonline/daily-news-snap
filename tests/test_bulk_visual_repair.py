@@ -260,7 +260,7 @@ class BulkVisualRepairTests(unittest.TestCase):
             return SourceCandidate("commons", source_id, "https://commons.test/page",
                 "https://upload.test/image.jpg", "unproven", "unproven", "", "", "",
                 800, 600, "one", "NVIDIA", ("NVIDIA",), ())
-        def discover(_beat, _limit, *, excluded_source_ids):
+        def discover(_beat, _limit, *, excluded_source_ids, telemetry_fn=None):
             return [candidate("commons:1")] if "commons:1" not in excluded_source_ids else []
         commons.side_effect = discover
         attempts = []

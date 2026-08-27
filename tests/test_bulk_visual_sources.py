@@ -1,5 +1,6 @@
 import unittest
 from urllib.error import HTTPError
+from urllib.parse import parse_qs, urlparse
 from unittest.mock import patch
 
 from tools.bulk_visual_sources import (
@@ -38,6 +39,58 @@ class StoryBeatPlannerTests(unittest.TestCase):
             self.assertTrue(beat.required_identity)
             self.assertTrue(all(any(identity in query for identity in beat.required_identity)
                                 for query in beat.queries))
+
+    def test_punctuation_heavy_identity_remains_the_query_anchor(self):
+        beats = plan_story_beats("قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى")
+        self.assertTrue(beats)
+        self.assertIn("CP/M", beats[0].required_identity)
+        self.assertTrue(all(any(query.startswith(identity + " ")
+                                for identity in beat.required_identity)
+                            for beat in beats for query in beat.queries))
+        self.assertTrue(all(any(query.startswith("CP/M ") for query in beat.queries)
+                            for beat in beats))
+
+    @staticmethod
+    def openverse_item(number, title, *, description="", tags=()):
+        return {"id": str(number), "title": title, "description": description,
+                "url": f"https://img.test/{number}.jpg",
+                "foreign_landing_url": f"https://source.test/{number}",
+                "tags": [{"name": tag} for tag in tags]}
+
+    def test_unrelated_hits_do_not_consume_candidate_budget(self):
+        beat = StoryBeat("origin", ("CP/M history",), ("CP/M",))
+        items = [self.openverse_item(i, "Van Gogh artwork") for i in range(5)]
+        items += [self.openverse_item(5, "CP/M computer"),
+                  self.openverse_item(6, "CP/M terminal")]
+        telemetry = []
+        found = discover_openverse(beat, limit=2,
+                                   json_get=lambda _: {"results": items},
+                                   telemetry_fn=telemetry.append)
+        self.assertEqual([item.title for item in found],
+                         ["CP/M computer", "CP/M terminal"])
+        self.assertEqual(telemetry[0]["result"], "DISCOVERY_IDENTITY_SKIPPED")
+        self.assertEqual(telemetry[0]["skipped_count"], 5)
+
+    def test_person_results_require_declared_exact_identity_in_metadata(self):
+        beat = StoryBeat("person", ("Jerry Lawson photograph",),
+                         ("Jerry Lawson", "Gerald Lawson"))
+        wrong = self.openverse_item(1, "Lawson archive", description="Jerry McDonald records")
+        right = self.openverse_item(2, "Engineering pioneers", tags=("Jerry Lawson",))
+        found = discover_openverse(beat, limit=1,
+                                   json_get=lambda _: {"results": [wrong, right]})
+        self.assertEqual([item.source_id for item in found], ["openverse:2"])
+
+    def test_source_results_examined_and_requested_are_hard_bounded(self):
+        beat = StoryBeat("person", ("Jerry Lawson photograph",), ("Jerry Lawson",))
+        requested, telemetry = [], []
+        def response(url):
+            requested.append(url)
+            return {"results": [self.openverse_item(i, "unrelated archive")
+                                 for i in range(100)]}
+        self.assertEqual(discover_openverse(beat, limit=12, json_get=response,
+                                            telemetry_fn=telemetry.append), [])
+        self.assertEqual(parse_qs(urlparse(requested[0]).query)["page_size"], ["48"])
+        self.assertEqual(telemetry[0]["examined_count"], 48)
 
     def test_commons_filters_artwork_and_preserves_license(self):
         beat = StoryBeat("person", ("Jack Bogle",), ("Jack Bogle", "John C. Bogle"))
