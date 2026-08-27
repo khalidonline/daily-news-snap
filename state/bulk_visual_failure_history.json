@@ -64,36 +64,6 @@
   ],
   "complete_query_sets": [
     {
-      "story": "NVIDIA story",
-      "beat": "one",
-      "source": "loc",
-      "fingerprint": "c5e9cd9efd1aaea2f9521fd57c82d2f352ce060cd44b5841dad6e95a6ee7e7a1"
-    },
-    {
-      "story": "NVIDIA story",
-      "beat": "one",
-      "source": "openverse",
-      "fingerprint": "c5e9cd9efd1aaea2f9521fd57c82d2f352ce060cd44b5841dad6e95a6ee7e7a1"
-    },
-    {
-      "story": "NVIDIA story",
-      "beat": "two",
-      "source": "commons",
-      "fingerprint": "63c9e8c51cc59f9d450be758ef951b44a6a530a32e75b2f1528156c0029de845"
-    },
-    {
-      "story": "NVIDIA story",
-      "beat": "two",
-      "source": "loc",
-      "fingerprint": "63c9e8c51cc59f9d450be758ef951b44a6a530a32e75b2f1528156c0029de845"
-    },
-    {
-      "story": "NVIDIA story",
-      "beat": "two",
-      "source": "openverse",
-      "fingerprint": "63c9e8c51cc59f9d450be758ef951b44a6a530a32e75b2f1528156c0029de845"
-    },
-    {
       "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
       "beat": "early_work",
       "source": "commons",
@@ -1457,6 +1427,150 @@
     },
     {
       "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "multiple_logo_properties"
+    },
+    {
+      "story": "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Hedy Lamarr: ممثلة سجّلت براءة اختراع صارت أساس الواي فاي",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "Hedy Lamarr: ممثلة سجّلت براءة اختراع صارت أساس الواي فاي",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Herb Kelleher: أسس Southwest على منديل ورقي",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_official_domains"
+    },
+    {
+      "story": "Herb Kelleher: أسس Southwest على منديل ورقي",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Masaru Ibuka: الشريك الأهدأ الذي بنى Sony مع Morita",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "Masaru Ibuka: الشريك الأهدأ الذي بنى Sony مع Morita",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "Muhammad Yunus: أقرض 27 دولاراً وغيّر فكرة البنوك",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "Muriel Siebert: أول امرأة تشتري مقعداً في بورصة نيويورك",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Warren Buffett: أول استثمار في سن الحادية عشرة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "قصة Warren Buffett: أول استثمار في سن الحادية عشرة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
       "source": "runtime",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "story_runtime.coverage() reported no deficit reduction"
