@@ -19,6 +19,10 @@ from urllib.request import Request, urlopen
 
 import news_bot as nb
 import story_bot as sb
+from tools.wikimedia_http import (
+    SMALL_RETRY_ALLOWANCE_SECONDS, parse_retry_after, require_available,
+    terminal_rate_limit, wikimedia_headers,
+)
 
 
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
@@ -77,8 +81,13 @@ def _json_get(url, *, attempts=2, sleep=time.sleep):
     if url in _JSON_CACHE:
         _JSON_CACHE.move_to_end(url)
         return _JSON_CACHE[url]
-    req = Request(url, headers={"User-Agent": "daily-news-snap/1.0 (visual source discovery; contact: repository maintainers)",
-                                "Accept": "application/json"})
+    is_commons = url.startswith(COMMONS_API)
+    if is_commons:
+        require_available("discovery")
+    req = Request(url, headers=(wikimedia_headers(accept="application/json") if is_commons else
+                                {"User-Agent": "daily-news-snap/1.0 (visual source discovery)",
+                                 "Accept": "application/json"}))
+    retried_429 = False
     for attempt in range(attempts):
         try:
             with urlopen(req, timeout=15) as response:
@@ -88,6 +97,16 @@ def _json_get(url, *, attempts=2, sleep=time.sleep):
                 _JSON_CACHE.popitem(last=False)
             return payload
         except HTTPError as exc:
+            if is_commons and exc.code == 429:
+                delay = parse_retry_after((exc.headers or {}).get("Retry-After"))
+                retry_delay = 1.0 if delay is None else delay
+                if (not retried_429 and attempt + 1 < attempts and
+                        retry_delay <= SMALL_RETRY_ALLOWANCE_SECONDS):
+                    retried_429 = True
+                    sleep(retry_delay)
+                    continue
+                raise terminal_rate_limit("discovery", delay,
+                                          retry_occurred=retried_429) from exc
             if exc.code not in _TRANSIENT_HTTP or attempt + 1 >= attempts:
                 raise
             sleep(_retry_delay(exc, attempt))

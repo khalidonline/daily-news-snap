@@ -14,6 +14,7 @@ import unicodedata
 from PIL import Image
 
 import image_precheck
+from tools.wikimedia_http import SourceRateLimited
 from runtime_relevance import COUNTABLE
 
 
@@ -218,6 +219,9 @@ def validate_candidate(story, candidate, existing_paths, temp_dir,
         return _result("accepted", accepted=True, verdict=verdict, path=path,
                        sha=sha, dhash=dhash, phase_seconds=timings)
     except ReviewerConfigurationError:
+        path.unlink(missing_ok=True)
+        raise
+    except SourceRateLimited:
         path.unlink(missing_ok=True)
         raise
     except Exception as exc:
