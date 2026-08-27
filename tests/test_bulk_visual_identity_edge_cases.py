@@ -140,6 +140,77 @@ class BulkVisualIdentityEdgeCaseTests(unittest.TestCase):
         )
         self.assertEqual(PERSON_ORG_RELATION_UNRESOLVED, result.reason)
 
+    def test_typed_person_fallback_survives_ambiguous_unrelated_alias(self):
+        person = {
+            "labels": {"en": {"value": "Jane Founder"}}, "aliases": {"en": []},
+            "claims": {
+                "P31": [claim({"id": "Q5"})],
+                "P108": [claim({"id": "QORG"})],
+            },
+        }
+        entities = {
+            "QPERSON": person,
+            "QORG": logo_entity("Acme", "acme.example"),
+            "QX1": logo_entity("Mercury", "one.example"),
+            "QX2": logo_entity("Mercury", "two.example"),
+        }
+        result = self.diagnose(
+            {"Jane Founder", "Acme", "Mercury"}, entities,
+            {"Jane Founder": ["QPERSON"], "Acme": [],
+             "Mercury": ["QX1", "QX2"]},
+            people=("Jane Founder",),
+        )
+        self.assertEqual(VERIFIED_IDENTITY, result.reason)
+        self.assertEqual("acme.example", result.logo.domain)
+
+    def test_untyped_person_fallback_survives_ambiguous_unrelated_alias(self):
+        person = {
+            "labels": {"en": {"value": "Jane Founder"}}, "aliases": {"en": []},
+            "claims": {
+                "P31": [claim({"id": "Q5"})],
+                "P108": [claim({"id": "QORG"})],
+            },
+        }
+        entities = {
+            "QPERSON": person,
+            "QORG": logo_entity("Acme", "acme.example"),
+            "QX1": logo_entity("Mercury", "one.example"),
+            "QX2": logo_entity("Mercury", "two.example"),
+        }
+        result = self.diagnose(
+            {"Jane Founder", "Acme", "Mercury"}, entities,
+            {"Jane Founder": ["QPERSON"], "Acme": [],
+             "Mercury": ["QX1", "QX2"]},
+        )
+        self.assertEqual(VERIFIED_IDENTITY, result.reason)
+        self.assertEqual("acme.example", result.logo.domain)
+
+    def test_ambiguous_alias_and_person_without_unique_org_reports_ambiguity(self):
+        person = {
+            "labels": {"en": {"value": "Jane Founder"}}, "aliases": {"en": []},
+            "claims": {"P31": [claim({"id": "Q5"})]},
+        }
+        ambiguous = {
+            "QX1": logo_entity("Mercury", "one.example"),
+            "QX2": logo_entity("Mercury", "two.example"),
+        }
+        zero = self.diagnose(
+            {"Jane Founder", "Mercury"}, {"QPERSON": person, **ambiguous},
+            {"Jane Founder": ["QPERSON"], "Mercury": ["QX1", "QX2"]},
+            people=("Jane Founder",),
+        )
+        self.assertEqual(AMBIGUOUS_ENTITY_CANDIDATES, zero.reason)
+        self.assertEqual("Mercury", json.loads(zero.detail)["ambiguous_terms"][0]["term"])
+
+        person["claims"]["P108"] = [claim({"id": "QX1"}), claim({"id": "QX2"})]
+        multiple = self.diagnose(
+            {"Jane Founder", "Mercury"}, {"QPERSON": person, **ambiguous},
+            {"Jane Founder": ["QPERSON"], "Mercury": ["QX1", "QX2"]},
+            people=("Jane Founder",),
+        )
+        self.assertEqual(AMBIGUOUS_ENTITY_CANDIDATES, multiple.reason)
+        self.assertIsNone(multiple.logo)
+
     def test_declared_aliases_are_verified_individually_before_person_fallback(self):
         story = "Fred Smith biography"
         with patch("tools.bulk_visual_identity.sb.story_aliases",

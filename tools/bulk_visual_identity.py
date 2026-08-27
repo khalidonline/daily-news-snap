@@ -398,7 +398,7 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
     if len(direct_matches) == 1:
         return LogoResolution(next(iter(direct_matches.values())), VERIFIED_IDENTITY)
 
-    if ambiguous_terms:
+    def ambiguity_failure():
         return LogoResolution(
             None, AMBIGUOUS_ENTITY_CANDIDATES,
             json.dumps({"ambiguous_terms": ambiguous_terms},
@@ -422,6 +422,8 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
     }
 
     if len(person_qids) != 1:
+        if ambiguous_terms:
+            return ambiguity_failure()
         if person_qids or people:
             return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
         if len(direct_failures) == 1:
@@ -458,12 +460,19 @@ def diagnose_verified_logo_identity(story, json_get=_json_get):
         person_qid, explicit_entities, photo_tags, simple_entity, relation_qids,
     )
     if len(organizations) != 1:
+        if ambiguous_terms:
+            return ambiguity_failure()
         return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
     org_qid = organizations[0]
     canonical_qid, entity = _canonical_entity(org_qid, json_get)
     if not canonical_qid:
+        if ambiguous_terms:
+            return ambiguity_failure()
         return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
-    return _entity_logo_resolution(canonical_qid, entity)
+    resolution = _entity_logo_resolution(canonical_qid, entity)
+    if not resolution.logo and ambiguous_terms:
+        return ambiguity_failure()
+    return resolution
 
 
 def discover_verified_logo_identity(story, json_get=_json_get):
