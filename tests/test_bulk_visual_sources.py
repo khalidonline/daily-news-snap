@@ -1,7 +1,10 @@
 import unittest
+from urllib.error import HTTPError
+from unittest.mock import patch
 
 from tools.bulk_visual_sources import (
     StoryBeat,
+    _json_get,
     discover_commons,
     discover_first_party,
     discover_loc,
@@ -11,6 +14,15 @@ from tools.bulk_visual_sources import (
 
 
 class StoryBeatPlannerTests(unittest.TestCase):
+    @patch("tools.bulk_visual_sources.urlopen")
+    def test_json_get_bounds_transient_retries(self, open_url):
+        # A dead external API receives one retry, not one long retry loop per
+        # candidate. Use unique URLs to avoid the successful-response cache.
+        open_url.side_effect = HTTPError("https://api.test/transient", 503, "down", {}, None)
+        with self.assertRaises(HTTPError):
+            _json_get("https://api.test/transient", attempts=2, sleep=lambda _: None)
+        self.assertEqual(open_url.call_count, 2)
+
     def test_person_story_starts_with_exact_person_identity(self):
         beats = plan_story_beats("Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير")
         self.assertEqual(beats[0].key, "person")
@@ -43,6 +55,26 @@ class StoryBeatPlannerTests(unittest.TestCase):
         self.assertEqual(found[0].source_id, "commons:1")
         self.assertEqual(found[0].license, "CC BY-SA 4.0")
         self.assertIn("John C. Bogle", found[0].description)
+
+    def test_commons_uses_raster_thumbnail_and_skips_already_seen_ids(self):
+        beat = StoryBeat("modern", ("Emirates aircraft", "Emirates A380"), ("Emirates",))
+        urls = []
+        def response(url):
+            urls.append(url)
+            return {"query": {"pages": {"7": {"pageid": 7, "title": "File:Emirates A380.jpg",
+                "imageinfo": [{"url": "https://upload.wikimedia.org/original.jpg",
+                    "thumburl": "https://upload.wikimedia.org/thumb/1600px-plane.jpg",
+                    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Emirates_A380.jpg",
+                    "width": 4000, "height": 3000,
+                    "extmetadata": {"ImageDescription": {"value": "Emirates A380 aircraft"}}}]}}}}
+        found = discover_commons(beat, json_get=response, excluded_source_ids={"commons:7"})
+        self.assertEqual(found, [])
+        self.assertEqual(len(urls), 2)  # continue to the next query looking for diversity
+        found = discover_commons(StoryBeat("modern", ("Emirates aircraft",), ("Emirates",)),
+                                 json_get=response)
+        self.assertIn("iiurlwidth=1600", urls[-1])
+        self.assertEqual(found[0].direct_url,
+                         "https://upload.wikimedia.org/thumb/1600px-plane.jpg")
 
     def test_structured_adapters_reject_missing_stable_identity_or_page(self):
         beat = StoryBeat("person", ("Jack Bogle",), ("Jack Bogle",))
@@ -91,6 +123,35 @@ class StoryBeatPlannerTests(unittest.TestCase):
         ids_by_url = {item.direct_url: item.source_id for item in first}
         self.assertEqual(ids_by_url,
                          {item.direct_url: item.source_id for item in second})
+
+    def test_first_party_follows_identity_links_and_returns_distinct_assets(self):
+        beat = StoryBeat("modern_result", ("NVIDIA modern product",), ("NVIDIA",))
+        pages = {
+            "https://nvidia.com/": ('<title>NVIDIA</title><img src="/hero.jpg" alt="NVIDIA campus">'
+                                    '<a href="/privacy">Privacy</a>'
+                                    '<a href="/nvidia-news">News</a>'
+                                    '<a href="/products/gpu">GPU products</a>'),
+            "https://nvidia.com/nvidia-news": ('<title>NVIDIA News</title>'
+                    '<img src="/hero.jpg" alt="NVIDIA campus"><img src="/gpu.jpg" alt="NVIDIA GPU">'),
+            "https://nvidia.com/products/gpu": ('<title>NVIDIA GPU products</title>'
+                    '<img src="/product.jpg" alt="NVIDIA GPU product">'),
+        }
+        requested = []
+        def get_page(url):
+            requested.append(url)
+            return pages[url]
+        found = discover_first_party(beat, "nvidia.com", html_get=get_page)
+        self.assertNotIn("https://nvidia.com/privacy", requested)
+        self.assertIn("https://nvidia.com/nvidia-news", requested)
+        self.assertIn("https://nvidia.com/products/gpu", requested)
+        self.assertEqual([item.direct_url for item in found],
+                         ["https://nvidia.com/hero.jpg", "https://nvidia.com/gpu.jpg",
+                          "https://nvidia.com/product.jpg"])
+        self.assertIn("NVIDIA GPU", found[1].depicts)
+        excluded = discover_first_party(beat, "nvidia.com", html_get=lambda url: pages[url],
+                                        excluded_source_ids={found[0].source_id})
+        self.assertEqual([item.direct_url for item in excluded],
+                         ["https://nvidia.com/gpu.jpg", "https://nvidia.com/product.jpg"])
 
 
 if __name__ == "__main__":

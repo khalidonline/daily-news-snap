@@ -1,8 +1,12 @@
 import unittest
 from unittest.mock import patch
+from pathlib import Path
+from types import SimpleNamespace
+from urllib.error import HTTPError
+import tempfile
 
 from tools.bulk_visual_board import CoverageRow
-from tools.bulk_visual_repair import catalogue_photo_paths, process_rows
+from tools.bulk_visual_repair import _download, catalogue_photo_paths, process_rows, repair_photos
 
 
 def row(story, need_photos, need_logo, status):
@@ -10,6 +14,47 @@ def row(story, need_photos, need_logo, status):
 
 
 class BulkVisualRepairTests(unittest.TestCase):
+    @patch("tools.bulk_visual_repair.urlopen")
+    def test_commons_download_retries_429_once_and_caches_by_source_id(self, open_url):
+        error = HTTPError("https://upload.wikimedia.org/thumb/x.jpg", 429, "rate", {}, None)
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value.read.return_value = b"image bytes"
+        open_url.side_effect = [error, response]
+        candidate = SimpleNamespace(source="commons", source_id="commons:unique-test",
+                                    direct_url="https://upload.wikimedia.org/thumb/x.jpg")
+        with tempfile.TemporaryDirectory() as directory:
+            first, second = Path(directory) / "one", Path(directory) / "two"
+            _download(candidate, first, sleep=lambda _: None)
+            _download(candidate, second, sleep=lambda _: None)
+            self.assertEqual(first.read_bytes(), second.read_bytes())
+        self.assertEqual(open_url.call_count, 2)
+
+    @patch("tools.bulk_visual_repair.plan_story_beats")
+    @patch("tools.bulk_visual_repair.catalogue_photo_paths", return_value=[])
+    @patch("tools.bulk_visual_repair.sb.story_logo_domain", return_value=None)
+    @patch("tools.bulk_visual_repair.discover_openverse", return_value=[])
+    @patch("tools.bulk_visual_repair.discover_loc", return_value=[])
+    @patch("tools.bulk_visual_repair.discover_commons")
+    def test_discovery_receives_seen_ids_and_does_not_log_repeat_as_duplicate(
+            self, commons, _loc, _openverse, _domain, _catalogue, beats):
+        from tools.bulk_visual_sources import SourceCandidate, StoryBeat
+        beat_one = StoryBeat("one", ("NVIDIA origin",), ("NVIDIA",))
+        beat_two = StoryBeat("two", ("NVIDIA modern",), ("NVIDIA",))
+        beats.return_value = [beat_one, beat_two]
+        def candidate(source_id):
+            return SourceCandidate("commons", source_id, "https://commons.test/page",
+                "https://upload.test/image.jpg", "unproven", "unproven", "", "", "",
+                800, 600, "one", "NVIDIA", ("NVIDIA",), ())
+        def discover(_beat, _limit, *, excluded_source_ids):
+            return [candidate("commons:1")] if "commons:1" not in excluded_source_ids else []
+        commons.side_effect = discover
+        attempts = []
+        repair_photos("NVIDIA story", 1, attempt_fn=attempts.append)
+        duplicate_repeats = [row for row in attempts if row.get("result") == "DUPLICATE_ONLY"
+                             and "source_id already evaluated" in row.get("reason", "")]
+        self.assertEqual(duplicate_repeats, [])
+        self.assertEqual(commons.call_args_list[1].kwargs["excluded_source_ids"], {"commons:1"})
+
     @patch("tools.bulk_visual_repair.build_board")
     def test_dedupe_catalogue_includes_relevant_photos_from_every_story(self, board):
         board.return_value = [

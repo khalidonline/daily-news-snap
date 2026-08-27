@@ -6,11 +6,14 @@ may count.
 """
 
 from dataclasses import dataclass
+from collections import OrderedDict
 import hashlib
 from html import unescape
 from html.parser import HTMLParser
 import json
 import re
+import time
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urljoin, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -50,10 +53,42 @@ class SourceCandidate:
     depicts: tuple[str, ...] = ()
 
 
-def _json_get(url):
-    req = Request(url, headers={"User-Agent": "daily-news-snap/1.0 (visual source discovery)"})
-    with urlopen(req, timeout=30) as response:
-        return json.load(response)
+_JSON_CACHE = OrderedDict()
+_TRANSIENT_HTTP = frozenset({429, 500, 502, 503, 504})
+_OPENVERSE_DISABLED_UNTIL = 0.0
+
+
+def _retry_delay(exc, attempt):
+    retry_after = getattr(exc, "headers", {}).get("Retry-After") if getattr(exc, "headers", None) else None
+    try:
+        return min(2.0, max(0.0, float(retry_after)))
+    except (TypeError, ValueError):
+        return 0.25 * (2 ** attempt)
+
+
+def _json_get(url, *, attempts=2, sleep=time.sleep):
+    """Fetch source JSON once per URL, with only bounded transient retries."""
+    if url in _JSON_CACHE:
+        _JSON_CACHE.move_to_end(url)
+        return _JSON_CACHE[url]
+    req = Request(url, headers={"User-Agent": "daily-news-snap/1.0 (visual source discovery; contact: repository maintainers)",
+                                "Accept": "application/json"})
+    for attempt in range(attempts):
+        try:
+            with urlopen(req, timeout=15) as response:
+                payload = json.load(response)
+            _JSON_CACHE[url] = payload
+            if len(_JSON_CACHE) > 256:
+                _JSON_CACHE.popitem(last=False)
+            return payload
+        except HTTPError as exc:
+            if exc.code not in _TRANSIENT_HTTP or attempt + 1 >= attempts:
+                raise
+            sleep(_retry_delay(exc, attempt))
+        except (TimeoutError, URLError):
+            if attempt + 1 >= attempts:
+                raise
+            sleep(0.25 * (2 ** attempt))
 
 
 def _html_get(url):
@@ -66,6 +101,10 @@ def _clean(value):
     if isinstance(value, list):
         value = " ".join(map(str, value))
     return unescape(re.sub(r"<[^>]+>", " ", str(value or ""))).strip()
+
+
+def _values(value):
+    return value if isinstance(value, (list, tuple)) else ((value,) if value else ())
 
 
 def _blocked(*values):
@@ -120,23 +159,33 @@ def _metadata(meta, key):
     return _clean(item.get("value", "") if isinstance(item, dict) else item)
 
 
-def discover_commons(beat, limit=12, json_get=_json_get):
+def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=()):
     found = []
+    excluded = set(excluded_source_ids)
     for query in beat.queries:
         params = {"action": "query", "format": "json", "generator": "search",
                   "gsrsearch": f"filetype:bitmap {query}", "gsrnamespace": 6,
-                  "gsrlimit": limit, "prop": "imageinfo", "iiprop": "url|size|extmetadata"}
+                  "gsrlimit": limit, "prop": "imageinfo", "iiprop": "url|size|extmetadata",
+                  # Ask MediaWiki for its documented raster derivative instead
+                  # of repeatedly materialising potentially huge originals.
+                  "iiurlwidth": 1600}
         payload = json_get(f"{COMMONS_API}?{urlencode(params)}")
         for page in payload.get("query", {}).get("pages", {}).values():
             info = (page.get("imageinfo") or [{}])[0]
             meta = info.get("extmetadata") or {}
-            title, desc = _clean(page.get("title")), _metadata(meta, "ImageDescription")
-            if (page.get("pageid") is None or not info.get("descriptionurl") or
-                    not info.get("url") or _blocked(title, desc)):
+            title = _clean(page.get("title"))
+            desc = _clean(" ".join(filter(None, (_metadata(meta, "ImageDescription"),
+                                                   _metadata(meta, "ObjectName"),
+                                                   _metadata(meta, "ImageDescriptionValue")))))
+            source_id = f"commons:{page.get('pageid')}"
+            direct = info.get("thumburl") or info.get("url")
+            if (page.get("pageid") is None or source_id in excluded or
+                    any(candidate.source_id == source_id for candidate in found) or
+                    not info.get("descriptionurl") or not direct or _blocked(title, desc)):
                 continue
             depicts = tuple(filter(None, (_metadata(meta, "DepictedPeople"), _metadata(meta, "Categories"))))
-            found.append(SourceCandidate("commons", f"commons:{page.get('pageid')}",
-                info.get("descriptionurl", ""), info["url"], title, desc,
+            found.append(SourceCandidate("commons", source_id,
+                info.get("descriptionurl", ""), direct, title, desc,
                 _metadata(meta, "Artist"), _metadata(meta, "LicenseShortName"),
                 _metadata(meta, "LicenseUrl"), int(info.get("width") or 0), int(info.get("height") or 0),
                 beat.key, query, beat.required_identity, depicts))
@@ -145,12 +194,15 @@ def discover_commons(beat, limit=12, json_get=_json_get):
     return found
 
 
-def discover_loc(beat, limit=12, json_get=_json_get):
+def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=()):
     found = []
+    excluded = set(excluded_source_ids)
     for query in beat.queries:
         payload = json_get(f"{LOC_API}?{urlencode({'fo': 'json', 'q': query, 'c': limit})}")
         for item in payload.get("results", []):
-            title, desc = _clean(item.get("title")), _clean(item.get("description"))
+            title = _clean(item.get("title"))
+            desc = _clean(" ".join(str(value or "") for value in
+                                    (item.get("description"), item.get("notes"))))
             source_page = str(item.get("id") or "")
             images = item.get("image_url") or []
             direct = images[-1] if isinstance(images, list) and images else ""
@@ -158,26 +210,43 @@ def discover_loc(beat, limit=12, json_get=_json_get):
                 continue
             resource = (item.get("resources") or [{}])[0]
             ident = source_page.rstrip("/").rsplit("/", 1)[-1]
-            found.append(SourceCandidate("loc", f"loc:{ident}", source_page, direct,
+            source_id = f"loc:{ident}"
+            if source_id in excluded or any(item.source_id == source_id for item in found):
+                continue
+            found.append(SourceCandidate("loc", source_id, source_page, direct,
                 title, desc, _clean(item.get("contributor")), _clean(item.get("rights")), "",
                 int(resource.get("width") or 0), int(resource.get("height") or 0), beat.key, query,
-                beat.required_identity, tuple(item.get("partof") or ())))
+                beat.required_identity, tuple(_clean(value) for field in
+                    ("subject", "partof", "location", "names")
+                    for value in _values(item.get(field)))))
             if len(found) >= limit:
                 return found
     return found
 
 
-def discover_openverse(beat, limit=12, json_get=_json_get):
+def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_ids=()):
+    global _OPENVERSE_DISABLED_UNTIL
+    if json_get is _json_get and time.monotonic() < _OPENVERSE_DISABLED_UNTIL:
+        return []
     found = []
+    excluded = set(excluded_source_ids)
     for query in beat.queries:
-        payload = json_get(f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': limit})}")
+        try:
+            payload = json_get(f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': limit})}")
+        except (HTTPError, URLError, TimeoutError):
+            if json_get is _json_get:
+                _OPENVERSE_DISABLED_UNTIL = time.monotonic() + 60
+            raise
         for item in payload.get("results", []):
             title, desc = _clean(item.get("title")), _clean(item.get("description"))
             if (not item.get("id") or not item.get("url") or
                     not item.get("foreign_landing_url") or
                     _blocked(title, desc, item.get("tags"))):
                 continue
-            found.append(SourceCandidate("openverse", f"openverse:{item.get('id')}",
+            source_id = f"openverse:{item.get('id')}"
+            if source_id in excluded or any(candidate.source_id == source_id for candidate in found):
+                continue
+            found.append(SourceCandidate("openverse", source_id,
                 item["foreign_landing_url"], item["url"], title, desc, _clean(item.get("creator")),
                 _clean(item.get("license")), str(item.get("license_url") or ""),
                 int(item.get("width") or 0), int(item.get("height") or 0), beat.key, query,
@@ -190,42 +259,86 @@ def discover_openverse(beat, limit=12, json_get=_json_get):
 class _Images(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.urls, self.title, self._title = [], "", False
+        self.images, self.links, self.title, self._title = [], [], "", False
+        self._link_href, self._link_text = "", []
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "title": self._title = True
-        if tag == "img" and attrs.get("src"): self.urls.append(attrs["src"])
+        if tag == "img" and attrs.get("src"): self.images.append((attrs["src"], attrs.get("alt", "")))
+        if tag == "a" and attrs.get("href"):
+            self._link_href, self._link_text = attrs["href"], []
         if tag == "meta" and attrs.get("property", "").casefold() in {"og:image", "twitter:image"} and attrs.get("content"):
-            self.urls.append(attrs["content"])
+            self.images.append((attrs["content"], attrs.get("content", "")))
     def handle_endtag(self, tag):
         if tag == "title": self._title = False
+        if tag == "a" and self._link_href:
+            self.links.append((self._link_href, _clean(" ".join(self._link_text))))
+            self._link_href, self._link_text = "", []
     def handle_data(self, data):
         if self._title: self.title += data
+        if self._link_href: self._link_text.append(data)
 
 
-def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_html_get):
+def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_html_get,
+                         excluded_source_ids=()):
     """Discover images referenced by a verified official page, never a naked CDN."""
     domain = (domain or "").casefold().strip().strip(".")
     page_url = page_url or f"https://{domain}/"
     host = (urlparse(page_url).hostname or "").casefold().rstrip(".")
     if not domain or not (host == domain or host.endswith("." + domain)):
         return []
-    try:
-        parser = _Images(); parser.feed(html_get(page_url))
-    except (OSError, UnicodeError, ValueError):
-        return []
+    excluded = set(excluded_source_ids)
     found = []
-    for raw in dict.fromkeys(parser.urls):
-        direct = urljoin(page_url, raw)
-        if urlparse(direct).scheme not in {"http", "https"} or _blocked(direct, parser.title):
+    pages, queued = [page_url], {page_url}
+    for current_page in pages:
+        try:
+            parser = _Images(); parser.feed(html_get(current_page))
+        except (OSError, UnicodeError, ValueError):
             continue
-        canonical_page = urlunparse(urlparse(page_url)._replace(fragment=""))
-        canonical_direct = urlunparse(urlparse(direct)._replace(fragment=""))
-        identity = hashlib.sha256(
-            f"{canonical_page}\n{canonical_direct}".encode("utf-8")
-        ).hexdigest()[:20]
-        found.append(SourceCandidate("first-party", f"first-party:{domain}:{identity}", page_url,
-            direct, _clean(parser.title), "Image referenced by verified official page", domain, "", "",
-            0, 0, beat.key, beat.queries[0] if beat.queries else "", beat.required_identity, ()))
-        if len(found) >= limit: break
+        # Follow a small, deterministic set of official links whose URL carries
+        # the requested identity/beat terms. This makes later beats explore
+        # actual story pages rather than returning the homepage hero repeatedly.
+        terms = _relevance_tokens((*beat.required_identity, *beat.queries, beat.key))
+        for raw_link, anchor in parser.links:
+            link = urljoin(current_page, raw_link)
+            parsed_link = urlparse(link)
+            link_host = (parsed_link.hostname or "").casefold()
+            # Deliberately exclude the hostname: on nvidia.com it would make
+            # the NVIDIA identity token match unrelated links such as /privacy.
+            link_terms = _relevance_tokens((parsed_link.path, parsed_link.query, anchor))
+            if (link_host == domain or link_host.endswith("." + domain)) and terms & link_terms:
+                link = urlunparse(urlparse(link)._replace(fragment=""))
+                if link not in queued and len(pages) < 5:
+                    queued.add(link); pages.append(link)
+        for raw, alt in parser.images:
+            direct = urljoin(current_page, raw)
+            if urlparse(direct).scheme not in {"http", "https"} or _blocked(direct, parser.title, alt):
+                continue
+            canonical_direct = urlunparse(urlparse(direct)._replace(fragment=""))
+            identity = hashlib.sha256(canonical_direct.encode("utf-8")).hexdigest()[:20]
+            source_id = f"first-party:{domain}:{identity}"
+            if source_id in excluded or any(item.source_id == source_id for item in found):
+                continue
+            description = _clean(alt) or "Image referenced by verified official page"
+            found.append(SourceCandidate("first-party", source_id, current_page,
+                direct, _clean(parser.title), description, domain, "", "", 0, 0,
+                beat.key, beat.queries[0] if beat.queries else "", beat.required_identity,
+                (_clean(alt),) if _clean(alt) else ()))
+            if len(found) >= limit: return found
     return found
+
+
+def _fold_token(value):
+    return re.sub(r"[^a-z0-9]+", "-", str(value).casefold()).strip("-")
+
+
+def _relevance_tokens(values):
+    tokens = set()
+    for value in values:
+        for token in _fold_token(value).split("-"):
+            if len(token) < 3:
+                continue
+            # A small normalization makes query "product" match an official
+            # /products/... path without introducing fuzzy identity matching.
+            tokens.add(token[:-1] if token.endswith("s") and len(token) > 4 else token)
+    return tokens
