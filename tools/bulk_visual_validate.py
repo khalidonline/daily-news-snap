@@ -20,6 +20,10 @@ from runtime_relevance import COUNTABLE
 _PERSON_STORY_BEATS = frozenset({"person", "early_work", "product_or_company", "legacy"})
 
 
+class ReviewerConfigurationError(RuntimeError):
+    """The visual reviewer cannot run with its deterministic configuration."""
+
+
 @dataclass(frozen=True)
 class ValidationResult:
     accepted: bool
@@ -105,6 +109,9 @@ def _relevance_verdict(relevance_fn, story, candidate, path):
     """Normalize a reviewer response; every malformed/error response fails closed."""
     try:
         response = relevance_fn(story, candidate, path)
+    except ReviewerConfigurationError:
+        # This is a run-level invariant, not an unavailable individual review.
+        raise
     except Exception as exc:  # External reviewers are allowed to be unavailable.
         return "", f"EXTERNAL_API_ERROR: {exc.__class__.__name__}"
     if isinstance(response, str):
@@ -210,6 +217,9 @@ def validate_candidate(story, candidate, existing_paths, temp_dir,
         timings["total"] = time.monotonic() - started
         return _result("accepted", accepted=True, verdict=verdict, path=path,
                        sha=sha, dhash=dhash, phase_seconds=timings)
+    except ReviewerConfigurationError:
+        path.unlink(missing_ok=True)
+        raise
     except Exception as exc:
         return _reject(path, f"VALIDATION_ERROR: {exc.__class__.__name__}: {exc}",
                        sha=sha, dhash=dhash)

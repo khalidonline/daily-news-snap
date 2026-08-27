@@ -12,6 +12,8 @@ from tools.bulk_visual_board import CoverageRow
 from tools.bulk_visual_repair import (
     _download, _strict_relevance, catalogue_photo_paths, process_rows, repair_photos,
 )
+from tools.bulk_visual_validate import ReviewerConfigurationError
+import tools.bulk_visual_repair as repair
 
 
 def row(story, need_photos, need_logo, status):
@@ -19,6 +21,9 @@ def row(story, need_photos, need_logo, status):
 
 
 class BulkVisualRepairTests(unittest.TestCase):
+    def setUp(self):
+        repair._REVIEWER_CONFIGURATION_FAILURE = None
+
     def reviewer_candidate(self):
         return SimpleNamespace(title="Title", description="Description", depicts="Entity",
                                beat_key="beat")
@@ -59,14 +64,41 @@ class BulkVisualRepairTests(unittest.TestCase):
                              "authentication" if status == 401 else "permission")
 
     def test_reviewer_invalid_model_client_error_fails_fast(self):
-        error = self.http_error(404, "not_found_error", "model: configured-model not found")
+        error = self.http_error(404, "not_found_error",
+                                "model: claude-sonnet-4-20250514")
         open_url, telemetry = unittest.mock.Mock(side_effect=error), []
-        with tempfile.TemporaryDirectory() as directory, self.assertRaises(HTTPError):
+        with tempfile.TemporaryDirectory() as directory, \
+                self.assertRaises(ReviewerConfigurationError):
             self.call_reviewer(open_url, telemetry, directory)
         self.assertEqual(open_url.call_count, 1)
         self.assertEqual(telemetry[0]["api_error_type"], "not_found_error")
         self.assertEqual(telemetry[0]["model"], "configured-model")
         self.assertEqual(telemetry[0]["failure_category"], "invalid_model")
+
+    def test_invalid_model_short_circuits_subsequent_reviews(self):
+        error = self.http_error(404, "not_found_error",
+                                "model: claude-sonnet-4-20250514")
+        open_url, telemetry = unittest.mock.Mock(side_effect=error), []
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(ReviewerConfigurationError):
+                self.call_reviewer(open_url, telemetry, directory)
+            with self.assertRaises(ReviewerConfigurationError):
+                self.call_reviewer(open_url, telemetry, directory)
+        self.assertEqual(open_url.call_count, 1)
+        self.assertEqual(len(telemetry), 1)
+
+    def test_invalid_reviewer_configuration_aborts_batch(self):
+        calls = []
+        def photos(story, _deficit):
+            calls.append(story)
+            raise ReviewerConfigurationError("invalid reviewer model")
+        with self.assertRaises(ReviewerConfigurationError):
+            process_rows(
+                [row("First", 1, False, "NEEDS"), row("Second", 1, False, "NEEDS")], 2,
+                lambda story: 0, photos, lambda story: row(story, 1, False, "NEEDS"),
+                lambda record: None,
+            )
+        self.assertEqual(calls, ["First"])
 
     def test_reviewer_429_retry_is_bounded(self):
         open_url, telemetry = unittest.mock.Mock(side_effect=lambda *_args, **_kwargs:

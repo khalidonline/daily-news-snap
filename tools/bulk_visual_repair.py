@@ -29,7 +29,9 @@ from tools.bulk_visual_sources import (
     discover_commons, discover_first_party, discover_loc, discover_openverse,
     plan_story_beats,
 )
-from tools.bulk_visual_validate import VisualDuplicateIndex, identity_proven, validate_candidate
+from tools.bulk_visual_validate import (
+    ReviewerConfigurationError, VisualDuplicateIndex, identity_proven, validate_candidate,
+)
 
 
 OUT_DIR = Path("out/bulk-visual-repair")
@@ -79,6 +81,8 @@ def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
                 writes = int(repair_photos_fn(current.story, current.need_photos) or 0)
                 claimed += writes
                 current = refresh_fn(current.story)
+            except ReviewerConfigurationError:
+                raise
             except Exception as exc:
                 attempt_fn({"story": original.story, "kind": "photo", "source": "orchestrator",
                         "result": "SOURCE_UNAVAILABLE",
@@ -123,6 +127,7 @@ def append_attempt(record, path=OUT_DIR / "attempts.jsonl"):
 
 _DOWNLOAD_CACHE = OrderedDict()
 _TRANSIENT_HTTP = frozenset({429, 500, 502, 503, 504})
+_REVIEWER_CONFIGURATION_FAILURE = None
 
 
 def _download(candidate, destination, *, sleep=time.sleep):
@@ -203,7 +208,9 @@ def _review_failure_telemetry(story, model, exc, api_key, retryable, attempt):
         category = "rate_limit"
     elif 500 <= exc.code <= 599:
         category = "anthropic_service"
-    elif "model" in folded and any(word in folded for word in ("invalid", "not found", "unavailable")):
+    elif (error_type.casefold() == "not_found_error" and "model" in message.casefold()) or (
+            "model" in folded and
+            any(word in folded for word in ("invalid", "not found", "unavailable"))):
         category = "invalid_model"
     else:
         category = "malformed_request_or_client_error"
@@ -219,6 +226,9 @@ def _review_failure_telemetry(story, model, exc, api_key, retryable, attempt):
 def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
                       sleep=time.sleep, max_attempts=3):
     """Ask the configured vision reviewer; missing/error/invalid output rejects."""
+    global _REVIEWER_CONFIGURATION_FAILURE
+    if _REVIEWER_CONFIGURATION_FAILURE is not None:
+        raise ReviewerConfigurationError(_REVIEWER_CONFIGURATION_FAILURE)
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
         raise RuntimeError("ANTHROPIC_API_KEY is required for candidate approval")
@@ -233,7 +243,7 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
         f"depicts={candidate.depicts!r}; beat={candidate.beat_key!r}. Never infer a person's identity "
         "from their face; source metadata is the identity proof."
     )
-    model = os.environ.get("VISION_MODEL", "claude-sonnet-4-20250514")
+    model = os.environ.get("VISION_MODEL", "claude-sonnet-4-6")
     payload = {"model": model, "max_tokens": 300,
                "messages": [{"role": "user", "content": [
                    {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
@@ -252,8 +262,13 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
             retryable = exc.code == 429 or 500 <= exc.code <= 599
             # Read the response exactly once before a possible retry. This also
             # preserves the useful API error details that HTTPError otherwise hides.
-            telemetry_fn(_review_failure_telemetry(
-                story, model, exc, key, retryable, attempt))
+            failure = _review_failure_telemetry(story, model, exc, key, retryable, attempt)
+            telemetry_fn(failure)
+            if failure["failure_category"] == "invalid_model":
+                _REVIEWER_CONFIGURATION_FAILURE = (
+                    f"invalid vision reviewer model {model}: {failure['api_error_message']}"
+                )
+                raise ReviewerConfigurationError(_REVIEWER_CONFIGURATION_FAILURE) from exc
             if not retryable or attempt == attempts:
                 raise
             header = exc.headers.get("Retry-After") if exc.headers else None
@@ -321,6 +336,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 candidates = adapter(beat, max_candidates_per_beat,
                                      excluded_source_ids=seen_source_ids)
                 discovery_seconds = time.monotonic() - discovery_started
+            except ReviewerConfigurationError:
+                raise
             except Exception as exc:
                 discovery_seconds = time.monotonic() - discovery_started
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key, "source": source,
@@ -417,11 +434,17 @@ def main(argv=None):
     if args.board_only:
         return 0 if len(rows) == 123 and all(row.status == "PASS" for row in rows) else 2
     backlog = repair_backlog(rows)
-    result = process_rows(
-        backlog, args.batch_stories, repair_logo,
-        lambda story, deficit: repair_photos(story, deficit, args.max_candidates_per_beat),
-        refresh_runtime_row, append_attempt,
-    )
+    try:
+        result = process_rows(
+            backlog, args.batch_stories, repair_logo,
+            lambda story, deficit: repair_photos(story, deficit, args.max_candidates_per_beat),
+            refresh_runtime_row, append_attempt,
+        )
+    except ReviewerConfigurationError as exc:
+        append_attempt({"story": args.story or "batch", "kind": "invariant",
+                        "source": "anthropic", "result": "VALIDATION_ERROR",
+                        "reason": str(exc)})
+        return 3
     final = build_board(stories); write_board(final, OUT_DIR); _write_unresolved(final)
     # Only the complete catalogue may return completion, never a selected story.
     if len(final) == 123 and all(row.status == "PASS" for row in final):
