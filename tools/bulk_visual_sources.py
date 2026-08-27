@@ -281,6 +281,32 @@ def plan_story_beats(story):
     return beats
 
 
+def story_source_strategy(story, beats=None):
+    """Return deterministic discovery priorities for the typed subject."""
+    beats = beats if beats is not None else plan_story_beats(story)
+    kind = getattr(beats[0], "entity_kind", "") if beats else ""
+    contexts = {value.casefold() for beat in beats
+                for value in getattr(beat, "entity_context", ())}
+    text = str(story).casefold()
+    gulf = bool(contexts & {"saudi", "gulf", "ksa"}) or any(
+        token in text for token in ("السعود", "الرياض", "جدة", "دبي", "إمارات"))
+    company = bool(sb.story_logo_domain(story)) or bool(
+        contexts & {"company", "retail", "delivery", "ecommerce", "food"})
+    historical = bool(contexts & {"history", "historical", "archive"}) or any(
+        token in text for token in ("قصة", "بدأت", "history", "first "))
+    if gulf and company:
+        return ("first-party", "commons", "loc", "openverse")
+    if kind == "person":
+        return ("commons", "loc", "first-party", "openverse")
+    if company:
+        return ("first-party", "commons", "openverse", "loc")
+    if historical or contexts & {"place", "city", "location"}:
+        return ("commons", "loc", "openverse", "first-party")
+    if contexts & {"product", "invention"}:
+        return ("commons", "first-party", "loc", "openverse")
+    return ("commons", "loc", "openverse", "first-party")
+
+
 def _metadata(meta, key):
     item = meta.get(key, {})
     return _clean(item.get("value", "") if isinstance(item, dict) else item)

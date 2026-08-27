@@ -19,12 +19,14 @@ def queue_class(row: CoverageRow) -> str:
 
 
 def _sort_key(row: CoverageRow) -> tuple[int, int, int, str]:
-    return (
-        row.need_photos + int(row.need_logo),
-        row.need_photos,
-        int(row.need_logo),
-        row.story.casefold(),
-    )
+    # Explicit near-PASS bands: logo-only, one photo, one photo plus logo,
+    # then all larger deficits. Alphabetical ordering makes each band stable.
+    if row.need_photos == 0 and row.need_logo: priority = 0
+    elif row.need_photos == 1 and not row.need_logo: priority = 1
+    elif row.need_photos == 1 and row.need_logo: priority = 2
+    else: priority = 3
+    return (priority, row.need_photos + int(row.need_logo),
+            int(row.need_logo), row.story.casefold())
 
 
 def _rotate(rows: list[CoverageRow], after_story: str | None) -> list[CoverageRow]:
@@ -72,18 +74,16 @@ def build_run_queue(
 
     limit = max(0, int(limit))
     all_rows = tuple(rows)
-    classes: dict[str, list[CoverageRow]] = {}
-    for name in QUEUE_CLASSES:
-        members = sorted(
-            (
-                row
-                for row in all_rows
-                if row.status != "PASS" and queue_class(row) == name
-            ),
-            key=_sort_key,
-        )
-        classes[name] = _rotate(members, cursor.get(name))
-    return (classes["photo-needed"] + classes["logo-only"])[:limit]
+    members = sorted((row for row in all_rows if row.status != "PASS"), key=_sort_key)
+    # Retain class cursors, but rotate only within equal-priority bands so a
+    # hard alphabetical prefix cannot starve peers without defeating proximity.
+    ordered = []
+    for priority in range(4):
+        band = [r for r in members if _sort_key(r)[0] == priority]
+        marker = next((cursor.get(queue_class(r)) for r in band
+                       if cursor.get(queue_class(r)) in {x.story for x in band}), None)
+        ordered.extend(_rotate(band, marker))
+    return ordered[:limit]
 
 
 def advance_cursor(
