@@ -35,6 +35,49 @@ _GENERIC = {"business", "office", "city", "meeting", "street"}
 _MAX_SOURCE_RESULTS_PER_QUERY = 48
 _DISCOVERY_WINDOW_MULTIPLIER = 4
 _OPENVERSE_ANON_PAGE_SIZE = 20
+SOURCE_DISCOVERY_BUDGET_SECONDS = 18.0
+SOURCE_REQUEST_TIMEOUT_SECONDS = 9.0
+SOURCE_MAX_REQUESTS = 4
+SOURCE_MAX_RETRIES = 2
+
+
+class SourceDiscoveryBudgetExceeded(TimeoutError):
+    """A source has spent its bounded allowance for this story."""
+
+
+class SourceDiscoveryBudget:
+    """Monotonic, per-source request budget shared across every story beat."""
+
+    def __init__(self, source, *, seconds=SOURCE_DISCOVERY_BUDGET_SECONDS,
+                 max_requests=SOURCE_MAX_REQUESTS, clock=time.monotonic):
+        self.source = source
+        self.seconds = float(seconds)
+        self.max_requests = int(max_requests)
+        self.clock = clock
+        self.started = clock()
+        self.request_count = 0
+        self.retry_count = 0
+        self.disabled = False
+
+    @property
+    def elapsed(self):
+        return max(0.0, self.clock() - self.started)
+
+    @property
+    def remaining(self):
+        return max(0.0, self.seconds - self.elapsed)
+
+    def begin_request(self):
+        if self.disabled or self.request_count >= self.max_requests or self.remaining <= 0:
+            self.disabled = True
+            raise SourceDiscoveryBudgetExceeded(self.source)
+        self.request_count += 1
+        return min(SOURCE_REQUEST_TIMEOUT_SECONDS, self.remaining)
+
+    def exhausted(self):
+        if self.elapsed >= self.seconds or self.request_count >= self.max_requests:
+            self.disabled = True
+        return self.disabled
 
 
 @dataclass(frozen=True)
@@ -42,6 +85,8 @@ class StoryBeat:
     key: str
     queries: tuple[str, ...]
     required_identity: tuple[str, ...]
+    entity_kind: str = ""
+    entity_context: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -76,7 +121,8 @@ def _retry_delay(exc, attempt):
         return 0.25 * (2 ** attempt)
 
 
-def _json_get(url, *, attempts=2, sleep=time.sleep):
+def _json_get(url, *, attempts=SOURCE_MAX_RETRIES, sleep=time.sleep, timeout=None,
+              budget=None):
     """Fetch source JSON once per URL, with only bounded transient retries."""
     if url in _JSON_CACHE:
         _JSON_CACHE.move_to_end(url)
@@ -88,9 +134,12 @@ def _json_get(url, *, attempts=2, sleep=time.sleep):
                                 {"User-Agent": "daily-news-snap/1.0 (visual source discovery)",
                                  "Accept": "application/json"}))
     retried_429 = False
+    attempts = min(max(1, attempts), SOURCE_MAX_RETRIES)
     for attempt in range(attempts):
         try:
-            with urlopen(req, timeout=15) as response:
+            request_timeout = (budget.begin_request() if budget is not None else
+                               min(SOURCE_REQUEST_TIMEOUT_SECONDS, timeout or SOURCE_REQUEST_TIMEOUT_SECONDS))
+            with urlopen(req, timeout=request_timeout) as response:
                 payload = json.load(response)
             _JSON_CACHE[url] = payload
             if len(_JSON_CACHE) > 256:
@@ -103,22 +152,27 @@ def _json_get(url, *, attempts=2, sleep=time.sleep):
                 if (not retried_429 and attempt + 1 < attempts and
                         retry_delay <= SMALL_RETRY_ALLOWANCE_SECONDS):
                     retried_429 = True
+                    if budget is not None: budget.retry_count += 1
                     sleep(retry_delay)
                     continue
                 raise terminal_rate_limit("discovery", delay,
                                           retry_occurred=retried_429) from exc
             if exc.code not in _TRANSIENT_HTTP or attempt + 1 >= attempts:
                 raise
+            if budget is not None: budget.retry_count += 1
             sleep(_retry_delay(exc, attempt))
+        except SourceDiscoveryBudgetExceeded:
+            raise
         except (TimeoutError, URLError):
             if attempt + 1 >= attempts:
                 raise
+            if budget is not None: budget.retry_count += 1
             sleep(0.25 * (2 ** attempt))
 
 
-def _html_get(url):
+def _html_get(url, *, timeout=SOURCE_REQUEST_TIMEOUT_SECONDS):
     req = Request(url, headers={"User-Agent": "daily-news-snap/1.0 (first-party discovery)"})
-    with urlopen(req, timeout=30) as response:
+    with urlopen(req, timeout=timeout) as response:
         return response.read().decode(response.headers.get_content_charset() or "utf-8", "replace")
 
 
@@ -174,11 +228,13 @@ def plan_story_beats(story):
                       ("turning_point", "milestone"), ("modern_or_legacy", "modern legacy"))
     aliases = identities[:3]
     beats = []
+    contexts = tuple(sb._STORY_CONTEXT.get(exact, ()))
     for key, terms in keys_terms:
         queries = tuple(f"{identity} {terms}" for identity in aliases
                         if identity.casefold() not in _GENERIC)
         if queries:
-            beats.append(StoryBeat(key, queries, identities))
+            beats.append(StoryBeat(key, queries, identities,
+                                   "person" if is_person else "entity", contexts))
     return beats
 
 
@@ -198,6 +254,45 @@ def _identity_bearing(beat, title, description, depicts=()):
     return identity_proven(probe)
 
 
+_CONFLICT_NOUNS = ("company", "corporation", "business", "sawmill", "museum",
+                   "town", "village", "county", "building", "artwork", "painting",
+                   "sculpture", "band", "ship")
+_CONTEXT_INCOMPATIBLE = {
+    "restaurant": frozenset({"sawmill", "museum", "town", "village", "county",
+                              "artwork", "painting", "sculpture", "band", "ship"}),
+}
+
+
+def _entity_conflict(beat, title, description, depicts=(), creator=""):
+    """Return a short reason only for an explicit same-name type contradiction."""
+    fields = "\n".join(_clean(v) for v in (title, description, *depicts, creator) if v)
+    folded = fields.casefold()
+    contexts = {_clean(value).casefold() for value in beat.entity_context}
+    for identity in beat.required_identity:
+        alias = _clean(identity).casefold()
+        if not alias:
+            continue
+        # The type noun must directly classify the literal identity. Merely
+        # mentioning a person at a company or place is intentionally ambiguous.
+        typed = re.search(rf"(?<!\w){re.escape(alias)}(?:['’]s?)?[\s,\-]+"
+                          rf"({'|'.join(_CONFLICT_NOUNS)})(?!\w)", folded)
+        if not typed:
+            continue
+        noun = typed.group(1)
+        if beat.entity_kind == "person" or any(
+                noun in _CONTEXT_INCOMPATIBLE.get(context, ()) for context in contexts):
+            return f"literal name explicitly identifies a {noun}"
+    return ""
+
+
+def _fetch_json(json_get, url, budget):
+    if json_get is _json_get:
+        return json_get(url, budget=budget)
+    if budget is not None:
+        budget.begin_request()
+    return json_get(url)
+
+
 def _source_window(limit):
     return min(_MAX_SOURCE_RESULTS_PER_QUERY,
                max(0, int(limit)) * _DISCOVERY_WINDOW_MULTIPLIER)
@@ -210,8 +305,16 @@ def _report_discovery_skips(telemetry_fn, source, query, skipped, examined):
                       "skipped_count": skipped, "examined_count": examined})
 
 
+def _report_entity_conflict(telemetry_fn, source, beat, query, reason):
+    if telemetry_fn is not None:
+        telemetry_fn({"kind": "photo", "source": source, "beat": beat.key,
+                      "query": query[:160], "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+                      "required_identity": list(beat.required_identity)[:3],
+                      "reason": reason[:160]})
+
+
 def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
-                     telemetry_fn=None):
+                     telemetry_fn=None, budget=None):
     found = []
     excluded = set(excluded_source_ids)
     for query in beat.queries:
@@ -221,7 +324,7 @@ def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=
                   # Ask MediaWiki for its documented raster derivative instead
                   # of repeatedly materialising potentially huge originals.
                   "iiurlwidth": 1600}
-        payload = json_get(f"{COMMONS_API}?{urlencode(params)}")
+        payload = _fetch_json(json_get, f"{COMMONS_API}?{urlencode(params)}", budget)
         skipped = examined = 0
         for page in list(payload.get("query", {}).get("pages", {}).values())[:_MAX_SOURCE_RESULTS_PER_QUERY]:
             examined += 1
@@ -234,6 +337,10 @@ def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=
             source_id = f"commons:{page.get('pageid')}"
             direct = info.get("thumburl") or info.get("url")
             depicts = tuple(filter(None, (_metadata(meta, "DepictedPeople"), _metadata(meta, "Categories"))))
+            conflict = _entity_conflict(beat, title, desc, depicts, _metadata(meta, "Artist"))
+            if conflict:
+                _report_entity_conflict(telemetry_fn, "commons", beat, query, conflict)
+                continue
             if not _identity_bearing(beat, title, desc, depicts):
                 skipped += 1
                 continue
@@ -254,11 +361,11 @@ def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=
 
 
 def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
-                 telemetry_fn=None):
+                 telemetry_fn=None, budget=None):
     found = []
     excluded = set(excluded_source_ids)
     for query in beat.queries:
-        payload = json_get(f"{LOC_API}?{urlencode({'fo': 'json', 'q': query, 'c': _source_window(limit)})}")
+        payload = _fetch_json(json_get, f"{LOC_API}?{urlencode({'fo': 'json', 'q': query, 'c': _source_window(limit)})}", budget)
         skipped = examined = 0
         for item in payload.get("results", [])[:_MAX_SOURCE_RESULTS_PER_QUERY]:
             examined += 1
@@ -270,6 +377,10 @@ def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
             direct = images[-1] if isinstance(images, list) and images else ""
             depicts = tuple(_clean(value) for field in
                 ("subject", "partof", "location", "names") for value in _values(item.get(field)))
+            conflict = _entity_conflict(beat, title, desc, depicts, _clean(item.get("contributor")))
+            if conflict:
+                _report_entity_conflict(telemetry_fn, "loc", beat, query, conflict)
+                continue
             if not _identity_bearing(beat, title, desc, depicts):
                 skipped += 1
                 continue
@@ -292,7 +403,7 @@ def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
 
 
 def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
-                       telemetry_fn=None):
+                       telemetry_fn=None, budget=None):
     global _OPENVERSE_DISABLED_UNTIL
     if json_get is _json_get and time.monotonic() < _OPENVERSE_DISABLED_UNTIL:
         return []
@@ -306,7 +417,7 @@ def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_id
         while examined < scan_cap and (page_count is None or page <= page_count):
             page_size = min(_OPENVERSE_ANON_PAGE_SIZE, scan_cap - examined)
             try:
-                payload = json_get(f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': page_size, 'page': page})}")
+                payload = _fetch_json(json_get, f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': page_size, 'page': page})}", budget)
             except (HTTPError, URLError, TimeoutError):
                 if json_get is _json_get:
                     _OPENVERSE_DISABLED_UNTIL = time.monotonic() + 60
@@ -325,6 +436,10 @@ def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_id
                 examined += 1
                 title, desc = _clean(item.get("title")), _clean(item.get("description"))
                 depicts = tuple(tag.get("name", "") for tag in item.get("tags", []) if isinstance(tag, dict))
+                conflict = _entity_conflict(beat, title, desc, depicts, _clean(item.get("creator")))
+                if conflict:
+                    _report_entity_conflict(telemetry_fn, "openverse", beat, query, conflict)
+                    continue
                 if not _identity_bearing(beat, title, desc, depicts):
                     skipped += 1
                     continue
@@ -374,7 +489,7 @@ class _Images(HTMLParser):
 
 
 def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_html_get,
-                         excluded_source_ids=(), telemetry_fn=None):
+                         excluded_source_ids=(), telemetry_fn=None, budget=None):
     """Discover images referenced by a verified official page, never a naked CDN."""
     domain = (domain or "").casefold().strip().strip(".")
     page_url = page_url or f"https://{domain}/"
@@ -386,7 +501,10 @@ def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_htm
     pages, queued = [page_url], {page_url}
     for current_page in pages:
         try:
-            parser = _Images(); parser.feed(html_get(current_page))
+            timeout = budget.begin_request() if budget is not None else SOURCE_REQUEST_TIMEOUT_SECONDS
+            parser = _Images()
+            parser.feed(html_get(current_page, timeout=timeout) if html_get is _html_get
+                        else html_get(current_page))
         except (OSError, UnicodeError, ValueError):
             continue
         # Follow a small, deterministic set of official links whose URL carries
