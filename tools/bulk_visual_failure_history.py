@@ -102,6 +102,17 @@ def mark_query_set_complete(history, story, beat, source, fingerprint):
         history["complete_query_sets"].append(record)
 
 
+def persist_query_set_complete(story, beat, source, fingerprint, path=None,
+                               valid_stories=None):
+    """Merge query completion into the latest durable advisory history."""
+    history = load_history(path)
+    if valid_stories is not None:
+        history = sanitize_history(history, valid_stories)
+    mark_query_set_complete(history, story, beat, source, fingerprint)
+    save_history(history, path)
+    return history
+
+
 def record_attempt(history, record):
     """Retain telemetry and only deterministic, source-addressable rejections."""
     if record.get("result") == "ACCEPTED":
