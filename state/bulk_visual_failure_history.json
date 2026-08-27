@@ -1,6 +1,1465 @@
 {
   "version": 1,
-  "candidate_rejections": [],
-  "complete_query_sets": [],
-  "diagnostics": []
+  "candidate_rejections": [
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:5e37ab011c284bed5496",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:76a1497a08ad7f776853",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:6f50a47c7785d21aa183",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:354569584b86f20b83d8",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:96c2d817c33068cfc7ca",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:7b9e69f03ce73ab05387",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:64b255cc8d920d4ca13d",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:95650de7283d4d8757fc",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:86527506df798a5de79d",
+      "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "source": "loc",
+      "source_id": "loc:2020722206",
+      "result": "VALIDATION_ERROR"
+    }
+  ],
+  "complete_query_sets": [
+    {
+      "story": "NVIDIA story",
+      "beat": "one",
+      "source": "loc",
+      "fingerprint": "c5e9cd9efd1aaea2f9521fd57c82d2f352ce060cd44b5841dad6e95a6ee7e7a1"
+    },
+    {
+      "story": "NVIDIA story",
+      "beat": "one",
+      "source": "openverse",
+      "fingerprint": "c5e9cd9efd1aaea2f9521fd57c82d2f352ce060cd44b5841dad6e95a6ee7e7a1"
+    },
+    {
+      "story": "NVIDIA story",
+      "beat": "two",
+      "source": "commons",
+      "fingerprint": "63c9e8c51cc59f9d450be758ef951b44a6a530a32e75b2f1528156c0029de845"
+    },
+    {
+      "story": "NVIDIA story",
+      "beat": "two",
+      "source": "loc",
+      "fingerprint": "63c9e8c51cc59f9d450be758ef951b44a6a530a32e75b2f1528156c0029de845"
+    },
+    {
+      "story": "NVIDIA story",
+      "beat": "two",
+      "source": "openverse",
+      "fingerprint": "63c9e8c51cc59f9d450be758ef951b44a6a530a32e75b2f1528156c0029de845"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "early_work",
+      "source": "commons",
+      "fingerprint": "d457e22feb5ac192eeafa503d1ee20bc4aa75f4ffb445223cfc479fe7c2cd3ef"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "early_work",
+      "source": "openverse",
+      "fingerprint": "d457e22feb5ac192eeafa503d1ee20bc4aa75f4ffb445223cfc479fe7c2cd3ef"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "product_or_company",
+      "source": "commons",
+      "fingerprint": "e7fe4a05ba1687f4c37fc681e8c0e90467ebadc69783c5880306f11f3712c5fe"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "product_or_company",
+      "source": "openverse",
+      "fingerprint": "e7fe4a05ba1687f4c37fc681e8c0e90467ebadc69783c5880306f11f3712c5fe"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "9d942f792788262cb2aa13c2d8e568fb692a7e21233598c867ff7fb450c46315"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "9d942f792788262cb2aa13c2d8e568fb692a7e21233598c867ff7fb450c46315"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "9d942f792788262cb2aa13c2d8e568fb692a7e21233598c867ff7fb450c46315"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "4acc38031f931e494ac6fc6b6d5fe277f3df4672293e2d829292bfcfb0513a1e"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "4acc38031f931e494ac6fc6b6d5fe277f3df4672293e2d829292bfcfb0513a1e"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "4acc38031f931e494ac6fc6b6d5fe277f3df4672293e2d829292bfcfb0513a1e"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "subject_detail",
+      "source": "commons",
+      "fingerprint": "5ce1f0436eccffb7da52ef4984d2355204125d690d15882b4c042ae7921234a7"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "subject_detail",
+      "source": "loc",
+      "fingerprint": "5ce1f0436eccffb7da52ef4984d2355204125d690d15882b4c042ae7921234a7"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "fingerprint": "5ce1f0436eccffb7da52ef4984d2355204125d690d15882b4c042ae7921234a7"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "00bbc4a53071eaf37725cad711bc9a010fcfb371f2a481aace283a58aa55cd9d"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "00bbc4a53071eaf37725cad711bc9a010fcfb371f2a481aace283a58aa55cd9d"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "00bbc4a53071eaf37725cad711bc9a010fcfb371f2a481aace283a58aa55cd9d"
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "4a4be73baa5ffb5aa119be7a170590652313cb0cf6abfd17963ac9454fa5692d"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "loc",
+      "fingerprint": "2482e135abfcdb1bfd036ac4af725cec0633db9107f7953b4ddcd0307ff6f253"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "openverse",
+      "fingerprint": "2482e135abfcdb1bfd036ac4af725cec0633db9107f7953b4ddcd0307ff6f253"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "1dbffd394e8539a774f5982900fa9bb434eb792257b24e7a104a445a64f3749c"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "1dbffd394e8539a774f5982900fa9bb434eb792257b24e7a104a445a64f3749c"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "subject_detail",
+      "source": "commons",
+      "fingerprint": "68bc3c03320e3e5420a37935eb4385f440ed6b5231a5b4f8d8a414b197b6a807"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "subject_detail",
+      "source": "loc",
+      "fingerprint": "68bc3c03320e3e5420a37935eb4385f440ed6b5231a5b4f8d8a414b197b6a807"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "fingerprint": "68bc3c03320e3e5420a37935eb4385f440ed6b5231a5b4f8d8a414b197b6a807"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "0adccaa64d0375750f9e2c3d198748ff766ff175953f76c6a798233cbab7ef2c"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "0adccaa64d0375750f9e2c3d198748ff766ff175953f76c6a798233cbab7ef2c"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "0adccaa64d0375750f9e2c3d198748ff766ff175953f76c6a798233cbab7ef2c"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "d3c74dbd6a8ee94455c5bf342ed43d525c76ef13506087b4d947fd482c131b5d"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "d3c74dbd6a8ee94455c5bf342ed43d525c76ef13506087b4d947fd482c131b5d"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "d3c74dbd6a8ee94455c5bf342ed43d525c76ef13506087b4d947fd482c131b5d"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "fingerprint": "c6605b6af867222b5cfa6f07f2a9ba3102b79b0cab1ed6217fe6934650b2c588"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "subject_detail",
+      "source": "loc",
+      "fingerprint": "c6605b6af867222b5cfa6f07f2a9ba3102b79b0cab1ed6217fe6934650b2c588"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "fingerprint": "c6605b6af867222b5cfa6f07f2a9ba3102b79b0cab1ed6217fe6934650b2c588"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "914d425439724cc742c2ad2210cb07217b72bdbc321ac19e4c8cb57c341d44b1"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "914d425439724cc742c2ad2210cb07217b72bdbc321ac19e4c8cb57c341d44b1"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "914d425439724cc742c2ad2210cb07217b72bdbc321ac19e4c8cb57c341d44b1"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "4acc38031f931e494ac6fc6b6d5fe277f3df4672293e2d829292bfcfb0513a1e"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "4acc38031f931e494ac6fc6b6d5fe277f3df4672293e2d829292bfcfb0513a1e"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "4acc38031f931e494ac6fc6b6d5fe277f3df4672293e2d829292bfcfb0513a1e"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "fingerprint": "5ce1f0436eccffb7da52ef4984d2355204125d690d15882b4c042ae7921234a7"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "subject_detail",
+      "source": "loc",
+      "fingerprint": "5ce1f0436eccffb7da52ef4984d2355204125d690d15882b4c042ae7921234a7"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "fingerprint": "5ce1f0436eccffb7da52ef4984d2355204125d690d15882b4c042ae7921234a7"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "00bbc4a53071eaf37725cad711bc9a010fcfb371f2a481aace283a58aa55cd9d"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "00bbc4a53071eaf37725cad711bc9a010fcfb371f2a481aace283a58aa55cd9d"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "00bbc4a53071eaf37725cad711bc9a010fcfb371f2a481aace283a58aa55cd9d"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "037bdfed200f12397d755b472803168b778fb80ce7f0fbcec830b5ef04686686"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "037bdfed200f12397d755b472803168b778fb80ce7f0fbcec830b5ef04686686"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "beat": "origin",
+      "source": "loc",
+      "fingerprint": "18e49bd297211725566b186fffbe8e4fb5150b1f11e4ecd311ab3982bf708633"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "beat": "origin",
+      "source": "first-party",
+      "fingerprint": "18e49bd297211725566b186fffbe8e4fb5150b1f11e4ecd311ab3982bf708633"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "beat": "early_operation",
+      "source": "first-party",
+      "fingerprint": "4d09a42e2d0a05169797b742b41fd2efdafddb01973a73501bee808cd48a6435"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "beat": "turning_point",
+      "source": "first-party",
+      "fingerprint": "6e30df2a6f8377e288d3911db9a9fd1b2b4a7085acae63d7b1f5dabfcb253c11"
+    }
+  ],
+  "diagnostics": [
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:5e37ab011c284bed5496",
+      "result": "VALIDATION_ERROR",
+      "reason": "VALIDATION_ERROR: image too small (144x58)"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:76a1497a08ad7f776853",
+      "result": "VALIDATION_ERROR",
+      "reason": "VALIDATION_ERROR: image too small (600x1)"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:6f50a47c7785d21aa183",
+      "result": "VALIDATION_ERROR",
+      "reason": "VALIDATION_ERROR: image too small (600x1)"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:c9caf8fcfda6e9c0bfd4",
+      "result": "VALIDATION_ERROR",
+      "reason": "WEAK_GENERIC; VALIDATION_ERROR: source metadata not sufficient"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:354569584b86f20b83d8",
+      "result": "VALIDATION_ERROR",
+      "reason": "WRONG_ENTITY; VALIDATION_ERROR: source metadata not sufficient"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:96c2d817c33068cfc7ca",
+      "result": "VALIDATION_ERROR",
+      "reason": "WRONG_ENTITY; VALIDATION_ERROR: source metadata not sufficient"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:7b9e69f03ce73ab05387",
+      "result": "VALIDATION_ERROR",
+      "reason": "VALIDATION_ERROR: image too small (32x32)"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:64b255cc8d920d4ca13d",
+      "result": "VALIDATION_ERROR",
+      "reason": "VALIDATION_ERROR: image too small (258x329)"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:95650de7283d4d8757fc",
+      "result": "VALIDATION_ERROR",
+      "reason": "VALIDATION_ERROR: image too small (60x34)"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:86527506df798a5de79d",
+      "result": "VALIDATION_ERROR",
+      "reason": "VALIDATION_ERROR: image too small (600x1)"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "beat": "legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a sawmill"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "loc",
+      "source_id": "loc:2020722206",
+      "result": "VALIDATION_ERROR",
+      "reason": "WRONG_ENTITY; relevance rejected candidate as WRONG_ENTITY"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "person",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "early_work",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "early_work",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "early_work",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "early_work",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "product_or_company",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "product_or_company",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "product_or_company",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "product_or_company",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "product_or_company",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "product_or_company",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a company"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a company"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a company"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+      "reason": "literal name explicitly identifies a company"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "beat": "legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "exact_entity_no_logo_property"
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "missing_canonical_entity_label"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    }
+  ]
 }
