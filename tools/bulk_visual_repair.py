@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import time
 from urllib.request import Request, urlopen
 
 from PIL import Image
@@ -26,7 +27,7 @@ from tools.bulk_visual_sources import (
     discover_commons, discover_first_party, discover_loc, discover_openverse,
     plan_story_beats,
 )
-from tools.bulk_visual_validate import validate_candidate
+from tools.bulk_visual_validate import VisualDuplicateIndex, identity_proven, validate_candidate
 
 
 OUT_DIR = Path("out/bulk-visual-repair")
@@ -56,6 +57,7 @@ def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
     invariant = False
     refreshed = {row.story: row for row in rows}
     for original in selected:
+        story_started = time.monotonic()
         processed += 1
         current = original
         claimed = 0
@@ -84,6 +86,12 @@ def process_rows(rows, batch_stories, repair_logo_fn, repair_photos_fn,
                 current = refresh_fn(current.story)
         refreshed[original.story] = current
         reduction = max(0, _gap(original) - _gap(current))
+        attempt_fn({"story": original.story, "kind": "runtime-coverage", "source": "runtime",
+                    "result": "ACCEPTED" if reduction else "NO_SAFE_CANDIDATE",
+                    "reason": ("story_runtime.coverage() reduced the deficit" if reduction else
+                               "story_runtime.coverage() reported no deficit reduction"),
+                    "before_gap": _gap(original), "after_gap": _gap(current),
+                    "claimed_writes": claimed, "elapsed_seconds": time.monotonic() - story_started})
         # Registration functions report writes for observability only. Runtime
         # coverage is both the progress counter and the invariant authority:
         # over-claiming (including two writes that close one slot) is just as
@@ -195,6 +203,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
     # A photo relevant to another story still cannot be imported as a second
     # catalogue asset. Newly accepted paths are appended below during the run.
     existing = catalogue_photo_paths()
+    duplicate_index = VisualDuplicateIndex.from_paths(existing)
+    seen_source_ids = set()
     for beat in plan_story_beats(story):
         if accepted >= deficit:
             break
@@ -208,20 +218,68 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
             if accepted >= deficit:
                 break
             try:
+                discovery_started = time.monotonic()
                 candidates = adapter(beat, max_candidates_per_beat)
+                discovery_seconds = time.monotonic() - discovery_started
             except Exception as exc:
                 attempt_fn({"story": story, "kind": "photo", "beat": beat.key, "source": source,
                             "result": "SOURCE_UNAVAILABLE", "reason": f"{exc.__class__.__name__}: {exc}"})
                 continue
+            if not candidates:
+                attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
+                            "source": source, "result": "NO_SAFE_CANDIDATE",
+                            "reason": "discovery returned no candidates",
+                            "discovery_seconds": discovery_seconds,
+                            "candidate_count": 0})
             for candidate in candidates:
                 if accepted >= deficit:
                     break
+                if candidate.source_id in seen_source_ids:
+                    attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
+                                "source": source, "source_page": candidate.source_page,
+                                "candidate": candidate.title, "result": "DUPLICATE_ONLY",
+                                "reason": "candidate source_id already evaluated",
+                                "discovery_seconds": discovery_seconds,
+                                "validation_seconds": 0.0})
+                    continue
+                seen_source_ids.add(candidate.source_id)
+                validation_started = time.monotonic()
+                # Keep this explicit preflight observable. validate_candidate
+                # repeats the gate so direct callers remain fail closed.
+                if not identity_proven(candidate):
+                    validation_seconds = time.monotonic() - validation_started
+                    attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
+                                "source": source, "source_page": candidate.source_page,
+                                "candidate": candidate.title, "result": "IDENTITY_UNPROVEN",
+                                "reason": "required identity absent from source metadata; fetch skipped",
+                                "discovery_seconds": discovery_seconds,
+                                "validation_seconds": validation_seconds,
+                                "fetch_skipped": True})
+                    continue
+                measured = {"fetch": 0.0, "model_review": 0.0}
+                def measured_download(item, path):
+                    phase_started = time.monotonic()
+                    try:
+                        return _download(item, path)
+                    finally:
+                        measured["fetch"] += time.monotonic() - phase_started
+                def measured_review(item_story, item, path):
+                    phase_started = time.monotonic()
+                    try:
+                        return _strict_relevance(item_story, item, path)
+                    finally:
+                        measured["model_review"] += time.monotonic() - phase_started
                 result = validate_candidate(story, candidate, existing, OUT_DIR / "tmp",
-                                            _strict_relevance, _download)
+                                            measured_review, measured_download, duplicate_index)
+                validation_seconds = time.monotonic() - validation_started
+                measured.update(result.phase_seconds)
                 record = {"story": story, "kind": "photo", "beat": beat.key, "source": source,
                           "source_page": candidate.source_page, "candidate": candidate.title,
                           "result": "ACCEPTED" if result.accepted else result.reason.split(":", 1)[0],
-                          "reason": f"{result.verdict}; {result.reason}".strip("; ")}
+                          "reason": f"{result.verdict}; {result.reason}".strip("; "),
+                          "discovery_seconds": discovery_seconds,
+                          "validation_seconds": validation_seconds,
+                          "phase_seconds": measured}
                 if record["result"] not in ALLOWED_FAILURES | {"ACCEPTED"}:
                     record["result"] = "VALIDATION_ERROR"
                 attempt_fn(record)
@@ -230,6 +288,7 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 destination = register_photo(story, candidate, result)
                 result.temp_path.unlink(missing_ok=True)
                 existing.append(destination); accepted += 1
+                duplicate_index.add(result.sha256, result.dhash)
                 refreshed = build_board([story])[0]
                 if len(refreshed.photos) < len(existing):
                     raise RuntimeError("registered photo absent from runtime coverage")
