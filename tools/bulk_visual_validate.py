@@ -54,9 +54,27 @@ def identity_proven(candidate):
     """
     metadata = "\n".join((candidate.title, candidate.description, *candidate.depicts))
     folded = _fold(metadata)
-    return any(re.search(rf"(?<!\w){re.escape(alias)}(?!\w)", folded)
-               for identity in candidate.required_identity
-               if (alias := _fold(identity)))
+    incompatible = tuple(getattr(candidate, "incompatible_context", ()))
+    if any(re.search(rf"(?<!\w){re.escape(term)}(?!\w)", folded)
+           for value in incompatible if (term := _fold(value))):
+        return False
+
+    matches = [identity for identity in candidate.required_identity
+               if (alias := _fold(identity)) and
+               re.search(rf"(?<!\w){re.escape(alias)}(?!\w)", folded)]
+    if not matches:
+        return False
+    # A one-token organization alias is not identity proof: Tesla can name a
+    # company, a person, a scientific system, or an institution. Canonical
+    # multi-token aliases remain sufficient; a short alias needs independently
+    # declared compatible context in the same source metadata.
+    if getattr(candidate, "entity_kind", "") != "entity":
+        return True
+    if any(len(_fold(identity).split()) > 1 for identity in matches):
+        return True
+    contexts = tuple(getattr(candidate, "entity_context", ()))
+    return any(re.search(rf"(?<!\w){re.escape(term)}(?!\w)", folded)
+               for value in contexts if (term := _fold(value)))
 
 
 def _reject(path, reason, *, verdict="", sha="", dhash=None):

@@ -124,6 +124,7 @@ class StoryBeat:
     required_identity: tuple[str, ...]
     entity_kind: str = ""
     entity_context: tuple[str, ...] = ()
+    incompatible_context: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -143,6 +144,9 @@ class SourceCandidate:
     matched_on: str
     required_identity: tuple[str, ...]
     depicts: tuple[str, ...] = ()
+    entity_kind: str = ""
+    entity_context: tuple[str, ...] = ()
+    incompatible_context: tuple[str, ...] = ()
 
 
 _JSON_CACHE = OrderedDict()
@@ -266,12 +270,14 @@ def plan_story_beats(story):
     aliases = identities[:3]
     beats = []
     contexts = tuple(sb._STORY_CONTEXT.get(exact, ()))
+    incompatible = tuple(sb._STORY_INCOMPATIBLE_CONTEXT.get(exact, ()))
     for key, terms in keys_terms:
         queries = tuple(f"{identity} {terms}" for identity in aliases
                         if identity.casefold() not in _GENERIC)
         if queries:
             beats.append(StoryBeat(key, queries, identities,
-                                   "person" if is_person else "entity", contexts))
+                                   "person" if is_person else "entity", contexts,
+                                   incompatible))
     return beats
 
 
@@ -287,7 +293,9 @@ def _identity_bearing(beat, title, description, depicts=()):
     from tools.bulk_visual_validate import identity_proven
     probe = SourceCandidate("", "", "", "", title, description, "", "", "",
                             0, 0, beat.key, "", beat.required_identity,
-                            tuple(_clean(value) for value in depicts if value))
+                            tuple(_clean(value) for value in depicts if value),
+                            beat.entity_kind, beat.entity_context,
+                            beat.incompatible_context)
     return identity_proven(probe)
 
 
@@ -304,6 +312,10 @@ def _entity_conflict(beat, title, description, depicts=(), creator=""):
     """Return a short reason only for an explicit same-name type contradiction."""
     fields = "\n".join(_clean(v) for v in (title, description, *depicts, creator) if v)
     folded = fields.casefold()
+    for incompatible in beat.incompatible_context:
+        phrase = _clean(incompatible).casefold()
+        if phrase and re.search(rf"(?<!\w){re.escape(phrase)}(?!\w)", folded):
+            return f"metadata explicitly identifies incompatible sense: {phrase}"
     contexts = {_clean(value).casefold() for value in beat.entity_context}
     for identity in beat.required_identity:
         alias = _clean(identity).casefold()
@@ -390,7 +402,8 @@ def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=
                 info.get("descriptionurl", ""), direct, title, desc,
                 _metadata(meta, "Artist"), _metadata(meta, "LicenseShortName"),
                 _metadata(meta, "LicenseUrl"), int(info.get("width") or 0), int(info.get("height") or 0),
-                beat.key, query, beat.required_identity, depicts))
+                beat.key, query, beat.required_identity, depicts,
+                beat.entity_kind, beat.entity_context, beat.incompatible_context))
             if len(found) >= limit:
                 _report_discovery_skips(telemetry_fn, "commons", query, skipped, examined)
                 return found
@@ -433,7 +446,8 @@ def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
             found.append(SourceCandidate("loc", source_id, source_page, direct,
                 title, desc, _clean(item.get("contributor")), _clean(item.get("rights")), "",
                 int(resource.get("width") or 0), int(resource.get("height") or 0), beat.key, query,
-                beat.required_identity, depicts))
+                beat.required_identity, depicts, beat.entity_kind,
+                beat.entity_context, beat.incompatible_context))
             if len(found) >= limit:
                 _report_discovery_skips(telemetry_fn, "loc", query, skipped, examined)
                 return found
@@ -494,7 +508,8 @@ def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_id
                     item["foreign_landing_url"], item["url"], title, desc, _clean(item.get("creator")),
                     _clean(item.get("license")), str(item.get("license_url") or ""),
                     int(item.get("width") or 0), int(item.get("height") or 0), beat.key, query,
-                    beat.required_identity, depicts))
+                    beat.required_identity, depicts, beat.entity_kind,
+                    beat.entity_context, beat.incompatible_context))
                 if len(found) >= limit:
                     _report_discovery_skips(telemetry_fn, "openverse", query, skipped, examined)
                     return found
@@ -576,7 +591,8 @@ def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_htm
             found.append(SourceCandidate("first-party", source_id, current_page,
                 direct, _clean(parser.title), description, domain, "", "", 0, 0,
                 beat.key, beat.queries[0] if beat.queries else "", beat.required_identity,
-                (_clean(alt),) if _clean(alt) else ()))
+                (_clean(alt),) if _clean(alt) else (), beat.entity_kind,
+                beat.entity_context, beat.incompatible_context))
             if len(found) >= limit: return found
     return found
 

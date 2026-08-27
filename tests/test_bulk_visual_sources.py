@@ -99,6 +99,62 @@ class StoryBeatPlannerTests(unittest.TestCase):
         self.assertEqual([b.key for b in beats[:4]],
                          ["origin", "early_operation", "turning_point", "modern_result"])
 
+    def test_tesla_story_carries_typed_canonical_identity_and_context(self):
+        beat = plan_story_beats("قصة Tesla: الشركة التي كادت تفلس مرتين")[0]
+        self.assertEqual(beat.entity_kind, "entity")
+        self.assertEqual(beat.required_identity[:2], ("Tesla, Inc.", "Tesla Motors"))
+        self.assertIn("electric vehicles", beat.entity_context)
+        self.assertIn("Elon Musk", beat.entity_context)
+        self.assertIn("Nikola Tesla", beat.incompatible_context)
+
+    def test_exact_checkpoint_tesla_files_are_rejected_during_discovery(self):
+        beat = plan_story_beats("قصة Tesla: الشركة التي كادت تفلس مرتين")[0]
+        pages = {
+            "1": {"pageid": 1,
+                  "title": "File:Serbian Academy of Sciences and Arts (13808353324).jpg",
+                  "imageinfo": [{"url": "https://upload.wikimedia.org/serbian.jpg",
+                                  "descriptionurl": "https://commons.wikimedia.org/wiki/File:Serbian_Academy_of_Sciences_and_Arts_(13808353324).jpg",
+                                  "width": 1600, "height": 1000,
+                                  "extmetadata": {"ImageDescription": {"value":
+                                      "Tesla-related Serbian scientific institutions"}}}]},
+            "2": {"pageid": 2,
+                  "title": "File:LANGE-SHALLENBERGER-TeslaPolyphaseSys1890METERrwLIPACKownerA.jpg",
+                  "imageinfo": [{"url": "https://upload.wikimedia.org/polyphase.jpg",
+                                  "descriptionurl": "https://commons.wikimedia.org/wiki/File:LANGE-SHALLENBERGER-TeslaPolyphaseSys1890METERrwLIPACKownerA.jpg",
+                                  "width": 1600, "height": 1000,
+                                  "extmetadata": {"ImageDescription": {"value":
+                                      "Tesla Polyphase System, Westinghouse-era electrical equipment"}}}]},
+        }
+        telemetry = []
+        found = discover_commons(beat, json_get=lambda _: {"query": {"pages": pages}},
+                                 telemetry_fn=telemetry.append)
+        self.assertEqual(found, [])
+        self.assertEqual(len(telemetry), 2 * len(beat.queries))
+        self.assertTrue(all(event["result"] == "DISCOVERY_ENTITY_CONFLICT_SKIPPED"
+                            for event in telemetry))
+
+    def test_tesla_short_alias_needs_compatible_company_context(self):
+        beat = plan_story_beats("قصة Tesla: الشركة التي كادت تفلس مرتين")[0]
+        rejected = [
+            self.openverse_item(1, "Nikola Tesla portrait"),
+            self.openverse_item(2, "Tesla Polyphase System"),
+            self.openverse_item(3, "Tesla Westinghouse electrical equipment"),
+            self.openverse_item(4, "Tesla Serbian scientific institution"),
+            self.openverse_item(5, "Tesla archive"),
+        ]
+        eligible = [
+            self.openverse_item(11, "Tesla Model S electric automobile"),
+            self.openverse_item(12, "Tesla Model 3 electric vehicle"),
+            self.openverse_item(13, "Tesla Gigafactory"),
+            self.openverse_item(14, "Tesla Motors factory"),
+            self.openverse_item(15, "Tesla, Inc. headquarters"),
+            self.openverse_item(16, "Tesla company facilities"),
+        ]
+        found = discover_openverse(
+            beat, limit=20, json_get=lambda _: {"results": rejected + eligible})
+        self.assertEqual([item.source_id for item in found],
+                         [f"openverse:{number}" for number in range(11, 17)])
+
     def test_queries_are_identity_anchored(self):
         for beat in plan_story_beats("قصة NVIDIA: من رقائق الألعاب إلى أغلى شركة في العالم"):
             self.assertTrue(beat.required_identity)
