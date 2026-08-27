@@ -26,6 +26,10 @@ from tools.bulk_visual_identity import (
     diagnose_verified_logo_identity, download_commons_logo,
     resolve_existing_logo_identity,
 )
+from tools.bulk_visual_failure_history import (
+    load_history, mark_query_set_complete, query_set_complete,
+    query_set_fingerprint, record_attempt, rejected_source_ids, save_history,
+)
 from tools.bulk_visual_register import register_logo, register_photo
 from tools.bulk_visual_sources import (
     SourceDiscoveryBudget, SourceDiscoveryBudgetExceeded, discover_commons,
@@ -133,6 +137,11 @@ def append_attempt(record, path=OUT_DIR / "attempts.jsonl"):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    # This durable file is advisory failure memory, never an asset registry or
+    # approval ledger.  In particular ACCEPTED is deliberately ignored.
+    history = load_history()
+    record_attempt(history, record)
+    save_history(history)
 
 
 _DOWNLOAD_CACHE = OrderedDict()
@@ -426,7 +435,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
     # catalogue asset. Newly accepted paths are appended below during the run.
     existing = catalogue_photo_paths()
     duplicate_index = VisualDuplicateIndex.from_paths(existing)
-    seen_source_ids = set()
+    history = load_history()
+    seen_source_ids = rejected_source_ids(history, story)
     source_budgets = {}
     for beat in plan_story_beats(story):
         if accepted >= deficit:
@@ -443,9 +453,19 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
             budget = source_budgets.setdefault(source, SourceDiscoveryBudget(source))
             if budget.disabled:
                 continue
+            query_fingerprint = query_set_fingerprint(getattr(beat, "queries", ()))
+            if query_set_complete(history, story, beat.key, source, query_fingerprint):
+                continue
             try:
                 discovery_started = time.monotonic()
+                discovery_was_incomplete = False
                 def discovery_telemetry(record):
+                    nonlocal discovery_was_incomplete
+                    if record.get("result") in {
+                        "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
+                        "DISCOVERY_IDENTITY_SKIPPED",
+                    }:
+                        discovery_was_incomplete = True
                     attempt_fn({"story": story, "beat": beat.key, **record})
                 adapter_kwargs = {"excluded_source_ids": seen_source_ids,
                                   "telemetry_fn": discovery_telemetry}
@@ -494,12 +514,20 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                             "reason": "discovery returned no candidates",
                             "discovery_seconds": discovery_seconds,
                             "candidate_count": 0})
+                # Completion means the adapter traversed this entire query set
+                # normally.  Skipped conflicts/identities and every exception
+                # above remain telemetry and are intentionally retryable.
+                if not discovery_was_incomplete and not budget.exhausted():
+                    mark_query_set_complete(history, story, beat.key, source,
+                                            query_fingerprint)
+                    save_history(history)
             for candidate in candidates:
                 if accepted >= deficit:
                     break
                 if candidate.source_id in seen_source_ids:
                     attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
                                 "source": source, "source_page": candidate.source_page,
+                                "source_id": candidate.source_id,
                                 "candidate": candidate.title, "result": "DUPLICATE_ONLY",
                                 "reason": "candidate source_id already evaluated",
                                 "discovery_seconds": discovery_seconds,
@@ -513,6 +541,7 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                     validation_seconds = time.monotonic() - validation_started
                     attempt_fn({"story": story, "kind": "photo", "beat": beat.key,
                                 "source": source, "source_page": candidate.source_page,
+                                "source_id": candidate.source_id,
                                 "candidate": candidate.title, "result": "IDENTITY_UNPROVEN",
                                 "reason": "required identity absent from source metadata; fetch skipped",
                                 "discovery_seconds": discovery_seconds,
@@ -548,7 +577,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 validation_seconds = time.monotonic() - validation_started
                 measured.update(result.phase_seconds)
                 record = {"story": story, "kind": "photo", "beat": beat.key, "source": source,
-                          "source_page": candidate.source_page, "candidate": candidate.title,
+                          "source_page": candidate.source_page, "source_id": candidate.source_id,
+                          "candidate": candidate.title,
                           "result": "ACCEPTED" if result.accepted else result.reason.split(":", 1)[0],
                           "reason": f"{result.verdict}; {result.reason}".strip("; "),
                           "discovery_seconds": discovery_seconds,
@@ -574,7 +604,8 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
 
 def _write_unresolved(rows, path=OUT_DIR / "unresolved.json"):
     unresolved = [asdict(row) for row in rows if row.status != "PASS"]
-    Path(path).write_text(json.dumps(unresolved, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(unresolved, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def main(argv=None):
