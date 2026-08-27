@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 
 from runtime_relevance import DIRECT, WEAK_GENERIC, WRONG_ENTITY
 from tools.bulk_visual_sources import SourceCandidate
-from tools.bulk_visual_validate import validate_candidate
+from tools.bulk_visual_validate import VisualDuplicateIndex, validate_candidate
 
 
 def make_image(path, fmt="JPEG"):
@@ -64,6 +64,31 @@ class BulkVisualValidationTests(unittest.TestCase):
         cand = cand.__class__(**{**cand.__dict__, "depicts": tuple()})
         result = validate_candidate("Jack Bogle story", cand, [], self.root, lambda *args: DIRECT, self.download)
         self.assertFalse(result.accepted); self.assertIn("identity", result.reason.lower())
+
+    def test_unproven_identity_is_rejected_without_fetch_or_model_review(self):
+        cand = candidate(title="Generic office", description="An office")
+        cand = cand.__class__(**{**cand.__dict__, "depicts": tuple()})
+        calls = []
+        result = validate_candidate(
+            "Jack Bogle story", cand, [], self.root,
+            lambda *args: calls.append("model") or DIRECT,
+            lambda *args: calls.append("fetch"),
+        )
+        self.assertFalse(result.accepted)
+        self.assertEqual(calls, [])
+        self.assertIn("identity", result.phase_seconds)
+
+    def test_prebuilt_duplicate_index_avoids_rehashing_catalogue_per_candidate(self):
+        existing = self.root / "existing.jpg"; shutil.copy2(self.download_source, existing)
+        index = VisualDuplicateIndex.from_paths([existing])
+        # The supplied path is deliberately invalid: validation must use the
+        # already-built run index rather than walking the catalogue again.
+        result = validate_candidate(
+            "Jack Bogle story", candidate(), [self.root / "missing.jpg"], self.root,
+            lambda *args: DIRECT, self.download, index,
+        )
+        self.assertFalse(result.accepted)
+        self.assertIn("duplicate", result.reason.lower())
 
     def test_every_person_story_beat_requires_source_metadata_identity(self):
         cand = candidate(title="Vanguard office", description="Vanguard headquarters")
