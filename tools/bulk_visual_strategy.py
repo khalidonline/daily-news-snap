@@ -19,10 +19,10 @@ def story_source_strategy(story, beats=None):
         "company", "corporation", "retail", "delivery", "ecommerce", "food",
         "airline", "bank", "telecom",
     })
-    if gulf and company:
-        return ("first-party", "commons", "loc", "openverse")
     if kind == "person":
         return ("commons", "loc", "first-party", "openverse")
+    if gulf and company:
+        return ("first-party", "commons", "loc", "openverse")
     if company:
         return ("first-party", "commons", "openverse", "loc")
     if contexts & {"history", "historical", "archive", "place", "city", "location"}:
