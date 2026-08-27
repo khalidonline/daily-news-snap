@@ -368,3 +368,4 @@ bogle-vanguard-founder.jpg | Jack Bogle, Vanguard, The Vanguard Group | Vanguard
 bulk-emirates-early-operation-a975e471d425.jpg | قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي, Emirates, طيران الإمارات | comedy_nose / pdm
 bulk-microsoft-origin-7cb63087fb3a.jpg | قصة Microsoft: الشركة التي صنعت آلاف المليونيرات في بلدة واحدة, Microsoft | barbourians / by-sa
 bulk-netflix-origin-37192e81de2d.jpg | قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام, Netflix | Ron Cogswell / by
+bulk-nvidia-origin-3f7fea19b604.jpg | قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم, NVIDIA | Diego3336 / by
