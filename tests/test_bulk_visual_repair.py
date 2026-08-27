@@ -3,10 +3,15 @@ from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 from urllib.error import HTTPError
+from io import BytesIO
+import json
+import os
 import tempfile
 
 from tools.bulk_visual_board import CoverageRow
-from tools.bulk_visual_repair import _download, catalogue_photo_paths, process_rows, repair_photos
+from tools.bulk_visual_repair import (
+    _download, _strict_relevance, catalogue_photo_paths, process_rows, repair_photos,
+)
 
 
 def row(story, need_photos, need_logo, status):
@@ -14,6 +19,89 @@ def row(story, need_photos, need_logo, status):
 
 
 class BulkVisualRepairTests(unittest.TestCase):
+    def reviewer_candidate(self):
+        return SimpleNamespace(title="Title", description="Description", depicts="Entity",
+                               beat_key="beat")
+
+    def http_error(self, status, error_type="invalid_request_error", message="bad request"):
+        body = json.dumps({"type": "error", "error": {"type": error_type,
+                                                        "message": message}}).encode()
+        return HTTPError("https://api.anthropic.com/v1/messages", status, "error", {},
+                         BytesIO(body))
+
+    def call_reviewer(self, open_url, telemetry, directory, **kwargs):
+        image = Path(directory) / "image.png"
+        from PIL import Image
+        Image.new("RGB", (4, 4)).save(image)
+        with patch.dict(os.environ, {"ANTHROPIC_API_KEY": "sk-test-secret",
+                                    "VISION_MODEL": "configured-model"}, clear=False), \
+                patch("tools.bulk_visual_repair.urlopen", open_url):
+            return _strict_relevance("Exact story", self.reviewer_candidate(), image,
+                                     telemetry_fn=telemetry.append, sleep=lambda _: None,
+                                     **kwargs)
+
+    def test_reviewer_successful_response(self):
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(json.dumps({"content": [{"type": "text", "text":
+            '{"verdict":"DIRECT","reason":"matches","source_metadata_sufficient":true}'}]}).encode())
+        with tempfile.TemporaryDirectory() as directory:
+            result = self.call_reviewer(unittest.mock.Mock(return_value=response), [], directory)
+        self.assertEqual(result["verdict"], "DIRECT")
+
+    def test_reviewer_401_and_403_fail_fast(self):
+        for status in (401, 403):
+            open_url, telemetry = unittest.mock.Mock(side_effect=self.http_error(status)), []
+            with tempfile.TemporaryDirectory() as directory, self.assertRaises(HTTPError):
+                self.call_reviewer(open_url, telemetry, directory)
+            self.assertEqual(open_url.call_count, 1)
+            self.assertFalse(telemetry[0]["retryable"])
+            self.assertEqual(telemetry[0]["failure_category"],
+                             "authentication" if status == 401 else "permission")
+
+    def test_reviewer_invalid_model_client_error_fails_fast(self):
+        error = self.http_error(404, "not_found_error", "model: configured-model not found")
+        open_url, telemetry = unittest.mock.Mock(side_effect=error), []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(HTTPError):
+            self.call_reviewer(open_url, telemetry, directory)
+        self.assertEqual(open_url.call_count, 1)
+        self.assertEqual(telemetry[0]["api_error_type"], "not_found_error")
+        self.assertEqual(telemetry[0]["model"], "configured-model")
+        self.assertEqual(telemetry[0]["failure_category"], "invalid_model")
+
+    def test_reviewer_429_retry_is_bounded(self):
+        open_url, telemetry = unittest.mock.Mock(side_effect=lambda *_args, **_kwargs:
+                                                  (_ for _ in ()).throw(self.http_error(429,
+                                                      "rate_limit_error", "limited"))), []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(HTTPError):
+            self.call_reviewer(open_url, telemetry, directory)
+        self.assertEqual(open_url.call_count, 3)
+        self.assertTrue(all(item["retryable"] for item in telemetry))
+        self.assertTrue(all(item["failure_category"] == "rate_limit" for item in telemetry))
+
+    def test_reviewer_5xx_retry_is_bounded(self):
+        open_url, telemetry = unittest.mock.Mock(side_effect=lambda *_args, **_kwargs:
+                                                  (_ for _ in ()).throw(self.http_error(503,
+                                                      "api_error", "unavailable"))), []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(HTTPError):
+            self.call_reviewer(open_url, telemetry, directory)
+        self.assertEqual(open_url.call_count, 3)
+        self.assertTrue(all(item["failure_category"] == "anthropic_service"
+                            for item in telemetry))
+
+    def test_malformed_model_response_fails_closed(self):
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(b'{"content":[{"type":"text","text":"not json"}]}')
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(json.JSONDecodeError):
+            self.call_reviewer(unittest.mock.Mock(return_value=response), [], directory)
+
+    def test_reviewer_telemetry_never_exposes_api_key(self):
+        error = self.http_error(400, "invalid_request_error", "bad sk-test-secret credential")
+        telemetry = []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(HTTPError):
+            self.call_reviewer(unittest.mock.Mock(side_effect=error), telemetry, directory)
+        self.assertNotIn("sk-test-secret", json.dumps(telemetry))
+        self.assertIn("[REDACTED]", telemetry[0]["api_error_message"])
+
     @patch("tools.bulk_visual_repair.urlopen")
     def test_commons_download_retries_429_once_and_caches_by_source_id(self, open_url):
         error = HTTPError("https://upload.wikimedia.org/thumb/x.jpg", 429, "rate", {}, None)
