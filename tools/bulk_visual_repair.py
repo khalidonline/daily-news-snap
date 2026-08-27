@@ -7,6 +7,7 @@ import argparse
 import base64
 from collections import OrderedDict
 from dataclasses import asdict, dataclass
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -128,6 +129,18 @@ def append_attempt(record, path=OUT_DIR / "attempts.jsonl"):
 _DOWNLOAD_CACHE = OrderedDict()
 _TRANSIENT_HTTP = frozenset({429, 500, 502, 503, 504})
 _REVIEWER_CONFIGURATION_FAILURE = None
+_REVIEW_VERDICTS = ("DIRECT", "STRONG_CONTEXT", "WEAK_GENERIC", "WRONG_ENTITY")
+_REVIEW_OUTPUT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "verdict": {"type": "string", "enum": list(_REVIEW_VERDICTS)},
+        "reason": {"type": "string"},
+        "source_metadata_sufficient": {"type": "boolean"},
+    },
+    "required": ["verdict", "reason", "source_metadata_sufficient"],
+    "additionalProperties": False,
+}
+_MAX_RESPONSE_BYTES = 1024 * 1024
 
 
 def _download(candidate, destination, *, sleep=time.sleep):
@@ -223,6 +236,41 @@ def _review_failure_telemetry(story, model, exc, api_key, retryable, attempt):
     }
 
 
+def _parse_failure_telemetry(story, model, category, exc, *, output=b""):
+    """Describe parsing failures without retaining reviewer text or other secrets."""
+    bounded = output[:_MAX_RESPONSE_BYTES]
+    return {
+        "story": story, "kind": "vision-review", "source": "anthropic",
+        "result": "EXTERNAL_API_ERROR", "reason": "Anthropic reviewer response parse failure",
+        "model": model, "failure_category": category,
+        "error_type": exc.__class__.__name__, "response_bytes": len(output),
+        "response_truncated": len(output) > len(bounded),
+        "response_sha256": hashlib.sha256(bounded).hexdigest(),
+    }
+
+
+def _parse_reviewer_output(body):
+    """Strictly decode the single structured-output text block and its schema."""
+    if not isinstance(body, dict):
+        raise ValueError("unexpected Anthropic response envelope")
+    if body.get("stop_reason") != "end_turn":
+        raise ValueError("unexpected Anthropic reviewer stop reason")
+    if not isinstance(body.get("content"), list):
+        raise ValueError("unexpected Anthropic response envelope")
+    blocks = body["content"]
+    if len(blocks) != 1 or not isinstance(blocks[0], dict) or blocks[0].get("type") != "text" \
+            or not isinstance(blocks[0].get("text"), str):
+        raise ValueError("unexpected Anthropic response content")
+    result = json.loads(blocks[0]["text"])
+    required = {"verdict", "reason", "source_metadata_sufficient"}
+    if not isinstance(result, dict) or set(result) != required:
+        raise ValueError("reviewer output does not match required fields")
+    if result["verdict"] not in _REVIEW_VERDICTS or not isinstance(result["reason"], str) \
+            or type(result["source_metadata_sufficient"]) is not bool:
+        raise ValueError("reviewer output does not match schema")
+    return result
+
+
 def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
                       sleep=time.sleep, max_attempts=3):
     """Ask the configured vision reviewer; missing/error/invalid output rejects."""
@@ -237,14 +285,15 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
         import io
         buffer = io.BytesIO(); image.save(buffer, "JPEG", quality=85)
     prompt = (
-        "Return JSON only with verdict, reason, source_metadata_sufficient. Verdict must be "
-        "DIRECT, STRONG_CONTEXT, WEAK_GENERIC, or WRONG_ENTITY. Judge this image for the exact "
+        "Judge this image for the exact "
         f"story {story!r}. Source title={candidate.title!r}; description={candidate.description!r}; "
         f"depicts={candidate.depicts!r}; beat={candidate.beat_key!r}. Never infer a person's identity "
         "from their face; source metadata is the identity proof."
     )
     model = os.environ.get("VISION_MODEL", "claude-sonnet-4-6")
     payload = {"model": model, "max_tokens": 300,
+               "output_config": {"format": {"type": "json_schema",
+                                             "schema": _REVIEW_OUTPUT_SCHEMA}},
                "messages": [{"role": "user", "content": [
                    {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
                                                "data": base64.b64encode(buffer.getvalue()).decode()}},
@@ -256,7 +305,18 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
     for attempt in range(1, attempts + 1):
         try:
             with urlopen(request, timeout=75) as response:
-                body = json.load(response)
+                raw_body = response.read(_MAX_RESPONSE_BYTES + 1)
+            if len(raw_body) > _MAX_RESPONSE_BYTES:
+                exc = ValueError("Anthropic response envelope exceeds size limit")
+                telemetry_fn(_parse_failure_telemetry(
+                    story, model, "response_envelope_size_limit", exc, output=raw_body))
+                raise exc
+            try:
+                body = json.loads(raw_body)
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                telemetry_fn(_parse_failure_telemetry(
+                    story, model, "invalid_response_envelope_json", exc, output=raw_body))
+                raise
             break
         except HTTPError as exc:
             retryable = exc.code == 429 or 500 <= exc.code <= 599
@@ -277,9 +337,26 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
             except (TypeError, ValueError):
                 delay = 0.5 * (2 ** (attempt - 1))
             sleep(delay)
-    text = "".join(item.get("text", "") for item in body.get("content", [])
-                   if item.get("type") == "text").strip()
-    return json.loads(text)
+    try:
+        return _parse_reviewer_output(body)
+    except (json.JSONDecodeError, TypeError, ValueError) as exc:
+        if isinstance(body, dict) and body.get("stop_reason") != "end_turn":
+            telemetry_fn({
+                "story": story, "kind": "vision-review", "source": "anthropic",
+                "result": "EXTERNAL_API_ERROR",
+                "reason": "Anthropic reviewer did not complete normally",
+                "model": model, "failure_category": "invalid_reviewer_stop_reason",
+                "stop_reason": body.get("stop_reason"),
+            })
+            raise
+        text = (body.get("content", [{}])[0].get("text", "")
+                if isinstance(body, dict) and isinstance(body.get("content"), list)
+                and body["content"] and isinstance(body["content"][0], dict) else "")
+        category = ("invalid_reviewer_output_json" if isinstance(exc, json.JSONDecodeError)
+                    else "invalid_reviewer_output_schema")
+        telemetry_fn(_parse_failure_telemetry(
+            story, model, category, exc, output=text.encode("utf-8", errors="replace")))
+        raise
 
 
 def repair_logo(story, attempt_fn=append_attempt):

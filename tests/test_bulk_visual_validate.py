@@ -49,6 +49,18 @@ class BulkVisualValidationTests(unittest.TestCase):
         result = validate_candidate("Jack Bogle story", candidate(), [], self.root, lambda *args: WEAK_GENERIC, self.download)
         self.assertFalse(result.accepted)
 
+    def test_structured_rejection_verdicts_never_accept(self):
+        for verdict in (WEAK_GENERIC, WRONG_ENTITY):
+            reviewer = lambda *args, verdict=verdict: {
+                "verdict": verdict, "reason": "not suitable",
+                "source_metadata_sufficient": True,
+            }
+            with self.subTest(verdict=verdict):
+                result = validate_candidate(
+                    "Jack Bogle story", candidate(), [], self.root, reviewer, self.download)
+                self.assertFalse(result.accepted)
+                self.assertEqual(result.verdict, verdict)
+
     def test_exact_duplicate_never_accepts(self):
         existing = self.root / "existing.jpg"; shutil.copy2(self.download_source, existing)
         result = validate_candidate("Jack Bogle story", candidate(), [existing], self.root, lambda *args: DIRECT, self.download)
