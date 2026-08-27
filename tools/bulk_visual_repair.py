@@ -486,7 +486,7 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 existing.append(destination); accepted += 1
                 duplicate_index.add(result.sha256, result.dhash)
                 refreshed = build_board([story])[0]
-                if len(refreshed.photos) < len(existing):
+                if Path(destination).name not in {Path(photo).name for photo in refreshed.photos}:
                     raise RuntimeError("registered photo absent from runtime coverage")
     if not accepted:
         attempt_fn({"story": story, "kind": "photo", "source": "all",

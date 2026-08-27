@@ -280,6 +280,51 @@ class BulkVisualRepairTests(unittest.TestCase):
                          [__import__("pathlib").Path("images/one.jpg"),
                           __import__("pathlib").Path("images/two.jpg")])
 
+    def run_accepted_photo_registration(self, runtime_photos, destination="images/new.jpg"):
+        candidate = SimpleNamespace(source="commons", source_id="commons:new",
+                                    source_page="https://commons.test/new",
+                                    title="Exact story photo", beat_key="beat")
+        validation = SimpleNamespace(accepted=True, temp_path=unittest.mock.MagicMock(),
+                                     sha256="sha", dhash="dhash", phase_seconds={},
+                                     verdict="STRONG_CONTEXT", reason="approved")
+        beat = SimpleNamespace(key="beat")
+        catalogue = [Path(f"images/unrelated-{number}.jpg") for number in range(20)]
+        runtime = CoverageRow("Exact story", tuple(runtime_photos), (), 0, False, "PASS")
+        duplicate_index = unittest.mock.MagicMock()
+        with patch("tools.bulk_visual_repair.catalogue_photo_paths", return_value=catalogue), \
+                patch("tools.bulk_visual_repair.VisualDuplicateIndex.from_paths",
+                      return_value=duplicate_index) as from_paths, \
+                patch("tools.bulk_visual_repair.plan_story_beats", return_value=[beat]), \
+                patch("tools.bulk_visual_repair.sb.story_logo_domain", return_value=None), \
+                patch("tools.bulk_visual_repair.discover_commons", return_value=[candidate]), \
+                patch("tools.bulk_visual_repair.identity_proven", return_value=True), \
+                patch("tools.bulk_visual_repair.validate_candidate", return_value=validation), \
+                patch("tools.bulk_visual_repair.register_photo",
+                      return_value=Path(destination)), \
+                patch("tools.bulk_visual_repair.build_board", return_value=[runtime]):
+            result = repair_photos("Exact story", 1, attempt_fn=lambda record: None)
+        from_paths.assert_called_once_with(catalogue)
+        duplicate_index.add.assert_called_once_with("sha", "dhash")
+        return result
+
+    def test_story_local_runtime_visibility_ignores_global_catalogue(self):
+        result = self.run_accepted_photo_registration(
+            ("existing-1.jpg", "existing-2.jpg", "existing-3.jpg", "new.jpg"))
+        self.assertEqual(result, 1)
+
+        batch = process_rows(
+            [row("Exact story", 1, False, "NEEDS")], 1, lambda story: 0,
+            lambda story, deficit: result,
+            lambda story: row(story, 0, False, "PASS"), lambda record: None,
+        )
+        self.assertEqual((batch.progress, batch.exit_code), (1, 0))
+
+    def test_registered_destination_must_be_visible_in_story_runtime_coverage(self):
+        with self.assertRaisesRegex(RuntimeError,
+                                    "registered photo absent from runtime coverage"):
+            self.run_accepted_photo_registration(
+                ("existing-1.jpg", "existing-2.jpg", "existing-3.jpg", "other.jpg"))
+
     def test_one_story_failure_does_not_abort_next_story(self):
         calls, attempts = [], []
         def photos(story, deficit):
