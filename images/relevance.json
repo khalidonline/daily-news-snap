@@ -1006,6 +1006,13 @@
       "stories": {
         "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
       }
+    },
+    "bulk-shuji-nakamura-180-person-adf398a50e03.jpg": {
+      "stories": {
+        "Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Professor_Shuji_Nakamura_(Cropped)_(2).jpg",
+      "note": "commons; CC BY 2.0; person"
     }
   }
 }
