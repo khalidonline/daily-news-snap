@@ -47,15 +47,48 @@ class BulkVisualRepairTests(unittest.TestCase):
 
     def test_reviewer_successful_response(self):
         response = unittest.mock.MagicMock()
-        response.__enter__.return_value = BytesIO(json.dumps({"content": [{"type": "text", "text":
+        response.__enter__.return_value = BytesIO(json.dumps({"stop_reason": "end_turn", "content": [{"type": "text", "text":
             '{"verdict":"DIRECT","reason":"matches","source_metadata_sufficient":true}'}]}).encode())
         with tempfile.TemporaryDirectory() as directory:
             result = self.call_reviewer(unittest.mock.Mock(return_value=response), [], directory)
         self.assertEqual(result["verdict"], "DIRECT")
 
+    def test_non_normal_stop_reasons_fail_closed_before_structured_output(self):
+        valid_text = ('{"verdict":"DIRECT","reason":"secret reviewer text",'
+                      '"source_metadata_sufficient":true}')
+        for stop_reason in ("max_tokens", "refusal", None, "unexpected_reason"):
+            body = {"content": [{"type": "text", "text": valid_text}]}
+            if stop_reason is not None:
+                body["stop_reason"] = stop_reason
+            response = unittest.mock.MagicMock()
+            response.__enter__.return_value = BytesIO(json.dumps(body).encode())
+            telemetry = []
+            with self.subTest(stop_reason=stop_reason), tempfile.TemporaryDirectory() as directory, \
+                    self.assertRaises(ValueError):
+                self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
+            self.assertEqual(telemetry, [{
+                "story": "Exact story", "kind": "vision-review", "source": "anthropic",
+                "result": "EXTERNAL_API_ERROR",
+                "reason": "Anthropic reviewer did not complete normally",
+                "model": "configured-model",
+                "failure_category": "invalid_reviewer_stop_reason",
+                "stop_reason": stop_reason,
+            }])
+            self.assertNotIn("secret reviewer text", json.dumps(telemetry))
+
+    def test_oversize_response_envelope_emits_bounded_telemetry(self):
+        response = unittest.mock.MagicMock()
+        response.__enter__.return_value = BytesIO(b"x" * (repair._MAX_RESPONSE_BYTES + 1))
+        telemetry = []
+        with tempfile.TemporaryDirectory() as directory, self.assertRaises(ValueError):
+            self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
+        self.assertEqual(telemetry[0]["failure_category"], "response_envelope_size_limit")
+        self.assertTrue(telemetry[0]["response_truncated"])
+        self.assertEqual(telemetry[0]["response_bytes"], repair._MAX_RESPONSE_BYTES + 1)
+
     def test_reviewer_requests_anthropic_structured_output(self):
         response = unittest.mock.MagicMock()
-        response.__enter__.return_value = BytesIO(json.dumps({"content": [{"type": "text", "text":
+        response.__enter__.return_value = BytesIO(json.dumps({"stop_reason": "end_turn", "content": [{"type": "text", "text":
             '{"verdict":"DIRECT","reason":"matches","source_metadata_sufficient":true}'}]}).encode())
         open_url = unittest.mock.Mock(return_value=response)
         with tempfile.TemporaryDirectory() as directory:
@@ -141,7 +174,7 @@ class BulkVisualRepairTests(unittest.TestCase):
 
     def test_malformed_model_response_fails_closed(self):
         response = unittest.mock.MagicMock()
-        response.__enter__.return_value = BytesIO(b'{"content":[{"type":"text","text":"not json"}]}')
+        response.__enter__.return_value = BytesIO(b'{"stop_reason":"end_turn","content":[{"type":"text","text":"not json"}]}')
         telemetry = []
         with tempfile.TemporaryDirectory() as directory, self.assertRaises(json.JSONDecodeError):
             self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
@@ -159,7 +192,7 @@ class BulkVisualRepairTests(unittest.TestCase):
 
     def test_unexpected_response_envelope_fails_closed(self):
         response = unittest.mock.MagicMock()
-        response.__enter__.return_value = BytesIO(b'{"content":{"type":"text"}}')
+        response.__enter__.return_value = BytesIO(b'{"stop_reason":"end_turn","content":{"type":"text"}}')
         telemetry = []
         with tempfile.TemporaryDirectory() as directory, self.assertRaises(ValueError):
             self.call_reviewer(unittest.mock.Mock(return_value=response), telemetry, directory)
@@ -173,7 +206,7 @@ class BulkVisualRepairTests(unittest.TestCase):
         for output in outputs:
             response = unittest.mock.MagicMock()
             response.__enter__.return_value = BytesIO(json.dumps(
-                {"content": [{"type": "text", "text": output}]}).encode())
+                {"stop_reason": "end_turn", "content": [{"type": "text", "text": output}]}).encode())
             telemetry = []
             with self.subTest(output=output), tempfile.TemporaryDirectory() as directory, \
                     self.assertRaises(ValueError):
@@ -184,7 +217,7 @@ class BulkVisualRepairTests(unittest.TestCase):
         output = '```json\n{"verdict":"DIRECT","reason":"matches","source_metadata_sufficient":true}\n```'
         response = unittest.mock.MagicMock()
         response.__enter__.return_value = BytesIO(json.dumps(
-            {"content": [{"type": "text", "text": output}]}).encode())
+            {"stop_reason": "end_turn", "content": [{"type": "text", "text": output}]}).encode())
         with tempfile.TemporaryDirectory() as directory, self.assertRaises(json.JSONDecodeError):
             self.call_reviewer(unittest.mock.Mock(return_value=response), [], directory)
 

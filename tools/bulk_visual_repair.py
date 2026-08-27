@@ -251,7 +251,11 @@ def _parse_failure_telemetry(story, model, category, exc, *, output=b""):
 
 def _parse_reviewer_output(body):
     """Strictly decode the single structured-output text block and its schema."""
-    if not isinstance(body, dict) or not isinstance(body.get("content"), list):
+    if not isinstance(body, dict):
+        raise ValueError("unexpected Anthropic response envelope")
+    if body.get("stop_reason") != "end_turn":
+        raise ValueError("unexpected Anthropic reviewer stop reason")
+    if not isinstance(body.get("content"), list):
         raise ValueError("unexpected Anthropic response envelope")
     blocks = body["content"]
     if len(blocks) != 1 or not isinstance(blocks[0], dict) or blocks[0].get("type") != "text" \
@@ -303,7 +307,10 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
             with urlopen(request, timeout=75) as response:
                 raw_body = response.read(_MAX_RESPONSE_BYTES + 1)
             if len(raw_body) > _MAX_RESPONSE_BYTES:
-                raise ValueError("Anthropic response envelope exceeds size limit")
+                exc = ValueError("Anthropic response envelope exceeds size limit")
+                telemetry_fn(_parse_failure_telemetry(
+                    story, model, "response_envelope_size_limit", exc, output=raw_body))
+                raise exc
             try:
                 body = json.loads(raw_body)
             except (json.JSONDecodeError, UnicodeDecodeError) as exc:
@@ -333,6 +340,15 @@ def _strict_relevance(story, candidate, path, *, telemetry_fn=append_attempt,
     try:
         return _parse_reviewer_output(body)
     except (json.JSONDecodeError, TypeError, ValueError) as exc:
+        if isinstance(body, dict) and body.get("stop_reason") != "end_turn":
+            telemetry_fn({
+                "story": story, "kind": "vision-review", "source": "anthropic",
+                "result": "EXTERNAL_API_ERROR",
+                "reason": "Anthropic reviewer did not complete normally",
+                "model": model, "failure_category": "invalid_reviewer_stop_reason",
+                "stop_reason": body.get("stop_reason"),
+            })
+            raise
         text = (body.get("content", [{}])[0].get("text", "")
                 if isinstance(body, dict) and isinstance(body.get("content"), list)
                 and body["content"] and isinstance(body["content"][0], dict) else "")
