@@ -45,6 +45,25 @@ class DiscoveredLogo:
     aliases: tuple[str, ...]
 
 
+@dataclass(frozen=True)
+class LogoResolution:
+    """A bounded, machine-readable result from fail-closed discovery."""
+    logo: DiscoveredLogo | None
+    reason: str
+    detail: str = ""
+
+
+NO_ENTITY_CANDIDATE = "no_entity_candidate"
+AMBIGUOUS_ENTITY_CANDIDATES = "ambiguous_entity_candidates"
+EXACT_ENTITY_NO_LOGO = "exact_entity_no_logo_property"
+MULTIPLE_LOGO_PROPERTIES = "multiple_logo_properties"
+LOGO_NO_OFFICIAL_DOMAIN = "logo_without_verified_official_domain"
+AMBIGUOUS_OFFICIAL_DOMAINS = "ambiguous_official_domains"
+MISSING_CANONICAL_LABEL = "missing_canonical_entity_label"
+PERSON_ORG_RELATION_UNRESOLVED = "person_organization_relationship_absent_or_ambiguous"
+VERIFIED_IDENTITY = "verified_organization_identity"
+
+
 def _json_get(url):
     cached = _JSON_CACHE.get(url)
     if cached is not None:
@@ -196,6 +215,28 @@ def _logo_from_entity(qid, entity):
     )
 
 
+def _entity_logo_resolution(qid, entity):
+    """Explain why an exact entity can or cannot supply a verified logo."""
+    label, aliases = _entity_names(entity)
+    if not label:
+        return LogoResolution(None, MISSING_CANONICAL_LABEL, qid)
+    logos = set(_claim_values(entity, "P154"))
+    if not logos:
+        return LogoResolution(None, EXACT_ENTITY_NO_LOGO, qid)
+    if len(logos) > 1:
+        return LogoResolution(None, MULTIPLE_LOGO_PROPERTIES, qid)
+    domains = _site_domains(entity)
+    if not domains:
+        return LogoResolution(None, LOGO_NO_OFFICIAL_DOMAIN, qid)
+    if len(domains) > 1:
+        return LogoResolution(None, AMBIGUOUS_OFFICIAL_DOMAINS, qid)
+    return LogoResolution(
+        DiscoveredLogo(label, next(iter(domains)), next(iter(logos)),
+                       f"https://www.wikidata.org/wiki/{qid}", tuple(aliases)),
+        VERIFIED_IDENTITY, qid,
+    )
+
+
 def _canonical_entity(qid, json_get):
     """Resolve a Wikidata redirect and reject non-entity disambiguation pages."""
     entities = json_get(WIKIDATA_ENTITY.format(qid=qid)).get("entities", {})
@@ -281,25 +322,50 @@ def _exact_human_identity(terms, json_get):
     return qid, matched_terms
 
 
-def discover_verified_logo_identity(story, json_get=_json_get):
-    """Resolve a direct entity or one uniquely corroborated person relation."""
-    key = str(story).strip()
-    people = set(sb._STORY_PERSONS.get(key) or ())
-    # Direct identity discovery is restricted to declared story metadata.
-    # Evaluate each declared identity independently so a biography's person
-    # does not make its explicitly named company look ambiguous. More than one
-    # verified logo-bearing declared identity still fails closed.
+def diagnose_verified_logo_identity(story, json_get=_json_get):
+    """Resolve an identity and retain a bounded reason when it fails closed."""
+    story_key = str(story).strip()
+    people = set(sb._STORY_PERSONS.get(story_key) or ())
     declared_terms = set(sb.story_aliases(story)) | people
     direct_matches = {}
+    exact_entities = {}
+    saw_ambiguous = False
+    direct_failures = set()
+
+    # Inspect each explicitly declared term independently. This prevents a
+    # biography's person from making its declared company look ambiguous,
+    # without ever deriving an organization from prose.
     for term in sorted({str(term).strip() for term in declared_terms if str(term).strip()}):
-        direct = discover_wikidata_logo_for_terms({term}, json_get)
-        if direct:
-            key_tuple = (direct.domain, direct.commons_filename, direct.source_url)
-            direct_matches[key_tuple] = direct
+        canonical = {}
+        for qid in sorted(_exact_search_qids({term}, json_get)):
+            canonical_qid, entity = _canonical_entity(qid, json_get)
+            if not canonical_qid:
+                continue
+            label, aliases = _entity_names(entity)
+            if norm(term) in {norm(label), *map(norm, aliases)}:
+                canonical[canonical_qid] = entity
+        if len(canonical) > 1:
+            saw_ambiguous = True
+            continue
+        if len(canonical) != 1:
+            continue
+        qid, entity = next(iter(canonical.items()))
+        exact_entities[qid] = entity
+        # A person's P154/P856 is not an organization identity. People can
+        # reach an organization only through the corroborated relation path.
+        if "Q5" in _claim_values(entity, "P31"):
+            continue
+        resolved = _entity_logo_resolution(qid, entity)
+        if resolved.logo:
+            logo = resolved.logo
+            direct_matches[(logo.domain, logo.commons_filename, logo.source_url)] = logo
+        else:
+            direct_failures.add(resolved.reason)
+
+    if len(direct_matches) > 1 or saw_ambiguous:
+        return LogoResolution(None, AMBIGUOUS_ENTITY_CANDIDATES)
     if len(direct_matches) == 1:
-        return next(iter(direct_matches.values()))
-    if len(direct_matches) > 1:
-        return None
+        return LogoResolution(next(iter(direct_matches.values())), VERIFIED_IDENTITY)
 
     if people:
         person_qids = _exact_search_qids(people, json_get)
@@ -318,7 +384,15 @@ def discover_verified_logo_identity(story, json_get=_json_get):
     }
 
     if len(person_qids) != 1:
-        return None
+        if person_qids or people:
+            return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
+        if len(direct_failures) == 1:
+            return LogoResolution(None, next(iter(direct_failures)))
+        if len(direct_failures) > 1:
+            return LogoResolution(None, AMBIGUOUS_ENTITY_CANDIDATES)
+        if exact_entities:
+            return LogoResolution(None, EXACT_ENTITY_NO_LOGO)
+        return LogoResolution(None, NO_ENTITY_CANDIDATE)
     person_qid = next(iter(person_qids))
     cache = {}
 
@@ -346,12 +420,17 @@ def discover_verified_logo_identity(story, json_get=_json_get):
         person_qid, explicit_entities, photo_tags, simple_entity, relation_qids,
     )
     if len(organizations) != 1:
-        return None
+        return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
     org_qid = organizations[0]
     canonical_qid, entity = _canonical_entity(org_qid, json_get)
     if not canonical_qid:
-        return None
-    return _logo_from_entity(canonical_qid, entity)
+        return LogoResolution(None, PERSON_ORG_RELATION_UNRESOLVED)
+    return _entity_logo_resolution(canonical_qid, entity)
+
+
+def discover_verified_logo_identity(story, json_get=_json_get):
+    """Compatibility wrapper returning only a successfully verified logo."""
+    return diagnose_verified_logo_identity(story, json_get).logo
 
 
 def _exact_search_qids(terms, json_get):
