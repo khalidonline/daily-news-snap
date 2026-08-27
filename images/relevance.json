@@ -971,6 +971,13 @@
       },
       "source_url": "https://www.flickr.com/photos/38284634@N00/6250961266",
       "note": "openverse; by; subject_detail"
+    },
+    "bulk-juan-trippe-pan-am-boeing-747-person-ef594091cda2.jpg": {
+      "stories": {
+        "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": "STRONG_CONTEXT"
+      },
+      "source_url": "http://www.loc.gov/item/2023630585/",
+      "note": "loc; person"
     }
   }
 }
