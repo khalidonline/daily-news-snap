@@ -936,6 +936,13 @@
       "stories": {
         "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
       }
+    },
+    "bulk-emirates-early-operation-a975e471d425.jpg": {
+      "stories": {
+        "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/23408922@N07/16015016065",
+      "note": "openverse; pdm; early_operation"
     }
   }
 }
