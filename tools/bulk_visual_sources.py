@@ -25,6 +25,12 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 LOC_API = "https://www.loc.gov/photos/"
 OPENVERSE_API = "https://api.openverse.org/v1/images/"
 _GENERIC = {"business", "office", "city", "meeting", "street"}
+# One larger response lets irrelevant search hits fall through without turning
+# discovery into unbounded pagination.  This is a per-query ceiling, even when
+# callers accidentally request a larger candidate limit.
+_MAX_SOURCE_RESULTS_PER_QUERY = 48
+_DISCOVERY_WINDOW_MULTIPLIER = 4
+_OPENVERSE_ANON_PAGE_SIZE = 20
 
 
 @dataclass(frozen=True)
@@ -121,6 +127,9 @@ def _identities(story):
         # Standalone test/manual stories still need an exact, non-generic anchor.
         prefix = str(story).split(":", 1)[0]
         aliases = re.findall(r"[A-Z][A-Za-z.]+(?:\s+[A-Z][A-Za-z.]+)+", prefix)
+    # Typed person declarations remain the sole required identity for person
+    # stories. Organization aliases can support other subsystems, but must not
+    # make a person photo pass metadata identity proof on the organization alone.
     return tuple(dict.fromkeys(persons or aliases))
 
 
@@ -159,18 +168,44 @@ def _metadata(meta, key):
     return _clean(item.get("value", "") if isinstance(item, dict) else item)
 
 
-def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=()):
+def _identity_bearing(beat, title, description, depicts=()):
+    """Apply validation's exact metadata identity gate during discovery."""
+    # Import locally so source adapters and validation retain their separate
+    # responsibilities without maintaining two subtly different matchers.
+    from tools.bulk_visual_validate import identity_proven
+    probe = SourceCandidate("", "", "", "", title, description, "", "", "",
+                            0, 0, beat.key, "", beat.required_identity,
+                            tuple(_clean(value) for value in depicts if value))
+    return identity_proven(probe)
+
+
+def _source_window(limit):
+    return min(_MAX_SOURCE_RESULTS_PER_QUERY,
+               max(0, int(limit)) * _DISCOVERY_WINDOW_MULTIPLIER)
+
+
+def _report_discovery_skips(telemetry_fn, source, query, skipped, examined):
+    if telemetry_fn is not None and skipped:
+        telemetry_fn({"kind": "photo", "source": source, "query": query[:240],
+                      "result": "DISCOVERY_IDENTITY_SKIPPED",
+                      "skipped_count": skipped, "examined_count": examined})
+
+
+def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
+                     telemetry_fn=None):
     found = []
     excluded = set(excluded_source_ids)
     for query in beat.queries:
         params = {"action": "query", "format": "json", "generator": "search",
                   "gsrsearch": f"filetype:bitmap {query}", "gsrnamespace": 6,
-                  "gsrlimit": limit, "prop": "imageinfo", "iiprop": "url|size|extmetadata",
+                  "gsrlimit": _source_window(limit), "prop": "imageinfo", "iiprop": "url|size|extmetadata",
                   # Ask MediaWiki for its documented raster derivative instead
                   # of repeatedly materialising potentially huge originals.
                   "iiurlwidth": 1600}
         payload = json_get(f"{COMMONS_API}?{urlencode(params)}")
-        for page in payload.get("query", {}).get("pages", {}).values():
+        skipped = examined = 0
+        for page in list(payload.get("query", {}).get("pages", {}).values())[:_MAX_SOURCE_RESULTS_PER_QUERY]:
+            examined += 1
             info = (page.get("imageinfo") or [{}])[0]
             meta = info.get("extmetadata") or {}
             title = _clean(page.get("title"))
@@ -179,33 +214,46 @@ def discover_commons(beat, limit=12, json_get=_json_get, *, excluded_source_ids=
                                                    _metadata(meta, "ImageDescriptionValue")))))
             source_id = f"commons:{page.get('pageid')}"
             direct = info.get("thumburl") or info.get("url")
+            depicts = tuple(filter(None, (_metadata(meta, "DepictedPeople"), _metadata(meta, "Categories"))))
+            if not _identity_bearing(beat, title, desc, depicts):
+                skipped += 1
+                continue
             if (page.get("pageid") is None or source_id in excluded or
                     any(candidate.source_id == source_id for candidate in found) or
                     not info.get("descriptionurl") or not direct or _blocked(title, desc)):
                 continue
-            depicts = tuple(filter(None, (_metadata(meta, "DepictedPeople"), _metadata(meta, "Categories"))))
             found.append(SourceCandidate("commons", source_id,
                 info.get("descriptionurl", ""), direct, title, desc,
                 _metadata(meta, "Artist"), _metadata(meta, "LicenseShortName"),
                 _metadata(meta, "LicenseUrl"), int(info.get("width") or 0), int(info.get("height") or 0),
                 beat.key, query, beat.required_identity, depicts))
             if len(found) >= limit:
+                _report_discovery_skips(telemetry_fn, "commons", query, skipped, examined)
                 return found
+        _report_discovery_skips(telemetry_fn, "commons", query, skipped, examined)
     return found
 
 
-def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=()):
+def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
+                 telemetry_fn=None):
     found = []
     excluded = set(excluded_source_ids)
     for query in beat.queries:
-        payload = json_get(f"{LOC_API}?{urlencode({'fo': 'json', 'q': query, 'c': limit})}")
-        for item in payload.get("results", []):
+        payload = json_get(f"{LOC_API}?{urlencode({'fo': 'json', 'q': query, 'c': _source_window(limit)})}")
+        skipped = examined = 0
+        for item in payload.get("results", [])[:_MAX_SOURCE_RESULTS_PER_QUERY]:
+            examined += 1
             title = _clean(item.get("title"))
             desc = _clean(" ".join(str(value or "") for value in
                                     (item.get("description"), item.get("notes"))))
             source_page = str(item.get("id") or "")
             images = item.get("image_url") or []
             direct = images[-1] if isinstance(images, list) and images else ""
+            depicts = tuple(_clean(value) for field in
+                ("subject", "partof", "location", "names") for value in _values(item.get(field)))
+            if not _identity_bearing(beat, title, desc, depicts):
+                skipped += 1
+                continue
             if not source_page or not direct or _blocked(title, desc, item.get("format")):
                 continue
             resource = (item.get("resources") or [{}])[0]
@@ -216,43 +264,70 @@ def discover_loc(beat, limit=12, json_get=_json_get, *, excluded_source_ids=()):
             found.append(SourceCandidate("loc", source_id, source_page, direct,
                 title, desc, _clean(item.get("contributor")), _clean(item.get("rights")), "",
                 int(resource.get("width") or 0), int(resource.get("height") or 0), beat.key, query,
-                beat.required_identity, tuple(_clean(value) for field in
-                    ("subject", "partof", "location", "names")
-                    for value in _values(item.get(field)))))
+                beat.required_identity, depicts))
             if len(found) >= limit:
+                _report_discovery_skips(telemetry_fn, "loc", query, skipped, examined)
                 return found
+        _report_discovery_skips(telemetry_fn, "loc", query, skipped, examined)
     return found
 
 
-def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_ids=()):
+def discover_openverse(beat, limit=12, json_get=_json_get, *, excluded_source_ids=(),
+                       telemetry_fn=None):
     global _OPENVERSE_DISABLED_UNTIL
     if json_get is _json_get and time.monotonic() < _OPENVERSE_DISABLED_UNTIL:
         return []
     found = []
     excluded = set(excluded_source_ids)
+    scan_cap = _source_window(limit)
     for query in beat.queries:
-        try:
-            payload = json_get(f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': limit})}")
-        except (HTTPError, URLError, TimeoutError):
-            if json_get is _json_get:
-                _OPENVERSE_DISABLED_UNTIL = time.monotonic() + 60
-            raise
-        for item in payload.get("results", []):
-            title, desc = _clean(item.get("title")), _clean(item.get("description"))
-            if (not item.get("id") or not item.get("url") or
-                    not item.get("foreign_landing_url") or
-                    _blocked(title, desc, item.get("tags"))):
-                continue
-            source_id = f"openverse:{item.get('id')}"
-            if source_id in excluded or any(candidate.source_id == source_id for candidate in found):
-                continue
-            found.append(SourceCandidate("openverse", source_id,
-                item["foreign_landing_url"], item["url"], title, desc, _clean(item.get("creator")),
-                _clean(item.get("license")), str(item.get("license_url") or ""),
-                int(item.get("width") or 0), int(item.get("height") or 0), beat.key, query,
-                beat.required_identity, tuple(tag.get("name", "") for tag in item.get("tags", []) if isinstance(tag, dict))))
-            if len(found) >= limit:
-                return found
+        skipped = examined = 0
+        page = 1
+        page_count = None
+        while examined < scan_cap and (page_count is None or page <= page_count):
+            page_size = min(_OPENVERSE_ANON_PAGE_SIZE, scan_cap - examined)
+            try:
+                payload = json_get(f"{OPENVERSE_API}?{urlencode({'q': query, 'page_size': page_size, 'page': page})}")
+            except (HTTPError, URLError, TimeoutError):
+                if json_get is _json_get:
+                    _OPENVERSE_DISABLED_UNTIL = time.monotonic() + 60
+                raise
+            try:
+                reported_page_count = int(payload.get("page_count") or 0)
+            except (TypeError, ValueError):
+                reported_page_count = 0
+            if reported_page_count > 0:
+                page_count = reported_page_count
+            items = payload.get("results", [])
+            if not items:
+                break
+            remaining = scan_cap - examined
+            for item in items[:remaining]:
+                examined += 1
+                title, desc = _clean(item.get("title")), _clean(item.get("description"))
+                depicts = tuple(tag.get("name", "") for tag in item.get("tags", []) if isinstance(tag, dict))
+                if not _identity_bearing(beat, title, desc, depicts):
+                    skipped += 1
+                    continue
+                if (not item.get("id") or not item.get("url") or
+                        not item.get("foreign_landing_url") or
+                        _blocked(title, desc, item.get("tags"))):
+                    continue
+                source_id = f"openverse:{item.get('id')}"
+                if source_id in excluded or any(candidate.source_id == source_id for candidate in found):
+                    continue
+                found.append(SourceCandidate("openverse", source_id,
+                    item["foreign_landing_url"], item["url"], title, desc, _clean(item.get("creator")),
+                    _clean(item.get("license")), str(item.get("license_url") or ""),
+                    int(item.get("width") or 0), int(item.get("height") or 0), beat.key, query,
+                    beat.required_identity, depicts))
+                if len(found) >= limit:
+                    _report_discovery_skips(telemetry_fn, "openverse", query, skipped, examined)
+                    return found
+            if len(items) < page_size:
+                break
+            page += 1
+        _report_discovery_skips(telemetry_fn, "openverse", query, skipped, examined)
     return found
 
 
@@ -280,7 +355,7 @@ class _Images(HTMLParser):
 
 
 def discover_first_party(beat, domain, limit=12, *, page_url=None, html_get=_html_get,
-                         excluded_source_ids=()):
+                         excluded_source_ids=(), telemetry_fn=None):
     """Discover images referenced by a verified official page, never a naked CDN."""
     domain = (domain or "").casefold().strip().strip(".")
     page_url = page_url or f"https://{domain}/"

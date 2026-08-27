@@ -20,6 +20,76 @@
       },
       "source_url": "https://corporate.vanguard.com/content/dam/corp/what-we-care-about/images/ethics-and-integrity/WWCA_Ethics_John.jpg"
     },
+    "bulk-amancio-ortega-person-ffe225c523f4.jpg": {
+      "stories": {
+        "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Brands_boycott_of_Russia_01.jpg",
+      "note": "commons; CC BY-SA 3.0; person"
+    },
+    "bulk-emirates-early-operation-a975e471d425.jpg": {
+      "stories": {
+        "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/23408922@N07/16015016065",
+      "note": "openverse; pdm; early_operation"
+    },
+    "bulk-juan-trippe-pan-am-boeing-747-person-ef594091cda2.jpg": {
+      "stories": {
+        "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": "STRONG_CONTEXT"
+      },
+      "source_url": "http://www.loc.gov/item/2023630585/",
+      "note": "loc; person"
+    },
+    "bulk-microsoft-origin-7cb63087fb3a.jpg": {
+      "stories": {
+        "قصة Microsoft: الشركة التي صنعت آلاف المليونيرات في بلدة واحدة": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/51607907@N03/8128002705",
+      "note": "openverse; by-sa; origin"
+    },
+    "bulk-netflix-origin-37192e81de2d.jpg": {
+      "stories": {
+        "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/22711505@N05/52857024559",
+      "note": "openverse; by; origin"
+    },
+    "bulk-nvidia-origin-3f7fea19b604.jpg": {
+      "stories": {
+        "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/31018257@N00/25519026177",
+      "note": "openverse; by; origin"
+    },
+    "bulk-story-origin-or-early-572b85c17c0c.jpg": {
+      "stories": {
+        "قصة نيويورك: كيف صارت عاصمة المال؟": "STRONG_CONTEXT"
+      },
+      "source_url": "http://www.loc.gov/item/ny1493/",
+      "note": "loc; origin_or_early"
+    },
+    "bulk-story-subject-detail-3404da0baf62.jpg": {
+      "stories": {
+        "قصة نوكيا من مصنع ورق إلى الهواتف": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/38284634@N00/6250961266",
+      "note": "openverse; by; subject_detail"
+    },
+    "bulk-story-subject-detail-812e9c999133.jpg": {
+      "stories": {
+        "كيف بُنيت دبي على الرمل في خمسين سنة؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://www.flickr.com/photos/40656982@N00/3549002774",
+      "note": "openverse; by-nc-nd; subject_detail"
+    },
+    "bulk-story-subject-detail-cda94c3c48a3.jpg": {
+      "stories": {
+        "قصة سابك من فكرة إلى عملاق بتروكيماويات": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:North_Tees_Works_-_geograph.org.uk_-_502684.jpg",
+      "note": "commons; CC BY-SA 2.0; subject_detail"
+    },
     "edison-stock-ticker.jpg": {
       "stories": {
         "Jack Bogle": "WEAK_GENERIC"
@@ -936,76 +1006,6 @@
       "stories": {
         "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
       }
-    },
-    "bulk-emirates-early-operation-a975e471d425.jpg": {
-      "stories": {
-        "قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي": "STRONG_CONTEXT"
-      },
-      "source_url": "https://www.flickr.com/photos/23408922@N07/16015016065",
-      "note": "openverse; pdm; early_operation"
-    },
-    "bulk-microsoft-origin-7cb63087fb3a.jpg": {
-      "stories": {
-        "قصة Microsoft: الشركة التي صنعت آلاف المليونيرات في بلدة واحدة": "STRONG_CONTEXT"
-      },
-      "source_url": "https://www.flickr.com/photos/51607907@N03/8128002705",
-      "note": "openverse; by-sa; origin"
-    },
-    "bulk-netflix-origin-37192e81de2d.jpg": {
-      "stories": {
-        "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام": "STRONG_CONTEXT"
-      },
-      "source_url": "https://www.flickr.com/photos/22711505@N05/52857024559",
-      "note": "openverse; by; origin"
-    },
-    "bulk-nvidia-origin-3f7fea19b604.jpg": {
-      "stories": {
-        "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم": "STRONG_CONTEXT"
-      },
-      "source_url": "https://www.flickr.com/photos/31018257@N00/25519026177",
-      "note": "openverse; by; origin"
-    },
-    "bulk-story-subject-detail-3404da0baf62.jpg": {
-      "stories": {
-        "قصة نوكيا من مصنع ورق إلى الهواتف": "STRONG_CONTEXT"
-      },
-      "source_url": "https://www.flickr.com/photos/38284634@N00/6250961266",
-      "note": "openverse; by; subject_detail"
-    },
-    "bulk-juan-trippe-pan-am-boeing-747-person-ef594091cda2.jpg": {
-      "stories": {
-        "Juan Trippe: بنى Pan Am وأقنع Boeing بصناعة 747": "STRONG_CONTEXT"
-      },
-      "source_url": "http://www.loc.gov/item/2023630585/",
-      "note": "loc; person"
-    },
-    "bulk-story-origin-or-early-572b85c17c0c.jpg": {
-      "stories": {
-        "قصة نيويورك: كيف صارت عاصمة المال؟": "STRONG_CONTEXT"
-      },
-      "source_url": "http://www.loc.gov/item/ny1493/",
-      "note": "loc; origin_or_early"
-    },
-    "bulk-story-subject-detail-812e9c999133.jpg": {
-      "stories": {
-        "كيف بُنيت دبي على الرمل في خمسين سنة؟": "STRONG_CONTEXT"
-      },
-      "source_url": "https://www.flickr.com/photos/40656982@N00/3549002774",
-      "note": "openverse; by-nc-nd; subject_detail"
-    },
-    "bulk-amancio-ortega-person-ffe225c523f4.jpg": {
-      "stories": {
-        "Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً": "STRONG_CONTEXT"
-      },
-      "source_url": "https://commons.wikimedia.org/wiki/File:Brands_boycott_of_Russia_01.jpg",
-      "note": "commons; CC BY-SA 3.0; person"
-    },
-    "bulk-story-subject-detail-cda94c3c48a3.jpg": {
-      "stories": {
-        "قصة سابك من فكرة إلى عملاق بتروكيماويات": "STRONG_CONTEXT"
-      },
-      "source_url": "https://commons.wikimedia.org/wiki/File:North_Tees_Works_-_geograph.org.uk_-_502684.jpg",
-      "note": "commons; CC BY-SA 2.0; subject_detail"
     }
   }
 }

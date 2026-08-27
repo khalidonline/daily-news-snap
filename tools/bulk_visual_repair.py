@@ -40,6 +40,7 @@ ALLOWED_FAILURES = frozenset({
     "SOURCE_UNAVAILABLE", "NO_SAFE_CANDIDATE", "IDENTITY_UNPROVEN",
     "DUPLICATE_ONLY", "LOGO_IDENTITY_MISSING", "VALIDATION_ERROR",
     "EXTERNAL_API_ERROR",
+    "DISCOVERY_IDENTITY_SKIPPED",
 })
 
 
@@ -413,8 +414,11 @@ def repair_photos(story, deficit, max_candidates_per_beat=12, attempt_fn=append_
                 break
             try:
                 discovery_started = time.monotonic()
+                def discovery_telemetry(record):
+                    attempt_fn({"story": story, "beat": beat.key, **record})
                 candidates = adapter(beat, max_candidates_per_beat,
-                                     excluded_source_ids=seen_source_ids)
+                                     excluded_source_ids=seen_source_ids,
+                                     telemetry_fn=discovery_telemetry)
                 discovery_seconds = time.monotonic() - discovery_started
             except ReviewerConfigurationError:
                 raise
