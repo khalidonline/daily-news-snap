@@ -1,29 +1,29 @@
 {
-  "run_nonce": "2026-08-29-near-pass-photos-2",
+  "run_nonce": "2026-08-29-near-pass-photos-3",
   "assets": [
     {
-      "filename": "targeted-tsmc-morris-chang-2018.jpg",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Morris_Chang_2018-11-12.jpg",
-      "tags": ["TSMC", "Morris Chang"],
-      "credit": "Mori / Office of the President (Taiwan) via Wikimedia Commons — CC BY 2.0",
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "verdict": "DIRECT"
-    },
-    {
-      "filename": "targeted-kodak-brownie-1980.jpg",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Kodak_Brownie_camera.jpg",
-      "tags": ["Kodak", "Eastman Kodak", "Brownie camera"],
-      "credit": "Matthew Paul Argall via Wikimedia Commons — CC BY 4.0; Kodak Brownie camera",
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "verdict": "DIRECT"
-    },
-    {
-      "filename": "targeted-cpm-digital-research-house.jpg",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/0/03/Gary_kildall801lighthouse.jpg",
-      "tags": ["Digital Research", "Gary Kildall"],
-      "credit": "Piotr J. Flatau via Wikimedia Commons — CC BY-SA 4.0; Digital Research house, 801 Lighthouse Ave",
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "filename": "targeted-2008-wall-street-october.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Wall_Street_New_York_2008.jpg",
+      "tags": ["2008 financial crisis", "Wall Street", "New York Stock Exchange", "October 2008"],
+      "credit": "Faizul Latif Chowdhury via Wikimedia Commons — CC BY-SA 3.0; Wall Street/NYSE entrance photographed in October 2008",
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
       "verdict": "STRONG_CONTEXT"
+    },
+    {
+      "filename": "targeted-saleh-kamel-1983.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Habib_Bourguiba,_Mohamed_Mzali,_Moncef_Cheikh-Rouhou,_Sheikh_Abdullah_Salah_Kamel.jpg",
+      "tags": ["Saleh Abdullah Kamel", "Dallah Albaraka", "Islamic finance", "1983"],
+      "credit": "HanniBarca via Wikimedia Commons — public domain; Sheikh Saleh Abdullah Kamel pictured during a 1983 Islamic-finance project meeting",
+      "story": "قصة صالح كامل ودلة البركة",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "targeted-publix-first-store-building.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/First_Publix_Supermarket_location%27s_building,_today_(as_seen_from_south-east).jpg",
+      "tags": ["Publix", "first Publix supermarket", "George W. Jenkins", "Lakeland Florida"],
+      "credit": "Wikimedia Commons; building of the first Publix Supermarket location",
+      "story": "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل",
+      "verdict": "DIRECT"
     }
   ]
 }
