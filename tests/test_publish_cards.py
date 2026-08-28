@@ -5,7 +5,7 @@ import tempfile
 import types
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,14 +39,29 @@ publish_cards = importlib.import_module("publish_cards")
 
 
 class PublishMediaTests(unittest.TestCase):
-    def test_bundle_keeps_each_reviewed_frame_as_separate_upload(self):
-        frames = ["card-1.png", "card-2.png", "card-3.png", "card-4.png"]
-        with patch.object(publish_cards, "POST_PROVIDER", "bundle"), \
-             patch.object(publish_cards, "frames_to_video") as to_video:
-            media = publish_cards.prepare_publish_media(frames, "2026-08-28-2pm")
+    def test_bundle_posts_each_reviewed_frame_as_its_own_story_item(self):
+        frames = ["card-1.png", "card-2.png", "card-3.png"]
+        responses = [{"status": "ok", "n": 1}, {"status": "ok", "n": 2}, {"status": "ok", "n": 3}]
+        with patch.object(publish_cards, "post_story", side_effect=responses) as post_story, \
+             patch.object(publish_cards, "post_ok", return_value=True):
+            result = publish_cards.publish_bundle_frames("caption", frames)
 
-        self.assertEqual(media, frames)
-        to_video.assert_not_called()
+        self.assertEqual(result, responses[-1])
+        self.assertEqual(post_story.call_args_list, [
+            call("caption", [], ["card-1.png"]),
+            call("caption", [], ["card-2.png"]),
+            call("caption", [], ["card-3.png"]),
+        ])
+
+    def test_bundle_stops_on_first_failed_frame(self):
+        frames = ["card-1.png", "card-2.png", "card-3.png"]
+        responses = [{"status": "ok"}, {"status": "error"}]
+        with patch.object(publish_cards, "post_story", side_effect=responses) as post_story, \
+             patch.object(publish_cards, "post_ok", side_effect=[True, False]):
+            result = publish_cards.publish_bundle_frames("caption", frames)
+
+        self.assertEqual(result, responses[-1])
+        self.assertEqual(post_story.call_count, 2)
 
     def test_non_bundle_still_uses_video_for_multi_frame_story(self):
         frames = ["card-1.png", "card-2.png"]
