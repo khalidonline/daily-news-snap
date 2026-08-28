@@ -24,7 +24,7 @@
 قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ | Aramco, أرامكو, logo:aramco.com
 كيف نشأت أول بورصة في العالم؟ | Amsterdam Stock Exchange, subject:first-stock-exchange
 قصة أزمة 2008: كيف بدأت وكيف انتهت؟ | entity: أزمة 2008 | subject:crisis-2008
-لماذا ارتبط الريال السعودي بالدولار وكيف؟ | entity: ربط الريال | subject:riyal-dollar-peg
+لماذا ارتبط الريال السعودي بالدولار وكيف؟ | entity: ربط الريال, SAMA, Saudi Central Bank, البنك المركزي السعودي | subject:riyal-dollar-peg | logo:sama.gov.sa
 قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي | PIF, Public Investment Fund
 كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟ | entity: Maersk, ميرسك | logo:maersk.com
 قصة البيتكوين: من ورقة بحثية إلى أصل بتريليونات | Bitcoin
@@ -134,7 +134,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة أزمة النقد في الثمانينات وأثرها على الخليج | subject:gulf-1980s-crisis
 قصة طفرة النفط الأولى في السبعينات وتغيير المملكة | 1970s oil boom
 قصة تأسيس مؤسسة النقد ساما | SAMA, Saudi Central Bank
-قصة ربط الريال بالدولار وقصته | entity: ربط الريال | subject:riyal-dollar-peg
+قصة ربط الريال بالدولار وقصته | entity: ربط الريال, SAMA, Saudi Central Bank, البنك المركزي السعودي | subject:riyal-dollar-peg | logo:sama.gov.sa
 
 # Global giants' Saudi chapter
 قصة كريم من الفكرة إلى استحواذ أوبر | Careem, Uber, subject:careem, logo:careem.com

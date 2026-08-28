@@ -69,6 +69,14 @@
         "قصة المكيّف الذي جعل مدن الخليج ممكنة": "DIRECT"
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:Carrier_HVAC_system,_MVUC.jpg"
+    },
+    "targeted-riyal-five-faisal-museum.jpg": {
+      "stories": {
+        "لماذا ارتبط الريال السعودي بالدولار وكيف؟": "DIRECT",
+        "قصة ربط الريال بالدولار وقصته": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Five_Riyals_from_the_Reign_of_King_Faisal_bin_Abdulaziz,_Alaliyah_Museum_Collection,_Jazan_(2024).jpg",
+      "note": "Distinct photograph of a historical Saudi five-riyal banknote; direct currency context for both peg stories."
     }
   }
 }
