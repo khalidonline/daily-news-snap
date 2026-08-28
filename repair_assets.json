@@ -1,31 +1,85 @@
 {
-  "run_nonce": "2026-08-26-bogle-repair-2",
+  "run_nonce": "2026-08-28-manual-sourcing-batch-1",
   "assets": [
     {
-      "filename": "bogle-vanguard-1959.jpg",
-      "url": "https://investor.vanguard.com/content/retail/public/us/en/about-us/_jcr_content/root/container/container_1884309581_30279271/container_890438166/image.coreimg.jpeg/1773702033665/vg20250421-bogle-morgan-welch-1959.jpeg",
-      "tags": ["Jack Bogle", "Vanguard", "The Vanguard Group"],
-      "credit": "Vanguard — official history page, Jack Bogle with colleagues (1959)",
-      "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
+      "filename": "ajay-bhatt-isef.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ajay_Bhatt_at_Intel_ISEF.jpg",
+      "tags": ["Ajay Bhatt", "USB", "Intel", "أجاي بهات"],
+      "credit": "LepVektor — Ajay Bhatt at Intel ISEF — public domain — Wikimedia Commons",
+      "story": "Ajay Bhatt: مخترع منفذ USB الذي لم يربح منه شيئاً",
       "verdict": "DIRECT"
     },
     {
-      "filename": "bogle-vanguard-1989.jpg",
-      "url": "https://corporate.vanguard.com/content/dam/corp/articles/images/50-years-50-facts-indexing/50_facts_fact_5.png",
-      "tags": ["Jack Bogle", "Vanguard", "The Vanguard Group"],
-      "credit": "Vanguard — 50 years of indexing, John C. Bogle pictured in 1989; cropped to the photographic panel",
-      "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
-      "verdict": "DIRECT",
-      "crop_box": [0.0, 0.0, 0.35, 1.0],
-      "replace_existing": true
+      "filename": "ajay-bhatt-usb-coinventor.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/USB_co-inventor_Ajay_Bhatt.jpg",
+      "tags": ["Ajay Bhatt", "USB co-inventor", "Intel", "أجاي بهات"],
+      "credit": "Intel Free Press — USB co-inventor Ajay Bhatt — CC BY-SA 2.0 — Wikimedia Commons",
+      "story": "Ajay Bhatt: مخترع منفذ USB الذي لم يربح منه شيئاً",
+      "verdict": "DIRECT"
     },
     {
-      "filename": "bogle-vanguard-founder.jpg",
-      "url": "https://corporate.vanguard.com/content/dam/corp/what-we-care-about/images/ethics-and-integrity/WWCA_Ethics_John.jpg",
-      "tags": ["Jack Bogle", "Vanguard", "The Vanguard Group"],
-      "credit": "Vanguard — official ethics and integrity page, founder John C. Bogle",
-      "story": "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير",
+      "filename": "mary-wilkes-linc-home-1965.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Mary_Allen_Wilkes_-_LINC_at_Home_-_1965.jpg",
+      "tags": ["Mary Allen Wilkes", "LINC", "1965", "home computer", "ماري ألن ويلكس"],
+      "credit": "Rex B. Wilkes / Mary Allen Wilkes archives — LINC at Home, 1965 — CC BY-SA 4.0 via Wikimedia VRT — Wikimedia Commons",
+      "story": "Mary Allen Wilkes: أول من استخدم حاسوباً في بيتها عام 1965",
       "verdict": "DIRECT"
+    },
+    {
+      "filename": "mary-wilkes-linc-computer.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/LINC_Computer_(5900038265).jpg",
+      "tags": ["Mary Allen Wilkes", "LINC computer", "LINC", "computer history"],
+      "credit": "Don DeBold — LINC Computer — CC BY 2.0 — Wikimedia Commons/Flickr",
+      "story": "Mary Allen Wilkes: أول من استخدم حاسوباً في بيتها عام 1965",
+      "verdict": "STRONG_CONTEXT"
+    },
+    {
+      "filename": "jerry-lawson-channel-f.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fairchild-Channel-F.jpg",
+      "tags": ["Jerry Lawson", "Fairchild Channel F", "video game cartridge", "Fairchild Semiconductor", "جيري لوسون"],
+      "credit": "Evan-Amos — Fairchild Channel F console — CC BY-SA 3.0 — Wikimedia Commons",
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "verdict": "STRONG_CONTEXT"
+    },
+    {
+      "filename": "mohammed-bin-laden-portrait.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Muhammad_bin_Ladin.jpg",
+      "tags": ["Mohammed bin Laden", "Muhammad bin Ladin", "Saudi Binladin Group", "محمد بن لادن"],
+      "credit": "Saudi Binladin Group — Muhammad bin Ladin, 1930s–1940s — public domain in Saudi Arabia — Wikimedia Commons",
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "philo-farnsworth-1939.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Philo_T_Farnsworth.jpg",
+      "tags": ["Philo Farnsworth", "television inventor", "1939", "فيلو فارنسورث"],
+      "credit": "Harris & Ewing / Library of Congress — Philo T. Farnsworth, 1939 — no known copyright restrictions — Wikimedia Commons",
+      "story": "Philo Farnsworth: اخترع التلفزيون في مزرعة وخسر حقوقه",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "philo-farnsworth-1924-yearbook.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Philo_Farnsworth_1924_yearbook.png",
+      "tags": ["Philo Farnsworth", "1924 yearbook", "Brigham Young High School", "فيلو فارنسورث"],
+      "credit": "1924 Brigham Young High School The Banyan — Philo Farnsworth yearbook portrait — public domain — Wikimedia Commons/Archive.org",
+      "story": "Philo Farnsworth: اخترع التلفزيون في مزرعة وخسر حقوقه",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "tesla-model-s-preproduction-2009.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Building_the_Tesla_(3654444214).jpg",
+      "tags": ["Tesla Inc", "Tesla Motors", "Tesla Model S", "pre-production", "2009"],
+      "credit": "Steve Jurvetson — Building the Tesla / Model S pre-production, 2009 — CC BY 2.0 — Wikimedia Commons/Flickr",
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "verdict": "STRONG_CONTEXT"
+    },
+    {
+      "filename": "tesla-nummi-factory-2010.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/From_NUMMI_to_Tesla_(5122119787).jpg",
+      "tags": ["Tesla Inc", "Tesla Motors", "Tesla Factory", "NUMMI", "Tesla Model S", "2010"],
+      "credit": "Steve Jurvetson — From NUMMI to Tesla manufacturing facility, 2010 — CC BY 2.0 — Wikimedia Commons/Flickr",
+      "story": "قصة Tesla: الشركة التي كادت تفلس مرتين",
+      "verdict": "STRONG_CONTEXT"
     }
   ]
 }
