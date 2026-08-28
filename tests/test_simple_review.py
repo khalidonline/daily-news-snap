@@ -54,7 +54,7 @@ def _photo(path, seed):
 
 
 class SimpleReviewTests(unittest.TestCase):
-    def test_requested_picture_count_is_applied_to_rendered_cards(self):
+    def test_standard_four_picture_coverage_is_applied_to_rendered_cards(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             frames = []
@@ -76,7 +76,7 @@ class SimpleReviewTests(unittest.TestCase):
                 4,
             )
 
-    def test_review_builds_one_fresh_story_then_sends_that_deck(self):
+    def test_review_builds_one_fresh_story_with_automatic_picture_standard(self):
         fresh = [f"fresh-{i}.png" for i in range(1, 7)]
         approved = [f"approved-{i}.jpg" for i in range(1, 5)]
         with patch.object(safe_publish_cards, "_build_fresh_review_story", return_value=("2026-08-28-8pm", fresh)) as build, \
@@ -86,7 +86,7 @@ class SimpleReviewTests(unittest.TestCase):
              patch.object(safe_publish_cards, "require_photo_coverage", return_value=4) as gate, \
              patch.object(safe_publish_cards.publisher, "load_caption", return_value="caption"), \
              patch.object(safe_publish_cards, "_telegram_review_photo", return_value=True) as send_photo:
-            safe_publish_cards.review_story_on_telegram("Jack Bogle", 4)
+            safe_publish_cards.review_story_on_telegram("Jack Bogle")
 
         build.assert_called_once_with("Jack Bogle")
         identity.assert_called_once_with("2026-08-28-8pm")
@@ -99,11 +99,9 @@ class SimpleReviewTests(unittest.TestCase):
             call("👀 مراجعة قبل النشر — 2026-08-28-8pm\n1/6\ncaption", "fresh-1.png"),
         )
 
-    def test_review_requires_story_and_picture_count_one_to_four(self):
-        for story, count in (("", 4), ("Jack Bogle", 0), ("Jack Bogle", 5)):
-            with self.subTest(story=story, count=count):
-                with self.assertRaises(SystemExit):
-                    safe_publish_cards.review_story_on_telegram(story, count)
+    def test_review_requires_only_story(self):
+        with self.assertRaises(SystemExit):
+            safe_publish_cards.review_story_on_telegram("")
 
 
 if __name__ == "__main__":
