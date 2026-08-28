@@ -23,6 +23,9 @@ def _fake_news_bot():
     module.DRY_RUN = False
     module.POST_PROVIDER = "bundle"
     module.MEDIA_MODE = "github"
+    module.BUNDLE_API_KEY = "test-key"
+    module.BUNDLE_BASE = "https://api.bundle.social/api/v1"
+    module.BUNDLE_HEADERS = {"User-Agent": "test"}
     module.post_story = lambda *args, **kwargs: {}
     module.post_ok = lambda response: True
     module.describe_failure = lambda response: ""
@@ -35,7 +38,6 @@ def _fake_news_bot():
     module.deliver_unposted = lambda *args, **kwargs: None
     module.publish_many_via_github = lambda media: []
     module.upload_media = lambda path: ""
-    module.wait_for_bundle_post = lambda response, **kwargs: response
     return module
 
 
