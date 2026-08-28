@@ -1,0 +1,209 @@
+name: Riyal peg near-pass visual repair
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/riyal-peg-near-pass-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: riyal-peg-near-pass-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Fetch reviewed Saudi Central Bank photo and logo
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p images/logos
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          UA = 'daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)'
+
+          def commons(title, destination, width=1600):
+              params = urlencode({
+                  'action': 'query', 'format': 'json', 'prop': 'imageinfo',
+                  'iiprop': 'url|extmetadata', 'iiurlwidth': width,
+                  'titles': 'File:' + title,
+              })
+              req = Request('https://commons.wikimedia.org/w/api.php?' + params, headers={'User-Agent': UA})
+              with urlopen(req, timeout=25) as response:
+                  payload = json.load(response)
+              page = next(iter(payload['query']['pages'].values()))
+              if 'missing' in page or not page.get('imageinfo'):
+                  raise SystemExit(f'Commons file missing: {title}')
+              info = page['imageinfo'][0]
+              url = info.get('thumburl') or info['url']
+              with urlopen(Request(url, headers={'User-Agent': UA}), timeout=30) as response:
+                  Path(destination).write_bytes(response.read())
+              print(f'fetched {title} -> {destination}')
+
+          commons('Bank SA.jpg', 'images/targeted-sama-bank-building.jpg')
+          commons('Saudi Central Bank Logo.png', 'images/logos/sama.gov.sa-current.png', 1280)
+          PY
+
+      - name: Validate distinct photo and clean logo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          from image_precheck import dhash, DHASH_MAX_DISTANCE
+
+          new = Path('images/targeted-sama-bank-building.jpg')
+          with Image.open(new) as im:
+              im.verify()
+          with Image.open(new) as im:
+              if im.width < 600 or im.height < 400:
+                  raise SystemExit(f'candidate too small: {im.size}')
+              print(f'candidate verified: {im.size}')
+
+          new_hash = dhash(new)
+          if new_hash is None:
+              raise SystemExit('could not fingerprint candidate')
+          for old in Path('images').glob('*'):
+              if old == new or not old.is_file() or old.suffix.lower() not in {'.jpg', '.jpeg', '.png', '.webp'}:
+                  continue
+              old_hash = dhash(old)
+              if old_hash is None:
+                  continue
+              distance = (new_hash ^ old_hash).bit_count()
+              if distance <= DHASH_MAX_DISTANCE:
+                  raise SystemExit(f'candidate duplicates {old} distance={distance}')
+          print('distinctness gate PASS')
+
+          p = Path('images/logos/sama.gov.sa-current.png')
+          with Image.open(p) as src:
+              rgba = src.convert('RGBA')
+          # Commons file currently has a white raster background; make only near-white
+          # edge/background pixels transparent, crop, then pad for card-safe treatment.
+          corners = [rgba.getpixel((0,0)), rgba.getpixel((rgba.width-1,0)),
+                     rgba.getpixel((0,rgba.height-1)), rgba.getpixel((rgba.width-1,rgba.height-1))]
+          if all(a > 220 and r > 240 and g > 240 and b > 240 for r,g,b,a in corners):
+              data = []
+              for r,g,b,a in rgba.getdata():
+                  data.append((r,g,b,0 if r > 245 and g > 245 and b > 245 else a))
+              rgba.putdata(data)
+          bbox = rgba.getchannel('A').getbbox()
+          if not bbox:
+              raise SystemExit('logo became empty')
+          rgba = rgba.crop(bbox)
+          pad = max(16, int(max(rgba.size) * 0.05))
+          canvas = Image.new('RGBA', (rgba.width + 2*pad, rgba.height + 2*pad), (255,255,255,0))
+          canvas.alpha_composite(rgba, (pad,pad))
+          if canvas.width < 250 or canvas.height < 80:
+              raise SystemExit(f'logo too small after normalization: {canvas.size}')
+          canvas.save(p)
+          print(f'clean logo normalized: {canvas.size}')
+          PY
+
+      - name: Register both peg stories
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          story_a = 'لماذا ارتبط الريال السعودي بالدولار وكيف؟'
+          story_b = 'قصة ربط الريال بالدولار وقصته'
+
+          manifest = Path('images/images.txt')
+          text = manifest.read_text(encoding='utf-8').rstrip()
+          line = ('targeted-sama-bank-building.jpg | SAMA, Saudi Central Bank, البنك المركزي السعودي, '
+                  'مؤسسة النقد, ربط الريال, الريال بالدولار | Sabadek / CC BY-SA 4.0 — Wikimedia Commons')
+          if line not in text:
+              text += '\n' + line
+          manifest.write_text(text + '\n', encoding='utf-8')
+
+          relevance_path = Path('images/relevance.json')
+          relevance = json.loads(relevance_path.read_text(encoding='utf-8'))
+          relevance.setdefault('assets', {})['targeted-sama-bank-building.jpg'] = {
+              'stories': {story_a: 'DIRECT', story_b: 'DIRECT'},
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Bank_SA.jpg',
+              'note': 'Saudi Central Bank building; direct institutional context for the Saudi riyal-dollar peg.',
+          }
+          relevance_path.write_text(json.dumps(relevance, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          index_path = Path('images/logos/index.json')
+          index = json.loads(index_path.read_text(encoding='utf-8'))
+          index['sama.gov.sa'] = [
+              'Saudi Central Bank', 'SAMA', 'Saudi Arabian Monetary Authority',
+              'البنك المركزي السعودي', 'مؤسسة النقد', 'ساما',
+              'ربط الريال', 'riyal-dollar peg', 'Saudi riyal', 'sama.gov.sa'
+          ]
+          index_path.write_text(json.dumps(index, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          stories_path = Path('stories.txt')
+          stories = stories_path.read_text(encoding='utf-8')
+          replacements = {
+              'لماذا ارتبط الريال السعودي بالدولار وكيف؟ | entity: ربط الريال | subject:riyal-dollar-peg':
+              'لماذا ارتبط الريال السعودي بالدولار وكيف؟ | entity: ربط الريال, SAMA, Saudi Central Bank, البنك المركزي السعودي | subject:riyal-dollar-peg | logo:sama.gov.sa',
+              'قصة ربط الريال بالدولار وقصته | entity: ربط الريال | subject:riyal-dollar-peg':
+              'قصة ربط الريال بالدولار وقصته | entity: ربط الريال, SAMA, Saudi Central Bank, البنك المركزي السعودي | subject:riyal-dollar-peg | logo:sama.gov.sa',
+          }
+          for old, new in replacements.items():
+              if old not in stories:
+                  raise SystemExit(f'expected story line missing: {old}')
+              stories = stories.replace(old, new, 1)
+          stories_path.write_text(stories, encoding='utf-8')
+          PY
+
+      - name: Verify both stories on authoritative board
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          rm -rf /tmp/riyal-board-engine
+          mkdir -p /tmp/riyal-board-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/riyal-board-engine
+          PYTHONPATH=/tmp/riyal-board-engine python - <<'PY'
+          import sys
+          sys.path.insert(0, '/tmp/riyal-board-engine')
+          from tools.bulk_visual_board import build_board
+
+          stories = [
+              'لماذا ارتبط الريال السعودي بالدولار وكيف؟',
+              'قصة ربط الريال بالدولار وقصته',
+          ]
+          rows = build_board(stories)
+          for row in rows:
+              print(f'{row.story}: {row.status} photos={len(row.photos)} logos={len(row.logos)}')
+          if any(row.status != 'PASS' or len(row.photos) < 4 or len(row.logos) < 1 for row in rows):
+              raise SystemExit('one or more riyal peg stories failed authoritative coverage')
+          PY
+
+      - name: Commit accepted repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name story-visual-repair-bot
+          git config user.email actions@github.com
+          git add images/targeted-sama-bank-building.jpg images/logos/sama.gov.sa-current.png \
+            images/images.txt images/relevance.json images/logos/index.json stories.txt
+          git commit -m "repair: close two riyal peg near-pass gaps"
+          git pull --rebase origin repair/all-story-visuals-2026-08-29
+          git push origin HEAD:repair/all-story-visuals-2026-08-29
