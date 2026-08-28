@@ -697,6 +697,762 @@
       "source_id": "first-party:careem.com:f5dfd064546b2d75d725",
       "result": "IDENTITY_UNPROVEN",
       "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:eea889d6c6a5bd8e283d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:bc07f44017bbf78d4cab",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:7ac1bd6b5f580eea3d4e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:25897cde732dc6c2208a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:89f235d64cc2b8d5878b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:039253058c53b523f246",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:9a675c631cdcf4eb0dd6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:004835272072f30596bc",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:200c3383bbbc223bdf01",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f72b339f315070c1d61e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:0603681a321fb1635331",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:91d474f5daf986632b48",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:bda5e83d515a9263b759",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:04c715e0fe107164aa6b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:47adff38640e749b48e8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:cb6f7d278357cf771137",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f49d652b4b5953a3152f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:cd89aed966c9c46c6698",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:575fa03196705c6b4db6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:21d08dec7cb114b1700f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:8213a0cfe74ef13d6ef8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:efb8951e5484f07eae57",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f04f82c51646b3c70389",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:66d39d490055a7523447",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:531e4ddc26cfe6118c73",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:a0f02a3bcade6e3dc60f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f5b240c16f65adf59b00",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:89c63332d9c24c2f7ee8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:debc7ce46e1e3436fb11",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:a314238db075ecd88d3e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:0bd4821c7c1369c7266d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:8705c90c6a8095434d25",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:44c7941c8cbd56c4ec49",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:55874d51533d748774de",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:57480db56f0e49cc2fc0",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:f8254723fc110523b9ab",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:48b6269bcbc48581dacc",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:2960f64251b8cd9a0422",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:03720a9c05aef892479e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:e8385acc41812d0b5d37",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:65759fedc100bc90171f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:b574a3e23b1ed5719607",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:b35a81ade820ef8801d4",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:55561c41f02e51b97c1e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:72610e05ae312dda0b32",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:cfdc1328799fe1ba43ef",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:9a4fca76bf807333ed4f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:4cecff4d6f16e59220aa",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:a5a390fe2172b6c64063",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:cdf63ee1058924bd5f97",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:a98a6fd10e8740149db0",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:ed420f651c78491fdb45",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:0d7e39278aae55f3b8ea",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:1b12635746edc2a5219f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:f9de7e4538daa9d738a7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:92043390db4d50551cfd",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:740c442dd71c4d0f80b5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:2593691f45cc9cef6085",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:7bf4789047fd61727630",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:34cf347e22b6a2029767",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:2e4df7aa152ae9c913bf",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:c7b5c936d4697474cc8a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:a2c0d2563d72c09dc9da",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:992fb96745f8ad314da9",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ddcd94ce626bdff6236a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:8b94ff36087e87ed54de",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ea39ec3cc09f08fd4271",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:615016c23c05bff79049",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:c75b499bd86c6a53da99",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:7c221147ab0b38357f76",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:d2ffc7d7ed11aff456a6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:0703f8fe93ce8124235b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:9a0a74d121c56cc8d00a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:a623de379c42291254cd",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:85ae13b2f3b9b6661e46",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:3c29a6612cfaa250f103",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:4862a2607567228e732e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:1d80292dfedc77cbbae3",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:86afe12499995568e2f8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:020f4da75216990e29fd",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ffc02886132e4ca81c28",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:5873c0239c1ff20c2c92",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:19ef0f89e43eb08404f2",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:9614ee26141d4879c7e4",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:259608bf930b7a58f037",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:6892573968e51bacde3d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:0ef47fef6dc3ad0bc32d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:b850bf5d13ac4ffc40f1",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:40fa39c0e8b4dcdf3377",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:d910d93bd6b12ff28401",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:c4b4d5b420dafb0591a6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:58e1dfc0680c4affdf39",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:34e3ccfed007ce66e3fb",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:75858734110e5a0a586b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:43b06be5f3e6fea83c11",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:f7448befe3190027cbbf",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:64a86e96c3d0a0721025",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:145533209140ce63b2a7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:37a38a70c2f2f1be7342",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:915781dd3a0abf1038f2",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:6ea7b46ec47864ea47d0",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ed02817b7a39cf4599f6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:6d9216faaae12e5dff49",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:68c137efefbf936fa105",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:0f89cc04c60b02cd2d78",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ffaf49b0c192a5d81bd7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:f837ff5b6ac185446688",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:4017513c83f1ae21ba57",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
     }
   ],
   "complete_query_sets": [
@@ -1443,1833 +2199,165 @@
       "beat": "origin_or_early",
       "source": "openverse",
       "fingerprint": "6ef4b307cec27bbebc3dceba81fb1de397f421968f8a8423d39ac96283280fd2"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "fingerprint": "ebe955707fbe398aa8388d93b5bdfdfdb91525ed2def2480771969cf819efa72"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "fingerprint": "0e0302e9b76fdb385aee99eaf80506143982ad8bb75bdfd83019a8bee642bde0"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "loc",
+      "fingerprint": "e5b222c31cc21d8fccc132b505711e3a163d8682f2f765179e2ef722a7785d68"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "first-party",
+      "fingerprint": "2482e135abfcdb1bfd036ac4af725cec0633db9107f7953b4ddcd0307ff6f253"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "loc",
+      "fingerprint": "71d15a38323969ab98aacbe0c35f5c4f708c2991c02245a19f818ab32b8e987f"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "openverse",
+      "fingerprint": "71d15a38323969ab98aacbe0c35f5c4f708c2991c02245a19f818ab32b8e987f"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "fingerprint": "67c31ff8bbcf649d53080c6c3cbeb06e6be5b7dfc4a2b43fb61d25493c24996c"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "fingerprint": "67c31ff8bbcf649d53080c6c3cbeb06e6be5b7dfc4a2b43fb61d25493c24996c"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "commons",
+      "fingerprint": "13173e9ffd2694b6c9ace08d93c4b1db9344782f152615695392b646edf8179f"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "3d5b4af3a728b7edaf526c25eabc74be305fd9b58be27992fb79d9088443e97e"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "fingerprint": "6c97469eaf6ae8eb0e18b3d820b8061de4120aa6521559fa660984ffa8623ace"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "fingerprint": "6c97469eaf6ae8eb0e18b3d820b8061de4120aa6521559fa660984ffa8623ace"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "fingerprint": "6c97469eaf6ae8eb0e18b3d820b8061de4120aa6521559fa660984ffa8623ace"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "loc",
+      "fingerprint": "23b88a4ed63748f874ca7bd28efa83cae771ec5885b8b358480204cb54433c52"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "early_operation",
+      "source": "commons",
+      "fingerprint": "7d12c79174179a96c9a5e2d66ce16d6f93f62b6cf6851533e5539405c60153a0"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "early_operation",
+      "source": "loc",
+      "fingerprint": "7d12c79174179a96c9a5e2d66ce16d6f93f62b6cf6851533e5539405c60153a0"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "eeaf6a7115e183533bc077beccb67ef1c9d2b2b751de2eff097e7d944a8adcfc"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "eeaf6a7115e183533bc077beccb67ef1c9d2b2b751de2eff097e7d944a8adcfc"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "commons",
+      "fingerprint": "de53ab492b227f52bdd729992b3832ccc6b7f080a8e1e309871f75c7ae505669"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "loc",
+      "fingerprint": "de53ab492b227f52bdd729992b3832ccc6b7f080a8e1e309871f75c7ae505669"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "commons",
+      "fingerprint": "1baffbf975239829b62fde353c3ec52feed0bef3b023d6790c9d07f0ae59f331"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "openverse",
+      "fingerprint": "1baffbf975239829b62fde353c3ec52feed0bef3b023d6790c9d07f0ae59f331"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "loc",
+      "fingerprint": "1baffbf975239829b62fde353c3ec52feed0bef3b023d6790c9d07f0ae59f331"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "ded544ba3374f1b1060fa011b4d0e0616a0ac84b6fe26c5853771ec2f2bb0a3e"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "ded544ba3374f1b1060fa011b4d0e0616a0ac84b6fe26c5853771ec2f2bb0a3e"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "ded544ba3374f1b1060fa011b4d0e0616a0ac84b6fe26c5853771ec2f2bb0a3e"
     }
   ],
   "diagnostics": [
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:kodak.com:4bb3daa59a28917322f7",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:kodak.com:e4bdb1d51e395a76a811",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:kodak.com:c2637a23267961d6c2e5",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:kodak.com:34663d32bfee2127d211",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:kodak.com:25eada01bc450b3caf11",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "SOURCE_UNAVAILABLE",
-      "reason": "TimeoutError: The read operation timed out"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "person_organization_relationship_absent_or_ambiguous"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "person",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "person",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "person",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "early_work",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "early_work",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "early_work",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "early_work",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "early_work",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "beat": "early_work",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:c9caf8fcfda6e9c0bfd4",
-      "result": "VALIDATION_ERROR",
-      "reason": "WEAK_GENERIC; VALIDATION_ERROR: source metadata not sufficient"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "ambiguous_entity_candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "origin_or_early",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "origin_or_early",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "origin_or_early",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "modern_or_legacy",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "modern_or_legacy",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "modern_or_legacy",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "beat": "modern_or_legacy",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة Rolex وصناعة الفخامة",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "person_organization_relationship_absent_or_ambiguous"
-    },
-    {
-      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "exact_entity_no_logo_property"
-    },
-    {
-      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة القهوة السعودية",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "ambiguous_entity_candidates"
-    },
-    {
-      "story": "قصة القهوة السعودية",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "ambiguous_entity_candidates"
-    },
-    {
-      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة دخول لوسيد ومصنعها في السعودية",
-      "source": "commons",
-      "result": "VALIDATION_ERROR",
-      "reason": "verified_organization_logo_download_or_render_validation_failed"
-    },
-    {
-      "story": "قصة دخول لوسيد ومصنعها في السعودية",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة سكة حديد الرياض الدمام 1951",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "no_entity_candidate"
-    },
-    {
-      "story": "قصة سكة حديد الرياض الدمام 1951",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "no_entity_candidate"
-    },
-    {
-      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:c9caf8fcfda6e9c0bfd4",
-      "result": "VALIDATION_ERROR",
-      "reason": "WEAK_GENERIC; VALIDATION_ERROR: source metadata not sufficient"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "beat": "modern_result",
-      "source": "first-party",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "beat": "modern_result",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "beat": "modern_result",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "person_organization_relationship_absent_or_ambiguous"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "no_entity_candidate"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin_or_early",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin_or_early",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin_or_early",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "SOURCE_UNAVAILABLE",
-      "reason": "TimeoutError: The read operation timed out"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "modern_or_legacy",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "modern_or_legacy",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "modern_or_legacy",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "modern_or_legacy",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "person_organization_relationship_absent_or_ambiguous"
-    },
-    {
-      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "exact_entity_no_logo_property"
-    },
-    {
-      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة القهوة السعودية",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "ambiguous_entity_candidates"
-    },
-    {
-      "story": "قصة القهوة السعودية",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "ambiguous_entity_candidates"
-    },
-    {
-      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة دخول لوسيد ومصنعها في السعودية",
-      "source": "commons",
-      "result": "VALIDATION_ERROR",
-      "reason": "verified_organization_logo_download_or_render_validation_failed"
-    },
-    {
-      "story": "قصة دخول لوسيد ومصنعها في السعودية",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة سكة حديد الرياض الدمام 1951",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "no_entity_candidate"
-    },
-    {
-      "story": "قصة سكة حديد الرياض الدمام 1951",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "no_entity_candidate"
-    },
-    {
-      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:c9caf8fcfda6e9c0bfd4",
-      "result": "VALIDATION_ERROR",
-      "reason": "WEAK_GENERIC; VALIDATION_ERROR: source metadata not sufficient"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "origin",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "beat": "modern_result",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "no_entity_candidate"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "origin_or_early",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "origin_or_early",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "origin_or_early",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "origin_or_early",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "origin_or_early",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "origin_or_early",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة التمر السعودي وتحوله لصناعة",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "no_entity_candidate"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "origin_or_early",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "origin_or_early",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "origin_or_early",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "modern_or_legacy",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "modern_or_legacy",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "modern_or_legacy",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "modern_or_legacy",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "modern_or_legacy",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "beat": "modern_or_legacy",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة المراعي من مزرعة إلى أكبر شركة ألبان",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "person_organization_relationship_absent_or_ambiguous"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "turning_point",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "modern_or_legacy",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "modern_or_legacy",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "modern_or_legacy",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "modern_or_legacy",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:e84930761dd3160f2b7b",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:ccaf51bd8ee9aca0d08f",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:866c8378f59c30bcb674",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:541660c51ee49531ca3e",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:fe63c63b1bd4e5a4a959",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:34d57da6e4b012bb6047",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:5f53b511db7ad53659bc",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:d1987b78e68591880c91",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
-    {
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:nyse.com:6c7c654a54c3c6475c73",
-      "result": "IDENTITY_UNPROVEN",
-      "reason": "required identity absent from source metadata; fetch skipped"
-    },
     {
       "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
       "beat": "origin",
@@ -4871,6 +3959,1969 @@
     },
     {
       "story": "قصة كريم من الفكرة إلى استحواذ أوبر",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:eea889d6c6a5bd8e283d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:bc07f44017bbf78d4cab",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:7ac1bd6b5f580eea3d4e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:25897cde732dc6c2208a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:89f235d64cc2b8d5878b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:039253058c53b523f246",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:9a675c631cdcf4eb0dd6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:004835272072f30596bc",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:200c3383bbbc223bdf01",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f72b339f315070c1d61e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:0603681a321fb1635331",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:91d474f5daf986632b48",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:bda5e83d515a9263b759",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:04c715e0fe107164aa6b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:47adff38640e749b48e8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:cb6f7d278357cf771137",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "origin",
+      "source": "loc",
+      "result": "SOURCE_UNAVAILABLE",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f49d652b4b5953a3152f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:cd89aed966c9c46c6698",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:575fa03196705c6b4db6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:21d08dec7cb114b1700f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:8213a0cfe74ef13d6ef8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:efb8951e5484f07eae57",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f04f82c51646b3c70389",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:66d39d490055a7523447",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:531e4ddc26cfe6118c73",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:a0f02a3bcade6e3dc60f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:f5b240c16f65adf59b00",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:blackberry.com:89c63332d9c24c2f7ee8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "لماذا اختفت BlackBerry من السوق؟",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:debc7ce46e1e3436fb11",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:a314238db075ecd88d3e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:0bd4821c7c1369c7266d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:8705c90c6a8095434d25",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:44c7941c8cbd56c4ec49",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:55874d51533d748774de",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:57480db56f0e49cc2fc0",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:f8254723fc110523b9ab",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:48b6269bcbc48581dacc",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:2960f64251b8cd9a0422",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:03720a9c05aef892479e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:e8385acc41812d0b5d37",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "origin",
+      "source": "loc",
+      "result": "SOURCE_UNAVAILABLE",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:65759fedc100bc90171f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:b574a3e23b1ed5719607",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:b35a81ade820ef8801d4",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:55561c41f02e51b97c1e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:72610e05ae312dda0b32",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:cfdc1328799fe1ba43ef",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:9a4fca76bf807333ed4f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:4cecff4d6f16e59220aa",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:a5a390fe2172b6c64063",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:cdf63ee1058924bd5f97",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:a98a6fd10e8740149db0",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:ed420f651c78491fdb45",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:0d7e39278aae55f3b8ea",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:1b12635746edc2a5219f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:f9de7e4538daa9d738a7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:alibaba.com:92043390db4d50551cfd",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:740c442dd71c4d0f80b5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:2593691f45cc9cef6085",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:7bf4789047fd61727630",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:netflix.com:34cf347e22b6a2029767",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Netflix: من تأجير الأقراص إلى إنتاج الأفلام",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:2e4df7aa152ae9c913bf",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:c7b5c936d4697474cc8a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:a2c0d2563d72c09dc9da",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:992fb96745f8ad314da9",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ddcd94ce626bdff6236a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:8b94ff36087e87ed54de",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ea39ec3cc09f08fd4271",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:615016c23c05bff79049",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:c75b499bd86c6a53da99",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:7c221147ab0b38357f76",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:d2ffc7d7ed11aff456a6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:0703f8fe93ce8124235b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:9a0a74d121c56cc8d00a",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:a623de379c42291254cd",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:85ae13b2f3b9b6661e46",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:3c29a6612cfaa250f103",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:4862a2607567228e732e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:1d80292dfedc77cbbae3",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:86afe12499995568e2f8",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:020f4da75216990e29fd",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ffc02886132e4ca81c28",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:5873c0239c1ff20c2c92",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:19ef0f89e43eb08404f2",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:9614ee26141d4879c7e4",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:259608bf930b7a58f037",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:6892573968e51bacde3d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:0ef47fef6dc3ad0bc32d",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:b850bf5d13ac4ffc40f1",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:40fa39c0e8b4dcdf3377",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:d910d93bd6b12ff28401",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:c4b4d5b420dafb0591a6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:58e1dfc0680c4affdf39",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:34e3ccfed007ce66e3fb",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:75858734110e5a0a586b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:43b06be5f3e6fea83c11",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:f7448befe3190027cbbf",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:64a86e96c3d0a0721025",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:145533209140ce63b2a7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:37a38a70c2f2f1be7342",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:915781dd3a0abf1038f2",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:6ea7b46ec47864ea47d0",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ed02817b7a39cf4599f6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:6d9216faaae12e5dff49",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:68c137efefbf936fa105",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:0f89cc04c60b02cd2d78",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:ffaf49b0c192a5d81bd7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:f837ff5b6ac185446688",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "source_id": "first-party:nvidia.com:4017513c83f1ae21ba57",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم",
       "source": "runtime",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "story_runtime.coverage() reported no deficit reduction"
