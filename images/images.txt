@@ -362,6 +362,6 @@ rt-publix-2.jpg | Publix | Phillip Pessar / CC BY 2.0 — Wikimedia Commons
 rt-publix-3.jpg | Publix | Winnebaggo / CC0 — Wikimedia Commons
 rt-google-1.jpg | Google | Google / CC BY-SA 3.0 — Wikimedia Commons
 rt-google-3.jpg | Google | Asoundd / CC BY-SA 4.0 — Wikimedia Commons
-bogle-vanguard-1959.jpg | Jack Bogle, Vanguard, The Vanguard Group | Vanguard — official history page, Jack Bogle with colleagues (1959)
-bogle-vanguard-1989.jpg | Jack Bogle, Vanguard, The Vanguard Group | Vanguard — 50 years of indexing, John C. Bogle pictured in 1989
-bogle-vanguard-founder.jpg | Jack Bogle, Vanguard, The Vanguard Group | Vanguard — official ethics and integrity page, founder John C. Bogle
+bogle-vanguard-1959.jpg | Vanguard, The Vanguard Group | Vanguard — official history page, Jack Bogle with colleagues (1959)
+bogle-vanguard-1989.jpg | Vanguard, The Vanguard Group | Vanguard — 50 years of indexing, John C. Bogle pictured in 1989
+bogle-vanguard-founder.jpg | Vanguard, The Vanguard Group | Vanguard — official ethics and integrity page, founder John C. Bogle
