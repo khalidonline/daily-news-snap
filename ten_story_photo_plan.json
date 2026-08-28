@@ -19,8 +19,8 @@
         "قصة ربط الريال بالدولار وقصته": "STRONG_CONTEXT",
         "لماذا ارتبط الريال السعودي بالدولار وكيف؟": "STRONG_CONTEXT"
       },
-      "source_url": "https://commons.wikimedia.org/wiki/File:Saudi_Arabian_10_riyal_note_-_AH1379_(1968)_issue.jpg",
-      "note": "Saudi Arabian Monetary Agency historical riyal banknote; public-domain historical currency context for the riyal peg stories."
+      "source_url": "https://commons.wikimedia.org/wiki/File:1968_Saudi_10_Riyal.jpg",
+      "note": "Saudi Arabian Monetary Agency 1968 ten-riyal note; public domain; historical Saudi-riyal context for the peg stories."
     },
     {
       "filename": "southwest-737.jpg",
@@ -28,8 +28,7 @@
       "stories": {
         "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": "STRONG_CONTEXT"
       },
-      "source_url": "https://commons.wikimedia.org/wiki/File:Southwest_Airlines_Boeing_737-700_N290WN.jpg",
-      "note": "Southwest Airlines Boeing 737; CC BY-SA 4.0; direct strong context for the low-cost-airline model."
+      "note": "Southwest Airlines Boeing 737; Paul Danese / CC BY-SA 4.0 per the existing curated index; strong context for the low-cost-airline model."
     }
   ],
   "new_assets": [
@@ -63,6 +62,7 @@
     {
       "filename": "souk-al-manakh-kuwait-stock-exchange.jpg",
       "commons_file": "Kuwait Stock Exchange.jpg",
+      "retrieval_url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Kuwait_Stock_Exchange.jpg",
       "provenance_url": "https://commons.wikimedia.org/wiki/File:Kuwait_Stock_Exchange.jpg",
       "license": "Public domain",
       "credit": "Aziz1005 — Kuwait Stock Exchange building — public domain — Wikimedia Commons",
@@ -72,6 +72,7 @@
     {
       "filename": "saleh-kamel-dallah-albaraka-727.jpg",
       "commons_file": "Boeing 727-51, Dallah Albaraka AN1213394.jpg",
+      "retrieval_url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Boeing_727-51%2C_Dallah_Albaraka_AN1213394.jpg",
       "provenance_url": "https://commons.wikimedia.org/wiki/File:Boeing_727-51,_Dallah_Albaraka_AN1213394.jpg",
       "license": "GFDL 1.2 or later; Wikimedia permission record",
       "credit": "Raimund Stehmann — Dallah Albaraka Boeing 727 — GFDL 1.2+ — Wikimedia Commons",
@@ -81,6 +82,7 @@
     {
       "filename": "flynas-a320-kkia.jpg",
       "commons_file": "Flynas Airbus A320 at KKIA.jpg",
+      "retrieval_url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Flynas_Airbus_A320_at_KKIA.jpg",
       "provenance_url": "https://commons.wikimedia.org/wiki/File:Flynas_Airbus_A320_at_KKIA.jpg",
       "license": "CC BY-SA 4.0",
       "credit": "Kskhh — flynas Airbus A320 at KKIA Riyadh — CC BY-SA 4.0 — Wikimedia Commons",
@@ -88,14 +90,15 @@
       "stories": {"قصة طيران ناس وثورة الطيران الاقتصادي": "DIRECT"}
     },
     {
-      "filename": "mohammed-bin-laden-sbg-clock-tower.jpg",
-      "commons_file": "Abraj-al-Bait largest clock tower in the world.jpg",
-      "provenance_url": "https://commons.wikimedia.org/wiki/File:Abraj-al-Bait_largest_clock_tower_in_the_world.jpg",
-      "license": "CC BY-SA 4.0",
-      "credit": "saudipics / Yasser Bakhsh — Makkah Clock Tower — CC BY-SA 4.0 — Wikimedia Commons",
-      "tags": ["Mohammed bin Laden", "Saudi Binladin Group", "Makkah Clock Tower", "Abraj Al Bait"],
+      "filename": "mohammed-bin-laden-haram-1969.jpg",
+      "commons_file": "Masjid al-Haram 1969.jpg",
+      "retrieval_url": "https://upload.wikimedia.org/wikipedia/commons/6/64/Masjid_al-Haram_1969.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:Masjid_al-Haram_1969.jpg",
+      "license": "Public domain — Saudi Arabia",
+      "credit": "Masjid al-Haram, 1969 — public domain in Saudi Arabia — Wikimedia Commons",
+      "tags": ["Mohammed bin Laden", "Saudi Binladin Group", "Masjid al-Haram", "Holy Mosque expansion"],
       "stories": {"محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة": "STRONG_CONTEXT"},
-      "context_note": "Saudi Binladin Group lists the Makkah Clock Tower among its major contracting projects: https://bihg.sa/contracting/"
+      "context_note": "BIHG history states SBG was awarded the first Saudi Extension to the Holy Mosque in Makkah in 1955: https://bihg.sa/history/"
     }
   ]
 }
