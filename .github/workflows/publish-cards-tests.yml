@@ -7,6 +7,7 @@ on:
       - "safe_publish_cards.py"
       - "review_visual_gate.py"
       - "tests/test_publish_cards.py"
+      - "tests/test_simple_review.py"
       - ".github/workflows/publish.yml"
       - ".github/workflows/publish-cards-tests.yml"
   pull_request:
@@ -15,6 +16,7 @@ on:
       - "safe_publish_cards.py"
       - "review_visual_gate.py"
       - "tests/test_publish_cards.py"
+      - "tests/test_simple_review.py"
       - ".github/workflows/publish.yml"
       - ".github/workflows/publish-cards-tests.yml"
 
@@ -33,4 +35,6 @@ jobs:
       - name: Install video verification dependencies
         run: pip install Pillow imageio-ffmpeg
       - name: Run publish-card regression tests
-        run: python tests/test_publish_cards.py
+        run: |
+          python tests/test_publish_cards.py
+          python tests/test_simple_review.py
