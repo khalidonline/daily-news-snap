@@ -1,0 +1,129 @@
+name: Ten story photo completion v2
+
+on:
+  push:
+    branches:
+      - photo-curation/ten-story-photo-completion
+    paths:
+      - ".github/workflows/ten-story-photo-completion-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  complete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: photo-curation/ten-story-photo-completion
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Complete and verify ten stories
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          from __future__ import annotations
+          import hashlib, io, json, urllib.parse, urllib.request
+          from pathlib import Path
+          from PIL import Image
+          import image_precheck as ipc
+          import story_runtime as sr
+
+          P=Path('ten_story_photo_plan.json'); D=Path('images'); I=D/'images.txt'; L=D/'relevance.json'
+          plan=json.loads(P.read_text(encoding='utf-8')); targets=plan['targets']
+          print('BASELINE')
+          for s in targets:
+              ph,lo,st=sr.coverage(s); print(s, len(ph), len(lo), st)
+
+          lines=I.read_text(encoding='utf-8').splitlines()
+          ledger=json.loads(L.read_text(encoding='utf-8')); assets=ledger.setdefault('assets',{})
+          def ledger_set(fn, stories, src=None, note=None):
+              row=assets.setdefault(fn,{}); sm=row.setdefault('stories',{})
+              for s,v in stories.items():
+                  if v not in {'DIRECT','STRONG_CONTEXT'}: raise SystemExit(f'bad verdict {fn} {v}')
+                  sm[s]=v
+              if src: row['source_url']=src
+              if note: row['note']=note
+          for sp in plan.get('reuse',[]):
+              fn=sp['filename']; path=D/fn
+              if not path.is_file(): raise SystemExit(f'missing reuse {fn}')
+              found=False
+              for n,line in enumerate(lines):
+                  parts=[x.strip() for x in line.split('|',2)]
+                  if not line.strip() or line.lstrip().startswith('#') or parts[0]!=fn: continue
+                  found=True; tags=[x.strip() for x in parts[1].split(',') if x.strip()]
+                  for tag in sp.get('add_tags',[]):
+                      if tag not in tags: tags.append(tag)
+                  credit=parts[2] if len(parts)>2 else ''
+                  lines[n]=f"{fn} | {', '.join(tags)}"+(f' | {credit}' if credit else '')
+                  break
+              if not found: raise SystemExit(f'reuse not indexed {fn}')
+              ledger_set(fn,sp['stories'],sp.get('source_url'),sp.get('note')); print('REUSE',fn)
+          I.write_text('\n'.join(lines)+'\n',encoding='utf-8'); L.write_text(json.dumps(ledger,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
+          def hashes():
+              ex={}; ph=[]
+              for p in D.glob('*.*'):
+                  if p.is_dir() or p.name in {'images.txt','relevance.json'}: continue
+                  try:
+                      raw=p.read_bytes(); ex[hashlib.sha256(raw).hexdigest()]=p; h=ipc.dhash(p)
+                      if h is not None: ph.append((h,p))
+                  except Exception: pass
+              return ex,ph
+          def fetch(sp):
+              special='https://commons.wikimedia.org/wiki/Special:Redirect/file/'+urllib.parse.quote(sp['commons_file'],safe='')
+              bases=[]
+              if sp.get('retrieval_url'): bases.append(sp['retrieval_url'])
+              bases.append(special)
+              urls=[]
+              for base in bases:
+                  enc=urllib.parse.quote(base,safe='')
+                  urls += ['https://images.weserv.nl/?url='+enc+'&output=jpg&q=94','https://wsrv.nl/?url='+enc+'&output=jpg&q=94',base]
+              errs=[]
+              for u in urls:
+                  try:
+                      req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0 (compatible; story-photo-curation/2.0)','Accept':'image/*,*/*;q=0.8'})
+                      with urllib.request.urlopen(req,timeout=90) as r: raw=r.read()
+                      if len(raw)<5000: raise ValueError(f'too small {len(raw)} bytes')
+                      im=Image.open(io.BytesIO(raw)).convert('RGB')
+                      if im.width<300 or im.height<250: raise ValueError(f'too small {im.width}x{im.height}')
+                      print('FETCH',sp['commons_file'],'via',urllib.parse.urlparse(u).netloc,im.size); return im,raw
+                  except Exception as e: errs.append(f"{urllib.parse.urlparse(u).netloc}:{type(e).__name__}:{e}")
+              raise RuntimeError('; '.join(errs))
+
+          added=[]
+          for sp in plan.get('new_assets',[]):
+              fn=sp['filename']; dest=D/fn
+              if dest.exists(): raise SystemExit(f'filename exists {fn}')
+              im,raw=fetch(sp); ex,ph=hashes()
+              if hashlib.sha256(raw).hexdigest() in ex: raise SystemExit(f'{fn}: exact duplicate')
+              tmp=D/(fn+'.tmp.jpg'); im.save(tmp,'JPEG',quality=93,optimize=True); h=ipc.dhash(tmp)
+              if h is None: raise SystemExit(f'{fn}: no dhash')
+              twins=[p.name for oh,p in ph if bin(h^oh).count('1')<=ipc.DHASH_MAX_DISTANCE]
+              if twins: tmp.unlink(missing_ok=True); raise SystemExit(f'{fn}: perceptual duplicate of {twins[0]}')
+              tmp.replace(dest)
+              with I.open('a',encoding='utf-8') as fh: fh.write(f"{fn} | {', '.join(sp['tags'])} | {sp['credit']}\n")
+              note=sp.get('license','')+(('; '+sp['context_note']) if sp.get('context_note') else '')
+              ledger_set(fn,sp['stories'],sp['provenance_url'],note); L.write_text(json.dumps(ledger,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+              added.append(fn); print('ACCEPT',fn)
+
+          failures=[]; print('FINAL')
+          for s in targets:
+              ph,lo,st=sr.coverage(s); names=[p.name for p in ph]; print(s,len(ph),len(lo),st,names)
+              if len(ph)<4: failures.append([s,len(ph),names])
+          if failures: raise SystemExit('PHOTO_GATE_FAIL '+json.dumps(failures,ensure_ascii=False))
+          print(f'TEN_STORY_PHOTO_GATE=PASS targets={len(targets)} added={len(added)}')
+          PY
+      - name: Commit verified photo assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/images.txt images/relevance.json images/*.jpg images/*.png
+          git diff --cached --quiet && exit 0
+          git commit -m "assets: complete photos for ten stories"
+          git push origin HEAD:photo-curation/ten-story-photo-completion
