@@ -146,6 +146,30 @@
         "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "STRONG_CONTEXT"
       },
       "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/USA_Stock_Exchange.JPG"
+    },
+    "targeted-blackberry-8700c-7230.jpg": {
+      "stories": {
+        "لماذا اختفت BlackBerry من السوق؟": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/BlackBerry_8700c_and_7230.jpg"
+    },
+    "targeted-blackberry-bold-9000.jpg": {
+      "stories": {
+        "لماذا اختفت BlackBerry من السوق؟": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Blackberry_bold_orange_romania.jpg"
+    },
+    "targeted-alibaba-jack-ma-2007.jpg": {
+      "stories": {
+        "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/2007ChinatrustGlobalLeadersForum_JackMa.jpg"
+    },
+    "targeted-alibaba-jack-ma-wef-2018.jpg": {
+      "stories": {
+        "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Meet_the_Leader_with_Jack_Ma%2C_Executive_Chairman%2C_Alibaba_Group_Holding_Limited_%2839012606625%29.jpg"
     }
   }
 }
