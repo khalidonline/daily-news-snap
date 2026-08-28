@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       stamp:
-        description: "الطابع الزمني للقصة — اتركه فارغاً لآخر قصة بُنيت (مثال: 2026-08-22-2pm)"
+        description: "Story name, part of name, or timestamp — blank = latest (e.g. سليمان or 2026-08-22-2pm)"
         type: string
         required: false
       dry_run:
-        description: "اعرض ما سيُنشر دون نشره"
+        description: "Preview only — do not publish"
         type: boolean
         default: false
 
@@ -36,8 +36,7 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      # imageio-ffmpeg: the runner image has no ffmpeg on PATH, and the
-      # story ships as one MP4 — this wheel carries a static binary
+      # imageio-ffmpeg remains available for non-Bundle provider fallback.
       - run: pip install -r requirements.txt imageio-ffmpeg
 
       - name: Publish the cards
