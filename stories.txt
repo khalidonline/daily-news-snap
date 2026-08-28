@@ -36,7 +36,7 @@
 قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية | Riyadh, الرياض | entity: Royal Commission for Riyadh City, RCRC, الهيئة الملكية لمدينة الرياض | logo:rcrc.gov.sa
 كيف بُنيت دبي على الرمل في خمسين سنة؟ | Dubai, دبي
 قصة سنغافورة: من ميناء فقير إلى أغنى دول آسيا | Singapore, سنغافورة
-كيف تحولت العلا من واحة إلى وجهة عالمية؟ | AlUla, العلا
+كيف تحولت العلا من واحة إلى وجهة عالمية؟ | AlUla, العلا | entity: Royal Commission for AlUla, RCU, Experience AlUla | logo:experiencealula.com
 قصة جدة التاريخية: بوابة الحج منذ قرون | Jeddah, جدة التاريخية | entity: Jeddah Historic District, Historic Jeddah, Al Balad, البلد | logo:visitalbalad.com
 لماذا صارت طوكيو أكبر مدينة في العالم؟ | Tokyo, طوكيو
 قصة نيويورك: كيف صارت عاصمة المال؟ | New York, نيويورك | entity: NYSE, New York Stock Exchange, Wall Street | logo:nyse.com
