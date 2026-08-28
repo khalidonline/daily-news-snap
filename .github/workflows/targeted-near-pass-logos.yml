@@ -92,7 +92,7 @@ jobs:
               'قصة دخول لوسيد ومصنعها في السعودية | entity: Lucid Motors, لوسيد, KAEC | logo:lucidmotors.com':
               'قصة دخول لوسيد ومصنعها في السعودية | entity: Lucid Motors, لوسيد, KAEC | logo:lucidmotors.com',
               'قصة سكة حديد الرياض الدمام 1951 | Riyadh Dammam railway':
-              'قصة سكة حديد الرياض الدمام 1951 | entity: Saudi Arabia Railways, SAR, الخطوط الحديدية السعودية | context: Riyadh Dammam railway, 1951 | logo:sar.com.sa',
+              'قصة سكة حديد الرياض الدمام 1951 | Riyadh Dammam railway | entity: Saudi Arabia Railways, SAR, الخطوط الحديدية السعودية | logo:sar.com.sa',
           }
           for old, new in replacements.items():
               if old not in text:
@@ -105,10 +105,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git archive origin/repair/story-visual-coverage | tar -x -C /tmp
-          PYTHONPATH=/tmp python - <<'PY'
+          rm -rf /tmp/story-logo-engine
+          mkdir -p /tmp/story-logo-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/story-logo-engine
+          PYTHONPATH=/tmp/story-logo-engine python - <<'PY'
           import sys
-          sys.path.insert(0, '/tmp')
+          sys.path.insert(0, '/tmp/story-logo-engine')
           from tools.bulk_visual_board import build_board
           stories = [
               'سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته',
