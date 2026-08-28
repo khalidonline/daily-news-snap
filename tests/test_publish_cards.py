@@ -46,24 +46,14 @@ publish_cards = importlib.import_module("publish_cards")
 
 
 class PublishMediaTests(unittest.TestCase):
-    def test_bundle_submits_one_verified_video_post(self):
+    def test_bundle_refuses_multi_frame_deck_instead_of_collapsing_it(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
-        scheduled = {"id": "post-123", "status": "SCHEDULED"}
-        posted = {"id": "post-123", "status": "POSTED"}
+        with patch.object(publish_cards, "post_story") as post_story, \
+             self.assertRaises(SystemExit) as exc:
+            publish_cards.publish_bundle_story("caption", frames, "2026-08-28-2pm")
 
-        with patch.object(publish_cards, "frames_to_video", return_value="story.mp4") as to_video, \
-             patch.object(publish_cards, "validate_story_video", return_value=True) as validate, \
-             patch.object(publish_cards, "post_story", return_value=scheduled) as post_story, \
-             patch.object(publish_cards, "wait_for_bundle_post", return_value=posted) as wait_post:
-            result = publish_cards.publish_bundle_story("caption", frames, "2026-08-28-2pm")
-
-        self.assertEqual(result, posted)
-        to_video.assert_called_once_with(
-            frames, Path(publish_cards.CARDS_DIR) / "2026-08-28-2pm-story.mp4"
-        )
-        validate.assert_called_once_with("story.mp4", frames)
-        post_story.assert_called_once_with("caption", [], ["story.mp4"])
-        wait_post.assert_called_once_with(scheduled)
+        self.assertIn("cannot publish 3 separate Snapchat Story photos", str(exc.exception))
+        post_story.assert_not_called()
 
     def test_frames_to_video_contains_every_source_frame_in_order(self):
         colors = [
@@ -101,16 +91,6 @@ class PublishMediaTests(unittest.TestCase):
                     35,
                     f"video segment {index} did not match source frame {index}: {actual} vs {expected}",
                 )
-
-    def test_latest_real_story_deck_builds_and_validates_as_one_video(self):
-        stamp, frames = publish_cards.find_story("")
-        self.assertTrue(stamp)
-        self.assertGreaterEqual(len(frames), 2)
-        with tempfile.TemporaryDirectory() as tmp:
-            out = Path(tmp) / f"{stamp}-story.mp4"
-            video = publish_cards.frames_to_video(frames, out)
-            self.assertTrue(Path(video).exists())
-            self.assertTrue(publish_cards.validate_story_video(video, frames))
 
     def test_non_bundle_still_uses_video_for_multi_frame_story(self):
         frames = ["card-1.png", "card-2.png"]
