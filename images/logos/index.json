@@ -150,5 +150,37 @@
     "شركة الخطوط الحديدية السعودية",
     "Riyadh Dammam railway",
     "sar.com.sa"
+  ],
+  "rcrc.gov.sa": [
+    "Riyadh",
+    "الرياض",
+    "Royal Commission for Riyadh City",
+    "RCRC",
+    "الهيئة الملكية لمدينة الرياض",
+    "rcrc.gov.sa"
+  ],
+  "visitalbalad.com": [
+    "Jeddah",
+    "جدة التاريخية",
+    "Historic Jeddah",
+    "Jeddah Historic District",
+    "Al Balad",
+    "البلد",
+    "visitalbalad.com"
+  ],
+  "saudicoffee.com": [
+    "Saudi coffee",
+    "Arabic coffee",
+    "Saudi Coffee Company",
+    "الشركة السعودية للقهوة",
+    "saudicoffee.com"
+  ],
+  "nwc.com.sa": [
+    "Zamzam water",
+    "National Water Company",
+    "NWC",
+    "شركة المياه الوطنية",
+    "King Abdullah Zamzam Water Project",
+    "nwc.com.sa"
   ]
 }

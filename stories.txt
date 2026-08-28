@@ -33,11 +33,11 @@
 كيف بدأت فكرة البطاقة الائتمانية؟ | subject:credit-card-history
 
 # — مدن ووجهات —
-قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية | Riyadh, الرياض
+قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية | Riyadh, الرياض | entity: Royal Commission for Riyadh City, RCRC, الهيئة الملكية لمدينة الرياض | logo:rcrc.gov.sa
 كيف بُنيت دبي على الرمل في خمسين سنة؟ | Dubai, دبي
 قصة سنغافورة: من ميناء فقير إلى أغنى دول آسيا | Singapore, سنغافورة
 كيف تحولت العلا من واحة إلى وجهة عالمية؟ | AlUla, العلا
-قصة جدة التاريخية: بوابة الحج منذ قرون | Jeddah, جدة التاريخية
+قصة جدة التاريخية: بوابة الحج منذ قرون | Jeddah, جدة التاريخية | entity: Jeddah Historic District, Historic Jeddah, Al Balad, البلد | logo:visitalbalad.com
 لماذا صارت طوكيو أكبر مدينة في العالم؟ | Tokyo, طوكيو
 قصة نيويورك: كيف صارت عاصمة المال؟ | New York, نيويورك
 كيف بنت الصين مدناً كاملة في سنوات؟ | subject:china-instant-cities
@@ -105,10 +105,10 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 
 # Things Saudis touch daily
 قصة الشماغ ومصانعه في إنجلترا | ghutra, shemagh, شماغ
-قصة القهوة السعودية | Saudi coffee, Arabic coffee
+قصة القهوة السعودية | Saudi coffee, Arabic coffee | entity: Saudi Coffee Company, الشركة السعودية للقهوة | logo:saudicoffee.com
 قصة التمر السعودي وتحوله لصناعة | entity: Saudi dates industry, التمر | context: dates, farming
 قصة المكيّف الذي جعل مدن الخليج ممكنة | air conditioning, Willis Carrier
-قصة ماء زمزم وكيف يُعبأ ويوزّع | Zamzam water
+قصة ماء زمزم وكيف يُعبأ ويوزّع | Zamzam water | entity: National Water Company, NWC, شركة المياه الوطنية | context: King Abdullah Zamzam Water Project | logo:nwc.com.sa
 قصة الكبسة ورحلة الرز إلى الجزيرة العربية | Kabsa, basmati rice trade
 قصة العباءة السعودية وتحولها لصناعة أزياء | abaya fashion industry
 
