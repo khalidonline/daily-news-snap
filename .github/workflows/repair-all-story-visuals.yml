@@ -106,8 +106,11 @@ jobs:
             fi
 
             read -r passed total <<<"$(python - <<'PY'
+          import contextlib
+          import io
           from tools.bulk_visual_board import build_board
-          rows = build_board()
+          with contextlib.redirect_stdout(io.StringIO()):
+              rows = build_board()
           print(sum(r.status == 'PASS' for r in rows), len(rows))
           PY
             )"
