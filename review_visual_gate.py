@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rendered-story photo verification and deterministic photo placement."""
+"""Rendered-story verification and deterministic visual placement."""
 
 from __future__ import annotations
 
@@ -60,8 +60,8 @@ def apply_requested_photos(frames, photo_paths, requested=4) -> int:
 
     The source photos are already story-approved by ``story_runtime``. The
     first requested card visual zones receive distinct approved photographs.
-    Any photographic zone after that is neutralized so the workflow input is
-    deterministic: request 4 pictures, get exactly 4 picture cards.
+    Any photographic zone after that is neutralized so the four-photo review
+    standard is deterministic before logo/portrait fallback is applied.
     """
     paths = [Path(p) for p in (frames or [])]
     photos = [Path(p) for p in (photo_paths or [])]
@@ -95,13 +95,54 @@ def apply_requested_photos(frames, photo_paths, requested=4) -> int:
                 f"{photos[index].name} -> {card_path.name}"
             )
         elif is_photographic_frame(card_path):
-            # Keep the user's requested picture count exact. Non-photo design
-            # elements (logos, figures, typography) outside this check remain.
             blank = Image.new("RGB", (width, height), CARD_BG)
             card.paste(blank, (box[0], box[1]))
         card.save(card_path, "PNG")
 
     return require_photo_coverage(paths, minimum=requested)
+
+
+def apply_fallback_visuals(frames, visual_paths, start_index=4) -> int:
+    """Fill remaining card visual zones with one repeatable approved visual.
+
+    ``visual_paths`` should be ordered by preference. The first approved logo
+    is normally supplied; if a story has no logo, callers may supply an
+    approved portrait/photo instead. Reusing the same logo or portrait on
+    multiple cards is intentional.
+    """
+    paths = [Path(p) for p in (frames or [])]
+    visuals = [Path(p) for p in (visual_paths or []) if Path(p).exists()]
+    start_index = int(start_index)
+    if not visuals or start_index >= len(paths):
+        return 0
+
+    source_path = visuals[0]
+    source = Image.open(source_path).convert("RGB")
+    filled = 0
+    for index in range(max(0, start_index), len(paths)):
+        card_path = paths[index]
+        card = Image.open(card_path).convert("RGB")
+        box = _pixel_box(card)
+        width = box[2] - box[0]
+        height = box[3] - box[1]
+
+        blank = Image.new("RGB", (width, height), CARD_BG)
+        fitted = ImageOps.contain(
+            source,
+            (int(width * 0.82), int(height * 0.82)),
+            method=Image.Resampling.LANCZOS,
+        )
+        x = (width - fitted.width) // 2
+        y = (height - fitted.height) // 2
+        blank.paste(fitted, (x, y))
+        card.paste(blank, (box[0], box[1]))
+        card.save(card_path, "PNG")
+        filled += 1
+        print(
+            f"    fallback visual {index + 1}/{len(paths)}: "
+            f"{source_path.name} -> {card_path.name}"
+        )
+    return filled
 
 
 def require_photo_coverage(frames, minimum=4) -> int:
