@@ -17,13 +17,19 @@ import os
 import re
 import shutil
 import subprocess
+import tempfile
 import time
 import unicodedata
+import urllib.error
+import urllib.request
 from pathlib import Path
+
+from PIL import Image, ImageChops, ImageStat
 
 try:
     from news_bot import (
         CARDS_DIR, DRY_RUN, POST_PROVIDER, MEDIA_MODE,
+        BUNDLE_API_KEY, BUNDLE_BASE, BUNDLE_HEADERS,
         post_story, post_ok, describe_failure,
         quota_ok, quota_bump, commit_and_push,
         notify, notify_album, ksa_stamp, deliver_unposted,
@@ -39,12 +45,8 @@ STAMP = os.getenv("CARDS_STAMP", "").strip()
 CAPTION = os.getenv("CAPTION", "").strip()
 FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "10")
 TAIL_MARGIN = int(os.getenv("TAIL_MARGIN", "").strip() or "1")
-# Bundle creates one Snapchat STORY post per frame. Firing all six at the same
-# instant caused only one item to appear on Snapchat even though all uploads
-# succeeded. Space successful posts so the platform can ingest them in order.
-BUNDLE_FRAME_SPACING_SECONDS = int(
-    os.getenv("BUNDLE_FRAME_SPACING_SECONDS", "").strip() or "15"
-)
+BUNDLE_STATUS_TIMEOUT = int(os.getenv("BUNDLE_STATUS_TIMEOUT", "").strip() or "150")
+BUNDLE_STATUS_POLL = int(os.getenv("BUNDLE_STATUS_POLL", "").strip() or "5")
 
 _STAMP_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-\d{1,2}(?:am|pm)$")
 _FRAME_RE = re.compile(
@@ -192,10 +194,29 @@ def load_caption(stamp, frame_count):
             or f"قصة في {frame_count} لقطات")
 
 
-def frames_to_video(frames, out_path):
-    """Compatibility fallback for non-Bundle providers."""
+def _ffmpeg_exe():
+    ffmpeg = shutil.which("ffmpeg")
+    if ffmpeg:
+        return ffmpeg
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except ImportError:
+        raise SystemExit("no ffmpeg on PATH and imageio-ffmpeg not installed — "
+                         "pip install imageio-ffmpeg")
+
+
+def _frame_durations(frames):
+    if not frames:
+        return []
     durations = [FRAME_SECONDS] * len(frames)
     durations[-1] = max(2, int(FRAME_SECONDS - TAIL_MARGIN))
+    return durations
+
+
+def frames_to_video(frames, out_path):
+    """Create one Snapchat-compatible MP4 containing every reviewed card."""
+    durations = _frame_durations(frames)
     total = sum(durations)
     if total > 60:
         raise SystemExit(f"frames add up to {total}s, over Snapchat's 60s "
@@ -208,14 +229,7 @@ def frames_to_video(frames, out_path):
             lines.append("duration 1")
     listing.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    ffmpeg = shutil.which("ffmpeg")
-    if not ffmpeg:
-        try:
-            import imageio_ffmpeg
-            ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
-        except ImportError:
-            raise SystemExit("no ffmpeg on PATH and imageio-ffmpeg not "
-                             "installed — pip install imageio-ffmpeg")
+    ffmpeg = _ffmpeg_exe()
     cmd = [ffmpeg, "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
            "-i", str(listing),
            "-vf", "fps=30,format=yuv420p,scale=1080:1920",
@@ -233,6 +247,115 @@ def frames_to_video(frames, out_path):
     return str(out_path)
 
 
+def _image_distance(left, right):
+    diff = ImageChops.difference(left, right)
+    means = ImageStat.Stat(diff).mean
+    return sum(means) / len(means)
+
+
+def validate_story_video(video_path, frames):
+    """Decode the MP4 and prove every source card is present in order.
+
+    One sample is extracted from the middle of each card's hold. The decoded
+    sample must be closest to the corresponding source card (not any other
+    card) and must stay within a conservative compression-distance threshold.
+    Refuse publication if any segment cannot be proven.
+    """
+    if not frames:
+        raise SystemExit("cannot validate a story video with no source frames")
+
+    durations = _frame_durations(frames)
+    ffmpeg = _ffmpeg_exe()
+    thumb_size = (270, 480)
+    sources = []
+    for frame in frames:
+        with Image.open(frame) as img:
+            sources.append(img.convert("RGB").resize(thumb_size))
+
+    elapsed = 0.0
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        for index, (frame, dur) in enumerate(zip(frames, durations)):
+            sample_at = elapsed + (float(dur) / 2.0)
+            sample = root / f"sample-{index + 1}.png"
+            cmd = [ffmpeg, "-y", "-loglevel", "error", "-ss", f"{sample_at:.3f}",
+                   "-i", str(video_path), "-frames:v", "1", str(sample)]
+            try:
+                subprocess.run(cmd, check=True, capture_output=True, text=True)
+            except subprocess.CalledProcessError as exc:
+                raise SystemExit(
+                    f"story video validation failed at frame {index + 1}: "
+                    f"{exc.stderr[-300:]}"
+                )
+            if not sample.exists():
+                raise SystemExit(
+                    f"story video validation failed: no decoded sample for frame {index + 1}"
+                )
+            with Image.open(sample) as decoded:
+                decoded_thumb = decoded.convert("RGB").resize(thumb_size)
+            distances = [_image_distance(decoded_thumb, source) for source in sources]
+            closest = min(range(len(distances)), key=distances.__getitem__)
+            expected_distance = distances[index]
+            if closest != index or expected_distance > 18.0:
+                raise SystemExit(
+                    f"story video validation failed at segment {index + 1}: "
+                    f"closest source is frame {closest + 1}, distance={expected_distance:.2f}"
+                )
+            elapsed += float(dur)
+
+    print(f"    video validation: {len(frames)}/{len(frames)} source frames confirmed in order")
+    return True
+
+
+def wait_for_bundle_post(response, timeout=None, poll=None):
+    """Wait until Bundle confirms POSTED; SCHEDULED alone is not success."""
+    if not isinstance(response, dict):
+        return {"status": "error", "message": "invalid Bundle post response"}
+    post_id = str(response.get("id") or "").strip()
+    if not post_id:
+        return {"status": "error", "message": "Bundle returned no post id"}
+
+    timeout = BUNDLE_STATUS_TIMEOUT if timeout is None else int(timeout)
+    poll = BUNDLE_STATUS_POLL if poll is None else int(poll)
+    deadline = time.monotonic() + max(1, timeout)
+    last = response
+    seen_status = None
+
+    while True:
+        status = str(last.get("status") or "").upper()
+        if status != seen_status:
+            print(f"    bundle delivery status: {status or 'UNKNOWN'}")
+            seen_status = status
+        if status == "POSTED":
+            return last
+        if status in ("ERROR", "DELETED"):
+            return last
+        if time.monotonic() >= deadline:
+            return {
+                "status": "error",
+                "message": f"Bundle post {post_id} did not reach POSTED within {timeout}s",
+                "last": last,
+            }
+
+        time.sleep(max(1, poll))
+        req = urllib.request.Request(
+            f"{BUNDLE_BASE.rstrip('/')}/post/{post_id}",
+            headers={**BUNDLE_HEADERS, "x-api-key": BUNDLE_API_KEY,
+                     "Accept": "application/json"},
+            method="GET",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                last = json.loads(resp.read() or b"{}")
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode()[:300]
+            if exc.code != 429 and 400 <= exc.code < 500:
+                return {"status": "error", "code": exc.code, "message": body}
+            print(f"  ! Bundle status check {exc.code}: {body}")
+        except Exception as exc:
+            print(f"  ! Bundle status check failed: {exc}")
+
+
 def prepare_publish_media(frames, stamp):
     """Non-Bundle providers retain the single-video compatibility path."""
     media = list(frames)
@@ -242,30 +365,14 @@ def prepare_publish_media(frames, stamp):
     return media
 
 
-def publish_bundle_frames(caption, frames):
-    """Publish each reviewed frame as its own Snapchat STORY post.
-
-    Bundle's Snapchat API rejects more than one uploadId in a post, so a
-    multi-frame story is sent as sequential one-frame STORY posts. Bundle's
-    "publish now" path is asynchronous; spacing successful submissions avoids
-    a burst where Snapchat only exposes the final item. Stop on first failure.
-    """
-    last_response = {"status": "error", "message": "no frames to publish"}
-    published = 0
-    for index, frame in enumerate(frames, start=1):
-        print(f"    bundle frame {index}/{len(frames)}: {Path(frame).name}")
-        last_response = post_story(caption, [], [frame])
-        if not post_ok(last_response):
-            if isinstance(last_response, dict):
-                last_response["_published_frames"] = published
-            return last_response
-        published += 1
-        if index < len(frames) and BUNDLE_FRAME_SPACING_SECONDS > 0:
-            print(f"    waiting {BUNDLE_FRAME_SPACING_SECONDS}s before next frame")
-            time.sleep(BUNDLE_FRAME_SPACING_SECONDS)
-    if isinstance(last_response, dict):
-        last_response["_published_frames"] = published
-    return last_response
+def publish_bundle_story(caption, frames, stamp):
+    """Publish one verified MP4 because Bundle Snapchat Stories accept one media item."""
+    video = frames_to_video(frames, Path(CARDS_DIR) / f"{stamp}-story.mp4")
+    validate_story_video(video, frames)
+    scheduled = post_story(caption, [], [video])
+    if not post_ok(scheduled):
+        return scheduled
+    return wait_for_bundle_post(scheduled)
 
 
 def _record_quota_posts(count):
@@ -297,20 +404,22 @@ def main():
         return
 
     if POST_PROVIDER == "bundle":
-        response = publish_bundle_frames(caption, frames)
-        published_count = int(response.get("_published_frames", 0)) if isinstance(response, dict) else 0
-        _record_quota_posts(published_count)
+        response = publish_bundle_story(caption, frames, stamp)
+        success = (isinstance(response, dict)
+                   and str(response.get("status") or "").upper() == "POSTED"
+                   and post_ok(response))
+        _record_quota_posts(1 if success else 0)
     else:
         media = prepare_publish_media(frames, stamp)
         urls = (publish_many_via_github(media) if MEDIA_MODE == "github"
                 else [upload_media(f) for f in media])
         response = post_story(caption, urls, media)
-        published_count = 1 if post_ok(response) else 0
-        _record_quota_posts(published_count)
+        success = post_ok(response)
+        _record_quota_posts(1 if success else 0)
 
     print("   ", response)
 
-    if post_ok(response) and published_count == len(frames) if POST_PROVIDER == "bundle" else post_ok(response):
+    if success:
         notify_album(f"✅ نُشرت القصة — {stamp}", frames)
     else:
         notify(f"❌ {stamp} — لم تُنشر\n{describe_failure(response)}")
