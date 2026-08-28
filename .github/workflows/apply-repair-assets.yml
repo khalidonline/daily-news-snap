@@ -23,6 +23,25 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Print near-complete typed photo backlog
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          import story_bot as sb
+          import story_runtime as sr
+          rows=[]
+          for story in sb.load_stories():
+              photos, logos, status = sr.coverage(story)
+              need=max(0,4-len(photos))
+              if need <= 2:
+                  rows.append((need, 0 if logos else 1, story, [p.name for p in photos], [p.name for p in logos], status))
+          rows.sort(key=lambda r:(r[0],r[1],r[2]))
+          print("NEAR_COMPLETE_BEGIN")
+          for need,need_logo,story,photos,logos,status in rows:
+              print(f"NEED_PHOTOS={need} NEED_LOGO={need_logo} STATUS={status} STORY={story}")
+              print("  PHOTOS=" + ",".join(photos))
+              print("  LOGOS=" + ",".join(logos))
+          print("NEAR_COMPLETE_END")
+          PY
       - name: Preflight all reviewed candidates
         run: |
           PYTHONPATH=. python - <<'PY'
