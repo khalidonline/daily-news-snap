@@ -77,6 +77,13 @@
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:Five_Riyals_from_the_Reign_of_King_Faisal_bin_Abdulaziz,_Alaliyah_Museum_Collection,_Jazan_(2024).jpg",
       "note": "Distinct photograph of a historical Saudi five-riyal banknote; direct currency context for both peg stories."
+    },
+    "targeted-nyse-facade-2025.jpg": {
+      "stories": {
+        "قصة نيويورك: كيف صارت عاصمة المال؟": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Wall_St_May_2025_28.jpg",
+      "note": "NYSE facade on Wall Street; direct finance-context photo for New York capital-of-finance story."
     }
   }
 }

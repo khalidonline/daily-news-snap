@@ -39,7 +39,7 @@
 كيف تحولت العلا من واحة إلى وجهة عالمية؟ | AlUla, العلا
 قصة جدة التاريخية: بوابة الحج منذ قرون | Jeddah, جدة التاريخية | entity: Jeddah Historic District, Historic Jeddah, Al Balad, البلد | logo:visitalbalad.com
 لماذا صارت طوكيو أكبر مدينة في العالم؟ | Tokyo, طوكيو
-قصة نيويورك: كيف صارت عاصمة المال؟ | New York, نيويورك
+قصة نيويورك: كيف صارت عاصمة المال؟ | New York, نيويورك | entity: NYSE, New York Stock Exchange, Wall Street | logo:nyse.com
 كيف بنت الصين مدناً كاملة في سنوات؟ | subject:china-instant-cities
 
 # — أشخاص —
