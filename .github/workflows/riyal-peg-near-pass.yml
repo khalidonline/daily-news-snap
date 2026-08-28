@@ -29,7 +29,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
 
-      - name: Fetch reviewed Saudi Central Bank photo and logo
+      - name: Fetch reviewed historical riyal photo and Saudi Central Bank logo
         shell: bash
         run: |
           set -euo pipefail
@@ -60,7 +60,10 @@ jobs:
                   Path(destination).write_bytes(response.read())
               print(f'fetched {title} -> {destination}')
 
-          commons('Bank SA.jpg', 'images/targeted-sama-bank-building.jpg')
+          commons(
+              'Five Riyals from the Reign of King Faisal bin Abdulaziz, Alaliyah Museum Collection, Jazan (2024).jpg',
+              'images/targeted-riyal-five-faisal-museum.jpg',
+          )
           commons('Saudi Central Bank Logo.png', 'images/logos/sama.gov.sa-current.png', 1280)
           PY
 
@@ -73,7 +76,7 @@ jobs:
           from PIL import Image
           from image_precheck import dhash, DHASH_MAX_DISTANCE
 
-          new = Path('images/targeted-sama-bank-building.jpg')
+          new = Path('images/targeted-riyal-five-faisal-museum.jpg')
           with Image.open(new) as im:
               im.verify()
           with Image.open(new) as im:
@@ -98,8 +101,6 @@ jobs:
           p = Path('images/logos/sama.gov.sa-current.png')
           with Image.open(p) as src:
               rgba = src.convert('RGBA')
-          # Commons file currently has a white raster background; make only near-white
-          # edge/background pixels transparent, crop, then pad for card-safe treatment.
           corners = [rgba.getpixel((0,0)), rgba.getpixel((rgba.width-1,0)),
                      rgba.getpixel((0,rgba.height-1)), rgba.getpixel((rgba.width-1,rgba.height-1))]
           if all(a > 220 and r > 240 and g > 240 and b > 240 for r,g,b,a in corners):
@@ -133,18 +134,18 @@ jobs:
 
           manifest = Path('images/images.txt')
           text = manifest.read_text(encoding='utf-8').rstrip()
-          line = ('targeted-sama-bank-building.jpg | SAMA, Saudi Central Bank, البنك المركزي السعودي, '
-                  'مؤسسة النقد, ربط الريال, الريال بالدولار | Sabadek / CC BY-SA 4.0 — Wikimedia Commons')
+          line = ('targeted-riyal-five-faisal-museum.jpg | الريال, ربط الريال, Saudi riyal, '
+                  'King Faisal, SAMA, خمسة ريالات | Saudi Photos / CC BY-SA 4.0 — Wikimedia Commons')
           if line not in text:
               text += '\n' + line
           manifest.write_text(text + '\n', encoding='utf-8')
 
           relevance_path = Path('images/relevance.json')
           relevance = json.loads(relevance_path.read_text(encoding='utf-8'))
-          relevance.setdefault('assets', {})['targeted-sama-bank-building.jpg'] = {
+          relevance.setdefault('assets', {})['targeted-riyal-five-faisal-museum.jpg'] = {
               'stories': {story_a: 'DIRECT', story_b: 'DIRECT'},
-              'source_url': 'https://commons.wikimedia.org/wiki/File:Bank_SA.jpg',
-              'note': 'Saudi Central Bank building; direct institutional context for the Saudi riyal-dollar peg.',
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Five_Riyals_from_the_Reign_of_King_Faisal_bin_Abdulaziz,_Alaliyah_Museum_Collection,_Jazan_(2024).jpg',
+              'note': 'Distinct photograph of a historical Saudi five-riyal banknote; direct currency context for both peg stories.',
           }
           relevance_path.write_text(json.dumps(relevance, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
@@ -202,7 +203,7 @@ jobs:
           set -euo pipefail
           git config user.name story-visual-repair-bot
           git config user.email actions@github.com
-          git add images/targeted-sama-bank-building.jpg images/logos/sama.gov.sa-current.png \
+          git add images/targeted-riyal-five-faisal-museum.jpg images/logos/sama.gov.sa-current.png \
             images/images.txt images/relevance.json images/logos/index.json stories.txt
           git commit -m "repair: close two riyal peg near-pass gaps"
           git pull --rebase origin repair/all-story-visuals-2026-08-29
