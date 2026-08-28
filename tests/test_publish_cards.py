@@ -122,6 +122,50 @@ class PublishMediaTests(unittest.TestCase):
         notify_album.assert_not_called()
         public_publish.assert_not_called()
 
+    def test_telegram_review_rebuilds_stale_deck_before_sending(self):
+        stale_frames = [f"old-{i}.png" for i in range(1, 7)]
+        fresh_frames = [f"fresh-{i}.png" for i in range(1, 7)]
+        stale_error = SystemExit("review blocked: only 1/6 photographic frames")
+        with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-26-2pm"), \
+             patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-26-2pm", stale_frames)), \
+             patch.object(safe_publish_cards.publisher, "load_caption", side_effect=["old caption", "fresh caption"]), \
+             patch.object(safe_publish_cards, "require_photo_coverage", side_effect=[stale_error, 4]) as visual_gate, \
+             patch.object(safe_publish_cards, "_story_identity", return_value="Jack Bogle: story") as identity, \
+             patch.object(safe_publish_cards, "_rebuild_story_for_review", return_value=("2026-08-28-8pm", fresh_frames)) as rebuild, \
+             patch.object(safe_publish_cards, "_telegram_review_photo", return_value=True) as send_photo:
+            safe_publish_cards.run_mode("telegram_review")
+
+        identity.assert_called_once_with("2026-08-26-2pm")
+        rebuild.assert_called_once_with("Jack Bogle: story", "2026-08-26-2pm")
+        self.assertEqual(visual_gate.call_args_list, [
+            call(stale_frames, minimum=4),
+            call(fresh_frames, minimum=4),
+        ])
+        self.assertEqual(send_photo.call_count, 6)
+        self.assertEqual(send_photo.call_args_list[0], call(
+            "👀 مراجعة قبل النشر — 2026-08-28-8pm\n1/6\nfresh caption",
+            "fresh-1.png",
+        ))
+
+    def test_telegram_review_does_not_send_if_rebuilt_deck_still_fails_gate(self):
+        stale_frames = [f"old-{i}.png" for i in range(1, 7)]
+        fresh_frames = [f"fresh-{i}.png" for i in range(1, 7)]
+        with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-26-2pm"), \
+             patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-26-2pm", stale_frames)), \
+             patch.object(safe_publish_cards.publisher, "load_caption", return_value="caption"), \
+             patch.object(safe_publish_cards, "require_photo_coverage", side_effect=[
+                 SystemExit("review blocked: only 1/6 photographic frames"),
+                 SystemExit("review blocked: only 3/6 photographic frames"),
+             ]), \
+             patch.object(safe_publish_cards, "_story_identity", return_value="Jack Bogle: story"), \
+             patch.object(safe_publish_cards, "_rebuild_story_for_review", return_value=("2026-08-28-8pm", fresh_frames)), \
+             patch.object(safe_publish_cards, "_telegram_review_photo") as send_photo:
+            with self.assertRaises(SystemExit) as exc:
+                safe_publish_cards.run_mode("telegram_review")
+
+        self.assertIn("only 3/6 photographic frames", str(exc.exception))
+        send_photo.assert_not_called()
+
     def test_telegram_review_fails_if_any_photo_is_not_confirmed(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
         with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
