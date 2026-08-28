@@ -40,7 +40,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python /tmp/apply_repair_assets.py
+          PYTHONPATH=. python /tmp/apply_repair_assets.py
 
       - name: Verify the three targeted stories
         env:
