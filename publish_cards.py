@@ -17,6 +17,7 @@ import os
 import re
 import shutil
 import subprocess
+import time
 import unicodedata
 from pathlib import Path
 
@@ -38,6 +39,12 @@ STAMP = os.getenv("CARDS_STAMP", "").strip()
 CAPTION = os.getenv("CAPTION", "").strip()
 FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "10")
 TAIL_MARGIN = int(os.getenv("TAIL_MARGIN", "").strip() or "1")
+# Bundle creates one Snapchat STORY post per frame. Firing all six at the same
+# instant caused only one item to appear on Snapchat even though all uploads
+# succeeded. Space successful posts so the platform can ingest them in order.
+BUNDLE_FRAME_SPACING_SECONDS = int(
+    os.getenv("BUNDLE_FRAME_SPACING_SECONDS", "").strip() or "15"
+)
 
 _STAMP_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-\d{1,2}(?:am|pm)$")
 _FRAME_RE = re.compile(
@@ -239,10 +246,9 @@ def publish_bundle_frames(caption, frames):
     """Publish each reviewed frame as its own Snapchat STORY post.
 
     Bundle's Snapchat API rejects more than one uploadId in a post, so a
-    multi-frame story must be sent as sequential one-frame STORY posts. Stop
-    at the first failure so we never silently skip a frame and continue.
-    The returned response carries a private count of frames that actually
-    succeeded so the quota ledger can stay accurate even on partial failure.
+    multi-frame story is sent as sequential one-frame STORY posts. Bundle's
+    "publish now" path is asynchronous; spacing successful submissions avoids
+    a burst where Snapchat only exposes the final item. Stop on first failure.
     """
     last_response = {"status": "error", "message": "no frames to publish"}
     published = 0
@@ -254,6 +260,9 @@ def publish_bundle_frames(caption, frames):
                 last_response["_published_frames"] = published
             return last_response
         published += 1
+        if index < len(frames) and BUNDLE_FRAME_SPACING_SECONDS > 0:
+            print(f"    waiting {BUNDLE_FRAME_SPACING_SECONDS}s before next frame")
+            time.sleep(BUNDLE_FRAME_SPACING_SECONDS)
     if isinstance(last_response, dict):
         last_response["_published_frames"] = published
     return last_response
