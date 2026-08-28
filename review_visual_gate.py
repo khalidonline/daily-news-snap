@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
-"""Fail closed when a rendered story deck is visually under-covered.
-
-The source-level Story runtime requires four reviewed photos plus a verified
-logo, but old decks in cards/ can pre-date that gate. This module checks the
-actual rendered PNGs before they are sent for review so a stale deck whose
-photo zone is mostly typography cannot masquerade as visually ready.
-"""
+"""Rendered-story photo verification and deterministic photo placement."""
 
 from __future__ import annotations
 
 import math
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 # The story template reserves roughly this upper-middle region for the visual.
-# Normalized coordinates keep the check stable across 1080x1920 source cards
-# and resized screenshots. On the reported Bogle deck the real portrait is
-# ~7 bits of entropy while the number/text treatments are ~0.9-1.35 bits.
 VISUAL_BOX = (0.08, 0.22, 0.92, 0.55)
 PHOTO_ENTROPY_MIN = 4.0
+CARD_BG = (238, 232, 227)
 
 
 def _entropy(gray: Image.Image) -> float:
@@ -37,17 +29,21 @@ def _entropy(gray: Image.Image) -> float:
     return result
 
 
-def photographic_entropy(path) -> float:
-    """Return grayscale entropy for the rendered card's visual zone."""
-    image = Image.open(path).convert("L")
+def _pixel_box(image: Image.Image):
     width, height = image.size
     left, top, right, bottom = VISUAL_BOX
-    crop = image.crop((
+    return (
         int(width * left),
         int(height * top),
         int(width * right),
         int(height * bottom),
-    ))
+    )
+
+
+def photographic_entropy(path) -> float:
+    """Return grayscale entropy for the rendered card's visual zone."""
+    image = Image.open(path).convert("L")
+    crop = image.crop(_pixel_box(image))
     return _entropy(crop)
 
 
@@ -59,13 +55,57 @@ def is_photographic_frame(path) -> bool:
         return False
 
 
-def require_photo_coverage(frames, minimum=4) -> int:
-    """Require at least ``minimum`` rendered frames with a photographic zone.
+def apply_requested_photos(frames, photo_paths, requested=4) -> int:
+    """Make the rendered deck contain exactly ``requested`` photo cards.
 
-    This is deliberately independent of metadata/sidecars. It protects review
-    and publication from stale cards already baked before the current runtime
-    relevance gate existed.
+    The source photos are already story-approved by ``story_runtime``. The
+    first requested card visual zones receive distinct approved photographs.
+    Any photographic zone after that is neutralized so the workflow input is
+    deterministic: request 4 pictures, get exactly 4 picture cards.
     """
+    paths = [Path(p) for p in (frames or [])]
+    photos = [Path(p) for p in (photo_paths or [])]
+    requested = int(requested)
+    if requested < 1 or requested > len(paths):
+        raise SystemExit(
+            f"number of pictures must be between 1 and {len(paths)}"
+        )
+    if len(photos) < requested:
+        raise SystemExit(
+            f"story has only {len(photos)} approved distinct photos; "
+            f"requested {requested}. Nothing was sent to Telegram."
+        )
+
+    for index, card_path in enumerate(paths):
+        card = Image.open(card_path).convert("RGB")
+        box = _pixel_box(card)
+        width = box[2] - box[0]
+        height = box[3] - box[1]
+        if index < requested:
+            source = Image.open(photos[index]).convert("RGB")
+            fitted = ImageOps.fit(
+                source,
+                (width, height),
+                method=Image.Resampling.LANCZOS,
+                centering=(0.5, 0.5),
+            )
+            card.paste(fitted, (box[0], box[1]))
+            print(
+                f"    requested picture {index + 1}/{requested}: "
+                f"{photos[index].name} -> {card_path.name}"
+            )
+        elif is_photographic_frame(card_path):
+            # Keep the user's requested picture count exact. Non-photo design
+            # elements (logos, figures, typography) outside this check remain.
+            blank = Image.new("RGB", (width, height), CARD_BG)
+            card.paste(blank, (box[0], box[1]))
+        card.save(card_path, "PNG")
+
+    return require_photo_coverage(paths, minimum=requested)
+
+
+def require_photo_coverage(frames, minimum=4) -> int:
+    """Require at least ``minimum`` rendered frames with a photographic zone."""
     paths = list(frames or [])
     scores = []
     for index, path in enumerate(paths, start=1):
@@ -85,8 +125,8 @@ def require_photo_coverage(frames, minimum=4) -> int:
     if count < int(minimum):
         raise SystemExit(
             f"review blocked: only {count}/{len(paths)} photographic frames; "
-            f"minimum is {minimum}. This rendered deck is stale or visually "
-            "incomplete and will not be sent to Telegram or Snapchat."
+            f"minimum is {minimum}. This rendered deck is visually incomplete "
+            "and will not be sent to Telegram or Snapchat."
         )
     print(f"    visual gate PASS: {count}/{len(paths)} photographic frames")
     return count
