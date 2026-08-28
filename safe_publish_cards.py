@@ -237,7 +237,15 @@ def review_on_telegram():
     for path in frames:
         print(f"    {path}")
     print(f"    caption: {caption}")
-    require_photo_coverage(frames, minimum=REVIEW_PHOTO_STANDARD)
+    try:
+        require_photo_coverage(frames, minimum=REVIEW_PHOTO_STANDARD)
+    except SystemExit:
+        if publisher.DRY_RUN:
+            raise
+        story = _story_identity(stamp)
+        stamp, frames = _rebuild_story_for_review(story, stamp)
+        caption = publisher.load_caption(stamp, len(frames))
+        require_photo_coverage(frames, minimum=REVIEW_PHOTO_STANDARD)
     if publisher.DRY_RUN:
         print("DRY_RUN — visual gate passed; Telegram review not sent; Snapchat untouched")
         return
