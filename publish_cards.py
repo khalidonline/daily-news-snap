@@ -36,23 +36,16 @@ except ImportError as exc:
 
 STAMP = os.getenv("CARDS_STAMP", "").strip()
 CAPTION = os.getenv("CAPTION", "").strip()
-# Non-Bundle providers may still need a single video instead of separate image
-# uploads. For that fallback, each reviewed frame holds for FRAME_SECONDS.
 FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "10")
-# Keep the fallback video safely below Snapchat's 60-second ceiling.
 TAIL_MARGIN = int(os.getenv("TAIL_MARGIN", "").strip() or "1")
 
 _STAMP_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-\d{1,2}(?:am|pm)$")
-
-# 2026-08-22-2pm-story-3-fe471e27.png
 _FRAME_RE = re.compile(
     r"^(?P<stamp>\d{4}-\d{2}-\d{2}-\d{1,2}(?:am|pm))-story-"
     r"(?P<n>\d+)-[0-9a-f]+\.png$")
 
 
 def _stamp_key(stamp):
-    """Sort chronologically. Lexical order puts 10am after 2pm — the hour is
-    written for people, not for sorting."""
     date, hour = stamp.rsplit("-", 1)
     h = int(hour[:-2]) % 12
     if hour.endswith("pm"):
@@ -70,13 +63,7 @@ def _normalise_selector(value):
 
 
 def resolve_story_selector(selector=""):
-    """Resolve a timestamp or a unique full/partial built-story title.
-
-    Blank keeps the historical behavior (latest built story). Exact timestamps
-    are passed through unchanged. Any other value is matched as a substring of
-    the sidecar's saved ``story`` or ``title`` field. Ambiguous matches fail
-    closed rather than risking publication of the wrong deck.
-    """
+    """Resolve a timestamp or a unique full/partial built-story title."""
     selector = (selector or "").strip()
     if not selector or _STAMP_RE.fullmatch(selector):
         return selector
@@ -127,7 +114,6 @@ def resolve_story_selector(selector=""):
 
 
 def _sidecar_frames(stamp):
-    """The exact frame files the run recorded, if its sidecar names them."""
     try:
         data = json.loads((Path(CARDS_DIR) / f"{stamp}-story.json")
                           .read_text(encoding="utf-8"))
@@ -138,7 +124,6 @@ def _sidecar_frames(stamp):
 
 
 def find_story(stamp=""):
-    """The frames of one story, in order. Returns (stamp, [paths])."""
     groups = {}
     dupes = set()
     for path in Path(CARDS_DIR).glob("*-story-*.png"):
@@ -160,8 +145,6 @@ def find_story(stamp=""):
     else:
         chosen = available[-1]
 
-    # The sidecar's own list wins outright: it is the one record of which
-    # files belong to one run.
     recorded = _sidecar_frames(chosen)
     if recorded:
         nums = []
@@ -190,7 +173,6 @@ def find_story(stamp=""):
 
 
 def load_caption(stamp, frame_count):
-    """The caption story_bot wrote beside the cards, or a plain fallback."""
     if CAPTION:
         return CAPTION
     sidecar = Path(CARDS_DIR) / f"{stamp}-story.json"
@@ -204,11 +186,7 @@ def load_caption(stamp, frame_count):
 
 
 def frames_to_video(frames, out_path):
-    """One MP4 from the frames, FRAME_SECONDS each.
-
-    This is only a compatibility fallback for providers that cannot accept the
-    reviewed frames directly. Bundle receives the PNGs as separate uploadIds.
-    """
+    """Compatibility fallback for non-Bundle providers."""
     durations = [FRAME_SECONDS] * len(frames)
     durations[-1] = max(2, int(FRAME_SECONDS - TAIL_MARGIN))
     total = sum(durations)
@@ -249,14 +227,45 @@ def frames_to_video(frames, out_path):
 
 
 def prepare_publish_media(frames, stamp):
-    """Return the media objects that the selected provider should receive."""
+    """Non-Bundle providers retain the single-video compatibility path."""
     media = list(frames)
-    if POST_PROVIDER == "bundle":
-        return media
     if len(media) > 1:
         return [frames_to_video(media,
                                 Path(CARDS_DIR) / f"{stamp}-story.mp4")]
     return media
+
+
+def publish_bundle_frames(caption, frames):
+    """Publish each reviewed frame as its own Snapchat STORY post.
+
+    Bundle's Snapchat API rejects more than one uploadId in a post, so a
+    multi-frame story must be sent as sequential one-frame STORY posts. Stop
+    at the first failure so we never silently skip a frame and continue.
+    The returned response carries a private count of frames that actually
+    succeeded so the quota ledger can stay accurate even on partial failure.
+    """
+    last_response = {"status": "error", "message": "no frames to publish"}
+    published = 0
+    for index, frame in enumerate(frames, start=1):
+        print(f"    bundle frame {index}/{len(frames)}: {Path(frame).name}")
+        last_response = post_story(caption, [], [frame])
+        if not post_ok(last_response):
+            if isinstance(last_response, dict):
+                last_response["_published_frames"] = published
+            return last_response
+        published += 1
+    if isinstance(last_response, dict):
+        last_response["_published_frames"] = published
+    return last_response
+
+
+def _record_quota_posts(count):
+    """Record exactly the provider posts that succeeded and commit once."""
+    quota_file = None
+    for _ in range(max(0, int(count))):
+        quota_file = quota_bump()
+    if quota_file is not None:
+        commit_and_push(quota_file, f"quota {ksa_stamp()} +{count}")
 
 
 def main():
@@ -278,18 +287,21 @@ def main():
         deliver_unposted(frames, caption)
         return
 
-    media = prepare_publish_media(frames, stamp)
-
-    urls = []
-    if POST_PROVIDER != "bundle":
+    if POST_PROVIDER == "bundle":
+        response = publish_bundle_frames(caption, frames)
+        published_count = int(response.get("_published_frames", 0)) if isinstance(response, dict) else 0
+        _record_quota_posts(published_count)
+    else:
+        media = prepare_publish_media(frames, stamp)
         urls = (publish_many_via_github(media) if MEDIA_MODE == "github"
                 else [upload_media(f) for f in media])
+        response = post_story(caption, urls, media)
+        published_count = 1 if post_ok(response) else 0
+        _record_quota_posts(published_count)
 
-    response = post_story(caption, urls, media)
     print("   ", response)
 
-    if post_ok(response):
-        commit_and_push(quota_bump(), f"quota {ksa_stamp()}")
+    if post_ok(response) and published_count == len(frames) if POST_PROVIDER == "bundle" else post_ok(response):
         notify_album(f"✅ نُشرت القصة — {stamp}", frames)
     else:
         notify(f"❌ {stamp} — لم تُنشر\n{describe_failure(response)}")
