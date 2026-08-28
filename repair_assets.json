@@ -1,5 +1,5 @@
 {
-  "run_nonce": "2026-08-29-near-pass-photos-6",
+  "run_nonce": "2026-08-29-near-pass-photos-7",
   "assets": [
     {
       "filename": "targeted-2008-wall-street-october.jpg",
@@ -22,6 +22,14 @@
       "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NYSE_Building.JPG",
       "tags": ["2008 financial crisis", "New York Stock Exchange", "Wall Street", "October 23 2008"],
       "credit": "Andy C via Wikimedia Commons; New York Stock Exchange seen from Federal Hall, 23 October 2008",
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "verdict": "STRONG_CONTEXT"
+    },
+    {
+      "filename": "targeted-2008-nyse-sept8.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/USA_Stock_Exchange.JPG",
+      "tags": ["2008 financial crisis", "New York Stock Exchange", "Wall Street", "September 8 2008"],
+      "credit": "Roland Weber via Wikimedia Commons; New York Stock Exchange on Wall Street, 8 September 2008",
       "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
       "verdict": "STRONG_CONTEXT"
     },
