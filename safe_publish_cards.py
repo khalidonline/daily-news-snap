@@ -5,6 +5,10 @@ Telegram is the private review stage. Snapchat is the public release stage.
 A Telegram review sends the selected reviewed deck and caption without calling
 Bundle/Snapchat or changing the Snapchat quota.
 
+Before review, the actual rendered cards must contain enough photographic
+coverage. This protects against stale decks built before the runtime visual
+coverage gate existed.
+
 Bundle/Snapchat Public Profile publishing supports one media item per Story
 post. Our live tests showed that neither multiple Bundle image posts nor one
 video produces the requested six separate photo snaps. Refuse that unsupported
@@ -19,6 +23,7 @@ import urllib.request
 from pathlib import Path
 
 import publish_cards as publisher
+from review_visual_gate import require_photo_coverage
 
 
 PUBLISH_MODE = os.getenv("PUBLISH_MODE", "telegram_review").strip() or "telegram_review"
@@ -110,7 +115,7 @@ def _send_review_photos(stamp, caption, frames):
 
 
 def review_on_telegram():
-    """Send the reviewed deck privately to Telegram and stop there."""
+    """Validate and send the reviewed deck privately to Telegram only."""
     stamp, frames = _selected_story()
     caption = publisher.load_caption(stamp, len(frames))
 
@@ -119,8 +124,12 @@ def review_on_telegram():
         print(f"    {path}")
     print(f"    caption: {caption}")
 
+    # Validate the actual baked PNGs, not just source inventory. Old decks can
+    # pre-date story_runtime's 4-photo + logo gate and must fail closed here.
+    require_photo_coverage(frames, minimum=4)
+
     if publisher.DRY_RUN:
-        print("DRY_RUN — Telegram review not sent; Snapchat untouched")
+        print("DRY_RUN — visual gate passed; Telegram review not sent; Snapchat untouched")
         return
 
     confirmed = _send_review_photos(stamp, caption, frames)
