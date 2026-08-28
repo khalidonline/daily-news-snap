@@ -1,5 +1,5 @@
 {
-  "run_nonce": "2026-08-29-near-pass-photos-3",
+  "run_nonce": "2026-08-29-near-pass-photos-4",
   "assets": [
     {
       "filename": "targeted-2008-wall-street-october.jpg",
@@ -10,6 +10,14 @@
       "verdict": "STRONG_CONTEXT"
     },
     {
+      "filename": "targeted-2008-lehman-sept15.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Lehman_Brothers-20080915.jpg",
+      "tags": ["2008 financial crisis", "Lehman Brothers", "September 15 2008", "New York"],
+      "credit": "Robert Scoble via Wikimedia Commons — CC BY 2.0; Lehman Brothers headquarters photographed 15 September 2008",
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "verdict": "DIRECT"
+    },
+    {
       "filename": "targeted-saleh-kamel-1983.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Habib_Bourguiba,_Mohamed_Mzali,_Moncef_Cheikh-Rouhou,_Sheikh_Abdullah_Salah_Kamel.jpg",
       "tags": ["Saleh Abdullah Kamel", "Dallah Albaraka", "Islamic finance", "1983"],
@@ -18,10 +26,26 @@
       "verdict": "DIRECT"
     },
     {
+      "filename": "targeted-dallah-albaraka-aircraft.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boeing_727-51,_Dallah_Albaraka_AN1213394.jpg",
+      "tags": ["Dallah Albaraka", "Saleh Abdullah Kamel", "Dallah", "Boeing 727"],
+      "credit": "Raimund Stehmann via Wikimedia Commons; Boeing 727 operated by Dallah Albaraka",
+      "story": "قصة صالح كامل ودلة البركة",
+      "verdict": "DIRECT"
+    },
+    {
       "filename": "targeted-publix-first-store-building.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/First_Publix_Supermarket_location%27s_building,_today_(as_seen_from_south-east).jpg",
-      "tags": ["Publix", "first Publix supermarket", "George W. Jenkins", "Lakeland Florida"],
-      "credit": "Wikimedia Commons; building of the first Publix Supermarket location",
+      "tags": ["Publix", "first Publix supermarket", "George W. Jenkins", "Florida"],
+      "credit": "BoringJim via Wikimedia Commons; building of the first Publix Supermarket location",
+      "story": "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "targeted-publix-southgate-lakeland.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Publix_@_Southgate_Shopping_Center%3B_Lakeland,_FL.jpg",
+      "tags": ["Publix", "Southgate Shopping Center", "Lakeland Florida", "supermarket"],
+      "credit": "Wikimedia Commons; Publix flagship store at Southgate Shopping Center in Lakeland, Florida",
       "story": "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل",
       "verdict": "DIRECT"
     }
