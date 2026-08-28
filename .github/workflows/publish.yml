@@ -42,7 +42,7 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PUBLISH_MODE: "telegram_review"
-          STORY: ${{ inputs.story || 'Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير' }}
+          STORY: "${{ inputs.story || 'Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير' }}"
 
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           STORY_MODEL: "claude-opus-5"
