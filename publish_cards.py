@@ -34,18 +34,10 @@ except ImportError as exc:
 
 STAMP = os.getenv("CARDS_STAMP", "").strip()
 CAPTION = os.getenv("CAPTION", "").strip()
-# bundle.social allows ONE upload per Snapchat post, so a six-frame story goes
-# up as a single video. Snapchat then splits a long story video into
-# 10-SECOND snaps — at 8s per frame those segments straddled two frames each,
-# and a viewer tapping through snaps jumped clean over frame 5 of the first
-# published story. 10s per frame makes each snap exactly one frame, which is
-# also the dwell time asked for in the first place. 6 frames = 60s, which is
-# Snapchat's ceiling, hence the <= below rather than <.
+# Non-Bundle providers may still need a single video instead of separate image
+# uploads. For that fallback, each reviewed frame holds for FRAME_SECONDS.
 FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "10")
-# A 60.00s video sits exactly on Snapchat's ceiling, and Snapchat shaves the
-# tail — the republished Aramco story lost the end of frame 6 even with clean
-# 10s alignment. The last frame surrenders this margin so the video ends
-# inside the limit; every earlier frame keeps its full snap.
+# Keep the fallback video safely below Snapchat's 60-second ceiling.
 TAIL_MARGIN = int(os.getenv("TAIL_MARGIN", "").strip() or "1")
 
 # 2026-08-22-2pm-story-3-fe471e27.png
@@ -156,9 +148,8 @@ def load_caption(stamp, frame_count):
 def frames_to_video(frames, out_path):
     """One MP4 from the frames, FRAME_SECONDS each. Returns the path.
 
-    Uses the concat demuxer rather than one -loop input per frame: the frame
-    count varies, and a malformed filter graph fails with an error message
-    that says nothing about which frame broke it.
+    This is only a compatibility fallback for providers that cannot accept the
+    reviewed frames directly. Bundle receives the PNGs as separate uploadIds.
     """
     durations = [FRAME_SECONDS] * len(frames)
     durations[-1] = max(2, int(FRAME_SECONDS - TAIL_MARGIN))
@@ -180,9 +171,8 @@ def frames_to_video(frames, out_path):
             lines.append("duration 1")
     listing.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    # GitHub's runner image does NOT ship ffmpeg on PATH — the first live run
-    # proved it. imageio-ffmpeg carries a static binary and installs from a
-    # wheel in seconds, so it is the fallback everywhere.
+    # GitHub's runner image does NOT ship ffmpeg on PATH — imageio-ffmpeg
+    # carries a static binary and installs from a wheel in seconds.
     ffmpeg = shutil.which("ffmpeg")
     if not ffmpeg:
         try:
@@ -208,6 +198,22 @@ def frames_to_video(frames, out_path):
     return str(out_path)
 
 
+def prepare_publish_media(frames, stamp):
+    """Return the media objects that the selected provider should receive.
+
+    Bundle supports multiple uploadIds inside one Snapchat STORY payload, so
+    preserve every reviewed PNG as its own upload. Other providers keep the
+    existing single-video fallback for multi-frame stories.
+    """
+    media = list(frames)
+    if POST_PROVIDER == "bundle":
+        return media
+    if len(media) > 1:
+        return [frames_to_video(media,
+                                Path(CARDS_DIR) / f"{stamp}-story.mp4")]
+    return media
+
+
 def main():
     stamp, frames = find_story(STAMP)
     if not frames:
@@ -227,12 +233,10 @@ def main():
         deliver_unposted(frames, caption)
         return
 
-    # One upload per Snapchat post is all bundle.social accepts — six frames
-    # posted as six images would be six posts against the plan. As one video
-    # it is a single post, and each frame holds for FRAME_SECONDS.
-    media = frames
-    if len(frames) > 1:
-        media = [frames_to_video(frames, Path(CARDS_DIR) / f"{stamp}-story.mp4")]
+    # Bundle receives every reviewed PNG directly and post_story uploads them
+    # as multiple uploadIds in a single Snapchat STORY request. Providers that
+    # cannot do that retain the old MP4 compatibility path.
+    media = prepare_publish_media(frames, stamp)
 
     urls = []
     if POST_PROVIDER != "bundle":
