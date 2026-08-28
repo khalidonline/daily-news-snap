@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Private Telegram review and guarded Snapchat publishing.
 
-The manual Telegram workflow is intentionally simple: enter one story, build
-one fresh six-card deck, enforce the standard four-photo visual coverage,
-verify the rendered result, then send all six cards to Telegram. Snapchat and
-Bundle are never called by this review path.
+The manual Telegram workflow builds one fresh six-card deck, enforces the
+standard four-photo coverage, fills remaining cards with an approved repeated
+logo/portrait fallback, verifies the rendered result, then sends all six cards
+to Telegram. Snapchat and Bundle are never called by this review path.
 """
 
 import hashlib
@@ -17,7 +17,11 @@ import urllib.request
 from pathlib import Path
 
 import publish_cards as publisher
-from review_visual_gate import apply_requested_photos, require_photo_coverage
+from review_visual_gate import (
+    apply_fallback_visuals,
+    apply_requested_photos,
+    require_photo_coverage,
+)
 
 
 PUBLISH_MODE = os.getenv("PUBLISH_MODE", "telegram_review").strip() or "telegram_review"
@@ -203,14 +207,14 @@ def _send_review_photos(stamp, caption, frames):
 
 
 def review_story_on_telegram(story):
-    """Build one fresh story with the standard four-photo review coverage."""
+    """Build one fresh story with four photos plus visual fallbacks."""
     story = str(story or "").strip()
     if not story:
         raise SystemExit("Story is required")
 
     stamp, frames = _build_fresh_review_story(story)
     canonical_story = _story_identity(stamp)
-    photos, _logos = approved_runtime_visuals(canonical_story)
+    photos, logos = approved_runtime_visuals(canonical_story)
     if len(photos) < REVIEW_PHOTO_STANDARD:
         raise SystemExit(
             f"{canonical_story} has only {len(photos)} approved distinct photos; "
@@ -218,13 +222,18 @@ def review_story_on_telegram(story):
         )
 
     apply_requested_photos(frames, photos, requested=REVIEW_PHOTO_STANDARD)
+    fallback_visuals = logos or photos[:1]
+    apply_fallback_visuals(
+        frames, fallback_visuals, start_index=REVIEW_PHOTO_STANDARD
+    )
     require_photo_coverage(frames, minimum=REVIEW_PHOTO_STANDARD)
     caption = publisher.load_caption(stamp, len(frames))
 
     confirmed = _send_review_photos(stamp, caption, frames)
     print(
         f"Telegram review complete: {confirmed}/6 cards sent; "
-        f"photo standard={REVIEW_PHOTO_STANDARD}; Snapchat/Bundle not called"
+        f"photo standard={REVIEW_PHOTO_STANDARD}; visual fallback applied; "
+        "Snapchat/Bundle not called"
     )
     return stamp, frames
 
