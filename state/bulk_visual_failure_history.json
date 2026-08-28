@@ -221,6 +221,20 @@
       "source_id": "first-party:nyse.com:f7d11e58346b73ad7bee",
       "result": "IDENTITY_UNPROVEN",
       "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "source": "first-party",
+      "source_id": "first-party:saudicoffee.com:9a1661d538737df5f058",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "source": "first-party",
+      "source_id": "first-party:saudicoffee.com:4bf917194044ec321a55",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
     }
   ],
   "complete_query_sets": [
@@ -859,222 +873,21 @@
       "beat": "modern_result",
       "source": "openverse",
       "fingerprint": "e5b222c31cc21d8fccc132b505711e3a163d8682f2f765179e2ef722a7785d68"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "loc",
+      "fingerprint": "7916e612d7946919addf8585a3dfebdcc5fb4d6c9b8acd2d00e22f5f75f5e971"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "openverse",
+      "fingerprint": "7916e612d7946919addf8585a3dfebdcc5fb4d6c9b8acd2d00e22f5f75f5e971"
     }
   ],
   "diagnostics": [
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:354569584b86f20b83d8",
-      "result": "VALIDATION_ERROR",
-      "reason": "WRONG_ENTITY; VALIDATION_ERROR: source metadata not sufficient"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:96c2d817c33068cfc7ca",
-      "result": "VALIDATION_ERROR",
-      "reason": "WRONG_ENTITY; VALIDATION_ERROR: source metadata not sufficient"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:7b9e69f03ce73ab05387",
-      "result": "VALIDATION_ERROR",
-      "reason": "VALIDATION_ERROR: image too small (32x32)"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:64b255cc8d920d4ca13d",
-      "result": "VALIDATION_ERROR",
-      "reason": "VALIDATION_ERROR: image too small (258x329)"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:95650de7283d4d8757fc",
-      "result": "VALIDATION_ERROR",
-      "reason": "VALIDATION_ERROR: image too small (60x34)"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:86527506df798a5de79d",
-      "result": "VALIDATION_ERROR",
-      "reason": "VALIDATION_ERROR: image too small (600x1)"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "early_operation",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "ambiguous_entity_candidates"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "beat": "legacy",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "ambiguous_entity_candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
     {
       "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
       "beat": "person",
@@ -4188,6 +4001,215 @@
     },
     {
       "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة التمر السعودي وتحوله لصناعة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "person",
+      "source": "first-party",
+      "source_id": "first-party:saudicoffee.com:9a1661d538737df5f058",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "first-party",
+      "source_id": "first-party:saudicoffee.com:4bf917194044ec321a55",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "early_work",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "beat": "product_or_company",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
       "source": "all",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "source tiers exhausted"

@@ -126,7 +126,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة زين السعودية ودخولها سوق الاتصالات | Zain KSA, subject:zain-ksa, logo:sa.zain.com
 قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC
 قصة سليمان الراجحي وأكبر وقف خاص | Sulaiman Al Rajhi
-قصة صالح كامل ودلة البركة | person: صالح كامل, Saleh Kamel | entity: دلة البركة, Dallah Al Baraka
+قصة صالح كامل ودلة البركة | person: صالح كامل, Saleh Kamel | entity: دلة البركة, Dallah Al Baraka | logo:saudicoffee.com
 
 # Collective financial memory
 قصة انهيار سوق الأسهم السعودية 2006 | Saudi stock market crash 2006
