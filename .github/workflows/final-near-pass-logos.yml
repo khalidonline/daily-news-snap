@@ -1,0 +1,186 @@
+name: Final near-pass logo repair
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/final-near-pass-logos-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: final-near-pass-logo-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Fetch verified identity logos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p images/logos
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          UA = 'daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)'
+
+          def commons(title, destination):
+              params = urlencode({
+                  'action': 'query', 'format': 'json', 'prop': 'imageinfo',
+                  'iiprop': 'url', 'iiurlwidth': 1280, 'titles': 'File:' + title,
+              })
+              req = Request('https://commons.wikimedia.org/w/api.php?' + params, headers={'User-Agent': UA})
+              with urlopen(req, timeout=25) as response:
+                  payload = json.load(response)
+              page = next(iter(payload['query']['pages'].values()))
+              if 'missing' in page or not page.get('imageinfo'):
+                  raise SystemExit(f'Commons identity file missing: {title}')
+              info = page['imageinfo'][0]
+              url = info.get('thumburl') or info['url']
+              req = Request(url, headers={'User-Agent': UA})
+              with urlopen(req, timeout=30) as response:
+                  Path(destination).write_bytes(response.read())
+              print(f'fetched {title} -> {destination}')
+
+          commons('Royal Commission for Riyadh City Logo.svg', 'images/logos/rcrc.gov.sa-current.png')
+          commons('Al Balad Logo.svg', 'images/logos/visitalbalad.com-current.png')
+          commons('National Water Company Logo 2021.png', 'images/logos/nwc.com.sa-current.png')
+          PY
+
+          curl --fail --location --retry 2 --retry-delay 2 \
+            --user-agent 'daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)' \
+            'https://images.seeklogo.com/logo-png/45/1/saudi-coffee-company-logo-png_seeklogo-457398.png' \
+            -o images/logos/saudicoffee.com-current.png
+
+      - name: Normalize clean logo treatment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          paths = [
+              Path('images/logos/rcrc.gov.sa-current.png'),
+              Path('images/logos/visitalbalad.com-current.png'),
+              Path('images/logos/saudicoffee.com-current.png'),
+              Path('images/logos/nwc.com.sa-current.png'),
+          ]
+          for p in paths:
+              with Image.open(p) as src:
+                  rgba = src.convert('RGBA')
+              corners = [rgba.getpixel((0, 0)), rgba.getpixel((rgba.width-1, 0)),
+                         rgba.getpixel((0, rgba.height-1)), rgba.getpixel((rgba.width-1, rgba.height-1))]
+              opaque_white_bg = all(a > 220 and r > 245 and g > 245 and b > 245 for r, g, b, a in corners)
+              if opaque_white_bg:
+                  data = []
+                  for r, g, b, a in rgba.getdata():
+                      if r > 245 and g > 245 and b > 245:
+                          data.append((r, g, b, 0))
+                      else:
+                          data.append((r, g, b, a))
+                  rgba.putdata(data)
+              alpha = rgba.getchannel('A')
+              bbox = alpha.getbbox()
+              if not bbox:
+                  raise SystemExit(f'logo became empty: {p}')
+              rgba = rgba.crop(bbox)
+              pad = max(12, int(max(rgba.size) * 0.04))
+              canvas = Image.new('RGBA', (rgba.width + 2*pad, rgba.height + 2*pad), (255,255,255,0))
+              canvas.alpha_composite(rgba, (pad, pad))
+              if canvas.width < 250 or canvas.height < 80:
+                  raise SystemExit(f'logo too small after normalization: {p} {canvas.size}')
+              canvas.save(p)
+              print(f'clean logo normalized: {p.name} {canvas.size}')
+          PY
+
+      - name: Register identities without hiding photo aliases
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          index_path = Path('images/logos/index.json')
+          index = json.loads(index_path.read_text(encoding='utf-8'))
+          index['rcrc.gov.sa'] = ['Riyadh', 'الرياض', 'Royal Commission for Riyadh City', 'RCRC', 'الهيئة الملكية لمدينة الرياض', 'rcrc.gov.sa']
+          index['visitalbalad.com'] = ['Jeddah', 'جدة التاريخية', 'Historic Jeddah', 'Jeddah Historic District', 'Al Balad', 'البلد', 'visitalbalad.com']
+          index['saudicoffee.com'] = ['Saudi coffee', 'Arabic coffee', 'Saudi Coffee Company', 'الشركة السعودية للقهوة', 'saudicoffee.com']
+          index['nwc.com.sa'] = ['Zamzam water', 'National Water Company', 'NWC', 'شركة المياه الوطنية', 'King Abdullah Zamzam Water Project', 'nwc.com.sa']
+          index_path.write_text(json.dumps(index, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          p = Path('stories.txt')
+          text = p.read_text(encoding='utf-8')
+          replacements = {
+              'قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية | Riyadh, الرياض':
+              'قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية | Riyadh, الرياض | entity: Royal Commission for Riyadh City, RCRC, الهيئة الملكية لمدينة الرياض | logo:rcrc.gov.sa',
+              'قصة جدة التاريخية: بوابة الحج منذ قرون | Jeddah, جدة التاريخية':
+              'قصة جدة التاريخية: بوابة الحج منذ قرون | Jeddah, جدة التاريخية | entity: Jeddah Historic District, Historic Jeddah, Al Balad, البلد | logo:visitalbalad.com',
+              'قصة القهوة السعودية | Saudi coffee, Arabic coffee':
+              'قصة القهوة السعودية | Saudi coffee, Arabic coffee | entity: Saudi Coffee Company, الشركة السعودية للقهوة | logo:saudicoffee.com',
+              'قصة ماء زمزم وكيف يُعبأ ويوزّع | Zamzam water':
+              'قصة ماء زمزم وكيف يُعبأ ويوزّع | Zamzam water | entity: National Water Company, NWC, شركة المياه الوطنية | context: King Abdullah Zamzam Water Project | logo:nwc.com.sa',
+          }
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit(f'expected story line not found: {old}')
+              text = text.replace(old, new, 1)
+          p.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Verify all four near-pass stories
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          rm -rf /tmp/final-logo-engine
+          mkdir -p /tmp/final-logo-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/final-logo-engine
+          PYTHONPATH=/tmp/final-logo-engine python - <<'PY'
+          import sys
+          sys.path.insert(0, '/tmp/final-logo-engine')
+          from tools.bulk_visual_board import build_board
+          stories = [
+              'قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية',
+              'قصة جدة التاريخية: بوابة الحج منذ قرون',
+              'قصة القهوة السعودية',
+              'قصة ماء زمزم وكيف يُعبأ ويوزّع',
+          ]
+          rows = build_board(stories)
+          for row in rows:
+              print(f'{row.story}: {row.status} photos={len(row.photos)} logos={len(row.logos)}')
+          if any(row.status != 'PASS' or len(row.photos) < 4 or len(row.logos) < 1 for row in rows):
+              raise SystemExit('one or more final near-pass stories failed authoritative coverage')
+          PY
+
+      - name: Commit validated final near-pass logos
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add images/logos/index.json images/logos/rcrc.gov.sa-current.png \
+            images/logos/visitalbalad.com-current.png images/logos/saudicoffee.com-current.png \
+            images/logos/nwc.com.sa-current.png stories.txt
+          git commit -m "repair: close final near-pass logo gaps"
+          git pull --rebase origin repair/all-story-visuals-2026-08-29
+          git push origin HEAD:repair/all-story-visuals-2026-08-29
