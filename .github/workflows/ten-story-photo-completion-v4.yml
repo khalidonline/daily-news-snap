@@ -1,0 +1,175 @@
+name: Ten story photo completion v4
+
+on:
+  push:
+    branches:
+      - photo-curation/ten-story-photo-completion
+    paths:
+      - ".github/workflows/ten-story-photo-completion-v4.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  complete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: photo-curation/ten-story-photo-completion
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Accept every independently valid photo
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          from __future__ import annotations
+          import copy, hashlib, io, json, urllib.parse, urllib.request
+          from pathlib import Path
+          from PIL import Image
+          import image_precheck as ipc
+          import story_runtime as sr
+
+          P=Path('ten_story_photo_plan.json'); D=Path('images'); I=D/'images.txt'; L=D/'relevance.json'; R=Path('ten_story_photo_result.json')
+          plan=json.loads(P.read_text(encoding='utf-8')); targets=plan['targets']
+          lines=I.read_text(encoding='utf-8').splitlines()
+          ledger=json.loads(L.read_text(encoding='utf-8')); assets=ledger.setdefault('assets',{})
+
+          def ledger_set(fn, stories, src=None, note=None):
+              row=assets.setdefault(fn,{}); sm=row.setdefault('stories',{})
+              for s,v in stories.items():
+                  if v not in {'DIRECT','STRONG_CONTEXT'}: raise ValueError(f'bad verdict {fn} {v}')
+                  sm[s]=v
+              if src: row['source_url']=src
+              if note: row['note']=note
+
+          # Idempotent review of already-local assets.
+          for sp in plan.get('reuse',[]):
+              fn=sp['filename']; path=D/fn
+              if not path.is_file():
+                  print('REUSE_FAIL',fn,'missing file'); continue
+              found=False
+              for n,line in enumerate(lines):
+                  if not line.strip() or line.lstrip().startswith('#'): continue
+                  parts=[x.strip() for x in line.split('|',2)]
+                  if parts[0]!=fn: continue
+                  found=True; tags=[x.strip() for x in parts[1].split(',') if x.strip()]
+                  for tag in sp.get('add_tags',[]):
+                      if tag not in tags: tags.append(tag)
+                  credit=parts[2] if len(parts)>2 else ''
+                  lines[n]=f"{fn} | {', '.join(tags)}"+(f' | {credit}' if credit else '')
+                  break
+              if found:
+                  ledger_set(fn,sp['stories'],sp.get('source_url'),sp.get('note')); print('REUSE_ACCEPT',fn)
+          I.write_text('\n'.join(lines)+'\n',encoding='utf-8'); L.write_text(json.dumps(ledger,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
+          def hashes(exclude=None):
+              ex={}; ph=[]
+              for p in D.glob('*.*'):
+                  if p.is_dir() or p==exclude or p.name in {'images.txt','relevance.json'}: continue
+                  try:
+                      raw=p.read_bytes(); ex[hashlib.sha256(raw).hexdigest()]=p; h=ipc.dhash(p)
+                      if h is not None: ph.append((h,p))
+                  except Exception: pass
+              return ex,ph
+
+          def proxy(base, host='images.weserv.nl', scheme=False):
+              upstream=base
+              if not scheme:
+                  if upstream.startswith('https://'): upstream=upstream[8:]
+                  elif upstream.startswith('http://'): upstream=upstream[7:]
+              return f'https://{host}/?url={upstream}&output=jpg&q=94'
+
+          def candidate_urls(sp):
+              special='https://commons.wikimedia.org/wiki/Special:Redirect/file/'+urllib.parse.quote(sp['commons_file'],safe='')
+              bases=[]
+              for u in sp.get('retrieval_urls',[]):
+                  if u not in bases: bases.append(u)
+              if sp.get('retrieval_url') and sp['retrieval_url'] not in bases: bases.append(sp['retrieval_url'])
+              if special not in bases: bases.append(special)
+              out=[]
+              for base in bases:
+                  variants=[proxy(base),proxy(base,'wsrv.nl'),proxy(base,scheme=True),proxy(base,'wsrv.nl',scheme=True),base]
+                  for u in variants:
+                      if u not in out: out.append(u)
+              return out
+
+          def fetch(sp):
+              errs=[]
+              for u in candidate_urls(sp):
+                  try:
+                      req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0 (compatible; story-photo-curation/4.0)','Accept':'image/*,*/*;q=0.8'})
+                      with urllib.request.urlopen(req,timeout=45) as r: raw=r.read()
+                      if len(raw)<5000: raise ValueError(f'too small {len(raw)} bytes')
+                      im=Image.open(io.BytesIO(raw)).convert('RGB')
+                      if im.width<300 or im.height<250: raise ValueError(f'too small {im.width}x{im.height}')
+                      print('FETCH_OK',sp['filename'],urllib.parse.urlparse(u).netloc,im.size); return im,raw
+                  except Exception as e:
+                      errs.append(f"{urllib.parse.urlparse(u).netloc}:{type(e).__name__}:{e}")
+              raise RuntimeError(' | '.join(errs))
+
+          accepted=[]; rejected=[]
+          for sp in plan.get('new_assets',[]):
+              fn=sp['filename']; dest=D/fn
+              mapped=list(sp['stories'])
+              # Already accepted on a prior incremental run: verify it still counts.
+              if dest.exists():
+                  if all(len(sr.coverage(s)[0])>=4 for s in mapped):
+                      accepted.append(fn); print('ALREADY_ACCEPTED',fn); continue
+                  rejected.append([fn,'existing file does not close mapped story']); continue
+              before_index=I.read_text(encoding='utf-8'); before_ledger=L.read_text(encoding='utf-8')
+              try:
+                  im,raw=fetch(sp); ex,ph=hashes()
+                  sha=hashlib.sha256(raw).hexdigest()
+                  if sha in ex: raise ValueError(f'exact duplicate of {ex[sha].name}')
+                  tmp=D/(fn+'.tmp.jpg'); im.save(tmp,'JPEG',quality=93,optimize=True); h=ipc.dhash(tmp)
+                  if h is None: raise ValueError('no dhash')
+                  twins=[p.name for oh,p in ph if bin(h^oh).count('1')<=ipc.DHASH_MAX_DISTANCE]
+                  if twins: raise ValueError(f'perceptual duplicate of {twins[0]}')
+                  tmp.replace(dest)
+                  with I.open('a',encoding='utf-8') as fh: fh.write(f"{fn} | {', '.join(sp['tags'])} | {sp['credit']}\n")
+                  note=sp.get('license','')+(('; '+sp['context_note']) if sp.get('context_note') else '')
+                  ledger_set(fn,sp['stories'],sp['provenance_url'],note); L.write_text(json.dumps(ledger,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                  counts={s:len(sr.coverage(s)[0]) for s in mapped}
+                  if not all(v>=4 for v in counts.values()): raise ValueError(f'not runtime-counting after registration: {counts}')
+                  accepted.append(fn); print('ASSET_ACCEPT',fn,counts)
+              except Exception as e:
+                  (D/(fn+'.tmp.jpg')).unlink(missing_ok=True); dest.unlink(missing_ok=True)
+                  I.write_text(before_index,encoding='utf-8'); L.write_text(before_ledger,encoding='utf-8')
+                  ledger=json.loads(before_ledger); assets=ledger.setdefault('assets',{})
+                  rejected.append([fn,f'{type(e).__name__}: {e}']); print('ASSET_REJECT',fn,type(e).__name__,e)
+
+          coverage=[]; incomplete=[]
+          for s in targets:
+              ph,lo,st=sr.coverage(s); row={'story':s,'photos':len(ph),'logos':len(lo),'status':st,'photo_files':[p.name for p in ph]}; coverage.append(row)
+              if len(ph)<4: incomplete.append(s)
+              print('COVERAGE',s,len(ph),st)
+          result={'accepted':accepted,'rejected':rejected,'coverage':coverage,'photo_complete':len(incomplete)==0,'incomplete':incomplete}
+          R.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('INCREMENTAL_RESULT',json.dumps({'accepted':accepted,'rejected':rejected,'incomplete':incomplete},ensure_ascii=False))
+          PY
+      - name: Commit independently verified assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/images.txt images/relevance.json images/*.jpg images/*.png ten_story_photo_result.json
+          if git diff --cached --quiet; then
+            echo "No new verified assets"
+          else
+            git commit -m "assets: add independently verified ten-story photos"
+            git push origin HEAD:photo-curation/ten-story-photo-completion
+          fi
+      - name: Report gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('ten_story_photo_result.json',encoding='utf-8'))
+          if r['incomplete']:
+              print('PHOTO_GATE_INCOMPLETE',r['incomplete'])
+          else:
+              print('TEN_STORY_PHOTO_GATE=PASS')
+          PY
