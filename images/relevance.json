@@ -98,6 +98,48 @@
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:2025-07-31_Heinz_Nixdorf_Forum_104.jpg",
       "note": "commons; CC BY-SA 4.0; person"
+    },
+    "targeted-2008-wall-street-october.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Wall_Street_New_York_2008.jpg"
+    },
+    "targeted-2008-nyse-trading-floor.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NYSE127.jpg"
+    },
+    "targeted-2008-nyse-oct23.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NYSE_Building.JPG"
+    },
+    "targeted-saleh-kamel-1983.jpg": {
+      "stories": {
+        "قصة صالح كامل ودلة البركة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Habib_Bourguiba,_Mohamed_Mzali,_Moncef_Cheikh-Rouhou,_Sheikh_Abdullah_Salah_Kamel.jpg"
+    },
+    "targeted-dallah-albaraka-aircraft.jpg": {
+      "stories": {
+        "قصة صالح كامل ودلة البركة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boeing_727-51,_Dallah_Albaraka_AN1213394.jpg"
+    },
+    "targeted-publix-first-store-building.jpg": {
+      "stories": {
+        "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/First_Publix_Supermarket_location%27s_building,_today_(as_seen_from_south-east).jpg"
+    },
+    "targeted-publix-southgate-lakeland.jpg": {
+      "stories": {
+        "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Publix_@_Southgate_Shopping_Center%3B_Lakeland,_FL.jpg"
     }
   }
 }
