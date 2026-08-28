@@ -885,323 +885,63 @@
       "beat": "early_work",
       "source": "openverse",
       "fingerprint": "7916e612d7946919addf8585a3dfebdcc5fb4d6c9b8acd2d00e22f5f75f5e971"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "5894b3e2e8c9f10bb9711fdac3b13074131d8a02671a2c11c1def00c80643bcf"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "b0045b9de71992603053f7e465d4f50ffb12a7aea9bcd484501c7c04ebbd73eb"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "b0045b9de71992603053f7e465d4f50ffb12a7aea9bcd484501c7c04ebbd73eb"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "b0045b9de71992603053f7e465d4f50ffb12a7aea9bcd484501c7c04ebbd73eb"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "subject_detail",
+      "source": "commons",
+      "fingerprint": "13b08c0f54dfd4c16112e90258c61744d66bb14df61d6598985a6db2c922ec10"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "subject_detail",
+      "source": "loc",
+      "fingerprint": "13b08c0f54dfd4c16112e90258c61744d66bb14df61d6598985a6db2c922ec10"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "fingerprint": "13b08c0f54dfd4c16112e90258c61744d66bb14df61d6598985a6db2c922ec10"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "3d5b4af3a728b7edaf526c25eabc74be305fd9b58be27992fb79d9088443e97e"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "3d5b4af3a728b7edaf526c25eabc74be305fd9b58be27992fb79d9088443e97e"
     }
   ],
   "diagnostics": [
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a sawmill"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "loc",
-      "source_id": "loc:2020722206",
-      "result": "VALIDATION_ERROR",
-      "reason": "WRONG_ENTITY; relevance rejected candidate as WRONG_ENTITY"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "person",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "early_work",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "early_work",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "early_work",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "early_work",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "early_work",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "early_work",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "product_or_company",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "product_or_company",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "product_or_company",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "product_or_company",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "product_or_company",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "product_or_company",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a company"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a company"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a company"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "DISCOVERY_ENTITY_CONFLICT_SKIPPED",
-      "reason": "literal name explicitly identifies a company"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "beat": "legacy",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "wikidata",
-      "result": "LOGO_IDENTITY_MISSING",
-      "reason": "person_organization_relationship_absent_or_ambiguous"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "beat": "subject_detail",
-      "source": "openverse",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "all",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "source tiers exhausted"
-    },
-    {
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
-      "source": "runtime",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "story_runtime.coverage() reported no deficit reduction"
-    },
     {
       "story": "قصة ربط الريال بالدولار وقصته",
       "source": "wikidata",
@@ -4213,6 +3953,316 @@
       "source": "all",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "SOURCE_UNAVAILABLE",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "SOURCE_UNAVAILABLE",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
     }
   ]
 }
