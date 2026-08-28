@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import call, patch
 
 import imageio_ffmpeg
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +44,7 @@ def _fake_news_bot():
 sys.modules.setdefault("news_bot", _fake_news_bot())
 publish_cards = importlib.import_module("publish_cards")
 safe_publish_cards = importlib.import_module("safe_publish_cards")
+review_visual_gate = importlib.import_module("review_visual_gate")
 
 
 class PublishMediaTests(unittest.TestCase):
@@ -58,16 +59,60 @@ class PublishMediaTests(unittest.TestCase):
             "bundle", ["card-1.png", "card-2.png"], dry_run=True
         )
 
+    def test_review_visual_gate_rejects_one_photo_out_of_six(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            frames = []
+            for index in range(6):
+                path = root / f"frame-{index + 1}.png"
+                img = Image.new("RGB", (1080, 1920), (238, 232, 227))
+                draw = ImageDraw.Draw(img)
+                if index == 0:
+                    # Deterministic photo-like texture in the visual zone.
+                    for y in range(420, 1060, 8):
+                        for x in range(90, 990, 8):
+                            v = (x * 13 + y * 17) % 256
+                            draw.rectangle((x, y, x + 7, y + 7), fill=(v, (v * 3) % 256, (v * 7) % 256))
+                else:
+                    draw.text((350, 650), str(1950 + index), fill=(20, 62, 105))
+                img.save(path)
+                frames.append(str(path))
+
+            with self.assertRaises(SystemExit) as exc:
+                review_visual_gate.require_photo_coverage(frames, minimum=4)
+        self.assertIn("1/6 photographic frames", str(exc.exception))
+
+    def test_review_visual_gate_accepts_four_photos_out_of_six(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            frames = []
+            for index in range(6):
+                path = root / f"frame-{index + 1}.png"
+                img = Image.new("RGB", (1080, 1920), (238, 232, 227))
+                draw = ImageDraw.Draw(img)
+                if index < 4:
+                    for y in range(420, 1060, 8):
+                        for x in range(90, 990, 8):
+                            v = (x * (13 + index) + y * 17) % 256
+                            draw.rectangle((x, y, x + 7, y + 7), fill=(v, (v * 3) % 256, (v * 7) % 256))
+                img.save(path)
+                frames.append(str(path))
+
+            count = review_visual_gate.require_photo_coverage(frames, minimum=4)
+        self.assertEqual(count, 4)
+
     def test_telegram_review_sends_each_frame_as_separate_verified_photo(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
         with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
              patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-28-2pm", frames)), \
              patch.object(safe_publish_cards.publisher, "load_caption", return_value="review caption"), \
+             patch.object(safe_publish_cards, "require_photo_coverage", return_value=3) as visual_gate, \
              patch.object(safe_publish_cards, "_telegram_review_photo", return_value=True) as send_photo, \
              patch.object(safe_publish_cards.publisher, "notify_album") as notify_album, \
              patch.object(safe_publish_cards.publisher, "main") as public_publish:
             safe_publish_cards.run_mode("telegram_review")
 
+        visual_gate.assert_called_once_with(frames, minimum=4)
         self.assertEqual(send_photo.call_count, 3)
         send_photo.assert_has_calls([
             call("👀 مراجعة قبل النشر — 2026-08-28-2pm\n1/3\nreview caption", "card-1.png"),
@@ -82,6 +127,7 @@ class PublishMediaTests(unittest.TestCase):
         with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
              patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-28-2pm", frames)), \
              patch.object(safe_publish_cards.publisher, "load_caption", return_value="review caption"), \
+             patch.object(safe_publish_cards, "require_photo_coverage", return_value=3), \
              patch.object(safe_publish_cards, "_telegram_review_photo", side_effect=[True, False, True]):
             with self.assertRaises(SystemExit) as exc:
                 safe_publish_cards.run_mode("telegram_review")
