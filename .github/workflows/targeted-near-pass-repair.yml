@@ -52,7 +52,7 @@ jobs:
           set -euo pipefail
           PYTHONPATH=. python /tmp/apply_repair_assets.py
 
-      - name: Verify the three targeted stories
+      - name: Verify targeted stories
         env:
           PYTHONPATH: /tmp/story-repair-engine
         shell: bash
@@ -66,9 +66,9 @@ jobs:
           sys.path.insert(0, '/tmp/story-repair-engine')
           from tools.bulk_visual_board import build_board
           stories = [
-              "كيف بنت TSMC احتكاراً على رقائق العالم",
-              "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
-              "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+              "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+              "قصة صالح كامل ودلة البركة",
+              "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل",
           ]
           rows = build_board(stories)
           for row in rows:
@@ -88,6 +88,6 @@ jobs:
             echo "No accepted asset changes."
             exit 0
           fi
-          git commit -m "repair: close near-pass photo gaps"
+          git commit -m "repair: close next near-pass photo gaps"
           git pull --rebase origin repair/all-story-visuals-2026-08-29
           git push origin HEAD:repair/all-story-visuals-2026-08-29
