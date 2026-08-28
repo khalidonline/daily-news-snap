@@ -49,20 +49,24 @@ def remaining_repaired_stories():
 
 
 def validate_story(story):
-    """Fresh-build one story and prove the rendered deck has >=4 photos."""
+    """Fresh-build one story and prove four photos plus fallback visuals."""
     try:
         stamp, frames = review._build_fresh_review_story(story)
         canonical = review._story_identity(stamp)
-        photos, _logos = review.approved_runtime_visuals(canonical)
+        photos, logos = review.approved_runtime_visuals(canonical)
         if len(photos) < REVIEW_PHOTO_STANDARD:
             return False, f"only {len(photos)} approved photos"
         review.apply_requested_photos(
             frames, photos, requested=REVIEW_PHOTO_STANDARD
         )
+        fallback_visuals = logos or photos[:1]
+        filled = review.apply_fallback_visuals(
+            frames, fallback_visuals, start_index=REVIEW_PHOTO_STANDARD
+        )
         count = review.require_photo_coverage(
             frames, minimum=REVIEW_PHOTO_STANDARD
         )
-        return True, f"{count}/6 photos"
+        return True, f"{count}/6 photos + {filled} fallback visuals"
     except BaseException as exc:
         return False, str(exc).replace("\n", " ")[:180]
 
