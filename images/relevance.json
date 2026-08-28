@@ -1013,6 +1013,62 @@
       "stories": {
         "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
       }
+    },
+    "saudi-10riyal-1968.jpg": {
+      "stories": {
+        "قصة ربط الريال بالدولار وقصته": "STRONG_CONTEXT",
+        "لماذا ارتبط الريال السعودي بالدولار وكيف؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:1968_Saudi_10_Riyal.jpg",
+      "note": "Saudi Arabian Monetary Agency 1968 ten-riyal note; public domain; historical Saudi-riyal context for the peg stories."
+    },
+    "southwest-737.jpg": {
+      "stories": {
+        "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": "STRONG_CONTEXT"
+      },
+      "note": "Southwest Airlines Boeing 737; Paul Danese / CC BY-SA 4.0 per the existing curated index; strong context for the low-cost-airline model."
+    },
+    "cpm-2-2-sanco.jpg": {
+      "stories": {
+        "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:CPM_2-2.jpg",
+      "note": "CC BY-SA 3.0"
+    },
+    "jerry-lawson-channel-f-cartridge.jpg": {
+      "stories": {
+        "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cartridge_Fairchild_Channel_F.jpg",
+      "note": "CC BY-SA 4.0"
+    },
+    "mcdonald-brothers-original-san-bernardino.jpg": {
+      "stories": {
+        "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:First_McDonalds,_San_Bernardino,_California.jpg",
+      "note": "CC BY-SA 2.0"
+    },
+    "saleh-kamel-dallah-albaraka-727.jpg": {
+      "stories": {
+        "قصة صالح كامل ودلة البركة": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Boeing_727-51,_Dallah_Albaraka_AN1213394.jpg",
+      "note": "GFDL 1.2 or later; Wikimedia permission record"
+    },
+    "flynas-a320-kkia.jpg": {
+      "stories": {
+        "قصة طيران ناس وثورة الطيران الاقتصادي": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Flynas_Airbus_A320_at_KKIA.jpg",
+      "note": "CC BY-SA 4.0"
+    },
+    "mohammed-bin-laden-haram-1969.jpg": {
+      "stories": {
+        "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Masjid_al-Haram_1969.jpg",
+      "note": "Public domain — Saudi Arabia; BIHG history states SBG was awarded the first Saudi Extension to the Holy Mosque in Makkah in 1955: https://bihg.sa/history/"
     }
   }
 }

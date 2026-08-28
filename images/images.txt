@@ -111,7 +111,7 @@ walker-ad.jpg | Madam C.J. Walker | Miscellaneous Items in High Demand, PPOC / P
 walker-factory.jpg | Madam C.J. Walker | Unknown authorUnknown author / Public domain — Wikimedia Commons
 trippe-pair.jpg | Juan Trippe, Pan Am | Unknown photographer / Public domain — Wikimedia Commons
 kelleher-portrait.jpg | Herb Kelleher, Southwest Airlines | Original uploader was en:User:JGHowes at / CC BY-SA 3.0 — Wikimedia Commons
-southwest-737.jpg | Southwest Airlines | Paul Danese / CC BY-SA 4.0 — Wikimedia Commons
+southwest-737.jpg | Southwest Airlines, الطيران الاقتصادي | Paul Danese / CC BY-SA 4.0 — Wikimedia Commons
 fedex-truck.jpg | Fred Smith, FedEx | KittensMittens2 / CC BY-SA 4.0 — Wikimedia Commons
 fedex-planes.jpg | FedEx | Aaron Davis / CC BY-SA 4.0 — Wikimedia Commons
 naimi-panel.jpg | Ali Al-Naimi, علي النعيمي | UNCTAD / CC BY-SA 2.0 — Wikimedia Commons
@@ -137,7 +137,7 @@ almarai-hq.jpg | المراعي, Almarai | D3NMARK06 (talk) / CC BY-SA 3.0 — W
 almarai-fleet.jpg | المراعي, Almarai, أسطول | الملك المصري / CC BY-SA 4.0 — Wikimedia Commons
 nadec-farm-gate.jpg | نادك, NADEC, مزرعة | Thoufiq313 / CC BY-SA 4.0 — Wikimedia Commons
 sabic-plant.jpg | سابك, SABIC, مصنع, بتروكيماويات | Snoopywv / CC BY-SA 3.0 — Wikimedia Commons
-saudi-10riyal-1968.jpg | أول عملة, ريال, ساما, عملة ورقية, first Saudi banknote | Saudi Arabian Monetary Agency / Public domain — Wikimedia Commons
+saudi-10riyal-1968.jpg | أول عملة, ريال, ساما, عملة ورقية, first Saudi banknote, ربط الريال | Saudi Arabian Monetary Agency / Public domain — Wikimedia Commons
 mcdonalds-jeddah.jpg | ماكدونالدز, McDonald's Saudi Arabia, جدة | Arbitrarily0 / CC BY-SA 3.0 — Wikimedia Commons
 riyadh-dammam-train.jpg | سكة حديد, قطار الرياض الدمام, Riyadh Dammam railway | Lijorijo at Malayalam Wikipedia / CC BY-SA 3.0 — Wikimedia Commons
 railway-construction-1951.jpg | سكة حديد الرياض الدمام, 1951, بناء, Riyadh Dammam railway | John C. Tarvin / Public domain — Wikimedia Commons
@@ -376,3 +376,9 @@ bulk-story-subject-detail-812e9c999133.jpg | كيف بُنيت دبي على ا�
 bulk-amancio-ortega-person-ffe225c523f4.jpg | Amancio Ortega: أغنى رجل في أوروبا ولا توجد له صور تقريباً, Amancio Ortega, Inditex | Stolbovsky / CC BY-SA 3.0
 bulk-story-subject-detail-cda94c3c48a3.jpg | قصة سابك من فكرة إلى عملاق بتروكيماويات, SABIC | Mick Garratt / CC BY-SA 2.0
 bulk-shuji-nakamura-180-person-adf398a50e03.jpg | Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة, Shuji Nakamura | Glenn Beltz / CC BY 2.0
+cpm-2-2-sanco.jpg | CP/M, Digital Research, Gary Kildall | Mspecht — CP/M 2.2 running on a Sanco 8001 — CC BY-SA 3.0 — Wikimedia Commons
+jerry-lawson-channel-f-cartridge.jpg | Jerry Lawson, Fairchild Channel F, video game cartridge | Schnurrikowski — Fairchild Channel F cartridge — CC BY-SA 4.0 — Wikimedia Commons
+mcdonald-brothers-original-san-bernardino.jpg | McDonald brothers, McDonald's, restaurant, San Bernardino | Cogart Strangehill — original McDonald's site, San Bernardino — CC BY-SA 2.0 — Wikimedia Commons/Flickr
+saleh-kamel-dallah-albaraka-727.jpg | صالح كامل, Saleh Kamel, Dallah Albaraka, دلة البركة | Raimund Stehmann — Dallah Albaraka Boeing 727 — GFDL 1.2+ — Wikimedia Commons
+flynas-a320-kkia.jpg | flynas, طيران ناس, King Khalid International Airport | Kskhh — flynas Airbus A320 at KKIA Riyadh — CC BY-SA 4.0 — Wikimedia Commons
+mohammed-bin-laden-haram-1969.jpg | Mohammed bin Laden, Saudi Binladin Group, Masjid al-Haram, Holy Mosque expansion | Masjid al-Haram, 1969 — public domain in Saudi Arabia — Wikimedia Commons

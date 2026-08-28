@@ -1,0 +1,141 @@
+{
+  "accepted": [
+    "cpm-2-2-sanco.jpg",
+    "jerry-lawson-channel-f-cartridge.jpg",
+    "mcdonald-brothers-original-san-bernardino.jpg",
+    "saleh-kamel-dallah-albaraka-727.jpg",
+    "flynas-a320-kkia.jpg",
+    "mohammed-bin-laden-haram-1969.jpg"
+  ],
+  "rejected": [
+    [
+      "souk-al-manakh-kuwait-stock-exchange.jpg",
+      "ValueError: perceptual duplicate of rt-souk-al-manakh-3.jpg"
+    ]
+  ],
+  "coverage": [
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "photos": 4,
+      "logos": 1,
+      "status": "PASS",
+      "photo_files": [
+        "kildall-1977-faire.jpg",
+        "eight-inch-floppy.jpg",
+        "digital-research-badge.jpg",
+        "cpm-2-2-sanco.jpg"
+      ]
+    },
+    {
+      "story": "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "lawson-kjzz.jpg",
+        "rt-jerry-lawson-1.jpg",
+        "rt-jerry-lawson-2.jpg",
+        "jerry-lawson-channel-f-cartridge.jpg"
+      ]
+    },
+    {
+      "story": "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "rt-mcdonald-brothers-1.jpg",
+        "rt-mcdonald-brothers-2.jpg",
+        "rt-mcdonald-brothers-3.jpg",
+        "mcdonald-brothers-original-san-bernardino.jpg"
+      ]
+    },
+    {
+      "story": "قصة ربط الريال بالدولار وقصته",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "silver-riyal.png",
+        "saudi-10riyal-1968.jpg",
+        "riyal-100-1961.jpg",
+        "riyal-1-1984.jpg"
+      ]
+    },
+    {
+      "story": "قصة سوق المناخ في الكويت 1982",
+      "photos": 3,
+      "logos": 0,
+      "status": "NEEDS 1 MORE PHOTO + LOGO",
+      "photo_files": [
+        "rt-souk-al-manakh-1.jpg",
+        "rt-souk-al-manakh-2.jpg",
+        "rt-souk-al-manakh-3.jpg"
+      ]
+    },
+    {
+      "story": "قصة صالح كامل ودلة البركة",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "saudi-coffee-dallah.jpg",
+        "saleh-kamel-portrait.jpg",
+        "dallah-dates.jpg",
+        "saleh-kamel-dallah-albaraka-727.jpg"
+      ]
+    },
+    {
+      "story": "قصة طيران ناس وثورة الطيران الاقتصادي",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "flynas-jeddah.jpg",
+        "rt-flynas-1.jpg",
+        "rt-flynas-2.jpg",
+        "flynas-a320-kkia.jpg"
+      ]
+    },
+    {
+      "story": "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "southwest-737.jpg",
+        "lowcost-easyjet.jpg",
+        "rt-كيف-غي-رت-شركات-الطيران-1.jpg",
+        "rt-كيف-غي-رت-شركات-الطيران-2.jpg"
+      ]
+    },
+    {
+      "story": "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "silver-riyal.png",
+        "saudi-10riyal-1968.jpg",
+        "riyal-100-1961.jpg",
+        "riyal-1-1984.jpg"
+      ]
+    },
+    {
+      "story": "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة",
+      "photos": 4,
+      "logos": 0,
+      "status": "NEEDS LOGO",
+      "photo_files": [
+        "binladin-sign.jpg",
+        "rt-mohammed-bin-laden-1.jpg",
+        "rt-mohammed-bin-laden-2.jpg",
+        "mohammed-bin-laden-haram-1969.jpg"
+      ]
+    }
+  ],
+  "photo_complete": false,
+  "incomplete": [
+    "قصة سوق المناخ في الكويت 1982"
+  ]
+}
