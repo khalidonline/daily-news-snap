@@ -58,6 +58,21 @@ class PublishMediaTests(unittest.TestCase):
             "bundle", ["card-1.png", "card-2.png"], dry_run=True
         )
 
+    def test_telegram_review_sends_album_without_public_publish(self):
+        frames = ["card-1.png", "card-2.png", "card-3.png"]
+        with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
+             patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-28-2pm", frames)), \
+             patch.object(safe_publish_cards.publisher, "load_caption", return_value="review caption"), \
+             patch.object(safe_publish_cards.publisher, "notify_album") as notify_album, \
+             patch.object(safe_publish_cards.publisher, "main") as public_publish:
+            safe_publish_cards.run_mode("telegram_review")
+
+        notify_album.assert_called_once_with(
+            "👀 مراجعة قبل النشر — 2026-08-28-2pm\nreview caption",
+            frames,
+        )
+        public_publish.assert_not_called()
+
     def test_frames_to_video_contains_every_source_frame_in_order(self):
         colors = [
             (230, 20, 20),
