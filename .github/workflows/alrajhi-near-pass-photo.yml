@@ -29,7 +29,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
 
-      - name: Fetch one distinct Al Rajhi ATM photo
+      - name: Fetch one distinct Al Rajhi innovation-lab photo
         shell: bash
         run: |
           set -euo pipefail
@@ -39,8 +39,8 @@ jobs:
           from urllib.parse import urlencode
           from urllib.request import Request, urlopen
 
-          title = 'ATM AL RAJHI BANK.JPG'
-          dest = Path('images/targeted-alrajhi-atm.jpg')
+          title = 'Innovation-lab.jpg'
+          dest = Path('images/targeted-alrajhi-innovation-lab.jpg')
           ua = 'daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)'
           params = urlencode({
               'action': 'query', 'format': 'json', 'prop': 'imageinfo',
@@ -51,7 +51,7 @@ jobs:
               payload = json.load(response)
           page = next(iter(payload['query']['pages'].values()))
           if 'missing' in page or not page.get('imageinfo'):
-              raise SystemExit('reviewed Commons Al Rajhi ATM photo is missing')
+              raise SystemExit('reviewed Commons Al Rajhi innovation-lab photo is missing')
           info = page['imageinfo'][0]
           url = info.get('thumburl') or info['url']
           req = Request(url, headers={'User-Agent': ua})
@@ -69,7 +69,7 @@ jobs:
           from PIL import Image
           from image_precheck import dhash, DHASH_MAX_DISTANCE
 
-          new = Path('images/targeted-alrajhi-atm.jpg')
+          new = Path('images/targeted-alrajhi-innovation-lab.jpg')
           with Image.open(new) as im:
               im.verify()
           with Image.open(new) as im:
@@ -100,8 +100,8 @@ jobs:
           import json
           from pathlib import Path
 
-          image_line = ('targeted-alrajhi-atm.jpg | مصرف الراجحي, Al Rajhi Bank, '
-                        'صالح الراجحي, Saleh Al Rajhi, ATM | Wikimedia Commons — reviewed bank photo')
+          image_line = ('targeted-alrajhi-innovation-lab.jpg | مصرف الراجحي, Al Rajhi Bank, '
+                        'صالح الراجحي, Saleh Al Rajhi, innovation lab | Wikimedia Commons — reviewed bank photo')
           manifest = Path('images/images.txt')
           text = manifest.read_text(encoding='utf-8')
           if image_line not in text:
@@ -109,13 +109,13 @@ jobs:
 
           rel_path = Path('images/relevance.json')
           rel = json.loads(rel_path.read_text(encoding='utf-8'))
-          rel.setdefault('assets', {})['targeted-alrajhi-atm.jpg'] = {
+          rel.setdefault('assets', {})['targeted-alrajhi-innovation-lab.jpg'] = {
               'stories': {
                   'صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء': 'STRONG_CONTEXT',
                   'قصة مصرف الراجحي من صرافة إلى أكبر بنك': 'DIRECT',
               },
-              'source_url': 'https://commons.wikimedia.org/wiki/File:ATM_AL_RAJHI_BANK.JPG',
-              'note': 'Distinct Al Rajhi Bank ATM photograph; strong context for the co-founder story and direct bank-history visual.',
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Innovation-lab.jpg',
+              'note': 'Distinct Al Rajhi Bank innovation-lab photograph; strong context for the co-founder story and direct bank-history visual.',
           }
           rel_path.write_text(json.dumps(rel, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
@@ -149,7 +149,7 @@ jobs:
           set -euo pipefail
           git config user.name "story-visual-repair-bot"
           git config user.email "actions@github.com"
-          git add images/targeted-alrajhi-atm.jpg images/images.txt images/relevance.json
+          git add images/targeted-alrajhi-innovation-lab.jpg images/images.txt images/relevance.json
           git commit -m "repair: close two Al Rajhi near-pass photo gaps"
           git pull --rebase origin repair/all-story-visuals-2026-08-29
           git push origin HEAD:repair/all-story-visuals-2026-08-29
