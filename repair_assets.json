@@ -1,68 +1,36 @@
 {
-  "run_nonce": "2026-08-29-near-pass-metadata-1",
+  "run_nonce": "2026-08-29-near-pass-blackberry-alibaba-1",
   "assets": [
     {
-      "filename": "targeted-2008-wall-street-october.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Wall_Street_New_York_2008.jpg",
-      "tags": ["أزمة 2008", "2008 financial crisis", "Wall Street", "New York Stock Exchange", "October 2008"],
-      "credit": "Faizul Latif Chowdhury via Wikimedia Commons — CC BY-SA 3.0; Wall Street/NYSE entrance photographed in October 2008",
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "verdict": "STRONG_CONTEXT"
-    },
-    {
-      "filename": "targeted-2008-nyse-trading-floor.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NYSE127.jpg",
-      "tags": ["أزمة 2008", "2008 financial crisis", "New York Stock Exchange", "trading floor", "August 2008", "brokers"],
-      "credit": "Wikimedia Commons — public domain; New York Stock Exchange trading floor and brokers, 15 August 2008",
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "verdict": "STRONG_CONTEXT"
-    },
-    {
-      "filename": "targeted-2008-nyse-oct23.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NYSE_Building.JPG",
-      "tags": ["أزمة 2008", "2008 financial crisis", "New York Stock Exchange", "Wall Street", "October 23 2008"],
-      "credit": "Andy C via Wikimedia Commons; New York Stock Exchange seen from Federal Hall, 23 October 2008",
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "verdict": "STRONG_CONTEXT"
-    },
-    {
-      "filename": "targeted-2008-nyse-sept8.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/USA_Stock_Exchange.JPG",
-      "tags": ["أزمة 2008", "2008 financial crisis", "New York Stock Exchange", "Wall Street", "September 8 2008"],
-      "credit": "Roland Weber via Wikimedia Commons; New York Stock Exchange on Wall Street, 8 September 2008",
-      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "verdict": "STRONG_CONTEXT"
-    },
-    {
-      "filename": "targeted-saleh-kamel-1983.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Habib_Bourguiba,_Mohamed_Mzali,_Moncef_Cheikh-Rouhou,_Sheikh_Abdullah_Salah_Kamel.jpg",
-      "tags": ["Saleh Abdullah Kamel", "Dallah Albaraka", "Islamic finance", "1983"],
-      "credit": "HanniBarca via Wikimedia Commons — public domain; Sheikh Saleh Abdullah Kamel pictured during a 1983 Islamic-finance project meeting",
-      "story": "قصة صالح كامل ودلة البركة",
+      "filename": "targeted-blackberry-8700c-7230.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/BlackBerry_8700c_and_7230.jpg",
+      "tags": ["BlackBerry", "RIM", "BlackBerry 8700c", "BlackBerry 7230", "2006"],
+      "credit": "Stephen Foskett via Wikimedia Commons — CC BY-SA; RIM BlackBerry 8700c and 7230 photographed 28 July 2006",
+      "story": "لماذا اختفت BlackBerry من السوق؟",
       "verdict": "DIRECT"
     },
     {
-      "filename": "targeted-dallah-albaraka-aircraft.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boeing_727-51,_Dallah_Albaraka_AN1213394.jpg",
-      "tags": ["Dallah Albaraka", "Saleh Abdullah Kamel", "Dallah", "Boeing 727"],
-      "credit": "Raimund Stehmann via Wikimedia Commons; Boeing 727 operated by Dallah Albaraka",
-      "story": "قصة صالح كامل ودلة البركة",
+      "filename": "targeted-blackberry-bold-9000.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Blackberry_bold_orange_romania.jpg",
+      "tags": ["BlackBerry", "BlackBerry Bold 9000", "smartphone", "2008"],
+      "credit": "Connectorxp via Wikimedia Commons — public domain; BlackBerry Bold 9000 photographed in September 2008",
+      "story": "لماذا اختفت BlackBerry من السوق؟",
       "verdict": "DIRECT"
     },
     {
-      "filename": "targeted-publix-first-store-building.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/First_Publix_Supermarket_location%27s_building,_today_(as_seen_from_south-east).jpg",
-      "tags": ["Publix", "first Publix supermarket", "George W. Jenkins", "Florida"],
-      "credit": "BoringJim via Wikimedia Commons; building of the first Publix Supermarket location",
-      "story": "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل",
+      "filename": "targeted-alibaba-jack-ma-2007.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/2007ChinatrustGlobalLeadersForum_JackMa.jpg",
+      "tags": ["Jack Ma", "Alibaba", "Alibaba Group", "2007"],
+      "credit": "Rico Shen via Wikimedia Commons — CC BY-SA; Jack Ma, founder of Alibaba Group, photographed 5 November 2007",
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
       "verdict": "DIRECT"
     },
     {
-      "filename": "targeted-publix-southgate-lakeland.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Publix_@_Southgate_Shopping_Center%3B_Lakeland,_FL.jpg",
-      "tags": ["Publix", "Southgate Shopping Center", "Lakeland Florida", "supermarket"],
-      "credit": "Wikimedia Commons; Publix flagship store at Southgate Shopping Center in Lakeland, Florida",
-      "story": "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل",
+      "filename": "targeted-alibaba-jack-ma-wef-2018.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Meet_the_Leader_with_Jack_Ma%2C_Executive_Chairman%2C_Alibaba_Group_Holding_Limited_%2839012606625%29.jpg",
+      "tags": ["Jack Ma", "Alibaba", "Alibaba Group", "World Economic Forum", "2018"],
+      "credit": "World Economic Forum via Wikimedia Commons — CC BY 2.0; Jack Ma at Meet the Leader, 24 January 2018",
+      "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
       "verdict": "DIRECT"
     }
   ]
