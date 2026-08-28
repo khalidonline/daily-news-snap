@@ -42,27 +42,27 @@ jobs:
 
           UA = 'daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)'
 
-          def commons(title, destination):
+          def wiki_image(api_host, title, destination):
               params = urlencode({
                   'action': 'query', 'format': 'json', 'prop': 'imageinfo',
                   'iiprop': 'url', 'iiurlwidth': 1280, 'titles': 'File:' + title,
               })
-              req = Request('https://commons.wikimedia.org/w/api.php?' + params, headers={'User-Agent': UA})
+              req = Request(f'https://{api_host}/w/api.php?' + params, headers={'User-Agent': UA})
               with urlopen(req, timeout=25) as response:
                   payload = json.load(response)
               page = next(iter(payload['query']['pages'].values()))
               if 'missing' in page or not page.get('imageinfo'):
-                  raise SystemExit(f'Commons identity file missing: {title}')
+                  raise SystemExit(f'wiki identity file missing on {api_host}: {title}')
               info = page['imageinfo'][0]
               url = info.get('thumburl') or info['url']
               req = Request(url, headers={'User-Agent': UA})
               with urlopen(req, timeout=30) as response:
                   Path(destination).write_bytes(response.read())
-              print(f'fetched {title} -> {destination}')
+              print(f'fetched {title} from {api_host} -> {destination}')
 
-          commons('Royal Commission for Riyadh City Logo.svg', 'images/logos/rcrc.gov.sa-current.png')
-          commons('Al Balad Logo.svg', 'images/logos/visitalbalad.com-current.png')
-          commons('National Water Company Logo 2021.png', 'images/logos/nwc.com.sa-current.png')
+          wiki_image('en.wikipedia.org', 'Royal Commission for Riyadh City Logo.svg', 'images/logos/rcrc.gov.sa-current.png')
+          wiki_image('commons.wikimedia.org', 'Al Balad Logo.svg', 'images/logos/visitalbalad.com-current.png')
+          wiki_image('commons.wikimedia.org', 'National Water Company Logo 2021.png', 'images/logos/nwc.com.sa-current.png')
           PY
 
           curl --fail --location --retry 2 --retry-delay 2 \
