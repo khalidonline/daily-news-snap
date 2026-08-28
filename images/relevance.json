@@ -170,6 +170,18 @@
         "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
       },
       "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Meet_the_Leader_with_Jack_Ma%2C_Executive_Chairman%2C_Alibaba_Group_Holding_Limited_%2839012606625%29.jpg"
+    },
+    "targeted-samsung-electronics-suwon.jpg": {
+      "stories": {
+        "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Samsung_Electronics_Suwon.JPG"
+    },
+    "targeted-samsung-galaxy-2016.jpg": {
+      "stories": {
+        "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Samsung_Galaxy.jpg"
     }
   }
 }
