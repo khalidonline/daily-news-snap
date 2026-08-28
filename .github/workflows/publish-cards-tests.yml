@@ -10,8 +10,10 @@ on:
       - "tests/test_publish_cards.py"
       - "tests/test_simple_review.py"
       - "tests/test_batch_review.py"
+      - "tests/test_repair_all_story_visuals_workflow.py"
       - ".github/workflows/publish.yml"
       - ".github/workflows/batch-review.yml"
+      - ".github/workflows/repair-all-story-visuals.yml"
       - ".github/workflows/publish-cards-tests.yml"
   pull_request:
     paths:
@@ -22,8 +24,10 @@ on:
       - "tests/test_publish_cards.py"
       - "tests/test_simple_review.py"
       - "tests/test_batch_review.py"
+      - "tests/test_repair_all_story_visuals_workflow.py"
       - ".github/workflows/publish.yml"
       - ".github/workflows/batch-review.yml"
+      - ".github/workflows/repair-all-story-visuals.yml"
       - ".github/workflows/publish-cards-tests.yml"
 
 permissions:
@@ -45,3 +49,4 @@ jobs:
           python tests/test_publish_cards.py
           python tests/test_simple_review.py
           python tests/test_batch_review.py
+          python tests/test_repair_all_story_visuals_workflow.py
