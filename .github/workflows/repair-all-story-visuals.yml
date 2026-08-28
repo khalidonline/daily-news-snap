@@ -1,0 +1,146 @@
+name: Repair remaining story visuals
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/repair-all-stories-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-all-story-visuals-2026-08-29
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Load proven repair engine without merging stale code
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          rm -rf /tmp/story-repair-engine
+          mkdir -p /tmp/story-repair-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/story-repair-engine
+
+          # The controller spawns tools/ paths relative to the current checkout.
+          rm -rf tools
+          ln -s /tmp/story-repair-engine/tools tools
+
+          # Seed durable queue/history state so the controller rotates through
+          # hard stories instead of retrying the same failures forever.
+          mkdir -p state
+          for f in bulk_visual_repair_cursor.json bulk_visual_failure_history.json; do
+            if [ ! -f "state/$f" ] && [ -f "/tmp/story-repair-engine/state/$f" ]; then
+              cp "/tmp/story-repair-engine/state/$f" "state/$f"
+            fi
+          done
+
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add state/bulk_visual_repair_cursor.json state/bulk_visual_failure_history.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: seed all-story repair controller state"
+            git push origin HEAD:repair/all-story-visuals-2026-08-29
+          fi
+
+          # This copy of the controller is execution-only. Point its checkpoint
+          # pushes at this fresh branch, and run code-only tests in the proven
+          # engine checkout while runtime review still reads today's assets.
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('/tmp/story-repair-engine/tools/bulk_visual_run.py')
+          text = p.read_text(encoding='utf-8')
+          text = text.replace('repair/story-visual-coverage', 'repair/all-story-visuals-2026-08-29')
+          old = '''    subprocess.run(\n        "python -m unittest -v tests/test_bulk_visual_*.py "\n        "tests/test_runtime_relevance.py tests/test_apply_repair_assets.py",\n        shell=True,\n        check=True,\n    )\n    subprocess.run([sys.executable, "tools/build_runtime_review.py"], check=True)'''
+          new = '''    subprocess.run(\n        "python -m unittest -v tests/test_bulk_visual_*.py "\n        "tests/test_runtime_relevance.py tests/test_apply_repair_assets.py",\n        shell=True,\n        check=True,\n        cwd="/tmp/story-repair-engine",\n    )\n    subprocess.run([sys.executable, "/tmp/story-repair-engine/tools/build_runtime_review.py"], check=True)'''
+          if old not in text:
+              raise SystemExit('repair controller checkpoint block changed unexpectedly')
+          p.write_text(text.replace(old, new), encoding='utf-8')
+          PY
+
+      - name: Verify repair engine before writes
+        env:
+          PYTHONPATH: /tmp/story-repair-engine
+        run: |
+          cd /tmp/story-repair-engine
+          python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py tests/test_apply_repair_assets.py
+
+      - name: Repair remaining catalogue in bounded rounds
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONPATH: /tmp/story-repair-engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          for round in 1 2 3; do
+            echo "=== bounded repair round ${round}/3 ==="
+            set +e
+            python /tmp/story-repair-engine/tools/bulk_visual_run.py \
+              --max-stories 12 \
+              --max-candidates-per-beat 12 \
+              --story-timeout-seconds 150 \
+              --soft-deadline-seconds 1500
+            rc=$?
+            set -e
+            if [ "$rc" -eq 3 ]; then
+              echo "Repair invariant failed."
+              exit 3
+            fi
+
+            read -r passed total <<<"$(python - <<'PY'
+          from tools.bulk_visual_board import build_board
+          rows = build_board()
+          print(sum(r.status == 'PASS' for r in rows), len(rows))
+          PY
+            )"
+            echo "Authoritative strict board after round ${round}: ${passed}/${total} PASS"
+            if [ "$passed" -eq "$total" ]; then
+              break
+            fi
+          done
+
+      - name: Final authoritative summary
+        if: always()
+        env:
+          PYTHONPATH: /tmp/story-repair-engine
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          from tools.bulk_visual_board import build_board
+          rows = build_board()
+          passed = [r for r in rows if r.status == 'PASS']
+          failed = [r for r in rows if r.status != 'PASS']
+          print(f"## Remaining-story visual repair\n\n**{len(passed)}/{len(rows)} strict runtime PASS**")
+          if failed:
+              print("\n### Still unresolved")
+              for r in failed:
+                  print(f"- {r.story}: {r.status}")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: remaining-story-visual-repair-${{ github.run_id }}
+          path: |
+            out/bulk-visual-repair/**
+            out/runtime-review/**
+          if-no-files-found: warn
+          retention-days: 7
