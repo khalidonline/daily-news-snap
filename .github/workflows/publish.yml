@@ -36,7 +36,6 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      # imageio-ffmpeg remains available for non-Bundle provider fallback.
       - run: pip install -r requirements.txt imageio-ffmpeg
 
       - name: Publish the cards
@@ -48,8 +47,9 @@ jobs:
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
           MEDIA_MODE: "github"
-          # one cap shared with the other workflows — see CLAUDE.md
           MONTHLY_POST_LIMIT: "145"
           CARDS_STAMP: ${{ inputs.stamp }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-        run: python publish_cards.py
+        # Safety wrapper refuses a multi-frame live Bundle publish because
+        # Bundle/Snapchat cannot guarantee separate photo Story snaps.
+        run: python safe_publish_cards.py
