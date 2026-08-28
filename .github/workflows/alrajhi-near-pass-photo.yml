@@ -1,0 +1,155 @@
+name: Al Rajhi near-pass photo repair
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/alrajhi-near-pass-photo-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: alrajhi-near-pass-photo-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Fetch one distinct Al Rajhi office photo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          title = 'Arrajhi Bank Office Madinah.JPG'
+          dest = Path('images/targeted-alrajhi-madinah-office.jpg')
+          ua = 'daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)'
+          params = urlencode({
+              'action': 'query', 'format': 'json', 'prop': 'imageinfo',
+              'iiprop': 'url|extmetadata', 'iiurlwidth': 1600, 'titles': 'File:' + title,
+          })
+          req = Request('https://commons.wikimedia.org/w/api.php?' + params, headers={'User-Agent': ua})
+          with urlopen(req, timeout=25) as response:
+              payload = json.load(response)
+          page = next(iter(payload['query']['pages'].values()))
+          if 'missing' in page or not page.get('imageinfo'):
+              raise SystemExit('reviewed Commons Al Rajhi office photo is missing')
+          info = page['imageinfo'][0]
+          url = info.get('thumburl') or info['url']
+          req = Request(url, headers={'User-Agent': ua})
+          with urlopen(req, timeout=30) as response:
+              dest.write_bytes(response.read())
+          print(f'fetched {title}: {url}')
+          PY
+
+      - name: Verify image and reject perceptual duplicates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          from image_precheck import dhash, DHASH_MAX_DISTANCE
+
+          new = Path('images/targeted-alrajhi-madinah-office.jpg')
+          with Image.open(new) as im:
+              im.verify()
+          with Image.open(new) as im:
+              if im.width < 600 or im.height < 400:
+                  raise SystemExit(f'candidate too small: {im.size}')
+              print(f'candidate verified: {im.size}')
+
+          new_hash = dhash(new)
+          if new_hash is None:
+              raise SystemExit('could not fingerprint candidate')
+          for old in Path('images').glob('*'):
+              if old == new or not old.is_file() or old.suffix.lower() not in {'.jpg', '.jpeg', '.png', '.webp'}:
+                  continue
+              old_hash = dhash(old)
+              if old_hash is None:
+                  continue
+              distance = (new_hash ^ old_hash).bit_count()
+              if distance <= DHASH_MAX_DISTANCE:
+                  raise SystemExit(f'candidate is perceptual duplicate of {old} distance={distance}')
+          print('distinctness gate PASS')
+          PY
+
+      - name: Register reviewed relevance
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          image_line = ('targeted-alrajhi-madinah-office.jpg | مصرف الراجحي, Al Rajhi Bank, '
+                        'صالح الراجحي, Saleh Al Rajhi, فرع المدينة | Wikimedia Commons — reviewed office photo')
+          manifest = Path('images/images.txt')
+          text = manifest.read_text(encoding='utf-8')
+          if image_line not in text:
+              manifest.write_text(text.rstrip() + '\n' + image_line + '\n', encoding='utf-8')
+
+          rel_path = Path('images/relevance.json')
+          rel = json.loads(rel_path.read_text(encoding='utf-8'))
+          rel.setdefault('assets', {})['targeted-alrajhi-madinah-office.jpg'] = {
+              'stories': {
+                  'صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء': 'STRONG_CONTEXT',
+                  'قصة مصرف الراجحي من صرافة إلى أكبر بنك': 'DIRECT',
+              },
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Arrajhi_Bank_Office_Madinah.JPG',
+              'note': 'Distinct Al Rajhi Bank office photograph; relevant to the bank history and Saleh Al Rajhi co-founder story.',
+          }
+          rel_path.write_text(json.dumps(rel, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Verify both stories on authoritative board
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          rm -rf /tmp/alrajhi-board-engine
+          mkdir -p /tmp/alrajhi-board-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/alrajhi-board-engine
+          PYTHONPATH=/tmp/alrajhi-board-engine python - <<'PY'
+          import sys
+          sys.path.insert(0, '/tmp/alrajhi-board-engine')
+          from tools.bulk_visual_board import build_board
+          stories = [
+              'صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء',
+              'قصة مصرف الراجحي من صرافة إلى أكبر بنك',
+          ]
+          rows = build_board(stories)
+          for row in rows:
+              print(f'{row.story}: {row.status} photos={len(row.photos)} logos={len(row.logos)}')
+          if any(row.status != 'PASS' or len(row.photos) < 4 or len(row.logos) < 1 for row in rows):
+              raise SystemExit('one or more Al Rajhi stories still fail authoritative coverage')
+          PY
+
+      - name: Commit accepted repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add images/targeted-alrajhi-madinah-office.jpg images/images.txt images/relevance.json
+          git commit -m "repair: close two Al Rajhi near-pass photo gaps"
+          git pull --rebase origin repair/all-story-visuals-2026-08-29
+          git push origin HEAD:repair/all-story-visuals-2026-08-29
