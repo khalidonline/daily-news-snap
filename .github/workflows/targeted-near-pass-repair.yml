@@ -35,6 +35,16 @@ jobs:
           set -euo pipefail
           git fetch origin repair/story-visual-coverage
           git show origin/repair/story-visual-coverage:tools/apply_repair_assets.py > /tmp/apply_repair_assets.py
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('/tmp/apply_repair_assets.py')
+          text = p.read_text(encoding='utf-8')
+          text = text.replace(
+              'UA = "Mozilla/5.0 (compatible; story-visual-repair/1.0)"',
+              'UA = "daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)"',
+          )
+          p.write_text(text, encoding='utf-8')
+          PY
 
       - name: Apply reviewed near-pass photos
         shell: bash
