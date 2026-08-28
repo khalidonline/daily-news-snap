@@ -1,17 +1,19 @@
 name: Telegram story review
 
 # Simple manual review workflow:
-# choose one story, build one fresh six-card deck with the standard visual
-# coverage, verify it, and send it privately to Telegram. Snapchat is never
+# Jack Bogle is the default story. The story field is optional; leaving it
+# unchanged builds one fresh six-card Jack Bogle deck with the standard visual
+# coverage, verifies it, and sends it privately to Telegram. Snapchat is never
 # called here.
 
 on:
   workflow_dispatch:
     inputs:
       story:
-        description: "Story name (for example: Jack Bogle or سليمان الراجحي)"
+        description: "Story — leave unchanged to review Jack Bogle"
         type: string
-        required: true
+        required: false
+        default: "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير"
 
 permissions:
   contents: write
@@ -40,7 +42,7 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PUBLISH_MODE: "telegram_review"
-          STORY: ${{ inputs.story }}
+          STORY: ${{ inputs.story || 'Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير' }}
 
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           STORY_MODEL: "claude-opus-5"
