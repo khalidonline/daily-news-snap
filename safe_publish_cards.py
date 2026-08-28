@@ -38,6 +38,25 @@ def _selected_story():
     return stamp, frames
 
 
+def _send_review_photos(stamp, caption, frames):
+    """Send every review frame as its own Telegram photo and verify each one."""
+    total = len(frames)
+    confirmed = 0
+    for index, frame in enumerate(frames, start=1):
+        text = f"👀 مراجعة قبل النشر — {stamp}\n{index}/{total}"
+        if index == 1:
+            text += f"\n{caption}"
+        ok = publisher.notify(text, frame)
+        if not ok:
+            raise SystemExit(
+                f"Telegram confirmed only {confirmed}/{total} review photos; "
+                f"frame {index} was not confirmed. Snapchat/Bundle were not called."
+            )
+        confirmed += 1
+        print(f"    telegram review photo {index}/{total}: confirmed")
+    return confirmed
+
+
 def review_on_telegram():
     """Send the reviewed deck privately to Telegram and stop there."""
     stamp, frames = _selected_story()
@@ -52,11 +71,11 @@ def review_on_telegram():
         print("DRY_RUN — Telegram review not sent; Snapchat untouched")
         return
 
-    publisher.notify_album(
-        f"👀 مراجعة قبل النشر — {stamp}\n{caption}",
-        frames,
+    confirmed = _send_review_photos(stamp, caption, frames)
+    print(
+        f"Telegram review confirmed {confirmed}/{len(frames)} separate photos — "
+        "Snapchat/Bundle not called; quota unchanged"
     )
-    print("Telegram review sent — Snapchat/Bundle not called; quota unchanged")
 
 
 def run_mode(mode=None):
