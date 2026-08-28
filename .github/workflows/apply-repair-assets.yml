@@ -1,14 +1,9 @@
 name: Apply repair assets
 
 on:
-  pull_request:
-    paths:
-      - "repair_assets.json"
-      - "tools/apply_repair_assets.py"
-      - ".github/workflows/apply-repair-assets.yml"
   push:
     branches:
-      - repair/story-visual-coverage
+      - photo-curation/manual-sourcing-batch-1
     paths:
       - "repair_assets.json"
       - "tools/apply_repair_assets.py"
@@ -24,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: repair/story-visual-coverage
+          ref: photo-curation/manual-sourcing-batch-1
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -32,26 +27,50 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Download and register reviewed repair assets
         run: PYTHONPATH=. python tools/apply_repair_assets.py
-      - name: Verify Jack Bogle runtime coverage
+      - name: Verify reviewed assets and photo coverage
         run: |
           PYTHONPATH=. python - <<'PY'
+          import json
+          from pathlib import Path
           import story_runtime as sr
-          story = "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير"
-          photos, logos, status = sr.coverage(story)
-          print("Bogle photos:", [p.name for p in photos])
-          print("Bogle logos:", [p.name for p in logos])
-          print("Bogle status:", status)
-          if status != "PASS":
-              raise SystemExit(f"Jack Bogle did not reach PASS: {status}")
+
+          manifest = json.loads(Path("repair_assets.json").read_text(encoding="utf-8"))
+          expected = {}
+          for asset in manifest.get("assets", []):
+              if asset.get("verdict") not in {"DIRECT", "STRONG_CONTEXT"}:
+                  continue
+              expected.setdefault(asset["story"], set()).add(asset["filename"])
+              if not (Path("images") / asset["filename"]).is_file():
+                  raise SystemExit(f"missing seeded asset: {asset['filename']}")
+
+          for story, filenames in expected.items():
+              photos, logos, status = sr.coverage(story)
+              photo_names = {p.name for p in photos}
+              print(story)
+              print("  photos:", sorted(photo_names))
+              print("  logos:", [p.name for p in logos])
+              print("  status:", status)
+              if len(photos) < 4:
+                  raise SystemExit(f"{story}: only {len(photos)} counting photos after batch")
+              if not (photo_names & filenames):
+                  raise SystemExit(f"{story}: none of the newly reviewed assets count in runtime coverage")
           PY
       - name: Commit accepted assets
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add images/images.txt images/relevance.json images/bogle-vanguard-*.jpg
+          git config user.email "4189827+github-actions[bot]@users.noreply.github.com"
+          git add images/images.txt images/relevance.json
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          manifest = json.loads(Path("repair_assets.json").read_text(encoding="utf-8"))
+          for asset in manifest.get("assets", []):
+              subprocess.run(["git", "add", f"images/{asset['filename']}"], check=True)
+          PY
           if git diff --cached --quiet; then
             echo "No repair asset changes to commit"
           else
-            git commit -m "assets: repair Jack Bogle runtime coverage"
-            git push origin HEAD:repair/story-visual-coverage
+            git commit -m "assets: seed reviewed manual sourcing batch 1"
+            git push origin HEAD:photo-curation/manual-sourcing-batch-1
           fi
