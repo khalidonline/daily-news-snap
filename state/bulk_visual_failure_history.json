@@ -531,6 +531,96 @@
       "beat": "turning_point",
       "source": "loc",
       "fingerprint": "681833edd4a4d0af346f3c359b44e1176061587602999a2d7fac51fa38a41261"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "loc",
+      "fingerprint": "7960d80b0e7130dbec97bcf6e808d76fff6eae458e8edec8007cbf8071272fe2"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "6fd11fecd554e4cc14cc58ba3b966228a7b8fb022c274709488d4d83dc86652f"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "fingerprint": "4610b733651eb0cb5e0424ea043f4c4b1742b7922d633b804c723793221a018b"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "commons",
+      "fingerprint": "4610b733651eb0cb5e0424ea043f4c4b1742b7922d633b804c723793221a018b"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "openverse",
+      "fingerprint": "4610b733651eb0cb5e0424ea043f4c4b1742b7922d633b804c723793221a018b"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "loc",
+      "fingerprint": "4610b733651eb0cb5e0424ea043f4c4b1742b7922d633b804c723793221a018b"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "loc",
+      "fingerprint": "785df25ae34d03e41fbe9a72d6273156ea3092b2f5f2a803294a3dcd67240f71"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "fingerprint": "785df25ae34d03e41fbe9a72d6273156ea3092b2f5f2a803294a3dcd67240f71"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "6b6dbe2dc1f9f1408a187ad9c5d6384019d42dcf746cc0f2eeb8e6817be4aad2"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "6b6dbe2dc1f9f1408a187ad9c5d6384019d42dcf746cc0f2eeb8e6817be4aad2"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "6b6dbe2dc1f9f1408a187ad9c5d6384019d42dcf746cc0f2eeb8e6817be4aad2"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "fingerprint": "3f45767bdce80d422fa551e698aee00694de9ca281e2c61d21cd3150fde8d637"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "fingerprint": "3f45767bdce80d422fa551e698aee00694de9ca281e2c61d21cd3150fde8d637"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "19d67120d7695ca2390f45a339bdce2352ec54da15f4b39e0914e1d763d6cf7a"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "19d67120d7695ca2390f45a339bdce2352ec54da15f4b39e0914e1d763d6cf7a"
     }
   ],
   "diagnostics": [
@@ -2438,6 +2528,604 @@
     },
     {
       "story": "قصة Rolex وصناعة الفخامة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "exact_entity_no_logo_property"
+    },
+    {
+      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة القهوة السعودية",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة القهوة السعودية",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة دخول لوسيد ومصنعها في السعودية",
+      "source": "commons",
+      "result": "VALIDATION_ERROR",
+      "reason": "verified_organization_logo_download_or_render_validation_failed"
+    },
+    {
+      "story": "قصة دخول لوسيد ومصنعها في السعودية",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة سكة حديد الرياض الدمام 1951",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة سكة حديد الرياض الدمام 1951",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:c9caf8fcfda6e9c0bfd4",
+      "result": "VALIDATION_ERROR",
+      "reason": "WEAK_GENERIC; VALIDATION_ERROR: source metadata not sufficient"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "SOURCE_UNAVAILABLE",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
       "source": "runtime",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "story_runtime.coverage() reported no deficit reduction"
