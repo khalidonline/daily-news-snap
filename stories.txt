@@ -92,7 +92,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 
 # السعودية والخليج
 علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi
-سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته | person: سليمان الراجحي, Sulaiman Al Rajhi | entity: مصرف الراجحي
+سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته | person: سليمان الراجحي, Sulaiman Al Rajhi | entity: مصرف الراجحي | logo:alrajhibank.com.sa
 يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط | Yusuf bin Ahmed Kanoo, YBA Kanoo
 قصة عبداللطيف جميل للسيارات ووكالة تويوتا | Abdul Latif Jameel, Toyota Saudi Arabia, logo:alj.com
 صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء | person: صالح الراجحي, Saleh Al Rajhi | entity: مصرف الراجحي
@@ -147,7 +147,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة استثمار صندوق الاستثمارات في Uber | PIF Uber stake
 
 # Firsts
-قصة سكة حديد الرياض الدمام 1951 | Riyadh Dammam railway
+قصة سكة حديد الرياض الدمام 1951 | Riyadh Dammam railway | entity: Saudi Arabia Railways, SAR, الخطوط الحديدية السعودية | logo:sar.com.sa
 قصة افتتاح أول جامعة سعودية | King Saud University 1957
 قصة أول سيارة تدخل الجزيرة العربية | أول سيارة, سيارات الملك عبدالعزيز, subject:first-car-arabia
 قصة أول مطار في جدة وتطور الطيران المدني | Jeddah airport history
