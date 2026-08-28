@@ -4,12 +4,16 @@ on:
   push:
     paths:
       - "publish_cards.py"
+      - "safe_publish_cards.py"
       - "tests/test_publish_cards.py"
+      - ".github/workflows/publish.yml"
       - ".github/workflows/publish-cards-tests.yml"
   pull_request:
     paths:
       - "publish_cards.py"
+      - "safe_publish_cards.py"
       - "tests/test_publish_cards.py"
+      - ".github/workflows/publish.yml"
       - ".github/workflows/publish-cards-tests.yml"
 
 permissions:
