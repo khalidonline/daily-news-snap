@@ -6,7 +6,7 @@ import tempfile
 import types
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 import imageio_ffmpeg
 from PIL import Image
@@ -32,7 +32,7 @@ def _fake_news_bot():
     module.quota_ok = lambda: True
     module.quota_bump = lambda: None
     module.commit_and_push = lambda *args, **kwargs: None
-    module.notify = lambda *args, **kwargs: None
+    module.notify = lambda *args, **kwargs: True
     module.notify_album = lambda *args, **kwargs: None
     module.ksa_stamp = lambda: "test"
     module.deliver_unposted = lambda *args, **kwargs: None
@@ -58,20 +58,34 @@ class PublishMediaTests(unittest.TestCase):
             "bundle", ["card-1.png", "card-2.png"], dry_run=True
         )
 
-    def test_telegram_review_sends_album_without_public_publish(self):
+    def test_telegram_review_sends_each_frame_as_separate_verified_photo(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
         with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
              patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-28-2pm", frames)), \
              patch.object(safe_publish_cards.publisher, "load_caption", return_value="review caption"), \
+             patch.object(safe_publish_cards.publisher, "notify", return_value=True) as notify, \
              patch.object(safe_publish_cards.publisher, "notify_album") as notify_album, \
              patch.object(safe_publish_cards.publisher, "main") as public_publish:
             safe_publish_cards.run_mode("telegram_review")
 
-        notify_album.assert_called_once_with(
-            "👀 مراجعة قبل النشر — 2026-08-28-2pm\nreview caption",
-            frames,
-        )
+        self.assertEqual(notify.call_count, 3)
+        notify.assert_has_calls([
+            call("👀 مراجعة قبل النشر — 2026-08-28-2pm\n1/3\nreview caption", "card-1.png"),
+            call("👀 مراجعة قبل النشر — 2026-08-28-2pm\n2/3", "card-2.png"),
+            call("👀 مراجعة قبل النشر — 2026-08-28-2pm\n3/3", "card-3.png"),
+        ])
+        notify_album.assert_not_called()
         public_publish.assert_not_called()
+
+    def test_telegram_review_fails_if_any_photo_is_not_confirmed(self):
+        frames = ["card-1.png", "card-2.png", "card-3.png"]
+        with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
+             patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-28-2pm", frames)), \
+             patch.object(safe_publish_cards.publisher, "load_caption", return_value="review caption"), \
+             patch.object(safe_publish_cards.publisher, "notify", side_effect=[True, False, True]):
+            with self.assertRaises(SystemExit) as exc:
+                safe_publish_cards.run_mode("telegram_review")
+        self.assertIn("Telegram confirmed only 1/3 review photos", str(exc.exception))
 
     def test_frames_to_video_contains_every_source_frame_in_order(self):
         colors = [
