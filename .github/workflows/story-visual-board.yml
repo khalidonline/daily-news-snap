@@ -1,0 +1,76 @@
+name: Story visual readiness board
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/story-visual-board-trigger"
+
+permissions:
+  contents: read
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Load authoritative board engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          rm -rf /tmp/visual-board-engine
+          mkdir -p /tmp/visual-board-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/visual-board-engine
+      - name: Build current readiness board
+        env:
+          PYTHONPATH: /tmp/visual-board-engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import collections
+          import contextlib
+          import csv
+          import io
+          from pathlib import Path
+          from tools.bulk_visual_board import build_board
+
+          with contextlib.redirect_stdout(io.StringIO()):
+              rows = build_board()
+          passed = [r for r in rows if r.status == 'PASS']
+          counts = collections.Counter(r.status for r in rows)
+          near = sorted(
+              (r for r in rows if r.status != 'PASS'),
+              key=lambda r: (r.need_photos + int(r.need_logo), r.need_photos, r.story.casefold()),
+          )
+          print(f'BOARD PASS={len(passed)} TOTAL={len(rows)} UNRESOLVED={len(near)}')
+          for status, count in sorted(counts.items()):
+              print(f'STATUS {status}: {count}')
+          print('NEXT_NEAR_PASS')
+          for r in near[:30]:
+              print(f'{r.need_photos + int(r.need_logo)}\tphotos={len(r.photos)}\tlogos={len(r.logos)}\t{r.status}\t{r.story}')
+
+          out = Path('out/story-visual-board')
+          out.mkdir(parents=True, exist_ok=True)
+          with (out / 'status.csv').open('w', encoding='utf-8', newline='') as f:
+              w = csv.writer(f)
+              w.writerow(['story','status','photos','logos','need_photos','need_logo','gap'])
+              for r in rows:
+                  w.writerow([r.story,r.status,len(r.photos),len(r.logos),r.need_photos,int(r.need_logo),r.need_photos+int(r.need_logo)])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: story-visual-board-${{ github.run_id }}
+          path: out/story-visual-board/status.csv
+          retention-days: 7
