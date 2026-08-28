@@ -4,6 +4,7 @@ import sys
 import tempfile
 import types
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import call, patch
 
@@ -39,25 +40,29 @@ publish_cards = importlib.import_module("publish_cards")
 
 
 class PublishMediaTests(unittest.TestCase):
-    def test_bundle_posts_each_reviewed_frame_as_its_own_story_item(self):
+    def test_bundle_posts_each_reviewed_frame_at_a_distinct_time(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
         responses = [{"status": "ok", "n": 1}, {"status": "ok", "n": 2}, {"status": "ok", "n": 3}]
+        start = datetime(2026, 8, 28, 15, 0, 0, tzinfo=timezone.utc)
         with patch.object(publish_cards, "post_story", side_effect=responses) as post_story, \
-             patch.object(publish_cards, "post_ok", return_value=True):
+             patch.object(publish_cards, "post_ok", return_value=True), \
+             patch.object(publish_cards, "bundle_schedule_start", return_value=start):
             result = publish_cards.publish_bundle_frames("caption", frames)
 
         self.assertEqual(result, responses[-1])
         self.assertEqual(post_story.call_args_list, [
-            call("caption", [], ["card-1.png"]),
-            call("caption", [], ["card-2.png"]),
-            call("caption", [], ["card-3.png"]),
+            call("caption", [], ["card-1.png"], post_date="2026-08-28T15:00:00+00:00"),
+            call("caption", [], ["card-2.png"], post_date="2026-08-28T15:00:15+00:00"),
+            call("caption", [], ["card-3.png"], post_date="2026-08-28T15:00:30+00:00"),
         ])
 
     def test_bundle_stops_on_first_failed_frame(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
         responses = [{"status": "ok"}, {"status": "error"}]
+        start = datetime(2026, 8, 28, 15, 0, 0, tzinfo=timezone.utc)
         with patch.object(publish_cards, "post_story", side_effect=responses) as post_story, \
-             patch.object(publish_cards, "post_ok", side_effect=[True, False]):
+             patch.object(publish_cards, "post_ok", side_effect=[True, False]), \
+             patch.object(publish_cards, "bundle_schedule_start", return_value=start):
             result = publish_cards.publish_bundle_frames("caption", frames)
 
         self.assertEqual(result, responses[-1])
