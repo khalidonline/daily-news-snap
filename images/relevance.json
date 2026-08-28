@@ -43,6 +43,14 @@
         "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": "STRONG_CONTEXT"
       },
       "source_url": "https://upload.wikimedia.org/wikipedia/commons/0/03/Gary_kildall801lighthouse.jpg"
+    },
+    "targeted-alrajhi-innovation-lab.jpg": {
+      "stories": {
+        "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء": "STRONG_CONTEXT",
+        "قصة مصرف الراجحي من صرافة إلى أكبر بنك": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Innovation-lab.jpg",
+      "note": "Distinct Al Rajhi Bank innovation-lab photograph; strong context for the co-founder story and direct bank-history visual."
     }
   }
 }
