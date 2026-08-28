@@ -1,0 +1,29 @@
+{
+  "run_nonce": "2026-08-29-near-pass-photos-1",
+  "assets": [
+    {
+      "filename": "targeted-tsmc-morris-chang-2018.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Morris_Chang_2018-11-12.jpg",
+      "tags": ["TSMC", "Morris Chang"],
+      "credit": "Mori / Office of the President (Taiwan) via Wikimedia Commons — CC BY 2.0",
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "targeted-kodak-hq-1900.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Eastman_Kodak_HQ_1900.jpg",
+      "tags": ["Kodak", "Eastman Kodak"],
+      "credit": "Detroit Publishing Company / Library of Congress via Wikimedia Commons — public domain",
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "targeted-cpm-digital-research-house.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/03/Gary_kildall801lighthouse.jpg",
+      "tags": ["Digital Research", "Gary Kildall"],
+      "credit": "Piotr J. Flatau via Wikimedia Commons — CC BY-SA 4.0; Digital Research house, 801 Lighthouse Ave",
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "verdict": "STRONG_CONTEXT"
+    }
+  ]
+}
