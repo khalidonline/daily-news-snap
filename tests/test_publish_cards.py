@@ -43,17 +43,20 @@ def _fake_news_bot():
 
 sys.modules.setdefault("news_bot", _fake_news_bot())
 publish_cards = importlib.import_module("publish_cards")
+safe_publish_cards = importlib.import_module("safe_publish_cards")
 
 
 class PublishMediaTests(unittest.TestCase):
-    def test_bundle_refuses_multi_frame_deck_instead_of_collapsing_it(self):
+    def test_bundle_refuses_multi_frame_deck_before_live_publish(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
-        with patch.object(publish_cards, "post_story") as post_story, \
-             self.assertRaises(SystemExit) as exc:
-            publish_cards.publish_bundle_story("caption", frames, "2026-08-28-2pm")
-
+        with self.assertRaises(SystemExit) as exc:
+            safe_publish_cards.guard_bundle_multiframe("bundle", frames, dry_run=False)
         self.assertIn("cannot publish 3 separate Snapchat Story photos", str(exc.exception))
-        post_story.assert_not_called()
+
+    def test_bundle_guard_allows_dry_run(self):
+        safe_publish_cards.guard_bundle_multiframe(
+            "bundle", ["card-1.png", "card-2.png"], dry_run=True
+        )
 
     def test_frames_to_video_contains_every_source_frame_in_order(self):
         colors = [
