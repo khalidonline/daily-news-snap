@@ -5,6 +5,8 @@ on:
     paths:
       - "runtime_relevance.py"
       - "story_runtime.py"
+      - "publish_cards.py"
+      - "tests/test_publish_cards_selector.py"
       - "tests/test_runtime_relevance.py"
       - "tools/bulk_visual_*.py"
       - "tests/test_bulk_visual_*.py"
@@ -32,8 +34,10 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Relevance policy unit tests
         run: python -m unittest -v tests/test_runtime_relevance.py
+      - name: Publisher selector unit tests
+        run: python -m unittest -v tests/test_publish_cards_selector.py
       - name: Compile guarded story entrypoint
-        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py
+        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py publish_cards.py preflight_stories.py image_precheck.py news_bot.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
       - name: Bulk board invariants

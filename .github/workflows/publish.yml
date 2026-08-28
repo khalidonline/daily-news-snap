@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       stamp:
-        description: "الطابع الزمني للقصة — اتركه فارغاً لآخر قصة بُنيت (مثال: 2026-08-22-2pm)"
+        description: "Story name, part of the name, or timestamp. Leave blank for latest (example: سليمان الراجحي or 2026-08-22-2pm)"
         type: string
         required: false
       dry_run:
