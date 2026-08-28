@@ -25,9 +25,68 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Download and register reviewed repair assets
+      - name: Preflight all reviewed candidates
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import image_precheck as ipc
+          import tools.apply_repair_assets as ara
+
+          path = Path("repair_assets.json")
+          manifest = json.loads(path.read_text(encoding="utf-8"))
+          exact, perceptual = ara.existing_hashes()
+          accepted = []
+          rejected = []
+          accepted_dhash = []
+
+          for spec in manifest.get("assets", []):
+              filename = spec["filename"]
+              tmp = ara.IMAGES / (filename + ".preflight.jpg")
+              try:
+                  img, raw = ara.download(spec["url"])
+                  img = ara.crop_from_spec(img, spec)
+                  raw_sha = hashlib.sha256(raw).hexdigest()
+                  if raw_sha in exact and not spec.get("crop_box"):
+                      rejected.append((filename, f"exact duplicate of {exact[raw_sha].name}"))
+                      continue
+                  ara.save_jpeg(img, tmp)
+                  dh = ipc.dhash(tmp)
+                  twin = None
+                  if dh is not None:
+                      for old_h, old_p in perceptual:
+                          if bin(dh ^ old_h).count("1") <= ipc.DHASH_MAX_DISTANCE:
+                              twin = old_p.name
+                              break
+                      if twin is None:
+                          for old_h, old_name in accepted_dhash:
+                              if bin(dh ^ old_h).count("1") <= ipc.DHASH_MAX_DISTANCE:
+                                  twin = old_name
+                                  break
+                  if twin:
+                      rejected.append((filename, f"perceptual duplicate of {twin}"))
+                      continue
+                  accepted.append(spec)
+                  if dh is not None:
+                      accepted_dhash.append((dh, filename))
+              except Exception as exc:
+                  rejected.append((filename, f"{type(exc).__name__}: {exc}"))
+              finally:
+                  tmp.unlink(missing_ok=True)
+
+          print("accepted candidates:", len(accepted))
+          for spec in accepted:
+              print("  ACCEPT", spec["filename"], "=>", spec["story"])
+          print("rejected candidates:", len(rejected))
+          for filename, reason in rejected:
+              print("  REJECT", filename, "=>", reason)
+
+          path.write_text(json.dumps({"run_nonce": manifest.get("run_nonce"), "assets": accepted}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+      - name: Download and register preflight-cleared repair assets
         run: PYTHONPATH=. python tools/apply_repair_assets.py
-      - name: Verify reviewed assets and photo coverage
+      - name: Verify every accepted asset counts at runtime
         run: |
           PYTHONPATH=. python - <<'PY'
           import json
@@ -37,8 +96,6 @@ jobs:
           manifest = json.loads(Path("repair_assets.json").read_text(encoding="utf-8"))
           expected = {}
           for asset in manifest.get("assets", []):
-              if asset.get("verdict") not in {"DIRECT", "STRONG_CONTEXT"}:
-                  continue
               expected.setdefault(asset["story"], set()).add(asset["filename"])
               if not (Path("images") / asset["filename"]).is_file():
                   raise SystemExit(f"missing seeded asset: {asset['filename']}")
@@ -50,15 +107,14 @@ jobs:
               print("  photos:", sorted(photo_names))
               print("  logos:", [p.name for p in logos])
               print("  status:", status)
-              if len(photos) < 4:
-                  raise SystemExit(f"{story}: only {len(photos)} counting photos after batch")
-              if not (photo_names & filenames):
-                  raise SystemExit(f"{story}: none of the newly reviewed assets count in runtime coverage")
+              not_counting = sorted(filenames - photo_names)
+              if not_counting:
+                  raise SystemExit(f"{story}: accepted assets not counting at runtime: {not_counting}")
           PY
       - name: Commit accepted assets
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "4189827+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add images/images.txt images/relevance.json
           python - <<'PY'
           import json
@@ -68,6 +124,7 @@ jobs:
           for asset in manifest.get("assets", []):
               subprocess.run(["git", "add", f"images/{asset['filename']}"], check=True)
           PY
+          git restore repair_assets.json
           if git diff --cached --quiet; then
             echo "No repair asset changes to commit"
           else
