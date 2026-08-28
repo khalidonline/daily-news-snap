@@ -6,8 +6,6 @@ on:
       - photo-curation/manual-sourcing-batch-1
     paths:
       - "repair_assets.json"
-      - "tools/apply_repair_assets.py"
-      - ".github/workflows/apply-repair-assets.yml"
   workflow_dispatch:
 
 permissions:
@@ -86,6 +84,25 @@ jobs:
           PY
       - name: Download and register preflight-cleared repair assets
         run: PYTHONPATH=. python tools/apply_repair_assets.py
+      - name: Restore provenance URLs in relevance ledger
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("repair_assets.json").read_text(encoding="utf-8"))
+          ledger_path = Path("images/relevance.json")
+          ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+          assets = ledger.setdefault("assets", {})
+          for spec in manifest.get("assets", []):
+              provenance = spec.get("provenance_url")
+              if not provenance:
+                  continue
+              row = assets.setdefault(spec["filename"], {})
+              row["source_url"] = provenance
+              if spec.get("source_license"):
+                  row["note"] = spec["source_license"]
+          ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
       - name: Verify every accepted asset counts at runtime
         run: |
           PYTHONPATH=. python - <<'PY'
