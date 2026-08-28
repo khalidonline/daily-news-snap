@@ -1,39 +1,36 @@
-name: Publish built cards
+name: Telegram story review
 
-# Manual private-review/public-release workflow.
-# Telegram review normally uses an already-built deck. If that baked deck is
-# stale under the current visual standard, review mode rebuilds the same story
-# once with Snapchat disabled, verifies the fresh cards, then sends Telegram.
+# Simple manual review workflow:
+# choose one story + number of picture cards, build one fresh six-card deck,
+# verify it, and send it privately to Telegram. Snapchat is never called here.
 
 on:
   workflow_dispatch:
     inputs:
-      mode:
-        description: "Action"
+      story:
+        description: "Story name (for example: Jack Bogle or سليمان الراجحي)"
+        type: string
+        required: true
+      photo_count:
+        description: "Number of picture cards"
         type: choice
         required: true
-        default: telegram_review
+        default: "4"
         options:
-          - telegram_review
-          - snapchat
-      stamp:
-        description: "Story name, part of name, or timestamp — blank = latest (e.g. سليمان or 2026-08-22-2pm)"
-        type: string
-        required: false
-      dry_run:
-        description: "Preview in workflow logs only — send/publish nothing"
-        type: boolean
-        default: false
+          - "1"
+          - "2"
+          - "3"
+          - "4"
 
 permissions:
   contents: write
 
 concurrency:
-  group: publish-cards
+  group: telegram-story-review
   cancel-in-progress: false
 
 jobs:
-  publish:
+  review:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -47,23 +44,14 @@ jobs:
 
       - run: pip install -r requirements.txt imageio-ffmpeg
 
-      - name: Review or publish the cards
+      - name: Build one fresh story and send to Telegram
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          POST_PROVIDER: "bundle"
-          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
-          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
-          MEDIA_MODE: "github"
-          MONTHLY_POST_LIMIT: "145"
-          PUBLISH_MODE: ${{ inputs.mode }}
-          CARDS_STAMP: ${{ inputs.stamp }}
-          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          PUBLISH_MODE: "telegram_review"
+          STORY: ${{ inputs.story }}
+          PHOTO_COUNT: ${{ inputs.photo_count }}
 
-          # Needed only when telegram_review detects an old/incomplete baked
-          # deck and rebuilds that same story. The subprocess strips Telegram
-          # and Bundle credentials and forces POST_TO_SNAPCHAT=0.
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           STORY_MODEL: "claude-opus-5"
           STORY_FRAMES: "6"
@@ -73,7 +61,6 @@ jobs:
           FONT_FAMILY: "Almarai"
           ALLOW_GENERATED: "0"
           ALLOW_STORY_GENERATION: "0"
-
-        # telegram_review: private review only; stale decks auto-rebuild once.
-        # snapchat: public release path, protected by the multi-frame gate.
+          POST_TO_SNAPCHAT: "0"
+          MEDIA_MODE: "github"
         run: python safe_publish_cards.py
