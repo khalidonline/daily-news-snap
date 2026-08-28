@@ -1,8 +1,9 @@
 name: Telegram story review
 
 # Simple manual review workflow:
-# choose one story + number of picture cards, build one fresh six-card deck,
-# verify it, and send it privately to Telegram. Snapchat is never called here.
+# choose one story, build one fresh six-card deck with the standard visual
+# coverage, verify it, and send it privately to Telegram. Snapchat is never
+# called here.
 
 on:
   workflow_dispatch:
@@ -11,16 +12,6 @@ on:
         description: "Story name (for example: Jack Bogle or سليمان الراجحي)"
         type: string
         required: true
-      photo_count:
-        description: "Number of picture cards"
-        type: choice
-        required: true
-        default: "4"
-        options:
-          - "1"
-          - "2"
-          - "3"
-          - "4"
 
 permissions:
   contents: write
@@ -50,7 +41,6 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PUBLISH_MODE: "telegram_review"
           STORY: ${{ inputs.story }}
-          PHOTO_COUNT: ${{ inputs.photo_count }}
 
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           STORY_MODEL: "claude-opus-5"
