@@ -1,5 +1,5 @@
 {
-  "run_nonce": "2026-08-29-near-pass-photos-1",
+  "run_nonce": "2026-08-29-near-pass-photos-2",
   "assets": [
     {
       "filename": "targeted-tsmc-morris-chang-2018.jpg",
@@ -10,10 +10,10 @@
       "verdict": "DIRECT"
     },
     {
-      "filename": "targeted-kodak-hq-1900.jpg",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Eastman_Kodak_HQ_1900.jpg",
-      "tags": ["Kodak", "Eastman Kodak"],
-      "credit": "Detroit Publishing Company / Library of Congress via Wikimedia Commons — public domain",
+      "filename": "targeted-kodak-brownie-1980.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Kodak_Brownie_camera.jpg",
+      "tags": ["Kodak", "Eastman Kodak", "Brownie camera"],
+      "credit": "Matthew Paul Argall via Wikimedia Commons — CC BY 4.0; Kodak Brownie camera",
       "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
       "verdict": "DIRECT"
     },
