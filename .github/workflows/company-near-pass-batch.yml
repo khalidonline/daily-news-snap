@@ -60,7 +60,7 @@ jobs:
                   Path(destination).write_bytes(response.read())
               print(f'fetched {title} -> {destination}')
 
-          commons('Rare Rolex Watch.png', 'images/targeted-rolex-watch.png')
+          commons('Rolex Submariner diving watch.jpg', 'images/targeted-rolex-submariner.jpg')
           commons('Logo da Rolex.png', 'images/logos/rolex.com-current.png', 1280)
           commons('Fruit juices in bottles.jpg', 'images/targeted-almarai-products.jpg')
           commons('المراعي - Almarai.svg', 'images/logos/almarai.com-current.png', 1280)
@@ -76,7 +76,7 @@ jobs:
           from image_precheck import dhash, DHASH_MAX_DISTANCE
 
           photos = [
-              Path('images/targeted-rolex-watch.png'),
+              Path('images/targeted-rolex-submariner.jpg'),
               Path('images/targeted-almarai-products.jpg'),
           ]
           for new in photos:
@@ -134,7 +134,7 @@ jobs:
           manifest = Path('images/images.txt')
           text = manifest.read_text(encoding='utf-8').rstrip()
           additions = [
-              'targeted-rolex-watch.png | Rolex, رولكس, ساعة رولكس | Matt C / CC BY 2.0 — Wikimedia Commons',
+              'targeted-rolex-submariner.jpg | Rolex, رولكس, Rolex Submariner, ساعة رولكس | Wikimedia Commons — reviewed watch photo',
               'targeted-almarai-products.jpg | Almarai, المراعي, منتجات المراعي, عصائر | Wikimedia Commons — reviewed product photo',
           ]
           for line in additions:
@@ -145,9 +145,9 @@ jobs:
           rel_path = Path('images/relevance.json')
           rel = json.loads(rel_path.read_text(encoding='utf-8'))
           assets = rel.setdefault('assets', {})
-          assets['targeted-rolex-watch.png'] = {
+          assets['targeted-rolex-submariner.jpg'] = {
               'stories': {'قصة Rolex وصناعة الفخامة': 'DIRECT'},
-              'source_url': 'https://commons.wikimedia.org/wiki/File:Rare_Rolex_Watch.png',
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Rolex_Submariner_diving_watch.jpg',
           }
           assets['targeted-almarai-products.jpg'] = {
               'stories': {'قصة المراعي من مزرعة إلى أكبر شركة ألبان': 'DIRECT'},
@@ -200,7 +200,7 @@ jobs:
           set -euo pipefail
           git config user.name "story-visual-repair-bot"
           git config user.email "actions@github.com"
-          git add images/targeted-rolex-watch.png images/targeted-almarai-products.jpg \
+          git add images/targeted-rolex-submariner.jpg images/targeted-almarai-products.jpg \
             images/logos/rolex.com-current.png images/logos/almarai.com-current.png \
             images/images.txt images/relevance.json images/logos/index.json stories.txt
           git commit -m "repair: close Rolex and Almarai near-pass gaps"
