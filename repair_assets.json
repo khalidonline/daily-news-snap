@@ -1,5 +1,5 @@
 {
-  "run_nonce": "2026-08-29-near-pass-photos-4",
+  "run_nonce": "2026-08-29-near-pass-photos-5",
   "assets": [
     {
       "filename": "targeted-2008-wall-street-october.jpg",
@@ -10,12 +10,12 @@
       "verdict": "STRONG_CONTEXT"
     },
     {
-      "filename": "targeted-2008-lehman-sept15.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Lehman_Brothers-20080915.jpg",
-      "tags": ["2008 financial crisis", "Lehman Brothers", "September 15 2008", "New York"],
-      "credit": "Robert Scoble via Wikimedia Commons — CC BY 2.0; Lehman Brothers headquarters photographed 15 September 2008",
+      "filename": "targeted-2008-nyse-trading-floor.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NYSE127.jpg",
+      "tags": ["2008 financial crisis", "New York Stock Exchange", "trading floor", "August 2008", "brokers"],
+      "credit": "Wikimedia Commons — public domain; New York Stock Exchange trading floor and brokers, 15 August 2008",
       "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
-      "verdict": "DIRECT"
+      "verdict": "STRONG_CONTEXT"
     },
     {
       "filename": "targeted-saleh-kamel-1983.jpg",
