@@ -116,7 +116,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة مكتبة جرير من متجر صغير إلى عملاق | Jarir Bookstore, Jarir Marketing
 قصة مصرف الراجحي من صرافة إلى أكبر بنك | Al Rajhi Bank
 قصة طيران ناس وثورة الطيران الاقتصادي | flynas
-قصة المراعي من مزرعة إلى أكبر شركة ألبان | Almarai
+قصة المراعي من مزرعة إلى أكبر شركة ألبان | Almarai | logo:almarai.com
 قصة صافولا | Savola Group
 قصة هنقرستيشن وحرب تطبيقات التوصيل | entity: HungerStation | context: توصيل, delivery, Saudi
 قصة مرسول وتوسعه | Mrsool
@@ -158,7 +158,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة نوكيا من مصنع ورق إلى الهواتف | Nokia
 قصة ليغو من ورشة نجارة | LEGO
 قصة IKEA من قرية سويدية | IKEA, Ingvar Kamprad
-قصة Rolex وصناعة الفخامة | Rolex
+قصة Rolex وصناعة الفخامة | Rolex | logo:rolex.com
 قصة UPS: الشركة التي يملكها سائقوها | UPS, logo:ups.com
 قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل | Publix, logo:publix.com
 قصة NVIDIA: الموظفون الذين صاروا مليونيرات بالأسهم | NVIDIA, logo:nvidia.com

@@ -51,6 +51,18 @@
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:Innovation-lab.jpg",
       "note": "Distinct Al Rajhi Bank innovation-lab photograph; strong context for the co-founder story and direct bank-history visual."
+    },
+    "targeted-rolex-submariner.jpg": {
+      "stories": {
+        "قصة Rolex وصناعة الفخامة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rolex_Submariner_diving_watch.jpg"
+    },
+    "targeted-almarai-products.jpg": {
+      "stories": {
+        "قصة المراعي من مزرعة إلى أكبر شركة ألبان": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Fruit_juices_in_bottles.jpg"
     }
   }
 }
