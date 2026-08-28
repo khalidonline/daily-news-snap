@@ -1,0 +1,135 @@
+name: Targeted near-pass logo repair
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/targeted-near-pass-logos-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: targeted-near-pass-logo-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Install three verified clean logos
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          git checkout origin/repair/story-visual-coverage -- images/logos/alrajhibank.com.sa-current.png
+
+          UA='daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)'
+          curl --fail --location --retry 2 --retry-delay 2 --user-agent "$UA" \
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Lucid_Motors_logo.svg/1280px-Lucid_Motors_logo.svg.png' \
+            -o images/logos/lucidmotors.com-current.png
+          curl --fail --location --retry 2 --retry-delay 2 --user-agent "$UA" \
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Saudi_Arabia_Railways_Logo.svg/1280px-Saudi_Arabia_Railways_Logo.svg.png' \
+            -o images/logos/sar.com.sa-current.png
+
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          for name in (
+              'images/logos/alrajhibank.com.sa-current.png',
+              'images/logos/lucidmotors.com-current.png',
+              'images/logos/sar.com.sa-current.png',
+          ):
+              p = Path(name)
+              with Image.open(p) as im:
+                  im.verify()
+              with Image.open(p) as im:
+                  if im.width < 300 or im.height < 20:
+                      raise SystemExit(f'logo too small: {p} {im.size}')
+                  if 'A' not in im.mode and 'transparency' not in im.info:
+                      raise SystemExit(f'logo lacks transparent treatment: {p} mode={im.mode}')
+                  print(f'clean logo verified: {p.name} {im.size} {im.mode}')
+          PY
+
+      - name: Register logo identities and story aliases
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          index_path = Path('images/logos/index.json')
+          index = json.loads(index_path.read_text(encoding='utf-8'))
+          index['alrajhibank.com.sa'] = [
+              'مصرف الراجحي', 'Al Rajhi Bank', 'سليمان الراجحي', 'Sulaiman Al Rajhi',
+              'صالح الراجحي', 'Saleh Al Rajhi', 'alrajhibank.com.sa'
+          ]
+          index['lucidmotors.com'] = ['Lucid Motors', 'لوسيد', 'lucidmotors.com']
+          index['sar.com.sa'] = [
+              'Saudi Arabia Railways', 'SAR', 'الخطوط الحديدية السعودية',
+              'شركة الخطوط الحديدية السعودية', 'Riyadh Dammam railway', 'sar.com.sa'
+          ]
+          index_path.write_text(json.dumps(index, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          stories_path = Path('stories.txt')
+          text = stories_path.read_text(encoding='utf-8')
+          replacements = {
+              'سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته | person: سليمان الراجحي, Sulaiman Al Rajhi | entity: مصرف الراجحي':
+              'سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته | person: سليمان الراجحي, Sulaiman Al Rajhi | entity: مصرف الراجحي | logo:alrajhibank.com.sa',
+              'قصة دخول لوسيد ومصنعها في السعودية | entity: Lucid Motors, لوسيد, KAEC | logo:lucidmotors.com':
+              'قصة دخول لوسيد ومصنعها في السعودية | entity: Lucid Motors, لوسيد, KAEC | logo:lucidmotors.com',
+              'قصة سكة حديد الرياض الدمام 1951 | Riyadh Dammam railway':
+              'قصة سكة حديد الرياض الدمام 1951 | entity: Saudi Arabia Railways, SAR, الخطوط الحديدية السعودية | context: Riyadh Dammam railway, 1951 | logo:sar.com.sa',
+          }
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit(f'expected story line not found: {old}')
+              text = text.replace(old, new, 1)
+          stories_path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Verify targeted runtime coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp
+          PYTHONPATH=/tmp python - <<'PY'
+          import sys
+          sys.path.insert(0, '/tmp')
+          from tools.bulk_visual_board import build_board
+          stories = [
+              'سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته',
+              'قصة دخول لوسيد ومصنعها في السعودية',
+              'قصة سكة حديد الرياض الدمام 1951',
+          ]
+          rows = build_board(stories)
+          for row in rows:
+              print(f'{row.story}: {row.status} photos={len(row.photos)} logos={len(row.logos)}')
+          if any(row.status != 'PASS' for row in rows):
+              raise SystemExit('one or more targeted logo stories are not PASS')
+          PY
+
+      - name: Commit validated logo repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add images/logos/index.json images/logos/alrajhibank.com.sa-current.png \
+            images/logos/lucidmotors.com-current.png images/logos/sar.com.sa-current.png stories.txt
+          git commit -m "repair: close three near-pass logo gaps"
+          git pull --rebase origin repair/all-story-visuals-2026-08-29
+          git push origin HEAD:repair/all-story-visuals-2026-08-29
