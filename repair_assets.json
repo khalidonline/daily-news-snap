@@ -1,11 +1,11 @@
 {
-  "run_nonce": "2026-08-29-near-pass-careem-1",
+  "run_nonce": "2026-08-29-near-pass-careem-2",
   "assets": [
     {
-      "filename": "targeted-careem-dammam-airport.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Careem_in_Dammam_airport.jpg",
-      "tags": ["Careem", "Dammam", "King Fahd International Airport", "Saudi Arabia", "2017"],
-      "credit": "Ashashyou via Wikimedia Commons — CC BY-SA 4.0; Careem at King Fahd International Airport in Dammam, 16 December 2017",
+      "filename": "targeted-careem-2016-app.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Careem.jpg",
+      "tags": ["Careem", "Careem app", "chauffeur service", "2016"],
+      "credit": "Zizolo0ol via Wikimedia Commons — CC BY-SA 4.0; Careem chauffeur-service/app photograph, 18 June 2016",
       "story": "قصة كريم من الفكرة إلى استحواذ أوبر",
       "verdict": "DIRECT"
     }
