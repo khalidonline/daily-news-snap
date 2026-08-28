@@ -1,0 +1,28 @@
+name: Publish cards tests
+
+on:
+  push:
+    paths:
+      - "publish_cards.py"
+      - "tests/test_publish_cards.py"
+      - ".github/workflows/publish-cards-tests.yml"
+  pull_request:
+    paths:
+      - "publish_cards.py"
+      - "tests/test_publish_cards.py"
+      - ".github/workflows/publish-cards-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run publish-card regression tests
+        run: python tests/test_publish_cards.py
