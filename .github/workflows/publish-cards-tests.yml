@@ -6,18 +6,24 @@ on:
       - "publish_cards.py"
       - "safe_publish_cards.py"
       - "review_visual_gate.py"
+      - "batch_review.py"
       - "tests/test_publish_cards.py"
       - "tests/test_simple_review.py"
+      - "tests/test_batch_review.py"
       - ".github/workflows/publish.yml"
+      - ".github/workflows/batch-review.yml"
       - ".github/workflows/publish-cards-tests.yml"
   pull_request:
     paths:
       - "publish_cards.py"
       - "safe_publish_cards.py"
       - "review_visual_gate.py"
+      - "batch_review.py"
       - "tests/test_publish_cards.py"
       - "tests/test_simple_review.py"
+      - "tests/test_batch_review.py"
       - ".github/workflows/publish.yml"
+      - ".github/workflows/batch-review.yml"
       - ".github/workflows/publish-cards-tests.yml"
 
 permissions:
@@ -38,3 +44,4 @@ jobs:
         run: |
           python tests/test_publish_cards.py
           python tests/test_simple_review.py
+          python tests/test_batch_review.py
