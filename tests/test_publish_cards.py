@@ -102,6 +102,16 @@ class PublishMediaTests(unittest.TestCase):
                     f"video segment {index} did not match source frame {index}: {actual} vs {expected}",
                 )
 
+    def test_latest_real_story_deck_builds_and_validates_as_one_video(self):
+        stamp, frames = publish_cards.find_story("")
+        self.assertTrue(stamp)
+        self.assertGreaterEqual(len(frames), 2)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / f"{stamp}-story.mp4"
+            video = publish_cards.frames_to_video(frames, out)
+            self.assertTrue(Path(video).exists())
+            self.assertTrue(publish_cards.validate_story_video(video, frames))
+
     def test_non_bundle_still_uses_video_for_multi_frame_story(self):
         frames = ["card-1.png", "card-2.png"]
         with patch.object(publish_cards, "POST_PROVIDER", "zernio"), \
