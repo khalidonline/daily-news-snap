@@ -63,6 +63,12 @@
         "قصة المراعي من مزرعة إلى أكبر شركة ألبان": "DIRECT"
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:Fruit_juices_in_bottles.jpg"
+    },
+    "targeted-carrier-hvac.jpg": {
+      "stories": {
+        "قصة المكيّف الذي جعل مدن الخليج ممكنة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Carrier_HVAC_system,_MVUC.jpg"
     }
   }
 }

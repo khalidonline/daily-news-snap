@@ -107,7 +107,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة الشماغ ومصانعه في إنجلترا | ghutra, shemagh, شماغ
 قصة القهوة السعودية | Saudi coffee, Arabic coffee | entity: Saudi Coffee Company, الشركة السعودية للقهوة | logo:saudicoffee.com
 قصة التمر السعودي وتحوله لصناعة | entity: Saudi dates industry, التمر | context: dates, farming
-قصة المكيّف الذي جعل مدن الخليج ممكنة | air conditioning, Willis Carrier
+قصة المكيّف الذي جعل مدن الخليج ممكنة | air conditioning, Willis Carrier | logo:carrier.com
 قصة ماء زمزم وكيف يُعبأ ويوزّع | Zamzam water | entity: National Water Company, NWC, شركة المياه الوطنية | context: King Abdullah Zamzam Water Project | logo:nwc.com.sa
 قصة الكبسة ورحلة الرز إلى الجزيرة العربية | Kabsa, basmati rice trade
 قصة العباءة السعودية وتحولها لصناعة أزياء | abaya fashion industry
