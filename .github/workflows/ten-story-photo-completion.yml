@@ -1,0 +1,203 @@
+name: Ten story photo completion
+
+on:
+  push:
+    branches:
+      - photo-curation/ten-story-photo-completion
+    paths:
+      - "ten_story_photo_plan.json"
+      - ".github/workflows/ten-story-photo-completion.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  complete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: photo-curation/ten-story-photo-completion
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Apply and verify ten-story photo batch
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          from __future__ import annotations
+          import hashlib
+          import io
+          import json
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+          from PIL import Image
+          import image_precheck as ipc
+          import story_runtime as sr
+
+          PLAN = Path("ten_story_photo_plan.json")
+          IMAGES = Path("images")
+          INDEX = IMAGES / "images.txt"
+          LEDGER = IMAGES / "relevance.json"
+          UA = "Mozilla/5.0 (compatible; story-photo-curation/1.0)"
+
+          plan = json.loads(PLAN.read_text(encoding="utf-8"))
+          targets = plan["targets"]
+
+          print("=== BASELINE ===")
+          for story in targets:
+              photos, logos, status = sr.coverage(story)
+              print(f"{story}: {len(photos)} photos / {len(logos)} logos / {status}")
+
+          index_text = INDEX.read_text(encoding="utf-8")
+          index_lines = index_text.splitlines()
+          try:
+              ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
+          except Exception:
+              ledger = {"version": 2, "policy": "Only DIRECT and STRONG_CONTEXT count.", "assets": {}}
+          ledger_assets = ledger.setdefault("assets", {})
+
+          def add_index_tags(filename: str, new_tags: list[str]) -> None:
+              found = False
+              for i, line in enumerate(index_lines):
+                  if not line.strip() or line.lstrip().startswith("#"):
+                      continue
+                  parts = [p.strip() for p in line.split("|", 2)]
+                  if parts[0] != filename:
+                      continue
+                  found = True
+                  tags = [t.strip() for t in (parts[1] if len(parts) > 1 else "").split(",") if t.strip()]
+                  for tag in new_tags:
+                      if tag not in tags:
+                          tags.append(tag)
+                  credit = parts[2] if len(parts) > 2 else ""
+                  index_lines[i] = f"{filename} | {', '.join(tags)}" + (f" | {credit}" if credit else "")
+                  break
+              if not found:
+                  raise SystemExit(f"reuse asset missing from index: {filename}")
+
+          def set_ledger(filename: str, stories: dict[str, str], source_url: str | None, note: str | None) -> None:
+              row = ledger_assets.setdefault(filename, {})
+              story_map = row.setdefault("stories", {})
+              for story, verdict in stories.items():
+                  if verdict not in {"DIRECT", "STRONG_CONTEXT"}:
+                      raise SystemExit(f"invalid counting verdict for {filename}: {verdict}")
+                  story_map[story] = verdict
+              if source_url:
+                  row["source_url"] = source_url
+              if note:
+                  row["note"] = note
+
+          for spec in plan.get("reuse", []):
+              path = IMAGES / spec["filename"]
+              if not path.is_file():
+                  raise SystemExit(f"reuse file does not exist: {path}")
+              add_index_tags(spec["filename"], spec.get("add_tags", []))
+              set_ledger(spec["filename"], spec["stories"], spec.get("source_url"), spec.get("note"))
+              print("REUSE", spec["filename"], "=>", list(spec["stories"]))
+
+          INDEX.write_text("\n".join(index_lines) + "\n", encoding="utf-8")
+          LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+          def existing_hashes(exclude: Path | None = None):
+              exact = {}
+              perceptual = []
+              for p in IMAGES.glob("*.*"):
+                  if p.is_dir() or p == exclude or p.name in {"images.txt", "relevance.json"}:
+                      continue
+                  try:
+                      raw = p.read_bytes()
+                      exact[hashlib.sha256(raw).hexdigest()] = p
+                      dh = ipc.dhash(p)
+                      if dh is not None:
+                          perceptual.append((dh, p))
+                  except Exception:
+                      continue
+              return exact, perceptual
+
+          def fetch_candidate(commons_file: str):
+              origin = "https://commons.wikimedia.org/wiki/Special:Redirect/file/" + urllib.parse.quote(commons_file, safe="")
+              encoded = urllib.parse.quote(origin, safe="")
+              urls = [
+                  "https://images.weserv.nl/?url=" + encoded + "&output=jpg&q=94",
+                  "https://wsrv.nl/?url=" + encoded + "&output=jpg&q=94",
+                  origin,
+              ]
+              errors = []
+              for url in urls:
+                  try:
+                      req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "image/avif,image/webp,image/*,*/*;q=0.8"})
+                      with urllib.request.urlopen(req, timeout=90) as resp:
+                          raw = resp.read()
+                      if len(raw) < 5000:
+                          raise ValueError(f"download too small ({len(raw)} bytes)")
+                      img = Image.open(io.BytesIO(raw)).convert("RGB")
+                      if img.width < 300 or img.height < 250:
+                          raise ValueError(f"image too small ({img.width}x{img.height})")
+                      print("FETCH", commons_file, "via", urllib.parse.urlparse(url).netloc, f"{img.width}x{img.height}")
+                      return img, raw
+                  except Exception as exc:
+                      errors.append(f"{urllib.parse.urlparse(url).netloc}: {type(exc).__name__}: {exc}")
+              raise RuntimeError("; ".join(errors))
+
+          added = []
+          for spec in plan.get("new_assets", []):
+              filename = spec["filename"]
+              dest = IMAGES / filename
+              if dest.exists():
+                  raise SystemExit(f"new asset filename already exists: {filename}")
+              img, raw = fetch_candidate(spec["commons_file"])
+              exact, perceptual = existing_hashes()
+              raw_sha = hashlib.sha256(raw).hexdigest()
+              if raw_sha in exact:
+                  raise SystemExit(f"{filename}: exact duplicate of {exact[raw_sha].name}")
+              tmp = IMAGES / (filename + ".tmp.jpg")
+              img.save(tmp, "JPEG", quality=93, optimize=True)
+              dh = ipc.dhash(tmp)
+              if dh is None:
+                  tmp.unlink(missing_ok=True)
+                  raise SystemExit(f"{filename}: cannot compute perceptual hash")
+              for old_h, old_p in perceptual:
+                  if bin(dh ^ old_h).count("1") <= ipc.DHASH_MAX_DISTANCE:
+                      tmp.unlink(missing_ok=True)
+                      raise SystemExit(f"{filename}: perceptual duplicate of {old_p.name}")
+              tmp.replace(dest)
+
+              with INDEX.open("a", encoding="utf-8") as fh:
+                  fh.write(f"{filename} | {', '.join(spec['tags'])} | {spec['credit']}\n")
+              note_parts = [spec.get("license", "")]
+              if spec.get("context_note"):
+                  note_parts.append(spec["context_note"])
+              set_ledger(filename, spec["stories"], spec["provenance_url"], "; ".join(x for x in note_parts if x))
+              LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+              added.append(filename)
+              print("ACCEPT", filename, "=>", list(spec["stories"]))
+
+          print("=== FINAL COVERAGE ===")
+          failures = []
+          for story in targets:
+              photos, logos, status = sr.coverage(story)
+              names = [p.name for p in photos]
+              print(f"{story}: {len(photos)} photos / {len(logos)} logos / {status}")
+              print("  ", names)
+              if len(photos) < 4:
+                  failures.append((story, len(photos), names))
+          if failures:
+              raise SystemExit("photo completion failed for: " + json.dumps(failures, ensure_ascii=False))
+          print(f"TEN_STORY_PHOTO_GATE=PASS targets={len(targets)} newly_added={len(added)}")
+          PY
+      - name: Commit verified photo batch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/images.txt images/relevance.json images/*.jpg images/*.png
+          if git diff --cached --quiet; then
+            echo "No verified photo changes to commit"
+          else
+            git commit -m "assets: complete photos for ten stories"
+            git push origin HEAD:photo-curation/ten-story-photo-completion
+          fi
