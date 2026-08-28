@@ -32,7 +32,7 @@ def _fake_news_bot():
     module.quota_ok = lambda: True
     module.quota_bump = lambda: None
     module.commit_and_push = lambda *args, **kwargs: None
-    module.notify = lambda *args, **kwargs: True
+    module.notify = lambda *args, **kwargs: None
     module.notify_album = lambda *args, **kwargs: None
     module.ksa_stamp = lambda: "test"
     module.deliver_unposted = lambda *args, **kwargs: None
@@ -63,13 +63,13 @@ class PublishMediaTests(unittest.TestCase):
         with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
              patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-28-2pm", frames)), \
              patch.object(safe_publish_cards.publisher, "load_caption", return_value="review caption"), \
-             patch.object(safe_publish_cards.publisher, "notify", return_value=True) as notify, \
+             patch.object(safe_publish_cards, "_telegram_review_photo", return_value=True) as send_photo, \
              patch.object(safe_publish_cards.publisher, "notify_album") as notify_album, \
              patch.object(safe_publish_cards.publisher, "main") as public_publish:
             safe_publish_cards.run_mode("telegram_review")
 
-        self.assertEqual(notify.call_count, 3)
-        notify.assert_has_calls([
+        self.assertEqual(send_photo.call_count, 3)
+        send_photo.assert_has_calls([
             call("👀 مراجعة قبل النشر — 2026-08-28-2pm\n1/3\nreview caption", "card-1.png"),
             call("👀 مراجعة قبل النشر — 2026-08-28-2pm\n2/3", "card-2.png"),
             call("👀 مراجعة قبل النشر — 2026-08-28-2pm\n3/3", "card-3.png"),
@@ -82,7 +82,7 @@ class PublishMediaTests(unittest.TestCase):
         with patch.object(safe_publish_cards.publisher, "resolve_story_selector", return_value="2026-08-28-2pm"), \
              patch.object(safe_publish_cards.publisher, "find_story", return_value=("2026-08-28-2pm", frames)), \
              patch.object(safe_publish_cards.publisher, "load_caption", return_value="review caption"), \
-             patch.object(safe_publish_cards.publisher, "notify", side_effect=[True, False, True]):
+             patch.object(safe_publish_cards, "_telegram_review_photo", side_effect=[True, False, True]):
             with self.assertRaises(SystemExit) as exc:
                 safe_publish_cards.run_mode("telegram_review")
         self.assertIn("Telegram confirmed only 1/3 review photos", str(exc.exception))
