@@ -495,6 +495,42 @@
       "beat": "person",
       "source": "openverse",
       "fingerprint": "ff945d1541d109f2d2a38f149afde2a895d501921e1c59ea8723f49782608158"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "fingerprint": "467aa14f128a1377bccd11fdc11569234ca551f77462115b92619d2a474525bf"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "fingerprint": "467aa14f128a1377bccd11fdc11569234ca551f77462115b92619d2a474525bf"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "fingerprint": "467aa14f128a1377bccd11fdc11569234ca551f77462115b92619d2a474525bf"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "fingerprint": "418feb024f235068d2d1f1491c2e46a2af337d389cb27031fd682a5736083ac1"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "681833edd4a4d0af346f3c359b44e1176061587602999a2d7fac51fa38a41261"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "681833edd4a4d0af346f3c359b44e1176061587602999a2d7fac51fa38a41261"
     }
   ],
   "diagnostics": [
@@ -2271,6 +2307,140 @@
       "source": "all",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "origin_or_early",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "origin_or_early",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "origin_or_early",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "subject_detail",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "subject_detail",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "modern_or_legacy",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Rolex وصناعة الفخامة",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
     }
   ]
 }
