@@ -1,5 +1,7 @@
 import importlib
+import json
 import sys
+import tempfile
 import types
 import unittest
 from pathlib import Path
@@ -54,6 +56,35 @@ class PublishMediaTests(unittest.TestCase):
 
         self.assertEqual(media, ["story.mp4"])
         to_video.assert_called_once()
+
+
+class StorySelectorTests(unittest.TestCase):
+    def _write_sidecar(self, root, stamp, **data):
+        Path(root, f"{stamp}-story.json").write_text(
+            json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+    def test_partial_arabic_story_name_resolves_unique_built_story(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._write_sidecar(tmp, "2026-08-25-2pm", title="قصة سليمان الراجحي")
+            self._write_sidecar(tmp, "2026-08-26-2pm", title="قصة جاك بوغل")
+            with patch.object(publish_cards, "CARDS_DIR", tmp):
+                stamp = publish_cards.resolve_story_selector("سليمان")
+        self.assertEqual(stamp, "2026-08-25-2pm")
+
+    def test_ambiguous_partial_name_fails_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._write_sidecar(tmp, "2026-08-24-2pm", title="سليمان الراجحي")
+            self._write_sidecar(tmp, "2026-08-25-2pm", title="صالح الراجحي")
+            with patch.object(publish_cards, "CARDS_DIR", tmp):
+                with self.assertRaises(SystemExit) as exc:
+                    publish_cards.resolve_story_selector("الراجحي")
+        self.assertIn("multiple built stories match", str(exc.exception))
+
+    def test_timestamp_selector_is_preserved(self):
+        self.assertEqual(
+            publish_cards.resolve_story_selector("2026-08-26-2pm"),
+            "2026-08-26-2pm",
+        )
 
 
 if __name__ == "__main__":
