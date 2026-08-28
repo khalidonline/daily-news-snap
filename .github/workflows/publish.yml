@@ -1,8 +1,9 @@
 name: Publish built cards
 
-# Manual review/release workflow for stories already built by story_bot.
-# Telegram is the private review stage; Snapchat is the public release stage.
-# No research call, no image search, no re-rendering.
+# Manual private-review/public-release workflow.
+# Telegram review normally uses an already-built deck. If that baked deck is
+# stale under the current visual standard, review mode rebuilds the same story
+# once with Snapchat disabled, verifies the fresh cards, then sends Telegram.
 
 on:
   workflow_dispatch:
@@ -34,7 +35,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
@@ -59,6 +60,20 @@ jobs:
           PUBLISH_MODE: ${{ inputs.mode }}
           CARDS_STAMP: ${{ inputs.stamp }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-        # telegram_review: private album/caption review only; no Bundle/quota.
-        # snapchat: public release path, still protected by the multi-frame gate.
+
+          # Needed only when telegram_review detects an old/incomplete baked
+          # deck and rebuilds that same story. The subprocess strips Telegram
+          # and Bundle credentials and forces POST_TO_SNAPCHAT=0.
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          STORY_MODEL: "claude-opus-5"
+          STORY_FRAMES: "6"
+          STORY_ALLOW_REPEAT: "1"
+          THEME: "light"
+          BRAND: "ملخص تنفيذي - قصة"
+          FONT_FAMILY: "Almarai"
+          ALLOW_GENERATED: "0"
+          ALLOW_STORY_GENERATION: "0"
+
+        # telegram_review: private review only; stale decks auto-rebuild once.
+        # snapchat: public release path, protected by the multi-frame gate.
         run: python safe_publish_cards.py
