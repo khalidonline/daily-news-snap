@@ -140,6 +140,12 @@
         "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل": "DIRECT"
       },
       "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Publix_@_Southgate_Shopping_Center%3B_Lakeland,_FL.jpg"
+    },
+    "targeted-2008-nyse-sept8.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/USA_Stock_Exchange.JPG"
     }
   }
 }
