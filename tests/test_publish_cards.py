@@ -1,11 +1,15 @@
 import importlib
 import json
+import subprocess
 import sys
 import tempfile
 import types
 import unittest
 from pathlib import Path
-from unittest.mock import call, patch
+from unittest.mock import patch
+
+import imageio_ffmpeg
+from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +35,7 @@ def _fake_news_bot():
     module.deliver_unposted = lambda *args, **kwargs: None
     module.publish_many_via_github = lambda media: []
     module.upload_media = lambda path: ""
+    module.wait_for_bundle_post = lambda response, **kwargs: response
     return module
 
 
@@ -39,33 +44,61 @@ publish_cards = importlib.import_module("publish_cards")
 
 
 class PublishMediaTests(unittest.TestCase):
-    def test_bundle_posts_each_reviewed_frame_with_delay_between_posts(self):
+    def test_bundle_submits_one_verified_video_post(self):
         frames = ["card-1.png", "card-2.png", "card-3.png"]
-        responses = [{"status": "ok", "n": 1}, {"status": "ok", "n": 2}, {"status": "ok", "n": 3}]
-        with patch.object(publish_cards, "post_story", side_effect=responses) as post_story, \
-             patch.object(publish_cards, "post_ok", return_value=True), \
-             patch.object(publish_cards.time, "sleep") as sleep:
-            result = publish_cards.publish_bundle_frames("caption", frames)
+        scheduled = {"id": "post-123", "status": "SCHEDULED"}
+        posted = {"id": "post-123", "status": "POSTED"}
 
-        self.assertEqual(result, responses[-1])
-        self.assertEqual(post_story.call_args_list, [
-            call("caption", [], ["card-1.png"]),
-            call("caption", [], ["card-2.png"]),
-            call("caption", [], ["card-3.png"]),
-        ])
-        self.assertEqual(sleep.call_args_list, [call(15), call(15)])
+        with patch.object(publish_cards, "frames_to_video", return_value="story.mp4") as to_video, \
+             patch.object(publish_cards, "validate_story_video", return_value=True) as validate, \
+             patch.object(publish_cards, "post_story", return_value=scheduled) as post_story, \
+             patch.object(publish_cards, "wait_for_bundle_post", return_value=posted) as wait_post:
+            result = publish_cards.publish_bundle_story("caption", frames, "2026-08-28-2pm")
 
-    def test_bundle_stops_on_first_failed_frame_without_extra_delay(self):
-        frames = ["card-1.png", "card-2.png", "card-3.png"]
-        responses = [{"status": "ok"}, {"status": "error"}]
-        with patch.object(publish_cards, "post_story", side_effect=responses) as post_story, \
-             patch.object(publish_cards, "post_ok", side_effect=[True, False]), \
-             patch.object(publish_cards.time, "sleep") as sleep:
-            result = publish_cards.publish_bundle_frames("caption", frames)
+        self.assertEqual(result, posted)
+        to_video.assert_called_once_with(
+            frames, Path(publish_cards.CARDS_DIR) / "2026-08-28-2pm-story.mp4"
+        )
+        validate.assert_called_once_with("story.mp4", frames)
+        post_story.assert_called_once_with("caption", [], ["story.mp4"])
+        wait_post.assert_called_once_with(scheduled)
 
-        self.assertEqual(result, responses[-1])
-        self.assertEqual(post_story.call_count, 2)
-        self.assertEqual(sleep.call_args_list, [call(15)])
+    def test_frames_to_video_contains_every_source_frame_in_order(self):
+        colors = [
+            (230, 20, 20),
+            (20, 220, 20),
+            (20, 20, 230),
+            (220, 220, 20),
+            (220, 20, 220),
+            (20, 220, 220),
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            frames = []
+            for index, color in enumerate(colors, start=1):
+                path = root / f"frame-{index}.png"
+                Image.new("RGB", (108, 192), color).save(path)
+                frames.append(str(path))
+
+            out = root / "story.mp4"
+            with patch.object(publish_cards, "FRAME_SECONDS", 2), \
+                 patch.object(publish_cards, "TAIL_MARGIN", 0):
+                publish_cards.frames_to_video(frames, out)
+
+            ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+            for index, (second, expected) in enumerate(zip((1, 3, 5, 7, 9, 11), colors), start=1):
+                sample = root / f"sample-{index}.png"
+                subprocess.run(
+                    [ffmpeg, "-y", "-loglevel", "error", "-ss", str(second),
+                     "-i", str(out), "-frames:v", "1", str(sample)],
+                    check=True,
+                )
+                actual = Image.open(sample).convert("RGB").getpixel((540, 960))
+                self.assertLess(
+                    max(abs(a - b) for a, b in zip(actual, expected)),
+                    35,
+                    f"video segment {index} did not match source frame {index}: {actual} vs {expected}",
+                )
 
     def test_non_bundle_still_uses_video_for_multi_frame_story(self):
         frames = ["card-1.png", "card-2.png"]
