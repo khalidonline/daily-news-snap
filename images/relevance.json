@@ -25,6 +25,24 @@
         "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير": "DIRECT"
       },
       "source_url": "https://corporate.vanguard.com/content/dam/corp/what-we-care-about/images/ethics-and-integrity/WWCA_Ethics_John.jpg"
+    },
+    "targeted-tsmc-morris-chang-2018.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      },
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Morris_Chang_2018-11-12.jpg"
+    },
+    "targeted-kodak-brownie-1980.jpg": {
+      "stories": {
+        "كيف خسرت Kodak السوق الذي اخترعته بنفسها": "DIRECT"
+      },
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Kodak_Brownie_camera.jpg"
+    },
+    "targeted-cpm-digital-research-house.jpg": {
+      "stories": {
+        "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": "STRONG_CONTEXT"
+      },
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/0/03/Gary_kildall801lighthouse.jpg"
     }
   }
 }
