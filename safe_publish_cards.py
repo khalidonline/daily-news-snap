@@ -1,20 +1,10 @@
 #!/usr/bin/env python3
-"""Safety wrapper for reviewed-card publishing.
+"""Private Telegram review and guarded Snapchat publishing.
 
-Telegram is the private review stage. Snapchat is the public release stage.
-A Telegram review sends the selected reviewed deck and caption without calling
-Bundle/Snapchat or changing the Snapchat quota.
-
-Before review, the actual rendered cards must contain enough photographic
-coverage. If an old baked deck predates the current visual standard, review mode
-rebuilds that same story once with the current renderer, verifies the fresh deck,
-and only then sends it to Telegram. The rebuild runs with Telegram and Snapchat
-credentials removed/disabled so the wrapper remains the sole review sender.
-
-Bundle/Snapchat Public Profile publishing supports one media item per Story
-post. Our live tests showed that neither multiple Bundle image posts nor one
-video produces the requested six separate photo snaps. Refuse that unsupported
-live operation instead of silently publishing the wrong shape.
+The manual Telegram workflow is intentionally simple: build one fresh story,
+place the requested number of approved photographs into its six cards, verify
+the rendered result, then send the six cards to Telegram. Snapchat/Bundle are
+not called by this review path.
 """
 
 import hashlib
@@ -27,12 +17,17 @@ import urllib.request
 from pathlib import Path
 
 import publish_cards as publisher
-from review_visual_gate import require_photo_coverage
+from review_visual_gate import apply_requested_photos, require_photo_coverage
 
 
 PUBLISH_MODE = os.getenv("PUBLISH_MODE", "telegram_review").strip() or "telegram_review"
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "").strip()
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+REVIEW_STORY = os.getenv("STORY", "").strip()
+try:
+    PHOTO_COUNT = int(os.getenv("PHOTO_COUNT", "4").strip() or "4")
+except ValueError:
+    PHOTO_COUNT = 4
 
 
 def guard_bundle_multiframe(provider, frames, dry_run=False):
@@ -41,8 +36,7 @@ def guard_bundle_multiframe(provider, frames, dry_run=False):
         raise SystemExit(
             f"Bundle cannot publish {len(frames)} separate Snapchat Story photos "
             "reliably. Live publishing is blocked to prevent another one-item "
-            "Story. Use Telegram review for private review, DRY_RUN=1 for log "
-            "preview, or a publishing path that can prove separate Story snaps."
+            "Story. Use Telegram review for private review."
         )
 
 
@@ -59,26 +53,30 @@ def _sidecar_path(stamp):
 
 
 def _story_identity(stamp):
-    """Return the canonical story input that originally built a deck."""
     path = _sidecar_path(stamp)
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
-        raise SystemExit(
-            f"cannot rebuild stale deck {stamp}: sidecar is unreadable ({exc})"
-        )
+        raise SystemExit(f"cannot read story sidecar {stamp}: {exc}")
     story = str(data.get("story") or "").strip()
     if not story:
-        raise SystemExit(
-            f"cannot rebuild stale deck {stamp}: sidecar has no canonical story field"
-        )
+        raise SystemExit(f"story sidecar {stamp} has no canonical story field")
     return story
+
+
+def _all_sidecars():
+    result = {}
+    for path in Path(publisher.CARDS_DIR).glob("*-story.json"):
+        try:
+            result[path] = (path.stat().st_mtime_ns, path.stat().st_size)
+        except OSError:
+            pass
+    return result
 
 
 def _matching_sidecars(story):
     matches = {}
-    root = Path(publisher.CARDS_DIR)
-    for path in root.glob("*-story.json"):
+    for path in Path(publisher.CARDS_DIR).glob("*-story.json"):
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except Exception:
@@ -89,9 +87,7 @@ def _matching_sidecars(story):
     return matches
 
 
-def _rebuild_story_for_review(story, stale_stamp):
-    """Rebuild one stale story with zero Telegram/Snapchat side effects."""
-    before = _matching_sidecars(story)
+def _run_story_builder(story):
     env = os.environ.copy()
     env.update({
         "STORY": story,
@@ -102,15 +98,14 @@ def _rebuild_story_for_review(story, stale_stamp):
         "ALLOW_GENERATED": "0",
         "ALLOW_STORY_GENERATION": "0",
     })
-    # The subprocess may commit its fresh cards, but it must never send a
-    # Telegram preview of its own or gain access to the public publisher.
+    # The build process creates files only. The wrapper is the sole Telegram
+    # sender and no public publisher credentials are available to the builder.
     for key in (
         "TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID", "BUNDLE_API_KEY",
         "BUNDLE_TEAM_ID", "BUNDLE_BASE",
     ):
         env.pop(key, None)
 
-    print(f"Stale review deck detected — rebuilding current story: {story}")
     result = subprocess.run(
         [sys.executable, "story_runtime.py"],
         env=env,
@@ -123,34 +118,48 @@ def _rebuild_story_for_review(story, stale_stamp):
         if result.stderr:
             print(result.stderr.rstrip())
         raise SystemExit(
-            f"automatic review rebuild failed for {story!r}; "
-            "Telegram and Snapchat were not called"
+            f"story build failed for {story!r}; nothing was sent to Telegram"
         )
 
-    after = _matching_sidecars(story)
+
+def _build_fresh_review_story(story):
+    """Build exactly one fresh six-card deck for this review run."""
+    before = _all_sidecars()
+    print(f"Building fresh Telegram review story: {story}")
+    _run_story_builder(story)
+    after = _all_sidecars()
     changed = [
         path for path, fingerprint in after.items()
         if path not in before or before[path] != fingerprint
     ]
     if not changed:
         raise SystemExit(
-            f"automatic review rebuild produced no fresh cards for {story!r}; "
-            "Telegram and Snapchat were not called"
+            f"story build produced no fresh deck for {story!r}; "
+            "nothing was sent to Telegram"
         )
     newest = max(changed, key=lambda p: p.stat().st_mtime_ns)
-    suffix = "-story.json"
-    stamp = newest.name[:-len(suffix)]
-    if stamp == stale_stamp and before.get(newest) == after.get(newest):
-        raise SystemExit("automatic review rebuild did not replace the stale deck")
+    stamp = newest.name[:-len("-story.json")]
     stamp, frames = publisher.find_story(stamp)
-    if not frames:
-        raise SystemExit("automatic review rebuild sidecar has no valid frame set")
-    print(f"Fresh review deck built: {stamp} ({len(frames)} frames)")
+    if len(frames) != 6:
+        raise SystemExit(
+            f"fresh story must contain 6 cards; got {len(frames)} for {stamp}"
+        )
+    print(f"Fresh deck ready: {stamp} ({len(frames)} cards)")
     return stamp, frames
 
 
+def _rebuild_story_for_review(story, stale_stamp):
+    """Legacy compatibility wrapper used by older tests/callers."""
+    return _build_fresh_review_story(story)
+
+
+def approved_runtime_visuals(story):
+    """Lazy import keeps publishing tests isolated from the story engine."""
+    from story_runtime import approved_runtime_visuals as _approved
+    return _approved(story)
+
+
 def _telegram_review_photo(text, photo_path):
-    """Send one Telegram photo and verify Telegram returned a message id."""
     if not (TELEGRAM_TOKEN and TELEGRAM_CHAT_ID):
         raise SystemExit("TELEGRAM_TOKEN and TELEGRAM_CHAT_ID must both be set")
     path = Path(photo_path)
@@ -195,15 +204,13 @@ def _telegram_review_photo(text, photo_path):
 
 
 def _send_review_photos(stamp, caption, frames):
-    """Send every review frame as its own Telegram photo and verify each one."""
     total = len(frames)
     confirmed = 0
     for index, frame in enumerate(frames, start=1):
         text = f"👀 مراجعة قبل النشر — {stamp}\n{index}/{total}"
         if index == 1:
             text += f"\n{caption}"
-        ok = _telegram_review_photo(text, frame)
-        if not ok:
+        if not _telegram_review_photo(text, frame):
             raise SystemExit(
                 f"Telegram confirmed only {confirmed}/{total} review photos; "
                 f"frame {index} was not confirmed. Snapchat/Bundle were not called."
@@ -213,33 +220,61 @@ def _send_review_photos(stamp, caption, frames):
     return confirmed
 
 
-def review_on_telegram():
-    """Validate, repair if stale, and send the deck privately to Telegram."""
-    stamp, frames = _selected_story()
+def review_story_on_telegram(story, picture_count):
+    """Build one fresh story and send one verified review deck to Telegram."""
+    story = str(story or "").strip()
+    try:
+        picture_count = int(picture_count)
+    except (TypeError, ValueError):
+        raise SystemExit("number of pictures must be 1, 2, 3, or 4")
+    if not story:
+        raise SystemExit("Story is required")
+    if picture_count not in (1, 2, 3, 4):
+        raise SystemExit("number of pictures must be 1, 2, 3, or 4")
+
+    stamp, frames = _build_fresh_review_story(story)
+    canonical_story = _story_identity(stamp)
+    photos, _logos = approved_runtime_visuals(canonical_story)
+    if len(photos) < picture_count:
+        raise SystemExit(
+            f"{canonical_story} has only {len(photos)} approved distinct photos; "
+            f"requested {picture_count}. Nothing was sent to Telegram."
+        )
+
+    # This is the deterministic contract: the requested number is applied to
+    # the actual cards, then independently verified before Telegram sees them.
+    apply_requested_photos(frames, photos, requested=picture_count)
+    require_photo_coverage(frames, minimum=picture_count)
     caption = publisher.load_caption(stamp, len(frames))
 
+    confirmed = _send_review_photos(stamp, caption, frames)
+    print(
+        f"Telegram review complete: {confirmed}/6 cards sent; "
+        f"requested pictures={picture_count}; Snapchat/Bundle not called"
+    )
+    return stamp, frames
+
+
+def review_on_telegram():
+    """Legacy built-deck review retained for callers that do not pass STORY."""
+    stamp, frames = _selected_story()
+    caption = publisher.load_caption(stamp, len(frames))
     print(f"Telegram review: {len(frames)} frames from {stamp}")
     for path in frames:
         print(f"    {path}")
     print(f"    caption: {caption}")
-
     try:
         require_photo_coverage(frames, minimum=4)
     except SystemExit:
-        # A true dry run may inspect but must never mutate/commit the repo.
         if publisher.DRY_RUN:
             raise
         story = _story_identity(stamp)
         stamp, frames = _rebuild_story_for_review(story, stamp)
         caption = publisher.load_caption(stamp, len(frames))
-        # The fresh baked PNGs are the final authority. A rebuild that still
-        # misses 4/6 fails closed before any Telegram message is sent.
         require_photo_coverage(frames, minimum=4)
-
     if publisher.DRY_RUN:
         print("DRY_RUN — visual gate passed; Telegram review not sent; Snapchat untouched")
         return
-
     confirmed = _send_review_photos(stamp, caption, frames)
     print(
         f"Telegram review confirmed {confirmed}/{len(frames)} separate photos — "
@@ -250,7 +285,10 @@ def review_on_telegram():
 def run_mode(mode=None):
     mode = (mode or PUBLISH_MODE).strip().lower()
     if mode == "telegram_review":
-        review_on_telegram()
+        if REVIEW_STORY:
+            review_story_on_telegram(REVIEW_STORY, PHOTO_COUNT)
+        else:
+            review_on_telegram()
         return
     if mode == "snapchat":
         _stamp, frames = _selected_story()
