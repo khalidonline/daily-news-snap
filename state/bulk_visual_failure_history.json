@@ -60,6 +60,55 @@
       "source": "loc",
       "source_id": "loc:2020722206",
       "result": "VALIDATION_ERROR"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:77e971488f30ac0b6af2",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:f28909ab2fdb9099bef5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:4bb3daa59a28917322f7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:e4bdb1d51e395a76a811",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:c2637a23267961d6c2e5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:34663d32bfee2127d211",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:25eada01bc450b3caf11",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
     }
   ],
   "complete_query_sets": [
@@ -368,6 +417,84 @@
       "beat": "turning_point",
       "source": "first-party",
       "fingerprint": "6e30df2a6f8377e288d3911db9a9fd1b2b4a7085acae63d7b1f5dabfcb253c11"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "first-party",
+      "fingerprint": "fd46e18cb16e1326779420e9d8074cbc7298436fd43e9678a7b9373a2a21cd6f"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "commons",
+      "fingerprint": "fd46e18cb16e1326779420e9d8074cbc7298436fd43e9678a7b9373a2a21cd6f"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "openverse",
+      "fingerprint": "fd46e18cb16e1326779420e9d8074cbc7298436fd43e9678a7b9373a2a21cd6f"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "loc",
+      "fingerprint": "fd46e18cb16e1326779420e9d8074cbc7298436fd43e9678a7b9373a2a21cd6f"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "fingerprint": "7960d80b0e7130dbec97bcf6e808d76fff6eae458e8edec8007cbf8071272fe2"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "commons",
+      "fingerprint": "7960d80b0e7130dbec97bcf6e808d76fff6eae458e8edec8007cbf8071272fe2"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "openverse",
+      "fingerprint": "7960d80b0e7130dbec97bcf6e808d76fff6eae458e8edec8007cbf8071272fe2"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "fingerprint": "6fd11fecd554e4cc14cc58ba3b966228a7b8fb022c274709488d4d83dc86652f"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "commons",
+      "fingerprint": "6fd11fecd554e4cc14cc58ba3b966228a7b8fb022c274709488d4d83dc86652f"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "6fd11fecd554e4cc14cc58ba3b966228a7b8fb022c274709488d4d83dc86652f"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "person",
+      "source": "commons",
+      "fingerprint": "ff945d1541d109f2d2a38f149afde2a895d501921e1c59ea8723f49782608158"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "person",
+      "source": "loc",
+      "fingerprint": "ff945d1541d109f2d2a38f149afde2a895d501921e1c59ea8723f49782608158"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "person",
+      "source": "openverse",
+      "fingerprint": "ff945d1541d109f2d2a38f149afde2a895d501921e1c59ea8723f49782608158"
     }
   ],
   "diagnostics": [
@@ -1574,6 +1701,576 @@
       "source": "runtime",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "exact_entity_no_logo_property"
+    },
+    {
+      "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة القهوة السعودية",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة القهوة السعودية",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "ambiguous_entity_candidates"
+    },
+    {
+      "story": "قصة جدة التاريخية: بوابة الحج منذ قرون",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة دخول لوسيد ومصنعها في السعودية",
+      "source": "commons",
+      "result": "VALIDATION_ERROR",
+      "reason": "verified_organization_logo_download_or_render_validation_failed"
+    },
+    {
+      "story": "قصة دخول لوسيد ومصنعها في السعودية",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة سكة حديد الرياض الدمام 1951",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة سكة حديد الرياض الدمام 1951",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "no_entity_candidate"
+    },
+    {
+      "story": "قصة ماء زمزم وكيف يُعبأ ويوزّع",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "SOURCE_UNAVAILABLE",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:77e971488f30ac0b6af2",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:f28909ab2fdb9099bef5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:4bb3daa59a28917322f7",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:e4bdb1d51e395a76a811",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:c2637a23267961d6c2e5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:34663d32bfee2127d211",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:kodak.com:25eada01bc450b3caf11",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "SOURCE_UNAVAILABLE",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "كيف خسرت Kodak السوق الذي اخترعته بنفسها",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "person",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "person",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "person",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "early_work",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "early_work",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "early_work",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "early_work",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "beat": "early_work",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:digitalresearch.biz:c9caf8fcfda6e9c0bfd4",
+      "result": "VALIDATION_ERROR",
+      "reason": "WEAK_GENERIC; VALIDATION_ERROR: source metadata not sufficient"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
     }
   ]
 }
