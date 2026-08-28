@@ -1,0 +1,101 @@
+{
+  "targets": [
+    "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
+    "Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي",
+    "الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟",
+    "قصة ربط الريال بالدولار وقصته",
+    "قصة سوق المناخ في الكويت 1982",
+    "قصة صالح كامل ودلة البركة",
+    "قصة طيران ناس وثورة الطيران الاقتصادي",
+    "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟",
+    "لماذا ارتبط الريال السعودي بالدولار وكيف؟",
+    "محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة"
+  ],
+  "reuse": [
+    {
+      "filename": "saudi-10riyal-1968.jpg",
+      "add_tags": ["ربط الريال"],
+      "stories": {
+        "قصة ربط الريال بالدولار وقصته": "STRONG_CONTEXT",
+        "لماذا ارتبط الريال السعودي بالدولار وكيف؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Saudi_Arabian_10_riyal_note_-_AH1379_(1968)_issue.jpg",
+      "note": "Saudi Arabian Monetary Agency historical riyal banknote; public-domain historical currency context for the riyal peg stories."
+    },
+    {
+      "filename": "southwest-737.jpg",
+      "add_tags": ["الطيران الاقتصادي"],
+      "stories": {
+        "كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Southwest_Airlines_Boeing_737-700_N290WN.jpg",
+      "note": "Southwest Airlines Boeing 737; CC BY-SA 4.0; direct strong context for the low-cost-airline model."
+    }
+  ],
+  "new_assets": [
+    {
+      "filename": "cpm-2-2-sanco.jpg",
+      "commons_file": "CPM 2-2.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:CPM_2-2.jpg",
+      "license": "CC BY-SA 3.0",
+      "credit": "Mspecht — CP/M 2.2 running on a Sanco 8001 — CC BY-SA 3.0 — Wikimedia Commons",
+      "tags": ["CP/M", "Digital Research", "Gary Kildall"],
+      "stories": {"قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى": "DIRECT"}
+    },
+    {
+      "filename": "jerry-lawson-channel-f-cartridge.jpg",
+      "commons_file": "Cartridge Fairchild Channel F.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:Cartridge_Fairchild_Channel_F.jpg",
+      "license": "CC BY-SA 4.0",
+      "credit": "Schnurrikowski — Fairchild Channel F cartridge — CC BY-SA 4.0 — Wikimedia Commons",
+      "tags": ["Jerry Lawson", "Fairchild Channel F", "video game cartridge"],
+      "stories": {"Jerry Lawson: من صمّم شرائط ألعاب الفيديو ونُسي": "STRONG_CONTEXT"}
+    },
+    {
+      "filename": "mcdonald-brothers-original-san-bernardino.jpg",
+      "commons_file": "First McDonalds, San Bernardino, California.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:First_McDonalds,_San_Bernardino,_California.jpg",
+      "license": "CC BY-SA 2.0",
+      "credit": "Cogart Strangehill — original McDonald's site, San Bernardino — CC BY-SA 2.0 — Wikimedia Commons/Flickr",
+      "tags": ["McDonald brothers", "McDonald's", "restaurant", "San Bernardino"],
+      "stories": {"الأخوان McDonald: من باع المطعم لـRay Kroc وندم؟": "STRONG_CONTEXT"}
+    },
+    {
+      "filename": "souk-al-manakh-kuwait-stock-exchange.jpg",
+      "commons_file": "Kuwait Stock Exchange.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:Kuwait_Stock_Exchange.jpg",
+      "license": "Public domain",
+      "credit": "Aziz1005 — Kuwait Stock Exchange building — public domain — Wikimedia Commons",
+      "tags": ["Souk Al-Manakh", "Kuwait Stock Exchange", "سوق المناخ"],
+      "stories": {"قصة سوق المناخ في الكويت 1982": "STRONG_CONTEXT"}
+    },
+    {
+      "filename": "saleh-kamel-dallah-albaraka-727.jpg",
+      "commons_file": "Boeing 727-51, Dallah Albaraka AN1213394.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:Boeing_727-51,_Dallah_Albaraka_AN1213394.jpg",
+      "license": "GFDL 1.2 or later; Wikimedia permission record",
+      "credit": "Raimund Stehmann — Dallah Albaraka Boeing 727 — GFDL 1.2+ — Wikimedia Commons",
+      "tags": ["صالح كامل", "Saleh Kamel", "Dallah Albaraka", "دلة البركة"],
+      "stories": {"قصة صالح كامل ودلة البركة": "STRONG_CONTEXT"}
+    },
+    {
+      "filename": "flynas-a320-kkia.jpg",
+      "commons_file": "Flynas Airbus A320 at KKIA.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:Flynas_Airbus_A320_at_KKIA.jpg",
+      "license": "CC BY-SA 4.0",
+      "credit": "Kskhh — flynas Airbus A320 at KKIA Riyadh — CC BY-SA 4.0 — Wikimedia Commons",
+      "tags": ["flynas", "طيران ناس", "King Khalid International Airport"],
+      "stories": {"قصة طيران ناس وثورة الطيران الاقتصادي": "DIRECT"}
+    },
+    {
+      "filename": "mohammed-bin-laden-sbg-clock-tower.jpg",
+      "commons_file": "Abraj-al-Bait largest clock tower in the world.jpg",
+      "provenance_url": "https://commons.wikimedia.org/wiki/File:Abraj-al-Bait_largest_clock_tower_in_the_world.jpg",
+      "license": "CC BY-SA 4.0",
+      "credit": "saudipics / Yasser Bakhsh — Makkah Clock Tower — CC BY-SA 4.0 — Wikimedia Commons",
+      "tags": ["Mohammed bin Laden", "Saudi Binladin Group", "Makkah Clock Tower", "Abraj Al Bait"],
+      "stories": {"محمد بن لادن: من عامل بناء إلى أكبر مقاول في المملكة": "STRONG_CONTEXT"},
+      "context_note": "Saudi Binladin Group lists the Makkah Clock Tower among its major contracting projects: https://bihg.sa/contracting/"
+    }
+  ]
+}
