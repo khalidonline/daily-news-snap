@@ -8,6 +8,7 @@ story_bot يبني ست لقطات ويرسلها لتيليجرام دون نش
 
     python publish_cards.py                        # آخر قصة بُنيت
     CARDS_STAMP=2026-08-22-2pm python publish_cards.py
+    CARDS_STAMP='سليمان' python publish_cards.py
     DRY_RUN=1 python publish_cards.py              # اعرض ما سيُنشر فقط
 """
 
@@ -16,6 +17,7 @@ import os
 import re
 import shutil
 import subprocess
+import unicodedata
 from pathlib import Path
 
 try:
@@ -40,6 +42,8 @@ FRAME_SECONDS = int(os.getenv("FRAME_SECONDS", "").strip() or "10")
 # Keep the fallback video safely below Snapchat's 60-second ceiling.
 TAIL_MARGIN = int(os.getenv("TAIL_MARGIN", "").strip() or "1")
 
+_STAMP_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-\d{1,2}(?:am|pm)$")
+
 # 2026-08-22-2pm-story-3-fe471e27.png
 _FRAME_RE = re.compile(
     r"^(?P<stamp>\d{4}-\d{2}-\d{2}-\d{1,2}(?:am|pm))-story-"
@@ -54,6 +58,72 @@ def _stamp_key(stamp):
     if hour.endswith("pm"):
         h += 12
     return (date, h)
+
+
+def _normalise_selector(value):
+    """Normalise Arabic/English title text without fuzzy guessing."""
+    text = unicodedata.normalize("NFKD", str(value or ""))
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = text.replace("ـ", "")
+    text = text.translate(str.maketrans({"أ": "ا", "إ": "ا", "آ": "ا", "ى": "ي"}))
+    return " ".join(text.casefold().split())
+
+
+def resolve_story_selector(selector=""):
+    """Resolve a timestamp or a unique full/partial built-story title.
+
+    Blank keeps the historical behavior (latest built story). Exact timestamps
+    are passed through unchanged. Any other value is matched as a substring of
+    the sidecar's saved ``story`` or ``title`` field. Ambiguous matches fail
+    closed rather than risking publication of the wrong deck.
+    """
+    selector = (selector or "").strip()
+    if not selector or _STAMP_RE.fullmatch(selector):
+        return selector
+
+    wanted = _normalise_selector(selector)
+    matches = {}
+    available = []
+
+    for sidecar in Path(CARDS_DIR).glob("*-story.json"):
+        stamp = sidecar.name[:-len("-story.json")]
+        if not _STAMP_RE.fullmatch(stamp):
+            continue
+        try:
+            data = json.loads(sidecar.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+
+        story = str(data.get("story") or "").strip()
+        title = str(data.get("title") or "").strip()
+        label = story or title or stamp
+        available.append((stamp, label))
+
+        haystacks = [_normalise_selector(story), _normalise_selector(title)]
+        if any(wanted and wanted in text for text in haystacks if text):
+            matches[stamp] = label
+
+    if not matches:
+        choices = ", ".join(
+            f"{stamp} — {label}"
+            for stamp, label in sorted(available, key=lambda x: _stamp_key(x[0]))
+        )
+        suffix = f" Available built stories: {choices}" if choices else ""
+        raise SystemExit(f"no built story matches {selector!r}.{suffix}")
+
+    if len(matches) > 1:
+        choices = "\n".join(
+            f"- {stamp} — {matches[stamp]}"
+            for stamp in sorted(matches, key=_stamp_key)
+        )
+        raise SystemExit(
+            f"multiple built stories match {selector!r}; use more of the title "
+            f"or the timestamp:\n{choices}"
+        )
+
+    stamp, label = next(iter(matches.items()))
+    print(f"    story selector {selector!r} -> {stamp} — {label}")
+    return stamp
 
 
 def _sidecar_frames(stamp):
@@ -94,9 +164,6 @@ def find_story(stamp=""):
     # files belong to one run.
     recorded = _sidecar_frames(chosen)
     if recorded:
-        # frames post by EXPLICIT index, and the set must be exactly 1..N —
-        # a gap or duplicate means a mixed or torn run; refuse rather than
-        # ship a deck with a hole in it
         nums = []
         for f in recorded:
             m = _FRAME_RE.match(f.name)
@@ -108,10 +175,6 @@ def find_story(stamp=""):
         recorded = [f for _, f in sorted(zip(nums, recorded))]
         return chosen, [str(f) for f in recorded]
 
-    # Two runs in the same KSA hour leave two files per frame number, and
-    # picking by glob order would stitch a story out of both — the very first
-    # publish attempt did exactly that. Without a sidecar to arbitrate,
-    # refusing is the only honest answer.
     if chosen in dupes:
         raise SystemExit(
             f"{chosen}: more than one file per frame number — two runs share "
@@ -120,7 +183,6 @@ def find_story(stamp=""):
 
     frames = groups[chosen]
     order = sorted(frames)
-    # a story with a hole in it is worse than no story
     if order != list(range(1, len(order) + 1)):
         raise SystemExit(f"{chosen}: found frames {order}, expected "
                          f"1..{len(order)} — refusing to post a partial story")
@@ -128,11 +190,7 @@ def find_story(stamp=""):
 
 
 def load_caption(stamp, frame_count):
-    """The caption story_bot wrote beside the cards, or a plain fallback.
-
-    Older stories were built before the sidecar existed, so this has to work
-    without one rather than refuse to publish them.
-    """
+    """The caption story_bot wrote beside the cards, or a plain fallback."""
     if CAPTION:
         return CAPTION
     sidecar = Path(CARDS_DIR) / f"{stamp}-story.json"
@@ -146,7 +204,7 @@ def load_caption(stamp, frame_count):
 
 
 def frames_to_video(frames, out_path):
-    """One MP4 from the frames, FRAME_SECONDS each. Returns the path.
+    """One MP4 from the frames, FRAME_SECONDS each.
 
     This is only a compatibility fallback for providers that cannot accept the
     reviewed frames directly. Bundle receives the PNGs as separate uploadIds.
@@ -158,12 +216,6 @@ def frames_to_video(frames, out_path):
         raise SystemExit(f"frames add up to {total}s, over Snapchat's 60s "
                          "video limit — lower FRAME_SECONDS")
     listing = Path(out_path).with_suffix(".txt")
-    # Every frame becomes repeated ONE-SECOND entries. Measured on ffmpeg 7,
-    # the concat demuxer holds the final frame for the PREVIOUS entry's
-    # duration and ignores its own ([10,10,9] plays 30s, [8,8,4] plays 24s) —
-    # equal durations masked this until the last frame needed a shorter hold.
-    # With every entry at 1s the quirk has nothing to distort. Durations must
-    # therefore stay whole seconds.
     lines = []
     for frame, dur in zip(frames, durations):
         for _ in range(int(dur)):
@@ -171,8 +223,6 @@ def frames_to_video(frames, out_path):
             lines.append("duration 1")
     listing.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    # GitHub's runner image does NOT ship ffmpeg on PATH — imageio-ffmpeg
-    # carries a static binary and installs from a wheel in seconds.
     ffmpeg = shutil.which("ffmpeg")
     if not ffmpeg:
         try:
@@ -199,12 +249,7 @@ def frames_to_video(frames, out_path):
 
 
 def prepare_publish_media(frames, stamp):
-    """Return the media objects that the selected provider should receive.
-
-    Bundle supports multiple uploadIds inside one Snapchat STORY payload, so
-    preserve every reviewed PNG as its own upload. Other providers keep the
-    existing single-video fallback for multi-frame stories.
-    """
+    """Return the media objects that the selected provider should receive."""
     media = list(frames)
     if POST_PROVIDER == "bundle":
         return media
@@ -215,7 +260,7 @@ def prepare_publish_media(frames, stamp):
 
 
 def main():
-    stamp, frames = find_story(STAMP)
+    stamp, frames = find_story(resolve_story_selector(STAMP))
     if not frames:
         raise SystemExit(f"no story cards found in {CARDS_DIR}/")
 
@@ -233,9 +278,6 @@ def main():
         deliver_unposted(frames, caption)
         return
 
-    # Bundle receives every reviewed PNG directly and post_story uploads them
-    # as multiple uploadIds in a single Snapchat STORY request. Providers that
-    # cannot do that retain the old MP4 compatibility path.
     media = prepare_publish_media(frames, stamp)
 
     urls = []
