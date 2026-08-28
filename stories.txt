@@ -23,7 +23,7 @@
 # — المال والاقتصاد —
 قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ | Aramco, أرامكو, logo:aramco.com
 كيف نشأت أول بورصة في العالم؟ | Amsterdam Stock Exchange, subject:first-stock-exchange
-قصة أزمة 2008: كيف بدأت وكيف انتهت؟ | entity: أزمة 2008 | subject:crisis-2008
+قصة أزمة 2008: كيف بدأت وكيف انتهت؟ | entity: أزمة 2008 | subject:crisis-2008 | logo:nyse.com
 لماذا ارتبط الريال السعودي بالدولار وكيف؟ | entity: ربط الريال, SAMA, Saudi Central Bank, البنك المركزي السعودي | subject:riyal-dollar-peg | logo:sama.gov.sa
 قصة صندوق الاستثمارات العامة: من صندوق محلي إلى مستثمر عالمي | PIF, Public Investment Fund
 كيف صارت شركة واحدة تتحكم في أسعار الشحن العالمي؟ | entity: Maersk, ميرسك | logo:maersk.com

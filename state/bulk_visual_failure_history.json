@@ -109,6 +109,118 @@
       "source_id": "first-party:kodak.com:25eada01bc450b3caf11",
       "result": "IDENTITY_UNPROVEN",
       "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:e84930761dd3160f2b7b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:ccaf51bd8ee9aca0d08f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:866c8378f59c30bcb674",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:541660c51ee49531ca3e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:fe63c63b1bd4e5a4a959",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:34d57da6e4b012bb6047",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:5f53b511db7ad53659bc",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:d1987b78e68591880c91",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:6c7c654a54c3c6475c73",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:cb754621562c6ab41a98",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:1e930e6b06ff411a27da",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:7ece9fea9d62a58d6538",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:de20d49ded9a20a7c6e5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:b313a9f18ffb89ffe5c6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:1b5af743eb206f41c0b3",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:f7d11e58346b73ad7bee",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
     }
   ],
   "complete_query_sets": [
@@ -675,105 +787,81 @@
       "beat": "turning_point",
       "source": "openverse",
       "fingerprint": "a0465d2e90166d984b880c6b2513edf437020d47d1fd8c19162c0b10e8a73ee5"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "7905ff31269669b488c2682bedaf469251b0adc6b61f68aeefaaec148fc26c99"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "openverse",
+      "fingerprint": "7905ff31269669b488c2682bedaf469251b0adc6b61f68aeefaaec148fc26c99"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "commons",
+      "fingerprint": "ebe955707fbe398aa8388d93b5bdfdfdb91525ed2def2480771969cf819efa72"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "openverse",
+      "fingerprint": "ebe955707fbe398aa8388d93b5bdfdfdb91525ed2def2480771969cf819efa72"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "loc",
+      "fingerprint": "ebe955707fbe398aa8388d93b5bdfdfdb91525ed2def2480771969cf819efa72"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "commons",
+      "fingerprint": "0e0302e9b76fdb385aee99eaf80506143982ad8bb75bdfd83019a8bee642bde0"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "openverse",
+      "fingerprint": "0e0302e9b76fdb385aee99eaf80506143982ad8bb75bdfd83019a8bee642bde0"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "loc",
+      "fingerprint": "0e0302e9b76fdb385aee99eaf80506143982ad8bb75bdfd83019a8bee642bde0"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "first-party",
+      "fingerprint": "19d67120d7695ca2390f45a339bdce2352ec54da15f4b39e0914e1d763d6cf7a"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "loc",
+      "fingerprint": "19d67120d7695ca2390f45a339bdce2352ec54da15f4b39e0914e1d763d6cf7a"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "commons",
+      "fingerprint": "e5b222c31cc21d8fccc132b505711e3a163d8682f2f765179e2ef722a7785d68"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "openverse",
+      "fingerprint": "e5b222c31cc21d8fccc132b505711e3a163d8682f2f765179e2ef722a7785d68"
     }
   ],
   "diagnostics": [
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "commons",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "loc",
-      "result": "NO_SAFE_CANDIDATE",
-      "reason": "discovery returned no candidates"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "DISCOVERY_IDENTITY_SKIPPED"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "openverse",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
-      "reason": "per-source story discovery allowance exhausted"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:5e37ab011c284bed5496",
-      "result": "VALIDATION_ERROR",
-      "reason": "VALIDATION_ERROR: image too small (144x58)"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:76a1497a08ad7f776853",
-      "result": "VALIDATION_ERROR",
-      "reason": "VALIDATION_ERROR: image too small (600x1)"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:6f50a47c7785d21aa183",
-      "result": "VALIDATION_ERROR",
-      "reason": "VALIDATION_ERROR: image too small (600x1)"
-    },
-    {
-      "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
-      "beat": "origin",
-      "source": "first-party",
-      "source_id": "first-party:digitalresearch.biz:c9caf8fcfda6e9c0bfd4",
-      "result": "VALIDATION_ERROR",
-      "reason": "WEAK_GENERIC; VALIDATION_ERROR: source metadata not sufficient"
-    },
     {
       "story": "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى",
       "beat": "origin",
@@ -3784,6 +3872,325 @@
       "source": "runtime",
       "result": "NO_SAFE_CANDIDATE",
       "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "wikidata",
+      "result": "LOGO_IDENTITY_MISSING",
+      "reason": "person_organization_relationship_absent_or_ambiguous"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "DISCOVERY_IDENTITY_SKIPPED"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "subject_detail",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "turning_point",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "beat": "modern_or_legacy",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
+    },
+    {
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "source": "runtime",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "story_runtime.coverage() reported no deficit reduction"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:e84930761dd3160f2b7b",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:ccaf51bd8ee9aca0d08f",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:866c8378f59c30bcb674",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:541660c51ee49531ca3e",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:fe63c63b1bd4e5a4a959",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:34d57da6e4b012bb6047",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:5f53b511db7ad53659bc",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:d1987b78e68591880c91",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:6c7c654a54c3c6475c73",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:cb754621562c6ab41a98",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:1e930e6b06ff411a27da",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:7ece9fea9d62a58d6538",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "origin",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:de20d49ded9a20a7c6e5",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:b313a9f18ffb89ffe5c6",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:1b5af743eb206f41c0b3",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "first-party",
+      "source_id": "first-party:nyse.com:f7d11e58346b73ad7bee",
+      "result": "IDENTITY_UNPROVEN",
+      "reason": "required identity absent from source metadata; fetch skipped"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "early_operation",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "turning_point",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "first-party",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "commons",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "openverse",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "SOURCE_DISCOVERY_BUDGET_EXCEEDED",
+      "reason": "per-source story discovery allowance exhausted"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "beat": "modern_result",
+      "source": "loc",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "discovery returned no candidates"
+    },
+    {
+      "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+      "source": "all",
+      "result": "NO_SAFE_CANDIDATE",
+      "reason": "source tiers exhausted"
     }
   ]
 }
