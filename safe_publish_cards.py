@@ -6,8 +6,10 @@ A Telegram review sends the selected reviewed deck and caption without calling
 Bundle/Snapchat or changing the Snapchat quota.
 
 Before review, the actual rendered cards must contain enough photographic
-coverage. This protects against stale decks built before the runtime visual
-coverage gate existed.
+coverage. If an old baked deck predates the current visual standard, review mode
+rebuilds that same story once with the current renderer, verifies the fresh deck,
+and only then sends it to Telegram. The rebuild runs with Telegram and Snapchat
+credentials removed/disabled so the wrapper remains the sole review sender.
 
 Bundle/Snapchat Public Profile publishing supports one media item per Story
 post. Our live tests showed that neither multiple Bundle image posts nor one
@@ -18,6 +20,8 @@ live operation instead of silently publishing the wrong shape.
 import hashlib
 import json
 import os
+import subprocess
+import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -47,6 +51,101 @@ def _selected_story():
     stamp, frames = publisher.find_story(selector)
     if not frames:
         raise SystemExit(f"no story cards found in {publisher.CARDS_DIR}/")
+    return stamp, frames
+
+
+def _sidecar_path(stamp):
+    return Path(publisher.CARDS_DIR) / f"{stamp}-story.json"
+
+
+def _story_identity(stamp):
+    """Return the canonical story input that originally built a deck."""
+    path = _sidecar_path(stamp)
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        raise SystemExit(
+            f"cannot rebuild stale deck {stamp}: sidecar is unreadable ({exc})"
+        )
+    story = str(data.get("story") or "").strip()
+    if not story:
+        raise SystemExit(
+            f"cannot rebuild stale deck {stamp}: sidecar has no canonical story field"
+        )
+    return story
+
+
+def _matching_sidecars(story):
+    matches = {}
+    root = Path(publisher.CARDS_DIR)
+    for path in root.glob("*-story.json"):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if str(data.get("story") or "").strip() != story:
+            continue
+        matches[path] = (path.stat().st_mtime_ns, path.stat().st_size)
+    return matches
+
+
+def _rebuild_story_for_review(story, stale_stamp):
+    """Rebuild one stale story with zero Telegram/Snapchat side effects."""
+    before = _matching_sidecars(story)
+    env = os.environ.copy()
+    env.update({
+        "STORY": story,
+        "DRY_RUN": "",
+        "POST_TO_SNAPCHAT": "0",
+        "STORY_ALLOW_REPEAT": "1",
+        "STORY_FRAMES": "6",
+        "ALLOW_GENERATED": "0",
+        "ALLOW_STORY_GENERATION": "0",
+    })
+    # The subprocess may commit its fresh cards, but it must never send a
+    # Telegram preview of its own or gain access to the public publisher.
+    for key in (
+        "TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID", "BUNDLE_API_KEY",
+        "BUNDLE_TEAM_ID", "BUNDLE_BASE",
+    ):
+        env.pop(key, None)
+
+    print(f"Stale review deck detected — rebuilding current story: {story}")
+    result = subprocess.run(
+        [sys.executable, "story_runtime.py"],
+        env=env,
+        text=True,
+        capture_output=True,
+    )
+    if result.stdout:
+        print(result.stdout.rstrip())
+    if result.returncode != 0:
+        if result.stderr:
+            print(result.stderr.rstrip())
+        raise SystemExit(
+            f"automatic review rebuild failed for {story!r}; "
+            "Telegram and Snapchat were not called"
+        )
+
+    after = _matching_sidecars(story)
+    changed = [
+        path for path, fingerprint in after.items()
+        if path not in before or before[path] != fingerprint
+    ]
+    if not changed:
+        raise SystemExit(
+            f"automatic review rebuild produced no fresh cards for {story!r}; "
+            "Telegram and Snapchat were not called"
+        )
+    newest = max(changed, key=lambda p: p.stat().st_mtime_ns)
+    suffix = "-story.json"
+    stamp = newest.name[:-len(suffix)]
+    if stamp == stale_stamp and before.get(newest) == after.get(newest):
+        raise SystemExit("automatic review rebuild did not replace the stale deck")
+    stamp, frames = publisher.find_story(stamp)
+    if not frames:
+        raise SystemExit("automatic review rebuild sidecar has no valid frame set")
+    print(f"Fresh review deck built: {stamp} ({len(frames)} frames)")
     return stamp, frames
 
 
@@ -115,7 +214,7 @@ def _send_review_photos(stamp, caption, frames):
 
 
 def review_on_telegram():
-    """Validate and send the reviewed deck privately to Telegram only."""
+    """Validate, repair if stale, and send the deck privately to Telegram."""
     stamp, frames = _selected_story()
     caption = publisher.load_caption(stamp, len(frames))
 
@@ -124,9 +223,18 @@ def review_on_telegram():
         print(f"    {path}")
     print(f"    caption: {caption}")
 
-    # Validate the actual baked PNGs, not just source inventory. Old decks can
-    # pre-date story_runtime's 4-photo + logo gate and must fail closed here.
-    require_photo_coverage(frames, minimum=4)
+    try:
+        require_photo_coverage(frames, minimum=4)
+    except SystemExit:
+        # A true dry run may inspect but must never mutate/commit the repo.
+        if publisher.DRY_RUN:
+            raise
+        story = _story_identity(stamp)
+        stamp, frames = _rebuild_story_for_review(story, stamp)
+        caption = publisher.load_caption(stamp, len(frames))
+        # The fresh baked PNGs are the final authority. A rebuild that still
+        # misses 4/6 fails closed before any Telegram message is sent.
+        require_photo_coverage(frames, minimum=4)
 
     if publisher.DRY_RUN:
         print("DRY_RUN — visual gate passed; Telegram review not sent; Snapchat untouched")
