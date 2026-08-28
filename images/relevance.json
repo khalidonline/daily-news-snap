@@ -1013,6 +1013,12 @@
       "stories": {
         "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير": "WEAK_GENERIC"
       }
+    },
+    "philo-farnsworth-1924-yearbook.jpg": {
+      "stories": {
+        "Philo Farnsworth: اخترع التلفزيون في مزرعة وخسر حقوقه": "DIRECT"
+      },
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Philo_Farnsworth_1924_yearbook.png"
     }
   }
 }
