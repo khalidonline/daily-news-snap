@@ -11,12 +11,19 @@ video produces the requested six separate photo snaps. Refuse that unsupported
 live operation instead of silently publishing the wrong shape.
 """
 
+import hashlib
+import json
 import os
+import urllib.error
+import urllib.request
+from pathlib import Path
 
 import publish_cards as publisher
 
 
 PUBLISH_MODE = os.getenv("PUBLISH_MODE", "telegram_review").strip() or "telegram_review"
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "").strip()
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
 
 
 def guard_bundle_multiframe(provider, frames, dry_run=False):
@@ -38,6 +45,51 @@ def _selected_story():
     return stamp, frames
 
 
+def _telegram_review_photo(text, photo_path):
+    """Send one Telegram photo and verify Telegram returned a message id."""
+    if not (TELEGRAM_TOKEN and TELEGRAM_CHAT_ID):
+        raise SystemExit("TELEGRAM_TOKEN and TELEGRAM_CHAT_ID must both be set")
+    path = Path(photo_path)
+    if not path.exists():
+        return False
+
+    boundary = "----snapreview" + hashlib.md5(
+        f"{text}|{path.name}".encode()
+    ).hexdigest()[:12]
+    parts = []
+    for name, value in (("chat_id", TELEGRAM_CHAT_ID), ("caption", text)):
+        parts.append(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="{name}"\r\n\r\n'
+            f"{value}\r\n".encode()
+        )
+    parts.append(
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="photo"; '
+        f'filename="{path.name}"\r\n'
+        f"Content-Type: image/png\r\n\r\n".encode()
+    )
+    body = b"".join(parts) + path.read_bytes() + f"\r\n--{boundary}--\r\n".encode()
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto",
+        data=body,
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=90) as resp:
+            data = json.loads(resp.read() or b"{}")
+    except urllib.error.HTTPError as exc:
+        print(f"  ! Telegram sendPhoto {exc.code}: {exc.read().decode()[:250]}")
+        return False
+    except Exception as exc:
+        print(f"  ! Telegram sendPhoto failed: {exc}")
+        return False
+
+    message_id = ((data.get("result") or {}).get("message_id")
+                  if isinstance(data, dict) else None)
+    return bool(isinstance(data, dict) and data.get("ok") is True and message_id)
+
+
 def _send_review_photos(stamp, caption, frames):
     """Send every review frame as its own Telegram photo and verify each one."""
     total = len(frames)
@@ -46,7 +98,7 @@ def _send_review_photos(stamp, caption, frames):
         text = f"👀 مراجعة قبل النشر — {stamp}\n{index}/{total}"
         if index == 1:
             text += f"\n{caption}"
-        ok = publisher.notify(text, frame)
+        ok = _telegram_review_photo(text, frame)
         if not ok:
             raise SystemExit(
                 f"Telegram confirmed only {confirmed}/{total} review photos; "
