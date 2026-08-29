@@ -1,4 +1,3 @@
-import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -14,17 +13,19 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
     def test_curated_sama_artifact_is_directly_relevant_to_sama_topic(self):
         wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'neutral')
         verdict = wrapped(
-            Path('state/topic_image_library/sama-history-hq.jpg'),
+            Path('sama-history-hq.jpg'),
             'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
         )
         self.assertEqual(verdict, 'yes')
 
     def test_copied_sama_artifact_keeps_provenance_and_overrides_wrong_no(self):
         wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'no')
-        source = Path('state/topic_image_library/sama-history-hq.jpg')
         with tempfile.TemporaryDirectory() as td:
             candidate = Path(td) / 'hero.auto-local.jpg'
-            shutil.copyfile(source, candidate)
+            candidate.write_bytes(b'candidate-image')
+            Path(str(candidate) + '.exempt').write_text(
+                'local:sama-history-hq.jpg', encoding='utf-8'
+            )
             verdict = wrapped(
                 candidate,
                 'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
@@ -35,7 +36,10 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
         wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'no')
         with tempfile.TemporaryDirectory() as td:
             candidate = Path(td) / 'hero.auto-local.jpg'
-            candidate.write_bytes(b'not-the-curated-sama-photo')
+            candidate.write_bytes(b'unrelated-image')
+            Path(str(candidate) + '.exempt').write_text(
+                'local:old-riyadh-souq.jpg', encoding='utf-8'
+            )
             verdict = wrapped(
                 candidate,
                 'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
@@ -45,7 +49,7 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
     def test_unrelated_curated_artifact_still_rejects_neutral_match(self):
         wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'neutral')
         verdict = wrapped(
-            Path('assets/old-riyadh-souq.jpg'),
+            Path('old-riyadh-souq.jpg'),
             'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
         )
         self.assertEqual(verdict, 'no')
@@ -63,14 +67,17 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
 
         self.assertEqual(result[0], Path('hero.jpg'))
         prompt = seen['prompt'].lower()
-        self.assertIn('no visible text', prompt)
-        self.assertIn('no arabic or english words', prompt)
-        self.assertIn('no names', prompt)
-        self.assertIn('no labels', prompt)
-        self.assertIn('no signs', prompt)
-        self.assertIn('no logos', prompt)
-        self.assertIn('no institution names', prompt)
-        self.assertIn('no fake official signage', prompt)
+        for rule in (
+            'no visible text',
+            'no arabic or english words',
+            'no names',
+            'no labels',
+            'no signs',
+            'no logos',
+            'no institution names',
+            'no fake official signage',
+        ):
+            self.assertIn(rule, prompt)
 
 
 if __name__ == '__main__':
