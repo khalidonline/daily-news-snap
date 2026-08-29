@@ -1,0 +1,85 @@
+name: Topic release once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/topic-release-once.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: topic-brief
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Research and post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: "bundle"
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+          ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+          ZERNIO_ACCOUNT_ID: ${{ vars.ZERNIO_ACCOUNT_ID }}
+          ZERNIO_BASE: ${{ vars.ZERNIO_BASE }}
+          AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          REQUIRE_PHOTO: "1"
+          TOPIC_ATTEMPTS: "3"
+          ALLOW_GENERATED: "1"
+          IMAGE_GEN: "byteplus"
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          ARK_URL: ${{ vars.ARK_URL }}
+          ARK_MODEL: ${{ vars.ARK_MODEL }}
+          FAL_KEY: ${{ secrets.FAL_KEY }}
+          TOPIC: "سعر الفائده وساما"
+          FORCE_SEASON: ""
+          TOPICS_FILE: "topics.txt"
+          VOICE_FILE: "voice.txt"
+          TOPIC_PERFORMANCE_FILE: "state/topic_performance.json"
+          THEME: "light"
+          BRAND: "معلومة تهمك"
+          KICKER: "معلومة تهمك"
+          FONT_FAMILY: "Almarai"
+          REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
+          MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
+          MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
+          COOLDOWN_DAYS: "21"
+          HARD_COOLDOWN_DAYS: "21"
+          SELECT_MODEL: "claude-haiku-4-5-20251001"
+          LOOKBACK_HOURS: "30"
+          DRY_RUN: "1"
+          MEDIA_MODE: "github"
+          POST_TO_SNAPCHAT: "1"
+          MONTHLY_POST_LIMIT: "145"
+          IMAGE_SOURCE: "auto"
+          POINTS: "3"
+          MAX_SEARCHES: "6"
+        run: python topic_snapchat.py
+
+      - name: Keep the card for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topic-card
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
