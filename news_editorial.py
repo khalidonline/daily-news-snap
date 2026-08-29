@@ -57,9 +57,9 @@ FEED_SPECS = (
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1007", "lane": "travel_lifestyle"},
 )
 
-# The deterministic gate is intentionally conservative. Nuanced ranking belongs
-# to the model; this only removes obvious low-scale or routine noise before those
-# items consume lane capacity.
+# The deterministic gates are intentionally conservative. Nuanced ranking
+# belongs to the model; these remove only material that is outside the product's
+# agreed scope or obviously too routine to consume model capacity.
 _LOCAL_ROUTINE_RE = re.compile(
     r"(?:بلدية|أمانة|حي\b|حديقة|ممشى|تشجير|سفلتة|إنارة|دوار|مواقف)"
 )
@@ -79,6 +79,104 @@ _IMPACT_RE = re.compile(
     r"(?:إطلاق|إلغاء|خفض|رفع|زيادة|انخفاض|سعر|رسوم|قرار|نظام|تمويل|"
     r"استحواذ|اكتتاب|تأشيرة|رحلات|مطار|مليار|مليون|%|صفقة كبرى|بطولة كبرى)"
 )
+
+_DIRECT_SAUDI_RE = re.compile(
+    r"(?:السعودي(?:ة|ين|ون)?|المملكة العربية السعودية|المملكة|ساما|أرامكو|"
+    r"الرياض|جدة|الخليج|مجلس التعاون|Saudi|KSA|Riyadh|Jeddah|Gulf|GCC)",
+    re.IGNORECASE,
+)
+_FOREIGN_POLITICS_RE = re.compile(
+    r"(?:ترامب|بايدن|بوتين|زيلينسكي|مادورو|نتنياهو|أردوغان|خامنئي|"
+    r"انتخابات|عقوبات|دبلوماس(?:ي|ية)|جيوسياس(?:ي|ية)|حرب|صراع|نزاع|"
+    r"وقف إطلاق النار|Trump|Biden|Putin|Zelensky|Maduro|Netanyahu|Erdogan|"
+    r"Khamenei|elections?|sanctions?|diplomat(?:ic|y)|geopolitic(?:al|s)|"
+    r"\bwar\b|\bconflict\b|ceasefire)",
+    re.IGNORECASE,
+)
+_MEDICAL_RE = re.compile(
+    r"(?:ضغط الدم|أدوية?|دواء|علاج|مرض|أعراض|طبيب|مرضى|سرطان|سكري|"
+    r"كوليسترول|جرعة|لقاح|نصيحة طبية|نصائح طبية|blood pressure|medication|"
+    r"medicine|treatment|disease|symptoms?|doctor|patients?|cancer|diabetes|"
+    r"cholesterol|dosage|vaccine|medical advice)",
+    re.IGNORECASE,
+)
+_HEALTH_POLICY_RE = re.compile(
+    r"(?:تأمين|تغطية|نظام|قرار|أسعار|رسوم|خدمة|وزارة الصحة|مستشفى|"
+    r"insurance|coverage|policy|regulation|pricing|fees?|health ministry|hospital)",
+    re.IGNORECASE,
+)
+_WEATHER_RE = re.compile(
+    r"(?:أمطار|طقس|درجات الحرارة|رياح|غبار|برد|عاصفة|ضباب|موجة حارة|"
+    r"سحب رعدية|weather|rain|thunderstorm|temperature|dust storm|fog|heatwave)",
+    re.IGNORECASE,
+)
+_ROUTINE_RESULT_RE = re.compile(
+    r"(?:يسحق|يهزم|يتغلب|يفوز|فاز|خسر|تعادل|يتعادل|بخماسية|برباعية|"
+    r"بثلاثية|نتيجة\s+(?:المباراة|اللقاء)|انتهت المباراة|\b\d+\s*[-–:]\s*\d+\b|"
+    r"\bbeats?\b|\bdefeats?\b|\bwins?\b|\bloses?\b|\bdraws?\b|final score)",
+    re.IGNORECASE,
+)
+_MAJOR_SPORTS_RE = re.compile(
+    r"(?:نهائي|النهائي|يتوج|توج|بطولة|كأس العالم|دوري أبطال|كأس آسيا|"
+    r"يتأهل|التأهل|لقب|رقم قياسي|تاريخي|ميدالية|final|champion|championship|"
+    r"world cup|champions league|qualif(?:y|ies|ied|ication)|title|record|historic|medal)",
+    re.IGNORECASE,
+)
+_FINANCING_RE = re.compile(
+    r"(?:تقترض|اقتراض|قرض|تمويل|جولة تمويل|تجمع\s+[^.]{0,40}(?:مليون|مليار)|"
+    r"ديون|borrows?|loan|funding round|raises?\s+\$|raises?\s+[^.]{0,20}\b(?:million|billion)\b|"
+    r"debt financing|debt facility)",
+    re.IGNORECASE,
+)
+_SUBJECT_LATIN_RE = re.compile(r"^\s*(?:شركة\s+)?([A-Za-z][A-Za-z0-9.&+\-]{1,40})\b")
+_KNOWN_GLOBAL_COMPANIES = {
+    "alphabet", "amazon", "anthropic", "apple", "boeing", "bytedance",
+    "disney", "google", "meta", "microsoft", "netflix", "nvidia",
+    "openai", "samsung", "snap", "spacex", "tesla", "tiktok", "uber",
+}
+
+
+def hard_scope_eligible(item):
+    """Enforce non-negotiable daily scope before the model can rank a story.
+
+    This is deliberately a rejection gate, not a scoring engine. Ambiguous but
+    plausible stories are left for the editorial model; only known product-scope
+    violations are removed here.
+    """
+    title = str(item.get("title", "") or "").strip()
+    summary = str(item.get("summary", "") or "").strip()
+    text = f"{title} {summary}".strip()
+    lane = item.get("lane", "business_tech")
+    direct_saudi = bool(_DIRECT_SAUDI_RE.search(text))
+
+    # Remote politics/geopolitics is outside this product. A story that actually
+    # names a Saudi/Gulf consequence is left for the model to judge.
+    if _FOREIGN_POLITICS_RE.search(text) and not direct_saudi:
+        return False
+
+    # Personal medical advice is not one of the approved lanes. A broad Saudi
+    # policy/insurance/service change is different: that affects adult daily life.
+    if _MEDICAL_RE.search(text):
+        if not (lane == "saudi_core" and direct_saudi and _HEALTH_POLICY_RE.search(text)):
+            return False
+
+    # Weather belongs in a weather product, not the one-story editorial brief.
+    if _WEATHER_RE.search(text):
+        return False
+
+    # Ordinary match recaps never consume a national card; major titles,
+    # qualification, finals and records remain eligible.
+    if lane == "sports" and _ROUTINE_RESULT_RE.search(text) and not _MAJOR_SPORTS_RE.search(text):
+        return False
+
+    # Large funding numbers and a famous chip/vendor name should not make an
+    # unfamiliar startup into mainstream news for this audience.
+    if lane == "business_tech" and _FINANCING_RE.search(text) and not direct_saudi:
+        subject = _SUBJECT_LATIN_RE.search(title)
+        if subject and subject.group(1).casefold() not in _KNOWN_GLOBAL_COMPANIES:
+            return False
+
+    return True
 
 
 def audience_fit_eligible(item):
@@ -186,7 +284,9 @@ def balanced_shortlist(items, limit=60, now=None):
     """
     qualified = [
         item for item in items
-        if audience_fit_eligible(item) and freshness_eligible(item, now=now)
+        if hard_scope_eligible(item)
+        and audience_fit_eligible(item)
+        and freshness_eligible(item, now=now)
     ]
     qualified = _dedupe_candidates(qualified)
     queues = _lane_source_queues(qualified)
