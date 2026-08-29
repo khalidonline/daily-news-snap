@@ -165,6 +165,26 @@ class BreakingWatchFeedTests(unittest.TestCase):
         self.assertTrue(feeds_ok)
         self.assertEqual(fresh, ["أوبك تعلن قراراً جديداً بشأن إنتاج النفط"])
 
+    def test_optional_global_outage_does_not_force_paid_fail_open(self):
+        published = datetime.now(timezone.utc) - timedelta(hours=4)
+        old_rss = f"""<rss><channel><item>
+          <title>قرار سعودي قديم خارج نافذة العاجل</title>
+          <pubDate>{format_datetime(published, usegmt=True)}</pubDate>
+        </item></channel></rss>""".encode("utf-8")
+        feeds = [
+            {"name": "Saudi core", "url": "https://example.com/core", "tier": "core"},
+            {"name": "CNN", "url": "https://example.com/cnn", "tier": "global"},
+        ]
+        with patch.object(breaking_watch, "WATCH_FEEDS", feeds), \
+                patch.object(
+                    breaking_watch.urllib.request,
+                    "urlopen",
+                    side_effect=[FakeResponse(old_rss), OSError("optional feed down")],
+                ):
+            fresh, feeds_ok = breaking_watch.feed_fresh_items()
+        self.assertEqual(fresh, [])
+        self.assertTrue(feeds_ok)
+
     def test_feed_identified_candidate_uses_one_verification_search(self):
         self.assertEqual(breaking_watch._classifier_search_budget(["headline"]), 1)
         self.assertEqual(
