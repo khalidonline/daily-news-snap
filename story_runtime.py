@@ -20,12 +20,15 @@ import image_precheck as ipc
 import news_bot as nb
 import story_bot as sb
 import story_focus
+import city_visual_fallback
 from runtime_relevance import asset_countable, runtime_pass, runtime_status
 
 # Story to Snapchat always enters through this guarded runtime. Apply the
-# editorial subject lock and frame-specific visual review before any selection,
-# research or rendering uses story_bot.
+# editorial subject lock first, then the city-only selector. Company/person
+# stories keep the generic image ladder; city stories use exact reviewed local
+# assets first and the simple city fallback only when needed.
 story_focus.configure(sb)
+city_visual_fallback.configure(sb)
 
 
 def _matches_story(entry, story):
