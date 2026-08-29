@@ -106,7 +106,7 @@ jobs:
           set -euo pipefail
           git config user.name "story-visual-repair-bot"
           git config user.email "actions@github.com"
-          git add images/images.txt images/relevance.json images/targeted-*.jpg repair_assets.json
+          git add images/images.txt images/relevance.json images/targeted-* repair_assets.json
           if git diff --cached --quiet; then
             echo "No accepted asset changes."
           else
