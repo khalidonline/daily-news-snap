@@ -1,0 +1,151 @@
+name: Targeted official-logo repair
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/targeted-logo-repair-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: targeted-official-logo-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Apply declared story identities and fetch verified current logos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from logo_fetch import fetch_current, update_index, LOGOS_DIR
+
+          manifest = json.loads(Path('logo_repair_assets.json').read_text(encoding='utf-8'))
+          stories = Path('stories.txt').read_text(encoding='utf-8')
+          for spec in manifest.get('assets', []):
+              before = spec['line_before']
+              after = spec['line_after']
+              if after not in stories:
+                  if before not in stories:
+                      raise SystemExit(f"story line not found for {spec['story']}")
+                  stories = stories.replace(before, after, 1)
+              LOGOS_DIR.mkdir(parents=True, exist_ok=True)
+              got = fetch_current(spec['domain'], spec['names'], require_domain=spec['domain'])
+              if not got:
+                  raise SystemExit(f"no verified current logo for {spec['domain']}")
+              update_index(spec['domain'], spec['names'] + [spec['domain']])
+              print(f"verified logo: {spec['story']} -> {got}")
+          Path('stories.txt').write_text(stories, encoding='utf-8')
+          PY
+
+      - name: Commit accepted identity and logo assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add stories.txt images/logos/ logo_repair_assets.json
+          if ! git diff --cached --quiet; then
+            git commit -m "repair: add verified official story logo"
+            git pull --rebase origin repair/all-story-visuals-2026-08-29
+            git push origin HEAD:repair/all-story-visuals-2026-08-29
+          fi
+
+      - name: Strict targeted gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          rm -rf /tmp/story-repair-engine
+          mkdir -p /tmp/story-repair-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/story-repair-engine
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, '/tmp/story-repair-engine')
+          from tools.bulk_visual_board import build_board
+          manifest = json.loads(Path('logo_repair_assets.json').read_text(encoding='utf-8'))
+          stories = [a['story'] for a in manifest.get('assets', [])]
+          rows = build_board(stories)
+          for row in rows:
+              print(f"FINAL {row.story}: {row.status}; photos={list(row.photos)}; logos={list(row.logos)}")
+          if any(row.status != 'PASS' for row in rows):
+              raise SystemExit("one or more targeted logo repairs still fail strict visual gate")
+          PY
+
+      - name: Promote strict PASS stories into READY pool
+        env:
+          POST_TO_SNAPCHAT: "0"
+          DRY_RUN: "1"
+        shell: bash
+        run: |
+          set -euo pipefail
+          python ready_story_publish.py --refresh-only
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          ready = json.loads(Path('state/ready_to_post.json').read_text(encoding='utf-8'))['stories']
+          path = Path('.github/workflows/story.yml')
+          text = path.read_text(encoding='utf-8')
+          start = '          # READY_STORY_OPTIONS_START\n'
+          end = '          # READY_STORY_OPTIONS_END\n'
+          before, rest = text.split(start, 1)
+          _, after = rest.split(end, 1)
+          options = ''.join(f'          - {json.dumps(story, ensure_ascii=False)}\n' for story in ready)
+          path.write_text(before + start + options + end + after, encoding='utf-8')
+          print(f'Promoted READY pool to {len(ready)} stories')
+          PY
+          git add state/ready_to_post.json .github/workflows/story.yml
+          if ! git diff --cached --quiet; then
+            git commit -m "state: promote repaired stories to READY"
+            git pull --rebase origin repair/all-story-visuals-2026-08-29
+            git push origin HEAD:repair/all-story-visuals-2026-08-29
+          fi
+
+      - name: Sync READY choices to live workflow on main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          rm -rf /tmp/story-main
+          git worktree add /tmp/story-main origin/main
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          ready = json.loads(Path('state/ready_to_post.json').read_text(encoding='utf-8'))['stories']
+          path = Path('/tmp/story-main/.github/workflows/story.yml')
+          text = path.read_text(encoding='utf-8')
+          start = '          # READY_STORY_OPTIONS_START\n'
+          end = '          # READY_STORY_OPTIONS_END\n'
+          before, rest = text.split(start, 1)
+          _, after = rest.split(end, 1)
+          options = ''.join(f'          - {json.dumps(story, ensure_ascii=False)}\n' for story in ready)
+          path.write_text(before + start + options + end + after, encoding='utf-8')
+          print(f'Synced {len(ready)} READY choices to main')
+          PY
+          cd /tmp/story-main
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/story.yml
+          if ! git diff --cached --quiet; then
+            git commit -m "ops: sync READY story dropdown"
+            git push origin HEAD:main
+          fi
