@@ -1,5 +1,9 @@
+import tempfile
 import unittest
+from pathlib import Path
+from types import SimpleNamespace
 
+import daily_news_runner
 from news_editorial import hard_scope_eligible
 
 
@@ -94,6 +98,15 @@ class NewsScopeEdgeTests(unittest.TestCase):
         }
         self.assertFalse(hard_scope_eligible(item))
 
+    def test_prospective_transfer_wording_is_rejected_without_announcement(self):
+        item = {
+            "lane": "sports",
+            "source": "اليوم",
+            "title": "الهلال يقترب من ضم أولي واتكينز رسمياً",
+            "summary": "الصفقة تقترب من الحسم لكن لا يوجد إعلان رسمي من النادي حتى الآن.",
+        }
+        self.assertFalse(hard_scope_eligible(item))
+
     def test_confirmed_major_transfer_remains_eligible(self):
         item = {
             "lane": "sports",
@@ -102,6 +115,62 @@ class NewsScopeEdgeTests(unittest.TestCase):
             "summary": "النادي أعلن الصفقة رسمياً عبر حساباته الرسمية.",
         }
         self.assertTrue(hard_scope_eligible(item))
+
+
+class FinalImageQualityTests(unittest.TestCase):
+    def test_article_neutral_beats_earlier_generic_local_neutral(self):
+        def write(path, label):
+            Path(path).write_bytes(label.encode("utf-8"))
+            return str(path)
+
+        def local(queries_ar, queries_en, out_path, respect_cooldown=True, exclude=()):
+            return write(out_path, "local"), "Local credit"
+
+        def article(url, out_path):
+            return write(out_path, "article"), "alyaum.com"
+
+        def no_pair(*args, **kwargs):
+            return None, None
+
+        def no_stock(*args, **kwargs):
+            return None
+
+        def judge(path, context):
+            label = Path(path).read_bytes().decode("utf-8")
+            return "neutral" if label in {"local", "article"} else "no"
+
+        fake = SimpleNamespace(
+            PEXELS_API_KEY="",
+            DOMAIN_CREDITS={"alyaum.com": "اليوم"},
+            photo_shows=judge,
+            fetch_local_photo=local,
+            fetch_article_photo=article,
+            fetch_spa_photo=no_pair,
+            fetch_commons_photo=no_pair,
+            fetch_loc_photo=no_pair,
+            fetch_openverse_photo=no_pair,
+            fetch_photo=no_stock,
+        )
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "خبر رياضي سعودي مهم",
+                "summary": "قصة رياضية واسعة الاهتمام.",
+                "takeaway": "تهم جمهور الرياضة في السعودية.",
+                "link": "https://www.alyaum.com/story",
+                "scope": "saudi",
+                "image_queries": ["saudi football"],
+                "image_queries_ar": ["كرة القدم السعودية"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["كرة القدم السعودية"], ["saudi football"], hero)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "اليوم")
+            self.assertEqual(hero.read_bytes(), b"article")
 
 
 if __name__ == "__main__":
