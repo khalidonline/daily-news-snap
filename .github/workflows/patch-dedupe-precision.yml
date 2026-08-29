@@ -1,0 +1,90 @@
+name: Patch dedupe precision once
+
+on:
+  push:
+    branches:
+      - fix/daily-source-dedupe-20260829
+    paths:
+      - ".github/workflows/patch-dedupe-precision.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/daily-source-dedupe-20260829
+      - name: Tighten source identity and legacy fallback
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("daily_news_runner.py")
+          text = path.read_text(encoding="utf-8")
+
+          old_url = '''    path = parts.path.rstrip("/")
+              return urllib.parse.urlunsplit(("https", host, path, "", ""))
+          '''
+          new_url = '''    path = parts.path.rstrip("/")
+              tracking_keys = {"ref", "source", "fbclid", "gclid"}
+              query_pairs = [
+                  (key, value)
+                  for key, value in urllib.parse.parse_qsl(
+                      parts.query, keep_blank_values=True
+                  )
+                  if key.casefold() not in tracking_keys
+                  and not key.casefold().startswith("utm_")
+              ]
+              query = urllib.parse.urlencode(query_pairs, doseq=True)
+              return urllib.parse.urlunsplit(("https", host, path, query, ""))
+          '''
+          if old_url not in text:
+              raise SystemExit("expected URL normalization snippet not found")
+          text = text.replace(old_url, new_url, 1)
+
+          old_memory = '''    recent_links = {
+                  _normalize_source_link(entry.get("source_link"))
+                  for entry in recent
+                  if _normalize_source_link(entry.get("source_link"))
+              }
+              kept = []
+          '''
+          new_memory = '''    recent_links = set()
+              legacy_headlines = []
+              for entry in recent:
+                  remembered_link = _normalize_source_link(entry.get("source_link"))
+                  if remembered_link:
+                      recent_links.add(remembered_link)
+                  elif str(entry.get("headline", "") or "").strip():
+                      legacy_headlines.append(entry.get("headline", ""))
+              kept = []
+          '''
+          if old_memory not in text:
+              raise SystemExit("expected recent-memory snippet not found")
+          text = text.replace(old_memory, new_memory, 1)
+
+          old_fuzzy = '''        if title and any(
+                      _same_recent_event(title, entry.get("headline", ""))
+                      for entry in recent
+                  ):
+          '''
+          new_fuzzy = '''        if title and any(
+                      _same_recent_event(title, headline)
+                      for headline in legacy_headlines
+                  ):
+          '''
+          if old_fuzzy not in text:
+              raise SystemExit("expected fuzzy fallback snippet not found")
+          text = text.replace(old_fuzzy, new_fuzzy, 1)
+
+          path.write_text(text, encoding="utf-8")
+          PY
+          rm .github/workflows/patch-dedupe-precision.yml
+          git config user.name "khalidonline"
+          git config user.email "69767138+khalidonline@users.noreply.github.com"
+          git add daily_news_runner.py .github/workflows/patch-dedupe-precision.yml
+          git commit -m "fix: keep daily dedupe precise"
+          git push origin HEAD:fix/daily-source-dedupe-20260829
