@@ -74,14 +74,7 @@ def _remember_topic_image_context(brief: dict[str, Any]) -> None:
 
 
 def _credit_requires_visible(provider: str, credit: str | None) -> bool:
-    """Return True when a candidate cannot be shown without a visible credit.
-
-    Openverse exposes its CC licence in the returned credit. Only CC0/public-
-    domain variants are eligible for a credit-free topic card. Commons credits
-    do not reliably expose enough licence detail here, so its candidates are
-    conservatively skipped. Library of Congress candidates already pass the
-    provider's no-known-restrictions rights gate and remain eligible.
-    """
+    """Return True when a candidate cannot be shown without a visible credit."""
     provider = (provider or "").strip().lower()
     text = (credit or "").strip().lower()
     if provider == "commons":
@@ -115,16 +108,23 @@ def _creditless_renderer(renderer, generated_credit: str | None = None):
     return wrapped
 
 
-def _curated_subject_override(photo, context: str) -> bool:
-    """Recognize curated subject artifacts that are inherently relevant.
+def _local_provenance_name(photo) -> str:
+    marker = Path(str(photo) + ".exempt")
+    try:
+        value = marker.read_text(encoding="utf-8").strip()
+    except OSError:
+        return ""
+    if not value.lower().startswith("local:"):
+        return ""
+    return value.split(":", 1)[1].strip().lower().replace("_", "-")
 
-    A SAMA headquarters/artifact photo can look like generic architecture to a
-    vision model even when it is precisely the institution discussed. Only a
-    neutral verdict is overridden; an explicit visual rejection still wins.
-    """
+
+def _curated_subject_override(photo, context: str) -> bool:
+    """Recognize a curated SAMA artifact even after it is copied to a temp path."""
     name = Path(str(photo)).name.lower().replace("_", "-")
+    provenance = _local_provenance_name(photo)
     text = str(context or "").lower()
-    sama_artifact = "sama" in name
+    sama_artifact = "sama" in name or "sama" in provenance
     sama_topic = (
         "sama" in text
         or "ساما" in text
@@ -135,16 +135,35 @@ def _curated_subject_override(photo, context: str) -> bool:
 
 
 def _direct_relevance_only(judge):
-    """Topic cards require a direct visual match; neutral scenery is not enough."""
+    """Topic cards require a direct visual match; verified subject provenance can win."""
     def wrapped(photo, context):
         verdict = str(judge(photo, context)).strip().lower()
-        if verdict == "neutral" and _curated_subject_override(photo, context):
-            print("      topic image: curated SAMA artifact accepted — direct subject match")
+        if _curated_subject_override(photo, context):
+            if verdict != "yes":
+                print("      topic image: verified curated SAMA artifact accepted — direct subject provenance")
             return "yes"
         if verdict == "neutral":
             print("      topic image: neutral candidate rejected — direct relevance required")
             return "no"
         return verdict
+    return wrapped
+
+
+def _topic_generated_photo(fetcher):
+    """Force AI fallback to communicate the topic visually, never with generated wording."""
+    def wrapped(prompt, out_path):
+        strict_prompt = (
+            f"{prompt}\n\n"
+            "Create a high-quality realistic editorial photograph directly related to the topic. "
+            "Communicate the subject through the scene, people, architecture, and objects only. "
+            "No visible text of any kind. No Arabic or English words. No names. No labels. "
+            "No signs. No logos. No institution names. No building names. No numbers. "
+            "No screens with writing. No documents with readable writing. No billboards. "
+            "No watermarks. No captions. No emblems. No fake official signage. "
+            "Do not invent official branding. Any surfaces that would normally contain writing "
+            "must be blank or visually unreadable."
+        )
+        return fetcher(strict_prompt, out_path)
     return wrapped
 
 
@@ -170,6 +189,10 @@ def _install_topic_image_policy(bot: Any) -> None:
     if not getattr(bot, "_TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED", False):
         bot.photo_shows = _direct_relevance_only(bot.photo_shows)
         bot._TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED = True
+
+    if hasattr(bot, "fetch_generated_photo") and not getattr(bot, "_TOPIC_TEXT_FREE_AI_INSTALLED", False):
+        bot.fetch_generated_photo = _topic_generated_photo(bot.fetch_generated_photo)
+        bot._TOPIC_TEXT_FREE_AI_INSTALLED = True
 
     bot.recent_fallback = lambda _hero: None
 
