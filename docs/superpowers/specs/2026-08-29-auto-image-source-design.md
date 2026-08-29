@@ -17,14 +17,12 @@ The image must explain or depict the selected story. Source identity is secondar
 - The existing approved providers remain available: local licensed library, original article image, SPA, Wikimedia Commons, Library of Congress, Openverse, and Pexels.
 - Each provider still applies its existing metadata, licence, safety, geographic-context, graphic/document, minimum-score, and cooldown checks before a candidate can be considered.
 - A candidate that survives those checks is then judged visually against the selected story using the existing `photo_shows()` vision relevance gate.
-- Relevance tiers outrank provider order:
-  1. `yes` — directly depicts a person/place/object named by the story; accept.
-  2. `neutral` — genuinely related but less direct; keep as fallback while continuing to search for `yes`.
-  3. `no` — misleading, wrong subject/place, graphic/document, or unrelated; reject and continue.
-- Provider order is only a tie-breaker among candidates in the same relevance tier. In normal `auto` mode it must never cause a `neutral` image to beat a later `yes` image.
-- The first `yes` candidate may be accepted because all `yes` verdicts satisfy the same direct-relevance standard; this avoids unnecessary network and vision calls after the highest relevance tier has already been reached.
-- If no provider yields `yes`, the first safe `neutral` candidate may be used after all relevant providers have been checked.
-- If no fresh `yes` or `neutral` image exists, preserve the existing recent-image fallback behavior rather than weakening relevance/safety checks.
+- In `auto` mode only a `yes` verdict is accepted. `neutral` and `no` both continue to later providers.
+- `yes` means the photo directly depicts a person, place, company/product, object, or scene named by the story strongly enough that a viewer can understand the connection without explanation.
+- `neutral` is intentionally not used for normal daily-news cards. A generic related image is weaker than either a directly relevant image from another source or no image.
+- The first `yes` candidate may be accepted because all `yes` verdicts satisfy the same direct-relevance standard; provider order therefore acts only as a tie-breaker inside the highest relevance tier.
+- If no provider yields `yes`, the selector continues to later ranked story candidates under the existing `REQUIRE_PHOTO` behavior rather than publishing a weak image.
+- Existing recent-image fallback behavior remains unchanged; no safety or relevance threshold is lowered to force a card.
 - SPA remains useful for Saudi official/national stories but is not the universal default.
 - Manual provider choices remain available only as troubleshooting/curation overrides and keep the legacy provider-priority behavior.
 - `none` remains available to intentionally disable image fetching.
@@ -32,7 +30,7 @@ The image must explain or depict the selected story. Source identity is secondar
 
 ## Story context used for relevance
 
-The visual judge should receive the selected story's `headline`, `summary`, and `takeaway`, not only search keywords. `daily_news_runner` may keep an internal mapping from the model's image-query tuple to this story context so the large legacy `news_bot.py` selection block does not need to be restructured.
+The visual judge must receive the selected story's `headline`, `summary`, and `takeaway`, not only search keywords. `daily_news_runner` keeps an internal mapping from the model's English/Arabic image-query tuple to this story context. The local provider is called first for every story, so it can establish the current story context for the subsequent provider wrappers without changing `news_bot.py`.
 
 ## Safety and quality constraints
 
@@ -57,14 +55,16 @@ Scheduled runs use `auto` when no manual workflow input exists.
 
 ## Implementation boundary
 
-Keep `news_bot.py` unchanged if possible. `daily.yml` already enters through `daily_news_runner.py`, so the runner can:
+Keep `news_bot.py` unchanged. `daily.yml` already enters through `daily_news_runner.py`, so the runner will:
 
 1. normalize the workflow/environment image mode;
-2. retain story text context after summarization;
+2. retain each returned story's text context after summarization;
 3. wrap the existing provider fetch functions only when `IMAGE_SOURCE=auto`;
-4. force the legacy first-success loop to continue past `neutral`/`no` candidates and return only a `yes` candidate, or the best neutral fallback after the provider chain is exhausted.
+4. let every provider run its existing fetch/safety/licence/score/cooldown logic unchanged;
+5. call `photo_shows()` on any candidate returned by a provider;
+6. return the candidate to the legacy first-success loop only when the vision verdict is `yes`; otherwise return no photo so the loop continues.
 
-This preserves the existing renderer, publisher, licences, provider fetchers, photo cooldown, and breaking-news behavior.
+This preserves the existing renderer, publisher, provider implementations, photo cooldown, and breaking-news behavior.
 
 ## Tests
 
@@ -75,8 +75,8 @@ Add deterministic tests proving:
 - `IMAGE_SOURCE=pexels` becomes `stock`;
 - unsupported values fall back to `auto`;
 - workflow default and scheduled fallback both use `auto`;
-- an early `neutral` candidate does not beat a later `yes` candidate;
+- an early `neutral` candidate is withheld so a later `yes` candidate can win;
 - an early `no` candidate is rejected;
-- if no `yes` exists, a safe `neutral` candidate is restored after the source chain is exhausted;
-- a selected candidate keeps its credit/provenance marker;
-- explicit manual provider mode does not install the automatic cross-source relevance wrapper.
+- a `yes` candidate is returned with its original credit/domain metadata unchanged;
+- the visual judge receives headline + summary + takeaway context;
+- explicit manual provider mode does not install the automatic relevance wrappers.
