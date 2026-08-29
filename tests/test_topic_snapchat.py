@@ -54,6 +54,63 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         self.assertIn("فشلت في بوابة الجودة", calls[1][1])
         self.assertEqual(bot.SYSTEM_PROMPT, "base prompt")
 
+    def test_research_retry_prompt_gives_length_target_and_current_count(self):
+        calls = []
+        bot = SimpleNamespace(SYSTEM_PROMPT="base prompt")
+        long_body = "هذه جملة خبرية تشرح الموضوع بوضوح وتضع المعلومة في سياقها من دون أي نصيحة أو توجيه. " * 5
+
+        def original(topic):
+            calls.append(bot.SYSTEM_PROMPT)
+            brief = {
+                "title": "عنوان واضح ومباشر",
+                "body": long_body if len(calls) == 1 else "هذه خلاصة خبرية قصيرة تشرح الموضوع بوضوح.",
+                "takeaway": "الدلالة الأساسية خبرية وليست توجيهاً للمتابع.",
+                "caption": "زاوية مختصرة تشرح لماذا يستحق الموضوع الانتباه.",
+                "sources": ["واس", "Reuters"],
+                "image_queries": ["Saudi economy Riyadh", "Saudi business Riyadh", "Saudi finance Riyadh"],
+                "image_queries_ar": ["اقتصاد سعودي", "أعمال السعودية", "مالية السعودية"],
+                "image_prompt": "high-quality editorial photograph about the Saudi economy",
+                "source_url": "https://example.com/source",
+            }
+            return brief
+
+        brief = research_with_validation(bot, original, "موضوع اقتصادي")
+        self.assertLessEqual(len(brief["body"]), 260)
+        self.assertEqual(len(calls), 2)
+        self.assertIn(f"body طوله الحالي {len(long_body.strip())}", calls[1])
+        self.assertIn("استهدف 230 حرفاً أو أقل", calls[1])
+        self.assertIn("الحد الأقصى 260", calls[1])
+
+    def test_research_compacts_length_only_second_draft_instead_of_failing(self):
+        calls = []
+        bot = SimpleNamespace(SYSTEM_PROMPT="base prompt")
+        long_body = (
+            "المعلومة الأساسية واضحة ومهمة للمتابع، وتفاصيلها تشرح السياق الحالي بصورة خبرية دقيقة من دون نصيحة أو توجيه. "
+            "كما أن الخلفية تضيف معنى مفيداً لفهم التطور وما الذي تغير ولماذا أصبح الموضوع مهماً الآن. "
+            "وتبقى الخلاصة أن الموضوع يستحق الانتباه بسبب أثره المباشر في المشهد المحلي الحالي."
+        )
+        self.assertGreater(len(long_body), 260)
+
+        def original(topic):
+            calls.append(bot.SYSTEM_PROMPT)
+            return {
+                "title": "عنوان واضح ومباشر",
+                "body": long_body,
+                "takeaway": "الدلالة الأساسية خبرية وليست توجيهاً للمتابع.",
+                "caption": "زاوية مختصرة تشرح لماذا يستحق الموضوع الانتباه.",
+                "sources": ["واس", "Reuters"],
+                "image_queries": ["Saudi economy Riyadh", "Saudi business Riyadh", "Saudi finance Riyadh"],
+                "image_queries_ar": ["اقتصاد سعودي", "أعمال السعودية", "مالية السعودية"],
+                "image_prompt": "high-quality editorial photograph about the Saudi economy",
+                "source_url": "https://example.com/source",
+            }
+
+        brief = research_with_validation(bot, original, "موضوع اقتصادي")
+        self.assertEqual(len(calls), 2)
+        self.assertLessEqual(len(brief["body"]), 240)
+        self.assertFalse(brief["body"].endswith(" "))
+        self.assertEqual(topic_snapchat.validate_brief(brief), [])
+
     def test_research_validation_blocks_after_second_invalid_result(self):
         bot = SimpleNamespace(SYSTEM_PROMPT="base prompt")
         with self.assertRaisesRegex(SystemExit, "failed editorial validation"):
