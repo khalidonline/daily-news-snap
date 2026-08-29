@@ -357,16 +357,22 @@ def reviewed_local_provenance(photo, frame: dict, index_path) -> str:
     return note
 
 
-def prepare_city_visual_search(brief: dict) -> dict:
-    """Let each city frame search Arabic catalogue tags as well as English."""
+def prepare_city_visual_search(brief: dict, aliases: Iterable[str] = ()) -> dict:
+    """Try exact city-frame terms first, then simple declared-city fallbacks."""
     if not isinstance(brief, dict):
         return brief
+    fallback_aliases = list(aliases or [])
     for frame in brief.get("frames") or []:
         if str(frame.get("subject_kind", "")).strip() != "place_city":
             continue
         english = list(frame.get("image_keywords") or [])
         arabic = list(frame.get("image_keywords_ar") or [])
-        frame["image_keywords"] = _unique(english + arabic)
+        # Keep the model's exact target first. Arabic catalogue tags come next,
+        # then the declared city aliases as the simple landmark/street/skyline
+        # fallback. Six total search terms bounds the source ladder.
+        frame["image_keywords"] = _unique(
+            english + arabic + fallback_aliases
+        )[:6]
     return brief
 
 
@@ -393,8 +399,13 @@ def _polish_brief_city_language(brief: dict) -> dict:
 
 
 def story_photo_verdict_ok(verdict: str) -> bool:
-    """Story photos require a positive vision verdict; neutral is not enough."""
+    """Non-city story photos require a positive vision verdict."""
     return str(verdict or "").strip().lower() == "yes"
+
+
+def city_photo_verdict_ok(verdict: str) -> bool:
+    """A clear city-subject photo may fill a city frame even if not exact."""
+    return str(verdict or "").strip().lower() in {"yes", "neutral"}
 
 
 def configure(story_bot_module):
@@ -441,7 +452,9 @@ def configure(story_bot_module):
         if provenance:
             contract = f"{contract}\n{provenance}"
         verdict = original_photo_shows(photo, contract)
-        if story_photo_verdict_ok(verdict):
+        is_city_frame = str(frame.get("subject_kind", "")).strip() == "place_city"
+        if (city_photo_verdict_ok(verdict) if is_city_frame
+                else story_photo_verdict_ok(verdict)):
             return "yes"
         print(
             "      (frame relevance gate: photo is not a confirmed match "
@@ -465,7 +478,8 @@ def configure(story_bot_module):
         finally:
             sb.SYSTEM_PROMPT = previous_prompt
         brief = _polish_brief_city_language(brief)
-        return prepare_city_visual_search(brief)
+        aliases = _subject_names(story, sb.story_aliases)
+        return prepare_city_visual_search(brief, aliases=aliases)
 
     def focused_find_all_photos(brief):
         previous_story = active["story"]
