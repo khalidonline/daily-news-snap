@@ -1,12 +1,20 @@
 {
-  "run_nonce": "2026-08-29-near-pass-careem-2",
+  "run_nonce": "2026-08-29-near-pass-sama-1",
   "assets": [
     {
-      "filename": "targeted-careem-2016-app.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Careem.jpg",
-      "tags": ["Careem", "Careem app", "chauffeur service", "2016"],
-      "credit": "Zizolo0ol via Wikimedia Commons — CC BY-SA 4.0; Careem chauffeur-service/app photograph, 18 June 2016",
-      "story": "قصة كريم من الفكرة إلى استحواذ أوبر",
+      "filename": "targeted-sama-central-bank-building.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bank%20SA.jpg",
+      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank"],
+      "credit": "Sabadek via Wikimedia Commons — CC BY-SA 4.0; Saudi Central Bank building, 11 March 2025",
+      "story": "قصة تأسيس مؤسسة النقد ساما",
+      "verdict": "DIRECT"
+    },
+    {
+      "filename": "targeted-sama-organisation-structure.png",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SAMA%20Organisation%20Structure.png",
+      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank"],
+      "credit": "Lord Mauleverer via Wikimedia Commons — CC BY-SA 3.0; organisation chart for SAMA, 8 May 2013",
+      "story": "قصة تأسيس مؤسسة النقد ساما",
       "verdict": "DIRECT"
     }
   ]
