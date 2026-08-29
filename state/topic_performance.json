@@ -1,0 +1,5 @@
+{
+  "_description": "Optional editorial weights from real Snapchat audience performance. Keep each category/topic adjustment modest; runtime caps the combined effect to -15..+15 so current relevance still wins.",
+  "categories": {},
+  "topics": {}
+}
