@@ -40,6 +40,24 @@ class NewsScopeEdgeTests(unittest.TestCase):
         }
         self.assertTrue(hard_scope_eligible(item))
 
+    def test_accident_death_lawsuit_story_is_rejected(self):
+        item = {
+            "lane": "travel_lifestyle",
+            "source": "example",
+            "title": "زوجة راكب توفي بعد اضطراب جوي تقاضي شركة طيران",
+            "summary": "دعوى مرتبطة بوفاة راكب بعد اضطراب جوي خلال رحلة دولية.",
+        }
+        self.assertFalse(hard_scope_eligible(item))
+
+    def test_national_transport_safety_regulation_can_qualify(self):
+        item = {
+            "lane": "travel_lifestyle",
+            "source": "example",
+            "title": "هيئة الطيران تصدر قواعد سلامة جديدة تلزم شركات الطيران",
+            "summary": "قرار تنظيمي جديد يطبق على جميع شركات الطيران والمسافرين في السعودية.",
+        }
+        self.assertTrue(hard_scope_eligible(item))
+
 
 if __name__ == "__main__":
     unittest.main()
