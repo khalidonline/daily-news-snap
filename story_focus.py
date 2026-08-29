@@ -142,11 +142,7 @@ def _norm_context(value: str) -> str:
 
 
 def frame_from_renderer_context(frames: Iterable[dict], context: str):
-    """Recover the model frame from story_bot's ``heading + text`` context.
-
-    Company stories may prefix the renderer context with a subject sentence,
-    so suffix matching is deliberate after whitespace normalization.
-    """
+    """Recover the model frame from story_bot's ``heading + text`` context."""
     needle = _norm_context(context)
     if not needle:
         return None
@@ -169,13 +165,7 @@ def frame_visual_context(
     frame: dict,
     aliases_fn: Callable[[str], Iterable[str]],
 ) -> str:
-    """Vision context bound to the subject and the frame's visual target.
-
-    If the model supplied image keywords, they are the authoritative visual
-    target. Supporting dates in the prose are narrative background and must not
-    accidentally turn a current-scene image into an anachronism. Legacy frames
-    without image keywords retain the older heading+text fallback.
-    """
+    """Vision context bound to the subject and the frame's visual target."""
     names = _subject_names(story, aliases_fn)
     label = " / ".join(names[:4]) or str(story or "").strip()
     heading = str(frame.get("heading", "") or "").strip()
@@ -212,7 +202,6 @@ def polish_city_wording(text: str) -> str:
     value = value.replace("صيرورته", "تحوله")
     value = value.replace("صيرورة المدينة", "تحول المدينة")
     value = value.replace("صيرورة", "تحول")
-
     value = re.sub(
         r"(?:[—–-]\s*)?أعلى من أي مدينة سعودية أخرى"
         r"(?:،\s*ومقابل[^.؟!]+)?",
@@ -233,6 +222,32 @@ def _is_city_brief(brief: dict) -> bool:
     return city_frames >= max(2, (len(frames) + 1) // 2)
 
 
+def catalog_tags_match_aliases(tags: Iterable[str], aliases: Iterable[str]) -> bool:
+    """Match reviewed catalogue tags to the declared subject aliases.
+
+    This preserves the old exact/single-word behavior and adds the missing
+    symmetric case: a full alias may appear as a whole phrase inside a more
+    specific tag (``Riyadh`` inside ``Riyadh skyline``).
+    """
+    phrases = {str(a).strip().casefold() for a in aliases or [] if str(a).strip()}
+    words = set()
+    for phrase in phrases:
+        words |= {w for w in re.split(r"[\s,]+", phrase) if len(w) > 2}
+
+    for raw_tag in tags or []:
+        tag = str(raw_tag).strip().casefold()
+        if not tag:
+            continue
+        if tag in phrases or (" " not in tag and tag in words):
+            return True
+        for phrase in phrases:
+            if len(phrase) < 3:
+                continue
+            if re.search(r"(?<!\w)" + re.escape(phrase) + r"(?!\w)", tag):
+                return True
+    return False
+
+
 def _read_visual_index(index_path) -> list[dict]:
     path = Path(index_path) if index_path else None
     if path is None:
@@ -241,7 +256,6 @@ def _read_visual_index(index_path) -> list[dict]:
         raw_lines = path.read_text(encoding="utf-8").splitlines()
     except OSError:
         return []
-
     rows = []
     for raw in raw_lines:
         line = raw.strip()
@@ -259,16 +273,10 @@ def _read_visual_index(index_path) -> list[dict]:
 
 
 def runtime_visual_inventory_prompt(index_path) -> str:
-    """Describe the already-reviewed runtime images to the story writer.
-
-    The filtered runtime index is evidence availability, not a factual source.
-    It helps the writer prefer an equally important, photographable beat while
-    all factual claims still have to come from researched sources.
-    """
+    """Describe the already-reviewed runtime images to the story writer."""
     rows = _read_visual_index(index_path)
     if not rows:
         return ""
-
     listed = [
         f"- {row['filename']}: {row['tags']}" if row["tags"]
         else f"- {row['filename']}"
@@ -314,11 +322,7 @@ def _local_source_name(photo) -> str:
 
 
 def reviewed_local_provenance(photo, frame: dict, index_path) -> str:
-    """Return trusted catalogue context for a candidate from the reviewed pool.
-
-    Provenance may establish identity and a catalogue year. It never declares
-    that the visible scene matches the frame; vision still owns that decision.
-    """
+    """Return trusted catalogue context for a candidate from the reviewed pool."""
     source_name = _local_source_name(photo)
     row = next(
         (item for item in _read_visual_index(index_path)
@@ -327,7 +331,6 @@ def reviewed_local_provenance(photo, frame: dict, index_path) -> str:
     )
     if row is None:
         return ""
-
     tags = row.get("tags", "")
     credit = row.get("credit", "")
     targets = " / ".join(_frame_visual_targets(frame)[:8])
@@ -335,7 +338,6 @@ def reviewed_local_provenance(photo, frame: dict, index_path) -> str:
         r"(?<!\d)((?:18|19|20)\d{2})(?!\d)",
         " ".join([source_name, tags, credit]),
     )
-
     note = (
         f"مرجع الصورة المحلية المراجعة: الملف {source_name}"
         + (f" مفهرس بوسوم: {tags}." if tags else ".")
@@ -427,25 +429,20 @@ def configure(story_bot_module):
         story = active["story"]
         if not story:
             return original_photo_shows(photo, context)
-
         frame = frame_from_renderer_context(active["frames"], str(context or ""))
         if frame is None:
             frame = {"heading": "", "text": str(context or "")}
         contract = frame_visual_context(story, frame, sb.story_aliases)
-
         try:
             import news_bot as nb
-
             provenance = reviewed_local_provenance(photo, frame, nb.IMAGES_INDEX)
         except Exception:
             provenance = ""
         if provenance:
             contract = f"{contract}\n{provenance}"
-
         verdict = original_photo_shows(photo, contract)
         if story_photo_verdict_ok(verdict):
             return "yes"
-
         print(
             "      (frame relevance gate: photo is not a confirmed match "
             "for this frame — rejected)"
@@ -456,11 +453,9 @@ def configure(story_bot_module):
         inventory = ""
         try:
             import news_bot as nb
-
             inventory = runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
         except Exception:
             inventory = ""
-
         previous_prompt = sb.SYSTEM_PROMPT
         if inventory:
             sb.SYSTEM_PROMPT = previous_prompt + inventory
@@ -469,7 +464,6 @@ def configure(story_bot_module):
             brief = original_research(story)
         finally:
             sb.SYSTEM_PROMPT = previous_prompt
-
         brief = _polish_brief_city_language(brief)
         return prepare_city_visual_search(brief)
 
