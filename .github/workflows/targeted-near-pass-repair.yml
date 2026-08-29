@@ -38,19 +38,14 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           p = Path('/tmp/apply_repair_assets.py')
-          text = p.read_text(encoding='utf-8')
-          text = text.replace(
+          text = p.read_text(encoding='utf-8').replace(
               'UA = "Mozilla/5.0 (compatible; story-visual-repair/1.0)"',
-              'UA = "daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)"',
-          )
+              'UA = "daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)"')
           p.write_text(text, encoding='utf-8')
           PY
 
       - name: Apply reviewed near-pass photos
-        shell: bash
-        run: |
-          set -euo pipefail
-          PYTHONPATH=. python /tmp/apply_repair_assets.py
+        run: PYTHONPATH=. python /tmp/apply_repair_assets.py
 
       - name: Synchronize reviewed index metadata
         shell: bash
@@ -59,13 +54,11 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           manifest = json.loads(Path('repair_assets.json').read_text(encoding='utf-8'))
           index = Path('images/images.txt')
           lines = index.read_text(encoding='utf-8').splitlines() if index.exists() else []
           specs = {a['filename']: a for a in manifest.get('assets', [])}
-          seen = set()
-          out = []
+          seen, out = set(), []
           for line in lines:
               filename = line.split('|', 1)[0].strip() if '|' in line else ''
               spec = specs.get(filename)
@@ -81,21 +74,17 @@ jobs:
           PY
 
       - name: Inspect targeted stories before commit
-        env:
-          PYTHONPATH: /tmp/story-repair-engine
         shell: bash
         run: |
           set -euo pipefail
-          rm -rf /tmp/story-repair-engine
-          mkdir -p /tmp/story-repair-engine
+          rm -rf /tmp/story-repair-engine && mkdir -p /tmp/story-repair-engine
           git archive origin/repair/story-visual-coverage | tar -x -C /tmp/story-repair-engine
           python - <<'PY'
           import json, sys
           from pathlib import Path
           sys.path.insert(0, '/tmp/story-repair-engine')
           from tools.bulk_visual_board import build_board
-          manifest = json.loads(Path('repair_assets.json').read_text(encoding='utf-8'))
-          stories = list(dict.fromkeys(a['story'] for a in manifest.get('assets', [])))
+          stories = list(dict.fromkeys(a['story'] for a in json.loads(Path('repair_assets.json').read_text(encoding='utf-8')).get('assets', [])))
           for row in build_board(stories):
               print(f"{row.story}: {row.status}; photos={list(row.photos)}; logos={list(row.logos)}")
           PY
@@ -107,17 +96,13 @@ jobs:
           git config user.name "story-visual-repair-bot"
           git config user.email "actions@github.com"
           git add images/images.txt images/relevance.json images/targeted-* repair_assets.json
-          if git diff --cached --quiet; then
-            echo "No accepted asset changes."
-          else
+          if ! git diff --cached --quiet; then
             git commit -m "repair: close next near-pass photo gaps"
             git pull --rebase origin repair/all-story-visuals-2026-08-29
             git push origin HEAD:repair/all-story-visuals-2026-08-29
           fi
 
       - name: Final strict targeted gate
-        env:
-          PYTHONPATH: /tmp/story-repair-engine
         shell: bash
         run: |
           set -euo pipefail
@@ -126,8 +111,7 @@ jobs:
           from pathlib import Path
           sys.path.insert(0, '/tmp/story-repair-engine')
           from tools.bulk_visual_board import build_board
-          manifest = json.loads(Path('repair_assets.json').read_text(encoding='utf-8'))
-          stories = list(dict.fromkeys(a['story'] for a in manifest.get('assets', [])))
+          stories = list(dict.fromkeys(a['story'] for a in json.loads(Path('repair_assets.json').read_text(encoding='utf-8')).get('assets', [])))
           rows = build_board(stories)
           for row in rows:
               print(f"FINAL {row.story}: {row.status}; photos={list(row.photos)}; logos={list(row.logos)}")
@@ -135,7 +119,7 @@ jobs:
               raise SystemExit("one or more targeted stories still fail the strict visual gate")
           PY
 
-      - name: Promote strict PASS stories into READY pool
+      - name: Promote strict PASS stories into READY state
         env:
           POST_TO_SNAPCHAT: "0"
           DRY_RUN: "1"
@@ -143,55 +127,11 @@ jobs:
         run: |
           set -euo pipefail
           python ready_story_publish.py --refresh-only
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          ready = json.loads(Path('state/ready_to_post.json').read_text(encoding='utf-8'))['stories']
-          path = Path('.github/workflows/story.yml')
-          text = path.read_text(encoding='utf-8')
-          start = '          # READY_STORY_OPTIONS_START\n'
-          end = '          # READY_STORY_OPTIONS_END\n'
-          before, rest = text.split(start, 1)
-          _, after = rest.split(end, 1)
-          options = ''.join(f'          - {json.dumps(story, ensure_ascii=False)}\n' for story in ready)
-          path.write_text(before + start + options + end + after, encoding='utf-8')
-          print(f'Promoted READY pool to {len(ready)} stories')
-          PY
-          git add state/ready_to_post.json .github/workflows/story.yml
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add state/ready_to_post.json
           if ! git diff --cached --quiet; then
             git commit -m "state: promote repaired stories to READY"
             git pull --rebase origin repair/all-story-visuals-2026-08-29
             git push origin HEAD:repair/all-story-visuals-2026-08-29
-          fi
-
-      - name: Sync READY choices to live workflow on main
-        shell: bash
-        run: |
-          set -euo pipefail
-          git fetch origin main
-          rm -rf /tmp/story-main
-          git worktree add /tmp/story-main origin/main
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          ready = json.loads(Path('state/ready_to_post.json').read_text(encoding='utf-8'))['stories']
-          path = Path('/tmp/story-main/.github/workflows/story.yml')
-          text = path.read_text(encoding='utf-8')
-          start = '          # READY_STORY_OPTIONS_START\n'
-          end = '          # READY_STORY_OPTIONS_END\n'
-          before, rest = text.split(start, 1)
-          _, after = rest.split(end, 1)
-          options = ''.join(f'          - {json.dumps(story, ensure_ascii=False)}\n' for story in ready)
-          path.write_text(before + start + options + end + after, encoding='utf-8')
-          print(f'Synced {len(ready)} READY choices to main')
-          PY
-          cd /tmp/story-main
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/workflows/story.yml
-          if ! git diff --cached --quiet; then
-            git commit -m "ops: sync READY story dropdown"
-            git push origin HEAD:main
           fi
