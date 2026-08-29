@@ -29,6 +29,17 @@ SUPPORTED_IMAGE_SOURCES = {
     "auto", "article", "spa", "commons", "loc", "openverse", "stock", "none"
 }
 
+AUTO_IMAGE_REQUIRED_ATTRS = (
+    "fetch_local_photo",
+    "fetch_article_photo",
+    "fetch_spa_photo",
+    "fetch_commons_photo",
+    "fetch_loc_photo",
+    "fetch_openverse_photo",
+    "fetch_photo",
+    "photo_shows",
+)
+
 _STORY_CONTEXTS = {}
 
 
@@ -90,6 +101,10 @@ def _context_for_queries(queries_en, queries_ar):
     return "\n".join(fallback)
 
 
+def _can_install_auto_image_selector(news_bot_module):
+    return all(hasattr(news_bot_module, name) for name in AUTO_IMAGE_REQUIRED_ATTRS)
+
+
 def make_fetcher(news_bot_module):
     def _fetch():
         return fetch_headlines(
@@ -139,6 +154,8 @@ def install_auto_image_selector(news_bot_module):
     withheld, so the legacy loop naturally continues to later providers.
     """
     if getattr(news_bot_module, "_AUTO_IMAGE_SELECTOR_INSTALLED", False):
+        return news_bot_module
+    if not _can_install_auto_image_selector(news_bot_module):
         return news_bot_module
 
     originals = {
