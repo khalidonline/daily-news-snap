@@ -102,6 +102,69 @@ class CityVisualFallbackTests(unittest.TestCase):
         self.assertIn("لا تستخدم حصة أسبوعية", prompt)
         self.assertIn("رقم سنوي", prompt)
 
+    # Regressions from Story to Snapchat #93.
+    def test_city_deck_forces_every_frame_out_of_company_logo_mode(self):
+        brief = {
+            "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+            "frames": [
+                {"subject_kind": "place_city", "heading": "الرياض القديمة"},
+                {"subject_kind": "product", "heading": "قطار داخل المدينة"},
+                {"subject_kind": "company", "heading": "هيئة تخطط للمدينة"},
+            ],
+        }
+        normalized = cvf.normalize_city_deck_for_visuals(brief)
+        self.assertEqual(
+            ["place_city", "place_city", "place_city"],
+            [frame["subject_kind"] for frame in normalized["frames"]],
+        )
+
+    def test_reviewed_exact_rows_find_railway_even_when_year_wording_differs(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "images.txt"
+            index.write_text(
+                "riyadh-dammam-train.jpg | سكة حديد, قطار الرياض الدمام, Riyadh Dammam railway | archive\n"
+                "railway-construction-1951.jpg | سكة حديد الرياض الدمام, 1951, بناء, Riyadh Dammam railway | archive\n"
+                "riyadh-skyline.jpg | Riyadh skyline, الرياض | archive\n",
+                encoding="utf-8",
+            )
+            frame = {
+                "subject_kind": "place_city",
+                "image_keywords": ["Riyadh Dammam railway 1947"],
+                "image_keywords_ar": ["سكة حديد الرياض الدمام"],
+            }
+            rows = cvf.reviewed_city_exact_rows(
+                frame, index, aliases=["Riyadh", "الرياض"]
+            )
+        names = [row["filename"] for row in rows]
+        self.assertIn("riyadh-dammam-train.jpg", names)
+        self.assertIn("railway-construction-1951.jpg", names)
+        self.assertNotIn("riyadh-skyline.jpg", names)
+
+    def test_generic_reviewed_city_rows_require_a_scene_clue_not_bare_city(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "images.txt"
+            index.write_text(
+                "mcdonalds-riyadh-first.jpg | ماكدونالدز, أول فرع, الرياض | archive\n"
+                "riyadh-skyline.jpg | Riyadh skyline, الرياض | archive\n"
+                "riyadh-departures.jpg | مطار الرياض, المغادرون | archive\n",
+                encoding="utf-8",
+            )
+            rows = cvf.reviewed_city_fallback_rows(
+                index, aliases=["Riyadh", "الرياض"]
+            )
+        names = [row["filename"] for row in rows]
+        self.assertIn("riyadh-skyline.jpg", names)
+        self.assertIn("riyadh-departures.jpg", names)
+        self.assertNotIn("mcdonalds-riyadh-first.jpg", names)
+
+    def test_city_fallback_context_has_a_marker_for_scene_only_vision(self):
+        context = cvf.city_fallback_visual_context(
+            "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+            aliases=["Riyadh", "الرياض"],
+        )
+        self.assertTrue(cvf.is_city_fallback_context(context))
+        self.assertTrue(context.startswith(cvf.CITY_FALLBACK_MARKER))
+
 
 if __name__ == "__main__":
     unittest.main()
