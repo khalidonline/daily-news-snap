@@ -1,0 +1,47 @@
+name: Daily news post-model acceptance smoke
+
+on:
+  push:
+    paths:
+      - ".github/workflows/daily-postmodel-smoke.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run real daily bot in forced dry-run mode
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DRY_RUN: "1"
+          POST_TO_SNAPCHAT: "0"
+          MEDIA_MODE: github
+          BRIEF_TITLE: "ملخص تنفيذي - خبر"
+          BRAND: "ملخص تنفيذي - خبر"
+          FONT_FAMILY: Almarai
+          THEME: light
+          STORIES_PER_DAY: "1"
+          CANDIDATES: "8"
+          REQUIRE_PHOTO: "1"
+          IMAGE_SOURCE: auto
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          LOOKBACK_HOURS: "48"
+          REMEMBER_DAYS: "3"
+        run: python daily_news_runner.py
+      - name: Keep acceptance card for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-postmodel-smoke-${{ github.run_id }}
+          path: out/*
+          if-no-files-found: ignore
+          retention-days: 1
