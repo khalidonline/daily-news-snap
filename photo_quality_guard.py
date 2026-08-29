@@ -8,11 +8,69 @@ dust/sand haze while preserving the existing source/relevance behavior.
 from __future__ import annotations
 
 from pathlib import Path
+import re
 
 import photo_quality
 
 
 _INSTALLED = "_global_photo_quality_installed"
+_HISTORICAL_TERMS = (
+    "historical", "archive", "archival", "old ", "vintage",
+    "تاريخ", "أرشيف", "قديم", "القديمة", "القديم",
+)
+
+
+def _index_row(source: str, index_path):
+    try:
+        lines = Path(index_path).read_text(encoding="utf-8").splitlines()
+    except (OSError, TypeError):
+        return ""
+    source = Path(str(source or "")).name
+    for raw in lines:
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if Path(line.split("|", 1)[0].strip()).name == source:
+            return line
+    return ""
+
+
+def is_historical_archive_source(source: str, index_path) -> bool:
+    """Preserve intentionally warm/sepia archival material.
+
+    Atmospheric orange cast is an editorial defect on contemporary city
+    photography, but it can be the medium itself on a historical archive.
+    Reviewed catalogue metadata is authoritative for that distinction.
+    """
+    row = _index_row(source, index_path)
+    text = f"{source} {row}".casefold()
+    if any(term.casefold() in text for term in _HISTORICAL_TERMS):
+        return True
+    years = [int(y) for y in re.findall(r"(?<!\d)((?:18|19|20)\d{2})(?!\d)", text)]
+    return bool(years and min(years) < 2000)
+
+
+def reviewed_local_is_acceptable(source: str, index_path, images_dir=None,
+                                 candidate_path=None) -> bool:
+    """Apply modern atmosphere quality while exempting reviewed archives."""
+    if is_historical_archive_source(source, index_path):
+        return True
+
+    path = Path(candidate_path) if candidate_path else None
+    if path is None or not path.exists():
+        if images_dir is None:
+            try:
+                import news_bot as nb
+                images_dir = nb.IMAGES_DIR
+            except Exception:
+                images_dir = None
+        if images_dir is not None:
+            path = Path(images_dir) / Path(str(source)).name
+    if path is None or not path.exists():
+        # Selection/fetching will handle a missing file; quality should not
+        # invent a rejection without pixels.
+        return True
+    return not photo_quality.has_poor_atmospheric_visibility(path)
 
 
 def install(nb):
@@ -41,8 +99,6 @@ def install(nb):
             )
             if not photo:
                 return None, None
-            if not photo_quality.has_poor_atmospheric_visibility(photo):
-                return photo, credit
 
             source = ""
             marker = Path(str(out_path) + ".exempt")
@@ -52,6 +108,14 @@ def install(nb):
                     source = Path(value.split(":", 1)[1]).name
             except OSError:
                 pass
+
+            if source and reviewed_local_is_acceptable(
+                source, nb.IMAGES_INDEX, nb.IMAGES_DIR, candidate_path=photo
+            ):
+                return photo, credit
+            if not source and not photo_quality.has_poor_atmospheric_visibility(photo):
+                return photo, credit
+
             marker.unlink(missing_ok=True)
             Path(out_path).unlink(missing_ok=True)
             if not source or source in excluded:
