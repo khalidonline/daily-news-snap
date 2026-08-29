@@ -177,6 +177,7 @@ def install(bot: Any) -> None:
     """Install Saudi Snapchat audience rules into an imported topic_bot module."""
     bot.HARD_COOLDOWN_DAYS = bot.COOLDOWN_DAYS
     bot.KICKER = os.getenv("KICKER", "معلومة تهمك")
+    bot.TOPIC_MODEL = bot.CLAUDE_MODEL
     bot.SYSTEM_PROMPT = enhance_prompt(bot.SYSTEM_PROMPT)
 
     selector_prompt = getattr(bot, "SELECT_PROMPT", "")
