@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import time
@@ -48,29 +49,75 @@ WATCH_MODEL = os.getenv("WATCH_MODEL", "").strip() or "claude-haiku-4-5-20251001
 WATCH_MAX_TOKENS = int(os.getenv("WATCH_MAX_TOKENS", "").strip() or "1200")
 WATCH_MAX_SEARCHES = int(os.getenv("WATCH_MAX_SEARCHES", "").strip() or "2")
 
-# Feed-diff pre-filter: the one irreducible cost of a watching cycle was
-# the classifier call itself — it did its own discovery, so it had to run
-# every 30 minutes even when nothing had been published anywhere. The
-# feeds answer "did anything new appear?" deterministically first, and
-# the model is only paid when the answer is yes. General Saudi headlines
-# catch national/official developments; business + technology preserve
-# the original beats; Asharq Al-Awsat adds direct economy coverage.
+# Feed-diff pre-filter: RSS/network reads are cheap; model calls and web
+# searches are not. Core Saudi feeds may fail open into classification, while
+# broader regional/global feeds are optional tripwires whose outages never
+# create paid work by themselves. Broad-source headlines are filtered with a
+# deterministic Saudi/Gulf relevance gate before Claude sees them.
 WATCH_FEED_DIFF = (os.getenv("WATCH_FEED_DIFF", "").strip() or "1") != "0"
-WATCH_FEEDS = [u.strip() for u in
-               (os.getenv("WATCH_FEEDS", "").strip() or
-                "https://news.google.com/rss?hl=ar&gl=SA&ceid=SA:ar,"
-                "https://news.google.com/rss/headlines/section/topic/"
-                "BUSINESS?hl=ar&gl=SA&ceid=SA:ar,"
-                "https://news.google.com/rss/headlines/section/topic/"
-                "TECHNOLOGY?hl=ar&gl=SA&ceid=SA:ar,"
-                "https://aawsat.com/feed/economy").split(",") if u.strip()]
+_DEFAULT_WATCH_FEEDS = [
+    {"name": "Saudi Google News",
+     "url": "https://news.google.com/rss?hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "core"},
+    {"name": "Saudi Business",
+     "url": "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "core"},
+    {"name": "Saudi Technology",
+     "url": "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "core"},
+    {"name": "Asharq Al-Awsat Economy",
+     "url": "https://aawsat.com/feed/economy", "tier": "core"},
+    {"name": "Al Arabiya",
+     "url": "https://news.google.com/rss/search?q=site%3Aalarabiya.net&hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "regional"},
+    {"name": "Al Jazeera",
+     "url": "https://news.google.com/rss/search?q=site%3Aaljazeera.net&hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "regional"},
+    {"name": "Asharq Business",
+     "url": "https://news.google.com/rss/search?q=site%3Aasharq.com&hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "regional"},
+    {"name": "Argaam",
+     "url": "https://news.google.com/rss/search?q=site%3Aargaam.com&hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "regional"},
+    {"name": "CNBC Arabia",
+     "url": "https://news.google.com/rss/search?q=site%3Acnbcarabia.com&hl=ar&gl=SA&ceid=SA:ar",
+     "tier": "regional"},
+    {"name": "CNN",
+     "url": "https://news.google.com/rss/search?q=site%3Acnn.com&hl=en&gl=US&ceid=US:en",
+     "tier": "global"},
+    {"name": "BBC",
+     "url": "https://news.google.com/rss/search?q=site%3Abbc.com&hl=en&gl=US&ceid=US:en",
+     "tier": "global"},
+    {"name": "Reuters",
+     "url": "https://news.google.com/rss/search?q=site%3Areuters.com&hl=en&gl=US&ceid=US:en",
+     "tier": "global"},
+    {"name": "AP",
+     "url": "https://news.google.com/rss/search?q=site%3Aapnews.com&hl=en&gl=US&ceid=US:en",
+     "tier": "global"},
+]
+_custom_feeds = os.getenv("WATCH_FEEDS", "").strip()
+WATCH_FEEDS = ([{"name": u, "url": u, "tier": "core"}
+                for u in _custom_feeds.split(",") if u.strip()]
+               if _custom_feeds else _DEFAULT_WATCH_FEEDS)
 # A wider stateless window makes the watcher resilient to delayed/missed
 # hosted-runner starts without forcing a state commit every 30 minutes.
 # The classifier still applies the stricter "hours, not days" breaking gate.
 WATCH_FEED_WINDOW_MIN = int(
     os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "180")
+WATCH_MAX_FEED_TITLES = int(
+    os.getenv("WATCH_MAX_FEED_TITLES", "").strip() or "12")
 FEED_UA = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
+_REGION_RELEVANCE_RE = re.compile(
+    r"(?:السعود(?:ية|ي)|الرياض|جدة|مكة|المدينة|نيوم|أرامكو|"
+    r"صندوق الاستثمارات|الإمارات|دبي|أبوظبي|قطر|الدوحة|الكويت|"
+    r"البحرين|عمان|مسقط|الخليج|أوبك|البحر الأحمر|"
+    r"\b(?:saudi(?: arabia)?|ksa|riyadh|jeddah|makkah|mecca|medina|"
+    r"neom|aramco|pif|public investment fund|uae|united arab emirates|"
+    r"dubai|abu dhabi|qatar|doha|kuwait|bahrain|oman|muscat|gcc|opec|"
+    r"red sea|gulf (?:states?|airlines?|region|markets?))\b)",
+    re.IGNORECASE,
+)
 BEATS = ("القرارات والتنظيمات والأخبار الوطنية السعودية، الاقتصاد السعودي، "
          "العقار السعودي والخليجي، السفر والسياحة السعودية، أخبار الأعمال "
          "والتقنية الكبرى")
@@ -191,55 +238,126 @@ def _feed_title(item):
     return (el.text or "").strip() if el is not None else ""
 
 
-def feed_fresh_items():
-    """Return (fresh_titles, feeds_healthy).
+def _feed_spec(raw):
+    if isinstance(raw, str):
+        return {"name": raw, "url": raw, "tier": "core"}
+    return {
+        "name": str(raw.get("name") or raw.get("url") or "feed"),
+        "url": str(raw.get("url") or ""),
+        "tier": str(raw.get("tier") or "core").lower(),
+    }
 
-    The pre-filter is allowed to suppress the classifier only when every
-    configured feed was fetched and parsed into usable titled entries. Any
-    unreachable, empty, or suspiciously untitled feed fails OPEN into the
-    classifier, because a broken pre-filter must never blind breaking news.
-    Undated entries still count as fresh. The 180-minute stateless window
-    absorbs hosted-runner jitter without committing scan state every cycle.
+
+def _headline_relevant(title, tier):
+    return tier == "core" or bool(_REGION_RELEVANCE_RE.search(title))
+
+
+def _headline_key(title):
+    # Google News commonly appends " - Publisher"; strip that so the same
+    # syndicated headline from two source feeds costs one classifier slot.
+    base = re.sub(r"\s+-\s+[^-]{2,60}$", "", title.strip())
+    return " ".join(re.sub(r"[^\w]+", " ", base.casefold()).split())
+
+
+def _round_robin_titles(buckets, limit):
+    selected, seen = [], set()
+    queues = [list(bucket) for bucket in buckets]
+    while len(selected) < limit:
+        progressed = False
+        for queue in queues:
+            while queue:
+                title = queue.pop(0)
+                key = _headline_key(title)
+                if not key or key in seen:
+                    continue
+                seen.add(key)
+                selected.append(title)
+                progressed = True
+                break
+            if len(selected) >= limit:
+                break
+        if not progressed:
+            break
+    return selected
+
+
+def feed_fresh_items():
+    """Return a small, source-diverse set of fresh trigger headlines.
+
+    Core Saudi feeds protect visibility and may fail open into classification.
+    Regional/global feeds widen coverage but are optional: their failures are
+    logged and never create a paid model call by themselves. Broad-source
+    headlines must pass a deterministic Saudi/Gulf relevance filter first.
     """
     cutoff = (datetime.now(timezone.utc)
               - timedelta(minutes=WATCH_FEED_WINDOW_MIN))
-    fresh = []
+    buckets = []
     reachable = 0
-    feeds_healthy = True
-    for url in WATCH_FEEDS:
+    core_seen = 0
+    core_healthy = True
+
+    for raw in WATCH_FEEDS:
+        spec = _feed_spec(raw)
+        name, url, tier = spec["name"], spec["url"], spec["tier"]
+        if tier == "core":
+            core_seen += 1
         try:
             req = urllib.request.Request(url, headers={"User-Agent": FEED_UA})
             with urllib.request.urlopen(req, timeout=20) as resp:
                 root = ET.fromstring(resp.read())
         except Exception as exc:
-            feeds_healthy = False
-            print(f"  ! feed unreachable ({exc}): {url}")
+            if tier == "core":
+                core_healthy = False
+                print(f"  ! CORE feed unreachable ({exc}): {name}")
+            else:
+                print(f"  ! optional feed unreachable ({exc}): {name}")
             continue
 
         reachable += 1
         items = (root.findall(".//item")
                  or root.findall(".//{http://www.w3.org/2005/Atom}entry"))
         titled = 0
-        fresh_before = len(fresh)
+        raw_fresh = 0
+        accepted = []
         for item in items:
             title = _feed_title(item)
             if not title:
                 continue
             titled += 1
             when = _feed_entry_time(item)
-            if when is None or when >= cutoff:
-                fresh.append(title)
+            if when is not None and when < cutoff:
+                continue
+            raw_fresh += 1
+            if _headline_relevant(title, tier):
+                accepted.append(title)
 
-        fresh_count = len(fresh) - fresh_before
-        print(f"  feed scan: entries={len(items)} titles={titled} "
-              f"fresh={fresh_count} — {url}")
+        print(f"  feed scan [{tier}] {name}: entries={len(items)} "
+              f"titles={titled} fresh={raw_fresh} accepted={len(accepted)}")
         if not items or titled == 0:
-            feeds_healthy = False
-            print("  ! feed parsed without usable titled entries — "
-                  "pre-filter will fail open")
+            if tier == "core":
+                core_healthy = False
+                print("  ! core feed parsed without usable titled entries — "
+                      "pre-filter will fail open")
+            else:
+                print("  ! optional feed parsed without usable titled entries")
+        buckets.append(accepted)
 
-    return fresh, bool(reachable) and feeds_healthy
+    fresh = _round_robin_titles(buckets, WATCH_MAX_FEED_TITLES)
+    if len(fresh) >= WATCH_MAX_FEED_TITLES:
+        print(f"  feed shortlist capped at {WATCH_MAX_FEED_TITLES} titles")
+    if core_seen:
+        feeds_healthy = core_healthy
+    else:
+        # Unit/custom configurations with no declared core feed still work,
+        # but production defaults always contain four core Saudi feeds.
+        feeds_healthy = bool(reachable)
+    return fresh, feeds_healthy
 
+
+def _classifier_search_budget(fresh_titles):
+    # A known RSS candidate needs verification, not rediscovery. Keep the
+    # second search only for fail-open cycles where the feed layer is blind.
+    return min(1, WATCH_MAX_SEARCHES) if fresh_titles else WATCH_MAX_SEARCHES
 
 def classify(now, fresh_titles=None):
     """One small-model call with tightly budgeted search. None on error —
@@ -248,22 +366,28 @@ def classify(now, fresh_titles=None):
     if not ANTHROPIC_API_KEY:
         print("  ! no ANTHROPIC_API_KEY — cannot classify, exiting quiet")
         return None
+    known_candidate = bool(fresh_titles)
+    search_budget = _classifier_search_budget(fresh_titles)
+    search_wording = ("ابحث بحثاً واحداً موجهاً للتحقق من المرشح"
+                      if known_candidate else
+                      "ابحث بحثاً أو بحثين موجهين لليوم")
     user = (f"الآن {now:%Y-%m-%d %H:%M} بتوقيت السعودية. امسح أخبار "
             f"الساعات الأخيرة في هذه الملفات: {BEATS}. "
-            f"ابحث بحثاً أو بحثين موجهين لليوم فقط، ثم أصدر الحكم.")
+            f"{search_wording}، ثم أصدر الحكم.")
     if fresh_titles:
-        # the pre-filter already found what appeared; the searches now
-        # verify a known candidate instead of rediscovering the field
-        listing = "\n".join(f"- {t}" for t in fresh_titles[:12])
+        listing = "\n".join(
+            f"- {t}" for t in fresh_titles[:WATCH_MAX_FEED_TITLES])
         user += ("\n\nعناوين ظهرت في الخلاصات منذ الدورة الماضية — "
                  "قيّمها أولاً، وابحث للتحقق لا للاكتشاف:\n" + listing)
+    print(f"  classifier budget: 1 call, max web searches={search_budget}, "
+          f"feed_titles={len(fresh_titles or [])}")
     payload = {
         "model": WATCH_MODEL,
         "max_tokens": WATCH_MAX_TOKENS,
         "system": WATCH_PROMPT,
         "messages": [{"role": "user", "content": user}],
         "tools": [{"type": "web_search_20250305", "name": "web_search",
-                   "max_uses": WATCH_MAX_SEARCHES}],
+                   "max_uses": search_budget}],
     }
     req = urllib.request.Request(
         "https://api.anthropic.com/v1/messages",
@@ -278,6 +402,10 @@ def classify(now, fresh_titles=None):
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 data = json.loads(resp.read())
+            usage = data.get("usage") or {}
+            if usage:
+                print("  classifier usage:",
+                      json.dumps(usage, ensure_ascii=False, sort_keys=True))
             text = "".join(b.get("text", "") for b in data.get("content", [])
                            if b.get("type") == "text").strip()
             start, end = text.find("{"), text.rfind("}")
