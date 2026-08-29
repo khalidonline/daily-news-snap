@@ -14,6 +14,7 @@ import re
 
 import city_visual_v2 as v2
 import city_visual_fallback as legacy
+import photo_quality_guard
 import story_focus
 
 
@@ -61,12 +62,8 @@ def _meaningful_overlap(targets: list[str], metadata: str,
     for target in targets:
         target_tokens = _tokens(target) - generic
         shared = target_tokens & meta
-        # Two independent scene/project words are strong: Dammam + railway,
-        # سكة + حديد, metro + station, etc.
         if len(shared) >= 2:
             best = max(best, 40 + 5 * min(3, len(shared)))
-        # One distinctive long token can still be exact: skyline, departures,
-        # boulevard, المصمك, المغادرون...
         elif shared and max(len(token) for token in shared) >= 6:
             best = max(best, 24)
     return best
@@ -78,11 +75,6 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     credit = str(row.get("credit", "") or "")
     metadata = " ".join([source, tags, credit])
 
-    # Exact rows still must belong to the declared story subject. The broad
-    # fallback's "other named city" veto is intentionally NOT applied here:
-    # a real named project can legitimately connect two cities, such as the
-    # Riyadh-Dammam railway. Unrelated Jeddah material cannot become exact
-    # because it earns no meaningful scene/project overlap below.
     if not story_focus.catalog_tags_match_aliases([metadata], aliases):
         return -1
 
@@ -93,9 +85,6 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     target_cf = _norm(target_text)
     metadata_cf = _norm(metadata)
 
-    # Old Riyadh is an explicit historical scene anchor. It is intentionally
-    # special-cased because removing the city alias leaves only the generic
-    # word "old", which should not match unrelated modern Riyadh assets.
     old_anchor = (
         ("old riyadh" in target_cf and "old riyadh" in metadata_cf)
         or ("الرياض القديمة" in target_text and "الرياض القديمة" in metadata)
@@ -105,8 +94,6 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     meta_years = _years(metadata)
     overlap = _meaningful_overlap(targets, metadata, aliases)
 
-    # An explicit wrong year is a hard contradiction unless the row and frame
-    # share a named multi-word project (e.g. Riyadh-Dammam railway 1947→1951).
     if target_years and meta_years and not (target_years & meta_years):
         if overlap < 40:
             return -1
@@ -117,7 +104,6 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     if target_years & meta_years:
         score += 120
 
-    # Decade wording may match a reviewed year inside that decade.
     if not target_years and (
         "1970s" in target_cf or "السبعينات" in target_text
     ) and any(year.startswith("197") for year in meta_years):
@@ -150,12 +136,21 @@ def reviewed_city_exact_rows(frame: dict, index_path,
 
 def plan_reviewed_exact_assignments(frames: Iterable[dict], index_path,
                                     aliases: Iterable[str] = ()) -> dict[int, dict]:
+    """Plan only exact reviewed photos that can actually survive quality."""
     assignments: dict[int, dict] = {}
     used: set[str] = set()
     for idx, frame in enumerate(frames or []):
         for row in reviewed_city_exact_rows(frame, index_path, aliases):
             source = Path(row.get("filename", "")).name
             if source in used:
+                continue
+            if not photo_quality_guard.reviewed_local_is_acceptable(
+                source, index_path
+            ):
+                print(
+                    f"      city exact plan: {source} excluded before counting "
+                    "— poor atmospheric visibility"
+                )
                 continue
             assignments[idx] = row
             used.add(source)
