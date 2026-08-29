@@ -78,9 +78,12 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     credit = str(row.get("credit", "") or "")
     metadata = " ".join([source, tags, credit])
 
+    # Exact rows still must belong to the declared story subject. The broad
+    # fallback's "other named city" veto is intentionally NOT applied here:
+    # a real named project can legitimately connect two cities, such as the
+    # Riyadh-Dammam railway. Unrelated Jeddah material cannot become exact
+    # because it earns no meaningful scene/project overlap below.
     if not story_focus.catalog_tags_match_aliases([metadata], aliases):
-        return -1
-    if not city_candidate_metadata_ok(metadata, aliases):
         return -1
 
     targets = exact_city_keywords(frame, aliases)
