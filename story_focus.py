@@ -1,13 +1,15 @@
-"""Subject-cohesion and frame-visual policy for Story to Snapchat.
+"""Subject-cohesion, city wording, and frame-visual policy for Story to Snapchat.
 
 The Story renderer already has strong research, image-source and vision gates.
-This layer closes two narrower editorial gaps without duplicating that system:
+This layer closes the narrower editorial gaps that surfaced in real decks:
 
 * the subject named by the selected story remains the protagonist throughout;
-* during Story rendering, a photo must be a confirmed match for the specific
-  frame as well as the declared story subject. A merely related/neutral photo
-  is rejected and the existing renderer falls through to another source or to
-  its designed text-only treatment.
+* a photo is judged against the frame's declared visual target, not every date
+  and supporting fact in the prose paragraph;
+* city stories prefer photographable beats and do not ship with a mostly
+  typographic deck when the frame-specific search failed;
+* city wording explains the subject's own significance before reaching for a
+  ranking comparison, and avoids stiff wording such as ``صيرورتها``.
 
 `configure(story_bot)` is intentionally idempotent. Story Runtime calls it once
 at import time so the guarded Story-to-Snapchat path always uses the policy.
@@ -15,6 +17,7 @@ at import time so the guarded Story-to-Snapchat path always uses the policy.
 
 from __future__ import annotations
 
+import re
 from typing import Callable, Iterable
 
 
@@ -49,6 +52,10 @@ FOCUS_PROMPT = r"""
   خروجها من حدودها القديمة ونموها، ثم كيف تغيّر شكل الحياة داخلها، ثم
   حجمها ودورها الحديث، ثم حكم واضح على التحول. لا تحوّل أي مرحلة إلى
   قصة عن مؤسسة موجودة في الرياض.
+- اختر داخل كل مرحلة لحظة أو مشهداً يمكن توثيقه بصورة حقيقية: سور، شارع،
+  حي، مشروع بنية تحتية، وسيلة نقل، أفق المدينة، أو مبنى مذكور فعلاً في
+  اللقطة. لا تغيّر القصة من أجل صورة؛ لكن إذا كان لديك خياران صحيحان
+  ومتساويان في الأهمية، فضّل المرحلة التي لها شاهد بصري واضح.
 
 قاعدة الصور في قصص المدن والأماكن:
 - الصورة تخدم هذه اللقطة تحديداً، لا اسم المدينة عموماً. صورة أفق الرياض
@@ -56,9 +63,33 @@ FOCUS_PROMPT = r"""
   تصلح للقصة لمجرد أنه في الرياض.
 - إذا كانت اللقطة تاريخية، فالصورة يجب أن توافق المكان والحقبة قدر الإمكان.
   صورة حديثة لمشهد قديم مرفوضة إذا أوحت للقارئ بأنها تمثل تلك المرحلة.
-- image_keywords في قصة مدينة تبدأ من المدينة/المكان المعلن ثم الشيء المادي
-  أو المرحلة التي تتحدث عنها اللقطة؛ لا تستبدل المدينة بكيان مجاور جذاب
-  بصرياً.
+- image_keywords في قصة مدينة هي «الهدف البصري» للّقطة: أسماء المشهد
+  المادي الذي تريد أن يراه القارئ، لا ملخص الفقرة كلها. قد تذكر الفقرة
+  1902 و2024 للمقارنة، بينما الهدف البصري هو «Riyadh Metro» أو «Riyadh
+  skyline»؛ عندها الصورة الحديثة صحيحة ولا تُرفض بسبب سنة 1902 الواردة
+  كخلفية سردية.
+- تبدأ image_keywords من المدينة/المكان المعلن ثم الشيء المادي أو المرحلة
+  التي تتحدث عنها اللقطة؛ لا تستبدل المدينة بكيان مجاور جذاب بصرياً.
+- اجعل لكل لقطة هدفاً بصرياً مختلفاً قدر الإمكان حتى تحكي الصور الرحلة
+  نفسها: قديم → توسع → بنية تحتية/حياة → مدينة حديثة، لا ست صور متشابهة.
+
+قاعدة اللغة والمقارنة في قصص المدن:
+- الأصل أن تذكر رقم المدينة نفسه ثم تشرح ماذا يكشف عن حجمها أو نشاطها أو
+  دورها. المقارنة ليست مطلوبة لمجرد إثبات أن الرقم كبير.
+- لا تقل «أعلى من أي مدينة سعودية أخرى»، ولا تجعل «الأولى» أو «تتفوق على»
+  هي الخلاصة؛ هذه صياغة منافسة لا نحتاجها عندما تكفي دلالة الرقم نفسه.
+- إذا كانت المقارنة ضرورية للفهم ومبنية على نفس القائمة والسنة والمقياس،
+  فاجعلها سياقاً محايداً لا سباقاً. مثال مقبول: «أكثر من ثاني مدينة في
+  القائمة»، ثم عد فوراً إلى ما يعنيه الرقم للمدينة نفسها.
+- استخدم العربية الطبيعية: «تحولها»، «ما أصبحت عليه»، «ما وصلت إليه».
+  لا تستخدم «صيرورتها» أو «صيرورة المدينة» في النص الموجّه لسناب شات.
+- نموذج ختام للرياض — أسلوبي فقط، ولا تستخدم رقمه إلا إذا أثبته البحث
+  لنفس السنة والمقياس:
+  heading: «من بلدة مسوّرة إلى مدينة بهذا الحجم»
+  text: «في 2024 سجّلت الرياض 225 مليار ريال في مبيعات نقاط البيع. رقم
+  يعكس حجم السوق والحركة الاقتصادية في مدينة كانت قبل نحو قرن محصورة داخل
+  سور من الطين.»
+  punch: «هذا هو حجم التحول الذي عاشته الرياض.»
 """
 
 
@@ -95,26 +126,132 @@ def story_focus_contract(
     )
 
 
+def _renderer_frame_text(frame: dict) -> str:
+    heading = str(frame.get("heading", "") or "").strip()
+    text = str(frame.get("text", "") or "").strip()
+    return "\n".join(v for v in (heading, text) if v).strip()
+
+
+def _norm_context(value: str) -> str:
+    return " ".join(str(value or "").split())
+
+
+def frame_from_renderer_context(frames: Iterable[dict], context: str):
+    """Recover the model frame from story_bot's ``heading + text`` context.
+
+    Company stories may prefix the renderer context with a subject sentence,
+    so suffix matching is deliberate after whitespace normalization.
+    """
+    needle = _norm_context(context)
+    if not needle:
+        return None
+    for frame in frames or []:
+        frame_text = _norm_context(_renderer_frame_text(frame))
+        if frame_text and (needle == frame_text or needle.endswith(frame_text)):
+            return frame
+    return None
+
+
+def _frame_visual_targets(frame: dict) -> list[str]:
+    return _unique(
+        list(frame.get("image_keywords") or [])
+        + list(frame.get("image_keywords_ar") or [])
+    )
+
+
 def frame_visual_context(
     story: str,
     frame: dict,
     aliases_fn: Callable[[str], Iterable[str]],
 ) -> str:
-    """Vision-gate context binding a candidate to both story and frame."""
+    """Vision context bound to the subject and the frame's visual target.
+
+    If the model supplied image keywords, they are the authoritative visual
+    target. Supporting dates in the prose are narrative background and must not
+    accidentally turn a current-scene image into an anachronism. Legacy frames
+    without image keywords retain the older heading+text fallback.
+    """
     names = _subject_names(story, aliases_fn)
     label = " / ".join(names[:4]) or str(story or "").strip()
     heading = str(frame.get("heading", "") or "").strip()
-    text = str(frame.get("text", "") or "").strip()
-    body = "\n".join(v for v in (heading, text) if v)
+    targets = _frame_visual_targets(frame)
+
+    if targets:
+        target_text = " / ".join(targets[:8])
+        body = "\n".join(v for v in (heading, f"الهدف البصري: {target_text}") if v)
+        target_rule = (
+            "احكم على الصورة مقابل الهدف البصري المكتوب أدناه. لا تجعل سنة "
+            "أو معلومة وردت كخلفية في نص اللقطة شرطاً زمنياً للصورة ما لم "
+            "تكن السنة أو الحقبة جزءاً من الهدف البصري نفسه. "
+        )
+    else:
+        body = _renderer_frame_text(frame)
+        target_rule = ""
+
     return (
         f"القصة كلها عن: {label}.\n"
         "راجع الصورة لهذه اللقطة تحديداً، لا لموضوع القصة عموماً. يجب أن "
         "تُظهر مباشرةً المكان/الشخص/الشيء أو المرحلة التي تصفها اللقطة، "
         "وأن تبقى ضمن بطل القصة المعلن. مجرد ارتباط الصورة بالبطل ليس كافياً. "
-        "إذا كانت اللقطة تاريخية فطابق الحقبة أيضاً؛ صورة حديثة لا تمثل "
-        "مرحلة قديمة لمجرد أنها للمكان نفسه.\n"
+        f"{target_rule}"
+        "إذا كان الهدف البصري نفسه تاريخياً فطابق الحقبة أيضاً؛ صورة حديثة "
+        "لا تمثل مرحلة قديمة لمجرد أنها للمكان نفسه.\n"
         f"{body}"
     ).strip()
+
+
+def polish_city_wording(text: str) -> str:
+    """Remove the two city-language regressions seen in the Riyadh deck."""
+    value = str(text or "")
+    value = value.replace("صيرورتها", "تحولها")
+    value = value.replace("صيرورته", "تحوله")
+    value = value.replace("صيرورة المدينة", "تحول المدينة")
+    value = value.replace("صيرورة", "تحول")
+
+    # Remove the hard-ranking clause and, when present, the immediate named
+    # runner-up comparison that turns the city card into a competition table.
+    # The prompt still permits a neutral "more than the second city" context
+    # when the model determines that comparison is genuinely useful.
+    value = re.sub(
+        r"(?:[—–-]\s*)?أعلى من أي مدينة سعودية أخرى"
+        r"(?:،\s*ومقابل[^.؟!]+)?",
+        "رقم يوضح حجم النشاط الاقتصادي في المدينة",
+        value,
+    )
+    return value
+
+
+def _is_city_brief(brief: dict) -> bool:
+    frames = list((brief or {}).get("frames") or [])
+    if not frames:
+        return False
+    city_frames = sum(
+        1 for frame in frames
+        if str(frame.get("subject_kind", "")).strip() == "place_city"
+    )
+    return city_frames >= max(2, (len(frames) + 1) // 2)
+
+
+def city_deck_visuals_ready(brief: dict, photos: Iterable[object]) -> bool:
+    """City decks need four matched visual slots; non-city decks are unchanged."""
+    if not _is_city_brief(brief):
+        return True
+    frames = list((brief or {}).get("frames") or [])
+    required = min(4, len(frames))
+    matched = sum(1 for photo in (photos or []) if photo is not None)
+    return matched >= required
+
+
+def _polish_brief_city_language(brief: dict) -> dict:
+    if not isinstance(brief, dict) or not _is_city_brief(brief):
+        return brief
+    for frame in brief.get("frames") or []:
+        for key in ("heading", "text", "punch"):
+            if key in frame:
+                frame[key] = polish_city_wording(frame.get(key, ""))
+    if "caption" in brief:
+        brief["caption"] = polish_city_wording(brief.get("caption", ""))
+    return brief
 
 
 def story_photo_verdict_ok(verdict: str) -> bool:
@@ -151,7 +288,8 @@ def configure(story_bot_module):
 
     original_photo_shows = sb.photo_shows
     original_find_all_photos = sb.find_all_photos
-    active = {"story": ""}
+    original_research = sb.research
+    active = {"story": "", "frames": []}
 
     def strict_story_photo_shows(photo, context):
         story = active["story"]
@@ -161,11 +299,10 @@ def configure(story_bot_module):
             # tightened by this Story-only rule.
             return original_photo_shows(photo, context)
 
-        contract = frame_visual_context(
-            story,
-            {"heading": "", "text": str(context or "")},
-            sb.story_aliases,
-        )
+        frame = frame_from_renderer_context(active["frames"], str(context or ""))
+        if frame is None:
+            frame = {"heading": "", "text": str(context or "")}
+        contract = frame_visual_context(story, frame, sb.story_aliases)
         verdict = original_photo_shows(photo, contract)
         if story_photo_verdict_ok(verdict):
             return "yes"
@@ -179,15 +316,37 @@ def configure(story_bot_module):
         )
         return "no"
 
+    def focused_research(story):
+        brief = original_research(story)
+        return _polish_brief_city_language(brief)
+
     def focused_find_all_photos(brief):
-        previous = active["story"]
+        previous_story = active["story"]
+        previous_frames = active["frames"]
         active["story"] = str((brief or {}).get("story", "") or "").strip()
+        active["frames"] = list((brief or {}).get("frames") or [])
         try:
-            return original_find_all_photos(brief)
+            photos = original_find_all_photos(brief)
+            if photos is not None and not city_deck_visuals_ready(brief, photos):
+                matched = sum(1 for photo in photos if photo is not None)
+                required = min(4, len((brief or {}).get("frames") or []))
+                sb._LAST_SKIP = (
+                    f"frame-aware city visual gate: {matched}/{required} "
+                    "matched visual slots"
+                )
+                print(
+                    f"  ! city visual gate: only {matched} matched frame "
+                    f"visuals; need {required} — skipping rather than "
+                    "shipping a mostly text-only city deck"
+                )
+                return None
+            return photos
         finally:
-            active["story"] = previous
+            active["story"] = previous_story
+            active["frames"] = previous_frames
 
     sb.photo_shows = strict_story_photo_shows
+    sb.research = focused_research
     sb.find_all_photos = focused_find_all_photos
     setattr(sb, _CONFIGURED_ATTR, True)
     return sb
