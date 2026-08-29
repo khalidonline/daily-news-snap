@@ -115,10 +115,32 @@ def _creditless_renderer(renderer, generated_credit: str | None = None):
     return wrapped
 
 
+def _curated_subject_override(photo, context: str) -> bool:
+    """Recognize curated subject artifacts that are inherently relevant.
+
+    A SAMA headquarters/artifact photo can look like generic architecture to a
+    vision model even when it is precisely the institution discussed. Only a
+    neutral verdict is overridden; an explicit visual rejection still wins.
+    """
+    name = Path(str(photo)).name.lower().replace("_", "-")
+    text = str(context or "").lower()
+    sama_artifact = "sama" in name
+    sama_topic = (
+        "sama" in text
+        or "ساما" in text
+        or "البنك المركزي السعودي" in text
+        or "المركزي السعودي" in text
+    )
+    return sama_artifact and sama_topic
+
+
 def _direct_relevance_only(judge):
     """Topic cards require a direct visual match; neutral scenery is not enough."""
     def wrapped(photo, context):
         verdict = str(judge(photo, context)).strip().lower()
+        if verdict == "neutral" and _curated_subject_override(photo, context):
+            print("      topic image: curated SAMA artifact accepted — direct subject match")
+            return "yes"
         if verdict == "neutral":
             print("      topic image: neutral candidate rejected — direct relevance required")
             return "no"
@@ -187,12 +209,7 @@ def _only_length_errors(errors: list[str]) -> bool:
 
 
 def _third_draft_worth_retrying(errors: list[str]) -> bool:
-    """Spend one final model call only on fixable editorial/source finance errors.
-
-    Structurally broken replies still fail after the normal second draft. This
-    keeps the release path strict while giving high-value finance explainers one
-    last chance to correct sourcing or institution-framing mistakes.
-    """
+    """Spend one final model call only on fixable editorial/source finance errors."""
     if not errors:
         return False
     retryable_fragments = (
