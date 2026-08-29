@@ -44,7 +44,9 @@ class BreakingWatchPersistentHeadlineMemoryTests(unittest.TestCase):
                     breaking_watch, "feed_fresh_items",
                     return_value=([self.title], True),
                 ), \
-                patch.object(breaking_watch, "classify") as classify, \
+                patch.object(
+                    breaking_watch, "classify", return_value=self.verdict
+                ) as classify, \
                 patch.object(breaking_watch, "save_state") as save_state, \
                 patch.object(breaking_watch, "notify"):
             breaking_watch._watch()
@@ -60,7 +62,10 @@ class BreakingWatchPersistentHeadlineMemoryTests(unittest.TestCase):
                     breaking_watch, "feed_fresh_items",
                     return_value=([syndicated], True),
                 ), \
-                patch.object(breaking_watch, "classify") as classify, \
+                patch.object(
+                    breaking_watch, "classify", return_value=self.verdict
+                ) as classify, \
+                patch.object(breaking_watch, "save_state"), \
                 patch.object(breaking_watch, "notify"):
             breaking_watch._watch()
         classify.assert_not_called()
