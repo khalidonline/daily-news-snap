@@ -57,11 +57,13 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "failed editorial validation"):
             research_with_validation(bot, lambda topic: {"title": "ناقص"}, "موضوع")
 
-    def test_install_uses_full_cooldown_and_snapchat_brand(self):
+    def test_install_uses_full_cooldown_snapchat_brand_and_shared_model(self):
         bot = SimpleNamespace(
             COOLDOWN_DAYS=21,
             HARD_COOLDOWN_DAYS=5,
             KICKER="ملخص تنفيذي",
+            CLAUDE_MODEL="claude-sonnet-5",
+            TOPIC_MODEL="claude-opus-5",
             SYSTEM_PROMPT="قواعد اللهجة والمصطلح — اكتب بلسان سعودي رسمي:\n",
             SELECT_PROMPT="اختر الموضوع",
             research=lambda topic: {},
@@ -72,6 +74,7 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
             install(bot)
         self.assertEqual(bot.HARD_COOLDOWN_DAYS, 21)
         self.assertEqual(bot.KICKER, "معلومة تهمك")
+        self.assertEqual(bot.TOPIC_MODEL, bot.CLAUDE_MODEL)
         self.assertNotIn("بلسان سعودي رسمي", bot.SYSTEM_PROMPT)
         self.assertIn("سناب شات", bot.SELECT_PROMPT)
 
