@@ -3,6 +3,7 @@ import types
 import unittest
 from datetime import datetime, timedelta, timezone
 from email.utils import format_datetime
+from pathlib import Path
 from unittest.mock import patch
 
 
@@ -99,16 +100,32 @@ class BreakingWatchWindowTests(unittest.TestCase):
             breaking_watch._watch()
         feed.assert_called_once_with()
 
-    def test_2000_and_later_stays_outside_window_without_stale_fallback_text(self):
-        now = datetime(2026, 8, 29, 20, 0, tzinfo=timezone.utc)
+    def test_2259_is_still_inside_extended_window(self):
+        now = datetime(2026, 8, 29, 22, 59, tzinfo=timezone.utc)
+        with patch.object(breaking_watch, "ksa_now", return_value=now), \
+                patch.object(breaking_watch, "load_state", return_value={}), \
+                patch.object(
+                    breaking_watch, "feed_fresh_items", return_value=([], True)
+                ) as feed, \
+                patch.object(breaking_watch, "notify"):
+            breaking_watch._watch()
+        feed.assert_called_once_with()
+
+    def test_2300_and_later_stays_outside_window(self):
+        now = datetime(2026, 8, 29, 23, 0, tzinfo=timezone.utc)
         with patch.object(breaking_watch, "ksa_now", return_value=now), \
                 patch.object(breaking_watch, "feed_fresh_items") as feed, \
                 patch.object(breaking_watch, "notify") as notify:
             breaking_watch._watch()
         feed.assert_not_called()
         message = notify.call_args.args[0]
+        self.assertIn("23:00", message)
         self.assertNotIn("احتياطي", message)
         self.assertNotIn("fallback", message.lower())
+
+    def test_workflow_schedules_through_2230_ksa(self):
+        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
+        self.assertIn('cron: "*/30 5-19 * * *"', workflow)
 
 
 if __name__ == "__main__":

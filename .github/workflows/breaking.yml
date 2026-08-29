@@ -2,11 +2,11 @@ name: Breaking news watch
 
 # THE evening news schedule lives here, in one place:
 #
-#   */30 5-16 UTC  (every 30 min, 08:00–19:30 KSA) — the watcher. A small
+#   */30 5-19 UTC  (every 30 min, 08:00–22:30 KSA) — the watcher. A small
 #                  model scans the beats; at most ONE breaking card a day
 #                  posts, the moment the full pipeline confirms the event.
-#                  The script accepts delayed starts until 20:00 KSA so
-#                  GitHub cron jitter cannot discard the final 19:30 cycle.
+#                  The script accepts delayed starts until 23:00 KSA so
+#                  GitHub cron jitter cannot discard the final 22:30 cycle.
 #                  Quiet cycles exit quickly, commit nothing, and send one
 #                  Telegram line — silence is a result, not a failure.
 #
@@ -17,7 +17,7 @@ name: Breaking news watch
 
 on:
   schedule:
-    - cron: "*/30 5-16 * * *"
+    - cron: "*/30 5-19 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
