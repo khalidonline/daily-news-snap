@@ -3,13 +3,47 @@ name: Story to Snapchat
 on:
   schedule:
     - cron: "0 11 * * *"       # 14:00 KSA daily
-  push:
-    paths:
-      - ".github/story-live-trigger"
   workflow_dispatch:
     inputs:
-      story:
-        description: "القصة — اتركها فارغة لاختيار قصة من READY_FOR_SNAP"
+      ready_story:
+        description: "اختر قصة جاهزة للنشر"
+        type: choice
+        required: true
+        options:
+          # READY_STORY_OPTIONS_START
+          - "لماذا اختفت BlackBerry من السوق؟"
+          - "كيف بنت TSMC احتكاراً على رقائق العالم"
+          - "قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات"
+          - "كيف خسرت Kodak السوق الذي اخترعته بنفسها"
+          - "قصة أرامكو: من اكتشاف الزيت إلى أكبر اكتتاب في التاريخ"
+          - "قصة أزمة 2008: كيف بدأت وكيف انتهت؟"
+          - "لماذا ارتبط الريال السعودي بالدولار وكيف؟"
+          - "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
+          - "كيف تحولت العلا من واحة إلى وجهة عالمية؟"
+          - "قصة جدة التاريخية: بوابة الحج منذ قرون"
+          - "قصة نيويورك: كيف صارت عاصمة المال؟"
+          - "من هو مؤسس أرامكو الحقيقي؟ قصة الاكتشاف الأول"
+          - "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة"
+          - "قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى"
+          - "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير"
+          - "سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته"
+          - "صالح الراجحي: الشريك الذي بنى المؤسسة وابتعد عن الأضواء"
+          - "من هم أول الموظفين السعوديين في أرامكو؟"
+          - "قصة القهوة السعودية"
+          - "قصة المكيّف الذي جعل مدن الخليج ممكنة"
+          - "قصة ماء زمزم وكيف يُعبأ ويوزّع"
+          - "قصة مصرف الراجحي من صرافة إلى أكبر بنك"
+          - "قصة المراعي من مزرعة إلى أكبر شركة ألبان"
+          - "قصة صالح كامل ودلة البركة"
+          - "قصة ربط الريال بالدولار وقصته"
+          - "قصة كريم من الفكرة إلى استحواذ أوبر"
+          - "قصة دخول لوسيد ومصنعها في السعودية"
+          - "قصة سكة حديد الرياض الدمام 1951"
+          - "قصة Rolex وصناعة الفخامة"
+          - "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل"
+          # READY_STORY_OPTIONS_END
+      custom_story:
+        description: "اختياري: اكتب اسم قصة هنا لتتجاوز الاختيار أعلاه"
         type: string
         required: false
       dry_run:
@@ -36,8 +70,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # The strict visual repairs live here while backlog work continues.
-          # Scheduled publishing must use the same authoritative repaired pool.
           ref: repair/all-story-visuals-2026-08-29
           fetch-depth: 0
 
@@ -57,9 +89,9 @@ jobs:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
-          POST_TO_SNAPCHAT: ${{ (github.event_name == 'schedule' || github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.post)) && '1' || '0' }}
+          POST_TO_SNAPCHAT: ${{ (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.post)) && '1' || '0' }}
           MONTHLY_POST_LIMIT: "145"
-          STORY: ${{ inputs.story }}
+          STORY: ${{ inputs.custom_story || inputs.ready_story || '' }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
           THEME: "light"
