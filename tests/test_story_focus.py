@@ -68,12 +68,15 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIs(matched, frame)
 
     def test_city_prompt_uses_neutral_comparison_and_natural_arabic(self):
-        self.assertIn("أعلى من أي مدينة سعودية أخرى", sb.SYSTEM_PROMPT)
-        self.assertIn("لا تقل", sb.SYSTEM_PROMPT)
-        self.assertIn("أكثر من ثاني مدينة في القائمة", sb.SYSTEM_PROMPT)
-        self.assertIn("من بلدة مسوّرة إلى مدينة بهذا الحجم", sb.SYSTEM_PROMPT)
-        self.assertIn("تحولها", sb.SYSTEM_PROMPT)
-        self.assertIn("صيرورتها", sb.SYSTEM_PROMPT)
+        # Prompt formatting may wrap sentences across source lines; test the
+        # editorial wording rather than source-code line breaks.
+        prompt = " ".join(sb.SYSTEM_PROMPT.split())
+        self.assertIn("أعلى من أي مدينة سعودية أخرى", prompt)
+        self.assertIn("لا تقل", prompt)
+        self.assertIn("أكثر من ثاني مدينة في القائمة", prompt)
+        self.assertIn("من بلدة مسوّرة إلى مدينة بهذا الحجم", prompt)
+        self.assertIn("تحولها", prompt)
+        self.assertIn("صيرورتها", prompt)
 
     def test_city_wording_cleanup_removes_hard_ranking_and_sayrura(self):
         text = (
@@ -88,6 +91,7 @@ class StorySubjectFocusTests(unittest.TestCase):
     def test_city_deck_needs_four_matched_visual_slots(self):
         brief = {
             "frames": [
+                {"subject_kind": "place_city"},
                 {"subject_kind": "place_city"},
                 {"subject_kind": "place_city"},
                 {"subject_kind": "place_city"},
