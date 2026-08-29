@@ -109,6 +109,17 @@ def _creditless_renderer(renderer, generated_credit: str | None = None):
     return wrapped
 
 
+def _direct_relevance_only(judge):
+    """Topic cards require a direct visual match; neutral scenery is not enough."""
+    def wrapped(photo, context):
+        verdict = str(judge(photo, context)).strip().lower()
+        if verdict == "neutral":
+            print("      topic image: neutral candidate rejected — direct relevance required")
+            return "no"
+        return verdict
+    return wrapped
+
+
 def _install_topic_image_policy(bot: Any) -> None:
     """Make relevance-first auto imagery mandatory for Topic Brief."""
     bot.IMAGE_SOURCE = "auto"
@@ -130,6 +141,18 @@ def _install_topic_image_policy(bot: Any) -> None:
         if hasattr(bot, "fetch_openverse_photo"):
             bot.fetch_openverse_photo = _creditless_pair(bot.fetch_openverse_photo, "openverse")
         bot._TOPIC_OPEN_LICENSE_POLICY_INSTALLED = True
+
+    # Run #74 proved that "neutral" is too permissive for an evergreen topic
+    # card: a generic old Riyadh souq photo can be safe yet unrelated. Topic
+    # Brief therefore accepts only a direct "yes" from the shared visual judge.
+    if not getattr(bot, "_TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED", False):
+        bot.photo_shows = _direct_relevance_only(bot.photo_shows)
+        bot._TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED = True
+
+    # Do not recycle a recent real photo after the topic-specific search fails.
+    # The legacy build path will then move to fetch_generated_photo(), whose
+    # prompt is generated specifically for this topic.
+    bot.recent_fallback = lambda _hero: None
 
     install_auto_image_selector(bot)
 
@@ -291,8 +314,10 @@ def install(bot: Any) -> None:
     if selector_prompt:
         bot.SELECT_PROMPT = selector_prompt + (
             "\n\nتذكّر أن المنصة سناب شات والجمهور سعودي عربي. عند تقارب الأهمية، "
-            "اختر الموضوع الذي يملك فائدة شخصية واضحة أو مفاجأة موثقة أو رقماً يمكن "
-            "للمتابع استخدامه، وتجنب المواضيع العامة التي تبدو كعنوان تقرير."
+            "اختر الموضوع الذي يملك أهمية واضحة للحياة في السعودية أو مفاجأة موثقة أو "
+            "رقماً أو زاوية تشرح لماذا يستحق الانتباه الآن. لا ترجّح موضوعاً لأنه يسمح "
+            "بإعطاء نصائح أو خطوات؛ Topic Brief يبرز الموضوع ولا يوجّه المتابع لما يفعله. "
+            "وتجنب المواضيع العامة التي تبدو كعنوان تقرير."
         )
 
     original_research = bot.research
