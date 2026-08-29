@@ -1,5 +1,5 @@
 name: Topic release once
-# release preflight: third strict editorial rewrite enabled
+# release preflight: curated SAMA artifact acceptance enabled
 
 on:
   push:
