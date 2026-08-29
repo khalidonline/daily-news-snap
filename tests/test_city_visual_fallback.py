@@ -36,7 +36,7 @@ class CityVisualFallbackTests(unittest.TestCase):
                 )
             )
 
-    def test_exact_city_search_does_not_mix_in_generic_city_fallback(self):
+    def test_exact_city_rung_strips_generic_city_fallback_aliases(self):
         brief = {
             "frames": [{
                 "subject_kind": "place_city",
@@ -47,11 +47,15 @@ class CityVisualFallbackTests(unittest.TestCase):
         prepared = story_focus.prepare_city_visual_search(
             brief, aliases=["Riyadh", "الرياض"]
         )
-        keywords = prepared["frames"][0]["image_keywords"]
-        self.assertNotIn("Riyadh", keywords)
-        self.assertNotIn("الرياض", keywords)
-        self.assertIn("Riyadh Dammam railway", keywords)
-        self.assertIn("سكة حديد الرياض الدمام", keywords)
+        frame = prepared["frames"][0]
+        # Keep the old public payload for compatibility, but the selector's
+        # exact rung must remove the bare city aliases before it searches.
+        self.assertIn("Riyadh", frame["image_keywords"])
+        exact = story_focus.exact_city_keywords(frame, ["Riyadh", "الرياض"])
+        self.assertNotIn("Riyadh", exact)
+        self.assertNotIn("الرياض", exact)
+        self.assertIn("Riyadh Dammam railway", exact)
+        self.assertIn("سكة حديد الرياض الدمام", exact)
 
     def test_city_fallback_queries_are_generic_city_scenes_only(self):
         queries = story_focus.city_fallback_queries(["Riyadh", "الرياض"])
