@@ -5,12 +5,14 @@ on:
     paths:
       - "breaking_watch.py"
       - "tests/test_breaking_watch.py"
+      - "tests/test_breaking_watch_seen_memory.py"
       - ".github/workflows/breaking.yml"
       - ".github/workflows/breaking-watch-tests.yml"
   pull_request:
     paths:
       - "breaking_watch.py"
       - "tests/test_breaking_watch.py"
+      - "tests/test_breaking_watch_seen_memory.py"
       - ".github/workflows/breaking.yml"
       - ".github/workflows/breaking-watch-tests.yml"
 
@@ -28,5 +30,5 @@ jobs:
           python-version: "3.12"
       - name: Run breaking watcher regressions
         run: |
-          python -m unittest tests.test_breaking_watch -v
+          python -m unittest tests.test_breaking_watch tests.test_breaking_watch_seen_memory -v
           python -m py_compile breaking_watch.py
