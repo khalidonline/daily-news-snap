@@ -78,8 +78,6 @@ def _specific_phrase_match(targets: list[str], metadata_parts: list[str]) -> int
             if not m:
                 continue
             m_tokens = set(m.split()) - generic
-            # A multi-token/Arabic scene phrase is strong enough to link two
-            # years of the same long-running project (e.g. railway 1947→1951).
             shared = t_tokens & m_tokens
             if (t in m or m in t) and len(min(t, m, key=len)) >= 5:
                 score = 45 - min(position, 10)
@@ -114,10 +112,6 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     meta_years = _years(metadata)
     phrase_score = _specific_phrase_match(targets, metadata_parts)
 
-    # Explicit year mismatch is normally a hard contradiction. The narrow
-    # exception is a strong named scene/project shared by both sides, such as
-    # Riyadh-Dammam railway construction that began in 1947 and completed in
-    # 1951. Generic words like "construction" are never enough to override it.
     if target_years and meta_years and not (target_years & meta_years):
         if phrase_score < 25:
             return -1
@@ -126,14 +120,11 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     if target_years & meta_years:
         score += 100
 
-    # Decade wording without a precise target year may match any reviewed year
-    # in that decade.
     if not target_years and (
         "1970s" in target_cf or "السبعينات" in target_cf
     ) and any(year.startswith("197") for year in meta_years):
         score += 70
 
-    # Old Riyadh is a meaningful historical scene, not a generic city alias.
     if (("old riyadh" in target_cf and "old riyadh" in metadata_cf)
             or ("الرياض القديمة" in target_text and "الرياض القديمة" in metadata)):
         score += 90
@@ -142,8 +133,6 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     meta_clues = legacy._visual_clues([metadata], aliases)
     score += min(30, 6 * len(target_clues & meta_clues))
 
-    # Earlier writer targets are preferred when several reviewed rows are
-    # valid (e.g. 1975 before 1977 when both are explicitly requested).
     for i, target in enumerate(targets):
         years = _years(target)
         if years and years & meta_years:
@@ -187,13 +176,7 @@ _GENERIC_SCENE_TERMS = (
 
 def city_frame_allows_generic_fallback(frame: dict,
                                        aliases: Iterable[str] = ()) -> bool:
-    """Return True only when the frame itself asks for a generic city scene.
-
-    A named palace, metro, project, historical era, or construction beat must
-    keep its own visual contract. Broad skyline/street/airport fallback is for
-    frames whose requested image is already generic, never a substitute for a
-    specific story beat.
-    """
+    """Return True only when the frame itself asks for a generic city scene."""
     targets = list((frame or {}).get("image_keywords") or [])
     targets += list((frame or {}).get("image_keywords_ar") or [])
     alias_tokens = set()
@@ -212,6 +195,18 @@ def city_frame_allows_generic_fallback(frame: dict,
             return False
         saw_generic = True
     return saw_generic
+
+
+def city_spa_metadata_ok(item: dict, aliases: Iterable[str] = ()) -> bool:
+    """Reject an SPA result whose own title/tags explicitly name another city."""
+    title = str((item or {}).get("title") or "")
+    tags = " ".join(
+        str(tag.get("name") or "")
+        for tag in ((item or {}).get("tags") or [])
+        if isinstance(tag, dict)
+    )
+    metadata = " ".join(part for part in (title, tags) if part).strip()
+    return bool(metadata) and city_candidate_metadata_ok(metadata, aliases)
 
 
 def reviewed_city_fallback_rows(index_path,
@@ -376,6 +371,19 @@ def configure(story_bot_module):
         ))
         if not targeted["image_keywords"] and not targeted["image_keywords_ar"]:
             return None
+
+        # SPA's scorer may find the requested city only in tags while the title
+        # explicitly names a different city. During a strict city-beat search,
+        # veto that metadata contradiction before the item can be downloaded or
+        # consume the fourth-photo slot.
+        spa_globals = getattr(sb.fetch_spa_photo, "__globals__", {})
+        original_spa_score = spa_globals.get("_spa_score")
+        if original_spa_score:
+            def strict_spa_score(item, terms):
+                if not city_spa_metadata_ok(item, active["aliases"]):
+                    return -10_000
+                return original_spa_score(item, terms)
+            spa_globals["_spa_score"] = strict_spa_score
         try:
             return base_find_photo(
                 targeted, out_path, seen, context,
@@ -383,6 +391,9 @@ def configure(story_bot_module):
             )
         except Exception:
             return None
+        finally:
+            if original_spa_score:
+                spa_globals["_spa_score"] = original_spa_score
 
     def web_fallback(out_path, seen):
         if active["photo_count"] >= 4:
@@ -448,9 +459,6 @@ def configure(story_bot_module):
                 return photo
             return None
 
-        # Broaden only when the WHOLE deck still needs photos. Specific beats
-        # first get one strict target-specific search and never degrade into a
-        # generic airport/street/skyline substitute.
         if not active["fallback_needed"] or active["photo_count"] >= 4:
             return None
 
@@ -507,9 +515,6 @@ def configure(story_bot_module):
                else "four-photo target met — generic fallback disabled")
         )
 
-        # Prevent generic Story Bot from rebuilding a story-wide fallback list
-        # from frames 1–2 after our city planner has deliberately decided that
-        # a missing exact frame should stay text-only.
         old_kinds = [frame.get("subject_kind") for frame in actual_frames]
         old_brief_keywords = brief.get("image_keywords", None)
         old_brief_queries_ar = brief.get("image_queries_ar", None)
