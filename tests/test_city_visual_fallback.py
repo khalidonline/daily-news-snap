@@ -60,6 +60,8 @@ class CityVisualFallbackTests(unittest.TestCase):
         self.assertIn("riyadh skyline", joined)
         self.assertIn("riyadh street", joined)
         self.assertIn("riyadh airport", joined)
+        self.assertIn("مطار الرياض", queries)
+        self.assertNotIn("الرياض", queries)
         self.assertNotIn("railway", joined)
         self.assertNotIn("1951", joined)
         self.assertNotIn("1977", joined)
