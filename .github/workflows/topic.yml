@@ -78,6 +78,9 @@ jobs:
           REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
           MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
           MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
+          # Topic Brief prioritizes direct subject relevance over image freshness.
+          # A verified SAMA/company/person artifact may therefore be reused.
+          LIBRARY_REUSE_DAYS: "0"
           COOLDOWN_DAYS: "21"
           HARD_COOLDOWN_DAYS: "21"
           SELECT_MODEL: "claude-haiku-4-5-20251001"
