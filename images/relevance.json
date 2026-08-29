@@ -194,6 +194,18 @@
         "قصة كريم من الفكرة إلى استحواذ أوبر": "DIRECT"
       },
       "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Careem.jpg"
+    },
+    "targeted-sama-1953-10-riyal.jpg": {
+      "stories": {
+        "قصة تأسيس مؤسسة النقد ساما": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SaudiArabiaP1-10Riyals-(1953)-donatedcz%20f.jpg"
+    },
+    "targeted-sama-1954-5-riyal.jpg": {
+      "stories": {
+        "قصة تأسيس مؤسسة النقد ساما": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SaudiArabiaP3-5Riyals-AH1373(1954)-donatedgs%20f.jpg"
     }
   }
 }
