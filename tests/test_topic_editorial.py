@@ -98,6 +98,18 @@ class TopicEditorialTests(unittest.TestCase):
         errors = validate_brief(brief)
         self.assertTrue(any("indirect financial relationship" in error for error in errors), errors)
 
+    def test_validate_brief_blocks_personalized_foreign_rate_hook(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "الفيدرالي ثبّت الفائدة... وقسطك؟",
+            "body": "قرار أمريكا الأخير يخصك إذا كان تمويلك متغيراً، لكن الأثر الفعلي يعتمد على المؤشر والعقد.",
+            "takeaway": "تكلفة التمويل المتغير تعتمد على المؤشر المرجعي وهامش البنك وموعد إعادة التسعير.",
+            "caption": "ثبات الفائدة جزء من السياق النقدي، وليس العامل الوحيد في تكلفة التمويل.",
+            "sources": ["Federal Reserve", "البنك المركزي السعودي"],
+        })
+        errors = validate_brief(brief)
+        self.assertTrue(any("personalize a foreign central-bank decision" in error for error in errors), errors)
+
     def test_validate_brief_blocks_run_72_repo_only_claim(self):
         brief = self._complete_brief()
         brief.update({
@@ -166,6 +178,7 @@ class TopicEditorialTests(unittest.TestCase):
         self.assertIn("المؤشر المرجعي", prompt)
         self.assertIn("ليس دورك أن تعلّم", prompt)
         self.assertIn("من دون توجيه القارئ", prompt)
+        self.assertIn("لا تجعل قراراً أجنبياً يبدو كأنه موجه شخصياً للقارئ", prompt)
 
     def test_enhance_prompt_teaches_saibor_margin_and_separate_institutions(self):
         prompt = enhance_prompt("", date(2026, 8, 29))
