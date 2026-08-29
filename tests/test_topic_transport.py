@@ -1,30 +1,14 @@
 import http.client
-import json
 import unittest
-from unittest.mock import patch
+from types import SimpleNamespace
 
-import topic_bot
-
-
-class _FakeResponse:
-    def __init__(self, *, payload=None, error=None):
-        self.payload = payload
-        self.error = error
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc, tb):
-        return False
-
-    def read(self):
-        if self.error is not None:
-            raise self.error
-        return self.payload
+from topic_snapchat import research_with_validation
 
 
 class TopicResearchTransportTests(unittest.TestCase):
     def test_incomplete_anthropic_body_is_retried(self):
+        calls = []
+        bot = SimpleNamespace(SYSTEM_PROMPT="base prompt")
         brief = {
             "title": "عنوان واضح",
             "body": "متن خبري واضح",
@@ -36,23 +20,17 @@ class TopicResearchTransportTests(unittest.TestCase):
             "image_prompt": "high-quality editorial photograph about the Saudi economy",
             "source_url": "https://example.com/source",
         }
-        claude_payload = {
-            "stop_reason": "end_turn",
-            "content": [{"type": "text", "text": json.dumps(brief, ensure_ascii=False)}],
-        }
-        responses = [
-            _FakeResponse(error=http.client.IncompleteRead(b"partial", 100000)),
-            _FakeResponse(payload=json.dumps(claude_payload, ensure_ascii=False).encode()),
-        ]
 
-        with patch.object(topic_bot, "ANTHROPIC_API_KEY", "test-key"), \
-                patch.object(topic_bot, "load_voice", return_value=[]), \
-                patch.object(topic_bot.urllib.request, "urlopen", side_effect=responses) as urlopen, \
-                patch("time.sleep", return_value=None):
-            result = topic_bot.research("موضوع اقتصادي")
+        def original(topic):
+            calls.append(topic)
+            if len(calls) == 1:
+                raise http.client.IncompleteRead(b"partial", 100000)
+            return dict(brief)
+
+        result = research_with_validation(bot, original, "موضوع اقتصادي")
 
         self.assertEqual(result["title"], brief["title"])
-        self.assertEqual(urlopen.call_count, 2)
+        self.assertEqual(len(calls), 2)
 
 
 if __name__ == "__main__":
