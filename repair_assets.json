@@ -1,11 +1,11 @@
 {
-  "run_nonce": "2026-08-29-near-pass-rollaboard-1",
+  "run_nonce": "2026-08-29-near-pass-rollaboard-2",
   "assets": [
     {
-      "filename": "targeted-rollaboard-plath-patent.png",
-      "url": "https://patentimages.storage.googleapis.com/ca/3f/e6/b1cccaa04be15e/US4995487-drawings-page-2.png",
-      "tags": ["قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد", "Rollaboard", "Robert Plath", "Robert V. Plath", "Travelpro", "US4995487A", "wheeled suitcase", "retractable handle"],
-      "credit": "Robert V. Plath, US Patent US4995487A drawing via Google Patents / USPTO — patent drawings typically not subject to copyright restrictions",
+      "filename": "targeted-rollaboard-bob-plath.jpg",
+      "url": "https://cdn.shopify.com/s/files/1/0080/0984/2786/files/BobPlath.jpg?v=1707249328",
+      "tags": ["قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد", "Rollaboard", "Bob Plath", "Robert Plath", "Travelpro", "1987", "rolling luggage"],
+      "credit": "Travelpro official company history — Bob Plath, founder of Travelpro and inventor of the Rollaboard",
       "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
       "verdict": "DIRECT"
     }
