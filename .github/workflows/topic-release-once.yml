@@ -1,5 +1,5 @@
 name: Topic release once
-# release preflight: curated SAMA artifact acceptance enabled
+# release preflight: verify SAMA provenance and text-free AI fallback
 
 on:
   push:
