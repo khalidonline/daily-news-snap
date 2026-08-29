@@ -1,4 +1,5 @@
 name: Topic release once
+# release preflight: transport retry verified
 
 on:
   push:
