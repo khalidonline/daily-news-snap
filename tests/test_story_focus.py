@@ -175,6 +175,23 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("البناء", keywords)
         self.assertIn("السبعينات", keywords)
 
+    def test_subject_alias_matches_inside_specific_catalog_tag(self):
+        self.assertTrue(
+            story_focus.catalog_tags_match_aliases(
+                ["Riyadh skyline", "real estate"], ["Riyadh", "الرياض"]
+            )
+        )
+        self.assertTrue(
+            story_focus.catalog_tags_match_aliases(
+                ["أفق الرياض الحديث"], ["Riyadh", "الرياض"]
+            )
+        )
+        self.assertFalse(
+            story_focus.catalog_tags_match_aliases(
+                ["Jeddah skyline", "جدة"], ["Riyadh", "الرياض"]
+            )
+        )
+
     def test_city_deck_needs_four_matched_visual_slots(self):
         brief = {
             "frames": [
