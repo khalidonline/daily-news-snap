@@ -8,7 +8,6 @@ publish-time editorial safeguards.
 
 from __future__ import annotations
 
-import filecmp
 import http.client
 import json
 import os
@@ -29,7 +28,6 @@ from topic_editorial import (
 )
 
 PERFORMANCE_FILE = Path(os.getenv("TOPIC_PERFORMANCE_FILE", "state/topic_performance.json"))
-_CURATED_SAMA_ASSET = Path(__file__).resolve().parent / "state/topic_image_library/sama-history-hq.jpg"
 
 _LENGTH_LIMITS = {"title": 45, "body": 260, "takeaway": 110, "caption": 120}
 _LENGTH_TARGETS = {"title": 40, "body": 230, "takeaway": 95, "caption": 105}
@@ -110,27 +108,30 @@ def _creditless_renderer(renderer, generated_credit: str | None = None):
     return wrapped
 
 
-def _same_file_content(left: Path, right: Path) -> bool:
+def _local_provenance_name(photo) -> str:
+    marker = Path(str(photo) + ".exempt")
     try:
-        return left.is_file() and right.is_file() and filecmp.cmp(left, right, shallow=False)
+        value = marker.read_text(encoding="utf-8").strip()
     except OSError:
-        return False
+        return ""
+    if not value.lower().startswith("local:"):
+        return ""
+    return value.split(":", 1)[1].strip().lower().replace("_", "-")
 
 
 def _curated_subject_override(photo, context: str) -> bool:
-    """Recognize the verified curated SAMA artifact even after a temporary copy."""
-    photo_path = Path(str(photo))
-    name = photo_path.name.lower().replace("_", "-")
+    """Recognize a curated SAMA artifact even after it is copied to a temp path."""
+    name = Path(str(photo)).name.lower().replace("_", "-")
+    provenance = _local_provenance_name(photo)
     text = str(context or "").lower()
+    sama_artifact = "sama" in name or "sama" in provenance
     sama_topic = (
         "sama" in text
         or "ساما" in text
         or "البنك المركزي السعودي" in text
         or "المركزي السعودي" in text
     )
-    if not sama_topic:
-        return False
-    return "sama" in name or _same_file_content(photo_path, _CURATED_SAMA_ASSET)
+    return sama_artifact and sama_topic
 
 
 def _direct_relevance_only(judge):
@@ -155,11 +156,12 @@ def _topic_generated_photo(fetcher):
             f"{prompt}\n\n"
             "Create a high-quality realistic editorial photograph directly related to the topic. "
             "Communicate the subject through the scene, people, architecture, and objects only. "
-            "No visible text of any kind. No Arabic or English words. No names, labels, signs, "
-            "logos, institution names, building names, numbers, screens with writing, documents "
-            "with readable writing, billboards, watermarks, captions, emblems, or fake official "
-            "signage. Do not invent official branding. Any surfaces that would normally contain "
-            "writing must be blank or visually unreadable."
+            "No visible text of any kind. No Arabic or English words. No names. No labels. "
+            "No signs. No logos. No institution names. No building names. No numbers. "
+            "No screens with writing. No documents with readable writing. No billboards. "
+            "No watermarks. No captions. No emblems. No fake official signage. "
+            "Do not invent official branding. Any surfaces that would normally contain writing "
+            "must be blank or visually unreadable."
         )
         return fetcher(strict_prompt, out_path)
     return wrapped
