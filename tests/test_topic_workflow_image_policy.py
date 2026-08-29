@@ -2,7 +2,6 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import daily_news_runner
 import topic_snapchat
 
 
@@ -11,18 +10,21 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
         workflow = Path('.github/workflows/topic.yml').read_text(encoding='utf-8')
         self.assertIn('LIBRARY_REUSE_DAYS: "0"', workflow)
 
-    def test_topic_image_context_includes_search_subject_even_when_copy_omits_it(self):
-        story = topic_snapchat.topic_image_story({
-            'title': '16 سبتمبر: موعد قرار الفائدة القادم',
-            'body': 'التمويل المتغير يعتمد على المؤشر المرجعي وهامش البنك.',
-            'takeaway': 'التسعير المحلي لا يعتمد على قرار واحد.',
-            'source_url': 'https://example.com',
-            'image_queries': ['Saudi Central Bank SAMA headquarters Riyadh'],
-            'image_queries_ar': ['ساما', 'الرياض'],
-        })
-        context = daily_news_runner._story_context_text(story)
-        self.assertIn('Saudi Central Bank SAMA headquarters Riyadh', context)
-        self.assertIn('ساما', context)
+    def test_sama_provenance_survives_finance_copy_that_omits_sama_name(self):
+        wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'neutral')
+        with tempfile.TemporaryDirectory() as td:
+            candidate = Path(td) / 'hero.auto-local.jpg'
+            candidate.write_bytes(b'candidate-image')
+            Path(str(candidate) + '.exempt').write_text(
+                'local:sama-history-hq.jpg', encoding='utf-8'
+            )
+            verdict = wrapped(
+                candidate,
+                '16 سبتمبر: موعد قرار الفائدة القادم\n'
+                'التمويل المتغير يعتمد على المؤشر المرجعي وهامش البنك.\n'
+                'التسعير المحلي لا يعتمد على قرار واحد.',
+            )
+        self.assertEqual(verdict, 'yes')
 
     def test_curated_sama_artifact_is_directly_relevant_to_sama_topic(self):
         wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'neutral')
