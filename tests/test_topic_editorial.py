@@ -122,6 +122,30 @@ class TopicEditorialTests(unittest.TestCase):
         errors = validate_brief(brief)
         self.assertTrue(any("state each institution's decision separately" in error for error in errors), errors)
 
+    def test_validate_brief_blocks_same_path_institution_comparison(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "الفائدة الأمريكية ثابتة حتى سبتمبر",
+            "body": "الفيدرالي الأمريكي ثبّت فائدته. الريال مربوط بالدولار، وساما تبقي الريبو عند 4.25% منذ ديسمبر 2025 على نفس المسار.",
+            "takeaway": "التمويل المتغير يتأثر بالمؤشر المرجعي وهامش البنك، لا بقرار الفيدرالي وحده.",
+            "caption": "الفائدة الأمريكية والمحلية ضمن بيئة تمويلية مترابطة.",
+            "sources": ["Federal Reserve", "البنك المركزي السعودي"],
+        })
+        errors = validate_brief(brief)
+        self.assertTrue(any("state each institution's decision separately" in error for error in errors), errors)
+
+    def test_validate_brief_blocks_personalized_finance_hook(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "الفائدة الأمريكية ثابتة حتى سبتمبر",
+            "body": "تمويلك المتغير وحساب التوفير يتأثران بحركة الفائدة. الفيدرالي الأمريكي ثبّت فائدته، بينما تعتمد تكلفة التمويل على المؤشر وهامش البنك.",
+            "takeaway": "التمويل المتغير يتأثر بالمؤشر المرجعي وهامش البنك وموعد إعادة التسعير.",
+            "caption": "ثبات الفائدة يترك بيئة التمويل دون تحول كبير الآن.",
+            "sources": ["Federal Reserve", "البنك المركزي السعودي"],
+        })
+        errors = validate_brief(brief)
+        self.assertTrue(any("personalize financial effects" in error for error in errors), errors)
+
     def test_validate_brief_requires_primary_sources_for_fed_sama_topic(self):
         brief = self._complete_brief()
         brief.update({
