@@ -1,5 +1,5 @@
 name: Topic release once
-# release preflight: relevance-first SAMA artifact reuse enabled
+# release preflight: third strict editorial rewrite enabled
 
 on:
   push:
