@@ -1,21 +1,13 @@
 {
-  "run_nonce": "2026-08-29-near-pass-sama-2",
+  "run_nonce": "2026-08-29-near-pass-rollaboard-1",
   "assets": [
     {
-      "filename": "targeted-sama-1953-10-riyal.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SaudiArabiaP1-10Riyals-(1953)-donatedcz%20f.jpg",
-      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank", "Saudi riyal", "1953"],
-      "credit": "Saudi Arabian Monetary Agency via Wikimedia Commons — public-domain scan; 10-riyal note, 1953",
-      "story": "قصة تأسيس مؤسسة النقد ساما",
-      "verdict": "STRONG_CONTEXT"
-    },
-    {
-      "filename": "targeted-sama-1954-5-riyal.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SaudiArabiaP3-5Riyals-AH1373(1954)-donatedgs%20f.jpg",
-      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank", "Saudi riyal", "1954"],
-      "credit": "Saudi Arabian Monetary Agency via Wikimedia Commons — public-domain scan; 5-riyal note, 1954",
-      "story": "قصة تأسيس مؤسسة النقد ساما",
-      "verdict": "STRONG_CONTEXT"
+      "filename": "targeted-rollaboard-plath-patent.png",
+      "url": "https://patentimages.storage.googleapis.com/ca/3f/e6/b1cccaa04be15e/US4995487-drawings-page-2.png",
+      "tags": ["قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد", "Rollaboard", "Robert Plath", "Robert V. Plath", "Travelpro", "US4995487A", "wheeled suitcase", "retractable handle"],
+      "credit": "Robert V. Plath, US Patent US4995487A drawing via Google Patents / USPTO — patent drawings typically not subject to copyright restrictions",
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "verdict": "DIRECT"
     }
   ]
 }
