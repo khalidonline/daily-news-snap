@@ -197,8 +197,78 @@ def city_frame_allows_generic_fallback(frame: dict,
     return saw_generic
 
 
-def city_spa_metadata_ok(item: dict, aliases: Iterable[str] = ()) -> bool:
-    """Reject an SPA result whose own title/tags explicitly name another city."""
+def targeted_city_keywords(frame: dict, aliases: Iterable[str] = ()) -> list[str]:
+    """Strict city-beat queries with archive anchors and no bare city aliases."""
+    terms = list(exact_city_keywords(frame, aliases))
+    joined = " ".join(terms)
+    norm = _norm_phrase(joined)
+
+    anchors = []
+    if (
+        "old riyadh" in norm
+        or "الرياض القديمة" in joined
+        or "سور الرياض" in joined
+        or "سوق الرياض القديم" in joined
+    ):
+        anchors.append("Workers breaking old city walls of Riyadh")
+
+    if (
+        "al malaz" in norm
+        or "الملز" in joined
+        or "1960s" in norm
+        or "الستينات" in joined
+    ):
+        anchors.append("Al-Dhahirah Street Riyadh 1960s")
+
+    alias_norms = {_norm_phrase(alias) for alias in aliases or () if alias}
+    out = []
+    for term in anchors + terms:
+        if _norm_phrase(term) in alias_norms:
+            continue
+        if term and term not in out:
+            out.append(term)
+    return out[:6]
+
+
+def _historical_target(frame: dict, aliases: Iterable[str] = ()) -> bool:
+    text = " ".join(targeted_city_keywords(frame, aliases))
+    norm = _norm_phrase(text)
+    years = _years(text)
+    return (
+        any(int(y) < 2000 for y in years)
+        or "old" in norm
+        or "historical" in norm
+        or "1950s" in norm
+        or "1960s" in norm
+        or "1970s" in norm
+        or any(word in text for word in (
+            "قديم", "القديمة", "الخمسينات", "الستينات", "السبعينات",
+        ))
+    )
+
+
+def city_target_metadata_ok(metadata: str, frame: dict,
+                            aliases: Iterable[str] = ()) -> bool:
+    """Strict target metadata must name the city and fit a historical era."""
+    metadata = str(metadata or "").strip()
+    if not metadata or not city_candidate_metadata_ok(metadata, aliases):
+        return False
+
+    norm_meta = _norm_phrase(metadata)
+    alias_norms = [_norm_phrase(alias) for alias in aliases or () if alias]
+    if alias_norms and not any(alias and alias in norm_meta for alias in alias_norms):
+        return False
+
+    if _historical_target(frame):
+        meta_years = _years(metadata)
+        if any(int(year) >= 2000 for year in meta_years):
+            return False
+    return True
+
+
+def city_spa_metadata_ok(item: dict, aliases: Iterable[str] = (),
+                         frame: dict | None = None) -> bool:
+    """Reject SPA results with a wrong city; strict searches also enforce era."""
     title = str((item or {}).get("title") or "")
     tags = " ".join(
         str(tag.get("name") or "")
@@ -206,6 +276,8 @@ def city_spa_metadata_ok(item: dict, aliases: Iterable[str] = ()) -> bool:
         if isinstance(tag, dict)
     )
     metadata = " ".join(part for part in (title, tags) if part).strip()
+    if frame is not None:
+        return city_target_metadata_ok(metadata, frame, aliases)
     return bool(metadata) and city_candidate_metadata_ok(metadata, aliases)
 
 
@@ -363,27 +435,52 @@ def configure(story_bot_module):
             Path(row["filename"]).name
             for row in legacy._read_visual_index(index_path())
         ]
+        terms = targeted_city_keywords(frame, active["aliases"])
         targeted = deepcopy(spec or {})
-        targeted["image_keywords"] = list(frame.get("image_keywords") or [])
-        targeted["image_keywords_ar"] = list(frame.get("image_keywords_ar") or [])
+        targeted["image_keywords"] = [
+            term for term in terms if re.search(r"[A-Za-z]", term)
+        ]
+        targeted["image_keywords_ar"] = [
+            term for term in terms if re.search(r"[ء-ي]", term)
+        ]
         targeted["lib_exclude"] = list(dict.fromkeys(
             list(targeted.get("lib_exclude") or []) + local_names
         ))
         if not targeted["image_keywords"] and not targeted["image_keywords_ar"]:
             return None
 
-        # SPA's scorer may find the requested city only in tags while the title
-        # explicitly names a different city. During a strict city-beat search,
-        # veto that metadata contradiction before the item can be downloaded or
-        # consume the fourth-photo slot.
         spa_globals = getattr(sb.fetch_spa_photo, "__globals__", {})
         original_spa_score = spa_globals.get("_spa_score")
         if original_spa_score:
-            def strict_spa_score(item, terms):
-                if not city_spa_metadata_ok(item, active["aliases"]):
+            def strict_spa_score(item, query_terms):
+                if not city_spa_metadata_ok(
+                    item, active["aliases"], frame=frame
+                ):
                     return -10_000
-                return original_spa_score(item, terms)
+                return original_spa_score(item, query_terms)
             spa_globals["_spa_score"] = strict_spa_score
+
+        commons_globals = getattr(sb.fetch_commons_photo, "__globals__", {})
+        original_commons_safe = commons_globals.get("_commons_safe")
+        commons_described = commons_globals.get("_commons_described")
+        if original_commons_safe:
+            def strict_commons_safe(page, info):
+                if not original_commons_safe(page, info):
+                    return False
+                title = str((page or {}).get("title") or "")
+                described = ""
+                if commons_described:
+                    try:
+                        described = str(commons_described(page, info) or "")
+                    except Exception:
+                        described = ""
+                return city_target_metadata_ok(
+                    " ".join(part for part in (title, described) if part),
+                    frame,
+                    active["aliases"],
+                )
+            commons_globals["_commons_safe"] = strict_commons_safe
+
         try:
             return base_find_photo(
                 targeted, out_path, seen, context,
@@ -394,6 +491,8 @@ def configure(story_bot_module):
         finally:
             if original_spa_score:
                 spa_globals["_spa_score"] = original_spa_score
+            if original_commons_safe:
+                commons_globals["_commons_safe"] = original_commons_safe
 
     def web_fallback(out_path, seen):
         if active["photo_count"] >= 4:
