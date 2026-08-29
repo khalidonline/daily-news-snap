@@ -39,6 +39,11 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  # A manual run and the 09:00 KSA run must never publish/update topic state together.
+  group: topic-brief
+  cancel-in-progress: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -84,14 +89,16 @@ jobs:
           FORCE_SEASON: ${{ inputs.season }}
           TOPICS_FILE: "topics.txt"
           VOICE_FILE: "voice.txt"
+          TOPIC_PERFORMANCE_FILE: "state/topic_performance.json"
           THEME: "light"
-          BRAND: "ملخص تنفيذي - معلومة"
+          BRAND: "معلومة تهمك"
+          KICKER: "معلومة تهمك"
           FONT_FAMILY: "Almarai"
           REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
           MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
           MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
           COOLDOWN_DAYS: "21"
-          HARD_COOLDOWN_DAYS: "5"
+          HARD_COOLDOWN_DAYS: "21"
           SELECT_MODEL: "claude-haiku-4-5-20251001"
           LOOKBACK_HOURS: "30"
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
@@ -104,7 +111,7 @@ jobs:
           IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
           POINTS: "3"
           MAX_SEARCHES: "6"
-        run: python topic_bot.py
+        run: python topic_snapchat.py
 
       - name: Keep the card for review
         if: always()
