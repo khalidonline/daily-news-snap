@@ -19,7 +19,13 @@ from pathlib import Path
 import image_precheck as ipc
 import news_bot as nb
 import story_bot as sb
+import story_focus
 from runtime_relevance import asset_countable, runtime_pass, runtime_status
+
+# Story to Snapchat always enters through this guarded runtime. Apply the
+# editorial subject lock and frame-specific visual review before any selection,
+# research or rendering uses story_bot.
+story_focus.configure(sb)
 
 
 def _matches_story(entry, story):
