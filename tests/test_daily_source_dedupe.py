@@ -42,6 +42,18 @@ class DailySourceDedupeTests(unittest.TestCase):
         }]
         self.assertEqual(self._filter(items, posted), [])
 
+    def test_exact_live_alyaum_ronaldo_title_is_blocked_by_existing_memory(self):
+        posted = [{
+            "headline": "رونالدو يكتب التاريخ ويتفوق على السهلاوي مع النصر",
+            "at": "2026-08-29T14:59:35+00:00",
+        }]
+        items = [{
+            "title": "رونالدو يحطم رقم السهلاوي ويصبح الهداف التاريخي للنصر في الدوري السعودي",
+            "link": "https://www.alyaum.com/articles/6680129/الرياضة/الدوري-السعودي/رونالدو",
+            "source": "اليوم",
+        }]
+        self.assertEqual(self._filter(items, posted), [])
+
     def test_different_ronaldo_story_is_not_blocked_by_name_alone(self):
         posted = [{
             "headline": "رونالدو يكتب التاريخ ويتفوق على السهلاوي مع النصر",
