@@ -25,9 +25,6 @@ _FINANCE_CONTEXT_RE = re.compile(
     re.IGNORECASE,
 )
 _FINANCE_OVERCLAIM_RES = (
-    # Run #71 pattern: a personal Saudi financial obligation is presented as
-    # literally linked to a foreign city/policy maker rather than indirectly
-    # influenced through monetary policy and local pricing.
     re.compile(
         r"(?:قسطك|قرضك|تمويلك).{0,45}(?:مرتبط|مربوط).{0,45}"
         r"(?:واشنطن|أمريكا|الولايات المتحدة|الفيدرالي)",
@@ -43,10 +40,36 @@ _FINANCE_OVERCLAIM_RES = (
         re.IGNORECASE,
     ),
 )
+_FINANCE_POLICY_ONLY_RES = (
+    re.compile(
+        r"(?:المتغير|تمويلك\s+المتغير|التمويل\s+المتغير).{0,55}"
+        r"(?:فقط|بس).{0,30}(?:غي[ّ]?ر|تغي[ّ]?ر).{0,25}(?:ساما|الريبو|إعادة الشراء)",
+        re.IGNORECASE,
+    ),
+)
+_INSTITUTION_RELATION_RES = (
+    re.compile(
+        r"(?:ساما|البنك\s+المركزي\s+السعودي).{0,20}"
+        r"(?:لحق|تبع|يتبع|مشى\s+ورا|يمشي\s+ورا|على\s+خطى|حذا\s+حذو|نسخ|قل[ّ]?د)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"(?:الفيدرالي|Federal\s+Reserve).{0,45}(?:وساما|و\s*ساما|والبنك\s+المركزي\s+السعودي).{0,20}"
+        r"(?:لحق|تبع|يتبع|مشى\s+ورا|يمشي\s+ورا|على\s+خطى|حذا\s+حذو|نسخ|قل[ّ]?د)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"(?:ساما|البنك\s+المركزي\s+السعودي).{0,30}(?:مثل|نفس|كما|على\s+غرار).{0,25}"
+        r"(?:الفيدرالي|Federal\s+Reserve)",
+        re.IGNORECASE,
+    ),
+)
+_FED_TEXT_RE = re.compile(r"الفيدرالي|Federal\s+Reserve", re.IGNORECASE)
+_FED_SOURCE_RE = re.compile(r"Federal\s+Reserve|الاحتياطي\s+الفيدرالي|الفيدرالي\s+الأمريكي", re.IGNORECASE)
+_SAMA_SOURCE_RE = re.compile(r"\bSAMA\b|ساما|البنك\s+المركزي\s+السعودي", re.IGNORECASE)
 
 
 def load_topics_with_categories(path: Path) -> list[dict[str, Any]]:
-    """Parse topics.txt while retaining each major editorial category."""
     try:
         lines = path.read_text(encoding="utf-8").splitlines()
     except FileNotFoundError:
@@ -70,25 +93,17 @@ def load_topics_with_categories(path: Path) -> list[dict[str, Any]]:
             continue
         topics.append({
             "topic": name,
-            "triggers": [
-                item.strip().lower()
-                for item in trigger_text.split(",")
-                if item.strip()
-            ],
+            "triggers": [item.strip().lower() for item in trigger_text.split(",") if item.strip()],
             "category": category,
         })
     return topics
 
 
 def _has_strong_signal(row: dict[str, Any]) -> bool:
-    return any(
-        str(reason).startswith(_STRONG_REASON_PREFIXES)
-        for reason in row.get("reasons", [])
-    )
+    return any(str(reason).startswith(_STRONG_REASON_PREFIXES) for reason in row.get("reasons", []))
 
 
 def balanced_shortlist(scored: list[dict[str, Any]], limit: int = 8) -> list[dict[str, Any]]:
-    """Keep strong live signals, then diversify evergreen candidates by category."""
     if limit <= 0:
         return []
 
@@ -96,7 +111,6 @@ def balanced_shortlist(scored: list[dict[str, Any]], limit: int = 8) -> list[dic
     chosen: list[dict[str, Any]] = []
     chosen_ids: set[int] = set()
 
-    # Current follower/news/season signals are allowed to cluster: relevance first.
     for row in ordered:
         if _has_strong_signal(row):
             chosen.append(row)
@@ -104,7 +118,6 @@ def balanced_shortlist(scored: list[dict[str, Any]], limit: int = 8) -> list[dic
             if len(chosen) == limit:
                 return chosen
 
-    # For evergreen slots, take one from each category before repeating a category.
     seen_categories: set[str] = set()
     for row in ordered:
         if id(row) in chosen_ids:
@@ -118,7 +131,6 @@ def balanced_shortlist(scored: list[dict[str, Any]], limit: int = 8) -> list[dic
         if len(chosen) == limit:
             return chosen
 
-    # If the catalog has fewer categories than slots, fill by score.
     for row in ordered:
         if id(row) in chosen_ids:
             continue
@@ -129,7 +141,6 @@ def balanced_shortlist(scored: list[dict[str, Any]], limit: int = 8) -> list[dic
 
 
 def load_performance(path: Path) -> dict[str, Any]:
-    """Load optional audience-performance weights; missing/invalid data is neutral."""
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (FileNotFoundError, json.JSONDecodeError, OSError):
@@ -138,7 +149,6 @@ def load_performance(path: Path) -> dict[str, Any]:
 
 
 def performance_adjustment(topic: str, category: str, performance: dict[str, Any]) -> int:
-    """Return a bounded score boost/penalty from historical audience response."""
     categories = performance.get("categories", {})
     topics = performance.get("topics", {})
     category_score = categories.get(category, 0) if isinstance(categories, dict) else 0
@@ -151,23 +161,41 @@ def performance_adjustment(topic: str, category: str, performance: dict[str, Any
 
 
 def _finance_tone_errors(brief: dict[str, Any]) -> list[str]:
-    """Block finance hooks that turn indirect influence into a literal claim."""
     text = "\n".join(
         str(brief.get(field, "") or "").strip()
         for field in ("title", "body", "takeaway", "caption")
     )
     if not _FINANCE_CONTEXT_RE.search(text):
         return []
+
+    errors: list[str] = []
     if any(pattern.search(text) for pattern in _FINANCE_OVERCLAIM_RES):
-        return [
+        errors.append(
             "financial wording overstates an indirect financial relationship; "
             "explain the local mechanism and use conditional language"
-        ]
-    return []
+        )
+    if any(pattern.search(text) for pattern in _FINANCE_POLICY_ONLY_RES):
+        errors.append(
+            "policy rate is not the only driver of variable financing; explain the "
+            "contract benchmark, bank margin, and repricing schedule"
+        )
+    if any(pattern.search(text) for pattern in _INSTITUTION_RELATION_RES):
+        errors.append(
+            "state each institution's decision separately; avoid following, imitation, "
+            "or side-by-side comparison language"
+        )
+
+    sources = brief.get("sources")
+    if _FED_TEXT_RE.search(text) and isinstance(sources, list):
+        source_text = "\n".join(str(item) for item in sources)
+        if not (_FED_SOURCE_RE.search(source_text) and _SAMA_SOURCE_RE.search(source_text)):
+            errors.append(
+                "Federal Reserve and SAMA primary sources are required for a Fed-to-Saudi finance explanation"
+            )
+    return errors
 
 
 def validate_brief(brief: Any) -> list[str]:
-    """Return publish-blocking editorial/shape errors for one Snapchat brief."""
     if not isinstance(brief, dict):
         return ["brief must be a JSON object"]
 
@@ -213,7 +241,6 @@ def _ksa_date_text(today: date) -> str:
 
 
 def enhance_prompt(base_prompt: str, today: date | None = None) -> str:
-    """Resolve voice/source contradictions and inject current Saudi Snapchat context."""
     today = today or date.today()
     prompt = base_prompt.replace(
         "- sources: أسماء المصادر (٢ إلى ٤). إن كان المصدر أجنبياً فاكتبه بالعربية.",
@@ -251,10 +278,25 @@ def enhance_prompt(base_prompt: str, today: date | None = None) -> str:
         "التمويل هنا؟» ثم اشرح الآلية بجمل قصيرة.\n"
         "- إذا كان الأثر يختلف حسب المنتج أو العقد، لا تخاطب الجميع كأن النتيجة واحدة. "
         "قل مثلاً: «إذا كان تمويلك متغيراً...» ثم وضّح ما الذي يحدد الأثر فعلياً.\n"
-        "- في موضوع الفيدرالي والسعودية: اشرح أن ارتباط الريال بالدولار يجعل السياسة "
-        "النقدية والفائدة المحلية تتأثر بتحركات الفائدة الأمريكية، لكن تكلفة التمويل "
-        "الفعلية تعتمد على الفائدة المحلية ونوع المنتج وتسعير البنك وشروط العقد. لا تقل "
-        "إن الفيدرالي «يحدد قسطك» أو إن قراره «يوصلك خلال أيام».\n"
+        "- عند ذكر الفيدرالي والبنك المركزي السعودي في الموضوع نفسه، اعرض قرار كل جهة على حدة "
+        "بصياغة محايدة، ثم اشرح العلاقة النقدية في جملة منفصلة. لا تصغ العنوان أو المتن "
+        "كحركة مشتركة أو مقارنة بين المؤسستين.\n"
+        "- اجعل العنوان عن فائدة المعلومة للمتابع، لا عن العلاقة بين المؤسسات. مثال مناسب: "
+        "«وش يعني ثبات الفائدة لتمويلك؟».\n"
+        "- في التمويل المتغير، لا تجعل سعر الريبو عند ساما هو المفتاح الوحيد. راجع ما "
+        "ينص عليه العقد: قد يكون المؤشر سايبور أو مؤشراً آخر، ثم يضاف هامش البنك، ويتغير "
+        "السعر بحسب موعد إعادة التسعير المحدد في العقد. تحركات السياسة النقدية تؤثر في البيئة "
+        "التمويلية، لكنها ليست وحدها ما يحدد كل قسط متغير.\n"
+        "- في موضوع الفيدرالي والسعودية: اشرح أن ارتباط الريال بالدولار يجعل تحركات الفائدة "
+        "الأمريكية مهمة للبيئة النقدية في السعودية، لكن تكلفة التمويل الفعلية تعتمد على "
+        "المؤشر المرجعي في العقد ونوع المنتج وهامش البنك وموعد إعادة التسعير. لا تقل إن "
+        "الفيدرالي «يحدد قسطك» أو إن قراره «يوصلك خلال أيام»، ولا تقل إن التمويل المتغير "
+        "يتحرك فقط عندما يتغير سعر الريبو.\n"
+        "- إذا ذكرت قراراً حديثاً للفيدرالي وتأثيره في السعودية، استخدم المصدرين الأوليين: "
+        "Federal Reserve للقرار الأمريكي والبنك المركزي السعودي (ساما) للفائدة أو البيانات "
+        "المحلية. يمكن إضافة مصدر صحفي للتفسير، لكن لا تستبدل المصدرين الأوليين به.\n"
+        "- عند الحديث عن تمويل ثابت قائم، قل إن القسط أو السعر التعاقدي لا يعاد تسعيره عادةً "
+        "بسبب قرار جديد؛ أما تمويل جديد أو إعادة تمويل فقد تتغير تكلفته مع ظروف السوق.\n"
         "- ابدأ بما يستطيع المتابع فهمه أو استخدامه: ما الذي قد يتغير هنا؟ من يتأثر؟ "
         "وماذا يراجع في عقده أو في الفائدة المحلية؟ الجاذبية تأتي من الفائدة العملية "
         "والمعلومة الدقيقة، لا من المبالغة.\n"
