@@ -1,5 +1,5 @@
 name: Topic release once
-# release preflight: final image gate after main integration
+# release preflight: verify final SAMA image and finance wording
 
 on:
   push:
