@@ -115,6 +115,17 @@ _MEDICAL_RE = re.compile(
     r"cholesterol|dosage|vaccine|medical advice)",
     re.IGNORECASE,
 )
+_PERSONAL_MEDICAL_ADVICE_RE = re.compile(
+    r"(?:"
+    r"(?:هل|كيف|ماذا)\s+[^.؟?]{0,100}(?:يضر|يفيد|يسبب|يرفع|يخفض|يحمي|يؤثر|مفيد|ضار|آمن)"
+    r"[^.؟?]{0,60}(?:الكبد|الكلى|القلب|الجسم|الصحة|النوم|الوزن|المناعة|السكر|الضغط)|"
+    r"(?:نصيحة طبية|نصائح صحية|فوائد صحية|أضرار صحية)|"
+    r"(?:does|can|could|how)\s+[^.?]{0,100}(?:harm|help|cause|lower|raise|protect|affect)"
+    r"[^.?]{0,60}(?:liver|kidney|heart|body|health|sleep|weight|immunity|blood sugar|blood pressure)|"
+    r"(?:health tips?|health benefits?|health risks?)"
+    r")",
+    re.IGNORECASE,
+)
 _HEALTH_POLICY_RE = re.compile(
     r"(?:تأمين|تغطية|نظام|قرار|أسعار|رسوم|خدمة|وزارة الصحة|مستشفى|"
     r"insurance|coverage|policy|regulation|pricing|fees?|health ministry|hospital)",
@@ -199,8 +210,14 @@ def hard_scope_eligible(item):
     if _FOREIGN_POLITICS_RE.search(text) and not direct_saudi_impact:
         return False
 
-    # Personal medical advice is not one of the approved lanes. A broad Saudi
-    # policy/insurance/service change is different: that affects adult daily life.
+    # Personal health advice stays outside the product even when a ministry or
+    # hospital is quoted. A named authority is evidence provenance, not proof
+    # that the story is a national policy or service change.
+    if _PERSONAL_MEDICAL_ADVICE_RE.search(text):
+        return False
+
+    # Other medical content is excluded unless it is a broad Saudi
+    # policy/insurance/service change that affects adult daily life.
     if _MEDICAL_RE.search(text):
         if not (lane == "saudi_core" and direct_saudi and _HEALTH_POLICY_RE.search(text)):
             return False
