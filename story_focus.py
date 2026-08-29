@@ -283,10 +283,12 @@ def runtime_visual_inventory_prompt(index_path) -> str:
 
 
 def prepare_city_visual_search(brief: dict) -> dict:
-    """Let the local library see Arabic city tags as well as English targets."""
-    if not isinstance(brief, dict) or not _is_city_brief(brief):
+    """Let each city frame search Arabic catalogue tags as well as English."""
+    if not isinstance(brief, dict):
         return brief
     for frame in brief.get("frames") or []:
+        if str(frame.get("subject_kind", "")).strip() != "place_city":
+            continue
         english = list(frame.get("image_keywords") or [])
         arabic = list(frame.get("image_keywords_ar") or [])
         frame["image_keywords"] = _unique(english + arabic)
