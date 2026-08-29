@@ -25,7 +25,7 @@ class CityVisualQualityPlanTests(unittest.TestCase):
         draw.rectangle((210, 100, 275, 205), fill=(85, 105, 120))
         return img
 
-    def test_dusty_modern_exact_asset_is_removed_before_counting_four(self):
+    def test_bad_modern_assets_are_removed_before_counting_four(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             for name in (
@@ -44,7 +44,7 @@ class CityVisualQualityPlanTests(unittest.TestCase):
                 encoding="utf-8",
             )
             frames = [
-                {"subject_kind": "place_city", "image_keywords": ["old Riyadh"], "image_keywords_ar": ["الرياض القديمة"]},
+                {"subject_kind": "place_city", "image_keywords": ["old Riyadh 1902"], "image_keywords_ar": ["الرياض القديمة", "1902"]},
                 {"subject_kind": "place_city", "image_keywords": ["Riyadh Dammam railway 1951"], "image_keywords_ar": ["سكة حديد الرياض الدمام"]},
                 {"subject_kind": "place_city", "image_keywords": ["Riyadh construction 1975"], "image_keywords_ar": ["الرياض البناء"]},
                 {"subject_kind": "place_city", "image_keywords": ["Riyadh skyline"], "image_keywords_ar": ["أفق الرياض"]},
@@ -59,7 +59,8 @@ class CityVisualQualityPlanTests(unittest.TestCase):
 
         names = {row["filename"] for row in assignments.values()}
         self.assertNotIn("riyadh-skyline.jpg", names)
-        self.assertEqual(3, len(assignments))
+        self.assertNotIn("old-riyadh-souq.jpg", names)
+        self.assertEqual(2, len(assignments))
 
 
 if __name__ == "__main__":
