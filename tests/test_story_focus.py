@@ -175,6 +175,32 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("البناء", keywords)
         self.assertIn("السبعينات", keywords)
 
+    def test_city_search_appends_declared_city_aliases_as_simple_fallback(self):
+        brief = {
+            "story": RIYADH_STORY,
+            "frames": [
+                {
+                    "subject_kind": "place_city",
+                    "image_keywords": ["Riyadh 1970s construction"],
+                    "image_keywords_ar": ["البناء", "السبعينات"],
+                }
+            ],
+        }
+        prepared = story_focus.prepare_city_visual_search(
+            brief, aliases=["Riyadh", "الرياض"]
+        )
+        keywords = prepared["frames"][0]["image_keywords"]
+        self.assertEqual("Riyadh 1970s construction", keywords[0])
+        self.assertIn("Riyadh", keywords)
+        self.assertIn("الرياض", keywords)
+        self.assertLessEqual(len(keywords), 6)
+
+    def test_city_fallback_accepts_relevant_neutral_but_never_wrong_city(self):
+        self.assertTrue(story_focus.city_photo_verdict_ok("yes"))
+        self.assertTrue(story_focus.city_photo_verdict_ok("neutral"))
+        self.assertFalse(story_focus.city_photo_verdict_ok("no"))
+        self.assertFalse(story_focus.city_photo_verdict_ok(""))
+
     def test_subject_alias_matches_inside_specific_catalog_tag(self):
         self.assertTrue(
             story_focus.catalog_tags_match_aliases(
