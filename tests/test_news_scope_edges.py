@@ -58,6 +58,24 @@ class NewsScopeEdgeTests(unittest.TestCase):
         }
         self.assertTrue(hard_scope_eligible(item))
 
+    def test_personal_health_advice_is_rejected_even_when_ministry_is_quoted(self):
+        item = {
+            "lane": "saudi_core",
+            "source": "example",
+            "title": "هل الشاي بدون سكر يضر الكبد؟ توضيح من وزارة الصحة",
+            "summary": "وزارة الصحة توضح أثر شرب الشاي على صحة الكبد.",
+        }
+        self.assertFalse(hard_scope_eligible(item))
+
+    def test_ministry_health_policy_change_remains_eligible(self):
+        item = {
+            "lane": "saudi_core",
+            "source": "example",
+            "title": "وزارة الصحة توسع التغطية التأمينية للقاحات السفر",
+            "summary": "قرار وطني جديد يطبق على وثائق التأمين في السعودية.",
+        }
+        self.assertTrue(hard_scope_eligible(item))
+
 
 if __name__ == "__main__":
     unittest.main()
