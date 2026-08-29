@@ -11,9 +11,11 @@ import os
 from news_editorial import (
     DEFAULT_LOOKBACK_HOURS,
     SYSTEM_PROMPT,
+    audience_fit_eligible,
     balanced_shortlist,
     decorate_model_items,
     fetch_headlines,
+    hard_scope_eligible,
     shortlist_lane_counts,
 )
 
@@ -101,6 +103,42 @@ def _context_for_queries(queries_en, queries_ar):
     return "\n".join(fallback)
 
 
+def validate_ranked_result(result, shortlist):
+    """Remove model-ranked stories that violate hard source-item boundaries.
+
+    The model refers to the numbered shortlist with a 1-based integer ``item``.
+    Only that exact source item decides eligibility; generated card wording can
+    never be used to bypass the deterministic scope rules.
+    """
+    if not isinstance(result, dict):
+        return result
+    stories = result.get("stories")
+    if not isinstance(stories, list):
+        return result
+
+    kept = []
+    for story in stories:
+        if not isinstance(story, dict):
+            continue
+        item_no = story.get("item")
+        if isinstance(item_no, bool) or not isinstance(item_no, int):
+            continue
+        if item_no < 1 or item_no > len(shortlist):
+            continue
+        source_item = shortlist[item_no - 1]
+        if not hard_scope_eligible(source_item):
+            continue
+        if not audience_fit_eligible(source_item):
+            continue
+        kept.append(story)
+
+    validated = dict(result)
+    validated["stories"] = kept
+    if len(kept) != len(stories):
+        print(f"    post-model scope gate: kept {len(kept)}/{len(stories)} ranked stories")
+    return validated
+
+
 def _can_install_auto_image_selector(news_bot_module):
     return all(hasattr(news_bot_module, name) for name in AUTO_IMAGE_REQUIRED_ATTRS)
 
@@ -135,9 +173,9 @@ def make_summarizer(news_bot_module):
                 f"{lane}={counts.get(lane, 0)}" for lane in LANE_ORDER
             ))
         decorated = decorate_model_items(shortlist)
-        return remember_story_contexts(
-            original_summarize(decorated, already_posted, pinned)
-        )
+        raw = original_summarize(decorated, already_posted, pinned)
+        validated = validate_ranked_result(raw, shortlist)
+        return remember_story_contexts(validated)
 
     return _summarize
 
