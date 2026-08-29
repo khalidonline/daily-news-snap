@@ -20,6 +20,30 @@ _AR_MONTHS = (
     "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
 )
 
+_FINANCE_CONTEXT_RE = re.compile(
+    r"قرض|تمويل|قسط|فائدة|الفيدرالي|سايبور|سعر الفائدة|الريال|الدولار|ساما",
+    re.IGNORECASE,
+)
+_FINANCE_OVERCLAIM_RES = (
+    # Run #71 pattern: a personal Saudi financial obligation is presented as
+    # literally linked to a foreign city/policy maker rather than indirectly
+    # influenced through monetary policy and local pricing.
+    re.compile(
+        r"(?:قسطك|قرضك|تمويلك).{0,45}(?:مرتبط|مربوط).{0,45}"
+        r"(?:واشنطن|أمريكا|الولايات المتحدة|الفيدرالي)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"(?:قرار|قرارات)\s+الفيدرالي.{0,35}(?:يوصلك|يصل\s*لك|يحدد\s+قسطك|يتحكم\s+بقسطك)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"(?:واشنطن.{0,24}(?:مو|وليس|بدل)\s+الرياض|"
+        r"الرياض.{0,24}(?:مو|وليس|بدل)\s+واشنطن)",
+        re.IGNORECASE,
+    ),
+)
+
 
 def load_topics_with_categories(path: Path) -> list[dict[str, Any]]:
     """Parse topics.txt while retaining each major editorial category."""
@@ -126,6 +150,22 @@ def performance_adjustment(topic: str, category: str, performance: dict[str, Any
     return int(max(-15, min(15, round(raw))))
 
 
+def _finance_tone_errors(brief: dict[str, Any]) -> list[str]:
+    """Block finance hooks that turn indirect influence into a literal claim."""
+    text = "\n".join(
+        str(brief.get(field, "") or "").strip()
+        for field in ("title", "body", "takeaway", "caption")
+    )
+    if not _FINANCE_CONTEXT_RE.search(text):
+        return []
+    if any(pattern.search(text) for pattern in _FINANCE_OVERCLAIM_RES):
+        return [
+            "financial wording overstates an indirect financial relationship; "
+            "explain the local mechanism and use conditional language"
+        ]
+    return []
+
+
 def validate_brief(brief: Any) -> list[str]:
     """Return publish-blocking editorial/shape errors for one Snapchat brief."""
     if not isinstance(brief, dict):
@@ -164,6 +204,7 @@ def validate_brief(brief: Any) -> list[str]:
     if not isinstance(source_url, str) or not re.match(r"^https?://", source_url.strip()):
         errors.append("source_url must be an http(s) URL")
 
+    errors.extend(_finance_tone_errors(brief))
     return errors
 
 
@@ -194,9 +235,28 @@ def enhance_prompt(base_prompt: str, today: date | None = None) -> str:
         "- الجمهور: جمهور سعودي عربي على سناب شات؛ الأولوية لما يوقف التمرير لأنه "
         "يمس الحياة اليومية أو المال أو العمل أو التقنية أو السيارات أو الرياضة أو "
         "الترفيه في السعودية.\n"
+        "- العنوان الجذاب يفتح فضولاً حقيقياً ولا يصنع صدمة لفظية. إذا كان العنوان "
+        "يعطي انطباعاً يحتاج المتن إلى تصحيحه لاحقاً، فأعد كتابة العنوان.\n"
         "- لا تحوّل النص إلى لهجة ثقيلة. استخدم فصحى مبسطة بإيقاع سعودي طبيعي، ويمكن "
         "استخدام كلمة سعودية مألوفة حين تجعل الجملة أقرب ولا تضعف المصداقية.\n"
         "- عندما يكون الموضوع زمنياً (اليوم، هذا العام، الأسعار الحالية، أين وصل)، "
         "تحقق من أحدث مصدر موثوق متاح وفضّل المصدر الرسمي أو الأولي.\n"
+        "\nقواعد خاصة بالمال والتمويل والاقتصاد:\n"
+        "- فرّق بوضوح بين العلاقة المباشرة وغير المباشرة. إذا كان حدث خارجي يؤثر عبر "
+        "سعر الفائدة أو سعر الصرف أو سياسة محلية، قل «يؤثر» أو «ينعكس» أو «قد يتأثر»، "
+        "ولا تقدمه كأنه يحدد مال القارئ مباشرة.\n"
+        "- ممنوع استخدام مفارقة جغرافية صادمة لتبسيط علاقة اقتصادية معقدة. مثال مرفوض: "
+        "«قسطك مرتبط بقرار في واشنطن مو الرياض». هذه جملة مثيرة لكنها مضللة وغير مريحة.\n"
+        "- بدلاً من ذلك، اجعل الفضول في سؤال عملي واضح، مثل: «ليش فائدة أمريكا تهم "
+        "التمويل هنا؟» ثم اشرح الآلية بجمل قصيرة.\n"
+        "- إذا كان الأثر يختلف حسب المنتج أو العقد، لا تخاطب الجميع كأن النتيجة واحدة. "
+        "قل مثلاً: «إذا كان تمويلك متغيراً...» ثم وضّح ما الذي يحدد الأثر فعلياً.\n"
+        "- في موضوع الفيدرالي والسعودية: اشرح أن ارتباط الريال بالدولار يجعل السياسة "
+        "النقدية والفائدة المحلية تتأثر بتحركات الفائدة الأمريكية، لكن تكلفة التمويل "
+        "الفعلية تعتمد على الفائدة المحلية ونوع المنتج وتسعير البنك وشروط العقد. لا تقل "
+        "إن الفيدرالي «يحدد قسطك» أو إن قراره «يوصلك خلال أيام».\n"
+        "- ابدأ بما يستطيع المتابع فهمه أو استخدامه: ما الذي قد يتغير هنا؟ من يتأثر؟ "
+        "وماذا يراجع في عقده أو في الفائدة المحلية؟ الجاذبية تأتي من الفائدة العملية "
+        "والمعلومة الدقيقة، لا من المبالغة.\n"
     )
     return prompt
