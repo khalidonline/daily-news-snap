@@ -77,6 +77,37 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
         self.assertTrue(cvf.city_frame_deserves_targeted_search_after_minimum(skyline, aliases))
         self.assertFalse(cvf.city_frame_deserves_targeted_search_after_minimum(ordinary, aliases))
 
+    def test_riyadh_metro_and_approved_close_have_deterministic_commons_assets(self):
+        metro = {
+            "subject_kind": "place_city",
+            "image_keywords": ["Riyadh Metro", "KAFD Metro Station Riyadh"],
+            "image_keywords_ar": ["مترو الرياض"],
+            "text": "افتُتح مترو الرياض أواخر 2024.",
+        }
+        closing = {
+            "subject_kind": "place_city",
+            "heading": "من بلدة مسوّرة إلى مدينة بهذا الحجم",
+            "image_keywords": ["Riyadh skyline", "King Abdullah Financial District Riyadh"],
+            "image_keywords_ar": ["أفق الرياض"],
+            "text": "في 2024 سجّلت الرياض 225 مليار ريال في مبيعات نقاط البيع.",
+        }
+        ordinary_skyline = {
+            "subject_kind": "place_city",
+            "image_keywords": ["Riyadh skyline", "Riyadh city"],
+            "image_keywords_ar": ["أفق الرياض"],
+            "text": "كبرت المدينة بسرعة.",
+        }
+
+        self.assertEqual(
+            "KAFD Station - Riyadh Metro.jpg",
+            cvf.pinned_riyadh_visual(metro)["filename"],
+        )
+        self.assertEqual(
+            "Riyadh Skyline.jpg",
+            cvf.pinned_riyadh_visual(closing)["filename"],
+        )
+        self.assertIsNone(cvf.pinned_riyadh_visual(ordinary_skyline))
+
     def test_spa_item_explicitly_naming_another_city_is_rejected(self):
         aliases = ["Riyadh", "الرياض"]
         jeddah = {
