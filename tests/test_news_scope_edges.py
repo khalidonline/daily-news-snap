@@ -67,12 +67,39 @@ class NewsScopeEdgeTests(unittest.TestCase):
         }
         self.assertFalse(hard_scope_eligible(item))
 
+    def test_declarative_personal_health_explainer_is_rejected(self):
+        item = {
+            "lane": "saudi_core",
+            "source": "اليوم",
+            "title": "الصحة توضح حقيقة تأثير الشاي بدون سكر على الكبد",
+            "summary": "توضيح صحي عن تأثير شرب الشاي دون سكر على الكبد.",
+        }
+        self.assertFalse(hard_scope_eligible(item))
+
     def test_ministry_health_policy_change_remains_eligible(self):
         item = {
             "lane": "saudi_core",
             "source": "example",
             "title": "وزارة الصحة توسع التغطية التأمينية للقاحات السفر",
             "summary": "قرار وطني جديد يطبق على وثائق التأمين في السعودية.",
+        }
+        self.assertTrue(hard_scope_eligible(item))
+
+    def test_unconfirmed_transfer_report_is_rejected(self):
+        item = {
+            "lane": "sports",
+            "source": "اليوم",
+            "title": "تقارير: واتكينز يقترب من الانتقال رسمياً للهلال",
+            "summary": "تقارير صحفية تتحدث عن قرب انتقال اللاعب إلى الهلال دون إعلان من النادي.",
+        }
+        self.assertFalse(hard_scope_eligible(item))
+
+    def test_confirmed_major_transfer_remains_eligible(self):
+        item = {
+            "lane": "sports",
+            "source": "example",
+            "title": "الهلال يعلن رسمياً التعاقد مع واتكينز",
+            "summary": "النادي أعلن الصفقة رسمياً عبر حساباته الرسمية.",
         }
         self.assertTrue(hard_scope_eligible(item))
 
