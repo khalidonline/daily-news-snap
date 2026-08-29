@@ -1,6 +1,6 @@
 """Editorial policy and candidate preparation for the Saudi Snapchat daily brief.
 
-This module deliberately contains no publishing or rendering code. It owns the
+This module deliberately contains no publishing or rendering code.  It owns the
 feed registry, conservative audience-fit filtering, freshness metadata helpers,
 lane-balanced shortlist construction, and the system prompt used by the daily
 editor.
@@ -25,6 +25,7 @@ LANE_TARGETS = {
 }
 
 FEED_SPECS = (
+    # Global business / technology sources.
     {"source": "BBC", "url": "https://feeds.bbci.co.uk/news/business/rss.xml", "lane": "business_tech"},
     {"source": "BBC", "url": "https://feeds.bbci.co.uk/news/technology/rss.xml", "lane": "business_tech"},
     {"source": "TechCrunch", "url": "https://techcrunch.com/feed/", "lane": "business_tech"},
@@ -32,25 +33,33 @@ FEED_SPECS = (
     {"source": "Engadget", "url": "https://www.engadget.com/rss.xml", "lane": "business_tech"},
     {"source": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "lane": "business_tech"},
     {"source": "CNBC", "url": "https://www.cnbc.com/id/19854910/device/rss/rss.html", "lane": "business_tech"},
+    # Saudi/Gulf core: use specific national/economy sections instead of broad
+    # general-news feeds that are dominated by politics, conflict, or hyperlocal noise.
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1005/92", "lane": "saudi_core"},
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1006", "lane": "saudi_core"},
     {"source": "الوطن", "url": "https://www.alwatan.com.sa/rssFeed/4", "lane": "saudi_core"},
     {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/gulf", "lane": "saudi_core"},
     {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/economy", "lane": "saudi_core"},
+    # Dedicated Saudi-interest sports.
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1009", "lane": "sports"},
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1009/112", "lane": "sports"},
     {"source": "الوطن", "url": "https://www.alwatan.com.sa/rssFeed/3", "lane": "sports"},
     {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/sport", "lane": "sports"},
+    # Entertainment / culture.
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1008", "lane": "entertainment_culture"},
     {"source": "الوطن", "url": "https://www.alwatan.com.sa/rssFeed/10", "lane": "entertainment_culture"},
     {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/culture", "lane": "entertainment_culture"},
     {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/arts", "lane": "entertainment_culture"},
     {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/cinema", "lane": "entertainment_culture"},
+    # Travel / lifestyle.
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1007/105", "lane": "travel_lifestyle"},
     {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/travel", "lane": "travel_lifestyle"},
     {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1007", "lane": "travel_lifestyle"},
 )
 
+# The deterministic gate is intentionally conservative. Nuanced ranking belongs
+# to the model; this only removes obvious low-scale or routine noise before those
+# items consume lane capacity.
 _LOCAL_ROUTINE_RE = re.compile(
     r"(?:بلدية|أمانة|حي\b|حديقة|ممشى|تشجير|سفلتة|إنارة|دوار|مواقف)"
 )
@@ -76,6 +85,7 @@ def audience_fit_eligible(item):
     """Reject only obvious routine/hyperlocal noise before lane allocation."""
     text = f"{item.get('title', '')} {item.get('summary', '')}".strip()
     lane = item.get("lane", "business_tech")
+
     if _ROUTINE_PR_RE.search(text) and not _IMPACT_RE.search(text):
         return False
     if lane == "saudi_core" and _LOCAL_ROUTINE_RE.search(text) and not _BROAD_RELEVANCE_RE.search(text):
@@ -109,7 +119,7 @@ def format_age_label(item, now=None):
 
 def freshness_eligible(item, now=None, max_age_hours=MAX_NORMAL_AGE_HOURS):
     age = publication_age_hours(item, now=now)
-    return age is None or age <= max_age_hours
+    return age is not None and age <= max_age_hours
 
 
 def _title_key(title):
@@ -167,7 +177,13 @@ def _pop_lane_item(source_queues, cursor):
 
 
 def balanced_shortlist(items, limit=60, now=None):
-    """Build a source-fair shortlist with lane targets and spillover."""
+    """Build a source-fair shortlist with lane targets and spillover.
+
+    Targets are opportunities, never quotas. Empty/weak lanes may contribute
+    zero and unused capacity is redistributed. Freshness only orders otherwise
+    comparable items inside a source; it does not displace a strong older lane
+    candidate with unrelated weak material.
+    """
     qualified = [
         item for item in items
         if audience_fit_eligible(item) and freshness_eligible(item, now=now)
@@ -204,6 +220,7 @@ def balanced_shortlist(items, limit=60, now=None):
                 selected.append(item)
                 counts[lane] += 1
                 progress = True
+
     return selected
 
 
@@ -215,7 +232,12 @@ def shortlist_lane_counts(items):
 
 
 def decorate_model_items(items, now=None):
-    """Copy candidates and add internal lane/age tags to the summary."""
+    """Copy candidates and add internal lane/age tags to the supplied summary.
+
+    The public source/title/link fields stay unchanged. The system prompt tells
+    the model these bracketed tags are metadata and must never be copied to card
+    text.
+    """
     result = []
     for item in items:
         copy = dict(item)
@@ -234,6 +256,7 @@ def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
     now = now or datetime.now(timezone.utc)
     cutoff = now - timedelta(hours=lookback_hours)
     items, seen = [], set()
+
     for feed in feed_specs:
         source, url, lane = feed["source"], feed["url"], feed["lane"]
         try:
@@ -242,7 +265,9 @@ def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
             print(f"  ! {source}: {exc}", file=sys.stderr)
             print(f"  {source}: 0 items (failed)")
             continue
-        entries = root.iter("item") if root.find(".//item") is not None else root.iter("{http://www.w3.org/2005/Atom}entry")
+
+        entries = root.iter("item") if root.find(".//item") is not None else \
+            root.iter("{http://www.w3.org/2005/Atom}entry")
         count = 0
         for entry in entries:
             def field(*names):
@@ -251,25 +276,32 @@ def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
                     if el is not None:
                         return el.text or el.get("href") or ""
                 return ""
+
             title = clean(field("title", "{http://www.w3.org/2005/Atom}title"))
             if not title:
                 continue
             key = re.sub(r"\s", "", title)[:60]
             if key in seen:
                 continue
+
             published = parse_date(field(
                 "pubDate", "{http://www.w3.org/2005/Atom}updated",
                 "{http://www.w3.org/2005/Atom}published"))
             if published and published < cutoff:
                 continue
+
             seen.add(key)
             items.append({
                 "source": source,
                 "lane": lane,
                 "title": title,
-                "summary": clean(field("description", "{http://www.w3.org/2005/Atom}summary"))[:400],
+                "summary": clean(field(
+                    "description", "{http://www.w3.org/2005/Atom}summary"))[:400],
                 "link": field("link", "{http://www.w3.org/2005/Atom}link"),
-                "published_at": published.astimezone(timezone.utc).isoformat() if published else None,
+                "published_at": (
+                    published.astimezone(timezone.utc).isoformat()
+                    if published else None
+                ),
             })
             count += 1
         print(f"  {source}: {count} recent items")
