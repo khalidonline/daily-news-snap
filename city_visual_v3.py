@@ -27,6 +27,7 @@ city_candidate_metadata_ok = v2.city_candidate_metadata_ok
 is_city_fallback_context = v2.is_city_fallback_context
 city_fallback_visual_context = v2.city_fallback_visual_context
 city_frame_allows_generic_fallback = v2.city_frame_allows_generic_fallback
+city_spa_metadata_ok = v2.city_spa_metadata_ok
 normalize_city_deck_for_visuals = v2.normalize_city_deck_for_visuals
 reviewed_city_fallback_rows = v2.reviewed_city_fallback_rows
 apply_riyadh_closing = v2.apply_riyadh_closing
