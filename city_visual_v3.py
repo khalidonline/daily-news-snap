@@ -24,7 +24,6 @@ import photo_quality_guard
 import story_focus
 
 
-# Public surface retained for the runtime/tests.
 CITY_PROMPT = v2.CITY_PROMPT
 CITY_FALLBACK_MARKER = v2.CITY_FALLBACK_MARKER
 exact_city_keywords = v2.exact_city_keywords
@@ -40,15 +39,17 @@ normalize_city_deck_for_visuals = v2.normalize_city_deck_for_visuals
 reviewed_city_fallback_rows = v2.reviewed_city_fallback_rows
 apply_riyadh_closing = v2.apply_riyadh_closing
 
-# Visually reviewed catalogue corrections. These files may remain useful for
-# their literal modern scene, but their old catalogue wording must not make
-# them historical evidence.
 _KNOWN_HISTORICAL_ERA_MISMATCHES = {"old-riyadh-souq.jpg"}
 
 _PINNED_RIYADH_METRO = {
     "filename": "KAFD Station - Riyadh Metro.jpg",
     "commons_file": "KAFD Station - Riyadh Metro.jpg",
     "credit": "Ali Lajami / Wikimedia Commons / CC BY 2.0",
+}
+_PINNED_RIYADH_GROWTH = {
+    "filename": "Riyadh aerial helicam 2013.jpg",
+    "commons_file": "Riyadh aerial helicam 2013.jpg",
+    "credit": "Ville Hyvönen / Wikimedia Commons / CC BY-SA 2.0",
 }
 _PINNED_RIYADH_SKYLINE = {
     "filename": "Riyadh Skyline.jpg",
@@ -62,8 +63,6 @@ def _norm(text: str) -> str:
 
 
 def _years(text: str) -> set[str]:
-    # Exact years only. A decade label such as ``1970s`` must reach the
-    # decade-matching rule below instead of becoming a false exact 1970.
     return set(
         re.findall(
             r"(?<![0-9a-z])((?:18|19|20)\d{2})(?![0-9a-z])",
@@ -90,12 +89,6 @@ def _generic_tokens(aliases: Iterable[str]) -> set[str]:
 def city_frame_deserves_targeted_search_after_minimum(
     frame: dict, aliases: Iterable[str] = ()
 ) -> bool:
-    """Keep one exact search for a high-value beat after four photos exist.
-
-    The four-photo threshold still stops generic/expensive hunting. Metro and
-    a final skyline/KAFD beat are exceptions because replacing either with a
-    text-only year card materially weakens the finished Snapchat sequence.
-    """
     targets = list((frame or {}).get("image_keywords") or [])
     targets += list((frame or {}).get("image_keywords_ar") or [])
     text = _norm(" ".join(str(term) for term in targets if term))
@@ -111,7 +104,7 @@ def city_frame_deserves_targeted_search_after_minimum(
 
 
 def pinned_riyadh_visual(frame: dict):
-    """Return a deterministic reviewed Commons asset for the two final beats."""
+    """Return deterministic Commons assets for Riyadh's final visual beats."""
     if not isinstance(frame, dict):
         return None
     targets = list(frame.get("image_keywords") or [])
@@ -129,6 +122,20 @@ def pinned_riyadh_visual(frame: dict):
     ) or "من بلدة مسو رة إلى مدينة بهذا الحجم" in _norm(heading)
     if approved_close and ("riyadh" in whole or "الرياض" in whole):
         return dict(_PINNED_RIYADH_SKYLINE)
+
+    growth_markers = (
+        "تعداد السعودية",
+        "سبعة ملايين",
+        "7 ملايين",
+        "هذا الحجم",
+        "حجم لم تعرفه",
+        "عدد سكانها",
+    )
+    if (
+        ("riyadh" in whole or "الرياض" in whole)
+        and any(marker in body or marker in heading for marker in growth_markers)
+    ):
+        return dict(_PINNED_RIYADH_GROWTH)
     return None
 
 
@@ -218,7 +225,6 @@ def reviewed_city_exact_rows(frame: dict, index_path,
 
 def plan_reviewed_exact_assignments(frames: Iterable[dict], index_path,
                                     aliases: Iterable[str] = ()) -> dict[int, dict]:
-    """Plan only exact reviewed photos that can actually survive quality."""
     assignments: dict[int, dict] = {}
     used: set[str] = set()
     for idx, frame in enumerate(frames or []):
@@ -241,7 +247,6 @@ def plan_reviewed_exact_assignments(frames: Iterable[dict], index_path,
 
 
 def _download_pinned_visual(asset: dict, out_path, sb, seen=()):
-    """Download one exact Commons file, verify pixels/quality, then stage it."""
     if not asset:
         return None
     out = Path(out_path)
@@ -283,7 +288,7 @@ def _download_pinned_visual(asset: dict, out_path, sb, seen=()):
 
 
 def configure(story_bot_module):
-    """Use v2 flow, with deterministic Metro/closing visuals for Riyadh."""
+    """Use v2 flow, with deterministic final Riyadh visuals."""
     pre_city_find_photo = story_bot_module.find_photo
 
     v2.reviewed_city_exact_match = reviewed_city_exact_match
@@ -299,9 +304,10 @@ def configure(story_bot_module):
         if str(frame.get("subject_kind", "")).strip() == "place_city":
             pinned = pinned_riyadh_visual(frame)
             if pinned is not None:
-                photo = _download_pinned_visual(pinned, out_path, sb, seen)
-                if photo is not None:
-                    return photo
+                # Fail closed. A pinned Riyadh beat may become text-only if its
+                # exact file is unavailable, but it may never drift to another
+                # city or an unrelated local photo.
+                return _download_pinned_visual(pinned, out_path, sb, seen)
 
         photo = city_find_photo(
             spec, out_path, seen, context,
@@ -325,14 +331,11 @@ def configure(story_bot_module):
         if not city_frame_deserves_targeted_search_after_minimum(frame, aliases):
             return None
 
-        # An ordinary skyline mention after the four-photo minimum is not
-        # allowed to reopen the generic ladder. The approved closing skyline
-        # is handled deterministically above.
         targets = _norm(" ".join(
             [str(x) for x in frame.get("image_keywords", [])]
             + [str(x) for x in frame.get("image_keywords_ar", [])]
         ))
-        if ("skyline" in targets or "أفق" in targets) and pinned_riyadh_visual(frame) is None:
+        if "skyline" in targets or "أفق" in targets:
             return None
 
         print("      city high-value exact search: continuing after four-photo minimum")
