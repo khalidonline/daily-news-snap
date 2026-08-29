@@ -8,30 +8,7 @@ new_import = "import random\nimport re\nimport subprocess\n"
 assert old_import in text
 text = text.replace(old_import, new_import, 1)
 
-old_config = '''# Feed-diff pre-filter: the one irreducible cost of a watching cycle was
-# the classifier call itself — it did its own discovery, so it had to run
-# every 30 minutes even when nothing had been published anywhere. The
-# feeds answer "did anything new appear?" deterministically first, and
-# the model is only paid when the answer is yes. General Saudi headlines
-# catch national/official developments; business + technology preserve
-# the original beats; Asharq Al-Awsat adds direct economy coverage.
-WATCH_FEED_DIFF = (os.getenv("WATCH_FEED_DIFF", "").strip() or "1") != "0"
-WATCH_FEEDS = [u.strip() for u in
-               (os.getenv("WATCH_FEEDS", "").strip() or
-                "https://news.google.com/rss?hl=ar&gl=SA&ceid=SA:ar,"
-                "https://news.google.com/rss/headlines/section/topic/"
-                "BUSINESS?hl=ar&gl=SA&ceid=SA:ar,"
-                "https://news.google.com/rss/headlines/section/topic/"
-                "TECHNOLOGY?hl=ar&gl=SA&ceid=SA:ar,"
-                "https://aawsat.com/feed/economy").split(",") if u.strip()]
-# A wider stateless window makes the watcher resilient to delayed/missed
-# hosted-runner starts without forcing a state commit every 30 minutes.
-# The classifier still applies the stricter "hours, not days" breaking gate.
-WATCH_FEED_WINDOW_MIN = int(
-    os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "180")
-FEED_UA = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
-'''
-new_config = '''# Feed-diff pre-filter: RSS/network reads are cheap; model calls and web
+new_config = r'''# Feed-diff pre-filter: RSS/network reads are cheap; model calls and web
 # searches are not. Core Saudi feeds may fail open into classification, while
 # broader regional/global feeds are optional tripwires whose outages never
 # create paid work by themselves. Broad-source headlines are filtered with a
@@ -99,61 +76,12 @@ _REGION_RELEVANCE_RE = re.compile(
     r"dubai|abu dhabi|qatar|doha|kuwait|bahrain|oman|muscat|gcc|opec|"
     r"red sea|gulf (?:states?|airlines?|region|markets?))\b)",
     re.IGNORECASE,
-)
-'''
-assert old_config in text
-text = text.replace(old_config, new_config, 1)
+)'''
+config_start = text.index("# Feed-diff pre-filter:")
+config_end = text.index("\nBEATS =", config_start)
+text = text[:config_start] + new_config + text[config_end:]
 
-old_feed = '''def feed_fresh_items():
-    """Return (fresh_titles, feeds_healthy).
-
-    The pre-filter is allowed to suppress the classifier only when every
-    configured feed was fetched and parsed into usable titled entries. Any
-    unreachable, empty, or suspiciously untitled feed fails OPEN into the
-    classifier, because a broken pre-filter must never blind breaking news.
-    Undated entries still count as fresh. The 180-minute stateless window
-    absorbs hosted-runner jitter without committing scan state every cycle.
-    """
-    cutoff = (datetime.now(timezone.utc)
-              - timedelta(minutes=WATCH_FEED_WINDOW_MIN))
-    fresh = []
-    reachable = 0
-    feeds_healthy = True
-    for url in WATCH_FEEDS:
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": FEED_UA})
-            with urllib.request.urlopen(req, timeout=20) as resp:
-                root = ET.fromstring(resp.read())
-        except Exception as exc:
-            feeds_healthy = False
-            print(f"  ! feed unreachable ({exc}): {url}")
-            continue
-
-        reachable += 1
-        items = (root.findall(".//item")
-                 or root.findall(".//{http://www.w3.org/2005/Atom}entry"))
-        titled = 0
-        fresh_before = len(fresh)
-        for item in items:
-            title = _feed_title(item)
-            if not title:
-                continue
-            titled += 1
-            when = _feed_entry_time(item)
-            if when is None or when >= cutoff:
-                fresh.append(title)
-
-        fresh_count = len(fresh) - fresh_before
-        print(f"  feed scan: entries={len(items)} titles={titled} "
-              f"fresh={fresh_count} — {url}")
-        if not items or titled == 0:
-            feeds_healthy = False
-            print("  ! feed parsed without usable titled entries — "
-                  "pre-filter will fail open")
-
-    return fresh, bool(reachable) and feeds_healthy
-'''
-new_feed = '''def _feed_spec(raw):
+new_feed = r'''def _feed_spec(raw):
     if isinstance(raw, str):
         return {"name": raw, "url": raw, "tier": "core"}
     return {
@@ -274,28 +202,11 @@ def _classifier_search_budget(fresh_titles):
     # second search only for fail-open cycles where the feed layer is blind.
     return min(1, WATCH_MAX_SEARCHES) if fresh_titles else WATCH_MAX_SEARCHES
 '''
-assert old_feed in text
-text = text.replace(old_feed, new_feed, 1)
+feed_start = text.index("def feed_fresh_items():")
+feed_end = text.index("\ndef classify(", feed_start)
+text = text[:feed_start] + new_feed + text[feed_end:]
 
-old_classify = '''    user = (f"الآن {now:%Y-%m-%d %H:%M} بتوقيت السعودية. امسح أخبار "
-            f"الساعات الأخيرة في هذه الملفات: {BEATS}. "
-            f"ابحث بحثاً أو بحثين موجهين لليوم فقط، ثم أصدر الحكم.")
-    if fresh_titles:
-        # the pre-filter already found what appeared; the searches now
-        # verify a known candidate instead of rediscovering the field
-        listing = "\n".join(f"- {t}" for t in fresh_titles[:12])
-        user += ("\n\nعناوين ظهرت في الخلاصات منذ الدورة الماضية — "
-                 "قيّمها أولاً، وابحث للتحقق لا للاكتشاف:\n" + listing)
-    payload = {
-        "model": WATCH_MODEL,
-        "max_tokens": WATCH_MAX_TOKENS,
-        "system": WATCH_PROMPT,
-        "messages": [{"role": "user", "content": user}],
-        "tools": [{"type": "web_search_20250305", "name": "web_search",
-                   "max_uses": WATCH_MAX_SEARCHES}],
-    }
-'''
-new_classify = '''    known_candidate = bool(fresh_titles)
+new_classify = r'''    known_candidate = bool(fresh_titles)
     search_budget = _classifier_search_budget(fresh_titles)
     search_wording = ("ابحث بحثاً واحداً موجهاً للتحقق من المرشح"
                       if known_candidate else
@@ -319,8 +230,10 @@ new_classify = '''    known_candidate = bool(fresh_titles)
                    "max_uses": search_budget}],
     }
 '''
-assert old_classify in text
-text = text.replace(old_classify, new_classify, 1)
+classify_start = text.index("def classify(")
+user_start = text.index('    user = (f"الآن', classify_start)
+req_start = text.index("    req = urllib.request.Request(", user_start)
+text = text[:user_start] + new_classify + text[req_start:]
 
 old_response = '''            with urllib.request.urlopen(req, timeout=120) as resp:
                 data = json.loads(resp.read())
