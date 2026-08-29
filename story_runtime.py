@@ -31,13 +31,9 @@ story_focus.configure(sb)
 def _matches_story(entry, story):
     aliases = [a for a in sb.story_aliases(story) if a]
     persons = sb._STORY_PERSONS.get(str(story).strip()) or []
-    phrases = {a.casefold() for a in aliases + persons}
-    words = set()
-    for q in phrases:
-        words |= {t for t in q.replace(",", " ").split() if len(t) > 2}
-    tags = {t.casefold() for t in entry.get("tags", [])}
-    return any(tag in phrases or (" " not in tag and tag in words)
-               for tag in tags)
+    return story_focus.catalog_tags_match_aliases(
+        entry.get("tags", []), aliases + persons
+    )
 
 
 def approved_runtime_visuals(story):
