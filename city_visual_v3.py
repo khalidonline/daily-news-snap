@@ -70,6 +70,29 @@ def _generic_tokens(aliases: Iterable[str]) -> set[str]:
     return generic
 
 
+def city_frame_deserves_targeted_search_after_minimum(
+    frame: dict, aliases: Iterable[str] = ()
+) -> bool:
+    """Keep one exact search for a high-value beat after four photos exist.
+
+    The four-photo threshold still stops generic/expensive hunting. Metro and
+    a final skyline/KAFD beat are exceptions because replacing either with a
+    text-only year card materially weakens the finished Snapchat sequence.
+    """
+    targets = list((frame or {}).get("image_keywords") or [])
+    targets += list((frame or {}).get("image_keywords_ar") or [])
+    text = _norm(" ".join(str(term) for term in targets if term))
+    if not text:
+        return False
+    phrases = (
+        "metro", "مترو",
+        "skyline", "أفق",
+        "kafd", "king abdullah financial district",
+        "مركز الملك عبدالله المالي",
+    )
+    return any(_norm(phrase) in text for phrase in phrases)
+
+
 def _meaningful_overlap(targets: list[str], metadata: str,
                         aliases: Iterable[str]) -> int:
     generic = _generic_tokens(aliases)
@@ -179,8 +202,49 @@ def plan_reviewed_exact_assignments(frames: Iterable[dict], index_path,
 
 
 def configure(story_bot_module):
-    """Use v2 runtime flow with this module's corrected exact scorer."""
+    """Use v2 flow, then preserve exact Metro/skyline searches after minimum."""
+    # story_focus's strict find_photo is the safe exact-search path beneath v2.
+    # Keep a handle so the post-minimum exception can use it without reopening
+    # generic city fallback.
+    pre_city_find_photo = story_bot_module.find_photo
+
     v2.reviewed_city_exact_match = reviewed_city_exact_match
     v2.reviewed_city_exact_rows = reviewed_city_exact_rows
     v2.plan_reviewed_exact_assignments = plan_reviewed_exact_assignments
-    return v2.configure(story_bot_module)
+    sb = v2.configure(story_bot_module)
+    city_find_photo = sb.find_photo
+
+    def find_photo_with_high_value_late_exact(
+        spec, out_path, seen=(), context="", allow_neutral=True, bank=None
+    ):
+        photo = city_find_photo(
+            spec, out_path, seen, context,
+            allow_neutral=allow_neutral, bank=bank,
+        )
+        if photo is not None:
+            return photo
+
+        frame = spec if isinstance(spec, dict) else {}
+        if str(frame.get("subject_kind", "")).strip() != "place_city":
+            return None
+        aliases = legacy._unique(
+            alias for alias in ("Riyadh", "الرياض")
+            if alias and alias.casefold() in (
+                " ".join(
+                    [str(context or "")]
+                    + [str(x) for x in frame.get("image_keywords", [])]
+                    + [str(x) for x in frame.get("image_keywords_ar", [])]
+                ).casefold()
+            )
+        )
+        if not city_frame_deserves_targeted_search_after_minimum(frame, aliases):
+            return None
+
+        print("      city high-value exact search: continuing after four-photo minimum")
+        return pre_city_find_photo(
+            frame, out_path, seen, context,
+            allow_neutral=False, bank=bank,
+        )
+
+    sb.find_photo = find_photo_with_high_value_late_exact
+    return sb
