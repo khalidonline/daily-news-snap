@@ -17,7 +17,7 @@ class NewsScopeEdgeTests(unittest.TestCase):
         item = {
             "lane": "business_tech",
             "source": "example",
-            "title": "قرار أمريكي جديد يخفض رسوماً على صادرات سعودية",
+            "title": "ترامب يعلن قراراً يخفض رسوماً على صادرات سعودية",
             "summary": "التغيير يطبق مباشرة على صادرات المملكة ويغير تكلفة التجارة.",
         }
         self.assertTrue(hard_scope_eligible(item))
