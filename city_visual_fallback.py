@@ -190,7 +190,7 @@ def city_fallback_queries(aliases: Iterable[str]) -> list[str]:
             f"{latin} landmark",
             f"{latin} airport",
             f"{latin} stadium",
-            arabic or latin,
+            f"مطار {arabic}" if arabic else f"{latin} public space",
         ]
     elif arabic:
         queries = [
@@ -199,7 +199,7 @@ def city_fallback_queries(aliases: Iterable[str]) -> list[str]:
             f"معلم {arabic}",
             f"مطار {arabic}",
             f"ملعب {arabic}",
-            arabic,
+            f"مساحة عامة في {arabic}",
         ]
     else:
         queries = []
