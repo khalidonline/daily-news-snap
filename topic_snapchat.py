@@ -8,6 +8,7 @@ publish-time editorial safeguards.
 
 from __future__ import annotations
 
+import http.client
 import json
 import os
 import re
@@ -223,13 +224,22 @@ def _compact_length_fields(brief: dict[str, Any], errors: list[str]) -> dict[str
     return compacted
 
 
+def _research_with_transport_retry(original_research, topic: str) -> dict[str, Any]:
+    """Retry one whole research call when an HTTP response body is truncated."""
+    try:
+        return original_research(topic)
+    except http.client.HTTPException as exc:
+        print(f"  ! topic research transport failed ({exc}) — retrying once")
+        return original_research(topic)
+
+
 def research_with_validation(bot: Any, original_research, topic: str) -> dict[str, Any]:
     """Research, validate, retry once with exact feedback, then block bad output."""
     # Never let a failed/new topic accidentally reuse the previous topic's image
     # context in the shared relevance selector.
     remember_story_contexts({"stories": []})
 
-    brief = original_research(topic)
+    brief = _research_with_transport_retry(original_research, topic)
     errors = validate_brief(brief)
     if not errors:
         _remember_topic_image_context(brief)
@@ -247,7 +257,7 @@ def research_with_validation(bot: Any, original_research, topic: str) -> dict[st
         + ("\n\nقيود الطول الدقيقة لهذه المحاولة:\n" + length_feedback if length_feedback else "")
     )
     try:
-        brief = original_research(topic)
+        brief = _research_with_transport_retry(original_research, topic)
     finally:
         bot.SYSTEM_PROMPT = original_prompt
 
