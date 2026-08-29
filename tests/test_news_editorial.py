@@ -1,6 +1,7 @@
 import unittest
 from datetime import datetime, timedelta, timezone
 
+import news_editorial
 from news_editorial import (
     DEFAULT_LOOKBACK_HOURS,
     FEED_SPECS,
@@ -31,6 +32,13 @@ class NewsEditorialTests(unittest.TestCase):
         if age_hours is not None:
             item["published_at"] = (self.FIXED_NOW - timedelta(hours=age_hours)).isoformat()
         return item
+
+    def hard_gate(self):
+        self.assertTrue(
+            hasattr(news_editorial, "hard_scope_eligible"),
+            "hard_scope_eligible must enforce non-negotiable daily scope",
+        )
+        return news_editorial.hard_scope_eligible
 
     def test_lane_targets_cover_sixty_model_slots(self):
         self.assertEqual(LANE_TARGETS, {
@@ -97,6 +105,70 @@ class NewsEditorialTests(unittest.TestCase):
             "title": "Apple ترفع سعر iPhone في السعودية",
             "summary": "السعر الجديد أعلى بـ200 ريال عند الإطلاق.",
         }))
+
+    def test_foreign_political_control_story_is_hard_rejected(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "business_tech", 201, source="BBC",
+            title="ترامب يعلن اتفاقاً أمريكياً للسيطرة على نفط فنزويلا",
+            summary="اتفاق سياسي جديد يتعلق بفنزويلا والنفط.")
+        self.assertFalse(gate(item))
+
+    def test_medical_advice_story_is_hard_rejected(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "travel_lifestyle", 202, source="الشرق الأوسط",
+            title="التوقف المفاجئ عن أدوية ضغط الدم له 5 مخاطر",
+            summary="نصائح طبية عن الأدوية وضغط الدم.")
+        self.assertFalse(gate(item))
+
+    def test_routine_hilal_result_is_hard_rejected(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "sports", 203, source="اليوم",
+            title="الهلال يسحق الخليج بخماسية في دوري روشن",
+            summary="فاز الهلال بنتيجة كبيرة في مباراة دوري عادية.")
+        self.assertFalse(gate(item))
+
+    def test_obscure_company_borrowing_for_nvidia_is_hard_rejected(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "business_tech", 204, source="TechCrunch",
+            title="شركة Lambda تقترض مليار دولار لشراء رقائق NVIDIA",
+            summary="شركة حوسبة غير معروفة تقترض لشراء الرقائق.")
+        self.assertFalse(gate(item))
+
+    def test_fed_rate_story_remains_hard_eligible(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "business_tech", 205, source="الشرق الأوسط",
+            title="الاحتياطي الفيدرالي يلمح لاحتمال رفع الفائدة مجدداً",
+            summary="القرار المحتمل يؤثر في أسعار الفائدة والتمويل والأسواق.")
+        self.assertTrue(gate(item))
+
+    def test_major_saudi_property_story_remains_hard_eligible(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "saudi_core", 206, source="الشرق الأوسط",
+            title="اهتمام دولي متزايد بشراء العقارات في السعودية",
+            summary="تغير ملحوظ في الطلب على السوق السعودية.")
+        self.assertTrue(gate(item))
+
+    def test_major_championship_story_remains_hard_eligible(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "sports", 207, source="اليوم",
+            title="الهلال يتوج بلقب دوري أبطال آسيا بعد النهائي",
+            summary="لقب قاري كبير للنادي السعودي.")
+        self.assertTrue(gate(item))
+
+    def test_national_saudi_health_policy_remains_hard_eligible(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "saudi_core", 208, source="اليوم",
+            title="السعودية توسع التغطية التأمينية لخدمة ملايين المستفيدين",
+            summary="تغيير وطني في التأمين الصحي والخدمات.")
+        self.assertTrue(gate(item))
 
     def test_balanced_shortlist_represents_all_populated_lanes(self):
         items = []
