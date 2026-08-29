@@ -1,0 +1,49 @@
+name: Cancel bad Topic Brief post once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/bundle-cancel-once.yml"
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check and cancel Bundle post
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+          POST_ID: "5e0d198b-8aa6-4bd1-83b7-6f51ea3ad7e1"
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.error
+          base = (os.environ.get("BUNDLE_BASE") or "").strip() or "https://api.bundle.social/api/v1"
+          post_id = os.environ["POST_ID"]
+          key = os.environ["BUNDLE_API_KEY"]
+          url = f"{base}/post/{post_id}"
+          headers = {
+              "x-api-key": key,
+              "Accept": "application/json",
+              "User-Agent": "Mozilla/5.0 daily-news-snap release repair",
+          }
+          req = urllib.request.Request(url, headers=headers, method="GET")
+          with urllib.request.urlopen(req, timeout=30) as resp:
+              data = json.loads(resp.read())
+          status = str(data.get("status") or "")
+          print("bundle status before cancel:", status)
+          print("postedDate:", data.get("postedDate"))
+          if status in {"SCHEDULED", "PROCESSING", "RETRYING", "REVIEW", "DRAFT"}:
+              req = urllib.request.Request(url, headers=headers, method="DELETE")
+              with urllib.request.urlopen(req, timeout=30) as resp:
+                  deleted = json.loads(resp.read())
+              print("cancel response status:", deleted.get("status"))
+              print("deletedAt:", deleted.get("deletedAt"))
+          elif status == "POSTED":
+              print("TOO_LATE_ALREADY_POSTED")
+          elif status == "DELETED":
+              print("ALREADY_DELETED")
+          else:
+              print("NOT_CANCELLED_UNEXPECTED_STATUS", status)
+          PY
