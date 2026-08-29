@@ -1,0 +1,52 @@
+name: Daily news production smoke 2
+
+on:
+  push:
+    branches:
+      - "verify/daily-news-smoke2-20260829"
+    paths:
+      - ".github/workflows/daily-smoke2.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run real daily bot in forced dry-run mode
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DRY_RUN: "1"
+          POST_TO_SNAPCHAT: "0"
+          MEDIA_MODE: "github"
+          BRIEF_TITLE: "ملخص تنفيذي - خبر"
+          BRAND: "ملخص تنفيذي - خبر"
+          FONT_FAMILY: "Almarai"
+          REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
+          MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
+          MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
+          THEME: "light"
+          STORIES_PER_DAY: "1"
+          CANDIDATES: "8"
+          REQUIRE_PHOTO: "1"
+          IMAGE_SOURCE: "auto"
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          LOOKBACK_HOURS: "48"
+          REMEMBER_DAYS: "3"
+        run: python daily_news_runner.py
+      - name: Keep smoke card for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-smoke2-${{ github.run_id }}
+          path: out/*
+          retention-days: 1
+          if-no-files-found: ignore
