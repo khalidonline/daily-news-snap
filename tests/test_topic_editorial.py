@@ -58,8 +58,8 @@ class TopicEditorialTests(unittest.TestCase):
         return {
             "title": "فاتورتك تتغير بهذا السبب",
             "body": "إذا ارتفع استهلاكك بالصيف، يبان الفرق بسرعة. وفق بيانات الجهة الرسمية، التعرفة مرتبطة بشرائح الاستهلاك.",
-            "takeaway": "قارن استهلاك هذا الشهر بنفس الشهر من السنة الماضية.",
-            "caption": "رقم واحد يستحق تراجعه قبل نهاية الشهر.",
+            "takeaway": "شرائح الاستهلاك هي العامل الذي يفسر تغير الفاتورة مع ارتفاع الاستخدام.",
+            "caption": "رقم واحد يوضح لماذا تختلف الفاتورة بين شهر وآخر.",
             "sources": ["هيئة تنظيم المياه والكهرباء", "Reuters"],
             "image_queries": ["Saudi electricity meter Riyadh", "Saudi home electricity Riyadh", "Saudi summer home Riyadh"],
             "image_queries_ar": ["كهرباء", "عداد", "الرياض"],
@@ -93,7 +93,7 @@ class TopicEditorialTests(unittest.TestCase):
         brief.update({
             "title": "قسطك مرتبط بقرار في واشنطن مو الرياض",
             "body": "إذا عندك قرض بفائدة متغيرة، قرار الفيدرالي يوصلك خلال أيام.",
-            "takeaway": "راقب اجتماعات الفيدرالي لأن قرارهم يوصلك خلال أيام.",
+            "takeaway": "أثر القرار الخارجي يمر عبر السياسة النقدية المحلية وشروط التمويل.",
         })
         errors = validate_brief(brief)
         self.assertTrue(any("indirect financial relationship" in error for error in errors), errors)
@@ -103,8 +103,8 @@ class TopicEditorialTests(unittest.TestCase):
         brief.update({
             "title": "الفيدرالي ثبّت الفائدة",
             "body": "إذا عندك تمويل بفائدة متغيرة، قرار الفيدرالي يهمك لأن الريال مربوط بالدولار.",
-            "takeaway": "تمويلك المتغير يتحرك فقط لو غيّر ساما سعر الريبو فعلياً.",
-            "caption": "وش يعني ثبات الفائدة لتمويلك؟",
+            "takeaway": "التمويل المتغير يتحرك فقط لو غيّر ساما سعر الريبو فعلياً.",
+            "caption": "وش يعني ثبات الفائدة للتمويل المتغير؟",
             "sources": ["Federal Reserve", "البنك المركزي السعودي"],
         })
         errors = validate_brief(brief)
@@ -115,8 +115,8 @@ class TopicEditorialTests(unittest.TestCase):
         brief.update({
             "title": "الفيدرالي ثبّت الفائدة وساما لحقه",
             "body": "الريال مربوط بالدولار، لكن كل جهة لها قرارها وسياقها المحلي.",
-            "takeaway": "راجع عقدك والمؤشر المرجعي قبل أي قرار تمويلي.",
-            "caption": "وش يعني ثبات الفائدة لتمويلك؟",
+            "takeaway": "إعادة تسعير التمويل المتغير تعتمد على المؤشر المرجعي وشروط العقد.",
+            "caption": "وش يعني ثبات الفائدة للتمويل المتغير؟",
             "sources": ["Federal Reserve", "البنك المركزي السعودي"],
         })
         errors = validate_brief(brief)
@@ -125,10 +125,10 @@ class TopicEditorialTests(unittest.TestCase):
     def test_validate_brief_requires_primary_sources_for_fed_sama_topic(self):
         brief = self._complete_brief()
         brief.update({
-            "title": "ليش قرار الفيدرالي يهم التمويل هنا؟",
+            "title": "وش يعني ثبات الفائدة للتمويل المتغير؟",
             "body": "الريال مربوط بالدولار، لذلك تحركات الفائدة الأمريكية تؤثر على اتجاه الفائدة في السعودية، لكن الأثر الفعلي يعتمد على المؤشر والعقد.",
-            "takeaway": "إذا تمويلك متغير، راجع المؤشر وهامش البنك وموعد إعادة التسعير.",
-            "caption": "وش علاقة الفيدرالي بتمويلك؟",
+            "takeaway": "التمويل المتغير يعتمد على المؤشر وهامش البنك وموعد إعادة التسعير.",
+            "caption": "الفائدة الأمريكية جزء من الصورة، وليست العامل الوحيد في تكلفة التمويل.",
             "sources": ["أرقام", "اليوم السابع", "الإمارات اليوم"],
         })
         errors = validate_brief(brief)
@@ -137,9 +137,11 @@ class TopicEditorialTests(unittest.TestCase):
     def test_validate_brief_accepts_clear_conditional_finance_explanation(self):
         brief = self._complete_brief()
         brief.update({
-            "title": "ليش فائدة أمريكا تهم التمويل هنا؟",
-            "body": "ارتباط الريال بالدولار يجعل الفائدة المحلية تتأثر بالسياسة الأمريكية. وإذا كان تمويلك متغيراً، يعتمد الأثر الفعلي على عقدك وتسعير البنك.",
-            "takeaway": "تابع الفائدة المحلية وشروط عقدك قبل قرار إعادة التمويل.",
+            "title": "وش يعني ثبات الفائدة للتمويل المتغير؟",
+            "body": "ارتباط الريال بالدولار يجعل الفائدة المحلية تتأثر بالسياسة الأمريكية. وإذا كان التمويل متغيراً، يعتمد الأثر الفعلي على عقده وتسعير البنك.",
+            "takeaway": "في التمويل المتغير، الأثر الفعلي يعتمد على الفائدة المحلية وشروط العقد.",
+            "caption": "القرار الأمريكي مهم للسياق النقدي، لكنه لا يحدد القسط وحده.",
+            "sources": ["Federal Reserve", "البنك المركزي السعودي"],
         })
         self.assertEqual(validate_brief(brief), [])
 
@@ -157,12 +159,13 @@ class TopicEditorialTests(unittest.TestCase):
         self.assertIn("29 أغسطس 2026", prompt)
         self.assertIn("جمهور سعودي عربي على سناب شات", prompt)
 
-    def test_enhance_prompt_teaches_useful_finance_hooks_not_geographic_metaphors(self):
+    def test_enhance_prompt_keeps_finance_hooks_informative_not_geographic_or_advisory(self):
         prompt = enhance_prompt("", date(2026, 8, 29))
         self.assertIn("العلاقة المباشرة وغير المباشرة", prompt)
-        self.assertIn("ليش فائدة أمريكا تهم التمويل هنا؟", prompt)
-        self.assertIn("إذا كان تمويلك متغيراً", prompt)
-        self.assertIn("الفائدة المحلية", prompt)
+        self.assertIn("وش يعني ثبات الفائدة للتمويل المتغير؟", prompt)
+        self.assertIn("المؤشر المرجعي", prompt)
+        self.assertIn("ليس دورك أن تعلّم", prompt)
+        self.assertIn("من دون توجيه القارئ", prompt)
 
     def test_enhance_prompt_teaches_saibor_margin_and_separate_institutions(self):
         prompt = enhance_prompt("", date(2026, 8, 29))
@@ -170,8 +173,10 @@ class TopicEditorialTests(unittest.TestCase):
         self.assertIn("هامش البنك", prompt)
         self.assertIn("موعد إعادة التسعير", prompt)
         self.assertIn("اعرض قرار كل جهة على حدة", prompt)
-        self.assertIn("وش يعني ثبات الفائدة لتمويلك؟", prompt)
+        self.assertIn("وش يعني ثبات الفائدة للتمويل المتغير؟", prompt)
         self.assertIn("المصدرين الأوليين", prompt)
+        self.assertIn("صورة تحريرية عالية الجودة", prompt)
+        self.assertIn("حقل takeaway ليس نصيحة", prompt)
         self.assertNotIn("وساما تبعه", prompt)
 
 
