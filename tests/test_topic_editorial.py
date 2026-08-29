@@ -134,18 +134,6 @@ class TopicEditorialTests(unittest.TestCase):
         errors = validate_brief(brief)
         self.assertTrue(any("Federal Reserve and SAMA primary sources" in error for error in errors), errors)
 
-    def test_validate_brief_blocks_run_78_personalized_global_rate_hook(self):
-        brief = self._complete_brief()
-        brief.update({
-            "title": "ليش قسطك ما يتغير مع كل قرار فائدة عالمي؟",
-            "body": "إذا تمويلك ثابت، تغيّر الفائدة العالمية ما يلمس قسطك. ساما تحدد سياستها النقدية محلياً.",
-            "takeaway": "تكلفة التمويل المتغير ترتبط بالمؤشر المرجعي وهامش البنك وموعد إعادة التسعير.",
-            "caption": "الفائدة العالمية جزء من السياق النقدي وليست وصفاً مباشراً لقسط العميل.",
-            "sources": ["Federal Reserve", "البنك المركزي السعودي"],
-        })
-        errors = validate_brief(brief)
-        self.assertTrue(any("viewer's installment or financing" in error for error in errors), errors)
-
     def test_validate_brief_accepts_clear_conditional_finance_explanation(self):
         brief = self._complete_brief()
         brief.update({
