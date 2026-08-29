@@ -2,7 +2,8 @@
 """Saudi Snapchat editorial runtime for topic_bot.
 
 This keeps the mature research/render/post plumbing in topic_bot.py intact while
-installing stricter audience selection and publish-time editorial safeguards.
+installing stricter audience selection, relevance-first automatic imagery, and
+publish-time editorial safeguards.
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from daily_news_runner import install_auto_image_selector, remember_story_contexts
 from topic_editorial import (
     balanced_shortlist,
     enhance_prompt,
@@ -48,11 +50,114 @@ def prepare_shortlist(bot: Any, scored: list[dict[str, Any]], performance: dict[
     return balanced_shortlist(enriched, limit=limit)
 
 
+def topic_image_story(brief: dict[str, Any]) -> dict[str, Any]:
+    """Translate a topic card into the story shape used by the shared image judge."""
+    return {
+        "headline": str(brief.get("title", "") or "").strip(),
+        "summary": str(brief.get("body", "") or "").strip(),
+        "takeaway": str(brief.get("takeaway", "") or "").strip(),
+        "link": str(brief.get("source_url", "") or "").strip(),
+        "scope": "saudi",
+        "image_queries": list(brief.get("image_queries", []) or []),
+        "image_queries_ar": list(brief.get("image_queries_ar", []) or []),
+    }
+
+
+def _remember_topic_image_context(brief: dict[str, Any]) -> None:
+    remember_story_contexts({"stories": [topic_image_story(brief)]})
+
+
+def _credit_requires_visible(provider: str, credit: str | None) -> bool:
+    """Return True when a candidate cannot be shown without a visible credit.
+
+    Openverse exposes its CC licence in the returned credit. Only CC0/public-
+    domain variants are eligible for a credit-free topic card. Commons credits
+    do not reliably expose enough licence detail here, so its candidates are
+    conservatively skipped. Library of Congress candidates already pass the
+    provider's no-known-restrictions rights gate and remain eligible.
+    """
+    provider = (provider or "").strip().lower()
+    text = (credit or "").strip().lower()
+    if provider == "commons":
+        return True
+    if provider == "openverse":
+        return not any(token in text for token in (
+            "cc0", "public domain", "pdm", "public-domain"
+        ))
+    return False
+
+
+def _creditless_pair(fetcher, provider: str):
+    """Keep a provider for auto search, but reject attribution-required results."""
+    def wrapped(*args, **kwargs):
+        photo, credit = fetcher(*args, **kwargs)
+        if photo and _credit_requires_visible(provider, credit):
+            print(f"      auto image [{provider}]: skipped — visible attribution required")
+            return None, None
+        return photo, credit
+    return wrapped
+
+
+def _creditless_renderer(renderer, generated_credit: str | None = None):
+    """Hide ordinary photographer/source credits while retaining AI disclosure."""
+    def wrapped(brief, out_path, photo_path=None, photo_credit=None):
+        visible_credit = None
+        if photo_path and generated_credit \
+                and Path(str(photo_path) + ".generated").exists():
+            visible_credit = generated_credit
+        return renderer(brief, out_path, photo_path, visible_credit)
+    return wrapped
+
+
+def _install_topic_image_policy(bot: Any) -> None:
+    """Make relevance-first auto imagery mandatory for Topic Brief."""
+    bot.IMAGE_SOURCE = "auto"
+
+    # topic_bot historically imported only the providers it called directly.
+    # Add the shared providers/vision judge needed by the proven daily auto
+    # selector, without changing the large legacy topic_bot.py module.
+    required = ("fetch_commons_photo", "fetch_loc_photo", "photo_shows")
+    shared_news = None
+    if any(not hasattr(bot, name) for name in required):
+        import news_bot as shared_news
+        for name in required:
+            if not hasattr(bot, name):
+                setattr(bot, name, getattr(shared_news, name))
+
+    if not getattr(bot, "_TOPIC_OPEN_LICENSE_POLICY_INSTALLED", False):
+        if hasattr(bot, "fetch_commons_photo"):
+            bot.fetch_commons_photo = _creditless_pair(bot.fetch_commons_photo, "commons")
+        if hasattr(bot, "fetch_openverse_photo"):
+            bot.fetch_openverse_photo = _creditless_pair(bot.fetch_openverse_photo, "openverse")
+        bot._TOPIC_OPEN_LICENSE_POLICY_INSTALLED = True
+
+    install_auto_image_selector(bot)
+
+    if not getattr(bot, "_TOPIC_CREDITLESS_RENDERERS_INSTALLED", False):
+        if shared_news is None:
+            try:
+                import news_bot as shared_news
+            except Exception:
+                shared_news = None
+        generated_credit = getattr(shared_news, "GENERATED_CREDIT", None) \
+            if shared_news is not None else None
+        if hasattr(bot, "render_story"):
+            bot.render_story = _creditless_renderer(bot.render_story, generated_credit)
+        if hasattr(bot, "render_topic"):
+            bot.render_topic = _creditless_renderer(bot.render_topic, generated_credit)
+        bot._TOPIC_CREDITLESS_RENDERERS_INSTALLED = True
+
+
 def research_with_validation(bot: Any, original_research, topic: str) -> dict[str, Any]:
     """Research, validate, retry once with exact feedback, then block bad output."""
+    # Never let a failed/new topic accidentally reuse the previous topic's image
+    # context in the shared relevance selector.
+    remember_story_contexts({"stories": []})
+
     brief = original_research(topic)
     errors = validate_brief(brief)
     if not errors:
+        _remember_topic_image_context(brief)
         return brief
 
     print("  ! topic brief failed editorial validation — retrying once")
@@ -74,6 +179,7 @@ def research_with_validation(bot: Any, original_research, topic: str) -> dict[st
         raise SystemExit(
             "Topic brief failed editorial validation after retry: " + "; ".join(errors)
         )
+    _remember_topic_image_context(brief)
     return brief
 
 
@@ -179,6 +285,7 @@ def install(bot: Any) -> None:
     bot.KICKER = os.getenv("KICKER", "معلومة تهمك")
     bot.TOPIC_MODEL = bot.CLAUDE_MODEL
     bot.SYSTEM_PROMPT = enhance_prompt(bot.SYSTEM_PROMPT)
+    _install_topic_image_policy(bot)
 
     selector_prompt = getattr(bot, "SELECT_PROMPT", "")
     if selector_prompt:
