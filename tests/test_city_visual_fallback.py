@@ -206,7 +206,7 @@ class CityVisualFallbackTests(unittest.TestCase):
             )
         self.assertEqual("old-riyadh-souq.jpg", rows[0]["filename"])
 
-    def test_whole_deck_gets_four_exact_assignments_before_any_fallback(self):
+    def test_whole_deck_exact_plan_excludes_dusty_skyline_before_fallback(self):
         with tempfile.TemporaryDirectory() as td:
             index = Path(td) / "images.txt"
             index.write_text(
@@ -228,11 +228,11 @@ class CityVisualFallbackTests(unittest.TestCase):
             assignments = cvf.plan_reviewed_exact_assignments(
                 frames, index, aliases=["Riyadh", "الرياض"]
             )
-        self.assertGreaterEqual(len(assignments), 4)
+        self.assertEqual(3, len(assignments))
         self.assertEqual("old-riyadh-souq.jpg", assignments[0]["filename"])
         self.assertEqual("railway-construction-1951.jpg", assignments[2]["filename"])
         self.assertIn(assignments[3]["filename"], {"riyadh-1975-construction.jpg", "riyadh-1977-construction.jpg"})
-        self.assertEqual("riyadh-skyline.jpg", assignments[5]["filename"])
+        self.assertNotIn(5, assignments)
 
     def test_riyadh_closing_is_locked_to_approved_annual_pos_copy(self):
         brief = {
