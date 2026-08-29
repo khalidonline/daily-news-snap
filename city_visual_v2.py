@@ -185,6 +185,35 @@ _GENERIC_SCENE_TERMS = (
 )
 
 
+def city_frame_allows_generic_fallback(frame: dict,
+                                       aliases: Iterable[str] = ()) -> bool:
+    """Return True only when the frame itself asks for a generic city scene.
+
+    A named palace, metro, project, historical era, or construction beat must
+    keep its own visual contract. Broad skyline/street/airport fallback is for
+    frames whose requested image is already generic, never a substitute for a
+    specific story beat.
+    """
+    targets = list((frame or {}).get("image_keywords") or [])
+    targets += list((frame or {}).get("image_keywords_ar") or [])
+    alias_tokens = set()
+    for alias in aliases or ():
+        alias_tokens.update(_norm_phrase(alias).split())
+    generic_tokens = {"city", "مدينة"}
+    for term in _GENERIC_SCENE_TERMS:
+        generic_tokens.update(_norm_phrase(term).split())
+
+    saw_generic = False
+    for target in targets:
+        tokens = set(_norm_phrase(target).split()) - alias_tokens
+        if not tokens:
+            continue
+        if not tokens <= generic_tokens:
+            return False
+        saw_generic = True
+    return saw_generic
+
+
 def reviewed_city_fallback_rows(index_path,
                                 aliases: Iterable[str] = ()) -> list[dict]:
     """Prefer obvious city scenes; a bare city tag is not enough for fallback."""
@@ -332,6 +361,29 @@ def configure(story_bot_module):
                 return candidate
         return None
 
+    def targeted_web(frame, spec, out_path, seen, context, bank=None):
+        if active["photo_count"] >= 4:
+            return None
+        local_names = [
+            Path(row["filename"]).name
+            for row in legacy._read_visual_index(index_path())
+        ]
+        targeted = deepcopy(spec or {})
+        targeted["image_keywords"] = list(frame.get("image_keywords") or [])
+        targeted["image_keywords_ar"] = list(frame.get("image_keywords_ar") or [])
+        targeted["lib_exclude"] = list(dict.fromkeys(
+            list(targeted.get("lib_exclude") or []) + local_names
+        ))
+        if not targeted["image_keywords"] and not targeted["image_keywords_ar"]:
+            return None
+        try:
+            return base_find_photo(
+                targeted, out_path, seen, context,
+                allow_neutral=False, bank=bank,
+            )
+        except Exception:
+            return None
+
     def web_fallback(out_path, seen):
         if active["photo_count"] >= 4:
             return None
@@ -396,11 +448,18 @@ def configure(story_bot_module):
                 return photo
             return None
 
-        # This is the user's simple rule: do not broaden one frame merely
-        # because it lacks an exact image. Broaden only when the WHOLE deck
-        # planned fewer than four exact photos.
+        # Broaden only when the WHOLE deck still needs photos. Specific beats
+        # first get one strict target-specific search and never degrade into a
+        # generic airport/street/skyline substitute.
         if not active["fallback_needed"] or active["photo_count"] >= 4:
             return None
+
+        frame = active["frames"][idx]
+        if not city_frame_allows_generic_fallback(frame, active["aliases"]):
+            photo = targeted_web(frame, spec, out_path, seen, context, bank=bank)
+            if photo is not None:
+                active["photo_count"] += 1
+            return photo
 
         photo = generic_local(
             out_path, seen, (spec or {}).get("lib_exclude") or []
