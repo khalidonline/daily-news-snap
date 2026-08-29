@@ -85,6 +85,14 @@ _DIRECT_SAUDI_RE = re.compile(
     r"الرياض|جدة|الخليج|مجلس التعاون|Saudi|KSA|Riyadh|Jeddah|Gulf|GCC)",
     re.IGNORECASE,
 )
+_NEGATED_SAUDI_RE = re.compile(
+    r"(?:بعيد(?:ة)?\s+عن\s+(?:السعودية|المملكة|الخليج)|"
+    r"لا\s+(?:يؤثر|يمس|يرتبط)\s+[^.]{0,30}(?:بالسعودية|بالخليج|السعودية|الخليج)|"
+    r"دون\s+(?:أثر|تأثير)\s+[^.]{0,30}(?:السعودية|الخليج)|"
+    r"(?:no|without)\s+(?:direct\s+)?(?:impact|effect|relevance)\s+(?:on|to)\s+"
+    r"(?:Saudi Arabia|Saudi|KSA|the Gulf|Gulf|GCC))",
+    re.IGNORECASE,
+)
 _FOREIGN_POLITICS_RE = re.compile(
     r"(?:ترامب|بايدن|بوتين|زيلينسكي|مادورو|نتنياهو|أردوغان|خامنئي|"
     r"انتخابات|عقوبات|دبلوماس(?:ي|ية)|جيوسياس(?:ي|ية)|حرب|صراع|نزاع|"
@@ -147,7 +155,7 @@ def hard_scope_eligible(item):
     summary = str(item.get("summary", "") or "").strip()
     text = f"{title} {summary}".strip()
     lane = item.get("lane", "business_tech")
-    direct_saudi = bool(_DIRECT_SAUDI_RE.search(text))
+    direct_saudi = bool(_DIRECT_SAUDI_RE.search(text)) and not _NEGATED_SAUDI_RE.search(text)
 
     # Remote politics/geopolitics is outside this product. A story that actually
     # names a Saudi/Gulf consequence is left for the model to judge.
