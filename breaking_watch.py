@@ -99,13 +99,15 @@ _custom_feeds = os.getenv("WATCH_FEEDS", "").strip()
 WATCH_FEEDS = ([{"name": u, "url": u, "tier": "core"}
                 for u in _custom_feeds.split(",") if u.strip()]
                if _custom_feeds else _DEFAULT_WATCH_FEEDS)
-# A wider stateless window makes the watcher resilient to delayed/missed
-# hosted-runner starts without forcing a state commit every 30 minutes.
-# The classifier still applies the stricter "hours, not days" breaking gate.
+# A wider feed window makes the watcher resilient to delayed/missed hosted
+# runner starts. Successfully evaluated headlines are remembered separately so
+# the same 180-minute item does not wake the classifier every 30 minutes.
 WATCH_FEED_WINDOW_MIN = int(
     os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "180")
 WATCH_MAX_FEED_TITLES = int(
     os.getenv("WATCH_MAX_FEED_TITLES", "").strip() or "12")
+WATCH_SEEN_HOURS = int(
+    os.getenv("WATCH_SEEN_HOURS", "").strip() or "24")
 FEED_UA = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
 _REGION_RELEVANCE_RE = re.compile(
@@ -257,6 +259,50 @@ def _headline_key(title):
     # syndicated headline from two source feeds costs one classifier slot.
     base = re.sub(r"\s+-\s+[^-]{2,60}$", "", title.strip())
     return " ".join(re.sub(r"[^\w]+", " ", base.casefold()).split())
+
+
+def _recent_seen_titles(state, now):
+    cutoff = now - timedelta(hours=WATCH_SEEN_HOURS)
+    recent = []
+    for entry in state.get("seen_titles", []) or []:
+        if not isinstance(entry, dict):
+            continue
+        key = str(entry.get("key") or "").strip()
+        raw_at = str(entry.get("at") or "").strip()
+        if not key or not raw_at:
+            continue
+        try:
+            seen_at = datetime.fromisoformat(raw_at.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if seen_at.tzinfo is None:
+            seen_at = seen_at.replace(tzinfo=timezone.utc)
+        if seen_at >= cutoff:
+            recent.append({
+                "key": key,
+                "title": str(entry.get("title") or "").strip(),
+                "at": seen_at.isoformat(),
+            })
+    return recent
+
+
+def _unseen_titles(titles, state, now):
+    seen = {entry["key"] for entry in _recent_seen_titles(state, now)}
+    return [title for title in titles if _headline_key(title) not in seen]
+
+
+def _remember_titles(state, titles, now):
+    updated = dict(state)
+    recent = _recent_seen_titles(state, now)
+    seen = {entry["key"] for entry in recent}
+    for title in titles:
+        key = _headline_key(title)
+        if not key or key in seen:
+            continue
+        recent.append({"key": key, "title": title, "at": now.isoformat()})
+        seen.add(key)
+    updated["seen_titles"] = recent
+    return updated
 
 
 def _round_robin_titles(buckets, limit):
@@ -490,7 +536,19 @@ def _watch():
                    "لم يُستدعَ المصنّف")
             return
         else:
-            print(f"  {len(fresh_titles)} fresh feed item(s) — classifying")
+            feed_count = len(fresh_titles)
+            fresh_titles = _unseen_titles(fresh_titles, state, now)
+            skipped = feed_count - len(fresh_titles)
+            if skipped:
+                print(f"  persistent feed dedupe: skipped {skipped} "
+                      "already-evaluated headline(s)")
+            if not fresh_titles:
+                print("all fresh feed items were already evaluated — "
+                      "classifier not called")
+                notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: كل عناوين "
+                       "الخلاصات الحديثة سبق تقييمها — لم يُستدعَ المصنّف")
+                return
+            print(f"  {len(fresh_titles)} unseen feed item(s) — classifying")
 
     verdict = classify(now, fresh_titles)
     if verdict:
@@ -500,6 +558,16 @@ def _watch():
         notify(f"🔴 {ksa_stamp()} — مراقب العاجل: تعذّر التصنيف هذه الدورة "
                "(خطأ في الاستدعاء) — عومل كلا عاجل")
         return
+
+    # A successful classifier result means these exact normalized headlines
+    # have paid for their one evaluation. Persist immediately so every later
+    # branch (ordinary rejection, malformed breaking verdict, or full-pipeline
+    # attempt) inherits the same cost protection. Failed classifier calls are
+    # deliberately not remembered and can be retried next cycle.
+    if fresh_titles:
+        state = _remember_titles(state, fresh_titles, now)
+        save_state(state)
+
     if not verdict.get("breaking"):
         print("no breaking news this cycle")
         n_src = len(verdict.get("sources") or [])
@@ -531,7 +599,8 @@ def _watch():
     state = {"date": today, "posted": False, "event_fp": fp,
              "lock_at": now.isoformat(),
              "stamps": state.get("stamps", []) if state.get("date") == today
-             else []}
+             else [],
+             "seen_titles": state.get("seen_titles", [])}
     save_state(state)
 
     print(f"BREAKING — pinning the event and running the full pipeline:\n"
