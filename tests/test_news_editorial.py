@@ -319,6 +319,63 @@ class NewsEditorialTests(unittest.TestCase):
 
 
 class DailyNewsRunnerTests(unittest.TestCase):
+    def test_post_model_validation_removes_hard_ineligible_item_even_if_ranked_first(self):
+        import daily_news_runner
+
+        self.assertTrue(
+            hasattr(daily_news_runner, "validate_ranked_result"),
+            "runner must validate the model ranking against the source shortlist",
+        )
+        shortlist = [
+            {
+                "lane": "business_tech",
+                "source": "BBC",
+                "title": "ترامب يعلن اتفاقاً أمريكياً للسيطرة على نفط فنزويلا",
+                "summary": "اتفاق سياسي بعيد عن السعودية.",
+            },
+            {
+                "lane": "saudi_core",
+                "source": "الشرق الأوسط",
+                "title": "اهتمام دولي متزايد بشراء العقارات في السعودية",
+                "summary": "تغير في الطلب على السوق السعودية.",
+            },
+        ]
+        result = {
+            "caption": "keep me",
+            "stories": [
+                {"item": 1, "headline": "bad"},
+                {"item": 2, "headline": "good"},
+            ],
+        }
+        filtered = daily_news_runner.validate_ranked_result(result, shortlist)
+        self.assertEqual(filtered["caption"], "keep me")
+        self.assertEqual([story["item"] for story in filtered["stories"]], [2])
+
+    def test_post_model_validation_rejects_invalid_item_numbers_and_routine_pr(self):
+        import daily_news_runner
+
+        self.assertTrue(hasattr(daily_news_runner, "validate_ranked_result"))
+        shortlist = [
+            {
+                "lane": "saudi_core",
+                "source": "اليوم",
+                "title": "جهتان تبحثان أوجه التعاون وتوقعان مذكرة تفاهم",
+                "summary": "ناقش الاجتماع فرص التعاون المستقبلية.",
+            },
+            {
+                "lane": "business_tech",
+                "source": "The Verge",
+                "title": "Google launches a major consumer search change",
+                "summary": "A large search product change reaches users.",
+            },
+        ]
+        result = {"stories": [
+            {"item": 0}, {"item": -1}, {"item": "2"}, {"item": 9},
+            {"item": 1}, {"item": 2},
+        ]}
+        filtered = daily_news_runner.validate_ranked_result(result, shortlist)
+        self.assertEqual([story["item"] for story in filtered["stories"]], [2])
+
     def test_configure_applies_48h_prompt_and_balanced_summarizer(self):
         import os
         from types import SimpleNamespace
