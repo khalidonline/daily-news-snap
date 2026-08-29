@@ -15,6 +15,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from PIL import Image, ImageDraw
+
 import news_bot as nb
 import story_bot as sb
 import story_runtime as sr
@@ -129,6 +131,63 @@ def build_story_without_posting(story):
     return changed
 
 
+def _logo_panel_color(logo):
+    rgba = logo.convert("RGBA")
+    pixels = [px for px in rgba.getdata() if px[3] > 32]
+    if not pixels:
+        return (248, 248, 246, 245)
+    avg = sum((0.2126 * r + 0.7152 * g + 0.0722 * b) for r, g, b, _ in pixels) / len(pixels)
+    return (24, 56, 97, 245) if avg >= 150 else (248, 248, 246, 245)
+
+
+def ensure_subject_logo_visible(story, frames, coverage_fn=None):
+    """Guarantee a readable approved subject logo on the first Story frame.
+
+    Some approved marks are intentionally light/gold and disappear against the
+    light Story theme. We preserve the original logo pixels and add only a
+    contrast backplate behind the approved mark.
+    """
+    frames = list(frames or [])
+    if not frames:
+        return frames
+    coverage_fn = coverage_fn or sr.coverage
+    _photos, logos, status = coverage_fn(story)
+    if status != "PASS" or not logos:
+        return frames
+
+    logo_path = Path(logos[0])
+    try:
+        logo = Image.open(logo_path).convert("RGBA")
+        bbox = logo.getbbox()
+        if bbox:
+            logo = logo.crop(bbox)
+        frame_path = Path(frames[0])
+        card = Image.open(frame_path).convert("RGBA")
+    except Exception as exc:
+        print(f"    logo visibility safeguard skipped: {exc}")
+        return frames
+
+    panel_w, panel_h = 260, 160
+    x0, y0 = 700, 455
+    x1, y1 = x0 + panel_w, y0 + panel_h
+    overlay = Image.new("RGBA", card.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+    panel = _logo_panel_color(logo)
+    draw.rounded_rectangle((x0, y0, x1, y1), radius=26, fill=panel)
+
+    max_w, max_h = 210, 110
+    scale = min(max_w / max(1, logo.width), max_h / max(1, logo.height))
+    size = (max(1, int(logo.width * scale)), max(1, int(logo.height * scale)))
+    rendered_logo = logo.resize(size, Image.LANCZOS)
+    lx = x0 + (panel_w - rendered_logo.width) // 2
+    ly = y0 + (panel_h - rendered_logo.height) // 2
+    overlay.alpha_composite(rendered_logo, (lx, ly))
+    card = Image.alpha_composite(card, overlay)
+    card.convert("RGB").save(frame_path, "PNG")
+    print(f"    subject logo visibility safeguard: {logo_path.name} on frame 1")
+    return frames
+
+
 def _mark_story_complete(story):
     slug = re.sub(r"[^\w]+", "-", story, flags=re.UNICODE)[:40].strip("-")
     sb.commit_and_push(sb.save_used(sb.load_used(), story), f"story: {slug}")
@@ -162,6 +221,7 @@ def main():
     print(f"Selected READY_FOR_SNAP story: {story}")
 
     frames = build_story_without_posting(story)
+    ensure_subject_logo_visible(story, frames)
     if nb.DRY_RUN or not nb.POST_ENABLED:
         print(f"DRY/HYBRID — rendered {len(frames)} frames; Snapchat untouched")
         return
