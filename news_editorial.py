@@ -135,6 +135,18 @@ _MATERIAL_DISRUPTION_RE = re.compile(
     r"suspend|disrupt|delay)",
     re.IGNORECASE,
 )
+_ACCIDENT_EVENT_RE = re.compile(
+    r"(?:حادث|حوادث|توفي|وفاة|مقتل|قتلى|إصابة|إصابات|مصاب|مصابين|اصطدام|"
+    r"تحطم|دهس|كارثة|اضطراب جوي[^.]{0,80}(?:وفاة|توفي|إصابة|دعوى)|"
+    r"accidents?|fatal(?:ity|ities)?|\bdied\b|\bdeath\b|\bkilled\b|collision|"
+    r"(?:plane|aircraft) crash|turbulence[^.]{0,80}(?:death|died|injur|lawsuit))",
+    re.IGNORECASE,
+)
+_SAFETY_RULE_CHANGE_RE = re.compile(
+    r"(?:قواعد|لائحة|لوائح|معايير|اشتراطات|قرار تنظيمي|نظام جديد|تنظيم جديد|"
+    r"تلزم|إلزام|rules?|regulations?|standards?|requirements?|mandate)",
+    re.IGNORECASE,
+)
 _ROUTINE_RESULT_RE = re.compile(
     r"(?:يسحق|يهزم|يتغلب|يفوز|فاز|خسر|تعادل|يتعادل|بخماسية|برباعية|"
     r"بثلاثية|نتيجة\s+(?:المباراة|اللقاء)|انتهت المباراة|\b\d+\s*[-–:]\s*\d+\b|"
@@ -164,6 +176,7 @@ _XML_ILLEGAL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
 _BARE_AMP_RE = re.compile(
     r"&(?!#\d+;|#x[0-9A-Fa-f]+;|[A-Za-z][A-Za-z0-9]+;)"
 )
+_FIRST_FEED_CLOSE_RE = re.compile(r"</(?:rss|feed)\s*>", re.IGNORECASE)
 
 
 def hard_scope_eligible(item):
@@ -196,6 +209,13 @@ def hard_scope_eligible(item):
     # fundamentally a material transport/school/service disruption can qualify.
     if _WEATHER_RE.search(text) and not _MATERIAL_DISRUPTION_RE.search(text):
         return False
+
+    # Accident/death/disaster event coverage is outside the approved daily brief.
+    # A genuinely national Saudi safety-rule change can still qualify even when
+    # the article mentions the incident that triggered the regulation.
+    if _ACCIDENT_EVENT_RE.search(text):
+        if not (direct_saudi and _SAFETY_RULE_CHANGE_RE.search(text)):
+            return False
 
     # Ordinary match recaps never consume a national card; major titles,
     # qualification, finals and records remain eligible.
@@ -384,12 +404,12 @@ def decorate_model_items(items, now=None):
 
 
 def _parse_feed_root(raw):
-    """Parse a feed strictly, then retry only safe syntax cleanup.
+    """Parse a feed strictly, then retry only conservative syntax recovery.
 
-    Some publisher RSS feeds occasionally ship bare ampersands or XML-illegal
-    control bytes. We do not try to repair structural markup; the retry only
-    removes characters XML 1.0 forbids and escapes ampersands that are not
-    already valid entities.
+    Recovery is intentionally bounded: strip XML-illegal controls, escape bare
+    ampersands, and—only after parsing still fails—truncate trailing content
+    after the first complete RSS/Atom root. This recovers publishers that
+    accidentally concatenate two documents without trying to invent markup.
     """
     try:
         return ET.fromstring(raw)
@@ -397,7 +417,13 @@ def _parse_feed_root(raw):
         text = raw.decode("utf-8", "replace") if isinstance(raw, bytes) else str(raw)
         text = _XML_ILLEGAL_RE.sub("", text)
         text = _BARE_AMP_RE.sub("&amp;", text)
-        return ET.fromstring(text)
+        try:
+            return ET.fromstring(text)
+        except ET.ParseError:
+            match = _FIRST_FEED_CLOSE_RE.search(text)
+            if not match:
+                raise
+            return ET.fromstring(text[:match.end()])
 
 
 def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
