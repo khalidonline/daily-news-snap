@@ -1,4 +1,6 @@
+import tempfile
 import unittest
+from pathlib import Path
 
 import story_bot as sb
 import story_focus
@@ -88,10 +90,46 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertNotIn("أعلى من أي مدينة سعودية أخرى", cleaned)
         self.assertIn("حجم النشاط الاقتصادي", cleaned)
 
+    def test_runtime_visual_inventory_is_given_to_city_writer(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "approved.txt"
+            index.write_text(
+                "old-riyadh-souq.jpg | الرياض القديمة, old Riyadh, سوق تقليدي | Wikimedia\n"
+                "riyadh-1975-construction.jpg | الرياض, البناء, السبعينات | أرشيف\n"
+                "riyadh-1977-construction.jpg | الرياض, 1977, عمران | أرشيف\n"
+                "mcdonalds-riyadh-first.jpg | ماكدونالدز, أول فرع, الرياض | أرشيف\n",
+                encoding="utf-8",
+            )
+            prompt = story_focus.runtime_visual_inventory_prompt(index)
+
+        self.assertIn("صور محلية مراجعة", prompt)
+        self.assertIn("old-riyadh-souq.jpg", prompt)
+        self.assertIn("riyadh-1975-construction.jpg", prompt)
+        self.assertIn("البناء", prompt)
+        self.assertIn("ليست مصادر للحقائق", prompt)
+        self.assertIn("مرحلة مهمة", prompt)
+        self.assertIn("image_keywords", prompt)
+
+    def test_city_local_search_can_match_arabic_catalog_tags(self):
+        brief = {
+            "frames": [
+                {
+                    "subject_kind": "place_city",
+                    "image_keywords": ["Riyadh 1970s construction"],
+                    "image_keywords_ar": ["الرياض", "البناء", "السبعينات"],
+                }
+            ]
+        }
+        prepared = story_focus.prepare_city_visual_search(brief)
+        keywords = prepared["frames"][0]["image_keywords"]
+        self.assertIn("Riyadh 1970s construction", keywords)
+        self.assertIn("الرياض", keywords)
+        self.assertIn("البناء", keywords)
+        self.assertIn("السبعينات", keywords)
+
     def test_city_deck_needs_four_matched_visual_slots(self):
         brief = {
             "frames": [
-                {"subject_kind": "place_city"},
                 {"subject_kind": "place_city"},
                 {"subject_kind": "place_city"},
                 {"subject_kind": "place_city"},
