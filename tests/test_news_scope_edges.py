@@ -107,6 +107,15 @@ class NewsScopeEdgeTests(unittest.TestCase):
         }
         self.assertFalse(hard_scope_eligible(item))
 
+    def test_in_route_transfer_wording_is_rejected_without_announcement(self):
+        item = {
+            "lane": "sports",
+            "source": "اليوم",
+            "title": "واتكينز في طريقه للانضمام رسمياً للهلال",
+            "summary": "اللاعب في طريقه للانضمام للنادي، ولم يعلن الهلال التعاقد حتى الآن.",
+        }
+        self.assertFalse(hard_scope_eligible(item))
+
     def test_confirmed_major_transfer_remains_eligible(self):
         item = {
             "lane": "sports",
