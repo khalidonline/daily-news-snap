@@ -1,21 +1,21 @@
 {
-  "run_nonce": "2026-08-29-near-pass-sama-1",
+  "run_nonce": "2026-08-29-near-pass-sama-2",
   "assets": [
     {
-      "filename": "targeted-sama-central-bank-building.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bank%20SA.jpg",
-      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank"],
-      "credit": "Sabadek via Wikimedia Commons — CC BY-SA 4.0; Saudi Central Bank building, 11 March 2025",
+      "filename": "targeted-sama-1953-10-riyal.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SaudiArabiaP1-10Riyals-(1953)-donatedcz%20f.jpg",
+      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank", "Saudi riyal", "1953"],
+      "credit": "Saudi Arabian Monetary Agency via Wikimedia Commons — public-domain scan; 10-riyal note, 1953",
       "story": "قصة تأسيس مؤسسة النقد ساما",
-      "verdict": "DIRECT"
+      "verdict": "STRONG_CONTEXT"
     },
     {
-      "filename": "targeted-sama-organisation-structure.png",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SAMA%20Organisation%20Structure.png",
-      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank"],
-      "credit": "Lord Mauleverer via Wikimedia Commons — CC BY-SA 3.0; organisation chart for SAMA, 8 May 2013",
+      "filename": "targeted-sama-1954-5-riyal.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SaudiArabiaP3-5Riyals-AH1373(1954)-donatedgs%20f.jpg",
+      "tags": ["قصة تأسيس مؤسسة النقد ساما", "مؤسسة النقد ساما", "SAMA", "Saudi Arabian Monetary Agency", "Saudi Central Bank", "Saudi riyal", "1954"],
+      "credit": "Saudi Arabian Monetary Agency via Wikimedia Commons — public-domain scan; 5-riyal note, 1954",
       "story": "قصة تأسيس مؤسسة النقد ساما",
-      "verdict": "DIRECT"
+      "verdict": "STRONG_CONTEXT"
     }
   ]
 }
