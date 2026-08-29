@@ -10,6 +10,8 @@ This layer closes the narrower editorial gaps that surfaced in real decks:
   typographic deck when the frame-specific search failed;
 * the writer can see the reviewed runtime visual inventory before choosing
   equally valid story beats, so prose and available evidence can line up;
+* reviewed local provenance can establish exact archive identity/era while
+  vision still judges whether the visible scene matches the frame;
 * city wording explains the subject's own significance before reaching for a
   ranking comparison, and avoids stiff wording such as ``صيرورتها``.
 
@@ -211,10 +213,6 @@ def polish_city_wording(text: str) -> str:
     value = value.replace("صيرورة المدينة", "تحول المدينة")
     value = value.replace("صيرورة", "تحول")
 
-    # Remove the hard-ranking clause and, when present, the immediate named
-    # runner-up comparison that turns the city card into a competition table.
-    # The prompt still permits a neutral "more than the second city" context
-    # when the model determines that comparison is genuinely useful.
     value = re.sub(
         r"(?:[—–-]\s*)?أعلى من أي مدينة سعودية أخرى"
         r"(?:،\s*ومقابل[^.؟!]+)?",
@@ -235,20 +233,14 @@ def _is_city_brief(brief: dict) -> bool:
     return city_frames >= max(2, (len(frames) + 1) // 2)
 
 
-def runtime_visual_inventory_prompt(index_path) -> str:
-    """Describe the already-reviewed runtime images to the story writer.
-
-    The filtered runtime index is evidence availability, not a factual source.
-    It helps the writer prefer an equally important, photographable beat while
-    all factual claims still have to come from researched sources.
-    """
+def _read_visual_index(index_path) -> list[dict]:
     path = Path(index_path) if index_path else None
     if path is None:
-        return ""
+        return []
     try:
         raw_lines = path.read_text(encoding="utf-8").splitlines()
     except OSError:
-        return ""
+        return []
 
     rows = []
     for raw in raw_lines:
@@ -258,28 +250,109 @@ def runtime_visual_inventory_prompt(index_path) -> str:
         parts = [part.strip() for part in line.split("|")]
         if not parts or not parts[0]:
             continue
-        filename = parts[0]
-        tags = parts[1] if len(parts) > 1 else ""
-        rows.append(f"- {filename}: {tags}" if tags else f"- {filename}")
+        rows.append({
+            "filename": parts[0],
+            "tags": parts[1] if len(parts) > 1 else "",
+            "credit": parts[2] if len(parts) > 2 else "",
+        })
+    return rows
 
+
+def runtime_visual_inventory_prompt(index_path) -> str:
+    """Describe the already-reviewed runtime images to the story writer.
+
+    The filtered runtime index is evidence availability, not a factual source.
+    It helps the writer prefer an equally important, photographable beat while
+    all factual claims still have to come from researched sources.
+    """
+    rows = _read_visual_index(index_path)
     if not rows:
         return ""
 
+    listed = [
+        f"- {row['filename']}: {row['tags']}" if row["tags"]
+        else f"- {row['filename']}"
+        for row in rows
+    ]
     return (
         "\n\nصور محلية مراجعة ومتاحة فعلاً لهذه القصة:\n"
-        + "\n".join(rows)
+        + "\n".join(listed)
         + "\n"
         "- هذه الصور ليست مصادر للحقائق. أثبت كل معلومة من البحث والمصادر، "
         "ولا تستنتج حدثاً أو تاريخاً من اسم الملف.\n"
         "- لا تغيّر القصة لتخدم صورة. لكن إذا كان أمامك مرحلتان صحيحتان "
         "ومتقاربتان في الأهمية، فضّل مرحلة مهمة يمكن أن يرويها واحد من هذه "
         "الصور بوضوح.\n"
+        "- إذا اخترت صورة محلية لتخدم لقطة، اجعل الفكرة المركزية في heading "
+        "وtext نفسها مما يظهر في الصورة؛ لا يكفي أن تضع وسوم الصورة في "
+        "image_keywords بينما اللقطة في الحقيقة عن مفهوم تجريدي مختلف. "
+        "مثال: صورة بناء الرياض في السبعينات تخدم لقطة عن التوسع العمراني "
+        "وأعمال البناء التي غيّرت شكل المدينة، لا لقطة مركزها «مخطط على الورق».\n"
         "- في قصص المدن، حاول أن تتوافق أربع لقطات على الأقل مع صور مراجعة "
         "مختلفة أو مع مشاهد مباشرة يسهل العثور عليها؛ لا تُدخل كياناً مجاوراً "
         "لمجرد أن له صورة.\n"
         "- إذا كانت صورة محلية مناسبة للّقطة، ضع الاسم/الوسم الدال عليها في "
         "image_keywords و image_keywords_ar حتى يستطيع محرك الصور العثور عليها."
     )
+
+
+def _local_source_name(photo) -> str:
+    """Resolve a copied runtime slot back to its reviewed local source name."""
+    path = Path(str(photo or ""))
+    direct = path.name
+    marker = Path(str(path) + ".exempt")
+    if marker.exists():
+        try:
+            value = marker.read_text(encoding="utf-8").strip()
+            if ":" in value:
+                marked = value.split(":", 1)[1].strip()
+                if marked:
+                    return Path(marked).name
+        except OSError:
+            pass
+    return direct
+
+
+def reviewed_local_provenance(photo, frame: dict, index_path) -> str:
+    """Return trusted catalogue context for a candidate from the reviewed pool.
+
+    Provenance may establish identity and a catalogue year. It never declares
+    that the visible scene matches the frame; vision still owns that decision.
+    """
+    source_name = _local_source_name(photo)
+    row = next(
+        (item for item in _read_visual_index(index_path)
+         if Path(item["filename"]).name == source_name),
+        None,
+    )
+    if row is None:
+        return ""
+
+    tags = row.get("tags", "")
+    credit = row.get("credit", "")
+    targets = " / ".join(_frame_visual_targets(frame)[:8])
+    years = re.findall(
+        r"(?<!\d)((?:18|19|20)\d{2})(?!\d)",
+        " ".join([source_name, tags, credit]),
+    )
+
+    note = (
+        f"مرجع الصورة المحلية المراجعة: الملف {source_name}"
+        + (f" مفهرس بوسوم: {tags}." if tags else ".")
+    )
+    if years:
+        year = years[0]
+        note += (
+            f" سنة {year} ثابتة من فهرسة/مراجعة هذا الأصل المحلي؛ "
+            "لا تستنتج سنة مختلفة من شكل السيارات أو جودة الصورة أو أسلوب "
+            "التصوير. استخدم السنة المراجعة مرجعاً زمنياً."
+        )
+    if targets:
+        note += (
+            f" قيّم بصرياً فقط هل ما يظهر في الصورة يطابق المشهد المطلوب: "
+            f"{targets}. لا تمنحها قبولاً لمجرد وجودها في المكتبة."
+        )
+    return note
 
 
 def prepare_city_visual_search(brief: dict) -> dict:
@@ -328,8 +401,6 @@ def configure(story_bot_module):
     if getattr(sb, _CONFIGURED_ATTR, False):
         return sb
 
-    # Make the helpers visible on story_bot too: operations/tests can inspect
-    # the active contract without knowing about this policy module.
     sb.story_focus_contract = lambda story: story_focus_contract(
         story, sb.story_aliases
     )
@@ -339,8 +410,6 @@ def configure(story_bot_module):
     sb.story_photo_verdict_ok = story_photo_verdict_ok
 
     if _PROMPT_MARKER not in sb.SYSTEM_PROMPT:
-        # Put the rule before the existing generic person/company structure so
-        # its explicit "city overrides person template" instruction wins.
         anchor = "\nالبناء:\n"
         if anchor in sb.SYSTEM_PROMPT:
             sb.SYSTEM_PROMPT = sb.SYSTEM_PROMPT.replace(
@@ -357,22 +426,26 @@ def configure(story_bot_module):
     def strict_story_photo_shows(photo, context):
         story = active["story"]
         if not story:
-            # Outside the frame-selection phase keep the underlying behavior;
-            # portrait prechecks and unrelated utilities are not broadened or
-            # tightened by this Story-only rule.
             return original_photo_shows(photo, context)
 
         frame = frame_from_renderer_context(active["frames"], str(context or ""))
         if frame is None:
             frame = {"heading": "", "text": str(context or "")}
         contract = frame_visual_context(story, frame, sb.story_aliases)
+
+        try:
+            import news_bot as nb
+
+            provenance = reviewed_local_provenance(photo, frame, nb.IMAGES_INDEX)
+        except Exception:
+            provenance = ""
+        if provenance:
+            contract = f"{contract}\n{provenance}"
+
         verdict = original_photo_shows(photo, contract)
         if story_photo_verdict_ok(verdict):
             return "yes"
 
-        # Existing Story code knows how to continue searching after "no".
-        # Mapping neutral -> no closes both historical-neutral banking and the
-        # local-library shortcut that previously accepted a related picture.
         print(
             "      (frame relevance gate: photo is not a confirmed match "
             "for this frame — rejected)"
@@ -380,10 +453,6 @@ def configure(story_bot_module):
         return "no"
 
     def focused_research(story):
-        # Story Runtime replaces news_bot.IMAGES_INDEX with a story-specific
-        # index containing only approved local files before sb.main() starts.
-        # Reading it here gives the writer the exact visual inventory that the
-        # renderer will later be allowed to use.
         inventory = ""
         try:
             import news_bot as nb
