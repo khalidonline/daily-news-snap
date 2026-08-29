@@ -105,7 +105,7 @@ class DailySourceDedupeTests(unittest.TestCase):
             self.assertEqual(data[0]["headline"], "رونالدو يكتب التاريخ ويتفوق على السهلاوي مع النصر")
             self.assertEqual(data[0]["at"], "2026-08-29T15:00:00+00:00")
             self.assertEqual(
-                data[0]["source_link"],
+                data[0].get("source_link"),
                 "https://alyaum.com/articles/ronaldo-record",
             )
 
