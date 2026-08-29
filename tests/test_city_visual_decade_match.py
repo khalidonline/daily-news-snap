@@ -59,6 +59,19 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
             cvf.city_frame_allows_generic_fallback(generic_frame, aliases)
         )
 
+    def test_spa_item_explicitly_naming_another_city_is_rejected(self):
+        aliases = ["Riyadh", "الرياض"]
+        jeddah = {
+            "title": "29 ممشى رياضياً بجدة تزيد أعداد الممارسين",
+            "tags": [{"name": "الرياض"}, {"name": "رياضة"}],
+        }
+        riyadh = {
+            "title": "افتتاح محطة مترو الرياض الجديدة",
+            "tags": [{"name": "الرياض"}, {"name": "مترو"}],
+        }
+        self.assertFalse(cvf.city_spa_metadata_ok(jeddah, aliases))
+        self.assertTrue(cvf.city_spa_metadata_ok(riyadh, aliases))
+
 
 if __name__ == "__main__":
     unittest.main()
