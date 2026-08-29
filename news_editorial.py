@@ -176,12 +176,12 @@ _MAJOR_SPORTS_RE = re.compile(
 )
 _UNCONFIRMED_TRANSFER_RE = re.compile(
     r"(?:"
-    r"(?:تقارير|مصادر|أنباء)[^.\n]{0,160}(?:انتقال|التعاقد|صفقة|ضم)|"
-    r"(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب)[^.\n]{0,100}(?:انتقال|التعاقد|صفقة|ضم)|"
-    r"(?:انتقال|التعاقد|صفقة|ضم)[^.\n]{0,100}(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب)|"
-    r"(?:reports?|sources?)[^.\n]{0,160}(?:transfer|sign|move)|"
-    r"(?:close to|set to|linked with|in talks)[^.\n]{0,100}(?:transfer|sign|move)|"
-    r"(?:transfer|sign|move)[^.\n]{0,100}(?:close to|set to|linked with|in talks)"
+    r"(?:تقارير|مصادر|أنباء)[^.\n]{0,160}(?:انتقال|التعاقد|صفقة|ضم|انضمام|الانضمام)|"
+    r"(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب|في\s+طريقه|في\s+طريقها)[^.\n]{0,100}(?:انتقال|التعاقد|صفقة|ضم|انضمام|الانضمام)|"
+    r"(?:انتقال|التعاقد|صفقة|ضم|انضمام|الانضمام)[^.\n]{0,100}(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب|في\s+طريقه|في\s+طريقها)|"
+    r"(?:reports?|sources?)[^.\n]{0,160}(?:transfer|sign|move|join)|"
+    r"(?:close to|set to|linked with|in talks|on (?:his|her|the) way)[^.\n]{0,100}(?:transfer|sign|move|join)|"
+    r"(?:transfer|sign|move|join)[^.\n]{0,100}(?:close to|set to|linked with|in talks|on (?:his|her|the) way)"
     r")",
     re.IGNORECASE,
 )
