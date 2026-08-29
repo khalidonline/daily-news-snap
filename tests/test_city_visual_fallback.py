@@ -11,17 +11,17 @@ class CityVisualFallbackTests(unittest.TestCase):
             index = Path(td) / "images.txt"
             index.write_text(
                 "old-riyadh-souq.jpg | الرياض القديمة, old Riyadh, سوق تقليدي | archive\n"
-                "riyadh-1977-construction.jpg | الرياض, 1977, عمران | archive\n",
+                "railway-construction-1951.jpg | سكة حديد الرياض الدمام, 1951, بناء, Riyadh Dammam railway | archive\n",
                 encoding="utf-8",
             )
             frame = {
                 "subject_kind": "place_city",
-                "image_keywords": ["old Riyadh", "Riyadh mud wall", "Riyadh old souq"],
-                "image_keywords_ar": ["الرياض القديمة", "سور الرياض القديم"],
+                "image_keywords": ["Riyadh Dammam railway 1951"],
+                "image_keywords_ar": ["سكة حديد الرياض الدمام"],
             }
             self.assertTrue(
                 cvf.reviewed_city_exact_match(
-                    Path(td) / "old-riyadh-souq.jpg",
+                    Path(td) / "railway-construction-1951.jpg",
                     frame,
                     index,
                     aliases=["Riyadh", "الرياض"],
@@ -29,7 +29,7 @@ class CityVisualFallbackTests(unittest.TestCase):
             )
             self.assertFalse(
                 cvf.reviewed_city_exact_match(
-                    Path(td) / "riyadh-1977-construction.jpg",
+                    Path(td) / "old-riyadh-souq.jpg",
                     frame,
                     index,
                     aliases=["Riyadh", "الرياض"],
@@ -188,7 +188,7 @@ class CityVisualFallbackTests(unittest.TestCase):
         self.assertEqual("riyadh-1975-construction.jpg", names[0])
         self.assertIn("riyadh-1977-construction.jpg", names)
 
-    def test_old_riyadh_phrase_is_an_exact_historical_anchor(self):
+    def test_known_modern_souq_does_not_override_historical_request(self):
         with tempfile.TemporaryDirectory() as td:
             index = Path(td) / "images.txt"
             index.write_text(
@@ -198,15 +198,16 @@ class CityVisualFallbackTests(unittest.TestCase):
             )
             frame = {
                 "subject_kind": "place_city",
-                "image_keywords": ["old Riyadh", "Masmak Fort Riyadh"],
-                "image_keywords_ar": ["الرياض القديمة", "قصر المصمك"],
+                "image_keywords": ["old Riyadh 1902", "Masmak Fort Riyadh"],
+                "image_keywords_ar": ["الرياض القديمة", "قصر المصمك", "1902"],
             }
             rows = cvf.reviewed_city_exact_rows(
                 frame, index, aliases=["Riyadh", "الرياض"]
             )
-        self.assertEqual("old-riyadh-souq.jpg", rows[0]["filename"])
+        names = [row["filename"] for row in rows]
+        self.assertNotIn("old-riyadh-souq.jpg", names)
 
-    def test_whole_deck_exact_plan_excludes_dusty_skyline_before_fallback(self):
+    def test_whole_deck_exact_plan_excludes_bad_souq_and_dusty_skyline(self):
         with tempfile.TemporaryDirectory() as td:
             index = Path(td) / "images.txt"
             index.write_text(
@@ -218,7 +219,7 @@ class CityVisualFallbackTests(unittest.TestCase):
                 encoding="utf-8",
             )
             frames = [
-                {"subject_kind": "place_city", "image_keywords": ["old Riyadh"], "image_keywords_ar": ["الرياض القديمة"]},
+                {"subject_kind": "place_city", "image_keywords": ["old Riyadh 1902"], "image_keywords_ar": ["الرياض القديمة", "1902"]},
                 {"subject_kind": "place_city", "image_keywords": ["Murabba Palace Riyadh"], "image_keywords_ar": ["قصر المربع"]},
                 {"subject_kind": "place_city", "image_keywords": ["Riyadh Dammam railway 1951"], "image_keywords_ar": ["سكة حديد الرياض الدمام"]},
                 {"subject_kind": "place_city", "image_keywords": ["Riyadh construction 1975", "Riyadh 1977"], "image_keywords_ar": ["الرياض البناء"]},
@@ -228,8 +229,8 @@ class CityVisualFallbackTests(unittest.TestCase):
             assignments = cvf.plan_reviewed_exact_assignments(
                 frames, index, aliases=["Riyadh", "الرياض"]
             )
-        self.assertEqual(3, len(assignments))
-        self.assertEqual("old-riyadh-souq.jpg", assignments[0]["filename"])
+        self.assertEqual(2, len(assignments))
+        self.assertNotIn(0, assignments)
         self.assertEqual("railway-construction-1951.jpg", assignments[2]["filename"])
         self.assertIn(assignments[3]["filename"], {"riyadh-1975-construction.jpg", "riyadh-1977-construction.jpg"})
         self.assertNotIn(5, assignments)
