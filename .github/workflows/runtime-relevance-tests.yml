@@ -9,6 +9,7 @@ on:
       - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
       - "tests/test_ready_story_publish.py"
+      - "tests/test_story_workflow_choices.py"
       - "images/relevance.json"
       - "images/images.txt"
       - "images/bogle-vanguard-*.jpg"
@@ -23,6 +24,7 @@ on:
       - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
       - "tests/test_ready_story_publish.py"
+      - "tests/test_story_workflow_choices.py"
       - "images/relevance.json"
       - "images/images.txt"
       - "images/bogle-vanguard-*.jpg"
@@ -48,6 +50,8 @@ jobs:
         run: python -m unittest -v tests/test_runtime_relevance.py
       - name: Ready-pool publishing unit tests
         run: python -m unittest -v tests/test_ready_story_publish.py
+      - name: Story workflow choice regression
+        run: python -m unittest -v tests/test_story_workflow_choices.py
       - name: Compile guarded story entrypoint
         run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py
       - name: Image precheck self-test
