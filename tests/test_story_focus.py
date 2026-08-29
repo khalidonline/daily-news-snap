@@ -85,6 +85,28 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertNotIn("أعلى من أي مدينة سعودية أخرى", cleaned)
         self.assertIn("حجم النشاط الاقتصادي", cleaned)
 
+    def test_city_deck_needs_four_matched_visual_slots(self):
+        brief = {
+            "frames": [
+                {"subject_kind": "place_city"},
+                {"subject_kind": "place_city"},
+                {"subject_kind": "place_city"},
+                {"subject_kind": "place_city"},
+                {"subject_kind": "place_city"},
+                {"subject_kind": "place_city"},
+            ]
+        }
+        self.assertFalse(
+            story_focus.city_deck_visuals_ready(
+                brief, [object(), None, None, None, None, None]
+            )
+        )
+        self.assertTrue(
+            story_focus.city_deck_visuals_ready(
+                brief, [object(), object(), object(), object(), None, None]
+            )
+        )
+
     def test_story_photo_gate_requires_confirmed_relevance(self):
         self.assertTrue(sb.story_photo_verdict_ok("yes"))
         self.assertFalse(sb.story_photo_verdict_ok("neutral"))
