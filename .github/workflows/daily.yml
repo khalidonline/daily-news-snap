@@ -89,9 +89,9 @@ jobs:
           REQUIRE_PHOTO: "1"
           IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-          LOOKBACK_HOURS: "10"
+          LOOKBACK_HOURS: "48"
           REMEMBER_DAYS: "3"
-        run: python news_bot.py
+        run: python daily_news_runner.py
 
       - name: Keep the card for review
         if: always()

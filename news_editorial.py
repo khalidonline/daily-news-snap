@@ -1,0 +1,312 @@
+"""Editorial policy and candidate preparation for the Saudi Snapchat daily brief.
+
+This module deliberately contains no publishing or rendering code.  It owns the
+feed registry, conservative audience-fit filtering, freshness metadata helpers,
+lane-balanced shortlist construction, and the system prompt used by the daily
+editor.
+"""
+
+from collections import defaultdict, deque
+from pathlib import Path
+from datetime import datetime, timedelta, timezone
+import re
+import sys
+from xml.etree import ElementTree as ET
+
+DEFAULT_LOOKBACK_HOURS = 48
+MAX_NORMAL_AGE_HOURS = 48
+
+LANE_TARGETS = {
+    "business_tech": 20,
+    "saudi_core": 16,
+    "sports": 8,
+    "entertainment_culture": 8,
+    "travel_lifestyle": 8,
+}
+
+FEED_SPECS = (
+    # Global business / technology sources.
+    {"source": "BBC", "url": "https://feeds.bbci.co.uk/news/business/rss.xml", "lane": "business_tech"},
+    {"source": "BBC", "url": "https://feeds.bbci.co.uk/news/technology/rss.xml", "lane": "business_tech"},
+    {"source": "TechCrunch", "url": "https://techcrunch.com/feed/", "lane": "business_tech"},
+    {"source": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "lane": "business_tech"},
+    {"source": "Engadget", "url": "https://www.engadget.com/rss.xml", "lane": "business_tech"},
+    {"source": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "lane": "business_tech"},
+    {"source": "CNBC", "url": "https://www.cnbc.com/id/19854910/device/rss/rss.html", "lane": "business_tech"},
+    # Saudi/Gulf core: use specific national/economy sections instead of broad
+    # general-news feeds that are dominated by politics, conflict, or hyperlocal noise.
+    {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1005/92", "lane": "saudi_core"},
+    {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1006", "lane": "saudi_core"},
+    {"source": "الوطن", "url": "https://www.alwatan.com.sa/rssFeed/4", "lane": "saudi_core"},
+    {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/gulf", "lane": "saudi_core"},
+    {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/economy", "lane": "saudi_core"},
+    # Dedicated Saudi-interest sports.
+    {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1009", "lane": "sports"},
+    {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1009/112", "lane": "sports"},
+    {"source": "الوطن", "url": "https://www.alwatan.com.sa/rssFeed/3", "lane": "sports"},
+    {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/sport", "lane": "sports"},
+    # Entertainment / culture.
+    {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1008", "lane": "entertainment_culture"},
+    {"source": "الوطن", "url": "https://www.alwatan.com.sa/rssFeed/10", "lane": "entertainment_culture"},
+    {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/culture", "lane": "entertainment_culture"},
+    {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/arts", "lane": "entertainment_culture"},
+    {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/cinema", "lane": "entertainment_culture"},
+    # Travel / lifestyle.
+    {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1007/105", "lane": "travel_lifestyle"},
+    {"source": "الشرق الأوسط", "url": "https://aawsat.com/feed/travel", "lane": "travel_lifestyle"},
+    {"source": "اليوم", "url": "https://www.alyaum.com/rssFeed/1007", "lane": "travel_lifestyle"},
+)
+
+# The deterministic gate is intentionally conservative. Nuanced ranking belongs
+# to the model; this only removes obvious low-scale or routine noise before those
+# items consume lane capacity.
+_LOCAL_ROUTINE_RE = re.compile(
+    r"(?:بلدية|أمانة|حي\b|حديقة|ممشى|تشجير|سفلتة|إنارة|دوار|مواقف)"
+)
+_BROAD_RELEVANCE_RE = re.compile(
+    r"(?:السعودية|المملكة|ساما|وزارة|هيئة|مطار|طيران|تأشيرة|تمويل|قرض|"
+    r"رهن|إسكان|أسعار|رسوم|ضريبة|بنك|موسم الرياض|نيوم|القدية|العلا|"
+    r"الهلال|النصر|الاتحاد|الأهلي|المنتخب)"
+)
+_ROUTINE_PR_RE = re.compile(
+    r"(?:بحث(?:ا|ت|وا)?\s+(?:أوجه\s+)?التعاون|مذكرة تفاهم|اجتماع.*التعاون|"
+    r"استعراض فرص التعاون|تعزيز أوجه التعاون)"
+)
+_ROUTINE_SPORTS_RE = re.compile(
+    r"(?:موعد مباراة|تشكيلة المباراة|التشكيل المتوقع|نتيجة المباراة|مواعيد مباريات)"
+)
+_IMPACT_RE = re.compile(
+    r"(?:إطلاق|إلغاء|خفض|رفع|زيادة|انخفاض|سعر|رسوم|قرار|نظام|تمويل|"
+    r"استحواذ|اكتتاب|تأشيرة|رحلات|مطار|مليار|مليون|%|صفقة كبرى|بطولة كبرى)"
+)
+
+
+def audience_fit_eligible(item):
+    """Reject only obvious routine/hyperlocal noise before lane allocation."""
+    text = f"{item.get('title', '')} {item.get('summary', '')}".strip()
+    lane = item.get("lane", "business_tech")
+
+    if _ROUTINE_PR_RE.search(text) and not _IMPACT_RE.search(text):
+        return False
+    if lane == "saudi_core" and _LOCAL_ROUTINE_RE.search(text) and not _BROAD_RELEVANCE_RE.search(text):
+        return False
+    if lane == "sports" and _ROUTINE_SPORTS_RE.search(text) and not _IMPACT_RE.search(text):
+        return False
+    return True
+
+
+def publication_age_hours(item, now=None):
+    raw = item.get("published_at")
+    if not raw:
+        return None
+    try:
+        published = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    if published.tzinfo is None:
+        published = published.replace(tzinfo=timezone.utc)
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    age = (now.astimezone(timezone.utc) - published.astimezone(timezone.utc)).total_seconds() / 3600
+    return max(0.0, age)
+
+
+def format_age_label(item, now=None):
+    age = publication_age_hours(item, now=now)
+    return "unknown" if age is None else f"{int(age)}h"
+
+
+def freshness_eligible(item, now=None, max_age_hours=MAX_NORMAL_AGE_HOURS):
+    age = publication_age_hours(item, now=now)
+    return age is not None and age <= max_age_hours
+
+
+def _title_key(title):
+    return re.sub(r"\W+", "", (title or "").casefold())[:120]
+
+
+def _dedupe_candidates(items):
+    seen = set()
+    result = []
+    for item in items:
+        key = _title_key(item.get("title", ""))
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        result.append(item)
+    return result
+
+
+def _published_sort_value(item):
+    raw = item.get("published_at")
+    if not raw:
+        return float("-inf")
+    try:
+        dt = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.timestamp()
+    except (TypeError, ValueError):
+        return float("-inf")
+
+
+def _lane_source_queues(items):
+    by_lane = defaultdict(lambda: defaultdict(list))
+    for item in items:
+        by_lane[item.get("lane", "business_tech")][item.get("source", "unknown")].append(item)
+    result = defaultdict(dict)
+    for lane, sources in by_lane.items():
+        for source, source_items in sources.items():
+            source_items.sort(key=_published_sort_value, reverse=True)
+            result[lane][source] = deque(source_items)
+    return result
+
+
+def _pop_lane_item(source_queues, cursor):
+    sources = list(source_queues)
+    if not sources:
+        return None, cursor
+    for offset in range(len(sources)):
+        idx = (cursor + offset) % len(sources)
+        source = sources[idx]
+        queue = source_queues[source]
+        if queue:
+            return queue.popleft(), (idx + 1) % len(sources)
+    return None, cursor
+
+
+def balanced_shortlist(items, limit=60, now=None):
+    """Build a source-fair shortlist with lane targets and spillover.
+
+    Targets are opportunities, never quotas. Empty/weak lanes may contribute
+    zero and unused capacity is redistributed. Freshness only orders otherwise
+    comparable items inside a source; it does not displace a strong older lane
+    candidate with unrelated weak material.
+    """
+    qualified = [
+        item for item in items
+        if audience_fit_eligible(item) and freshness_eligible(item, now=now)
+    ]
+    qualified = _dedupe_candidates(qualified)
+    queues = _lane_source_queues(qualified)
+    lane_order = [lane for lane in LANE_TARGETS if queues.get(lane)]
+    cursors = {lane: 0 for lane in lane_order}
+    counts = defaultdict(int)
+    selected = []
+
+    progress = True
+    while len(selected) < limit and progress:
+        progress = False
+        for lane in lane_order:
+            if len(selected) >= limit:
+                break
+            if counts[lane] >= LANE_TARGETS[lane]:
+                continue
+            item, cursors[lane] = _pop_lane_item(queues[lane], cursors[lane])
+            if item is not None:
+                selected.append(item)
+                counts[lane] += 1
+                progress = True
+
+    progress = True
+    while len(selected) < limit and progress:
+        progress = False
+        for lane in lane_order:
+            if len(selected) >= limit:
+                break
+            item, cursors[lane] = _pop_lane_item(queues[lane], cursors[lane])
+            if item is not None:
+                selected.append(item)
+                counts[lane] += 1
+                progress = True
+
+    return selected
+
+
+def shortlist_lane_counts(items):
+    counts = defaultdict(int)
+    for item in items:
+        counts[item.get("lane", "business_tech")] += 1
+    return dict(counts)
+
+
+def decorate_model_items(items, now=None):
+    """Copy candidates and add internal lane/age tags to the supplied summary.
+
+    The public source/title/link fields stay unchanged. The system prompt tells
+    the model these bracketed tags are metadata and must never be copied to card
+    text.
+    """
+    result = []
+    for item in items:
+        copy = dict(item)
+        summary = copy.get("summary", "")
+        copy["summary"] = (
+            f"[lane={copy.get('lane', 'business_tech')}] "
+            f"[age={format_age_label(copy, now=now)}] {summary}"
+        ).strip()
+        result.append(copy)
+    return result
+
+
+def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
+                    lookback_hours=DEFAULT_LOOKBACK_HOURS, now=None):
+    """Fetch lane-tagged RSS/Atom items using news_bot's existing HTTP helpers."""
+    now = now or datetime.now(timezone.utc)
+    cutoff = now - timedelta(hours=lookback_hours)
+    items, seen = [], set()
+
+    for feed in feed_specs:
+        source, url, lane = feed["source"], feed["url"], feed["lane"]
+        try:
+            root = ET.fromstring(http_get(url))
+        except Exception as exc:
+            print(f"  ! {source}: {exc}", file=sys.stderr)
+            print(f"  {source}: 0 items (failed)")
+            continue
+
+        entries = root.iter("item") if root.find(".//item") is not None else \
+            root.iter("{http://www.w3.org/2005/Atom}entry")
+        count = 0
+        for entry in entries:
+            def field(*names):
+                for name in names:
+                    el = entry.find(name)
+                    if el is not None:
+                        return el.text or el.get("href") or ""
+                return ""
+
+            title = clean(field("title", "{http://www.w3.org/2005/Atom}title"))
+            if not title:
+                continue
+            key = re.sub(r"\s", "", title)[:60]
+            if key in seen:
+                continue
+
+            published = parse_date(field(
+                "pubDate", "{http://www.w3.org/2005/Atom}updated",
+                "{http://www.w3.org/2005/Atom}published"))
+            if published and published < cutoff:
+                continue
+
+            seen.add(key)
+            items.append({
+                "source": source,
+                "lane": lane,
+                "title": title,
+                "summary": clean(field(
+                    "description", "{http://www.w3.org/2005/Atom}summary"))[:400],
+                "link": field("link", "{http://www.w3.org/2005/Atom}link"),
+                "published_at": (
+                    published.astimezone(timezone.utc).isoformat()
+                    if published else None
+                ),
+            })
+            count += 1
+        print(f"  {source}: {count} recent items")
+    return items
+
+
+_PROMPT_PATH = Path(__file__).with_name("news_editorial_prompt.txt")
+SYSTEM_PROMPT = _PROMPT_PATH.read_text(encoding="utf-8")
