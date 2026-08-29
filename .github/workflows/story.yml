@@ -5,8 +5,12 @@ on:
     - cron: "0 11 * * *"       # 14:00 KSA daily
   workflow_dispatch:
     inputs:
+      custom_story:
+        description: "بحث سريع: اكتب اسم القصة أو كلمة مميزة (يتجاوز القائمة)"
+        type: string
+        required: false
       ready_story:
-        description: "اختر قصة جاهزة للنشر"
+        description: "أو اختر قصة جاهزة للنشر من القائمة"
         type: choice
         required: true
         options:
@@ -42,10 +46,6 @@ on:
           - "قصة Rolex وصناعة الفخامة"
           - "قصة Publix: سلسلة متاجر يملكها موظفوها بالكامل"
           # READY_STORY_OPTIONS_END
-      custom_story:
-        description: "اختياري: اكتب اسم قصة هنا لتتجاوز الاختيار أعلاه"
-        type: string
-        required: false
       dry_run:
         description: "Render only — don't publish"
         type: boolean
