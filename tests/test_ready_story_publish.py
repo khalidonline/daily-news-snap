@@ -1,4 +1,8 @@
+import tempfile
 import unittest
+from pathlib import Path
+
+from PIL import Image, ImageDraw
 
 import ready_story_publish as rsp
 
@@ -55,6 +59,29 @@ class ReadyStoryPublishTests(unittest.TestCase):
             )
 
         self.assertEqual(calls, ["1.png", "2.png"])
+
+    def test_ensure_subject_logo_visible_adds_contrast_backplate(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            frame = root / "frame.png"
+            logo = root / "logo.png"
+
+            Image.new("RGB", (1080, 1920), (238, 232, 227)).save(frame)
+            mark = Image.new("RGBA", (320, 150), (0, 0, 0, 0))
+            draw = ImageDraw.Draw(mark)
+            draw.rectangle((20, 35, 300, 115), fill=(226, 196, 112, 255))
+            mark.save(logo)
+
+            rsp.ensure_subject_logo_visible(
+                "Story A",
+                [frame],
+                coverage_fn=lambda story: ([], [logo], "PASS"),
+            )
+
+            rendered = Image.open(frame).convert("RGB")
+            # A dark contrast surface should now exist behind the pale logo in
+            # the first frame's visual area; the original beige card had none.
+            self.assertLess(sum(rendered.getpixel((830, 535))) / 3, 120)
 
 
 if __name__ == "__main__":
