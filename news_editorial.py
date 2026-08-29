@@ -143,6 +143,11 @@ _KNOWN_GLOBAL_COMPANIES = {
     "openai", "samsung", "snap", "spacex", "tesla", "tiktok", "uber",
 }
 
+_XML_ILLEGAL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+_BARE_AMP_RE = re.compile(
+    r"&(?!#\d+;|#x[0-9A-Fa-f]+;|[A-Za-z][A-Za-z0-9]+;)"
+)
+
 
 def hard_scope_eligible(item):
     """Enforce non-negotiable daily scope before the model can rank a story.
@@ -358,6 +363,23 @@ def decorate_model_items(items, now=None):
     return result
 
 
+def _parse_feed_root(raw):
+    """Parse a feed strictly, then retry only safe syntax cleanup.
+
+    Some publisher RSS feeds occasionally ship bare ampersands or XML-illegal
+    control bytes. We do not try to repair structural markup; the retry only
+    removes characters XML 1.0 forbids and escapes ampersands that are not
+    already valid entities.
+    """
+    try:
+        return ET.fromstring(raw)
+    except ET.ParseError:
+        text = raw.decode("utf-8", "replace") if isinstance(raw, bytes) else str(raw)
+        text = _XML_ILLEGAL_RE.sub("", text)
+        text = _BARE_AMP_RE.sub("&amp;", text)
+        return ET.fromstring(text)
+
+
 def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
                     lookback_hours=DEFAULT_LOOKBACK_HOURS, now=None):
     """Fetch lane-tagged RSS/Atom items using news_bot's existing HTTP helpers."""
@@ -368,7 +390,7 @@ def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
     for feed in feed_specs:
         source, url, lane = feed["source"], feed["url"], feed["lane"]
         try:
-            root = ET.fromstring(http_get(url))
+            root = _parse_feed_root(http_get(url))
         except Exception as exc:
             print(f"  ! {source}: {exc}", file=sys.stderr)
             print(f"  {source}: 0 items (failed)")
@@ -395,7 +417,11 @@ def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
             published = parse_date(field(
                 "pubDate", "{http://www.w3.org/2005/Atom}updated",
                 "{http://www.w3.org/2005/Atom}published"))
-            if published and published < cutoff:
+            if published is None:
+                continue
+            if published.tzinfo is None:
+                published = published.replace(tzinfo=timezone.utc)
+            if published < cutoff:
                 continue
 
             seen.add(key)
@@ -406,10 +432,7 @@ def fetch_headlines(http_get, clean, parse_date, *, feed_specs=FEED_SPECS,
                 "summary": clean(field(
                     "description", "{http://www.w3.org/2005/Atom}summary"))[:400],
                 "link": field("link", "{http://www.w3.org/2005/Atom}link"),
-                "published_at": (
-                    published.astimezone(timezone.utc).isoformat()
-                    if published else None
-                ),
+                "published_at": published.astimezone(timezone.utc).isoformat(),
             })
             count += 1
         print(f"  {source}: {count} recent items")
