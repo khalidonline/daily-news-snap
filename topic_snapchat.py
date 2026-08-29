@@ -120,7 +120,14 @@ def _local_provenance_name(photo) -> str:
 
 
 def _curated_subject_override(photo, context: str) -> bool:
-    """Recognize a curated SAMA artifact even after it is copied to a temp path."""
+    """Recognize the verified SAMA artifact even when final copy omits its name.
+
+    The local-library selector already chose the asset from the current story's
+    image queries. Its provenance marker is therefore stronger evidence than a
+    generic vision model calling a known central-bank building "architecture".
+    We still require a finance/rates context when the final copy does not name
+    SAMA explicitly, so the asset can never override an unrelated topic.
+    """
     name = Path(str(photo)).name.lower().replace("_", "-")
     provenance = _local_provenance_name(photo)
     text = str(context or "").lower()
@@ -131,7 +138,11 @@ def _curated_subject_override(photo, context: str) -> bool:
         or "البنك المركزي السعودي" in text
         or "المركزي السعودي" in text
     )
-    return sama_artifact and sama_topic
+    finance_context = any(token in text for token in (
+        "فائدة", "الفائدة", "تمويل", "الفيدرالي", "سايبور",
+        "interest rate", "interest-rate", "financing", "banking",
+    ))
+    return sama_artifact and (sama_topic or finance_context)
 
 
 def _direct_relevance_only(judge):
@@ -149,8 +160,14 @@ def _direct_relevance_only(judge):
     return wrapped
 
 
-def _topic_generated_photo(fetcher):
-    """Force AI fallback to communicate the topic visually, never with generated wording."""
+def _topic_generated_photo(fetcher, cleaner=None):
+    """Force AI fallback to communicate the topic visually, never with wording.
+
+    The underlying generator already has its own safety check. Topic Brief adds
+    a second independent pass because run #78 showed that one visual check can
+    miss small storefront/flag lettering. If the second pass finds any text or
+    signage, fail closed instead of publishing a bad generated image.
+    """
     def wrapped(prompt, out_path):
         strict_prompt = (
             f"{prompt}\n\n"
@@ -160,10 +177,21 @@ def _topic_generated_photo(fetcher):
             "No signs. No logos. No institution names. No building names. No numbers. "
             "No screens with writing. No documents with readable writing. No billboards. "
             "No watermarks. No captions. No emblems. No fake official signage. "
-            "Do not invent official branding. Any surfaces that would normally contain writing "
-            "must be blank or visually unreadable."
+            "Avoid flags, storefronts, signboards, license plates, branded facades, and any "
+            "other scene element that normally carries lettering. Do not invent official branding. "
+            "Any unavoidable surface that would normally contain writing must be blank or visually unreadable."
         )
-        return fetcher(strict_prompt, out_path)
+        photo, credit = fetcher(strict_prompt, out_path)
+        if not photo or cleaner is None:
+            return photo, credit
+        ok, reason = cleaner(photo)
+        if ok:
+            return photo, credit
+        print(f"  ! topic generated image rejected by second text/signage gate: {reason}")
+        Path(str(photo)).unlink(missing_ok=True)
+        for suffix in (".generated", ".exempt"):
+            Path(str(photo) + suffix).unlink(missing_ok=True)
+        return None, None
     return wrapped
 
 
@@ -191,7 +219,12 @@ def _install_topic_image_policy(bot: Any) -> None:
         bot._TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED = True
 
     if hasattr(bot, "fetch_generated_photo") and not getattr(bot, "_TOPIC_TEXT_FREE_AI_INSTALLED", False):
-        bot.fetch_generated_photo = _topic_generated_photo(bot.fetch_generated_photo)
+        if shared_news is None:
+            import news_bot as shared_news
+        bot.fetch_generated_photo = _topic_generated_photo(
+            bot.fetch_generated_photo,
+            cleaner=getattr(shared_news, "generated_image_clean", None),
+        )
         bot._TOPIC_TEXT_FREE_AI_INSTALLED = True
 
     bot.recent_fallback = lambda _hero: None
