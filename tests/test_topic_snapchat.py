@@ -4,6 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
+import topic_snapchat
 from daily_news_runner import _story_for_queries, remember_story_contexts
 from topic_snapchat import install, prepare_shortlist, research_with_validation
 
@@ -80,6 +81,16 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         self.assertEqual(story["takeaway"], brief["takeaway"])
         self.assertEqual(story["link"], brief["source_url"])
         remember_story_contexts({"stories": []})
+
+    def test_credit_policy_rejects_attribution_required_open_images(self):
+        policy = getattr(topic_snapchat, "_credit_requires_visible", None)
+        self.assertIsNotNone(policy)
+        self.assertTrue(policy("openverse", "Alice / CC BY 4.0"))
+        self.assertTrue(policy("commons", "Alice / Wikimedia Commons"))
+        self.assertFalse(policy("openverse", "Openverse / CC CC0 1.0"))
+        self.assertFalse(policy("openverse", "Public Domain / PDM"))
+        self.assertFalse(policy("loc", "Library of Congress"))
+        self.assertFalse(policy("stock", "Pexels"))
 
     def test_install_uses_full_cooldown_snapchat_brand_shared_model_and_auto_images(self):
         rendered_credits = []
