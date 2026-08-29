@@ -101,6 +101,36 @@ class TopicEditorialTests(unittest.TestCase):
             errors,
         )
 
+    def test_validate_brief_blocks_run_72_repo_only_claim(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "الفيدرالي ثبّت الفائدة خامس مرة.. وساما تبعه",
+            "body": "إذا عندك تمويل بفائدة متغيرة، قرار الفيدرالي يهمك لأن الريال مربوط بالدولار.",
+            "takeaway": "تمويلك الثابت ما يتأثر، والمتغير يتحرك فقط لو غيّر ساما سعر الريبو فعلياً.",
+            "caption": "فائدة أمريكا ثابتة من أشهر... وش معناها لقرضك في السعودية؟",
+            "sources": ["أرقام", "اليوم السابع", "الإمارات اليوم"],
+        })
+        errors = validate_brief(brief)
+        self.assertTrue(
+            any("policy rate is not the only driver" in error for error in errors),
+            errors,
+        )
+
+    def test_validate_brief_requires_primary_sources_for_fed_sama_topic(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "ليش قرار الفيدرالي يهم التمويل هنا؟",
+            "body": "الريال مربوط بالدولار، لذلك تحركات الفائدة الأمريكية تؤثر على اتجاه الفائدة في السعودية، لكن الأثر الفعلي يعتمد على المؤشر والعقد.",
+            "takeaway": "إذا تمويلك متغير، راجع المؤشر وهامش البنك وموعد إعادة التسعير.",
+            "caption": "وش علاقة الفيدرالي بتمويلك؟",
+            "sources": ["أرقام", "اليوم السابع", "الإمارات اليوم"],
+        })
+        errors = validate_brief(brief)
+        self.assertTrue(
+            any("Federal Reserve and SAMA primary sources" in error for error in errors),
+            errors,
+        )
+
     def test_validate_brief_accepts_clear_conditional_finance_explanation(self):
         brief = self._complete_brief()
         brief.update({
@@ -131,6 +161,14 @@ class TopicEditorialTests(unittest.TestCase):
         self.assertIn("ليش فائدة أمريكا تهم التمويل هنا؟", prompt)
         self.assertIn("إذا كان تمويلك متغيراً", prompt)
         self.assertIn("الفائدة المحلية", prompt)
+
+    def test_enhance_prompt_teaches_saibor_margin_and_repricing_schedule(self):
+        prompt = enhance_prompt("", date(2026, 8, 29))
+        self.assertIn("سايبور", prompt)
+        self.assertIn("هامش البنك", prompt)
+        self.assertIn("موعد إعادة التسعير", prompt)
+        self.assertIn("لا تقل «وساما تبعه»", prompt)
+        self.assertIn("المصدرين الأوليين", prompt)
 
 
 if __name__ == "__main__":
