@@ -94,6 +94,15 @@ class NewsScopeEdgeTests(unittest.TestCase):
         }
         self.assertFalse(hard_scope_eligible(item))
 
+    def test_prospective_transfer_wording_is_rejected_without_announcement(self):
+        item = {
+            "lane": "sports",
+            "source": "اليوم",
+            "title": "الهلال يقترب من ضم أولي واتكينز رسمياً",
+            "summary": "الصفقة تقترب من الحسم لكن لا يوجد إعلان رسمي من النادي حتى الآن.",
+        }
+        self.assertFalse(hard_scope_eligible(item))
+
     def test_confirmed_major_transfer_remains_eligible(self):
         item = {
             "lane": "sports",
