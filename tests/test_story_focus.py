@@ -39,6 +39,52 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("امتدت الرياض خارج حدودها القديمة", context)
         self.assertIn("هذه اللقطة تحديداً", context)
 
+    def test_visual_context_prefers_image_target_over_full_timeline(self):
+        frame = {
+            "heading": "ما أصبحت عليه الرياض",
+            "text": (
+                "بدأت القصة من حدود 1902، ثم اتسعت المدينة، وفي ديسمبر 2024 "
+                "افتتح مترو الرياض."
+            ),
+            "image_keywords": ["Riyadh Metro", "Riyadh skyline"],
+            "image_keywords_ar": ["مترو الرياض", "أفق الرياض الحديث"],
+        }
+        context = sb.frame_visual_context(RIYADH_STORY, frame)
+        self.assertIn("Riyadh Metro", context)
+        self.assertIn("مترو الرياض", context)
+        self.assertIn("ما أصبحت عليه الرياض", context)
+        # 1902 is narrative background, not a requirement for a modern photo.
+        self.assertNotIn("1902", context)
+
+    def test_renderer_context_resolves_back_to_the_frame_visual_target(self):
+        frame = {
+            "heading": "ما أصبحت عليه الرياض",
+            "text": "افتتح مترو الرياض وأصبح جزءاً من حركة المدينة اليومية.",
+            "image_keywords": ["Riyadh Metro"],
+            "image_keywords_ar": ["مترو الرياض"],
+        }
+        renderer_context = f"{frame['heading']}\n{frame['text']}"
+        matched = story_focus.frame_from_renderer_context([frame], renderer_context)
+        self.assertIs(matched, frame)
+
+    def test_city_prompt_uses_neutral_comparison_and_natural_arabic(self):
+        self.assertIn("أعلى من أي مدينة سعودية أخرى", sb.SYSTEM_PROMPT)
+        self.assertIn("لا تقل", sb.SYSTEM_PROMPT)
+        self.assertIn("أكثر من ثاني مدينة في القائمة", sb.SYSTEM_PROMPT)
+        self.assertIn("من بلدة مسوّرة إلى مدينة بهذا الحجم", sb.SYSTEM_PROMPT)
+        self.assertIn("تحولها", sb.SYSTEM_PROMPT)
+        self.assertIn("صيرورتها", sb.SYSTEM_PROMPT)
+
+    def test_city_wording_cleanup_removes_hard_ranking_and_sayrura(self):
+        text = (
+            "هذه صيرورتها اليوم: 225 مليار ريال، أعلى من أي مدينة سعودية أخرى."
+        )
+        cleaned = story_focus.polish_city_wording(text)
+        self.assertNotIn("صيرورتها", cleaned)
+        self.assertIn("تحولها", cleaned)
+        self.assertNotIn("أعلى من أي مدينة سعودية أخرى", cleaned)
+        self.assertIn("حجم النشاط الاقتصادي", cleaned)
+
     def test_story_photo_gate_requires_confirmed_relevance(self):
         self.assertTrue(sb.story_photo_verdict_ok("yes"))
         self.assertFalse(sb.story_photo_verdict_ok("neutral"))
