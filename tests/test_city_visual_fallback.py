@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import city_visual_fallback as cvf
+import city_visual_v2 as cvf
 
 
 class CityVisualFallbackTests(unittest.TestCase):
