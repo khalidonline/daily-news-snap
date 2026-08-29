@@ -20,7 +20,7 @@ from news_editorial import (
 class NewsEditorialTests(unittest.TestCase):
     FIXED_NOW = datetime(2026, 8, 29, 12, 0, tzinfo=timezone.utc)
 
-    def make_item(self, lane, n, source=None, title=None, age_hours=None, summary=None):
+    def make_item(self, lane, n, source=None, title=None, age_hours=3, summary=None):
         item = {
             "lane": lane,
             "source": source or f"source-{lane}",
@@ -179,6 +179,11 @@ class NewsEditorialTests(unittest.TestCase):
         older = self.make_item("business_tech", 2, age_hours=31.2)
         self.assertEqual(format_age_label(older, self.FIXED_NOW), "31h")
 
+    def test_unknown_age_item_is_not_eligible_for_normal_daily_shortlist(self):
+        item = self.make_item("business_tech", 99)
+        item.pop("published_at")
+        self.assertFalse(freshness_eligible(item, now=self.FIXED_NOW))
+
     def test_47_hour_item_eligible_and_49_hour_item_excluded(self):
         self.assertTrue(freshness_eligible(self.make_item("business_tech", 1, age_hours=47), now=self.FIXED_NOW))
         self.assertFalse(freshness_eligible(self.make_item("business_tech", 2, age_hours=49), now=self.FIXED_NOW))
@@ -273,7 +278,7 @@ class DailyNewsRunnerTests(unittest.TestCase):
         self.assertEqual(fake.LOOKBACK_HOURS, 48)
         self.assertIn("25 و50", fake.SYSTEM_PROMPT)
 
-        now = NewsEditorialTests.FIXED_NOW
+        now = datetime.now(timezone.utc)
         items = []
         for lane in LANE_TARGETS:
             for i in range(20):
@@ -286,16 +291,12 @@ class DailyNewsRunnerTests(unittest.TestCase):
                     "published_at": (now - timedelta(hours=3)).isoformat(),
                 }
                 items.append(item)
-        # Avoid clock dependence for this runner test by stripping timestamps;
-        # the module-level freshness helpers are covered with fixed times above.
-        for item in items:
-            item["published_at"] = None
         fake.summarize(items, ("old story",), "")
         self.assertEqual(len(captured["items"]), 60)
         counts = shortlist_lane_counts(captured["items"])
         self.assertEqual(counts, LANE_TARGETS)
         self.assertTrue(all("[lane=" in x["summary"] for x in captured["items"]))
-        self.assertTrue(all("[age=unknown]" in x["summary"] for x in captured["items"]))
+        self.assertTrue(all("[age=3h]" in x["summary"] or "[age=2h]" in x["summary"] for x in captured["items"]))
         self.assertEqual(captured["already_posted"], ("old story",))
 
     def test_pinned_event_bypasses_lane_balancing(self):
