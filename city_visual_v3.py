@@ -11,9 +11,15 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Iterable
 import re
+import shutil
+import urllib.parse
+import urllib.request
+
+from PIL import Image
 
 import city_visual_v2 as v2
 import city_visual_fallback as legacy
+import photo_quality
 import photo_quality_guard
 import story_focus
 
@@ -38,6 +44,17 @@ apply_riyadh_closing = v2.apply_riyadh_closing
 # their literal modern scene, but their old catalogue wording must not make
 # them historical evidence.
 _KNOWN_HISTORICAL_ERA_MISMATCHES = {"old-riyadh-souq.jpg"}
+
+_PINNED_RIYADH_METRO = {
+    "filename": "KAFD Station - Riyadh Metro.jpg",
+    "commons_file": "KAFD Station - Riyadh Metro.jpg",
+    "credit": "Ali Lajami / Wikimedia Commons / CC BY 2.0",
+}
+_PINNED_RIYADH_SKYLINE = {
+    "filename": "Riyadh Skyline.jpg",
+    "commons_file": "Riyadh Skyline.jpg",
+    "credit": "B.alotaby / Wikimedia Commons / CC BY-SA 4.0",
+}
 
 
 def _norm(text: str) -> str:
@@ -91,6 +108,28 @@ def city_frame_deserves_targeted_search_after_minimum(
         "مركز الملك عبدالله المالي",
     )
     return any(_norm(phrase) in text for phrase in phrases)
+
+
+def pinned_riyadh_visual(frame: dict):
+    """Return a deterministic reviewed Commons asset for the two final beats."""
+    if not isinstance(frame, dict):
+        return None
+    targets = list(frame.get("image_keywords") or [])
+    targets += list(frame.get("image_keywords_ar") or [])
+    target_text = _norm(" ".join(str(term) for term in targets if term))
+    body = str(frame.get("text", "") or "")
+    heading = str(frame.get("heading", "") or "")
+    whole = _norm(" ".join([target_text, body, heading]))
+
+    if ("metro" in whole or "مترو" in whole) and ("riyadh" in whole or "الرياض" in whole):
+        return dict(_PINNED_RIYADH_METRO)
+
+    approved_close = (
+        "225" in body and "نقاط البيع" in body
+    ) or "من بلدة مسو رة إلى مدينة بهذا الحجم" in _norm(heading)
+    if approved_close and ("riyadh" in whole or "الرياض" in whole):
+        return dict(_PINNED_RIYADH_SKYLINE)
+    return None
 
 
 def _meaningful_overlap(targets: list[str], metadata: str,
@@ -201,11 +240,50 @@ def plan_reviewed_exact_assignments(frames: Iterable[dict], index_path,
     return assignments
 
 
+def _download_pinned_visual(asset: dict, out_path, sb, seen=()):
+    """Download one exact Commons file, verify pixels/quality, then stage it."""
+    if not asset:
+        return None
+    out = Path(out_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    tmp = out.with_name(out.name + ".pinned.tmp")
+    tmp.unlink(missing_ok=True)
+    filename = str(asset["commons_file"])
+    url = (
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/"
+        + urllib.parse.quote(filename, safe="")
+    )
+    request = urllib.request.Request(
+        url,
+        headers={"User-Agent": "ExecutiveSummaryStoryBot/1.0 (visual editorial review)"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=25) as response, tmp.open("wb") as handle:
+            shutil.copyfileobj(response, handle)
+        with Image.open(tmp) as image:
+            image.verify()
+        if photo_quality.has_poor_atmospheric_visibility(tmp):
+            print(f"      pinned Riyadh visual rejected by quality: {asset['filename']}")
+            tmp.unlink(missing_ok=True)
+            return None
+        try:
+            digest = sb._photo_digest(tmp)
+            if any(sb.same_picture(digest, prior) for prior in seen):
+                tmp.unlink(missing_ok=True)
+                return None
+        except Exception:
+            pass
+        tmp.replace(out)
+        print(f"      pinned Riyadh visual: {asset['filename']} — {asset['credit']}")
+        return str(out)
+    except Exception as exc:
+        tmp.unlink(missing_ok=True)
+        print(f"      pinned Riyadh visual unavailable: {asset['filename']} ({exc})")
+        return None
+
+
 def configure(story_bot_module):
-    """Use v2 flow, then preserve exact Metro/skyline searches after minimum."""
-    # story_focus's strict find_photo is the safe exact-search path beneath v2.
-    # Keep a handle so the post-minimum exception can use it without reopening
-    # generic city fallback.
+    """Use v2 flow, with deterministic Metro/closing visuals for Riyadh."""
     pre_city_find_photo = story_bot_module.find_photo
 
     v2.reviewed_city_exact_match = reviewed_city_exact_match
@@ -217,6 +295,14 @@ def configure(story_bot_module):
     def find_photo_with_high_value_late_exact(
         spec, out_path, seen=(), context="", allow_neutral=True, bank=None
     ):
+        frame = spec if isinstance(spec, dict) else {}
+        if str(frame.get("subject_kind", "")).strip() == "place_city":
+            pinned = pinned_riyadh_visual(frame)
+            if pinned is not None:
+                photo = _download_pinned_visual(pinned, out_path, sb, seen)
+                if photo is not None:
+                    return photo
+
         photo = city_find_photo(
             spec, out_path, seen, context,
             allow_neutral=allow_neutral, bank=bank,
@@ -224,7 +310,6 @@ def configure(story_bot_module):
         if photo is not None:
             return photo
 
-        frame = spec if isinstance(spec, dict) else {}
         if str(frame.get("subject_kind", "")).strip() != "place_city":
             return None
         aliases = legacy._unique(
@@ -238,6 +323,16 @@ def configure(story_bot_module):
             )
         )
         if not city_frame_deserves_targeted_search_after_minimum(frame, aliases):
+            return None
+
+        # An ordinary skyline mention after the four-photo minimum is not
+        # allowed to reopen the generic ladder. The approved closing skyline
+        # is handled deterministically above.
+        targets = _norm(" ".join(
+            [str(x) for x in frame.get("image_keywords", [])]
+            + [str(x) for x in frame.get("image_keywords_ar", [])]
+        ))
+        if ("skyline" in targets or "أفق" in targets) and pinned_riyadh_visual(frame) is None:
             return None
 
         print("      city high-value exact search: continuing after four-photo minimum")
