@@ -1,3 +1,5 @@
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -15,6 +17,17 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
             Path('assets/sama-history-hq.jpg'),
             'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
         )
+        self.assertEqual(verdict, 'yes')
+
+    def test_copied_hero_still_recognizes_curated_sama_artifact(self):
+        wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'neutral')
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / 'hero.jpg'
+            shutil.copyfile('assets/sama-history-hq.jpg', hero)
+            verdict = wrapped(
+                hero,
+                'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
+            )
         self.assertEqual(verdict, 'yes')
 
     def test_unrelated_curated_artifact_still_rejects_neutral_match(self):
