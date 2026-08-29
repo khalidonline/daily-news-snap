@@ -36,7 +36,14 @@ def _norm(text: str) -> str:
 
 
 def _years(text: str) -> set[str]:
-    return set(re.findall(r"(?<!\d)((?:18|19|20)\d{2})(?!\d)", str(text or "")))
+    # Exact years only. A decade label such as ``1970s`` must reach the
+    # decade-matching rule below instead of becoming a false exact 1970.
+    return set(
+        re.findall(
+            r"(?<![0-9a-z])((?:18|19|20)\d{2})(?![0-9a-z])",
+            str(text or "").casefold(),
+        )
+    )
 
 
 def _tokens(text: str) -> set[str]:
