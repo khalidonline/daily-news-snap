@@ -18,17 +18,18 @@ on:
         type: boolean
         default: false
       image_source:
-        description: "مصدر الصورة — لا يوجد توليد آلي في الأخبار"
+        description: "مصدر الصورة — auto يختار الصورة الأكثر صلة"
         type: choice
         options:
-          - spa
+          - auto
           - article
+          - spa
           - commons          # Wikimedia Commons
           - loc              # Library of Congress
           - openverse
-          - stock   # Pexels
+          - stock            # Pexels
           - none
-        default: spa
+        default: auto
 
 permissions:
   contents: write
@@ -87,7 +88,7 @@ jobs:
           STORIES_PER_DAY: "1"
           CANDIDATES: "8"
           REQUIRE_PHOTO: "1"
-          IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
+          IMAGE_SOURCE: ${{ inputs.image_source || 'auto' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           LOOKBACK_HOURS: "48"
           REMEMBER_DAYS: "3"
