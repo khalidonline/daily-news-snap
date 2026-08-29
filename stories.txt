@@ -62,7 +62,7 @@
 # القاعدة: الشيء معروف، والشخص مجهول.
 
 # التقنية
-من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره | Douglas Engelbart
+من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره | Douglas Engelbart | entity: SRI International, SRI | logo:sri.com
 قصة CP/M: النظام الذي كاد يسبق Microsoft ثم اختفى | Digital Research, Gary Kildall | logo:digitalresearch.biz
 Radia Perlman: المهندسة التي جعلت شبكات الإنترنت تعمل | Radia Perlman
 Shuji Nakamura: اخترع الضوء الأزرق وحصل على 180 دولاراً مكافأة | Shuji Nakamura
