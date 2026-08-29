@@ -1,6 +1,7 @@
 import unittest
 
 import story_bot as sb
+import story_focus
 
 
 RIYADH_STORY = "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
@@ -9,7 +10,9 @@ RIYADH_STORY = "قصة الرياض: من بلدة مسورة إلى عاصمة 
 class StorySubjectFocusTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # Populate aliases exactly as production does from stories.txt.
+        # Match the production entrypoint: Story Runtime configures story_bot
+        # before selection/research/rendering, then aliases come from stories.txt.
+        story_focus.configure(sb)
         sb.load_stories()
 
     def test_riyadh_contract_locks_declared_subject(self):
@@ -41,6 +44,13 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertFalse(sb.story_photo_verdict_ok("neutral"))
         self.assertFalse(sb.story_photo_verdict_ok("no"))
         self.assertFalse(sb.story_photo_verdict_ok(""))
+
+    def test_configuration_is_idempotent(self):
+        first_prompt = sb.SYSTEM_PROMPT
+        first_gate = sb.photo_shows
+        story_focus.configure(sb)
+        self.assertEqual(first_prompt, sb.SYSTEM_PROMPT)
+        self.assertIs(first_gate, sb.photo_shows)
 
 
 if __name__ == "__main__":
