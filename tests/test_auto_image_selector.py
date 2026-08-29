@@ -64,81 +64,200 @@ class AutoImageSourcePolicyTests(unittest.TestCase):
 
 
 class RelevanceFirstWrapperTests(unittest.TestCase):
-    def make_module(self, verdicts, seen_contexts):
-        def write_pair(label, credit):
-            def provider(*args, **kwargs):
-                out_path = args[-1]
-                Path(out_path).write_bytes(label.encode("utf-8"))
-                return str(out_path), credit
-            return provider
+    def make_module(self, verdicts, calls, *, local_marker=False, pexels_key="key"):
+        def write(path, label, marker=False):
+            Path(path).write_bytes(label.encode("utf-8"))
+            if marker:
+                Path(str(path) + ".exempt").write_text(
+                    f"local:{label}.jpg", encoding="utf-8")
+            return str(path)
 
-        def write_photo(label):
-            def provider(*args, **kwargs):
-                out_path = args[1]
-                Path(out_path).write_bytes(label.encode("utf-8"))
-                return str(out_path)
-            return provider
+        def local(queries_ar, queries_en, out_path,
+                  respect_cooldown=True, exclude=()):
+            calls.append("local")
+            return write(out_path, "local", local_marker), "Local credit"
+
+        def article(url, out_path):
+            calls.append("article")
+            return write(out_path, "article"), "aawsat.com"
+
+        def spa(queries_ar, out_path):
+            calls.append("spa")
+            return write(out_path, "spa"), "واس"
+
+        def commons(queries, out_path, need_saudi=None, min_hits=None,
+                    subject_mode=False):
+            calls.append("commons")
+            return write(out_path, "commons"), "Commons credit"
+
+        def loc(queries, out_path, need_saudi=None, min_hits=None,
+                subject_mode=False):
+            calls.append("loc")
+            return write(out_path, "loc"), "Library of Congress"
+
+        def openverse(queries, out_path, need_saudi=None, min_hits=None,
+                      subject_mode=False):
+            calls.append("openverse")
+            return write(out_path, "openverse"), "Openverse credit"
+
+        def stock(queries, out_path, need_saudi=None):
+            calls.append("stock")
+            return write(out_path, "stock")
 
         def judge(path, context):
             label = Path(path).read_bytes().decode("utf-8")
-            seen_contexts.append(context)
             return verdicts[label]
 
         return SimpleNamespace(
             IMAGE_SOURCE="auto",
-            PEXELS_API_KEY="key",
+            PEXELS_API_KEY=pexels_key,
             DOMAIN_CREDITS={"aawsat.com": "الشرق الأوسط"},
             photo_shows=judge,
-            fetch_local_photo=write_pair("local", "Local credit"),
-            fetch_article_photo=write_pair("article", "aawsat.com"),
-            fetch_spa_photo=write_pair("spa", "واس"),
-            fetch_commons_photo=write_pair("commons", "Commons credit"),
-            fetch_loc_photo=write_pair("loc", "Library of Congress"),
-            fetch_openverse_photo=write_pair("openverse", "Openverse credit"),
-            fetch_photo=write_photo("stock"),
+            fetch_local_photo=local,
+            fetch_article_photo=article,
+            fetch_spa_photo=spa,
+            fetch_commons_photo=commons,
+            fetch_loc_photo=loc,
+            fetch_openverse_photo=openverse,
+            fetch_photo=stock,
         )
 
-    def remember_story(self):
+    def remember_story(self, *, scope="saudi"):
         daily_news_runner.remember_story_contexts({
             "stories": [{
                 "headline": "Apple تغيّر شيئاً مهماً في iPhone",
                 "summary": "التغيير يصل للمستخدمين في السعودية.",
                 "takeaway": "قد يؤثر على قرار الشراء القادم.",
+                "link": "https://aawsat.com/story",
+                "scope": scope,
                 "image_queries": ["apple iphone saudi arabia"],
                 "image_queries_ar": ["آيفون"],
             }]
         })
 
-    def test_neutral_early_source_does_not_beat_later_yes(self):
-        seen = []
+    def run_auto(self, fake, hero):
+        daily_news_runner.install_auto_image_selector(fake)
+        return fake.fetch_local_photo(
+            ["آيفون"], ["apple iphone saudi arabia"], hero)
+
+    def test_later_yes_beats_earlier_neutral_in_one_auto_search(self):
+        calls = []
         fake = self.make_module({
             "local": "neutral", "article": "yes", "spa": "no",
             "commons": "no", "loc": "no", "openverse": "no", "stock": "no",
-        }, seen)
+        }, calls)
         self.remember_story()
-        daily_news_runner.install_auto_image_selector(fake)
 
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
-            photo, credit = fake.fetch_local_photo(
-                ["آيفون"], ["apple iphone saudi arabia"], hero)
+            photo, credit = self.run_auto(fake, hero)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "الشرق الأوسط")
+            self.assertEqual(hero.read_bytes(), b"article")
+
+        self.assertEqual(calls, ["local", "article"])
+
+    def test_first_safe_neutral_is_used_when_no_yes_exists(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "neutral",
+            "stock": "no",
+        }, calls)
+        self.remember_story()
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = self.run_auto(fake, hero)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "Commons credit")
+            self.assertEqual(hero.read_bytes(), b"commons")
+
+        self.assertEqual(
+            calls, ["local", "article", "spa", "commons", "loc", "openverse", "stock"])
+
+    def test_no_candidate_is_never_promoted(self):
+        calls = []
+        fake = self.make_module({
+            name: "no" for name in
+            ("local", "article", "spa", "commons", "loc", "openverse", "stock")
+        }, calls)
+        self.remember_story()
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = self.run_auto(fake, hero)
             self.assertIsNone(photo)
             self.assertIsNone(credit)
 
-            photo, domain = fake.fetch_article_photo("https://aawsat.com/x", hero)
+    def test_neutral_fallback_keeps_provider_credit_not_pexels(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls)
+        self.remember_story()
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            _, credit = self.run_auto(fake, hero)
+            self.assertEqual(credit, "Commons credit")
+            self.assertNotEqual(credit, "Pexels")
+
+    def test_selected_local_neutral_preserves_exempt_marker(self):
+        calls = []
+        fake = self.make_module({
+            "local": "neutral", "article": "no", "spa": "no",
+            "commons": "no", "loc": "no", "openverse": "no", "stock": "no",
+        }, calls, local_marker=True)
+        self.remember_story()
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = self.run_auto(fake, hero)
             self.assertEqual(photo, str(hero))
-            self.assertEqual(domain, "aawsat.com")
-            self.assertEqual(hero.read_bytes(), b"article")
+            self.assertEqual(credit, "Local credit")
+            marker = Path(str(hero) + ".exempt")
+            self.assertTrue(marker.exists())
+            self.assertTrue(marker.read_text(encoding="utf-8").startswith("local:"))
 
-        self.assertTrue(any("Apple تغيّر" in context for context in seen))
-        self.assertTrue(any("قرار الشراء" in context for context in seen))
+    def test_rejected_local_marker_does_not_leak_to_article_neutral(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "neutral", "spa": "no",
+            "commons": "no", "loc": "no", "openverse": "no", "stock": "no",
+        }, calls, local_marker=True)
+        self.remember_story()
 
-    def test_no_candidate_is_rejected_and_yes_candidate_keeps_metadata(self):
-        seen = []
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = self.run_auto(fake, hero)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "الشرق الأوسط")
+            self.assertFalse(Path(str(hero) + ".exempt").exists())
+
+    def test_world_story_skips_spa(self):
+        calls = []
         fake = self.make_module({
             "local": "no", "article": "no", "spa": "yes",
-            "commons": "no", "loc": "no", "openverse": "no", "stock": "no",
-        }, seen)
+            "commons": "neutral", "loc": "no", "openverse": "no", "stock": "no",
+        }, calls)
+        self.remember_story(scope="world")
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = self.run_auto(fake, hero)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "Commons credit")
+        self.assertNotIn("spa", calls)
+
+    def test_downstream_legacy_provider_is_suppressed_after_auto_exhaustion(self):
+        calls = []
+        fake = self.make_module({
+            name: "no" for name in
+            ("local", "article", "spa", "commons", "loc", "openverse", "stock")
+        }, calls)
         self.remember_story()
         daily_news_runner.install_auto_image_selector(fake)
 
@@ -147,37 +266,11 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             photo, _ = fake.fetch_local_photo(
                 ["آيفون"], ["apple iphone saudi arabia"], hero)
             self.assertIsNone(photo)
-            photo, _ = fake.fetch_article_photo("https://aawsat.com/x", hero)
+            before = list(calls)
+            photo, credit = fake.fetch_article_photo("https://aawsat.com/story", hero)
             self.assertIsNone(photo)
-            photo, credit = fake.fetch_spa_photo(["آيفون"], hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "واس")
-            self.assertEqual(hero.read_bytes(), b"spa")
-
-    def test_neutral_stock_is_not_accepted_when_no_direct_match_exists(self):
-        seen = []
-        fake = self.make_module({
-            "local": "neutral", "article": "neutral", "spa": "neutral",
-            "commons": "neutral", "loc": "neutral", "openverse": "neutral",
-            "stock": "neutral",
-        }, seen)
-        self.remember_story()
-        daily_news_runner.install_auto_image_selector(fake)
-
-        with tempfile.TemporaryDirectory() as td:
-            hero = Path(td) / "hero.jpg"
-            self.assertIsNone(fake.fetch_local_photo(
-                ["آيفون"], ["apple iphone saudi arabia"], hero)[0])
-            self.assertIsNone(fake.fetch_article_photo("https://aawsat.com/x", hero)[0])
-            self.assertIsNone(fake.fetch_spa_photo(["آيفون"], hero)[0])
-            self.assertIsNone(fake.fetch_commons_photo(
-                ["apple iphone saudi arabia"], hero, need_saudi=True)[0])
-            self.assertIsNone(fake.fetch_loc_photo(
-                ["apple iphone saudi arabia"], hero, need_saudi=True)[0])
-            self.assertIsNone(fake.fetch_openverse_photo(
-                ["apple iphone saudi arabia"], hero, need_saudi=True)[0])
-            self.assertIsNone(fake.fetch_photo(
-                ["apple iphone saudi arabia"], hero, need_saudi=True))
+            self.assertIsNone(credit)
+            self.assertEqual(calls, before)
 
 
 if __name__ == "__main__":
