@@ -119,9 +119,13 @@ _PERSONAL_MEDICAL_ADVICE_RE = re.compile(
     r"(?:"
     r"(?:هل|كيف|ماذا)\s+[^.؟?]{0,100}(?:يضر|يفيد|يسبب|يرفع|يخفض|يحمي|يؤثر|مفيد|ضار|آمن)"
     r"[^.؟?]{0,60}(?:الكبد|الكلى|القلب|الجسم|الصحة|النوم|الوزن|المناعة|السكر|الضغط)|"
+    r"(?:حقيقة\s+)?(?:تأثير|أثر|فوائد|أضرار)\s+[^.؟?]{0,100}(?:على|لـ)\s*"
+    r"(?:الكبد|الكلى|القلب|الجسم|الصحة|النوم|الوزن|المناعة|السكر|الضغط)|"
     r"(?:نصيحة طبية|نصائح صحية|فوائد صحية|أضرار صحية)|"
     r"(?:does|can|could|how)\s+[^.?]{0,100}(?:harm|help|cause|lower|raise|protect|affect)"
     r"[^.?]{0,60}(?:liver|kidney|heart|body|health|sleep|weight|immunity|blood sugar|blood pressure)|"
+    r"(?:effect|impact|benefits?|risks?)\s+of\s+[^.?]{0,80}\s+on\s+"
+    r"(?:liver|kidney|heart|body|health|sleep|weight|immunity|blood sugar|blood pressure)|"
     r"(?:health tips?|health benefits?|health risks?)"
     r")",
     re.IGNORECASE,
@@ -168,6 +172,15 @@ _MAJOR_SPORTS_RE = re.compile(
     r"(?:نهائي|النهائي|يتوج|توج|بطولة|كأس العالم|دوري أبطال|كأس آسيا|"
     r"يتأهل|التأهل|لقب|رقم قياسي|تاريخي|ميدالية|final|champion|championship|"
     r"world cup|champions league|qualif(?:y|ies|ied|ication)|title|record|historic|medal)",
+    re.IGNORECASE,
+)
+_UNCONFIRMED_TRANSFER_RE = re.compile(
+    r"(?:تقارير|مصادر|أنباء)[^.\n]{0,160}"
+    r"(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب)[^.\n]{0,100}"
+    r"(?:انتقال|التعاقد|صفقة)|"
+    r"(?:reports?|sources?)[^.\n]{0,160}"
+    r"(?:close to|set to|linked with|in talks)[^.\n]{0,100}"
+    r"(?:transfer|sign|move)",
     re.IGNORECASE,
 )
 _FINANCING_RE = re.compile(
@@ -233,6 +246,12 @@ def hard_scope_eligible(item):
     if _ACCIDENT_EVENT_RE.search(text):
         if not (direct_saudi and _SAFETY_RULE_CHANGE_RE.search(text)):
             return False
+
+    # Transfer speculation is still a rumor even when the sentence says the
+    # eventual move would be "official". A club announcement/confirmed deal has
+    # no report/source + proximity wording and remains eligible.
+    if lane == "sports" and _UNCONFIRMED_TRANSFER_RE.search(text):
+        return False
 
     # Ordinary match recaps never consume a national card; major titles,
     # qualification, finals and records remain eligible.
