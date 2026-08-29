@@ -165,6 +165,88 @@ class CityVisualFallbackTests(unittest.TestCase):
         self.assertTrue(cvf.is_city_fallback_context(context))
         self.assertTrue(context.startswith(cvf.CITY_FALLBACK_MARKER))
 
+    # Regressions from the second live artifact of #93.
+    def test_explicit_year_conflict_is_hard_rejected(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "images.txt"
+            index.write_text(
+                "railway-construction-1951.jpg | الرياض, 1951, بناء, Riyadh Dammam railway | archive\n"
+                "riyadh-1975-construction.jpg | الرياض, 1975, البناء, السبعينات | archive\n"
+                "riyadh-1977-construction.jpg | الرياض, 1977, عمران, السبعينات | archive\n",
+                encoding="utf-8",
+            )
+            frame = {
+                "subject_kind": "place_city",
+                "image_keywords": ["Riyadh construction 1975", "Riyadh 1977"],
+                "image_keywords_ar": ["الرياض البناء", "الرياض 1977"],
+            }
+            rows = cvf.reviewed_city_exact_rows(
+                frame, index, aliases=["Riyadh", "الرياض"]
+            )
+        names = [row["filename"] for row in rows]
+        self.assertNotIn("railway-construction-1951.jpg", names)
+        self.assertEqual("riyadh-1975-construction.jpg", names[0])
+        self.assertIn("riyadh-1977-construction.jpg", names)
+
+    def test_old_riyadh_phrase_is_an_exact_historical_anchor(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "images.txt"
+            index.write_text(
+                "old-riyadh-souq.jpg | الرياض القديمة, old Riyadh, سوق تقليدي, الرياض | archive\n"
+                "riyadh-departures.jpg | مطار الرياض, المغادرون | archive\n",
+                encoding="utf-8",
+            )
+            frame = {
+                "subject_kind": "place_city",
+                "image_keywords": ["old Riyadh", "Masmak Fort Riyadh"],
+                "image_keywords_ar": ["الرياض القديمة", "قصر المصمك"],
+            }
+            rows = cvf.reviewed_city_exact_rows(
+                frame, index, aliases=["Riyadh", "الرياض"]
+            )
+        self.assertEqual("old-riyadh-souq.jpg", rows[0]["filename"])
+
+    def test_whole_deck_gets_four_exact_assignments_before_any_fallback(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "images.txt"
+            index.write_text(
+                "old-riyadh-souq.jpg | الرياض القديمة, old Riyadh, سوق تقليدي, الرياض | archive\n"
+                "railway-construction-1951.jpg | سكة حديد الرياض الدمام, 1951, بناء, Riyadh Dammam railway | archive\n"
+                "riyadh-1975-construction.jpg | الرياض, 1975, البناء, السبعينات | archive\n"
+                "riyadh-1977-construction.jpg | الرياض, 1977, عمران, السبعينات | archive\n"
+                "riyadh-skyline.jpg | Riyadh skyline, الرياض | archive\n",
+                encoding="utf-8",
+            )
+            frames = [
+                {"subject_kind": "place_city", "image_keywords": ["old Riyadh"], "image_keywords_ar": ["الرياض القديمة"]},
+                {"subject_kind": "place_city", "image_keywords": ["Murabba Palace Riyadh"], "image_keywords_ar": ["قصر المربع"]},
+                {"subject_kind": "place_city", "image_keywords": ["Riyadh Dammam railway 1951"], "image_keywords_ar": ["سكة حديد الرياض الدمام"]},
+                {"subject_kind": "place_city", "image_keywords": ["Riyadh construction 1975", "Riyadh 1977"], "image_keywords_ar": ["الرياض البناء"]},
+                {"subject_kind": "place_city", "image_keywords": ["Riyadh Metro"], "image_keywords_ar": ["مترو الرياض"]},
+                {"subject_kind": "place_city", "image_keywords": ["Riyadh skyline"], "image_keywords_ar": ["أفق الرياض"]},
+            ]
+            assignments = cvf.plan_reviewed_exact_assignments(
+                frames, index, aliases=["Riyadh", "الرياض"]
+            )
+        self.assertGreaterEqual(len(assignments), 4)
+        self.assertEqual("old-riyadh-souq.jpg", assignments[0]["filename"])
+        self.assertEqual("railway-construction-1951.jpg", assignments[2]["filename"])
+        self.assertIn(assignments[3]["filename"], {"riyadh-1975-construction.jpg", "riyadh-1977-construction.jpg"})
+        self.assertEqual("riyadh-skyline.jpg", assignments[5]["filename"])
+
+    def test_riyadh_closing_is_locked_to_approved_annual_pos_copy(self):
+        brief = {
+            "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+            "frames": [{"heading": f"frame {i}"} for i in range(6)],
+        }
+        out = cvf.apply_riyadh_closing(brief)
+        last = out["frames"][-1]
+        self.assertIn("225 مليار ريال", last["text"])
+        self.assertIn("مبيعات نقاط البيع", last["text"])
+        self.assertEqual("هذا هو حجم التحول الذي عاشته الرياض.", last["punch"])
+        self.assertNotIn("34%", last["text"])
+        self.assertIn("Riyadh skyline", last["image_keywords"])
+
 
 if __name__ == "__main__":
     unittest.main()
