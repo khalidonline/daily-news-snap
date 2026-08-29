@@ -1,0 +1,57 @@
+name: Refresh READY story pool
+
+on:
+  push:
+    paths:
+      - "ready_story_publish.py"
+      - "stories.txt"
+      - "images/images.txt"
+      - "images/relevance.json"
+      - "images/logos/**"
+      - "images/targeted-*"
+      - "images/rt-*"
+      - ".github/workflows/ready-story-pool.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ready-story-pool
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Rebuild strict READY_FOR_SNAP list
+        env:
+          POST_TO_SNAPCHAT: "0"
+          DRY_RUN: "1"
+        run: python ready_story_publish.py --refresh-only
+
+      - name: Commit READY list when it changes
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/ready_to_post.json
+          if git diff --cached --quiet; then
+            echo "READY list unchanged"
+            exit 0
+          fi
+          git commit -m "state: refresh READY_FOR_SNAP pool"
+          git push origin HEAD:repair/all-story-visuals-2026-08-29
