@@ -32,6 +32,11 @@ normalize_city_deck_for_visuals = v2.normalize_city_deck_for_visuals
 reviewed_city_fallback_rows = v2.reviewed_city_fallback_rows
 apply_riyadh_closing = v2.apply_riyadh_closing
 
+# Visually reviewed catalogue corrections. These files may remain useful for
+# their literal modern scene, but their old catalogue wording must not make
+# them historical evidence.
+_KNOWN_HISTORICAL_ERA_MISMATCHES = {"old-riyadh-souq.jpg"}
+
 
 def _norm(text: str) -> str:
     return " ".join(re.findall(r"[a-z0-9]+|[ء-ي]+", str(text or "").casefold()))
@@ -94,12 +99,16 @@ def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
     target_cf = _norm(target_text)
     metadata_cf = _norm(metadata)
 
+    target_years = _years(target_text)
+    historical_request = bool(target_years) or "old riyadh" in target_cf or "الرياض القديمة" in target_text
+    if source in _KNOWN_HISTORICAL_ERA_MISMATCHES and historical_request:
+        return -1
+
     old_anchor = (
         ("old riyadh" in target_cf and "old riyadh" in metadata_cf)
         or ("الرياض القديمة" in target_text and "الرياض القديمة" in metadata)
     )
 
-    target_years = _years(target_text)
     meta_years = _years(metadata)
     overlap = _meaningful_overlap(targets, metadata, aliases)
 
