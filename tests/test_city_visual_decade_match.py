@@ -77,12 +77,19 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
         self.assertTrue(cvf.city_frame_deserves_targeted_search_after_minimum(skyline, aliases))
         self.assertFalse(cvf.city_frame_deserves_targeted_search_after_minimum(ordinary, aliases))
 
-    def test_riyadh_metro_and_approved_close_have_deterministic_commons_assets(self):
+    def test_riyadh_growth_metro_and_close_have_deterministic_commons_assets(self):
         metro = {
             "subject_kind": "place_city",
             "image_keywords": ["Riyadh Metro", "KAFD Metro Station Riyadh"],
             "image_keywords_ar": ["مترو الرياض"],
             "text": "افتُتح مترو الرياض أواخر 2024.",
+        }
+        growth = {
+            "subject_kind": "place_city",
+            "heading": "من بلدة مسوّرة إلى هذا الحجم",
+            "image_keywords": ["Riyadh skyline", "Riyadh city"],
+            "image_keywords_ar": ["الرياض", "أفق الرياض"],
+            "text": "وهكذا وصلت الرياض إلى حجم لم تعرفه من قبل. في تعداد السعودية تجاوز عدد سكانها سبعة ملايين نسمة.",
         }
         closing = {
             "subject_kind": "place_city",
@@ -101,6 +108,10 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
         self.assertEqual(
             "KAFD Station - Riyadh Metro.jpg",
             cvf.pinned_riyadh_visual(metro)["filename"],
+        )
+        self.assertEqual(
+            "Riyadh aerial helicam 2013.jpg",
+            cvf.pinned_riyadh_visual(growth)["filename"],
         )
         self.assertEqual(
             "Riyadh Skyline.jpg",
