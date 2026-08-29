@@ -123,12 +123,26 @@ def _context_for_queries(queries_en, queries_ar):
     return "\n".join(fallback)
 
 
+def _model_story_scope_item(story, source_item):
+    """Project model-written card text back into the source item's policy lane."""
+    candidate = dict(source_item)
+    candidate["title"] = str(story.get("headline", "") or "").strip()
+    candidate["summary"] = " ".join(
+        str(story.get(field, "") or "").strip()
+        for field in ("summary", "takeaway")
+        if str(story.get(field, "") or "").strip()
+    )
+    return candidate
+
+
 def validate_ranked_result(result, shortlist):
-    """Remove model-ranked stories that violate hard source-item boundaries.
+    """Remove model-ranked stories that violate hard editorial boundaries.
 
     The model refers to the numbered shortlist with a 1-based integer ``item``.
-    Only that exact source item decides eligibility; generated card wording can
-    never be used to bypass the deterministic scope rules.
+    Both the exact source item and the model-written card text must independently
+    pass the deterministic scope gates. This prevents an ambiguous source item
+    from being rewritten into health advice, rumor, politics, or other material
+    that the daily brief explicitly excludes.
     """
     if not isinstance(result, dict):
         return result
@@ -149,6 +163,11 @@ def validate_ranked_result(result, shortlist):
         if not hard_scope_eligible(source_item):
             continue
         if not audience_fit_eligible(source_item):
+            continue
+        card_item = _model_story_scope_item(story, source_item)
+        if not hard_scope_eligible(card_item):
+            continue
+        if not audience_fit_eligible(card_item):
             continue
         kept.append(story)
 
