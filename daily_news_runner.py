@@ -47,6 +47,15 @@ AUTO_IMAGE_REQUIRED_ATTRS = (
 )
 
 _IMAGE_MARKERS = (".exempt", ".generated", ".recentkeep")
+_NEUTRAL_PRIORITY = {
+    "article": 0,
+    "commons": 1,
+    "spa": 2,
+    "local": 3,
+    "openverse": 4,
+    "loc": 5,
+    "stock": 6,
+}
 _STORY_CONTEXTS = {}
 
 
@@ -232,10 +241,11 @@ def install_auto_image_selector(news_bot_module):
     an isolated candidate path, asks the existing vision judge about that
     candidate, and applies the editorial tiering rule:
 
-        direct yes > first safe neutral > no candidate
+        direct yes > best safe neutral > no candidate
 
-    A later direct match therefore beats an earlier generic image, while a safe
-    neutral can still save a strong story when no exact photograph exists.
+    A later direct match therefore beats any neutral. If no direct match exists,
+    an article-backed neutral outranks a generic local neutral so geographic
+    familiarity alone cannot produce a visually unrelated card.
     """
     if getattr(news_bot_module, "_AUTO_IMAGE_SELECTOR_INSTALLED", False):
         return news_bot_module
@@ -316,8 +326,11 @@ def install_auto_image_selector(news_bot_module):
             print(f"      auto image relevance [{name}]: {verdict}")
             if verdict == "yes":
                 return (Path(photo), credit, name)
-            if verdict == "neutral" and neutral is None:
-                neutral = (Path(photo), credit, name)
+            if verdict == "neutral":
+                proposed = (Path(photo), credit, name)
+                if neutral is None or _NEUTRAL_PRIORITY.get(name, 99) < \
+                        _NEUTRAL_PRIORITY.get(neutral[2], 99):
+                    neutral = proposed
             return None
 
         selected = None
