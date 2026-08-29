@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -26,6 +27,10 @@ from topic_editorial import (
 )
 
 PERFORMANCE_FILE = Path(os.getenv("TOPIC_PERFORMANCE_FILE", "state/topic_performance.json"))
+
+_LENGTH_LIMITS = {"title": 45, "body": 260, "takeaway": 110, "caption": 120}
+_LENGTH_TARGETS = {"title": 40, "body": 230, "takeaway": 95, "caption": 105}
+_LENGTH_ERROR_RE = re.compile(r"^(title|body|takeaway|caption) exceeds \d+ characters$")
 
 
 def prepare_shortlist(bot: Any, scored: list[dict[str, Any]], performance: dict[str, Any],
@@ -171,6 +176,53 @@ def _install_topic_image_policy(bot: Any) -> None:
         bot._TOPIC_CREDITLESS_RENDERERS_INSTALLED = True
 
 
+def _retry_length_feedback(brief: dict[str, Any], errors: list[str]) -> str:
+    """Give the rewrite model exact counts and targets instead of a vague max error."""
+    lines: list[str] = []
+    for field, limit in _LENGTH_LIMITS.items():
+        if not any(error.startswith(f"{field} exceeds ") for error in errors):
+            continue
+        value = str(brief.get(field, "") or "").strip()
+        lines.append(
+            f"- {field} طوله الحالي {len(value)} حرفاً؛ استهدف {_LENGTH_TARGETS[field]} "
+            f"حرفاً أو أقل (الحد الأقصى {limit}). اختصر المعنى ولا تضف تفاصيل جديدة."
+        )
+    return "\n".join(lines)
+
+
+def _only_length_errors(errors: list[str]) -> bool:
+    return bool(errors) and all(_LENGTH_ERROR_RE.match(error) for error in errors)
+
+
+def _compact_text(text: str, target: int) -> str:
+    """Compact an already-valid field at a natural boundary, without inventing content."""
+    clean = " ".join(str(text or "").split())
+    if len(clean) <= target:
+        return clean
+
+    window = clean[:target + 1]
+    floor = max(40, int(target * 0.55))
+    sentence_cut = max(window.rfind(mark) for mark in (".", "؟", "!", "؛"))
+    if sentence_cut >= floor:
+        return window[:sentence_cut + 1].strip()
+
+    word_cut = window.rfind(" ")
+    if word_cut < floor:
+        word_cut = target
+    shortened = window[:word_cut].rstrip(" ،؛:-")
+    if shortened and len(shortened) < target:
+        shortened += "…"
+    return shortened[:target].rstrip()
+
+
+def _compact_length_fields(brief: dict[str, Any], errors: list[str]) -> dict[str, Any]:
+    compacted = dict(brief)
+    for field, target in _LENGTH_TARGETS.items():
+        if any(error.startswith(f"{field} exceeds ") for error in errors):
+            compacted[field] = _compact_text(str(compacted.get(field, "") or ""), target)
+    return compacted
+
+
 def research_with_validation(bot: Any, original_research, topic: str) -> dict[str, Any]:
     """Research, validate, retry once with exact feedback, then block bad output."""
     # Never let a failed/new topic accidentally reuse the previous topic's image
@@ -187,10 +239,12 @@ def research_with_validation(bot: Any, original_research, topic: str) -> dict[st
     for error in errors:
         print(f"      - {error}")
 
+    length_feedback = _retry_length_feedback(brief, errors)
     original_prompt = bot.SYSTEM_PROMPT
     bot.SYSTEM_PROMPT = original_prompt + (
         "\n\nالمحاولة السابقة فشلت في بوابة الجودة قبل النشر. أعد البحث والكتابة من الصفر، "
         "ولا تكرر الأخطاء التالية:\n- " + "\n- ".join(errors)
+        + ("\n\nقيود الطول الدقيقة لهذه المحاولة:\n" + length_feedback if length_feedback else "")
     )
     try:
         brief = original_research(topic)
@@ -198,6 +252,18 @@ def research_with_validation(bot: Any, original_research, topic: str) -> dict[st
         bot.SYSTEM_PROMPT = original_prompt
 
     errors = validate_brief(brief)
+    if _only_length_errors(errors):
+        # At this point the second draft has already passed every semantic,
+        # sourcing, tone, and image-query check. A deterministic trim is safer
+        # than discarding a valid card solely because the model overshot a field
+        # by a few characters. Never use this path for any non-length error.
+        compacted = _compact_length_fields(brief, errors)
+        compact_errors = validate_brief(compacted)
+        if not compact_errors:
+            print("  ! second draft was editorially valid but over length — compacted safely")
+            brief = compacted
+            errors = []
+
     if errors:
         raise SystemExit(
             "Topic brief failed editorial validation after retry: " + "; ".join(errors)
