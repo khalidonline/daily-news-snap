@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 
+# Regression suite for breaking-source coverage, relevance, and cost controls.
 # breaking_watch imports only these names from news_bot at module import time.
 # Stub them so this reliability suite stays focused and dependency-free.
 _fake_news_bot = types.ModuleType("news_bot")
@@ -35,8 +36,9 @@ class FakeResponse:
 
 
 class BreakingWatchFeedTests(unittest.TestCase):
-    def feed(self, xml):
-        with patch.object(breaking_watch, "WATCH_FEEDS", ["https://example.com/rss"]), \
+    def feed(self, xml, spec=None):
+        feeds = [spec or "https://example.com/rss"]
+        with patch.object(breaking_watch, "WATCH_FEEDS", feeds), \
                 patch.object(
                     breaking_watch.urllib.request,
                     "urlopen",
@@ -81,10 +83,114 @@ class BreakingWatchFeedTests(unittest.TestCase):
         self.assertEqual(fresh, [])
         self.assertFalse(feeds_ok)
 
-    def test_default_trigger_set_includes_general_saudi_headlines(self):
-        self.assertTrue(
-            any("news.google.com/rss?" in url for url in breaking_watch.WATCH_FEEDS),
-            breaking_watch.WATCH_FEEDS,
+    def test_default_trigger_set_includes_requested_regional_and_global_sources(self):
+        blob = "\n".join(str(spec).lower() for spec in breaking_watch.WATCH_FEEDS)
+        for domain in (
+            "alarabiya.net",
+            "aljazeera.net",
+            "asharq.com",
+            "argaam.com",
+            "cnbcarabia.com",
+            "cnn.com",
+            "bbc.com",
+            "reuters.com",
+            "apnews.com",
+        ):
+            self.assertIn(domain, blob)
+
+    def test_irrelevant_global_headline_is_filtered_before_classifier(self):
+        rss = """<rss><channel><item>
+          <title>US baseball team wins championship after extra innings</title>
+        </item></channel></rss>"""
+        fresh, feeds_ok = self.feed(
+            rss,
+            {"name": "CNN", "url": "https://example.com/cnn", "tier": "global"},
+        )
+        self.assertTrue(feeds_ok)
+        self.assertEqual(fresh, [])
+
+    def test_saudi_global_headline_survives_relevance_filter(self):
+        rss = """<rss><channel><item>
+          <title>Saudi Arabia announces new aviation rules affecting Riyadh flights</title>
+        </item></channel></rss>"""
+        fresh, feeds_ok = self.feed(
+            rss,
+            {"name": "BBC", "url": "https://example.com/bbc", "tier": "global"},
+        )
+        self.assertTrue(feeds_ok)
+        self.assertEqual(
+            fresh,
+            ["Saudi Arabia announces new aviation rules affecting Riyadh flights"],
+        )
+
+    def test_irrelevant_regional_headline_is_filtered_before_classifier(self):
+        rss = """<rss><channel><item>
+          <title>فريق أمريكي يفوز ببطولة محلية في مباراة مثيرة</title>
+        </item></channel></rss>"""
+        fresh, feeds_ok = self.feed(
+            rss,
+            {"name": "Al Jazeera", "url": "https://example.com/aj", "tier": "regional"},
+        )
+        self.assertTrue(feeds_ok)
+        self.assertEqual(fresh, [])
+
+    def test_gulf_regional_headline_survives_relevance_filter(self):
+        rss = """<rss><channel><item>
+          <title>الإمارات تعلن قراراً جديداً يؤثر على رحلات الطيران في الخليج</title>
+        </item></channel></rss>"""
+        fresh, feeds_ok = self.feed(
+            rss,
+            {"name": "Al Arabiya", "url": "https://example.com/aa", "tier": "regional"},
+        )
+        self.assertTrue(feeds_ok)
+        self.assertEqual(
+            fresh,
+            ["الإمارات تعلن قراراً جديداً يؤثر على رحلات الطيران في الخليج"],
+        )
+
+    def test_duplicate_headline_across_feeds_is_returned_once(self):
+        rss = """<rss><channel><item>
+          <title>أوبك تعلن قراراً جديداً بشأن إنتاج النفط</title>
+        </item></channel></rss>""".encode("utf-8")
+        feeds = [
+            {"name": "Al Arabiya", "url": "https://example.com/a", "tier": "regional"},
+            {"name": "Reuters", "url": "https://example.com/b", "tier": "global"},
+        ]
+        with patch.object(breaking_watch, "WATCH_FEEDS", feeds), \
+                patch.object(
+                    breaking_watch.urllib.request,
+                    "urlopen",
+                    side_effect=[FakeResponse(rss), FakeResponse(rss)],
+                ):
+            fresh, feeds_ok = breaking_watch.feed_fresh_items()
+        self.assertTrue(feeds_ok)
+        self.assertEqual(fresh, ["أوبك تعلن قراراً جديداً بشأن إنتاج النفط"])
+
+    def test_optional_global_outage_does_not_force_paid_fail_open(self):
+        published = datetime.now(timezone.utc) - timedelta(hours=4)
+        old_rss = f"""<rss><channel><item>
+          <title>قرار سعودي قديم خارج نافذة العاجل</title>
+          <pubDate>{format_datetime(published, usegmt=True)}</pubDate>
+        </item></channel></rss>""".encode("utf-8")
+        feeds = [
+            {"name": "Saudi core", "url": "https://example.com/core", "tier": "core"},
+            {"name": "CNN", "url": "https://example.com/cnn", "tier": "global"},
+        ]
+        with patch.object(breaking_watch, "WATCH_FEEDS", feeds), \
+                patch.object(
+                    breaking_watch.urllib.request,
+                    "urlopen",
+                    side_effect=[FakeResponse(old_rss), OSError("optional feed down")],
+                ):
+            fresh, feeds_ok = breaking_watch.feed_fresh_items()
+        self.assertEqual(fresh, [])
+        self.assertTrue(feeds_ok)
+
+    def test_feed_identified_candidate_uses_one_verification_search(self):
+        self.assertEqual(breaking_watch._classifier_search_budget(["headline"]), 1)
+        self.assertEqual(
+            breaking_watch._classifier_search_budget(None),
+            breaking_watch.WATCH_MAX_SEARCHES,
         )
 
 
