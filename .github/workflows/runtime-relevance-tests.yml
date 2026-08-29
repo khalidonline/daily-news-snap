@@ -6,7 +6,9 @@ on:
       - "runtime_relevance.py"
       - "story_runtime.py"
       - "story_bot.py"
+      - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
+      - "tests/test_ready_story_publish.py"
       - "images/relevance.json"
       - "images/images.txt"
       - "images/bogle-vanguard-*.jpg"
@@ -18,7 +20,9 @@ on:
       - "runtime_relevance.py"
       - "story_runtime.py"
       - "story_bot.py"
+      - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
+      - "tests/test_ready_story_publish.py"
       - "images/relevance.json"
       - "images/images.txt"
       - "images/bogle-vanguard-*.jpg"
@@ -42,6 +46,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Relevance policy unit tests
         run: python -m unittest -v tests/test_runtime_relevance.py
+      - name: Ready-pool publishing unit tests
+        run: python -m unittest -v tests/test_ready_story_publish.py
       - name: Compile guarded story entrypoint
         run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py
       - name: Image precheck self-test
