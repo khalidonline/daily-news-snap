@@ -78,7 +78,7 @@ jobs:
           POST_TO_SNAPCHAT: ${{ ((github.event_name == 'schedule' && github.event.schedule != '0 9 * * *') || (github.event_name == 'workflow_dispatch' && inputs.post)) && '1' || '0' }}
           # one cap shared with topic.yml — see the note there
           MONTHLY_POST_LIMIT: "145"
-          BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
+          BRIEF_TITLE: "ملخص تنفيذي - خبر"
           BRAND: "ملخص تنفيذي - خبر"
           FONT_FAMILY: "Almarai"
           REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
