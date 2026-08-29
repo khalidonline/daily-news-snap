@@ -1,5 +1,5 @@
 name: Topic release once
-# release preflight: verify SAMA provenance and text-free AI fallback
+# release preflight: final image gate after main integration
 
 on:
   push:
