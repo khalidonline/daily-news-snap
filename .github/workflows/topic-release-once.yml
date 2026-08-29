@@ -1,5 +1,5 @@
 name: Topic release once
-# release preflight: transport retry verified
+# release preflight: relevance-first SAMA artifact reuse enabled
 
 on:
   push:
@@ -63,6 +63,7 @@ jobs:
           REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
           MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
           MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
+          LIBRARY_REUSE_DAYS: "0"
           COOLDOWN_DAYS: "21"
           HARD_COOLDOWN_DAYS: "21"
           SELECT_MODEL: "claude-haiku-4-5-20251001"
