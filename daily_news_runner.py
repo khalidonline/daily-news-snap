@@ -208,7 +208,17 @@ def _normalize_source_link(value):
     if host.startswith("www."):
         host = host[4:]
     path = parts.path.rstrip("/")
-    return urllib.parse.urlunsplit(("https", host, path, "", ""))
+    tracking_keys = {"ref", "source", "fbclid", "gclid"}
+    query_pairs = [
+        (key, value)
+        for key, value in urllib.parse.parse_qsl(
+            parts.query, keep_blank_values=True
+        )
+        if key.casefold() not in tracking_keys
+        and not key.casefold().startswith("utm_")
+    ]
+    query = urllib.parse.urlencode(query_pairs, doseq=True)
+    return urllib.parse.urlunsplit(("https", host, path, query, ""))
 
 
 def _normalize_dedupe_token(token):
@@ -257,11 +267,14 @@ def filter_recent_source_duplicates(items, posted):
     the same person or company.
     """
     recent = [entry for entry in (posted or []) if isinstance(entry, dict)]
-    recent_links = {
-        _normalize_source_link(entry.get("source_link"))
-        for entry in recent
-        if _normalize_source_link(entry.get("source_link"))
-    }
+    recent_links = set()
+    legacy_headlines = []
+    for entry in recent:
+        remembered_link = _normalize_source_link(entry.get("source_link"))
+        if remembered_link:
+            recent_links.add(remembered_link)
+        elif str(entry.get("headline", "") or "").strip():
+            legacy_headlines.append(entry.get("headline", ""))
     kept = []
     removed = 0
     for item in items:
@@ -271,8 +284,8 @@ def filter_recent_source_duplicates(items, posted):
             continue
         title = str(item.get("title", "") or "").strip()
         if title and any(
-            _same_recent_event(title, entry.get("headline", ""))
-            for entry in recent
+            _same_recent_event(title, headline)
+            for headline in legacy_headlines
         ):
             removed += 1
             continue
