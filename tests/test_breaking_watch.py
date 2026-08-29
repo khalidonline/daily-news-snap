@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 
+# Regression suite for breaking-source coverage, relevance, and cost controls.
 # breaking_watch imports only these names from news_bot at module import time.
 # Stub them so this reliability suite stays focused and dependency-free.
 _fake_news_bot = types.ModuleType("news_bot")
