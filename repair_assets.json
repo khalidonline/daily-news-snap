@@ -1,12 +1,12 @@
 {
-  "run_nonce": "2026-08-29-near-pass-rollaboard-3",
+  "run_nonce": "2026-08-29-near-pass-saudi-dates-1",
   "assets": [
     {
-      "filename": "targeted-rollaboard-crew-classic.jpg",
-      "url": "https://travelpro.com/cdn/shop/files/407242205_01-1500x1500-f3a2c67_0c566f33-ffc8-4b64-8b3d-2dd15a5a3f59.jpg?v=1761068255",
-      "tags": ["قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد", "Rollaboard", "Travelpro", "Crew Classic Carry-On Rollaboard", "two-wheel luggage", "rolling luggage"],
-      "credit": "Travelpro official product page — Crew Classic Carry-On Rollaboard, two-wheel luggage",
-      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "filename": "targeted-saudi-dates-paste.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Dates%20paste.jpg",
+      "tags": ["قصة التمر السعودي وتحوله لصناعة", "Saudi dates", "تمر سعودي", "dates industry", "date products", "date paste", "processing"],
+      "credit": "Ahmed1251985 via Wikimedia Commons — CC BY-SA 4.0; Saudi date paste product, 24 April 2016",
+      "story": "قصة التمر السعودي وتحوله لصناعة",
       "verdict": "DIRECT"
     }
   ]
