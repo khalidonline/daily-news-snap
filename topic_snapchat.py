@@ -130,9 +130,6 @@ def _install_topic_image_policy(bot: Any) -> None:
     """Make relevance-first auto imagery mandatory for Topic Brief."""
     bot.IMAGE_SOURCE = "auto"
 
-    # topic_bot historically imported only the providers it called directly.
-    # Add the shared providers/vision judge needed by the proven daily auto
-    # selector, without changing the large legacy topic_bot.py module.
     required = ("fetch_commons_photo", "fetch_loc_photo", "photo_shows")
     shared_news = None
     if any(not hasattr(bot, name) for name in required):
@@ -148,16 +145,10 @@ def _install_topic_image_policy(bot: Any) -> None:
             bot.fetch_openverse_photo = _creditless_pair(bot.fetch_openverse_photo, "openverse")
         bot._TOPIC_OPEN_LICENSE_POLICY_INSTALLED = True
 
-    # Run #74 proved that "neutral" is too permissive for an evergreen topic
-    # card: a generic old Riyadh souq photo can be safe yet unrelated. Topic
-    # Brief therefore accepts only a direct "yes" from the shared visual judge.
     if not getattr(bot, "_TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED", False):
         bot.photo_shows = _direct_relevance_only(bot.photo_shows)
         bot._TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED = True
 
-    # Do not recycle a recent real photo after the topic-specific search fails.
-    # The legacy build path will then move to fetch_generated_photo(), whose
-    # prompt is generated specifically for this topic.
     bot.recent_fallback = lambda _hero: None
 
     install_auto_image_selector(bot)
@@ -195,8 +186,28 @@ def _only_length_errors(errors: list[str]) -> bool:
     return bool(errors) and all(_LENGTH_ERROR_RE.match(error) for error in errors)
 
 
+def _third_draft_worth_retrying(errors: list[str]) -> bool:
+    """Spend one final model call only on fixable editorial/source finance errors.
+
+    Structurally broken replies still fail after the normal second draft. This
+    keeps the release path strict while giving high-value finance explainers one
+    last chance to correct sourcing or institution-framing mistakes.
+    """
+    if not errors:
+        return False
+    retryable_fragments = (
+        "state each institution's decision separately",
+        "Federal Reserve and SAMA primary sources are required",
+        "policy rate is not the only driver of variable financing",
+    )
+    return all(
+        bool(_LENGTH_ERROR_RE.match(error))
+        or any(fragment in error for fragment in retryable_fragments)
+        for error in errors
+    )
+
+
 def _compact_text(text: str, target: int) -> str:
-    """Compact an already-valid field at a natural boundary, without inventing content."""
     clean = " ".join(str(text or "").split())
     if len(clean) <= target:
         return clean
@@ -233,11 +244,40 @@ def _research_with_transport_retry(original_research, topic: str) -> dict[str, A
         return original_research(topic)
 
 
+def _retry_prompt(original_prompt: str, brief: dict[str, Any], errors: list[str],
+                  final: bool = False) -> str:
+    length_feedback = _retry_length_feedback(brief, errors)
+    intro = (
+        "\n\nالمحاولة السابقة فشلت في بوابة الجودة قبل النشر. "
+        + ("هذه هي محاولة التصحيح الأخيرة. " if final else "")
+        + "أعد البحث والكتابة من الصفر، ولا تكرر الأخطاء التالية:\n- "
+        + "\n- ".join(errors)
+    )
+    if final:
+        intro += (
+            "\n\nمهم: لا تربط قرار جهة بجهة بصياغة متابعة أو مماثلة. اذكر قرار كل جهة "
+            "بشكل مستقل ومحايد، واستخدم المصادر الأولية المطلوبة صراحةً."
+        )
+    if length_feedback:
+        intro += "\n\nقيود الطول الدقيقة لهذه المحاولة:\n" + length_feedback
+    return original_prompt + intro
+
+
+def _accept_length_only(brief: dict[str, Any], errors: list[str], label: str):
+    if not _only_length_errors(errors):
+        return brief, errors
+    compacted = _compact_length_fields(brief, errors)
+    compact_errors = validate_brief(compacted)
+    if not compact_errors:
+        print(f"  ! {label} was editorially valid but over length — compacted safely")
+        return compacted, []
+    return brief, errors
+
+
 def research_with_validation(bot: Any, original_research, topic: str) -> dict[str, Any]:
-    """Research, validate, retry once with exact feedback, then block bad output."""
-    # Never let a failed/new topic accidentally reuse the previous topic's image
-    # context in the shared relevance selector.
+    """Research and strictly validate up to three drafts before publication."""
     remember_story_contexts({"stories": []})
+    original_prompt = bot.SYSTEM_PROMPT
 
     brief = _research_with_transport_retry(original_research, topic)
     errors = validate_brief(brief)
@@ -245,39 +285,45 @@ def research_with_validation(bot: Any, original_research, topic: str) -> dict[st
         _remember_topic_image_context(brief)
         return brief
 
-    print("  ! topic brief failed editorial validation — retrying once")
+    print("  ! topic brief failed editorial validation — retrying")
     for error in errors:
         print(f"      - {error}")
 
-    length_feedback = _retry_length_feedback(brief, errors)
-    original_prompt = bot.SYSTEM_PROMPT
-    bot.SYSTEM_PROMPT = original_prompt + (
-        "\n\nالمحاولة السابقة فشلت في بوابة الجودة قبل النشر. أعد البحث والكتابة من الصفر، "
-        "ولا تكرر الأخطاء التالية:\n- " + "\n- ".join(errors)
-        + ("\n\nقيود الطول الدقيقة لهذه المحاولة:\n" + length_feedback if length_feedback else "")
-    )
+    bot.SYSTEM_PROMPT = _retry_prompt(original_prompt, brief, errors)
     try:
         brief = _research_with_transport_retry(original_research, topic)
     finally:
         bot.SYSTEM_PROMPT = original_prompt
 
     errors = validate_brief(brief)
-    if _only_length_errors(errors):
-        # At this point the second draft has already passed every semantic,
-        # sourcing, tone, and image-query check. A deterministic trim is safer
-        # than discarding a valid card solely because the model overshot a field
-        # by a few characters. Never use this path for any non-length error.
-        compacted = _compact_length_fields(brief, errors)
-        compact_errors = validate_brief(compacted)
-        if not compact_errors:
-            print("  ! second draft was editorially valid but over length — compacted safely")
-            brief = compacted
-            errors = []
+    brief, errors = _accept_length_only(brief, errors, "second draft")
+    if not errors:
+        _remember_topic_image_context(brief)
+        return brief
 
-    if errors:
+    if not _third_draft_worth_retrying(errors):
         raise SystemExit(
             "Topic brief failed editorial validation after retry: " + "; ".join(errors)
         )
+
+    print("  ! second draft still failed a fixable editorial gate — final rewrite")
+    for error in errors:
+        print(f"      - {error}")
+
+    bot.SYSTEM_PROMPT = _retry_prompt(original_prompt, brief, errors, final=True)
+    try:
+        brief = _research_with_transport_retry(original_research, topic)
+    finally:
+        bot.SYSTEM_PROMPT = original_prompt
+
+    errors = validate_brief(brief)
+    brief, errors = _accept_length_only(brief, errors, "final draft")
+    if errors:
+        raise SystemExit(
+            "Topic brief failed editorial validation after final rewrite: "
+            + "; ".join(errors)
+        )
+
     _remember_topic_image_context(brief)
     return brief
 
@@ -292,8 +338,6 @@ def _make_choose_topic(bot: Any):
 
         used = bot.load_used()
         exclude_set = set(exclude)
-        # load_used() is already trimmed to COOLDOWN_DAYS, so every entry here is
-        # a hard exact-topic block. A new angle belongs as a new topic string.
         blocked = {entry["topic"] for entry in used} | exclude_set
 
         forced_pool = None
@@ -316,7 +360,6 @@ def _make_choose_topic(bot: Any):
             print(f"  ! couldn't fetch headlines ({exc})")
             items = []
 
-        # Recent is empty because exact repeats are now blocked for the full window.
         scored = bot.score_topics(items, blocked, set(), forced_pool)
         if not scored:
             print("  ! no eligible topics outside the full cooldown window")
