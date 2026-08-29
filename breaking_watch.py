@@ -41,8 +41,8 @@ MAX_BREAKING_PER_DAY = 1        # v1 cap — one breaking post a day, full stop
 LOCK_MINUTES = 25               # under the 30-minute cadence, so a stuck
                                 # lock never outlives the next cycle by much
 # GitHub cron can start several minutes late. The last scheduled cycle is
-# 19:30 KSA, but the script accepts delayed starts until (not including) 20:00.
-WATCH_START_H, WATCH_END_H = 8.0, 20.0
+# 22:30 KSA, but the script accepts delayed starts until (not including) 23:00.
+WATCH_START_H, WATCH_END_H = 8.0, 23.0
 # classification is a small-model job — budget it tightly
 WATCH_MODEL = os.getenv("WATCH_MODEL", "").strip() or "claude-haiku-4-5-20251001"
 WATCH_MAX_TOKENS = int(os.getenv("WATCH_MAX_TOKENS", "").strip() or "1200")
@@ -315,13 +315,13 @@ def watch():
 def _watch():
     now = ksa_now()
     hour = now.hour + now.minute / 60
-    # The cron schedules through 19:30 KSA, but hosted runners can start
-    # late. Accept a delayed final cycle until 20:00, then stay safely off.
+    # The cron schedules through 22:30 KSA, but hosted runners can start
+    # late. Accept a delayed final cycle until 23:00, then stay safely off.
     if not WATCH_START_H <= hour < WATCH_END_H:
         print(f"outside the watch window ({now:%H:%M} KSA) — exiting")
         notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: خارج نافذة المراقبة "
-               f"({now:%H:%M} بتوقيت السعودية؛ الجدول 08:00–19:30 "
-               "مع مهلة تأخير حتى 20:00). لم يُفحص شيء — "
+               f"({now:%H:%M} بتوقيت السعودية؛ الجدول 08:00–22:30 "
+               "مع مهلة تأخير حتى 23:00). لم يُفحص شيء — "
                "لا توجد دورة مسائية بديلة.")
         return
 
