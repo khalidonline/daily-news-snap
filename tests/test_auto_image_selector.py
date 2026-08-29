@@ -152,7 +152,7 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
             self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "aawsat.com")
+            self.assertEqual(credit, "الشرق الأوسط")
             self.assertEqual(hero.read_bytes(), b"article")
 
         self.assertEqual(calls, ["local", "article"])
@@ -234,7 +234,7 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
             self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "aawsat.com")
+            self.assertEqual(credit, "الشرق الأوسط")
             self.assertFalse(Path(str(hero) + ".exempt").exists())
 
     def test_world_story_skips_spa(self):
