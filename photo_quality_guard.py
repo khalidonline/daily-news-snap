@@ -14,9 +14,11 @@ import photo_quality
 
 
 _INSTALLED = "_global_photo_quality_installed"
+# Bare credit words such as "archive" are not enough: modern photos can come
+# from an archive too. Exemption requires actual historical scene evidence.
 _HISTORICAL_TERMS = (
-    "historical", "archive", "archival", "old ", "vintage",
-    "تاريخ", "أرشيف", "قديم", "القديمة", "القديم",
+    "historical", "old ", "vintage",
+    "تاريخ", "قديم", "القديمة", "القديم",
 )
 
 
@@ -36,11 +38,11 @@ def _index_row(source: str, index_path):
 
 
 def is_historical_archive_source(source: str, index_path) -> bool:
-    """Preserve intentionally warm/sepia archival material.
+    """Preserve intentionally warm/sepia historical material.
 
     Atmospheric orange cast is an editorial defect on contemporary city
-    photography, but it can be the medium itself on a historical archive.
-    Reviewed catalogue metadata is authoritative for that distinction.
+    photography, but it can be the medium itself on a historical photograph.
+    A generic source/credit label such as "archive" does not establish age.
     """
     row = _index_row(source, index_path)
     text = f"{source} {row}".casefold()
@@ -52,7 +54,7 @@ def is_historical_archive_source(source: str, index_path) -> bool:
 
 def reviewed_local_is_acceptable(source: str, index_path, images_dir=None,
                                  candidate_path=None) -> bool:
-    """Apply modern atmosphere quality while exempting reviewed archives."""
+    """Apply modern atmosphere quality while exempting reviewed history."""
     if is_historical_archive_source(source, index_path):
         return True
 
