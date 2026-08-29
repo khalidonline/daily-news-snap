@@ -26,3 +26,5 @@ jobs:
           git add breaking_watch.py .github/workflows/patch-breaking-source-expansion.yml scripts/patch_breaking_source_expansion.py
           git commit -m "feat: expand breaking sources cost effectively"
           git push
+
+# rerun after marker-based patch fix
