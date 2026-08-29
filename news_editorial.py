@@ -175,12 +175,14 @@ _MAJOR_SPORTS_RE = re.compile(
     re.IGNORECASE,
 )
 _UNCONFIRMED_TRANSFER_RE = re.compile(
-    r"(?:تقارير|مصادر|أنباء)[^.\n]{0,160}"
-    r"(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب)[^.\n]{0,100}"
-    r"(?:انتقال|التعاقد|صفقة)|"
-    r"(?:reports?|sources?)[^.\n]{0,160}"
-    r"(?:close to|set to|linked with|in talks)[^.\n]{0,100}"
-    r"(?:transfer|sign|move)",
+    r"(?:"
+    r"(?:تقارير|مصادر|أنباء)[^.\n]{0,160}(?:انتقال|التعاقد|صفقة|ضم)|"
+    r"(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب)[^.\n]{0,100}(?:انتقال|التعاقد|صفقة|ضم)|"
+    r"(?:انتقال|التعاقد|صفقة|ضم)[^.\n]{0,100}(?:يقترب|قريب|مرشح|مفاوضات|يتفاوض|قرب)|"
+    r"(?:reports?|sources?)[^.\n]{0,160}(?:transfer|sign|move)|"
+    r"(?:close to|set to|linked with|in talks)[^.\n]{0,100}(?:transfer|sign|move)|"
+    r"(?:transfer|sign|move)[^.\n]{0,100}(?:close to|set to|linked with|in talks)"
+    r")",
     re.IGNORECASE,
 )
 _FINANCING_RE = re.compile(
@@ -249,7 +251,7 @@ def hard_scope_eligible(item):
 
     # Transfer speculation is still a rumor even when the sentence says the
     # eventual move would be "official". A club announcement/confirmed deal has
-    # no report/source + proximity wording and remains eligible.
+    # no proximity/negotiation wording and remains eligible.
     if lane == "sports" and _UNCONFIRMED_TRANSFER_RE.search(text):
         return False
 
