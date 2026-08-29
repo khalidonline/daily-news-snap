@@ -1,12 +1,12 @@
 {
-  "run_nonce": "2026-08-29-logo-repair-engelbart-1",
+  "run_nonce": "2026-08-29-logo-repair-rollaboard-1",
   "assets": [
     {
-      "story": "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره",
-      "domain": "sri.com",
-      "names": ["SRI International", "SRI"],
-      "line_before": "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره | Douglas Engelbart",
-      "line_after": "من اخترع الفأرة؟ قصة Douglas Engelbart والعرض الذي سبق عصره | Douglas Engelbart | entity: SRI International, SRI | logo:sri.com"
+      "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
+      "domain": "travelpro.com",
+      "names": ["Travelpro", "The Original Rollaboard", "Rollaboard"],
+      "line_before": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد | Travelpro, Robert Plath",
+      "line_after": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد | Travelpro, Robert Plath | entity: Travelpro | logo:travelpro.com"
     }
   ]
 }
