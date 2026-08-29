@@ -93,6 +93,13 @@ _NEGATED_SAUDI_RE = re.compile(
     r"(?:Saudi Arabia|Saudi|KSA|the Gulf|Gulf|GCC))",
     re.IGNORECASE,
 )
+_SAUDI_IMPACT_RE = re.compile(
+    r"(?:رسوم|تعرفة|صادرات|واردات|تجارة|استثمار|عقود|نفط|إنتاج|أسعار|"
+    r"فائدة|تمويل|بنوك|تأشيرة|رحلات|طيران|سفر|ضريبة|تكلفة|وظائف|"
+    r"tariff|fees?|exports?|imports?|trade|investment|contracts?|oil|production|"
+    r"prices?|interest rates?|financing|banks?|visa|flights?|aviation|travel|tax|cost|jobs?)",
+    re.IGNORECASE,
+)
 _FOREIGN_POLITICS_RE = re.compile(
     r"(?:ترامب|بايدن|بوتين|زيلينسكي|مادورو|نتنياهو|أردوغان|خامنئي|"
     r"انتخابات|عقوبات|دبلوماس(?:ي|ية)|جيوسياس(?:ي|ية)|حرب|صراع|نزاع|"
@@ -116,6 +123,16 @@ _HEALTH_POLICY_RE = re.compile(
 _WEATHER_RE = re.compile(
     r"(?:أمطار|طقس|درجات الحرارة|رياح|غبار|برد|عاصفة|ضباب|موجة حارة|"
     r"سحب رعدية|weather|rain|thunderstorm|temperature|dust storm|fog|heatwave)",
+    re.IGNORECASE,
+)
+_MATERIAL_DISRUPTION_RE = re.compile(
+    r"(?:تغلق|يغلق|إغلاق|تلغي|إلغاء|تعليق|توقف|تعطل|تأجيل)"
+    r"[^.]{0,60}(?:مطار|رحلات|طيران|مدارس|دراسة|طرق|خدمات|airport|flights?|"
+    r"aviation|schools?|roads?|services?)|"
+    r"(?:مطار|رحلات|طيران|مدارس|دراسة|طرق|خدمات|airport|flights?|aviation|"
+    r"schools?|roads?|services?)[^.]{0,60}"
+    r"(?:تغلق|يغلق|إغلاق|تلغي|إلغاء|تعليق|توقف|تعطل|تأجيل|closed?|cancel|"
+    r"suspend|disrupt|delay)",
     re.IGNORECASE,
 )
 _ROUTINE_RESULT_RE = re.compile(
@@ -161,10 +178,12 @@ def hard_scope_eligible(item):
     text = f"{title} {summary}".strip()
     lane = item.get("lane", "business_tech")
     direct_saudi = bool(_DIRECT_SAUDI_RE.search(text)) and not _NEGATED_SAUDI_RE.search(text)
+    direct_saudi_impact = direct_saudi and bool(_SAUDI_IMPACT_RE.search(text))
 
-    # Remote politics/geopolitics is outside this product. A story that actually
-    # names a Saudi/Gulf consequence is left for the model to judge.
-    if _FOREIGN_POLITICS_RE.search(text) and not direct_saudi:
+    # Remote politics/geopolitics is outside this product. Merely naming Saudi
+    # Arabia is not enough; the input itself must contain a concrete Saudi/Gulf
+    # economic, consumer, travel or employment consequence.
+    if _FOREIGN_POLITICS_RE.search(text) and not direct_saudi_impact:
         return False
 
     # Personal medical advice is not one of the approved lanes. A broad Saudi
@@ -173,8 +192,9 @@ def hard_scope_eligible(item):
         if not (lane == "saudi_core" and direct_saudi and _HEALTH_POLICY_RE.search(text)):
             return False
 
-    # Weather belongs in a weather product, not the one-story editorial brief.
-    if _WEATHER_RE.search(text):
+    # Routine forecasts belong in a weather product. A weather event that is
+    # fundamentally a material transport/school/service disruption can qualify.
+    if _WEATHER_RE.search(text) and not _MATERIAL_DISRUPTION_RE.search(text):
         return False
 
     # Ordinary match recaps never consume a national card; major titles,
