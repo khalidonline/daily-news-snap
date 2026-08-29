@@ -1,5 +1,5 @@
 name: Topic release once
-# release preflight: verify final SAMA image and finance wording
+# live release: verified SAMA image and finance wording gates
 
 on:
   push:
@@ -68,7 +68,7 @@ jobs:
           HARD_COOLDOWN_DAYS: "21"
           SELECT_MODEL: "claude-haiku-4-5-20251001"
           LOOKBACK_HOURS: "30"
-          DRY_RUN: "1"
+          DRY_RUN: "0"
           MEDIA_MODE: "github"
           POST_TO_SNAPCHAT: "1"
           MONTHLY_POST_LIMIT: "145"
