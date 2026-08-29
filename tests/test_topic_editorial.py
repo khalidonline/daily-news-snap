@@ -54,8 +54,8 @@ class TopicEditorialTests(unittest.TestCase):
         performance = {"categories": {"التقنية": 100}, "topics": {"موضوع": 100}}
         self.assertEqual(performance_adjustment("موضوع", "التقنية", performance), 15)
 
-    def test_validate_brief_accepts_complete_snapchat_brief(self):
-        brief = {
+    def _complete_brief(self):
+        return {
             "title": "فاتورتك تتغير بهذا السبب",
             "body": "إذا ارتفع استهلاكك بالصيف، يبان الفرق بسرعة. وفق بيانات الجهة الرسمية، التعرفة مرتبطة بشرائح الاستهلاك.",
             "takeaway": "قارن استهلاك هذا الشهر بنفس الشهر من السنة الماضية.",
@@ -66,7 +66,9 @@ class TopicEditorialTests(unittest.TestCase):
             "image_prompt": "a modern electricity meter on a Saudi home wall in Riyadh",
             "source_url": "https://example.com/source",
         }
-        self.assertEqual(validate_brief(brief), [])
+
+    def test_validate_brief_accepts_complete_snapchat_brief(self):
+        self.assertEqual(validate_brief(self._complete_brief()), [])
 
     def test_validate_brief_rejects_oversized_fields(self):
         brief = {
@@ -86,6 +88,28 @@ class TopicEditorialTests(unittest.TestCase):
         self.assertIn("takeaway exceeds 110 characters", errors)
         self.assertIn("caption exceeds 120 characters", errors)
 
+    def test_validate_brief_blocks_run_71_style_foreign_policy_overclaim(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "قسطك مرتبط بقرار في واشنطن مو الرياض",
+            "body": "إذا عندك قرض بفائدة متغيرة، قرار الفيدرالي يوصلك خلال أيام.",
+            "takeaway": "راقب اجتماعات الفيدرالي لأن قرارهم يوصلك خلال أيام.",
+        })
+        errors = validate_brief(brief)
+        self.assertTrue(
+            any("indirect financial relationship" in error for error in errors),
+            errors,
+        )
+
+    def test_validate_brief_accepts_clear_conditional_finance_explanation(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "ليش فائدة أمريكا تهم التمويل هنا؟",
+            "body": "ارتباط الريال بالدولار يجعل الفائدة المحلية تتأثر بالسياسة الأمريكية. وإذا كان تمويلك متغيراً، يعتمد الأثر الفعلي على عقدك وتسعير البنك.",
+            "takeaway": "تابع الفائدة المحلية وشروط عقدك قبل قرار إعادة التمويل.",
+        })
+        self.assertEqual(validate_brief(brief), [])
+
     def test_enhance_prompt_resolves_voice_conflict_and_adds_ksa_date(self):
         base = (
             "- sources: أسماء المصادر (٢ إلى ٤). إن كان المصدر أجنبياً فاكتبه بالعربية.\n"
@@ -99,6 +123,14 @@ class TopicEditorialTests(unittest.TestCase):
         self.assertIn("Reuters", prompt)
         self.assertIn("29 أغسطس 2026", prompt)
         self.assertIn("جمهور سعودي عربي على سناب شات", prompt)
+
+    def test_enhance_prompt_teaches_useful_finance_hooks_not_geographic_metaphors(self):
+        prompt = enhance_prompt("", date(2026, 8, 29))
+        self.assertIn("العلاقة المباشرة وغير المباشرة", prompt)
+        self.assertIn("قسطك مرتبط بقرار في واشنطن", prompt)
+        self.assertIn("ليش فائدة أمريكا تهم التمويل هنا؟", prompt)
+        self.assertIn("إذا كان تمويلك متغيراً", prompt)
+        self.assertIn("الفائدة المحلية", prompt)
 
 
 if __name__ == "__main__":
