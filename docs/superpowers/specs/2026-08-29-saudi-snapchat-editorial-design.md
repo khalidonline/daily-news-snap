@@ -1,7 +1,7 @@
 # Saudi Snapchat Editorial Model
 
 Date: 2026-08-29
-Status: Approved design, pending implementation review
+Status: Approved direction, revised for source-mix review
 
 ## Goal
 
@@ -11,13 +11,12 @@ The bot should no longer behave like a miniature business newswire. It should be
 
 ## Current problem
 
-The current `SYSTEM_PROMPT` is strong at rejecting low-value corporate news, but it is too narrow for the target audience:
+The current system has two linked weaknesses:
 
-- It explicitly excludes sports, entertainment, celebrity/culture, and most labor-market stories.
-- It gives highest priority to global technology companies and business/economic news.
-- Its primary relevance test is economic or product impact rather than broader Saudi audience interest.
+1. The `SYSTEM_PROMPT` is strong at rejecting low-value corporate news, but it is too narrow for the target audience. It explicitly excludes sports, entertainment, celebrity/culture, and most labor-market stories, and it gives highest priority to global technology companies and business/economic news.
+2. The candidate pool is also too narrow. Most existing feeds are global business/technology feeds, and the model only sees a capped shortlist. Simply broadening the prompt is not enough if Saudi sports, entertainment, travel, and lifestyle stories never enter that shortlist.
 
-This can cause a globally important but locally remote tech/business story to outrank a major Saudi event, sports development, travel announcement, cultural moment, or consumer change that would be much more compelling on Snapchat.
+This can cause a globally important but locally remote tech/business story to outrank — or completely crowd out — a major Saudi event, sports development, travel announcement, cultural moment, or consumer change that would be much more compelling on Snapchat.
 
 ## Editorial identity
 
@@ -35,7 +34,7 @@ Conventional newsroom importance is secondary to Saudi audience relevance, provi
 
 ## Eligible content lanes
 
-The bot may select from six lanes. No fixed quota is required; the strongest story wins.
+The bot may select from six lanes. No fixed quota is required in the final output; the strongest story wins.
 
 ### 1. Saudi life and major decisions
 
@@ -111,6 +110,67 @@ Eligible examples:
 - large hospitality or destination announcements
 - consumer/lifestyle developments with broad Saudi relevance
 
+## Dedicated Saudi source mix
+
+Dedicated Saudi-interest sources are part of Phase 1, not a later enhancement. The source pool must contain enough sports, entertainment/culture, travel, and lifestyle coverage that the editor can actually choose from those lanes.
+
+### Initial verified RSS set
+
+The first implementation should add a conservative set of established RSS/Atom feeds that work with the existing XML ingestion pipeline.
+
+#### Saudi sports
+
+- اليوم — الرياضة: `https://www.alyaum.com/rssFeed/1009`
+- اليوم — الدوري السعودي: `https://www.alyaum.com/rssFeed/1009/112`
+- الوطن — رياضة: `https://www.alwatan.com.sa/rssFeed/3`
+- الشرق الأوسط — الرياضة: `https://aawsat.com/feed/sport`
+
+#### Entertainment and culture
+
+- الوطن — حياة: `https://www.alwatan.com.sa/rssFeed/10`
+- الشرق الأوسط — الثقافة: `https://aawsat.com/feed/culture`
+- الشرق الأوسط — أنغام وفنون: `https://aawsat.com/feed/arts`
+- الشرق الأوسط — السينما: `https://aawsat.com/feed/cinema`
+
+#### Travel and tourism
+
+- اليوم — سياحة وسفر: `https://www.alyaum.com/rssFeed/1007/105`
+- الشرق الأوسط — السياحة: `https://aawsat.com/feed/travel`
+
+#### Lifestyle and consumer interest
+
+- اليوم — الحياة: `https://www.alyaum.com/rssFeed/1007`
+- الوطن — حياة: `https://www.alwatan.com.sa/rssFeed/10`
+
+These feeds supplement rather than replace the existing strong business, technology, Saudi-general, and regional sources.
+
+The implementation may drop a feed that consistently returns zero usable items, malformed XML, or mostly low-value content. Any replacement should stay within the same lane and should be an established Saudi or Saudi-relevant source, not an arbitrary aggregator.
+
+## Balanced candidate sampling
+
+Adding feeds alone is insufficient because the bot currently builds a capped model shortlist. High-volume feeds appearing early can consume that window before later Saudi-interest sources are represented.
+
+Phase 1 therefore includes a small internal feed-lane change:
+
+- tag each feed with an internal lane such as `saudi_core`, `business_tech`, `sports`, `entertainment_culture`, or `travel_lifestyle`
+- preserve the existing article fields and output JSON schema
+- build the model shortlist with lane-aware interleaving instead of raw feed-list order
+- cap how many headlines one individual feed can contribute before other feeds receive a turn
+- guarantee meaningful representation for Saudi-interest lanes when they contain fresh items
+- let unused lane capacity flow to other lanes rather than padding the shortlist with weak material
+
+A good starting allocation for the 60-headline model window is:
+
+- `business_tech`: up to 20
+- `saudi_core`: up to 16
+- `sports`: up to 8
+- `entertainment_culture`: up to 8
+- `travel_lifestyle`: up to 8
+
+These are shortlist ceilings/targets, not final editorial quotas. If sports has only two worthwhile fresh items, the remaining six slots are reallocated. The model still chooses the single strongest story overall.
+
+The lane label may be included in the model input for context, but it must not be added to the public JSON schema.
+
 ## Saudi Snapchat score
 
 The prompt should require the model to evaluate each candidate internally across six dimensions. These scores are for reasoning/ranking only and do not need to appear in the JSON output.
@@ -174,7 +234,7 @@ Foreign company/product names remain in their common English forms. Saudi/Arabic
 
 ## Card-copy roles
 
-Keep the current JSON schema and renderer unchanged.
+Keep the current public JSON schema and renderer unchanged.
 
 ### `headline`
 
@@ -238,26 +298,27 @@ This editorial change should not weaken factual or visual safeguards.
 
 ## Architecture and implementation scope
 
-### Primary change
+### Primary changes
 
-Update `SYSTEM_PROMPT` in `news_bot.py` so the selection and writing logic follows this Saudi Snapchat editorial model.
+1. Update `SYSTEM_PROMPT` in `news_bot.py` so selection and writing follow this Saudi Snapchat editorial model.
+2. Expand `FEEDS` with the dedicated Saudi sports, entertainment/culture, travel, and lifestyle feeds above.
+3. Add internal feed-lane metadata and lane-aware shortlist construction so the new sources are not crowded out by high-volume global feeds.
 
-### Preserve existing interfaces
+### Preserve existing public interfaces
 
 Do not change:
-- `summarize()` call shape
-- output JSON schema
+- public output JSON schema
 - `headline`, `summary`, `takeaway`, `source`, `item`, `scope`, `image_queries`, `image_queries_ar`
 - renderer contracts
 - publishing code
 - photo-selection pipeline
 - breaking-news pipeline interfaces
 
-This keeps the first rollout low risk.
+Internal feed items may gain a `lane` field, and `summarize()` may consume the balanced shortlist, as long as the downstream public contract remains unchanged.
 
-### Tests
+## Tests
 
-Add focused editorial regression tests/examples that verify ranking behavior conceptually. At minimum cover:
+Add focused editorial and shortlist regression tests. At minimum cover:
 
 1. A major Al Hilal/Al Nassr development should outrank obscure US corporate earnings.
 2. A major Riyadh Season announcement should outrank a minor Google UI update.
@@ -267,6 +328,10 @@ Add focused editorial regression tests/examples that verify ranking behavior con
 6. Celebrity gossip should remain rejected.
 7. Major Saudi travel/aviation developments should rank strongly.
 8. An obscure sports transfer or ordinary concert promotion should not win merely because it is local.
+9. High-volume global feeds must not prevent fresh sports, entertainment/culture, and travel/lifestyle candidates from reaching the 60-item shortlist.
+10. A single feed must not dominate the shortlist when other lanes have fresh items.
+11. If a lane has fewer fresh items than its target, its unused capacity must flow to other lanes.
+12. Existing cross-feed title deduplication must still work when the same story appears in a general feed and a section feed.
 
 Where automated model-output tests would be nondeterministic, implement deterministic prompt/fixture checks and representative evaluation cases rather than brittle exact-output assertions.
 
@@ -276,19 +341,22 @@ The breaking watcher may use the same broader audience concept only after the ev
 
 Broadening editorial interest must not lower the definition of "breaking." A sports or entertainment event should qualify for breaking treatment only if it is genuinely major and confirmed, not merely trending.
 
+The new dedicated feeds may be considered by the watcher in a later focused change if the watcher's source architecture is separate. Phase 1 must not silently weaken or destabilize the breaking watcher while changing the daily-news candidate pool.
+
 ## Rollout
 
 Phase 1:
-- change the editorial prompt only
+- expand the source mix with dedicated Saudi sports, entertainment/culture, travel, and lifestyle feeds
+- add lane-aware balanced shortlist sampling
+- update the editorial prompt
 - preserve schema/rendering/publishing
-- run dry-run comparisons against current candidate sets
+- run dry-run comparisons against current candidate sets and confirm lane representation in logs
 
 Phase 2, only if later justified by observed results:
-- tune feed mix to add stronger Saudi sports/culture/travel sources
+- refine or replace weak feeds based on actual yield
 - introduce explicit audience-scoring telemetry
-- use engagement data to tune ranking weights
-
-These are intentionally outside the first implementation unless needed to make the approved editorial model work.
+- use Snapchat engagement data to tune ranking weights
+- consider dedicated source expansion for the breaking watcher
 
 ## Success criteria
 
@@ -296,6 +364,8 @@ The change is successful when:
 
 - selected stories feel recognizably relevant to Saudi Snapchat users
 - the feed is broader than business/tech without becoming generic or gossip-driven
+- Saudi sports, entertainment/culture, travel, and lifestyle stories are actually present in the model candidate pool every run when fresh material exists
+- no single high-volume global source can crowd the Saudi-interest lanes out of the shortlist
 - headlines are easier to understand at a glance
 - cards more consistently answer "what happened?" and "why should I care?"
 - major Saudi sports, events, travel, consumer and cultural stories can beat remote global business stories when appropriate
