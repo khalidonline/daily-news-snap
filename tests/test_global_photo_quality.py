@@ -79,6 +79,28 @@ class GlobalPhotoQualityTests(unittest.TestCase):
             marker = Path(str(out) + ".exempt").read_text(encoding="utf-8")
             self.assertEqual("local:clear.jpg", marker)
 
+    def test_warm_historical_archive_is_not_treated_as_modern_dust(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            archive = root / "old-riyadh-souq.jpg"
+            self._dusty().save(archive, "JPEG", quality=92)
+            index = root / "images.txt"
+            index.write_text(
+                "old-riyadh-souq.jpg | الرياض القديمة, old Riyadh, سوق تقليدي | Historical archive\n",
+                encoding="utf-8",
+            )
+            old_dir, old_index = news_bot.IMAGES_DIR, news_bot.IMAGES_INDEX
+            news_bot.IMAGES_DIR, news_bot.IMAGES_INDEX = root, index
+            self.addCleanup(setattr, news_bot, "IMAGES_DIR", old_dir)
+            self.addCleanup(setattr, news_bot, "IMAGES_INDEX", old_index)
+            out = root / "selected.jpg"
+            selected, _credit = news_bot.fetch_local_photo(
+                [], ["old Riyadh"], out, respect_cooldown=False
+            )
+            self.assertIsNotNone(selected)
+            marker = Path(str(out) + ".exempt").read_text(encoding="utf-8")
+            self.assertEqual("local:old-riyadh-souq.jpg", marker)
+
 
 if __name__ == "__main__":
     unittest.main()
