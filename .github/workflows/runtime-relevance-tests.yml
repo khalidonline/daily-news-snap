@@ -9,6 +9,7 @@ on:
       - "story_focus.py"
       - "city_visual_fallback.py"
       - "city_visual_v2.py"
+      - "city_visual_v3.py"
       - "photo_quality.py"
       - "news_bot.py"
       - "image_precheck.py"
@@ -33,6 +34,7 @@ on:
       - "story_focus.py"
       - "city_visual_fallback.py"
       - "city_visual_v2.py"
+      - "city_visual_v3.py"
       - "photo_quality.py"
       - "news_bot.py"
       - "image_precheck.py"
@@ -77,7 +79,7 @@ jobs:
       - name: Global photo quality regressions
         run: python -m unittest -v tests/test_global_photo_quality.py
       - name: Compile guarded story entrypoint
-        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py city_visual_fallback.py city_visual_v2.py photo_quality.py preflight_stories.py image_precheck.py news_bot.py
+        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py city_visual_fallback.py city_visual_v2.py city_visual_v3.py photo_quality.py preflight_stories.py image_precheck.py news_bot.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
       - name: Jack Bogle regression — require repaired source coverage
