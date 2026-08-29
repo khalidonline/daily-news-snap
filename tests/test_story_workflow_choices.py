@@ -1,5 +1,4 @@
 import json
-import re
 import unittest
 from pathlib import Path
 
@@ -10,12 +9,14 @@ class StoryWorkflowChoiceTests(unittest.TestCase):
         self.ready = json.loads(Path('state/ready_to_post.json').read_text(encoding='utf-8'))['stories']
 
     def test_manual_dropdown_matches_ready_pool(self):
-        match = re.search(
-            r"ready_story:\n(?:.*\n)*?\s+options:\n(?P<options>(?:\s+- .*\n)+)",
-            self.workflow,
-        )
-        self.assertIsNotNone(match, 'ready_story choice input with options is required')
-        options = [line.strip()[2:].strip().strip('"') for line in match.group('options').splitlines()]
+        start = '          # READY_STORY_OPTIONS_START\n'
+        end = '          # READY_STORY_OPTIONS_END\n'
+        self.assertIn('ready_story:', self.workflow)
+        self.assertIn('type: choice', self.workflow)
+        self.assertIn(start, self.workflow)
+        self.assertIn(end, self.workflow)
+        block = self.workflow.split(start, 1)[1].split(end, 1)[0]
+        options = [json.loads(line.strip()[2:].strip()) for line in block.splitlines() if line.strip().startswith('- ')]
         self.assertEqual(options, self.ready)
 
     def test_custom_story_overrides_dropdown_and_post_is_explicit(self):
