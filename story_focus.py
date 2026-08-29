@@ -8,6 +8,8 @@ This layer closes the narrower editorial gaps that surfaced in real decks:
   and supporting fact in the prose paragraph;
 * city stories prefer photographable beats and do not ship with a mostly
   typographic deck when the frame-specific search failed;
+* the writer can see the reviewed runtime visual inventory before choosing
+  equally valid story beats, so prose and available evidence can line up;
 * city wording explains the subject's own significance before reaching for a
   ranking comparison, and avoids stiff wording such as ``صيرورتها``.
 
@@ -18,6 +20,7 @@ at import time so the guarded Story-to-Snapchat path always uses the policy.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Callable, Iterable
 
 
@@ -232,6 +235,64 @@ def _is_city_brief(brief: dict) -> bool:
     return city_frames >= max(2, (len(frames) + 1) // 2)
 
 
+def runtime_visual_inventory_prompt(index_path) -> str:
+    """Describe the already-reviewed runtime images to the story writer.
+
+    The filtered runtime index is evidence availability, not a factual source.
+    It helps the writer prefer an equally important, photographable beat while
+    all factual claims still have to come from researched sources.
+    """
+    path = Path(index_path) if index_path else None
+    if path is None:
+        return ""
+    try:
+        raw_lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return ""
+
+    rows = []
+    for raw in raw_lines:
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = [part.strip() for part in line.split("|")]
+        if not parts or not parts[0]:
+            continue
+        filename = parts[0]
+        tags = parts[1] if len(parts) > 1 else ""
+        rows.append(f"- {filename}: {tags}" if tags else f"- {filename}")
+
+    if not rows:
+        return ""
+
+    return (
+        "\n\nصور محلية مراجعة ومتاحة فعلاً لهذه القصة:\n"
+        + "\n".join(rows)
+        + "\n"
+        "- هذه الصور ليست مصادر للحقائق. أثبت كل معلومة من البحث والمصادر، "
+        "ولا تستنتج حدثاً أو تاريخاً من اسم الملف.\n"
+        "- لا تغيّر القصة لتخدم صورة. لكن إذا كان أمامك مرحلتان صحيحتان "
+        "ومتقاربتان في الأهمية، فضّل مرحلة مهمة يمكن أن يرويها واحد من هذه "
+        "الصور بوضوح.\n"
+        "- في قصص المدن، حاول أن تتوافق أربع لقطات على الأقل مع صور مراجعة "
+        "مختلفة أو مع مشاهد مباشرة يسهل العثور عليها؛ لا تُدخل كياناً مجاوراً "
+        "لمجرد أن له صورة.\n"
+        "- إذا كانت صورة محلية مناسبة للّقطة، ضع الاسم/الوسم الدال عليها في "
+        "image_keywords و image_keywords_ar حتى يستطيع محرك الصور العثور عليها."
+    )
+
+
+def prepare_city_visual_search(brief: dict) -> dict:
+    """Let the local library see Arabic city tags as well as English targets."""
+    if not isinstance(brief, dict) or not _is_city_brief(brief):
+        return brief
+    for frame in brief.get("frames") or []:
+        english = list(frame.get("image_keywords") or [])
+        arabic = list(frame.get("image_keywords_ar") or [])
+        frame["image_keywords"] = _unique(english + arabic)
+    return brief
+
+
 def city_deck_visuals_ready(brief: dict, photos: Iterable[object]) -> bool:
     """City decks need four matched visual slots; non-city decks are unchanged."""
     if not _is_city_brief(brief):
@@ -317,8 +378,29 @@ def configure(story_bot_module):
         return "no"
 
     def focused_research(story):
-        brief = original_research(story)
-        return _polish_brief_city_language(brief)
+        # Story Runtime replaces news_bot.IMAGES_INDEX with a story-specific
+        # index containing only approved local files before sb.main() starts.
+        # Reading it here gives the writer the exact visual inventory that the
+        # renderer will later be allowed to use.
+        inventory = ""
+        try:
+            import news_bot as nb
+
+            inventory = runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
+        except Exception:
+            inventory = ""
+
+        previous_prompt = sb.SYSTEM_PROMPT
+        if inventory:
+            sb.SYSTEM_PROMPT = previous_prompt + inventory
+            print("    writer visual inventory: reviewed local anchors supplied")
+        try:
+            brief = original_research(story)
+        finally:
+            sb.SYSTEM_PROMPT = previous_prompt
+
+        brief = _polish_brief_city_language(brief)
+        return prepare_city_visual_search(brief)
 
     def focused_find_all_photos(brief):
         previous_story = active["story"]
