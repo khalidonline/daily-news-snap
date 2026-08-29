@@ -10,6 +10,7 @@ on:
       - "tests/test_auto_image_selector.py"
       - "tests/test_news_feed_ingestion.py"
       - "tests/test_news_scope_edges.py"
+      - "tests/test_post_model_scope.py"
       - ".github/workflows/daily.yml"
       - ".github/workflows/news-editorial-tests.yml"
   pull_request:
@@ -21,6 +22,7 @@ on:
       - "tests/test_auto_image_selector.py"
       - "tests/test_news_feed_ingestion.py"
       - "tests/test_news_scope_edges.py"
+      - "tests/test_post_model_scope.py"
       - ".github/workflows/daily.yml"
       - ".github/workflows/news-editorial-tests.yml"
 
@@ -38,5 +40,5 @@ jobs:
           python-version: "3.12"
       - name: Run Saudi Snapchat editorial regressions
         run: |
-          python -m unittest tests.test_news_editorial tests.test_auto_image_selector tests.test_news_feed_ingestion tests.test_news_scope_edges -v
+          python -m unittest tests.test_news_editorial tests.test_auto_image_selector tests.test_news_feed_ingestion tests.test_news_scope_edges tests.test_post_model_scope -v
           python -m py_compile news_editorial.py daily_news_runner.py
