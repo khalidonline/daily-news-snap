@@ -94,6 +94,65 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
             [row["filename"] for row in rows],
         )
 
+    def test_targeted_web_requires_declared_city_and_compatible_era(self):
+        aliases = ["Riyadh", "الرياض"]
+        old_frame = {
+            "image_keywords": ["Old Riyadh city wall"],
+            "image_keywords_ar": ["الرياض القديمة", "سور الرياض القديم"],
+        }
+        expansion_frame = {
+            "image_keywords": ["Al Malaz Riyadh", "Riyadh 1960s"],
+            "image_keywords_ar": ["حي الملز", "الرياض الستينات"],
+        }
+
+        self.assertFalse(
+            cvf.city_target_metadata_ok(
+                "File:Old town of Tharmada, central Saudi Arabia - 2020.jpg",
+                old_frame,
+                aliases,
+            )
+        )
+        self.assertTrue(
+            cvf.city_target_metadata_ok(
+                "Workers breaking old city walls of Riyadh 1950 Riyadh",
+                old_frame,
+                aliases,
+            )
+        )
+        self.assertFalse(
+            cvf.city_target_metadata_ok(
+                "المسار الرياضي يعزز جودة الحياة في الرياض 2025",
+                expansion_frame,
+                aliases,
+            )
+        )
+        self.assertTrue(
+            cvf.city_target_metadata_ok(
+                "Al-Dhahirah Street in Riyadh, 1959 or 1960",
+                expansion_frame,
+                aliases,
+            )
+        )
+
+    def test_riyadh_historical_target_queries_use_precise_archive_anchors(self):
+        aliases = ["Riyadh", "الرياض"]
+        old_frame = {
+            "image_keywords": ["Old Riyadh", "Riyadh old town"],
+            "image_keywords_ar": ["الرياض القديمة", "سوق الرياض القديم"],
+        }
+        expansion_frame = {
+            "image_keywords": ["Al Malaz Riyadh", "Riyadh 1960s"],
+            "image_keywords_ar": ["حي الملز", "الرياض"],
+        }
+
+        old_terms = cvf.targeted_city_keywords(old_frame, aliases)
+        expansion_terms = cvf.targeted_city_keywords(expansion_frame, aliases)
+
+        self.assertEqual("Workers breaking old city walls of Riyadh", old_terms[0])
+        self.assertIn("Al-Dhahirah Street Riyadh 1960s", expansion_terms)
+        self.assertNotIn("Riyadh", expansion_terms)
+        self.assertNotIn("الرياض", expansion_terms)
+
 
 if __name__ == "__main__":
     unittest.main()
