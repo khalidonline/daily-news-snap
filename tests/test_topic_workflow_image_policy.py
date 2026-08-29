@@ -2,6 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import daily_news_runner
 import topic_snapchat
 
 
@@ -9,6 +10,19 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
     def test_topic_brief_prioritizes_relevant_curated_artifacts_over_reuse_rest(self):
         workflow = Path('.github/workflows/topic.yml').read_text(encoding='utf-8')
         self.assertIn('LIBRARY_REUSE_DAYS: "0"', workflow)
+
+    def test_topic_image_context_includes_search_subject_even_when_copy_omits_it(self):
+        story = topic_snapchat.topic_image_story({
+            'title': '16 سبتمبر: موعد قرار الفائدة القادم',
+            'body': 'التمويل المتغير يعتمد على المؤشر المرجعي وهامش البنك.',
+            'takeaway': 'التسعير المحلي لا يعتمد على قرار واحد.',
+            'source_url': 'https://example.com',
+            'image_queries': ['Saudi Central Bank SAMA headquarters Riyadh'],
+            'image_queries_ar': ['ساما', 'الرياض'],
+        })
+        context = daily_news_runner._story_context_text(story)
+        self.assertIn('Saudi Central Bank SAMA headquarters Riyadh', context)
+        self.assertIn('ساما', context)
 
     def test_curated_sama_artifact_is_directly_relevant_to_sama_topic(self):
         wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'neutral')
@@ -28,7 +42,7 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
             )
             verdict = wrapped(
                 candidate,
-                'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
+                'Saudi Central Bank SAMA headquarters Riyadh\nساما',
             )
         self.assertEqual(verdict, 'yes')
 
@@ -42,7 +56,7 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
             )
             verdict = wrapped(
                 candidate,
-                'ساما البنك المركزي السعودي سعر الفائدة والتمويل في السعودية',
+                'Saudi Central Bank SAMA headquarters Riyadh\nساما',
             )
         self.assertEqual(verdict, 'no')
 
@@ -59,10 +73,13 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
 
         def fake_fetcher(prompt, out_path):
             seen['prompt'] = prompt
-            seen['out_path'] = out_path
+            Path(out_path).write_bytes(b'image')
+            Path(str(out_path) + '.generated').write_text('ai', encoding='utf-8')
             return Path(out_path), 'AI generated'
 
-        wrapped = topic_snapchat._topic_generated_photo(fake_fetcher)
+        wrapped = topic_snapchat._topic_generated_photo(
+            fake_fetcher, cleaner=lambda photo: (True, '')
+        )
         result = wrapped('Saudi interest rate policy and banking', Path('hero.jpg'))
 
         self.assertEqual(result[0], Path('hero.jpg'))
@@ -78,6 +95,23 @@ class TopicWorkflowImagePolicyTests(unittest.TestCase):
             'no fake official signage',
         ):
             self.assertIn(rule, prompt)
+
+    def test_generated_topic_photo_is_blocked_when_second_visual_gate_finds_text(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = Path(td) / 'hero.jpg'
+
+            def fake_fetcher(prompt, out_path):
+                Path(out_path).write_bytes(b'image-with-text')
+                Path(str(out_path) + '.generated').write_text('ai', encoding='utf-8')
+                return Path(out_path), 'AI generated'
+
+            wrapped = topic_snapchat._topic_generated_photo(
+                fake_fetcher,
+                cleaner=lambda photo: (False, 'visible Arabic text and signage'),
+            )
+            self.assertEqual(wrapped('Saudi finance scene', out), (None, None))
+            self.assertFalse(out.exists())
+            self.assertFalse(Path(str(out) + '.generated').exists())
 
 
 if __name__ == '__main__':
