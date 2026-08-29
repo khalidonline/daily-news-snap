@@ -59,6 +59,24 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
             cvf.city_frame_allows_generic_fallback(generic_frame, aliases)
         )
 
+    def test_metro_and_final_skyline_still_get_one_exact_search_after_four_photos(self):
+        aliases = ["Riyadh", "الرياض"]
+        metro = {
+            "image_keywords": ["Riyadh Metro", "KAFD Metro Station Riyadh"],
+            "image_keywords_ar": ["مترو الرياض"],
+        }
+        skyline = {
+            "image_keywords": ["Riyadh skyline", "King Abdullah Financial District Riyadh"],
+            "image_keywords_ar": ["أفق الرياض"],
+        }
+        ordinary = {
+            "image_keywords": ["Riyadh street"],
+            "image_keywords_ar": ["شوارع الرياض"],
+        }
+        self.assertTrue(cvf.city_frame_deserves_targeted_search_after_minimum(metro, aliases))
+        self.assertTrue(cvf.city_frame_deserves_targeted_search_after_minimum(skyline, aliases))
+        self.assertFalse(cvf.city_frame_deserves_targeted_search_after_minimum(ordinary, aliases))
+
     def test_spa_item_explicitly_naming_another_city_is_rejected(self):
         aliases = ["Riyadh", "الرياض"]
         jeddah = {
