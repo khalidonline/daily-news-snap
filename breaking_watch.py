@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""مراقب العاجل — بديل موعد التاسعة مساءً الثابت.
+"""مراقب العاجل — يفحص الأخبار كل 30 دقيقة نهاراً.
 
-    python breaking_watch.py            # دورة مراقبة (كل ٣٠ دقيقة نهاراً)
-    python breaking_watch.py fallback   # موعد الثامنة مساءً الاحتياطي
+    python breaking_watch.py            # دورة مراقبة
 
 الدورة رخيصة: فحص الخلاصات أولاً (بلا نموذج) — إن لم يظهر جديد منذ آخر
 دورة انتهت الدورة هنا. وإن ظهر، نموذج صغير يصنّف والعناوين أمامه — الأصل
@@ -11,7 +10,7 @@
 مثبّت (PINNED_EVENT): النموذج الكبير يعيد التحقق ويكتب بكل قواعد
 البطاقة، وإن لم يتأكد الحدث يموت التشغيل هناك دون نشر.
 
-لا احتياطي مسائي: لا بطاقة عاجلة إلا إذا اجتاز حدثٌ البوابات كلها —
+لا بطاقة مسائية بديلة: لا بطاقة عاجلة إلا إذا اجتاز حدثٌ البوابات كلها —
 ومعظم الأيام لا يُنشر مساءً شيء، وهذا هو المقصود. الصمت نتيجة لا عطل،
 والمراقب يرسل سطراً في كل دورة على أي حال.
 """
@@ -41,7 +40,9 @@ STATE_FILE = Path("state/breaking.json")
 MAX_BREAKING_PER_DAY = 1        # v1 cap — one breaking post a day, full stop
 LOCK_MINUTES = 25               # under the 30-minute cadence, so a stuck
                                 # lock never outlives the next cycle by much
-WATCH_START_H, WATCH_END_H = 8.0, 19.5      # KSA; 20:00 belongs to fallback
+# GitHub cron can start several minutes late. The last scheduled cycle is
+# 19:30 KSA, but the script accepts delayed starts until (not including) 20:00.
+WATCH_START_H, WATCH_END_H = 8.0, 20.0
 # classification is a small-model job — budget it tightly
 WATCH_MODEL = os.getenv("WATCH_MODEL", "").strip() or "claude-haiku-4-5-20251001"
 WATCH_MAX_TOKENS = int(os.getenv("WATCH_MAX_TOKENS", "").strip() or "1200")
@@ -51,25 +52,28 @@ WATCH_MAX_SEARCHES = int(os.getenv("WATCH_MAX_SEARCHES", "").strip() or "2")
 # the classifier call itself — it did its own discovery, so it had to run
 # every 30 minutes even when nothing had been published anywhere. The
 # feeds answer "did anything new appear?" deterministically first, and
-# the model is only paid when the answer is yes. Google News (ar-SA)
-# aggregates the sources that 403 direct fetches (Argaam, CNBC Arabia,
-# Asharq Business); Asharq Al-Awsat serves its economy feed directly.
+# the model is only paid when the answer is yes. General Saudi headlines
+# catch national/official developments; business + technology preserve
+# the original beats; Asharq Al-Awsat adds direct economy coverage.
 WATCH_FEED_DIFF = (os.getenv("WATCH_FEED_DIFF", "").strip() or "1") != "0"
 WATCH_FEEDS = [u.strip() for u in
                (os.getenv("WATCH_FEEDS", "").strip() or
+                "https://news.google.com/rss?hl=ar&gl=SA&ceid=SA:ar,"
                 "https://news.google.com/rss/headlines/section/topic/"
                 "BUSINESS?hl=ar&gl=SA&ceid=SA:ar,"
                 "https://news.google.com/rss/headlines/section/topic/"
                 "TECHNOLOGY?hl=ar&gl=SA&ceid=SA:ar,"
                 "https://aawsat.com/feed/economy").split(",") if u.strip()]
-# 45 = the 30-minute cadence plus margin for cron jitter: a story landing
-# just after one cycle's sweep must still be inside the next cycle's window
+# A wider stateless window makes the watcher resilient to delayed/missed
+# hosted-runner starts without forcing a state commit every 30 minutes.
+# The classifier still applies the stricter "hours, not days" breaking gate.
 WATCH_FEED_WINDOW_MIN = int(
-    os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "45")
+    os.getenv("WATCH_FEED_WINDOW_MIN", "").strip() or "180")
 FEED_UA = "Mozilla/5.0 (compatible; daily-news-bot/1.0)"
 
-BEATS = ("الاقتصاد السعودي، العقار السعودي والخليجي، السفر والسياحة "
-         "السعودية، أخبار الأعمال والتقنية الكبرى")
+BEATS = ("القرارات والتنظيمات والأخبار الوطنية السعودية، الاقتصاد السعودي، "
+         "العقار السعودي والخليجي، السفر والسياحة السعودية، أخبار الأعمال "
+         "والتقنية الكبرى")
 
 WATCH_PROMPT = """أنت حارس بوابة «العاجل» لحساب أخبار أعمال سعودي على سناب شات.
 مهمتك تصنيف لا كتابة: هل وقع خلال الساعات الأخيرة حدثٌ يستحق بطاقة
@@ -174,39 +178,67 @@ def _feed_entry_time(item):
     return None
 
 
+def _feed_title(item):
+    """Return RSS or Atom title without relying on Element truthiness.
+
+    ElementTree elements with no child nodes currently evaluate false, so
+    `rss_title or atom_title` drops a perfectly valid RSS <title>. Test
+    explicitly for None instead.
+    """
+    el = item.find("title")
+    if el is None:
+        el = item.find("{http://www.w3.org/2005/Atom}title")
+    return (el.text or "").strip() if el is not None else ""
+
+
 def feed_fresh_items():
-    """(fresh_titles, feeds_ok). Stateless by design: an item is fresh if
-    its own timestamp falls inside the last cycle's window, so quiet
-    cycles keep committing nothing — a seen-set would need a state push
-    every 30 minutes. The costs of that choice are accepted: an item
-    WITHOUT a parseable date counts as fresh (a date-less feed must not
-    blind the watcher), and a re-dated repost buys one extra classifier
-    call, which the classifier itself refuses. Feeds are checked in full,
-    not head-first — Google News topic feeds are relevance-ordered."""
+    """Return (fresh_titles, feeds_healthy).
+
+    The pre-filter is allowed to suppress the classifier only when every
+    configured feed was fetched and parsed into usable titled entries. Any
+    unreachable, empty, or suspiciously untitled feed fails OPEN into the
+    classifier, because a broken pre-filter must never blind breaking news.
+    Undated entries still count as fresh. The 180-minute stateless window
+    absorbs hosted-runner jitter without committing scan state every cycle.
+    """
     cutoff = (datetime.now(timezone.utc)
               - timedelta(minutes=WATCH_FEED_WINDOW_MIN))
-    fresh, feeds_ok = [], 0
+    fresh = []
+    reachable = 0
+    feeds_healthy = True
     for url in WATCH_FEEDS:
         try:
             req = urllib.request.Request(url, headers={"User-Agent": FEED_UA})
             with urllib.request.urlopen(req, timeout=20) as resp:
                 root = ET.fromstring(resp.read())
         except Exception as exc:
+            feeds_healthy = False
             print(f"  ! feed unreachable ({exc}): {url}")
             continue
-        feeds_ok += 1
+
+        reachable += 1
         items = (root.findall(".//item")
                  or root.findall(".//{http://www.w3.org/2005/Atom}entry"))
+        titled = 0
+        fresh_before = len(fresh)
         for item in items:
-            el = (item.find("title")
-                  or item.find("{http://www.w3.org/2005/Atom}title"))
-            title = (el.text or "").strip() if el is not None else ""
+            title = _feed_title(item)
             if not title:
                 continue
+            titled += 1
             when = _feed_entry_time(item)
             if when is None or when >= cutoff:
                 fresh.append(title)
-    return fresh, feeds_ok > 0
+
+        fresh_count = len(fresh) - fresh_before
+        print(f"  feed scan: entries={len(items)} titles={titled} "
+              f"fresh={fresh_count} — {url}")
+        if not items or titled == 0:
+            feeds_healthy = False
+            print("  ! feed parsed without usable titled entries — "
+                  "pre-filter will fail open")
+
+    return fresh, bool(reachable) and feeds_healthy
 
 
 def classify(now, fresh_titles=None):
@@ -283,14 +315,14 @@ def watch():
 def _watch():
     now = ksa_now()
     hour = now.hour + now.minute / 60
-    # the cron already stops outside the window, but GitHub replays stale
-    # crons after workflow edits (see the bitten list) — the script itself
-    # must be safe to fire at any time, twice
-    if not WATCH_START_H <= hour <= WATCH_END_H:
+    # The cron schedules through 19:30 KSA, but hosted runners can start
+    # late. Accept a delayed final cycle until 20:00, then stay safely off.
+    if not WATCH_START_H <= hour < WATCH_END_H:
         print(f"outside the watch window ({now:%H:%M} KSA) — exiting")
         notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: خارج نافذة المراقبة "
-               f"({now:%H:%M} بتوقيت السعودية؛ النافذة 08:00–19:30). "
-               "لم يُفحص شيء — بعد الثامنة مساءً موعد الاحتياطي هو الذي يعمل.")
+               f"({now:%H:%M} بتوقيت السعودية؛ الجدول 08:00–19:30 "
+               "مع مهلة تأخير حتى 20:00). لم يُفحص شيء — "
+               "لا توجد دورة مسائية بديلة.")
         return
 
     state = load_state()
@@ -318,17 +350,16 @@ def _watch():
     if WATCH_FEED_DIFF:
         fresh_titles, feeds_ok = feed_fresh_items()
         if not feeds_ok:
-            # every feed failed: fail OPEN into the model call — a broken
-            # pre-filter must not blind the watcher, same doctrine as the
-            # vision gate
-            print("  ! every feed failed — pre-filter skipped, "
+            # Any incomplete/broken pre-filter fails OPEN into the model.
+            # A partial feed outage must not suppress a real breaking event.
+            print("  ! feed pre-filter unhealthy/incomplete — "
                   "classifying anyway")
             fresh_titles = None
         elif not fresh_titles:
             print("no new feed items this cycle — classifier not called")
             notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: لا جديد في "
-                   f"الخلاصات منذ آخر دورة (نافذة "
-                   f"{WATCH_FEED_WINDOW_MIN} دقيقة) — لم يُستدعَ المصنّف")
+                   f"الخلاصات ضمن نافذة {WATCH_FEED_WINDOW_MIN} دقيقة — "
+                   "لم يُستدعَ المصنّف")
             return
         else:
             print(f"  {len(fresh_titles)} fresh feed item(s) — classifying")
@@ -396,8 +427,8 @@ def _watch():
         notify(f"🚨 بطاقة عاجلة نُشرت تلقائياً\n{event[:150]}")
     else:
         # keep the fingerprint: an event the big model could not confirm
-        # must not be retried every half hour — the 20:00 fallback still
-        # covers the story through the feeds if it firms up
+        # must not be retried every half hour. A later genuinely new event
+        # can still be evaluated by the watcher.
         state["lock_at"] = ""
         save_state(state)
         print("pinned pipeline aborted — lock released, fingerprint kept")
@@ -413,10 +444,7 @@ def main():
     if role == "watch":
         watch()
     else:
-        # the 20:00 fallback is RETIRED (owner decision): no breaking card
-        # unless something clears the gates — most evenings, nothing posts
-        raise SystemExit(f"unknown role {role!r} — only 'watch' exists; "
-                         "the evening fallback was retired")
+        raise SystemExit(f"unknown role {role!r} — only 'watch' exists")
 
 
 if __name__ == "__main__":
