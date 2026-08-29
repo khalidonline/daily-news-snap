@@ -29,6 +29,36 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
         self.assertIn("riyadh-1977-construction.jpg", names)
         self.assertNotIn("railway-construction-1951.jpg", names)
 
+    def test_specific_city_beats_cannot_be_satisfied_by_generic_city_scene(self):
+        aliases = ["Riyadh", "الرياض"]
+        specific_frames = [
+            {
+                "image_keywords": ["Murabba Palace Riyadh"],
+                "image_keywords_ar": ["قصر المربع"],
+            },
+            {
+                "image_keywords": ["Riyadh Metro", "Riyadh Metro station"],
+                "image_keywords_ar": ["مترو الرياض"],
+            },
+            {
+                "image_keywords": ["Riyadh 1970s construction"],
+                "image_keywords_ar": ["الرياض السبعينات"],
+            },
+        ]
+        for frame in specific_frames:
+            with self.subTest(frame=frame):
+                self.assertFalse(
+                    cvf.city_frame_allows_generic_fallback(frame, aliases)
+                )
+
+        generic_frame = {
+            "image_keywords": ["Riyadh skyline", "Riyadh street"],
+            "image_keywords_ar": ["أفق الرياض"],
+        }
+        self.assertTrue(
+            cvf.city_frame_allows_generic_fallback(generic_frame, aliases)
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
