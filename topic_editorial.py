@@ -47,6 +47,10 @@ _FINANCE_POLICY_ONLY_RES = (
         re.IGNORECASE,
     ),
 )
+_FINANCE_PERSONALIZED_RE = re.compile(
+    r"(?:قسطك|قرضك|تمويلك|حسابك|توفيرك|ودائعك|مدخراتك)",
+    re.IGNORECASE,
+)
 _INSTITUTION_RELATION_RES = (
     re.compile(
         r"(?:ساما|البنك\s+المركزي\s+السعودي).{0,20}"
@@ -69,6 +73,15 @@ _INSTITUTION_RELATION_RES = (
         r"(?:الفيدرالي|Federal\s+Reserve).{0,45}(?:وساما|و\s*ساما|والبنك\s+المركزي\s+السعودي)"
         r".{0,20}(?:مثله|نفسه|نفس\s+(?:القرار|الخطوة|الاتجاه)|بنفس\s+(?:الخطوة|الاتجاه))",
         re.IGNORECASE,
+    ),
+    # Release preflight leak: a later SAMA sentence said "على نفس المسار",
+    # collapsing two separate policy decisions into one implied joint stance.
+    re.compile(
+        r"(?:الفيدرالي|Federal\s+Reserve).{0,220}"
+        r"(?:وساما|و\s*ساما|والبنك\s+المركزي\s+السعودي).{0,55}"
+        r"(?:على\s+نفس\s+المسار|على\s+المسار\s+نفسه|في\s+المسار\s+نفسه|"
+        r"بنفس\s+المسار|بنفس\s+الاتجاه|في\s+الاتجاه\s+نفسه)",
+        re.IGNORECASE | re.DOTALL,
     ),
 )
 _FED_TEXT_RE = re.compile(r"الفيدرالي|Federal\s+Reserve", re.IGNORECASE)
@@ -208,6 +221,12 @@ def _finance_tone_errors(brief: dict[str, Any]) -> list[str]:
             "financial wording overstates an indirect financial relationship; "
             "explain the local mechanism and use conditional language"
         )
+    if _FINANCE_PERSONALIZED_RE.search(text):
+        errors.append(
+            "finance briefs should not personalize financial effects as the viewer's loan, "
+            "financing, installment, savings, or account; describe the affected product or "
+            "condition instead"
+        )
     if any(pattern.search(text) for pattern in _FINANCE_POLICY_ONLY_RES):
         errors.append(
             "policy rate is not the only driver of variable financing; explain the "
@@ -321,11 +340,16 @@ def enhance_prompt(base_prompt: str, today: date | None = None) -> str:
         "«قسطك مرتبط بقرار في واشنطن مو الرياض». هذه جملة مثيرة لكنها مضللة وغير مريحة.\n"
         "- بدلاً من ذلك، اجعل الفضول في سؤال واضح عن معنى التطور نفسه، مثل: «وش يعني ثبات "
         "الفائدة للتمويل المتغير؟» ثم اشرح الآلية بجمل قصيرة من دون توجيه القارئ.\n"
+        "- لا تخاطب المتابع بضمير الملكية عند وصف الأثر المالي: لا تقل «تمويلك»، «قسطك»، "
+        "«قرضك»، «حسابك» أو «مدخراتك». استخدم أسماء المنتجات والفئات نفسها مثل «التمويل "
+        "المتغير»، «الأقساط المتغيرة»، «حسابات التوفير» و«الودائع».\n"
         "- إذا كان الأثر يختلف حسب المنتج أو العقد، لا تخاطب الجميع كأن النتيجة واحدة. "
         "صف الاختلاف نفسه: التمويل المتغير يتأثر وفق المؤشر المرجعي والهامش وموعد إعادة التسعير.\n"
         "- عند ذكر الفيدرالي والبنك المركزي السعودي في الموضوع نفسه، اعرض قرار كل جهة على حدة "
         "بصياغة محايدة، ثم اشرح العلاقة النقدية في جملة منفصلة. لا تصغ العنوان أو المتن "
         "كحركة مشتركة أو مقارنة بين المؤسستين.\n"
+        "- لا تلخص موقفي الفيدرالي وساما بعبارات مثل «على نفس المسار»، «بنفس الاتجاه» أو "
+        "«المسار نفسه». اذكر قرار كل جهة مستقلاً، ثم اشرح علاقة الربط النقدي في جملة منفصلة.\n"
         "- اجعل العنوان عن أهمية المعلومة أو معناها للمتابع، لا عن العلاقة بين المؤسسات.\n"
         "- في التمويل المتغير، لا تجعل سعر الريبو عند ساما هو المفتاح الوحيد. المؤشر قد يكون "
         "سايبور أو مؤشراً آخر، ثم يضاف هامش البنك، ويتغير السعر بحسب موعد إعادة التسعير "
