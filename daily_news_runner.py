@@ -7,7 +7,9 @@ approved provider candidates by visual relevance before returning one to the
 legacy renderer.
 """
 
+import json
 import os
+import re
 import shutil
 import urllib.parse
 from pathlib import Path
@@ -57,6 +59,20 @@ _NEUTRAL_PRIORITY = {
     "stock": 6,
 }
 _STORY_CONTEXTS = {}
+
+_DEDUPE_TOKEN_RE = re.compile(r"[A-Za-z0-9\u0600-\u06ff]+")
+_ARABIC_DIACRITICS_RE = re.compile(r"[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06edـ]")
+_ARABIC_NORMALIZATION = str.maketrans({
+    "أ": "ا", "إ": "ا", "آ": "ا", "ى": "ي", "ؤ": "و", "ئ": "ي",
+})
+_DEDUPE_STOPWORDS = {
+    "الى", "إلى", "على", "عن", "في", "من", "مع", "بعد", "قبل", "بين",
+    "هذا", "هذه", "ذلك", "تلك", "الذي", "التي", "حول", "ضمن", "عبر",
+    "اليوم", "جديد", "جديدة", "خبر", "اخبار", "أخبار", "السعودية", "المملكة",
+    "شركة", "وزارة", "هيئة", "مليون", "مليار", "ريال", "دولار",
+    "the", "a", "an", "and", "or", "of", "to", "in", "on", "for", "with",
+    "new", "news", "saudi", "arabia", "company", "million", "billion",
+}
 
 
 def normalize_image_source(value):
@@ -178,18 +194,154 @@ def validate_ranked_result(result, shortlist):
     return validated
 
 
+def _normalize_source_link(value):
+    raw = str(value or "").strip()
+    if not raw:
+        return ""
+    try:
+        parts = urllib.parse.urlsplit(raw)
+    except ValueError:
+        return raw
+    if not parts.netloc:
+        return raw.rstrip("/")
+    host = parts.netloc.casefold()
+    if host.startswith("www."):
+        host = host[4:]
+    path = parts.path.rstrip("/")
+    tracking_keys = {"ref", "source", "fbclid", "gclid"}
+    query_pairs = [
+        (key, value)
+        for key, value in urllib.parse.parse_qsl(
+            parts.query, keep_blank_values=True
+        )
+        if key.casefold() not in tracking_keys
+        and not key.casefold().startswith("utm_")
+    ]
+    query = urllib.parse.urlencode(query_pairs, doseq=True)
+    return urllib.parse.urlunsplit(("https", host, path, query, ""))
+
+
+def _normalize_dedupe_token(token):
+    # Arabic commonly attaches conjunctions/prepositions to the noun.
+    # Normalize only the high-confidence forms around the definite article
+    # so "للنصر", "والنصر" and "بالنصر" compare as "النصر".
+    if len(token) > 5 and token[0] in {"و", "ف"} and token[1:3] == "لل":
+        token = token[1:]
+    if token.startswith("لل") and len(token) > 4:
+        return "ال" + token[2:]
+    if len(token) > 4 and token[:3] in {"وال", "فال", "بال", "كال"}:
+        return token[1:]
+    return token
+
+
+def _dedupe_tokens(text):
+    normalized = _ARABIC_DIACRITICS_RE.sub("", str(text or ""))
+    normalized = normalized.translate(_ARABIC_NORMALIZATION).casefold()
+    tokens = set()
+    for token in _DEDUPE_TOKEN_RE.findall(normalized):
+        token = _normalize_dedupe_token(token)
+        if len(token) < 3 or token in _DEDUPE_STOPWORDS:
+            continue
+        tokens.add(token)
+    return tokens
+
+
+def _same_recent_event(candidate_title, remembered_title):
+    candidate = _dedupe_tokens(candidate_title)
+    remembered = _dedupe_tokens(remembered_title)
+    if not candidate or not remembered:
+        return False
+    shared = candidate & remembered
+    if len(shared) < 3:
+        return False
+    return len(shared) / min(len(candidate), len(remembered)) >= 0.40
+
+
+def filter_recent_source_duplicates(items, posted):
+    """Remove already-covered source stories before they consume model slots.
+
+    New memory entries carry a canonical source URL, which is the strongest
+    identity. Older entries have only the AI-written headline, so retain a
+    conservative three-token event-overlap fallback to protect existing state
+    (including the Ronaldo record story) without blocking unrelated news about
+    the same person or company.
+    """
+    recent = [entry for entry in (posted or []) if isinstance(entry, dict)]
+    recent_links = set()
+    legacy_headlines = []
+    for entry in recent:
+        remembered_link = _normalize_source_link(entry.get("source_link"))
+        if remembered_link:
+            recent_links.add(remembered_link)
+        elif str(entry.get("headline", "") or "").strip():
+            legacy_headlines.append(entry.get("headline", ""))
+    kept = []
+    removed = 0
+    for item in items:
+        link = _normalize_source_link(item.get("link"))
+        if link and link in recent_links:
+            removed += 1
+            continue
+        title = str(item.get("title", "") or "").strip()
+        if title and any(
+            _same_recent_event(title, headline)
+            for headline in legacy_headlines
+        ):
+            removed += 1
+            continue
+        kept.append(item)
+    if removed:
+        print(f"    source dedupe: removed {removed} recently covered candidate(s)")
+    return kept
+
+
+def make_source_aware_save_posted(news_bot_module):
+    """Preserve legacy state format while adding stable source identity."""
+    original_save = news_bot_module.save_posted
+
+    def _save(previous, stories):
+        path = Path(original_save(previous, stories))
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return path
+        if not isinstance(data, list):
+            return path
+
+        start = max(0, len(data) - len(stories))
+        changed = False
+        for entry, story in zip(data[start:], stories):
+            if not isinstance(entry, dict) or not isinstance(story, dict):
+                continue
+            link = _normalize_source_link(story.get("link"))
+            if link and entry.get("source_link") != link:
+                entry["source_link"] = link
+                changed = True
+        if changed:
+            path.write_text(
+                json.dumps(data, ensure_ascii=False, indent=1),
+                encoding="utf-8",
+            )
+        return path
+
+    return _save
+
+
 def _can_install_auto_image_selector(news_bot_module):
     return all(hasattr(news_bot_module, name) for name in AUTO_IMAGE_REQUIRED_ATTRS)
 
 
 def make_fetcher(news_bot_module):
     def _fetch():
-        return fetch_headlines(
+        items = fetch_headlines(
             news_bot_module._http_get,
             news_bot_module._clean,
             news_bot_module._parse_date,
             lookback_hours=news_bot_module.LOOKBACK_HOURS,
         )
+        load_posted = getattr(news_bot_module, "load_posted", None)
+        posted = load_posted() if callable(load_posted) else []
+        return filter_recent_source_duplicates(items, posted)
     return _fetch
 
 
@@ -439,6 +591,8 @@ def configure(news_bot_module):
     news_bot_module.SYSTEM_PROMPT = SYSTEM_PROMPT
     news_bot_module.fetch_headlines = make_fetcher(news_bot_module)
     news_bot_module.summarize = make_summarizer(news_bot_module)
+    if hasattr(news_bot_module, "save_posted"):
+        news_bot_module.save_posted = make_source_aware_save_posted(news_bot_module)
     if news_bot_module.IMAGE_SOURCE == "auto":
         install_auto_image_selector(news_bot_module)
     return news_bot_module
