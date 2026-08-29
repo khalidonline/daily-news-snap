@@ -17,17 +17,6 @@ on:
         description: "Render the card but don't post"
         type: boolean
         default: false
-      image_source:
-        description: "Where the photo comes from"
-        type: choice
-        options:
-          - spa
-          - generate
-          - openverse
-          - none
-          - article
-          - stock   # Pexels
-        default: spa
 
 permissions:
   contents: write
@@ -100,7 +89,7 @@ jobs:
           # so the two must name the same number or each would stop the other
           # at its own limit
           MONTHLY_POST_LIMIT: "145"
-          IMAGE_SOURCE: ${{ inputs.image_source || 'spa' }}
+          IMAGE_SOURCE: "auto"      # best relevant eligible photo wins; source is secondary
           POINTS: "3"
           MAX_SEARCHES: "6"
         run: python topic_snapchat.py
