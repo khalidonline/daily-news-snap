@@ -64,7 +64,7 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         brief = {
             "title": "العنوان الذي سيراه المتابع",
             "body": "المعلومة الأساسية التي يجب أن تعكسها الصورة",
-            "takeaway": "الخلاصة العملية",
+            "takeaway": "الخلاصة الخبرية",
             "caption": "تعليق",
             "sources": ["واس", "Reuters"],
             "image_queries": ["Saudi Riyadh school", "Saudi students Riyadh", "Saudi classroom"],
@@ -81,6 +81,36 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         self.assertEqual(story["takeaway"], brief["takeaway"])
         self.assertEqual(story["link"], brief["source_url"])
         remember_story_contexts({"stories": []})
+
+    def test_run_74_teacher_like_action_line_is_publish_blocking(self):
+        brief = {
+            "title": "وش يعني ثبات الفائدة للتمويل المتغير؟",
+            "body": "الفائدة المرجعية والتمويل المتغير لا يتحركان دائماً بالطريقة نفسها؛ العقد يحدد المؤشر والهامش وموعد إعادة التسعير.",
+            "takeaway": "راجع مؤشر تمويلك المتغير في العقد، ولا تفترض ارتباطه المباشر بقرار واحد.",
+            "caption": "ثبات الفائدة لا يعني أن كل تمويل متغير سيبقى كما هو.",
+            "sources": ["Federal Reserve", "البنك المركزي السعودي"],
+            "image_queries": ["Saudi Central Bank headquarters Riyadh", "Saudi banking finance Riyadh", "Saudi mortgage banking Riyadh"],
+            "image_queries_ar": ["البنك المركزي السعودي", "تمويل بنكي", "تمويل عقاري"],
+            "image_prompt": "high-quality editorial photograph about Saudi banking and variable-rate financing",
+            "source_url": "https://www.sama.gov.sa/",
+        }
+        errors = topic_snapchat.validate_brief(brief)
+        self.assertTrue(any("instructional or advisory" in error for error in errors), errors)
+
+    def test_run_74_institution_comparison_is_publish_blocking(self):
+        brief = {
+            "title": "الفائدة الأمريكية ثابتة",
+            "body": "التمويل المتغير يعتمد على المؤشر المرجعي وهامش البنك وموعد إعادة التسعير.",
+            "takeaway": "تكلفة التمويل تتأثر بعدة عوامل، وليس بقرار واحد فقط.",
+            "caption": "الفيدرالي ثابت وساما مثله، لكن تفاصيل العقد هي التي تحدد إعادة التسعير.",
+            "sources": ["Federal Reserve", "البنك المركزي السعودي"],
+            "image_queries": ["Saudi Central Bank headquarters Riyadh", "Saudi banking finance Riyadh", "Saudi mortgage banking Riyadh"],
+            "image_queries_ar": ["البنك المركزي السعودي", "تمويل بنكي", "تمويل عقاري"],
+            "image_prompt": "high-quality editorial photograph about Saudi banking and variable-rate financing",
+            "source_url": "https://www.sama.gov.sa/",
+        }
+        errors = topic_snapchat.validate_brief(brief)
+        self.assertTrue(any("state each institution's decision separately" in error for error in errors), errors)
 
     def test_credit_policy_rejects_attribution_required_open_images(self):
         policy = getattr(topic_snapchat, "_credit_requires_visible", None)
@@ -126,7 +156,8 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
             fetch_loc_photo=pair,
             fetch_openverse_photo=pair,
             fetch_photo=stock,
-            photo_shows=lambda photo, context: "no",
+            photo_shows=lambda photo, context: "neutral",
+            recent_fallback=lambda path: "old-unrelated-photo.jpg",
             _AUTO_IMAGE_SELECTOR_INSTALLED=False,
         )
         with patch.dict("os.environ", {}, clear=False):
@@ -138,6 +169,18 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         self.assertTrue(bot._AUTO_IMAGE_SELECTOR_INSTALLED)
         self.assertNotIn("بلسان سعودي رسمي", bot.SYSTEM_PROMPT)
         self.assertIn("سناب شات", bot.SELECT_PROMPT)
+
+        # Topic Brief is stricter than Daily News: neutral imagery and unrelated
+        # recent-photo reuse are not valid fallbacks. A generated topic-specific
+        # image can run after the real-photo search is exhausted.
+        self.assertEqual(bot.photo_shows(Path("candidate.jpg"), "topic"), "no")
+        self.assertIsNone(bot.recent_fallback(Path("hero.jpg")))
+
+        # The bot surfaces what matters; it does not tell the follower what to do.
+        self.assertIn("ليس دورك أن تعلّم", bot.SYSTEM_PROMPT)
+        self.assertIn("takeaway", bot.SYSTEM_PROMPT)
+        self.assertIn("صورة تحريرية عالية الجودة", bot.SYSTEM_PROMPT)
+        self.assertNotIn("يمكن للمتابع استخدامه", bot.SELECT_PROMPT)
 
         bot.render_story({}, Path("card.png"), Path("hero.jpg"), "Pexels")
         bot.render_topic({}, Path("card.png"), Path("hero.jpg"), "SPA")
