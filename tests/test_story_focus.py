@@ -110,6 +110,54 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("مرحلة مهمة", prompt)
         self.assertIn("image_keywords", prompt)
 
+    def test_inventory_prompt_requires_the_frame_beat_to_be_visible(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "approved.txt"
+            index.write_text(
+                "riyadh-1975-construction.jpg | الرياض, البناء, السبعينات | أرشيف الرياض التاريخي\n",
+                encoding="utf-8",
+            )
+            prompt = story_focus.runtime_visual_inventory_prompt(index)
+
+        self.assertIn("الفكرة المركزية", prompt)
+        self.assertIn("ما يظهر في الصورة", prompt)
+        self.assertIn("لا يكفي", prompt)
+
+    def test_reviewed_archive_year_is_authoritative_in_vision_context(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "approved.txt"
+            index.write_text(
+                "riyadh-1975-construction.jpg | الرياض, البناء, السبعينات | أرشيف الرياض التاريخي\n",
+                encoding="utf-8",
+            )
+            frame = {
+                "subject_kind": "place_city",
+                "heading": "توسع عمراني في السبعينات",
+                "text": "اتسعت الرياض سريعاً مع موجة بناء جديدة.",
+                "image_keywords": ["Riyadh 1975 construction"],
+                "image_keywords_ar": ["الرياض", "البناء", "السبعينات"],
+            }
+            note = story_focus.reviewed_local_provenance(
+                Path(td) / "riyadh-1975-construction.jpg", frame, index
+            )
+
+        self.assertIn("1975", note)
+        self.assertIn("مراجعة", note)
+        self.assertIn("لا تستنتج سنة مختلفة", note)
+        self.assertIn("البناء", note)
+
+    def test_unlisted_photo_gets_no_reviewed_provenance_override(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "approved.txt"
+            index.write_text(
+                "riyadh-1975-construction.jpg | الرياض, البناء, السبعينات | أرشيف\n",
+                encoding="utf-8",
+            )
+            note = story_focus.reviewed_local_provenance(
+                Path(td) / "downloaded-web-photo.jpg", {}, index
+            )
+        self.assertEqual("", note)
+
     def test_city_local_search_can_match_arabic_catalog_tags(self):
         brief = {
             "frames": [
