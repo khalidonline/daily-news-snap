@@ -211,11 +211,25 @@ def _normalize_source_link(value):
     return urllib.parse.urlunsplit(("https", host, path, "", ""))
 
 
+def _normalize_dedupe_token(token):
+    # Arabic commonly attaches conjunctions/prepositions to the noun.
+    # Normalize only the high-confidence forms around the definite article
+    # so "للنصر", "والنصر" and "بالنصر" compare as "النصر".
+    if len(token) > 5 and token[0] in {"و", "ف"} and token[1:3] == "لل":
+        token = token[1:]
+    if token.startswith("لل") and len(token) > 4:
+        return "ال" + token[2:]
+    if len(token) > 4 and token[:3] in {"وال", "فال", "بال", "كال"}:
+        return token[1:]
+    return token
+
+
 def _dedupe_tokens(text):
     normalized = _ARABIC_DIACRITICS_RE.sub("", str(text or ""))
     normalized = normalized.translate(_ARABIC_NORMALIZATION).casefold()
     tokens = set()
     for token in _DEDUPE_TOKEN_RE.findall(normalized):
+        token = _normalize_dedupe_token(token)
         if len(token) < 3 or token in _DEDUPE_STOPWORDS:
             continue
         tokens.add(token)
