@@ -5,10 +5,12 @@ name: Breaking news watch
 #   */30 5-16 UTC  (every 30 min, 08:00–19:30 KSA) — the watcher. A small
 #                  model scans the beats; at most ONE breaking card a day
 #                  posts, the moment the full pipeline confirms the event.
-#                  Quiet cycles exit in seconds, commit nothing, and send
-#                  one Telegram line — silence is a result, not a failure.
+#                  The script accepts delayed starts until 20:00 KSA so
+#                  GitHub cron jitter cannot discard the final 19:30 cycle.
+#                  Quiet cycles exit quickly, commit nothing, and send one
+#                  Telegram line — silence is a result, not a failure.
 #
-# There is NO evening fallback post (owner decision): no breaking card
+# There is NO evening replacement post (owner decision): no breaking card
 # unless something clears the gates, and most days that means nothing
 # posts in the evening. daily.yml keeps 07:00 (posts) and 12:00 (hybrid);
 # its manual dispatch with the post tick remains the human override.
@@ -47,7 +49,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Watch or fall back
+      - name: Watch for confirmed breaking news
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
@@ -58,9 +60,7 @@ jobs:
           BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
-          # POST_TO_SNAPCHAT is decided by breaking_watch.py per role —
-          # the watcher posts only a confirmed pinned event, the fallback
-          # posts only when no breaking card went out today
+          # breaking_watch.py posts only a confirmed pinned event.
           # one cap shared with every posting workflow — see CLAUDE.md
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
