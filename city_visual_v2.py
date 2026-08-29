@@ -1,9 +1,12 @@
-"""Run-93 fix: deterministic visual selection for city stories.
+"""Deterministic visual selection for city stories.
 
-This module replaces only the city selection integration.  It reuses the
-reviewed metadata/prompt helpers from ``city_visual_fallback`` but takes full
-control before generic Story Bot can classify one supporting entity as a
-company and turn the whole city deck into a logo-led story.
+The city path deliberately uses a whole-deck two-pass policy:
+1. plan distinct reviewed local photos that exactly support visible beats;
+2. only if fewer than four exact photos exist, use broad city-scene fallbacks.
+
+This keeps generic Story Bot company/logo behavior out of city stories and
+prevents a fallback photo from stealing a slot that a later frame can match
+exactly.
 """
 
 from __future__ import annotations
@@ -11,6 +14,7 @@ from __future__ import annotations
 from copy import deepcopy
 from pathlib import Path
 from typing import Iterable
+import re
 
 import city_visual_fallback as legacy
 import story_focus
@@ -20,8 +24,6 @@ CITY_PROMPT = legacy.CITY_PROMPT
 CITY_FALLBACK_MARKER = "[[CITY_FALLBACK_SCENE_ONLY]]\n"
 _CONFIGURED_ATTR = "_city_visual_v2_configured"
 
-# Re-export the stable helpers already covered by the earlier city tests.
-reviewed_city_exact_match = legacy.reviewed_city_exact_match
 exact_city_keywords = legacy.exact_city_keywords
 city_fallback_queries = legacy.city_fallback_queries
 city_candidate_metadata_ok = legacy.city_candidate_metadata_ok
@@ -51,16 +53,127 @@ def normalize_city_deck_for_visuals(brief: dict) -> dict:
     return out
 
 
+def _years(text: str) -> set[str]:
+    return set(re.findall(r"(?<!\d)((?:18|19|20)\d{2})(?!\d)", str(text or "")))
+
+
+def _norm_phrase(text: str) -> str:
+    return " ".join(re.findall(r"[a-z0-9]+|[ء-ي]+", str(text or "").casefold()))
+
+
+def _specific_phrase_match(targets: list[str], metadata_parts: list[str]) -> int:
+    """Score real scene/entity phrase overlap, not bare city/generic words."""
+    best = 0
+    generic = {
+        "riyadh", "الرياض", "city", "مدينة", "construction", "building",
+        "بناء", "البناء", "عمران", "old", "قديم", "القديمة", "photo", "صورة",
+    }
+    for position, target in enumerate(targets):
+        t = _norm_phrase(target)
+        if not t:
+            continue
+        t_tokens = set(t.split()) - generic
+        for part in metadata_parts:
+            m = _norm_phrase(part)
+            if not m:
+                continue
+            m_tokens = set(m.split()) - generic
+            # A multi-token/Arabic scene phrase is strong enough to link two
+            # years of the same long-running project (e.g. railway 1947→1951).
+            shared = t_tokens & m_tokens
+            if (t in m or m in t) and len(min(t, m, key=len)) >= 5:
+                score = 45 - min(position, 10)
+                best = max(best, score)
+            elif len(shared) >= 2:
+                best = max(best, 26 - min(position, 10))
+            elif shared and any(len(tok) >= 6 for tok in shared):
+                best = max(best, 14 - min(position, 10))
+    return best
+
+
+def _row_exact_score(row: dict, frame: dict, aliases: Iterable[str]) -> int:
+    source = Path(row.get("filename", "")).name
+    tags = [p.strip() for p in str(row.get("tags", "")).split(",") if p.strip()]
+    credit = str(row.get("credit", "") or "")
+    metadata_parts = [source] + tags + ([credit] if credit else [])
+    metadata = " ".join(metadata_parts)
+
+    if not story_focus.catalog_tags_match_aliases([metadata], aliases):
+        return -1
+    if not city_candidate_metadata_ok(metadata, aliases):
+        return -1
+
+    targets = exact_city_keywords(frame, aliases)
+    if not targets:
+        return -1
+    target_text = " ".join(targets)
+    target_cf = target_text.casefold()
+    metadata_cf = metadata.casefold()
+
+    target_years = _years(target_text)
+    meta_years = _years(metadata)
+    phrase_score = _specific_phrase_match(targets, metadata_parts)
+
+    # Explicit year mismatch is normally a hard contradiction. The narrow
+    # exception is a strong named scene/project shared by both sides, such as
+    # Riyadh-Dammam railway construction that began in 1947 and completed in
+    # 1951. Generic words like "construction" are never enough to override it.
+    if target_years and meta_years and not (target_years & meta_years):
+        if phrase_score < 25:
+            return -1
+
+    score = phrase_score
+    if target_years & meta_years:
+        score += 100
+
+    # Decade wording without a precise target year may match any reviewed year
+    # in that decade.
+    if not target_years and (
+        "1970s" in target_cf or "السبعينات" in target_cf
+    ) and any(year.startswith("197") for year in meta_years):
+        score += 70
+
+    # Old Riyadh is a meaningful historical scene, not a generic city alias.
+    if (("old riyadh" in target_cf and "old riyadh" in metadata_cf)
+            or ("الرياض القديمة" in target_text and "الرياض القديمة" in metadata)):
+        score += 90
+
+    target_clues = legacy._visual_clues(targets, aliases)
+    meta_clues = legacy._visual_clues([metadata], aliases)
+    score += min(30, 6 * len(target_clues & meta_clues))
+
+    # Earlier writer targets are preferred when several reviewed rows are
+    # valid (e.g. 1975 before 1977 when both are explicitly requested).
+    for i, target in enumerate(targets):
+        years = _years(target)
+        if years and years & meta_years:
+            score += max(0, 12 - i)
+            break
+
+    return score if score > 0 else -1
+
+
+def reviewed_city_exact_match(photo, frame: dict, index_path,
+                              aliases: Iterable[str] = ()) -> bool:
+    source = legacy._source_name(photo)
+    row = next(
+        (r for r in legacy._read_visual_index(index_path)
+         if Path(r.get("filename", "")).name == source),
+        None,
+    )
+    return bool(row and _row_exact_score(row, frame, aliases) > 0)
+
+
 def reviewed_city_exact_rows(frame: dict, index_path,
                              aliases: Iterable[str] = ()) -> list[dict]:
-    """Return reviewed rows that match the frame beat, independent of fuzzy score."""
-    rows = []
-    for row in legacy._read_visual_index(index_path):
-        if reviewed_city_exact_match(
-            Path(row["filename"]), frame, index_path, aliases=aliases
-        ):
-            rows.append(row)
-    return rows
+    """Reviewed candidates sorted by exact visual relevance to one frame."""
+    scored = []
+    for order, row in enumerate(legacy._read_visual_index(index_path)):
+        score = _row_exact_score(row, frame, aliases)
+        if score > 0:
+            scored.append((score, -order, row))
+    scored.sort(key=lambda item: (item[0], item[1]), reverse=True)
+    return [row for _score, _order, row in scored]
 
 
 _GENERIC_SCENE_TERMS = (
@@ -91,6 +204,48 @@ def reviewed_city_fallback_rows(index_path,
     return out
 
 
+def plan_reviewed_exact_assignments(frames: Iterable[dict], index_path,
+                                    aliases: Iterable[str] = ()) -> dict[int, dict]:
+    """Assign distinct reviewed exact photos across the whole deck first."""
+    assignments: dict[int, dict] = {}
+    used: set[str] = set()
+    for idx, frame in enumerate(frames or []):
+        for row in reviewed_city_exact_rows(frame, index_path, aliases):
+            source = Path(row.get("filename", "")).name
+            if source in used:
+                continue
+            assignments[idx] = row
+            used.add(source)
+            break
+    return assignments
+
+
+def apply_riyadh_closing(brief: dict) -> dict:
+    """Lock the owner-approved Riyadh closing card and its skyline target."""
+    if not isinstance(brief, dict):
+        return brief
+    story = str(brief.get("story", "") or "")
+    if "الرياض" not in story or "عاصمة اقتصادية" not in story:
+        return brief
+    frames = list(brief.get("frames") or [])
+    if not frames:
+        return brief
+    last = frames[-1]
+    last.update({
+        "heading": "من بلدة مسوّرة إلى مدينة بهذا الحجم",
+        "text": (
+            "في 2024 سجّلت الرياض 225 مليار ريال في مبيعات نقاط البيع. "
+            "رقم يعكس حجم السوق والحركة الاقتصادية في مدينة كانت قبل نحو "
+            "قرن محصورة داخل سور من الطين."
+        ),
+        "punch": "هذا هو حجم التحول الذي عاشته الرياض.",
+        "subject_kind": "place_city",
+        "image_keywords": ["Riyadh skyline", "King Abdullah Financial District Riyadh"],
+        "image_keywords_ar": ["أفق الرياض", "الرياض"],
+    })
+    return brief
+
+
 def _row_terms(row: dict) -> list[str]:
     tags = [part.strip() for part in str(row.get("tags", "")).split(",")
             if part.strip()]
@@ -98,7 +253,7 @@ def _row_terms(row: dict) -> list[str]:
 
 
 def configure(story_bot_module):
-    """Install a city-only selector after ``story_focus.configure``."""
+    """Install the whole-deck city selector after ``story_focus.configure``."""
     sb = story_bot_module
     if getattr(sb, _CONFIGURED_ATTR, False):
         return sb
@@ -110,6 +265,9 @@ def configure(story_bot_module):
         "story": "",
         "frames": [],
         "aliases": [],
+        "frame_index": {},
+        "exact_assignments": {},
+        "fallback_needed": False,
         "attempted": set(),
         "photo_count": 0,
     }
@@ -130,30 +288,20 @@ def configure(story_bot_module):
         except Exception:
             return True
 
-    def reserved_for_other_frames(frame):
-        path = index_path()
-        if not path:
-            return set()
-        reserved = set()
-        for other in active["frames"]:
-            if other is frame:
-                continue
-            for row in reviewed_city_exact_rows(other, path, active["aliases"]):
-                reserved.add(Path(row["filename"]).name)
-        return reserved
-
-    def fetch_reviewed_row(row, out_path, seen, tried):
+    def fetch_reviewed_row(row, out_path, seen, tried=()):
         source = Path(row["filename"]).name
         terms = _row_terms(row)
         if not terms:
             return None
+        all_rows = legacy._read_visual_index(index_path())
+        excluded = list(dict.fromkeys(
+            list(tried or [])
+            + [Path(r["filename"]).name for r in all_rows
+               if Path(r["filename"]).name != source]
+        ))
         candidate, _credit = sb.fetch_local_photo(
             [], terms, out_path,
-            exclude=list(dict.fromkeys(list(tried) + [
-                Path(r["filename"]).name
-                for r in legacy._read_visual_index(index_path())
-                if Path(r["filename"]).name != source
-            ])),
+            exclude=excluded,
             respect_cooldown=False,
         )
         if not candidate or legacy._source_name(candidate) != source:
@@ -162,30 +310,15 @@ def configure(story_bot_module):
             return None
         return candidate
 
-    def exact_local(frame, out_path, seen, lib_exclude=()):
+    def generic_local(out_path, seen, lib_exclude=()):
         path = index_path()
         if not path:
             return None
-        excluded = {Path(str(v)).name for v in (lib_exclude or [])}
-        for row in reviewed_city_exact_rows(frame, path, active["aliases"]):
-            source = Path(row["filename"]).name
-            if source in excluded:
-                continue
-            candidate = fetch_reviewed_row(row, out_path, seen, excluded)
-            if candidate:
-                print(
-                    f"      city exact local v2: {source} "
-                    "(reviewed row selected directly; cooldown ignored)"
-                )
-                return candidate
-        return None
-
-    def generic_local(frame, out_path, seen, lib_exclude=()):
-        path = index_path()
-        if not path:
-            return None
-        excluded = {Path(str(v)).name for v in (lib_exclude or [])}
-        excluded |= reserved_for_other_frames(frame)
+        assigned = {
+            Path(row["filename"]).name
+            for row in active["exact_assignments"].values()
+        }
+        excluded = {Path(str(v)).name for v in (lib_exclude or [])} | assigned
         for row in reviewed_city_fallback_rows(path, active["aliases"]):
             source = Path(row["filename"]).name
             if source in excluded:
@@ -214,9 +347,6 @@ def configure(story_bot_module):
             "image_keywords_ar": queries[4:6],
             "lib_exclude": local_names,
         }
-        # The frame-specific story_focus gate is intentionally bypassed only
-        # for this explicit CITY_FALLBACK marker.  Raw vision still checks that
-        # the image is genuinely of the declared city and not another city.
         try:
             import news_bot as nb
             strict_gate = sb.photo_shows
@@ -232,24 +362,49 @@ def configure(story_bot_module):
         except Exception:
             return None
 
+    def frame_index_from_context(context: str):
+        frame = legacy._frame_from_context(active["frames"], context)
+        if frame is None:
+            return None
+        return active["frame_index"].get(id(frame))
+
     def focused_find_photo(spec, out_path, seen=(), context="",
                            allow_neutral=True, bank=None):
-        frame = legacy._frame_from_context(active["frames"], context)
-        if not active["story"] or frame is None:
+        idx = frame_index_from_context(context)
+        if not active["story"] or idx is None:
             return base_find_photo(
                 spec, out_path, seen, context,
                 allow_neutral=allow_neutral, bank=bank,
             )
 
-        key = id(frame)
-        if key in active["attempted"]:
+        if idx in active["attempted"]:
             return None
-        active["attempted"].add(key)
+        active["attempted"].add(idx)
 
-        excludes = (spec or {}).get("lib_exclude") or []
-        photo = exact_local(frame, out_path, seen, excludes)
-        if photo is None:
-            photo = generic_local(frame, out_path, seen, excludes)
+        assigned = active["exact_assignments"].get(idx)
+        if assigned is not None:
+            photo = fetch_reviewed_row(
+                assigned, out_path, seen, (spec or {}).get("lib_exclude") or []
+            )
+            if photo:
+                source = Path(assigned["filename"]).name
+                active["photo_count"] += 1
+                print(
+                    f"      city exact local v2: {source} "
+                    "(whole-deck reviewed assignment; cooldown ignored)"
+                )
+                return photo
+            return None
+
+        # This is the user's simple rule: do not broaden one frame merely
+        # because it lacks an exact image. Broaden only when the WHOLE deck
+        # planned fewer than four exact photos.
+        if not active["fallback_needed"] or active["photo_count"] >= 4:
+            return None
+
+        photo = generic_local(
+            out_path, seen, (spec or {}).get("lib_exclude") or []
+        )
         if photo is None:
             photo = web_fallback(out_path, seen)
         if photo is not None:
@@ -260,32 +415,74 @@ def configure(story_bot_module):
         previous = sb.SYSTEM_PROMPT
         sb.SYSTEM_PROMPT = previous + CITY_PROMPT
         try:
-            return base_research(story)
+            brief = base_research(story)
         finally:
             sb.SYSTEM_PROMPT = previous
+        return apply_riyadh_closing(brief)
 
     def focused_find_all_photos(brief):
         if not _is_city_deck(brief):
             return base_find_all_photos(brief)
 
+        apply_riyadh_closing(brief)
         previous = dict(active)
-        frames = list((brief or {}).get("frames") or [])
-        old_kinds = [frame.get("subject_kind") for frame in frames]
+        actual_frames = list((brief or {}).get("frames") or [])
+        source_frames = deepcopy(actual_frames)
+        aliases = legacy._unique(sb.story_aliases(str(brief.get("story", "") or "")))
+        path = index_path()
+        assignments = plan_reviewed_exact_assignments(source_frames, path, aliases)
+        required = min(4, len(actual_frames))
+
         active["story"] = str((brief or {}).get("story", "") or "").strip()
-        active["frames"] = frames
-        active["aliases"] = legacy._unique(sb.story_aliases(active["story"]))
+        active["frames"] = source_frames
+        active["aliases"] = aliases
+        active["frame_index"] = {id(frame): i for i, frame in enumerate(source_frames)}
+        active["exact_assignments"] = assignments
+        active["fallback_needed"] = len(assignments) < required
         active["attempted"] = set()
         active["photo_count"] = 0
 
-        # Critical #93 fix: one supporting company/product frame must never
-        # make Story Bot classify the entire Riyadh deck as a company story.
-        for frame in frames:
+        print(
+            f"    city visual plan: {len(assignments)} exact reviewed frame(s); "
+            + ("generic fallback enabled" if active["fallback_needed"]
+               else "four-photo target met — generic fallback disabled")
+        )
+
+        # Prevent generic Story Bot from rebuilding a story-wide fallback list
+        # from frames 1–2 after our city planner has deliberately decided that
+        # a missing exact frame should stay text-only.
+        old_kinds = [frame.get("subject_kind") for frame in actual_frames]
+        old_brief_keywords = brief.get("image_keywords", None)
+        old_brief_queries_ar = brief.get("image_queries_ar", None)
+        first_two_keywords = [
+            actual_frames[i].get("image_keywords", None)
+            for i in range(min(2, len(actual_frames)))
+        ]
+        for frame in actual_frames:
             frame["subject_kind"] = "place_city"
+        brief["image_keywords"] = []
+        brief["image_queries_ar"] = []
+        for i in range(min(2, len(actual_frames))):
+            actual_frames[i]["image_keywords"] = []
+
         try:
             return base_find_all_photos(brief)
         finally:
-            for frame, old_kind in zip(frames, old_kinds):
+            for frame, old_kind in zip(actual_frames, old_kinds):
                 frame["subject_kind"] = old_kind
+            if old_brief_keywords is None:
+                brief.pop("image_keywords", None)
+            else:
+                brief["image_keywords"] = old_brief_keywords
+            if old_brief_queries_ar is None:
+                brief.pop("image_queries_ar", None)
+            else:
+                brief["image_queries_ar"] = old_brief_queries_ar
+            for i, old in enumerate(first_two_keywords):
+                if old is None:
+                    actual_frames[i].pop("image_keywords", None)
+                else:
+                    actual_frames[i]["image_keywords"] = old
             active.clear()
             active.update(previous)
 
