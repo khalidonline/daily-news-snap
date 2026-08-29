@@ -79,9 +79,33 @@ class ReadyStoryPublishTests(unittest.TestCase):
             )
 
             rendered = Image.open(frame).convert("RGB")
-            # A dark contrast surface should now exist behind the pale logo in
-            # the first frame's visual area; the original beige card had none.
-            self.assertLess(sum(rendered.getpixel((830, 535))) / 3, 120)
+            # The panel itself must be dark while the pale mark remains light:
+            # this is the contrast pair that was missing in run #87.
+            panel_luma = sum(rendered.getpixel((710, 465))) / 3
+            mark_luma = sum(rendered.getpixel((830, 535))) / 3
+            self.assertLess(panel_luma, 120)
+            self.assertGreater(mark_luma, 150)
+            self.assertGreater(mark_luma - panel_luma, 60)
+
+    def test_saudi_coffee_logo_gets_readable_contrast(self):
+        logo = Path("images/logos/saudicoffee.com-current.png")
+        self.assertTrue(logo.exists(), "Saudi Coffee logo asset must exist")
+        with tempfile.TemporaryDirectory() as td:
+            frame = Path(td) / "frame.png"
+            Image.new("RGB", (1080, 1920), (238, 232, 227)).save(frame)
+
+            rsp.ensure_subject_logo_visible(
+                "قصة القهوة السعودية",
+                [frame],
+                coverage_fn=lambda story: ([], [logo], "PASS"),
+            )
+
+            rendered = Image.open(frame).convert("RGB")
+            panel = rendered.crop((700, 455, 960, 615))
+            luminance = [sum(px) / 3 for px in panel.getdata()]
+            self.assertLess(min(luminance), 120)
+            self.assertGreater(max(luminance), 150)
+            self.assertGreater(max(luminance) - min(luminance), 60)
 
 
 if __name__ == "__main__":
