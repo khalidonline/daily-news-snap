@@ -7,6 +7,7 @@ on:
       - "story_runtime.py"
       - "story_bot.py"
       - "story_focus.py"
+      - "city_visual_fallback.py"
       - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
       - "tests/test_ready_story_publish.py"
@@ -25,6 +26,7 @@ on:
       - "story_runtime.py"
       - "story_bot.py"
       - "story_focus.py"
+      - "city_visual_fallback.py"
       - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
       - "tests/test_ready_story_publish.py"
@@ -63,7 +65,7 @@ jobs:
       - name: City visual fallback regressions
         run: python -m unittest -v tests/test_city_visual_fallback.py
       - name: Compile guarded story entrypoint
-        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py preflight_stories.py image_precheck.py news_bot.py
+        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py city_visual_fallback.py preflight_stories.py image_precheck.py news_bot.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
       - name: Jack Bogle regression — require repaired source coverage
