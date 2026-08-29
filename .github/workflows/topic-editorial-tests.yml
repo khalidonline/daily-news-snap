@@ -12,6 +12,7 @@ on:
       - "tests/test_topic_editorial.py"
       - "tests/test_topic_snapchat.py"
       - "tests/test_topic_transport.py"
+      - "tests/test_topic_workflow_image_policy.py"
       - ".github/workflows/topic.yml"
       - ".github/workflows/topic-editorial-tests.yml"
   pull_request:
@@ -25,6 +26,7 @@ on:
       - "tests/test_topic_editorial.py"
       - "tests/test_topic_snapchat.py"
       - "tests/test_topic_transport.py"
+      - "tests/test_topic_workflow_image_policy.py"
       - ".github/workflows/topic.yml"
       - ".github/workflows/topic-editorial-tests.yml"
 
@@ -44,5 +46,5 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Run Saudi Snapchat topic regressions
         run: |
-          python -m unittest tests.test_topic_editorial tests.test_topic_snapchat tests.test_topic_transport -v
+          python -m unittest tests.test_topic_editorial tests.test_topic_snapchat tests.test_topic_transport tests.test_topic_workflow_image_policy -v
           python -m py_compile topic_editorial.py topic_snapchat.py topic_bot.py
