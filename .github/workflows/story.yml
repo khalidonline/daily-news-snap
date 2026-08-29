@@ -3,14 +3,21 @@ name: Story to Snapchat
 on:
   schedule:
     - cron: "0 11 * * *"       # 14:00 KSA daily
+  push:
+    paths:
+      - ".github/story-live-trigger"
   workflow_dispatch:
     inputs:
       story:
-        description: "القصة — اتركها فارغة لاختيار قصة من stories.txt"
+        description: "القصة — اتركها فارغة لاختيار قصة من READY_FOR_SNAP"
         type: string
         required: false
       dry_run:
         description: "Render only — don't publish"
+        type: boolean
+        default: false
+      post:
+        description: "Publish to Snapchat now"
         type: boolean
         default: false
 
@@ -24,10 +31,15 @@ concurrency:
 jobs:
   story:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The strict visual repairs live here while backlog work continues.
+          # Scheduled publishing must use the same authoritative repaired pool.
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -36,7 +48,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Build and post the story
+      - name: Build and publish one strict-ready story
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
@@ -44,7 +56,8 @@ jobs:
           POST_PROVIDER: "bundle"
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          POST_TO_SNAPCHAT: "0"
+          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+          POST_TO_SNAPCHAT: ${{ (github.event_name == 'schedule' || github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.post)) && '1' || '0' }}
           MONTHLY_POST_LIMIT: "145"
           STORY: ${{ inputs.story }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
@@ -60,7 +73,7 @@ jobs:
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
-        run: python story_runtime.py
+        run: python ready_story_publish.py
 
       - name: Keep the frames for review
         if: always()
