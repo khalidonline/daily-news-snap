@@ -1,0 +1,66 @@
+name: Story cost-control tests
+
+on:
+  push:
+    paths:
+      - "story_brief_store.py"
+      - "story_editorial_quality.py"
+      - "story_cost_guard.py"
+      - "story_editorial_runtime.py"
+      - "story_visual_state.py"
+      - "story_notification_state.py"
+      - "story_cost_report.py"
+      - "story_cost_pilot.py"
+      - "story_runtime.py"
+      - "story_bot.py"
+      - "story_focus.py"
+      - "ready_story_publish.py"
+      - "tests/test_story_brief_store.py"
+      - "tests/test_story_editorial_quality.py"
+      - "tests/test_story_cost_guard.py"
+      - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_visual_state.py"
+      - "tests/test_story_notification_state.py"
+      - "tests/test_story_cost_report.py"
+      - ".github/workflows/story.yml"
+      - ".github/workflows/story-cost-control-tests.yml"
+  pull_request:
+    paths:
+      - "story_brief_store.py"
+      - "story_editorial_quality.py"
+      - "story_cost_guard.py"
+      - "story_editorial_runtime.py"
+      - "story_visual_state.py"
+      - "story_notification_state.py"
+      - "story_cost_report.py"
+      - "story_cost_pilot.py"
+      - "story_runtime.py"
+      - "story_bot.py"
+      - "story_focus.py"
+      - "ready_story_publish.py"
+      - "tests/test_story_brief_store.py"
+      - "tests/test_story_editorial_quality.py"
+      - "tests/test_story_cost_guard.py"
+      - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_visual_state.py"
+      - "tests/test_story_notification_state.py"
+      - "tests/test_story_cost_report.py"
+      - ".github/workflows/story.yml"
+      - ".github/workflows/story-cost-control-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Story brief store
+        run: python -m unittest -v tests/test_story_brief_store.py
