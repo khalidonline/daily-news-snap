@@ -109,6 +109,48 @@ def persist_editorial_state(commit_fn=None):
             commit_fn(target, f"story editorial state: {target.name}")
 
 
+def resolve_visual_revision(
+    story,
+    *,
+    revision_fn=None,
+    state_dir_fn=None,
+):
+    """Resolve the exact revision directory written by the child renderer.
+
+    The child adds its filtered visual inventory to the editorial prompt before
+    hashing the revision. The publisher process does not own that filtered
+    prompt, so its independently computed revision can differ. Prefer the exact
+    path when it exists; otherwise discover the newest child-written state.json
+    under the same story root.
+    """
+    revision_fn = revision_fn or (lambda value: svs._effective_revision(sb, value))
+    state_dir_fn = state_dir_fn or svs.visual_revision_dir
+    revision = str(revision_fn(story))
+    path = Path(state_dir_fn(story, revision))
+    if path.exists():
+        return revision, path
+
+    candidates = []
+    parent = path.parent
+    if parent.exists():
+        for state_file in parent.glob("*/state.json"):
+            try:
+                stamp = state_file.stat().st_mtime_ns
+            except OSError:
+                continue
+            candidates.append((stamp, state_file.parent.name, state_file.parent))
+    if candidates:
+        _stamp, child_revision, child_path = max(
+            candidates, key=lambda item: (item[0], item[1])
+        )
+        print(
+            "    visual revision resolved from child state: "
+            f"{child_revision[:12]}"
+        )
+        return child_revision, child_path
+    return revision, path
+
+
 def persist_visual_revision(
     story,
     *,
@@ -116,12 +158,13 @@ def persist_visual_revision(
     state_dir_fn=None,
     commit_fn=None,
 ):
-    """Commit the revision-scoped visual state/assets after a successful build."""
-    revision_fn = revision_fn or (lambda value: svs._effective_revision(sb, value))
-    state_dir_fn = state_dir_fn or svs.visual_revision_dir
+    """Commit the exact revision-scoped visual state/assets written by the child."""
     commit_fn = commit_fn or sb.commit_and_push
-    revision = revision_fn(story)
-    path = Path(state_dir_fn(story, revision))
+    revision, path = resolve_visual_revision(
+        story,
+        revision_fn=revision_fn,
+        state_dir_fn=state_dir_fn,
+    )
     if path.exists():
         commit_fn(path, f"story visual state: {revision[:12]}")
     return path
@@ -313,7 +356,7 @@ def main():
     frames = build_story_without_posting(story)
     ensure_subject_logo_visible(story, frames)
 
-    revision = svs._effective_revision(sb, story)
+    revision, _visual_path = resolve_visual_revision(story)
     visual_state = svs.load_visual_state(story, revision)
     final_status = (
         "READY"
