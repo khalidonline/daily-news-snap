@@ -1,0 +1,113 @@
+{
+  "brief": {
+    "caption": "بدأت بـ300 بقرة في وسط الجزيرة… وكيف وصلت المراعي إلى ما هي عليه اليوم.",
+    "frames": [
+      {
+        "heading": "حليب يأتي من وراء البحر",
+        "image_keywords": [
+          "Riyadh 1970s",
+          "Saudi Arabia 1970s"
+        ],
+        "image_keywords_ar": [
+          "الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في سبعينات القرن الماضي لم تكن في المملكة تقريباً بنية لإنتاج الحليب الطازج وبيعه. الحليب يصل بودرة في علب مستوردة، لأن الطازج لا يصمد في حرارة الصيف بلا سلسلة تبريد من المزرعة إلى الرف. والفكرة نفسها بدت صعبة: بقرة حلوب وسط الصحراء. ولم يكن أحد يبني تلك السلسلة."
+      },
+      {
+        "heading": "البداية بقطيع صغير",
+        "image_keywords": [
+          "Almarai",
+          "Almarai headquarters"
+        ],
+        "image_keywords_ar": [
+          "المراعي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولأن أحداً لم يكن يبنيها، دخل الأمير سلطان بن محمد بن سعود الكبير هذا المجال. في 1 يوليو 1977 أسّس شركة المراعي مع شركاء أيرلنديين خبراء في الزراعة. البداية كانت 300 بقرة، وحليباً طازجاً ولبناً يُباع في السوق المحلي. لكن الأبقار لم تكن المشكلة."
+      },
+      {
+        "heading": "قرار جمع كل شيء",
+        "image_keywords": [
+          "Al Kharj",
+          "Almarai farm"
+        ],
+        "image_keywords_ar": [
+          "الخرج",
+          "المراعي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. مع بداية التسعينات كان الإنتاج موزعاً على عشر مزارع صغيرة متفرقة وخمسة مصانع. فقرّرت الشركة جمع كل شيء في مكان واحد: مصنع مركزي واحد، وأربع مزارع كبيرة في الخرج جنوب الرياض. القرار سهل على الورق، لكن تنفيذه يعني التخلي عمّا بنته."
+      },
+      {
+        "heading": "ثمن هدم ما بُني",
+        "image_keywords": [
+          "Almarai factory",
+          "Almarai production"
+        ],
+        "image_keywords_ar": [
+          "المراعي",
+          "إنتاج غذائي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولذلك جاء الثمن: أغلقت المراعي مصانعها الخمسة ومزارعها العشر التي أنشأتها خلال أكثر من عقد. وبنت بدلاً منها منشآت إنتاج ونقل مبرّد تحفظ الحليب طازجاً من الحظيرة إلى المتجر. سنوات من الإنفاق قبل أن يظهر أثر ذلك في الأرباح."
+      },
+      {
+        "heading": "من قطيع صغير إلى الأكبر",
+        "image_keywords": [
+          "Almarai fleet",
+          "Almarai trucks"
+        ],
+        "image_keywords_ar": [
+          "أسطول",
+          "المراعي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وحين ظهر الأثر، خرجت الشركة من الملكية الخاصة إلى السوق: في 2005 طرحت 30% من أسهمها في تداول. واليوم تذكر المراعي على موقعها أنها تنتج 1.5 مليار لتر حليب سنوياً من أكثر من 189 ألف بقرة، وأنها أكبر شركة ألبان متكاملة رأسياً في العالم. البداية كانت 300 بقرة."
+      },
+      {
+        "heading": "ما تغيّر ولا يعود",
+        "image_keywords": [
+          "Almarai products"
+        ],
+        "image_keywords_ar": [
+          "منتجات المراعي",
+          "المراعي"
+        ],
+        "punch": "الصحراء التي كانت تستورد حليبها صارت تنتجه بنفسها.",
+        "subject_kind": "company",
+        "text": "وهكذا صار الحليب الطازج في بيوت الخليج يخرج كل صباح من مزارع في وسط الجزيرة، لا من علب تصل من الخارج."
+      }
+    ],
+    "image_prompt": "A small desert farm in central Saudi Arabia at dawn in the 1970s: mud-brick outbuildings, a few dairy cows in a dusty pen, date palms, metal milk churns beside a dirt track, warm low morning light, wide shot, no people, no signage",
+    "image_queries": [
+      "Saudi desert farm 1970s",
+      "Al Kharj farmland aerial",
+      "old Riyadh dirt road 1970s"
+    ],
+    "image_queries_ar": [
+      "الخرج",
+      "الرياض"
+    ],
+    "sources": [
+      "المراعي",
+      "أرقام",
+      "Wikipedia",
+      "AGBI"
+    ],
+    "title": "مزرعة في الصحراء صارت الأكبر"
+  },
+  "input_tokens": 173776,
+  "message_id": "msg_011CeYZX3C3fWs9dpBjAnWN1",
+  "model": "claude-opus-5",
+  "output_tokens": 10653,
+  "prompt_hash": "586bc43764f00e691e4a79428f6eb7a3acc24c0f01b9dc817e4aed3ddcabba38",
+  "revision": "114f17062f5f46c36554631c9f87f1c82ffbce0ef80b2f1c5e2d697a496fb17f",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
