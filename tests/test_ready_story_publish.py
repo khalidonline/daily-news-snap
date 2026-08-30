@@ -1,6 +1,7 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from PIL import Image, ImageDraw
 
@@ -60,6 +61,34 @@ class ReadyStoryPublishTests(unittest.TestCase):
 
         self.assertEqual(calls, ["1.png", "2.png"])
 
+    def test_persist_visual_revision_commits_only_existing_state(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            revision_dir = root / "rev"
+            revision_dir.mkdir()
+            calls = []
+            path = rsp.persist_visual_revision(
+                "story",
+                revision_fn=lambda _story: "abc123",
+                state_dir_fn=lambda _story, _rev: revision_dir,
+                commit_fn=lambda target, message: calls.append((Path(target), message)),
+            )
+            self.assertEqual(revision_dir, path)
+            self.assertEqual(1, len(calls))
+            self.assertIn("abc123", calls[0][1])
+
+    def test_persist_visual_revision_does_not_commit_missing_state(self):
+        with tempfile.TemporaryDirectory() as td:
+            calls = []
+            path = rsp.persist_visual_revision(
+                "story",
+                revision_fn=lambda _story: "abc123",
+                state_dir_fn=lambda _story, _rev: Path(td) / "missing",
+                commit_fn=lambda target, message: calls.append((target, message)),
+            )
+            self.assertFalse(path.exists())
+            self.assertEqual([], calls)
+
     def test_ensure_subject_logo_visible_adds_contrast_backplate(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
@@ -79,8 +108,6 @@ class ReadyStoryPublishTests(unittest.TestCase):
             )
 
             rendered = Image.open(frame).convert("RGB")
-            # The panel itself must be dark while the pale mark remains light:
-            # this is the contrast pair that was missing in run #87.
             panel_luma = sum(rendered.getpixel((710, 465))) / 3
             mark_luma = sum(rendered.getpixel((830, 535))) / 3
             self.assertLess(panel_luma, 120)
