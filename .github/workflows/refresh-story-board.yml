@@ -19,42 +19,19 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Build current-runtime Story visual board
+      - name: Diagnose remaining one-visual repairs
         shell: bash
         run: |
-          mkdir -p out/story-board-refresh
-          PYTHONPATH=. python - <<'PY' | tee out/story-board-refresh/board.txt
+          PYTHONPATH=. python - <<'PY'
           import story_runtime as sr
-          import story_bot as sb
-
-          rows = []
-          for story in sb.load_stories():
+          targets = [
+              "لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير",
+              "لماذا صارت طوكيو أكبر مدينة في العالم؟",
+          ]
+          for story in targets:
               photos, logos, status = sr.coverage(story)
-              rows.append((story, len(photos), len(logos), status))
-
-          passed = [r for r in rows if r[3] == "PASS"]
-          unresolved = [r for r in rows if r[3] != "PASS"]
-          print(f"TOTAL={len(rows)}")
-          print(f"PASS={len(passed)}")
-          print(f"UNRESOLVED={len(unresolved)}")
-
-          print("\nNEAR-PASS QUEUE")
-          for story, photos, logos, status in sorted(unresolved, key=lambda r: (-r[1], r[0])):
-              if photos >= 2:
-                  print(f"{status} | {story} | visuals={photos} | optional_logos={logos}")
-
-          print("\nALL UNRESOLVED")
-          for story, photos, logos, status in sorted(unresolved, key=lambda r: (-r[1], r[0])):
-              print(f"{status} | {story} | visuals={photos} | optional_logos={logos}")
-
-          print("\nPASS STORIES")
-          for story, photos, logos, status in sorted(passed, key=lambda r: r[0]):
-              print(f"PASS | {story} | visuals={photos} | optional_logos={logos}")
+              print("STORY", story)
+              print("STATUS", status)
+              print("VISUALS", len(photos), [p.name for p in photos])
+              print("LOGOS", len(logos), [p.name for p in logos])
           PY
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: story-board-refresh-${{ github.run_id }}
-          path: out/story-board-refresh/board.txt
-          retention-days: 7
-          if-no-files-found: warn
