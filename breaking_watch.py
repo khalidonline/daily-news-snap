@@ -405,6 +405,40 @@ def _classifier_search_budget(fresh_titles):
     # second search only for fail-open cycles where the feed layer is blind.
     return min(1, WATCH_MAX_SEARCHES) if fresh_titles else WATCH_MAX_SEARCHES
 
+
+def _parse_classifier_json(text):
+    """Return the first valid JSON object in a classifier text response.
+
+    Claude is instructed to emit JSON only, but harmless wrappers such as
+    Markdown fences or a short preface should not turn one paid answer into a
+    second paid request. Keep malformed responses failing so the existing
+    transient-error retry path still applies when there is no usable object.
+    """
+    text = text.strip()
+    if not text:
+        raise json.JSONDecodeError("empty classifier response", text, 0)
+
+    try:
+        value = json.loads(text)
+    except json.JSONDecodeError:
+        value = None
+    if isinstance(value, dict):
+        return value
+
+    decoder = json.JSONDecoder()
+    for match in re.finditer(r"\{", text):
+        try:
+            value, _ = decoder.raw_decode(text[match.start():])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict):
+            return value
+
+    raise json.JSONDecodeError(
+        "no JSON object found in classifier response", text, 0
+    )
+
+
 def classify(now, fresh_titles=None):
     """One small-model call with tightly budgeted search. None on error —
     and None is treated as 'not breaking': a broken classifier must fail
@@ -454,8 +488,7 @@ def classify(now, fresh_titles=None):
                       json.dumps(usage, ensure_ascii=False, sort_keys=True))
             text = "".join(b.get("text", "") for b in data.get("content", [])
                            if b.get("type") == "text").strip()
-            start, end = text.find("{"), text.rfind("}")
-            return json.loads(text[start:end + 1])
+            return _parse_classifier_json(text)
         except Exception as exc:
             if attempt < 2:
                 wait = (15, 45)[attempt] + random.uniform(0, 10)
