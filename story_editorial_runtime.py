@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import json
 import os
 from typing import Any
 
@@ -68,6 +69,79 @@ def _record_result(sb: Any, reservation: scg.CallReservation, status: str) -> No
     )
 
 
+class _CapturedResponse:
+    """Proxy an HTTP 200 response while capturing Anthropic usage metadata."""
+
+    def __init__(self, raw: Any, sb: Any):
+        self._raw = raw
+        self._reader = raw
+        self._sb = sb
+
+    def __enter__(self):
+        enter = getattr(self._raw, "__enter__", None)
+        self._reader = enter() if callable(enter) else self._raw
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        exit_fn = getattr(self._raw, "__exit__", None)
+        if callable(exit_fn):
+            return exit_fn(exc_type, exc, tb)
+        close = getattr(self._raw, "close", None)
+        if callable(close):
+            close()
+        return False
+
+    def read(self, *args, **kwargs):
+        data = self._reader.read(*args, **kwargs)
+        try:
+            payload = json.loads(data)
+            usage = payload.get("usage") or {}
+            self._sb._LAST_EDITORIAL_USAGE = {
+                "message_id": payload.get("id"),
+                "input_tokens": int(usage.get("input_tokens") or 0),
+                "output_tokens": int(usage.get("output_tokens") or 0),
+            }
+        except (TypeError, ValueError, json.JSONDecodeError):
+            pass
+        return data
+
+    def __getattr__(self, name: str):
+        return getattr(self._reader, name)
+
+
+def _research_with_paid_response_ceiling(sb: Any, research_fn: Any, story: str):
+    """Allow at most one successful Messages HTTP response per revision.
+
+    Transport/HTTP failures that raise before a response is returned can still
+    retry inside the existing Story Bot. Once one HTTP response succeeds,
+    however, a pause-turn or truncation continuation would create another
+    separately billable Anthropic message and is blocked fail-closed.
+    """
+    urllib_module = getattr(sb, "urllib", None)
+    request_module = getattr(urllib_module, "request", None)
+    original_urlopen = getattr(request_module, "urlopen", None)
+    if not callable(original_urlopen):
+        return research_fn(story)
+
+    successful_responses = 0
+
+    def guarded_urlopen(*args, **kwargs):
+        nonlocal successful_responses
+        if successful_responses >= 1:
+            raise scg.EditorialSpendBlocked(
+                "editorial paid-response ceiling reached; explicit regeneration required"
+            )
+        response = original_urlopen(*args, **kwargs)
+        successful_responses += 1
+        return _CapturedResponse(response, sb)
+
+    request_module.urlopen = guarded_urlopen
+    try:
+        return research_fn(story)
+    finally:
+        request_module.urlopen = original_urlopen
+
+
 def configure(story_bot_module: Any) -> Any:
     """Wrap the already-focused research function with cache and spend policy."""
     sb = story_bot_module
@@ -102,7 +176,7 @@ def configure(story_bot_module: Any) -> Any:
         reservation = scg.reserve_editorial_call(story, revision, selected)
         sb._LAST_EDITORIAL_USAGE = {}
         try:
-            brief = original_research(story)
+            brief = _research_with_paid_response_ceiling(sb, original_research, story)
         except BaseException:
             _record_result(sb, reservation, "error")
             raise
