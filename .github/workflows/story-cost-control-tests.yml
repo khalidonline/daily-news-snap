@@ -23,6 +23,7 @@ on:
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
+      - "tests/test_ready_story_publish.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/story-cost-control-tests.yml"
   pull_request:
@@ -47,6 +48,7 @@ on:
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
+      - "tests/test_ready_story_publish.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/story-cost-control-tests.yml"
   workflow_dispatch:
@@ -78,3 +80,7 @@ jobs:
         run: python -m unittest -v tests/test_story_visual_state.py
       - name: Final notification dedupe
         run: python -m unittest -v tests/test_story_notification_state.py
+      - name: Publisher persistence and final-only notification
+        run: POST_TO_SNAPCHAT=0 python -m unittest -v tests/test_ready_story_publish.py
+      - name: Local story cost report
+        run: python -m unittest -v tests/test_story_cost_report.py
