@@ -89,6 +89,24 @@ class ReadyStoryPublishTests(unittest.TestCase):
             self.assertFalse(path.exists())
             self.assertEqual([], calls)
 
+    def test_persist_visual_revision_discovers_child_revision_when_parent_hash_differs(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "story-id"
+            child_revision = root / "child-revision"
+            child_revision.mkdir(parents=True)
+            (child_revision / "state.json").write_text("{}\n", encoding="utf-8")
+            calls = []
+
+            path = rsp.persist_visual_revision(
+                "story",
+                revision_fn=lambda _story: "parent-revision",
+                state_dir_fn=lambda _story, revision: root / revision,
+                commit_fn=lambda target, message: calls.append((Path(target), message)),
+            )
+
+            self.assertEqual(child_revision, path)
+            self.assertEqual([(child_revision, "story visual state: child-revisi")], calls)
+
     def test_child_render_suppresses_intermediate_telegram(self):
         fake_result = mock.Mock(returncode=1, stdout="", stderr="blocked")
         with mock.patch.object(rsp, "persist_editorial_state"):
