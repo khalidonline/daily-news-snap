@@ -2,9 +2,10 @@
 """Shared relevance policy for Story Bot runtime and audits.
 
 For a personal Snapchat story, the useful question is simple: do we have enough
-reviewed, relevant visuals to tell the story? A logo is optional, and a curated
-historical document/currency scan is a valid visual when it was selected from
-the reviewed local library for that story.
+reviewed, relevant source material to attempt the story? The rendered six-card
+deck is authoritative for publication quality. A logo is optional, and a
+curated historical document/currency scan is a valid visual when it was
+selected from the reviewed local library for that story.
 """
 
 from __future__ import annotations
@@ -90,11 +91,11 @@ def trusted_selected_local_visual(
 ) -> bool:
     """Trust a keyword-selected, reviewed local visual for a Story frame.
 
-    This is intentionally simple. The local selector has already matched the
-    frame's image keywords. If the source is curated/countable for this story,
-    do not make a second generic 'is this a photograph?' model veto it merely
-    because it is a banknote, document, receipt, advertisement or archive scan.
-    Explicit WEAK_GENERIC/WRONG_ENTITY verdicts still fail closed.
+    The local selector has already matched the frame's image keywords. If the
+    source is curated/countable for this story, do not make a second generic
+    "is this a photograph?" model veto it merely because it is a banknote,
+    document, receipt, advertisement or archive scan. Explicit weak/wrong
+    verdicts still fail closed.
     """
     source = _selected_local_source(selected_path)
     if not source:
@@ -103,7 +104,12 @@ def trusted_selected_local_visual(
 
 
 def runtime_status(photo_count: int, logo_count: int = 0) -> str:
-    """Personal Story gate: four reviewed relevant visuals; logo optional."""
+    """Source-material gate only; final rendered-frame quality is authoritative.
+
+    Four reviewed visuals are enough to attempt a six-card personal story. This
+    is deliberately not a publication quota or target: the renderer should use
+    every strong relevant visual it can find, including a fifth or sixth one.
+    """
     need_visuals = max(0, 4 - int(photo_count))
     if need_visuals == 0:
         return "PASS"

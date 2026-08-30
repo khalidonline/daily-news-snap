@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Hard post-render release gate for Story-to-Snapchat.
 
-This is a personal Snapchat story, not a corporate asset pipeline. The inventory
-gate asks only whether enough reviewed relevant visuals exist to attempt the
-story; logos are optional. The rendered deck is authoritative and may contain
-at most one genuinely text-only card.
+This is a personal Snapchat story, not a corporate asset pipeline. The source
+inventory gate only decides whether a story is worth attempting; it does not
+set a photo target or ceiling. The rendered deck is authoritative. Use every
+strong relevant visual available, require meaningful visuals on the opening
+and closing cards, and allow at most one genuine text-only middle card.
 """
 
 from __future__ import annotations
@@ -32,20 +33,17 @@ def _personal_resolve_story():
         photos, _logos, status = rsp.sr.coverage(story)
         if status != "PASS" or len(photos) < 4:
             raise SystemExit(
-                f"requested story is not READY_FOR_SNAP: {status}: {story}"
+                f"requested story is not READY_FOR_RENDER: {status}: {story}"
             )
         return story
     return rsp.sr.choose_runtime_story()
 
 
-# Keep the legacy publisher helpers, but replace its corporate-style inventory
-# assumptions for this guarded Story entrypoint only.
 rsp.collect_ready_stories = _personal_collect_ready_stories
 rsp._resolve_story = _personal_resolve_story
 
 
 def require_ready_for_publication(status: str, story: str) -> None:
-    """Fail closed unless the post-render deck is explicitly READY."""
     normalized = str(status or "").strip().upper()
     if normalized != "READY":
         raise SystemExit(
@@ -55,7 +53,6 @@ def require_ready_for_publication(status: str, story: str) -> None:
 
 
 def visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
-    """Report approved visual slots from persisted post-render state."""
     rows = (visual_state or {}).get("frames") or {}
     approved = []
     missing = []
@@ -75,12 +72,23 @@ def visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
 
 
 def visual_report_is_ready(report: dict) -> bool:
-    """A personal Story needs strong visual coverage, not six corporate assets."""
-    frame_count = int((report or {}).get("frame_count", 0) or 0)
-    approved = int((report or {}).get("approved_visual_count", 0) or 0)
-    missing = int((report or {}).get("missing_visual_count", frame_count) or 0)
-    required = min(4, frame_count)
-    return frame_count > 0 and approved >= required and missing <= 1
+    """Judge the actual deck, not an inventory quota.
+
+    The hook and payoff are critical: frame 1 and the final frame must have a
+    meaningful approved visual. Across the deck, at most one middle frame may
+    be text-only. There is no maximum photo count; six good visuals is ideal.
+    """
+    report = report or {}
+    frame_count = int(report.get("frame_count", 0) or 0)
+    approved_frames = {
+        int(frame_no) for frame_no in (report.get("approved_visual_frames") or [])
+    }
+    missing = int(report.get("missing_visual_count", frame_count) or 0)
+    if frame_count <= 0:
+        return False
+    if 1 not in approved_frames or frame_count not in approved_frames:
+        return False
+    return missing <= 1
 
 
 def print_visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
@@ -101,12 +109,12 @@ def main() -> None:
     if refresh_only:
         return
     if not ready:
-        raise SystemExit("READY_FOR_SNAP is empty")
+        raise SystemExit("READY_FOR_RENDER is empty")
 
     story = rsp._resolve_story()
     if not story:
-        raise SystemExit("no fresh READY_FOR_SNAP story available")
-    print(f"Selected READY_FOR_SNAP story: {story}")
+        raise SystemExit("no fresh READY_FOR_RENDER story available")
+    print(f"Selected READY_FOR_RENDER story: {story}")
 
     frames = rsp.build_story_without_posting(story)
 

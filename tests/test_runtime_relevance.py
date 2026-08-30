@@ -53,7 +53,9 @@ class RuntimeRelevanceTests(unittest.TestCase):
         self.assertTrue(asset_countable("rt-shared.jpg", "Story A", ledger))
         self.assertFalse(asset_countable("rt-shared.jpg", "Story B", ledger))
 
-    def test_personal_story_gate_requires_visuals_not_a_logo(self):
+    def test_personal_story_source_gate_allows_render_with_four_visuals_and_no_logo(self):
+        self.assertEqual(runtime_status(6, 0), "PASS")
+        self.assertEqual(runtime_status(5, 0), "PASS")
         self.assertEqual(runtime_status(4, 0), "PASS")
         self.assertEqual(runtime_status(4, 1), "PASS")
         self.assertEqual(runtime_status(3, 0), "NEEDS 1 MORE VISUAL")

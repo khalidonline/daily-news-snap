@@ -33,7 +33,6 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         return path
 
     def test_reviewed_banknote_selected_from_local_library_is_a_valid_visual(self):
-        self.assertTrue(hasattr(rr, "trusted_selected_local_visual"))
         self.assertTrue(rr.trusted_selected_local_visual(
             self._selected_local(),
             "قصة تأسيس مؤسسة النقد ساما",
@@ -41,51 +40,85 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         ))
 
     def test_wrong_entity_document_is_still_rejected(self):
-        self.assertTrue(hasattr(rr, "trusted_selected_local_visual"))
         self.assertFalse(rr.trusted_selected_local_visual(
             self._selected_local(),
             "قصة تأسيس مؤسسة النقد ساما",
             self._ledger(rr.WRONG_ENTITY),
         ))
 
-    def test_logo_is_optional_for_ready_pool(self):
+    def test_logo_is_optional_for_render_pool(self):
         ready = rsp.collect_ready_stories(
             ["personal-story"],
             coverage_fn=lambda _story: (list(range(4)), [], "PASS"),
         )
         self.assertEqual(ready, ["personal-story"])
 
-    def test_one_text_only_card_can_still_be_ready(self):
+    def test_three_visuals_do_not_enter_render_pool(self):
+        ready = rsp.collect_ready_stories(
+            ["personal-story"],
+            coverage_fn=lambda _story: (list(range(3)), [], "PASS"),
+        )
+        self.assertEqual(ready, [])
+
+    def test_all_six_visual_frames_are_ready_and_not_capped(self):
         state = {"frames": {
-            "1": {"status": "PASS"},
-            "2": {"status": "PASS"},
-            "3": {"status": "PASS"},
-            "4": {"status": "PASS"},
-            "5": {"status": "PASS"},
-            "6": {"status": "FAIL"},
+            str(i): {"status": "PASS"} for i in range(1, 7)
         }}
         report = gsp.visual_accounting(state, 6)
-        self.assertTrue(hasattr(gsp, "visual_report_is_ready"))
+        self.assertEqual(report["approved_visual_count"], 6)
         self.assertTrue(gsp.visual_report_is_ready(report))
+
+    def test_middle_text_only_card_can_still_be_ready(self):
+        state = {"frames": {
+            "1": {"status": "PASS"}, "2": {"status": "PASS"},
+            "3": {"status": "FAIL"}, "4": {"status": "PASS"},
+            "5": {"status": "PASS"}, "6": {"status": "PASS"},
+        }}
+        self.assertTrue(gsp.visual_report_is_ready(gsp.visual_accounting(state, 6)))
+
+    def test_frame_one_must_have_a_meaningful_visual(self):
+        state = {"frames": {
+            "1": {"status": "FAIL"}, "2": {"status": "PASS"},
+            "3": {"status": "PASS"}, "4": {"status": "PASS"},
+            "5": {"status": "PASS"}, "6": {"status": "PASS"},
+        }}
+        self.assertFalse(gsp.visual_report_is_ready(gsp.visual_accounting(state, 6)))
+
+    def test_frame_six_must_have_a_meaningful_visual(self):
+        state = {"frames": {
+            "1": {"status": "PASS"}, "2": {"status": "PASS"},
+            "3": {"status": "PASS"}, "4": {"status": "PASS"},
+            "5": {"status": "PASS"}, "6": {"status": "FAIL"},
+        }}
+        self.assertFalse(gsp.visual_report_is_ready(gsp.visual_accounting(state, 6)))
 
     def test_two_text_only_cards_are_not_ready(self):
         state = {"frames": {
-            "1": {"status": "PASS"},
-            "2": {"status": "PASS"},
-            "3": {"status": "PASS"},
-            "4": {"status": "PASS"},
-            "5": {"status": "FAIL"},
-            "6": {"status": "FAIL"},
+            "1": {"status": "PASS"}, "2": {"status": "PASS"},
+            "3": {"status": "PASS"}, "4": {"status": "FAIL"},
+            "5": {"status": "FAIL"}, "6": {"status": "PASS"},
         }}
-        report = gsp.visual_accounting(state, 6)
-        self.assertTrue(hasattr(gsp, "visual_report_is_ready"))
-        self.assertFalse(gsp.visual_report_is_ready(report))
+        self.assertFalse(gsp.visual_report_is_ready(gsp.visual_accounting(state, 6)))
 
-    def test_pre_render_visual_coverage_rejects_two_or_more_empty_slots(self):
+    def test_pre_render_visual_gate_requires_open_and_close_when_slots_are_known(self):
         import story_runtime as sr
-        self.assertTrue(hasattr(sr, "personal_visual_slots_ready"))
-        self.assertTrue(sr.personal_visual_slots_ready(["1", "2", "3", "4", "5", None]))
-        self.assertFalse(sr.personal_visual_slots_ready(["1", "2", "3", "4", None, None]))
+        self.assertTrue(sr.personal_visual_slots_ready(["1", "2", "3", "4", "5", "6"]))
+        self.assertTrue(sr.personal_visual_slots_ready(["1", "2", None, "4", "5", "6"]))
+        self.assertFalse(sr.personal_visual_slots_ready([None, "2", "3", "4", "5", "6"]))
+        self.assertFalse(sr.personal_visual_slots_ready(["1", "2", "3", "4", "5", None]))
+        self.assertFalse(sr.personal_visual_slots_ready(["1", "2", None, "4", None, "6"]))
+
+    def test_personal_story_does_not_use_logo_as_visual_fallback(self):
+        import story_runtime as sr
+        self.assertEqual(sr.sb.LOGO_MAX_FRAMES, 0)
+
+    def test_sama_catalog_has_at_least_five_real_visuals(self):
+        import story_runtime as sr
+        photos, _logos = sr.approved_runtime_visuals("قصة تأسيس مؤسسة النقد ساما")
+        names = {Path(p).name for p in photos}
+        self.assertGreaterEqual(len(names), 5)
+        self.assertIn("first-hajj-receipt.png", names)
+        self.assertIn("silver-riyal.png", names)
 
 
 if __name__ == "__main__":
