@@ -31,6 +31,19 @@ from runtime_relevance import (
 
 story_focus.configure(sb)
 
+PERSONAL_SNAP_PROMPT = """
+
+قاعدة سناب شخصي — البساطة أهم من أسلوب التقارير:
+- هذا سناب شخصي لجمهور يتابع قصة ممتعة، وليس تقرير شركة أو عرضاً تنفيذياً.
+- اجعل نص كل لقطة قصيراً وسريع القراءة: فكرة واحدة واضحة، بلا حشو ولا لغة مؤسسية.
+- الصورة هي جزء من السرد، وليست زينة. اختر شيئاً يراه القارئ ويفهم منه المرحلة فوراً.
+- الصورة الصحيحة قد تكون صورة فوتوغرافية، وثيقة أصلية، ورقة نقدية، إيصالاً، إعلاناً قديماً، خريطة تاريخية أو مسحاً أرشيفياً إذا كان هذا الشيء نفسه جزءاً من القصة.
+- لا تستخدم شعاراً لمجرد ملء الفراغ. الشعار اختياري ويظهر عند الحاجة فقط.
+- إذا لم تجد صورة مناسبة فعلاً، لا تختلق صلة ضعيفة. لقطة نصية واحدة مقبولة كحد أقصى في القصة كلها.
+"""
+if "قاعدة سناب شخصي" not in sb.SYSTEM_PROMPT:
+    sb.SYSTEM_PROMPT += PERSONAL_SNAP_PROMPT
+
 # The reviewed local library is already selected by the frame's image keywords.
 # For Story-to-Snapchat, trust that curation instead of making a generic vision
 # model veto a banknote/document merely because it is not a conventional photo.
@@ -62,6 +75,40 @@ def _editorial_prompt_for_revision():
 sb.editorial_prompt_for_revision = _editorial_prompt_for_revision
 story_editorial_runtime.configure(sb)
 city_visual_v3.configure(sb)
+
+
+def personal_visual_slots_ready(photos) -> bool:
+    """A six-card personal Story may have at most one genuinely empty visual slot."""
+    values = list(photos or [])
+    if not values:
+        return False
+    return sum(1 for photo in values if photo is None) <= 1
+
+
+# Do not let typographic numbers/dates hide a mostly empty deck. The legacy
+# renderer may style them nicely, but they are still not photos/documents.
+_personal_find_all_photos = sb.find_all_photos
+
+
+def _visual_first_find_all_photos(brief):
+    photos = _personal_find_all_photos(brief)
+    if photos is None:
+        return None
+    if not personal_visual_slots_ready(photos):
+        missing = [i for i, photo in enumerate(photos, 1) if photo is None]
+        sb._LAST_SKIP = (
+            "personal Story visual coverage: missing real visuals on frames "
+            + ", ".join(str(i) for i in missing)
+        )
+        print(
+            "  ! personal Story visual gate: more than one frame has no real "
+            "visual — skipping rather than shipping a text-heavy deck"
+        )
+        return None
+    return photos
+
+
+sb.find_all_photos = _visual_first_find_all_photos
 story_visual_state.configure(sb)
 
 
