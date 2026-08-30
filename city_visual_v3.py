@@ -41,10 +41,20 @@ apply_riyadh_closing = v2.apply_riyadh_closing
 
 _KNOWN_HISTORICAL_ERA_MISMATCHES = {"old-riyadh-souq.jpg"}
 
+_PINNED_RIYADH_MURABBA = {
+    "filename": "Murabba Palace.jpg",
+    "commons_file": "Murabba Palace.jpg",
+    "credit": "saudipics / Wikimedia Commons / CC BY-SA 4.0",
+}
 _PINNED_RIYADH_METRO = {
     "filename": "KAFD Station - Riyadh Metro.jpg",
     "commons_file": "KAFD Station - Riyadh Metro.jpg",
     "credit": "Ali Lajami / Wikimedia Commons / CC BY 2.0",
+}
+_PINNED_RIYADH_METRO_ALTERNATE = {
+    "filename": "KAFD Metro Station Riyadh Saudi Arabia 019.jpg",
+    "commons_file": "KAFD Metro Station Riyadh Saudi Arabia 019.jpg",
+    "credit": "Kolaiel / Wikimedia Commons / CC0 1.0",
 }
 _PINNED_RIYADH_GROWTH = {
     "filename": "Riyadh aerial helicam 2013.jpg",
@@ -103,25 +113,38 @@ def city_frame_deserves_targeted_search_after_minimum(
     return any(_norm(phrase) in text for phrase in phrases)
 
 
-def pinned_riyadh_visual(frame: dict):
-    """Return deterministic Commons assets for Riyadh's final visual beats."""
+def pinned_riyadh_visuals(frame: dict) -> list[dict]:
+    """Return ordered deterministic Commons candidates for key Riyadh beats."""
     if not isinstance(frame, dict):
-        return None
+        return []
     targets = list(frame.get("image_keywords") or [])
     targets += list(frame.get("image_keywords_ar") or [])
     target_text = _norm(" ".join(str(term) for term in targets if term))
     body = str(frame.get("text", "") or "")
     heading = str(frame.get("heading", "") or "")
-    whole = _norm(" ".join([target_text, body, heading]))
+    raw = " ".join([target_text, body, heading])
+    whole = _norm(raw)
+    is_riyadh = "riyadh" in whole or "الرياض" in raw
 
-    if ("metro" in whole or "مترو" in whole) and ("riyadh" in whole or "الرياض" in whole):
-        return dict(_PINNED_RIYADH_METRO)
+    if is_riyadh and (
+        "قصر المربع" in body
+        or "قصر المربع" in heading
+        or "murabba palace" in whole
+        or "al murabba" in whole
+    ):
+        return [dict(_PINNED_RIYADH_MURABBA)]
+
+    if is_riyadh and ("metro" in whole or "مترو" in raw):
+        return [
+            dict(_PINNED_RIYADH_METRO),
+            dict(_PINNED_RIYADH_METRO_ALTERNATE),
+        ]
 
     approved_close = (
         "225" in body and "نقاط البيع" in body
     ) or "من بلدة مسو رة إلى مدينة بهذا الحجم" in _norm(heading)
-    if approved_close and ("riyadh" in whole or "الرياض" in whole):
-        return dict(_PINNED_RIYADH_SKYLINE)
+    if approved_close and is_riyadh:
+        return [dict(_PINNED_RIYADH_SKYLINE)]
 
     growth_markers = (
         "تعداد السعودية",
@@ -131,12 +154,15 @@ def pinned_riyadh_visual(frame: dict):
         "حجم لم تعرفه",
         "عدد سكانها",
     )
-    if (
-        ("riyadh" in whole or "الرياض" in whole)
-        and any(marker in body or marker in heading for marker in growth_markers)
-    ):
-        return dict(_PINNED_RIYADH_GROWTH)
-    return None
+    if is_riyadh and any(marker in body or marker in heading for marker in growth_markers):
+        return [dict(_PINNED_RIYADH_GROWTH)]
+    return []
+
+
+def pinned_riyadh_visual(frame: dict):
+    """Backward-compatible first-choice Riyadh pin."""
+    candidates = pinned_riyadh_visuals(frame)
+    return candidates[0] if candidates else None
 
 
 def _meaningful_overlap(targets: list[str], metadata: str,
@@ -274,6 +300,7 @@ def _download_pinned_visual(asset: dict, out_path, sb, seen=()):
         try:
             digest = sb._photo_digest(tmp)
             if any(sb.same_picture(digest, prior) for prior in seen):
+                print(f"      pinned Riyadh visual skipped as previously rejected: {asset['filename']}")
                 tmp.unlink(missing_ok=True)
                 return None
         except Exception:
@@ -302,12 +329,17 @@ def configure(story_bot_module):
     ):
         frame = spec if isinstance(spec, dict) else {}
         if str(frame.get("subject_kind", "")).strip() == "place_city":
-            pinned = pinned_riyadh_visual(frame)
-            if pinned is not None:
-                # Fail closed. A pinned Riyadh beat may become text-only if its
-                # exact file is unavailable, but it may never drift to another
-                # city or an unrelated local photo.
-                return _download_pinned_visual(pinned, out_path, sb, seen)
+            pinned = pinned_riyadh_visuals(frame)
+            if pinned:
+                # Fail closed. A pinned Riyadh beat may become text-only if all
+                # exact files are unavailable, but it may never drift to another
+                # city or an unrelated local photo. Human repair can reject the
+                # first pin through ``seen`` and advance to the next exact pin.
+                for candidate in pinned:
+                    photo = _download_pinned_visual(candidate, out_path, sb, seen)
+                    if photo is not None:
+                        return photo
+                return None
 
         photo = city_find_photo(
             spec, out_path, seen, context,
