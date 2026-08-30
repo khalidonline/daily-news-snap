@@ -1,0 +1,95 @@
+name: Apply AI image source fix once
+
+on:
+  push:
+    branches:
+      - fix/hide-ai-image-source
+    paths:
+      - ".github/workflows/apply-ai-image-source-fix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/hide-ai-image-source
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Apply minimal attribution changes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_exact(path, old, new, expected=1):
+              p = Path(path)
+              text = p.read_text(encoding="utf-8")
+              count = text.count(old)
+              if count != expected:
+                  raise SystemExit(f"{path}: expected {expected} matches, found {count}")
+              p.write_text(text.replace(old, new), encoding="utf-8")
+
+          news_old = '''    # a generated image must always be labelled, whatever was passed in
+              if photo_path and Path(str(photo_path) + ".generated").exists():
+                  photo_credit = GENERATED_CREDIT
+          '''
+          news_new = '''    # AI-generated imagery has no external photo source to attribute.
+              if photo_path and Path(str(photo_path) + ".generated").exists():
+                  photo_credit = None
+          '''
+          replace_exact("news_bot.py", news_old, news_new, expected=2)
+
+          topic_old = '''def _creditless_renderer(renderer, generated_credit: str | None = None):
+              """Hide ordinary photographer/source credits while retaining AI disclosure."""
+              def wrapped(brief, out_path, photo_path=None, photo_credit=None):
+                  visible_credit = None
+                  if photo_path and generated_credit \\
+                          and Path(str(photo_path) + ".generated").exists():
+                      visible_credit = generated_credit
+                  return renderer(brief, out_path, photo_path, visible_credit)
+              return wrapped
+          '''
+          topic_new = '''def _creditless_renderer(renderer, generated_credit: str | None = None):
+              """Hide photographer/source credits, including for AI-generated imagery."""
+              def wrapped(brief, out_path, photo_path=None, photo_credit=None):
+                  return renderer(brief, out_path, photo_path, None)
+              return wrapped
+          '''
+          replace_exact("topic_snapchat.py", topic_old, topic_new)
+
+          story_old = '''        photo = photos[n - 1]
+                  if photo and Path(str(photo) + ".generated").exists():
+                      # rule 2: a generated image is never unlabelled
+                      foot = f"{foot} • {GENERATED_CREDIT}" if foot else GENERATED_CREDIT
+          '''
+          story_new = '''        photo = photos[n - 1]
+                  # Generated imagery has no photo source label; editorial sources
+                  # remain on the closing frame exactly as they do for other frames.
+          '''
+          replace_exact("story_bot.py", story_old, story_new)
+          PY
+
+      - name: Verify AI image attribution regression
+        run: |
+          python -m unittest -v tests/test_runtime_relevance.py tests/test_ai_image_attribution.py
+          python -m py_compile news_bot.py topic_snapchat.py story_bot.py
+
+      - name: Commit verified fix and remove one-shot workflow
+        run: |
+          rm .github/workflows/apply-ai-image-source-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add news_bot.py topic_snapchat.py story_bot.py .github/workflows/apply-ai-image-source-fix.yml
+          git commit -m "fix: hide source labels for AI-generated images"
+          git push origin HEAD:fix/hide-ai-image-source
