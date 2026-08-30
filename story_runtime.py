@@ -20,14 +20,28 @@ import image_precheck as ipc
 import news_bot as nb
 import story_bot as sb
 import story_focus
+import story_editorial_runtime
 import city_visual_v3
 from runtime_relevance import asset_countable, runtime_pass, runtime_status
 
 # Story to Snapchat always enters through this guarded runtime. Apply the
-# editorial subject lock first, then the city-only selector. Company/person
-# stories keep the generic image ladder; city stories use exact reviewed local
-# assets first and the simple city fallback only when needed.
+# editorial subject lock first, then cost-controlled editorial caching, then
+# the city-only selector. The revision prompt includes the same reviewed local
+# visual inventory that Story Focus appends during the paid research call.
 story_focus.configure(sb)
+
+
+def _editorial_prompt_for_revision():
+    inventory = ""
+    try:
+        inventory = story_focus.runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
+    except Exception:
+        inventory = ""
+    return sb.SYSTEM_PROMPT + inventory
+
+
+sb.editorial_prompt_for_revision = _editorial_prompt_for_revision
+story_editorial_runtime.configure(sb)
 city_visual_v3.configure(sb)
 
 
