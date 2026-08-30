@@ -98,13 +98,9 @@ def _creditless_pair(fetcher, provider: str):
 
 
 def _creditless_renderer(renderer, generated_credit: str | None = None):
-    """Hide ordinary photographer/source credits while retaining AI disclosure."""
+    """Hide photographer/source credits, including for AI-generated imagery."""
     def wrapped(brief, out_path, photo_path=None, photo_credit=None):
-        visible_credit = None
-        if photo_path and generated_credit \
-                and Path(str(photo_path) + ".generated").exists():
-            visible_credit = generated_credit
-        return renderer(brief, out_path, photo_path, visible_credit)
+        return renderer(brief, out_path, photo_path, None)
     return wrapped
 
 

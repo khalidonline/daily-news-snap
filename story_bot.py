@@ -1492,9 +1492,8 @@ def build_frames(brief, stamp, photos):
         # line — a frame that is entirely red emphasises nothing.
         foot = (f"المصدر: {sources}" if sources else None) if last else None
         photo = photos[n - 1]
-        if photo and Path(str(photo) + ".generated").exists():
-            # rule 2: a generated image is never unlabelled
-            foot = f"{foot} • {GENERATED_CREDIT}" if foot else GENERATED_CREDIT
+        # Generated imagery has no photo source label; editorial sources
+        # remain on the closing frame exactly as they do for other frames.
         paths.append(render_frame(
             OUT_DIR / f"{stamp}-story-{n:02d}.png", BRAND,
             f"{n} / {total}",
