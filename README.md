@@ -59,6 +59,49 @@ you're happy, and from then on it runs on its own at 06:30 UTC daily.
 
 ---
 
+## Story-to-Snapchat cost-control operation
+
+The long-form Story workflow uses a stricter cost model than the daily-news bot.
+Editorial generation is revision-scoped and fail-closed: a normal revision may reserve
+at most one paid editorial model call. An approved brief is cached only after the
+deterministic editorial-quality gate passes.
+
+GitHub **Story to Snapchat** dispatch exposes three operation modes:
+
+- `auto` — reuse an `EDITORIAL_LOCKED` cache when present; otherwise allow the one
+  guarded editorial call for that revision.
+- `visual_only` — require a locked cached brief and make zero editorial-model calls;
+  approved visual slots are reused and only failed slots reopen the visual ladder.
+- `regenerate_editorial` — explicit paid regeneration only. Supply a new
+  `regeneration_nonce`; reusing the same nonce is idempotent and does not buy the
+  revision twice.
+
+Keep `post=false` / `POST_TO_SNAPCHAT=0` during verification. The child renderer also
+suppresses intermediate Telegram albums; only a final `READY` or genuine `REVIEW`
+candidate is eligible, and unchanged deck hashes are deduplicated.
+
+Local reporting is read-only and makes no API calls:
+
+```bash
+python story_cost_report.py --last 10
+```
+
+The report includes paid editorial calls, cache hits, visual-only runs, blocked second
+calls, estimated cost when token prices are configured, and final READY/REVIEW/BLOCKED
+states.
+
+The safe 10-category control-plane proof also uses no external APIs and never posts:
+
+```bash
+POST_TO_SNAPCHAT=0 python story_cost_pilot.py --output /tmp/story-cost-pilot.json
+```
+
+This pilot proves call/cache mechanics only; it deliberately does **not** claim that its
+fixture stories have been evaluated for publication quality. Run a paid editorial pilot
+only after reviewing the expected budget.
+
+---
+
 ## Tuning
 
 | Env var | Default | What it does |
