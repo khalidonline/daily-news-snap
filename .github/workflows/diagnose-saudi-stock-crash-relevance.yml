@@ -6,20 +6,34 @@ on:
       - fix/saudi-stock-crash-relevance
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   diagnose:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: fix/saudi-stock-crash-relevance
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Print match evidence and reject BlackBerry
+      - name: Apply minimal matcher fix
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('story_focus.py')
+          text = path.read_text(encoding='utf-8')
+          old = 'words |= {w for w in re.split(r"[\\s,]+", phrase) if len(w) > 2}'
+          new = 'words |= {w for w in re.split(r"[\\s,]+", phrase) if len(w) > 2 and not w.isdigit()}'
+          if old not in text:
+              raise SystemExit('matcher line not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Verify stock crash no longer claims BlackBerry
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -29,15 +43,35 @@ jobs:
 
           story = "قصة انهيار سوق الأسهم السعودية 2006"
           aliases = [a for a in sb.story_aliases(story) if a]
-          persons = sb._STORY_PERSONS.get(story) or []
           print("ALIASES", aliases)
+          matched = []
           for entry in nb.load_local_images():
               name = Path(entry["path"]).name
               if sr._matches_story(entry, story):
+                  matched.append(name)
                   print("MATCH", name, entry.get("tags", []))
           photos, logos, status = sr.coverage(story)
           names = [p.name for p in photos]
           print("COVERAGE", status, len(photos), names)
-          if "targeted-blackberry-8700c-7230.jpg" in names:
-              raise SystemExit("irrelevant BlackBerry asset matched Saudi stock crash story")
+          if "targeted-blackberry-8700c-7230.jpg" in matched or "targeted-blackberry-8700c-7230.jpg" in names:
+              raise SystemExit("BlackBerry relevance leak persists")
+          if "tasi-crash-2006.jpg" not in matched or "rt-saudi-stock-market-crash-1.jpg" not in matched:
+              raise SystemExit("legitimate stock-crash assets stopped matching")
           PY
+      - name: Matcher regression checks
+        run: |
+          python - <<'PY'
+          import story_focus
+          assert story_focus.catalog_tags_match_aliases(['Riyadh skyline'], ['Riyadh'])
+          assert story_focus.catalog_tags_match_aliases(['saudi stock market crash 2006'], ['Saudi stock market crash 2006'])
+          assert not story_focus.catalog_tags_match_aliases(['2006'], ['Saudi stock market crash 2006'])
+          assert story_focus.catalog_tags_match_aliases(['BlackBerry 8700c'], ['BlackBerry'])
+          print('matcher regressions PASS')
+          PY
+      - name: Commit matcher fix
+        run: |
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add story_focus.py
+          git commit -m "fix: ignore year-only visual alias matches"
+          git push origin HEAD:fix/saudi-stock-crash-relevance
