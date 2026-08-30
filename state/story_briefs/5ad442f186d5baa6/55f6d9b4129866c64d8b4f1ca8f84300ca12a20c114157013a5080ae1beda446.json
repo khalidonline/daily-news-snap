@@ -1,0 +1,113 @@
+{
+  "brief": {
+    "caption": "بدأ يحمل أغراض الناس بأجر، وانتهى ببنك تجاوزت أصوله تريليون ريال — ثم تنازل عن نصيبه.",
+    "frames": [
+      {
+        "heading": "بلد بلا بنوك",
+        "image_keywords": [
+          "Mecca 1940s",
+          "Buraydah 1950s"
+        ],
+        "image_keywords_ar": [
+          "مكة القديمة",
+          "بريدة قديماً"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في ثلاثينات القرن الماضي، الأسر في منطقة القصيم كانت تعيش على الكفاف، والأطفال يعملون قبل سن العاشرة. النقود تُحفظ في الصناديق لا في حسابات. والحاج القادم إلى مكة بعملة غريبة كان يصرفها عند رجل يجلس في الشارع. لا أحد كان يفكر في بنك."
+      },
+      {
+        "heading": "الطفل الذي حمل أغراض الناس",
+        "image_keywords": [
+          "Sulaiman Al Rajhi",
+          "Saleh Al Rajhi"
+        ],
+        "image_keywords_ar": [
+          "سليمان الراجحي"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "وفي ذلك الزمن، كان طفل اسمه سليمان الراجحي يحمل أغراض الناس في السوق بأجر، وهو في التاسعة. لم يدخل مدرسة. وحين كبر عمل مع أخيه الأكبر صالح في صرف العملات للحجاج، يحمل الطرود على ظهره ويمشي أكثر من عشرة كيلومترات ليوفّر أجرة النقل. ومن هناك رأى أن العملة نفسها تجارة."
+      },
+      {
+        "heading": "من محل صرافة إلى فكرة بنك",
+        "image_keywords": [
+          "Al Rajhi Bank 1985",
+          "Al Rajhi Bank"
+        ],
+        "image_keywords_ar": [
+          "مصرف الراجحي",
+          "صرافة"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. سنة 1957 فتح مع إخوته مركز صرافة، وأول فرع كان في حي الديرة بالرياض. وفي 1978 جُمعت مؤسسات العائلة تحت مظلة واحدة للتجارة والصرافة. لكن ما كان يريده أكبر من محل: مصرف يعمل بأحكام الشريعة، ولم يكن في المملكة مصرف كهذا."
+      },
+      {
+        "heading": "ثلاثون سنة حتى صار مصرفاً",
+        "image_keywords": [
+          "Al Rajhi Bank 1996",
+          "Al Rajhi Bank"
+        ],
+        "image_keywords_ar": [
+          "مصرف الراجحي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولأن الفكرة كانت جديدة، لم تتحقق بسرعة. من مركز الصرافة سنة 1957 حتى صدور المرسوم الملكي رقم م/59 في يونيو 1987 مرّت ثلاثون سنة. وثمن التحول أن العمل العائلي صار سنة 1988 شركة مساهمة سعودية عامة — أي أن ما بنوه بأيديهم صار ملكاً لآلاف المساهمين."
+      },
+      {
+        "heading": "ما وصل إليه المصرف اليوم",
+        "image_keywords": [
+          "Al Rajhi Bank",
+          "Al Rajhi Bank Riyadh"
+        ],
+        "image_keywords_ar": [
+          "مصرف الراجحي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وبعد ذلك كبر المصرف حتى صار أكبر بنك إسلامي في العالم بحجم الأصول. وفي الربع الأول من 2025 تجاوزت أصوله تريليون ريال لأول مرة في تاريخه. كل هذا نما من مركز صرافة واحد في الديرة."
+      },
+      {
+        "heading": "ثم تنازل عن نصيبه",
+        "image_keywords": [
+          "Sulaiman Al Rajhi"
+        ],
+        "image_keywords_ar": [
+          "سليمان الراجحي",
+          "وقف سليمان الراجحي"
+        ],
+        "punch": "بدأ من الصفر مضطراً، وعاد إليه باختياره.",
+        "subject_kind": "person",
+        "text": "ومع ذلك لم يُبقِ نصيبه لنفسه: نقل معظم ثروته إلى وقف خيري بصك رسمي، وصار يأخذ مصروفه الشخصي من الوقف."
+      }
+    ],
+    "image_prompt": "An old Arabian market street of mud-brick buildings at midday, wooden doors, stacked sacks and crates, dusty ground, warm daylight, no people, no text, no logos",
+    "image_queries": [
+      "Mecca old city 1940s",
+      "Buraydah old mud brick market",
+      "Qassim oasis village old"
+    ],
+    "image_queries_ar": [
+      "مكة القديمة",
+      "بريدة قديماً",
+      "القصيم"
+    ],
+    "sources": [
+      "سعوديبيديا",
+      "وقف سليمان الراجحي",
+      "مصرف الراجحي",
+      "AGBI"
+    ],
+    "title": "من حمّال في السوق إلى أكبر بنك إسلامي"
+  },
+  "input_tokens": 164278,
+  "message_id": "msg_011CeYYKN3f6NTj7naDhJoWJ",
+  "model": "claude-opus-5",
+  "output_tokens": 11139,
+  "prompt_hash": "6ccdabfc969327ed46b773e6875400cd2526754ee65ecf3cf5adbeed6516e061",
+  "revision": "55f6d9b4129866c64d8b4f1ca8f84300ca12a20c114157013a5080ae1beda446",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
