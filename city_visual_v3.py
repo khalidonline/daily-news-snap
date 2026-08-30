@@ -144,7 +144,10 @@ def pinned_riyadh_visuals(frame: dict) -> list[dict]:
         "225" in body and "نقاط البيع" in body
     ) or "من بلدة مسو رة إلى مدينة بهذا الحجم" in _norm(heading)
     if approved_close and is_riyadh:
-        return [dict(_PINNED_RIYADH_SKYLINE)]
+        return [
+            dict(_PINNED_RIYADH_SKYLINE),
+            dict(_PINNED_RIYADH_GROWTH),
+        ]
 
     growth_markers = (
         "تعداد السعودية",
