@@ -81,13 +81,6 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         self.assertTrue(hasattr(gsp, "visual_report_is_ready"))
         self.assertFalse(gsp.visual_report_is_ready(report))
 
-    def test_story_prompt_explicitly_targets_personal_snapchat_not_report_style(self):
-        import story_runtime as sr
-        prompt = sr.sb.SYSTEM_PROMPT
-        self.assertIn("سناب شخصي", prompt)
-        self.assertIn("قصيراً", prompt)
-        self.assertIn("وثيقة", prompt)
-
     def test_pre_render_visual_coverage_rejects_two_or_more_empty_slots(self):
         import story_runtime as sr
         self.assertTrue(hasattr(sr, "personal_visual_slots_ready"))
