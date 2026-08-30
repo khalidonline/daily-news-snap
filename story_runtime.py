@@ -186,6 +186,10 @@ def main():
     nb.IMAGES_INDEX = filtered
     os.environ["IMAGES_INDEX"] = str(filtered)
     sb.STORY = story
+    if (os.getenv("STORY_SUPPRESS_TELEGRAM") or "").strip() == "1":
+        sb.notify = lambda *args, **kwargs: None
+        sb.notify_album = lambda *args, **kwargs: None
+        print("    intermediate Telegram notifications suppressed")
     print(f"    runtime gate PASS: {story}")
     print("    approved photos: " + ", ".join(p.name for p in photos))
     print("    logo(s): " + ", ".join(p.name for p in logos))
