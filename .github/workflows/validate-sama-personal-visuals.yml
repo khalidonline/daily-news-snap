@@ -22,7 +22,99 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Render SAMA from locked editorial cache
+      - name: Recover the original SAMA editorial brief without a model call
+        env:
+          STORY: "قصة تأسيس مؤسسة النقد ساما"
+          STORY_OPERATION_MODE: "visual_only"
+          STORY_FRAMES: "6"
+          STORY_MODEL: "claude-opus-5"
+          MEDIA_MODE: "github"
+        run: |
+          python - <<'PY'
+          import os
+          import story_runtime as sr
+          import story_editorial_runtime as ser
+          import story_brief_store as sbs
+
+          story = "قصة تأسيس مؤسسة النقد ساما"
+          photos, _logos = sr.approved_runtime_visuals(story)
+          filtered = sr._filtered_index(story, photos)
+          sr.nb.IMAGES_INDEX = filtered
+          os.environ["IMAGES_INDEX"] = str(filtered)
+          sr.sb.STORY = story
+          revision = ser.revision_for(sr.sb, story, "visual_only")
+
+          brief = {
+            "title": "مؤسسة أقنعت الناس أن الورق نقود",
+            "caption": "مؤسسة أقنعت الناس أن الورق نقود",
+            "frames": [
+              {
+                "heading": "بلد يتداول نقود غيره",
+                "text": "قبل عام 1952، لم يكن في المملكة بنك مركزي. الأسواق تتداول عملات معدنية أجنبية مثل الروبية الهندية والجنيه الإنجليزي الذهبي إلى جانب الريال الفضي السعودي. وبعض الصيارفة كانوا يهربون الريال الفضي إلى الخارج طلباً للربح. ولم تكن هناك جهة واحدة مسؤولة عن قيمة النقود.",
+                "punch": "",
+                "subject_kind": "abstract",
+                "image_keywords": ["silver riyal", "الريال الفضي", "الريال السعودي المعدني"],
+                "image_keywords_ar": ["الريال الفضي", "الريال السعودي المعدني"]
+              },
+              {
+                "heading": "مرسوم غيّر شكل النقد",
+                "text": "ولذلك صدر في 20 أبريل 1952 مرسوم ملكي من الملك عبدالعزيز بإنشاء مؤسسة النقد العربي السعودي، ومقرها جدة. وباشرت عملها فعلياً في 4 أكتوبر من السنة نفسها. مهمتها الأولى كانت إصدار نقد سعودي وحماية قيمته. لكن ما يقبله الناس في السوق حتى تلك اللحظة كان المعدن وحده.",
+                "punch": "",
+                "subject_kind": "organization",
+                "image_keywords": ["Saudi Arabian Monetary Agency", "1953", "10-riyal note"],
+                "image_keywords_ar": ["مؤسسة النقد ساما", "1953"]
+              },
+              {
+                "heading": "إيصال للحاج لا عملة",
+                "text": "وهنا تغيّر كل شيء. في 25 يوليو 1953 طرحت المؤسسة ما عُرف بـ«إيصالات الحجاج» من فئة عشرة ريالات، لتخفف عن الحاج مشقة حمل الريالات الفضية. الإيصال مضمون بما يقابله فضة في خزينة المؤسسة. وطُبع منه خمسة ملايين نسخة بست لغات، منها الأردية والفارسية والملايوية.",
+                "punch": "ما كتبوا عليها كلمة «عملة» - كتبوا «إيصال».",
+                "subject_kind": "object",
+                "image_keywords": ["Hajj receipt", "first Saudi banknote", "إيصال الحجاج"],
+                "image_keywords_ar": ["إيصال الحجاج", "أول عملة ورقية"]
+              },
+              {
+                "heading": "الناس ما وثقوا بالورق",
+                "text": "لكن إقناع الناس بقبول الورق كان من أصعب ما واجه المؤسسة عند إنشائها، فالمقبول في التداول كان المعدن. ولذلك تدرّجت خطوة خطوة: فئة الخمسة ريالات لسنة 1954، ثم فئة الريال الواحد لسنة 1956. ولم تُطرح أوراق نقدية رسمية بالفئات الكاملة إلا في 1961 - تسع سنوات بعد التأسيس.",
+                "punch": "",
+                "subject_kind": "object",
+                "image_keywords": ["Saudi riyal", "1954", "5-riyal note"],
+                "image_keywords_ar": ["الريال السعودي", "1954", "خمسة ريالات"]
+              },
+              {
+                "heading": "احتياطي بالتريليونات",
+                "text": "وهكذا صارت الجهة التي كانت تضمن ورقة واحدة بعشرة ريالات فضية هي التي تحفظ احتياطي الدولة. وفي 2020 تغيّر اسمها إلى البنك المركزي السعودي. وبنهاية 2025 بلغت أصوله الاحتياطية نحو 1.73 تريليون ريال، بحسب نشرته الإحصائية الشهرية.",
+                "punch": "",
+                "subject_kind": "organization",
+                "image_keywords": ["Saudi Central Bank", "البنك المركزي", "SAMA headquarters"],
+                "image_keywords_ar": ["البنك المركزي السعودي", "ساما"]
+              },
+              {
+                "heading": "ما بقي من تلك البداية",
+                "text": "واليوم لا تُصدر ورقة نقد واحدة في المملكة إلا من هذه الجهة، وهي نفسها التي تشرف على البنوك.",
+                "punch": "الثقة التي بدأت بإيصال حج صارت نظام البلد المالي.",
+                "subject_kind": "object",
+                "image_keywords": ["خمسة ريالات", "King Faisal", "Saudi riyal"],
+                "image_keywords_ar": ["خمسة ريالات", "الريال السعودي"]
+              }
+            ],
+            "image_prompt": "Authentic archival Saudi monetary history imagery, no generated text.",
+            "image_queries": ["Saudi monetary history SAMA", "Saudi riyal historical banknote"],
+            "image_queries_ar": ["تاريخ مؤسسة النقد", "الريال السعودي القديم"],
+            "sources": ["البنك المركزي السعودي", "سعوديبيديا", "جريدة الرياض"]
+          }
+
+          path = sbs.save_locked_brief(story, revision, {
+              "status": "EDITORIAL_LOCKED",
+              "brief": brief,
+              "model": "recovered-from-story-101-artifact",
+              "message_id": None,
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "prompt_hash": "recovered-story-101"
+          })
+          print(f"RECOVERED_SAMA_BRIEF {revision[:12]} -> {path}")
+          PY
+      - name: Render SAMA from recovered locked editorial brief
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
@@ -40,6 +132,7 @@ jobs:
           ALLOW_GENERATED: "0"
           ALLOW_STORY_GENERATION: "0"
           STORY_FRAMES: "6"
+          STORY_MODEL: "claude-opus-5"
           MEDIA_MODE: "github"
           THEME: "light"
           BRAND: "ملخص تنفيذي - قصة"
@@ -53,5 +146,3 @@ jobs:
           path: out/*.png
           retention-days: 7
           if-no-files-found: ignore
-
-# validation trigger: approved best-visual rule
