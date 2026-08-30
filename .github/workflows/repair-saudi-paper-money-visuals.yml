@@ -1,0 +1,64 @@
+name: Repair Saudi paper-money story visuals
+
+on:
+  push:
+    branches:
+      - fix/saudi-paper-money-visuals
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/saudi-paper-money-visuals
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Reuse SAMA archive visuals for Saudi paper-money story
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import story_runtime as sr
+
+          story = "قصة أول عملة ورقية سعودية"
+          before, _ = sr.approved_runtime_visuals(story)
+          print("BEFORE", len(before), [p.name for p in before])
+          if len(before) != 2:
+              raise SystemExit(f"expected 2 visuals before repair, got {len(before)}")
+
+          index = Path("images/images.txt")
+          text = index.read_text(encoding="utf-8")
+          replacements = {
+            "targeted-sama-1953-10-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1953 |":
+            "targeted-sama-1953-10-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, قصة أول عملة ورقية سعودية, أول عملة ورقية سعودية, إيصالات الحجاج, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1953 |",
+            "targeted-sama-1954-5-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1954 |":
+            "targeted-sama-1954-5-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, قصة أول عملة ورقية سعودية, أول عملة ورقية سعودية, إيصالات الحجاج, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1954 |",
+          }
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit(f"expected catalogue line missing: {old}")
+              text = text.replace(old, new, 1)
+          index.write_text(text, encoding="utf-8")
+
+          after, _ = sr.approved_runtime_visuals(story)
+          photos, logos, status = sr.coverage(story)
+          print("AFTER", len(after), [p.name for p in after])
+          print("STATUS", status, len(photos), len(logos))
+          if len(after) < 4 or status != "PASS":
+              raise SystemExit("Saudi paper-money story did not reach PASS")
+          PY
+
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add images/images.txt
+          git commit -m "assets: connect SAMA archive to Saudi paper-money story"
+          git push origin HEAD:fix/saudi-paper-money-visuals
