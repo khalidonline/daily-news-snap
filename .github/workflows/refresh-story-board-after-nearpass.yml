@@ -1,0 +1,60 @@
+name: Refresh Story board after near-PASS repairs
+
+on:
+  push:
+    branches:
+      - validation/story-board-after-nearpass-2026-08-30
+
+permissions:
+  contents: read
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation/story-board-after-nearpass-2026-08-30
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Refresh and diagnose next repair slice
+        shell: bash
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          import story_runtime as sr
+          import story_bot as sb
+
+          rows = []
+          for story in sb.load_stories():
+              photos, logos, status = sr.coverage(story)
+              rows.append((story, photos, logos, status))
+          passed = [r for r in rows if r[3] == "PASS"]
+          unresolved = [r for r in rows if r[3] != "PASS"]
+          print("TOTAL", len(rows))
+          print("PASS", len(passed))
+          print("UNRESOLVED", len(unresolved))
+          print("NEAR_PASS_REMAINING")
+          for story, photos, logos, status in sorted(unresolved, key=lambda r: (-len(r[1]), r[0])):
+              if len(photos) >= 2:
+                  print(status, "|", story, "|", len(photos), [p.name for p in photos])
+
+          priority = [
+              "قصة أول عملة ورقية سعودية",
+              "قصة أول مطار في جدة وتطور الطيران المدني",
+              "قصة الطيران المدني في السعودية",
+              "قصة الكبسة",
+              "قصة انهيار سوق الأسهم السعودية 2006",
+              "قصة سابك",
+              "قصة نادك",
+              "قصة نون",
+              "قصة ماكدونالدز في السعودية",
+              "علي النعيمي",
+          ]
+          print("PRIORITY_DETAILS")
+          for wanted in priority:
+              matches = [r for r in rows if r[0] == wanted or wanted in r[0]]
+              for story, photos, logos, status in matches:
+                  print(status, "|", story, "|", len(photos), [p.name for p in photos])
+          PY
