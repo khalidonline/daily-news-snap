@@ -232,7 +232,7 @@ def catalog_tags_match_aliases(tags: Iterable[str], aliases: Iterable[str]) -> b
     phrases = {str(a).strip().casefold() for a in aliases or [] if str(a).strip()}
     words = set()
     for phrase in phrases:
-        words |= {w for w in re.split(r"[\s,]+", phrase) if len(w) > 2}
+        words |= {w for w in re.split(r"[\s,]+", phrase) if len(w) > 2 and not w.isdigit()}
 
     for raw_tag in tags or []:
         tag = str(raw_tag).strip().casefold()
