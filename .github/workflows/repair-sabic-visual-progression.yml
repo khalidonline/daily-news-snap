@@ -31,13 +31,13 @@ jobs:
           if len(photos) != 2:
               raise SystemExit(f"expected two visuals before repair, got {len(photos)}")
           PY
-      - name: Add SABIC global expansion and leadership visuals
+      - name: Add SABIC European expansion and leadership visuals
         shell: bash
         run: |
           set -euo pipefail
           curl -L --fail --retry 3 \
-            "https://commons.wikimedia.org/wiki/Special:Redirect/file/SABIC%20plastics%20plant%20and%20technical%20centre%20in%20Washington%2C%20West%20Virginia..JPG" \
-            -o images/sabic-west-virginia-2014.jpg
+            "https://commons.wikimedia.org/wiki/Special:Redirect/file/SABIC%20office%20Sittard.jpg" \
+            -o images/sabic-sittard-office-2006.jpg
           curl -L --fail --retry 3 \
             "https://commons.wikimedia.org/wiki/Special:Redirect/file/Abdulrahman%20Al%20Fageeh%20at%20WEF%20Special%20Meeting%20on%20Global%20Collaboration%2C%20Growth%20and%20Energy%20for%20Development%2C%202024.png" \
             -o images/sabic-ceo-wef-2024.png
@@ -47,7 +47,7 @@ jobs:
 
           story = "قصة سابك من فكرة إلى عملاق بتروكيماويات"
           assets = {
-              "sabic-west-virginia-2014.jpg": "Snoopywv via Wikimedia Commons — CC BY-SA 3.0; SABIC plastics plant and technical centre, Washington, West Virginia, 2014",
+              "sabic-sittard-office-2006.jpg": "LIZIT via Wikimedia Commons — CC BY 2.5 / CC BY-SA 3.0; SABIC European head office in Sittard, Netherlands, 2006",
               "sabic-ceo-wef-2024.png": "World Economic Forum via Wikimedia Commons — CC BY 3.0; SABIC CEO Abdulrahman Al-Fageeh at WEF, 2024",
           }
           index = Path("images/images.txt")
@@ -70,7 +70,7 @@ jobs:
           photos, logos, status = sr.coverage(story)
           names = [p.name for p in photos]
           print("AFTER", status, len(photos), names)
-          required = {"sabic-west-virginia-2014.jpg", "sabic-ceo-wef-2024.png"}
+          required = {"sabic-sittard-office-2006.jpg", "sabic-ceo-wef-2024.png"}
           if status != "PASS" or len(photos) < 4 or not required.issubset(names):
               raise SystemExit("SABIC story did not reach PASS with four distinct visual beats")
           PY
@@ -80,6 +80,6 @@ jobs:
           set -euo pipefail
           git config user.name "story-visual-repair-bot"
           git config user.email "actions@github.com"
-          git add images/images.txt images/sabic-west-virginia-2014.jpg images/sabic-ceo-wef-2024.png
+          git add images/images.txt images/sabic-sittard-office-2006.jpg images/sabic-ceo-wef-2024.png
           git commit -m "assets: complete SABIC visual progression"
           git push origin HEAD:fix/sabic-visual-progression
