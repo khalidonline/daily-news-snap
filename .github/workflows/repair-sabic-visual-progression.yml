@@ -1,0 +1,33 @@
+name: Repair SABIC visual progression
+
+on:
+  push:
+    branches:
+      - fix/sabic-visual-progression
+
+permissions:
+  contents: read
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/sabic-visual-progression
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: SABIC has four distinct visual beats
+        run: |
+          python - <<'PY'
+          import story_runtime as sr
+          story = "قصة سابك من فكرة إلى عملاق بتروكيماويات"
+          photos, logos, status = sr.coverage(story)
+          names = [p.name for p in photos]
+          print("COVERAGE", status, len(photos), names)
+          required = {"sabic-west-virginia-2014.jpg", "sabic-ceo-wef-2024.png"}
+          if status != "PASS" or len(photos) < 4 or not required.issubset(names):
+              raise SystemExit("SABIC story still lacks four distinct visual beats")
+          PY
