@@ -29,7 +29,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Seed durable Riyadh visual state
+      - name: Repair Riyadh frame 6 only
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
@@ -42,41 +42,7 @@ jobs:
           MONTHLY_POST_LIMIT: "145"
           STORY: "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
           STORY_OPERATION_MODE: "visual_only"
-          STORY_REPAIR_FRAMES: ""
-          STORY_REGENERATION_NONCE: ""
-          DRY_RUN: "1"
-          MEDIA_MODE: "github"
-          THEME: "light"
-          BRAND: "ملخص تنفيذي - قصة"
-          FONT_FAMILY: "Almarai"
-          STORY_MODEL: "claude-opus-5"
-          STORY_FRAMES: "6"
-          ALLOW_GENERATED: "0"
-          ALLOW_STORY_GENERATION: "0"
-          STORY_ALLOW_REPEAT: "1"
-          IMAGE_GEN: "byteplus"
-          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
-          ARK_MODEL: ${{ vars.ARK_MODEL }}
-        run: |
-          python ready_story_publish.py
-          rm -rf seed_out
-          mkdir -p seed_out
-          cp out/*.png seed_out/
-
-      - name: Repair Riyadh frame 5 only
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          POST_PROVIDER: "bundle"
-          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
-          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
-          POST_TO_SNAPCHAT: "0"
-          MONTHLY_POST_LIMIT: "145"
-          STORY: "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
-          STORY_OPERATION_MODE: "visual_only"
-          STORY_REPAIR_FRAMES: "5"
+          STORY_REPAIR_FRAMES: "6"
           STORY_REGENERATION_NONCE: ""
           DRY_RUN: "1"
           MEDIA_MODE: "github"
@@ -93,20 +59,11 @@ jobs:
           ARK_MODEL: ${{ vars.ARK_MODEL }}
         run: python ready_story_publish.py
 
-      - name: Keep seed frames for review
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: riyadh-seed-${{ github.run_id }}
-          path: seed_out/*.png
-          retention-days: 7
-          if-no-files-found: ignore
-
       - name: Keep repaired frames for review
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: riyadh-targeted-repair-${{ github.run_id }}
+          name: riyadh-frame-6-repair-${{ github.run_id }}
           path: out/*.png
           retention-days: 7
           if-no-files-found: ignore
