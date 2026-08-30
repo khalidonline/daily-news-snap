@@ -1,0 +1,45 @@
+name: Refresh Story visual board
+
+on:
+  push:
+    branches:
+      - validation/story-board-refresh-2026-08-30
+
+permissions:
+  contents: read
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation/story-board-refresh-2026-08-30
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Build authoritative Story visual board
+        shell: bash
+        run: |
+          mkdir -p out/story-board-refresh
+          PYTHONPATH=. python - <<'PY' | tee out/story-board-refresh/board.txt
+          from tools.bulk_visual_board import build_board
+          board = build_board()
+          passed = [r for r in board if r.status == "PASS"]
+          unresolved = [r for r in board if r.status != "PASS"]
+          print(f"TOTAL={len(board)}")
+          print(f"PASS={len(passed)}")
+          print(f"UNRESOLVED={len(unresolved)}")
+          print("\nPASS STORIES")
+          for r in passed:
+              print(f"PASS | {r.story} | photos={getattr(r, 'photo_count', '?')} | logos={getattr(r, 'logo_count', '?')}")
+          print("\nUNRESOLVED STORIES")
+          for r in unresolved:
+              print(f"{r.status} | {r.story} | photos={getattr(r, 'photo_count', '?')} | logos={getattr(r, 'logo_count', '?')}")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: story-board-refresh-${{ github.run_id }}
+          path: out/story-board-refresh/board.txt
+          retention-days: 7
