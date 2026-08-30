@@ -21,6 +21,7 @@ import news_bot as nb
 import story_bot as sb
 import story_runtime as sr
 import story_visual_state as svs
+import story_notification_state as sns
 
 
 READY_FILE = Path(os.getenv("READY_STORIES_FILE", "state/ready_to_post.json"))
@@ -111,6 +112,60 @@ def persist_visual_revision(
     return path
 
 
+def persist_notification_state(commit_fn=None):
+    commit_fn = commit_fn or sb.commit_and_push
+    claims = sns.notification_claim_dir()
+    ledger = sns.notification_ledger_path()
+    if claims.exists():
+        commit_fn(claims, "story notification claims")
+    if ledger.exists():
+        commit_fn(ledger, "story notification ledger")
+
+
+def notify_final_candidate(
+    story,
+    frames,
+    status,
+    revision,
+    digest=None,
+    *,
+    claim_fn=None,
+    notify_fn=None,
+    complete_fn=None,
+    release_fn=None,
+    persist_fn=None,
+):
+    """Send one final READY/REVIEW Telegram album for a unique rendered deck."""
+    status = str(status or "").strip().upper()
+    if not sns.should_notify(status):
+        return False
+    frames = list(frames or [])
+    digest = digest or sns.deck_hash(frames)
+    claim_fn = claim_fn or sns.claim_notification
+    notify_fn = notify_fn or sb.notify_album
+    complete_fn = complete_fn or sns.complete_notification
+    release_fn = release_fn or sns.release_notification
+    persist_fn = persist_fn or persist_notification_state
+
+    claim = claim_fn(story, revision, status, digest)
+    if claim is None:
+        print(f"    Telegram {status} candidate unchanged — duplicate suppressed")
+        return False
+    try:
+        notify_fn(
+            f"[{status}] {story}\nFinal publication candidate",
+            frames,
+            as_documents=True,
+        )
+    except Exception:
+        release_fn(claim)
+        raise
+    complete_fn(claim, story, revision, status, digest)
+    persist_fn()
+    print(f"    Telegram final candidate sent: {status}")
+    return True
+
+
 def build_story_without_posting(story):
     """Render one fresh strict-PASS deck without changing posting state."""
     before = _frame_snapshot()
@@ -119,6 +174,7 @@ def build_story_without_posting(story):
         "STORY": story,
         "DRY_RUN": "1",
         "POST_TO_SNAPCHAT": "0",
+        "STORY_SUPPRESS_TELEGRAM": "1",
         "STORY_ALLOW_REPEAT": "1",
         "ALLOW_GENERATED": "0",
         "ALLOW_STORY_GENERATION": "0",
@@ -147,9 +203,6 @@ def build_story_without_posting(story):
         raise SystemExit(
             f"expected {expected} fresh story frames, got {len(changed)}; nothing posted"
         )
-    # The child runtime persisted approved intermediate visuals and QA state.
-    # Commit only after the expected fresh deck exists, before any posting
-    # decision, so later visual_only reruns can reuse untouched frame slots.
     persist_visual_revision(story)
     return changed
 
@@ -164,12 +217,7 @@ def _logo_panel_color(logo):
 
 
 def ensure_subject_logo_visible(story, frames, coverage_fn=None):
-    """Guarantee a readable approved subject logo on the first Story frame.
-
-    Some approved marks are intentionally light/gold and disappear against the
-    light Story theme. We preserve the original logo pixels and add only a
-    contrast backplate behind the approved mark.
-    """
+    """Guarantee a readable approved subject logo on the first Story frame."""
     frames = list(frames or [])
     if not frames:
         return frames
@@ -245,6 +293,16 @@ def main():
 
     frames = build_story_without_posting(story)
     ensure_subject_logo_visible(story, frames)
+
+    revision = svs._effective_revision(sb, story)
+    visual_state = svs.load_visual_state(story, revision)
+    final_status = (
+        "READY"
+        if visual_state and not svs.failed_frame_indices(visual_state)
+        else "REVIEW"
+    )
+    notify_final_candidate(story, frames, final_status, revision)
+
     if nb.DRY_RUN or not nb.POST_ENABLED:
         print(f"DRY/HYBRID — rendered {len(frames)} frames; Snapchat untouched")
         return
@@ -257,7 +315,7 @@ def main():
         raise SystemExit("not all Snapchat Story frames were confirmed")
 
     _mark_story_complete(story)
-    print(f"SNAPCHAT STORY COMPLETE: {story} ({confirmed}/{len(frames)} frames")
+    print(f"SNAPCHAT STORY COMPLETE: {story} ({confirmed}/{len(frames)} frames)")
 
 
 if __name__ == "__main__":
