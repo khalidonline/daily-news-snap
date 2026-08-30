@@ -6,28 +6,80 @@ on:
       - fix/saudi-civil-aviation-visuals
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   repair:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: fix/saudi-civil-aviation-visuals
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Saudi civil aviation has four distinct visuals
+      - name: Confirm RED starting point
+        run: |
+          python - <<'PY'
+          import story_runtime as sr
+          story = "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم"
+          photos, _, status = sr.coverage(story)
+          print("BEFORE", status, len(photos), [p.name for p in photos])
+          if len(photos) != 2:
+              raise SystemExit(f"expected two visuals before repair, got {len(photos)}")
+          PY
+      - name: Add historical and modern airport visuals
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 \
+            "https://commons.wikimedia.org/wiki/Special:Redirect/file/Oblique%20Jeddah%20Airport%201950s.jpg" \
+            -o images/saudi-civil-aviation-jeddah-1950s.jpg
+          curl -L --fail --retry 3 \
+            "https://commons.wikimedia.org/wiki/Special:Redirect/file/King%20Abdulaziz%20International%20Airport%20-%20Terminal%201.jpg" \
+            -o images/saudi-civil-aviation-kaia-terminal.jpg
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          story = "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم"
+          assets = {
+              "saudi-civil-aviation-jeddah-1950s.jpg": "King Abdulaziz Foundation / King Fahd National Library via Wikimedia Commons — public domain; Jeddah Airport in the 1950s",
+              "saudi-civil-aviation-kaia-terminal.jpg": "Skytrax via Wikimedia Commons — CC BY-SA 4.0; King Abdulaziz International Airport Terminal 1, 2020",
+          }
+          index = Path("images/images.txt")
+          text = index.read_text(encoding="utf-8")
+          for filename, credit in assets.items():
+              path = Path("images") / filename
+              with Image.open(path) as im:
+                  print(filename, im.size, im.format)
+                  if min(im.size) < 500:
+                      raise SystemExit(f"image too small: {filename} {im.size}")
+              if filename not in text:
+                  text += f"{filename} | {story}, الطيران المدني, السعودية, مطار جدة, Saudi civil aviation, Saudia | {credit}\n"
+          index.write_text(text, encoding="utf-8")
+          PY
+      - name: Verify GREEN runtime coverage
         run: |
           python - <<'PY'
           import story_runtime as sr
           story = "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم"
           photos, logos, status = sr.coverage(story)
           names = [p.name for p in photos]
-          print("COVERAGE", status, len(photos), names)
+          print("AFTER", status, len(photos), names)
           required = {"saudi-civil-aviation-jeddah-1950s.jpg", "saudi-civil-aviation-kaia-terminal.jpg"}
           if status != "PASS" or len(photos) < 4 or not required.issubset(names):
-              raise SystemExit("Saudi civil aviation story still lacks the historical-to-modern airport progression")
+              raise SystemExit("Saudi civil aviation story did not reach PASS with both airport beats")
           PY
+      - name: Commit repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add images/images.txt images/saudi-civil-aviation-jeddah-1950s.jpg images/saudi-civil-aviation-kaia-terminal.jpg
+          git commit -m "assets: complete Saudi civil aviation visual arc"
+          git push origin HEAD:fix/saudi-civil-aviation-visuals
