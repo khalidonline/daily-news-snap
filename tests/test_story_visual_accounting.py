@@ -1,32 +1,34 @@
 import unittest
 
-import story_bot as sb
+import guarded_story_publish as gsp
 
 
 class StoryVisualAccountingTests(unittest.TestCase):
-    def test_typographic_frames_still_count_as_missing_real_visuals(self):
-        frames = [
-            {"heading": "1952", "text": "بدأت القصة"},
-            {"heading": "1953", "text": "تغير الاسم"},
-            {"heading": "1954", "text": "صدر النقد"},
-            {"heading": "1955", "text": "مرحلة جديدة"},
-            {"heading": "صورة", "text": "لها صورة"},
-            {"heading": "صورة", "text": "لها صورة"},
-        ]
-        photos = [None, None, None, None, "5.jpg", "6.jpg"]
+    def test_failed_visual_state_counts_typographic_cards_as_missing(self):
+        state = {
+            "frames": {
+                "1": {"status": "FAIL"},
+                "2": {"status": "FAIL"},
+                "3": {"status": "FAIL"},
+                "4": {"status": "FAIL"},
+                "5": {"status": "PASS"},
+                "6": {"status": "FAIL"},
+            }
+        }
 
-        self.assertEqual(sb._missing_visual_indices(frames, photos), [1, 2, 3, 4])
+        report = gsp.visual_accounting(state, frame_count=6)
 
-    def test_visual_accounting_distinguishes_real_visuals_from_typography(self):
-        frames = [{"heading": str(i), "text": str(i)} for i in range(1, 7)]
-        photos = [None, "2.jpg", None, "4.jpg", "5.jpg", None]
+        self.assertEqual(report["approved_visual_frames"], [5])
+        self.assertEqual(report["missing_visual_frames"], [1, 2, 3, 4, 6])
+        self.assertEqual(report["approved_visual_count"], 1)
+        self.assertEqual(report["missing_visual_count"], 5)
 
-        report = sb._visual_accounting(frames, photos)
+    def test_missing_state_counts_every_frame_as_missing(self):
+        report = gsp.visual_accounting({}, frame_count=6)
 
-        self.assertEqual(report["real_visual_frames"], [2, 4, 5])
-        self.assertEqual(report["missing_visual_frames"], [1, 3, 6])
-        self.assertEqual(report["real_visual_count"], 3)
-        self.assertEqual(report["missing_visual_count"], 3)
+        self.assertEqual(report["approved_visual_frames"], [])
+        self.assertEqual(report["missing_visual_frames"], [1, 2, 3, 4, 5, 6])
+        self.assertEqual(report["missing_visual_count"], 6)
 
 
 if __name__ == "__main__":
