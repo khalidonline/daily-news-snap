@@ -1,3 +1,4 @@
+import json
 import sys
 import types
 import unittest
@@ -192,6 +193,30 @@ class BreakingWatchFeedTests(unittest.TestCase):
             breaking_watch._classifier_search_budget(None),
             breaking_watch.WATCH_MAX_SEARCHES,
         )
+
+
+class BreakingWatchClassifierJsonTests(unittest.TestCase):
+    def test_clean_json_is_parsed(self):
+        result = breaking_watch._parse_classifier_json(
+            '{"breaking": false, "reason": "routine"}'
+        )
+        self.assertEqual(result["breaking"], False)
+
+    def test_fenced_json_is_parsed_without_retry(self):
+        result = breaking_watch._parse_classifier_json(
+            '```json\n{"breaking": false, "reason": "routine"}\n```'
+        )
+        self.assertEqual(result["reason"], "routine")
+
+    def test_valid_object_is_recovered_around_unrelated_braces(self):
+        result = breaking_watch._parse_classifier_json(
+            'note {not json}\n{"breaking": false, "reason": "routine"}\ntrailer {junk}'
+        )
+        self.assertEqual(result, {"breaking": False, "reason": "routine"})
+
+    def test_malformed_response_still_fails_for_retry(self):
+        with self.assertRaises(json.JSONDecodeError):
+            breaking_watch._parse_classifier_json("not JSON at all")
 
 
 class BreakingWatchWindowTests(unittest.TestCase):
