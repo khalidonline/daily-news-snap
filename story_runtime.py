@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Runtime-safe Story Bot entrypoint for a personal Snapchat story.
 
-The runtime inventory is a useful starting filter, not a corporate asset gate:
-four distinct reviewed relevant visuals are enough to attempt a story and a
-logo is optional. Reviewed local visuals selected by the frame's own keywords
-are trusted, including historical documents, banknotes and archive scans.
+Five distinct reviewed relevant visuals are required before a six-card story is
+attempted; a logo is not a visual substitute. Reviewed local visuals selected
+by the frame's own keywords are trusted, including historical documents,
+banknotes and archive scans.
 """
 
 from __future__ import annotations
@@ -46,8 +46,8 @@ def _personal_story_photo_shows(photo, context):
 
 
 sb.photo_shows = _personal_story_photo_shows
-# Keep logos as occasional accents, not corporate wallpaper.
-sb.LOGO_MAX_FRAMES = min(1, int(getattr(sb, "LOGO_MAX_FRAMES", 1) or 1))
+# Personal Snap: logos do not fill visual slots. Use actual photos/documents.
+sb.LOGO_MAX_FRAMES = 0
 
 
 def _editorial_prompt_for_revision():
@@ -98,8 +98,19 @@ def _visual_first_find_all_photos(brief):
 sb.find_all_photos = _visual_first_find_all_photos
 story_visual_state.configure(sb)
 
+# Curated documentary assets that belong to a story but use object-focused tags
+# in images.txt. Keep this tiny and explicit rather than weakening tag matching.
+_STORY_EXTRA_VISUALS = {
+    "قصة تأسيس مؤسسة النقد ساما": {
+        "first-hajj-receipt.png",
+        "silver-riyal.png",
+    },
+}
+
 
 def _matches_story(entry, story):
+    if entry.get("path") and Path(entry["path"]).name in _STORY_EXTRA_VISUALS.get(str(story).strip(), set()):
+        return True
     aliases = [a for a in sb.story_aliases(story) if a]
     persons = sb._STORY_PERSONS.get(str(story).strip()) or []
     return story_focus.catalog_tags_match_aliases(
@@ -218,7 +229,7 @@ def main():
         story = choose_runtime_story()
 
     if not story:
-        raise SystemExit("no runtime-PASS story available (needs 4 approved visuals)")
+        raise SystemExit("no runtime-PASS story available (needs 5 approved visuals)")
 
     photos, logos, status = coverage(story)
     if not runtime_pass(len(photos), len(logos)):
