@@ -2,9 +2,10 @@
 """Shared relevance policy for Story Bot runtime and audits.
 
 For a personal Snapchat story, the useful question is simple: do we have enough
-reviewed, relevant visuals to tell the story? A logo is optional, and a curated
-historical document/currency scan is a valid visual when it was selected from
-the reviewed local library for that story.
+reviewed, relevant source material to attempt the story? The rendered six-card
+deck is authoritative for publication quality. A logo is optional, and a
+curated historical document/currency scan is a valid visual when it was
+selected from the reviewed local library for that story.
 """
 
 from __future__ import annotations
@@ -103,8 +104,13 @@ def trusted_selected_local_visual(
 
 
 def runtime_status(photo_count: int, logo_count: int = 0) -> str:
-    """Six-card personal Story gate: five reviewed visuals; logo optional."""
-    need_visuals = max(0, 5 - int(photo_count))
+    """Source-material gate only; final rendered-frame quality is authoritative.
+
+    Four reviewed visuals are enough to attempt a six-card personal story. This
+    is deliberately not a publication quota or target: the renderer should use
+    every strong relevant visual it can find, including a fifth or sixth one.
+    """
+    need_visuals = max(0, 4 - int(photo_count))
     if need_visuals == 0:
         return "PASS"
     return f"NEEDS {need_visuals} MORE VISUAL{'S' if need_visuals != 1 else ''}"
