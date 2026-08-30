@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Runtime-safe Story Bot entrypoint for a personal Snapchat story.
 
-Five distinct reviewed relevant visuals are required before a six-card story is
-attempted; a logo is not a visual substitute. Reviewed local visuals selected
-by the frame's own keywords are trusted, including historical documents,
-banknotes and archive scans.
+The source inventory only decides whether a story is worth attempting; it does
+not set a photo target or ceiling. Reviewed local visuals selected by the
+frame's own keywords are trusted, including historical documents, banknotes and
+archive scans. The renderer should use every strong relevant visual available,
+and the final rendered deck is authoritative for publication quality.
 """
 
 from __future__ import annotations
@@ -46,7 +47,7 @@ def _personal_story_photo_shows(photo, context):
 
 
 sb.photo_shows = _personal_story_photo_shows
-# Personal Snap: logos do not fill visual slots. Use actual photos/documents.
+# A logo may be useful as an accent elsewhere, but it never fills a Story visual slot.
 sb.LOGO_MAX_FRAMES = 0
 
 
@@ -65,15 +66,23 @@ city_visual_v3.configure(sb)
 
 
 def personal_visual_slots_ready(photos) -> bool:
-    """A personal Story may have at most one genuinely empty visual slot."""
+    """Protect the hook/payoff while allowing one genuine middle-card fallback.
+
+    This function never limits how many visuals may appear. If all six frames
+    have strong visuals, all six should be used. Frame 1 and the final frame are
+    mandatory visual positions whenever the six-card slot list is known.
+    """
     values = list(photos or [])
     if not values:
+        return False
+    if values[0] is None or values[-1] is None:
         return False
     return sum(1 for photo in values if photo is None) <= 1
 
 
-# Do not let typographic numbers/dates hide a mostly empty deck. The legacy
-# renderer may style them nicely, but they are still not photos/documents.
+# Do not let typographic numbers/dates hide a weak visual deck. The renderer may
+# style them nicely, but opening and closing frames still need meaningful visuals
+# and at most one middle frame may fall back to text-only.
 _personal_find_all_photos = sb.find_all_photos
 
 
@@ -83,13 +92,18 @@ def _visual_first_find_all_photos(brief):
         return None
     if not personal_visual_slots_ready(photos):
         missing = [i for i, photo in enumerate(photos, 1) if photo is None]
+        critical = [i for i in missing if i in {1, len(photos)}]
+        if critical:
+            reason = "opening/closing frame missing a meaningful visual"
+        else:
+            reason = "more than one frame missing a meaningful visual"
         sb._LAST_SKIP = (
-            "personal Story visual coverage: missing real visuals on frames "
+            f"personal Story visual quality: {reason}; missing frames "
             + ", ".join(str(i) for i in missing)
         )
         print(
-            "  ! personal Story visual gate: more than one frame has no real "
-            "visual — skipping rather than shipping a text-heavy deck"
+            "  ! personal Story visual gate: " + reason
+            + " — skipping rather than shipping a weaker deck"
         )
         return None
     return photos
@@ -119,7 +133,7 @@ def _matches_story(entry, story):
 
 
 def approved_runtime_visuals(story):
-    """Return distinct approved local visuals plus optional local logos."""
+    """Return every distinct approved local visual plus optional local logos."""
     photos = []
     for entry in nb.load_local_images():
         path = entry["path"]
@@ -195,13 +209,13 @@ def choose_runtime_story():
             continue
         seed = hashlib.md5(datetime.now().date().isoformat().encode()).hexdigest()
         story = good[int(seed, 16) % len(good)]
-        print(f"    runtime gate: {len(good)} PASS stories available in {pool}")
+        print(f"    runtime gate: {len(good)} render-eligible stories available in {pool}")
         return story
     return ""
 
 
 def _filtered_index(story, approved_paths):
-    """Write a story-specific image index containing only approved files."""
+    """Write a story-specific image index containing every approved file."""
     allowed = {Path(p).name for p in approved_paths}
     source = nb.IMAGES_INDEX
     lines = []
@@ -229,7 +243,7 @@ def main():
         story = choose_runtime_story()
 
     if not story:
-        raise SystemExit("no runtime-PASS story available (needs 5 approved visuals)")
+        raise SystemExit("no runtime-PASS story available (needs enough approved source visuals to attempt)")
 
     photos, logos, status = coverage(story)
     if not runtime_pass(len(photos), len(logos)):
