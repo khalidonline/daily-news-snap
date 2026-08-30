@@ -25,6 +25,42 @@ def require_ready_for_publication(status: str, story: str) -> None:
         )
 
 
+def visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
+    """Report real approved visuals from persisted post-render state.
+
+    Typography, dates, large figures and designed text-only treatments do not
+    count as visuals. Only frames explicitly persisted with status PASS count.
+    """
+    rows = (visual_state or {}).get("frames") or {}
+    approved = []
+    missing = []
+    for frame_no in range(1, int(frame_count) + 1):
+        row = rows.get(str(frame_no)) or {}
+        if isinstance(row, dict) and row.get("status") == "PASS":
+            approved.append(frame_no)
+        else:
+            missing.append(frame_no)
+    return {
+        "approved_visual_frames": approved,
+        "missing_visual_frames": missing,
+        "approved_visual_count": len(approved),
+        "missing_visual_count": len(missing),
+        "frame_count": int(frame_count),
+    }
+
+
+def print_visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
+    report = visual_accounting(visual_state, frame_count=frame_count)
+    print(
+        "POST_RENDER_VISUAL_ACCOUNTING: "
+        f"approved={report['approved_visual_count']}/{report['frame_count']} "
+        f"frames={report['approved_visual_frames']}; "
+        f"missing={report['missing_visual_count']}/{report['frame_count']} "
+        f"frames={report['missing_visual_frames']}"
+    )
+    return report
+
+
 def main() -> None:
     refresh_only = "--refresh-only" in sys.argv
     _ready_path, ready = rsp.write_ready_file()
@@ -42,8 +78,8 @@ def main() -> None:
 
     revision, _visual_path = rsp.resolve_visual_revision(story)
     visual_state = rsp.svs.load_visual_state(story, revision)
-    failed = rsp.svs.failed_frame_indices(visual_state) if visual_state else ()
-    final_status = "READY" if visual_state and not failed else "REVIEW"
+    report = print_visual_accounting(visual_state, frame_count=len(frames))
+    final_status = "READY" if visual_state and report["missing_visual_count"] == 0 else "REVIEW"
 
     rsp.scg.record_operation_event(
         story,
