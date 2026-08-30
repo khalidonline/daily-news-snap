@@ -90,11 +90,11 @@ def trusted_selected_local_visual(
 ) -> bool:
     """Trust a keyword-selected, reviewed local visual for a Story frame.
 
-    This is intentionally simple. The local selector has already matched the
-    frame's image keywords. If the source is curated/countable for this story,
-    do not make a second generic 'is this a photograph?' model veto it merely
-    because it is a banknote, document, receipt, advertisement or archive scan.
-    Explicit WEAK_GENERIC/WRONG_ENTITY verdicts still fail closed.
+    The local selector has already matched the frame's image keywords. If the
+    source is curated/countable for this story, do not make a second generic
+    "is this a photograph?" model veto it merely because it is a banknote,
+    document, receipt, advertisement or archive scan. Explicit weak/wrong
+    verdicts still fail closed.
     """
     source = _selected_local_source(selected_path)
     if not source:
@@ -103,8 +103,8 @@ def trusted_selected_local_visual(
 
 
 def runtime_status(photo_count: int, logo_count: int = 0) -> str:
-    """Personal Story gate: four reviewed relevant visuals; logo optional."""
-    need_visuals = max(0, 4 - int(photo_count))
+    """Six-card personal Story gate: five reviewed visuals; logo optional."""
+    need_visuals = max(0, 5 - int(photo_count))
     if need_visuals == 0:
         return "PASS"
     return f"NEEDS {need_visuals} MORE VISUAL{'S' if need_visuals != 1 else ''}"
