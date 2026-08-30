@@ -21,6 +21,7 @@ import news_bot as nb
 import story_bot as sb
 import story_focus
 import story_editorial_runtime
+import story_visual_state
 import city_visual_v3
 from runtime_relevance import asset_countable, runtime_pass, runtime_status
 
@@ -43,6 +44,10 @@ def _editorial_prompt_for_revision():
 sb.editorial_prompt_for_revision = _editorial_prompt_for_revision
 story_editorial_runtime.configure(sb)
 city_visual_v3.configure(sb)
+# Visual-state reuse wraps the final city/non-city selector so approved frames
+# keep all existing relevance/era/haze protections and failed slots alone are
+# reopened during visual_only repair.
+story_visual_state.configure(sb)
 
 
 def _matches_story(entry, story):
