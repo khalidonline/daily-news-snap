@@ -22,13 +22,23 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Recover the original SAMA editorial brief without a model call
+      - name: Recover and render the original SAMA story without a model call
         env:
+          POST_TO_SNAPCHAT: "0"
+          DRY_RUN: "1"
           STORY: "قصة تأسيس مؤسسة النقد ساما"
           STORY_OPERATION_MODE: "visual_only"
+          STORY_REPAIR_FRAMES: "1,2,3,4,5,6"
+          STORY_ALLOW_REPEAT: "1"
+          STORY_SUPPRESS_TELEGRAM: "1"
+          ALLOW_GENERATED: "0"
+          ALLOW_STORY_GENERATION: "0"
           STORY_FRAMES: "6"
           STORY_MODEL: "claude-opus-5"
           MEDIA_MODE: "github"
+          THEME: "light"
+          BRAND: "ملخص تنفيذي - قصة"
+          FONT_FAMILY: "Almarai"
         run: |
           python - <<'PY'
           import os
@@ -113,31 +123,8 @@ jobs:
               "prompt_hash": "recovered-story-101"
           })
           print(f"RECOVERED_SAMA_BRIEF {revision[:12]} -> {path}")
+          sr.main()
           PY
-      - name: Render SAMA from recovered locked editorial brief
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          POST_PROVIDER: "bundle"
-          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
-          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
-          POST_TO_SNAPCHAT: "0"
-          DRY_RUN: "1"
-          STORY: "قصة تأسيس مؤسسة النقد ساما"
-          STORY_OPERATION_MODE: "visual_only"
-          STORY_REPAIR_FRAMES: "1,2,3,4,5,6"
-          STORY_ALLOW_REPEAT: "1"
-          ALLOW_GENERATED: "0"
-          ALLOW_STORY_GENERATION: "0"
-          STORY_FRAMES: "6"
-          STORY_MODEL: "claude-opus-5"
-          MEDIA_MODE: "github"
-          THEME: "light"
-          BRAND: "ملخص تنفيذي - قصة"
-          FONT_FAMILY: "Almarai"
-        run: python guarded_story_publish.py
       - name: Keep SAMA frames for review
         if: always()
         uses: actions/upload-artifact@v4
