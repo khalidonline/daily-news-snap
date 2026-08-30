@@ -68,3 +68,5 @@ jobs:
         run: python -m unittest -v tests/test_story_editorial_quality.py
       - name: Editorial spend guard
         run: python -m unittest -v tests/test_story_cost_guard.py
+      - name: Cached editorial runtime
+        run: python -m unittest -v tests/test_story_editorial_runtime.py
