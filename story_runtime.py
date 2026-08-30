@@ -31,19 +31,6 @@ from runtime_relevance import (
 
 story_focus.configure(sb)
 
-PERSONAL_SNAP_PROMPT = """
-
-قاعدة سناب شخصي — البساطة أهم من أسلوب التقارير:
-- هذا سناب شخصي لجمهور يتابع قصة ممتعة، وليس تقرير شركة أو عرضاً تنفيذياً.
-- اجعل نص كل لقطة قصيراً وسريع القراءة: فكرة واحدة واضحة، بلا حشو ولا لغة مؤسسية.
-- الصورة هي جزء من السرد، وليست زينة. اختر شيئاً يراه القارئ ويفهم منه المرحلة فوراً.
-- الصورة الصحيحة قد تكون صورة فوتوغرافية، وثيقة أصلية، ورقة نقدية، إيصالاً، إعلاناً قديماً، خريطة تاريخية أو مسحاً أرشيفياً إذا كان هذا الشيء نفسه جزءاً من القصة.
-- لا تستخدم شعاراً لمجرد ملء الفراغ. الشعار اختياري ويظهر عند الحاجة فقط.
-- إذا لم تجد صورة مناسبة فعلاً، لا تختلق صلة ضعيفة. لقطة نصية واحدة مقبولة كحد أقصى في القصة كلها.
-"""
-if "قاعدة سناب شخصي" not in sb.SYSTEM_PROMPT:
-    sb.SYSTEM_PROMPT += PERSONAL_SNAP_PROMPT
-
 # The reviewed local library is already selected by the frame's image keywords.
 # For Story-to-Snapchat, trust that curation instead of making a generic vision
 # model veto a banknote/document merely because it is not a conventional photo.
@@ -78,7 +65,7 @@ city_visual_v3.configure(sb)
 
 
 def personal_visual_slots_ready(photos) -> bool:
-    """A six-card personal Story may have at most one genuinely empty visual slot."""
+    """A personal Story may have at most one genuinely empty visual slot."""
     values = list(photos or [])
     if not values:
         return False
