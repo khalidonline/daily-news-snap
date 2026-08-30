@@ -1,0 +1,33 @@
+name: Repair McDonald's Saudi visuals
+
+on:
+  push:
+    branches:
+      - fix/mcdonalds-saudi-visuals
+
+permissions:
+  contents: read
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/mcdonalds-saudi-visuals
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: McDonald's Saudi story has four Saudi branch visuals
+        run: |
+          python - <<'PY'
+          import story_runtime as sr
+          story = "قصة ماكدونالدز في السعودية وعائلات الامتياز"
+          photos, logos, status = sr.coverage(story)
+          names = [p.name for p in photos]
+          print("COVERAGE", status, len(photos), names)
+          required = {"mcdonalds-riyadh-2009.jpg", "mcdonalds-jubail.jpg"}
+          if status != "PASS" or len(photos) < 4 or not required.issubset(names):
+              raise SystemExit("McDonald's Saudi story still lacks four distinct Saudi branch visuals")
+          PY
