@@ -1,0 +1,67 @@
+name: Repair Walker fourth visual
+
+on:
+  push:
+    branches:
+      - fix/walker-fourth-visual
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/walker-fourth-visual
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Add and verify Villa Lewaro visual
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import urllib.request
+          import story_runtime as sr
+
+          story = "قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا"
+          before, _logos = sr.approved_runtime_visuals(story)
+          print("WALKER_BEFORE", len(before), [p.name for p in before])
+          if len(before) != 3:
+              raise SystemExit(f"expected Walker to start at 3 visuals, got {len(before)}")
+
+          dest = Path("images/villa-lewaro.jpg")
+          req = urllib.request.Request(
+              "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Lewaro_circa_1986.jpg",
+              headers={"User-Agent": "daily-news-snap/1.0 (Story visual curation)"},
+          )
+          with urllib.request.urlopen(req, timeout=30) as response:
+              dest.write_bytes(response.read())
+
+          index = Path("images/images.txt")
+          line = "villa-lewaro.jpg | Madam C.J. Walker, Villa Lewaro, مدام سي جيه ووكر, ووكر | Historic American Buildings Survey / Library of Congress — Public domain"
+          text = index.read_text(encoding="utf-8")
+          if line not in text:
+              index.write_text(text.rstrip() + "\n" + line + "\n", encoding="utf-8")
+
+          after, _logos = sr.approved_runtime_visuals(story)
+          print("WALKER_AFTER", len(after), [p.name for p in after])
+          if len(after) < 4:
+              raise SystemExit("Walker did not reach 4 distinct approved visuals")
+          photos, logos, status = sr.coverage(story)
+          print("WALKER_STATUS", status, len(photos), len(logos))
+          if status != "PASS":
+              raise SystemExit(f"Walker still not PASS: {status}")
+          PY
+
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add images/villa-lewaro.jpg images/images.txt
+          git commit -m "assets: add Villa Lewaro for Madam C. J. Walker"
+          git push origin HEAD:fix/walker-fourth-visual
