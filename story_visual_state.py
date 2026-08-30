@@ -82,6 +82,30 @@ def failed_frame_indices(state: dict[str, Any]) -> tuple[int, ...]:
     return tuple(sorted(failed))
 
 
+def requested_repair_frame_indices(raw: str | None = None) -> tuple[int, ...]:
+    """Parse human-requested visual repair slots from STORY_REPAIR_FRAMES."""
+    if raw is None:
+        raw = os.getenv("STORY_REPAIR_FRAMES", "")
+    raw = str(raw or "").strip()
+    if not raw:
+        return ()
+    frames: set[int] = set()
+    for token in re.split(r"[,\s]+", raw):
+        if not token:
+            continue
+        try:
+            frame_no = int(token)
+        except ValueError as exc:
+            raise ValueError(
+                f"invalid STORY_REPAIR_FRAMES token {token!r}; "
+                "use comma-separated frame numbers"
+            ) from exc
+        if frame_no < 1:
+            raise ValueError("STORY_REPAIR_FRAMES values must be >= 1")
+        frames.add(frame_no)
+    return tuple(sorted(frames))
+
+
 def preserve_approved_frames(
     previous: dict[str, Any], incoming_frames: Iterable[dict], failed: Iterable[int]
 ) -> list[dict]:
@@ -211,7 +235,10 @@ def _effective_revision(sb: Any, story: str) -> str:
     return ser.revision_for(sb, story, revision_mode)
 
 
-def _valid_reuse_map(state: dict[str, Any]) -> dict[int, Path]:
+def _valid_reuse_map(
+    state: dict[str, Any], excluded: Iterable[int] = ()
+) -> dict[int, Path]:
+    excluded_set = {int(i) for i in excluded}
     result: dict[int, Path] = {}
     for key, row in ((state or {}).get("frames") or {}).items():
         if not isinstance(row, dict) or row.get("status") != "PASS":
@@ -220,14 +247,79 @@ def _valid_reuse_map(state: dict[str, Any]) -> dict[int, Path]:
             frame_no = int(key)
         except (TypeError, ValueError):
             continue
+        if frame_no in excluded_set:
+            continue
         source = Path(str(row.get("image_source") or ""))
         if source.exists() and source.is_file():
             result[frame_no] = source
     return result
 
 
+def _previous_rejected_digests(
+    sb: Any, previous: dict[str, Any], requested: Iterable[int]
+) -> dict[int, object]:
+    result: dict[int, object] = {}
+    if not hasattr(sb, "_photo_digest"):
+        return result
+    rows = (previous or {}).get("frames") or {}
+    for frame_no in requested:
+        row = rows.get(str(frame_no)) or {}
+        source = Path(str(row.get("image_source") or ""))
+        if row.get("status") != "PASS" or not source.exists():
+            continue
+        try:
+            result[int(frame_no)] = sb._photo_digest(source)
+        except Exception:
+            continue
+    return result
+
+
+def _seen_with_rejected(sb: Any, seen: Iterable[object], rejected: object):
+    values = list(seen or ())
+    if rejected is None:
+        return tuple(values)
+    duplicate = False
+    for prior in values:
+        try:
+            if sb.same_picture(rejected, prior):
+                duplicate = True
+                break
+        except Exception:
+            if rejected == prior:
+                duplicate = True
+                break
+    if not duplicate:
+        values.append(rejected)
+    return tuple(values)
+
+
+def _reject_unchanged_requested_photos(
+    sb: Any,
+    photos: Iterable[object],
+    rejected_digests: dict[int, object],
+) -> list[object]:
+    result = list(photos or [])
+    if not rejected_digests or not hasattr(sb, "_photo_digest"):
+        return result
+    for frame_no, rejected in rejected_digests.items():
+        index = frame_no - 1
+        if index < 0 or index >= len(result) or not result[index]:
+            continue
+        try:
+            digest = sb._photo_digest(result[index])
+            unchanged = sb.same_picture(digest, rejected)
+        except Exception:
+            unchanged = False
+        if unchanged:
+            print(
+                f"    frame {frame_no}: targeted repair rejected unchanged prior visual"
+            )
+            result[index] = None
+    return result
+
+
 def configure(story_bot_module: Any) -> Any:
-    """Wrap the final visual selector so visual_only reopens failed slots only."""
+    """Wrap the final visual selector so visual_only repairs only requested slots."""
     sb = story_bot_module
     if getattr(sb, _CONFIGURED_ATTR, False):
         return sb
@@ -241,17 +333,38 @@ def configure(story_bot_module: Any) -> Any:
         revision = _effective_revision(sb, story)
         mode = (os.getenv("STORY_OPERATION_MODE") or "auto").strip() or "auto"
         previous = load_visual_state(story, revision)
-        reuse = _valid_reuse_map(previous) if mode == "visual_only" else {}
+        requested = requested_repair_frame_indices() if mode == "visual_only" else ()
+        frame_count = len(list((brief or {}).get("frames") or []))
+        invalid = [frame_no for frame_no in requested if frame_no > frame_count]
+        if invalid:
+            raise ValueError(
+                "STORY_REPAIR_FRAMES outside this deck: "
+                + ", ".join(str(i) for i in invalid)
+            )
+        failed = failed_frame_indices(previous) if mode == "visual_only" else ()
+        repair_slots = tuple(sorted(set(failed) | set(requested)))
+        reuse = (
+            _valid_reuse_map(previous, repair_slots)
+            if mode == "visual_only" else {}
+        )
+        rejected_digests = (
+            _previous_rejected_digests(sb, previous, requested)
+            if mode == "visual_only" else {}
+        )
 
         if mode == "visual_only" and previous:
-            failed = failed_frame_indices(previous)
             brief["frames"] = preserve_approved_frames(
-                previous, list(brief.get("frames") or []), failed
+                previous, list(brief.get("frames") or []), repair_slots
             )
             print(
                 "    visual_only repair slots: "
-                + (", ".join(str(i) for i in failed) if failed else "none")
+                + (", ".join(str(i) for i in repair_slots) if repair_slots else "none")
             )
+            if requested:
+                print(
+                    "    human-requested visual repair slots: "
+                    + ", ".join(str(i) for i in requested)
+                )
 
         originals: dict[str, Any] = {}
 
@@ -266,49 +379,77 @@ def configure(story_bot_module: Any) -> Any:
             print(f"    frame {frame_no}: reused approved visual state")
             return str(dest)
 
-        if reuse:
+        if reuse or rejected_digests:
             if hasattr(sb, "find_photo"):
                 originals["find_photo"] = sb.find_photo
-                def reuse_find_photo(spec, out_path, seen=(), context="", allow_neutral=True, bank=None):
-                    staged = stage(_frame_no_from_path(out_path), out_path)
+
+                def reuse_find_photo(
+                    spec, out_path, seen=(), context="", allow_neutral=True, bank=None
+                ):
+                    frame_no = _frame_no_from_path(out_path)
+                    staged = stage(frame_no, out_path)
                     if staged:
                         return staged
+                    repair_seen = seen
+                    if frame_no in rejected_digests:
+                        repair_seen = _seen_with_rejected(
+                            sb, seen, rejected_digests[frame_no]
+                        )
                     return originals["find_photo"](
-                        spec, out_path, seen, context,
+                        spec, out_path, repair_seen, context,
                         allow_neutral=allow_neutral, bank=bank,
                     )
+
                 sb.find_photo = reuse_find_photo
 
             if hasattr(sb, "_person_frame_photo"):
                 originals["_person_frame_photo"] = sb._person_frame_photo
+
                 def reuse_person(frame, slot, used):
-                    staged = stage(_frame_no_from_path(slot), slot)
-                    return staged or originals["_person_frame_photo"](frame, slot, used)
+                    frame_no = _frame_no_from_path(slot)
+                    staged = stage(frame_no, slot)
+                    if staged:
+                        return staged
+                    repair_used = used
+                    if frame_no in rejected_digests:
+                        repair_used = _seen_with_rejected(
+                            sb, used, rejected_digests[frame_no]
+                        )
+                    return originals["_person_frame_photo"](
+                        frame, slot, repair_used
+                    )
+
                 sb._person_frame_photo = reuse_person
 
             if hasattr(sb, "_curated_logo"):
                 originals["_curated_logo"] = sb._curated_logo
+
                 def reuse_logo(frame_no, total, inner_brief, frame, allow_hero=False):
                     slot = sb.OUT_DIR / f"story-frame-{frame_no}.jpg"
                     staged = stage(frame_no, slot)
                     return staged or originals["_curated_logo"](
                         frame_no, total, inner_brief, frame, allow_hero=allow_hero
                     )
+
                 sb._curated_logo = reuse_logo
 
             if hasattr(sb, "_curated_flag"):
                 originals["_curated_flag"] = sb._curated_flag
+
                 def reuse_flag(frame_no, frame):
                     slot = sb.OUT_DIR / f"story-frame-{frame_no}.jpg"
                     staged = stage(frame_no, slot)
                     return staged or originals["_curated_flag"](frame_no, frame)
+
                 sb._curated_flag = reuse_flag
 
             if hasattr(sb, "_generated_frame"):
                 originals["_generated_frame"] = sb._generated_frame
+
                 def reuse_generated(frame, slot):
                     staged = stage(_frame_no_from_path(slot), slot)
                     return staged or originals["_generated_frame"](frame, slot)
+
                 sb._generated_frame = reuse_generated
 
         try:
@@ -318,6 +459,9 @@ def configure(story_bot_module: Any) -> Any:
                 setattr(sb, name, original)
 
         if photos is not None:
+            photos = _reject_unchanged_requested_photos(
+                sb, photos, rejected_digests
+            )
             capture_visual_state(story, revision, brief, photos)
         return photos
 

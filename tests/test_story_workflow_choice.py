@@ -24,6 +24,11 @@ class StoryOperationModeWorkflowTests(unittest.TestCase):
         self.assertIn("inputs.operation_mode == 'regenerate_editorial'", self.text)
         self.assertIn('github.run_id', self.text)
 
+    def test_workflow_exposes_targeted_visual_repair_frames(self):
+        self.assertIn('repair_frames:', self.text)
+        self.assertIn('STORY_REPAIR_FRAMES:', self.text)
+        self.assertIn("inputs.repair_frames || ''", self.text)
+
     def test_rerun_attempt_never_implies_regeneration(self):
         self.assertNotIn('github.run_attempt > 1', self.text)
         self.assertNotIn('github.run_attempt != 1', self.text)
