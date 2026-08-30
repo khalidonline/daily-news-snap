@@ -26,22 +26,31 @@ PILOT_STORIES = (
     ("global_business", "Pilot global business story"),
 )
 
+_BEATS = (
+    "The opening establishes the original setting and the practical constraint before the central change begins.",
+    "A named protagonist then enters with a specific decision that directly addresses the problem already introduced.",
+    "The turning point changes the direction of events through one concrete action whose consequences become visible.",
+    "The cost of that choice appears next through delay, rejection, financial pressure, or another measurable sacrifice.",
+    "The result is demonstrated with a dated outcome and a concrete scale indicator tied back to the starting point.",
+    "The closing states the lasting consequence clearly and resolves the story with evidence rather than an open question.",
+)
+
 
 def _brief(label: str) -> dict:
+    frames = []
+    for i, text in enumerate(_BEATS, start=1):
+        frames.append({
+            "heading": f"Beat {i}",
+            "text": f"{text} Category marker: {label}.",
+            "punch": f"Resolved consequence {i}",
+            "subject_kind": "company",
+            "image_keywords": [f"proof subject {i}"],
+            "image_keywords_ar": [f"موضوع تجريبي {i}"],
+        })
     return {
         "title": f"Proof {label}",
         "caption": "Local cost-control proof only",
-        "frames": [
-            {
-                "heading": f"Beat {i}",
-                "text": f"Distinct local proof narrative beat {i} for {label} with enough context to pass deterministic checks.",
-                "punch": f"Payoff {i}",
-                "subject_kind": "company",
-                "image_keywords": [f"proof subject {i}"],
-                "image_keywords_ar": [f"موضوع تجريبي {i}"],
-            }
-            for i in range(1, 7)
-        ],
+        "frames": frames,
         "sources": ["Local proof fixture", "Deterministic test data"],
         "image_queries": ["local proof"],
         "image_queries_ar": ["اختبار محلي"],
