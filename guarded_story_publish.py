@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Hard post-render release gate for Story-to-Snapchat.
 
-The inventory gate decides which stories are worth attempting. This entrypoint
-adds the authoritative final gate: only a rendered deck whose persisted visual
-state is READY may cross the Snapchat publishing boundary. REVIEW decks remain
-available for Telegram/manual review but are never auto-published.
+This is a personal Snapchat story, not a corporate asset pipeline. The inventory
+gate asks only whether enough reviewed relevant visuals exist to attempt the
+story; logos are optional. The rendered deck is authoritative and may contain
+at most one genuinely text-only card.
 """
 
 from __future__ import annotations
@@ -13,6 +13,35 @@ import os
 import sys
 
 import ready_story_publish as rsp
+
+
+def _personal_collect_ready_stories(stories=None, coverage_fn=None):
+    stories = list(rsp.sb.load_stories() if stories is None else stories)
+    coverage_fn = coverage_fn or rsp.sr.coverage
+    ready = []
+    for story in stories:
+        photos, _logos, status = coverage_fn(story)
+        if status == "PASS" and len(photos) >= 4:
+            ready.append(story)
+    return ready
+
+
+def _personal_resolve_story():
+    if rsp.sb.STORY:
+        story = rsp.sb.resolve_story_input(rsp.sb.STORY)
+        photos, _logos, status = rsp.sr.coverage(story)
+        if status != "PASS" or len(photos) < 4:
+            raise SystemExit(
+                f"requested story is not READY_FOR_SNAP: {status}: {story}"
+            )
+        return story
+    return rsp.sr.choose_runtime_story()
+
+
+# Keep the legacy publisher helpers, but replace its corporate-style inventory
+# assumptions for this guarded Story entrypoint only.
+rsp.collect_ready_stories = _personal_collect_ready_stories
+rsp._resolve_story = _personal_resolve_story
 
 
 def require_ready_for_publication(status: str, story: str) -> None:
@@ -26,11 +55,7 @@ def require_ready_for_publication(status: str, story: str) -> None:
 
 
 def visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
-    """Report real approved visuals from persisted post-render state.
-
-    Typography, dates, large figures and designed text-only treatments do not
-    count as visuals. Only frames explicitly persisted with status PASS count.
-    """
+    """Report approved visual slots from persisted post-render state."""
     rows = (visual_state or {}).get("frames") or {}
     approved = []
     missing = []
@@ -47,6 +72,15 @@ def visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
         "missing_visual_count": len(missing),
         "frame_count": int(frame_count),
     }
+
+
+def visual_report_is_ready(report: dict) -> bool:
+    """A personal Story needs strong visual coverage, not six corporate assets."""
+    frame_count = int((report or {}).get("frame_count", 0) or 0)
+    approved = int((report or {}).get("approved_visual_count", 0) or 0)
+    missing = int((report or {}).get("missing_visual_count", frame_count) or 0)
+    required = min(4, frame_count)
+    return frame_count > 0 and approved >= required and missing <= 1
 
 
 def print_visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
@@ -79,7 +113,7 @@ def main() -> None:
     revision, _visual_path = rsp.resolve_visual_revision(story)
     visual_state = rsp.svs.load_visual_state(story, revision)
     report = print_visual_accounting(visual_state, frame_count=len(frames))
-    final_status = "READY" if visual_state and report["missing_visual_count"] == 0 else "REVIEW"
+    final_status = "READY" if visual_state and visual_report_is_ready(report) else "REVIEW"
 
     rsp.scg.record_operation_event(
         story,
@@ -95,8 +129,6 @@ def main() -> None:
         print(f"DRY/HYBRID — rendered {len(frames)} frames; Snapchat untouched")
         return
 
-    # This is the boundary Story #101 was missing. REVIEW is useful for human
-    # inspection, but it is never a publishable state.
     require_ready_for_publication(final_status, story)
 
     if not rsp.nb.quota_ok():

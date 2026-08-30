@@ -1,0 +1,42 @@
+name: Personal Story visual policy test
+
+on:
+  push:
+    paths:
+      - "runtime_relevance.py"
+      - "story_runtime.py"
+      - "story_focus.py"
+      - "story_bot.py"
+      - "ready_story_publish.py"
+      - "guarded_story_publish.py"
+      - "tests/test_personal_story_visual_policy.py"
+      - ".github/workflows/personal-story-visual-policy-test.yml"
+  pull_request:
+    paths:
+      - "runtime_relevance.py"
+      - "story_runtime.py"
+      - "story_focus.py"
+      - "story_bot.py"
+      - "ready_story_publish.py"
+      - "guarded_story_publish.py"
+      - "tests/test_personal_story_visual_policy.py"
+      - ".github/workflows/personal-story-visual-policy-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Personal Story visual policy regressions
+        env:
+          POST_TO_SNAPCHAT: "0"
+        run: python -m unittest -v tests/test_personal_story_visual_policy.py

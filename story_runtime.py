@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Runtime-safe Story Bot entrypoint.
+"""Runtime-safe Story Bot entrypoint for a personal Snapchat story.
 
-The old catalogue could call a story READY while the renderer could only see
-one local file. This entrypoint makes the runtime itself authoritative:
-4 distinct, reviewed, relevant local photos + 1 local logo are required before
-research starts. It also exposes the renderer only to the approved local image
-rows for the selected story.
+The runtime inventory is a useful starting filter, not a corporate asset gate:
+four distinct reviewed relevant visuals are enough to attempt a story and a
+logo is optional. Reviewed local visuals selected by the frame's own keywords
+are trusted, including historical documents, banknotes and archive scans.
 """
 
 from __future__ import annotations
@@ -23,13 +22,32 @@ import story_focus
 import story_editorial_runtime
 import story_visual_state
 import city_visual_v3
-from runtime_relevance import asset_countable, runtime_pass, runtime_status
+from runtime_relevance import (
+    asset_countable,
+    runtime_pass,
+    runtime_status,
+    trusted_selected_local_visual,
+)
 
-# Story to Snapchat always enters through this guarded runtime. Apply the
-# editorial subject lock first, then cost-controlled editorial caching, then
-# the city-only selector. The revision prompt includes the same reviewed local
-# visual inventory that Story Focus appends during the paid research call.
 story_focus.configure(sb)
+
+# The reviewed local library is already selected by the frame's image keywords.
+# For Story-to-Snapchat, trust that curation instead of making a generic vision
+# model veto a banknote/document merely because it is not a conventional photo.
+_story_photo_shows = sb.photo_shows
+
+
+def _personal_story_photo_shows(photo, context):
+    story = str(sb.STORY or "").strip()
+    if story and trusted_selected_local_visual(photo, story):
+        print("      reviewed local visual trusted for personal Story")
+        return "yes"
+    return _story_photo_shows(photo, context)
+
+
+sb.photo_shows = _personal_story_photo_shows
+# Keep logos as occasional accents, not corporate wallpaper.
+sb.LOGO_MAX_FRAMES = min(1, int(getattr(sb, "LOGO_MAX_FRAMES", 1) or 1))
 
 
 def _editorial_prompt_for_revision():
@@ -44,9 +62,40 @@ def _editorial_prompt_for_revision():
 sb.editorial_prompt_for_revision = _editorial_prompt_for_revision
 story_editorial_runtime.configure(sb)
 city_visual_v3.configure(sb)
-# Visual-state reuse wraps the final city/non-city selector so approved frames
-# keep all existing relevance/era/haze protections and failed slots alone are
-# reopened during visual_only repair.
+
+
+def personal_visual_slots_ready(photos) -> bool:
+    """A personal Story may have at most one genuinely empty visual slot."""
+    values = list(photos or [])
+    if not values:
+        return False
+    return sum(1 for photo in values if photo is None) <= 1
+
+
+# Do not let typographic numbers/dates hide a mostly empty deck. The legacy
+# renderer may style them nicely, but they are still not photos/documents.
+_personal_find_all_photos = sb.find_all_photos
+
+
+def _visual_first_find_all_photos(brief):
+    photos = _personal_find_all_photos(brief)
+    if photos is None:
+        return None
+    if not personal_visual_slots_ready(photos):
+        missing = [i for i, photo in enumerate(photos, 1) if photo is None]
+        sb._LAST_SKIP = (
+            "personal Story visual coverage: missing real visuals on frames "
+            + ", ".join(str(i) for i in missing)
+        )
+        print(
+            "  ! personal Story visual gate: more than one frame has no real "
+            "visual — skipping rather than shipping a text-heavy deck"
+        )
+        return None
+    return photos
+
+
+sb.find_all_photos = _visual_first_find_all_photos
 story_visual_state.configure(sb)
 
 
@@ -59,7 +108,7 @@ def _matches_story(entry, story):
 
 
 def approved_runtime_visuals(story):
-    """Return distinct approved local photos plus local logos for ``story``."""
+    """Return distinct approved local visuals plus optional local logos."""
     photos = []
     for entry in nb.load_local_images():
         path = entry["path"]
@@ -87,8 +136,6 @@ def approved_runtime_visuals(story):
         hashes.append(dh)
         kept.append(path)
 
-    # Logo resolution in story_bot is already local-file based and uses the
-    # story's declared identity. We deliberately ignore its photo result here.
     _, logos = sb.resolve_runtime_visuals(story)
     return kept, logos
 
@@ -101,7 +148,7 @@ def coverage(story):
 def _eligible_story(story):
     photos, logos, status = coverage(story)
     print(f"    runtime relevance: {status} "
-          f"({len(photos)} approved photos, {len(logos)} logo(s))")
+          f"({len(photos)} approved visual(s), {len(logos)} optional logo(s))")
     return runtime_pass(len(photos), len(logos))
 
 
@@ -171,17 +218,14 @@ def main():
         story = choose_runtime_story()
 
     if not story:
-        raise SystemExit("no runtime-PASS story available (needs 4 approved photos + logo)")
+        raise SystemExit("no runtime-PASS story available (needs 4 approved visuals)")
 
     photos, logos, status = coverage(story)
     if not runtime_pass(len(photos), len(logos)):
         raise SystemExit(
             f"story blocked by runtime relevance gate: {status}; "
-            f"{len(photos)} approved photos, {len(logos)} logo(s): {story}")
+            f"{len(photos)} approved visual(s): {story}")
 
-    # Give the existing renderer only the approved rows for this story. This is
-    # stronger than merely changing the audit: rejected/unreviewed local assets
-    # are invisible to fetch_local_photo for this run.
     filtered = _filtered_index(story, photos)
     nb.IMAGES_INDEX = filtered
     os.environ["IMAGES_INDEX"] = str(filtered)
@@ -191,8 +235,9 @@ def main():
         sb.notify_album = lambda *args, **kwargs: None
         print("    intermediate Telegram notifications suppressed")
     print(f"    runtime gate PASS: {story}")
-    print("    approved photos: " + ", ".join(p.name for p in photos))
-    print("    logo(s): " + ", ".join(p.name for p in logos))
+    print("    approved visuals: " + ", ".join(p.name for p in photos))
+    if logos:
+        print("    optional logo(s): " + ", ".join(p.name for p in logos))
     sb.main()
 
 
