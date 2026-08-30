@@ -122,7 +122,7 @@
       "status": "PASS"
     },
     "6": {
-      "asset_hash": null,
+      "asset_hash": "38abde281f23159d3cd0da27974a0f21843433927e9204107b00637c8235bbaa",
       "frame_payload": {
         "heading": "من بلدة مسوّرة إلى مدينة بهذا الحجم",
         "image_keywords": [
@@ -137,15 +137,13 @@
         "subject_kind": "place_city",
         "text": "في 2024 سجّلت الرياض 225 مليار ريال في مبيعات نقاط البيع. رقم يعكس حجم السوق والحركة الاقتصادية في مدينة كانت قبل نحو قرن محصورة داخل سور من الطين."
       },
-      "image_source": null,
-      "qa_reasons": [
-        "no approved visual selected"
-      ],
-      "status": "FAIL"
+      "image_source": "state/story_visuals/75502f37e3511459/6a749d51b72c80eb4536c3087a889a5cbdfb7b42fb68cf7b2eafafca2d4c88ce/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
     }
   },
   "revision": "6a749d51b72c80eb4536c3087a889a5cbdfb7b42fb68cf7b2eafafca2d4c88ce",
   "schema": "story-visual-v1",
-  "status": "VISUAL_ASSEMBLY",
+  "status": "VISUAL_READY",
   "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
 }
