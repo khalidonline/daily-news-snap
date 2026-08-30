@@ -74,3 +74,5 @@ jobs:
         run: python -m unittest -v tests/test_story_editorial_runtime.py
       - name: Story operation modes
         run: python -m unittest -v tests/test_story_workflow_choice.py
+      - name: Frame-only visual state
+        run: python -m unittest -v tests/test_story_visual_state.py
