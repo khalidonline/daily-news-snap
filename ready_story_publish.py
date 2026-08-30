@@ -22,6 +22,7 @@ import story_bot as sb
 import story_runtime as sr
 import story_visual_state as svs
 import story_notification_state as sns
+import story_cost_guard as scg
 
 
 READY_FILE = Path(os.getenv("READY_STORIES_FILE", "state/ready_to_post.json"))
@@ -92,6 +93,20 @@ def _frame_snapshot():
         except OSError:
             pass
     return result
+
+
+def persist_editorial_state(commit_fn=None):
+    """Persist spend guard/cache evidence created by the child, even on failure."""
+    commit_fn = commit_fn or sb.commit_and_push
+    cost_root = Path(os.getenv("STORY_COST_STATE_ROOT", "state"))
+    targets = [
+        cost_root / "model_usage.jsonl",
+        cost_root / "model_call_guard",
+        Path(os.getenv("STORY_BRIEF_ROOT", "state/story_briefs")),
+    ]
+    for target in targets:
+        if target.exists():
+            commit_fn(target, f"story editorial state: {target.name}")
 
 
 def persist_visual_revision(
@@ -185,6 +200,10 @@ def build_story_without_posting(story):
         text=True,
         capture_output=True,
     )
+    # The child owns paid-call/cache writes. Persist them before interpreting
+    # its exit status so a failed render cannot erase a reservation on the
+    # next clean GitHub runner and accidentally buy the same revision again.
+    persist_editorial_state()
     if result.stdout:
         print(result.stdout.rstrip())
     if result.returncode != 0:
@@ -301,6 +320,14 @@ def main():
         if visual_state and not svs.failed_frame_indices(visual_state)
         else "REVIEW"
     )
+    scg.record_operation_event(
+        story,
+        revision,
+        "final_state",
+        mode=os.getenv("STORY_OPERATION_MODE", "auto"),
+        status=final_status,
+    )
+    persist_editorial_state()
     notify_final_candidate(story, frames, final_status, revision)
 
     if nb.DRY_RUN or not nb.POST_ENABLED:
