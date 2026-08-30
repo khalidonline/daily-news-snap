@@ -46,7 +46,18 @@ class EditorialQualityTests(unittest.TestCase):
 
     def test_empty_required_field_fails(self):
         brief = good_brief()
+        brief["frames"][2]["heading"] = ""
+        self.assertFalse(seq.evaluate_brief(brief, 6).passed)
+
+    def test_interior_punch_may_be_empty_when_field_is_present(self):
+        brief = good_brief()
         brief["frames"][2]["punch"] = ""
+        result = seq.evaluate_brief(brief, 6)
+        self.assertTrue(result.passed, result.reasons)
+
+    def test_missing_punch_field_fails_contract(self):
+        brief = good_brief()
+        brief["frames"][2].pop("punch")
         self.assertFalse(seq.evaluate_brief(brief, 6).passed)
 
     def test_model_boilerplate_or_raw_json_fails(self):
