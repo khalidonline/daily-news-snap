@@ -7,6 +7,14 @@ on:
       - "story_runtime.py"
       - "story_bot.py"
       - "story_focus.py"
+      - "story_brief_store.py"
+      - "story_editorial_quality.py"
+      - "story_cost_guard.py"
+      - "story_editorial_runtime.py"
+      - "story_visual_state.py"
+      - "story_notification_state.py"
+      - "story_cost_report.py"
+      - "story_cost_pilot.py"
       - "city_visual_fallback.py"
       - "city_visual_v2.py"
       - "city_visual_v3.py"
@@ -19,7 +27,15 @@ on:
       - "tests/test_runtime_relevance.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_story_workflow_choices.py"
+      - "tests/test_story_workflow_choice.py"
       - "tests/test_story_focus.py"
+      - "tests/test_story_brief_store.py"
+      - "tests/test_story_editorial_quality.py"
+      - "tests/test_story_cost_guard.py"
+      - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_visual_state.py"
+      - "tests/test_story_notification_state.py"
+      - "tests/test_story_cost_report.py"
       - "tests/test_city_visual_fallback.py"
       - "tests/test_city_visual_quality_plan.py"
       - "tests/test_city_visual_decade_match.py"
@@ -36,6 +52,14 @@ on:
       - "story_runtime.py"
       - "story_bot.py"
       - "story_focus.py"
+      - "story_brief_store.py"
+      - "story_editorial_quality.py"
+      - "story_cost_guard.py"
+      - "story_editorial_runtime.py"
+      - "story_visual_state.py"
+      - "story_notification_state.py"
+      - "story_cost_report.py"
+      - "story_cost_pilot.py"
       - "city_visual_fallback.py"
       - "city_visual_v2.py"
       - "city_visual_v3.py"
@@ -48,7 +72,15 @@ on:
       - "tests/test_runtime_relevance.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_story_workflow_choices.py"
+      - "tests/test_story_workflow_choice.py"
       - "tests/test_story_focus.py"
+      - "tests/test_story_brief_store.py"
+      - "tests/test_story_editorial_quality.py"
+      - "tests/test_story_cost_guard.py"
+      - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_visual_state.py"
+      - "tests/test_story_notification_state.py"
+      - "tests/test_story_cost_report.py"
       - "tests/test_city_visual_fallback.py"
       - "tests/test_city_visual_quality_plan.py"
       - "tests/test_city_visual_decade_match.py"
@@ -77,11 +109,21 @@ jobs:
       - name: Relevance policy unit tests
         run: python -m unittest -v tests/test_runtime_relevance.py
       - name: Ready-pool publishing unit tests
-        run: python -m unittest -v tests/test_ready_story_publish.py
+        run: POST_TO_SNAPCHAT=0 python -m unittest -v tests/test_ready_story_publish.py
       - name: Story workflow choice regression
-        run: python -m unittest -v tests/test_story_workflow_choices.py
+        run: python -m unittest -v tests/test_story_workflow_choices.py tests/test_story_workflow_choice.py
       - name: Story subject and visual focus regressions
         run: python -m unittest -v tests/test_story_focus.py
+      - name: Story cost-control regressions
+        run: |
+          POST_TO_SNAPCHAT=0 python -m unittest \
+            tests.test_story_brief_store \
+            tests.test_story_editorial_quality \
+            tests.test_story_cost_guard \
+            tests.test_story_editorial_runtime \
+            tests.test_story_visual_state \
+            tests.test_story_notification_state \
+            tests.test_story_cost_report -v
       - name: City visual fallback regressions
         run: python -m unittest -v tests/test_city_visual_fallback.py
       - name: City visual quality-plan regression
@@ -91,9 +133,13 @@ jobs:
       - name: Global photo quality regressions
         run: python -m unittest -v tests/test_global_photo_quality.py
       - name: Compile guarded story entrypoint
-        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py city_visual_fallback.py city_visual_v2.py city_visual_v3.py photo_quality.py photo_quality_guard.py preflight_stories.py image_precheck.py news_bot.py news_bot_core.py
+        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py story_brief_store.py story_editorial_quality.py story_cost_guard.py story_editorial_runtime.py story_visual_state.py story_notification_state.py story_cost_report.py story_cost_pilot.py city_visual_fallback.py city_visual_v2.py city_visual_v3.py photo_quality.py photo_quality_guard.py preflight_stories.py image_precheck.py news_bot.py news_bot_core.py ready_story_publish.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
+      - name: Zero-external-API cost-control pilot proof
+        env:
+          POST_TO_SNAPCHAT: "0"
+        run: python story_cost_pilot.py --output /tmp/story-cost-pilot.json
       - name: Jack Bogle regression — require repaired source coverage
         run: |
           PYTHONPATH=. python - <<'PY'
