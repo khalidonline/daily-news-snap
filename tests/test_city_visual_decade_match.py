@@ -117,6 +117,10 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
             "Riyadh Skyline.jpg",
             cvf.pinned_riyadh_visual(closing)["filename"],
         )
+        self.assertEqual(
+            ["Riyadh Skyline.jpg", "Riyadh aerial helicam 2013.jpg"],
+            [asset["filename"] for asset in cvf.pinned_riyadh_visuals(closing)],
+        )
         self.assertIsNone(cvf.pinned_riyadh_visual(ordinary_skyline))
 
     def test_spa_item_explicitly_naming_another_city_is_rejected(self):
