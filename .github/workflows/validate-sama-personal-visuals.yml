@@ -53,3 +53,5 @@ jobs:
           path: out/*.png
           retention-days: 7
           if-no-files-found: ignore
+
+# validation trigger: approved best-visual rule
