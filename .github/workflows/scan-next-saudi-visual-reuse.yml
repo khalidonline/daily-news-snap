@@ -1,0 +1,46 @@
+name: Scan next Saudi visual reuse
+
+on:
+  push:
+    branches:
+      - validation/next-saudi-visual-reuse
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation/next-saudi-visual-reuse
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Print reusable candidates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import news_bot as nb
+          import story_runtime as sr
+          from runtime_relevance import asset_countable
+
+          stories = [
+              "قصة نادك للأغذية",
+              "قصة سابك من فكرة إلى عملاق بتروكيماويات",
+              "قصة نون ومنافسة التجارة الإلكترونية",
+              "قصة الكبسة ورحلة الرز إلى الجزيرة العربية",
+          ]
+          entries = nb.load_local_images()
+          for story in stories:
+              photos, logos, status = sr.coverage(story)
+              print('\nSTORY', story)
+              print('COVERAGE', status, len(photos), [p.name for p in photos])
+              print('MATCHED_CATALOG')
+              for entry in entries:
+                  if sr._matches_story(entry, story):
+                      name = Path(entry['path']).name
+                      print(name, 'countable=', asset_countable(name, story), 'tags=', entry.get('tags', []))
+          PY
