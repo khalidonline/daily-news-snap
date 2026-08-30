@@ -1,3 +1,4 @@
+# Regression coverage for AI-generated image attribution across publish flows.
 import tempfile
 import unittest
 from pathlib import Path
