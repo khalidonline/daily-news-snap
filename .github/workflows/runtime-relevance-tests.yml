@@ -6,7 +6,10 @@ on:
       - "runtime_relevance.py"
       - "story_runtime.py"
       - "story_bot.py"
+      - "news_bot.py"
+      - "topic_snapchat.py"
       - "tests/test_runtime_relevance.py"
+      - "tests/test_ai_image_attribution.py"
       - "images/relevance.json"
       - "images/images.txt"
       - "images/bogle-vanguard-*.jpg"
@@ -18,7 +21,10 @@ on:
       - "runtime_relevance.py"
       - "story_runtime.py"
       - "story_bot.py"
+      - "news_bot.py"
+      - "topic_snapchat.py"
       - "tests/test_runtime_relevance.py"
+      - "tests/test_ai_image_attribution.py"
       - "images/relevance.json"
       - "images/images.txt"
       - "images/bogle-vanguard-*.jpg"
@@ -40,10 +46,10 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Relevance policy unit tests
-        run: python -m unittest -v tests/test_runtime_relevance.py
+      - name: Relevance and AI-attribution policy unit tests
+        run: python -m unittest -v tests/test_runtime_relevance.py tests/test_ai_image_attribution.py
       - name: Compile guarded story entrypoint
-        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py
+        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py topic_snapchat.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
       - name: Jack Bogle regression — require repaired source coverage

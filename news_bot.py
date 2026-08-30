@@ -2523,9 +2523,9 @@ def render_number(brief, out_path, photo_credit=None):
     sources = "، ".join(brief.get("sources", [])[:3])
     if sources:
         parts.append(f"المصدر: {sources}")
-    # a generated image must always be labelled, whatever was passed in
+    # AI-generated imagery has no external photo source to attribute.
     if photo_path and Path(str(photo_path) + ".generated").exists():
-        photo_credit = GENERATED_CREDIT
+        photo_credit = None
     if photo_credit:
         parts.append(f"الصورة: {photo_credit}")
     if parts:
@@ -2683,9 +2683,9 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
 
     # credit, always clear of the text above it
     f_foot = load_font(26)
-    # a generated image must always be labelled, whatever was passed in
+    # AI-generated imagery has no external photo source to attribute.
     if photo_path and Path(str(photo_path) + ".generated").exists():
-        photo_credit = GENERATED_CREDIT
+        photo_credit = None
 
     def fit(text):
         while text and draw.textlength(ar(text)[0], font=f_foot, **kw) > max_w:
