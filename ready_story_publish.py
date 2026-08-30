@@ -20,6 +20,7 @@ from PIL import Image, ImageDraw
 import news_bot as nb
 import story_bot as sb
 import story_runtime as sr
+import story_visual_state as svs
 
 
 READY_FILE = Path(os.getenv("READY_STORIES_FILE", "state/ready_to_post.json"))
@@ -92,6 +93,24 @@ def _frame_snapshot():
     return result
 
 
+def persist_visual_revision(
+    story,
+    *,
+    revision_fn=None,
+    state_dir_fn=None,
+    commit_fn=None,
+):
+    """Commit the revision-scoped visual state/assets after a successful build."""
+    revision_fn = revision_fn or (lambda value: svs._effective_revision(sb, value))
+    state_dir_fn = state_dir_fn or svs.visual_revision_dir
+    commit_fn = commit_fn or sb.commit_and_push
+    revision = revision_fn(story)
+    path = Path(state_dir_fn(story, revision))
+    if path.exists():
+        commit_fn(path, f"story visual state: {revision[:12]}")
+    return path
+
+
 def build_story_without_posting(story):
     """Render one fresh strict-PASS deck without changing posting state."""
     before = _frame_snapshot()
@@ -128,6 +147,10 @@ def build_story_without_posting(story):
         raise SystemExit(
             f"expected {expected} fresh story frames, got {len(changed)}; nothing posted"
         )
+    # The child runtime persisted approved intermediate visuals and QA state.
+    # Commit only after the expected fresh deck exists, before any posting
+    # decision, so later visual_only reruns can reuse untouched frame slots.
+    persist_visual_revision(story)
     return changed
 
 
@@ -234,7 +257,7 @@ def main():
         raise SystemExit("not all Snapchat Story frames were confirmed")
 
     _mark_story_complete(story)
-    print(f"SNAPCHAT STORY COMPLETE: {story} ({confirmed}/{len(frames)} frames)")
+    print(f"SNAPCHAT STORY COMPLETE: {story} ({confirmed}/{len(frames)} frames")
 
 
 if __name__ == "__main__":
