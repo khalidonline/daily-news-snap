@@ -1,0 +1,33 @@
+name: Repair Ali Al-Naimi visuals
+
+on:
+  push:
+    branches:
+      - fix/ali-alnaimi-visuals
+
+permissions:
+  contents: read
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/ali-alnaimi-visuals
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Ali Al-Naimi has four protagonist visuals
+        run: |
+          python - <<'PY'
+          import story_runtime as sr
+          story = "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط"
+          photos, logos, status = sr.coverage(story)
+          names = [p.name for p in photos]
+          print("COVERAGE", status, len(photos), names)
+          required = {"ali-alnaimi-2005-india.jpg", "ali-alnaimi-2010-bilateral.jpg"}
+          if status != "PASS" or len(photos) < 4 or not required.issubset(names):
+              raise SystemExit("Ali Al-Naimi story still lacks four distinct protagonist visuals")
+          PY
