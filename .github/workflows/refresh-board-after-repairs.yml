@@ -1,0 +1,47 @@
+name: Refresh board after repairs
+
+on:
+  push:
+    branches:
+      - validation/next-saudi-visual-reuse
+
+permissions:
+  contents: read
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation/next-saudi-visual-reuse
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Calculate board
+        run: |
+          python - <<'PY'
+          import story_bot as sb
+          import story_runtime as sr
+          rows=[]
+          for story in sb.load_stories():
+              photos, logos, status = sr.coverage(story)
+              rows.append((story, len(photos), status))
+          passed=[r for r in rows if r[2]=='PASS']
+          unresolved=[r for r in rows if r[2]!='PASS']
+          print('TOTAL', len(rows))
+          print('PASS', len(passed))
+          print('UNRESOLVED', len(unresolved))
+          print('ONE_SHORT', sum(1 for _,n,_ in unresolved if n==3))
+          print('TWO_SHORT', sum(1 for _,n,_ in unresolved if n==2))
+          for target in [
+              'قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم',
+              'علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط',
+              'قصة ماكدونالدز في السعودية وعائلات الامتياز',
+              'قصة انهيار سوق الأسهم السعودية 2006',
+          ]:
+              for row in rows:
+                  if row[0] == target:
+                      print('TARGET', row)
+          PY
