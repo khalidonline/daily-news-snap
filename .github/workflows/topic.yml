@@ -10,7 +10,7 @@ on:
         type: string
         required: false
       season:
-        description: "موسم — اسم موسم من seasons.txt (مثل: الدوري، كأس آسيا، رمضان)"
+        description: "موسم — اسم أو alias من seasons.txt (مثل: LEAP، ليب، رمضان)"
         type: string
         required: false
       dry_run:
@@ -41,6 +41,17 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Resolve manual season alias
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          REQUESTED_SEASON: ${{ inputs.season }}
+        run: |
+          resolved="$(python season_aliases.py "$REQUESTED_SEASON" seasons.txt)"
+          echo "FORCE_SEASON=$resolved" >> "$GITHUB_ENV"
+          if [ -n "$REQUESTED_SEASON" ] && [ "$resolved" != "$REQUESTED_SEASON" ]; then
+            echo "season alias: $REQUESTED_SEASON -> $resolved"
+          fi
+
       - name: Research and post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -67,7 +78,6 @@ jobs:
           ARK_MODEL: ${{ vars.ARK_MODEL }}
           FAL_KEY: ${{ secrets.FAL_KEY }}
           TOPIC: ${{ inputs.topic }}
-          FORCE_SEASON: ${{ inputs.season }}
           TOPICS_FILE: "topics.txt"
           VOICE_FILE: "voice.txt"
           TOPIC_PERFORMANCE_FILE: "state/topic_performance.json"
