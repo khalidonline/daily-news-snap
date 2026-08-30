@@ -53,6 +53,13 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         )
         self.assertEqual(ready, ["personal-story"])
 
+    def test_four_visuals_do_not_enter_ready_pool_even_if_status_is_wrongly_pass(self):
+        ready = rsp.collect_ready_stories(
+            ["personal-story"],
+            coverage_fn=lambda _story: (list(range(4)), [], "PASS"),
+        )
+        self.assertEqual(ready, [])
+
     def test_one_text_only_card_can_still_be_ready(self):
         state = {"frames": {
             "1": {"status": "PASS"}, "2": {"status": "PASS"},
