@@ -22,19 +22,16 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Recover and render the original SAMA story without a model call
+      - name: Render recovered SAMA story without editorial/model call
         env:
           POST_TO_SNAPCHAT: "0"
           DRY_RUN: "1"
           STORY: "قصة تأسيس مؤسسة النقد ساما"
-          STORY_OPERATION_MODE: "visual_only"
-          STORY_REPAIR_FRAMES: "1,2,3,4,5,6"
           STORY_ALLOW_REPEAT: "1"
           STORY_SUPPRESS_TELEGRAM: "1"
           ALLOW_GENERATED: "0"
           ALLOW_STORY_GENERATION: "0"
           STORY_FRAMES: "6"
-          STORY_MODEL: "claude-opus-5"
           MEDIA_MODE: "github"
           THEME: "light"
           BRAND: "ملخص تنفيذي - قصة"
@@ -43,8 +40,6 @@ jobs:
           python - <<'PY'
           import os
           import story_runtime as sr
-          import story_editorial_runtime as ser
-          import story_brief_store as sbs
 
           story = "قصة تأسيس مؤسسة النقد ساما"
           photos, _logos = sr.approved_runtime_visuals(story)
@@ -52,11 +47,11 @@ jobs:
           sr.nb.IMAGES_INDEX = filtered
           os.environ["IMAGES_INDEX"] = str(filtered)
           sr.sb.STORY = story
-          revision = ser.revision_for(sr.sb, story, "visual_only")
 
           brief = {
             "title": "مؤسسة أقنعت الناس أن الورق نقود",
             "caption": "مؤسسة أقنعت الناس أن الورق نقود",
+            "story": story,
             "frames": [
               {
                 "heading": "بلد يتداول نقود غيره",
@@ -113,16 +108,10 @@ jobs:
             "sources": ["البنك المركزي السعودي", "سعوديبيديا", "جريدة الرياض"]
           }
 
-          path = sbs.save_locked_brief(story, revision, {
-              "status": "EDITORIAL_LOCKED",
-              "brief": brief,
-              "model": "recovered-from-story-101-artifact",
-              "message_id": None,
-              "input_tokens": 0,
-              "output_tokens": 0,
-              "prompt_hash": "recovered-story-101"
-          })
-          print(f"RECOVERED_SAMA_BRIEF {revision[:12]} -> {path}")
+          # Validation only: bypass the editorial wrapper and feed the recovered
+          # Story #101 brief straight to the normal visual/render path.
+          sr.sb.research = lambda requested_story: brief
+          print("RECOVERED_SAMA_BRIEF injected directly; editorial model disabled")
           sr.main()
           PY
       - name: Keep SAMA frames for review
