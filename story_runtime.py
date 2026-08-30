@@ -119,6 +119,10 @@ _STORY_EXTRA_VISUALS = {
         "first-hajj-receipt.png",
         "silver-riyal.png",
     },
+    "قصة أول عملة ورقية سعودية": {
+        "targeted-sama-1953-10-riyal.jpg",
+        "targeted-sama-1954-5-riyal.jpg",
+    },
 }
 
 
