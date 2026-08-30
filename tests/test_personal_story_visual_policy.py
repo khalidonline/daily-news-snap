@@ -81,6 +81,13 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         self.assertTrue(hasattr(gsp, "visual_report_is_ready"))
         self.assertFalse(gsp.visual_report_is_ready(report))
 
+    def test_story_prompt_explicitly_targets_personal_snapchat_not_report_style(self):
+        import story_runtime as sr
+        prompt = sr.sb.SYSTEM_PROMPT
+        self.assertIn("سناب شخصي", prompt)
+        self.assertIn("قصيراً", prompt)
+        self.assertIn("وثيقة", prompt)
+
 
 if __name__ == "__main__":
     unittest.main()
