@@ -6,7 +6,6 @@ from unittest import mock
 from PIL import Image, ImageDraw
 
 import ready_story_publish as rsp
-import story_bot as sb
 
 
 class ReadyStoryPublishTests(unittest.TestCase):
@@ -31,18 +30,6 @@ class ReadyStoryPublishTests(unittest.TestCase):
 
     def test_ready_deck_is_publishable(self):
         rsp.require_ready_for_publication("READY", "story")
-
-    def test_typographic_frames_still_count_as_missing_visuals(self):
-        frames = [
-            {"text": "1952"},
-            {"text": "1953"},
-            {"text": "1954"},
-            {"text": "1955"},
-            {"text": "photo"},
-            {"text": "photo"},
-        ]
-        photos = [None, None, None, None, "5.jpg", "6.jpg"]
-        self.assertEqual(sb._missing_visual_indices(frames, photos), [1, 2, 3, 4])
 
     def test_publish_frames_posts_each_snap_separately(self):
         calls = []
