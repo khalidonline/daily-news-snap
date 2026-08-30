@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Shared relevance policy for Story Bot runtime and audits.
 
-A local file is necessary but not sufficient. Materialized ``rt-*`` assets
-must be explicitly reviewed for the specific story before they count. Existing
-manually curated assets remain trusted by default unless the ledger explicitly
-rejects them.
+For a personal Snapchat story, the useful question is simple: do we have enough
+reviewed, relevant visuals to tell the story? A logo is optional, and a curated
+historical document/currency scan is a valid visual when it was selected from
+the reviewed local library for that story.
 """
 
 from __future__ import annotations
@@ -36,13 +36,7 @@ def _load(path: str | Path = DEFAULT_LEDGER) -> dict:
 
 
 def verdict_for(filename: str, story: str, ledger_path: str | Path = DEFAULT_LEDGER) -> str:
-    """Return the story-specific review verdict, or ``""`` when unreviewed.
-
-    Ledger keys are normally exact story lines. A shorter explicit selector
-    such as ``Jack Bogle`` is also allowed and matches only when that selector
-    is contained in the story line. This keeps the ledger stable if editorial
-    punctuation in a title changes without making verdicts global.
-    """
+    """Return the story-specific review verdict, or ``""`` when unreviewed."""
     row = _load(ledger_path).get("assets", {}).get(Path(filename).name, {})
     stories = row.get("stories", {}) if isinstance(row, dict) else {}
     if not isinstance(stories, dict):
@@ -62,13 +56,11 @@ def verdict_for(filename: str, story: str, ledger_path: str | Path = DEFAULT_LED
 
 def asset_countable(filename: str, story: str,
                     ledger_path: str | Path = DEFAULT_LEDGER) -> bool:
-    """Whether this local photo may count and be served for ``story``.
+    """Whether this local visual may count and be served for ``story``.
 
-    Policy:
-    * ``DIRECT`` and ``STRONG_CONTEXT`` count.
-    * ``WEAK_GENERIC`` and ``WRONG_ENTITY`` never count.
-    * unreviewed ``rt-*`` files fail closed.
-    * legacy/manual non-``rt-*`` files remain trusted unless explicitly vetoed.
+    DIRECT and STRONG_CONTEXT count. Explicit weak/wrong verdicts do not.
+    Unreviewed materialized ``rt-*`` files fail closed; manually curated files
+    remain trusted unless explicitly vetoed.
     """
     name = Path(filename).name
     verdict = verdict_for(name, story, ledger_path)
@@ -79,18 +71,44 @@ def asset_countable(filename: str, story: str,
     return not name.startswith("rt-")
 
 
-def runtime_status(photo_count: int, logo_count: int) -> str:
-    """Canonical 4 relevant photos + 1 logo classification."""
-    need_photos = max(0, 4 - int(photo_count))
-    has_logo = int(logo_count) > 0
-    if need_photos == 0 and has_logo:
+def _selected_local_source(selected_path: str | Path) -> str:
+    """Return the source filename recorded by fetch_local_photo, if any."""
+    marker = Path(str(selected_path) + ".exempt")
+    try:
+        value = marker.read_text(encoding="utf-8").strip()
+    except OSError:
+        return ""
+    if not value.startswith("local:"):
+        return ""
+    return Path(value.split(":", 1)[1].strip()).name
+
+
+def trusted_selected_local_visual(
+    selected_path: str | Path,
+    story: str,
+    ledger_path: str | Path = DEFAULT_LEDGER,
+) -> bool:
+    """Trust a keyword-selected, reviewed local visual for a Story frame.
+
+    This is intentionally simple. The local selector has already matched the
+    frame's image keywords. If the source is curated/countable for this story,
+    do not make a second generic 'is this a photograph?' model veto it merely
+    because it is a banknote, document, receipt, advertisement or archive scan.
+    Explicit WEAK_GENERIC/WRONG_ENTITY verdicts still fail closed.
+    """
+    source = _selected_local_source(selected_path)
+    if not source:
+        return False
+    return asset_countable(source, story, ledger_path)
+
+
+def runtime_status(photo_count: int, logo_count: int = 0) -> str:
+    """Personal Story gate: four reviewed relevant visuals; logo optional."""
+    need_visuals = max(0, 4 - int(photo_count))
+    if need_visuals == 0:
         return "PASS"
-    if need_photos and not has_logo:
-        return f"NEEDS {need_photos} MORE PHOTO{'S' if need_photos != 1 else ''} + LOGO"
-    if need_photos:
-        return f"NEEDS {need_photos} MORE PHOTO{'S' if need_photos != 1 else ''}"
-    return "NEEDS LOGO"
+    return f"NEEDS {need_visuals} MORE VISUAL{'S' if need_visuals != 1 else ''}"
 
 
-def runtime_pass(photo_count: int, logo_count: int) -> bool:
+def runtime_pass(photo_count: int, logo_count: int = 0) -> bool:
     return runtime_status(photo_count, logo_count) == "PASS"
