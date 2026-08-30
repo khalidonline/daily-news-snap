@@ -89,6 +89,47 @@ class ReadyStoryPublishTests(unittest.TestCase):
             self.assertFalse(path.exists())
             self.assertEqual([], calls)
 
+    def test_child_render_suppresses_intermediate_telegram(self):
+        fake_result = mock.Mock(returncode=1, stdout="", stderr="blocked")
+        with mock.patch.object(rsp.subprocess, "run", return_value=fake_result) as run:
+            with self.assertRaises(SystemExit):
+                rsp.build_story_without_posting("story")
+        self.assertEqual("1", run.call_args.kwargs["env"]["STORY_SUPPRESS_TELEGRAM"])
+        self.assertEqual("0", run.call_args.kwargs["env"]["POST_TO_SNAPCHAT"])
+
+    def test_final_ready_candidate_notifies_once_then_dedupes(self):
+        calls = []
+        claims = iter([Path("claim"), None])
+        kwargs = dict(
+            story="story",
+            frames=["1.png", "2.png"],
+            status="READY",
+            revision="rev",
+            digest="hash",
+            claim_fn=lambda *args: next(claims),
+            notify_fn=lambda caption, frames, as_documents=True: calls.append((caption, tuple(frames))),
+            complete_fn=lambda *args: None,
+            release_fn=lambda *args: None,
+            persist_fn=lambda: None,
+        )
+        self.assertTrue(rsp.notify_final_candidate(**kwargs))
+        self.assertFalse(rsp.notify_final_candidate(**kwargs))
+        self.assertEqual(1, len(calls))
+        self.assertIn("READY", calls[0][0])
+
+    def test_blocked_candidate_never_notifies(self):
+        called = []
+        sent = rsp.notify_final_candidate(
+            "story", ["1.png"], "BLOCKED", "rev", "hash",
+            claim_fn=lambda *args: called.append(args),
+            notify_fn=lambda *args, **kwargs: called.append("notify"),
+            complete_fn=lambda *args: None,
+            release_fn=lambda *args: None,
+            persist_fn=lambda: None,
+        )
+        self.assertFalse(sent)
+        self.assertEqual([], called)
+
     def test_ensure_subject_logo_visible_adds_contrast_backplate(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
