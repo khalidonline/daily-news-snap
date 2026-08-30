@@ -62,6 +62,28 @@ class CityVisualQualityPlanTests(unittest.TestCase):
         self.assertNotIn("old-riyadh-souq.jpg", names)
         self.assertEqual(2, len(assignments))
 
+    def test_riyadh_pins_offer_alternates_for_human_repair(self):
+        metro = cvf.pinned_riyadh_visuals({
+            "subject_kind": "place_city",
+            "heading": "الرياض تنزل تحت الأرض",
+            "text": "افتتح مترو الرياض",
+            "image_keywords": ["Riyadh Metro", "KAFD"],
+            "image_keywords_ar": ["مترو الرياض"],
+        })
+        self.assertGreaterEqual(len(metro), 2)
+        self.assertEqual("KAFD Station - Riyadh Metro.jpg", metro[0]["filename"])
+        self.assertNotEqual(metro[0]["filename"], metro[1]["filename"])
+
+        murabba = cvf.pinned_riyadh_visuals({
+            "subject_kind": "place_city",
+            "heading": "القصر الذي بُني خارج السور",
+            "text": "بنى الملك عبدالعزيز قصر المربع خارج سور الرياض",
+            "image_keywords": [],
+            "image_keywords_ar": [],
+        })
+        self.assertTrue(murabba)
+        self.assertEqual("Murabba Palace.jpg", murabba[0]["filename"])
+
 
 if __name__ == "__main__":
     unittest.main()
