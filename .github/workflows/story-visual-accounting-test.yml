@@ -1,0 +1,32 @@
+name: Story visual accounting test
+
+on:
+  push:
+    paths:
+      - "guarded_story_publish.py"
+      - "story_bot.py"
+      - "tests/test_story_visual_accounting.py"
+      - ".github/workflows/story-visual-accounting-test.yml"
+  pull_request:
+    paths:
+      - "guarded_story_publish.py"
+      - "story_bot.py"
+      - "tests/test_story_visual_accounting.py"
+      - ".github/workflows/story-visual-accounting-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Visual accounting regression
+        run: python -m unittest -v tests/test_story_visual_accounting.py
