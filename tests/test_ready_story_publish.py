@@ -5,6 +5,7 @@ from unittest import mock
 
 from PIL import Image, ImageDraw
 
+import guarded_story_publish as gsp
 import ready_story_publish as rsp
 
 
@@ -23,6 +24,13 @@ class ReadyStoryPublishTests(unittest.TestCase):
         )
 
         self.assertEqual(ready, ["ready-a", "ready-b"])
+
+    def test_review_deck_is_never_publishable(self):
+        with self.assertRaises(SystemExit):
+            gsp.require_ready_for_publication("REVIEW", "قصة تأسيس مؤسسة النقد ساما")
+
+    def test_ready_deck_is_publishable(self):
+        gsp.require_ready_for_publication("READY", "story")
 
     def test_publish_frames_posts_each_snap_separately(self):
         calls = []

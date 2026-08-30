@@ -123,7 +123,7 @@ jobs:
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
-        run: python ready_story_publish.py
+        run: python guarded_story_publish.py
 
       - name: Keep the frames for review
         if: always()
