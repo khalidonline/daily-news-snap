@@ -91,11 +91,41 @@ class ReadyStoryPublishTests(unittest.TestCase):
 
     def test_child_render_suppresses_intermediate_telegram(self):
         fake_result = mock.Mock(returncode=1, stdout="", stderr="blocked")
-        with mock.patch.object(rsp.subprocess, "run", return_value=fake_result) as run:
-            with self.assertRaises(SystemExit):
-                rsp.build_story_without_posting("story")
+        with mock.patch.object(rsp, "persist_editorial_state"):
+            with mock.patch.object(rsp.subprocess, "run", return_value=fake_result) as run:
+                with self.assertRaises(SystemExit):
+                    rsp.build_story_without_posting("story")
         self.assertEqual("1", run.call_args.kwargs["env"]["STORY_SUPPRESS_TELEGRAM"])
         self.assertEqual("0", run.call_args.kwargs["env"]["POST_TO_SNAPCHAT"])
+
+    def test_failed_child_persists_editorial_state_before_exit(self):
+        fake_result = mock.Mock(returncode=1, stdout="", stderr="blocked")
+        with mock.patch.object(rsp, "persist_editorial_state") as persist:
+            with mock.patch.object(rsp.subprocess, "run", return_value=fake_result):
+                with self.assertRaises(SystemExit):
+                    rsp.build_story_without_posting("story")
+        persist.assert_called_once_with()
+
+    def test_persist_editorial_state_commits_guard_ledger_and_briefs(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            cost = root / "cost"
+            briefs = root / "briefs"
+            (cost / "model_call_guard").mkdir(parents=True)
+            (cost / "model_usage.jsonl").write_text("{}\n", encoding="utf-8")
+            briefs.mkdir()
+            calls = []
+            with mock.patch.dict(
+                "os.environ",
+                {"STORY_COST_STATE_ROOT": str(cost), "STORY_BRIEF_ROOT": str(briefs)},
+            ):
+                rsp.persist_editorial_state(
+                    commit_fn=lambda target, message: calls.append((Path(target), message))
+                )
+            self.assertEqual(
+                {cost / "model_usage.jsonl", cost / "model_call_guard", briefs},
+                {target for target, _message in calls},
+            )
 
     def test_final_ready_candidate_notifies_once_then_dedupes(self):
         calls = []
