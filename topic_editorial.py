@@ -100,6 +100,20 @@ _ADVISORY_RE = re.compile(
     r"(?:ننصحك|نصيحتنا|خطوتك\s+(?:الآن|التالية)|وش\s+تسوي|ماذا\s+تفعل)",
     re.IGNORECASE,
 )
+_ASSERTIVENESS_RES = (
+    # Conversational certainty that upgrades an observed pattern into a conclusion.
+    re.compile(r"(?:واضح[هة]?\s+مو\s+صدف[هة]|مو\s+صدف[هة])", re.IGNORECASE),
+    # Unsupported claims of a single true/root cause or dominant driver.
+    re.compile(r"(?:السبب\s+الحقيقي|المحرك\s+الأكبر|المحرك\s+الرئيسي\s+بلا\s+شك)", re.IGNORECASE),
+    # Certainty markers attached to causal language.
+    re.compile(
+        r"(?:بلا\s+شك|بدون\s+شك|أكيد|بالتأكيد).{0,70}"
+        r"(?:سبب|عامل|محرك|يرفع|يخفض|يدفع|يسبب|وراء)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    # "X is what raises/causes Y" is too strong unless causality is explicitly established.
+    re.compile(r"(?:هو|هي)\s+ما\s+(?:يرفع|ترفع|يخفض|تخفض|يدفع|تدفع|يسبب|تسبب)", re.IGNORECASE),
+)
 
 
 def load_topics_with_categories(path: Path) -> list[dict[str, Any]]:
@@ -207,6 +221,20 @@ def _instructional_tone_errors(brief: dict[str, Any]) -> list[str]:
     return []
 
 
+def _assertiveness_errors(brief: dict[str, Any]) -> list[str]:
+    """Do not let editorial confidence exceed what the cited evidence establishes."""
+    text = "\n".join(
+        str(brief.get(field, "") or "").strip()
+        for field in ("title", "body", "takeaway", "caption")
+    )
+    if any(pattern.search(text) for pattern in _ASSERTIVENESS_RES):
+        return [
+            "assertiveness exceeds the evidence; avoid definitive certainty or causal language "
+            "unless the cited evidence explicitly establishes that conclusion"
+        ]
+    return []
+
+
 def _finance_tone_errors(brief: dict[str, Any]) -> list[str]:
     text = "\n".join(
         str(brief.get(field, "") or "").strip()
@@ -286,6 +314,7 @@ def validate_brief(brief: Any) -> list[str]:
         errors.append("source_url must be an http(s) URL")
 
     errors.extend(_instructional_tone_errors(brief))
+    errors.extend(_assertiveness_errors(brief))
     errors.extend(_finance_tone_errors(brief))
     return errors
 
@@ -324,6 +353,14 @@ def enhance_prompt(base_prompt: str, today: date | None = None) -> str:
         "الأهم أو السياق الذي ينبغي أن يبقى في ذهن المتابع، من دون توجيهه لفعل شيء.\n"
         "- العنوان الجذاب يفتح فضولاً حقيقياً ولا يصنع صدمة لفظية. إذا كان العنوان "
         "يعطي انطباعاً يحتاج المتن إلى تصحيحه لاحقاً، فأعد كتابة العنوان.\n"
+        "- لا تجعل قوة العبارة أعلى من قوة الدليل. البيانات التي تظهر تزامناً أو فرقاً في "
+        "السرعة لا تثبت وحدها السببية أو السبب الوحيد. تجنب عبارات مثل «واضحة مو صدفة»، "
+        "«بلا شك»، «السبب الحقيقي»، «المحرك الأكبر» و«هو ما يرفع» ما لم يثبت المصدر ذلك صراحة.\n"
+        "- عند تفسير نمط أو علاقة غير سببية، استخدم صياغة معايرة مثل «تشير البيانات إلى»، "
+        "«من العوامل»، «أحد العوامل»، «يتزامن مع» أو «قد يفسر جزءاً من». ويمكن الاكتفاء "
+        "بعرض الأرقام والمقارنة إذا لم يثبت المصدر تفسيراً أقوى.\n"
+        "- طبّق مستوى التحفظ نفسه على العنوان والمتن وtakeaway وcaption؛ لا تجعل caption أكثر "
+        "جزماً من البطاقة نفسها.\n"
         "- لا تحوّل النص إلى لهجة ثقيلة. استخدم فصحى مبسطة بإيقاع سعودي طبيعي، ويمكن "
         "استخدام كلمة سعودية مألوفة حين تجعل الجملة أقرب ولا تضعف المصداقية.\n"
         "- عندما يكون الموضوع زمنياً (اليوم، هذا العام، الأسعار الحالية، أين وصل)، "
