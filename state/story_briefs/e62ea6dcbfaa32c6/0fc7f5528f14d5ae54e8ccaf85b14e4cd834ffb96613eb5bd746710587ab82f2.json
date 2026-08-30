@@ -1,0 +1,117 @@
+{
+  "brief": {
+    "caption": "قبل 1952 ما كان للمملكة بنك مركزي. القصة بدأت بإيصال يحمله حاج.",
+    "frames": [
+      {
+        "heading": "بلد يتداول نقود غيره",
+        "image_keywords": [
+          "Jeddah 1950s",
+          "Saudi silver riyal coin"
+        ],
+        "image_keywords_ar": [
+          "جدة",
+          "الريال السعودي الفضي"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "قبل عام 1952، لم يكن في المملكة بنك مركزي. الأسواق تتداول عملات معدنية أجنبية مثل الروبية الهندية والجنيه الإنجليزي الذهبي إلى جانب الريال الفضي السعودي. وبعض الصيارفة كانوا يهرّبون الريال الفضي إلى الخارج طلباً للربح. ولم تكن هناك جهة واحدة مسؤولة عن قيمة النقود."
+      },
+      {
+        "heading": "مرسوم غيّر شكل النقد",
+        "image_keywords": [
+          "SAMA",
+          "Saudi Arabian Monetary Agency"
+        ],
+        "image_keywords_ar": [
+          "ساما",
+          "مؤسسة النقد"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولذلك صدر في 20 أبريل 1952 مرسوم ملكي من الملك عبدالعزيز بإنشاء مؤسسة النقد العربي السعودي، ومقرها جدة. وباشرت عملها فعلياً في 4 أكتوبر من السنة نفسها. مهمتها الأولى كانت إصدار نقد سعودي وحماية قيمته. لكن ما يقبله الناس في السوق حتى تلك اللحظة كان المعدن وحده."
+      },
+      {
+        "heading": "إيصال للحاج لا عملة",
+        "image_keywords": [
+          "Saudi riyal 1953",
+          "Saudi Arabian Monetary Agency 1953"
+        ],
+        "image_keywords_ar": [
+          "إيصالات الحجاج",
+          "مؤسسة النقد ساما"
+        ],
+        "punch": "ما كتبوا عليها كلمة «عملة» — كتبوا «إيصال».",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. في 25 يوليو 1953 طرحت المؤسسة ما عُرف بـ«إيصالات الحجاج» من فئة عشرة ريالات، لتخفّف عن الحاج مشقة حمل الريالات الفضية. الإيصال مضمون بما يقابله فضةً في خزينة المؤسسة. وطُبع منه خمسة ملايين نسخة بست لغات، منها الأردية والفارسية والملاوية."
+      },
+      {
+        "heading": "الناس ما وثقوا بالورق",
+        "image_keywords": [
+          "Saudi riyal 1954",
+          "Saudi Arabian Monetary Agency 1954"
+        ],
+        "image_keywords_ar": [
+          "مؤسسة النقد ساما",
+          "الريال"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن إقناع الناس بقبول الورق كان من أصعب ما واجه المؤسسة عند إنشائها، فالمقبول في التداول كان المعدن. ولذلك تدرّجت خطوة خطوة: فئة الخمسة ريالات سنة 1954، ثم فئة الريال الواحد سنة 1956. ولم تُطرح أوراق نقدية رسمية بالفئات الكاملة إلا في 1961 — تسع سنوات بعد التأسيس."
+      },
+      {
+        "heading": "احتياطي بالتريليونات",
+        "image_keywords": [
+          "Saudi riyal banknote",
+          "Saudi Central Bank"
+        ],
+        "image_keywords_ar": [
+          "الريال",
+          "البنك المركزي السعودي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهكذا صارت الجهة التي كانت تضمن ورقة واحدة بعشرة ريالات فضية هي التي تحفظ احتياطي الدولة. وفي 2020 تغيّر اسمها إلى البنك المركزي السعودي. وبنهاية 2025 بلغت أصوله الاحتياطية نحو 1.73 تريليون ريال، بحسب نشرته الإحصائية الشهرية."
+      },
+      {
+        "heading": "ما بقي من تلك البداية",
+        "image_keywords": [
+          "Saudi Central Bank",
+          "SAMA"
+        ],
+        "image_keywords_ar": [
+          "البنك المركزي السعودي",
+          "ساما"
+        ],
+        "punch": "الثقة التي بدأت بإيصال حج صارت نظام البلد المالي.",
+        "subject_kind": "company",
+        "text": "واليوم لا تُصدر ورقة نقد واحدة في المملكة إلا من هذه الجهة، وهي نفسها التي تشرف على البنوك."
+      }
+    ],
+    "image_prompt": "A quiet 1950s Arabian port town street at golden hour, low coral-stone buildings with wooden shutters, wooden crates and a scale on a merchant's table, scattered old silver coins on worn cloth, dusty ground, no people, no text, no logos, warm documentary photograph style",
+    "image_queries": [
+      "old Jeddah waterfront 1950s",
+      "vintage silver coins scattered",
+      "1950s Arabian market street"
+    ],
+    "image_queries_ar": [
+      "جدة",
+      "الريال السعودي الفضي",
+      "مؤسسة النقد"
+    ],
+    "sources": [
+      "البنك المركزي السعودي",
+      "سعوديبيديا",
+      "جريدة الرياض",
+      "واس"
+    ],
+    "title": "مؤسسة أقنعت الناس أن الورق نقود"
+  },
+  "input_tokens": 105141,
+  "message_id": "msg_011CeZ9MvDJoBo568tJJLBHT",
+  "model": "claude-opus-5",
+  "output_tokens": 8153,
+  "prompt_hash": "78d7ee23ad04a0019d5bb824214f91f2fc887c5604aefa62708b5e4e40d6c04d",
+  "revision": "0fc7f5528f14d5ae54e8ccaf85b14e4cd834ffb96613eb5bd746710587ab82f2",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
