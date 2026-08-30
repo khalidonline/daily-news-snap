@@ -76,3 +76,5 @@ jobs:
         run: python -m unittest -v tests/test_story_workflow_choice.py
       - name: Frame-only visual state
         run: python -m unittest -v tests/test_story_visual_state.py
+      - name: Final notification dedupe
+        run: python -m unittest -v tests/test_story_notification_state.py
