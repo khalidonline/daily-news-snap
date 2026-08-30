@@ -1,0 +1,40 @@
+name: Refresh current Story board
+
+on:
+  push:
+    branches:
+      - validation/story-board-current-2026-08-30
+
+permissions:
+  contents: read
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation/story-board-current-2026-08-30
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Calculate current runtime board
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          import story_runtime as sr
+          import story_bot as sb
+          rows=[]
+          for story in sb.load_stories():
+              photos, logos, status = sr.coverage(story)
+              rows.append((story, photos, logos, status))
+          passed=[r for r in rows if r[3]=='PASS']
+          unresolved=[r for r in rows if r[3] != 'PASS']
+          print('TOTAL', len(rows))
+          print('PASS', len(passed))
+          print('UNRESOLVED', len(unresolved))
+          print('NEXT_TWO_VISUAL_SAUDI')
+          for story, photos, logos, status in unresolved:
+              if len(photos)==2 and any(k in story for k in ['السعود','سابك','نادك','نون','الكبسة','الطيران','النعيمي','ماكدونالدز','سوق الأسهم']):
+                  print(status, '|', story, '|', [p.name for p in photos])
+          PY
