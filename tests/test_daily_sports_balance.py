@@ -131,6 +131,25 @@ class DailySportsBalanceTests(unittest.TestCase):
 
         self.assertEqual(result["stories"][0]["item"], 1)
 
+    def test_non_sports_goal_or_final_words_do_not_trigger_legacy_guard(self):
+        shortlist = [
+            {"lane": "sports"},
+            {"lane": "saudi_core"},
+        ]
+        stories = [
+            {"item": 1, "headline": "الهلال يحقق بطولة كبرى"},
+            {"item": 2, "headline": "ساما تعلن نظاماً جديداً"},
+        ]
+        controls = [
+            "البرنامج يهدف إلى رفع الاستثمارات التقنية",
+            "الهيئة تصدر قراراً نهائياً بشأن الرسوم",
+        ]
+
+        for headline in controls:
+            with self.subTest(headline=headline):
+                result = self._summarize([{"headline": headline}], stories, shortlist)
+                self.assertEqual(result["stories"][0]["item"], 1)
+
     def test_source_aware_save_persists_editorial_lane_for_future_runs(self):
         with tempfile.TemporaryDirectory() as tmp:
             state_path = Path(tmp) / "posted.json"
