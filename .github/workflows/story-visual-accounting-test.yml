@@ -3,11 +3,13 @@ name: Story visual accounting test
 on:
   push:
     paths:
+      - "guarded_story_publish.py"
       - "story_bot.py"
       - "tests/test_story_visual_accounting.py"
       - ".github/workflows/story-visual-accounting-test.yml"
   pull_request:
     paths:
+      - "guarded_story_publish.py"
       - "story_bot.py"
       - "tests/test_story_visual_accounting.py"
       - ".github/workflows/story-visual-accounting-test.yml"
