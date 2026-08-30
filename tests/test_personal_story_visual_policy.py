@@ -88,6 +88,12 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         self.assertIn("قصيراً", prompt)
         self.assertIn("وثيقة", prompt)
 
+    def test_pre_render_visual_coverage_rejects_two_or_more_empty_slots(self):
+        import story_runtime as sr
+        self.assertTrue(hasattr(sr, "personal_visual_slots_ready"))
+        self.assertTrue(sr.personal_visual_slots_ready(["1", "2", "3", "4", "5", None]))
+        self.assertFalse(sr.personal_visual_slots_ready(["1", "2", "3", "4", None, None]))
+
 
 if __name__ == "__main__":
     unittest.main()
