@@ -91,9 +91,13 @@ def evaluate_brief(brief: dict, expected_frames: int) -> EditorialQualityResult:
             reasons.append(f"frame {index} must be an object")
             continue
         valid_frames.append(raw)
-        for field in ("heading", "text", "punch", "subject_kind"):
+        for field in ("heading", "text", "subject_kind"):
             if not _clean(raw.get(field)):
                 reasons.append(f"frame {index} missing {field}")
+        # `punch` is part of the renderer contract but intentionally empty on
+        # most interior cards; field absence is invalid, emptiness is not.
+        if "punch" not in raw:
+            reasons.append(f"frame {index} missing punch")
         if not (_nonempty_list(raw.get("image_keywords")) or _nonempty_list(raw.get("image_keywords_ar"))):
             reasons.append(f"frame {index} missing visual targeting keywords")
 
@@ -110,7 +114,8 @@ def evaluate_brief(brief: dict, expected_frames: int) -> EditorialQualityResult:
         if any(marker in folded for marker in _BOILERPLATE):
             reasons.append("model/placeholder boilerplate detected")
             break
-        if _URL_RE.findall(fragment) and (_URL_RE.findall(fragment).__len__() > 1 or "{" in fragment or "}" in fragment):
+        url_count = len(_URL_RE.findall(fragment))
+        if url_count > 1 or (url_count and ("{" in fragment or "}" in fragment)):
             reasons.append("excessive raw URL/JSON fragment detected")
             break
         if any(phrase in fragment for phrase in _UNSUPPORTED_COMPARATIVES):
@@ -130,12 +135,15 @@ def evaluate_brief(brief: dict, expected_frames: int) -> EditorialQualityResult:
         closing = valid_frames[-1]
         closing_text = _clean(closing.get("text"))
         closing_punch = _clean(closing.get("punch"))
-        if len(_tokens(closing_text)) < 5 or len(_tokens(closing_punch)) < 2:
+        if len(_tokens(closing_text)) < 5:
             reasons.append("closing payoff is too thin")
-        if closing_text.endswith("؟") or closing_punch.endswith("؟") or closing_text.endswith("?") or closing_punch.endswith("?"):
+        # A concrete closing can live in the body, but if a punch is present it
+        # must itself be meaningful rather than a fragment.
+        if closing_punch and len(_tokens(closing_punch)) < 2:
+            reasons.append("closing punch is too thin")
+        if closing_text.endswith(("؟", "?")) or closing_punch.endswith(("؟", "?")):
             reasons.append("closing must resolve with a payoff, not a question")
 
-    # Deduplicate reasons while preserving deterministic order.
     unique_reasons = tuple(dict.fromkeys(reasons))
     passed = not unique_reasons
     return EditorialQualityResult(
