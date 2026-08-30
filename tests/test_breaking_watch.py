@@ -218,6 +218,30 @@ class BreakingWatchClassifierJsonTests(unittest.TestCase):
         with self.assertRaises(json.JSONDecodeError):
             breaking_watch._parse_classifier_json("not JSON at all")
 
+    def test_recoverable_output_does_not_trigger_paid_retry(self):
+        model_text = (
+            'note {not json}\n'
+            '{"breaking": false, "reason": "routine"}\n'
+            'trailer {junk}'
+        )
+        body = json.dumps({
+            "content": [{"type": "text", "text": model_text}],
+            "usage": {"input_tokens": 10, "output_tokens": 5},
+        }).encode("utf-8")
+        response = FakeResponse(body)
+        with patch.object(
+            breaking_watch.urllib.request,
+            "urlopen",
+            return_value=response,
+        ) as urlopen, patch.object(breaking_watch.time, "sleep") as sleep:
+            verdict = breaking_watch.classify(
+                datetime(2026, 8, 30, 20, 0),
+                ["قرار سعودي جديد"],
+            )
+        self.assertEqual(verdict, {"breaking": False, "reason": "routine"})
+        self.assertEqual(urlopen.call_count, 1)
+        sleep.assert_not_called()
+
 
 class BreakingWatchWindowTests(unittest.TestCase):
     def test_delayed_1930_schedule_is_still_checked_at_1940(self):
