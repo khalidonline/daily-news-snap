@@ -21,34 +21,51 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Reuse SAMA archive visuals for Saudi paper-money story
-        shell: bash
+      - name: Confirm starting coverage
         run: |
-          set -euo pipefail
           python - <<'PY'
-          from pathlib import Path
           import story_runtime as sr
-
           story = "قصة أول عملة ورقية سعودية"
           before, _ = sr.approved_runtime_visuals(story)
           print("BEFORE", len(before), [p.name for p in before])
           if len(before) != 2:
               raise SystemExit(f"expected 2 visuals before repair, got {len(before)}")
-
+          PY
+      - name: Connect existing SAMA archive assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
           index = Path("images/images.txt")
           text = index.read_text(encoding="utf-8")
-          replacements = {
-            "targeted-sama-1953-10-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1953 |":
-            "targeted-sama-1953-10-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, قصة أول عملة ورقية سعودية, أول عملة ورقية سعودية, إيصالات الحجاج, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1953 |",
-            "targeted-sama-1954-5-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1954 |":
-            "targeted-sama-1954-5-riyal.jpg | قصة تأسيس مؤسسة النقد ساما, قصة أول عملة ورقية سعودية, أول عملة ورقية سعودية, إيصالات الحجاج, مؤسسة النقد ساما, SAMA, Saudi Arabian Monetary Agency, Saudi Central Bank, Saudi riyal, 1954 |",
+          additions = {
+            "targeted-sama-1953-10-riyal.jpg": ["قصة أول عملة ورقية سعودية", "أول عملة ورقية سعودية", "إيصالات الحجاج"],
+            "targeted-sama-1954-5-riyal.jpg": ["قصة أول عملة ورقية سعودية", "أول عملة ورقية سعودية", "إيصالات الحجاج"],
           }
-          for old, new in replacements.items():
-              if old not in text:
-                  raise SystemExit(f"expected catalogue line missing: {old}")
-              text = text.replace(old, new, 1)
-          index.write_text(text, encoding="utf-8")
-
+          lines = text.splitlines()
+          seen = set()
+          for i, line in enumerate(lines):
+              for filename, tags in additions.items():
+                  if not line.startswith(filename + " |"):
+                      continue
+                  seen.add(filename)
+                  parts = line.split("|", 2)
+                  if len(parts) != 3:
+                      raise SystemExit(f"malformed catalogue line: {line}")
+                  current = [t.strip() for t in parts[1].split(",") if t.strip()]
+                  for tag in tags:
+                      if tag not in current:
+                          current.append(tag)
+                  lines[i] = f"{parts[0].strip()} | {', '.join(current)} | {parts[2].strip()}"
+          missing = set(additions) - seen
+          if missing:
+              raise SystemExit(f"catalogue assets missing: {sorted(missing)}")
+          index.write_text("\n".join(lines) + "\n", encoding="utf-8")
+          PY
+      - name: Verify refreshed runtime coverage
+        run: |
+          python - <<'PY'
+          import story_runtime as sr
+          story = "قصة أول عملة ورقية سعودية"
           after, _ = sr.approved_runtime_visuals(story)
           photos, logos, status = sr.coverage(story)
           print("AFTER", len(after), [p.name for p in after])
@@ -56,7 +73,10 @@ jobs:
           if len(after) < 4 or status != "PASS":
               raise SystemExit("Saudi paper-money story did not reach PASS")
           PY
-
+      - name: Commit repair
+        shell: bash
+        run: |
+          set -euo pipefail
           git config user.name "story-visual-repair-bot"
           git config user.email "actions@github.com"
           git add images/images.txt
