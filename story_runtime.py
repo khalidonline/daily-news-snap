@@ -123,6 +123,10 @@ _STORY_EXTRA_VISUALS = {
         "targeted-sama-1953-10-riyal.jpg",
         "targeted-sama-1954-5-riyal.jpg",
     },
+    "قصة أول مطار في جدة وتطور الطيران المدني": {
+        "saudia-dc3-crowd.jpg",
+        "saudia-707-historic.jpg",
+    },
 }
 
 
