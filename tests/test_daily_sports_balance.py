@@ -154,7 +154,7 @@ class DailySportsBalanceTests(unittest.TestCase):
             }])
 
             saved = json.loads(state_path.read_text(encoding="utf-8"))
-            self.assertEqual(saved[0]["lane"], "sports")
+            self.assertEqual(saved[0].get("lane"), "sports")
 
 
 if __name__ == "__main__":
