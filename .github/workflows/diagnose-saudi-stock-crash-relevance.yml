@@ -1,0 +1,43 @@
+name: Diagnose Saudi stock crash relevance
+
+on:
+  push:
+    branches:
+      - fix/saudi-stock-crash-relevance
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/saudi-stock-crash-relevance
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Print match evidence and reject BlackBerry
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import news_bot as nb
+          import story_bot as sb
+          import story_runtime as sr
+
+          story = "قصة انهيار سوق الأسهم السعودية 2006"
+          aliases = [a for a in sb.story_aliases(story) if a]
+          persons = sb._STORY_PERSONS.get(story) or []
+          print("ALIASES", aliases)
+          for entry in nb.load_local_images():
+              name = Path(entry["path"]).name
+              if sr._matches_story(entry, story):
+                  print("MATCH", name, entry.get("tags", []))
+          photos, logos, status = sr.coverage(story)
+          names = [p.name for p in photos]
+          print("COVERAGE", status, len(photos), names)
+          if "targeted-blackberry-8700c-7230.jpg" in names:
+              raise SystemExit("irrelevant BlackBerry asset matched Saudi stock crash story")
+          PY
