@@ -6,7 +6,9 @@ on:
       - "topic_editorial.py"
       - "topic_snapchat.py"
       - "topic_bot.py"
+      - "season_aliases.py"
       - "topics.txt"
+      - "seasons.txt"
       - "voice.txt"
       - "state/topic_performance.json"
       - "tests/test_topic_editorial.py"
@@ -15,6 +17,7 @@ on:
       - "tests/test_topic_workflow_image_policy.py"
       - "tests/test_topic_editorial_retries.py"
       - "tests/test_topic_assertiveness.py"
+      - "tests/test_season_aliases.py"
       - ".github/workflows/topic.yml"
       - ".github/workflows/topic-editorial-tests.yml"
   pull_request:
@@ -22,7 +25,9 @@ on:
       - "topic_editorial.py"
       - "topic_snapchat.py"
       - "topic_bot.py"
+      - "season_aliases.py"
       - "topics.txt"
+      - "seasons.txt"
       - "voice.txt"
       - "state/topic_performance.json"
       - "tests/test_topic_editorial.py"
@@ -31,6 +36,7 @@ on:
       - "tests/test_topic_workflow_image_policy.py"
       - "tests/test_topic_editorial_retries.py"
       - "tests/test_topic_assertiveness.py"
+      - "tests/test_season_aliases.py"
       - ".github/workflows/topic.yml"
       - ".github/workflows/topic-editorial-tests.yml"
 
@@ -50,5 +56,5 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Run Saudi Snapchat topic regressions
         run: |
-          python -m unittest tests.test_topic_editorial tests.test_topic_snapchat tests.test_topic_transport tests.test_topic_workflow_image_policy tests.test_topic_editorial_retries tests.test_topic_assertiveness -v
-          python -m py_compile topic_editorial.py topic_snapchat.py topic_bot.py
+          python -m unittest tests.test_topic_editorial tests.test_topic_snapchat tests.test_topic_transport tests.test_topic_workflow_image_policy tests.test_topic_editorial_retries tests.test_topic_assertiveness tests.test_season_aliases -v
+          python -m py_compile topic_editorial.py topic_snapchat.py topic_bot.py season_aliases.py
