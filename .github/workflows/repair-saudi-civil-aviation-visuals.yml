@@ -1,0 +1,33 @@
+name: Repair Saudi civil aviation visuals
+
+on:
+  push:
+    branches:
+      - fix/saudi-civil-aviation-visuals
+
+permissions:
+  contents: read
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/saudi-civil-aviation-visuals
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Saudi civil aviation has four distinct visuals
+        run: |
+          python - <<'PY'
+          import story_runtime as sr
+          story = "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم"
+          photos, logos, status = sr.coverage(story)
+          names = [p.name for p in photos]
+          print("COVERAGE", status, len(photos), names)
+          required = {"saudi-civil-aviation-jeddah-1950s.jpg", "saudi-civil-aviation-kaia-terminal.jpg"}
+          if status != "PASS" or len(photos) < 4 or not required.issubset(names):
+              raise SystemExit("Saudi civil aviation story still lacks the historical-to-modern airport progression")
+          PY
