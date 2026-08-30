@@ -64,3 +64,5 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Story brief store
         run: python -m unittest -v tests/test_story_brief_store.py
+      - name: Editorial quality gate
+        run: python -m unittest -v tests/test_story_editorial_quality.py
