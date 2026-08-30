@@ -1,6 +1,7 @@
 import json
 import os
 import tempfile
+import types
 import unittest
 
 import story_brief_store as sbs
@@ -43,6 +44,48 @@ class FakeStoryBot:
             "output_tokens": 50,
         }
         return json.loads(json.dumps(self.brief, ensure_ascii=False))
+
+
+class _FakeResponse:
+    def __init__(self, payload):
+        self.payload = json.dumps(payload).encode("utf-8")
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+    def read(self):
+        return self.payload
+
+
+class FakeHttpStoryBot(FakeStoryBot):
+    def __init__(self):
+        super().__init__()
+        self.http_successes = 0
+
+        def urlopen(*args, **kwargs):
+            self.http_successes += 1
+            return _FakeResponse({
+                "id": f"msg_http_{self.http_successes}",
+                "usage": {"input_tokens": 20, "output_tokens": 10},
+                "content": [],
+            })
+
+        self.urllib = types.SimpleNamespace(
+            request=types.SimpleNamespace(urlopen=urlopen)
+        )
+
+    def research(self, story):
+        # Simulate the real research path needing a second successful Messages
+        # response (pause_turn/truncation continuation). The cost wrapper must
+        # stop before the second successful paid response is purchased.
+        with self.urllib.request.urlopen("request-1") as response:
+            response.read()
+        with self.urllib.request.urlopen("request-2") as response:
+            response.read()
+        return good_brief()
 
 
 class EditorialRuntimeTests(unittest.TestCase):
@@ -132,6 +175,17 @@ class EditorialRuntimeTests(unittest.TestCase):
         sb.research("قصة اختبار")
         self.assertEqual(2, sb.calls)
         self.assertIsNotNone(sbs.load_locked_brief("قصة اختبار", regen_revision))
+
+    def test_second_successful_anthropic_response_is_blocked(self):
+        sb = FakeHttpStoryBot()
+        ser.configure(sb)
+        with self.assertRaises(scg.EditorialSpendBlocked):
+            sb.research("قصة تحتاج متابعة")
+        self.assertEqual(1, sb.http_successes)
+        rows = [json.loads(line) for line in scg.usage_ledger_path().read_text(encoding="utf-8").splitlines()]
+        model_rows = [row for row in rows if row.get("event") == "model_result"]
+        self.assertEqual(1, len(model_rows))
+        self.assertEqual("msg_http_1", model_rows[0]["message_id"])
 
 
 if __name__ == "__main__":
