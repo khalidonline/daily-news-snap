@@ -19,6 +19,7 @@ on:
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_workflow_choice.py"
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
@@ -42,6 +43,7 @@ on:
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_workflow_choice.py"
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
@@ -70,3 +72,5 @@ jobs:
         run: python -m unittest -v tests/test_story_cost_guard.py
       - name: Cached editorial runtime
         run: python -m unittest -v tests/test_story_editorial_runtime.py
+      - name: Story operation modes
+        run: python -m unittest -v tests/test_story_workflow_choice.py
