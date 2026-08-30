@@ -1,0 +1,138 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "بلد يتداول نقود غيره",
+        "image_keywords": [
+          "Jeddah 1950s",
+          "Saudi silver riyal coin"
+        ],
+        "image_keywords_ar": [
+          "جدة",
+          "الريال السعودي الفضي"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "قبل عام 1952، لم يكن في المملكة بنك مركزي. الأسواق تتداول عملات معدنية أجنبية مثل الروبية الهندية والجنيه الإنجليزي الذهبي إلى جانب الريال الفضي السعودي. وبعض الصيارفة كانوا يهرّبون الريال الفضي إلى الخارج طلباً للربح. ولم تكن هناك جهة واحدة مسؤولة عن قيمة النقود."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "2": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "مرسوم غيّر شكل النقد",
+        "image_keywords": [
+          "SAMA",
+          "Saudi Arabian Monetary Agency"
+        ],
+        "image_keywords_ar": [
+          "ساما",
+          "مؤسسة النقد"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولذلك صدر في 20 أبريل 1952 مرسوم ملكي من الملك عبدالعزيز بإنشاء مؤسسة النقد العربي السعودي، ومقرها جدة. وباشرت عملها فعلياً في 4 أكتوبر من السنة نفسها. مهمتها الأولى كانت إصدار نقد سعودي وحماية قيمته. لكن ما يقبله الناس في السوق حتى تلك اللحظة كان المعدن وحده."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "3": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "إيصال للحاج لا عملة",
+        "image_keywords": [
+          "Saudi riyal 1953",
+          "Saudi Arabian Monetary Agency 1953"
+        ],
+        "image_keywords_ar": [
+          "إيصالات الحجاج",
+          "مؤسسة النقد ساما"
+        ],
+        "punch": "ما كتبوا عليها كلمة «عملة» — كتبوا «إيصال».",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. في 25 يوليو 1953 طرحت المؤسسة ما عُرف بـ«إيصالات الحجاج» من فئة عشرة ريالات، لتخفّف عن الحاج مشقة حمل الريالات الفضية. الإيصال مضمون بما يقابله فضةً في خزينة المؤسسة. وطُبع منه خمسة ملايين نسخة بست لغات، منها الأردية والفارسية والملاوية."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "4": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "الناس ما وثقوا بالورق",
+        "image_keywords": [
+          "Saudi riyal 1954",
+          "Saudi Arabian Monetary Agency 1954"
+        ],
+        "image_keywords_ar": [
+          "مؤسسة النقد ساما",
+          "الريال"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن إقناع الناس بقبول الورق كان من أصعب ما واجه المؤسسة عند إنشائها، فالمقبول في التداول كان المعدن. ولذلك تدرّجت خطوة خطوة: فئة الخمسة ريالات سنة 1954، ثم فئة الريال الواحد سنة 1956. ولم تُطرح أوراق نقدية رسمية بالفئات الكاملة إلا في 1961 — تسع سنوات بعد التأسيس."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "5": {
+      "asset_hash": "1b24020dfedd84e74aeb2f90cdae40ff0d376f882ae9c869d48dc1a7953fc7d4",
+      "frame_payload": {
+        "heading": "احتياطي بالتريليونات",
+        "image_keywords": [
+          "Saudi riyal banknote",
+          "Saudi Central Bank"
+        ],
+        "image_keywords_ar": [
+          "الريال",
+          "البنك المركزي السعودي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهكذا صارت الجهة التي كانت تضمن ورقة واحدة بعشرة ريالات فضية هي التي تحفظ احتياطي الدولة. وفي 2020 تغيّر اسمها إلى البنك المركزي السعودي. وبنهاية 2025 بلغت أصوله الاحتياطية نحو 1.73 تريليون ريال، بحسب نشرته الإحصائية الشهرية."
+      },
+      "image_source": "state/story_visuals/e62ea6dcbfaa32c6/f756554cf4505069a192084418e8bc257a04b289bf9f1d2266e05bb3fec592ee/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "ما بقي من تلك البداية",
+        "image_keywords": [
+          "Saudi Central Bank",
+          "SAMA"
+        ],
+        "image_keywords_ar": [
+          "البنك المركزي السعودي",
+          "ساما"
+        ],
+        "punch": "الثقة التي بدأت بإيصال حج صارت نظام البلد المالي.",
+        "subject_kind": "company",
+        "text": "واليوم لا تُصدر ورقة نقد واحدة في المملكة إلا من هذه الجهة، وهي نفسها التي تشرف على البنوك."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    }
+  },
+  "revision": "f756554cf4505069a192084418e8bc257a04b289bf9f1d2266e05bb3fec592ee",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_ASSEMBLY",
+  "story": "قصة تأسيس مؤسسة النقد ساما"
+}
