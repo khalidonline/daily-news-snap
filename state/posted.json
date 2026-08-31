@@ -1,9 +1,5 @@
 [
  {
-  "headline": "Apple ترفع سعر اشتراك Apple TV إلى 14.99 دولار",
-  "at": "2026-08-28T20:43:14.823796+00:00"
- },
- {
   "headline": "ترامب يعلن اتفاقاً أمريكياً للسيطرة على نفط فنزويلا",
   "at": "2026-08-29T06:57:00.003073+00:00"
  },
@@ -60,5 +56,11 @@
   "at": "2026-08-31T19:01:27.880243+00:00",
   "source_link": "https://theverge.com/tech/986832/read-tim-cooks-final-message-as-ceo-to-apple-staff",
   "lane": "business_tech"
+ },
+ {
+  "headline": "علي البليهي يفسخ عقده مع الهلال بعد 16 بطولة",
+  "at": "2026-08-31T23:43:02.735996+00:00",
+  "source_link": "https://alyaum.com/articles/6680561/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A/%D8%B9%D8%A7%D8%AC%D9%84-%D8%A7%D9%84%D9%87%D9%84%D8%A7%D9%84-%D9%8A%D8%B9%D9%84%D9%86-%D9%81%D8%B3%D8%AE-%D8%A7%D9%84%D8%AA%D8%B9%D8%A7%D9%82%D8%AF-%D9%85%D8%B9-%D8%B9%D9%84%D9%8A-%D8%A2%D9%84-%D8%A8%D9%84%D9%8A%D9%87%D9%8A",
+  "lane": "sports"
  }
 ]
