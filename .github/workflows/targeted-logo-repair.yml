@@ -36,7 +36,16 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          from logo_fetch import fetch_current, update_index, LOGOS_DIR
+          from logo_fetch import (
+              LOGOS_DIR,
+              _commons_fileinfo,
+              _commons_licence_ok,
+              _download,
+              _renders_as_a_mark,
+              fetch_current,
+              update_index,
+              wikidata_p154_logo,
+          )
 
           manifest = json.loads(Path('logo_repair_assets.json').read_text(encoding='utf-8'))
           stories = Path('stories.txt').read_text(encoding='utf-8')
@@ -49,6 +58,25 @@ jobs:
                   stories = stories.replace(before, after, 1)
               LOGOS_DIR.mkdir(parents=True, exist_ok=True)
               got = fetch_current(spec['domain'], spec['names'], require_domain=spec['domain'])
+              if not got:
+                  filename = wikidata_p154_logo(spec['names'], spec['domain'])
+                  if filename:
+                      title = f"File:{filename}"
+                      for page, info in _commons_fileinfo([title]):
+                          if not _commons_licence_ok(info):
+                              continue
+                          link = info.get('thumburl') or info.get('url')
+                          if not link:
+                              continue
+                          dest = LOGOS_DIR / f"{spec['domain']}-current.png"
+                          _download(link, dest)
+                          if _renders_as_a_mark(dest):
+                              got = dest
+                              print(
+                                  f"verified Wikidata P154 logo: {spec['story']} -> {got} "
+                                  f"(P856={spec['domain']})"
+                              )
+                              break
               if not got:
                   raise SystemExit(f"no verified current logo for {spec['domain']}")
               update_index(spec['domain'], spec['names'] + [spec['domain']])
