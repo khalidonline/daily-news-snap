@@ -20,12 +20,14 @@ on:
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
       - "tests/test_story_workflow_choice.py"
+      - "tests/test_three_story_cost_pilot_workflow.py"
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
       - "tests/test_ready_story_publish.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/story-cost-control-tests.yml"
+      - ".github/workflows/three-story-cost-pilot.yml"
   pull_request:
     paths:
       - "story_brief_store.py"
@@ -45,12 +47,14 @@ on:
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
       - "tests/test_story_workflow_choice.py"
+      - "tests/test_three_story_cost_pilot_workflow.py"
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
       - "tests/test_ready_story_publish.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/story-cost-control-tests.yml"
+      - ".github/workflows/three-story-cost-pilot.yml"
   workflow_dispatch:
 
 permissions:
@@ -76,6 +80,8 @@ jobs:
         run: python -m unittest -v tests/test_story_editorial_runtime.py
       - name: Story operation modes
         run: python -m unittest -v tests/test_story_workflow_choice.py
+      - name: Bounded three-story cost pilot workflow
+        run: python -m unittest -v tests/test_three_story_cost_pilot_workflow.py
       - name: Frame-only visual state
         run: python -m unittest -v tests/test_story_visual_state.py
       - name: Final notification dedupe

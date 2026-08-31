@@ -187,6 +187,21 @@ class EditorialRuntimeTests(unittest.TestCase):
         self.assertEqual(1, len(model_rows))
         self.assertEqual("msg_http_1", model_rows[0]["message_id"])
 
+    def test_revision_prompt_receives_the_active_story(self):
+        sb = FakeStoryBot()
+        seen = []
+
+        def prompt_for_revision():
+            seen.append(getattr(sb, "_ACTIVE_EDITORIAL_STORY", ""))
+            return "prompt {n}"
+
+        sb.editorial_prompt_for_revision = prompt_for_revision
+        ser.configure(sb)
+        sb.research("قصة الرياض")
+
+        self.assertTrue(seen)
+        self.assertTrue(all(story == "قصة الرياض" for story in seen))
+
 
 if __name__ == "__main__":
     unittest.main()

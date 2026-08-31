@@ -272,9 +272,17 @@ def _read_visual_index(index_path) -> list[dict]:
     return rows
 
 
-def runtime_visual_inventory_prompt(index_path) -> str:
+def runtime_visual_inventory_prompt(index_path, aliases: Iterable[str] = ()) -> str:
     """Describe the already-reviewed runtime images to the story writer."""
     rows = _read_visual_index(index_path)
+    aliases = list(aliases or [])
+    if aliases:
+        rows = [
+            row for row in rows
+            if catalog_tags_match_aliases(
+                [part.strip() for part in row["tags"].split(",")], aliases
+            )
+        ]
     if not rows:
         return ""
     listed = [
@@ -466,7 +474,10 @@ def configure(story_bot_module):
         inventory = ""
         try:
             import news_bot as nb
-            inventory = runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
+            aliases = _subject_names(story, sb.story_aliases)
+            inventory = runtime_visual_inventory_prompt(
+                nb.IMAGES_INDEX, aliases=aliases
+            )
         except Exception:
             inventory = ""
         previous_prompt = sb.SYSTEM_PROMPT

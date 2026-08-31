@@ -151,7 +151,7 @@ def configure(story_bot_module: Any) -> Any:
     original_research = sb.research
     sb._story_editorial_uncached_research = original_research
 
-    def controlled_research(story: str):
+    def _controlled_research(story: str):
         selected = _mode()
         revision = revision_for(sb, story, selected)
 
@@ -213,6 +213,21 @@ def configure(story_bot_module: Any) -> Any:
         )
         print(f"    EDITORIAL_LOCKED {revision[:12]}")
         return copy.deepcopy(brief)
+
+    def controlled_research(story: str):
+        marker = "_ACTIVE_EDITORIAL_STORY"
+        previous = getattr(sb, marker, None)
+        setattr(sb, marker, str(story or "").strip())
+        try:
+            return _controlled_research(story)
+        finally:
+            if previous is None:
+                try:
+                    delattr(sb, marker)
+                except AttributeError:
+                    pass
+            else:
+                setattr(sb, marker, previous)
 
     sb.research = controlled_research
     setattr(sb, _CONFIGURED_ATTR, True)
