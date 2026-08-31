@@ -92,7 +92,9 @@
  ],
  "aramco.com": [
   "Aramco",
-  "aramco.com"
+  "aramco.com",
+  "Saudi Aramco",
+  "أرامكو"
  ],
  "maersk.com": [
   "Maersk",
@@ -238,5 +240,11 @@
   "SRI International",
   "SRI",
   "sri.com"
+ ],
+ "saudia.com": [
+  "Saudia",
+  "Saudi Arabian Airlines",
+  "الخطوط السعودية",
+  "saudia.com"
  ]
 }

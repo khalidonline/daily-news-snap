@@ -51,7 +51,7 @@
 قصة رجل الأعمال السعودي الذي بدأ ببقالة صغيرة
 
 # — سفر وطيران —
-قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم | Saudia, subject:saudi-civil-aviation
+قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم | Saudia, subject:saudi-civil-aviation | entity: Saudia, Saudi Arabian Airlines, الخطوط السعودية | logo:saudia.com
 كيف غيّرت شركات الطيران الاقتصادي صناعة السفر؟ | entity: الطيران الاقتصادي | subject:low-cost-airlines
 قصة Emirates: من شركتين مستأجرتين إلى أكبر ناقل دولي | Emirates, طيران الإمارات, logo:emirates.com
 لماذا تختلف أسعار التذاكر بين يوم وآخر؟ قصة التسعير | entity: أسعار التذاكر | subject:airfare-pricing
@@ -91,7 +91,7 @@ Herb Kelleher: أسس Southwest على منديل ورقي | Herb Kelleher, Sout
 Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة متوسطة | Fred Smith, FedEx
 
 # السعودية والخليج
-علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi
+علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi | entity: Saudi Aramco, Aramco, أرامكو | logo:aramco.com
 سليمان الراجحي: من حمّال في السوق إلى مؤسس أكبر بنك ثم تبرّع بثروته | person: سليمان الراجحي, Sulaiman Al Rajhi | entity: مصرف الراجحي | logo:alrajhibank.com.sa
 يوسف بن أحمد كانو: تاجر بحريني بنى إمبراطورية قبل النفط | Yusuf bin Ahmed Kanoo, YBA Kanoo
 قصة عبداللطيف جميل للسيارات ووكالة تويوتا | Abdul Latif Jameel, Toyota Saudi Arabia, logo:alj.com
