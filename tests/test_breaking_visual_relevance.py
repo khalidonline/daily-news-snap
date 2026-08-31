@@ -1,72 +1,106 @@
-import inspect
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from PIL import Image
 
-import news_bot
-
 
 class BreakingVisualRelevanceTests(unittest.TestCase):
-    def story(self):
-        return {
-            "headline": "فيدان: تحالف مكة الدفاعي بدأ ببنية أمنية جديدة",
-            "summary": "إعلان تركي عن بدء تشكيل الهيكل الأساسي لاتفاق دفاعي بين السعودية وتركيا وباكستان.",
-            "takeaway": "تطور مباشر في اتفاق دفاعي يهم القارئ السعودي.",
-        }
+    def runner(self):
+        path = Path("breaking_news_runner.py")
+        self.assertTrue(path.exists(), "breaking-news visual gate runner is missing")
+        import breaking_news_runner
+        return breaking_news_runner
+
+    def fake_bot(self, *, verdict_photo="candidate.jpg"):
+        notices = []
+
+        def local(_queries_ar, _queries_en, out_path, **_kwargs):
+            Path(out_path).write_bytes(b"candidate")
+            return str(out_path), "local credit"
+
+        return SimpleNamespace(
+            PINNED_EVENT=(
+                "وزير خارجية تركيا يعلن بدء تشكيل الهيكل الأساسي "
+                "لاتفاق مكة الدفاعي بين السعودية وتركيا وباكستان"
+            ),
+            POST_ENABLED=True,
+            ANTHROPIC_API_KEY="test-key",
+            VISION_GATE=True,
+            VISION_MODEL="test-model",
+            OUT_DIR=Path("out"),
+            fetch_local_photo=local,
+            notify=lambda text, *args, **kwargs: notices.append(text),
+            ksa_stamp=lambda: "2026-08-31-9pm",
+            post_story=lambda *args, **kwargs: {"status": "SCHEDULED"},
+            main=lambda: None,
+            _notices=notices,
+        )
 
     def test_generic_riyadh_library_photo_cannot_qualify_for_breaking(self):
-        helper = getattr(news_bot, "_breaking_photo_acceptable", None)
-        self.assertIsNotNone(helper)
-        with patch.object(news_bot, "PINNED_EVENT", "وزير خارجية تركيا يعلن بدء تشكيل الهيكل الأساسي لاتفاق مكة الدفاعي"), \
-                patch.object(news_bot, "photo_shows", return_value="neutral") as judge:
-            accepted = helper("old-riyadh-souq.jpg", self.story())
+        runner = self.runner()
+        bot = self.fake_bot()
+        event = bot.PINNED_EVENT
+        with patch.object(runner, "_strict_vision_verdict", return_value="neutral") as judge:
+            accepted = runner._breaking_photo_acceptable(
+                bot, "old-riyadh-souq.jpg", event
+            )
         self.assertFalse(accepted)
-        context = judge.call_args.args[1]
+        context = judge.call_args.args[2]
         self.assertIn("تركيا", context)
         self.assertIn("باكستان", context)
 
     def test_breaking_visual_requires_explicit_yes(self):
-        helper = getattr(news_bot, "_breaking_photo_acceptable", None)
-        self.assertIsNotNone(helper)
-        with patch.object(news_bot, "PINNED_EVENT", "حدث عاجل سعودي"):
-            for verdict in ("neutral", "no"):
-                with self.subTest(verdict=verdict), \
-                        patch.object(news_bot, "photo_shows", return_value=verdict):
-                    self.assertFalse(helper("candidate.jpg", self.story()))
-            with patch.object(news_bot, "photo_shows", return_value="yes"):
-                self.assertTrue(helper("candidate.jpg", self.story()))
-
-    def test_non_breaking_visual_path_stays_unchanged(self):
-        helper = getattr(news_bot, "_breaking_photo_acceptable", None)
-        self.assertIsNotNone(helper)
-        with patch.object(news_bot, "PINNED_EVENT", ""), \
-                patch.object(news_bot, "photo_shows") as judge:
-            self.assertTrue(helper("candidate.jpg", self.story()))
-        judge.assert_not_called()
+        runner = self.runner()
+        bot = self.fake_bot()
+        for verdict in ("neutral", "no"):
+            with self.subTest(verdict=verdict), \
+                    patch.object(runner, "_strict_vision_verdict", return_value=verdict):
+                self.assertFalse(
+                    runner._breaking_photo_acceptable(bot, "candidate.jpg", bot.PINNED_EVENT)
+                )
+        with patch.object(runner, "_strict_vision_verdict", return_value="yes"):
+            self.assertTrue(
+                runner._breaking_photo_acceptable(bot, "candidate.jpg", bot.PINNED_EVENT)
+            )
 
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
-        self.assertIn("fail_open", inspect.signature(news_bot.photo_shows).parameters)
+        runner = self.runner()
+        bot = self.fake_bot()
         with tempfile.TemporaryDirectory() as td:
             photo = Path(td) / "candidate.jpg"
             Image.new("RGB", (20, 20), "white").save(photo)
-            with patch.object(news_bot, "VISION_GATE", True), \
-                    patch.object(news_bot, "ANTHROPIC_API_KEY", "test-key"), \
-                    patch.object(news_bot.urllib.request, "urlopen", side_effect=OSError("vision unavailable")):
-                verdict = news_bot.photo_shows(photo, "breaking context", fail_open=False)
+            with patch.object(
+                runner.urllib.request, "urlopen", side_effect=OSError("vision unavailable")
+            ):
+                verdict = runner._strict_vision_verdict(
+                    bot, photo, "حدث عاجل سعودي"
+                )
         self.assertEqual(verdict, "no")
 
+    def test_rejected_local_candidate_is_removed_from_breaking_pipeline(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        with tempfile.TemporaryDirectory() as td, \
+                patch.object(runner, "_strict_vision_verdict", return_value="neutral"):
+            hero = Path(td) / "hero.jpg"
+            state = runner.install_strict_visual_gate(bot)
+            photo, credit = bot.fetch_local_photo(["الرياض"], ["saudi"], hero)
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+        self.assertFalse(state["accepted_photo"])
+
     def test_breaking_no_photo_aborts_with_dedicated_exit_code(self):
-        helper = getattr(news_bot, "_handle_no_usable_photo", None)
-        self.assertIsNotNone(helper)
-        with patch.object(news_bot, "PINNED_EVENT", "حدث عاجل سعودي"), \
-                patch.object(news_bot, "notify") as notify:
+        runner = self.runner()
+        bot = self.fake_bot()
+        with patch.object(runner, "_strict_vision_verdict", return_value="neutral"):
             with self.assertRaises(SystemExit) as raised:
-                helper([self.story()])
-        self.assertEqual(raised.exception.code, news_bot.BREAKING_VISUAL_EXIT)
-        self.assertIn("صورة", notify.call_args.args[0])
+                runner.run_bot(bot)
+        self.assertEqual(raised.exception.code, runner.BREAKING_VISUAL_EXIT)
+        self.assertTrue(bot._notices)
+        self.assertIn("صورة", bot._notices[-1])
 
 
 if __name__ == "__main__":
