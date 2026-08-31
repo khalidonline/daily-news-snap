@@ -92,6 +92,15 @@ class PublicationReadyPoolTests(unittest.TestCase):
             self.assertIn("python publication_ready_pool.py", text, str(workflow))
             self.assertNotIn("ready_story_publish.py --refresh-only", text, str(workflow))
 
+    def test_ready_pool_refresh_never_rewrites_workflow_files(self):
+        text = Path(".github/workflows/ready-story-pool.yml").read_text(encoding="utf-8")
+        self.assertIn("git add state/ready_to_post.json", text)
+        self.assertNotIn("git add state/ready_to_post.json .github/workflows/story.yml", text)
+        self.assertNotIn("git worktree", text)
+        self.assertNotIn("/tmp/story-main", text)
+        self.assertNotIn("Sync READY choices into repair workflow", text)
+        self.assertNotIn("Sync READY choices to live workflow on main", text)
+
 
 if __name__ == "__main__":
     unittest.main()
