@@ -16,6 +16,7 @@ on:
       - "story_focus.py"
       - "ready_story_publish.py"
       - "publication_ready_pool.py"
+      - "logo_fetch.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
@@ -27,6 +28,7 @@ on:
       - "tests/test_story_cost_report.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_ready_story_publish_readiness_gate.py"
+      - "tests/test_logo_fetch.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/ready-story-pool.yml"
       - ".github/workflows/targeted-near-pass-repair.yml"
@@ -47,6 +49,7 @@ on:
       - "story_focus.py"
       - "ready_story_publish.py"
       - "publication_ready_pool.py"
+      - "logo_fetch.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
@@ -58,6 +61,7 @@ on:
       - "tests/test_story_cost_report.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_ready_story_publish_readiness_gate.py"
+      - "tests/test_logo_fetch.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/ready-story-pool.yml"
       - ".github/workflows/targeted-near-pass-repair.yml"
@@ -96,5 +100,7 @@ jobs:
         run: python -m unittest -v tests/test_story_notification_state.py
       - name: Publisher persistence and final-only notification
         run: POST_TO_SNAPCHAT=0 python -m unittest -v tests/test_ready_story_publish.py tests/test_ready_story_publish_readiness_gate.py
+      - name: Domain-verified logo fallback
+        run: python -m unittest -v tests/test_logo_fetch.py
       - name: Local story cost report
         run: python -m unittest -v tests/test_story_cost_report.py
