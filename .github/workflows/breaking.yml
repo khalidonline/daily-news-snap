@@ -24,6 +24,11 @@ on:
         description: "Classify and build only — never post"
         type: boolean
         default: true
+      confirmed_event:
+        description: "Optional already-confirmed event to reproduce; bypasses classifier and forces dry run"
+        type: string
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -59,6 +64,7 @@ jobs:
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '' }}
+          CONFIRMED_BREAKING_EVENT: ${{ github.event_name == 'workflow_dispatch' && inputs.confirmed_event || '' }}
           MEDIA_MODE: "github"
           # breaking_watch.py posts only a confirmed pinned event.
           # one cap shared with every posting workflow — see CLAUDE.md
