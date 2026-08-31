@@ -93,6 +93,12 @@ class PublicationReadyPoolTests(unittest.TestCase):
             self.assertIn("python publication_ready_pool.py", text, str(workflow))
             self.assertNotIn("ready_story_publish.py --refresh-only", text, str(workflow))
 
+    def test_targeted_logo_repair_uses_only_domain_verified_wikidata_fallback(self):
+        text = Path(".github/workflows/targeted-logo-repair.yml").read_text(encoding="utf-8")
+        self.assertIn("require_domain=spec['domain']", text)
+        self.assertIn("wikidata_p154_logo(spec['names'], spec['domain'])", text)
+        self.assertNotIn("wikidata_p154_logo(spec['names'], None)", text)
+
     def test_ready_pool_refresh_never_rewrites_workflow_files(self):
         text = Path(".github/workflows/ready-story-pool.yml").read_text(encoding="utf-8")
         self.assertIn("git add state/ready_to_post.json", text)
