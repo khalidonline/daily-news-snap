@@ -86,6 +86,7 @@ class PublicationReadyPoolTests(unittest.TestCase):
         workflows = [
             Path(".github/workflows/ready-story-pool.yml"),
             Path(".github/workflows/targeted-near-pass-repair.yml"),
+            Path(".github/workflows/targeted-logo-repair.yml"),
         ]
         for workflow in workflows:
             text = workflow.read_text(encoding="utf-8")
