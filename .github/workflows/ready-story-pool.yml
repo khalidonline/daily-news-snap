@@ -2,7 +2,10 @@ name: Refresh READY story pool
 
 on:
   push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
     paths:
+      - "publication_ready_pool.py"
       - "ready_story_publish.py"
       - "stories.txt"
       - "images/images.txt"
@@ -10,6 +13,8 @@ on:
       - "images/logos/**"
       - "images/targeted-*"
       - "images/rt-*"
+      - "state/story_briefs/**"
+      - "state/story_visuals/**"
       - ".github/workflows/ready-story-pool.yml"
   workflow_dispatch:
 
@@ -37,11 +42,11 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Rebuild strict READY_FOR_SNAP list
+      - name: Rebuild evidence-backed READY_TO_POST list
         env:
           POST_TO_SNAPCHAT: "0"
           DRY_RUN: "1"
-        run: python ready_story_publish.py --refresh-only
+        run: python publication_ready_pool.py
 
       - name: Sync READY choices into repair workflow
         run: |
@@ -72,7 +77,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "READY list and repair dropdown unchanged"
           else
-            git commit -m "state: refresh READY_FOR_SNAP pool"
+            git commit -m "state: refresh READY_TO_POST pool"
             git push origin HEAD:repair/all-story-visuals-2026-08-29
           fi
 
