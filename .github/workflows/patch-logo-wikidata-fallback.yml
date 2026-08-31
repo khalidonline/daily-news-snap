@@ -1,0 +1,74 @@
+name: Patch logo Wikidata fallback
+
+on:
+  push:
+    branches:
+      - fix/logo-wikidata-p154-fallback
+    paths:
+      - ".github/workflows/patch-logo-wikidata-fallback.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/logo-wikidata-p154-fallback
+          fetch-depth: 0
+      - name: Wire domain-verified Wikidata P154 fallback
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('logo_fetch.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''        print(f"  saved {dest}  <- {title}  (non-free, {lang}.wikipedia)")
+                  return dest
+              print("  ! no usable article logo found for the current logo")
+              return None
+          '''
+          # Match the real four-space function indentation, not the YAML heredoc indentation.
+          old = '\n'.join(line[10:] if line.startswith('          ') else line for line in old.splitlines()) + '\n'
+          new = '''        print(f"  saved {dest}  <- {title}  (non-free, {lang}.wikipedia)")
+                  return dest
+              if require_domain:
+                  filename = wikidata_p154_logo(names, require_domain)
+                  if filename:
+                      title = f"File:{filename}"
+                      for page, info in _commons_fileinfo([title]):
+                          if not _commons_licence_ok(info):
+                              print(f"  ! {page['title']}: licence unusable — skipping")
+                              continue
+                          link = info.get("thumburl") or info.get("url")
+                          if not link:
+                              continue
+                          dest = LOGOS_DIR / f"{slug}-current.png"
+                          try:
+                              _download(link, dest)
+                          except Exception as exc:
+                              print(f"  ! Wikidata logo download failed for {title}: {exc}")
+                              continue
+                          if not _renders_as_a_mark(dest):
+                              continue
+                          print(f"  saved {dest}  <- {page['title']}  "
+                                f"(Wikidata P154; P856={require_domain})")
+                          return dest
+              print("  ! no usable article or domain-verified Wikidata logo found")
+              return None
+          '''
+          new = '\n'.join(line[10:] if line.startswith('          ') else line for line in new.splitlines()) + '\n'
+          if old not in text:
+              raise SystemExit('fetch_current tail not found; refusing broad patch')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit focused fallback
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add logo_fetch.py
+          git commit -m "fix: use domain-verified Wikidata logo fallback"
+          git push origin HEAD:fix/logo-wikidata-p154-fallback
