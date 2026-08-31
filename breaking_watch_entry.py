@@ -11,6 +11,9 @@ import breaking_watch
 def _run_strict_news_bot(extra_env):
     env = os.environ.copy()
     env.update(extra_env)
+    # Review phase: breaking cards may be generated and sent to Telegram,
+    # but this entrypoint must never allow a direct Snapchat publish.
+    env["POST_TO_SNAPCHAT"] = "0"
     return subprocess.call([sys.executable, "breaking_news_runner.py"], env=env)
 
 
@@ -24,7 +27,7 @@ def run():
         print("manual confirmed-event reproduction — classifier bypassed, dry run forced")
         return _run_strict_news_bot({
             "PINNED_EVENT": confirmed_event,
-            "POST_TO_SNAPCHAT": "1",
+            "POST_TO_SNAPCHAT": "0",
             "DRY_RUN": "1",
         })
 
