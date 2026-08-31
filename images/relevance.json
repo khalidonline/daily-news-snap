@@ -218,6 +218,34 @@
         "قصة التمر السعودي وتحوله لصناعة": "DIRECT"
       },
       "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Dates%20paste.jpg"
+    },
+    "targeted-amazon-founding-site.jpg": {
+      "stories": {
+        "كيف بدأت Amazon كمتجر كتب على الإنترنت": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Amazon%27s_founding_site_in_Bellevue,_Washington_-_exterior.jpg",
+      "note": "Actual Bellevue founding house; direct origin visual."
+    },
+    "targeted-amazon-fulfillment-center.jpg": {
+      "stories": {
+        "كيف بدأت Amazon كمتجر كتب على الإنترنت": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Amazon_fulfillment_center_(14544646554).jpg",
+      "note": "Amazon fulfillment center; strong visual for the scale reached after the bookstore start."
+    },
+    "targeted-souq-ronaldo-mouchawar.jpg": {
+      "stories": {
+        "قصة أمازون واستحواذها على سوق دوت كوم": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ronaldo_Mouchawar.jpg",
+      "note": "Souq.com co-founder and CEO Ronaldo Mouchawar; direct acquisition-story subject."
+    },
+    "targeted-souq-amazon-robotics.jpg": {
+      "stories": {
+        "قصة أمازون واستحواذها على سوق دوت كوم": "STRONG_CONTEXT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Amazon_warehouse_robot_2020.JPG",
+      "note": "Amazon logistics/robotics; strong context for the operating platform Souq joined after acquisition."
     }
   }
 }
