@@ -1,19 +1,19 @@
 {
-  "run_nonce": "2026-08-31-logo-only-near-pass-batch-1b",
+  "run_nonce": "2026-08-31-logo-only-near-pass-batch-2",
   "assets": [
     {
-      "story": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط",
-      "domain": "aramco.com",
-      "names": ["Saudi Aramco", "Aramco", "أرامكو"],
-      "line_before": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi",
-      "line_after": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi | entity: Saudi Aramco, Aramco, أرامكو | logo:aramco.com"
+      "story": "قصة سابك من فكرة إلى عملاق بتروكيماويات",
+      "domain": "sabic.com",
+      "names": ["SABIC", "Saudi Basic Industries Corporation", "سابك"],
+      "line_before": "قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC",
+      "line_after": "قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC | entity: SABIC, Saudi Basic Industries Corporation, سابك | logo:sabic.com"
     },
     {
-      "story": "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم",
-      "domain": "saudia.com",
-      "names": ["Saudia", "Saudi Arabian Airlines", "الخطوط السعودية"],
-      "line_before": "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم | Saudia, subject:saudi-civil-aviation",
-      "line_after": "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم | Saudia, subject:saudi-civil-aviation | entity: Saudia, Saudi Arabian Airlines, الخطوط السعودية | logo:saudia.com"
+      "story": "قصة ماكدونالدز في السعودية وعائلات الامتياز",
+      "domain": "mcdonalds.com",
+      "names": ["McDonald's", "McDonalds", "ماكدونالدز"],
+      "line_before": "قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia",
+      "line_after": "قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia | entity: McDonald's, McDonalds, ماكدونالدز | logo:mcdonalds.com"
     }
   ]
 }
