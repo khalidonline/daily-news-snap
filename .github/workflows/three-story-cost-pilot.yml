@@ -1,10 +1,10 @@
-name: Three Story Cost Pilot
+name: Two Story Visual Repair Pilot
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: three-story-cost-pilot
@@ -24,7 +24,8 @@ jobs:
       BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
       POST_TO_SNAPCHAT: "0"
       DRY_RUN: "1"
-      STORY_OPERATION_MODE: "auto"
+      STORY_OPERATION_MODE: "visual_only"
+      STORY_COST_STATE_ROOT: "pilot-cost-state"
       MEDIA_MODE: "github"
       THEME: "light"
       BRAND: "ملخص تنفيذي - قصة"
@@ -41,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: optimize/all-stories-publication-ready
+          ref: repair/all-story-visuals-2026-08-29
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -52,7 +53,10 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Pilot 1 — Riyadh
+        id: riyadh
         continue-on-error: true
+        env:
+          STORY_REPAIR_FRAMES: "6"
         run: |
           set +e
           STORY="قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية" python guarded_story_publish.py
@@ -64,7 +68,10 @@ jobs:
           exit "$status"
 
       - name: Pilot 2 — SAMA
+        id: sama
         continue-on-error: true
+        env:
+          STORY_REPAIR_FRAMES: "6"
         run: |
           set +e
           STORY="قصة تأسيس مؤسسة النقد ساما" python guarded_story_publish.py
@@ -75,21 +82,10 @@ jobs:
           find out -mindepth 1 -maxdepth 1 -type f -delete 2>/dev/null || true
           exit "$status"
 
-      - name: Pilot 3 — Madam C. J. Walker
-        continue-on-error: true
-        run: |
-          set +e
-          STORY="من هي Madam C. J. Walker؟ أول مليونيرة عصامية في أمريكا" python guarded_story_publish.py
-          status=$?
-          set -e
-          mkdir -p pilot-artifacts/walker
-          cp -a out/. pilot-artifacts/walker/ 2>/dev/null || true
-          exit "$status"
-
-      - name: Build three-story cost report
+      - name: Build run-only cost report
         if: always()
         run: |
-          python -c 'import json; from pathlib import Path; import story_cost_report as r; Path("pilot-artifacts").mkdir(exist_ok=True); Path("pilot-artifacts/story-cost-report.json").write_text(json.dumps(r.summarize(last=3), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")'
+          python -c 'import json; from pathlib import Path; import story_cost_report as r; Path("pilot-artifacts").mkdir(exist_ok=True); report=r.summarize(usage_path=Path("pilot-cost-state/model_usage.jsonl"), notification_path=Path("pilot-cost-state/story_notifications.jsonl"), last=2); Path("pilot-artifacts/story-cost-report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")'
 
       - name: Keep all frames and the cost report
         if: always()
@@ -99,3 +95,11 @@ jobs:
           path: pilot-artifacts/
           retention-days: 14
           if-no-files-found: warn
+
+      - name: Enforce pilot result
+        if: always()
+        run: |
+          if [[ "${{ steps.riyadh.outcome }}" != "success" || "${{ steps.sama.outcome }}" != "success" ]]; then
+            echo "One or more visual-only repairs failed; inspect the retained artifact."
+            exit 1
+          fi
