@@ -1,5 +1,7 @@
+import inspect
 import os
 import unittest
+from pathlib import Path
 from unittest import mock
 
 import breaking_watch_entry as entry
@@ -28,7 +30,15 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         self.assertEqual(command, [entry.sys.executable, "breaking_news_runner.py"])
         self.assertEqual(env["PINNED_EVENT"], EVENT)
         self.assertEqual(env["DRY_RUN"], "1")
-        self.assertEqual(env["POST_TO_SNAPCHAT"], "1")
+        self.assertEqual(env["POST_TO_SNAPCHAT"], "0")
+
+    def test_confirmed_breaking_pipeline_is_review_only(self):
+        watcher_source = inspect.getsource(entry.breaking_watch._watch)
+        self.assertIn('POST_TO_SNAPCHAT": "0"', watcher_source)
+        self.assertNotIn('POST_TO_SNAPCHAT": "1"', watcher_source)
+
+        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
+        self.assertIn('POST_TO_SNAPCHAT: "0"', workflow)
 
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": ""}, clear=False)
     @mock.patch.object(entry.breaking_watch, "watch")
