@@ -1,4 +1,3 @@
-import inspect
 import os
 import unittest
 from pathlib import Path
@@ -32,12 +31,19 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         self.assertEqual(env["DRY_RUN"], "1")
         self.assertEqual(env["POST_TO_SNAPCHAT"], "0")
 
-    def test_confirmed_breaking_pipeline_is_review_only(self):
-        watcher_source = inspect.getsource(entry.breaking_watch._watch)
-        self.assertIn('POST_TO_SNAPCHAT": "0"', watcher_source)
-        self.assertNotIn('POST_TO_SNAPCHAT": "1"', watcher_source)
+    @mock.patch.object(entry.subprocess, "call", return_value=0)
+    def test_strict_runner_forces_review_only_even_if_caller_requests_post(self, call):
+        entry._run_strict_news_bot({
+            "PINNED_EVENT": EVENT,
+            "POST_TO_SNAPCHAT": "1",
+        })
 
+        env = call.call_args.kwargs["env"]
+        self.assertEqual(env["POST_TO_SNAPCHAT"], "0")
+
+    def test_breaking_workflow_is_review_only(self):
         workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
+        self.assertIn('DRY_RUN: "1"', workflow)
         self.assertIn('POST_TO_SNAPCHAT: "0"', workflow)
 
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": ""}, clear=False)
