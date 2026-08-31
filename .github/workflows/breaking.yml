@@ -1,19 +1,19 @@
 name: Breaking news watch
 
-# THE evening news schedule lives here, in one place:
+# THE breaking-news schedule lives here, in one place:
 #
 #   */30 5-19 UTC  (every 30 min, 08:00–22:30 KSA) — the watcher. A small
-#                  model scans the beats; at most ONE breaking card a day
-#                  posts, the moment the full pipeline confirms the event.
+#                  model scans the beats; when the full pipeline confirms a
+#                  breaking event, the card is built and sent to Telegram for
+#                  review. During the review phase nothing posts to Snapchat.
 #                  The script accepts delayed starts until 23:00 KSA so
 #                  GitHub cron jitter cannot discard the final 22:30 cycle.
 #                  Quiet cycles exit quickly, commit nothing, and send one
 #                  Telegram line — silence is a result, not a failure.
 #
-# There is NO evening replacement post (owner decision): no breaking card
-# unless something clears the gates, and most days that means nothing
-# posts in the evening. daily.yml keeps 07:00 (posts) and 12:00 (hybrid);
-# its manual dispatch with the post tick remains the human override.
+# There is NO evening replacement post: no breaking card unless something
+# clears the gates. Direct Snapchat publishing stays disabled until the owner
+# explicitly ends the Telegram review phase.
 
 on:
   schedule:
@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Classify and build only — never post"
+        description: "Review mode is enforced — classify/build only, never post"
         type: boolean
         default: true
       confirmed_event:
@@ -34,8 +34,8 @@ permissions:
   contents: write
 
 concurrency:
-  # never cancel a run that may be mid-post; the state lock in
-  # breaking_watch.py is what prevents double work
+  # never cancel a run that may be building/delivering a review card; the
+  # state lock in breaking_watch.py prevents duplicate work
   group: breaking
   cancel-in-progress: false
 
@@ -63,11 +63,13 @@ jobs:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
-          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '' }}
+          # Review phase is fail-closed at both levels: the watcher itself sees
+          # DRY_RUN=1, and breaking_watch_entry.py forces POST_TO_SNAPCHAT=0
+          # before launching the full breaking-card pipeline.
+          DRY_RUN: "1"
+          POST_TO_SNAPCHAT: "0"
           CONFIRMED_BREAKING_EVENT: ${{ github.event_name == 'workflow_dispatch' && inputs.confirmed_event || '' }}
           MEDIA_MODE: "github"
-          # breaking_watch.py posts only a confirmed pinned event.
-          # one cap shared with every posting workflow — see CLAUDE.md
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
           BRAND: "ملخص تنفيذي - خبر"
