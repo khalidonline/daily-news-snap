@@ -35,6 +35,14 @@ class LogoFetchTests(unittest.TestCase):
             Path(td) / "mcdonalds.com-current.png",
         )
 
+    def test_fetch_current_never_uses_wikidata_without_declared_domain(self):
+        with patch.object(lf, "_article_logo_files", return_value=[]), \
+             patch.object(lf, "wikidata_p154_logo") as wikidata_logo:
+            result = lf.fetch_current("unverified", ["Unverified Brand"])
+
+        self.assertIsNone(result)
+        wikidata_logo.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()
