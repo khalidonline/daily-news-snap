@@ -121,6 +121,7 @@ story_visual_state.configure(sb)
 _STORY_EXTRA_VISUALS = {
     "قصة تأسيس مؤسسة النقد ساما": {
         "first-hajj-receipt.png",
+        "rt-sama-1.jpg",
         "silver-riyal.png",
     },
     "قصة أول عملة ورقية سعودية": {

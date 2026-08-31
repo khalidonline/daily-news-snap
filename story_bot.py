@@ -2011,6 +2011,16 @@ STORY_MAX_BLANK_FRAMES = int(
 _LAST_SKIP = ""
 
 
+def company_frame_spec(subject_spec, frame_spec):
+    """Keep company identity while preferring the frame's visual beat."""
+    result = dict(frame_spec or {})
+    for key in ("image_keywords", "image_keywords_ar"):
+        own = [value for value in result.get(key, []) if value]
+        subject = [value for value in (subject_spec or {}).get(key, []) if value]
+        result[key] = list(dict.fromkeys(own + subject))
+    return result
+
+
 def find_all_photos(brief):
     """A picture for a frame that has one; a text-only frame otherwise.
 
@@ -2174,9 +2184,11 @@ def find_all_photos(brief):
                         photo, tier = lead, "subject logo"
                         logo_slots.append(n)
             if story_has_company:
-                # frame keywords are ignored by design: the query IS the
-                # subject, and the gate hears the subject too
-                spec = dict(spec, **subject_spec)
+                # The approved local pool is already story-scoped. Keep the
+                # declared subject in every query, but prefer the visual beat
+                # requested by this frame so distinct assets land on the
+                # correct part of the timeline.
+                spec = company_frame_spec(subject_spec, spec)
                 context = f"القصة عن {subject_name}.\n{context}"
             # Historical stories BANK neutrals: a period photo of the
             # story's world that doesn't show this beat's exact subject is
