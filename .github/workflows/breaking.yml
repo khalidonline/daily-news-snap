@@ -78,7 +78,7 @@ jobs:
           LOOKBACK_HOURS: "10"
           REMEMBER_DAYS: "3"
           WATCH_MODEL: ${{ vars.WATCH_MODEL }}
-        run: python breaking_watch.py watch
+        run: python breaking_watch_entry.py
 
       - name: Keep the card for review
         if: always()
