@@ -1,12 +1,26 @@
 {
-  "run_nonce": "2026-08-29-logo-repair-rollaboard-1",
+  "run_nonce": "2026-08-31-logo-only-near-pass-batch-1",
   "assets": [
+    {
+      "story": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط",
+      "domain": "aramco.com",
+      "names": ["Saudi Aramco", "Aramco", "أرامكو"],
+      "line_before": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi",
+      "line_after": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط | Ali Al-Naimi | entity: Saudi Aramco, Aramco, أرامكو | logo:aramco.com"
+    },
     {
       "story": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد",
       "domain": "travelpro.com",
       "names": ["Travelpro", "The Original Rollaboard", "Rollaboard"],
       "line_before": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد | Travelpro, Robert Plath",
       "line_after": "قصة Rollaboard: طيّار أضاف عجلات للحقيبة فغيّر السفر للأبد | Travelpro, Robert Plath | entity: Travelpro | logo:travelpro.com"
+    },
+    {
+      "story": "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم",
+      "domain": "saudia.com",
+      "names": ["Saudia", "Saudi Arabian Airlines", "الخطوط السعودية"],
+      "line_before": "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم | Saudia, subject:saudi-civil-aviation",
+      "line_after": "قصة الطيران المدني في السعودية: من أول رحلة إلى اليوم | Saudia, subject:saudi-civil-aviation | entity: Saudia, Saudi Arabian Airlines, الخطوط السعودية | logo:saudia.com"
     }
   ]
 }
