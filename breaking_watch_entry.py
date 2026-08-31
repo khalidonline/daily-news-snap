@@ -17,5 +17,20 @@ def _run_strict_news_bot(extra_env):
 breaking_watch._run_news_bot = _run_strict_news_bot
 
 
-if __name__ == "__main__":
+def run():
+    """Run the watcher, or safely reproduce an already-confirmed event."""
+    confirmed_event = os.getenv("CONFIRMED_BREAKING_EVENT", "").strip()
+    if confirmed_event:
+        print("manual confirmed-event reproduction — classifier bypassed, dry run forced")
+        return _run_strict_news_bot({
+            "PINNED_EVENT": confirmed_event,
+            "POST_TO_SNAPCHAT": "1",
+            "DRY_RUN": "1",
+        })
+
     breaking_watch.watch()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(run())
