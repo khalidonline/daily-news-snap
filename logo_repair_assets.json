@@ -1,5 +1,5 @@
 {
-  "run_nonce": "2026-08-31-logo-only-near-pass-batch-2",
+  "run_nonce": "2026-08-31-logo-only-near-pass-batch-2b",
   "assets": [
     {
       "story": "قصة سابك من فكرة إلى عملاق بتروكيماويات",
@@ -7,13 +7,6 @@
       "names": ["SABIC", "Saudi Basic Industries Corporation", "سابك"],
       "line_before": "قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC",
       "line_after": "قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC | entity: SABIC, Saudi Basic Industries Corporation, سابك | logo:sabic.com"
-    },
-    {
-      "story": "قصة ماكدونالدز في السعودية وعائلات الامتياز",
-      "domain": "mcdonalds.com",
-      "names": ["McDonald's", "McDonalds", "ماكدونالدز"],
-      "line_before": "قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia",
-      "line_after": "قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia | entity: McDonald's, McDonalds, ماكدونالدز | logo:mcdonalds.com"
     }
   ]
 }
