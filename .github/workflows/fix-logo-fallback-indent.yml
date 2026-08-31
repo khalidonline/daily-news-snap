@@ -1,0 +1,87 @@
+name: Fix logo fallback indentation
+
+on:
+  push:
+    branches:
+      - fix/logo-wikidata-p154-fallback
+    paths:
+      - ".github/workflows/fix-logo-fallback-indent.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/logo-wikidata-p154-fallback
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Correct only malformed fallback block
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('logo_fetch.py')
+          text = path.read_text(encoding='utf-8')
+          bad = '''        if filename:
+  title = f"File:{filename}"
+  for page, info in _commons_fileinfo([title]):
+      if not _commons_licence_ok(info):
+          print(f"  ! {page['title']}: licence unusable — skipping")
+          continue
+      link = info.get("thumburl") or info.get("url")
+      if not link:
+          continue
+      dest = LOGOS_DIR / f"{slug}-current.png"
+      try:
+          _download(link, dest)
+      except Exception as exc:
+          print(f"  ! Wikidata logo download failed for {title}: {exc}")
+          continue
+      if not _renders_as_a_mark(dest):
+          continue
+      print(f"  saved {dest}  <- {page['title']}  "
+            f"(Wikidata P154; P856={require_domain})")
+      return dest
+'''
+          good = '''        if filename:
+            title = f"File:{filename}"
+            for page, info in _commons_fileinfo([title]):
+                if not _commons_licence_ok(info):
+                    print(f"  ! {page['title']}: licence unusable — skipping")
+                    continue
+                link = info.get("thumburl") or info.get("url")
+                if not link:
+                    continue
+                dest = LOGOS_DIR / f"{slug}-current.png"
+                try:
+                    _download(link, dest)
+                except Exception as exc:
+                    print(f"  ! Wikidata logo download failed for {title}: {exc}")
+                    continue
+                if not _renders_as_a_mark(dest):
+                    continue
+                print(f"  saved {dest}  <- {page['title']}  "
+                      f"(Wikidata P154; P856={require_domain})")
+                return dest
+'''
+          if text.count(bad) != 1:
+              raise SystemExit('expected exactly one malformed fallback block')
+          path.write_text(text.replace(bad, good, 1), encoding='utf-8')
+          PY
+      - name: Verify focused tests
+        run: python -m unittest -v tests/test_logo_fetch.py
+      - name: Commit correction
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add logo_fetch.py
+          git commit -m "fix: correct Wikidata fallback indentation"
+          git push origin HEAD:fix/logo-wikidata-p154-fallback
