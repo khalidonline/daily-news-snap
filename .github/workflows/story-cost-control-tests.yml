@@ -25,6 +25,7 @@ on:
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
       - "tests/test_ready_story_publish.py"
+      - "tests/test_ready_story_publish_readiness_gate.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/story-cost-control-tests.yml"
       - ".github/workflows/three-story-cost-pilot.yml"
@@ -52,6 +53,7 @@ on:
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
       - "tests/test_ready_story_publish.py"
+      - "tests/test_ready_story_publish_readiness_gate.py"
       - ".github/workflows/story.yml"
       - ".github/workflows/story-cost-control-tests.yml"
       - ".github/workflows/three-story-cost-pilot.yml"
@@ -87,6 +89,6 @@ jobs:
       - name: Final notification dedupe
         run: python -m unittest -v tests/test_story_notification_state.py
       - name: Publisher persistence and final-only notification
-        run: POST_TO_SNAPCHAT=0 python -m unittest -v tests/test_ready_story_publish.py
+        run: POST_TO_SNAPCHAT=0 python -m unittest -v tests/test_ready_story_publish.py tests/test_ready_story_publish_readiness_gate.py
       - name: Local story cost report
         run: python -m unittest -v tests/test_story_cost_report.py
