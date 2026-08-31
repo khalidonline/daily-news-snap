@@ -91,19 +91,19 @@ jobs:
               raise SystemExit("one or more targeted logo repairs still fail strict visual gate")
           PY
 
-      - name: Promote strict PASS stories into READY state
+      - name: Refresh evidence-backed READY state
         env:
           POST_TO_SNAPCHAT: "0"
           DRY_RUN: "1"
         shell: bash
         run: |
           set -euo pipefail
-          python ready_story_publish.py --refresh-only
+          python publication_ready_pool.py
           git config user.name "story-visual-repair-bot"
           git config user.email "actions@github.com"
           git add state/ready_to_post.json
           if ! git diff --cached --quiet; then
-            git commit -m "state: promote repaired stories to READY"
+            git commit -m "state: refresh evidence-backed READY pool"
             git pull --rebase origin repair/all-story-visuals-2026-08-29
             git push origin HEAD:repair/all-story-visuals-2026-08-29
           fi
