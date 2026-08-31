@@ -1,0 +1,36 @@
+name: Probe near-pass Wikidata logos
+
+on:
+  push:
+    branches:
+      - probe/logo-wikidata-nearpass
+    paths:
+      - ".github/workflows/probe-logo-wikidata-nearpass.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: probe/logo-wikidata-nearpass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Probe domain-verified P154
+        run: |
+          python - <<'PY'
+          from logo_fetch import wikidata_p154_logo
+
+          probes = [
+              ("mcdonalds.com", ["McDonald's", "McDonalds", "ماكدونالدز"]),
+              ("travelpro.com", ["Travelpro", "The Original Rollaboard", "Rollaboard"]),
+          ]
+          for domain, names in probes:
+              logo = wikidata_p154_logo(names, domain)
+              print(f"PROBE {domain}: {logo or 'NONE'}")
+          PY
