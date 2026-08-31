@@ -1,0 +1,132 @@
+{
+  "brief": {
+    "caption": "قبل الطيران كان الوصول إلى جدة يكلّف أسابيع في البحر. هذه قصة أول مطار في المدينة.",
+    "frames": [
+      {
+        "heading": "الطريق إلى مكة كان بحراً",
+        "image_keywords": [
+          "Jeddah port",
+          "Jeddah",
+          "ميناء جدة",
+          "جدة",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "ميناء جدة",
+          "جدة"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "قبل أن تعرف المدينة الطيران، كان الطريق إلى مكة يمرّ من بحر جدة. الحجاج القادمون من موانئ آسيا يقضون أسابيع على ظهر السفن قبل أن يبلغوا الميناء. ومن هناك تبدأ رحلة أخرى بالجمال أو على الأقدام. ولم يكن في جدة مطار واحد."
+      },
+      {
+        "heading": "مدرج رملي في الكندرة",
+        "image_keywords": [
+          "Kandara Airport Jeddah",
+          "Jeddah 1940s",
+          "مطار جدة القديم",
+          "الكندرة",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "مطار جدة القديم",
+          "الكندرة"
+        ],
+        "punch": "والجمال كانت تدخل المدرج أحياناً.",
+        "subject_kind": "place_city",
+        "text": "لكن في 1939 شُقّ في حي الكندرة بجدة مدرج بسيط، بدأ مهبطاً عسكرياً. وطوال الأربعينات لم يكن هناك مبنى مطار واحد، ولا رحلات ركاب منتظمة؛ كل رحلة كانت تُرتَّب يدوياً حسب الحاجة. شريط من الرمل، وهذا كل ما كان يملكه المكان."
+      },
+      {
+        "heading": "طائرة واحدة غيّرت المسار",
+        "image_keywords": [
+          "Douglas DC-3",
+          "King Abdulaziz"
+        ],
+        "image_keywords_ar": [
+          "الملك عبدالعزيز"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. في 1945 وصلت طائرة DC-3 أُهديت للملك عبدالعزيز بعد لقائه الرئيس الأمريكي، فأهداها لشعب المملكة وبدأت بها أول رحلات داخلية منتظمة في البلاد. وفي 1952 افتُتح على أرض الكندرة أول مطار متكامل حديث في المملكة."
+      },
+      {
+        "heading": "المدينة كبرت حوله",
+        "image_keywords": [
+          "Jeddah Al-Balad",
+          "Jeddah",
+          "جدة التاريخية",
+          "البلد",
+          "جدة",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "جدة التاريخية",
+          "البلد",
+          "جدة"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولأن الطائرة اختصرت أسابيع البحر، صار الحج جوّاً هو الخيار الأول، وكان المطار يمرّ به نحو 250 ألف حاج في الموسم. وفي 1958 بُنيت داخل أرضه خمسة مبانٍ على عجل لا تتسع إلا لألفي حاج. ثم توسّعت جدة حتى أحاطت به، فلم يبق مجال للتوسع، وأُغلق في مايو 1981."
+      },
+      {
+        "heading": "سقف من خيام في الصحراء",
+        "image_keywords": [
+          "Hajj Terminal Jeddah",
+          "King Abdulaziz International Airport",
+          "صالة الحجاج",
+          "مطار الملك عبدالعزيز الدولي",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "صالة الحجاج",
+          "مطار الملك عبدالعزيز الدولي"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولذلك افتُتح شمال المدينة في 31 مايو 1981 مطار الملك عبدالعزيز الدولي على مساحة تقارب 105 كيلومترات مربعة. وفيه صالة للحجاج سقفها خيام من قماش تغطي 40.5 هكتار، وكان أكبر سقف قماشي في العالم يومها. الصالة وحدها تستوعب 80 ألف حاج في وقت واحد."
+      },
+      {
+        "heading": "ما صار إليه مطار جدة",
+        "image_keywords": [
+          "King Abdulaziz International Airport",
+          "Jeddah airport terminal",
+          "مطار الملك عبدالعزيز الدولي",
+          "مطار جدة",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "مطار الملك عبدالعزيز الدولي",
+          "مطار جدة"
+        ],
+        "punch": "الطريق الذي كان يُقاس بالأسابيع صار يُقاس بالساعات.",
+        "subject_kind": "place_city",
+        "text": "وفي 2024 عبر مطار الملك عبدالعزيز الدولي 49.1 مليون مسافر بحسب شركة مطارات جدة، وهو أعلى رقم سنوي في تاريخه، في المدينة التي كان بلوغها يكلّف أسابيع في عرض البحر."
+      }
+    ],
+    "image_prompt": "A historic Red Sea harbor at Jeddah in soft dawn light, wooden sailing vessels moored along a stone quay, coral-stone buildings with wooden lattice balconies rising behind, calm water, wide documentary view, no people, no text, no signage",
+    "image_queries": [
+      "Jeddah Red Sea harbor old",
+      "wooden sailing ships Red Sea quay",
+      "Jeddah seafront coral stone buildings"
+    ],
+    "image_queries_ar": [
+      "ميناء جدة",
+      "جدة التاريخية"
+    ],
+    "sources": [
+      "الهيئة العامة للطيران المدني",
+      "واس",
+      "مطارات جدة",
+      "Aga Khan Award for Architecture"
+    ],
+    "title": "مطار جدة: من مدرج رملي إلى بوابة الحج"
+  },
+  "input_tokens": 171140,
+  "message_id": "msg_011CebFUd466xaf9TsMvB94M",
+  "model": "claude-opus-5",
+  "output_tokens": 11198,
+  "prompt_hash": "3b4739a081f939bc438a255468263a35e9ba1e6addd124c4f8f95c890124f9ec",
+  "revision": "1b3023d6fb85f8d48ccc05fcee1e89d043eaa68f5976d6401044295510bf569b",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
