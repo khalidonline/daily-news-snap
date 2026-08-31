@@ -124,7 +124,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 قصة بنده والتجزئة السعودية | Panda Retail
 قصة نادك للأغذية | entity: نادك, NADEC | context: dairy, food, Saudi
 قصة زين السعودية ودخولها سوق الاتصالات | Zain KSA, subject:zain-ksa, logo:sa.zain.com
-قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC
+قصة سابك من فكرة إلى عملاق بتروكيماويات | SABIC | entity: SABIC, Saudi Basic Industries Corporation, سابك | logo:sabic.com
 قصة سليمان الراجحي وأكبر وقف خاص | Sulaiman Al Rajhi
 قصة صالح كامل ودلة البركة | person: صالح كامل, Saleh Kamel | entity: دلة البركة, Dallah Al Baraka | logo:saudicoffee.com
 
