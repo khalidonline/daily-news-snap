@@ -1,0 +1,194 @@
+name: Amazon near-pass visual repair
+
+on:
+  push:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - ".github/amazon-near-pass-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amazon-near-pass-visual-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Fetch reviewed Amazon and Souq assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          UA = 'daily-news-snap/1.0 (https://github.com/khalidonline/daily-news-snap; story visual repair)'
+
+          def commons(title, destination, width=1800):
+              params = urlencode({
+                  'action': 'query', 'format': 'json', 'prop': 'imageinfo',
+                  'iiprop': 'url|extmetadata', 'iiurlwidth': width, 'titles': 'File:' + title,
+              })
+              req = Request('https://commons.wikimedia.org/w/api.php?' + params, headers={'User-Agent': UA})
+              with urlopen(req, timeout=25) as response:
+                  payload = json.load(response)
+              page = next(iter(payload['query']['pages'].values()))
+              if 'missing' in page or not page.get('imageinfo'):
+                  raise SystemExit(f'Commons file missing: {title}')
+              info = page['imageinfo'][0]
+              url = info.get('thumburl') or info['url']
+              req = Request(url, headers={'User-Agent': UA})
+              with urlopen(req, timeout=30) as response:
+                  Path(destination).write_bytes(response.read())
+              print(f'fetched {title} -> {destination}')
+
+          commons("Amazon's founding site in Bellevue, Washington - exterior.jpg", 'images/targeted-amazon-founding-site.jpg')
+          commons('Amazon fulfillment center (14544646554).jpg', 'images/targeted-amazon-fulfillment-center.jpg')
+          commons('Ronaldo Mouchawar.jpg', 'images/targeted-souq-ronaldo-mouchawar.jpg')
+          commons('Amazon warehouse robot 2020.JPG', 'images/targeted-souq-amazon-robotics.jpg')
+          PY
+
+      - name: Validate photos and distinctness
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          from image_precheck import dhash, DHASH_MAX_DISTANCE
+
+          photos = [
+              Path('images/targeted-amazon-founding-site.jpg'),
+              Path('images/targeted-amazon-fulfillment-center.jpg'),
+              Path('images/targeted-souq-ronaldo-mouchawar.jpg'),
+              Path('images/targeted-souq-amazon-robotics.jpg'),
+          ]
+          for new in photos:
+              with Image.open(new) as im:
+                  im.verify()
+              with Image.open(new) as im:
+                  if im.width < 600 or im.height < 400:
+                      raise SystemExit(f'candidate too small: {new} {im.size}')
+                  print(f'candidate verified: {new.name} {im.size}')
+              new_hash = dhash(new)
+              if new_hash is None:
+                  raise SystemExit(f'could not fingerprint {new}')
+              for old in Path('images').glob('*'):
+                  if old in photos or not old.is_file() or old.suffix.lower() not in {'.jpg', '.jpeg', '.png', '.webp'}:
+                      continue
+                  old_hash = dhash(old)
+                  if old_hash is None:
+                      continue
+                  distance = (new_hash ^ old_hash).bit_count()
+                  if distance <= DHASH_MAX_DISTANCE:
+                      raise SystemExit(f'{new.name} duplicates {old} distance={distance}')
+              print(f'distinctness gate PASS: {new.name}')
+          PY
+
+      - name: Register reviewed Amazon assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest = Path('images/images.txt')
+          text = manifest.read_text(encoding='utf-8').rstrip()
+          additions = [
+              "targeted-amazon-founding-site.jpg | Amazon, Jeff Bezos, أمازون, Bellevue, founding site | Wikimedia Commons — SounderBruce / CC BY-SA 4.0",
+              "targeted-amazon-fulfillment-center.jpg | Amazon, أمازون, fulfillment center, ecommerce | Wikimedia Commons — Akos Kokai / CC BY 2.0",
+              "targeted-souq-ronaldo-mouchawar.jpg | Souq.com, سوق دوت كوم, Ronaldo Mouchawar, رونالدو مشحور | Wikimedia Commons — Unus32 / CC BY-SA 4.0",
+              "targeted-souq-amazon-robotics.jpg | Amazon, Souq.com, Amazon logistics, أمازون, ecommerce | Wikimedia Commons — Geni / CC BY-SA 4.0",
+          ]
+          for line in additions:
+              if line not in text:
+                  text += '\n' + line
+          manifest.write_text(text + '\n', encoding='utf-8')
+
+          rel_path = Path('images/relevance.json')
+          rel = json.loads(rel_path.read_text(encoding='utf-8'))
+          assets = rel.setdefault('assets', {})
+          assets['targeted-amazon-founding-site.jpg'] = {
+              'stories': {'كيف بدأت Amazon كمتجر كتب على الإنترنت': 'DIRECT'},
+              'source_url': "https://commons.wikimedia.org/wiki/File:Amazon%27s_founding_site_in_Bellevue,_Washington_-_exterior.jpg",
+              'note': 'Actual Bellevue founding house; direct origin visual.',
+          }
+          assets['targeted-amazon-fulfillment-center.jpg'] = {
+              'stories': {'كيف بدأت Amazon كمتجر كتب على الإنترنت': 'STRONG_CONTEXT'},
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Amazon_fulfillment_center_(14544646554).jpg',
+              'note': 'Amazon fulfillment center; strong visual for the scale reached after the bookstore start.',
+          }
+          assets['targeted-souq-ronaldo-mouchawar.jpg'] = {
+              'stories': {'قصة أمازون واستحواذها على سوق دوت كوم': 'DIRECT'},
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Ronaldo_Mouchawar.jpg',
+              'note': 'Souq.com co-founder and CEO Ronaldo Mouchawar; direct acquisition-story subject.',
+          }
+          assets['targeted-souq-amazon-robotics.jpg'] = {
+              'stories': {'قصة أمازون واستحواذها على سوق دوت كوم': 'STRONG_CONTEXT'},
+              'source_url': 'https://commons.wikimedia.org/wiki/File:Amazon_warehouse_robot_2020.JPG',
+              'note': 'Amazon logistics/robotics; strong context for the operating platform Souq joined after acquisition.',
+          }
+          rel_path.write_text(json.dumps(rel, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Verify both stories on authoritative board
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/story-visual-coverage
+          rm -rf /tmp/amazon-board-engine
+          mkdir -p /tmp/amazon-board-engine
+          git archive origin/repair/story-visual-coverage | tar -x -C /tmp/amazon-board-engine
+          PYTHONPATH=/tmp/amazon-board-engine python - <<'PY'
+          import sys
+          sys.path.insert(0, '/tmp/amazon-board-engine')
+          from tools.bulk_visual_board import build_board
+
+          stories = [
+              'كيف بدأت Amazon كمتجر كتب على الإنترنت',
+              'قصة أمازون واستحواذها على سوق دوت كوم',
+          ]
+          rows = build_board(stories)
+          for row in rows:
+              print(f'{row.story}: {row.status} photos={len(row.photos)} logos={len(row.logos)}')
+          if len(rows) != 2:
+              raise SystemExit(f'expected 2 Amazon rows, got {len(rows)}')
+          if any(row.status != 'PASS' or len(row.photos) < 4 or len(row.logos) < 1 for row in rows):
+              raise SystemExit('one or more Amazon near-pass stories failed authoritative coverage')
+          PY
+
+      - name: Commit accepted Amazon repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "story-visual-repair-bot"
+          git config user.email "actions@github.com"
+          git add \
+            images/targeted-amazon-founding-site.jpg \
+            images/targeted-amazon-fulfillment-center.jpg \
+            images/targeted-souq-ronaldo-mouchawar.jpg \
+            images/targeted-souq-amazon-robotics.jpg \
+            images/images.txt images/relevance.json
+          git commit -m "repair: close two Amazon near-pass gaps"
+          git pull --rebase origin repair/all-story-visuals-2026-08-29
+          git push origin HEAD:repair/all-story-visuals-2026-08-29
