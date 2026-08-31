@@ -305,7 +305,29 @@ def fetch_current(slug, names, require_domain=None):
             continue
         print(f"  saved {dest}  <- {title}  (non-free, {lang}.wikipedia)")
         return dest
-    print("  ! no usable article logo found for the current logo")
+    if require_domain:
+        filename = wikidata_p154_logo(names, require_domain)
+        if filename:
+  title = f"File:{filename}"
+  for page, info in _commons_fileinfo([title]):
+      if not _commons_licence_ok(info):
+          print(f"  ! {page['title']}: licence unusable — skipping")
+          continue
+      link = info.get("thumburl") or info.get("url")
+      if not link:
+          continue
+      dest = LOGOS_DIR / f"{slug}-current.png"
+      try:
+          _download(link, dest)
+      except Exception as exc:
+          print(f"  ! Wikidata logo download failed for {title}: {exc}")
+          continue
+      if not _renders_as_a_mark(dest):
+          continue
+      print(f"  saved {dest}  <- {page['title']}  "
+            f"(Wikidata P154; P856={require_domain})")
+      return dest
+    print("  ! no usable article or domain-verified Wikidata logo found")
     return None
 
 
