@@ -28,20 +28,25 @@ def _story_id(story: str) -> str:
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
 
+def _read_json_object(path: Path) -> dict:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
 def has_locked_editorial(story: str, *, brief_root: Path | None = None) -> bool:
     root = Path(brief_root or os.getenv("STORY_BRIEF_ROOT", "state/story_briefs"))
     story_dir = root / _story_id(story)
     if not story_dir.exists():
         return False
     for path in sorted(story_dir.glob("*.json")):
-        try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, UnicodeError, json.JSONDecodeError):
-            continue
+        payload = _read_json_object(path)
         if (
-            isinstance(payload, dict)
-            and payload.get("status") == sbs.EDITORIAL_LOCKED
-            and payload.get("story") == story
+            payload.get("schema") == sbs.BRIEF_SCHEMA_VERSION
+            and payload.get("revision") == path.stem
+            and payload.get("status") == "EDITORIAL_LOCKED"
             and isinstance(payload.get("brief"), dict)
         ):
             return True
@@ -60,15 +65,15 @@ def has_complete_rendered_state(
         return False
     expected = int(expected_frames)
     for state_path in sorted(story_dir.glob("*/state.json")):
-        revision = state_path.parent.name
-        try:
-            state = svs.load_visual_state(story, revision)
-        except RuntimeError:
+        state = _read_json_object(state_path)
+        frames = state.get("frames") or {}
+        if state.get("schema") != svs.VISUAL_STATE_SCHEMA:
             continue
-        frames = (state or {}).get("frames") or {}
         if state.get("story") != story or state.get("status") != "VISUAL_READY":
             continue
-        if len(frames) != expected:
+        if state.get("revision") != state_path.parent.name:
+            continue
+        if not isinstance(frames, dict) or len(frames) != expected:
             continue
         if all(
             isinstance(frames.get(str(frame_no)), dict)
