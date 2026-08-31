@@ -139,7 +139,7 @@ Fred Smith: كتب فكرة FedEx في بحث جامعي ونال درجة مت�
 # Global giants' Saudi chapter
 قصة كريم من الفكرة إلى استحواذ أوبر | Careem, Uber, subject:careem, logo:careem.com
 قصة دخول لوسيد ومصنعها في السعودية | entity: Lucid Motors, لوسيد, KAEC | logo:lucidmotors.com
-قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia
+قصة ماكدونالدز في السعودية وعائلات الامتياز | McDonald's Saudi Arabia | entity: McDonald's, McDonald's Saudi Arabia, ماكدونالدز | logo:mcdonalds.com
 قصة ستاربكس عبر الشايع | Starbucks, Alshaya
 قصة أمازون واستحواذها على سوق دوت كوم | Souq.com, Amazon
 قصة نون ومنافسة التجارة الإلكترونية | entity: noon | context: ecommerce, Saudi, Emaar
