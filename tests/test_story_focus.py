@@ -123,6 +123,21 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("ما يظهر في الصورة", prompt)
         self.assertIn("لا يكفي", prompt)
 
+    def test_story_inventory_excludes_unrelated_catalogue_rows(self):
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "approved.txt"
+            index.write_text(
+                "riyadh-skyline.jpg | الرياض, Riyadh, skyline | Wikimedia\n"
+                "tokyo-crossing.jpg | طوكيو, Tokyo, crossing | Wikimedia\n",
+                encoding="utf-8",
+            )
+            prompt = story_focus.runtime_visual_inventory_prompt(
+                index, aliases=["الرياض", "Riyadh"]
+            )
+
+        self.assertIn("riyadh-skyline.jpg", prompt)
+        self.assertNotIn("tokyo-crossing.jpg", prompt)
+
     def test_reviewed_archive_year_is_authoritative_in_vision_context(self):
         with tempfile.TemporaryDirectory() as td:
             index = Path(td) / "approved.txt"

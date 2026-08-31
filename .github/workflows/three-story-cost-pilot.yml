@@ -1,0 +1,101 @@
+name: Three Story Cost Pilot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: three-story-cost-pilot
+  cancel-in-progress: false
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      POST_PROVIDER: "bundle"
+      BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+      BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+      BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+      POST_TO_SNAPCHAT: "0"
+      DRY_RUN: "1"
+      STORY_OPERATION_MODE: "auto"
+      MEDIA_MODE: "github"
+      THEME: "light"
+      BRAND: "ملخص تنفيذي - قصة"
+      FONT_FAMILY: "Almarai"
+      STORY_MODEL: "claude-opus-5"
+      STORY_FRAMES: "6"
+      ALLOW_GENERATED: "0"
+      ALLOW_STORY_GENERATION: "0"
+      STORY_ALLOW_REPEAT: "1"
+      IMAGE_GEN: "byteplus"
+      ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+      ARK_MODEL: ${{ vars.ARK_MODEL }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: optimize/all-stories-publication-ready
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Pilot 1 — Riyadh
+        continue-on-error: true
+        run: |
+          set +e
+          STORY="قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية" python guarded_story_publish.py
+          status=$?
+          set -e
+          mkdir -p pilot-artifacts/riyadh
+          cp -a out/. pilot-artifacts/riyadh/ 2>/dev/null || true
+          find out -mindepth 1 -maxdepth 1 -type f -delete 2>/dev/null || true
+          exit "$status"
+
+      - name: Pilot 2 — SAMA
+        continue-on-error: true
+        run: |
+          set +e
+          STORY="قصة تأسيس مؤسسة النقد ساما" python guarded_story_publish.py
+          status=$?
+          set -e
+          mkdir -p pilot-artifacts/sama
+          cp -a out/. pilot-artifacts/sama/ 2>/dev/null || true
+          find out -mindepth 1 -maxdepth 1 -type f -delete 2>/dev/null || true
+          exit "$status"
+
+      - name: Pilot 3 — Madam C. J. Walker
+        continue-on-error: true
+        run: |
+          set +e
+          STORY="من هي Madam C. J. Walker؟ أول مليونيرة عصامية في أمريكا" python guarded_story_publish.py
+          status=$?
+          set -e
+          mkdir -p pilot-artifacts/walker
+          cp -a out/. pilot-artifacts/walker/ 2>/dev/null || true
+          exit "$status"
+
+      - name: Build three-story cost report
+        if: always()
+        run: |
+          python -c 'import json; from pathlib import Path; import story_cost_report as r; Path("pilot-artifacts").mkdir(exist_ok=True); Path("pilot-artifacts/story-cost-report.json").write_text(json.dumps(r.summarize(last=3), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")'
+
+      - name: Keep all frames and the cost report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: three-story-cost-pilot-${{ github.run_id }}
+          path: pilot-artifacts/
+          retention-days: 14
+          if-no-files-found: warn

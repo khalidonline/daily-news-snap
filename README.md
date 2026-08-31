@@ -100,6 +100,11 @@ This pilot proves call/cache mechanics only; it deliberately does **not** claim 
 fixture stories have been evaluated for publication quality. Run a paid editorial pilot
 only after reviewing the expected budget.
 
+For a bounded publication-quality check, manually dispatch **Three Story Cost Pilot**.
+It processes Riyadh, SAMA, and Madam C. J. Walker sequentially in guarded `auto` mode,
+uploads every available frame plus a three-story cost report, and cannot publish because
+both `POST_TO_SNAPCHAT=0` and `DRY_RUN=1` are fixed in the workflow. It has no schedule.
+
 ---
 
 ## Tuning

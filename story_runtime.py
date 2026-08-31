@@ -54,7 +54,11 @@ sb.LOGO_MAX_FRAMES = 0
 def _editorial_prompt_for_revision():
     inventory = ""
     try:
-        inventory = story_focus.runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
+        story = str(getattr(sb, "_ACTIVE_EDITORIAL_STORY", "") or "").strip()
+        aliases = [story] + list(sb.story_aliases(story) if story else [])
+        inventory = story_focus.runtime_visual_inventory_prompt(
+            nb.IMAGES_INDEX, aliases=aliases
+        )
     except Exception:
         inventory = ""
     return sb.SYSTEM_PROMPT + inventory
