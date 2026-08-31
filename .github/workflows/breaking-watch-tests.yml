@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "breaking_watch.py"
+      - "breaking_news_runner.py"
+      - "breaking_watch_entry.py"
       - "news_bot.py"
       - "tests/test_breaking_watch.py"
       - "tests/test_breaking_watch_seen_memory.py"
@@ -13,6 +15,8 @@ on:
   pull_request:
     paths:
       - "breaking_watch.py"
+      - "breaking_news_runner.py"
+      - "breaking_watch_entry.py"
       - "news_bot.py"
       - "tests/test_breaking_watch.py"
       - "tests/test_breaking_watch_seen_memory.py"
@@ -38,4 +42,4 @@ jobs:
         run: |
           python -m unittest tests.test_breaking_watch tests.test_breaking_watch_seen_memory -v
           python -m unittest tests.test_breaking_visual_relevance -v
-          python -m py_compile breaking_watch.py news_bot.py
+          python -m py_compile breaking_watch.py breaking_news_runner.py breaking_watch_entry.py news_bot.py
