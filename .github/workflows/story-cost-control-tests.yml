@@ -15,6 +15,7 @@ on:
       - "story_bot.py"
       - "story_focus.py"
       - "ready_story_publish.py"
+      - "publication_ready_pool.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
@@ -27,6 +28,8 @@ on:
       - "tests/test_ready_story_publish.py"
       - "tests/test_ready_story_publish_readiness_gate.py"
       - ".github/workflows/story.yml"
+      - ".github/workflows/ready-story-pool.yml"
+      - ".github/workflows/targeted-near-pass-repair.yml"
       - ".github/workflows/story-cost-control-tests.yml"
       - ".github/workflows/three-story-cost-pilot.yml"
   pull_request:
@@ -43,6 +46,7 @@ on:
       - "story_bot.py"
       - "story_focus.py"
       - "ready_story_publish.py"
+      - "publication_ready_pool.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
@@ -55,6 +59,8 @@ on:
       - "tests/test_ready_story_publish.py"
       - "tests/test_ready_story_publish_readiness_gate.py"
       - ".github/workflows/story.yml"
+      - ".github/workflows/ready-story-pool.yml"
+      - ".github/workflows/targeted-near-pass-repair.yml"
       - ".github/workflows/story-cost-control-tests.yml"
       - ".github/workflows/three-story-cost-pilot.yml"
   workflow_dispatch:
