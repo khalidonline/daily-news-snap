@@ -1,0 +1,129 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "be32907a16bac4fb1f8d171c56d1019e8ec156ce8f49c40af77f3dd12577193e",
+      "frame_payload": {
+        "heading": "الخليج بلا فرع واحد",
+        "image_keywords": [
+          "Riyadh 1990s",
+          "Takhassusi Road Riyadh"
+        ],
+        "image_keywords_ar": [
+          "الرياض",
+          "طريق التخصصي"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في بداية التسعينات، لم يكن في دول الخليج كلها فرع واحد لماكدونالدز. السلسلة التي يعرفها الناس من التلفزيون كانت غائبة عن المنطقة تماماً. والسؤال وقتها: من يجرؤ على فتح أول مطعم في سوق لم يجرّبه أحد؟"
+      },
+      "image_source": "state/story_visuals/e094128892876115/5226dff2e332acd526e9ae3519018102ad1adc004571c389ce0e9dc0bfb228e8/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "55802f3b6363f2c06ffb564c5976fcc586f13535beb6fc4723232995f00040cb",
+      "frame_payload": {
+        "heading": "امتياز لشركتين سعوديتين",
+        "image_keywords": [
+          "McDonald's Saudi Arabia"
+        ],
+        "image_keywords_ar": [
+          "ماكدونالدز السعودية",
+          "ماكدونالدز"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن في عام 1992 مُنح حق الامتياز لشركتين سعوديتين: شركة الرياض العالمية للأغذية في المناطق الوسطى والشرقية والشمالية، وشركة علي رضا للخدمات الغذائية في الغربية والجنوبية. ماكدونالدز لم تدخل المملكة بنفسها، بل عبر ملّاك محليين يتحملون الكلفة والمخاطرة."
+      },
+      "image_source": "state/story_visuals/e094128892876115/5226dff2e332acd526e9ae3519018102ad1adc004571c389ce0e9dc0bfb228e8/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "290a13714730d5ea6e504f855f985b280877d40bd95151b359a6661f5a46b78f",
+      "frame_payload": {
+        "heading": "أول مطعم يفتح أبوابه",
+        "image_keywords": [
+          "McDonald's Riyadh",
+          "McDonald's Saudi Arabia"
+        ],
+        "image_keywords_ar": [
+          "أول فرع",
+          "الرياض",
+          "ماكدونالدز"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. في 8 ديسمبر 1993 فُتح أول مطعم ماكدونالدز في الرياض، عند تقاطع طريق التخصصي مع طريق مكة. ولم يكن الأول في المملكة فقط، بل أول ماكدونالدز في منطقة الخليج كلها. وبعده بعام فتحت الشركة الثانية فرعها الأول في حي الحمراء بجدة."
+      },
+      "image_source": "state/story_visuals/e094128892876115/5226dff2e332acd526e9ae3519018102ad1adc004571c389ce0e9dc0bfb228e8/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "43b2cfc48bee1252cf19a1d42d1b8eab0714bc86a1b7ed6bdb8e7504c83ff1b4",
+      "frame_payload": {
+        "heading": "كل شيء يأتي من الخارج",
+        "image_keywords": [
+          "McDonald's Saudi Arabia",
+          "McDonald's Riyadh"
+        ],
+        "image_keywords_ar": [
+          "ماكدونالدز السعودية",
+          "الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن الافتتاح كان أسهل من التشغيل. قال رئيس شركة الرياض العالمية للأغذية لموقع أرقام سنة 2013 إن التكاليف التشغيلية كانت مرتفعة جداً لأن المواد الأولية كلها مستوردة. وتوطين تلك المواد استغرق نحو عشرين سنة حتى بلغ 55%. ولم يصدر نظام سعودي ينظّم الامتياز التجاري إلا في أكتوبر 2019."
+      },
+      "image_source": "state/story_visuals/e094128892876115/5226dff2e332acd526e9ae3519018102ad1adc004571c389ce0e9dc0bfb228e8/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "من مطعم واحد إلى مئات",
+        "image_keywords": [
+          "McDonald's Jeddah",
+          "McDonald's Saudi Arabia"
+        ],
+        "image_keywords_ar": [
+          "ماكدونالدز",
+          "جدة"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهكذا صار مطعم 1993 الواحد شبكة تغطي المملكة. شركة الرياض العالمية للأغذية تذكر أن لديها أكثر من 208 مطاعم و6,632 موظفاً، منهم 2,382 سعودياً. وشركة علي رضا تذكر على موقعها نحو 162 مطعماً في الغربية والجنوبية، من جدة إلى مكة والمدينة وتبوك وجيزان."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "6": {
+      "asset_hash": "65745442a6b919d6b58a7a5cce4a1b2467504f1cfbaad693f4f368e712f6500f",
+      "frame_payload": {
+        "heading": "علامة عالمية بإدارة سعودية",
+        "image_keywords": [
+          "McDonald's Saudi Arabia"
+        ],
+        "image_keywords_ar": [
+          "ماكدونالدز السعودية",
+          "ماكدونالدز"
+        ],
+        "punch": "العلامة جاءت من الخارج، والمطاعم صارت شغلاً سعودياً بالكامل.",
+        "subject_kind": "company",
+        "text": "ولذلك فإن كل مطاعم ماكدونالدز في المملكة اليوم مملوكة لهاتين الشركتين السعوديتين، وقراراتها التجارية تُتخذ داخل المملكة."
+      },
+      "image_source": "state/story_visuals/e094128892876115/5226dff2e332acd526e9ae3519018102ad1adc004571c389ce0e9dc0bfb228e8/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "5226dff2e332acd526e9ae3519018102ad1adc004571c389ce0e9dc0bfb228e8",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_ASSEMBLY",
+  "story": "قصة ماكدونالدز في السعودية وعائلات الامتياز"
+}
