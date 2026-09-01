@@ -24,6 +24,10 @@ class DailySlotSchedulerTests(unittest.TestCase):
         completed = {"2026-09-01T09:10+03:00"}
         self.assertIsNone(scheduler.due_slot_id(now, completed=completed))
 
+    def test_same_day_slot_older_than_recovery_window_is_not_resurrected(self):
+        now = datetime(2026, 9, 1, 10, 45, tzinfo=KSA)
+        self.assertIsNone(scheduler.due_slot_id(now, completed=set()))
+
     def test_does_not_resurrect_obsolete_overnight_slot(self):
         now = datetime(2026, 9, 2, 2, 43, tzinfo=KSA)
         self.assertIsNone(scheduler.due_slot_id(now, completed=set()))
