@@ -6,6 +6,11 @@ not set a photo target or ceiling. Reviewed local visuals selected by the
 frame's own keywords are trusted, including historical documents, banknotes and
 archive scans. The renderer should use every strong relevant visual available,
 and the final rendered deck is authoritative for publication quality.
+
+Story visuals are authentic-first: synthetic/generated imagery is disabled for
+this runtime. Explicitly reviewed STRONG_CONTEXT real assets may broaden a deck
+beyond literal subject matches (for example products, meals, employees,
+operations, locations and other documentary context).
 """
 
 from __future__ import annotations
@@ -25,12 +30,67 @@ import story_visual_state
 import city_visual_v3
 from runtime_relevance import (
     asset_countable,
+    explicitly_relevant,
     runtime_pass,
     runtime_status,
     trusted_selected_local_visual,
 )
 
+# Story runtime never creates synthetic visual filler. Insufficient authentic
+# coverage stays REVIEW/blocked rather than silently invoking image generation.
+os.environ["ALLOW_GENERATED"] = "0"
+os.environ["ALLOW_STORY_GENERATION"] = "0"
+if hasattr(sb, "ALLOW_GENERATED"):
+    sb.ALLOW_GENERATED = False
+sb.ALLOW_STORY_GENERATION = False
+# The runtime builds a story-specific approved index before story_bot runs.
+sb._STORY_RUNTIME_INDEX_SCOPED = True
+
 story_focus.configure(sb)
+
+_AUTHENTIC_VISUAL_PROMPT = r"""
+
+قاعدة التنوع البصري الحقيقي — تنطبق على كل القصص، وبالأخص الشركات والمنتجات:
+- استخدم صور حقيقية فقط. لا تستخدم صوراً مولدة أو مشاهد تاريخية مصطنعة
+  لتعبئة فراغ بصري؛ إذا لم توجد صورة حقيقية مناسبة، فالأفضل أن تبقى اللقطة
+  نصية أو أن تتوقف القصة للمراجعة.
+- لا تحوّل قصة الشركة أو العلامة إلى ست صور متشابهة لواجهات الفروع. وسّع
+  المشاهد الحقيقية المرتبطة بالبطل: المنتجات، الوجبات والمشروبات، الموظفين
+  أثناء العمل، العملاء عندما يكون وجودهم جزءاً من الحدث، العمليات، المطابخ
+  والمصانع، الفروع والداخلية، التغليف، المركبات والتوصيل، سلسلة الإمداد،
+  الإعلانات والوثائق والأرشيف، والمواقع المرتبطة فعلاً بالقصة.
+- التنوع ليس حشواً. اختر من هذه المشاهد فقط عندما يضيف المشهد فهماً جديداً
+  للبطل أو لمرحلة حقيقية في رحلته. صورة منتج لا توضع على لقطة نصها عن موقع
+  جغرافي مختلف؛ غيّر اللقطة فقط إذا كان المنتج أو الموظف أو العملية نفسها
+  جزءاً صحيحاً ومهماً من القصة ومدعوماً بالمصادر.
+- إذا كانت أمامك فكرتان صحيحتان ومتقاربتان في الأهمية، فضّل الفكرة التي
+  يمكن توثيقها بصورة حقيقية مختلفة عن الصور السابقة: منتج، شخص، عملية،
+  مكان، أو أصل أرشيفي. الهدف أن تروي الصور الست القصة أيضاً، لا أن تكرر
+  نفس المبنى من زوايا مختلفة.
+"""
+if "قاعدة التنوع البصري الحقيقي" not in sb.SYSTEM_PROMPT:
+    sb.SYSTEM_PROMPT = sb.SYSTEM_PROMPT + _AUTHENTIC_VISUAL_PROMPT
+
+# story_focus normally filters inventory rows by literal subject aliases. That
+# is useful on an unscoped catalogue, but Story Runtime replaces IMAGES_INDEX
+# with a story-specific approved index first. A second alias filter would hide
+# legitimate STRONG_CONTEXT rows such as a meal, employee or factory whose tags
+# do not repeat the brand name. Keep filtering everywhere else; trust only the
+# already-scoped runtime index here.
+_story_inventory_prompt = story_focus.runtime_visual_inventory_prompt
+
+
+def _scoped_runtime_inventory_prompt(index_path, aliases=()):
+    try:
+        scoped = Path(index_path).resolve() == Path(nb.IMAGES_INDEX).resolve()
+    except Exception:
+        scoped = False
+    if scoped and getattr(sb, "_STORY_RUNTIME_INDEX_SCOPED", False):
+        return _story_inventory_prompt(index_path, aliases=())
+    return _story_inventory_prompt(index_path, aliases=aliases)
+
+
+story_focus.runtime_visual_inventory_prompt = _scoped_runtime_inventory_prompt
 
 # The reviewed local library is already selected by the frame's image keywords.
 # For Story-to-Snapchat, trust that curation instead of making a generic vision
@@ -54,11 +114,9 @@ sb.LOGO_MAX_FRAMES = 0
 def _editorial_prompt_for_revision():
     inventory = ""
     try:
-        story = str(getattr(sb, "_ACTIVE_EDITORIAL_STORY", "") or "").strip()
-        aliases = [story] + list(sb.story_aliases(story) if story else [])
-        inventory = story_focus.runtime_visual_inventory_prompt(
-            nb.IMAGES_INDEX, aliases=aliases
-        )
+        # nb.IMAGES_INDEX is already the story-specific, relevance-approved
+        # runtime index. Do not filter it a second time by literal aliases.
+        inventory = story_focus.runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
     except Exception:
         inventory = ""
     return sb.SYSTEM_PROMPT + inventory
@@ -135,8 +193,15 @@ _STORY_EXTRA_VISUALS = {
 }
 
 
-def _matches_story(entry, story):
-    if entry.get("path") and Path(entry["path"]).name in _STORY_EXTRA_VISUALS.get(str(story).strip(), set()):
+def _matches_story(entry, story, ledger_path=None):
+    filename = Path(entry.get("path") or "").name
+    if filename and explicitly_relevant(
+        filename,
+        story,
+        ledger_path=ledger_path or Path("images/relevance.json"),
+    ):
+        return True
+    if entry.get("path") and filename in _STORY_EXTRA_VISUALS.get(str(story).strip(), set()):
         return True
     aliases = [a for a in sb.story_aliases(story) if a]
     persons = sb._STORY_PERSONS.get(str(story).strip()) or []
@@ -146,7 +211,7 @@ def _matches_story(entry, story):
 
 
 def approved_runtime_visuals(story):
-    """Return every distinct approved local visual plus optional local logos."""
+    """Return every distinct approved authentic local visual plus optional logos."""
     photos = []
     for entry in nb.load_local_images():
         path = entry["path"]
@@ -273,7 +338,7 @@ def main():
         sb.notify_album = lambda *args, **kwargs: None
         print("    intermediate Telegram notifications suppressed")
     print(f"    runtime gate PASS: {story}")
-    print("    approved visuals: " + ", ".join(p.name for p in photos))
+    print("    approved authentic visuals: " + ", ".join(p.name for p in photos))
     if logos:
         print("    optional logo(s): " + ", ".join(p.name for p in logos))
     sb.main()

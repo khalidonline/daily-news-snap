@@ -53,6 +53,45 @@ class RuntimeRelevanceTests(unittest.TestCase):
         self.assertTrue(asset_countable("rt-shared.jpg", "Story A", ledger))
         self.assertFalse(asset_countable("rt-shared.jpg", "Story B", ledger))
 
+    def test_generated_asset_is_rejected_even_when_marked_direct(self):
+        ledger = self.write_ledger({
+            "assets": {
+                "generated-brand-scene.jpg": {
+                    "stories": {"Story A": DIRECT},
+                    "source_type": "ai_generated",
+                    "source_url": "generated:byteplus",
+                }
+            }
+        })
+        self.assertFalse(asset_countable("generated-brand-scene.jpg", "Story A", ledger))
+
+    def test_generated_filename_is_rejected_without_ledger_metadata(self):
+        ledger = self.write_ledger({"assets": {}})
+        self.assertFalse(asset_countable("ai-generated-storefront.png", "Story A", ledger))
+
+    def test_visual_sanity_fail_is_rejected_even_when_direct(self):
+        ledger = self.write_ledger({
+            "assets": {
+                "upside-down.jpg": {
+                    "stories": {"Story A": DIRECT},
+                    "visual_sanity": "FAIL",
+                }
+            }
+        })
+        self.assertFalse(asset_countable("upside-down.jpg", "Story A", ledger))
+
+    def test_story_specific_strong_context_is_explicitly_relevant(self):
+        ledger = self.write_ledger({
+            "assets": {
+                "meal.jpg": {
+                    "stories": {"Brand history story": STRONG_CONTEXT},
+                    "source_url": "https://example.com/real-meal.jpg",
+                }
+            }
+        })
+        self.assertTrue(rr.explicitly_relevant("meal.jpg", "Brand history story", ledger))
+        self.assertFalse(rr.explicitly_relevant("meal.jpg", "Other story", ledger))
+
     def test_personal_story_source_gate_allows_render_with_four_visuals_and_no_logo(self):
         self.assertEqual(runtime_status(6, 0), "PASS")
         self.assertEqual(runtime_status(5, 0), "PASS")
