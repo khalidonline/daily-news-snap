@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "policy": "Assets explicitly observed with broken orientation or other visual-sanity defects fail closed until corrected or replaced.",
+  "assets": {
+    "mcdonalds-jubail.jpg": {
+      "visual_sanity": "FAIL",
+      "orientation": "UPSIDE_DOWN",
+      "note": "Observed upside down in Daily Story Telegram run 33525318618; quarantined until corrected or replaced."
+    }
+  }
+}
