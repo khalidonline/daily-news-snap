@@ -7,17 +7,25 @@ class DailyReviewWorkflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
 
-    def test_runs_every_two_hours_from_710am_through_1110pm_ksa(self):
-        self.assertIn('- cron: "10 4-20/2 * * *"', self.workflow)
-        self.assertNotIn('- cron: "0 4-20/2 * * *"', self.workflow)
+    def test_uses_frequent_lightweight_heartbeat_for_self_healing(self):
+        self.assertIn('- cron: "10,25,40,55 4-20 * * *"', self.workflow)
+        self.assertNotIn('- cron: "10 4-20/2 * * *"', self.workflow)
+        self.assertIn("python3 daily_slot_scheduler.py due", self.workflow)
 
-    def test_stale_scheduled_runs_are_skipped_before_paid_work(self):
-        self.assertIn('name: Guard scheduled freshness', self.workflow)
-        self.assertIn('RUN_DAILY=0', self.workflow)
-        self.assertIn('RUN_DAILY=1', self.workflow)
-        self.assertIn('github.event_name == \'workflow_dispatch\'', self.workflow)
-        self.assertIn('if: ${{ env.RUN_DAILY != \'0\' }}', self.workflow)
-        self.assertIn('MAX_SCHEDULE_DELAY_MINUTES: "45"', self.workflow)
+    def test_scheduler_controls_paid_work(self):
+        self.assertIn("RUN_DAILY=0", self.workflow)
+        self.assertIn("RUN_DAILY=1", self.workflow)
+        self.assertIn("DAILY_SLOT_ID", self.workflow)
+        self.assertIn("if: ${{ env.RUN_DAILY != '0' }}", self.workflow)
+
+    def test_successful_scheduled_run_marks_slot_complete(self):
+        self.assertIn("python3 daily_slot_scheduler.py mark", self.workflow)
+        self.assertIn("daily_slot_state.json", self.workflow)
+        self.assertIn("git pull --rebase origin main", self.workflow)
+        self.assertIn("git push origin HEAD:main", self.workflow)
+
+    def test_heartbeat_never_cancels_live_delivery(self):
+        self.assertIn("cancel-in-progress: false", self.workflow)
 
     def test_scheduled_runs_never_post_to_snapchat(self):
         expected = (
