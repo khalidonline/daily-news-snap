@@ -112,6 +112,22 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         import story_runtime as sr
         self.assertEqual(sr.sb.LOGO_MAX_FRAMES, 0)
 
+    def test_explicit_strong_context_can_match_without_literal_story_tags(self):
+        import story_runtime as sr
+        td = tempfile.TemporaryDirectory()
+        self.addCleanup(td.cleanup)
+        ledger = Path(td.name) / "relevance.json"
+        ledger.write_text(json.dumps({
+            "assets": {
+                "brand-meal.jpg": {
+                    "stories": {"قصة العلامة": rr.STRONG_CONTEXT},
+                    "source_url": "https://example.com/real-brand-meal.jpg",
+                }
+            }
+        }), encoding="utf-8")
+        entry = {"path": Path("images/brand-meal.jpg"), "tags": ["meal", "employee", "restaurant"]}
+        self.assertTrue(sr._matches_story(entry, "قصة العلامة", ledger_path=ledger))
+
     def test_sama_catalog_has_at_least_five_real_visuals(self):
         import story_runtime as sr
         photos, _logos = sr.approved_runtime_visuals("قصة تأسيس مؤسسة النقد ساما")
