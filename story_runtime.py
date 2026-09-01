@@ -6,6 +6,11 @@ not set a photo target or ceiling. Reviewed local visuals selected by the
 frame's own keywords are trusted, including historical documents, banknotes and
 archive scans. The renderer should use every strong relevant visual available,
 and the final rendered deck is authoritative for publication quality.
+
+Story visuals are authentic-first: synthetic/generated imagery is disabled for
+this runtime. Explicitly reviewed STRONG_CONTEXT real assets may broaden a deck
+beyond literal subject matches (for example products, meals, employees,
+operations, locations and other documentary context).
 """
 
 from __future__ import annotations
@@ -25,10 +30,17 @@ import story_visual_state
 import city_visual_v3
 from runtime_relevance import (
     asset_countable,
+    explicitly_relevant,
     runtime_pass,
     runtime_status,
     trusted_selected_local_visual,
 )
+
+# Story runtime never creates synthetic visual filler. Insufficient authentic
+# coverage stays REVIEW/blocked rather than silently invoking image generation.
+os.environ["ALLOW_GENERATED"] = "0"
+if hasattr(sb, "ALLOW_GENERATED"):
+    sb.ALLOW_GENERATED = False
 
 story_focus.configure(sb)
 
@@ -135,8 +147,15 @@ _STORY_EXTRA_VISUALS = {
 }
 
 
-def _matches_story(entry, story):
-    if entry.get("path") and Path(entry["path"]).name in _STORY_EXTRA_VISUALS.get(str(story).strip(), set()):
+def _matches_story(entry, story, ledger_path=None):
+    filename = Path(entry.get("path") or "").name
+    if filename and explicitly_relevant(
+        filename,
+        story,
+        ledger_path=ledger_path or Path("images/relevance.json"),
+    ):
+        return True
+    if entry.get("path") and filename in _STORY_EXTRA_VISUALS.get(str(story).strip(), set()):
         return True
     aliases = [a for a in sb.story_aliases(story) if a]
     persons = sb._STORY_PERSONS.get(str(story).strip()) or []
@@ -146,7 +165,7 @@ def _matches_story(entry, story):
 
 
 def approved_runtime_visuals(story):
-    """Return every distinct approved local visual plus optional local logos."""
+    """Return every distinct approved authentic local visual plus optional logos."""
     photos = []
     for entry in nb.load_local_images():
         path = entry["path"]
@@ -273,7 +292,7 @@ def main():
         sb.notify_album = lambda *args, **kwargs: None
         print("    intermediate Telegram notifications suppressed")
     print(f"    runtime gate PASS: {story}")
-    print("    approved visuals: " + ", ".join(p.name for p in photos))
+    print("    approved authentic visuals: " + ", ".join(p.name for p in photos))
     if logos:
         print("    optional logo(s): " + ", ".join(p.name for p in logos))
     sb.main()
