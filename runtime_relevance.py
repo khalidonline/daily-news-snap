@@ -28,6 +28,7 @@ COUNTABLE = {DIRECT, STRONG_CONTEXT}
 REJECTED = {WEAK_GENERIC, WRONG_ENTITY}
 
 DEFAULT_LEDGER = Path("images/relevance.json")
+DEFAULT_SANITY_LEDGER = Path("images/visual_sanity.json")
 
 _GENERATED_NAME_PATTERNS = (
     re.compile(r"(^|[-_])ai[-_]generated([-_.]|$)", re.I),
@@ -42,6 +43,7 @@ _GENERATED_SOURCE_TYPES = {
     "image_generation",
 }
 _SANITY_REJECT = {"FAIL", "REJECT", "INVALID", "BAD"}
+_ORIENTATION_REJECT = {"INVALID", "UPSIDE_DOWN", "UPSIDE-DOWN", "ROTATED_BAD"}
 
 
 def _load(path: str | Path = DEFAULT_LEDGER) -> dict:
@@ -59,6 +61,11 @@ def _load(path: str | Path = DEFAULT_LEDGER) -> dict:
 
 def _asset_row(filename: str, ledger_path: str | Path = DEFAULT_LEDGER) -> dict:
     row = _load(ledger_path).get("assets", {}).get(Path(filename).name, {})
+    return row if isinstance(row, dict) else {}
+
+
+def _sanity_row(filename: str) -> dict:
+    row = _load(DEFAULT_SANITY_LEDGER).get("assets", {}).get(Path(filename).name, {})
     return row if isinstance(row, dict) else {}
 
 
@@ -97,14 +104,12 @@ def generated_asset(filename: str, ledger_path: str | Path = DEFAULT_LEDGER) -> 
 
 
 def visual_sanity_ok(filename: str, ledger_path: str | Path = DEFAULT_LEDGER) -> bool:
-    """Fail closed when human/automated review explicitly flags a broken visual."""
-    row = _asset_row(filename, ledger_path)
-    sanity = str(row.get("visual_sanity") or "").strip().upper()
-    orientation = str(row.get("orientation") or "").strip().upper()
-    if sanity in _SANITY_REJECT:
-        return False
-    if orientation in {"INVALID", "UPSIDE_DOWN", "UPSIDE-DOWN", "ROTATED_BAD"}:
-        return False
+    """Fail closed when review explicitly flags a broken or misoriented visual."""
+    for row in (_asset_row(filename, ledger_path), _sanity_row(filename)):
+        sanity = str(row.get("visual_sanity") or "").strip().upper()
+        orientation = str(row.get("orientation") or "").strip().upper()
+        if sanity in _SANITY_REJECT or orientation in _ORIENTATION_REJECT:
+            return False
     return True
 
 
