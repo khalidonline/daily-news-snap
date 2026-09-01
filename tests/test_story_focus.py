@@ -12,8 +12,6 @@ RIYADH_STORY = "قصة الرياض: من بلدة مسورة إلى عاصمة 
 class StorySubjectFocusTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # Match the production entrypoint: Story Runtime configures story_bot
-        # before selection/research/rendering, then aliases come from stories.txt.
         story_focus.configure(sb)
         sb.load_stories()
 
@@ -28,6 +26,13 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("إذا كان بطل القصة مدينة أو مكاناً", sb.SYSTEM_PROMPT)
         self.assertIn("لا تُدخل شخصاً كبطل في اللقطة الثانية", sb.SYSTEM_PROMPT)
         self.assertIn("التوسع المادي", sb.SYSTEM_PROMPT)
+
+    def test_company_prompt_encourages_diverse_real_visual_beats(self):
+        prompt = " ".join(sb.SYSTEM_PROMPT.split())
+        for term in ("المنتجات", "الموظفين", "العمليات", "الفروع", "التغليف"):
+            self.assertIn(term, prompt)
+        self.assertIn("صور حقيقية", prompt)
+        self.assertIn("لا تستخدم صوراً مولدة", prompt)
 
     def test_frame_visual_context_binds_story_and_specific_frame(self):
         frame = {
@@ -55,7 +60,6 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("Riyadh Metro", context)
         self.assertIn("مترو الرياض", context)
         self.assertIn("ما أصبحت عليه الرياض", context)
-        # 1902 is narrative background, not a requirement for a modern photo.
         self.assertNotIn("1902", context)
 
     def test_renderer_context_resolves_back_to_the_frame_visual_target(self):
@@ -70,8 +74,6 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIs(matched, frame)
 
     def test_city_prompt_uses_neutral_comparison_and_natural_arabic(self):
-        # Prompt formatting may wrap sentences across source lines; test the
-        # editorial wording rather than source-code line breaks.
         prompt = " ".join(sb.SYSTEM_PROMPT.split())
         self.assertIn("أعلى من أي مدينة سعودية أخرى", prompt)
         self.assertIn("لا تقل", prompt)
@@ -81,9 +83,7 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("صيرورتها", prompt)
 
     def test_city_wording_cleanup_removes_hard_ranking_and_sayrura(self):
-        text = (
-            "هذه صيرورتها اليوم: 225 مليار ريال، أعلى من أي مدينة سعودية أخرى."
-        )
+        text = "هذه صيرورتها اليوم: 225 مليار ريال، أعلى من أي مدينة سعودية أخرى."
         cleaned = story_focus.polish_city_wording(text)
         self.assertNotIn("صيرورتها", cleaned)
         self.assertIn("تحولها", cleaned)
@@ -101,7 +101,6 @@ class StorySubjectFocusTests(unittest.TestCase):
                 encoding="utf-8",
             )
             prompt = story_focus.runtime_visual_inventory_prompt(index)
-
         self.assertIn("صور محلية مراجعة", prompt)
         self.assertIn("old-riyadh-souq.jpg", prompt)
         self.assertIn("riyadh-1975-construction.jpg", prompt)
@@ -118,7 +117,6 @@ class StorySubjectFocusTests(unittest.TestCase):
                 encoding="utf-8",
             )
             prompt = story_focus.runtime_visual_inventory_prompt(index)
-
         self.assertIn("الفكرة المركزية", prompt)
         self.assertIn("ما يظهر في الصورة", prompt)
         self.assertIn("لا يكفي", prompt)
@@ -131,10 +129,7 @@ class StorySubjectFocusTests(unittest.TestCase):
                 "tokyo-crossing.jpg | طوكيو, Tokyo, crossing | Wikimedia\n",
                 encoding="utf-8",
             )
-            prompt = story_focus.runtime_visual_inventory_prompt(
-                index, aliases=["الرياض", "Riyadh"]
-            )
-
+            prompt = story_focus.runtime_visual_inventory_prompt(index, aliases=["الرياض", "Riyadh"])
         self.assertIn("riyadh-skyline.jpg", prompt)
         self.assertNotIn("tokyo-crossing.jpg", prompt)
 
@@ -152,10 +147,7 @@ class StorySubjectFocusTests(unittest.TestCase):
                 "image_keywords": ["Riyadh 1975 construction"],
                 "image_keywords_ar": ["الرياض", "البناء", "السبعينات"],
             }
-            note = story_focus.reviewed_local_provenance(
-                Path(td) / "riyadh-1975-construction.jpg", frame, index
-            )
-
+            note = story_focus.reviewed_local_provenance(Path(td) / "riyadh-1975-construction.jpg", frame, index)
         self.assertIn("1975", note)
         self.assertIn("مراجعة", note)
         self.assertIn("لا تستنتج سنة مختلفة", note)
@@ -164,25 +156,12 @@ class StorySubjectFocusTests(unittest.TestCase):
     def test_unlisted_photo_gets_no_reviewed_provenance_override(self):
         with tempfile.TemporaryDirectory() as td:
             index = Path(td) / "approved.txt"
-            index.write_text(
-                "riyadh-1975-construction.jpg | الرياض, البناء, السبعينات | أرشيف\n",
-                encoding="utf-8",
-            )
-            note = story_focus.reviewed_local_provenance(
-                Path(td) / "downloaded-web-photo.jpg", {}, index
-            )
+            index.write_text("riyadh-1975-construction.jpg | الرياض, البناء, السبعينات | أرشيف\n", encoding="utf-8")
+            note = story_focus.reviewed_local_provenance(Path(td) / "downloaded-web-photo.jpg", {}, index)
         self.assertEqual("", note)
 
     def test_city_local_search_can_match_arabic_catalog_tags(self):
-        brief = {
-            "frames": [
-                {
-                    "subject_kind": "place_city",
-                    "image_keywords": ["Riyadh 1970s construction"],
-                    "image_keywords_ar": ["الرياض", "البناء", "السبعينات"],
-                }
-            ]
-        }
+        brief = {"frames": [{"subject_kind": "place_city", "image_keywords": ["Riyadh 1970s construction"], "image_keywords_ar": ["الرياض", "البناء", "السبعينات"]}]}
         prepared = story_focus.prepare_city_visual_search(brief)
         keywords = prepared["frames"][0]["image_keywords"]
         self.assertIn("Riyadh 1970s construction", keywords)
@@ -191,19 +170,8 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertIn("السبعينات", keywords)
 
     def test_city_search_appends_declared_city_aliases_as_simple_fallback(self):
-        brief = {
-            "story": RIYADH_STORY,
-            "frames": [
-                {
-                    "subject_kind": "place_city",
-                    "image_keywords": ["Riyadh 1970s construction"],
-                    "image_keywords_ar": ["البناء", "السبعينات"],
-                }
-            ],
-        }
-        prepared = story_focus.prepare_city_visual_search(
-            brief, aliases=["Riyadh", "الرياض"]
-        )
+        brief = {"story": RIYADH_STORY, "frames": [{"subject_kind": "place_city", "image_keywords": ["Riyadh 1970s construction"], "image_keywords_ar": ["البناء", "السبعينات"]}]}
+        prepared = story_focus.prepare_city_visual_search(brief, aliases=["Riyadh", "الرياض"])
         keywords = prepared["frames"][0]["image_keywords"]
         self.assertEqual("Riyadh 1970s construction", keywords[0])
         self.assertIn("Riyadh", keywords)
@@ -217,43 +185,14 @@ class StorySubjectFocusTests(unittest.TestCase):
         self.assertFalse(story_focus.city_photo_verdict_ok(""))
 
     def test_subject_alias_matches_inside_specific_catalog_tag(self):
-        self.assertTrue(
-            story_focus.catalog_tags_match_aliases(
-                ["Riyadh skyline", "real estate"], ["Riyadh", "الرياض"]
-            )
-        )
-        self.assertTrue(
-            story_focus.catalog_tags_match_aliases(
-                ["أفق الرياض الحديث"], ["Riyadh", "الرياض"]
-            )
-        )
-        self.assertFalse(
-            story_focus.catalog_tags_match_aliases(
-                ["Jeddah skyline", "جدة"], ["Riyadh", "الرياض"]
-            )
-        )
+        self.assertTrue(story_focus.catalog_tags_match_aliases(["Riyadh skyline", "real estate"], ["Riyadh", "الرياض"]))
+        self.assertTrue(story_focus.catalog_tags_match_aliases(["أفق الرياض الحديث"], ["Riyadh", "الرياض"]))
+        self.assertFalse(story_focus.catalog_tags_match_aliases(["Jeddah skyline", "جدة"], ["Riyadh", "الرياض"]))
 
     def test_city_deck_needs_four_matched_visual_slots(self):
-        brief = {
-            "frames": [
-                {"subject_kind": "place_city"},
-                {"subject_kind": "place_city"},
-                {"subject_kind": "place_city"},
-                {"subject_kind": "place_city"},
-                {"subject_kind": "place_city"},
-                {"subject_kind": "place_city"},
-            ]
-        }
-        self.assertFalse(
-            story_focus.city_deck_visuals_ready(
-                brief, [object(), None, None, None, None, None]
-            )
-        )
-        self.assertTrue(
-            story_focus.city_deck_visuals_ready(
-                brief, [object(), object(), object(), object(), None, None]
-            )
-        )
+        brief = {"frames": [{"subject_kind": "place_city"} for _ in range(6)]}
+        self.assertFalse(story_focus.city_deck_visuals_ready(brief, [object(), None, None, None, None, None]))
+        self.assertTrue(story_focus.city_deck_visuals_ready(brief, [object(), object(), object(), object(), None, None]))
 
     def test_story_photo_gate_requires_confirmed_relevance(self):
         self.assertTrue(sb.story_photo_verdict_ok("yes"))
