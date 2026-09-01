@@ -39,8 +39,14 @@ from runtime_relevance import (
 # Story runtime never creates synthetic visual filler. Insufficient authentic
 # coverage stays REVIEW/blocked rather than silently invoking image generation.
 os.environ["ALLOW_GENERATED"] = "0"
+os.environ["ALLOW_STORY_GENERATION"] = "0"
 if hasattr(sb, "ALLOW_GENERATED"):
     sb.ALLOW_GENERATED = False
+sb.ALLOW_STORY_GENERATION = False
+# The runtime builds a story-specific approved index before story_bot runs.
+# Tell story_focus not to hide explicitly reviewed contextual rows by applying
+# a second literal-alias filter to that already-scoped inventory.
+sb._STORY_RUNTIME_INDEX_SCOPED = True
 
 story_focus.configure(sb)
 
@@ -66,11 +72,11 @@ sb.LOGO_MAX_FRAMES = 0
 def _editorial_prompt_for_revision():
     inventory = ""
     try:
-        story = str(getattr(sb, "_ACTIVE_EDITORIAL_STORY", "") or "").strip()
-        aliases = [story] + list(sb.story_aliases(story) if story else [])
-        inventory = story_focus.runtime_visual_inventory_prompt(
-            nb.IMAGES_INDEX, aliases=aliases
-        )
+        # nb.IMAGES_INDEX is already the story-specific, relevance-approved
+        # runtime index. Do not filter it a second time by literal aliases:
+        # real products/employees/operations may be STRONG_CONTEXT without
+        # repeating the company or person name in their catalogue tags.
+        inventory = story_focus.runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
     except Exception:
         inventory = ""
     return sb.SYSTEM_PROMPT + inventory
