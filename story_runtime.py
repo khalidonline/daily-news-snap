@@ -44,11 +44,53 @@ if hasattr(sb, "ALLOW_GENERATED"):
     sb.ALLOW_GENERATED = False
 sb.ALLOW_STORY_GENERATION = False
 # The runtime builds a story-specific approved index before story_bot runs.
-# Tell story_focus not to hide explicitly reviewed contextual rows by applying
-# a second literal-alias filter to that already-scoped inventory.
 sb._STORY_RUNTIME_INDEX_SCOPED = True
 
 story_focus.configure(sb)
+
+_AUTHENTIC_VISUAL_PROMPT = r"""
+
+قاعدة التنوع البصري الحقيقي — تنطبق على كل القصص، وبالأخص الشركات والمنتجات:
+- استخدم صور حقيقية فقط. لا تستخدم صوراً مولدة أو مشاهد تاريخية مصطنعة
+  لتعبئة فراغ بصري؛ إذا لم توجد صورة حقيقية مناسبة، فالأفضل أن تبقى اللقطة
+  نصية أو أن تتوقف القصة للمراجعة.
+- لا تحوّل قصة الشركة أو العلامة إلى ست صور متشابهة لواجهات الفروع. وسّع
+  المشاهد الحقيقية المرتبطة بالبطل: المنتجات، الوجبات والمشروبات، الموظفين
+  أثناء العمل، العملاء عندما يكون وجودهم جزءاً من الحدث، العمليات، المطابخ
+  والمصانع، الفروع والداخلية، التغليف، المركبات والتوصيل، سلسلة الإمداد،
+  الإعلانات والوثائق والأرشيف، والمواقع المرتبطة فعلاً بالقصة.
+- التنوع ليس حشواً. اختر من هذه المشاهد فقط عندما يضيف المشهد فهماً جديداً
+  للبطل أو لمرحلة حقيقية في رحلته. صورة منتج لا توضع على لقطة نصها عن موقع
+  جغرافي مختلف؛ غيّر اللقطة فقط إذا كان المنتج أو الموظف أو العملية نفسها
+  جزءاً صحيحاً ومهماً من القصة ومدعوماً بالمصادر.
+- إذا كانت أمامك فكرتان صحيحتان ومتقاربتان في الأهمية، فضّل الفكرة التي
+  يمكن توثيقها بصورة حقيقية مختلفة عن الصور السابقة: منتج، شخص، عملية،
+  مكان، أو أصل أرشيفي. الهدف أن تروي الصور الست القصة أيضاً، لا أن تكرر
+  نفس المبنى من زوايا مختلفة.
+"""
+if "قاعدة التنوع البصري الحقيقي" not in sb.SYSTEM_PROMPT:
+    sb.SYSTEM_PROMPT = sb.SYSTEM_PROMPT + _AUTHENTIC_VISUAL_PROMPT
+
+# story_focus normally filters inventory rows by literal subject aliases. That
+# is useful on an unscoped catalogue, but Story Runtime replaces IMAGES_INDEX
+# with a story-specific approved index first. A second alias filter would hide
+# legitimate STRONG_CONTEXT rows such as a meal, employee or factory whose tags
+# do not repeat the brand name. Keep filtering everywhere else; trust only the
+# already-scoped runtime index here.
+_story_inventory_prompt = story_focus.runtime_visual_inventory_prompt
+
+
+def _scoped_runtime_inventory_prompt(index_path, aliases=()):
+    try:
+        scoped = Path(index_path).resolve() == Path(nb.IMAGES_INDEX).resolve()
+    except Exception:
+        scoped = False
+    if scoped and getattr(sb, "_STORY_RUNTIME_INDEX_SCOPED", False):
+        return _story_inventory_prompt(index_path, aliases=())
+    return _story_inventory_prompt(index_path, aliases=aliases)
+
+
+story_focus.runtime_visual_inventory_prompt = _scoped_runtime_inventory_prompt
 
 # The reviewed local library is already selected by the frame's image keywords.
 # For Story-to-Snapchat, trust that curation instead of making a generic vision
@@ -73,9 +115,7 @@ def _editorial_prompt_for_revision():
     inventory = ""
     try:
         # nb.IMAGES_INDEX is already the story-specific, relevance-approved
-        # runtime index. Do not filter it a second time by literal aliases:
-        # real products/employees/operations may be STRONG_CONTEXT without
-        # repeating the company or person name in their catalogue tags.
+        # runtime index. Do not filter it a second time by literal aliases.
         inventory = story_focus.runtime_visual_inventory_prompt(nb.IMAGES_INDEX)
     except Exception:
         inventory = ""
