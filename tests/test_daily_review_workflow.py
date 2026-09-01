@@ -8,7 +8,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         cls.workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
 
     def test_uses_frequent_lightweight_heartbeat_for_self_healing(self):
-        self.assertIn('- cron: "*/15 4-20 * * *"', self.workflow)
+        self.assertIn('- cron: "10,25,40,55 4-20 * * *"', self.workflow)
         self.assertNotIn('- cron: "10 4-20/2 * * *"', self.workflow)
         self.assertIn("python3 daily_slot_scheduler.py due", self.workflow)
 
