@@ -2,11 +2,11 @@ name: News brief to Snapchat
 
 on:
   schedule:
-    # KSA is UTC+3. Run every two hours from 07:10 through 23:10 KSA.
-    # Moving off minute 00 reduces GitHub Actions top-of-hour congestion.
-    # Scheduled runs are review-only: build the strongest eligible card,
-    # send it to Telegram, record it as covered, and never post to Snapchat.
-    - cron: "10 4-20/2 * * *"
+    # Self-healing heartbeat. KSA is UTC+3.
+    # Intended review slots remain 07:10, 09:10, 11:10, 13:10, 15:10,
+    # 17:10, 19:10, 21:10, 23:10 KSA. The extra :25/:40/:55 heartbeats
+    # recover a missed :10 fire without generating duplicate cards.
+    - cron: "10,25,40,55 4-20 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -35,50 +35,24 @@ permissions:
   contents: write
 
 concurrency:
-  # runs are 2 hours apart; a genuine overlap means the earlier one is stuck.
-  # cancel it rather than queueing behind it forever.
+  # Heartbeats may overlap a slow real delivery. Never cancel the live run;
+  # queue the next heartbeat so it can observe the completed slot and exit.
   group: news-brief
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15      # room for a retry if Claude is slow
+    timeout-minutes: 15
 
     steps:
-      - name: Guard scheduled freshness
-        env:
-          MAX_SCHEDULE_DELAY_MINUTES: "45"
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "manual dispatch — freshness guard bypassed"
-            echo "RUN_DAILY=1" >> "$GITHUB_ENV"
-            exit 0
-          fi
-
-          now_hour="$(date -u +%H)"
-          now_minute="$(date -u +%M)"
-          now_minutes=$((10#$now_hour * 60 + 10#$now_minute))
-          min_delay=9999
-
-          # 04:10–20:10 UTC == 07:10–23:10 KSA, every two hours.
-          for scheduled_minutes in 250 370 490 610 730 850 970 1090 1210; do
-            delay=$((now_minutes - scheduled_minutes))
-            if [ "$delay" -ge 0 ] && [ "$delay" -lt "$min_delay" ]; then
-              min_delay="$delay"
-            fi
-          done
-
-          if [ "$min_delay" -gt "$MAX_SCHEDULE_DELAY_MINUTES" ]; then
-            echo "stale scheduled run: ${min_delay}m late; skipping paid/content work"
-            echo "RUN_DAILY=0" >> "$GITHUB_ENV"
-          else
-            echo "scheduled run is ${min_delay}m late; proceeding"
-            echo "RUN_DAILY=1" >> "$GITHUB_ENV"
-          fi
-
       - uses: actions/checkout@v4
-        if: ${{ env.RUN_DAILY != '0' }}
+
+      - name: Resolve due KSA review slot
+        # The scheduler writes RUN_DAILY=1 + DAILY_SLOT_ID when the latest
+        # intended slot needs delivery, otherwise RUN_DAILY=0. Manual dispatch
+        # bypasses slot gating and remains an explicit operator action.
+        run: python3 daily_slot_scheduler.py due --event-name "${{ github.event_name }}" --github-env "$GITHUB_ENV"
 
       - uses: actions/setup-python@v5
         if: ${{ env.RUN_DAILY != '0' }}
@@ -104,14 +78,12 @@ jobs:
           ZERNIO_BASE: ${{ vars.ZERNIO_BASE }}
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
           # Scheduled runs intentionally stay out of DRY_RUN so hybrid mode can
-          # persist the covered-story state and avoid repeating Telegram alerts.
-          # The dry-run switch remains available for manual testing.
+          # persist covered-story state and avoid repeating Telegram alerts.
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
           # Scheduled runs are always Telegram review-only. Snapchat publishing
-          # is possible only on an explicit manual dispatch with "post" checked.
+          # is possible only on explicit manual dispatch with "post" checked.
           POST_TO_SNAPCHAT: ${{ (github.event_name == 'workflow_dispatch' && inputs.post) && '1' || '0' }}
-          # one cap shared with topic.yml — see the note there
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - خبر"
           BRAND: "ملخص تنفيذي - خبر"
@@ -128,6 +100,17 @@ jobs:
           LOOKBACK_HOURS: "48"
           REMEMBER_DAYS: "3"
         run: python daily_news_runner.py
+
+      - name: Mark scheduled slot complete
+        if: ${{ success() && github.event_name == 'schedule' && env.RUN_DAILY != '0' && env.DAILY_SLOT_ID != '' }}
+        run: |
+          python3 daily_slot_scheduler.py mark --slot "$DAILY_SLOT_ID" --state daily_slot_state.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add daily_slot_state.json
+          git commit -m "state: complete daily slot $DAILY_SLOT_ID"
+          git pull --rebase origin main
+          git push origin HEAD:main
 
       - name: Keep the card for review
         if: ${{ always() && env.RUN_DAILY != '0' }}
