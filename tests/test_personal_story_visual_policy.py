@@ -114,6 +114,20 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         import story_runtime as sr
         self.assertFalse(sr.sb.ALLOW_STORY_GENERATION)
 
+    def test_story_runtime_prompt_requests_diverse_real_visuals(self):
+        import story_runtime as sr
+        prompt = " ".join(sr.sb.SYSTEM_PROMPT.split())
+        for term in ("المنتجات", "الموظفين", "العمليات", "الفروع", "التغليف"):
+            self.assertIn(term, prompt)
+        self.assertIn("صور حقيقية", prompt)
+        self.assertIn("لا تستخدم صوراً مولدة", prompt)
+
+    def test_quarantined_upside_down_mcdonalds_visual_is_not_countable(self):
+        self.assertFalse(rr.asset_countable(
+            "mcdonalds-jubail.jpg",
+            "قصة ماكدونالدز في السعودية وعائلات الامتياز",
+        ))
+
     def test_explicit_strong_context_can_match_without_literal_story_tags(self):
         import story_runtime as sr
         td = tempfile.TemporaryDirectory()
