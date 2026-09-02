@@ -1,6 +1,9 @@
 name: News brief to Snapchat
 
 on:
+  push:
+    paths:
+      - "scheduler/triggers/news.txt"
   schedule:
     # Temporary fallback only. External scheduler should be authoritative.
     - cron: "10,25,40,55 4-20 * * *"
