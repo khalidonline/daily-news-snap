@@ -2,13 +2,16 @@ name: News brief to Snapchat
 
 on:
   schedule:
-    # Self-healing heartbeat. KSA is UTC+3.
-    # Intended review slots remain 07:10, 09:10, 11:10, 13:10, 15:10,
-    # 17:10, 19:10, 21:10, 23:10 KSA. The extra :25/:40/:55 heartbeats
-    # recover a missed :10 fire without generating duplicate cards.
+    # Temporary fallback only. External scheduler should be authoritative.
     - cron: "10,25,40,55 4-20 * * *"
+  repository_dispatch:
+    types: [news-schedule]
   workflow_dispatch:
     inputs:
+      scheduled_slot:
+        description: "Scheduler-only ISO KSA slot; leave empty for manual run"
+        type: string
+        required: false
       dry_run:
         description: "Render the card but don't post"
         type: boolean
@@ -24,10 +27,10 @@ on:
           - auto
           - article
           - spa
-          - commons          # Wikimedia Commons
-          - loc              # Library of Congress
+          - commons
+          - loc
           - openverse
-          - stock            # Pexels
+          - stock
           - none
         default: auto
 
@@ -35,8 +38,6 @@ permissions:
   contents: write
 
 concurrency:
-  # Heartbeats may overlap a slow real delivery. Never cancel the live run;
-  # queue the next heartbeat so it can observe the completed slot and exit.
   group: news-brief
   cancel-in-progress: false
 
@@ -48,28 +49,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Resolve due KSA review slot
-        # The scheduler writes RUN_DAILY=1 + DAILY_SLOT_ID when the latest
-        # intended slot needs delivery, otherwise RUN_DAILY=0. Manual dispatch
-        # bypasses slot gating and remains an explicit operator action.
-        run: python3 daily_slot_scheduler.py due --event-name "${{ github.event_name }}" --github-env "$GITHUB_ENV"
+      - name: Resolve News schedule slot
+        env:
+          REQUESTED_SLOT: ${{ github.event.client_payload.slot || inputs.scheduled_slot || '' }}
+        run: |
+          python3 shared_schedule_gate.py due \
+            --bot news \
+            --event-name "${{ github.event_name }}" \
+            --requested-slot "$REQUESTED_SLOT" \
+            --state daily_slot_state.json \
+            --github-env "$GITHUB_ENV"
 
       - uses: actions/setup-python@v5
-        if: ${{ env.RUN_DAILY != '0' }}
+        if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         with:
           python-version: "3.12"
           cache: pip
 
       - run: pip install -r requirements.txt
-        if: ${{ env.RUN_DAILY != '0' }}
+        if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
 
       - name: Run bot
-        if: ${{ env.RUN_DAILY != '0' }}
+        if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          POST_PROVIDER: "bundle"        # bundle | ayrshare | zernio
+          POST_PROVIDER: "bundle"
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
@@ -77,12 +83,8 @@ jobs:
           ZERNIO_ACCOUNT_ID: ${{ vars.ZERNIO_ACCOUNT_ID }}
           ZERNIO_BASE: ${{ vars.ZERNIO_BASE }}
           AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
-          # Scheduled runs intentionally stay out of DRY_RUN so hybrid mode can
-          # persist covered-story state and avoid repeating Telegram alerts.
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           MEDIA_MODE: "github"
-          # Scheduled runs are always Telegram review-only. Snapchat publishing
-          # is possible only on explicit manual dispatch with "post" checked.
           POST_TO_SNAPCHAT: ${{ (github.event_name == 'workflow_dispatch' && inputs.post) && '1' || '0' }}
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - خبر"
@@ -101,19 +103,19 @@ jobs:
           REMEMBER_DAYS: "3"
         run: python daily_news_runner.py
 
-      - name: Mark scheduled slot complete
-        if: ${{ success() && github.event_name == 'schedule' && env.RUN_DAILY != '0' && env.DAILY_SLOT_ID != '' }}
+      - name: Mark News slot complete
+        if: ${{ success() && env.RUN_SCHEDULED_BOT != '0' && env.SCHEDULE_SLOT_ID != '' }}
         run: |
-          python3 daily_slot_scheduler.py mark --slot "$DAILY_SLOT_ID" --state daily_slot_state.json
+          python3 shared_schedule_gate.py mark --slot "$SCHEDULE_SLOT_ID" --state daily_slot_state.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add daily_slot_state.json
-          git commit -m "state: complete daily slot $DAILY_SLOT_ID"
+          git commit -m "state: complete news slot $SCHEDULE_SLOT_ID"
           git pull --rebase origin main
           git push origin HEAD:main
 
       - name: Keep the card for review
-        if: ${{ always() && env.RUN_DAILY != '0' }}
+        if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
         uses: actions/upload-artifact@v4
         with:
           name: card-${{ github.run_id }}
