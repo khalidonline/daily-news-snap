@@ -1,0 +1,122 @@
+{
+  "brief": {
+    "caption": "من غاز كان يُحرق فوق الرمال إلى 53.9 مليون طن في سنة واحدة — قصة سابك.",
+    "frames": [
+      {
+        "heading": "الغاز الذي كان يذهب هدراً",
+        "image_keywords": [
+          "Saudi gas flare",
+          "Persian Gulf fishing village"
+        ],
+        "image_keywords_ar": [
+          "حرق الغاز",
+          "قرية صيد"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في سبعينات القرن الماضي كان الدخل يأتي من تصدير النفط الخام. أما الغاز الطبيعي المصاحب لإنتاجه فكان يُحرق هدراً، لأنه لا توجد صناعة تحوّله إلى شيء له قيمة. وعلى الساحل قرى صيد صغيرة، بلا مصانع ولا موانئ صناعية."
+      },
+      {
+        "heading": "مرسوم ملكي أنشأ الشركة",
+        "image_keywords": [
+          "SABIC",
+          "Ghazi Algosaibi"
+        ],
+        "image_keywords_ar": [
+          "سابك",
+          "غازي القصيبي"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن في 6 سبتمبر 1976 صدر مرسوم ملكي بإنشاء الشركة السعودية للصناعات الأساسية «سابك». <cite index=\"2-1\">مهمتها كانت واحدة: تحويل الغاز الذي يُحرق هدراً إلى مواد كيماوية ذات قيمة.</cite> <cite index=\"1-1\">وأول رئيس لها كان غازي القصيبي، وزير الصناعة والكهرباء وقتها.</cite> شركة على الورق، بلا مصنع واحد."
+      },
+      {
+        "heading": "من قريتي صيد إلى مدينتين",
+        "image_keywords": [
+          "Jubail Industrial City",
+          "SABIC Jubail",
+          "الجبيل",
+          "سابك",
+          "ينبع",
+          "SABIC"
+        ],
+        "image_keywords_ar": [
+          "الجبيل",
+          "سابك",
+          "ينبع"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "وهنا تغيّر كل شيء. <cite index=\"4-1\">الجبيل على الخليج وينبع على البحر الأحمر تحوّلتا في أواخر السبعينيات وأوائل الثمانينيات من قريتين يعيش أهلهما على صيد البحر إلى مدينتين صناعيتين ببنية أساسية حديثة، بينما بدأت سابك بناء مصانعها فيهما.</cite> <cite index=\"3-1\">وفي 1981 خرجت باكورة الإنتاج.</cite>"
+      },
+      {
+        "heading": "زائر كتب أنها لن تنجح",
+        "image_keywords": [
+          "Abdulaziz Al-Zamil",
+          "SABIC"
+        ],
+        "image_keywords_ar": [
+          "عبدالعزيز الزامل",
+          "سابك"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن البداية لم تكن مضمونة. <cite index=\"15-1\">يروي المهندس عبدالعزيز الزامل، أول رئيس تنفيذي لسابك، أن الخبرات والإمكانيات كانت متواضعة جداً والتحديات هائلة.</cite> <cite index=\"15-2\">ومقر الشركة كان مبنى متواضعاً في شارع خلفي بالرياض، زاره صحفي غربي فخرج بمقال يستبعد نجاح المشروع السعودي.</cite>"
+      },
+      {
+        "heading": "صفقة غيّرت حجم الشركة",
+        "image_keywords": [
+          "GE Plastics",
+          "SABIC Sittard office"
+        ],
+        "image_keywords_ar": [
+          "سابك"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولأن الشركة كبرت أسرع مما توقع أولئك، صارت هي المشتري. <cite index=\"29-1\">في مايو 2007 اشترت سابك قسم البلاستيك في شركة General Electric الأمريكية بـ11.6 مليار دولار.</cite> <cite index=\"29-3\">وكانت من أكبر عمليات استحواذ شركة شرق أوسطية على نشاط غربي.</cite>"
+      },
+      {
+        "heading": "ما تنتجه سابك اليوم",
+        "image_keywords": [
+          "SABIC plant",
+          "SABIC petrochemical"
+        ],
+        "image_keywords_ar": [
+          "سابك",
+          "مصنع سابك",
+          "بتروكيماويات"
+        ],
+        "punch": "الغاز الذي كان يُحرق فوق الرمال صار مادة يشتريها العالم.",
+        "subject_kind": "company",
+        "text": "وهكذا بلغ إجمالي إنتاج سابك <cite index=\"19-4,19-5\">53.9 مليون طن متري في سنة 2024 وحدها</cite>."
+      }
+    ],
+    "image_prompt": "A wide documentary photograph of a flat desert coastline at dusk, with a single gas flare burning in the distance over an oil field, empty sand and calm sea, no people, no text, no logos",
+    "image_queries": [
+      "gas flare burning at a desert oil field at dusk",
+      "empty Gulf coastline fishing village 1970s",
+      "flat desert shoreline before industrial development"
+    ],
+    "image_queries_ar": [
+      "الجبيل",
+      "حرق الغاز",
+      "ينبع"
+    ],
+    "sources": [
+      "سابك",
+      "سعوديبيديا",
+      "صحيفة الجزيرة",
+      "GE"
+    ],
+    "title": "شركة وُلدت بلا مصنع واحد"
+  },
+  "input_tokens": 108749,
+  "message_id": "msg_011CeeVyBeKbyUKcvYQ4F9P7",
+  "model": "claude-opus-5",
+  "output_tokens": 10386,
+  "prompt_hash": "122305ccf2945970eed1c9d701a14d6a8e976d773f45aa21fcaa009fe187d1ae",
+  "revision": "a732138949fba645be2857813aed503bccda92cca0b2f7c53904073d58a7c597",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
