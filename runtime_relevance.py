@@ -70,7 +70,6 @@ def _sanity_row(filename: str) -> dict:
 
 
 def verdict_for(filename: str, story: str, ledger_path: str | Path = DEFAULT_LEDGER) -> str:
-    """Return the story-specific review verdict, or ``""`` when unreviewed."""
     row = _asset_row(filename, ledger_path)
     stories = row.get("stories", {}) if isinstance(row, dict) else {}
     if not isinstance(stories, dict):
@@ -147,11 +146,16 @@ def trusted_selected_local_visual(
     story: str,
     ledger_path: str | Path = DEFAULT_LEDGER,
 ) -> bool:
-    """Legacy source-readiness trust for selected local visuals."""
+    """Bypass frame vision only for an explicitly reviewed story asset.
+
+    Local-library membership may make a source eligible for readiness, but it
+    must not suppress the frame heading/text relevance check. Only a DIRECT or
+    STRONG_CONTEXT verdict for this story earns the documentary-asset bypass.
+    """
     source = _selected_local_source(selected_path)
     if not source:
         return False
-    return asset_countable(source, story, ledger_path)
+    return explicitly_relevant(source, story, ledger_path)
 
 
 def explicitly_trusted_selected_local_visual(
@@ -159,17 +163,7 @@ def explicitly_trusted_selected_local_visual(
     story: str,
     ledger_path: str | Path = DEFAULT_LEDGER,
 ) -> bool:
-    """Allow a local visual to bypass frame vision only after story-specific review.
-
-    Curated files may still count toward source readiness, but they must not skip
-    the frame heading/text relevance gate merely because they live in the local
-    library. Only an explicit DIRECT/STRONG_CONTEXT verdict for this exact story
-    earns the bypass used for archive documents, receipts, banknotes, etc.
-    """
-    source = _selected_local_source(selected_path)
-    if not source:
-        return False
-    return explicitly_relevant(source, story, ledger_path)
+    return trusted_selected_local_visual(selected_path, story, ledger_path)
 
 
 def runtime_status(photo_count: int, logo_count: int = 0) -> str:
