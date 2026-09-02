@@ -7,19 +7,21 @@ class DailyReviewWorkflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
 
-    def test_uses_frequent_lightweight_heartbeat_for_self_healing(self):
+    def test_keeps_github_heartbeat_only_as_temporary_fallback(self):
         self.assertIn('- cron: "10,25,40,55 4-20 * * *"', self.workflow)
-        self.assertNotIn('- cron: "10 4-20/2 * * *"', self.workflow)
-        self.assertIn("python3 daily_slot_scheduler.py due", self.workflow)
+        self.assertIn("Temporary fallback only", self.workflow)
+        self.assertIn("repository_dispatch:", self.workflow)
+        self.assertIn("types: [news-schedule]", self.workflow)
 
-    def test_scheduler_controls_paid_work(self):
-        self.assertIn("RUN_DAILY=0", self.workflow)
-        self.assertIn("RUN_DAILY=1", self.workflow)
-        self.assertIn("DAILY_SLOT_ID", self.workflow)
-        self.assertIn("if: ${{ env.RUN_DAILY != '0' }}", self.workflow)
+    def test_shared_gate_controls_paid_work(self):
+        self.assertIn("python3 shared_schedule_gate.py due", self.workflow)
+        self.assertIn("--bot news", self.workflow)
+        self.assertIn("github.event.client_payload.slot", self.workflow)
+        self.assertIn("SCHEDULE_SLOT_ID", self.workflow)
+        self.assertIn("if: ${{ env.RUN_SCHEDULED_BOT != '0' }}", self.workflow)
 
-    def test_successful_scheduled_run_marks_slot_complete(self):
-        self.assertIn("python3 daily_slot_scheduler.py mark", self.workflow)
+    def test_successful_slot_marks_durable_state(self):
+        self.assertIn("python3 shared_schedule_gate.py mark", self.workflow)
         self.assertIn("daily_slot_state.json", self.workflow)
         self.assertIn("git pull --rebase origin main", self.workflow)
         self.assertIn("git push origin HEAD:main", self.workflow)
@@ -37,6 +39,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
             line for line in self.workflow.splitlines()
             if line.strip().startswith("POST_TO_SNAPCHAT:")
         )
+        self.assertNotIn("repository_dispatch", post_line)
         self.assertNotIn("schedule", post_line)
 
     def test_scheduled_review_mode_keeps_telegram_and_dedupe(self):
