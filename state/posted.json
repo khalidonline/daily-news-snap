@@ -1,15 +1,5 @@
 [
  {
-  "headline": "ليفربول يحسم صفقة باركولا بـ145 مليون يورو",
-  "at": "2026-08-29T19:20:14.232088+00:00",
-  "source_link": "https://alyaum.com/articles/6680188/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A3%D9%88%D8%B1%D9%88%D8%A8%D9%8A/%D9%84%D9%8A%D9%81%D8%B1%D8%A8%D9%88%D9%84-%D9%8A%D8%AD%D8%B3%D9%85-%D8%B5%D9%81%D9%82%D8%A9-%D8%A8%D8%A7%D8%B1%D9%83%D9%88%D9%84%D8%A7-%D9%85%D9%86-%D8%A8%D8%A7%D8%B1%D9%8A%D8%B3-%D8%B3%D8%A7%D9%86-%D8%AC%D9%8A%D8%B1%D9%85%D8%A7%D9%86-%D9%85%D9%82%D8%A7%D8%A8%D9%84-145-%D9%85%D9%84%D9%8A%D9%88%D9%86-%D9%8A%D9%88%D8%B1%D9%88"
- },
- {
-  "headline": "الهلال يسجل خماسية في شوط واحد أمام الخليج",
-  "at": "2026-08-29T22:32:28.837441+00:00",
-  "source_link": "https://alwatan.com.sa/article/1184827"
- },
- {
   "headline": "Sony Music وWarner يقاضيان Anthropic بسرقة حقوق النشر",
   "at": "2026-08-30T09:53:26.520531+00:00",
   "source_link": "https://techcrunch.com/2026/08/29/sony-music-warner-sue-anthropic-alleging-a-brazen-campaign-of-intellectual-property-theft",
@@ -72,5 +62,11 @@
   "at": "2026-09-01T18:27:58.524479+00:00",
   "source_link": "https://alwatan.com.sa/article/1184956",
   "lane": "saudi_core"
+ },
+ {
+  "headline": "أمازون تطلق منطقة الرياض السحابية في ديسمبر",
+  "at": "2026-09-02T06:57:07.801410+00:00",
+  "source_link": "https://aawsat.com/node/5313721",
+  "lane": "entertainment_culture"
  }
 ]
