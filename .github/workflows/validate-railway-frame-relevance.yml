@@ -1,0 +1,57 @@
+name: Validate Railway frame relevance
+
+on:
+  push:
+    branches:
+      - validation/railway-frame-relevance-20260902
+    paths:
+      - validation/railway-frame-relevance-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  railway:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Dry-run Railway production path
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: bundle
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          BUNDLE_BASE: ${{ secrets.BUNDLE_BASE }}
+          POST_TO_SNAPCHAT: '0'
+          DRY_RUN: '1'
+          MEDIA_MODE: github
+          MONTHLY_POST_LIMIT: '145'
+          STORY: 'قصة سكة حديد الرياض الدمام 1951'
+          STORY_OPERATION_MODE: auto
+          STORY_MODEL: claude-opus-5
+          STORY_FRAMES: '6'
+          STORY_ALLOW_REPEAT: '1'
+          ALLOW_GENERATED: '0'
+          ALLOW_STORY_GENERATION: '0'
+          IMAGE_GEN: byteplus
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          ARK_MODEL: seedream-4-5-251128
+        run: python guarded_story_publish.py
+      - name: Keep Railway frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: railway-frame-relevance-${{ github.run_id }}
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
