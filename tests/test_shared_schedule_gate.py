@@ -82,6 +82,23 @@ class SharedScheduleGateTests(unittest.TestCase):
             data = json.loads(state.read_text(encoding="utf-8"))
             self.assertEqual(data["completed_slots"], ["2026-09-02T14:00+03:00"])
 
+    def test_topic_workflow_accepts_external_slot_and_marks_it(self):
+        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
+        self.assertIn("types: [topic-schedule]", workflow)
+        self.assertIn("--bot topic", workflow)
+        self.assertIn("state/topic_schedule_slots.json", workflow)
+        self.assertIn("python3 shared_schedule_gate.py mark", workflow)
+        self.assertIn("POST_TO_SNAPCHAT: \"0\"", workflow)
+
+    def test_story_workflow_accepts_external_slot_and_preserves_repair_branch(self):
+        workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
+        self.assertIn("types: [story-schedule]", workflow)
+        self.assertIn("--bot story", workflow)
+        self.assertIn("state/story_schedule_slots.json", workflow)
+        self.assertIn("ref: repair/all-story-visuals-2026-08-29", workflow)
+        self.assertIn("git checkout main", workflow)
+        self.assertIn("github.event_name != 'workflow_dispatch'", workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
