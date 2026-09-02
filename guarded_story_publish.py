@@ -15,6 +15,8 @@ import sys
 
 import ready_story_publish as rsp
 
+AUTO_MIN_APPROVED_VISUALS = 6
+
 
 def _personal_collect_ready_stories(stories=None, coverage_fn=None):
     stories = list(rsp.sb.load_stories() if stories is None else stories)
@@ -25,6 +27,16 @@ def _personal_collect_ready_stories(stories=None, coverage_fn=None):
         if status == "PASS" and len(photos) >= 4:
             ready.append(story)
     return ready
+
+
+def _auto_story_has_visual_buffer(story):
+    photos, logos, status = rsp.sr.coverage(story)
+    print(
+        f"    auto visual buffer: {status} "
+        f"({len(photos)} approved visual(s), {len(logos)} optional logo(s)); "
+        f"need {AUTO_MIN_APPROVED_VISUALS} approved visuals"
+    )
+    return status == "PASS" and len(photos) >= AUTO_MIN_APPROVED_VISUALS
 
 
 def _personal_resolve_story():
@@ -41,6 +53,7 @@ def _personal_resolve_story():
 
 rsp.collect_ready_stories = _personal_collect_ready_stories
 rsp._resolve_story = _personal_resolve_story
+rsp.sr._eligible_story = _auto_story_has_visual_buffer
 
 
 def require_ready_for_publication(status: str, story: str) -> None:
