@@ -70,7 +70,6 @@ def _sanity_row(filename: str) -> dict:
 
 
 def verdict_for(filename: str, story: str, ledger_path: str | Path = DEFAULT_LEDGER) -> str:
-    """Return the story-specific review verdict, or ``""`` when unreviewed."""
     row = _asset_row(filename, ledger_path)
     stories = row.get("stories", {}) if isinstance(row, dict) else {}
     if not isinstance(stories, dict):
@@ -89,7 +88,6 @@ def verdict_for(filename: str, story: str, ledger_path: str | Path = DEFAULT_LED
 
 
 def generated_asset(filename: str, ledger_path: str | Path = DEFAULT_LEDGER) -> bool:
-    """Return True when filename or provenance marks an asset as synthetic."""
     name = Path(filename).name
     if any(pattern.search(name) for pattern in _GENERATED_NAME_PATTERNS):
         return True
@@ -104,7 +102,6 @@ def generated_asset(filename: str, ledger_path: str | Path = DEFAULT_LEDGER) -> 
 
 
 def visual_sanity_ok(filename: str, ledger_path: str | Path = DEFAULT_LEDGER) -> bool:
-    """Fail closed when review explicitly flags a broken or misoriented visual."""
     for row in (_asset_row(filename, ledger_path), _sanity_row(filename)):
         sanity = str(row.get("visual_sanity") or "").strip().upper()
         orientation = str(row.get("orientation") or "").strip().upper()
@@ -115,7 +112,6 @@ def visual_sanity_ok(filename: str, ledger_path: str | Path = DEFAULT_LEDGER) ->
 
 def explicitly_relevant(filename: str, story: str,
                         ledger_path: str | Path = DEFAULT_LEDGER) -> bool:
-    """True for reviewed DIRECT/STRONG_CONTEXT authentic assets for this story."""
     if generated_asset(filename, ledger_path) or not visual_sanity_ok(filename, ledger_path):
         return False
     return verdict_for(filename, story, ledger_path) in COUNTABLE
@@ -123,13 +119,6 @@ def explicitly_relevant(filename: str, story: str,
 
 def asset_countable(filename: str, story: str,
                     ledger_path: str | Path = DEFAULT_LEDGER) -> bool:
-    """Whether this local visual may count and be served for ``story``.
-
-    DIRECT and STRONG_CONTEXT count. Explicit weak/wrong verdicts do not.
-    Unreviewed materialized ``rt-*`` files fail closed; manually curated files
-    remain trusted unless explicitly vetoed. Synthetic/generated assets and
-    explicit visual-sanity failures are always rejected.
-    """
     name = Path(filename).name
     if generated_asset(name, ledger_path) or not visual_sanity_ok(name, ledger_path):
         return False
@@ -142,7 +131,6 @@ def asset_countable(filename: str, story: str,
 
 
 def _selected_local_source(selected_path: str | Path) -> str:
-    """Return the source filename recorded by fetch_local_photo, if any."""
     marker = Path(str(selected_path) + ".exempt")
     try:
         value = marker.read_text(encoding="utf-8").strip()
@@ -158,27 +146,27 @@ def trusted_selected_local_visual(
     story: str,
     ledger_path: str | Path = DEFAULT_LEDGER,
 ) -> bool:
-    """Trust a keyword-selected, reviewed local visual for a Story frame.
+    """Bypass frame vision only for an explicitly reviewed story asset.
 
-    The local selector has already matched the frame's image keywords. If the
-    source is curated/countable for this story, do not make a second generic
-    "is this a photograph?" model veto it merely because it is a banknote,
-    document, receipt, advertisement or archive scan. Explicit weak/wrong,
-    generated and visual-sanity-failed assets still fail closed.
+    Local-library membership may make a source eligible for readiness, but it
+    must not suppress the frame heading/text relevance check. Only a DIRECT or
+    STRONG_CONTEXT verdict for this story earns the documentary-asset bypass.
     """
     source = _selected_local_source(selected_path)
     if not source:
         return False
-    return asset_countable(source, story, ledger_path)
+    return explicitly_relevant(source, story, ledger_path)
+
+
+def explicitly_trusted_selected_local_visual(
+    selected_path: str | Path,
+    story: str,
+    ledger_path: str | Path = DEFAULT_LEDGER,
+) -> bool:
+    return trusted_selected_local_visual(selected_path, story, ledger_path)
 
 
 def runtime_status(photo_count: int, logo_count: int = 0) -> str:
-    """Source-material gate only; final rendered-frame quality is authoritative.
-
-    Four reviewed visuals are enough to attempt a six-card personal story. This
-    is deliberately not a publication quota or target: the renderer should use
-    every strong relevant visual it can find, including a fifth or sixth one.
-    """
     need_visuals = max(0, 4 - int(photo_count))
     if need_visuals == 0:
         return "PASS"
