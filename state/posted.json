@@ -1,11 +1,5 @@
 [
  {
-  "headline": "بنزيمة يفارق الهلال بالتراضي بعد 6 أشهر",
-  "at": "2026-08-30T14:46:39.905086+00:00",
-  "source_link": "https://aawsat.com/node/5312720",
-  "lane": "entertainment_culture"
- },
- {
   "headline": "الاقتصاد الرقمي السعودي يتجاوز 139 مليار دولار",
   "at": "2026-08-30T19:13:54.734384+00:00",
   "source_link": "https://aawsat.com/node/5312707",
@@ -79,6 +73,12 @@
   "headline": "السعودية تصدر صكوكاً دولية بـ3.25 مليار دولار",
   "at": "2026-09-02T12:17:07.308981+00:00",
   "source_link": "https://alwatan.com.sa/article/1185048",
+  "lane": "saudi_core"
+ },
+ {
+  "headline": "قروض القطاع الخاص السعودي تقفز 197 مليار ريال",
+  "at": "2026-09-02T17:11:10.184515+00:00",
+  "source_link": "https://alwatan.com.sa/article/1185065",
   "lane": "saudi_core"
  }
 ]
