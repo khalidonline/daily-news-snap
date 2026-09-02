@@ -1,0 +1,120 @@
+{
+  "brief": {
+    "caption": "سكة حديد طلبتها شركة نفط لتنتهي قرب الساحل — فصدر أمر بمدّها إلى الرياض. القصة من 1947 إلى اليوم.",
+    "frames": [
+      {
+        "heading": "لا طرق.. فقط مسارات رملية",
+        "image_keywords": [
+          "Dammam 1940s",
+          "Dhahran 1940s"
+        ],
+        "image_keywords_ar": [
+          "الدمام",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في أربعينات القرن الماضي لم تكن في المنطقة الشرقية طرق معبّدة، بل مسارات رملية تحتاج مركبات مجهزة خصيصاً. نقل البضائع كان بطيئاً جداً، وسفن الشحن تبقى راسية فترات طويلة تنتظر التفريغ. حتى أصحاب السفن صاروا يترددون في المجيء أصلاً."
+      },
+      {
+        "heading": "خط قصير من الميناء",
+        "image_keywords": [
+          "Dammam port",
+          "Riyadh Dammam railway"
+        ],
+        "image_keywords_ar": [
+          "ميناء الدمام",
+          "سكة حديد الرياض الدمام"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولذلك طرحت شركة أرامكو للنفط حلاً: ميناء تجاري كبير عند الدمام، وخط حديدي يخرج منه إلى الداخل. لكن الخط في الخطة الأولى كان قصيراً، يصل إلى مواقع النفط القريبة فقط. سكة تخدم البراميل، لا الناس."
+      },
+      {
+        "heading": "أمر واحد غيّر نهاية الخط",
+        "image_keywords": [
+          "Riyadh Dammam railway",
+          "King Abdulaziz 1951"
+        ],
+        "image_keywords_ar": [
+          "الملك عبدالعزيز",
+          "المسمار الذهبي",
+          "سكة حديد الرياض الدمام"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. عُرضت الفكرة على الملك عبدالعزيز، فأمر بتنفيذ المشروع كاملاً حتى يصل إلى الرياض. وفي أكتوبر 1947 بدأ العمل فعلاً، وطُرق مسمار ذهبي إيذاناً بالانطلاق. خط رُسم ليخدم ميناءً صار خطاً يعبر البلاد من الساحل إلى العاصمة."
+      },
+      {
+        "heading": "البحر الضحل وقف في الطريق",
+        "image_keywords": [
+          "Riyadh Dammam railway construction 1951",
+          "Dammam pier 1950"
+        ],
+        "image_keywords_ar": [
+          "سكة حديد الرياض الدمام",
+          "عمال",
+          "1951"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "لكن البداية نفسها كانت العقبة: مياه الخليج عند الدمام ضحلة، والسفن الكبيرة لا تستطيع الاقتراب. فمُدّ الخط نحو 11 كيلومتراً داخل الماء على جسر وردم حتى يبلغ عمقاً كافياً. وعلى البر استمر التمهيد أربع سنوات، حتى وصلت القضبان إلى الهفوف في مارس 1950."
+      },
+      {
+        "heading": "من رحلة واحدة إلى رحلات يومية",
+        "image_keywords": [
+          "Saudi Arabia Railways train",
+          "Riyadh Dammam railway"
+        ],
+        "image_keywords_ar": [
+          "قطار سار",
+          "سكة حديد"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهكذا في 20 أكتوبر 1951 وصل أول قطار إلى الرياض، على خط طوله 569 كيلومتراً. واليوم يسير على المسار نفسه 14 رحلة يومياً، بحسب الخطوط الحديدية السعودية. وفي الربع الثاني من 2026 سجّل الخط نحو 389 ألف راكب، بحسب الهيئة العامة للنقل."
+      },
+      {
+        "heading": "ما بقي من ذلك القرار",
+        "image_keywords": [
+          "Saudi Arabia Railways",
+          "Riyadh railway station"
+        ],
+        "image_keywords_ar": [
+          "سار",
+          "الخطوط الحديدية السعودية",
+          "محطة قطار الرياض"
+        ],
+        "punch": "الخط الذي رُسم للنفط صار طريق الناس بين العاصمة والساحل.",
+        "subject_kind": "company",
+        "text": "واليوم، بعد خمسة وسبعين سنة، ما زال المسار نفسه يعمل، ومنه وُلد قطاع الخطوط الحديدية في المملكة."
+      }
+    ],
+    "image_prompt": "A flat coastal desert plain in eastern Arabia in the late 1940s, a rough sand track winding toward the horizon, low dunes and gravel, distant cargo ships anchored offshore on a calm gulf, hazy daylight, documentary style, no people, no text, no logos",
+    "image_queries": [
+      "sand track desert eastern Saudi Arabia 1940s",
+      "cargo ship anchored Arabian Gulf coast 1940s",
+      "Dammam coastline before port construction"
+    ],
+    "image_queries_ar": [
+      "الدمام",
+      "الظهران",
+      "ميناء الدمام"
+    ],
+    "sources": [
+      "واس",
+      "الخطوط الحديدية السعودية",
+      "سعوديبيديا",
+      "الهيئة العامة للنقل"
+    ],
+    "title": "الخط الذي كان سينتهي قبل الرياض"
+  },
+  "input_tokens": 170905,
+  "message_id": "msg_011CeedvinAgLnHgwcWJ1uwn",
+  "model": "claude-opus-5",
+  "output_tokens": 11713,
+  "prompt_hash": "190cb74fa20599a0fc24550b8028f21a018bdaf803e1f34238d5dd9780aa6dd8",
+  "revision": "2835094e13fe04793a169565d7783b982d2d5532ce4d68a66f331ece9b9b70ab",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
