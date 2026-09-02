@@ -1,0 +1,133 @@
+name: Validate Story and Topic now
+
+on:
+  push:
+    branches:
+      - validation/story-topic-now-20260902
+    paths:
+      - validation/run-now.txt
+
+permissions:
+  contents: write
+
+jobs:
+  story:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Dry-run Story production path
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: "bundle"
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+          POST_TO_SNAPCHAT: "0"
+          MONTHLY_POST_LIMIT: "145"
+          STORY: ""
+          STORY_OPERATION_MODE: "auto"
+          STORY_REPAIR_FRAMES: ""
+          STORY_REGENERATION_NONCE: ""
+          DRY_RUN: "1"
+          MEDIA_MODE: "github"
+          THEME: "light"
+          BRAND: "ملخص تنفيذي - قصة"
+          FONT_FAMILY: "Almarai"
+          STORY_MODEL: "claude-opus-5"
+          STORY_FRAMES: "6"
+          ALLOW_GENERATED: "0"
+          ALLOW_STORY_GENERATION: "0"
+          STORY_ALLOW_REPEAT: "1"
+          IMAGE_GEN: "byteplus"
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          ARK_MODEL: ${{ vars.ARK_MODEL }}
+        run: python guarded_story_publish.py
+      - name: Keep Story frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-validation-${{ github.run_id }}
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
+
+  topic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Dry-run Topic production path
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: "bundle"
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
+          ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+          ZERNIO_ACCOUNT_ID: ${{ vars.ZERNIO_ACCOUNT_ID }}
+          ZERNIO_BASE: ${{ vars.ZERNIO_BASE }}
+          AYRSHARE_API_KEY: ${{ secrets.AYRSHARE_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          REQUIRE_PHOTO: "1"
+          TOPIC_ATTEMPTS: "3"
+          SCORE_TRIGGER: ${{ vars.SCORE_TRIGGER }}
+          SCORE_SEASON: ${{ vars.SCORE_SEASON }}
+          SCORE_MONTHLY: ${{ vars.SCORE_MONTHLY }}
+          ALLOW_GENERATED: "1"
+          IMAGE_GEN: "byteplus"
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          ARK_URL: ${{ vars.ARK_URL }}
+          ARK_MODEL: ${{ vars.ARK_MODEL }}
+          FAL_KEY: ${{ secrets.FAL_KEY }}
+          TOPIC: ""
+          TOPICS_FILE: "topics.txt"
+          VOICE_FILE: "voice.txt"
+          TOPIC_PERFORMANCE_FILE: "state/topic_performance.json"
+          THEME: "light"
+          BRAND: "معلومة تهمك"
+          KICKER: "معلومة تهمك"
+          FONT_FAMILY: "Almarai"
+          REQUIRE_SAUDI_CONTEXT: ${{ vars.REQUIRE_SAUDI_CONTEXT }}
+          MIN_TERM_HITS: ${{ vars.MIN_TERM_HITS }}
+          MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
+          LIBRARY_REUSE_DAYS: "0"
+          COOLDOWN_DAYS: "21"
+          HARD_COOLDOWN_DAYS: "21"
+          SELECT_MODEL: "claude-haiku-4-5-20251001"
+          LOOKBACK_HOURS: "30"
+          DRY_RUN: "1"
+          MEDIA_MODE: "github"
+          POST_TO_SNAPCHAT: "0"
+          MONTHLY_POST_LIMIT: "145"
+          IMAGE_SOURCE: "auto"
+          POINTS: "3"
+          MAX_SEARCHES: "6"
+        run: python topic_snapchat.py
+      - name: Keep Topic card
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topic-validation-${{ github.run_id }}
+          path: out/*.png
+          retention-days: 7
+          if-no-files-found: ignore
