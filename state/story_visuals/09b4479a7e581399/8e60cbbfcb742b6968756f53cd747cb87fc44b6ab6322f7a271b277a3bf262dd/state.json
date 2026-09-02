@@ -1,0 +1,131 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "488b98e892e5d37ec455e841e1fa6b49d792ee15b58c0a5a3c37d90a54e1d3bf",
+      "frame_payload": {
+        "heading": "لا طرق.. فقط مسارات رملية",
+        "image_keywords": [
+          "Dammam 1940s",
+          "Dhahran 1940s"
+        ],
+        "image_keywords_ar": [
+          "الدمام",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في أربعينات القرن الماضي لم تكن في المنطقة الشرقية طرق معبّدة، بل مسارات رملية تحتاج مركبات مجهزة خصيصاً. نقل البضائع كان بطيئاً جداً، وسفن الشحن تبقى راسية فترات طويلة تنتظر التفريغ. حتى أصحاب السفن صاروا يترددون في المجيء أصلاً."
+      },
+      "image_source": "state/story_visuals/09b4479a7e581399/8e60cbbfcb742b6968756f53cd747cb87fc44b6ab6322f7a271b277a3bf262dd/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "75bd831719d4bb2f6de1c6b093c6321a87cf1a1f844abab342bdd19aa6471578",
+      "frame_payload": {
+        "heading": "خط قصير من الميناء",
+        "image_keywords": [
+          "Dammam port",
+          "Riyadh Dammam railway"
+        ],
+        "image_keywords_ar": [
+          "ميناء الدمام",
+          "سكة حديد الرياض الدمام"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولذلك طرحت شركة أرامكو للنفط حلاً: ميناء تجاري كبير عند الدمام، وخط حديدي يخرج منه إلى الداخل. لكن الخط في الخطة الأولى كان قصيراً، يصل إلى مواقع النفط القريبة فقط. سكة تخدم البراميل، لا الناس."
+      },
+      "image_source": "state/story_visuals/09b4479a7e581399/8e60cbbfcb742b6968756f53cd747cb87fc44b6ab6322f7a271b277a3bf262dd/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "038d1fa1012718032aeaabb66ce2b1492a55d639b1396d8ce8e510d54d44eb2d",
+      "frame_payload": {
+        "heading": "أمر واحد غيّر نهاية الخط",
+        "image_keywords": [
+          "Riyadh Dammam railway",
+          "King Abdulaziz 1951"
+        ],
+        "image_keywords_ar": [
+          "الملك عبدالعزيز",
+          "المسمار الذهبي",
+          "سكة حديد الرياض الدمام"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. عُرضت الفكرة على الملك عبدالعزيز، فأمر بتنفيذ المشروع كاملاً حتى يصل إلى الرياض. وفي أكتوبر 1947 بدأ العمل فعلاً، وطُرق مسمار ذهبي إيذاناً بالانطلاق. خط رُسم ليخدم ميناءً صار خطاً يعبر البلاد من الساحل إلى العاصمة."
+      },
+      "image_source": "state/story_visuals/09b4479a7e581399/8e60cbbfcb742b6968756f53cd747cb87fc44b6ab6322f7a271b277a3bf262dd/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "b996cde9aaeb75fdb9a0ce592b556485125afd9d9253928a1036ecdf44cab30f",
+      "frame_payload": {
+        "heading": "البحر الضحل وقف في الطريق",
+        "image_keywords": [
+          "Riyadh Dammam railway construction 1951",
+          "Dammam pier 1950"
+        ],
+        "image_keywords_ar": [
+          "سكة حديد الرياض الدمام",
+          "عمال",
+          "1951"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "لكن البداية نفسها كانت العقبة: مياه الخليج عند الدمام ضحلة، والسفن الكبيرة لا تستطيع الاقتراب. فمُدّ الخط نحو 11 كيلومتراً داخل الماء على جسر وردم حتى يبلغ عمقاً كافياً. وعلى البر استمر التمهيد أربع سنوات، حتى وصلت القضبان إلى الهفوف في مارس 1950."
+      },
+      "image_source": "state/story_visuals/09b4479a7e581399/8e60cbbfcb742b6968756f53cd747cb87fc44b6ab6322f7a271b277a3bf262dd/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "6821a2a321fe553a509bfcd509da77c2cc10f57cc6ece4e5ec5149bb7080c790",
+      "frame_payload": {
+        "heading": "من رحلة واحدة إلى رحلات يومية",
+        "image_keywords": [
+          "Saudi Arabia Railways train",
+          "Riyadh Dammam railway"
+        ],
+        "image_keywords_ar": [
+          "قطار سار",
+          "سكة حديد"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهكذا في 20 أكتوبر 1951 وصل أول قطار إلى الرياض، على خط طوله 569 كيلومتراً. واليوم يسير على المسار نفسه 14 رحلة يومياً، بحسب الخطوط الحديدية السعودية. وفي الربع الثاني من 2026 سجّل الخط نحو 389 ألف راكب، بحسب الهيئة العامة للنقل."
+      },
+      "image_source": "state/story_visuals/09b4479a7e581399/8e60cbbfcb742b6968756f53cd747cb87fc44b6ab6322f7a271b277a3bf262dd/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "be32907a16bac4fb1f8d171c56d1019e8ec156ce8f49c40af77f3dd12577193e",
+      "frame_payload": {
+        "heading": "ما بقي من ذلك القرار",
+        "image_keywords": [
+          "Saudi Arabia Railways",
+          "Riyadh railway station"
+        ],
+        "image_keywords_ar": [
+          "سار",
+          "الخطوط الحديدية السعودية",
+          "محطة قطار الرياض"
+        ],
+        "punch": "الخط الذي رُسم للنفط صار طريق الناس بين العاصمة والساحل.",
+        "subject_kind": "company",
+        "text": "واليوم، بعد خمسة وسبعين سنة، ما زال المسار نفسه يعمل، ومنه وُلد قطاع الخطوط الحديدية في المملكة."
+      },
+      "image_source": "state/story_visuals/09b4479a7e581399/8e60cbbfcb742b6968756f53cd747cb87fc44b6ab6322f7a271b277a3bf262dd/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "8e60cbbfcb742b6968756f53cd747cb87fc44b6ab6322f7a271b277a3bf262dd",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_READY",
+  "story": "قصة سكة حديد الرياض الدمام 1951"
+}
