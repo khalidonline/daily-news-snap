@@ -1,6 +1,9 @@
 name: Topic brief to Snapchat
 
 on:
+  push:
+    paths:
+      - "scheduler/triggers/topic.txt"
   schedule:
     - cron: "0 6 * * *"        # temporary fallback: 09:00 KSA daily
   repository_dispatch:

@@ -1,6 +1,9 @@
 name: Daily Story to Telegram / manual Snapchat
 
 on:
+  push:
+    paths:
+      - "scheduler/triggers/story.txt"
   schedule:
     - cron: "0 11 * * *"       # temporary fallback: 14:00 KSA daily
   repository_dispatch:
