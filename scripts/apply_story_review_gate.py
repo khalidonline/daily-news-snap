@@ -80,13 +80,40 @@ def verify_review_manifest(manifest, root):
     if needle not in text:
         raise SystemExit('ready_story_publish insertion point not found')
     text = text.replace(needle, block + needle, 1)
-    ready.write_text(text, encoding='utf-8')
+
+if 'def deliver_approved_review(' not in text:
+    needle = '\ndef notify_final_candidate(\n'
+    block = r'''
+
+def deliver_approved_review(manifest_path, *, notify_fn=None):
+    """Deliver the exact approved artifact; never render or regenerate here."""
+    manifest_path = Path(manifest_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    frames = verify_review_manifest(manifest, manifest_path.parent)
+    caption = f"[APPROVED] {manifest['story']}\nHuman-reviewed publication candidate"
+    if notify_fn is not None:
+        notify_fn(caption, frames, as_documents=True)
+        return True
+    return notify_final_candidate(
+        manifest["story"],
+        frames,
+        "READY",
+        manifest["revision"],
+        digest=manifest.get("deck_hash"),
+    )
+'''
+    if needle not in text:
+        raise SystemExit('approved delivery insertion point not found')
+    text = text.replace(needle, block + needle, 1)
+
+ready.write_text(text, encoding='utf-8')
 
 guarded = Path('guarded_story_publish.py')
 gtext = guarded.read_text(encoding='utf-8')
 old = '''    rsp.persist_editorial_state()\n    rsp.notify_final_candidate(story, frames, final_status, revision)\n\n    if rsp.nb.DRY_RUN or not rsp.nb.POST_ENABLED:\n'''
 new = '''    rsp.persist_editorial_state()\n    manifest_path = rsp.write_review_manifest(\n        story, revision, final_status, frames\n    )\n    human_approved = (os.getenv("STORY_HUMAN_APPROVED") or "").strip() == "1"\n    if rsp.review_delivery_allowed(status=final_status, approved=human_approved):\n        rsp.notify_final_candidate(story, frames, final_status, revision)\n    else:\n        print(\n            f"REVIEW_GATE: {final_status} deck frozen for human review; "\n            f"Telegram untouched; artifact={manifest_path}"\n        )\n        if not human_approved:\n            print("REVIEW_REQUIRED — no Telegram or Snapchat delivery before approval")\n            return\n\n    if rsp.nb.DRY_RUN or not rsp.nb.POST_ENABLED:\n'''
-if old not in gtext:
+if old in gtext:
+    gtext = gtext.replace(old, new, 1)
+elif 'REVIEW_REQUIRED — no Telegram or Snapchat delivery before approval' not in gtext:
     raise SystemExit('guarded_story_publish replacement point not found')
-gtext = gtext.replace(old, new, 1)
 guarded.write_text(gtext, encoding='utf-8')
