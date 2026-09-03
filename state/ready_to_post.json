@@ -1,9 +1,8 @@
 {
-  "ready_count": 2,
+  "ready_count": 1,
   "total_stories": 123,
-  "basis": "visual PASS + EDITORIAL_LOCKED + committed six-frame VISUAL_READY",
+  "basis": "current frame-relevance-v2 publishability evidence",
   "stories": [
-    "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
-    "قصة سكة حديد الرياض الدمام 1951"
+    "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
   ]
 }
