@@ -1,17 +1,5 @@
 [
  {
-  "headline": "الاقتصاد الرقمي السعودي يتجاوز 139 مليار دولار",
-  "at": "2026-08-30T19:13:54.734384+00:00",
-  "source_link": "https://aawsat.com/node/5312707",
-  "lane": "saudi_core"
- },
- {
-  "headline": "واتكينز رسمياً في الهلال قادماً من أستون فيلا",
-  "at": "2026-08-30T22:35:15.816174+00:00",
-  "source_link": "https://alyaum.com/articles/6680375/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D9%88%D8%A7%D8%AA%D9%83%D9%8A%D9%86%D8%B2%D8%A7%D9%84%D8%A3%D8%B2%D8%B1%D9%82-%D9%8A%D9%84%D9%8A%D9%82-%D8%A8%D9%83",
-  "lane": "sports"
- },
- {
   "headline": "مسودة جديدة تنظم تحصيل الديون والحجز على الأموال",
   "at": "2026-08-31T10:43:47.966686+00:00",
   "source_link": "https://alyaum.com/articles/6680474/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D9%8A%D9%88%D9%85/%D8%A7%D9%84%D9%8A%D9%88%D9%85-%D8%AA%D9%86%D8%B4%D8%B1-%D9%85%D8%B3%D9%88%D8%AF%D8%A9-%D9%84%D8%A7%D8%A6%D8%AD%D8%A9-%D8%A7%D9%84%D8%AA%D9%86%D9%81%D9%8A%D8%B0-50-%D8%A3%D9%84%D9%81%D8%A7-%D9%84%D9%84%D8%AF%D9%8A%D9%88%D9%86-%D8%A7%D9%84%D9%8A%D8%B3%D9%8A%D8%B1%D8%A9-%D9%88%D8%B6%D9%88%D8%A7%D8%A8%D8%B7-%D9%84%D9%84%D8%AD%D8%AC%D8%B2-%D9%88%D8%A7%D9%84%D9%85%D9%86%D8%B9-%D9%85%D9%86-%D8%A7%D9%84%D8%B3%D9%81%D8%B1-%D8%B9%D8%A7%D8%AC%D9%84",
@@ -85,6 +73,12 @@
   "headline": "Uber تسرّح أكثر من 3000 موظف حول العالم",
   "at": "2026-09-02T18:12:44.043514+00:00",
   "source_link": "https://bbc.co.uk/news/articles/cp3ky2w4y9no?at_medium=RSS&at_campaign=rss",
+  "lane": "business_tech"
+ },
+ {
+  "headline": "أوبر تسبق Waymo وتطلق أول روبوتاكسي في لندن",
+  "at": "2026-09-03T04:17:24.582215+00:00",
+  "source_link": "https://theverge.com/news/988415/uber-wayve-robotaxi-london-launch",
   "lane": "business_tech"
  }
 ]
