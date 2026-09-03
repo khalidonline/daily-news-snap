@@ -1,0 +1,145 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "ee6ba94db312120c30b6a5f28a6c1ce177b87f94ed65eec1309600813215d465",
+      "frame_payload": {
+        "heading": "الحج كان يأتي من البحر",
+        "image_keywords": [
+          "Jeddah port 1940s",
+          "Jeddah harbour old",
+          "ميناء جدة",
+          "جدة",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "ميناء جدة",
+          "جدة"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "في أربعينات القرن الماضي، من أراد الوصول إلى مكة من خارج الجزيرة كان يأتي بحراً. الباخرة ترسو في ميناء جدة بعد أسابيع في البحر. ولم يكن في البلاد مطار مدني واحد يستقبل قادماً من الجو. الطريق إلى مكة كان طريق ماء فقط."
+      },
+      "image_source": "state/story_visuals/ccaa65bdbd199406/e6b5c4ffca40f612d16825246031378221286f39b1cc7431a5c92e3c6bbc81d9/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "f30f0c08cebcb18ec58c8705223613c81214fb15a07c74a1377c949e1254bf10",
+      "frame_payload": {
+        "heading": "طائرة واحدة على مدرج تراب",
+        "image_keywords": [
+          "Kandara Airport Jeddah",
+          "Jeddah airport 1950s",
+          "Douglas DC-3 Saudi Arabian Airlines",
+          "مطار جدة القديم",
+          "الكندرة",
+          "الطيران المدني"
+        ],
+        "image_keywords_ar": [
+          "مطار جدة القديم",
+          "الكندرة",
+          "الطيران المدني"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "لكن في 1945 وصلت إلى جدة طائرة واحدة، أهداها الرئيس الأمريكي إلى الملك عبدالعزيز. هبطت على مدرج ترابي في حي الكندرة. ومن ذلك المدرج بدأت أول رحلات مدنية في البلاد. وفي 1952 افتُتح المكان رسمياً كأول مطار متكامل في المملكة — داخل مدينة تكبر حوله."
+      },
+      "image_source": "state/story_visuals/ccaa65bdbd199406/e6b5c4ffca40f612d16825246031378221286f39b1cc7431a5c92e3c6bbc81d9/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "effcb6342ba68701cde975f467a23da66140b638f9ac6e128caa0792dc2fe62a",
+      "frame_payload": {
+        "heading": "المطار يخرج من وسط المدينة",
+        "image_keywords": [
+          "Hajj Terminal Jeddah",
+          "King Abdulaziz International Airport",
+          "صالة الحجاج",
+          "مطار الملك عبدالعزيز الدولي",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "صالة الحجاج",
+          "مطار الملك عبدالعزيز الدولي"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولهذا تغيّر كل شيء. في 1974 اختير موقع جديد شمال جدة بعيداً عن البيوت. وفي 1981 فتح مطار الملك عبدالعزيز الدولي أبوابه هناك. وفيه صالة خُصصت للحجاج وحدهم، سقفها 210 خيام قماشية، وكان أكبر سقف قماشي معلّق في العالم يوم افتتاحه."
+      },
+      "image_source": "state/story_visuals/ccaa65bdbd199406/e6b5c4ffca40f612d16825246031378221286f39b1cc7431a5c92e3c6bbc81d9/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "5caa48aa68c08da25a8ae44977483bc4a47e5d04da1003491533cdb58f0478a3",
+      "frame_payload": {
+        "heading": "نهاية المطار الأول",
+        "image_keywords": [
+          "Jeddah airport 1981",
+          "Saudia Boeing 707",
+          "مطار جدة القديم",
+          "الخطوط السعودية",
+          "طائرة",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "مطار جدة القديم",
+          "الخطوط السعودية",
+          "طائرة"
+        ],
+        "punch": "أول مطار في المملكة لم يبقَ منه شيء على الأرض.",
+        "subject_kind": "place_city",
+        "text": "وفي الشهر الذي بدأ فيه الجديد، توقف القديم. أُغلقت رحلات مطار الكندرة في مايو 1981 بعد 29 سنة من افتتاحه، ثم أُزيل بالكامل. الحي الذي عاش على حركة المطار وجد نفسه بلا مطار، وامتدت المدينة على أرض المدارج."
+      },
+      "image_source": "state/story_visuals/ccaa65bdbd199406/e6b5c4ffca40f612d16825246031378221286f39b1cc7431a5c92e3c6bbc81d9/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "564131e3f1791622df39832df47bd7421f35d568fa9a3d192433719555c14d18",
+      "frame_payload": {
+        "heading": "الرقم الذي يمر منه اليوم",
+        "image_keywords": [
+          "King Abdulaziz International Airport Terminal 1",
+          "Jeddah airport terminal",
+          "مطار الملك عبدالعزيز الدولي",
+          "Jeddah airport history"
+        ],
+        "image_keywords_ar": [
+          "مطار الملك عبدالعزيز الدولي"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "وبعد أربعة عقود على الانتقال، مرّ عبر مطار الملك عبدالعزيز الدولي 53.5 مليون مسافر في 2025، بحسب إحصاءات الهيئة العامة للطيران المدني. وفي السنة نفسها سجّل 314 ألف رحلة قادمة ومغادرة. هذا رقم مكان بدأ بمدرج من تراب وطائرة واحدة."
+      },
+      "image_source": "state/story_visuals/ccaa65bdbd199406/e6b5c4ffca40f612d16825246031378221286f39b1cc7431a5c92e3c6bbc81d9/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "0fa42bbaa2b9f4800980ae8cda2fe0d55ade7ab929f653096d1d668ee9e497d4",
+      "frame_payload": {
+        "heading": "بوابة مكة غيّرت مكانها",
+        "image_keywords": [
+          "King Abdulaziz International Airport",
+          "Jeddah skyline"
+        ],
+        "image_keywords_ar": [
+          "مطار الملك عبدالعزيز الدولي",
+          "جدة"
+        ],
+        "punch": "الطريق إلى مكة انتقل من البحر إلى السماء ولم يعد.",
+        "subject_kind": "abstract",
+        "text": "وهكذا صار من يقصد مكة من خارج الجزيرة يبدأ رحلته عند بوابة طائرة في شمال جدة، لا عند رصيف باخرة في الميناء."
+      },
+      "image_source": "state/story_visuals/ccaa65bdbd199406/e6b5c4ffca40f612d16825246031378221286f39b1cc7431a5c92e3c6bbc81d9/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "e6b5c4ffca40f612d16825246031378221286f39b1cc7431a5c92e3c6bbc81d9",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_READY",
+  "story": "قصة أول مطار في جدة وتطور الطيران المدني"
+}
