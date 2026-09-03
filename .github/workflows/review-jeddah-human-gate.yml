@@ -1,0 +1,55 @@
+name: Review Jeddah Story before Telegram
+
+on:
+  push:
+    branches: [review/jeddah-human-gate]
+    paths:
+      - '.github/workflows/review-jeddah-human-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: review/jeddah-human-gate
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Render frozen Jeddah review deck
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          POST_TO_SNAPCHAT: '0'
+          STORY_HUMAN_APPROVED: '0'
+          DRY_RUN: '1'
+          STORY: 'قصة أول مطار في جدة وتطور الطيران المدني'
+          STORY_OPERATION_MODE: 'auto'
+          STORY_ALLOW_REPEAT: '1'
+          STORY_FRAMES: '6'
+          MEDIA_MODE: 'github'
+          THEME: 'light'
+          BRAND: 'ملخص تنفيذي - قصة'
+          FONT_FAMILY: 'Almarai'
+          STORY_MODEL: 'claude-opus-5'
+          ALLOW_GENERATED: '0'
+          ALLOW_STORY_GENERATION: '0'
+          IMAGE_GEN: 'byteplus'
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          ARK_MODEL: ${{ vars.ARK_MODEL }}
+        run: python guarded_story_publish.py
+      - name: Upload exact review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-review-${{ github.run_id }}
+          path: |
+            out/*.png
+            out/story-review.json
+          retention-days: 1
+          if-no-files-found: error
