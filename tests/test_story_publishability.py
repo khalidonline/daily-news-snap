@@ -1,6 +1,6 @@
 import unittest
 
-import story_runtime as sr
+import story_publishability as sp
 
 
 class StoryPublishabilityTests(unittest.TestCase):
@@ -17,38 +17,30 @@ class StoryPublishabilityTests(unittest.TestCase):
         return payload
 
     def _evaluate(self, state, story="story-a"):
-        fn = getattr(sr, "publishability_from_visual_state", None)
-        if fn is None:
-            return {"status": "MISSING_IMPLEMENTATION", "publishable": False}
-        return fn(story, state)
+        return sp.publishability_from_visual_state(story, state)
 
     def test_six_frame_current_policy_state_is_publishable(self):
-        policy = getattr(sr, "PUBLISHABILITY_POLICY", "expected-policy")
-        result = self._evaluate(self._state(policy=policy))
+        result = self._evaluate(self._state(policy=sp.PUBLISHABILITY_POLICY))
         self.assertEqual(result["status"], "READY_FOR_PUBLISH")
         self.assertTrue(result["publishable"])
 
     def test_one_middle_text_only_frame_is_publishable(self):
-        policy = getattr(sr, "PUBLISHABILITY_POLICY", "expected-policy")
-        result = self._evaluate(self._state(failed=(3,), policy=policy))
+        result = self._evaluate(self._state(failed=(3,), policy=sp.PUBLISHABILITY_POLICY))
         self.assertEqual(result["status"], "READY_FOR_PUBLISH")
         self.assertEqual(result["usable_frames"], 5)
 
     def test_opening_frame_failure_blocks_story(self):
-        policy = getattr(sr, "PUBLISHABILITY_POLICY", "expected-policy")
-        result = self._evaluate(self._state(failed=(1,), policy=policy))
+        result = self._evaluate(self._state(failed=(1,), policy=sp.PUBLISHABILITY_POLICY))
         self.assertEqual(result["status"], "BLOCKED_FRAME_COVERAGE")
         self.assertFalse(result["publishable"])
 
     def test_closing_frame_failure_blocks_story(self):
-        policy = getattr(sr, "PUBLISHABILITY_POLICY", "expected-policy")
-        result = self._evaluate(self._state(failed=(6,), policy=policy))
+        result = self._evaluate(self._state(failed=(6,), policy=sp.PUBLISHABILITY_POLICY))
         self.assertEqual(result["status"], "BLOCKED_FRAME_COVERAGE")
         self.assertFalse(result["publishable"])
 
     def test_two_missing_middle_frames_block_story(self):
-        policy = getattr(sr, "PUBLISHABILITY_POLICY", "expected-policy")
-        result = self._evaluate(self._state(failed=(3, 4), policy=policy))
+        result = self._evaluate(self._state(failed=(3, 4), policy=sp.PUBLISHABILITY_POLICY))
         self.assertEqual(result["status"], "BLOCKED_FRAME_COVERAGE")
         self.assertFalse(result["publishable"])
 
@@ -58,8 +50,9 @@ class StoryPublishabilityTests(unittest.TestCase):
         self.assertFalse(result["publishable"])
 
     def test_story_mismatch_fails_closed(self):
-        policy = getattr(sr, "PUBLISHABILITY_POLICY", "expected-policy")
-        result = self._evaluate(self._state(story="different-story", policy=policy))
+        result = self._evaluate(
+            self._state(story="different-story", policy=sp.PUBLISHABILITY_POLICY)
+        )
         self.assertEqual(result["status"], "BLOCKED_STALE_EVIDENCE")
         self.assertFalse(result["publishable"])
 
