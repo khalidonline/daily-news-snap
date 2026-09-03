@@ -186,7 +186,20 @@ def main() -> None:
         status=final_status,
     )
     rsp.persist_editorial_state()
-    rsp.notify_final_candidate(story, frames, final_status, revision)
+    manifest_path = rsp.write_review_manifest(
+        story, revision, final_status, frames
+    )
+    human_approved = (os.getenv("STORY_HUMAN_APPROVED") or "").strip() == "1"
+    if rsp.review_delivery_allowed(status=final_status, approved=human_approved):
+        rsp.notify_final_candidate(story, frames, final_status, revision)
+    else:
+        print(
+            f"REVIEW_GATE: {final_status} deck frozen for human review; "
+            f"Telegram untouched; artifact={manifest_path}"
+        )
+        if not human_approved:
+            print("REVIEW_REQUIRED — no Telegram or Snapchat delivery before approval")
+            return
 
     if rsp.nb.DRY_RUN or not rsp.nb.POST_ENABLED:
         print(
