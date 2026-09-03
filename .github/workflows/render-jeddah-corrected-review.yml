@@ -1,0 +1,98 @@
+name: Render corrected Jeddah review deck
+
+on:
+  push:
+    branches: [review/jeddah-corrected-deck]
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: review/jeddah-corrected-deck
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Apply targeted editorial repair to cached Jeddah brief
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('state/story_briefs/ccaa65bdbd199406/00fa9bcab2745c310fb53d66a4673d80c234e2b7bc064cf4adedb3d4c858cc19.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          brief = data['brief']
+          frames = brief['frames']
+
+          frames[0].update({
+              'heading': 'أول مطار في جدة كان مدرجاً بسيطاً',
+              'text': 'قبل أن يصبح لجدة مطار دولي ضخم، بدأت الحركة الجوية في المدينة بمدرج ترابي ومرافق محدودة في الكندرة. هذه البداية البسيطة كانت النواة الأولى للمطار المدني في جدة.',
+              'punch': '',
+              'subject_kind': 'place_city',
+              'image_keywords': ['Kandara Airport Jeddah 1940s archive', 'old Jeddah airport Kandara', 'مطار جدة القديم الكندرة'],
+              'image_keywords_ar': ['مطار جدة القديم', 'الكندرة'],
+          })
+
+          frames[3].update({
+              'heading': 'نهاية المطار الأول',
+              'text': 'عندما افتتح مطار الملك عبدالعزيز الدولي عام 1981، توقفت رحلات مطار الكندرة القديم في مايو من العام نفسه بعد 29 سنة من افتتاحه. أُزيل المطار لاحقاً، وامتد عمران جدة فوق المنطقة التي كانت تضم المدارج.',
+              'punch': 'انتقلت حركة جدة الجوية من قلب المدينة إلى شمالها.',
+              'subject_kind': 'place_city',
+              'image_keywords': ['Jeddah airport 1981 historic', 'Saudia Boeing 707 Jeddah 1981', 'مطار جدة القديم 1981'],
+              'image_keywords_ar': ['مطار جدة القديم', 'الخطوط السعودية'],
+          })
+
+          frames[5].update({
+              'heading': 'من مدرج ترابي إلى مطار حديث',
+              'text': 'اليوم أصبح مطار الملك عبدالعزيز الدولي بوابة جوية حديثة لجدة في السعودية، مع صالة 1 الحديثة وربط مباشر بقطار الحرمين. خلال عقود قليلة انتقل مطار جدة من مدرج ترابي في الكندرة إلى منظومة نقل حديثة تخدم ملايين المسافرين.',
+              'punch': 'قصة مطار جدة هي قصة مدينة كبرت معه.',
+              'subject_kind': 'place_city',
+              'image_keywords': ['King Abdulaziz International Airport Terminal 1 current 2025', 'Jeddah airport Terminal 1 modern current', 'مطار الملك عبدالعزيز الدولي الصالة 1 حديث'],
+              'image_keywords_ar': ['مطار الملك عبدالعزيز الدولي', 'الصالة 1', 'جدة'],
+          })
+
+          brief['title'] = 'قصة مطار جدة: من الكندرة إلى مطار الملك عبدالعزيز'
+          brief['caption'] = 'من مدرج ترابي في الكندرة إلى مطار حديث يخدم ملايين المسافرين: كيف تطور مطار جدة عبر العقود.'
+          brief['image_prompt'] = 'Historic Kandara Airport in Jeddah, simple dirt runway and early civil aviation scene, authentic archival photograph, no text, no logos'
+          brief['image_queries'] = ['Kandara Airport Jeddah 1940s', 'old Jeddah airport archive']
+          brief['image_queries_ar'] = ['مطار جدة القديم', 'الكندرة']
+
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('targeted Jeddah cache repair applied to frames 1,4,6')
+          PY
+      - name: Render and run global quality gate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          POST_TO_SNAPCHAT: '0'
+          STORY_HUMAN_APPROVED: '0'
+          DRY_RUN: '1'
+          STORY: 'قصة أول مطار في جدة وتطور الطيران المدني'
+          STORY_OPERATION_MODE: 'auto'
+          STORY_ALLOW_REPEAT: '1'
+          STORY_FRAMES: '6'
+          MEDIA_MODE: 'github'
+          THEME: 'light'
+          BRAND: 'ملخص تنفيذي - قصة'
+          FONT_FAMILY: 'Almarai'
+          STORY_MODEL: 'claude-opus-5'
+          ALLOW_GENERATED: '0'
+          ALLOW_STORY_GENERATION: '0'
+          STORY_SUPPRESS_TELEGRAM: '1'
+        run: python guarded_story_publish.py
+      - name: Upload exact corrected review deck
+        uses: actions/upload-artifact@v4
+        with:
+          name: jeddah-corrected-review-${{ github.run_id }}
+          path: |
+            out/*.png
+            out/story-review.json
+          retention-days: 1
+          if-no-files-found: error
