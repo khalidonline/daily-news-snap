@@ -1,4 +1,4 @@
-name: Daily Story to Telegram / manual Snapchat
+name: Daily Story review / manual Snapchat
 
 on:
   push:
@@ -19,7 +19,7 @@ on:
         type: string
         required: false
       ready_story:
-        description: "أو اختر قصة جاهزة للنشر من القائمة"
+        description: "أو اختر قصة جاهزة للمراجعة من القائمة"
         type: choice
         required: true
         options:
@@ -40,11 +40,11 @@ on:
         type: string
         required: false
       dry_run:
-        description: "Render only — don't publish"
+        description: "Render review artifact only"
         type: boolean
-        default: false
+        default: true
       post:
-        description: "Manual only — publish to Snapchat now"
+        description: "Reserved — approval is required before any delivery"
         type: boolean
         default: false
 
@@ -95,23 +95,18 @@ jobs:
       - run: pip install -r requirements.txt
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
 
-      - name: Build and deliver story
+      - name: Build frozen Story review artifact
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          POST_PROVIDER: "bundle"
-          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
-          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          BUNDLE_BASE: ${{ vars.BUNDLE_BASE }}
-          POST_TO_SNAPCHAT: ${{ (github.event_name == 'workflow_dispatch' && inputs.post) && '1' || '0' }}
+          POST_TO_SNAPCHAT: "0"
+          STORY_HUMAN_APPROVED: "0"
           MONTHLY_POST_LIMIT: "145"
           STORY: ${{ inputs.custom_story || inputs.ready_story || '' }}
           STORY_OPERATION_MODE: ${{ inputs.operation_mode || 'auto' }}
           STORY_REPAIR_FRAMES: ${{ inputs.repair_frames || '' }}
           STORY_REGENERATION_NONCE: ${{ inputs.operation_mode == 'regenerate_editorial' && github.run_id || '' }}
-          DRY_RUN: ${{ github.event_name != 'workflow_dispatch' && '1' || (inputs.dry_run && '1' || '') }}
+          DRY_RUN: "1"
           MEDIA_MODE: "github"
           THEME: "light"
           BRAND: "ملخص تنفيذي - قصة"
@@ -126,12 +121,14 @@ jobs:
           ARK_MODEL: ${{ vars.ARK_MODEL }}
         run: python guarded_story_publish.py
 
-      - name: Keep the frames for review
+      - name: Keep exact Story deck for approval
         if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
         uses: actions/upload-artifact@v4
         with:
-          name: story-frames-${{ github.run_id }}
-          path: out/*.png
+          name: story-review-${{ github.run_id }}
+          path: |
+            out/*.png
+            out/story-review.json
           retention-days: 7
           if-no-files-found: ignore
 
