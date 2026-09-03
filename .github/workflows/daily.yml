@@ -109,7 +109,7 @@ jobs:
           MODEL_MAX_USD_PER_RUN: "2"
           NEWS_MAX_PAID_RESPONSES: "2"
           VISION_MAX_PAID_RESPONSES: "50"
-        run: python daily_news_runner.py
+        run: python daily_news_fresh_runner.py
 
       - name: Model cost summary
         if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
