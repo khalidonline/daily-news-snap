@@ -9,6 +9,8 @@ on:
       - "story_focus.py"
       - "story_brief_store.py"
       - "story_editorial_quality.py"
+      - "story_quality_gate.py"
+      - "guarded_story_publish.py"
       - "story_cost_guard.py"
       - "story_editorial_runtime.py"
       - "story_visual_state.py"
@@ -31,6 +33,8 @@ on:
       - "tests/test_story_focus.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
+      - "tests/test_story_quality_gate.py"
+      - "tests/test_story_quality_gate_integration.py"
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
       - "tests/test_story_visual_state.py"
@@ -54,6 +58,8 @@ on:
       - "story_focus.py"
       - "story_brief_store.py"
       - "story_editorial_quality.py"
+      - "story_quality_gate.py"
+      - "guarded_story_publish.py"
       - "story_cost_guard.py"
       - "story_editorial_runtime.py"
       - "story_visual_state.py"
@@ -76,6 +82,8 @@ on:
       - "tests/test_story_focus.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
+      - "tests/test_story_quality_gate.py"
+      - "tests/test_story_quality_gate_integration.py"
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
       - "tests/test_story_visual_state.py"
@@ -114,6 +122,14 @@ jobs:
         run: python -m unittest -v tests/test_story_workflow_choices.py tests/test_story_workflow_choice.py
       - name: Story subject and visual focus regressions
         run: python -m unittest -v tests/test_story_focus.py
+      - name: Global pre-review quality regressions
+        env:
+          ANTHROPIC_API_KEY: ""
+          ARK_API_KEY: ""
+          OPENAI_API_KEY: ""
+          TELEGRAM_TOKEN: ""
+          POST_TO_SNAPCHAT: "0"
+        run: python -m unittest -v tests/test_story_quality_gate.py tests/test_story_quality_gate_integration.py
       - name: Story cost-control regressions
         run: |
           POST_TO_SNAPCHAT=0 python -m unittest \
@@ -133,7 +149,7 @@ jobs:
       - name: Global photo quality regressions
         run: python -m unittest -v tests/test_global_photo_quality.py
       - name: Compile guarded story entrypoint
-        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py story_brief_store.py story_editorial_quality.py story_cost_guard.py story_editorial_runtime.py story_visual_state.py story_notification_state.py story_cost_report.py story_cost_pilot.py city_visual_fallback.py city_visual_v2.py city_visual_v3.py photo_quality.py photo_quality_guard.py preflight_stories.py image_precheck.py news_bot.py news_bot_core.py ready_story_publish.py
+        run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py story_focus.py story_brief_store.py story_editorial_quality.py story_quality_gate.py guarded_story_publish.py story_cost_guard.py story_editorial_runtime.py story_visual_state.py story_notification_state.py story_cost_report.py story_cost_pilot.py city_visual_fallback.py city_visual_v2.py city_visual_v3.py photo_quality.py photo_quality_guard.py preflight_stories.py image_precheck.py news_bot.py news_bot_core.py ready_story_publish.py
       - name: Image precheck self-test
         run: python image_precheck.py --selftest
       - name: Zero-external-API cost-control pilot proof
