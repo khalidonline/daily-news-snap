@@ -1,8 +1,7 @@
 name: Freeze final approved Jeddah deck
 
 on:
-  push:
-    branches: [delivery/jeddah-telegram-final]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -10,125 +9,5 @@ permissions:
 jobs:
   freeze:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: delivery/jeddah-telegram-final
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          cache: pip
-      - run: pip install -r requirements.txt
-
-      - name: Apply approved Jeddah editorial corrections
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          path = Path('state/story_briefs/ccaa65bdbd199406/00fa9bcab2745c310fb53d66a4673d80c234e2b7bc064cf4adedb3d4c858cc19.json')
-          data = json.loads(path.read_text(encoding='utf-8'))
-          brief = data['brief']
-          frames = brief['frames']
-
-          frames[0].update({
-              'heading': 'أول مطار في جدة كان مدرجاً بسيطاً',
-              'text': 'قبل أن يصبح لجدة مطار دولي ضخم، بدأت الحركة الجوية في المدينة بمدرج ترابي ومرافق محدودة في الكندرة. هذه البداية البسيطة كانت النواة الأولى للمطار المدني في جدة.',
-              'punch': '',
-              'subject_kind': 'place_city',
-              'image_keywords': ['Aerial Jeddah Airport 1948', 'Kandara Airport Jeddah 1948', 'مطار جدة القديم 1948'],
-              'image_keywords_ar': ['مطار جدة القديم', 'الكندرة'],
-          })
-
-          frames[3].update({
-              'heading': 'نهاية المطار الأول',
-              'text': 'بعد افتتاح المطار الجديد مباشرة، توقفت رحلات مطار الكندرة القديم في مايو من العام نفسه. ثم أُزيل المطار لاحقاً، وامتد عمران جدة فوق المنطقة التي كانت تضم المدارج.',
-              'punch': 'انتقلت حركة جدة الجوية من قلب المدينة إلى شمالها.',
-              'subject_kind': 'place_city',
-              'image_keywords': ['Jeddah airport 1981 historic', 'Saudia Boeing 707 Jeddah 1981', 'مطار جدة القديم 1981'],
-              'image_keywords_ar': ['مطار جدة القديم', 'الخطوط السعودية'],
-          })
-
-          # Keep frame 5 modern but make it intentionally different from frame 6.
-          frames[4].update({
-              'image_keywords': ['King Abdulaziz International Airport North Terminal 2', 'Jeddah airport North Terminal modern', 'مطار الملك عبدالعزيز الدولي الصالة الشمالية'],
-              'image_keywords_ar': ['مطار الملك عبدالعزيز الدولي', 'الصالة الشمالية', 'جدة'],
-          })
-
-          frames[5].update({
-              'heading': 'من مدرج ترابي إلى مطار حديث',
-              'text': 'اليوم أصبح مطار الملك عبدالعزيز الدولي بوابة جوية حديثة لجدة في السعودية، مع صالة 1 الحديثة وربط مباشر بقطار الحرمين. خلال عقود قليلة انتقل مطار جدة من مدرج ترابي في الكندرة إلى منظومة نقل حديثة تخدم ملايين المسافرين.',
-              'punch': 'قصة مطار جدة هي قصة مدينة كبرت معه.',
-              'subject_kind': 'place_city',
-              'image_keywords': ['King Abdulaziz International Airport Terminal 1 2020', 'Jeddah airport Terminal 1 modern', 'مطار الملك عبدالعزيز الدولي الصالة 1'],
-              'image_keywords_ar': ['مطار الملك عبدالعزيز الدولي', 'الصالة 1', 'جدة'],
-          })
-
-          brief['title'] = 'قصة مطار جدة: من الكندرة إلى مطار الملك عبدالعزيز'
-          brief['caption'] = 'من مدرج ترابي في الكندرة إلى مطار حديث يخدم ملايين المسافرين: كيف تطور مطار جدة عبر العقود.'
-          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          PY
-
-      - name: Pin exact opening and modern final visuals
-        run: |
-          curl -L --fail --retry 2 -o images/targeted-jeddah-airport-1948.jpg \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Aerial_Jeddah_Airport_1948.jpg'
-          curl -L --fail --retry 2 -o images/targeted-jeddah-terminal1-2020.jpg \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/King_Abdulaziz_International_Airport_-_Terminal_1.jpg'
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('story_runtime.py')
-          text = p.read_text(encoding='utf-8')
-          marker = '"قصة أول مطار في جدة وتطور الطيران المدني": (\n'
-          injection = (
-              '"قصة أول مطار في جدة وتطور الطيران المدني": (\n'
-              '        (("أول مطار في جدة",), "targeted-jeddah-airport-1948.jpg"),\n'
-              '        (("من مدرج ترابي إلى مطار حديث",), "targeted-jeddah-terminal1-2020.jpg"),\n'
-          )
-          if marker not in text:
-              raise SystemExit('Jeddah curated mapping marker not found')
-          p.write_text(text.replace(marker, injection, 1), encoding='utf-8')
-          PY
-
-      - name: Render exact final review deck
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          POST_TO_SNAPCHAT: '0'
-          STORY_HUMAN_APPROVED: '0'
-          DRY_RUN: '1'
-          STORY: 'قصة أول مطار في جدة وتطور الطيران المدني'
-          STORY_OPERATION_MODE: 'auto'
-          STORY_ALLOW_REPEAT: '1'
-          STORY_FRAMES: '6'
-          MEDIA_MODE: 'github'
-          THEME: 'light'
-          BRAND: 'ملخص تنفيذي - قصة'
-          FONT_FAMILY: 'Almarai'
-          STORY_MODEL: 'claude-opus-5'
-          ALLOW_GENERATED: '0'
-          ALLOW_STORY_GENERATION: '0'
-          STORY_SUPPRESS_TELEGRAM: '1'
-        run: python guarded_story_publish.py
-
-      - name: Require READY quality
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          m = json.loads(Path('out/story-review.json').read_text(encoding='utf-8'))
-          if m.get('status') != 'READY' or m.get('frame_count') != 6:
-              raise SystemExit(f"final Jeddah deck is not READY: {m}")
-          print('FINAL_JEDDAH_READY', m['deck_hash'])
-          PY
-
-      - name: Upload exact approval artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: story-review-${{ github.run_id }}
-          path: |
-            out/*.png
-            out/story-review.json
-          retention-days: 7
-          if-no-files-found: error
+      - run: echo "Historical freeze workflow retained for audit; final delivery uses the combined approved artifact."
