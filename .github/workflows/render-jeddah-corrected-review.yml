@@ -37,7 +37,7 @@ jobs:
               'text': 'قبل أن يصبح لجدة مطار دولي ضخم، بدأت الحركة الجوية في المدينة بمدرج ترابي ومرافق محدودة في الكندرة. هذه البداية البسيطة كانت النواة الأولى للمطار المدني في جدة.',
               'punch': '',
               'subject_kind': 'place_city',
-              'image_keywords': ['Kandara Airport Jeddah 1940s archive', 'old Jeddah airport Kandara', 'مطار جدة القديم الكندرة'],
+              'image_keywords': ['Aerial Jeddah Airport 1948', 'Kandara Airport Jeddah 1948', 'مطار جدة القديم 1948'],
               'image_keywords_ar': ['مطار جدة القديم', 'الكندرة'],
           })
 
@@ -55,18 +55,40 @@ jobs:
               'text': 'اليوم أصبح مطار الملك عبدالعزيز الدولي بوابة جوية حديثة لجدة في السعودية، مع صالة 1 الحديثة وربط مباشر بقطار الحرمين. خلال عقود قليلة انتقل مطار جدة من مدرج ترابي في الكندرة إلى منظومة نقل حديثة تخدم ملايين المسافرين.',
               'punch': 'قصة مطار جدة هي قصة مدينة كبرت معه.',
               'subject_kind': 'place_city',
-              'image_keywords': ['King Abdulaziz International Airport Terminal 1 current 2025', 'Jeddah airport Terminal 1 modern current', 'مطار الملك عبدالعزيز الدولي الصالة 1 حديث'],
+              'image_keywords': ['King Abdulaziz International Airport Terminal 1 2020', 'Jeddah airport Terminal 1 modern', 'مطار الملك عبدالعزيز الدولي الصالة 1'],
               'image_keywords_ar': ['مطار الملك عبدالعزيز الدولي', 'الصالة 1', 'جدة'],
           })
 
           brief['title'] = 'قصة مطار جدة: من الكندرة إلى مطار الملك عبدالعزيز'
           brief['caption'] = 'من مدرج ترابي في الكندرة إلى مطار حديث يخدم ملايين المسافرين: كيف تطور مطار جدة عبر العقود.'
           brief['image_prompt'] = 'Historic Kandara Airport in Jeddah, simple dirt runway and early civil aviation scene, authentic archival photograph, no text, no logos'
-          brief['image_queries'] = ['Kandara Airport Jeddah 1940s', 'old Jeddah airport archive']
+          brief['image_queries'] = ['Aerial Jeddah Airport 1948', 'Kandara Airport Jeddah 1948']
           brief['image_queries_ar'] = ['مطار جدة القديم', 'الكندرة']
 
           path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           print('targeted Jeddah cache repair applied to frames 1,4,6')
+          PY
+      - name: Fetch exact authentic timeline visuals
+        run: |
+          curl -L --fail --retry 2 -o images/targeted-jeddah-airport-1948.jpg \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Aerial_Jeddah_Airport_1948.jpg'
+          curl -L --fail --retry 2 -o images/targeted-jeddah-terminal1-2020.jpg \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/King_Abdulaziz_International_Airport_-_Terminal_1.jpg'
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('story_runtime.py')
+          text = p.read_text(encoding='utf-8')
+          marker = '"قصة أول مطار في جدة وتطور الطيران المدني": (\n'
+          injection = (
+              '"قصة أول مطار في جدة وتطور الطيران المدني": (\n'
+              '        (("أول مطار في جدة",), "targeted-jeddah-airport-1948.jpg"),\n'
+              '        (("من مدرج ترابي إلى مطار حديث",), "targeted-jeddah-terminal1-2020.jpg"),\n'
+          )
+          if marker not in text:
+              raise SystemExit('Jeddah curated mapping marker not found')
+          text = text.replace(marker, injection, 1)
+          p.write_text(text, encoding='utf-8')
+          print('temporary exact Jeddah frame pins installed for review render')
           PY
       - name: Render and run global quality gate
         env:
@@ -88,6 +110,7 @@ jobs:
           STORY_SUPPRESS_TELEGRAM: '1'
         run: python guarded_story_publish.py
       - name: Upload exact corrected review deck
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jeddah-corrected-review-${{ github.run_id }}
@@ -95,4 +118,4 @@ jobs:
             out/*.png
             out/story-review.json
           retention-days: 1
-          if-no-files-found: error
+          if-no-files-found: ignore
