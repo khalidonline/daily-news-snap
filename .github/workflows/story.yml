@@ -16,6 +16,7 @@ on:
         options:
           # READY_STORY_OPTIONS_START
           - "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
+          - "قصة سكة حديد الرياض الدمام 1951"
           # READY_STORY_OPTIONS_END
       operation_mode:
         description: "Editorial operation mode"
