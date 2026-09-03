@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 
+import daily_news_fresh_runner
 import daily_news_runner
 
 
@@ -34,7 +35,12 @@ class RecentPhotoFallbackTests(unittest.TestCase):
             fetch_loc_photo=none_pair,
             fetch_openverse_photo=none_pair,
             fetch_photo=none_photo,
+            recent_fallback=lambda out_path: str(out_path),
         )
+
+    def install(self, fake):
+        daily_news_runner.install_auto_image_selector(fake)
+        daily_news_fresh_runner.install_recent_photo_fail_closed(fake)
 
     def remember(self, headline, query):
         daily_news_runner.remember_story_contexts({
@@ -51,7 +57,7 @@ class RecentPhotoFallbackTests(unittest.TestCase):
 
     def test_recent_photo_is_not_exposed_as_legacy_fallback(self):
         fake = self.make_module()
-        daily_news_runner.install_auto_image_selector(fake)
+        self.install(fake)
         self.remember("استثمارات المركزي السعودي", "sama")
 
         with tempfile.TemporaryDirectory() as td:
@@ -60,10 +66,11 @@ class RecentPhotoFallbackTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
             self.assertFalse(Path(str(hero) + ".recentkeep").exists())
+            self.assertIsNone(fake.recent_fallback(hero))
 
     def test_recent_fallback_cannot_leak_from_one_story_to_the_next(self):
         fake = self.make_module()
-        daily_news_runner.install_auto_image_selector(fake)
+        self.install(fake)
 
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
@@ -79,6 +86,7 @@ class RecentPhotoFallbackTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
             self.assertFalse(Path(str(hero) + ".recentkeep").exists())
+            self.assertIsNone(fake.recent_fallback(hero))
 
 
 if __name__ == "__main__":
