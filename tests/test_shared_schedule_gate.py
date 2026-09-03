@@ -111,6 +111,7 @@ class SharedScheduleGateTests(unittest.TestCase):
         self.assertIn("notify-failure:", workflow)
         self.assertIn("needs.publish.result != 'success'", workflow)
         self.assertIn("api.telegram.org/bot", workflow)
+        self.assertIn("Verify Topic card was produced", workflow)
 
     def test_story_workflow_accepts_external_slot_and_preserves_repair_branch(self):
         workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
