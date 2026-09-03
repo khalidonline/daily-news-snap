@@ -1,0 +1,129 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "c1f8ea3928a9a6ae53af0bbb30339f08a0142859538e052441b326744e1681c3",
+      "frame_payload": {
+        "heading": "نقود من فضة فقط",
+        "image_keywords": [
+          "Saudi silver riyal",
+          "silver riyal coin"
+        ],
+        "image_keywords_ar": [
+          "الريال الفضي",
+          "الريال السعودي المعدني"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في النصف الأول من القرن الماضي، كانت النقود في السعودية معدناً يُحمل باليد: ريالات مسكوكة من الفضة. لا ورقة نقدية واحدة، ولا جهة مركزية تضبط الصرف. ومع تنامي الدخل من صادرات النفط، صار في البلد مال يكبر ووضع نقدي مضطرب بلا جهاز يمسك زمامه."
+      },
+      "image_source": "state/story_visuals/e62ea6dcbfaa32c6/a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "868528a64e6b75db0c18650f8d7012dcc421ac53e28be4c8d626c75e8a1af96e",
+      "frame_payload": {
+        "heading": "مرسومان أنشآ مؤسسة النقد",
+        "image_keywords": [
+          "SAMA",
+          "Saudi Arabian Monetary Agency"
+        ],
+        "image_keywords_ar": [
+          "مؤسسة النقد",
+          "ساما"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولذلك، في 20 أبريل 1952 صدر مرسومان ملكيان في عهد الملك عبدالعزيز بإنشاء مؤسسة النقد العربي السعودي. مهمتها تنظيم شؤون النقد والإشراف على المصارف وتثبيت قيمة العملة. وبدأت مزاولة أعمالها فعلياً في أكتوبر من السنة نفسها. لكن النقود في أيدي الناس بقيت فضة ثقيلة."
+      },
+      "image_source": "state/story_visuals/e62ea6dcbfaa32c6/a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "8fb5e8fd0b90a24a7b1c76fc2e1bf34c290f1bc9f65d8d4ed2bedf1be7edb707",
+      "frame_payload": {
+        "heading": "ورقة صُنعت لأجل الحجاج",
+        "image_keywords": [
+          "Hajj receipt",
+          "first Saudi banknote"
+        ],
+        "image_keywords_ar": [
+          "إيصالات الحجاج",
+          "أول عملة ورقية"
+        ],
+        "punch": "ثم بدأ تجار مكة يتداولونها بينهم.",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. في 25 يوليو 1953 أصدرت المؤسسة ورقة اسمها «إيصالات الحجاج» من فئة عشرة ريالات. قيمتها مضمونة بما يقابلها من الريالات الفضية، وطُبعت بست لغات ليقرأها الحاج القادم من أي بلد. خمسة ملايين إيصال، ليحمل الحاج ورقة بدل كيس المعدن."
+      },
+      "image_source": "state/story_visuals/e62ea6dcbfaa32c6/a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "d973116aebeea8ae573c962b52f26e05e4cefa9cbbf0d68672a6ccd2fa0c0875",
+      "frame_payload": {
+        "heading": "الطريق إلى عملة رسمية",
+        "image_keywords": [
+          "Saudi riyal banknote 1961",
+          "Saudi riyal note"
+        ],
+        "image_keywords_ar": [
+          "الريال السعودي",
+          "عملة ورقية"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن الطريق إلى عملة ورقية رسمية لم يكن قصيراً. ففي سنوات المؤسسة الأولى مرّت البلاد بأزمة نقدية ومالية، وصدر مرسوم ملكي في نوفمبر 1957 عدّل نظامها. ولم يُطرح أول إصدار نقدي ورقي رسمي إلا في 14 يونيو 1961 — بعد تسع سنوات من التأسيس."
+      },
+      "image_source": "state/story_visuals/e62ea6dcbfaa32c6/a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "4a8e88ab36e582223007862939d197523d3cb9f18efacb44cccc660fe1d80410",
+      "frame_payload": {
+        "heading": "من إيصال إلى احتياطي ضخم",
+        "image_keywords": [
+          "Saudi Central Bank Riyadh",
+          "SAMA headquarters"
+        ],
+        "image_keywords_ar": [
+          "البنك المركزي السعودي",
+          "ساما"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهكذا كبرت المهمة مع البلد. في 2020 صار اسمها البنك المركزي السعودي، مع الاحتفاظ باختصار ساما. وبنهاية 2025 بلغت أصولها الاحتياطية نحو 1.73 تريليون ريال بحسب بياناتها الإحصائية — الجهة نفسها التي بدأت بضمان ورقة قيمتها عشرة ريالات فضية."
+      },
+      "image_source": "state/story_visuals/e62ea6dcbfaa32c6/a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "663363e35cc295daf0d4370191ad79fe73aa8d43190f14bf3ea44713ba8f20bc",
+      "frame_payload": {
+        "heading": "سعر لا يتحرك",
+        "image_keywords": [
+          "Saudi riyal",
+          "Saudi Central Bank"
+        ],
+        "image_keywords_ar": [
+          "الريال",
+          "ربط الريال",
+          "ساما"
+        ],
+        "punch": "المؤسسة التي وُلدت من الاضطراب صارت مرساة الريال.",
+        "subject_kind": "company",
+        "text": "ومنذ 1986 وسعر صرف الريال ثابت عند 3.75 للدولار، وساما هي التي تحافظ عليه."
+      },
+      "image_source": "state/story_visuals/e62ea6dcbfaa32c6/a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_READY",
+  "story": "قصة تأسيس مؤسسة النقد ساما"
+}
