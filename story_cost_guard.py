@@ -25,6 +25,18 @@ class EditorialSpendBlocked(RuntimeError):
     """Raised when policy forbids another paid editorial call."""
 
 
+class AuxModelSpendBlocked(RuntimeError):
+    """Raised before an auxiliary model call exceeds its run ceiling."""
+
+
+_AUX_PRICES = {
+    "claude-haiku-4-5-20251001": (1.0, 5.0),
+    "claude-sonnet-5": (2.0, 10.0),
+    "claude-opus-5": (5.0, 25.0),
+}
+_aux_paid_responses = 0
+
+
 @dataclass(frozen=True)
 class CallReservation:
     story: str
@@ -138,7 +150,11 @@ def reserve_editorial_call(story: str, revision: str, mode: str | OperationMode)
     )
 
 
-def _estimated_usd(input_tokens: int | None, output_tokens: int | None) -> float | None:
+def _estimated_usd(
+    input_tokens: int | None,
+    output_tokens: int | None,
+    web_search_requests: int | None = 0,
+) -> float | None:
     input_price = os.getenv("STORY_MODEL_INPUT_USD_PER_M")
     output_price = os.getenv("STORY_MODEL_OUTPUT_USD_PER_M")
     if input_price in (None, "") or output_price in (None, ""):
@@ -150,7 +166,12 @@ def _estimated_usd(input_tokens: int | None, output_tokens: int | None) -> float
         out_tokens = int(output_tokens or 0)
     except (TypeError, ValueError):
         return None
-    return round((in_tokens / 1_000_000) * in_rate + (out_tokens / 1_000_000) * out_rate, 6)
+    return round(
+        (in_tokens / 1_000_000) * in_rate
+        + (out_tokens / 1_000_000) * out_rate
+        + int(web_search_requests or 0) * 0.01,
+        6,
+    )
 
 
 def record_model_result(
@@ -161,6 +182,7 @@ def record_model_result(
     input_tokens: int | None,
     output_tokens: int | None,
     status: str,
+    web_search_requests: int | None = 0,
 ) -> None:
     _append_row({
         "timestamp": _utcnow(),
@@ -174,12 +196,74 @@ def record_model_result(
         "message_id": message_id,
         "input_tokens": int(input_tokens or 0),
         "output_tokens": int(output_tokens or 0),
-        "estimated_usd": _estimated_usd(input_tokens, output_tokens),
+        "web_search_requests": int(web_search_requests or 0),
+        "estimated_usd": _estimated_usd(
+            input_tokens, output_tokens, web_search_requests
+        ),
         "status": status,
         "cache_hit": False,
         "run_id": reservation.run_id,
         "run_attempt": reservation.run_attempt,
     })
+
+
+def require_aux_model_capacity() -> None:
+    limit = int(os.getenv("STORY_AUX_MAX_PAID_RESPONSES", "50") or "50")
+    if limit < 1 or _aux_paid_responses >= limit:
+        raise AuxModelSpendBlocked(
+            f"auxiliary paid-response ceiling reached: {_aux_paid_responses}/{limit}"
+        )
+
+
+def _aux_estimated_usd(model: str, usage: dict[str, Any]) -> float | None:
+    rates = _AUX_PRICES.get(str(model or ""))
+    if rates is None:
+        return None
+    server = usage.get("server_tool_use") or {}
+    searches = int(server.get("web_search_requests") or 0) \
+        if isinstance(server, dict) else 0
+    return round(
+        int(usage.get("input_tokens") or 0) * rates[0] / 1_000_000
+        + int(usage.get("output_tokens") or 0) * rates[1] / 1_000_000
+        + searches * 0.01,
+        6,
+    )
+
+
+def record_aux_model_result(
+    *, purpose: str, model: str, response: dict[str, Any]
+) -> dict[str, Any]:
+    usage = response.get("usage") or {}
+    if not isinstance(usage, dict):
+        usage = {}
+    server = usage.get("server_tool_use") or {}
+    searches = int(server.get("web_search_requests") or 0) \
+        if isinstance(server, dict) else 0
+    run_id, run_attempt = _run_identity()
+    row = {
+        "timestamp": _utcnow(),
+        "event": "aux_model_result",
+        "provider": "anthropic",
+        "purpose": str(purpose),
+        "story": os.getenv("STORY_USAGE_CONTEXT", "").strip(),
+        "model": str(model),
+        "message_id": response.get("id"),
+        "input_tokens": int(usage.get("input_tokens") or 0),
+        "output_tokens": int(usage.get("output_tokens") or 0),
+        "web_search_requests": searches,
+        "estimated_usd": _aux_estimated_usd(model, usage),
+        "run_id": run_id,
+        "run_attempt": run_attempt,
+    }
+    _append_row(row)
+    global _aux_paid_responses
+    _aux_paid_responses += 1
+    return row
+
+
+def reset_aux_run_state() -> None:
+    global _aux_paid_responses
+    _aux_paid_responses = 0
 
 
 def record_cache_hit(

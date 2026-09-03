@@ -69,7 +69,11 @@ class FakeHttpStoryBot(FakeStoryBot):
             self.http_successes += 1
             return _FakeResponse({
                 "id": f"msg_http_{self.http_successes}",
-                "usage": {"input_tokens": 20, "output_tokens": 10},
+                "usage": {
+                    "input_tokens": 20,
+                    "output_tokens": 10,
+                    "server_tool_use": {"web_search_requests": 2},
+                },
                 "content": [],
             })
 
@@ -186,6 +190,7 @@ class EditorialRuntimeTests(unittest.TestCase):
         model_rows = [row for row in rows if row.get("event") == "model_result"]
         self.assertEqual(1, len(model_rows))
         self.assertEqual("msg_http_1", model_rows[0]["message_id"])
+        self.assertEqual(2, model_rows[0]["web_search_requests"])
 
     def test_revision_prompt_receives_the_active_story(self):
         sb = FakeStoryBot()

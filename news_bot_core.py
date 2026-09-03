@@ -26,6 +26,8 @@ from xml.etree import ElementTree as ET
 from PIL import Image, ImageDraw, ImageFont, features
 from fontTools.ttLib import TTFont
 
+import story_cost_guard as _story_cost
+
 # --------------------------------------------------------------------------
 # Config
 # --------------------------------------------------------------------------
@@ -3297,6 +3299,7 @@ def photo_shows(photo_path, context):
             _gate_cache[cache_key] = "no"
         return "no"
     try:
+        _story_cost.require_aux_model_capacity()
         payload = {
             "model": VISION_MODEL,
             "max_tokens": 150,
@@ -3316,8 +3319,14 @@ def photo_shows(photo_path, context):
                      "anthropic-version": "2023-06-01"})
         with urllib.request.urlopen(req, timeout=60) as resp:
             data = json.loads(resp.read())
+        _story_cost.record_aux_model_result(
+            purpose="vision_photo", model=VISION_MODEL, response=data
+        )
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text").strip()
+    except _story_cost.AuxModelSpendBlocked as exc:
+        print(f"  ! vision gate stopped by cost guard ({exc}) — rejecting photo")
+        return "no"
     except Exception as exc:
         print(f"  ! vision gate unavailable ({exc}) — letting the photo through")
         return "yes"
@@ -3429,8 +3438,12 @@ def generated_image_clean(photo_path):
             headers={"content-type": "application/json",
                      "x-api-key": ANTHROPIC_API_KEY,
                      "anthropic-version": "2023-06-01"})
+        _story_cost.require_aux_model_capacity()
         with urllib.request.urlopen(req, timeout=60) as resp:
             data = json.loads(resp.read())
+        _story_cost.record_aux_model_result(
+            purpose="vision_generated", model=VISION_MODEL, response=data
+        )
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text").strip()
     except Exception as exc:

@@ -14,6 +14,7 @@ class StoryCostReportTests(unittest.TestCase):
             notifications = root / "notifications.jsonl"
             rows = [
                 {"timestamp": "2026-08-30T01:00:00+00:00", "event": "model_result", "story": "A", "revision": "r1", "message_id": "msg1", "estimated_usd": 2.5, "mode": "auto"},
+                {"timestamp": "2026-08-30T01:00:30+00:00", "event": "aux_model_result", "story": "A", "purpose": "vision_photo", "estimated_usd": 0.1},
                 {"timestamp": "2026-08-30T01:01:00+00:00", "event": "cache_hit", "story": "A", "revision": "r1", "mode": "auto"},
                 {"timestamp": "2026-08-30T01:02:00+00:00", "event": "cache_hit", "story": "A", "revision": "r1", "mode": "visual_only"},
                 {"timestamp": "2026-08-30T01:03:00+00:00", "event": "call_block", "story": "A", "revision": "r1", "mode": "auto"},
@@ -31,9 +32,11 @@ class StoryCostReportTests(unittest.TestCase):
             report = scr.summarize(usage, notifications)
             self.assertEqual(2, report["stories"])
             self.assertEqual(2, report["paid_editorial_calls"])
+            self.assertEqual(3, report["paid_model_calls"])
+            self.assertEqual(1, report["vision_model_calls"])
             self.assertEqual(2, report["cache_hits"])
             self.assertEqual(2, report["visual_only_runs"])
-            self.assertEqual(5.5, report["estimated_usd"])
+            self.assertEqual(5.6, report["estimated_usd"])
             self.assertEqual(1, report["second_call_blocks"])
             self.assertEqual(1, report["ready"])
             self.assertEqual(0, report["review"])

@@ -13,12 +13,14 @@ class CostGuardTests(unittest.TestCase):
         self.saved = {key: os.environ.get(key) for key in (
             "STORY_COST_STATE_ROOT", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT",
             "STORY_REGENERATION_NONCE", "STORY_MODEL_INPUT_USD_PER_M",
-            "STORY_MODEL_OUTPUT_USD_PER_M",
+            "STORY_MODEL_OUTPUT_USD_PER_M", "STORY_USAGE_CONTEXT",
+            "STORY_AUX_MAX_PAID_RESPONSES",
         )}
         os.environ["STORY_COST_STATE_ROOT"] = self.tmp.name
         for key in self.saved:
             if key != "STORY_COST_STATE_ROOT":
                 os.environ.pop(key, None)
+        scg.reset_aux_run_state()
 
     def tearDown(self):
         for key, value in self.saved.items():
@@ -27,6 +29,7 @@ class CostGuardTests(unittest.TestCase):
             else:
                 os.environ[key] = value
         self.tmp.cleanup()
+        scg.reset_aux_run_state()
 
     def test_visual_only_forbids_paid_call(self):
         with self.assertRaises(scg.EditorialSpendBlocked):
@@ -72,6 +75,33 @@ class CostGuardTests(unittest.TestCase):
         )
         row = json.loads(scg.usage_ledger_path().read_text(encoding="utf-8").splitlines()[-1])
         self.assertEqual(20.0, row["estimated_usd"])
+
+    def test_aux_vision_usage_is_priced_and_labeled(self):
+        os.environ["STORY_USAGE_CONTEXT"] = "قصة اختبار"
+        row = scg.record_aux_model_result(
+            purpose="vision_photo",
+            model="claude-haiku-4-5-20251001",
+            response={
+                "id": "vision_1",
+                "usage": {"input_tokens": 300, "output_tokens": 10},
+            },
+        )
+
+        self.assertEqual("aux_model_result", row["event"])
+        self.assertEqual("قصة اختبار", row["story"])
+        self.assertEqual("vision_photo", row["purpose"])
+        self.assertEqual(0.00035, row["estimated_usd"])
+
+    def test_aux_response_ceiling_blocks_before_an_extra_call(self):
+        os.environ["STORY_AUX_MAX_PAID_RESPONSES"] = "1"
+        scg.require_aux_model_capacity()
+        scg.record_aux_model_result(
+            purpose="vision_photo",
+            model="claude-haiku-4-5-20251001",
+            response={"usage": {}},
+        )
+        with self.assertRaises(scg.AuxModelSpendBlocked):
+            scg.require_aux_model_capacity()
 
     def test_regeneration_requires_explicit_nonce_and_is_separately_auditable(self):
         with self.assertRaises(scg.EditorialSpendBlocked):

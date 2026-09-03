@@ -65,6 +65,7 @@ def _record_result(sb: Any, reservation: scg.CallReservation, status: str) -> No
         message_id=usage.get("message_id"),
         input_tokens=usage.get("input_tokens"),
         output_tokens=usage.get("output_tokens"),
+        web_search_requests=usage.get("web_search_requests"),
         status=status,
     )
 
@@ -100,6 +101,11 @@ class _CapturedResponse:
                 "message_id": payload.get("id"),
                 "input_tokens": int(usage.get("input_tokens") or 0),
                 "output_tokens": int(usage.get("output_tokens") or 0),
+                "web_search_requests": int(
+                    (usage.get("server_tool_use") or {}).get(
+                        "web_search_requests"
+                    ) or 0
+                ),
             }
         except (TypeError, ValueError, json.JSONDecodeError):
             pass

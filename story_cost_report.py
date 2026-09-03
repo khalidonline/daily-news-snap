@@ -59,7 +59,9 @@ def summarize(
     notifications = [row for row in notifications if not allowed or str(row.get("story")) in allowed]
 
     stories = {str(row.get("story")) for row in usage + notifications if row.get("story")}
-    paid = [row for row in usage if row.get("event") == "model_result"]
+    editorial = [row for row in usage if row.get("event") == "model_result"]
+    auxiliary = [row for row in usage if row.get("event") == "aux_model_result"]
+    paid = editorial + auxiliary
     cache_hits = sum(row.get("event") == "cache_hit" for row in usage)
     visual_only = sum(str(row.get("mode") or "") == "visual_only" for row in usage)
     blocks = sum(row.get("event") == "call_block" for row in usage)
@@ -80,7 +82,12 @@ def summarize(
     statuses = [status for _stamp, status in latest_state.values()]
     return {
         "stories": len(stories),
-        "paid_editorial_calls": len(paid),
+        "paid_editorial_calls": len(editorial),
+        "paid_model_calls": len(paid),
+        "vision_model_calls": sum(
+            str(row.get("purpose") or "").startswith("vision")
+            for row in auxiliary
+        ),
         "cache_hits": int(cache_hits),
         "visual_only_runs": int(visual_only),
         "estimated_usd": estimated,
@@ -93,7 +100,8 @@ def summarize(
 
 def _print(report: dict) -> None:
     for key in (
-        "stories", "paid_editorial_calls", "cache_hits", "visual_only_runs",
+        "stories", "paid_editorial_calls", "paid_model_calls",
+        "vision_model_calls", "cache_hits", "visual_only_runs",
         "estimated_usd", "second_call_blocks", "ready", "review", "blocked",
     ):
         print(f"{key}: {report[key]}")

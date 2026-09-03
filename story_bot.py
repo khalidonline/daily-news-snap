@@ -1078,6 +1078,7 @@ def pick_story(exclude=()):
             story = choose_story(exclude=tried)
         if not story:
             break
+        os.environ["STORY_USAGE_CONTEXT"] = story
         name = person_name(story)
         if not name:
             return story, misses
@@ -2318,6 +2319,7 @@ def main():
     photos = None
     failed_this_run = []
     for attempt in range(3):
+        os.environ["STORY_USAGE_CONTEXT"] = story
         print(f"1/3 researching: {story}")
         try:
             brief = research(story)
