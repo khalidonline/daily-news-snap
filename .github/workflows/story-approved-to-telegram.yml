@@ -1,0 +1,86 @@
+name: Approved Story to Telegram
+
+on:
+  push:
+    paths:
+      - "scheduler/approvals/story.txt"
+  workflow_dispatch:
+    inputs:
+      review_run_id:
+        description: "Story review workflow run ID to approve"
+        type: string
+        required: true
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: approved-story-to-telegram
+  cancel-in-progress: false
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout approval pointer from main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Resolve approved Story run
+        env:
+          INPUT_RUN_ID: ${{ inputs.review_run_id || '' }}
+        run: |
+          RUN_ID="$INPUT_RUN_ID"
+          if [ -z "$RUN_ID" ] && [ -f scheduler/approvals/story.txt ]; then
+            RUN_ID="$(tr -d '[:space:]' < scheduler/approvals/story.txt)"
+          fi
+          if [[ "$RUN_ID" =~ ^[0-9]+$ ]] && [ "$RUN_ID" != "0" ]; then
+            echo "APPROVED_STORY_RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
+            echo "HAS_APPROVED_STORY=1" >> "$GITHUB_ENV"
+          else
+            echo "HAS_APPROVED_STORY=0" >> "$GITHUB_ENV"
+            echo "No numeric Story approval pointer; nothing to deliver."
+          fi
+
+      - name: Checkout Story production code
+        if: ${{ env.HAS_APPROVED_STORY == '1' }}
+        uses: actions/checkout@v4
+        with:
+          ref: repair/all-story-visuals-2026-08-29
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        if: ${{ env.HAS_APPROVED_STORY == '1' }}
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+        if: ${{ env.HAS_APPROVED_STORY == '1' }}
+
+      - name: Download exact approved Story artifact
+        if: ${{ env.HAS_APPROVED_STORY == '1' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf approved_story
+          mkdir -p approved_story
+          gh run download "$APPROVED_STORY_RUN_ID" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name "story-review-$APPROVED_STORY_RUN_ID" \
+            --dir approved_story
+          test -f approved_story/story-review.json
+
+      - name: Verify frozen deck and send to Telegram
+        if: ${{ env.HAS_APPROVED_STORY == '1' }}
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_TO_SNAPCHAT: "0"
+          DRY_RUN: "0"
+        run: python send_approved_story.py approved_story/story-review.json
