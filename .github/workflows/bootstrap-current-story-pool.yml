@@ -45,6 +45,7 @@ jobs:
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
         run: |
+          # Fresh manual dry-run trigger: 2026-09-03 latest gate code.
           # Seed only the strongest repaired candidates. Broader pool growth can
           # happen incrementally; daily auto-selection will never use an
           # unvalidated story.
