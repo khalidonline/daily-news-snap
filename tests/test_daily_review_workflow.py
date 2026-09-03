@@ -48,7 +48,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn("DRY_RUN: ${{ inputs.dry_run && '1' || '' }}", self.workflow)
         self.assertIn('REMEMBER_DAYS: "3"', self.workflow)
         self.assertIn('LOOKBACK_HOURS: "48"', self.workflow)
-        self.assertIn("run: python daily_news_runner.py", self.workflow)
+        self.assertIn("run: python daily_news_fresh_runner.py", self.workflow)
 
     def test_manual_post_remains_explicit_opt_in(self):
         self.assertIn("post:", self.workflow)

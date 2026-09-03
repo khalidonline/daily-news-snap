@@ -6,10 +6,12 @@ on:
       - "news_editorial.py"
       - "news_editorial_prompt.txt"
       - "daily_news_runner.py"
+      - "daily_news_fresh_runner.py"
       - "daily_slot_scheduler.py"
       - "shared_schedule_gate.py"
       - "tests/test_news_editorial.py"
       - "tests/test_auto_image_selector.py"
+      - "tests/test_photo_reuse_fallback.py"
       - "tests/test_news_feed_ingestion.py"
       - "tests/test_news_scope_edges.py"
       - "tests/test_post_model_scope.py"
@@ -30,10 +32,12 @@ on:
       - "news_editorial.py"
       - "news_editorial_prompt.txt"
       - "daily_news_runner.py"
+      - "daily_news_fresh_runner.py"
       - "daily_slot_scheduler.py"
       - "shared_schedule_gate.py"
       - "tests/test_news_editorial.py"
       - "tests/test_auto_image_selector.py"
+      - "tests/test_photo_reuse_fallback.py"
       - "tests/test_news_feed_ingestion.py"
       - "tests/test_news_scope_edges.py"
       - "tests/test_post_model_scope.py"
@@ -63,7 +67,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run Saudi Snapchat editorial regressions
-        # Includes source identity, legacy dedupe, Arabic clitics, rolling sports balance, schedule recovery, and legacy-match precision.
+        # Includes source identity, legacy dedupe, Arabic clitics, rolling sports balance, schedule recovery, visual freshness, and legacy-match precision.
         run: |
-          python -m unittest tests.test_news_editorial tests.test_auto_image_selector tests.test_news_feed_ingestion tests.test_news_scope_edges tests.test_post_model_scope tests.test_daily_review_workflow tests.test_daily_slot_scheduler tests.test_shared_schedule_gate tests.test_health_scope_live tests.test_daily_source_dedupe tests.test_daily_source_dedupe_clitics tests.test_daily_source_dedupe_precision tests.test_daily_sports_balance -v
-          python -m py_compile news_editorial.py daily_news_runner.py daily_slot_scheduler.py shared_schedule_gate.py
+          python -m unittest tests.test_news_editorial tests.test_auto_image_selector tests.test_photo_reuse_fallback tests.test_news_feed_ingestion tests.test_news_scope_edges tests.test_post_model_scope tests.test_daily_review_workflow tests.test_daily_slot_scheduler tests.test_shared_schedule_gate tests.test_health_scope_live tests.test_daily_source_dedupe tests.test_daily_source_dedupe_clitics tests.test_daily_source_dedupe_precision tests.test_daily_sports_balance -v
+          python -m py_compile news_editorial.py daily_news_runner.py daily_news_fresh_runner.py daily_slot_scheduler.py shared_schedule_gate.py
