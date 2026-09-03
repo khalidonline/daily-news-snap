@@ -37,3 +37,4 @@ jobs:
           tests.test_nearest_story_repairs
           tests.test_story_review_gate
           tests.test_story_quality_gate
+          tests.test_story_quality_gate_integration
