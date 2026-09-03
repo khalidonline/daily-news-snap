@@ -122,7 +122,20 @@ jobs:
           IMAGE_SOURCE: "auto"
           POINTS: "3"
           MAX_SEARCHES: "6"
+          MODEL_BOT: "topic"
+          MODEL_USAGE_PATH: "out/model_usage.jsonl"
+          MODEL_MAX_USD_PER_RUN: "3"
+          TOPIC_SELECT_MAX_PAID_RESPONSES: "1"
+          TOPIC_MAX_PAID_RESPONSES: "3"
+          VISION_MAX_PAID_RESPONSES: "30"
+          IMAGE_GEN_MAX_PAID_RESPONSES: "2"
+          ARK_IMAGE_USD_PER_CALL: ${{ vars.ARK_IMAGE_USD_PER_CALL }}
+          FAL_IMAGE_USD_PER_CALL: ${{ vars.FAL_IMAGE_USD_PER_CALL }}
         run: python topic_snapchat.py
+
+      - name: Model cost summary
+        if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
+        run: python model_usage.py summarize --path out/model_usage.jsonl >> "$GITHUB_STEP_SUMMARY"
 
       - name: Mark Topic slot complete
         if: ${{ success() && env.RUN_SCHEDULED_BOT != '0' && env.SCHEDULE_SLOT_ID != '' }}
@@ -140,6 +153,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: topic-card
-          path: out/*.png
+          path: |
+            out/*.png
+            out/model_usage.jsonl
           retention-days: 7
           if-no-files-found: ignore

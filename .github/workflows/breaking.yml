@@ -86,13 +86,25 @@ jobs:
           LOOKBACK_HOURS: "10"
           REMEMBER_DAYS: "3"
           WATCH_MODEL: ${{ vars.WATCH_MODEL }}
+          MODEL_BOT: "breaking"
+          MODEL_USAGE_PATH: "out/model_usage.jsonl"
+          MODEL_MAX_USD_PER_RUN: "1"
+          BREAKING_MAX_PAID_RESPONSES: "1"
+          NEWS_MAX_PAID_RESPONSES: "2"
+          VISION_MAX_PAID_RESPONSES: "30"
         run: python breaking_watch_entry.py
+
+      - name: Model cost summary
+        if: always()
+        run: python model_usage.py summarize --path out/model_usage.jsonl >> "$GITHUB_STEP_SUMMARY"
 
       - name: Keep the card for review
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: breaking-card-${{ github.run_id }}
-          path: out/*.png
+          path: |
+            out/*.png
+            out/model_usage.jsonl
           retention-days: 7
           if-no-files-found: ignore

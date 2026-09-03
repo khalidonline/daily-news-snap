@@ -13,6 +13,7 @@ from pathlib import Path
 from PIL import Image
 
 import news_bot
+import model_usage as model_meter
 
 BREAKING_VISUAL_EXIT = 42
 
@@ -77,8 +78,21 @@ def _strict_vision_verdict(bot, photo_path, context):
         },
     )
     try:
+        model_meter.require_response_capacity(
+            "vision_gate", getattr(bot, "VISION_MAX_PAID_RESPONSES", 50)
+        )
+        max_run_cost = float(getattr(bot, "MODEL_MAX_USD_PER_RUN", 0) or 0)
+        if max_run_cost > 0:
+            model_meter.require_run_cost_capacity(max_run_cost)
         with urllib.request.urlopen(req, timeout=60) as resp:
             data = json.loads(resp.read())
+        model_meter.note_successful_response("vision_gate")
+        model_meter.record_anthropic_response(
+            bot="breaking",
+            purpose="vision_strict",
+            model=payload["model"],
+            response=data,
+        )
         text = "".join(
             block.get("text", "") for block in data.get("content", [])
             if block.get("type") == "text"

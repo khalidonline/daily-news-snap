@@ -112,6 +112,9 @@ jobs:
           BRAND: "ملخص تنفيذي - قصة"
           FONT_FAMILY: "Almarai"
           STORY_MODEL: "claude-opus-5"
+          STORY_MODEL_INPUT_USD_PER_M: "5"
+          STORY_MODEL_OUTPUT_USD_PER_M: "25"
+          STORY_AUX_MAX_PAID_RESPONSES: "50"
           STORY_FRAMES: "6"
           ALLOW_GENERATED: "0"
           ALLOW_STORY_GENERATION: "0"
@@ -121,6 +124,10 @@ jobs:
           ARK_MODEL: ${{ vars.ARK_MODEL }}
         run: python guarded_story_publish.py
 
+      - name: Story cost summary
+        if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
+        run: python story_cost_report.py --last 1 >> "$GITHUB_STEP_SUMMARY"
+
       - name: Keep exact Story deck for approval
         if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
         uses: actions/upload-artifact@v4
@@ -129,6 +136,7 @@ jobs:
           path: |
             out/*.png
             out/story-review.json
+            state/model_usage.jsonl
           retention-days: 7
           if-no-files-found: ignore
 

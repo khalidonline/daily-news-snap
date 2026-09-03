@@ -13,6 +13,7 @@ import urllib.request
 import safe_publish_cards as review
 
 REVIEW_PHOTO_STANDARD = 4
+MAX_BATCH_STORIES = 3
 JACK_BOGLE = "Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير"
 
 REPAIRED_STORIES = [
@@ -98,10 +99,16 @@ def send_summary(text):
         raise SystemExit("Telegram did not confirm batch summary")
 
 
-def run_batch(stories=None, already_ready=None):
+def run_batch(stories=None, already_ready=None, max_stories=None):
     stories = list(stories if stories is not None else REPAIRED_STORIES)
     already_ready = set(already_ready if already_ready is not None else {JACK_BOGLE})
+    requested = MAX_BATCH_STORIES if max_stories is None else int(max_stories)
+    if requested < 1 or requested > MAX_BATCH_STORIES:
+        raise SystemExit(
+            f"paid batch maximum is {MAX_BATCH_STORIES} stories per run"
+        )
     targets = [story for story in stories if story not in already_ready]
+    targets = targets[:requested]
     results = []
     for index, story in enumerate(targets, 1):
         print(f"[{index}/{len(targets)}] validating {story}")
@@ -113,7 +120,12 @@ def run_batch(stories=None, already_ready=None):
 
 
 def main():
-    run_batch(remaining_repaired_stories(), already_ready=set())
+    requested = int(os.getenv("BATCH_STORIES", "").strip() or MAX_BATCH_STORIES)
+    run_batch(
+        remaining_repaired_stories(),
+        already_ready=set(),
+        max_stories=requested,
+    )
 
 
 if __name__ == "__main__":

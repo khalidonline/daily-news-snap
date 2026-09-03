@@ -26,6 +26,8 @@ from xml.etree import ElementTree as ET
 from PIL import Image, ImageDraw, ImageFont, features
 from fontTools.ttLib import TTFont
 
+import model_usage as model_meter
+
 # --------------------------------------------------------------------------
 # Config
 # --------------------------------------------------------------------------
@@ -69,6 +71,18 @@ def _clean_model_id(raw, fallback):
 
 CLAUDE_MODEL = _clean_model_id(os.getenv("CLAUDE_MODEL"), "claude-sonnet-5")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
+NEWS_MAX_PAID_RESPONSES = int(
+    os.getenv("NEWS_MAX_PAID_RESPONSES", "").strip() or "2"
+)
+MODEL_MAX_USD_PER_RUN = float(
+    os.getenv("MODEL_MAX_USD_PER_RUN", "").strip() or "0"
+)
+VISION_MAX_PAID_RESPONSES = int(
+    os.getenv("VISION_MAX_PAID_RESPONSES", "").strip() or "50"
+)
+IMAGE_GEN_MAX_PAID_RESPONSES = int(
+    os.getenv("IMAGE_GEN_MAX_PAID_RESPONSES", "").strip() or "2"
+)
 AYRSHARE_API_KEY = os.getenv("AYRSHARE_API_KEY", "").strip()
 
 # which service actually publishes to Snapchat: bundle | ayrshare | zernio
@@ -1126,6 +1140,11 @@ def summarize(items, already_posted=(), pinned=""):
         # HTTPError, so it escaped the handler below and killed the run
         # before a card had been built.
         timeout = min(360, max(180, budget // 45))
+        model_meter.require_response_capacity(
+            "news_editorial", NEWS_MAX_PAID_RESPONSES
+        )
+        if MODEL_MAX_USD_PER_RUN > 0:
+            model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 data = json.loads(resp.read())
@@ -1146,6 +1165,14 @@ def summarize(items, already_posted=(), pinned=""):
                       f"({attempt + 1}/3)")
                 continue
             raise SystemExit(f"Claude unreachable after 4 attempts: {exc}")
+
+        model_meter.record_anthropic_response(
+            bot="news",
+            purpose="editorial",
+            model=CLAUDE_MODEL,
+            response=data,
+        )
+        model_meter.note_successful_response("news_editorial")
 
         if data.get("stop_reason") == "max_tokens":
             if budget < 32000:
@@ -3297,6 +3324,11 @@ def photo_shows(photo_path, context):
             _gate_cache[cache_key] = "no"
         return "no"
     try:
+        model_meter.require_response_capacity(
+            "vision_gate", VISION_MAX_PAID_RESPONSES
+        )
+        if MODEL_MAX_USD_PER_RUN > 0:
+            model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
         payload = {
             "model": VISION_MODEL,
             "max_tokens": 150,
@@ -3316,8 +3348,18 @@ def photo_shows(photo_path, context):
                      "anthropic-version": "2023-06-01"})
         with urllib.request.urlopen(req, timeout=60) as resp:
             data = json.loads(resp.read())
+        model_meter.note_successful_response("vision_gate")
+        model_meter.record_anthropic_response(
+            bot=os.getenv("MODEL_BOT", "shared"),
+            purpose="vision_photo",
+            model=VISION_MODEL,
+            response=data,
+        )
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text").strip()
+    except model_meter.ModelBudgetExceeded as exc:
+        print(f"  ! vision gate stopped by cost guard ({exc}) — rejecting photo")
+        return "no"
     except Exception as exc:
         print(f"  ! vision gate unavailable ({exc}) — letting the photo through")
         return "yes"
@@ -3429,8 +3471,20 @@ def generated_image_clean(photo_path):
             headers={"content-type": "application/json",
                      "x-api-key": ANTHROPIC_API_KEY,
                      "anthropic-version": "2023-06-01"})
+        model_meter.require_response_capacity(
+            "vision_gate", VISION_MAX_PAID_RESPONSES
+        )
+        if MODEL_MAX_USD_PER_RUN > 0:
+            model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
         with urllib.request.urlopen(req, timeout=60) as resp:
             data = json.loads(resp.read())
+        model_meter.note_successful_response("vision_gate")
+        model_meter.record_anthropic_response(
+            bot=os.getenv("MODEL_BOT", "shared"),
+            purpose="vision_generated",
+            model=VISION_MODEL,
+            response=data,
+        )
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text").strip()
     except Exception as exc:
@@ -3495,8 +3549,24 @@ def fetch_generated_photo(prompt, out_path):
         req = urllib.request.Request(url, data=json.dumps(pay).encode(),
                                      headers=headers)
         try:
+            model_meter.require_response_capacity(
+                "image_generation", IMAGE_GEN_MAX_PAID_RESPONSES
+            )
+            if MODEL_MAX_USD_PER_RUN > 0:
+                model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
             with urllib.request.urlopen(req, timeout=180) as resp:
                 data = json.loads(resp.read())
+            model_meter.note_successful_response("image_generation")
+            price_key = "FAL_IMAGE_USD_PER_CALL" if IMAGE_GEN == "fal" \
+                else "ARK_IMAGE_USD_PER_CALL"
+            raw_price = os.getenv(price_key, "").strip()
+            model_meter.record_external_call(
+                provider="fal" if IMAGE_GEN == "fal" else "byteplus",
+                bot=os.getenv("MODEL_BOT", "topic"),
+                purpose="image_generation",
+                model=FAL_MODEL if IMAGE_GEN == "fal" else ARK_MODEL,
+                estimated_usd=float(raw_price) if raw_price else None,
+            )
         except urllib.error.HTTPError as exc:
             body = exc.read().decode()[:250]
             print(f"  ! {IMAGE_GEN} {exc.code}: {body}")

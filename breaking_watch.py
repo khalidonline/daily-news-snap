@@ -29,6 +29,8 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
+import model_usage as model_meter
+
 try:
     from news_bot import (
         ANTHROPIC_API_KEY, DRY_RUN, commit_and_push, ksa_stamp, notify,
@@ -48,6 +50,12 @@ WATCH_START_H, WATCH_END_H = 8.0, 23.0
 WATCH_MODEL = os.getenv("WATCH_MODEL", "").strip() or "claude-haiku-4-5-20251001"
 WATCH_MAX_TOKENS = int(os.getenv("WATCH_MAX_TOKENS", "").strip() or "1200")
 WATCH_MAX_SEARCHES = int(os.getenv("WATCH_MAX_SEARCHES", "").strip() or "2")
+BREAKING_MAX_PAID_RESPONSES = int(
+    os.getenv("BREAKING_MAX_PAID_RESPONSES", "").strip() or "1"
+)
+MODEL_MAX_USD_PER_RUN = float(
+    os.getenv("MODEL_MAX_USD_PER_RUN", "").strip() or "0"
+)
 
 # Feed-diff pre-filter: RSS/network reads are cheap; model calls and web
 # searches are not. Core Saudi feeds may fail open into classification, while
@@ -478,10 +486,28 @@ def classify(now, fresh_titles=None):
     # a 529 at the wrong minute used to become a silent "not breaking"
     # for the whole cycle — transient failures get three attempts before
     # the quiet verdict (the 🔴 line still reports a final failure)
+    paid_responses = 0
     for attempt in range(3):
+        if paid_responses >= BREAKING_MAX_PAID_RESPONSES:
+            print("  ! classifier stopped by paid-response ceiling "
+                  f"({paid_responses}/{BREAKING_MAX_PAID_RESPONSES})")
+            return None
+        try:
+            if MODEL_MAX_USD_PER_RUN > 0:
+                model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
+        except model_meter.ModelBudgetExceeded as exc:
+            print(f"  ! classifier stopped by cost guard ({exc})")
+            return None
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 data = json.loads(resp.read())
+            paid_responses += 1
+            model_meter.record_anthropic_response(
+                bot="breaking",
+                purpose="classifier",
+                model=WATCH_MODEL,
+                response=data,
+            )
             usage = data.get("usage") or {}
             if usage:
                 print("  classifier usage:",
@@ -489,6 +515,10 @@ def classify(now, fresh_titles=None):
             text = "".join(b.get("text", "") for b in data.get("content", [])
                            if b.get("type") == "text").strip()
             return _parse_classifier_json(text)
+        except json.JSONDecodeError as exc:
+            print(f"  ! classifier returned malformed paid output ({exc}) — "
+                  "cost guard forbids buying a second answer")
+            return None
         except Exception as exc:
             if attempt < 2:
                 wait = (15, 45)[attempt] + random.uniform(0, 10)

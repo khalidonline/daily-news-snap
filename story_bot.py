@@ -24,6 +24,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
+import model_usage as model_meter
+
 try:
     from news_bot import (
         ANTHROPIC_API_KEY, DRY_RUN, OUT_DIR, CARDS_DIR, W, H,
@@ -50,6 +52,12 @@ STORIES_FILE = Path(os.getenv("STORIES_FILE", "stories.txt"))
 USED_FILE = Path("state/stories_used.json")
 STORY = os.getenv("STORY", "").strip()
 STORY_MODEL = _clean_model_id(os.getenv("STORY_MODEL"), "claude-opus-5")
+STORY_MAX_PAID_RESPONSES = int(
+    os.getenv("STORY_MAX_PAID_RESPONSES", "").strip() or "1"
+)
+MODEL_MAX_USD_PER_RUN = float(
+    os.getenv("MODEL_MAX_USD_PER_RUN", "").strip() or "0"
+)
 MAX_TOKENS = int(os.getenv("MAX_TOKENS", "").strip() or "16000")
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "").strip() or "6")
 BRAND = os.getenv("BRAND", "ملخص تنفيذي - قصة")
@@ -1132,6 +1140,11 @@ def research(story):
         )
         data = None
         for attempt in range(4):
+            model_meter.require_response_capacity(
+                "story_research", STORY_MAX_PAID_RESPONSES
+            )
+            if MODEL_MAX_USD_PER_RUN > 0:
+                model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
             try:
                 with urllib.request.urlopen(req, timeout=600) as resp:
                     data = json.loads(resp.read())
@@ -1160,6 +1173,14 @@ def research(story):
                       f"({attempt + 1}/3)")
                 import time as _t
                 _t.sleep(8)
+
+        model_meter.record_anthropic_response(
+            bot="story",
+            purpose="research",
+            model=STORY_MODEL,
+            response=data,
+        )
+        model_meter.note_successful_response("story_research")
 
         searches += sum(1 for b in data.get("content", [])
                         if b.get("type") == "server_tool_use")

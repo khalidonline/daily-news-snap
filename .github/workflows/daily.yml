@@ -104,7 +104,16 @@ jobs:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           LOOKBACK_HOURS: "48"
           REMEMBER_DAYS: "3"
+          MODEL_BOT: "news"
+          MODEL_USAGE_PATH: "out/model_usage.jsonl"
+          MODEL_MAX_USD_PER_RUN: "2"
+          NEWS_MAX_PAID_RESPONSES: "2"
+          VISION_MAX_PAID_RESPONSES: "50"
         run: python daily_news_runner.py
+
+      - name: Model cost summary
+        if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
+        run: python model_usage.py summarize --path out/model_usage.jsonl >> "$GITHUB_STEP_SUMMARY"
 
       - name: Mark News slot complete
         if: ${{ success() && env.RUN_SCHEDULED_BOT != '0' && env.SCHEDULE_SLOT_ID != '' }}
@@ -122,6 +131,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: card-${{ github.run_id }}
-          path: out/*.png
+          path: |
+            out/*.png
+            out/model_usage.jsonl
           retention-days: 7
           if-no-files-found: ignore

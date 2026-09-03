@@ -233,7 +233,9 @@ class BreakingWatchClassifierJsonTests(unittest.TestCase):
             breaking_watch.urllib.request,
             "urlopen",
             return_value=response,
-        ) as urlopen, patch.object(breaking_watch.time, "sleep") as sleep:
+        ) as urlopen, patch.object(
+            breaking_watch, "ANTHROPIC_API_KEY", "test-key"
+        ), patch.object(breaking_watch.time, "sleep") as sleep:
             verdict = breaking_watch.classify(
                 datetime(2026, 8, 30, 20, 0),
                 ["قرار سعودي جديد"],

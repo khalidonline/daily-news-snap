@@ -15,6 +15,8 @@ import re
 import urllib.request
 from datetime import datetime
 from pathlib import Path
+
+import model_usage as model_meter
 from typing import Any
 
 from daily_news_runner import install_auto_image_selector, remember_story_contexts
@@ -471,8 +473,20 @@ def _make_choose_topic(bot: Any):
             },
         )
         try:
+            model_meter.require_response_capacity(
+                "topic_selection", bot.TOPIC_SELECT_MAX_PAID_RESPONSES
+            )
+            if bot.MODEL_MAX_USD_PER_RUN > 0:
+                model_meter.require_run_cost_capacity(bot.MODEL_MAX_USD_PER_RUN)
             with urllib.request.urlopen(request, timeout=90) as response:
                 data = json.loads(response.read())
+            model_meter.record_anthropic_response(
+                bot="topic",
+                purpose="selection",
+                model=bot.SELECT_MODEL,
+                response=data,
+            )
+            model_meter.note_successful_response("topic_selection")
             text = "".join(
                 block.get("text", "") for block in data.get("content", [])
                 if block.get("type") == "text"

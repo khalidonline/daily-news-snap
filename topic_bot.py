@@ -23,6 +23,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
+import model_usage as model_meter
+
 try:
     from news_bot import (
         ANTHROPIC_API_KEY, CLAUDE_MODEL, DRY_RUN, MEDIA_MODE, OUT_DIR,
@@ -270,6 +272,9 @@ USED_FILE = Path("state/topics_used.json")
 COOLDOWN_DAYS = int(os.getenv("COOLDOWN_DAYS", "21"))
 HARD_COOLDOWN_DAYS = int(os.getenv("HARD_COOLDOWN_DAYS", "5"))
 SELECT_MODEL = _clean_model_id(os.getenv("SELECT_MODEL"), "claude-sonnet-5")
+TOPIC_SELECT_MAX_PAID_RESPONSES = int(
+    os.getenv("TOPIC_SELECT_MAX_PAID_RESPONSES", "").strip() or "1"
+)
 # when a season is running, prefer its topics over the general list
 SEASON_PRIORITY = os.getenv("SEASON_PRIORITY", "1").strip() not in ("", "0", "false")
 # manual runs can force a season by name, ignoring the calendar
@@ -479,8 +484,20 @@ def choose_topic(exclude=()):
                  "anthropic-version": "2023-06-01"},
     )
     try:
+        model_meter.require_response_capacity(
+            "topic_selection", TOPIC_SELECT_MAX_PAID_RESPONSES
+        )
+        if MODEL_MAX_USD_PER_RUN > 0:
+            model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
         with urllib.request.urlopen(req, timeout=90) as resp:
             data = json.loads(resp.read())
+        model_meter.record_anthropic_response(
+            bot="topic",
+            purpose="selection",
+            model=SELECT_MODEL,
+            response=data,
+        )
+        model_meter.note_successful_response("topic_selection")
         text = "".join(b.get("text", "") for b in data.get("content", [])
                        if b.get("type") == "text")
         a, b = text.find("{"), text.rfind("}")
@@ -495,6 +512,12 @@ def choose_topic(exclude=()):
 
 
 TOPIC_MODEL = _clean_model_id(os.getenv("TOPIC_MODEL"), "claude-opus-5")
+TOPIC_MAX_PAID_RESPONSES = int(
+    os.getenv("TOPIC_MAX_PAID_RESPONSES", "").strip() or "3"
+)
+MODEL_MAX_USD_PER_RUN = float(
+    os.getenv("MODEL_MAX_USD_PER_RUN", "").strip() or "0"
+)
 # how many topics to try before giving up on finding a photo
 TOPIC_ATTEMPTS = int(os.getenv("TOPIC_ATTEMPTS", "").strip() or "3")
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "6"))
@@ -805,6 +828,11 @@ def research(topic):
         )
         data = None
         for attempt in range(4):
+            model_meter.require_response_capacity(
+                "topic_research", TOPIC_MAX_PAID_RESPONSES
+            )
+            if MODEL_MAX_USD_PER_RUN > 0:
+                model_meter.require_run_cost_capacity(MODEL_MAX_USD_PER_RUN)
             try:
                 with urllib.request.urlopen(req, timeout=300) as resp:
                     data = json.loads(resp.read())
@@ -833,6 +861,14 @@ def research(topic):
                       f"({attempt + 1}/3)")
                 import time as _t
                 _t.sleep(8)
+
+        model_meter.record_anthropic_response(
+            bot="topic",
+            purpose="research",
+            model=TOPIC_MODEL,
+            response=data,
+        )
+        model_meter.note_successful_response("topic_research")
 
         content = data.get("content", [])
         searches += sum(1 for b in content if b.get("type") == "server_tool_use")

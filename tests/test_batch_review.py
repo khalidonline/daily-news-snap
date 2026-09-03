@@ -39,6 +39,28 @@ batch_review = importlib.import_module("batch_review")
 
 
 class BatchReviewTests(unittest.TestCase):
+    def test_default_batch_never_pays_for_more_than_three_stories(self):
+        stories = ["Story A", "Story B", "Story C", "Story D"]
+        with patch.object(
+            batch_review,
+            "validate_story",
+            side_effect=[(True, "ready"), (True, "ready"), (True, "ready")],
+        ) as validate, patch.object(batch_review, "send_summary"):
+            results = batch_review.run_batch(stories=stories, already_ready=set())
+
+        self.assertEqual(validate.call_count, 3)
+        self.assertEqual([row[0] for row in results], stories[:3])
+
+    def test_requested_batch_above_hard_limit_is_blocked_before_paid_work(self):
+        with patch.object(batch_review, "validate_story") as validate, \
+                patch.object(batch_review, "send_summary"):
+            with self.assertRaisesRegex(SystemExit, "maximum is 3"):
+                batch_review.run_batch(
+                    stories=["Story A"], already_ready=set(), max_stories=4
+                )
+
+        validate.assert_not_called()
+
     def test_batch_validates_remaining_stories_and_sends_one_text_summary(self):
         stories = ["Story A", "Jack Bogle story", "Story B"]
         with patch.object(batch_review, "validate_story", side_effect=[

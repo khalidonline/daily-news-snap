@@ -2,6 +2,15 @@ name: Batch story validation
 
 on:
   workflow_dispatch:
+    inputs:
+      batch_stories:
+        description: "Maximum paid story generations in this run"
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+        default: "3"
 
 permissions:
   contents: write
@@ -40,4 +49,23 @@ jobs:
           ALLOW_STORY_GENERATION: "0"
           POST_TO_SNAPCHAT: "0"
           MEDIA_MODE: "github"
+          BATCH_STORIES: ${{ inputs.batch_stories || '3' }}
+          MODEL_BOT: "story"
+          MODEL_USAGE_PATH: "out/model_usage.jsonl"
+          MODEL_MAX_USD_PER_RUN: "4"
+          STORY_MAX_PAID_RESPONSES: "3"
+          VISION_MAX_PAID_RESPONSES: "50"
         run: python batch_review.py
+
+      - name: Model cost summary
+        if: always()
+        run: python model_usage.py summarize --path out/model_usage.jsonl >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Keep model usage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: batch-review-usage-${{ github.run_id }}
+          path: out/model_usage.jsonl
+          retention-days: 14
+          if-no-files-found: ignore
