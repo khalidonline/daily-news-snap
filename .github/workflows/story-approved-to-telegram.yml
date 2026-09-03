@@ -10,6 +10,14 @@ on:
         description: "Story review workflow run ID to approve"
         type: string
         required: true
+      artifact_id:
+        description: "Exact Story review artifact ID"
+        type: string
+        required: true
+      deck_hash:
+        description: "Exact reviewed deck SHA-256"
+        type: string
+        required: true
 
 permissions:
   actions: read
@@ -31,53 +39,98 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Resolve approved Story run
+      - name: Resolve exact approved Story package
         env:
           INPUT_RUN_ID: ${{ inputs.review_run_id || '' }}
+          INPUT_ARTIFACT_ID: ${{ inputs.artifact_id || '' }}
+          INPUT_DECK_HASH: ${{ inputs.deck_hash || '' }}
         run: |
+          set -euo pipefail
           RUN_ID="$INPUT_RUN_ID"
+          ARTIFACT_ID="$INPUT_ARTIFACT_ID"
+          DECK_HASH="$INPUT_DECK_HASH"
+
           if [ -z "$RUN_ID" ] && [ -f scheduler/approvals/story.txt ]; then
-            RUN_ID="$(tr -d '[:space:]' < scheduler/approvals/story.txt)"
-          fi
-          if [[ "$RUN_ID" =~ ^[0-9]+$ ]] && [ "$RUN_ID" != "0" ]; then
-            echo "APPROVED_STORY_RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
-            echo "HAS_APPROVED_STORY=1" >> "$GITHUB_ENV"
-          else
-            echo "HAS_APPROVED_STORY=0" >> "$GITHUB_ENV"
-            echo "No numeric Story approval pointer; nothing to deliver."
+            POINTER="$(cat scheduler/approvals/story.txt)"
+            if ! printf '%s' "$POINTER" | jq -e . >/dev/null 2>&1; then
+              echo "Legacy numeric-only Story approval pointers are rejected"
+              exit 1
+            fi
+            RUN_ID="$(printf '%s' "$POINTER" | jq -r '.review_run_id // empty')"
+            ARTIFACT_ID="$(printf '%s' "$POINTER" | jq -r '.artifact_id // empty')"
+            DECK_HASH="$(printf '%s' "$POINTER" | jq -r '.deck_hash // empty')"
           fi
 
+          if ! [[ "$RUN_ID" =~ ^[0-9]+$ ]] || [ "$RUN_ID" = "0" ]; then
+            echo "Invalid or missing review_run_id"
+            exit 1
+          fi
+          if ! [[ "$ARTIFACT_ID" =~ ^[0-9]+$ ]] || [ "$ARTIFACT_ID" = "0" ]; then
+            echo "Invalid or missing artifact_id"
+            exit 1
+          fi
+          if ! [[ "$DECK_HASH" =~ ^[0-9a-fA-F]{64}$ ]]; then
+            echo "Invalid or missing deck_hash"
+            exit 1
+          fi
+
+          echo "APPROVED_STORY_RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
+          echo "APPROVED_STORY_ARTIFACT_ID=$ARTIFACT_ID" >> "$GITHUB_ENV"
+          echo "APPROVED_STORY_DECK_HASH=${DECK_HASH,,}" >> "$GITHUB_ENV"
+
       - name: Checkout Story production code
-        if: ${{ env.HAS_APPROVED_STORY == '1' }}
         uses: actions/checkout@v4
         with:
           ref: repair/all-story-visuals-2026-08-29
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
-        if: ${{ env.HAS_APPROVED_STORY == '1' }}
         with:
           python-version: "3.12"
           cache: pip
 
       - run: pip install -r requirements.txt
-        if: ${{ env.HAS_APPROVED_STORY == '1' }}
 
       - name: Download exact approved Story artifact
-        if: ${{ env.HAS_APPROVED_STORY == '1' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          rm -rf approved_story
+          set -euo pipefail
+          rm -rf approved_story approved_story.zip
           mkdir -p approved_story
-          gh run download "$APPROVED_STORY_RUN_ID" \
-            --repo "$GITHUB_REPOSITORY" \
-            --name "story-review-$APPROVED_STORY_RUN_ID" \
-            --dir approved_story
+
+          ARTIFACT_JSON="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$APPROVED_STORY_ARTIFACT_ID")"
+          ARTIFACT_RUN_ID="$(printf '%s' "$ARTIFACT_JSON" | jq -r '.workflow_run.id')"
+          ARTIFACT_EXPIRED="$(printf '%s' "$ARTIFACT_JSON" | jq -r '.expired')"
+          if [ "$ARTIFACT_RUN_ID" != "$APPROVED_STORY_RUN_ID" ]; then
+            echo "Approved artifact does not belong to approved review run"
+            exit 1
+          fi
+          if [ "$ARTIFACT_EXPIRED" = "true" ]; then
+            echo "Approved artifact has expired"
+            exit 1
+          fi
+
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            "repos/$GITHUB_REPOSITORY/actions/artifacts/$APPROVED_STORY_ARTIFACT_ID/zip" \
+            > approved_story.zip
+          unzip -q approved_story.zip -d approved_story
           test -f approved_story/story-review.json
 
+      - name: Verify approved deck identity
+        run: |
+          set -euo pipefail
+          MANIFEST_HASH="$(jq -r '.deck_hash // empty' approved_story/story-review.json | tr '[:upper:]' '[:lower:]')"
+          if [ "$MANIFEST_HASH" != "$APPROVED_STORY_DECK_HASH" ]; then
+            echo "Approved deck hash does not match downloaded artifact"
+            echo "expected=$APPROVED_STORY_DECK_HASH"
+            echo "actual=$MANIFEST_HASH"
+            exit 1
+          fi
+          echo "Exact approved Story identity verified: run=$APPROVED_STORY_RUN_ID artifact=$APPROVED_STORY_ARTIFACT_ID deck=${APPROVED_STORY_DECK_HASH:0:12}"
+
       - name: Verify frozen deck and send to Telegram
-        if: ${{ env.HAS_APPROVED_STORY == '1' }}
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
