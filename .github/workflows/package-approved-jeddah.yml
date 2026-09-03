@@ -1,0 +1,102 @@
+name: Package exact approved Jeddah deck
+
+on:
+  push:
+    branches: [delivery/jeddah-telegram-final]
+    paths:
+      - '.github/workflows/package-approved-jeddah.yml'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: delivery/jeddah-telegram-final
+
+      - name: Download reviewed base deck and corrected frame-6 deck
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf base corrected out
+          mkdir -p base corrected out
+          gh run download 33746567291 --repo "$GITHUB_REPOSITORY" \
+            --name 'jeddah-corrected-review-33746567291' --dir base
+          gh run download 33760730733 --repo "$GITHUB_REPOSITORY" \
+            --name 'story-review-33760730733' --dir corrected
+          test -f base/story-review.json
+          test -f corrected/story-review.json
+
+      - name: Freeze approved frames 1-5 plus corrected modern frame 6
+        run: |
+          python - <<'PY'
+          import hashlib, json, shutil
+          from pathlib import Path
+
+          base = Path('base')
+          corrected = Path('corrected')
+          out = Path('out')
+
+          base_manifest = json.loads((base / 'story-review.json').read_text(encoding='utf-8'))
+          corrected_manifest = json.loads((corrected / 'story-review.json').read_text(encoding='utf-8'))
+          if base_manifest.get('status') != 'READY' or corrected_manifest.get('status') != 'READY':
+              raise SystemExit('source review artifacts must both be READY')
+          if base_manifest.get('story') != corrected_manifest.get('story'):
+              raise SystemExit('source artifacts are for different stories')
+
+          base_frames = sorted(base.glob('*-story-*.png'))
+          corrected_frames = sorted(corrected.glob('*-story-*.png'))
+          if len(base_frames) != 6 or len(corrected_frames) != 6:
+              raise SystemExit(f'expected 6+6 frames, got {len(base_frames)}+{len(corrected_frames)}')
+
+          chosen = base_frames[:5] + [corrected_frames[5]]
+          frozen = []
+          rows = []
+          for i, src in enumerate(chosen, start=1):
+              dst = out / f'jeddah-approved-{i:02d}.png'
+              shutil.copy2(src, dst)
+              frozen.append(dst)
+              rows.append({
+                  'index': i,
+                  'path': dst.name,
+                  'sha256': hashlib.sha256(dst.read_bytes()).hexdigest(),
+              })
+
+          deck = hashlib.sha256()
+          for i, path in enumerate(frozen, start=1):
+              deck.update(f'{i}:'.encode('utf-8'))
+              deck.update(path.read_bytes())
+              deck.update(b'\0')
+          deck_hash = deck.hexdigest()
+
+          manifest = {
+              'schema_version': 1,
+              'story': base_manifest['story'],
+              'revision': corrected_manifest.get('revision') or base_manifest.get('revision') or 'approved-jeddah-final',
+              'status': 'READY',
+              'frame_count': 6,
+              'deck_hash': deck_hash,
+              'frames': rows,
+          }
+          (out / 'story-review.json').write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print('FINAL_APPROVED_JEDDAH', deck_hash)
+          print('frames 1-5 source run=33746567291')
+          print('frame 6 source run=33760730733 (modern Terminal 1 curated pin)')
+          PY
+
+      - name: Upload Telegram-ready frozen artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-review-${{ github.run_id }}
+          path: |
+            out/*.png
+            out/story-review.json
+          retention-days: 7
+          if-no-files-found: error
