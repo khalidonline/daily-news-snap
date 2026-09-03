@@ -1,28 +1,25 @@
 #!/usr/bin/env python3
-"""Hard post-render release gate for Story-to-Snapchat.
+"""Hard post-render release gate for Story delivery.
 
 Automatic Story selection is fail-closed: raw image inventory is never enough
-for the daily publish pool. A story must have persisted evidence from the
-current frame-level relevance policy showing a meaningful opening and closing
-visual and at least five usable visuals across the six-card deck.
+for the daily publish pool. A story must have persisted frame-level relevance
+evidence and must pass the global Story quality policy before it can be frozen
+as a human-ready candidate.
 """
 
 from __future__ import annotations
 
+import json
 import os
 import sys
 
 import ready_story_publish as rsp
 import story_publishability as sp
+import story_quality_gate as sqg
 
 
 def _personal_collect_ready_stories(stories=None, coverage_fn=None):
-    """Return the globally publishable pool.
-
-    ``coverage_fn`` is retained only as an explicit compatibility seam for
-    existing unit tests/manual inventory diagnostics. Production calls omit it
-    and therefore require current-policy frame evidence.
-    """
+    """Return the globally publishable pool based on current frame evidence."""
     stories = list(rsp.sb.load_stories() if stories is None else stories)
     if coverage_fn is not None:
         ready = []
@@ -102,12 +99,7 @@ def visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
 
 
 def visual_report_is_ready(report: dict) -> bool:
-    """Judge the actual deck, not an inventory quota.
-
-    The hook and payoff are critical: frame 1 and the final frame must have a
-    meaningful approved visual. Across the deck, at most one middle frame may
-    be text-only. There is no maximum photo count; six good visuals is ideal.
-    """
+    """Judge the actual deck, not an inventory quota."""
     report = report or {}
     frame_count = int(report.get("frame_count", 0) or 0)
     approved_frames = {
@@ -131,6 +123,52 @@ def print_visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
         f"frames={report['missing_visual_frames']}"
     )
     return report
+
+
+def _frame_payloads(visual_state: dict, frame_count: int = 6) -> list[dict]:
+    rows = (visual_state or {}).get("frames") or {}
+    return [
+        dict((rows.get(str(frame_no)) or {}).get("frame_payload") or {})
+        for frame_no in range(1, int(frame_count) + 1)
+    ]
+
+
+def apply_quality_gate(
+    story: str,
+    revision: str,
+    visual_state: dict,
+    *,
+    technical_status: str,
+    save_fn=None,
+):
+    """Persist global quality evidence and return the human-review release state.
+
+    A quality PASS may preserve technical READY, but it can never promote an
+    already technical REVIEW candidate. This function is deterministic and has
+    no publishing or model side effects.
+    """
+    save_fn = save_fn or rsp.svs.save_visual_state
+    updated = dict(visual_state or {})
+    rows = updated.get("frames") or {}
+    frame_count = max(6, len(rows)) if rows else 6
+    payloads = _frame_payloads(updated, frame_count=frame_count)
+    quality = sqg.evaluate_story_quality(story, payloads, updated)
+
+    updated["story_quality_policy"] = sqg.QUALITY_POLICY
+    updated["story_quality_status"] = quality["status"]
+    updated["story_quality_dimensions"] = quality.get("dimensions") or {}
+    updated["story_quality_findings"] = quality.get("findings") or []
+    updated["story_quality_frame_evidence"] = quality.get("frame_evidence") or []
+    updated["story_quality_repair"] = quality.get("repair") or {}
+    save_fn(story, revision, updated)
+
+    technical = str(technical_status or "").strip().upper()
+    final_status = (
+        "READY"
+        if technical == "READY" and sqg.release_ready(quality)
+        else "REVIEW"
+    )
+    return final_status, quality, updated
 
 
 def _persist_current_publishability(story: str, revision: str, visual_state: dict,
@@ -158,8 +196,6 @@ def main() -> None:
     _ready_path, ready = rsp.write_ready_file()
     if refresh_only:
         return
-    # Explicit dry/manual validation is allowed to bootstrap a story that has
-    # no current-policy evidence yet. Scheduled/automatic mode is not.
     if not ready and not rsp.sb.STORY:
         raise SystemExit("READY_FOR_PUBLISH is empty")
 
@@ -172,8 +208,33 @@ def main() -> None:
 
     revision, _visual_path = rsp.resolve_visual_revision(story)
     visual_state = rsp.svs.load_visual_state(story, revision)
-    report = print_visual_accounting(visual_state, frame_count=len(frames))
-    final_status = "READY" if visual_state and visual_report_is_ready(report) else "REVIEW"
+    visual_report = print_visual_accounting(visual_state, frame_count=len(frames))
+    technical_status = (
+        "READY" if visual_state and visual_report_is_ready(visual_report) else "REVIEW"
+    )
+    final_status, quality_report, visual_state = apply_quality_gate(
+        story,
+        revision,
+        visual_state,
+        technical_status=technical_status,
+    )
+    blocked_frames = (quality_report.get("repair") or {}).get("frames") or []
+    print(
+        "STORY_QUALITY_GATE: "
+        f"{quality_report['status']} "
+        f"policy={sqg.QUALITY_POLICY} "
+        f"frames={blocked_frames}"
+    )
+    if blocked_frames:
+        print(
+            "STORY_QUALITY_REPAIR: "
+            + json.dumps(
+                quality_report.get("repair") or {},
+                ensure_ascii=False,
+                sort_keys=True,
+            )
+        )
+
     publishability = _persist_current_publishability(
         story, revision, visual_state, final_status
     )
