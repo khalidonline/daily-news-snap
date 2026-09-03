@@ -75,7 +75,7 @@ def resolve_slot(
     if not due:
         return None
     latest = due[-1]
-    if local_now - latest > timedelta(minutes=RECOVERY_WINDOW_MINUTES):
+    if bot == "news" and local_now - latest > timedelta(minutes=RECOVERY_WINDOW_MINUTES):
         return None
     identifier = slot_id(latest)
     if identifier in completed:
