@@ -55,6 +55,25 @@ class SharedScheduleGateTests(unittest.TestCase):
             "2026-09-02T09:00+03:00",
         )
 
+    def test_topic_fallback_recovers_after_four_hour_delay(self):
+        self.assertEqual(
+            gate.resolve_slot(
+                bot="topic",
+                now=datetime(2026, 9, 2, 13, 27, tzinfo=KSA),
+                completed=set(),
+            ),
+            "2026-09-02T09:00+03:00",
+        )
+
+    def test_news_fallback_keeps_ninety_minute_window(self):
+        self.assertIsNone(
+            gate.resolve_slot(
+                bot="news",
+                now=datetime(2026, 9, 2, 13, 0, tzinfo=KSA),
+                completed=set(),
+            )
+        )
+
     def test_story_fallback_resolves_daily_1400_slot(self):
         self.assertEqual(
             gate.resolve_slot(
@@ -89,6 +108,9 @@ class SharedScheduleGateTests(unittest.TestCase):
         self.assertIn("state/topic_schedule_slots.json", workflow)
         self.assertIn("python3 shared_schedule_gate.py mark", workflow)
         self.assertIn("POST_TO_SNAPCHAT: \"0\"", workflow)
+        self.assertIn("notify-failure:", workflow)
+        self.assertIn("needs.publish.result != 'success'", workflow)
+        self.assertIn("api.telegram.org/bot", workflow)
 
     def test_story_workflow_accepts_external_slot_and_preserves_repair_branch(self):
         workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
