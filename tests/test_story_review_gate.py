@@ -1,4 +1,5 @@
 import hashlib
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -52,6 +53,32 @@ class StoryReviewGateTests(unittest.TestCase):
             frames[3].write_bytes(b"changed after approval")
             with self.assertRaises(ValueError):
                 verify(manifest, root)
+
+    def test_approved_delivery_uses_exact_frozen_files_without_rendering(self):
+        deliver = getattr(rsp, "deliver_approved_review", None)
+        self.assertIsNotNone(deliver, "deliver_approved_review must exist")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            frames = []
+            for index in range(1, 7):
+                path = root / f"frame-{index}.png"
+                path.write_bytes(f"frame-{index}".encode())
+                frames.append(path)
+            manifest = rsp.build_review_manifest("Jeddah", "rev123", "READY", frames)
+            manifest_path = root / "story-review.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            captured = {}
+
+            def notify(caption, delivered, as_documents=False):
+                captured["caption"] = caption
+                captured["frames"] = list(delivered)
+                captured["as_documents"] = as_documents
+
+            result = deliver(manifest_path, notify_fn=notify)
+            self.assertTrue(result)
+            self.assertEqual(captured["frames"], frames)
+            self.assertTrue(captured["as_documents"])
+            self.assertIn("Jeddah", captured["caption"])
 
 
 if __name__ == "__main__":
