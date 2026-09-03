@@ -1,10 +1,7 @@
 import os
 import unittest
 
-try:
-    import story_quality_gate as sqg
-except ImportError:
-    sqg = None
+import story_quality_gate as sqg
 
 
 def frame(heading, text, keywords=None, punch=""):
@@ -55,7 +52,6 @@ def company_frames():
     ]
 
 
-@unittest.skipIf(sqg is None, "story_quality_gate not implemented yet")
 class StoryQualityGateTests(unittest.TestCase):
     def assertFinding(self, report, dimension, frame_no=None, code=None):
         matches = [
