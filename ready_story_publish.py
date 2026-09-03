@@ -252,6 +252,24 @@ def verify_review_manifest(manifest, root):
         raise ValueError("review deck hash mismatch")
     return frames
 
+
+def deliver_approved_review(manifest_path, *, notify_fn=None):
+    """Deliver the exact approved artifact; never render or regenerate here."""
+    manifest_path = Path(manifest_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    frames = verify_review_manifest(manifest, manifest_path.parent)
+    caption = f"[APPROVED] {manifest['story']}\nHuman-reviewed publication candidate"
+    if notify_fn is not None:
+        notify_fn(caption, frames, as_documents=True)
+        return True
+    return notify_final_candidate(
+        manifest["story"],
+        frames,
+        "READY",
+        manifest["revision"],
+        digest=manifest.get("deck_hash"),
+    )
+
 def notify_final_candidate(
     story,
     frames,
