@@ -95,8 +95,16 @@ def _normalize_arabic(value: str) -> str:
 def _stem_token(token: str) -> str:
     token = _normalize_arabic(token.casefold())
     if re.search(r"[\u0600-\u06ff]", token):
-        if len(token) > 4 and token.startswith(_AR_PREFIXES):
-            token = token[1:]
+        # Strip conjunctions (و/ف) freely, and other one-letter clitics only
+        # when they introduce the definite article. This handles forms such
+        # as "وبالعودة" without corrupting normal words such as "لاحقا".
+        while len(token) > 4 and token[:1] in _AR_PREFIXES:
+            first = token[0]
+            rest = token[1:]
+            if first in {"و", "ف"} or rest.startswith("ال"):
+                token = rest
+                continue
+            break
         if len(token) > 4 and token.startswith("ال"):
             token = token[2:]
     return token
