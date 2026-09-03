@@ -5,10 +5,13 @@ on:
     branches: [fix/global-story-publishability]
   pull_request:
     paths:
+      - 'story_publishability.py'
       - 'story_runtime.py'
       - 'story_visual_state.py'
       - 'ready_story_publish.py'
+      - 'guarded_story_publish.py'
       - 'tests/test_story_publishability.py'
+      - 'tests/test_story_publishability_state_order.py'
       - '.github/workflows/story-publishability-ci.yml'
 
 jobs:
@@ -21,4 +24,7 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python -m unittest tests.test_story_publishability
+      - run: >-
+          python -m unittest
+          tests.test_story_publishability
+          tests.test_story_publishability_state_order
