@@ -2,10 +2,11 @@ name: Story publishability tests
 
 on:
   push:
-    branches: [fix/global-story-publishability, fix/nearest-story-repairs, fix/story-review-before-telegram]
+    branches: [fix/global-story-publishability, fix/nearest-story-repairs, fix/story-review-before-telegram, feat/global-story-quality-gate]
   pull_request:
     paths:
       - 'story_publishability.py'
+      - 'story_quality_gate.py'
       - 'story_runtime.py'
       - 'story_visual_state.py'
       - 'ready_story_publish.py'
@@ -15,6 +16,8 @@ on:
       - 'tests/test_story_publishability_state_order.py'
       - 'tests/test_nearest_story_repairs.py'
       - 'tests/test_story_review_gate.py'
+      - 'tests/test_story_quality_gate.py'
+      - 'tests/test_story_quality_gate_integration.py'
       - '.github/workflows/story-publishability-ci.yml'
 
 jobs:
@@ -33,3 +36,4 @@ jobs:
           tests.test_story_publishability_state_order
           tests.test_nearest_story_repairs
           tests.test_story_review_gate
+          tests.test_story_quality_gate
