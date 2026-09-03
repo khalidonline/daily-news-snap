@@ -45,6 +45,8 @@ jobs:
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
         run: |
+          # Final-code bootstrap: every PASS below is evidence created by the
+          # same global frame-relevance policy that scheduled publishing uses.
           set +e
           stories=(
             'قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية'
