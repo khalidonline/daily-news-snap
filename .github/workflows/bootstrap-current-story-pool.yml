@@ -1,0 +1,74 @@
+name: Bootstrap current Story publishability pool
+
+on:
+  push:
+    paths:
+      - '.github/workflows/bootstrap-current-story-pool.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: story-publishability-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/global-story-publishability
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Validate strongest repaired stories under current frame policy
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          POST_TO_SNAPCHAT: '0'
+          DRY_RUN: '1'
+          MEDIA_MODE: 'github'
+          THEME: 'light'
+          BRAND: 'ملخص تنفيذي - قصة'
+          FONT_FAMILY: 'Almarai'
+          STORY_MODEL: 'claude-opus-5'
+          STORY_FRAMES: '6'
+          STORY_ALLOW_REPEAT: '1'
+          ALLOW_GENERATED: '0'
+          ALLOW_STORY_GENERATION: '0'
+          STORY_OPERATION_MODE: 'auto'
+          IMAGE_GEN: 'byteplus'
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          ARK_MODEL: ${{ vars.ARK_MODEL }}
+        run: |
+          set +e
+          stories=(
+            'قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية'
+            'قصة تأسيس مؤسسة النقد ساما'
+            'قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا'
+            'قصة أول مطار في جدة وتطور الطيران المدني'
+            'قصة أول عملة ورقية سعودية'
+            'قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات'
+            'Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير'
+          )
+          passed=0
+          failed=0
+          for story in "${stories[@]}"; do
+            echo "===== VALIDATE: $story ====="
+            STORY="$story" python guarded_story_publish.py
+            rc=$?
+            if [ "$rc" -eq 0 ]; then
+              passed=$((passed + 1))
+            else
+              failed=$((failed + 1))
+              echo "BLOCKED: $story (exit $rc)"
+            fi
+          done
+          echo "BOOTSTRAP_RESULT passed=$passed failed=$failed"
+          python guarded_story_publish.py --refresh-only
+          git status --short
+          exit 0
