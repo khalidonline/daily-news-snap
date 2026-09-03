@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 import story_publishability as sp
 
@@ -60,6 +61,41 @@ class StoryPublishabilityTests(unittest.TestCase):
         result = self._evaluate({})
         self.assertEqual(result["status"], "BLOCKED_NO_FRAME_EVIDENCE")
         self.assertFalse(result["publishable"])
+
+    def test_auto_selector_never_falls_back_to_inventory_count(self):
+        import guarded_story_publish as gsp
+        blocked = {
+            "status": "BLOCKED_STALE_EVIDENCE",
+            "publishable": False,
+            "usable_frames": 6,
+            "opening_ok": True,
+            "closing_ok": True,
+        }
+        with patch.object(gsp.sp, "evaluate_story", return_value=blocked), \
+             patch.object(gsp.rsp.sr, "coverage", side_effect=AssertionError("inventory used")):
+            self.assertFalse(gsp._auto_story_has_visual_buffer("railway-story"))
+
+    def test_global_ready_pool_uses_publishability_for_every_story(self):
+        import guarded_story_publish as gsp
+        verdicts = {
+            "ready": {
+                "status": "READY_FOR_PUBLISH", "publishable": True,
+                "usable_frames": 6, "opening_ok": True, "closing_ok": True,
+            },
+            "railway": {
+                "status": "BLOCKED_FRAME_COVERAGE", "publishable": False,
+                "usable_frames": 3, "opening_ok": False, "closing_ok": False,
+            },
+            "sabic": {
+                "status": "BLOCKED_STALE_EVIDENCE", "publishable": False,
+                "usable_frames": 6, "opening_ok": True, "closing_ok": True,
+            },
+        }
+        with patch.object(gsp.sp, "evaluate_story", side_effect=lambda story: verdicts[story]):
+            self.assertEqual(
+                gsp._personal_collect_ready_stories(["ready", "railway", "sabic"]),
+                ["ready"],
+            )
 
 
 if __name__ == "__main__":
