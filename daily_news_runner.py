@@ -679,8 +679,7 @@ def install_auto_image_selector(news_bot_module):
             selected = judge("stock", photo, "Pexels" if photo else None, candidate)
 
         if selected is None and neutral is not None:
-            selected = neutral
-            print(f"      auto image: using safe neutral fallback from {selected[2]}")
+            print(f"      auto image: rejecting neutral fallback from {neutral[2]}")
 
         if selected is not None:
             selected_path, selected_credit, _ = selected
