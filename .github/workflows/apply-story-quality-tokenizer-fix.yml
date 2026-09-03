@@ -1,0 +1,43 @@
+name: Apply Story quality tokenizer fix
+
+on:
+  push:
+    branches: [feat/global-story-quality-gate]
+    paths:
+      - '.github/workflows/apply-story-quality-tokenizer-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/global-story-quality-gate
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch Arabic clitic normalization
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('story_quality_gate.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''def _stem_token(token: str) -> str:\n    token = _normalize_arabic(token.casefold())\n    if re.search(r"[\\u0600-\\u06ff]", token):\n        if len(token) > 4 and token.startswith(_AR_PREFIXES):\n            token = token[1:]\n        if len(token) > 4 and token.startswith("ال"):\n            token = token[2:]\n    return token\n'''
+          new = '''def _stem_token(token: str) -> str:\n    token = _normalize_arabic(token.casefold())\n    if re.search(r"[\\u0600-\\u06ff]", token):\n        # Strip conjunctions (و/ف) freely, and other one-letter clitics only\n        # when they introduce the definite article. This handles forms such\n        # as "وبالعودة" without corrupting normal words such as "لاحقا".\n        while len(token) > 4 and token[:1] in _AR_PREFIXES:\n            first = token[0]\n            rest = token[1:]\n            if first in {"و", "ف"} or rest.startswith("ال"):\n                token = rest\n                continue\n            break\n        if len(token) > 4 and token.startswith("ال"):\n            token = token[2:]\n    return token\n'''
+          if old not in text:
+              raise SystemExit('expected _stem_token block not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Verify focused quality suite
+        run: python -m unittest -v tests/test_story_quality_gate.py
+      - name: Commit tokenizer fix
+        run: |
+          git config user.name khalidonline
+          git config user.email 69767138+khalidonline@users.noreply.github.com
+          git add story_quality_gate.py
+          git commit -m 'fix: normalize Arabic Story quality cues'
+          git push origin HEAD:feat/global-story-quality-gate
