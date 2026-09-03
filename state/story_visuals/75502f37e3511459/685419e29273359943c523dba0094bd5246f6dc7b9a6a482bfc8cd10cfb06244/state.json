@@ -1,0 +1,152 @@
+{
+  "final_release_status": "READY",
+  "frames": {
+    "1": {
+      "asset_hash": "0d22ee481b439a1633185326d59fda787e5e94a635b20fd8f949d80c7ada8a00",
+      "frame_payload": {
+        "heading": "مدينة تنتهي عند سورها",
+        "image_keywords": [
+          "old Riyadh",
+          "Riyadh old souq",
+          "الرياض القديمة",
+          "سوق تقليدي",
+          "الرياض",
+          "Riyadh"
+        ],
+        "image_keywords_ar": [
+          "الرياض القديمة",
+          "سوق تقليدي",
+          "الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "قبل نحو قرن كانت الرياض بلدة صغيرة داخل سور من الطين. مساحتها لا تتجاوز كيلومتراً مربعاً واحداً، وعدد سكانها نحو 19 ألف نسمة سنة 1918. لا سكة حديد ولا خط منتظم يربطها بساحل الخليج شرقاً. المدينة كانت تنتهي فعلياً عند سورها."
+      },
+      "image_source": "state/story_visuals/75502f37e3511459/685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "488b98e892e5d37ec455e841e1fa6b49d792ee15b58c0a5a3c37d90a54e1d3bf",
+      "frame_payload": {
+        "heading": "قطار يصل إلى العاصمة",
+        "image_keywords": [
+          "Riyadh Dammam railway 1951",
+          "railway construction 1951"
+        ],
+        "image_keywords_ar": [
+          "سكة حديد",
+          "الملك عبدالعزيز",
+          "قطار الرياض الدمام"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. سنة 1947 بدأ العمل على خط حديدي ينطلق من ميناء الدمام على الخليج. وأمر الملك عبدالعزيز بمدّ الخط حتى العاصمة نفسها. وفي 20 أكتوبر 1951 افتُتح الخط في الرياض في حفل رسمي بحضوره، بطول 569 كيلومتراً."
+      },
+      "image_source": "state/story_visuals/75502f37e3511459/685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "40cdaf62c30162abc6e95fe1218e5eeb70d693f0b9cff6064e78eb70c71d3a8b",
+      "frame_payload": {
+        "heading": "خروج من حدود الطين",
+        "image_keywords": [
+          "Riyadh construction 1975",
+          "Riyadh 1977",
+          "الرياض",
+          "البناء",
+          "السبعينات",
+          "Riyadh"
+        ],
+        "image_keywords_ar": [
+          "الرياض",
+          "البناء",
+          "السبعينات"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولأن الخط جلب البضائع والناس، لم يعد السور يعني شيئاً، وبحلول منتصف القرن الماضي كان قد أزيل. في العشرينات كانت المدينة نحو كيلومتر مربع يسكنه قرابة 10 آلاف نسمة. ثم امتدت في كل اتجاه حتى تجاوزت مساحتها 1800 كيلومتر مربع، وامتلأت أطرافها بورش البناء في السبعينات."
+      },
+      "image_source": "state/story_visuals/75502f37e3511459/685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "d45cf443bddbbc45e8a583decfcf8283954891ba14a59b355b7da77b1f1bc491",
+      "frame_payload": {
+        "heading": "المدينة تتحرك تحت الأرض",
+        "image_keywords": [
+          "Riyadh Metro",
+          "King Abdullah Financial District",
+          "مترو الرياض",
+          "قطار الرياض",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "مترو الرياض",
+          "قطار الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "وهكذا صارت المسافة داخل المدينة نفسها هي المشكلة. وفي ديسمبر 2024 بدأ تشغيل مترو الرياض: ستة خطوط بطول 176 كيلومتراً و85 محطة، بقطارات كهربائية بلا سائق. وأعلنت الهيئة الملكية لمدينة الرياض أن عدد الركاب تجاوز 100 مليون في أقل من تسعة أشهر."
+      },
+      "image_source": "state/story_visuals/75502f37e3511459/685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "بلدة صارت مدينة بهذا الحجم",
+        "image_keywords": [
+          "Riyadh skyline",
+          "Kingdom Centre Riyadh",
+          "الرياض",
+          "برج المملكة",
+          "Riyadh",
+          "Royal Commission for Riyadh City"
+        ],
+        "image_keywords_ar": [
+          "الرياض",
+          "برج المملكة"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولهذا صار حجم الرياض يُقاس بأرقام من نوع آخر. في تعداد 2022 بلغ عدد سكان المدينة 7,009,120 نسمة. وفي أسبوع واحد من مايو 2026 مرّ عبر نقاط البيع فيها 4.46 مليار ريال، بحسب تقرير البنك المركزي السعودي."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "6": {
+      "asset_hash": "38abde281f23159d3cd0da27974a0f21843433927e9204107b00637c8235bbaa",
+      "frame_payload": {
+        "heading": "من بلدة مسوّرة إلى مدينة بهذا الحجم",
+        "image_keywords": [
+          "Riyadh skyline",
+          "King Abdullah Financial District Riyadh"
+        ],
+        "image_keywords_ar": [
+          "أفق الرياض",
+          "الرياض"
+        ],
+        "punch": "هذا هو حجم التحول الذي عاشته الرياض.",
+        "subject_kind": "place_city",
+        "text": "في 2024 سجّلت الرياض 225 مليار ريال في مبيعات نقاط البيع. رقم يعكس حجم السوق والحركة الاقتصادية في مدينة كانت قبل نحو قرن محصورة داخل سور من الطين."
+      },
+      "image_source": "state/story_visuals/75502f37e3511459/685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "publishability_evaluated_at": "2026-09-03T06:24:45.462325+00:00",
+  "publishability_policy": "frame-relevance-v2",
+  "revision": "685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_ASSEMBLY",
+  "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
+}

@@ -1,0 +1,35 @@
+name: Apply nearest Story frame repair
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-nearest-story-repair.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/nearest-story-repairs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python scripts/apply_nearest_story_repair.py
+      - run: >-
+          python -m unittest
+          tests.test_story_publishability
+          tests.test_story_publishability_state_order
+          tests.test_nearest_story_repairs
+      - name: Commit repair
+        run: |
+          git config user.name khalidonline
+          git config user.email 69767138+khalidonline@users.noreply.github.com
+          git add story_runtime.py
+          git commit -m 'fix: pin reviewed visuals to blocked Story frames'
+          git push origin HEAD:fix/nearest-story-repairs

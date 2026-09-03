@@ -1,0 +1,140 @@
+{
+  "brief": {
+    "caption": "قبل قرن كانت الرياض بلدة داخل سور من الطين. ما الذي غيّرها؟ القصة في 6 لقطات.",
+    "frames": [
+      {
+        "heading": "مدينة تنتهي عند سورها",
+        "image_keywords": [
+          "old Riyadh",
+          "Riyadh old souq",
+          "الرياض القديمة",
+          "سوق تقليدي",
+          "الرياض",
+          "Riyadh"
+        ],
+        "image_keywords_ar": [
+          "الرياض القديمة",
+          "سوق تقليدي",
+          "الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "قبل نحو قرن كانت الرياض بلدة صغيرة داخل سور من الطين. مساحتها لا تتجاوز كيلومتراً مربعاً واحداً، وعدد سكانها نحو 19 ألف نسمة سنة 1918. لا سكة حديد ولا خط منتظم يربطها بساحل الخليج شرقاً. المدينة كانت تنتهي فعلياً عند سورها."
+      },
+      {
+        "heading": "قطار يصل إلى العاصمة",
+        "image_keywords": [
+          "Riyadh Dammam railway 1951",
+          "railway construction 1951"
+        ],
+        "image_keywords_ar": [
+          "سكة حديد",
+          "الملك عبدالعزيز",
+          "قطار الرياض الدمام"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. سنة 1947 بدأ العمل على خط حديدي ينطلق من ميناء الدمام على الخليج. وأمر الملك عبدالعزيز بمدّ الخط حتى العاصمة نفسها. وفي 20 أكتوبر 1951 افتُتح الخط في الرياض في حفل رسمي بحضوره، بطول 569 كيلومتراً."
+      },
+      {
+        "heading": "خروج من حدود الطين",
+        "image_keywords": [
+          "Riyadh construction 1975",
+          "Riyadh 1977",
+          "الرياض",
+          "البناء",
+          "السبعينات",
+          "Riyadh"
+        ],
+        "image_keywords_ar": [
+          "الرياض",
+          "البناء",
+          "السبعينات"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولأن الخط جلب البضائع والناس، لم يعد السور يعني شيئاً، وبحلول منتصف القرن الماضي كان قد أزيل. في العشرينات كانت المدينة نحو كيلومتر مربع يسكنه قرابة 10 آلاف نسمة. ثم امتدت في كل اتجاه حتى تجاوزت مساحتها 1800 كيلومتر مربع، وامتلأت أطرافها بورش البناء في السبعينات."
+      },
+      {
+        "heading": "المدينة تتحرك تحت الأرض",
+        "image_keywords": [
+          "Riyadh Metro",
+          "King Abdullah Financial District",
+          "مترو الرياض",
+          "قطار الرياض",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "مترو الرياض",
+          "قطار الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "وهكذا صارت المسافة داخل المدينة نفسها هي المشكلة. وفي ديسمبر 2024 بدأ تشغيل مترو الرياض: ستة خطوط بطول 176 كيلومتراً و85 محطة، بقطارات كهربائية بلا سائق. وأعلنت الهيئة الملكية لمدينة الرياض أن عدد الركاب تجاوز 100 مليون في أقل من تسعة أشهر."
+      },
+      {
+        "heading": "بلدة صارت مدينة بهذا الحجم",
+        "image_keywords": [
+          "Riyadh skyline",
+          "Kingdom Centre Riyadh",
+          "الرياض",
+          "برج المملكة",
+          "Riyadh",
+          "Royal Commission for Riyadh City"
+        ],
+        "image_keywords_ar": [
+          "الرياض",
+          "برج المملكة"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولهذا صار حجم الرياض يُقاس بأرقام من نوع آخر. في تعداد 2022 بلغ عدد سكان المدينة 7,009,120 نسمة. وفي أسبوع واحد من مايو 2026 مرّ عبر نقاط البيع فيها 4.46 مليار ريال، بحسب تقرير البنك المركزي السعودي."
+      },
+      {
+        "heading": "حدود السور لم تعد قائمة",
+        "image_keywords": [
+          "SAR train Riyadh",
+          "Riyadh Dammam railway",
+          "قطار سار",
+          "سكة حديد",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "قطار سار",
+          "سكة حديد"
+        ],
+        "punch": "المدينة التي كان القطار ينتهي عندها صارت المدينة التي يبدأ منها.",
+        "subject_kind": "place_city",
+        "text": "واليوم تنطلق من الرياض خطوط قطارات إلى الشرق والشمال، وتتحرك داخلها شبكة مترو كل يوم."
+      }
+    ],
+    "image_prompt": "Wide golden-hour view of an early twentieth century Najdi mud-brick town enclosed by a low earthen wall, flat rooftops, date palm groves at the edge, empty sandy lanes, desert plateau horizon, no people, no text",
+    "image_queries": [
+      "old mud brick town wall Najd",
+      "traditional mud brick houses Riyadh",
+      "earthen town walls Arabian plateau"
+    ],
+    "image_queries_ar": [
+      "الرياض القديمة",
+      "سوق تقليدي",
+      "الرياض"
+    ],
+    "sources": [
+      "الهيئة العامة للإحصاء",
+      "الهيئة الملكية لمدينة الرياض",
+      "وكالة الأنباء السعودية",
+      "أرقام"
+    ],
+    "title": "الرياض: من بلدة داخل سور إلى عاصمة"
+  },
+  "input_tokens": 169911,
+  "message_id": "msg_011CefzddgZMZnqy4Aj9CmDr",
+  "model": "claude-opus-5",
+  "output_tokens": 11699,
+  "prompt_hash": "a04f44c249e1743aec80426c5a881eb20f8d0773f9a81ebd03b4579147f97a72",
+  "revision": "55f15c3866719afbb5b9df7dfb7a7c1c99827ec4ae512f17870f9ed607bc8e08",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}

@@ -1,0 +1,111 @@
+{
+  "brief": {
+    "caption": "من دولار ونصف في اليوم إلى مصنع يحمل اسمها — قصة مدام سي جيه ووكر.",
+    "frames": [
+      {
+        "heading": "حقول القطن وحوض الغسيل",
+        "image_keywords": [
+          "Delta Louisiana",
+          "Vicksburg Mississippi"
+        ],
+        "image_keywords_ar": [],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في ثمانينات القرن التاسع عشر جنوب أمريكا، بنات العبيد المحرَّرين لم يكن أمامهن غير حقول القطن أو غسيل ملابس الآخرين. الأجرة دولار ونصف في اليوم. وكثيرات منهن كنّ يفقدن شعرهن من الصابون القاسي وقلة الماء النظيف — بلا منتج واحد صُنع لهن."
+      },
+      {
+        "heading": "بنت الحقول التي فقدت شعرها",
+        "image_keywords": [
+          "Sarah Breedlove",
+          "Madam C.J. Walker"
+        ],
+        "image_keywords_ar": [
+          "مدام سي جيه ووكر",
+          "ووكر"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "لكن واحدة منهن كانت تعرف هذه الحياة كلها من الداخل، اسمها Sarah Breedlove. وُلدت سنة 1867 لأبوين خرجا من العبودية، وكانت أول فرد في العائلة يولد حراً. يتيمة في السابعة، أرملة في العشرين، ثم غسّالة في مدينة سانت لويس بدولار ونصف في اليوم. وكانت تفقد شعرها هي أيضاً."
+      },
+      {
+        "heading": "الوصفة التي جربتها على نفسها",
+        "image_keywords": [
+          "Madam C.J. Walker"
+        ],
+        "image_keywords_ar": [
+          "مدام سي جيه ووكر",
+          "ووكر"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "وهنا تغيّر كل شيء. في 1905 انتقلت إلى مدينة دنفر غرب أمريكا، وبدأت تخلط وصفة لفروة الرأس وتجربها على شعرها هي. وفي 1906 تزوجت Charles Joseph Walker وأخذت اسمه، فصارت تُعرف بمدام سي جيه ووكر. ثم فعلت ما لم يفعله أحد: وضعت صورة شعرها قبل وبعد في الإعلان نفسه."
+      },
+      {
+        "heading": "المؤتمر الذي منعوها فيه",
+        "image_keywords": [
+          "Booker T. Washington",
+          "Madam C.J. Walker"
+        ],
+        "image_keywords_ar": [
+          "مدام سي جيه ووكر"
+        ],
+        "punch": "«بالتأكيد لن تغلق الباب في وجهي.»",
+        "subject_kind": "person",
+        "text": "لكن الاعتراف لم يأتِ بسهولة. سنة 1910 كتبت إلى Booker T. Washington، أشهر زعيم أسود في أمريكا وقتها، تطلب دعمه لشركتها، فاعتذر. وفي 1912 حضرت مؤتمر رجال الأعمال السود في مدينة شيكاغو، فأُعطيت المنصة لمنافسيها ولم تُعطَ دقيقة واحدة. في اليوم الأخير وقفت من بين الجمهور وتكلمت بلا إذن."
+      },
+      {
+        "heading": "المصنع الذي حمل اسمها",
+        "image_keywords": [
+          "Madam C.J. Walker",
+          "Indianapolis"
+        ],
+        "image_keywords_ar": [
+          "مدام سي جيه ووكر",
+          "ووكر"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وفي السنة التالية دعاها هو نفسه متحدثة رسمية على منصته. وفي 1919، آخر سنة في حياتها، تجاوزت مبيعات شركتها نصف مليون دولار من مصنعها في مدينة إنديانابوليس. وGuinness يسجّلها أول امرأة صنعت مليونها بنفسها في أمريكا، وإن قدّر مؤرخون تركتها عند وفاتها بـ600 ألف دولار."
+      },
+      {
+        "heading": "ما بقي منها",
+        "image_keywords": [
+          "Villa Lewaro",
+          "Madam C.J. Walker"
+        ],
+        "image_keywords_ar": [
+          "فيلا ليوارو",
+          "مدام سي جيه ووكر"
+        ],
+        "punch": "فتحت لنساء لم يكن أمامهن غير الحقل أو الغسيل باباً ثالثاً.",
+        "subject_kind": "abstract",
+        "text": "وحتى بيتها الكبير قرب نيويورك، فيلا Lewaro، صار معلماً تاريخياً وطنياً مسجَّلاً في أمريكا."
+      }
+    ],
+    "image_prompt": "A weathered wooden washboard resting in a metal tub of soapy water on a plank porch at dawn, rows of cotton fields blurred in the background, late 19th century rural American South, warm muted natural light, no people, no text",
+    "image_queries": [
+      "cotton field Mississippi Delta",
+      "old washboard laundry tub",
+      "1890s St Louis street"
+    ],
+    "image_queries_ar": [
+      "مدام سي جيه ووكر",
+      "ووكر"
+    ],
+    "sources": [
+      "Britannica",
+      "Smithsonian Magazine",
+      "Library of Congress",
+      "National Women's History Museum"
+    ],
+    "title": "رفضوا أن تتكلم، فبنت مصنعها"
+  },
+  "input_tokens": 168065,
+  "message_id": "msg_011Ceg1ddZEi3YNqNY9bWWXV",
+  "model": "claude-opus-5",
+  "output_tokens": 14830,
+  "prompt_hash": "0e479b4a0fae92053f1ba7868de10868b50937794afe5099faeaec5bcc82a148",
+  "revision": "253790edf09d49eace192bd158e8cd51a67915dc8e012295004ef6ce17821d2f",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}

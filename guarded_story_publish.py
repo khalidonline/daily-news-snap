@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Hard post-render release gate for Story-to-Snapchat.
 
-This is a personal Snapchat story, not a corporate asset pipeline. The source
-inventory gate only decides whether a story is worth attempting; it does not
-set a photo target or ceiling. The rendered deck is authoritative. Use every
-strong relevant visual available, require meaningful visuals on the opening
-and closing cards, and allow at most one genuine text-only middle card.
+Automatic Story selection is fail-closed: raw image inventory is never enough
+for the daily publish pool. A story must have persisted evidence from the
+current frame-level relevance policy showing a meaningful opening and closing
+visual and at least five usable visuals across the six-card deck.
 """
 
 from __future__ import annotations
@@ -14,32 +13,50 @@ import os
 import sys
 
 import ready_story_publish as rsp
-
-AUTO_MIN_APPROVED_VISUALS = 6
+import story_publishability as sp
 
 
 def _personal_collect_ready_stories(stories=None, coverage_fn=None):
+    """Return the globally publishable pool.
+
+    ``coverage_fn`` is retained only as an explicit compatibility seam for
+    existing unit tests/manual inventory diagnostics. Production calls omit it
+    and therefore require current-policy frame evidence.
+    """
     stories = list(rsp.sb.load_stories() if stories is None else stories)
-    coverage_fn = coverage_fn or rsp.sr.coverage
+    if coverage_fn is not None:
+        ready = []
+        for story in stories:
+            photos, _logos, status = coverage_fn(story)
+            if status == "PASS" and len(photos) >= 4:
+                ready.append(story)
+        return ready
+
     ready = []
     for story in stories:
-        photos, _logos, status = coverage_fn(story)
-        if status == "PASS" and len(photos) >= 4:
+        result = sp.evaluate_story(story)
+        if result["publishable"]:
             ready.append(story)
     return ready
 
 
 def _auto_story_has_visual_buffer(story):
-    photos, logos, status = rsp.sr.coverage(story)
+    """Automatic selection uses persisted frame evidence, never inventory count."""
+    result = sp.evaluate_story(story)
     print(
-        f"    auto visual buffer: {status} "
-        f"({len(photos)} approved visual(s), {len(logos)} optional logo(s)); "
-        f"need {AUTO_MIN_APPROVED_VISUALS} approved visuals"
+        "    auto publishability: "
+        f"{result['status']} "
+        f"({result['usable_frames']}/6 usable frame visual(s); "
+        f"opening={'yes' if result['opening_ok'] else 'no'}; "
+        f"closing={'yes' if result['closing_ok'] else 'no'}; "
+        f"policy={sp.PUBLISHABILITY_POLICY})"
     )
-    return status == "PASS" and len(photos) >= AUTO_MIN_APPROVED_VISUALS
+    return bool(result["publishable"])
 
 
 def _personal_resolve_story():
+    # Explicit/manual Story runs remain the bootstrap/review path: they may
+    # attempt an inventory-PASS story so it can earn current-policy evidence.
     if rsp.sb.STORY:
         story = rsp.sb.resolve_story_input(rsp.sb.STORY)
         photos, _logos, status = rsp.sr.coverage(story)
@@ -116,18 +133,40 @@ def print_visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
     return report
 
 
+def _persist_current_publishability(story: str, revision: str, visual_state: dict,
+                                    final_status: str) -> dict:
+    """Stamp and persist evidence only after current post-render QA completes."""
+    updated = sp.mark_visual_state_current(
+        story,
+        revision,
+        visual_state,
+        final_status=final_status,
+        save_fn=rsp.svs.save_visual_state,
+    )
+    rsp.persist_visual_revision(story)
+    result = sp.publishability_from_visual_state(story, updated, require_assets=True)
+    print(
+        "PUBLISHABILITY_EVIDENCE: "
+        f"{result['status']} {result['usable_frames']}/6 "
+        f"policy={sp.PUBLISHABILITY_POLICY}"
+    )
+    return result
+
+
 def main() -> None:
     refresh_only = "--refresh-only" in sys.argv
     _ready_path, ready = rsp.write_ready_file()
     if refresh_only:
         return
-    if not ready:
-        raise SystemExit("READY_FOR_RENDER is empty")
+    # Explicit dry/manual validation is allowed to bootstrap a story that has
+    # no current-policy evidence yet. Scheduled/automatic mode is not.
+    if not ready and not rsp.sb.STORY:
+        raise SystemExit("READY_FOR_PUBLISH is empty")
 
     story = rsp._resolve_story()
     if not story:
-        raise SystemExit("no fresh READY_FOR_RENDER story available")
-    print(f"Selected READY_FOR_RENDER story: {story}")
+        raise SystemExit("no fresh READY_FOR_PUBLISH story available")
+    print(f"Selected {'MANUAL_VALIDATION' if rsp.sb.STORY else 'READY_FOR_PUBLISH'} story: {story}")
 
     frames = rsp.build_story_without_posting(story)
 
@@ -135,6 +174,9 @@ def main() -> None:
     visual_state = rsp.svs.load_visual_state(story, revision)
     report = print_visual_accounting(visual_state, frame_count=len(frames))
     final_status = "READY" if visual_state and visual_report_is_ready(report) else "REVIEW"
+    publishability = _persist_current_publishability(
+        story, revision, visual_state, final_status
+    )
 
     rsp.scg.record_operation_event(
         story,
@@ -147,10 +189,18 @@ def main() -> None:
     rsp.notify_final_candidate(story, frames, final_status, revision)
 
     if rsp.nb.DRY_RUN or not rsp.nb.POST_ENABLED:
-        print(f"DRY/HYBRID — rendered {len(frames)} frames; Snapchat untouched")
+        print(
+            f"DRY/HYBRID — rendered {len(frames)} frames; Snapchat untouched; "
+            f"publishability={publishability['status']}"
+        )
         return
 
     require_ready_for_publication(final_status, story)
+    if not publishability["publishable"]:
+        raise SystemExit(
+            f"POST_RENDER_RELEASE_BLOCKED: {story}: "
+            f"{publishability['status']}; Snapchat untouched"
+        )
 
     if not rsp.nb.quota_ok():
         raise SystemExit("monthly Snapchat post quota reached")

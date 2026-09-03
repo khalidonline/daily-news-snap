@@ -1,0 +1,117 @@
+{
+  "brief": {
+    "caption": "من إيصال ورقي للحجاج إلى احتياطي بالتريليونات — قصة تأسيس ساما.",
+    "frames": [
+      {
+        "heading": "نقود من فضة فقط",
+        "image_keywords": [
+          "Saudi silver riyal",
+          "silver riyal coin"
+        ],
+        "image_keywords_ar": [
+          "الريال الفضي",
+          "الريال السعودي المعدني"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في النصف الأول من القرن الماضي، كانت النقود في السعودية معدناً يُحمل باليد: ريالات مسكوكة من الفضة. لا ورقة نقدية واحدة، ولا جهة مركزية تضبط الصرف. ومع تنامي الدخل من صادرات النفط، صار في البلد مال يكبر ووضع نقدي مضطرب بلا جهاز يمسك زمامه."
+      },
+      {
+        "heading": "مرسومان أنشآ مؤسسة النقد",
+        "image_keywords": [
+          "SAMA",
+          "Saudi Arabian Monetary Agency"
+        ],
+        "image_keywords_ar": [
+          "مؤسسة النقد",
+          "ساما"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولذلك، في 20 أبريل 1952 صدر مرسومان ملكيان في عهد الملك عبدالعزيز بإنشاء مؤسسة النقد العربي السعودي. مهمتها تنظيم شؤون النقد والإشراف على المصارف وتثبيت قيمة العملة. وبدأت مزاولة أعمالها فعلياً في أكتوبر من السنة نفسها. لكن النقود في أيدي الناس بقيت فضة ثقيلة."
+      },
+      {
+        "heading": "ورقة صُنعت لأجل الحجاج",
+        "image_keywords": [
+          "Hajj receipt",
+          "first Saudi banknote"
+        ],
+        "image_keywords_ar": [
+          "إيصالات الحجاج",
+          "أول عملة ورقية"
+        ],
+        "punch": "ثم بدأ تجار مكة يتداولونها بينهم.",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. في 25 يوليو 1953 أصدرت المؤسسة ورقة اسمها «إيصالات الحجاج» من فئة عشرة ريالات. قيمتها مضمونة بما يقابلها من الريالات الفضية، وطُبعت بست لغات ليقرأها الحاج القادم من أي بلد. خمسة ملايين إيصال، ليحمل الحاج ورقة بدل كيس المعدن."
+      },
+      {
+        "heading": "الطريق إلى عملة رسمية",
+        "image_keywords": [
+          "Saudi riyal banknote 1961",
+          "Saudi riyal note"
+        ],
+        "image_keywords_ar": [
+          "الريال السعودي",
+          "عملة ورقية"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن الطريق إلى عملة ورقية رسمية لم يكن قصيراً. ففي سنوات المؤسسة الأولى مرّت البلاد بأزمة نقدية ومالية، وصدر مرسوم ملكي في نوفمبر 1957 عدّل نظامها. ولم يُطرح أول إصدار نقدي ورقي رسمي إلا في 14 يونيو 1961 — بعد تسع سنوات من التأسيس."
+      },
+      {
+        "heading": "من إيصال إلى احتياطي ضخم",
+        "image_keywords": [
+          "Saudi Central Bank Riyadh",
+          "SAMA headquarters"
+        ],
+        "image_keywords_ar": [
+          "البنك المركزي السعودي",
+          "ساما"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهكذا كبرت المهمة مع البلد. في 2020 صار اسمها البنك المركزي السعودي، مع الاحتفاظ باختصار ساما. وبنهاية 2025 بلغت أصولها الاحتياطية نحو 1.73 تريليون ريال بحسب بياناتها الإحصائية — الجهة نفسها التي بدأت بضمان ورقة قيمتها عشرة ريالات فضية."
+      },
+      {
+        "heading": "سعر لا يتحرك",
+        "image_keywords": [
+          "Saudi riyal",
+          "Saudi Central Bank"
+        ],
+        "image_keywords_ar": [
+          "الريال",
+          "ربط الريال",
+          "ساما"
+        ],
+        "punch": "المؤسسة التي وُلدت من الاضطراب صارت مرساة الريال.",
+        "subject_kind": "company",
+        "text": "ومنذ 1986 وسعر صرف الريال ثابت عند 3.75 للدولار، وساما هي التي تحافظ عليه."
+      }
+    ],
+    "image_prompt": "A close-up of a pile of worn silver coins resting on rough cloth on a wooden table in warm daylight, no people, no logos, no writing visible",
+    "image_queries": [
+      "silver coins pile close up",
+      "old money changer stall market",
+      "brass coin scale weights"
+    ],
+    "image_queries_ar": [
+      "الريال الفضي",
+      "الريال السعودي"
+    ],
+    "sources": [
+      "البنك المركزي السعودي",
+      "سعوديبيديا",
+      "الشرق الأوسط",
+      "جريدة الرياض"
+    ],
+    "title": "يوم كان الحاج يحمل نقوده فضة"
+  },
+  "input_tokens": 171351,
+  "message_id": "msg_011Ceg1DC9bh6tJnXNeviwpd",
+  "model": "claude-opus-5",
+  "output_tokens": 10822,
+  "prompt_hash": "c2c4a4fc4a880c20e3def53bf73dfa2b9556438ccd71bc97975dc6364efb3a21",
+  "revision": "f32ef36cca77e7375ff0680bab30ab549b78e4b0687b24257f1bb34b002d3ed6",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
