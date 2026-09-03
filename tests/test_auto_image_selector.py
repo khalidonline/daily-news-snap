@@ -157,10 +157,10 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
 
         self.assertEqual(calls, ["local", "article"])
 
-    def test_first_safe_neutral_is_used_when_no_yes_exists(self):
+    def test_neutral_candidates_are_not_promoted_when_no_relevant_photo_exists(self):
         calls = []
         fake = self.make_module({
-            "local": "no", "article": "no", "spa": "no",
+            "local": "no", "article": "no", "spa": "neutral",
             "commons": "neutral", "loc": "no", "openverse": "neutral",
             "stock": "no",
         }, calls)
@@ -169,9 +169,8 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "Commons credit")
-            self.assertEqual(hero.read_bytes(), b"commons")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
 
         self.assertEqual(
             calls, ["local", "article", "spa", "commons", "loc", "openverse", "stock"])
@@ -190,7 +189,7 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
 
-    def test_neutral_fallback_keeps_provider_credit_not_pexels(self):
+    def test_neutral_fallback_does_not_keep_provider_credit(self):
         calls = []
         fake = self.make_module({
             "local": "no", "article": "no", "spa": "no",
@@ -201,11 +200,12 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
-            _, credit = self.run_auto(fake, hero)
-            self.assertEqual(credit, "Commons credit")
-            self.assertNotEqual(credit, "Pexels")
+            photo, credit = self.run_auto(fake, hero)
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
 
-    def test_selected_local_neutral_preserves_exempt_marker(self):
+
+    def test_local_neutral_is_not_promoted_or_left_exempt(self):
         calls = []
         fake = self.make_module({
             "local": "neutral", "article": "no", "spa": "no",
@@ -216,13 +216,12 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "Local credit")
-            marker = Path(str(hero) + ".exempt")
-            self.assertTrue(marker.exists())
-            self.assertTrue(marker.read_text(encoding="utf-8").startswith("local:"))
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
+            self.assertFalse(Path(str(hero) + ".exempt").exists())
 
-    def test_rejected_local_marker_does_not_leak_to_article_neutral(self):
+
+    def test_rejected_local_marker_does_not_leak_when_article_is_neutral(self):
         calls = []
         fake = self.make_module({
             "local": "no", "article": "neutral", "spa": "no",
@@ -233,11 +232,12 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "الشرق الأوسط")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
             self.assertFalse(Path(str(hero) + ".exempt").exists())
 
-    def test_world_story_skips_spa(self):
+
+    def test_world_story_skips_spa_and_rejects_neutral_commons(self):
         calls = []
         fake = self.make_module({
             "local": "no", "article": "no", "spa": "yes",
@@ -248,9 +248,10 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "Commons credit")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
         self.assertNotIn("spa", calls)
+
 
     def test_downstream_legacy_provider_is_suppressed_after_auto_exhaustion(self):
         calls = []
