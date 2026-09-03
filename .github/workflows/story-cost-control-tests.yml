@@ -11,10 +11,12 @@ on:
       - "story_notification_state.py"
       - "story_cost_report.py"
       - "story_cost_pilot.py"
+      - "story_quality_gate.py"
       - "story_runtime.py"
       - "story_bot.py"
       - "story_focus.py"
       - "ready_story_publish.py"
+      - "guarded_story_publish.py"
       - "publication_ready_pool.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
@@ -25,6 +27,8 @@ on:
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
+      - "tests/test_story_quality_gate.py"
+      - "tests/test_story_quality_gate_integration.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_ready_story_publish_readiness_gate.py"
       - ".github/workflows/story.yml"
@@ -42,10 +46,12 @@ on:
       - "story_notification_state.py"
       - "story_cost_report.py"
       - "story_cost_pilot.py"
+      - "story_quality_gate.py"
       - "story_runtime.py"
       - "story_bot.py"
       - "story_focus.py"
       - "ready_story_publish.py"
+      - "guarded_story_publish.py"
       - "publication_ready_pool.py"
       - "tests/test_story_brief_store.py"
       - "tests/test_story_editorial_quality.py"
@@ -56,6 +62,8 @@ on:
       - "tests/test_story_visual_state.py"
       - "tests/test_story_notification_state.py"
       - "tests/test_story_cost_report.py"
+      - "tests/test_story_quality_gate.py"
+      - "tests/test_story_quality_gate_integration.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_ready_story_publish_readiness_gate.py"
       - ".github/workflows/story.yml"
@@ -94,6 +102,15 @@ jobs:
         run: python -m unittest -v tests/test_story_visual_state.py
       - name: Final notification dedupe
         run: python -m unittest -v tests/test_story_notification_state.py
+      - name: Global pre-review Story quality stays local
+        env:
+          ANTHROPIC_API_KEY: ""
+          ARK_API_KEY: ""
+          OPENAI_API_KEY: ""
+          TELEGRAM_TOKEN: ""
+          TELEGRAM_CHAT_ID: ""
+          POST_TO_SNAPCHAT: "0"
+        run: python -m unittest -v tests/test_story_quality_gate.py tests/test_story_quality_gate_integration.py
       - name: Publisher persistence and final-only notification
         run: POST_TO_SNAPCHAT=0 python -m unittest -v tests/test_ready_story_publish.py tests/test_ready_story_publish_readiness_gate.py
       - name: Local story cost report
