@@ -1,7 +1,10 @@
-import json
+import importlib.util
 from pathlib import Path
 
-import send_approved_story as sender
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("send_approved_story", ROOT / "send_approved_story.py")
+sender = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(sender)
 
 
 def test_send_verified_frames_sequentially_sends_all_six(tmp_path, monkeypatch):
