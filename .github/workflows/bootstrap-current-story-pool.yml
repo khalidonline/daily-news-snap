@@ -10,12 +10,12 @@ permissions:
 
 concurrency:
   group: story-publishability-bootstrap
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   validate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,17 +45,15 @@ jobs:
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
         run: |
-          # Final-code bootstrap: every PASS below is evidence created by the
-          # same global frame-relevance policy that scheduled publishing uses.
+          # Seed only the strongest repaired candidates. Broader pool growth can
+          # happen incrementally; daily auto-selection will never use an
+          # unvalidated story.
           set +e
           stories=(
             'قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية'
             'قصة تأسيس مؤسسة النقد ساما'
             'قصة مدام سي جيه ووكر: أول امرأة صنعت ثروتها بنفسها في أمريكا'
             'قصة أول مطار في جدة وتطور الطيران المدني'
-            'قصة أول عملة ورقية سعودية'
-            'قصة Samsung: من متجر بقالة إلى عملاق إلكترونيات'
-            'Jack Bogle: أنشأ صندوق المؤشرات ورفض أن يصبح ملياردير'
           )
           passed=0
           failed=0
