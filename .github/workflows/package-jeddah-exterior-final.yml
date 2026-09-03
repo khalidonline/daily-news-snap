@@ -1,0 +1,70 @@
+name: Package corrected Jeddah exterior final
+
+on:
+  push:
+    branches: [delivery/jeddah-exterior-frame6]
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow
+      - name: Download previously reviewed five-card base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -H 'Accept: application/vnd.github+json' \
+            repos/$GITHUB_REPOSITORY/actions/artifacts/9895487188/zip > base.zip
+          mkdir deck && unzip -q base.zip -d deck
+      - name: Replace only frame 6 with modern Terminal 1 exterior
+        run: |
+          curl -L --fail --retry 2 \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/King_Abdulaziz_International_Airport_-_Terminal_1.jpg' \
+            -o terminal1.jpg
+          python - <<'PY'
+          from PIL import Image, ImageDraw
+          from pathlib import Path
+          import hashlib, json
+
+          root=Path('deck')
+          card_path=root/'jeddah-approved-06.png'
+          card=Image.open(card_path).convert('RGB')
+          src=Image.open('terminal1.jpg').convert('RGB')
+
+          # Exact photo box in the 1080x1920 Story template.
+          x0,y0,x1,y1=82,360,998,1050
+          w,h=x1-x0,y1-y0
+          scale=max(w/src.width,h/src.height)
+          resized=src.resize((round(src.width*scale),round(src.height*scale)),Image.LANCZOS)
+          left=(resized.width-w)//2; top=(resized.height-h)//2
+          photo=resized.crop((left,top,left+w,top+h))
+          mask=Image.new('L',(w,h),0)
+          ImageDraw.Draw(mask).rounded_rectangle((0,0,w-1,h-1),radius=34,fill=255)
+          card.paste(photo,(x0,y0),mask)
+          card.save(card_path,'PNG',optimize=True)
+
+          manifest=json.loads((root/'story-review.json').read_text(encoding='utf-8'))
+          d=hashlib.sha256()
+          for i,row in enumerate(manifest['frames'],1):
+              p=root/row['path']
+              row['sha256']=hashlib.sha256(p.read_bytes()).hexdigest()
+              d.update(f'{i}:'.encode()); d.update(p.read_bytes()); d.update(b'\0')
+          manifest['deck_hash']=d.hexdigest()
+          (root/'story-review.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('DECK_HASH='+manifest['deck_hash'])
+          PY
+      - name: Upload exact corrected deck
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-review-${{ github.run_id }}
+          path: deck/
+          retention-days: 7
+          if-no-files-found: error
