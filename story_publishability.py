@@ -10,6 +10,7 @@ stale by design and requires an explicit dry validation to become current.
 from __future__ import annotations
 
 import hashlib
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
@@ -81,37 +82,60 @@ def publishability_from_visual_state(
     return result
 
 
+def _load_state_path(
+    path: Path,
+    load_fn: Callable[[Path], dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    if load_fn is not None:
+        try:
+            payload = load_fn(path)
+        except (OSError, ValueError, TypeError):
+            return {}
+        return payload if isinstance(payload, dict) else {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, ValueError, TypeError):
+        return {}
+    if not isinstance(payload, dict):
+        return {}
+    return {key: value for key, value in payload.items() if key != "schema"}
+
+
 def latest_visual_state(
     story: str,
     *,
     root: str | Path = DEFAULT_VISUAL_ROOT,
     load_fn: Callable[[Path], dict[str, Any]] | None = None,
 ) -> tuple[str, dict[str, Any]]:
-    """Return the newest persisted visual state for a story without guessing."""
+    """Return the newest meaningful persisted visual evidence for a story.
+
+    Git checkouts commonly give many files the same filesystem mtime, so mtime
+    is only a final fallback. Current-policy states rank ahead of legacy states,
+    and among current states the persisted evaluation timestamp is authoritative.
+    """
     root = Path(root)
     parent = root / _story_id(story)
-    candidates: list[tuple[int, str, Path]] = []
+    candidates: list[tuple[tuple[Any, ...], str, dict[str, Any]]] = []
     if parent.exists():
         for path in parent.glob("*/state.json"):
-            try:
-                stamp = path.stat().st_mtime_ns
-            except OSError:
+            state = _load_state_path(path, load_fn=load_fn)
+            if not state:
                 continue
-            candidates.append((stamp, path.parent.name, path))
+            try:
+                mtime = path.stat().st_mtime_ns
+            except OSError:
+                mtime = 0
+            current_policy = int(
+                state.get("publishability_policy") == PUBLISHABILITY_POLICY
+            )
+            evaluated_at = str(state.get("publishability_evaluated_at") or "")
+            revision = path.parent.name
+            rank = (current_policy, evaluated_at, mtime, revision)
+            candidates.append((rank, revision, state))
     if not candidates:
         return "", {}
-    _stamp, revision, path = max(candidates, key=lambda item: (item[0], item[1]))
-    if load_fn is not None:
-        return revision, load_fn(path)
-    try:
-        import json
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, ValueError, TypeError):
-        return revision, {}
-    if isinstance(payload, dict):
-        payload = {key: value for key, value in payload.items() if key != "schema"}
-        return revision, payload
-    return revision, {}
+    _rank, revision, state = max(candidates, key=lambda item: item[0])
+    return revision, state
 
 
 def evaluate_story(
