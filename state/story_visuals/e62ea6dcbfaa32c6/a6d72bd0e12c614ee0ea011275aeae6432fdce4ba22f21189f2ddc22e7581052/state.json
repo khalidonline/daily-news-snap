@@ -1,4 +1,5 @@
 {
+  "final_release_status": "READY",
   "frames": {
     "1": {
       "asset_hash": "c1f8ea3928a9a6ae53af0bbb30339f08a0142859538e052441b326744e1681c3",
@@ -122,6 +123,8 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-03T07:12:50.018859+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "a6d72bd0e12c614ee0ea011275aeae6432fdce4ba22f21189f2ddc22e7581052",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
