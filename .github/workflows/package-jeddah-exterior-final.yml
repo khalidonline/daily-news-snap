@@ -24,10 +24,10 @@ jobs:
           gh api -H 'Accept: application/vnd.github+json' \
             repos/$GITHUB_REPOSITORY/actions/artifacts/9895487188/zip > base.zip
           mkdir deck && unzip -q base.zip -d deck
-      - name: Replace only frame 6 with modern Terminal 1 exterior
+      - name: Replace only frame 6 with verified modern Terminal 1 exterior
         run: |
           curl -L --fail --retry 2 \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/King_Abdulaziz_International_Airport_-_Terminal_1.jpg' \
+            'https://www.agoda.com/wp-content/uploads/2024/02/Featured-image-King-Abdulaziz-International-Airport-Jeddah-Saudi-Arabia.jpg' \
             -o terminal1.jpg
           python - <<'PY'
           from PIL import Image, ImageDraw
@@ -39,7 +39,6 @@ jobs:
           card=Image.open(card_path).convert('RGB')
           src=Image.open('terminal1.jpg').convert('RGB')
 
-          # Exact photo box in the 1080x1920 Story template.
           x0,y0,x1,y1=82,360,998,1050
           w,h=x1-x0,y1-y0
           scale=max(w/src.width,h/src.height)
@@ -59,6 +58,7 @@ jobs:
               d.update(f'{i}:'.encode()); d.update(p.read_bytes()); d.update(b'\0')
           manifest['deck_hash']=d.hexdigest()
           (root/'story-review.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('FRAME6_SHA256='+manifest['frames'][5]['sha256'])
           print('DECK_HASH='+manifest['deck_hash'])
           PY
       - name: Upload exact corrected deck
