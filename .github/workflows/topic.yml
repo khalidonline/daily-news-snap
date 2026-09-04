@@ -50,6 +50,7 @@ jobs:
             --bot topic \
             --event-name "${{ github.event_name }}" \
             --requested-slot "$REQUESTED_SLOT" \
+            --requested-slot-file scheduler/triggers/topic.txt \
             --state state/topic_schedule_slots.json \
             --github-env "$GITHUB_ENV"
 
