@@ -244,6 +244,39 @@ class BreakingWatchClassifierJsonTests(unittest.TestCase):
         self.assertEqual(urlopen.call_count, 1)
         sleep.assert_not_called()
 
+    def test_classifier_requests_schema_constrained_json(self):
+        body = json.dumps({
+            "content": [{
+                "type": "text",
+                "text": (
+                    '{"breaking": false, "event": "", "sources": [], '
+                    '"official_source": false, "reason": "routine"}'
+                ),
+            }],
+            "usage": {"input_tokens": 10, "output_tokens": 5},
+        }).encode("utf-8")
+        with patch.object(
+            breaking_watch.urllib.request,
+            "urlopen",
+            return_value=FakeResponse(body),
+        ) as urlopen, patch.object(
+            breaking_watch, "ANTHROPIC_API_KEY", "test-key"
+        ):
+            breaking_watch.classify(
+                datetime(2026, 8, 30, 20, 0),
+                ["قرار سعودي جديد"],
+            )
+
+        request_payload = json.loads(urlopen.call_args.args[0].data)
+        output_format = request_payload["output_config"]["format"]
+        self.assertEqual(output_format["type"], "json_schema")
+        self.assertEqual(output_format["schema"]["type"], "object")
+        self.assertEqual(
+            output_format["schema"]["required"],
+            ["breaking", "event", "sources", "official_source", "reason"],
+        )
+        self.assertFalse(output_format["schema"]["additionalProperties"])
+
 
 class BreakingWatchWindowTests(unittest.TestCase):
     def test_delayed_1930_schedule_is_still_checked_at_1940(self):

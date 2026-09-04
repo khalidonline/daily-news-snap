@@ -183,6 +183,21 @@ WATCH_PROMPT = """أنت حارس بوابة «العاجل» لحساب أخب�
  "official_source": true/false,
  "reason": "لماذا مرّ أو لماذا رُفض"}"""
 
+CLASSIFIER_OUTPUT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "breaking": {"type": "boolean"},
+        "event": {"type": "string"},
+        "sources": {"type": "array", "items": {"type": "string"}},
+        "official_source": {"type": "boolean"},
+        "reason": {"type": "string"},
+    },
+    "required": [
+        "breaking", "event", "sources", "official_source", "reason",
+    ],
+    "additionalProperties": False,
+}
+
 
 def ksa_now():
     return datetime.now(timezone.utc) + timedelta(hours=3)
@@ -474,6 +489,12 @@ def classify(now, fresh_titles=None):
         "max_tokens": WATCH_MAX_TOKENS,
         "system": WATCH_PROMPT,
         "messages": [{"role": "user", "content": user}],
+        "output_config": {
+            "format": {
+                "type": "json_schema",
+                "schema": CLASSIFIER_OUTPUT_SCHEMA,
+            },
+        },
         "tools": [{"type": "web_search_20250305", "name": "web_search",
                    "max_uses": search_budget}],
     }
