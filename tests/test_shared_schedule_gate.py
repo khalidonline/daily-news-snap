@@ -96,6 +96,17 @@ class SharedScheduleGateTests(unittest.TestCase):
             )
         )
 
+    def test_external_scheduler_tick_just_before_slot_is_normalized(self):
+        self.assertEqual(
+            gate.resolve_slot(
+                bot="story",
+                now=datetime(2026, 9, 4, 13, 58, tzinfo=KSA),
+                completed=set(),
+                requested_slot="2026-09-04T13:57:43+03:00",
+            ),
+            "2026-09-04T14:00+03:00",
+        )
+
     def test_state_round_trip(self):
         with tempfile.TemporaryDirectory() as tmp:
             state = Path(tmp) / "state.json"
