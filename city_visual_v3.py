@@ -67,6 +67,12 @@ _PINNED_RIYADH_SKYLINE = {
     "local_path": "images/riyadh-skyline.jpg",
     "credit": "B.alotaby / Wikimedia Commons / CC BY-SA 4.0",
 }
+_PINNED_RIYADH_CLEAR_LOCAL = {
+    "filename": "Riyadh clear local skyline",
+    "commons_file": "Riyadh Skyline.jpg",
+    "local_path": "images/kafd-financial-district.jpg",
+    "credit": "Ahmed / Wikimedia Commons / CC BY-SA 4.0",
+}
 
 
 def _norm(text: str) -> str:
@@ -146,6 +152,7 @@ def pinned_riyadh_visuals(frame: dict) -> list[dict]:
     ) or "من بلدة مسو رة إلى مدينة بهذا الحجم" in _norm(heading)
     if approved_close and is_riyadh:
         return [
+            dict(_PINNED_RIYADH_CLEAR_LOCAL),
             dict(_PINNED_RIYADH_SKYLINE),
             dict(_PINNED_RIYADH_GROWTH),
         ]
