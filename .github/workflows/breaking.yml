@@ -50,6 +50,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Load confirmed-event recovery trigger
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          if [ "$(sed -n '1p' scheduler/triggers/breaking.txt)" = "confirmed" ]; then
+            {
+              echo "TRIGGER_CONFIRMED_EVENT=$(sed -n '2p' scheduler/triggers/breaking.txt)"
+              echo "PINNED_EVENT_URL=$(sed -n '3p' scheduler/triggers/breaking.txt)"
+            } >> "$GITHUB_ENV"
+          fi
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
