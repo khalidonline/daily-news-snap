@@ -157,10 +157,10 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
 
         self.assertEqual(calls, ["local", "article"])
 
-    def test_article_neutral_is_the_only_last_resort_when_no_direct_photo_exists(self):
+    def test_neutral_candidates_are_not_promoted_when_no_relevant_photo_exists(self):
         calls = []
         fake = self.make_module({
-            "local": "no", "article": "neutral", "spa": "neutral",
+            "local": "no", "article": "no", "spa": "neutral",
             "commons": "neutral", "loc": "no", "openverse": "neutral",
             "stock": "no",
         }, calls)
@@ -169,9 +169,8 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "الشرق الأوسط")
-            self.assertEqual(hero.read_bytes(), b"article")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
 
         self.assertEqual(
             calls, ["local", "article", "spa", "commons", "loc", "openverse", "stock"])
@@ -222,7 +221,7 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertFalse(Path(str(hero) + ".exempt").exists())
 
 
-    def test_article_neutral_fallback_does_not_inherit_rejected_local_marker(self):
+    def test_rejected_local_marker_does_not_leak_when_article_is_neutral(self):
         calls = []
         fake = self.make_module({
             "local": "no", "article": "neutral", "spa": "no",
@@ -233,9 +232,8 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "الشرق الأوسط")
-            self.assertEqual(hero.read_bytes(), b"article")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
             self.assertFalse(Path(str(hero) + ".exempt").exists())
 
 
