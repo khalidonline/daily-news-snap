@@ -1612,6 +1612,8 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
     Only commercial-use, modification-allowed licences are requested, and the
     creator and licence are returned so the card can credit them.
     """
+    commons_title_marker = Path(str(out_path) + ".commons-title")
+    commons_title_marker.unlink(missing_ok=True)
     if isinstance(queries, str):
         queries = [queries]
     queries = [q.strip() for q in queries if q and q.strip()]
@@ -2072,7 +2074,9 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
             if _recent_reject(out_path):
                 continue
             credit = _commons_credit(info)
-            print(f"    photo: {page.get('title', '')[:70]} — {credit} [{query}]")
+            title = page.get("title", "")
+            commons_title_marker.write_text(title, encoding="utf-8")
+            print(f"    photo: {title[:70]} — {credit} [{query}]")
             return str(out_path), credit
 
     print("  ! every Commons candidate failed to download")
