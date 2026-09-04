@@ -120,6 +120,13 @@ def append_env(path: str | None, key: str, value: str) -> None:
 
 def command_due(args: argparse.Namespace) -> int:
     requested = (args.requested_slot or "").strip()
+    if not requested and args.event_name == "push" and args.requested_slot_file:
+        try:
+            requested = args.requested_slot_file.read_text(
+                encoding="utf-8"
+            ).split()[0]
+        except (OSError, IndexError):
+            requested = ""
     # A human workflow_dispatch without a scheduled_slot is an explicit manual run.
     if args.event_name == "workflow_dispatch" and not requested:
         append_env(args.github_env, "RUN_SCHEDULED_BOT", "1")
@@ -161,6 +168,7 @@ def build_parser() -> argparse.ArgumentParser:
     due.add_argument("--bot", choices=sorted(BOT_SLOTS), required=True)
     due.add_argument("--event-name", default=os.getenv("GITHUB_EVENT_NAME", "schedule"))
     due.add_argument("--requested-slot", default="")
+    due.add_argument("--requested-slot-file", type=Path)
     due.add_argument("--github-env", default=os.getenv("GITHUB_ENV"))
     due.add_argument("--state", type=Path, required=True)
     due.set_defaults(func=command_due)
