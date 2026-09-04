@@ -114,11 +114,11 @@ class CityVisualDecadeMatchTests(unittest.TestCase):
             cvf.pinned_riyadh_visual(growth)["filename"],
         )
         self.assertEqual(
-            "Riyadh Skyline.jpg",
+            "Riyadh clear local skyline",
             cvf.pinned_riyadh_visual(closing)["filename"],
         )
         self.assertEqual(
-            ["Riyadh Skyline.jpg", "Riyadh aerial helicam 2013.jpg"],
+            ["Riyadh clear local skyline", "Riyadh Skyline.jpg", "Riyadh aerial helicam 2013.jpg"],
             [asset["filename"] for asset in cvf.pinned_riyadh_visuals(closing)],
         )
         self.assertIsNone(cvf.pinned_riyadh_visual(ordinary_skyline))
