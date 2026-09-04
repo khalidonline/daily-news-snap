@@ -144,6 +144,54 @@ class BreakingWatchPersistentHeadlineMemoryTests(unittest.TestCase):
         commit.assert_called_once()
         self.assertEqual(commit.call_args.args[0].name, "breaking.json")
 
+    def test_reviewed_card_uses_daily_cap_without_classifier(self):
+        state = {
+            "date": "2026-08-29",
+            "posted": False,
+            "reviewed": True,
+            "stamps": ["test-stamp"],
+        }
+        with patch.object(breaking_watch, "ksa_now", return_value=self.now), \
+                patch.object(breaking_watch, "load_state", return_value=state), \
+                patch.object(breaking_watch, "feed_fresh_items") as feeds, \
+                patch.object(breaking_watch, "classify") as classify, \
+                patch.object(breaking_watch, "notify"):
+            breaking_watch._watch()
+        feeds.assert_not_called()
+        classify.assert_not_called()
+
+    def test_successful_review_marks_daily_cap(self):
+        verdict = {
+            "breaking": True,
+            "event": "قرار سعودي عاجل مؤكد الآن",
+            "sources": ["SPA", "Reuters"],
+            "official_source": True,
+            "reason": "confirmed",
+        }
+        saved = []
+        with patch.object(breaking_watch, "ksa_now", return_value=self.now), \
+                patch.object(breaking_watch, "load_state", return_value={}), \
+                patch.object(
+                    breaking_watch, "feed_fresh_items",
+                    return_value=([self.title], True),
+                ), \
+                patch.object(breaking_watch, "classify", return_value=verdict), \
+                patch.object(breaking_watch, "_run_news_bot", return_value=0), \
+                patch.object(breaking_watch, "DRY_RUN", True), \
+                patch.object(
+                    breaking_watch, "PERSIST_REVIEW_STATE", True, create=True
+                ), \
+                patch.object(
+                    breaking_watch, "save_state",
+                    side_effect=lambda state: saved.append(dict(state)),
+                ), \
+                patch.object(breaking_watch, "notify"):
+            breaking_watch._watch()
+
+        self.assertTrue(saved[-1]["reviewed"])
+        self.assertEqual(saved[-1]["stamps"], ["test-stamp"])
+        self.assertEqual(saved[-1]["lock_at"], "")
+
     def test_classifier_failure_does_not_burn_headline(self):
         with patch.object(breaking_watch, "ksa_now", return_value=self.now), \
                 patch.object(breaking_watch, "load_state", return_value={}), \
