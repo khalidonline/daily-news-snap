@@ -102,11 +102,12 @@ class StoryPublishabilityTests(unittest.TestCase):
         coverage = {
             "weak": (["1", "2", "3"], ["logo"], "FAIL"),
             "ready": (["1", "2", "3", "4"], ["logo"], "PASS"),
+            "strong": (["1", "2", "3", "4", "5", "6"], ["logo"], "PASS"),
         }
         with patch.object(gsp.rsp.sr, "choose_runtime_story", return_value=""), \
-             patch.object(gsp.rsp.sb, "load_stories", return_value=["weak", "ready"]), \
+             patch.object(gsp.rsp.sb, "load_stories", return_value=["weak", "ready", "strong"]), \
              patch.object(gsp.rsp.sr, "coverage", side_effect=lambda story: coverage[story]):
-            self.assertEqual(gsp._personal_resolve_story(), "ready")
+            self.assertEqual(gsp._personal_resolve_story(), "strong")
 
 
 if __name__ == "__main__":
