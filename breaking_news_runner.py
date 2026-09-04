@@ -220,8 +220,7 @@ def run_bot(bot=news_bot):
     # news_bot currently returns normally when REQUIRE_PHOTO exhausts all
     # sources. In breaking mode that must not be interpreted by the watcher as
     # a successful publish. A dedicated non-zero exit keeps the daily cap free.
-    dry_run = bool(getattr(bot, "DRY_RUN", False))
-    if getattr(bot, "POST_ENABLED", True) and not dry_run and not state["post_called"]:
+    if not state["accepted_photo"]:
         _abort_no_visual(bot, event, state)
     return result
 
