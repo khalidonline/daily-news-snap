@@ -1,27 +1,5 @@
 [
  {
-  "headline": "فيدان: تحالف مكة الدفاعي بدأ ببنية أمنية جديدة",
-  "at": "2026-08-31T18:05:08.418800+00:00"
- },
- {
-  "headline": "تيم كوك يترك رئاسة Apple التنفيذية اليوم",
-  "at": "2026-08-31T19:01:27.880243+00:00",
-  "source_link": "https://theverge.com/tech/986832/read-tim-cooks-final-message-as-ceo-to-apple-staff",
-  "lane": "business_tech"
- },
- {
-  "headline": "علي البليهي يفسخ عقده مع الهلال بعد 16 بطولة",
-  "at": "2026-08-31T23:43:02.735996+00:00",
-  "source_link": "https://alyaum.com/articles/6680561/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A/%D8%B9%D8%A7%D8%AC%D9%84-%D8%A7%D9%84%D9%87%D9%84%D8%A7%D9%84-%D9%8A%D8%B9%D9%84%D9%86-%D9%81%D8%B3%D8%AE-%D8%A7%D9%84%D8%AA%D8%B9%D8%A7%D9%82%D8%AF-%D9%85%D8%B9-%D8%B9%D9%84%D9%8A-%D8%A2%D9%84-%D8%A8%D9%84%D9%8A%D9%87%D9%8A",
-  "lane": "sports"
- },
- {
-  "headline": "«شي إن» تدخل بورصة هونغ كونغ بقيمة 26 مليار دولار",
-  "at": "2026-09-01T10:28:39.810815+00:00",
-  "source_link": "https://bbc.co.uk/news/articles/c3v0qrz7z25o?at_medium=RSS&at_campaign=rss",
-  "lane": "business_tech"
- },
- {
   "headline": "ليب 2026 يعلن استثمارات تقنية بـ15 مليار دولار",
   "at": "2026-09-01T15:03:21.953696+00:00",
   "source_link": "https://alwatan.com.sa/article/1184959",
@@ -97,6 +75,12 @@
   "headline": "مسؤول بالفدرالي الأمريكي يرجّح تثبيت الفائدة سبتمبر",
   "at": "2026-09-03T13:09:47.810448+00:00",
   "source_link": "https://cnbc.com/2026/09/03/fed-governor-waller-indicates-he-will-support-holding-rates-steady-at-september-meeting.html",
+  "lane": "business_tech"
+ },
+ {
+  "headline": "Sam Altman يعتذر عن مشاكل إطلاق GPT-6 Astra",
+  "at": "2026-09-04T10:46:53.381849+00:00",
+  "source_link": "https://theverge.com/ai-artificial-intelligence/990060/altman-apologizes-messy-astra-rollout",
   "lane": "business_tech"
  }
 ]
