@@ -60,6 +60,7 @@ jobs:
             --bot news \
             --event-name "${{ github.event_name }}" \
             --requested-slot "$REQUESTED_SLOT" \
+            --requested-slot-file scheduler/triggers/news.txt \
             --state daily_slot_state.json \
             --github-env "$GITHUB_ENV"
 
