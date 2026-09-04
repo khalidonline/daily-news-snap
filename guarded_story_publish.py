@@ -69,11 +69,15 @@ def _personal_resolve_story():
     # A policy upgrade can make every persisted frame-evidence record stale.
     # Keep the publication gate fail-closed, but let the scheduled review run
     # bootstrap fresh evidence from a story with adequate authentic inventory.
+    candidates = []
     for candidate in rsp.sb.load_stories():
         photos, _logos, status = rsp.sr.coverage(candidate)
         if status == "PASS" and len(photos) >= 4:
-            print(f"    review bootstrap candidate: {candidate}")
-            return candidate
+            candidates.append((len(photos), candidate))
+    if candidates:
+        _photo_count, candidate = max(candidates, key=lambda item: item[0])
+        print(f"    review bootstrap candidate: {candidate}")
+        return candidate
     return ""
 
 
