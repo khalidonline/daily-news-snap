@@ -16,29 +16,12 @@ jobs:
         with:
           ref: fix/reject-unrelated-article-images
       - name: Remove neutral article fallback
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          path = Path("daily_news_runner.py")
-          text = path.read_text(encoding="utf-8")
-          old = '''        if selected is None and neutral is not None:
-            if neutral[2] == "article":
-                selected = neutral
-                print("      auto image: using selected article photo as last resort")
-            else:
-                print(f"      auto image: rejecting neutral fallback from {neutral[2]}")
-'''
-          new = '''        if selected is None and neutral is not None:
-            print(f"      auto image: rejecting neutral fallback from {neutral[2]}")
-'''
-          if old not in text:
-              raise SystemExit("expected neutral article fallback block not found")
-          path.write_text(text.replace(old, new, 1), encoding="utf-8")
-          PY
+        run: sed -i '/if neutral\[2\] == "article":/,/print(f"      auto image: rejecting neutral fallback from {neutral\[2\]}")/c\            print(f"      auto image: rejecting neutral fallback from {neutral[2]}")' daily_news_runner.py
       - name: Commit fix to feature branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add daily_news_runner.py
+          git diff --cached --exit-code && exit 1 || true
           git commit -m "fix: require direct relevance for article images"
           git push origin HEAD:fix/reject-unrelated-article-images
