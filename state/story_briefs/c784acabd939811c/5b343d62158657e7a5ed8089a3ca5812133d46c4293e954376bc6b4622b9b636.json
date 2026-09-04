@@ -1,0 +1,110 @@
+{
+  "brief": {
+    "caption": "بدأت ببيع الكتب من مرأب بيت مستأجر. قصة Amazon من أول طلب إلى اليوم.",
+    "frames": [
+      {
+        "heading": "قبل أن يشتري أحد من النت",
+        "image_keywords": [
+          "Seattle 1990s",
+          "Bellevue Washington"
+        ],
+        "image_keywords_ar": [
+          "سياتل"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "منتصف التسعينات. الإنترنت كان جديداً على الناس، والشراء منه فكرة لم يجرّبها أحد تقريباً. من يريد كتاباً معيناً يذهب إلى المكتبة، وإن لم يجده يطلبه وينتظر أسابيع. لكن استخدام الويب كان ينمو بأكثر من 2000% في السنة، وأحد لم يكن يعرف ماذا يفعل بهذا الرقم."
+      },
+      {
+        "heading": "الشاب الذي ترك وول ستريت",
+        "image_keywords": [
+          "Jeff Bezos"
+        ],
+        "image_keywords_ar": [],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "لكن موظفاً في شركة استثمار بوول ستريت اسمه Jeff Bezos قرأ الرقم بطريقة أخرى. في 1994 ترك وظيفته وانتقل إلى بلدة Bellevue، واستأجر بيتاً من ثلاث غرف وبدأ العمل في مرأبه. فكرته: متجر كتب على الإنترنت يعرض ما لا يتسع له أي رف. لكن الشركة التي سجّلها في 5 يوليو 1994 لم تكن تحمل اسم أمازون أصلاً."
+      },
+      {
+        "heading": "الموقع يفتح للناس",
+        "image_keywords": [
+          "Amazon garage",
+          "Amazon first office",
+          "Bellevue founding site"
+        ],
+        "image_keywords_ar": [
+          "أمازون"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. الاسم المسجَّل كان Cadabra، لكن محاميه سمعه «cadaver» أي جثة، فغيّره إلى أمازون على اسم أكبر نهر في العالم. في 16 يوليو 1995 فُتح الموقع للبيع، وأول كتاب بيع كان مؤلَّفاً في الذكاء الاصطناعي. في الأسبوع الأول وصلت طلبات بقيمة 12 ألف دولار — وكل طلب كان يكلّف الشركة أكثر مما تكسبه منه."
+      },
+      {
+        "heading": "سنوات الخسائر والسخرية",
+        "image_keywords": [
+          "Amazon",
+          "Jeff Bezos"
+        ],
+        "image_keywords_ar": [
+          "أمازون"
+        ],
+        "punch": "وصفت المجلة صاحبها بأنه «مجرد وسيط آخر».",
+        "subject_kind": "company",
+        "text": "ولذلك ظلت الخسائر تكبر سنة بعد سنة. في 1998 خسرت أمازون نحو 125 مليون دولار على مبيعات 610 ملايين. وفي مايو 1999 نشرت مجلة Barron's المالية غلافاً بعنوان «Amazon.bomb» قالت فيه إن السهم مبالغ في سعره وإن القصة الجميلة لا تصنع شركة. وفي تلك السنة نفسها بلغت خسارة أمازون 719.9 مليون دولار."
+      },
+      {
+        "heading": "من الكتب إلى كل شيء",
+        "image_keywords": [
+          "Amazon fulfillment center",
+          "Souq.com",
+          "Amazon logistics"
+        ],
+        "image_keywords_ar": [
+          "أمازون",
+          "سوق.كوم"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وحتى مع هذه الخسائر لم تتوقف عن التوسع: صنف بعد صنف، وسوق بعد سوق. في 17 يونيو 2020 تحوّل موقع سوق.كوم في السعودية إلى متجر أمازون السعودية. وفي 2025 أعلنت أمازون مبيعات سنوية بلغت 716.9 مليار دولار — الشركة نفسها التي بدأت بطلبات قيمتها 12 ألف دولار في أسبوع."
+      },
+      {
+        "heading": "ماذا بقي من متجر الكتب",
+        "image_keywords": [
+          "Amazon",
+          "Amazon fulfillment center"
+        ],
+        "image_keywords_ar": [
+          "أمازون"
+        ],
+        "punch": "أمازون لم تكبر فقط — غيّرت طريقة شراء الناس لكل شيء.",
+        "subject_kind": "company",
+        "text": "وهكذا صارت الكتب قسماً واحداً بين عشرات الأقسام داخل المتجر نفسه."
+      }
+    ],
+    "image_prompt": "A quiet 1990s suburban garage turned into a small workspace: wooden door-desks, stacked cardboard boxes of books, a beige desktop computer, warm daylight through a side window, no people, no text, no logos",
+    "image_queries": [
+      "suburban garage workspace 1990s",
+      "1990s bookstore shelves interior",
+      "1990s desktop computer home office"
+    ],
+    "image_queries_ar": [
+      "أمازون",
+      "سياتل"
+    ],
+    "sources": [
+      "Amazon",
+      "HistoryLink",
+      "Barron's",
+      "CNN بالعربية"
+    ],
+    "title": "متجر كتب في مرأب... ثم كل شيء"
+  },
+  "input_tokens": 109970,
+  "message_id": "msg_011CeiJ1tkH1Zh4Ge2RwojTv",
+  "model": "claude-opus-5",
+  "output_tokens": 8021,
+  "prompt_hash": "3e7b345c438cabab76cb118857a55ab766daed35b902f1d73976fb41c64a901c",
+  "revision": "5b343d62158657e7a5ed8089a3ca5812133d46c4293e954376bc6b4622b9b636",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
