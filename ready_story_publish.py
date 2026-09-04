@@ -305,11 +305,15 @@ def notify_final_candidate(
         print(f"    Telegram {status} candidate unchanged — duplicate suppressed")
         return False
     try:
-        notify_fn(
+        confirmed = notify_fn(
             f"[{status}] {story}\nFinal publication candidate",
             frames,
             as_documents=True,
         )
+        if confirmed is not True:
+            raise RuntimeError(
+                "Telegram did not confirm the complete Story review album"
+            )
     except Exception:
         release_fn(claim)
         raise

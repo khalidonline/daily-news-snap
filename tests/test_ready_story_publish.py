@@ -163,7 +163,9 @@ class ReadyStoryPublishTests(unittest.TestCase):
             revision="rev",
             digest="hash",
             claim_fn=lambda *args: next(claims),
-            notify_fn=lambda caption, frames, as_documents=True: calls.append((caption, tuple(frames))),
+            notify_fn=lambda caption, frames, as_documents=True: (
+                calls.append((caption, tuple(frames))) or True
+            ),
             complete_fn=lambda *args: None,
             release_fn=lambda *args: None,
             persist_fn=lambda: None,
@@ -172,6 +174,29 @@ class ReadyStoryPublishTests(unittest.TestCase):
         self.assertFalse(rsp.notify_final_candidate(**kwargs))
         self.assertEqual(1, len(calls))
         self.assertIn("READY", calls[0][0])
+
+    def test_failed_telegram_ack_releases_claim_without_marking_complete(self):
+        released = []
+        completed = []
+        persisted = []
+
+        with self.assertRaisesRegex(RuntimeError, "Telegram did not confirm"):
+            rsp.notify_final_candidate(
+                "story",
+                ["1.png", "2.png"],
+                "REVIEW",
+                "rev",
+                "hash",
+                claim_fn=lambda *args: Path("claim"),
+                notify_fn=lambda *args, **kwargs: False,
+                complete_fn=lambda *args: completed.append(args),
+                release_fn=lambda claim: released.append(claim),
+                persist_fn=lambda: persisted.append(True),
+            )
+
+        self.assertEqual([Path("claim")], released)
+        self.assertEqual([], completed)
+        self.assertEqual([], persisted)
 
     def test_blocked_candidate_never_notifies(self):
         called = []

@@ -3063,7 +3063,7 @@ def notify(text, photo_path=None):
     """Send a message, with the card attached when there is one.
     Silent no-op if the secrets aren't set."""
     if not (TELEGRAM_TOKEN and TELEGRAM_CHAT_ID):
-        return
+        return False
 
     base = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
     try:
@@ -3094,8 +3094,10 @@ def notify(text, photo_path=None):
         with urllib.request.urlopen(req, timeout=60) as resp:
             ok = json.loads(resp.read()).get("ok")
         print(f"    telegram: {'sent' if ok else 'rejected'}")
+        return ok is True
     except Exception as exc:
         print(f"  ! telegram notification failed: {exc}")
+        return False
 
 
 def notify_album(text, photo_paths, as_documents=False):
@@ -3109,7 +3111,7 @@ def notify_album(text, photo_paths, as_documents=False):
     """
     paths = [p for p in (photo_paths or []) if p and Path(p).exists()]
     if not (TELEGRAM_TOKEN and TELEGRAM_CHAT_ID) or not paths:
-        return
+        return False
     if len(paths) == 1 and not as_documents:
         return notify(text, paths[0])
 
@@ -3150,9 +3152,13 @@ def notify_album(text, photo_paths, as_documents=False):
         with urllib.request.urlopen(req, timeout=120) as resp:
             ok = json.loads(resp.read()).get("ok")
         print(f"    telegram: album of {len(paths)} {'sent' if ok else 'rejected'}")
+        return ok is True
     except Exception as exc:
+        if as_documents:
+            print(f"  ! telegram document album failed ({exc}) — no partial fallback")
+            return False
         print(f"  ! telegram album failed ({exc}) — sending one photo instead")
-        notify(text, paths[0])
+        return notify(text, paths[0])
 
 
 def deliver_unposted(cards, headline):
