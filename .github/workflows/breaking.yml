@@ -81,6 +81,7 @@ jobs:
           # DRY_RUN=1, and breaking_watch_entry.py forces POST_TO_SNAPCHAT=0
           # before launching the full breaking-card pipeline.
           DRY_RUN: "1"
+          PERSIST_BREAKING_REVIEW_STATE: "1"
           POST_TO_SNAPCHAT: "0"
           CONFIRMED_BREAKING_EVENT: ${{ github.event_name == 'workflow_dispatch' && inputs.confirmed_event || '' }}
           MEDIA_MODE: "github"
