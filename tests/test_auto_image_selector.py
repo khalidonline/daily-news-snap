@@ -64,7 +64,8 @@ class AutoImageSourcePolicyTests(unittest.TestCase):
 
 
 class RelevanceFirstWrapperTests(unittest.TestCase):
-    def make_module(self, verdicts, calls, *, local_marker=False, pexels_key="key"):
+    def make_module(self, verdicts, calls, *, local_marker=False, pexels_key="key",
+                    commons_title="File:Apple iPhone launch.jpg"):
         def write(path, label, marker=False):
             Path(path).write_bytes(label.encode("utf-8"))
             if marker:
@@ -88,7 +89,10 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         def commons(queries, out_path, need_saudi=None, min_hits=None,
                     subject_mode=False):
             calls.append("commons")
-            return write(out_path, "commons"), "Commons credit"
+            photo = write(out_path, "commons")
+            Path(str(out_path) + ".commons-title").write_text(
+                commons_title, encoding="utf-8")
+            return photo, "Commons credit"
 
         def loc(queries, out_path, need_saudi=None, min_hits=None,
                 subject_mode=False):
@@ -175,6 +179,21 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
 
         self.assertEqual(
             calls, ["local", "article", "spa", "commons", "loc", "openverse", "stock"])
+
+    def test_unrelated_commons_title_blocks_neutral_fallback(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title="File:Perth CBD 200520 gnangarra-138.jpg")
+        self.remember_story(scope="world")
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = self.run_auto(fake, hero)
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
 
     def test_no_candidate_is_never_promoted(self):
         calls = []
