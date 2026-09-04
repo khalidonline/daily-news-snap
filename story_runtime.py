@@ -354,6 +354,16 @@ def _fresh_candidates(pool):
     used = {e["story"] for e in sb.load_used()}
     used |= {e["story"] for e in sb.load_skipped()}
     used |= sb._UNIDENTIFIED
+    ledger = Path(os.getenv(
+        "STORY_NOTIFICATION_LEDGER", "state/story_notifications.jsonl"
+    ))
+    try:
+        for raw in ledger.read_text(encoding="utf-8").splitlines():
+            row = json.loads(raw)
+            if row.get("event") == "telegram_sent" and row.get("story"):
+                used.add(row["story"])
+    except (OSError, json.JSONDecodeError):
+        pass
 
     used_subjects = set()
     try:
