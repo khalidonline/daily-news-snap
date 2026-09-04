@@ -217,9 +217,8 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "الشرق الأوسط")
-            self.assertEqual(hero.read_bytes(), b"article")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
             self.assertFalse(Path(str(hero) + ".exempt").exists())
 
 
@@ -234,8 +233,9 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertIsNone(photo)
-            self.assertIsNone(credit)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "الشرق الأوسط")
+            self.assertEqual(hero.read_bytes(), b"article")
             self.assertFalse(Path(str(hero) + ".exempt").exists())
 
 
