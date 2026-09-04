@@ -1,5 +1,4 @@
 {
-  "final_release_status": "READY",
   "frames": {
     "1": {
       "asset_hash": "0d22ee481b439a1633185326d59fda787e5e94a635b20fd8f949d80c7ada8a00",
@@ -123,7 +122,7 @@
       "status": "FAIL"
     },
     "6": {
-      "asset_hash": "38abde281f23159d3cd0da27974a0f21843433927e9204107b00637c8235bbaa",
+      "asset_hash": "0ce82cde85723d9f5d5e042711e34774c4060e5cc78f1b603845ccff7f2f053b",
       "frame_payload": {
         "heading": "من بلدة مسوّرة إلى مدينة بهذا الحجم",
         "image_keywords": [
@@ -143,8 +142,6 @@
       "status": "PASS"
     }
   },
-  "publishability_evaluated_at": "2026-09-03T06:24:45.462325+00:00",
-  "publishability_policy": "frame-relevance-v2",
   "revision": "685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244",
   "schema": "story-visual-v1",
   "status": "VISUAL_ASSEMBLY",
