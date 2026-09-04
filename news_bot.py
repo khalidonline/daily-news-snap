@@ -548,7 +548,17 @@ POST_ENABLED = os.getenv("POST_TO_SNAPCHAT", "1").strip() not in ("", "0", "fals
 # re-verifies through the normal prompt and the run ABORTS if it can't —
 # a watcher false positive must die here, not print a thin card.
 PINNED_EVENT = os.getenv("PINNED_EVENT", "").strip()
+PINNED_EVENT_URL = os.getenv("PINNED_EVENT_URL", "").strip()
 REMEMBER_DAYS = int(os.getenv("REMEMBER_DAYS", "3"))
+
+
+def attach_pinned_event_url(stories, url=""):
+    """Attach a verified article to a confirmed-event recovery candidate."""
+    stories = list(stories or [])
+    url = str(url or "").strip()
+    if stories and url.startswith(("https://", "http://")):
+        stories[0]["link"] = url
+    return stories
 
 
 def quota_used():
@@ -3937,6 +3947,8 @@ def main():
     result = summarize(items, [e["headline"] for e in posted],
                        pinned=PINNED_EVENT)
     stories = result.get("stories", [])[:CANDIDATES]
+    if PINNED_EVENT:
+        stories = attach_pinned_event_url(stories, PINNED_EVENT_URL)
     caption = result.get("caption", "موجز اليوم")
 
     if not stories:
