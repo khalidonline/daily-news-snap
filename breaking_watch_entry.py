@@ -22,7 +22,10 @@ breaking_watch._run_news_bot = _run_strict_news_bot
 
 def run():
     """Run the watcher, or safely reproduce an already-confirmed event."""
-    confirmed_event = os.getenv("CONFIRMED_BREAKING_EVENT", "").strip()
+    confirmed_event = (
+        os.getenv("CONFIRMED_BREAKING_EVENT", "").strip()
+        or os.getenv("TRIGGER_CONFIRMED_EVENT", "").strip()
+    )
     if confirmed_event:
         print("manual confirmed-event reproduction — classifier bypassed, dry run forced")
         return _run_strict_news_bot({
