@@ -590,7 +590,7 @@ def _watch():
     state = load_state()
     today = now.date().isoformat()
     if state.get("date") == today:
-        if state.get("posted") and \
+        if (state.get("posted") or state.get("reviewed")) and \
                 len(state.get("stamps", [])) >= MAX_BREAKING_PER_DAY:
             print("today's breaking post already went out — quiet cycle")
             notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: بطاقة اليوم العاجلة "
@@ -698,13 +698,21 @@ def _watch():
     state = load_state()
     if rc == 0:
         if DRY_RUN:
-            # the pipeline already sent the [DRY RUN] card message; the
-            # watcher must not claim a publish that never happened, nor
-            # burn the daily cap on a rehearsal
-            state["lock_at"] = ""
+            # Telegram review is the operational delivery in production.
+            # Persist that outcome and apply the existing one-card daily cap,
+            # without claiming that Snapchat received a publish.
+            if PERSIST_REVIEW_STATE:
+                state.update(
+                    reviewed=True,
+                    lock_at="",
+                    stamps=state.get("stamps", []) + [ksa_stamp()],
+                )
+            else:
+                state["lock_at"] = ""
             save_state(state)
-            print("dry run: card built and reported — nothing posted, "
-                  "cap untouched")
+            print("dry run: card built and reported — nothing posted"
+                  + (", review cap recorded" if PERSIST_REVIEW_STATE
+                     else ", cap untouched"))
             return
         state.update(posted=True, lock_at="",
                      stamps=state.get("stamps", []) + [ksa_stamp()])
