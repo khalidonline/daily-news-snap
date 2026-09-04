@@ -169,6 +169,11 @@ class SharedScheduleGateTests(unittest.TestCase):
         self.assertIn("--bot story", workflow)
         self.assertIn("state/story_schedule_slots.json", workflow)
         self.assertIn("ref: repair/all-story-visuals-2026-08-29", workflow)
+        self.assertIn("git stash push --include-untracked", workflow)
+        self.assertLess(
+            workflow.index("git stash push --include-untracked"),
+            workflow.index("git checkout main"),
+        )
         self.assertIn("git checkout main", workflow)
         self.assertIn("github.event_name != 'workflow_dispatch'", workflow)
 
