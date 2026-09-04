@@ -157,7 +157,7 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
 
         self.assertEqual(calls, ["local", "article"])
 
-    def test_neutral_candidates_are_not_promoted_when_no_relevant_photo_exists(self):
+    def test_curated_commons_neutral_is_used_when_no_direct_photo_exists(self):
         calls = []
         fake = self.make_module({
             "local": "no", "article": "no", "spa": "neutral",
@@ -169,8 +169,9 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertIsNone(photo)
-            self.assertIsNone(credit)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "Commons credit")
+            self.assertEqual(hero.read_bytes(), b"commons")
 
         self.assertEqual(
             calls, ["local", "article", "spa", "commons", "loc", "openverse", "stock"])
@@ -189,7 +190,7 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
 
-    def test_neutral_fallback_does_not_keep_provider_credit(self):
+    def test_curated_commons_neutral_keeps_provider_credit(self):
         calls = []
         fake = self.make_module({
             "local": "no", "article": "no", "spa": "no",
