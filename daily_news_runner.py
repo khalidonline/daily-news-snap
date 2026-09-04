@@ -48,7 +48,7 @@ AUTO_IMAGE_REQUIRED_ATTRS = (
     "photo_shows",
 )
 
-_IMAGE_MARKERS = (".exempt", ".generated", ".recentkeep")
+_IMAGE_MARKERS = (".exempt", ".generated", ".recentkeep", ".commons-title")
 _NEUTRAL_PRIORITY = {
     "article": 0,
     "commons": 1,
@@ -626,10 +626,39 @@ def install_auto_image_selector(news_bot_module):
             if verdict == "yes":
                 return (Path(photo), credit, name)
             if verdict == "neutral" and name == "commons":
-                # A Commons photo judged neutral is topical but indirect, and
-                # carries auditable provenance. Keep it only as the final
-                # fallback; article/local neutral images remain rejected.
-                neutral = (Path(photo), credit, name)
+                # A neutral verdict alone does not prove topicality. Commons
+                # search can return a generic scene whose description happens
+                # to contain a query word (for example, a Perth street for an
+                # Apple launch). Require the file title to name a meaningful
+                # query subject before retaining it as the final fallback.
+                title_marker = _marker(candidate, ".commons-title")
+                try:
+                    commons_title = title_marker.read_text(encoding="utf-8")
+                except OSError:
+                    commons_title = ""
+                query_text = " ".join(
+                    str(item) for item in
+                    (q_en if isinstance(q_en, (list, tuple)) else [q_en])
+                )
+                generic = {
+                    "file", "photo", "image", "event", "stage", "launch",
+                    "september", "building", "lineup", "reveal", "news",
+                }
+                title_tokens = {
+                    token.casefold() for token in re.findall(
+                        r"[A-Za-z0-9]+", commons_title
+                    ) if len(token) > 2
+                }
+                subject_tokens = {
+                    token.casefold() for token in re.findall(
+                        r"[A-Za-z0-9]+", query_text
+                    ) if len(token) > 2 and token.casefold() not in generic
+                }
+                if title_tokens & subject_tokens:
+                    neutral = (Path(photo), credit, name)
+                else:
+                    print("      auto image: rejected neutral Commons photo "
+                          "without a named subject match")
             return None
 
         selected = None
