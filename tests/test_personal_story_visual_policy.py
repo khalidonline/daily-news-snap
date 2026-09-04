@@ -174,5 +174,22 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         self.assertIn("silver-riyal.png", names)
 
 
+    def test_aramco_employees_closing_uses_reviewed_worker_photo(self):
+        import story_runtime as sr
+
+        frame = {
+            "heading": "أسماؤهم على الأرض",
+            "text": "اليوم بقي أثر أوائل الموظفين السعوديين في أرامكو.",
+            "punch": "",
+        }
+
+        self.assertEqual(
+            sr.curated_frame_visual_filename(
+                "من هم أول الموظفين السعوديين في أرامكو؟", frame
+            ),
+            "aramco-1951-car.jpg",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
