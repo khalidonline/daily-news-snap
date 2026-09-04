@@ -1,0 +1,131 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "602087cee3ac2db5cde6361d0cc63baa3984ae8fed11e41f1e7a979de7590f7c",
+      "frame_payload": {
+        "heading": "صحراء بلا خرائط",
+        "image_keywords": [
+          "Aramco 1935",
+          "Hufof 1935",
+          "أرامكو 1935",
+          "الأحساء 1935",
+          "Aramco",
+          "أرامكو"
+        ],
+        "image_keywords_ar": [
+          "أرامكو 1935",
+          "الأحساء 1935"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "في منتصف الثلاثينات كانت صحراء المنطقة الشرقية أرضاً بلا طرق معبّدة ولا خرائط. وصلها جيولوجيون أمريكيون يبحثون عن النفط، ومعهم أدوات قياس لا تنفع في أرض لا يعرفون أولها من آخرها. والوظيفة براتب شهري لم تكن شيئاً معروفاً بين أهلها."
+      },
+      "image_source": "state/story_visuals/fa4ab785ae0bfd4f/f5ac29340b2b4f017f800cf4b6ebc71c695e46f8998a7a5addc4f575bfdce1a2/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "9e7d3b37b53376cc54256a21f4547d7fdc8b5da39531ba35d931844015f41c50",
+      "frame_payload": {
+        "heading": "الدليل الذي جاء من البادية",
+        "image_keywords": [
+          "Khamis bin Rimthan",
+          "Max Steineke"
+        ],
+        "image_keywords_ar": [
+          "خميس بن رمثان"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "ولأن أحداً من الفريق لا يعرف الطريق، طلبت الشركة دليلاً من أهل المنطقة. جاءها خميس بن رمثان، رجل من البادية لا يقرأ ولا يكتب، يعرف موقعه من شكل الكثبان ولون التربة ومواضع النجوم. ومن سنة 1935 صار يرافق كبير الجيولوجيين ماكس ستاينكي في رحلاته."
+      },
+      "image_source": "state/story_visuals/fa4ab785ae0bfd4f/f5ac29340b2b4f017f800cf4b6ebc71c695e46f8998a7a5addc4f575bfdce1a2/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "البئر السابعة تتدفق",
+        "image_keywords": [
+          "Dammam No 7 1938",
+          "Dhahran drilling 1930s"
+        ],
+        "image_keywords_ar": [
+          "بئر الدمام رقم 7",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. في مارس 1938 تدفق النفط بكميات تجارية من بئر الدمام رقم 7. وكان في عقد الامتياز شرط بأن توظف الشركة سعوديين قدر الإمكان. وبنهاية 1939 كان في كشوف الرواتب 3,178 سعودياً مقابل 322 أمريكياً."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "4": {
+      "asset_hash": "3da58d7fbf4683eb3afe88dcaac867f90884bb647d3ae3d0883074652b74ffe2",
+      "frame_payload": {
+        "heading": "الأجر لم يكن واحداً",
+        "image_keywords": [
+          "Aramco camp 1951",
+          "Aramco 1951 truck"
+        ],
+        "image_keywords_ar": [
+          "أرامكو 1951",
+          "طفرة النفط"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "لكن العمل داخل المعسكرات لم يكن متساوياً. الأجر والسكن للعامل السعودي كانا أقل مما يحصل عليه الأمريكي في المكان نفسه. في يوليو 1945 توقف 137 حفّاراً عربياً في الظهران عن العمل بسبب فرق الأجور. وفي أكتوبر 1953 توقف 13 ألف عامل سعودي في أول نزاع عمالي كبير في تاريخ البلاد."
+      },
+      "image_source": "state/story_visuals/fa4ab785ae0bfd4f/f5ac29340b2b4f017f800cf4b6ebc71c695e46f8998a7a5addc4f575bfdce1a2/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "61dede0a64d06c77325367f2620e11362fce0122a996a20a3b84a6d2000d4ab4",
+      "frame_payload": {
+        "heading": "صبي ينقل الأوراق",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "وفي تلك المكاتب نفسها كان صبي اسمه علي النعيمي. دخل الشركة سنة 1947 وعمره لم يتجاوز الثانية عشرة، ينقل الأوراق بين المكاتب بثلاثة ريالات في اليوم. ابتعثته الشركة فدرس الجيولوجيا وتخرّج سنة 1962. وفي 1 يناير 1984 صار أول رئيس سعودي لأرامكو."
+      },
+      "image_source": "state/story_visuals/fa4ab785ae0bfd4f/f5ac29340b2b4f017f800cf4b6ebc71c695e46f8998a7a5addc4f575bfdce1a2/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "a08e6eaa955a14bc0d6fa10c167b00a4e1b5efa41f13dcb1c4827304bb6c7b5b",
+      "frame_payload": {
+        "heading": "أسماؤهم على الأرض",
+        "image_keywords": [
+          "Aramco Dhahran",
+          "Rimthan tanker"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الظهران"
+        ],
+        "punch": "الذين دخلوها أدلّة وعمّالاً صاروا هم من يديرونها.",
+        "subject_kind": "company",
+        "text": "واليوم يحمل حقل نفط في المنطقة الشرقية اسم خميس بن رمثان، ومعه ناقلة عملاقة تحمل الاسم نفسه."
+      },
+      "image_source": "state/story_visuals/fa4ab785ae0bfd4f/f5ac29340b2b4f017f800cf4b6ebc71c695e46f8998a7a5addc4f575bfdce1a2/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "f5ac29340b2b4f017f800cf4b6ebc71c695e46f8998a7a5addc4f575bfdce1a2",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_ASSEMBLY",
+  "story": "من هم أول الموظفين السعوديين في أرامكو؟"
+}
