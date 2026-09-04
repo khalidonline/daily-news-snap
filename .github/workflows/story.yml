@@ -100,6 +100,8 @@ jobs:
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           POST_TO_SNAPCHAT: "0"
           STORY_HUMAN_APPROVED: "0"
           MONTHLY_POST_LIMIT: "145"

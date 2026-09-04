@@ -176,6 +176,8 @@ class SharedScheduleGateTests(unittest.TestCase):
         )
         self.assertIn("git checkout main", workflow)
         self.assertIn("github.event_name != 'workflow_dispatch'", workflow)
+        self.assertIn("TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}", workflow)
+        self.assertIn("TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}", workflow)
 
 
 if __name__ == "__main__":
