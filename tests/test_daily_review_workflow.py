@@ -54,6 +54,9 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn('LOOKBACK_HOURS: "48"', self.workflow)
         self.assertIn("run: python daily_news_fresh_runner.py", self.workflow)
 
+    def test_runtime_budget_covers_strict_image_search(self):
+        self.assertIn("timeout-minutes: 30", self.workflow)
+
     def test_manual_post_remains_explicit_opt_in(self):
         self.assertIn("post:", self.workflow)
         self.assertIn("default: false", self.workflow)
