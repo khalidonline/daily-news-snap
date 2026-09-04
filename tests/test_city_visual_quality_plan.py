@@ -86,6 +86,16 @@ class CityVisualQualityPlanTests(unittest.TestCase):
         self.assertTrue(murabba)
         self.assertEqual("Murabba Palace.jpg", murabba[0]["filename"])
 
+    def test_riyadh_closing_prefers_reviewed_clear_local_photo(self):
+        closing = cvf.pinned_riyadh_visuals({
+            "subject_kind": "place_city",
+            "heading": "من بلدة مسورة إلى مدينة بهذا الحجم",
+            "text": "225 مليار عملية عبر نقاط البيع",
+            "image_keywords": ["Riyadh skyline"],
+            "image_keywords_ar": ["أفق الرياض"],
+        })
+        self.assertEqual("images/kafd-financial-district.jpg", closing[0]["local_path"])
+
     def test_pinned_visual_uses_reviewed_local_copy_before_network(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
