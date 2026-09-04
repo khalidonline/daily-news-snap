@@ -13,6 +13,20 @@ EVENT = (
 
 
 class ManualBreakingReproductionTests(unittest.TestCase):
+    @mock.patch.dict(
+        os.environ,
+        {"CONFIRMED_BREAKING_EVENT": "", "TRIGGER_CONFIRMED_EVENT": EVENT},
+        clear=False,
+    )
+    @mock.patch.object(entry.breaking_watch, "watch")
+    @mock.patch.object(entry.subprocess, "call", return_value=0)
+    def test_trigger_file_confirmed_event_bypasses_classifier(self, call, watch):
+        rc = entry.run()
+
+        self.assertEqual(0, rc)
+        watch.assert_not_called()
+        self.assertEqual(EVENT, call.call_args.kwargs["env"]["PINNED_EVENT"])
+
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": EVENT}, clear=False)
     @mock.patch.object(entry.breaking_watch, "watch")
     @mock.patch.object(entry.subprocess, "call", return_value=0)
@@ -45,6 +59,8 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
         self.assertIn('DRY_RUN: "1"', workflow)
         self.assertIn('POST_TO_SNAPCHAT: "0"', workflow)
+        self.assertIn("TRIGGER_CONFIRMED_EVENT", workflow)
+        self.assertIn("PINNED_EVENT_URL", workflow)
 
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": ""}, clear=False)
     @mock.patch.object(entry.breaking_watch, "watch")
