@@ -149,10 +149,10 @@ _CURATED_FRAME_VISUALS = {
         (("خرج من الوزارة واسمه بقي",), "ali-alnaimi-2005-india.jpg"),
         (("الباب الذي فتحه",), "ali-alnaimi.jpg"),
     ),
-}    "من هم أول الموظفين السعوديين في أرامكو؟": (
+    "من هم أول الموظفين السعوديين في أرامكو؟": (
         (("أسماؤهم على الأرض",), "aramco-1951-car.jpg"),
     ),
-
+}
 
 
 def curated_frame_visual_filename(story, frame):
