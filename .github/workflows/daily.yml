@@ -64,6 +64,14 @@ jobs:
             --state daily_slot_state.json \
             --github-env "$GITHUB_ENV"
 
+      - name: Load exact News recovery story
+        if: ${{ github.event_name == 'push' && env.RUN_SCHEDULED_BOT != '0' }}
+        run: |
+          payload="$(sed -n '2p' scheduler/triggers/news.txt)"
+          if [ -n "$payload" ]; then
+            echo "NEWS_RECOVERY_STORY_B64=$payload" >> "$GITHUB_ENV"
+          fi
+
       - uses: actions/setup-python@v5
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         with:
@@ -77,6 +85,7 @@ jobs:
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NEWS_RECOVERY_STORY_B64: ${{ env.NEWS_RECOVERY_STORY_B64 }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           POST_PROVIDER: "bundle"
