@@ -183,8 +183,13 @@ def persist_notification_state(commit_fn=None):
 
 
 def review_delivery_allowed(*, status, approved):
-    """Only a human-approved READY deck may leave the review boundary."""
-    return str(status or "").strip().upper() == "READY" and bool(approved)
+    """Allow complete candidate decks into Telegram's private review channel.
+
+    Human approval remains mandatory in the separate Snapchat publication
+    path; it is not required merely to deliver READY/REVIEW material for review.
+    """
+    del approved
+    return str(status or "").strip().upper() in {"READY", "REVIEW"}
 
 
 def build_review_manifest(story, revision, status, frames):
