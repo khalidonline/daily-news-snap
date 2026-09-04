@@ -1,0 +1,118 @@
+{
+  "brief": {
+    "caption": "قبل المصافي وناطحات الظهران، كان أول من وظفتهم أرامكو من السعوديين رجالاً يقرؤون النجوم.",
+    "frames": [
+      {
+        "heading": "صحراء بلا خرائط",
+        "image_keywords": [
+          "Aramco 1935",
+          "Hufof 1935",
+          "أرامكو 1935",
+          "الأحساء 1935",
+          "Aramco",
+          "أرامكو"
+        ],
+        "image_keywords_ar": [
+          "أرامكو 1935",
+          "الأحساء 1935"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "في منتصف الثلاثينات كانت صحراء المنطقة الشرقية أرضاً بلا طرق معبّدة ولا خرائط. وصلها جيولوجيون أمريكيون يبحثون عن النفط، ومعهم أدوات قياس لا تنفع في أرض لا يعرفون أولها من آخرها. والوظيفة براتب شهري لم تكن شيئاً معروفاً بين أهلها."
+      },
+      {
+        "heading": "الدليل الذي جاء من البادية",
+        "image_keywords": [
+          "Khamis bin Rimthan",
+          "Max Steineke"
+        ],
+        "image_keywords_ar": [
+          "خميس بن رمثان"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "ولأن أحداً من الفريق لا يعرف الطريق، طلبت الشركة دليلاً من أهل المنطقة. جاءها خميس بن رمثان، رجل من البادية لا يقرأ ولا يكتب، يعرف موقعه من شكل الكثبان ولون التربة ومواضع النجوم. ومن سنة 1935 صار يرافق كبير الجيولوجيين ماكس ستاينكي في رحلاته."
+      },
+      {
+        "heading": "البئر السابعة تتدفق",
+        "image_keywords": [
+          "Dammam No 7 1938",
+          "Dhahran drilling 1930s"
+        ],
+        "image_keywords_ar": [
+          "بئر الدمام رقم 7",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. في مارس 1938 تدفق النفط بكميات تجارية من بئر الدمام رقم 7. وكان في عقد الامتياز شرط بأن توظف الشركة سعوديين قدر الإمكان. وبنهاية 1939 كان في كشوف الرواتب 3,178 سعودياً مقابل 322 أمريكياً."
+      },
+      {
+        "heading": "الأجر لم يكن واحداً",
+        "image_keywords": [
+          "Aramco camp 1951",
+          "Aramco 1951 truck"
+        ],
+        "image_keywords_ar": [
+          "أرامكو 1951",
+          "طفرة النفط"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "لكن العمل داخل المعسكرات لم يكن متساوياً. الأجر والسكن للعامل السعودي كانا أقل مما يحصل عليه الأمريكي في المكان نفسه. في يوليو 1945 توقف 137 حفّاراً عربياً في الظهران عن العمل بسبب فرق الأجور. وفي أكتوبر 1953 توقف 13 ألف عامل سعودي في أول نزاع عمالي كبير في تاريخ البلاد."
+      },
+      {
+        "heading": "صبي ينقل الأوراق",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "وفي تلك المكاتب نفسها كان صبي اسمه علي النعيمي. دخل الشركة سنة 1947 وعمره لم يتجاوز الثانية عشرة، ينقل الأوراق بين المكاتب بثلاثة ريالات في اليوم. ابتعثته الشركة فدرس الجيولوجيا وتخرّج سنة 1962. وفي 1 يناير 1984 صار أول رئيس سعودي لأرامكو."
+      },
+      {
+        "heading": "أسماؤهم على الأرض",
+        "image_keywords": [
+          "Aramco Dhahran",
+          "Rimthan tanker"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الظهران"
+        ],
+        "punch": "الذين دخلوها أدلّة وعمّالاً صاروا هم من يديرونها.",
+        "subject_kind": "company",
+        "text": "واليوم يحمل حقل نفط في المنطقة الشرقية اسم خميس بن رمثان، ومعه ناقلة عملاقة تحمل الاسم نفسه."
+      }
+    ],
+    "image_prompt": "Vast rippled sand dunes of eastern Arabia under low sun, a faint caravan track curving toward the horizon, scattered scrub, empty landscape with no people, warm sepia daylight, documentary photographic style",
+    "image_queries": [
+      "Eastern Arabia sand dunes 1930s",
+      "Al Hasa oasis palm groves vintage",
+      "desert survey camp Arabia 1935"
+    ],
+    "image_queries_ar": [
+      "الأحساء 1935",
+      "المنطقة الشرقية",
+      "أرامكو 1935"
+    ],
+    "sources": [
+      "أرامكو السعودية",
+      "Aramco World",
+      "سعوديبيديا",
+      "Arab News"
+    ],
+    "title": "أول السعوديين في أرامكو: بدأوا أدلّة"
+  },
+  "input_tokens": 111108,
+  "message_id": "msg_011CejBJwbqcmBAxo889wWf7",
+  "model": "claude-opus-5",
+  "output_tokens": 12043,
+  "prompt_hash": "59bfed71f1ea7185b00ebef6835ee3307bb5af2dd41d7421da71e55abe1b1ccf",
+  "revision": "eccaad42724dbccb72643fee5b3765dac103ccb0af0b17e6236497c186f7e52a",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
