@@ -21,6 +21,10 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn("if: ${{ env.RUN_SCHEDULED_BOT != '0' }}", self.workflow)
 
     def test_successful_slot_marks_durable_state(self):
+        verify_index = self.workflow.index("Verify News card was produced")
+        mark_index = self.workflow.index("Mark News slot complete")
+        self.assertLess(verify_index, mark_index)
+        self.assertIn("test -n \"$(find out -maxdepth 1 -name \'*.png\' -print -quit)\"", self.workflow)
         self.assertIn("python3 shared_schedule_gate.py mark", self.workflow)
         self.assertIn("daily_slot_state.json", self.workflow)
         self.assertIn("git pull --rebase origin main", self.workflow)
