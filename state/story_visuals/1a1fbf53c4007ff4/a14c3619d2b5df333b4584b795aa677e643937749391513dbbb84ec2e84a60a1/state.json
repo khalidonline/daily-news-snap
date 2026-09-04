@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "602087cee3ac2db5cde6361d0cc63baa3984ae8fed11e41f1e7a979de7590f7c",
@@ -120,8 +121,212 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-04T14:44:20.010135+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط"
+  "story": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط",
+  "story_quality_dimensions": {
+    "claim_precision": "BLOCKED",
+    "final_frame_currency": "PASS",
+    "narrative_chronology": "BLOCKED",
+    "subject_focus": "BLOCKED",
+    "visual_chronology": "BLOCKED"
+  },
+  "story_quality_findings": [
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 1,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "SAUDI_GEOGRAPHY_AMBIGUOUS",
+      "dimension": "claim_precision",
+      "frame": 1,
+      "message": "use السعودية or المملكة when the modern Kingdom is intended",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 2,
+      "message": "narrative year regresses from 1938 to 1935 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 5,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 5,
+      "message": "narrative year regresses from 2014 to 1947 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "CURRENT_COPY_ARCHIVAL_VISUAL",
+      "dimension": "visual_chronology",
+      "frame": 5,
+      "message": "present-day copy is paired with archival visual evidence",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 6,
+      "message": "narrative year regresses from 2016 to 1984 without flashback",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [
+        1938
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 1,
+      "subject_overlap": [
+        "ارامكو",
+        "نفط"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1935,
+        1930,
+        1935
+      ]
+    },
+    {
+      "copy_years": [
+        1947,
+        1935
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 2,
+      "subject_overlap": [
+        "ارامكو",
+        "صبي"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        1984,
+        1988
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 3,
+      "subject_overlap": [
+        "ارامكو"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1951,
+        1951
+      ]
+    },
+    {
+      "copy_years": [
+        1995,
+        2014
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "نعيمي",
+        "وزير"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2016,
+        1947,
+        2016
+      ],
+      "current": true,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 5,
+      "subject_overlap": [
+        "ارامكو"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        2000
+      ]
+    },
+    {
+      "copy_years": [
+        1984
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 6,
+      "subject_overlap": [
+        "ارامكو",
+        "نفط"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "claim_precision",
+      "narrative_chronology",
+      "subject_focus",
+      "visual_chronology"
+    ],
+    "frame_modes": {
+      "1": "editorial_frame",
+      "2": "editorial_frame",
+      "5": "mixed_frame",
+      "6": "editorial_frame"
+    },
+    "frames": [
+      1,
+      2,
+      5,
+      6
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "1": [
+        "keep the frame centered on the named Story subject",
+        "rewrite the claim precisely and remove unsupported exclusivity or ambiguity"
+      ],
+      "2": [
+        "restore chronological order or make the flashback explicit"
+      ],
+      "5": [
+        "keep the frame centered on the named Story subject",
+        "restore chronological order or make the flashback explicit",
+        "replace the visual with one matching this frame's time period"
+      ],
+      "6": [
+        "restore chronological order or make the flashback explicit"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
