@@ -102,6 +102,16 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
         self.assertTrue(bot._notices)
         self.assertIn("صورة", bot._notices[-1])
 
+    def test_review_mode_no_photo_also_aborts_instead_of_false_success(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        bot.DRY_RUN = True
+        bot.POST_ENABLED = False
+        with patch.object(runner, "_strict_vision_verdict", return_value="neutral"):
+            with self.assertRaises(SystemExit) as raised:
+                runner.run_bot(bot)
+        self.assertEqual(runner.BREAKING_VISUAL_EXIT, raised.exception.code)
+
 
 if __name__ == "__main__":
     unittest.main()
