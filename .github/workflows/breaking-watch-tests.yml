@@ -8,6 +8,7 @@ on:
       - "breaking_watch_entry.py"
       - "news_bot.py"
       - "tests/test_breaking_watch.py"
+      - "tests/test_breaking_watch_notifications.py"
       - "tests/test_breaking_watch_seen_memory.py"
       - "tests/test_breaking_visual_relevance.py"
       - "tests/test_breaking_manual_reproduction.py"
@@ -20,6 +21,7 @@ on:
       - "breaking_watch_entry.py"
       - "news_bot.py"
       - "tests/test_breaking_watch.py"
+      - "tests/test_breaking_watch_notifications.py"
       - "tests/test_breaking_watch_seen_memory.py"
       - "tests/test_breaking_visual_relevance.py"
       - "tests/test_breaking_manual_reproduction.py"
@@ -42,7 +44,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run breaking watcher regressions
         run: |
-          python -m unittest tests.test_breaking_watch tests.test_breaking_watch_seen_memory -v
+          python -m unittest tests.test_breaking_watch tests.test_breaking_watch_notifications tests.test_breaking_watch_seen_memory -v
           python -m unittest tests.test_breaking_visual_relevance -v
           python -m unittest tests.test_breaking_manual_reproduction -v
           python -m py_compile breaking_watch.py breaking_news_runner.py breaking_watch_entry.py news_bot.py
