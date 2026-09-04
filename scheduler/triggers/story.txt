@@ -1,1 +1,1 @@
-2026-09-04T14:00:00+03:00 story recovery-clear-closing-v6
+2026-09-04T14:00:00+03:00 story recovery-telegram-confirm-v7
