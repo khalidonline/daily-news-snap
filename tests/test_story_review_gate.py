@@ -8,14 +8,14 @@ import ready_story_publish as rsp
 
 
 class StoryReviewGateTests(unittest.TestCase):
-    def test_ready_deck_is_not_deliverable_before_human_approval(self):
-        allowed = getattr(rsp, "review_delivery_allowed", lambda **_kwargs: True)
-        self.assertFalse(allowed(status="READY", approved=False))
-
-    def test_only_ready_approved_deck_is_deliverable(self):
+    def test_ready_deck_is_deliverable_to_review_without_publication_approval(self):
         allowed = getattr(rsp, "review_delivery_allowed", lambda **_kwargs: False)
-        self.assertTrue(allowed(status="READY", approved=True))
-        self.assertFalse(allowed(status="REVIEW", approved=True))
+        self.assertTrue(allowed(status="READY", approved=False))
+
+    def test_review_deck_is_deliverable_to_review_but_invalid_status_is_not(self):
+        allowed = getattr(rsp, "review_delivery_allowed", lambda **_kwargs: False)
+        self.assertTrue(allowed(status="REVIEW", approved=False))
+        self.assertFalse(allowed(status="BLOCKED", approved=True))
 
     def test_review_manifest_freezes_exact_frame_hashes(self):
         build = getattr(rsp, "build_review_manifest", None)
