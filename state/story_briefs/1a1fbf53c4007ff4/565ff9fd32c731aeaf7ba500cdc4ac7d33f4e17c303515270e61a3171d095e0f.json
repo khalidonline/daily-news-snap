@@ -1,0 +1,116 @@
+{
+  "brief": {
+    "caption": "دخل أرامكو صبياً براتب 90 ريالاً، وبعد 69 سنة صارت كلمته تحرّك أسعار النفط في العالم.",
+    "frames": [
+      {
+        "heading": "بادية بلا مدارس",
+        "image_keywords": [
+          "Aramco 1935",
+          "Dhahran 1930s",
+          "Hofuf 1935"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الأحساء",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في ثلاثينات القرن الماضي، كان أطفال البادية في شرق الجزيرة يرعون الغنم قبل أن يتعلّموا القراءة. المدارس نادرة، وشهادة الميلاد نفسها لم تكن شيئاً معروفاً. وفي 1938 خرج النفط من تحت الرمل، لكن من يديره جاء من أمريكا."
+      },
+      {
+        "heading": "الصبي الذي حلّ محل أخيه",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي",
+          "النعيمي"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "لكن في 1947 دخل شركة أرامكو صبي اسمه علي النعيمي، مولود في البادية سنة 1935. جاء ليأخذ مكان أخيه الذي توفي بالمرض، وصار معيل أسرته. وظيفته: ساعي مكتب براتب 90 ريالاً في الشهر. ولم يكن يجيد القراءة بعد."
+      },
+      {
+        "heading": "الشركة أرسلته يتعلّم",
+        "image_keywords": [
+          "Aramco 1951",
+          "Aramco Dhahran"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الظهران",
+          "1951"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. الشركة كانت قد فتحت في الظهران مدرسة الجبل لتعليم الصغار، فتعلّم فيها القراءة. ثم ابتعثته إلى بيروت وإلى أمريكا حتى أنهى الماجستير في جامعة Stanford. عاد جيولوجياً وصعد في المناصب: سنة 1984 صار أول سعودي يرأس أرامكو، وسنة 1988 أول رئيس تنفيذي سعودي لها."
+      },
+      {
+        "heading": "الاجتماع الذي هزّ الأسعار",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي",
+          "وزير البترول"
+        ],
+        "punch": "«كان قراراً عظيماً» — قالها وهو يخرج من الاجتماع.",
+        "subject_kind": "person",
+        "text": "وبينما كان ينوي التقاعد عند الستين، جاء تعيينه وزيراً للبترول في أغسطس 1995. وفي نوفمبر 2014 اجتمعت منظمة أوبك والأسعار تهوي، فلم يوافق على خفض الإنتاج دفاعاً عن حصة السعودية في السوق. خام برنت كان 115 دولاراً في يونيو، وهبط بعد القرار إلى أقل من 69. واتُّهم بإشعال حرب أسعار."
+      },
+      {
+        "heading": "خرج من الوزارة واسمه بقي",
+        "image_keywords": [
+          "Saudi Aramco Dhahran"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وبعد نحو 21 سنة في الوزارة، انتهى عمله وزيراً في مايو 2016. بين أول يوم له في أرامكو سنة 1947 وذلك اليوم 69 سنة في النفط، بدأت براتب 90 ريالاً في الشهر. وفي نوفمبر 2016 صدر أمر الملك سلمان بتسمية أحد شوارع أرامكو باسمه."
+      },
+      {
+        "heading": "الباب الذي فتحه",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي",
+          "النعيمي"
+        ],
+        "punch": "ابن البادية أثبت أن مقعد رئيس أرامكو ليس حكراً على الأجانب.",
+        "subject_kind": "person",
+        "text": "ومنذ أن جلس على رأس أرامكو سنة 1984، لم يتولَّ قيادة أكبر شركة نفط في العالم غير سعوديين جاؤوا كلهم بعده."
+      }
+    ],
+    "image_prompt": "A wide eastern Arabian desert landscape at dawn, low sand dunes and a distant early oil drilling derrick, dust haze, muted warm tones, no people, no logos, no text",
+    "image_queries": [
+      "Dhahran desert oil camp 1930s",
+      "eastern Arabia sand dunes desert",
+      "early oil derrick Saudi desert"
+    ],
+    "image_queries_ar": [
+      "الظهران",
+      "أرامكو 1935",
+      "الأحساء"
+    ],
+    "sources": [
+      "أرامكو السعودية",
+      "Saudipedia",
+      "Al Arabiya",
+      "Reuters"
+    ],
+    "title": "من ساعي مكتب في أرامكو إلى وزير النفط"
+  },
+  "input_tokens": 110381,
+  "message_id": "msg_011CeiZKMDDDQiqZerTPSxQ7",
+  "model": "claude-opus-5",
+  "output_tokens": 14406,
+  "prompt_hash": "b8b5a0d7daf21af3a0f88e2f808f5f90d51a2718e1b1d3f50ecf9131f9630f82",
+  "revision": "565ff9fd32c731aeaf7ba500cdc4ac7d33f4e17c303515270e61a3171d095e0f",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
