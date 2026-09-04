@@ -1,0 +1,40 @@
+name: Model quality and cost benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      benchmark_json_b64:
+        description: "Base64-encoded frozen benchmark JSON"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  rank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Decode frozen comparison
+        env:
+          BENCHMARK_JSON_B64: ${{ inputs.benchmark_json_b64 }}
+        run: printf '%s' "$BENCHMARK_JSON_B64" | base64 --decode > /tmp/model-candidates.json
+      - name: Rank candidates without model calls
+        run: >-
+          python model_quality_benchmark.py /tmp/model-candidates.json
+          --output model-benchmark-result.json
+          --summary model-benchmark-summary.md
+      - name: Publish benchmark summary
+        run: cat model-benchmark-summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: model-quality-cost-ranking-${{ github.run_id }}
+          path: |
+            model-benchmark-result.json
+            model-benchmark-summary.md
+          retention-days: 30

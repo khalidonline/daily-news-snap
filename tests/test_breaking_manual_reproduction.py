@@ -59,8 +59,8 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
         self.assertIn('DRY_RUN: "1"', workflow)
         self.assertIn('POST_TO_SNAPCHAT: "0"', workflow)
-        self.assertIn("TRIGGER_CONFIRMED_EVENT", workflow)
-        self.assertIn("PINNED_EVENT_URL", workflow)
+        self.assertIn("github.event.client_payload.confirmed_event", workflow)
+        self.assertIn("types: [breaking-recovery]", workflow)
 
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": ""}, clear=False)
     @mock.patch.object(entry.breaking_watch, "watch")

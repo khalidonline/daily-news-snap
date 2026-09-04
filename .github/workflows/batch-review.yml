@@ -39,7 +39,7 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          STORY_MODEL: "claude-opus-5"
+          STORY_MODEL: "claude-sonnet-5"
           STORY_FRAMES: "6"
           STORY_ALLOW_REPEAT: "1"
           THEME: "light"
@@ -52,9 +52,9 @@ jobs:
           BATCH_STORIES: ${{ inputs.batch_stories || '3' }}
           MODEL_BOT: "story"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
-          MODEL_MAX_USD_PER_RUN: "4"
+          MODEL_MAX_USD_PER_RUN: "2"
           STORY_MAX_PAID_RESPONSES: "3"
-          VISION_MAX_PAID_RESPONSES: "50"
+          VISION_MAX_PAID_RESPONSES: "24"
         run: python batch_review.py
 
       - name: Model cost summary

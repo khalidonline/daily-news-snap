@@ -11,7 +11,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn('- cron: "10,25,40,55 4-20 * * *"', self.workflow)
         self.assertIn("Temporary fallback only", self.workflow)
         self.assertIn("repository_dispatch:", self.workflow)
-        self.assertIn("types: [news-schedule]", self.workflow)
+        self.assertIn("types: [news-schedule, news-recovery]", self.workflow)
 
     def test_shared_gate_controls_paid_work(self):
         self.assertIn("python3 shared_schedule_gate.py due", self.workflow)
@@ -54,9 +54,10 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn('LOOKBACK_HOURS: "48"', self.workflow)
         self.assertIn("run: python daily_news_fresh_runner.py", self.workflow)
 
-    def test_photo_only_recovery_loads_exact_story_from_trigger(self):
+    def test_photo_only_recovery_loads_exact_story_from_explicit_input(self):
         self.assertIn("Load exact News recovery story", self.workflow)
-        self.assertIn("sed -n '2p' scheduler/triggers/news.txt", self.workflow)
+        self.assertIn("github.event.client_payload.story_b64", self.workflow)
+        self.assertIn("inputs.recovery_story", self.workflow)
         self.assertIn("NEWS_RECOVERY_STORY_B64", self.workflow)
 
     def test_runtime_budget_covers_strict_image_search(self):

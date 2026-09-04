@@ -1,18 +1,19 @@
 name: News brief to Snapchat
 
 on:
-  push:
-    paths:
-      - "scheduler/triggers/news.txt"
   schedule:
     # Temporary fallback only. External scheduler should be authoritative.
     - cron: "10,25,40,55 4-20 * * *"
   repository_dispatch:
-    types: [news-schedule]
+    types: [news-schedule, news-recovery]
   workflow_dispatch:
     inputs:
       scheduled_slot:
         description: "Scheduler-only ISO KSA slot; leave empty for manual run"
+        type: string
+        required: false
+      recovery_story:
+        description: "Exact story text for a manual recovery run"
         type: string
         required: false
       dry_run:
@@ -65,10 +66,15 @@ jobs:
             --github-env "$GITHUB_ENV"
 
       - name: Load exact News recovery story
-        if: ${{ github.event_name == 'push' && env.RUN_SCHEDULED_BOT != '0' }}
+        if: ${{ env.RUN_SCHEDULED_BOT != '0' && (github.event.action == 'news-recovery' || inputs.recovery_story != '') }}
+        env:
+          DISPATCH_STORY_B64: ${{ github.event.client_payload.story_b64 || '' }}
+          MANUAL_STORY: ${{ inputs.recovery_story || '' }}
         run: |
-          payload="$(sed -n '2p' scheduler/triggers/news.txt)"
-          if [ -n "$payload" ]; then
+          if [ -n "$DISPATCH_STORY_B64" ]; then
+            echo "NEWS_RECOVERY_STORY_B64=$DISPATCH_STORY_B64" >> "$GITHUB_ENV"
+          elif [ -n "$MANUAL_STORY" ]; then
+            payload="$(printf '%s' "$MANUAL_STORY" | base64 -w0)"
             echo "NEWS_RECOVERY_STORY_B64=$payload" >> "$GITHUB_ENV"
           fi
 
@@ -85,6 +91,7 @@ jobs:
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.NEWS_MODEL || 'claude-sonnet-5' }}
           NEWS_RECOVERY_STORY_B64: ${{ env.NEWS_RECOVERY_STORY_B64 }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -116,9 +123,9 @@ jobs:
           REMEMBER_DAYS: "3"
           MODEL_BOT: "news"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
-          MODEL_MAX_USD_PER_RUN: "2"
+          MODEL_MAX_USD_PER_RUN: "0.50"
           NEWS_MAX_PAID_RESPONSES: "2"
-          VISION_MAX_PAID_RESPONSES: "50"
+          VISION_MAX_PAID_RESPONSES: "20"
         run: python daily_news_fresh_runner.py
 
       - name: Verify News card was produced

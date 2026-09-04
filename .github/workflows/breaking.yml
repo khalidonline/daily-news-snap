@@ -17,11 +17,10 @@ name: Breaking news watch
 # explicitly ends the Telegram review phase.
 
 on:
-  push:
-    paths:
-      - "scheduler/triggers/breaking.txt"
   schedule:
     - cron: "*/30 5-19 * * *"
+  repository_dispatch:
+    types: [breaking-recovery]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -51,16 +50,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Load confirmed-event recovery trigger
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          if [ "$(sed -n '1p' scheduler/triggers/breaking.txt)" = "confirmed" ]; then
-            {
-              echo "TRIGGER_CONFIRMED_EVENT=$(sed -n '2p' scheduler/triggers/breaking.txt)"
-              echo "PINNED_EVENT_URL=$(sed -n '3p' scheduler/triggers/breaking.txt)"
-            } >> "$GITHUB_ENV"
-          fi
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -83,7 +72,7 @@ jobs:
           DRY_RUN: "1"
           PERSIST_BREAKING_REVIEW_STATE: "1"
           POST_TO_SNAPCHAT: "0"
-          CONFIRMED_BREAKING_EVENT: ${{ github.event_name == 'workflow_dispatch' && inputs.confirmed_event || '' }}
+          CONFIRMED_BREAKING_EVENT: ${{ github.event.client_payload.confirmed_event || inputs.confirmed_event || '' }}
           MEDIA_MODE: "github"
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
@@ -100,13 +89,13 @@ jobs:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           LOOKBACK_HOURS: "10"
           REMEMBER_DAYS: "3"
-          WATCH_MODEL: ${{ vars.WATCH_MODEL }}
+          WATCH_MODEL: ${{ vars.WATCH_MODEL || 'claude-haiku-4-5-20251001' }}
           MODEL_BOT: "breaking"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
-          MODEL_MAX_USD_PER_RUN: "1"
+          MODEL_MAX_USD_PER_RUN: "0.15"
           BREAKING_MAX_PAID_RESPONSES: "1"
           NEWS_MAX_PAID_RESPONSES: "2"
-          VISION_MAX_PAID_RESPONSES: "30"
+          VISION_MAX_PAID_RESPONSES: "12"
         run: python breaking_watch_entry.py
 
       - name: Model cost summary

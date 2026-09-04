@@ -1,9 +1,6 @@
 name: Topic brief to Snapchat
 
 on:
-  push:
-    paths:
-      - "scheduler/triggers/topic.txt"
   schedule:
     - cron: "0 6 * * *"        # temporary fallback: 09:00 KSA daily
   repository_dispatch:
@@ -78,6 +75,7 @@ jobs:
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.TOPIC_MODEL || 'claude-sonnet-5' }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           POST_PROVIDER: "bundle"
@@ -125,10 +123,10 @@ jobs:
           MAX_SEARCHES: "6"
           MODEL_BOT: "topic"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
-          MODEL_MAX_USD_PER_RUN: "3"
+          MODEL_MAX_USD_PER_RUN: "1.50"
           TOPIC_SELECT_MAX_PAID_RESPONSES: "1"
-          TOPIC_MAX_PAID_RESPONSES: "3"
-          VISION_MAX_PAID_RESPONSES: "30"
+          TOPIC_MAX_PAID_RESPONSES: "2"
+          VISION_MAX_PAID_RESPONSES: "20"
           IMAGE_GEN_MAX_PAID_RESPONSES: "2"
           ARK_IMAGE_USD_PER_CALL: ${{ vars.ARK_IMAGE_USD_PER_CALL }}
           FAL_IMAGE_USD_PER_CALL: ${{ vars.FAL_IMAGE_USD_PER_CALL }}
@@ -184,4 +182,3 @@ jobs:
             "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=⚠️ Topic bot failed. No Topic was delivered. Run: ${RUN_URL}"
-
