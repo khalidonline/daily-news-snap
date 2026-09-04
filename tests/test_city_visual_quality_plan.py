@@ -1,6 +1,8 @@
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 from PIL import Image, ImageDraw
 
@@ -83,6 +85,25 @@ class CityVisualQualityPlanTests(unittest.TestCase):
         })
         self.assertTrue(murabba)
         self.assertEqual("Murabba Palace.jpg", murabba[0]["filename"])
+
+    def test_pinned_visual_uses_reviewed_local_copy_before_network(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            local = root / "riyadh-skyline.jpg"
+            self._clear().save(local, "JPEG", quality=92)
+            out = root / "frame.jpg"
+            asset = {
+                "filename": "Riyadh Skyline.jpg",
+                "commons_file": "Riyadh Skyline.jpg",
+                "local_path": str(local),
+                "credit": "reviewed",
+            }
+            sb = SimpleNamespace(_photo_digest=lambda _path: "digest", same_picture=lambda *_args: False)
+            with patch.object(cvf.urllib.request, "urlopen", side_effect=AssertionError("network used")), \
+                 patch.object(cvf.photo_quality, "has_poor_atmospheric_visibility", return_value=False):
+                result = cvf._download_pinned_visual(asset, out, sb)
+
+        self.assertEqual(str(out), result)
 
 
 if __name__ == "__main__":
