@@ -7,6 +7,7 @@ approved provider candidates by visual relevance before returning one to the
 legacy renderer.
 """
 
+import base64
 import json
 import os
 import re
@@ -474,6 +475,18 @@ def make_summarizer(news_bot_module):
     original_summarize = news_bot_module.summarize
 
     def _summarize(items, already_posted=(), pinned=""):
+        encoded_recovery = os.getenv("NEWS_RECOVERY_STORY_B64", "").strip()
+        if encoded_recovery:
+            try:
+                story = json.loads(base64.b64decode(encoded_recovery).decode("utf-8"))
+            except (ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+                raise ValueError("invalid exact News recovery payload") from exc
+            required = ("headline", "summary", "takeaway", "link")
+            if not isinstance(story, dict) or any(not story.get(k) for k in required):
+                raise ValueError("exact News recovery payload is missing required fields")
+            print("    exact News recovery: preserving original story copy")
+            return remember_story_contexts({"stories": [story]})
+
         if pinned:
             # Pinned events keep the original verified-search path. Remembering
             # the returned context is harmless and keeps image behavior coherent
