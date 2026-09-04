@@ -75,6 +75,7 @@ jobs:
             --bot story \
             --event-name "${{ github.event_name }}" \
             --requested-slot "$REQUESTED_SLOT" \
+            --requested-slot-file scheduler/triggers/story.txt \
             --state state/story_schedule_slots.json \
             --github-env "$GITHUB_ENV"
           cp shared_schedule_gate.py /tmp/shared_schedule_gate.py
