@@ -1550,11 +1550,17 @@ DOMAIN_CREDITS = {
 }
 
 
+_openverse_unavailable = False
+
+
 def _openverse_search(query, page_size=12):
     """Search Openverse for openly licensed images. No API key needed.
 
     Anonymous access is rate limited, so a 429 here is normal on repeat runs.
     """
+    global _openverse_unavailable
+    if _openverse_unavailable:
+        return []
     url = ("https://api.openverse.org/v1/images/"
            f"?q={urllib.parse.quote(query)}&page_size={page_size}"
            "&license_type=commercial,modification&mature=false")
@@ -1565,12 +1571,14 @@ def _openverse_search(query, page_size=12):
         print(f"    Openverse: {len(results)} results for {query!r}")
         return results
     except urllib.error.HTTPError as exc:
+        _openverse_unavailable = True
         if exc.code == 429:
             print("  ! Openverse rate limited (anonymous quota) — try again later")
         else:
             print(f"  ! Openverse HTTP {exc.code} for {query!r}")
         return []
     except Exception as exc:
+        _openverse_unavailable = True
         print(f"  ! Openverse error for {query!r}: {exc}")
         return []
 
