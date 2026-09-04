@@ -1,0 +1,127 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "602087cee3ac2db5cde6361d0cc63baa3984ae8fed11e41f1e7a979de7590f7c",
+      "frame_payload": {
+        "heading": "بادية بلا مدارس",
+        "image_keywords": [
+          "Aramco 1935",
+          "Dhahran 1930s",
+          "Hofuf 1935"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الأحساء",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في ثلاثينات القرن الماضي، كان أطفال البادية في شرق الجزيرة يرعون الغنم قبل أن يتعلّموا القراءة. المدارس نادرة، وشهادة الميلاد نفسها لم تكن شيئاً معروفاً. وفي 1938 خرج النفط من تحت الرمل، لكن من يديره جاء من أمريكا."
+      },
+      "image_source": "state/story_visuals/1a1fbf53c4007ff4/a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "71d6505667c3402725a8306e9f4708dd4af9d0997f98f5104589b70bb8cf1efe",
+      "frame_payload": {
+        "heading": "الصبي الذي حلّ محل أخيه",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي",
+          "النعيمي"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "لكن في 1947 دخل شركة أرامكو صبي اسمه علي النعيمي، مولود في البادية سنة 1935. جاء ليأخذ مكان أخيه الذي توفي بالمرض، وصار معيل أسرته. وظيفته: ساعي مكتب براتب 90 ريالاً في الشهر. ولم يكن يجيد القراءة بعد."
+      },
+      "image_source": "state/story_visuals/1a1fbf53c4007ff4/a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "a08e6eaa955a14bc0d6fa10c167b00a4e1b5efa41f13dcb1c4827304bb6c7b5b",
+      "frame_payload": {
+        "heading": "الشركة أرسلته يتعلّم",
+        "image_keywords": [
+          "Aramco 1951",
+          "Aramco Dhahran"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الظهران",
+          "1951"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. الشركة كانت قد فتحت في الظهران مدرسة الجبل لتعليم الصغار، فتعلّم فيها القراءة. ثم ابتعثته إلى بيروت وإلى أمريكا حتى أنهى الماجستير في جامعة Stanford. عاد جيولوجياً وصعد في المناصب: سنة 1984 صار أول سعودي يرأس أرامكو، وسنة 1988 أول رئيس تنفيذي سعودي لها."
+      },
+      "image_source": "state/story_visuals/1a1fbf53c4007ff4/a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "08ca73f62d3f610ccd5eedea6a44925378ce5d5a0f8d6b61c0f2f1c2e551bf47",
+      "frame_payload": {
+        "heading": "الاجتماع الذي هزّ الأسعار",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي",
+          "وزير البترول"
+        ],
+        "punch": "«كان قراراً عظيماً» — قالها وهو يخرج من الاجتماع.",
+        "subject_kind": "person",
+        "text": "وبينما كان ينوي التقاعد عند الستين، جاء تعيينه وزيراً للبترول في أغسطس 1995. وفي نوفمبر 2014 اجتمعت منظمة أوبك والأسعار تهوي، فلم يوافق على خفض الإنتاج دفاعاً عن حصة السعودية في السوق. خام برنت كان 115 دولاراً في يونيو، وهبط بعد القرار إلى أقل من 69. واتُّهم بإشعال حرب أسعار."
+      },
+      "image_source": "state/story_visuals/1a1fbf53c4007ff4/a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "61dede0a64d06c77325367f2620e11362fce0122a996a20a3b84a6d2000d4ab4",
+      "frame_payload": {
+        "heading": "خرج من الوزارة واسمه بقي",
+        "image_keywords": [
+          "Saudi Aramco Dhahran"
+        ],
+        "image_keywords_ar": [
+          "أرامكو",
+          "الظهران"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وبعد نحو 21 سنة في الوزارة، انتهى عمله وزيراً في مايو 2016. بين أول يوم له في أرامكو سنة 1947 وذلك اليوم 69 سنة في النفط، بدأت براتب 90 ريالاً في الشهر. وفي نوفمبر 2016 صدر أمر الملك سلمان بتسمية أحد شوارع أرامكو باسمه."
+      },
+      "image_source": "state/story_visuals/1a1fbf53c4007ff4/a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "4be3bbb403ef7867005be36f71f42e41ce8f71be4c43ed4a465ce592b32af805",
+      "frame_payload": {
+        "heading": "الباب الذي فتحه",
+        "image_keywords": [
+          "Ali Al-Naimi"
+        ],
+        "image_keywords_ar": [
+          "علي النعيمي",
+          "النعيمي"
+        ],
+        "punch": "ابن البادية أثبت أن مقعد رئيس أرامكو ليس حكراً على الأجانب.",
+        "subject_kind": "person",
+        "text": "ومنذ أن جلس على رأس أرامكو سنة 1984، لم يتولَّ قيادة أكبر شركة نفط في العالم غير سعوديين جاؤوا كلهم بعده."
+      },
+      "image_source": "state/story_visuals/1a1fbf53c4007ff4/a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "a14c3619d2b5df333b4584b795aa677e643937749391513dbbb84ec2e84a60a1",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_READY",
+  "story": "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط"
+}
