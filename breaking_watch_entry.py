@@ -17,6 +17,20 @@ def _run_strict_news_bot(extra_env):
     return subprocess.call([sys.executable, "breaking_news_runner.py"], env=env)
 
 
+def _install_quiet_notifications():
+    """Silence routine watcher status while preserving real alerts/failures."""
+    send = breaking_watch.notify
+
+    def notify(message):
+        text = str(message)
+        if text.startswith("⚪️"):
+            print("routine breaking-watch Telegram notification suppressed")
+            return None
+        return send(message)
+
+    breaking_watch.notify = notify
+
+
 breaking_watch._run_news_bot = _run_strict_news_bot
 
 
@@ -34,6 +48,7 @@ def run():
             "DRY_RUN": "1",
         })
 
+    _install_quiet_notifications()
     breaking_watch.watch()
     return 0
 
