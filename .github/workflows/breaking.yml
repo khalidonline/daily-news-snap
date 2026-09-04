@@ -8,8 +8,9 @@ name: Breaking news watch
 #                  review. During the review phase nothing posts to Snapchat.
 #                  The script accepts delayed starts until 23:00 KSA so
 #                  GitHub cron jitter cannot discard the final 22:30 cycle.
-#                  Quiet cycles exit quickly, commit nothing, and send one
-#                  Telegram line — silence is a result, not a failure.
+#                  Quiet/no-breaking cycles stay in Actions logs and do not
+#                  send Telegram status. Meaningful failures and real breaking
+#                  review alerts remain notify-worthy.
 #
 # There is NO evening replacement post: no breaking card unless something
 # clears the gates. Direct Snapchat publishing stays disabled until the owner
