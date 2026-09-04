@@ -111,6 +111,11 @@ jobs:
           VISION_MAX_PAID_RESPONSES: "50"
         run: python daily_news_fresh_runner.py
 
+      - name: Verify News card was produced
+        if: ${{ env.RUN_SCHEDULED_BOT != \'0\' }}
+        run: |
+          test -n "$(find out -maxdepth 1 -name \'*.png\' -print -quit)"
+
       - name: Model cost summary
         if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
         run: python model_usage.py summarize --path out/model_usage.jsonl >> "$GITHUB_STEP_SUMMARY"
