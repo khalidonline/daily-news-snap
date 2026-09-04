@@ -17,6 +17,7 @@ from zoneinfo import ZoneInfo
 
 KSA = ZoneInfo("Asia/Riyadh")
 RECOVERY_WINDOW_MINUTES = 90
+EARLY_TRIGGER_GRACE_MINUTES = 5
 
 BOT_SLOTS = {
     "news": tuple((hour, 10) for hour in (7, 9, 11, 13, 15, 17, 19, 21, 23)),
@@ -53,6 +54,17 @@ def _is_valid_bot_slot(bot: str, slot: datetime) -> bool:
     return (slot.hour, slot.minute) in BOT_SLOTS.get(bot, ())
 
 
+def _normalize_requested_slot(bot: str, requested: datetime) -> datetime | None:
+    if _is_valid_bot_slot(bot, requested):
+        return requested
+    for slot in slots_for_day(bot, requested):
+        if requested <= slot <= requested + timedelta(
+            minutes=EARLY_TRIGGER_GRACE_MINUTES
+        ):
+            return slot
+    return None
+
+
 def resolve_slot(
     *,
     bot: str,
@@ -64,7 +76,10 @@ def resolve_slot(
 
     if requested_slot:
         requested = _parse_requested_slot(requested_slot)
-        if requested is None or not _is_valid_bot_slot(bot, requested):
+        if requested is None:
+            return None
+        requested = _normalize_requested_slot(bot, requested)
+        if requested is None:
             return None
         identifier = slot_id(requested)
         if identifier in completed:
