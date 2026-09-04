@@ -112,9 +112,9 @@ jobs:
         run: python daily_news_fresh_runner.py
 
       - name: Verify News card was produced
-        if: ${{ env.RUN_SCHEDULED_BOT != \'0\' }}
+        if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         run: |
-          test -n "$(find out -maxdepth 1 -name \'*.png\' -print -quit)"
+          test -n "$(find out -maxdepth 1 -name '*.png' -print -quit)"
 
       - name: Model cost summary
         if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
