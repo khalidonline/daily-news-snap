@@ -144,6 +144,7 @@ jobs:
       - name: Mark Story slot complete on main
         if: ${{ success() && env.RUN_SCHEDULED_BOT != '0' && env.SCHEDULE_SLOT_ID != '' }}
         run: |
+          git stash push --include-untracked -m "story-slot-transition"
           git checkout main
           git pull --ff-only origin main
           python3 /tmp/shared_schedule_gate.py mark --slot "$SCHEDULE_SLOT_ID" --state state/story_schedule_slots.json
