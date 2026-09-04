@@ -54,6 +54,11 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn('LOOKBACK_HOURS: "48"', self.workflow)
         self.assertIn("run: python daily_news_fresh_runner.py", self.workflow)
 
+    def test_photo_only_recovery_loads_exact_story_from_trigger(self):
+        self.assertIn("Load exact News recovery story", self.workflow)
+        self.assertIn("sed -n '2p' scheduler/triggers/news.txt", self.workflow)
+        self.assertIn("NEWS_RECOVERY_STORY_B64", self.workflow)
+
     def test_runtime_budget_covers_strict_image_search(self):
         self.assertIn("timeout-minutes: 30", self.workflow)
 
