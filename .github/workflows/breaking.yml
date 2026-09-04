@@ -16,6 +16,9 @@ name: Breaking news watch
 # explicitly ends the Telegram review phase.
 
 on:
+  push:
+    paths:
+      - "scheduler/triggers/breaking.txt"
   schedule:
     - cron: "*/30 5-19 * * *"
   workflow_dispatch:
