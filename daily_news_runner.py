@@ -625,11 +625,11 @@ def install_auto_image_selector(news_bot_module):
             print(f"      auto image relevance [{name}]: {verdict}")
             if verdict == "yes":
                 return (Path(photo), credit, name)
-            if verdict == "neutral":
-                proposed = (Path(photo), credit, name)
-                if neutral is None or _NEUTRAL_PRIORITY.get(name, 99) < \
-                        _NEUTRAL_PRIORITY.get(neutral[2], 99):
-                    neutral = proposed
+            if verdict == "neutral" and name == "commons":
+                # A Commons photo judged neutral is topical but indirect, and
+                # carries auditable provenance. Keep it only as the final
+                # fallback; article/local neutral images remain rejected.
+                neutral = (Path(photo), credit, name)
             return None
 
         selected = None
@@ -679,7 +679,9 @@ def install_auto_image_selector(news_bot_module):
             selected = judge("stock", photo, "Pexels" if photo else None, candidate)
 
         if selected is None and neutral is not None:
-            print(f"      auto image: rejecting neutral fallback from {neutral[2]}")
+            selected = neutral
+            print("      auto image: using curated Commons photo as "
+                  "topical fallback")
 
         if selected is not None:
             selected_path, selected_credit, _ = selected
