@@ -40,6 +40,9 @@ except ImportError as exc:
                      f"needs ({exc}). The two files move together.")
 
 STATE_FILE = Path("state/breaking.json")
+PERSIST_REVIEW_STATE = (
+    os.getenv("PERSIST_BREAKING_REVIEW_STATE", "").strip() or "0"
+) != "0"
 MAX_BREAKING_PER_DAY = 1        # v1 cap — one breaking post a day, full stop
 LOCK_MINUTES = 25               # under the 30-minute cadence, so a stuck
                                 # lock never outlives the next cycle by much
@@ -215,8 +218,9 @@ def save_state(state):
     STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=1),
                           encoding="utf-8")
     # shared-file discipline: same rebase-and-retry push as quota.json.
-    # A DRY_RUN keeps its state local so tests never race the live bots.
-    if not DRY_RUN:
+    # Tests keep dry-run state local by default. Production Telegram review
+    # explicitly opts in so reviewed headlines/events cannot be sent twice.
+    if not DRY_RUN or PERSIST_REVIEW_STATE:
         commit_and_push(STATE_FILE, f"breaking state {ksa_stamp()}")
 
 
