@@ -27,6 +27,20 @@ class NearestStoryRepairTests(unittest.TestCase):
             with self.subTest(expected=expected):
                 self.assertEqual(sr.curated_frame_visual_filename(story, frame), expected)
 
+    def test_ali_alnaimi_curated_frame_assignments_cover_all_six_beats(self):
+        story = "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط"
+        cases = [
+            ({"heading": "بادية بلا مدارس"}, "aramco-1935-hufof.jpg"),
+            ({"heading": "الصبي الذي حلّ محل أخيه"}, "aramco-1951-camp.jpg"),
+            ({"heading": "الشركة أرسلته يتعلّم"}, "aramco-1951-car.jpg"),
+            ({"heading": "الاجتماع الذي هزّ الأسعار"}, "ali-alnaimi-2010-bilateral.jpg"),
+            ({"heading": "خرج من الوزارة واسمه بقي"}, "ali-alnaimi-2005-india.jpg"),
+            ({"heading": "الباب الذي فتحه"}, "ali-alnaimi.jpg"),
+        ]
+        for frame, expected in cases:
+            with self.subTest(expected=expected):
+                self.assertEqual(sr.curated_frame_visual_filename(story, frame), expected)
+
     def test_unrelated_frame_never_gets_a_curated_pin(self):
         self.assertIsNone(
             sr.curated_frame_visual_filename(
