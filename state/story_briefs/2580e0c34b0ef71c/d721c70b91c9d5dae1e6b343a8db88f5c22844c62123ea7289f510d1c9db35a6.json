@@ -1,0 +1,114 @@
+{
+  "brief": {
+    "caption": "بدأ بنقل الرسائل بين القرى، وانتهى برائد صناعة مالية كاملة. قصة صالح كامل ودلة البركة.",
+    "frames": [
+      {
+        "heading": "البريد يصل للمدن فقط",
+        "image_keywords": [
+          "Saudi Arabia 1960s",
+          "Riyadh 1960s"
+        ],
+        "image_keywords_ar": [
+          "السعودية",
+          "الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في ستينات القرن الماضي، خدمة البريد في السعودية كانت تقتصر على المدن الكبرى. القرى والبلدات الصغيرة تنتظر مسافراً يحمل رسائلها معه. والطرق بينها طويلة وترابية، ولا أحد يعرف كم تحتاج السيارة من وقود لتقطعها."
+      },
+      {
+        "heading": "موظف رأى المناقصة",
+        "image_keywords": [
+          "Saleh Abdullah Kamel",
+          "Saleh Kamel"
+        ],
+        "image_keywords_ar": [
+          "صالح كامل"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "لكن في وزارة البرق والبريد والهاتف كان هناك موظف شاب اسمه صالح كامل، من مواليد 1941 وخريج تجارة سنة 1963. وحين طرحت الوزارة مناقصة لنقل البريد الداخلي وتوزيعه، رأى فيها ما لم يره غيره: مشروعاً كاملاً، لا مهمة إدارية."
+      },
+      {
+        "heading": "قاس الطريق بنفسه",
+        "image_keywords": [
+          "Toyota Land Cruiser",
+          "Dallah Albaraka"
+        ],
+        "image_keywords_ar": [
+          "دلة البركة"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. قبل أن يتقدّم للمناقصة طاف على مدن السعودية وقراها وقاس المسافات بينها، حتى صار يعرف كم يحتاج كل خط من وقود. ثم استثمر 300 ألف ريال — كل ما جمعه من مطبعة صغيرة ومطبخ — في 30 سيارة تويوتا جيب. المشروع استمر 15 سنة، ومنه وُلدت مؤسسة دلة سنة 1969."
+      },
+      {
+        "heading": "بنك بلا ترخيص في بلده",
+        "image_keywords": [
+          "Saleh Abdullah Kamel 1983",
+          "Dallah Albaraka"
+        ],
+        "image_keywords_ar": [
+          "صالح كامل",
+          "البركة"
+        ],
+        "punch": "البيان قال: ليس عجزاً مالياً ولا لأنه بنك إسلامي.",
+        "subject_kind": "company",
+        "text": "ولأن ما أراده فعلاً كان مصرفاً بلا فوائد، أسس سنة 1982 شركة البركة للاستثمار والتنمية. لكن تراخيص تشغيل بنك تجاري إسلامي داخل المملكة لم تُمنح في تلك المرحلة، فبنى شبكته خارج الحدود. وفي 1993 أوقف بنك البركة في لندن قبول الودائع وبدأ يردّ أموال المودعين بعد متطلبات رقابية جديدة."
+      },
+      {
+        "heading": "من سيارات البريد إلى المصارف",
+        "image_keywords": [
+          "Al Baraka Group",
+          "Manama Bahrain"
+        ],
+        "image_keywords_ar": [
+          "مجموعة البركة"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ومع ذلك كبرت بنوكه في الخارج حتى جُمعت في كيان واحد: مجموعة البركة، الذراع المصرفية التي خرجت من دلة البركة. في النصف الأول من 2026 أعلنت المجموعة أن إجمالي أصولها بلغ 33 مليار دولار، عبر بنوك تابعة في 13 دولة. البداية كانت 300 ألف ريال و30 سيارة بريد."
+      },
+      {
+        "heading": "ما بقي بعده",
+        "image_keywords": [
+          "Saleh Abdullah Kamel",
+          "Dallah Albaraka"
+        ],
+        "image_keywords_ar": [
+          "صالح كامل",
+          "دلة البركة"
+        ],
+        "punch": "صاحب سيارات البريد يُذكر اليوم كرائد للمصرفية الإسلامية.",
+        "subject_kind": "person",
+        "text": "ورحل صالح كامل سنة 2020، وبقيت المصارف التي أسسها تعمل من بعده."
+      }
+    ],
+    "image_prompt": "A dusty unpaved desert track stretching between scattered mud-brick village houses in central Arabia, tyre marks in the sand, distant low hills, warm late-afternoon light, no people, no signage",
+    "image_queries": [
+      "Saudi desert unpaved road 1960s",
+      "Saudi village mud brick houses 1960s",
+      "old desert track Arabia"
+    ],
+    "image_queries_ar": [
+      "السعودية",
+      "الرياض",
+      "جدة"
+    ],
+    "sources": [
+      "Arab News",
+      "Al Baraka Group",
+      "UK Parliament Hansard",
+      "ويكيبيديا"
+    ],
+    "title": "300 ألف ريال و30 سيارة بريد"
+  },
+  "input_tokens": 170782,
+  "message_id": "msg_011CeiYmtR3DHfz3H96BPHRd",
+  "model": "claude-opus-5",
+  "output_tokens": 11137,
+  "prompt_hash": "77cc3e9b870b1945256a6789a39d86559748b592512bb746c631564ecfd681f9",
+  "revision": "d721c70b91c9d5dae1e6b343a8db88f5c22844c62123ea7289f510d1c9db35a6",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
