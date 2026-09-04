@@ -127,7 +127,7 @@ class NewsScopeEdgeTests(unittest.TestCase):
 
 
 class FinalImageQualityTests(unittest.TestCase):
-    def test_article_neutral_beats_unrelated_local_neutral_as_last_resort(self):
+    def test_article_and_local_neutral_are_both_rejected(self):
         def write(path, label):
             Path(path).write_bytes(label.encode("utf-8"))
             return str(path)
@@ -177,9 +177,8 @@ class FinalImageQualityTests(unittest.TestCase):
             hero = Path(td) / "hero.jpg"
             photo, credit = fake.fetch_local_photo(
                 ["كرة القدم السعودية"], ["saudi football"], hero)
-            self.assertEqual(photo, str(hero))
-            self.assertEqual(credit, "اليوم")
-            self.assertEqual(hero.read_bytes(), b"article")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
 
 
 if __name__ == "__main__":
