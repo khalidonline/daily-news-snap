@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from datetime import datetime
@@ -100,6 +102,43 @@ class SharedScheduleGateTests(unittest.TestCase):
             gate.mark_complete(state, "2026-09-02T14:00+03:00")
             data = json.loads(state.read_text(encoding="utf-8"))
             self.assertEqual(data["completed_slots"], ["2026-09-02T14:00+03:00"])
+
+    def test_push_trigger_file_supplies_the_exact_requested_slot(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            trigger = root / "news.txt"
+            state = root / "state.json"
+            github_env = root / "github.env"
+            trigger.write_text(
+                "2026-09-02T07:10:00+03:00 news\n", encoding="utf-8"
+            )
+
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "shared_schedule_gate.py",
+                    "due",
+                    "--bot",
+                    "news",
+                    "--event-name",
+                    "push",
+                    "--requested-slot-file",
+                    str(trigger),
+                    "--state",
+                    str(state),
+                    "--github-env",
+                    str(github_env),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(
+                github_env.read_text(encoding="utf-8"),
+                "RUN_SCHEDULED_BOT=1\nSCHEDULE_SLOT_ID=2026-09-02T07:10+03:00\n",
+            )
 
     def test_topic_workflow_accepts_external_slot_and_marks_it(self):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
