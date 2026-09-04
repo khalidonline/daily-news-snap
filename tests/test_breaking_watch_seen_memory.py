@@ -1,7 +1,9 @@
 import sys
+import tempfile
 import types
 import unittest
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from unittest.mock import patch
 
 
@@ -127,6 +129,20 @@ class BreakingWatchPersistentHeadlineMemoryTests(unittest.TestCase):
             saved["seen_titles"][0]["key"],
             breaking_watch._headline_key(self.title),
         )
+
+    def test_review_mode_can_persist_delivery_memory_when_enabled(self):
+        state = {"date": "2026-08-29", "event_fp": "reviewed-event"}
+        with tempfile.TemporaryDirectory() as td, \
+                patch.object(breaking_watch, "STATE_FILE", Path(td) / "breaking.json"), \
+                patch.object(breaking_watch, "DRY_RUN", True), \
+                patch.object(
+                    breaking_watch, "PERSIST_REVIEW_STATE", True, create=True
+                ), \
+                patch.object(breaking_watch, "commit_and_push") as commit:
+            breaking_watch.save_state(state)
+
+        commit.assert_called_once()
+        self.assertEqual(commit.call_args.args[0].name, "breaking.json")
 
     def test_classifier_failure_does_not_burn_headline(self):
         with patch.object(breaking_watch, "ksa_now", return_value=self.now), \
