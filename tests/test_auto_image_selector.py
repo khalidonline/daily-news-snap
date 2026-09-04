@@ -202,8 +202,9 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertIsNone(photo)
-            self.assertIsNone(credit)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "Commons credit")
+            self.assertEqual(hero.read_bytes(), b"commons")
 
 
     def test_local_neutral_is_not_promoted_or_left_exempt(self):
@@ -238,7 +239,7 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertFalse(Path(str(hero) + ".exempt").exists())
 
 
-    def test_world_story_skips_spa_and_rejects_neutral_commons(self):
+    def test_world_story_skips_spa_and_uses_neutral_commons(self):
         calls = []
         fake = self.make_module({
             "local": "no", "article": "no", "spa": "yes",
@@ -249,8 +250,9 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = self.run_auto(fake, hero)
-            self.assertIsNone(photo)
-            self.assertIsNone(credit)
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "Commons credit")
+            self.assertEqual(hero.read_bytes(), b"commons")
         self.assertNotIn("spa", calls)
 
 
