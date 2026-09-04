@@ -97,6 +97,17 @@ class StoryPublishabilityTests(unittest.TestCase):
                 ["ready"],
             )
 
+    def test_empty_ready_pool_bootstraps_a_renderable_story(self):
+        import guarded_story_publish as gsp
+        coverage = {
+            "weak": (["1", "2", "3"], ["logo"], "FAIL"),
+            "ready": (["1", "2", "3", "4"], ["logo"], "PASS"),
+        }
+        with patch.object(gsp.rsp.sr, "choose_runtime_story", return_value=""), \
+             patch.object(gsp.rsp.sb, "load_stories", return_value=["weak", "ready"]), \
+             patch.object(gsp.rsp.sr, "coverage", side_effect=lambda story: coverage[story]):
+            self.assertEqual(gsp._personal_resolve_story(), "ready")
+
 
 if __name__ == "__main__":
     unittest.main()
