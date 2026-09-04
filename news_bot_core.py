@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 44676)
-Total output lines: 4065
-
 #!/usr/bin/env python3
 """
 موجز الأخبار السعودية اليومي -> سناب شات
@@ -1712,7 +1709,439 @@ PUBLIC_API_UA = ("daily-news-snap/1.0 "
 # ar first: a Saudi subject is far more likely to have an Arabic article, and
 # its lead image is the one a Saudi reader would recognise.
 WIKI_LANGS = tuple(l for l in (os.getenv("WIKI_LANGS", "").strip()
-                               or "ar,en").sp…4676 tokens truncated…ay_publish(item):
+                               or "ar,en").split(",") if l.strip())
+
+COMMONS_API = "https://commons.wikimedia.org/w/api.php"
+
+# Commons is free-content only, but "free" there still covers licences we
+# can't use: match what we ask Openverse for — commercial use and modification.
+_BAD_LICENCE = re.compile(
+    r"(non-?commercial|no-?derivat|\bnc\b|\bnd\b|fair\s*use)", re.IGNORECASE)
+
+
+def _wiki_get(url, params, timeout=30, label="wikimedia"):
+    query = urllib.parse.urlencode(params)
+    req = urllib.request.Request(f"{url}?{query}", headers={
+        "User-Agent": PUBLIC_API_UA, "Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return json.loads(resp.read())
+    except urllib.error.HTTPError as exc:
+        print(f"  ! {label} HTTP {exc.code}")
+    except Exception as exc:
+        print(f"  ! {label} request failed: {exc}")
+    return {}
+
+
+def _commons_meta(info, key):
+    """One extmetadata value, or ''. The values arrive as HTML."""
+    field = (info.get("extmetadata") or {}).get(key) or {}
+    return _clean(str(field.get("value", "")))
+
+
+def _commons_licence_ok(info):
+    licence = " ".join(_commons_meta(info, k) for k in
+                       ("License", "LicenseShortName", "UsageTerms"))
+    if not licence.strip():
+        return False               # unknown licence — never guess in our favour
+    return not _BAD_LICENCE.search(licence)
+
+
+_URL_RE = re.compile(r"(?:https?://|www\.)\S+", re.IGNORECASE)
+# Credit is a provenance blob, not an author field: links, galleries, dates
+# and several labels run together. The name, when it is in there, is labelled.
+# the label is matched case-insensitively, the name is not: the capture
+# relies on capitalisation to know where a name starts and stops
+_CREDIT_AUTHOR_RE = re.compile(
+    r"(?i:photographer|photograph by|author|artist|creator)\s*:?\s*"
+    r"([A-Z][\w.\-']*(?:\s+[A-Z][\w.\-']*){0,2})")
+
+
+def _commons_person(text):
+    """A person's name out of a metadata field, or "".
+
+    Strips links first: some files carry only a URL where the photographer
+    belongs, and printing it puts a raw hyperlink on the card.
+    """
+    text = re.sub(r"\s+", " ", _URL_RE.sub(" ", text or "")).strip(" ,;·-:")
+    if not text:
+        return ""
+    match = _CREDIT_AUTHOR_RE.search(text)
+    if match:
+        return match.group(1).strip(" ,;")
+    if ":" in text:            # still a labelled blob, no name we can trust
+        return ""
+    return text
+
+
+def _commons_credit(info):
+    """Most Commons files are CC BY-SA: the credit line is not optional."""
+    artist = _commons_person(_commons_meta(info, "Artist")) \
+        or _commons_person(_commons_meta(info, "Credit"))
+    if len(artist) > 60:                     # some Artist fields are a paragraph
+        artist = artist[:60].rsplit(" ", 1)[0].rstrip(" ,;")
+    licence = _commons_meta(info, "LicenseShortName").strip()
+    # never a bare licence with nobody named — say where it came from instead
+    return " / ".join(p for p in (artist or "Wikimedia Commons", licence) if p)
+
+
+def _commons_described(page, info):
+    """Everything the file says about itself, for matching a query."""
+    return " ".join(filter(None, [
+        _commons_depicts(page, info),
+        _commons_meta(info, "Categories").replace("|", " "),
+    ]))
+
+
+def _commons_depicts(page, info):
+    """What the picture actually shows — no categories.
+
+    Categories classify the SUBJECT, not the image. A portrait of someone who
+    once served is filed under military categories, and judging it by those
+    rejected a perfectly ordinary headshot: searching Yuan Geng lost his
+    photograph to 'Armed' and 'Army' sitting in his biography.
+    """
+    return " ".join(filter(None, [
+        page.get("title", "").replace("File:", ""),
+        _commons_meta(info, "ObjectName"),
+        _commons_meta(info, "ImageDescription"),
+    ]))
+
+
+# Categories are still worth checking, but only against words that describe a
+# scene and could never describe a career. "Army" and "police" say what a
+# person was; "explosion" and "riot" say what is in the frame.
+_AFFILIATION_TERMS = {"military", "army", "armed", "soldier", "soldiers",
+                      "troops", "police"}
+# Commons names categories in the plural — "Riots", "Explosions" — while the
+# blocklist holds singulars, so an optional s is the difference between this
+# check working and doing nothing at all.
+_CATEGORY_BLOCKED_RE = re.compile(
+    r"\b(" + "|".join(re.escape(t) for t in BLOCKED_IMAGE_TERMS
+                      if t not in _AFFILIATION_TERMS) + r")s?\b",
+    re.IGNORECASE)
+
+
+def _commons_safe(page, info):
+    """Reject on what the picture shows, and on categories that can only
+    describe content. Keeps rule 3 without vetoing a soldier's headshot."""
+    if not _image_is_safe(_commons_depicts(page, info)):
+        return False
+    categories = _commons_meta(info, "Categories").replace("|", " ")
+    match = _CATEGORY_BLOCKED_RE.search(categories)
+    if match:
+        print(f"  ! skipped an image ({match.group(0)!r} in its categories)")
+        return False
+    return True
+
+
+def _commons_fileinfo(titles):
+    """imageinfo + licence metadata for File: titles. Titles missing here are
+    hosted locally on a Wikipedia rather than on Commons, which usually means
+    they are not freely licensed — dropping them is the point."""
+    titles = [t for t in titles if t][:20]
+    if not titles:
+        return []
+    data = _wiki_get(COMMONS_API, {
+        "action": "query", "format": "json", "titles": "|".join(titles),
+        "prop": "imageinfo",
+        "iiprop": "url|extmetadata|size|mime", "iiurlwidth": "1600",
+    }, label="Commons")
+    pages = (data.get("query") or {}).get("pages", {})
+    out = []
+    for page in pages.values():
+        if "missing" in page or not page.get("imageinfo"):
+            continue
+        out.append((page, page["imageinfo"][0]))
+    return out
+
+
+_REJECTED_FILE = Path("images/rejected.txt")
+_rejected_cache = None
+
+
+def _owner_rejected(title):
+    """True for a Commons file title the owner has vetoed by review.
+
+    images/rejected.txt is a content file: one title per line, with or
+    without the File: prefix, # comments allowed. A rejected file never
+    reaches a card, a probe count, or a portrait slot again — rejecting
+    a candidate in the catalogue must be a decision made once."""
+    global _rejected_cache
+    if _rejected_cache is None:
+        entries = set()
+        try:
+            for ln in _REJECTED_FILE.read_text("utf-8").splitlines():
+                ln = ln.split("#")[0].strip()
+                if ln:
+                    entries.add(ln.removeprefix("File:")
+                                .replace("_", " ").casefold())
+        except Exception:
+            pass
+        _rejected_cache = entries
+    t = str(title or "").removeprefix("File:").replace("_", " ").casefold()
+    if t in _rejected_cache:
+        return True
+    # a trailing * vetoes by prefix: two Deir Jarir photos were vetoed
+    # and two OTHERS surfaced — a wrong-subject family needs one line
+    return any(r.endswith("*") and t.startswith(r[:-1])
+               for r in _rejected_cache)
+
+
+def _commons_search(term, limit=12):
+    data = _wiki_get(COMMONS_API, {
+        "action": "query", "format": "json", "generator": "search",
+        "gsrsearch": term, "gsrnamespace": "6", "gsrlimit": str(limit),
+        "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime",
+        "iiurlwidth": "1600",
+    }, label="Commons")
+    pages = (data.get("query") or {}).get("pages", {})
+    found = [(p, p["imageinfo"][0]) for p in pages.values()
+             if p.get("imageinfo") and not _owner_rejected(p.get("title"))]
+    print(f"    Commons: {len(found)} files for {term!r}")
+    return found
+
+
+def _wikipedia_lead_files(term):
+    """File: titles of the lead images of articles matching this term.
+
+    A portrait of a person is almost never captioned with a phrase anyone
+    would search for, but it is nearly always the lead image of their article.
+    """
+    titles = []
+    for lang in WIKI_LANGS:
+        data = _wiki_get(f"https://{lang}.wikipedia.org/w/api.php", {
+            "action": "query", "format": "json", "generator": "search",
+            "gsrsearch": term, "gsrnamespace": "0", "gsrlimit": "3",
+            "redirects": "1", "prop": "pageimages", "piprop": "name",
+        }, label=f"{lang}.wikipedia")
+        pages = list((data.get("query") or {}).get("pages", {}).values())
+        # search ranks a loosely related article first often enough to matter,
+        # so an exact title match jumps the queue
+        pages.sort(key=lambda p: (p.get("title", "").strip().lower()
+                                  != term.strip().lower()))
+        # The lead image is exempt from the term-hit check below, because it
+        # is the article's own picture. That only holds if the article is
+        # really about what we asked for — so require the title to carry every
+        # word of the query. Searching for "علي النعيمي" otherwise returned the
+        # article for a different النعيمي and, with it, a photograph of the
+        # wrong man.
+        wanted = [w for w in re.split(r"\W+", term.lower()) if len(w) > 2]
+        # whole words, not substrings: an Arabic name fragment turns up inside
+        # unrelated words, which is how a different النعيمي got matched
+        checks = [(_latin_word_re([w]) if w.isascii() else _arabic_word_re([w]))
+                  for w in wanted]
+        for page in pages:
+            name = page.get("pageimage")
+            title = (page.get("title") or "").lower()
+            if not name or not checks:
+                continue
+            if not all(rx.search(title) for rx in checks):
+                continue
+            titles.append(f"File:{name}")
+    if titles:
+        print(f"    Wikipedia lead image(s) for {term!r}: {len(titles)}")
+    titles = [t for t in titles if not _owner_rejected(t)]
+    return titles
+
+
+def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
+                        subject_mode=False):
+    """Fetch a freely licensed photo from Wikimedia Commons.
+
+    Returns (path, credit) or (None, None). Same signature as
+    fetch_openverse_photo so the two are interchangeable.
+    """
+    if isinstance(queries, str):
+        queries = [queries]
+    queries = [q.strip() for q in queries if q and q.strip()]
+    if not queries:
+        return None, None
+
+    want_saudi = REQUIRE_SAUDI_CONTEXT if need_saudi is None else need_saudi
+    want_hits = MIN_TERM_HITS if min_hits is None else min_hits
+
+    candidates = []
+    for query in queries:
+        terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
+        found = _commons_search(query)
+        lead = _commons_fileinfo(_wikipedia_lead_files(query))
+        for page, _info in lead:
+            page["_lead"] = True      # scored differently: see below
+        found += lead
+
+        for page, info in found:
+            if (info.get("mime") or "").startswith("image/svg"):
+                continue                      # a diagram, never a photograph
+            if not _commons_licence_ok(info):
+                continue
+            described = _commons_described(page, info)
+            if not _commons_safe(page, info):
+                continue
+            if want_saudi and _geo_adjust(described) <= 0:
+                continue
+            hits = _term_hits(described, terms)
+            # A lead image is the article's own picture of the subject, so it
+            # is on-topic even when its filename shares no words with the
+            # query — that is exactly the portrait case this source is for.
+            from_article = page.get("_lead", False)
+            if not from_article and hits < want_hits:
+                continue
+            score = hits * 10 + _geo_adjust(described)
+            if (info.get("width") or 0) >= (info.get("height") or 1):
+                score += 3
+            if from_article:
+                # The article title had to carry every word of the query to
+                # get here, so this really is a picture of the subject. That
+                # beats a filename that merely happens to contain the words:
+                # searching "علي النعيمي" scored a different النعيمي above the
+                # correct man, because _term_hits matches substrings and short
+                # Arabic tokens turn up inside unrelated words.
+                score += 25
+            if not subject_mode and any(h in described.lower()
+                                        for h in MEETING_HINTS):
+                score -= 15
+            candidates.append((score, query, page, info))
+
+        if any(c[0] >= MIN_PHOTO_SCORE for c in candidates):
+            break
+
+    if not candidates:
+        print("  ! no Commons photo found")
+        return None, None
+
+    candidates.sort(key=lambda c: -c[0])
+    if candidates[0][0] < MIN_PHOTO_SCORE:
+        print(f"  ! best Commons match scored {candidates[0][0]:.0f}, below "
+              f"{MIN_PHOTO_SCORE} — skipping")
+        return None, None
+
+    for score, query, page, info in candidates[:5]:
+        # thumburl is a resized copy; originals run to tens of megabytes
+        for link in (info.get("thumburl"), info.get("url")):
+            if not link:
+                continue
+            try:
+                req = urllib.request.Request(link, headers={"User-Agent": PUBLIC_API_UA})
+                with urllib.request.urlopen(req, timeout=60) as resp:
+                    data = resp.read()
+            except Exception as exc:
+                print(f"  ! Commons download failed ({exc}) — trying next")
+                continue
+            if len(data) < 15_000:
+                continue
+            _clear_generated_marker(out_path)
+            Path(out_path).write_bytes(data)
+            if looks_like_a_graphic(out_path):
+                break                        # try the next candidate instead
+            if _recent_reject(out_path):
+                continue
+            credit = _commons_credit(info)
+            print(f"    photo: {page.get('title', '')[:70]} — {credit} [{query}]")
+            return str(out_path), credit
+
+    print("  ! every Commons candidate failed to download")
+    return None, None
+
+
+def fetch_commons_portrait(name, out_path):
+    """A free photograph of a named person, or (None, None).
+
+    Deliberately stricter than fetch_commons_photo. A portrait of the wrong
+    person is worse than no portrait: nothing downstream would catch it, and
+    the card would put a stranger's face on someone else's story. Searching
+    "علي النعيمي" returned a different النعيمي precisely this way, because the
+    ordinary term scoring matches substrings and a short Arabic token turns up
+    inside unrelated words.
+
+    Two ways in, both requiring the whole name:
+      1. the lead image of an article whose title carries every word of it
+      2. a Commons file whose own description names the person in full
+    """
+    name = (name or "").strip()
+    parts = [p for p in re.split(r"\W+", name) if len(p) > 2]
+    if not parts:
+        return None, None
+    checks = [(_latin_word_re([p]) if p.isascii() else _arabic_word_re([p]))
+              for p in parts]
+
+    candidates = []
+    for page, info in _commons_fileinfo(_wikipedia_lead_files(name)):
+        candidates.append((2, page, info))          # the subject's own article
+    for page, info in _commons_search(name):
+        # The name must be in the FILE TITLE, not merely somewhere in the
+        # description. Anyone by that name appearing in a caption was enough
+        # before, which put a US embassy reception under "Robert Plath" and a
+        # football match under "Jack Bogle". A photograph of someone else is
+        # the one failure nothing downstream can catch.
+        if all(rx.search(page.get("title", "")) for rx in checks):
+            candidates.append((1, page, info))
+
+    for rank, page, info in sorted(candidates, key=lambda c: -c[0])[:6]:
+        if (info.get("mime") or "").startswith("image/svg"):
+            continue
+        if not _commons_licence_ok(info):
+            continue
+        if not _commons_safe(page, info):
+            continue
+        for link in (info.get("thumburl"), info.get("url")):
+            if not link:
+                continue
+            try:
+                req = urllib.request.Request(
+                    link, headers={"User-Agent": PUBLIC_API_UA})
+                with urllib.request.urlopen(req, timeout=60) as resp:
+                    data = resp.read()
+            except Exception:
+                continue
+            if len(data) < 15_000:
+                continue
+            _clear_generated_marker(out_path)
+            Path(out_path).write_bytes(data)
+            if looks_like_a_graphic(out_path):
+                break
+            credit = _commons_credit(info)
+            print(f"    portrait: {page.get('title', '')[:60]} — {credit}")
+            return str(out_path), credit
+    return None, None
+
+
+# --------------------------------------------------------------------------
+# Library of Congress — public domain photography, no key
+# --------------------------------------------------------------------------
+# Strong on historical subjects, which is where an open-licence search usually
+# comes back empty. The API is slow and drops connections often enough that
+# every call here is best-effort.
+
+LOC_SEARCH = "https://www.loc.gov/photos/"
+LOC_CREDIT = "Library of Congress"
+
+# access_restricted is not the signal it looks like — items whose advisory
+# reads "No known restrictions on publication" still come back True. The
+# advisory text is what actually says whether we may publish, so require it
+# to say so, and reject anything hedged.
+_LOC_CLEAR = re.compile(r"no known restrictions", re.IGNORECASE)
+_LOC_HEDGED = re.compile(
+    r"(may be restricted|not been evaluated|not evaluated|permission|"
+    r"rights status|contact)", re.IGNORECASE)
+
+
+def _loc_search(term, limit=12):
+    url = (f"{LOC_SEARCH}?q={urllib.parse.quote(term)}"
+           f"&fo=json&c={limit}&at=results")
+    req = urllib.request.Request(url, headers={"User-Agent": PUBLIC_API_UA,
+                                               "Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            results = json.loads(resp.read()).get("results", [])
+    except Exception as exc:
+        print(f"  ! Library of Congress unavailable for {term!r}: {exc}")
+        return []
+    print(f"    Library of Congress: {len(results)} results for {term!r}")
+    return results
+
+
+def _loc_may_publish(item):
     advisory = " ".join(str(item.get(k) or "") for k in
                         ("rights_advisory", "rights", "rights_information"))
     if not _LOC_CLEAR.search(advisory):
