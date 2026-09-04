@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "0d22ee481b439a1633185326d59fda787e5e94a635b20fd8f949d80c7ada8a00",
@@ -142,8 +143,169 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-04T11:29:35.176821+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "685419e29273359943c523dba0094bd5246f6dc7b9a6a482bfc8cd10cfb06244",
   "schema": "story-visual-v1",
   "status": "VISUAL_ASSEMBLY",
-  "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
+  "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+  "story_quality_dimensions": {
+    "claim_precision": "PASS",
+    "final_frame_currency": "PASS",
+    "narrative_chronology": "BLOCKED",
+    "subject_focus": "PASS",
+    "visual_chronology": "PASS"
+  },
+  "story_quality_findings": [
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 3,
+      "message": "narrative year regresses from 1951 to 1800 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 5,
+      "message": "narrative year regresses from 2024 to 2022 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 6,
+      "message": "narrative year regresses from 2026 to 2024 without flashback",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [
+        1918
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 1,
+      "subject_overlap": [
+        "بلدة",
+        "رياض"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        1947,
+        1951
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 2,
+      "subject_overlap": [
+        "رياض",
+        "عاصمة"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1951,
+        1951
+      ]
+    },
+    {
+      "copy_years": [
+        1800
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 3,
+      "subject_overlap": [
+        "رياض"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1975,
+        1977
+      ]
+    },
+    {
+      "copy_years": [
+        2024
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "رياض"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2022,
+        2026
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 5,
+      "subject_overlap": [
+        "بلدة",
+        "رياض"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2024
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 6,
+      "subject_overlap": [
+        "اقتصادية",
+        "بلدة",
+        "رياض",
+        "مسورة"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "narrative_chronology"
+    ],
+    "frame_modes": {
+      "3": "editorial_frame",
+      "5": "editorial_frame",
+      "6": "editorial_frame"
+    },
+    "frames": [
+      3,
+      5,
+      6
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "3": [
+        "restore chronological order or make the flashback explicit"
+      ],
+      "5": [
+        "restore chronological order or make the flashback explicit"
+      ],
+      "6": [
+        "restore chronological order or make the flashback explicit"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
