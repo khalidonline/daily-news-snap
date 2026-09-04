@@ -428,6 +428,37 @@ class DailyNewsRunnerTests(unittest.TestCase):
         self.assertTrue(all("[age=3h]" in x["summary"] or "[age=2h]" in x["summary"] for x in captured["items"]))
         self.assertEqual(captured["already_posted"], ("old story",))
 
+    def test_exact_recovery_story_bypasses_selection_and_preserves_copy(self):
+        import base64
+        import json
+        import os
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        import daily_news_runner
+
+        recovery = {
+            "headline": "أبل تستعد لأكبر إطلاق لها في سبتمبر",
+            "summary": "حدث أبل في 9 سبتمبر أول ظهور لرئيسها الجديد.",
+            "takeaway": "أول حدث كبير لأبل بعد تغيير القيادة.",
+            "link": "https://theverge.com/apple-event",
+            "scope": "world",
+            "image_queries": ["Apple Park Steve Jobs Theater"],
+            "image_queries_ar": ["مسرح ستيف جوبز أبل بارك"],
+        }
+        encoded = base64.b64encode(
+            json.dumps(recovery, ensure_ascii=False).encode("utf-8")
+        ).decode("ascii")
+
+        def must_not_select(*args, **kwargs):
+            self.fail("photo-only recovery must not select or rewrite another story")
+
+        fake = SimpleNamespace(MAX_HEADLINES_TO_MODEL=60, summarize=must_not_select)
+        wrapped = daily_news_runner.make_summarizer(fake)
+        with patch.dict(os.environ, {"NEWS_RECOVERY_STORY_B64": encoded}):
+            result = wrapped([{"title": "different story"}])
+
+        self.assertEqual(result["stories"], [recovery])
+
     def test_pinned_event_bypasses_lane_balancing(self):
         from types import SimpleNamespace
         import daily_news_runner
