@@ -64,6 +64,7 @@ _PINNED_RIYADH_GROWTH = {
 _PINNED_RIYADH_SKYLINE = {
     "filename": "Riyadh Skyline.jpg",
     "commons_file": "Riyadh Skyline.jpg",
+    "local_path": "images/riyadh-skyline.jpg",
     "credit": "B.alotaby / Wikimedia Commons / CC BY-SA 4.0",
 }
 
@@ -282,18 +283,23 @@ def _download_pinned_visual(asset: dict, out_path, sb, seen=()):
     out.parent.mkdir(parents=True, exist_ok=True)
     tmp = out.with_name(out.name + ".pinned.tmp")
     tmp.unlink(missing_ok=True)
-    filename = str(asset["commons_file"])
-    url = (
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/"
-        + urllib.parse.quote(filename, safe="")
-    )
-    request = urllib.request.Request(
-        url,
-        headers={"User-Agent": "ExecutiveSummaryStoryBot/1.0 (visual editorial review)"},
-    )
     try:
-        with urllib.request.urlopen(request, timeout=25) as response, tmp.open("wb") as handle:
-            shutil.copyfileobj(response, handle)
+        local_path = asset.get("local_path")
+        local = Path(str(local_path)) if local_path else None
+        if local is not None and local.is_file():
+            shutil.copy2(local, tmp)
+        else:
+            filename = str(asset["commons_file"])
+            url = (
+                "https://commons.wikimedia.org/wiki/Special:Redirect/file/"
+                + urllib.parse.quote(filename, safe="")
+            )
+            request = urllib.request.Request(
+                url,
+                headers={"User-Agent": "ExecutiveSummaryStoryBot/1.0 (visual editorial review)"},
+            )
+            with urllib.request.urlopen(request, timeout=25) as response, tmp.open("wb") as handle:
+                shutil.copyfileobj(response, handle)
         with Image.open(tmp) as image:
             image.verify()
         if photo_quality.has_poor_atmospheric_visibility(tmp):
