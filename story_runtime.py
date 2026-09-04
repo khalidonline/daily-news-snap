@@ -196,6 +196,30 @@ def _find_photo_with_curated_frame_pin(
 sb.find_photo = _find_photo_with_curated_frame_pin
 
 
+_pre_curated_person_frame_photo = sb._person_frame_photo
+
+
+def _person_frame_photo_with_curated_pin(frame, out_path, seen):
+    filename = curated_frame_visual_filename(
+        sb.resolve_story_input(sb.STORY) if sb.STORY else "",
+        frame if isinstance(frame, dict) else {},
+    )
+    if filename:
+        source = Path("images") / filename
+        if source.exists() and source.is_file():
+            digest = sb._photo_digest(source)
+            if not any(sb.same_picture(digest, prior) for prior in seen):
+                out = Path(out_path)
+                out.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source, out)
+                print(f"      curated person-frame pin: {filename}")
+                return str(out)
+    return _pre_curated_person_frame_photo(frame, out_path, seen)
+
+
+sb._person_frame_photo = _person_frame_photo_with_curated_pin
+
+
 def personal_visual_slots_ready(photos) -> bool:
     """Protect the hook/payoff while allowing one genuine middle-card fallback.
 
