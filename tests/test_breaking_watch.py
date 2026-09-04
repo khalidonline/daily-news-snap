@@ -317,6 +317,10 @@ class BreakingWatchWindowTests(unittest.TestCase):
         workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
         self.assertIn('cron: "*/30 5-19 * * *"', workflow)
 
+    def test_workflow_persists_review_delivery_memory(self):
+        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
+        self.assertIn('PERSIST_BREAKING_REVIEW_STATE: "1"', workflow)
+
     def test_workflow_accepts_external_clock_push(self):
         workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
         self.assertIn('"scheduler/triggers/breaking.txt"', workflow)
