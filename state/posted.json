@@ -1,11 +1,5 @@
 [
  {
-  "headline": "أرامكو خامس أكبر شركة عالمياً بـ446 مليار دولار",
-  "at": "2026-09-01T18:27:58.524479+00:00",
-  "source_link": "https://alwatan.com.sa/article/1184956",
-  "lane": "saudi_core"
- },
- {
   "headline": "أمازون تطلق منطقة الرياض السحابية في ديسمبر",
   "at": "2026-09-02T06:57:07.801410+00:00",
   "source_link": "https://aawsat.com/node/5313721",
@@ -112,5 +106,11 @@
   "at": "2026-09-04T16:12:37.605438+00:00",
   "source_link": "https://alyaum.com/articles/6681172/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D9%8A%D9%88%D9%85/%D8%B9%D8%A7%D8%AC%D9%84-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D8%AC%D8%AF%D9%8A%D8%AF-%D9%84%D9%85%D8%B1%D8%A7%D9%83%D8%B2-%D8%A7%D9%84%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA-%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D8%B7%D8%A7%D8%AA-%D9%84%D9%84%D8%A8%D9%86%D8%A7%D8%A1-%D9%88%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D9%88%D8%A7%D9%84%D8%AA%D8%A8%D8%B1%D9%8A%D8%AF-%D9%88%D8%A7%D9%84%D8%AD%D9%85%D8%A7%D9%8A%D8%A9-%D9%85%D9%86-%D8%A7%D9%84%D8%AD%D8%B1%D9%8A%D9%82",
   "lane": "saudi_core"
+ },
+ {
+  "headline": "تحقيق فيدرالي يلاحق Cybercab من Tesla بعد أيام من إطلاقها",
+  "at": "2026-09-04T19:15:24.398426+00:00",
+  "source_link": "https://engadget.com/2251066/tesla-cybercab-under-federal-investigation-almost-immediately-after-hitting-streets",
+  "lane": "business_tech"
  }
 ]
