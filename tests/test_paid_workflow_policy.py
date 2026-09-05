@@ -5,6 +5,12 @@ import yaml
 
 
 PAID_WORKFLOWS = ("daily.yml", "topic.yml", "story.yml", "breaking.yml")
+CLOCK_DISPATCHES = {
+    "news": "news-schedule",
+    "topic": "topic-schedule",
+    "story": "story-schedule",
+    "breaking": "breaking-recovery",
+}
 
 
 class PaidWorkflowPolicyTests(unittest.TestCase):
@@ -35,6 +41,27 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
     def test_breaking_recovery_uses_repository_dispatch(self):
         triggers = self.load_workflow("breaking.yml")["on"]
         self.assertIn("breaking-recovery", triggers["repository_dispatch"]["types"])
+
+    def test_external_clock_receiver_is_path_scoped(self):
+        receiver = self.load_workflow("external-clock-receiver.yml")
+        triggers = receiver["on"]["push"]
+        self.assertEqual(triggers["branches"], ["main"])
+        self.assertEqual(
+            set(triggers["paths"]),
+            {f"scheduler/triggers/{bot}.txt" for bot in CLOCK_DISPATCHES},
+        )
+
+    def test_external_clock_receiver_dispatches_each_bot_without_model_calls(self):
+        receiver_path = Path(".github/workflows/external-clock-receiver.yml")
+        text = receiver_path.read_text(encoding="utf-8")
+        for bot, event_type in CLOCK_DISPATCHES.items():
+            with self.subTest(bot=bot):
+                self.assertIn(f"{bot}:{event_type}", text)
+        self.assertNotIn("ANTHROPIC_API_KEY", text)
+        self.assertNotIn("python daily_news", text)
+        self.assertNotIn("python story", text)
+        self.assertNotIn("python topic", text)
+        self.assertNotIn("python breaking", text)
 
 
 if __name__ == "__main__":
