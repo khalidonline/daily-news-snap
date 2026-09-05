@@ -215,6 +215,42 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
 
+    def test_neutral_commons_rejects_wrong_ministry_despite_riyadh_match(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "neutral", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title=(
+            "File:Ministry of Education, Riyadh, Saudi Arabia.JPG"
+        ))
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "قرار جديد يربط نقل ملكية الأراضي البيضاء بسداد الرسوم",
+                "summary": "يشترط القرار سداد رسوم الأراضي البيضاء قبل التوثيق.",
+                "takeaway": "السداد أصبح شرطاً لنقل الملكية.",
+                "link": "https://alyaum.com/white-land-fees",
+                "scope": "saudi",
+                "image_queries": [
+                    "Saudi white land fees property transfer",
+                    "Riyadh government building",
+                ],
+                "image_queries_ar": ["رسوم الأراضي البيضاء"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["رسوم الأراضي البيضاء"],
+                ["Saudi white land fees property transfer", "Riyadh government building"],
+                hero,
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
     def test_no_candidate_is_never_promoted(self):
         calls = []
         fake = self.make_module({
