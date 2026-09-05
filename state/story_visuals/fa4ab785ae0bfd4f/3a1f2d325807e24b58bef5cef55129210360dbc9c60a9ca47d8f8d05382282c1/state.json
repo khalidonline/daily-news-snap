@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "602087cee3ac2db5cde6361d0cc63baa3984ae8fed11e41f1e7a979de7590f7c",
@@ -122,8 +123,179 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-05T07:59:40.817703+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "3a1f2d325807e24b58bef5cef55129210360dbc9c60a9ca47d8f8d05382282c1",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "من هم أول الموظفين السعوديين في أرامكو؟"
+  "story": "من هم أول الموظفين السعوديين في أرامكو؟",
+  "story_quality_dimensions": {
+    "claim_precision": "PASS",
+    "final_frame_currency": "BLOCKED",
+    "narrative_chronology": "PASS",
+    "subject_focus": "BLOCKED",
+    "visual_chronology": "PASS"
+  },
+  "story_quality_findings": [
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 1,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "SUBJECT_DRIFT",
+      "dimension": "subject_focus",
+      "frame": 2,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "SUBJECT_DRIFT",
+      "dimension": "subject_focus",
+      "frame": 5,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 6,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "CURRENT_COPY_UNPROVEN_VISUAL",
+      "dimension": "final_frame_currency",
+      "frame": 6,
+      "message": "current ending needs positive modern/current visual evidence",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DRIFT",
+      "frame": 1,
+      "subject_overlap": [],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1935,
+        1935,
+        1935,
+        1935,
+        1935,
+        1935
+      ]
+    },
+    {
+      "copy_years": [
+        1935
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DRIFT",
+      "frame": 2,
+      "subject_overlap": [],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        1938,
+        1939
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 3,
+      "subject_overlap": [
+        "سعوديين"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1938,
+        1930
+      ]
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "سعوديين"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1951
+      ]
+    },
+    {
+      "copy_years": [
+        1947,
+        1962,
+        1984
+      ],
+      "current": true,
+      "flashback": false,
+      "focus": "DRIFT",
+      "frame": 5,
+      "subject_overlap": [],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [],
+      "current": true,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 6,
+      "subject_overlap": [
+        "هم"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "final_frame_currency",
+      "subject_focus"
+    ],
+    "frame_modes": {
+      "1": "editorial_frame",
+      "2": "editorial_frame",
+      "5": "editorial_frame",
+      "6": "mixed_frame"
+    },
+    "frames": [
+      1,
+      2,
+      5,
+      6
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "1": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "2": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "5": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "6": [
+        "keep the frame centered on the named Story subject",
+        "use a clearly current visual for the present-day ending"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
