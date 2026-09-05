@@ -35,11 +35,28 @@ def install_recent_photo_fail_closed(news_bot_module):
     return news_bot_module
 
 
+def install_news_notification_labels(news_bot_module):
+    """Keep News alerts distinct from the separate Story bot."""
+    original_notify = news_bot_module.notify
+
+    def news_notify(text, *args, **kwargs):
+        text = str(text).replace(
+            "stories had a usable photo", "news items had a usable photo"
+        ).replace(
+            "model returned no stories", "model returned no news items"
+        )
+        return original_notify(text, *args, **kwargs)
+
+    news_bot_module.notify = news_notify
+    return news_bot_module
+
+
 def main():
     import news_bot
 
     daily_news_runner.configure(news_bot)
     install_recent_photo_fail_closed(news_bot)
+    install_news_notification_labels(news_bot)
     news_bot.main()
 
 
