@@ -6,7 +6,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
-        cls.news_bot = Path("news_bot.py").read_text(encoding="utf-8")
+        cls.news_runner = Path("daily_news_fresh_runner.py").read_text(encoding="utf-8")
 
     def test_keeps_github_heartbeat_only_as_temporary_fallback(self):
         self.assertIn('- cron: "10,25,40,55 4-20 * * *"', self.workflow)
@@ -62,8 +62,10 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn("NEWS_RECOVERY_STORY_B64", self.workflow)
 
     def test_no_photo_notification_calls_news_items_not_stories(self):
-        self.assertIn("news items had a usable photo", self.news_bot)
-        self.assertNotIn("stories had a usable photo", self.news_bot)
+        self.assertIn("install_news_notification_labels", self.news_runner)
+        self.assertIn('"news items had a usable photo"', self.news_runner)
+        self.assertIn('"model returned no news items"', self.news_runner)
+        self.assertIn("install_news_notification_labels(news_bot)", self.news_runner)
 
     def test_runtime_budget_covers_strict_image_search(self):
         self.assertIn("timeout-minutes: 30", self.workflow)
