@@ -1,9 +1,10 @@
 {
-  "ready_count": 2,
+  "ready_count": 3,
   "total_stories": 123,
   "basis": "visual PASS + EDITORIAL_LOCKED + committed six-frame VISUAL_READY",
   "stories": [
     "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+    "علي النعيمي: من صبي في أرامكو إلى وزير يحرّك أسواق النفط",
     "قصة سكة حديد الرياض الدمام 1951"
   ]
 }
