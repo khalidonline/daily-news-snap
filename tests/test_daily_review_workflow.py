@@ -6,6 +6,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
+        cls.news_bot = Path("news_bot.py").read_text(encoding="utf-8")
 
     def test_keeps_github_heartbeat_only_as_temporary_fallback(self):
         self.assertIn('- cron: "10,25,40,55 4-20 * * *"', self.workflow)
@@ -24,7 +25,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         verify_index = self.workflow.index("Verify News card was produced")
         mark_index = self.workflow.index("Mark News slot complete")
         self.assertLess(verify_index, mark_index)
-        self.assertIn("test -n \"$(find out -maxdepth 1 -name \'*.png\' -print -quit)\"", self.workflow)
+        self.assertIn("test -n \"$(find out -maxdepth 1 -name '*.png' -print -quit)\"", self.workflow)
         self.assertIn("python3 shared_schedule_gate.py mark", self.workflow)
         self.assertIn("daily_slot_state.json", self.workflow)
         self.assertIn("git pull --rebase origin main", self.workflow)
@@ -59,6 +60,10 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn("github.event.client_payload.story_b64", self.workflow)
         self.assertIn("inputs.recovery_story", self.workflow)
         self.assertIn("NEWS_RECOVERY_STORY_B64", self.workflow)
+
+    def test_no_photo_notification_calls_news_items_not_stories(self):
+        self.assertIn("news items had a usable photo", self.news_bot)
+        self.assertNotIn("stories had a usable photo", self.news_bot)
 
     def test_runtime_budget_covers_strict_image_search(self):
         self.assertIn("timeout-minutes: 30", self.workflow)
