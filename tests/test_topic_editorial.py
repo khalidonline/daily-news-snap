@@ -169,6 +169,22 @@ class TopicEditorialTests(unittest.TestCase):
         })
         self.assertEqual(validate_brief(brief), [])
 
+    def test_validate_brief_blocks_finance_company_total_relabelled_as_bnpl(self):
+        brief = self._complete_brief()
+        brief.update({
+            "title": "عدد شركات الدفع الآجل وصل 76 شركة",
+            "body": (
+                "تابي وتمارا وغيرها تكبر بسرعة. وفق ساما، رُخصت 76 شركة دفع آجل "
+                "حتى يوليو 2026."
+            ),
+            "takeaway": "الدفع الآجل نشاط واحد ضمن شركات التمويل المرخصة.",
+            "caption": "سوق الدفع الآجل يتوسع في السعودية.",
+            "sources": ["البنك المركزي السعودي", "صحيفة الاقتصادية"],
+            "source_url": "https://www.sama.gov.sa/ar-sa/MediaCenter/News/Pages/news-1155.aspx",
+        })
+        errors = validate_brief(brief)
+        self.assertTrue(any("finance-company total" in error for error in errors), errors)
+
     def test_enhance_prompt_resolves_voice_conflict_and_adds_ksa_date(self):
         base = (
             "- sources: أسماء المصادر (٢ إلى ٤). إن كان المصدر أجنبياً فاكتبه بالعربية.\n"
@@ -202,6 +218,11 @@ class TopicEditorialTests(unittest.TestCase):
         self.assertIn("صورة تحريرية عالية الجودة", prompt)
         self.assertIn("حقل takeaway ليس نصيحة", prompt)
         self.assertNotIn("وساما تبعه", prompt)
+
+    def test_enhance_prompt_distinguishes_bnpl_license_from_finance_company_total(self):
+        prompt = enhance_prompt("", date(2026, 9, 5))
+        self.assertIn("إجمالي عدد شركات التمويل المرخصة", prompt)
+        self.assertIn("عدد شركات الدفع الآجل", prompt)
 
 
 if __name__ == "__main__":
