@@ -6,6 +6,7 @@
 jack-bogle.jpg | Jack Bogle, John Bogle, بوغل | BillCramer / CC BY-SA 4.0
 sarah-breedlove.jpg | Sarah Breedlove, Madam C.J. Walker, مدام سي جيه ووكر, ووكر | Addison Norton Scurlock / Public domain
 ali-alnaimi.jpg | علي النعيمي, Ali Al-Naimi, النعيمي | Paradoxicalengineer / CC BY-SA 3.0
+aramco-dammam-well-7.jpg | أرامكو, البئر رقم 7, بئر الدمام 7, Dammam Well No. 7, 1938 | Saudi Aramco archive via Aramco Life
 
 # seeded beats — recurring abstract subjects, see docs/seeding-images.md
 ministry-of-finance.jpg | وزارة المالية, المالية, الميزانية, الإيرادات, ministry of finance, budget | Albreeze / CC BY-SA 3.0
