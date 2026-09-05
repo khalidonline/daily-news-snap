@@ -4,9 +4,23 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import daily_news_runner
+import news_bot
 
 
 class ArticleImageRelevanceRegressionTests(unittest.TestCase):
+    def test_us_air_force_provenance_is_rejected_for_news_photos(self):
+        metadata = (
+            "Saudi ambulance emergency response training "
+            "U.S. Air Force photo by Senior Airman DeQuan Simmons"
+        )
+
+        self.assertFalse(news_bot._image_is_safe(metadata))
+
+    def test_foreign_context_overrides_a_saudi_keyword(self):
+        metadata = "Saudi emergency response exercise at a United States air base"
+
+        self.assertLess(news_bot._geo_adjust(metadata), 0)
+
     def test_neutral_article_photo_is_rejected_instead_of_used_as_fallback(self):
         calls = []
 

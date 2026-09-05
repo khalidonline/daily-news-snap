@@ -168,6 +168,7 @@ REQUIRE_SAUDI_CONTEXT = (os.getenv("REQUIRE_SAUDI_CONTEXT", "").strip() or "1") 
 BLOCKED_IMAGE_TERMS = (
     "weapon", "weapons", "gun", "guns", "rifle", "rifles", "pistol", "firearm",
     "soldier", "soldiers", "military", "army", "armed", "troops", "war",
+    "air force", "airman", "airmen", "air base",
     "combat", "battle", "tank", "missile", "bomb", "explosion", "airstrike",
     "police", "arrest", "handcuff", "prison", "jail", "detention",
     "protest", "riot", "demonstration", "clash", "violence", "blood",
@@ -1625,9 +1626,17 @@ def fetch_openverse_photo(queries, out_path, need_saudi=None, min_hits=None,
         if not results:
             continue
         for item in results:
+            # Provenance is evidence about what a photo depicts.  The image
+            # that exposed this gap was titled generically enough to match a
+            # Saudi ambulance story, while its creator/credit identified it as
+            # a U.S. Air Force exercise.  Never score only the searchable
+            # title and tags and then discard the strongest identity signal.
             described = " ".join(filter(None, [
                 item.get("title") or "",
                 " ".join(t.get("name", "") for t in item.get("tags") or []),
+                item.get("creator") or "",
+                item.get("source") or "",
+                item.get("attribution") or "",
             ]))
             if not _image_is_safe(described):
                 continue
@@ -2306,7 +2315,8 @@ SAUDI_HINTS = ("saudi", "riyadh", "jeddah", "dammam", "mecca", "makkah",
 FOREIGN_HINTS = ("barcelona", "madrid", "london", "paris", "berlin", "rome",
                  "tokyo", "beijing", "moscow", "new york", "dubai", "doha",
                  "abu dhabi", "kuwait", "cairo", "istanbul", "camp nou",
-                 "wembley", "eiffel", "colosseum")
+                 "wembley", "eiffel", "colosseum", "united states",
+                 "u.s.", "u.s. air force", "american air base")
 
 
 def _term_hits(text, terms):
@@ -2317,7 +2327,10 @@ def _term_hits(text, terms):
 def _geo_adjust(text):
     """+ for Saudi context, - for a recognisable foreign landmark."""
     low = (text or "").lower()
-    if any(h in low for h in FOREIGN_HINTS) and not any(h in low for h in SAUDI_HINTS):
+    # Contradictory foreign identity must win over a coincidental Saudi query
+    # token.  Previously a candidate containing both "Saudi" and "United
+    # States" received the Saudi bonus and could reach the card.
+    if any(h in low for h in FOREIGN_HINTS):
         return -25
     if any(h in low for h in SAUDI_HINTS):
         return 8
@@ -3315,12 +3328,15 @@ _gate_cache = {}
 def photo_shows(photo_path, context):
     """Does the picture actually show what the frame is about?
 
-    Returns "yes", "neutral" or "no". Fail-open by design: no key, gate off,
-    or an API error all return "yes", so an outage degrades to the old
-    behaviour instead of losing the story. A rejection prints the reason.
+    Returns "yes", "neutral" or "no". An explicitly disabled gate preserves
+    manual operation, but a missing key or API error fails closed: an
+    unverified photo is worse than publishing the story without it.
     """
-    if not (VISION_GATE and ANTHROPIC_API_KEY):
+    if not VISION_GATE:
         return "yes"
+    if not ANTHROPIC_API_KEY:
+        print("  ! vision gate has no API key — rejecting photo")
+        return "no"
     try:
         raw = Path(photo_path).read_bytes()
         cache_key = (hashlib.md5(raw).hexdigest(),
@@ -3383,8 +3399,8 @@ def photo_shows(photo_path, context):
         print(f"  ! vision gate stopped by cost guard ({exc}) — rejecting photo")
         return "no"
     except Exception as exc:
-        print(f"  ! vision gate unavailable ({exc}) — letting the photo through")
-        return "yes"
+        print(f"  ! vision gate unavailable ({exc}) — rejecting photo")
+        return "no"
 
     _vision_stats["asked"] += 1
     # The verdict word may arrive dressed — "**نعم**", «نعم», a leading dash.

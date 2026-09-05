@@ -162,6 +162,26 @@ class ModelUsageIntegrationTests(unittest.TestCase):
 
         self.assertEqual((rows[0]["bot"], rows[0]["purpose"]), ("shared", "vision_photo"))
 
+    def test_photo_vision_gate_fails_closed_without_api_key(self):
+        with tempfile.TemporaryDirectory() as td:
+            image = Path(td) / "photo.jpg"
+            Image.new("RGB", (20, 20), "blue").save(image)
+            with patch.object(news_bot, "ANTHROPIC_API_KEY", ""), \
+                    patch.object(news_bot, "VISION_GATE", True):
+                news_bot._gate_cache.clear()
+                self.assertEqual(news_bot.photo_shows(image, "context"), "no")
+
+    def test_photo_vision_gate_fails_closed_when_api_is_unavailable(self):
+        with tempfile.TemporaryDirectory() as td:
+            image = Path(td) / "photo.jpg"
+            Image.new("RGB", (20, 20), "blue").save(image)
+            with patch.object(news_bot, "ANTHROPIC_API_KEY", "key"), \
+                    patch.object(news_bot, "VISION_GATE", True), \
+                    patch.object(news_bot.urllib.request, "urlopen",
+                                 side_effect=OSError("vision unavailable")):
+                news_bot._gate_cache.clear()
+                self.assertEqual(news_bot.photo_shows(image, "context"), "no")
+
     def test_photo_vision_ceiling_prevents_an_extra_paid_response(self):
         payload = {
             "id": "vision-msg",

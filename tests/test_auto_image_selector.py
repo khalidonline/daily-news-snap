@@ -161,6 +161,26 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
 
         self.assertEqual(calls, ["local", "article"])
 
+    def test_visual_judge_receives_photo_provenance(self):
+        calls = []
+        seen_contexts = []
+        fake = self.make_module({
+            "local": "yes", "article": "no", "spa": "no",
+            "commons": "no", "loc": "no", "openverse": "no", "stock": "no",
+        }, calls)
+
+        def judge(path, context):
+            seen_contexts.append(context)
+            return "yes"
+
+        fake.photo_shows = judge
+        self.remember_story()
+
+        with tempfile.TemporaryDirectory() as td:
+            self.run_auto(fake, Path(td) / "hero.jpg")
+
+        self.assertIn("Local credit", seen_contexts[0])
+
     def test_curated_commons_neutral_is_used_when_no_direct_photo_exists(self):
         calls = []
         fake = self.make_module({
