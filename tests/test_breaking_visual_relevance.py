@@ -121,6 +121,17 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
         self.assertIn("tanker docks", marker)
         self.assertIn("NASA", marker)
 
+    def test_curated_kharg_terminal_asset_is_indexed(self):
+        asset = Path("images/kharg-island-oil-terminal-nasa.jpg")
+        self.assertTrue(asset.exists())
+        index = Path("images/images.txt").read_text(encoding="utf-8")
+        self.assertIn(
+            "kharg-island-oil-terminal-nasa.jpg | "
+            "Kharg Island oil terminal Iran",
+            index,
+        )
+        self.assertIn("NASA Johnson Space Center", index)
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()
