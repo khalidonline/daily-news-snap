@@ -43,7 +43,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install runtime dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt pyyaml
       - name: Run breaking watcher regressions
         run: |
           python -m unittest tests.test_breaking_watch tests.test_breaking_watch_notifications tests.test_breaking_watch_seen_memory -v
