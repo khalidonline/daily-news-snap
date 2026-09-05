@@ -97,6 +97,30 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
         self.assertIn("tanker docks", context)
         self.assertIn("NASA", context)
 
+    def test_local_asset_marker_carries_curated_provenance(self):
+        import news_bot
+        with tempfile.TemporaryDirectory() as td:
+            asset = Path(td) / "kharg-island-oil-terminal-nasa.jpg"
+            asset.write_bytes(b"candidate")
+            hero = Path(td) / "hero.jpg"
+            entry = {
+                "path": asset,
+                "tags": ["Kharg Island oil terminal Iran", "tanker docks"],
+                "credit": "NASA / Public domain — Wikimedia Commons",
+            }
+            with patch.object(news_bot, "load_local_images", return_value=[entry]), \
+                    patch.object(news_bot, "MIN_PHOTO_SCORE", 10):
+                photo, credit = news_bot.fetch_local_photo(
+                    [], ["Kharg Island oil terminal Iran"], hero,
+                    respect_cooldown=False,
+                )
+        self.assertEqual(photo, str(hero))
+        self.assertEqual(credit, entry["credit"])
+        marker = Path(str(hero) + ".exempt").read_text(encoding="utf-8")
+        self.assertIn("Kharg Island oil terminal Iran", marker)
+        self.assertIn("tanker docks", marker)
+        self.assertIn("NASA", marker)
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()
