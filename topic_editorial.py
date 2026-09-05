@@ -87,6 +87,16 @@ _INSTITUTION_RELATION_RES = (
 _FED_TEXT_RE = re.compile(r"الفيدرالي|Federal\s+Reserve", re.IGNORECASE)
 _FED_SOURCE_RE = re.compile(r"Federal\s+Reserve|الاحتياطي\s+الفيدرالي|الفيدرالي\s+الأمريكي", re.IGNORECASE)
 _SAMA_SOURCE_RE = re.compile(r"\bSAMA\b|ساما|البنك\s+المركزي\s+السعودي", re.IGNORECASE)
+_BNPL_RELABELLED_FINANCE_TOTAL_RES = (
+    re.compile(
+        r"(?:عدد\s+)?شركات\s+الدفع\s+الآجل.{0,24}\b(?:76|77|78)\s+شركة",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:76|77|78)\s+(?:شركة|شركات)\s+(?:دفع\s+آجل|للدفع\s+الآجل)",
+        re.IGNORECASE,
+    ),
+)
 
 _INSTRUCTIONAL_RE = re.compile(
     r"(?:^|[\s،,:؛.!؟])"
@@ -244,6 +254,15 @@ def _finance_tone_errors(brief: dict[str, Any]) -> list[str]:
         return []
 
     errors: list[str] = []
+    sources = brief.get("sources")
+    source_text = "\n".join(str(item) for item in sources) if isinstance(sources, list) else ""
+    if _SAMA_SOURCE_RE.search(source_text) and any(
+        pattern.search(text) for pattern in _BNPL_RELABELLED_FINANCE_TOTAL_RES
+    ):
+        errors.append(
+            "SAMA's finance-company total must not be relabelled as a BNPL-company total; "
+            "preserve the source's exact population and use the latest official count"
+        )
     if any(pattern.search(text) for pattern in _FINANCE_OVERCLAIM_RES):
         errors.append(
             "financial wording overstates an indirect financial relationship; "
@@ -266,9 +285,7 @@ def _finance_tone_errors(brief: dict[str, Any]) -> list[str]:
             "or side-by-side comparison language"
         )
 
-    sources = brief.get("sources")
     if _FED_TEXT_RE.search(text) and isinstance(sources, list):
-        source_text = "\n".join(str(item) for item in sources)
         if not (_FED_SOURCE_RE.search(source_text) and _SAMA_SOURCE_RE.search(source_text)):
             errors.append(
                 "Federal Reserve and SAMA primary sources are required for a Fed-to-Saudi finance explanation"
@@ -402,6 +419,9 @@ def enhance_prompt(base_prompt: str, today: date | None = None) -> str:
         "المحلية. يمكن إضافة مصدر صحفي للتفسير، لكن لا تستبدل المصدرين الأوليين به.\n"
         "- عند الحديث عن تمويل ثابت قائم، قل إن القسط أو السعر التعاقدي لا يعاد تسعيره عادةً "
         "بسبب قرار جديد؛ أما تمويل جديد أو إعادة تمويل فقد تتغير تكلفته مع ظروف السوق.\n"
+        "- في أخبار تراخيص ساما، لا تحوّل عبارة «إجمالي عدد شركات التمويل المرخصة» إلى "
+        "«عدد شركات الدفع الآجل». الترخيص الجديد قد يكون لنشاط الدفع الآجل، لكن الرقم الإجمالي "
+        "يشمل جميع أنشطة شركات التمويل. انقل نطاق الرقم حرفياً وتحقق من أحدث بيان رسمي.\n"
         "- ركّز على ما الذي تغيّر، من الذي قد يتأثر، ولماذا تستحق المعلومة الانتباه الآن. "
         "الجاذبية تأتي من أهمية الموضوع والمعلومة الدقيقة، لا من النصيحة أو المبالغة.\n"
     )
