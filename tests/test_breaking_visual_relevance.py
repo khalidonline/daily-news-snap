@@ -114,9 +114,9 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
                     [], ["Kharg Island oil terminal Iran"], hero,
                     respect_cooldown=False,
                 )
+            marker = Path(str(hero) + ".exempt").read_text(encoding="utf-8")
         self.assertEqual(photo, str(hero))
         self.assertEqual(credit, entry["credit"])
-        marker = Path(str(hero) + ".exempt").read_text(encoding="utf-8")
         self.assertIn("Kharg Island oil terminal Iran", marker)
         self.assertIn("tanker docks", marker)
         self.assertIn("NASA", marker)
