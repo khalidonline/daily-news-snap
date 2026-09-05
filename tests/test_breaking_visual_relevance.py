@@ -66,6 +66,13 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
                 runner._breaking_photo_acceptable(bot, "candidate.jpg", bot.PINNED_EVENT)
             )
 
+    def test_exact_named_location_can_pass_without_depicting_event_moment(self):
+        runner = self.runner()
+        prompt = runner._BREAKING_VISION_PROMPT
+        self.assertIn("المكان المحدد نفسه", prompt)
+        self.assertIn("لا يشترط أن تُظهر لحظة الحدث", prompt)
+        self.assertIn("صورة أرشيفية", prompt)
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()
