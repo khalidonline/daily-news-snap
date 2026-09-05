@@ -3074,8 +3074,13 @@ def fetch_local_photo(queries_ar, queries_en, out_path,
     # how a recurring subject sidesteps the cooldown by design
     # the marker names the served file so a caller can walk PAST a
     # gate-rejected candidate to the library's next match
+    provenance = (
+        f"local:{best['path'].name}\\n"
+        f"tags: {', '.join(str(tag) for tag in best.get('tags', []))}\\n"
+        f"credit: {best.get('credit') or ''}"
+    ).strip()
     Path(str(out_path) + ".exempt").write_text(
-        f"local:{best['path'].name}", encoding="utf-8")
+        provenance, encoding="utf-8")
     print(f"    photo: {best['path'].name} from your library "
           f"(matched {best_score // 10} tag(s))")
     return str(out_path), best.get("credit")
