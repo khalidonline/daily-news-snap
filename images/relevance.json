@@ -246,6 +246,20 @@
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:Amazon_warehouse_robot_2020.JPG",
       "note": "Amazon logistics/robotics; strong context for the operating platform Souq joined after acquisition."
+    },
+    "aramco-dammam-well-7.jpg": {
+      "stories": {
+        "من هم أول الموظفين السعوديين في أرامكو؟": "DIRECT"
+      },
+      "source_url": "https://www.aramcolife.com/en/publications/the-arabian-sun/articles/2021/week-11/dammam-well-7-part-3",
+      "note": "Saudi Aramco archive photograph of Dammam Well No. 7; exact visual for the 1938 discovery frame."
+    },
+    "ali-alnaimi.jpg": {
+      "stories": {
+        "من هم أول الموظفين السعوديين في أرامكو؟": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ali_Al-Naimi.jpg",
+      "note": "Licensed portrait of Ali Al-Naimi in Saudi dress."
     }
   }
 }

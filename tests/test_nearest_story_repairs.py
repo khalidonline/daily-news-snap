@@ -41,6 +41,17 @@ class NearestStoryRepairTests(unittest.TestCase):
             with self.subTest(expected=expected):
                 self.assertEqual(sr.curated_frame_visual_filename(story, frame), expected)
 
+    def test_aramco_first_employees_curated_frames_use_exact_visuals(self):
+        story = "من هم أول الموظفين السعوديين في أرامكو؟"
+        cases = [
+            ({"heading": "البئر السابعة تتدفق"}, "aramco-dammam-well-7.jpg"),
+            ({"heading": "صبي ينقل الأوراق"}, "ali-alnaimi.jpg"),
+            ({"heading": "أسماؤهم على الأرض"}, "aramco-1951-car.jpg"),
+        ]
+        for frame, expected in cases:
+            with self.subTest(expected=expected):
+                self.assertEqual(sr.curated_frame_visual_filename(story, frame), expected)
+
     def test_unrelated_frame_never_gets_a_curated_pin(self):
         self.assertIsNone(
             sr.curated_frame_visual_filename(
