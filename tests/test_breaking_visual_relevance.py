@@ -73,6 +73,30 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
         self.assertIn("لا يشترط أن تُظهر لحظة الحدث", prompt)
         self.assertIn("صورة أرشيفية", prompt)
 
+    def test_verified_asset_provenance_reaches_visual_gate(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        with tempfile.TemporaryDirectory() as td:
+            photo = Path(td) / "candidate.jpg"
+            photo.write_bytes(b"candidate")
+            Path(str(photo) + ".exempt").write_text(
+                "local:kharg-island-oil-terminal-nasa.jpg\\n"
+                "tags: Kharg Island oil terminal Iran, tanker docks, oil tanks\\n"
+                "credit: NASA / Public domain — Wikimedia Commons",
+                encoding="utf-8",
+            )
+            with patch.object(
+                runner, "_strict_vision_verdict", return_value="yes"
+            ) as judge:
+                accepted = runner._breaking_photo_acceptable(
+                    bot, photo, "انفجارات قرب جزيرة خرج"
+                )
+        self.assertTrue(accepted)
+        context = judge.call_args.args[2]
+        self.assertIn("kharg-island-oil-terminal-nasa.jpg", context)
+        self.assertIn("tanker docks", context)
+        self.assertIn("NASA", context)
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()
