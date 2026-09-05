@@ -661,6 +661,13 @@ def install_auto_image_selector(news_bot_module):
                 generic = {
                     "file", "photo", "image", "event", "stage", "launch",
                     "september", "building", "lineup", "reveal", "news",
+                    # Geography and generic officialdom establish where a
+                    # photo was taken, not what it depicts.  Treating Riyadh
+                    # as a subject match put the Ministry of Education on a
+                    # card about white-land fees.
+                    "saudi", "arabia", "arabian", "kingdom", "riyadh",
+                    "jeddah", "makkah", "mecca", "madinah", "medina",
+                    "dammam", "khobar", "government", "ministry",
                 }
                 title_tokens = {
                     token.casefold() for token in re.findall(
