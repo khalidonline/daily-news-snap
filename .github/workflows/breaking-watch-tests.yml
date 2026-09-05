@@ -12,6 +12,7 @@ on:
       - "tests/test_breaking_watch_seen_memory.py"
       - "tests/test_breaking_visual_relevance.py"
       - "tests/test_breaking_manual_reproduction.py"
+      - "tests/test_model_usage_workflows.py"
       - ".github/workflows/breaking.yml"
       - ".github/workflows/breaking-watch-tests.yml"
   pull_request:
@@ -25,6 +26,7 @@ on:
       - "tests/test_breaking_watch_seen_memory.py"
       - "tests/test_breaking_visual_relevance.py"
       - "tests/test_breaking_manual_reproduction.py"
+      - "tests/test_model_usage_workflows.py"
       - ".github/workflows/breaking.yml"
       - ".github/workflows/breaking-watch-tests.yml"
 
@@ -41,10 +43,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install runtime dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt pyyaml
       - name: Run breaking watcher regressions
         run: |
           python -m unittest tests.test_breaking_watch tests.test_breaking_watch_notifications tests.test_breaking_watch_seen_memory -v
           python -m unittest tests.test_breaking_visual_relevance -v
-          python -m unittest tests.test_breaking_manual_reproduction -v
+          python -m unittest tests.test_breaking_manual_reproduction tests.test_model_usage_workflows -v
           python -m py_compile breaking_watch.py breaking_news_runner.py breaking_watch_entry.py news_bot.py
