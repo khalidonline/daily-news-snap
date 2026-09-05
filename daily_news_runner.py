@@ -634,7 +634,12 @@ def install_auto_image_selector(news_bot_module):
             record_recent(candidate)
             if not photo:
                 return None
-            verdict = str(news_bot_module.photo_shows(photo, context)).strip().lower()
+            judge_context = context
+            if credit:
+                judge_context += f"\nPhoto provenance: {credit}"
+            verdict = str(news_bot_module.photo_shows(
+                photo, judge_context
+            )).strip().lower()
             print(f"      auto image relevance [{name}]: {verdict}")
             if verdict == "yes":
                 return (Path(photo), credit, name)
