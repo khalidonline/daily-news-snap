@@ -92,7 +92,7 @@ jobs:
           WATCH_MODEL: ${{ vars.WATCH_MODEL || 'claude-haiku-4-5-20251001' }}
           MODEL_BOT: "breaking"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
-          MODEL_MAX_USD_PER_RUN: "0.15"
+          MODEL_MAX_USD_PER_RUN: "0.60"
           BREAKING_MAX_PAID_RESPONSES: "1"
           NEWS_MAX_PAID_RESPONSES: "2"
           VISION_MAX_PAID_RESPONSES: "12"
