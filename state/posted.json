@@ -1,11 +1,5 @@
 [
  {
-  "headline": "قروض القطاع الخاص السعودي تقفز 197 مليار ريال",
-  "at": "2026-09-02T17:11:10.184515+00:00",
-  "source_link": "https://alwatan.com.sa/article/1185065",
-  "lane": "saudi_core"
- },
- {
   "headline": "Uber تسرّح أكثر من 3000 موظف حول العالم",
   "at": "2026-09-02T18:12:44.043514+00:00",
   "source_link": "https://bbc.co.uk/news/articles/cp3ky2w4y9no?at_medium=RSS&at_campaign=rss",
@@ -142,5 +136,11 @@
   "at": "2026-09-05T16:49:12.366952+00:00",
   "source_link": "https://alyaum.com/articles/6681269/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D9%8A%D9%88%D9%85/%D8%B9%D8%A7%D8%AC%D9%84-%D8%B6%D9%88%D8%A7%D8%A8%D8%B7-%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-%D9%84%D8%AA%D9%88%D8%AB%D9%8A%D9%82-%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A-%D8%A7%D9%84%D8%AE%D8%A7%D8%B6%D8%B9%D8%A9-%D9%84%D8%B1%D8%B3%D9%88%D9%85-%D8%A7%D9%84%D8%A8%D9%8A%D8%B6%D8%A7%D8%A1-%D9%88%D8%A7%D9%84%D8%B3%D8%AF%D8%A7%D8%AF-%D8%B4%D8%B1%D8%B7-%D9%84%D9%86%D9%82%D9%84-%D8%A7%D9%84%D9%85%D9%84%D9%83%D9%8A%D8%A9",
   "lane": "saudi_core"
+ },
+ {
+  "headline": "Oura تتجه للطرح العام وسط منافسة الخواتم الذكية",
+  "at": "2026-09-05T18:13:17.657735+00:00",
+  "source_link": "https://techcrunch.com/2026/09/05/oura-is-going-public-but-these-smart-ring-companies-are-coming-for-its-crown",
+  "lane": "business_tech"
  }
 ]
