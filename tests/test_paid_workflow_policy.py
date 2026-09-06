@@ -51,6 +51,14 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
             {f"scheduler/triggers/{bot}.txt" for bot in CLOCK_DISPATCHES},
         )
 
+    def test_breaking_clock_can_forward_an_exact_recovery_event(self):
+        receiver = Path(".github/workflows/external-clock-receiver.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("confirmed_event=", receiver)
+        self.assertIn("client_payload[confirmed_event]", receiver)
+        self.assertIn("base64 --decode", receiver)
+
     def test_external_clock_receiver_dispatches_each_bot_without_model_calls(self):
         receiver_path = Path(".github/workflows/external-clock-receiver.yml")
         text = receiver_path.read_text(encoding="utf-8")
