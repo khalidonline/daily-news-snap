@@ -62,6 +62,11 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn("inputs.recovery_story", self.workflow)
         self.assertIn("NEWS_RECOVERY_STORY_B64", self.workflow)
 
+    def test_exact_recovery_bypasses_completed_schedule_slot(self):
+        self.assertIn("github.event.action == 'news-recovery'", self.workflow)
+        self.assertIn("RECOVERY_STORY_B64", self.workflow)
+        self.assertIn("exact News recovery — schedule gate bypassed", self.workflow)
+
     def test_no_photo_notification_calls_news_items_not_stories(self):
         self.assertIn("install_news_notification_labels", self.news_runner)
         self.assertIn('"news items had a usable photo"', self.news_runner)
