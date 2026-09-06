@@ -1,11 +1,5 @@
 [
  {
-  "headline": "مسؤول بالفدرالي الأمريكي يرجّح تثبيت الفائدة سبتمبر",
-  "at": "2026-09-03T13:09:47.810448+00:00",
-  "source_link": "https://cnbc.com/2026/09/03/fed-governor-waller-indicates-he-will-support-holding-rates-steady-at-september-meeting.html",
-  "lane": "business_tech"
- },
- {
   "headline": "Sam Altman يعتذر عن مشاكل إطلاق GPT-6 Astra",
   "at": "2026-09-04T10:46:53.381849+00:00",
   "source_link": "https://theverge.com/ai-artificial-intelligence/990060/altman-apologizes-messy-astra-rollout",
@@ -147,6 +141,12 @@
   "headline": "أكوا باور تشغّل منظومة طاقة البحر الأحمر بالكامل",
   "at": "2026-09-06T12:15:58.733145+00:00",
   "source_link": "https://aawsat.com/node/5315247",
+  "lane": "saudi_core"
+ },
+ {
+  "headline": "اكتتاب في صكوك صح بعائد 4.8% حتى 8 سبتمبر",
+  "at": "2026-09-06T14:17:11.823042+00:00",
+  "source_link": "https://alyaum.com/articles/6681403/%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF/%D9%85%D8%A7%D9%84-%D9%88%D8%A3%D8%B9%D9%85%D8%A7%D9%84/%D8%AD%D8%AA%D9%89-8-%D8%B3%D8%A8%D8%AA%D9%85%D8%A8%D8%B1-%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%A7%D9%83%D8%AA%D8%AA%D8%A7%D8%A8-%D9%81%D9%8A-%D8%B5%D9%83%D9%88%D9%83-%D8%B5%D8%AD-%D8%A8%D8%B9%D8%A7%D8%A6%D8%AF-48",
   "lane": "saudi_core"
  }
 ]
