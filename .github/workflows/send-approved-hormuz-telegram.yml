@@ -7,6 +7,7 @@ on:
     paths:
       - "2026-09-06-hormuz-final-v4-story-*.png"
       - "render_approved_hormuz_frame4.py"
+      - "render_approved_hormuz_original.py"
       - "render_approved_hormuz_native.py"
       - "send_approved_story.py"
       - ".github/workflows/send-approved-hormuz-telegram.yml"
@@ -14,7 +15,7 @@ on:
     branches:
       - repair/all-story-visuals-2026-08-29
     paths:
-      - "render_approved_hormuz_native.py"
+      - "render_approved_hormuz_original.py"
 
 permissions:
   contents: read
@@ -34,8 +35,8 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Rebuild approved frame 4 inside the original light template
-        run: python render_approved_hormuz_frame4.py
+      - name: Apply frame 4 format to all six frames
+        run: python render_approved_hormuz_original.py
       - name: Freeze and verify exact six-frame deck
         run: |
           python - <<'PY'
