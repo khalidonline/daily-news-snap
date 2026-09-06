@@ -1,9 +1,12 @@
+import io
 import os
 import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
+
+from PIL import Image
 
 import daily_news_runner
 
@@ -286,13 +289,19 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIsNone(credit)
 
     def test_verified_official_visual_download_is_allowlisted(self):
+        source = io.BytesIO()
+        Image.new("RGBA", (120, 80), (0, 0, 0, 0)).save(
+            source, format="PNG", compress_level=0
+        )
+        image_data = source.getvalue()
+
         class Response:
             def __enter__(self):
                 return self
             def __exit__(self, *args):
                 return False
             def read(self, limit=-1):
-                return b"official-subject-image" * 1000
+                return image_data
 
         story = {
             "official_image_url": (
@@ -308,6 +317,50 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertEqual(photo, str(target))
             self.assertIsNone(credit)
             self.assertTrue(Path(str(target) + ".official-subject").exists())
+            with Image.open(target) as rendered:
+                pixel = rendered.convert("RGB").getpixel((60, 40))
+            self.assertTrue(all(channel > 230 for channel in pixel))
+
+    def test_curated_recovery_photo_requires_attribution(self):
+        source = io.BytesIO()
+        Image.new("RGB", (120, 80), (145, 98, 45)).save(
+            source, format="PNG", compress_level=0
+        )
+        image_data = source.getvalue()
+
+        class Response:
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit=-1):
+                return image_data
+
+        story = {
+            "recovery_image_url": (
+                "https://upload.wikimedia.org/wikipedia/commons/1/1a/"
+                "Saudi_coins_%281%29.jpg"
+            ),
+            "recovery_photo_credit": "Sajetpa / CC BY-SA 3.0",
+        }
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "coins.jpg"
+            photo, credit = daily_news_runner.fetch_verified_official_visual(
+                story, target, opener=lambda *args, **kwargs: Response()
+            )
+            self.assertEqual(photo, str(target))
+            self.assertEqual(credit, "Sajetpa / CC BY-SA 3.0")
+
+    def test_curated_recovery_photo_without_attribution_is_rejected(self):
+        story = {
+            "recovery_image_url": (
+                "https://upload.wikimedia.org/wikipedia/commons/1/1a/"
+                "Saudi_coins_%281%29.jpg"
+            )
+        }
+        photo, credit = daily_news_runner.fetch_verified_official_visual(story, "x")
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
 
     def test_no_candidate_is_never_promoted(self):
         calls = []
