@@ -44,7 +44,7 @@ FRAMES = [
 ]
 
 PHOTO_BOX = (96, 420, 984, 1059)
-KICKER = "ملخص تنفيذي - قصة"\n# Delivery revision: exact native Riyadh card format.
+KICKER = "ملخص تنفيذي - قصة"\n# Delivery revision: exact native Riyadh card format (six frames).
 
 
 def render_deck(source_frames, output_dir):
