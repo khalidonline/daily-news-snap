@@ -668,6 +668,10 @@ def install_auto_image_selector(news_bot_module):
                     "saudi", "arabia", "arabian", "kingdom", "riyadh",
                     "jeddah", "makkah", "mecca", "madinah", "medina",
                     "dammam", "khobar", "government", "ministry",
+                    # Generic finance/place terms do not make a city scene
+                    # relevant to a specific sukuk, IPO, bank product, or deal.
+                    "financial", "finance", "district", "market", "office",
+                    "building", "business", "bank",
                 }
                 title_tokens = {
                     token.casefold() for token in re.findall(
