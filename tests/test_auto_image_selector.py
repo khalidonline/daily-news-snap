@@ -388,6 +388,23 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIn("أكوام النقود", guidance)
         self.assertIn("قناة الاكتتاب", guidance)
 
+    def test_repository_recovery_asset_is_decoded_with_credit(self):
+        story = {
+            "recovery_image_b64_path": (
+                "assets/recovery/sah-modern-photo.jpg.b64"
+            ),
+            "recovery_photo_credit": "Arabian Business",
+        }
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "sah.jpg"
+            photo, credit = daily_news_runner.fetch_verified_official_visual(
+                story, target
+            )
+            self.assertEqual(photo, str(target))
+            self.assertEqual(credit, "Arabian Business")
+            with Image.open(target) as rendered:
+                self.assertEqual(rendered.size, (1024, 683))
+
     def test_curated_recovery_photo_without_attribution_is_rejected(self):
         story = {
             "recovery_image_url": (
