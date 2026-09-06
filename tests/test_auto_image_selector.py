@@ -255,6 +255,40 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIsNone(photo)
         self.assertIsNone(credit)
 
+    def test_neutral_commons_rejects_empty_stadium_for_player_transfer(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title="File:Jawhara Stadium Jeddah.jpg")
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "ديابي يقترب من الأهلي باتفاق حتى 2029",
+                "summary": "اقترب النادي الأهلي من ضم موسى ديابي.",
+                "takeaway": "الصفقة تدعم هجوم الأهلي بلاعب دولي.",
+                "link": "https://akhbaar24.com/diaby-al-ahli",
+                "scope": "saudi",
+                "image_queries": [
+                    "Moussa Diaby Al Ahli transfer",
+                    "Jeddah football stadium",
+                ],
+                "image_queries_ar": ["موسى ديابي الأهلي"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["موسى ديابي الأهلي"],
+                ["Moussa Diaby Al Ahli transfer", "Jeddah football stadium"],
+                hero,
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
     def test_neutral_financial_district_photo_is_too_generic_for_sukuk(self):
         calls = []
         fake = self.make_module({
