@@ -41,9 +41,11 @@ def run():
         or os.getenv("TRIGGER_CONFIRMED_EVENT", "").strip()
     )
     if confirmed_event:
-        print("manual confirmed-event reproduction — classifier bypassed, dry run forced")
+        mode = os.getenv("BREAKING_RUN_MODE", "repair_visual").strip()
+        print(f"manual confirmed-event reproduction ({mode}) — classifier bypassed, dry run forced")
         return _run_strict_news_bot({
             "PINNED_EVENT": confirmed_event,
+            "BREAKING_RUN_MODE": mode,
             "POST_TO_SNAPCHAT": "0",
             "DRY_RUN": "1",
         })
