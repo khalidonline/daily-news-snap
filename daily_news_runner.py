@@ -642,7 +642,7 @@ def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlope
     )
     kind = "curated" if is_curated else "official"
     print(f"    photo: verified {kind} subject visual from {source_label}")
-    return str(target), credit
+    return str(target), credit or None
 
 
 def install_auto_image_selector(news_bot_module):
