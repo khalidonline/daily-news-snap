@@ -557,7 +557,9 @@ OFFICIAL_VISUAL_HOSTS = {
     "mof.gov.sa", "www.mof.gov.sa",
     "spa.gov.sa", "www.spa.gov.sa",
 }
-CURATED_RECOVERY_VISUAL_HOSTS = {"upload.wikimedia.org"}
+CURATED_RECOVERY_VISUAL_HOSTS = {
+    "upload.wikimedia.org", "arabic.arabianbusiness.com",
+}
 
 
 def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlopen):
@@ -739,6 +741,9 @@ def install_auto_image_selector(news_bot_module):
                     # relevant to a specific sukuk, IPO, bank product, or deal.
                     "financial", "finance", "district", "market", "office",
                     "building", "business", "bank",
+                    # Literal money objects are not sufficient context for a
+                    # modern named investment or savings product.
+                    "coin", "coins", "currency", "money", "riyal", "riyals",
                 }
                 title_tokens = {
                     token.casefold() for token in re.findall(
