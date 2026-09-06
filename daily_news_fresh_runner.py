@@ -11,6 +11,26 @@ from pathlib import Path
 import daily_news_runner
 
 
+FINANCIAL_TAKEAWAY_GUIDANCE = """
+في الأخبار المالية، اجعل takeaway يشرح ببساطة ماذا يعني الخبر، لا أن يعيد العنوان.
+طبّق ذلك خصوصاً على: صكوك، اكتتاب، تمويل، إصدار، نتائج مالية، استحواذ وطرح.
+اشرح الأثر المباشر بلغة بسيطة: ماذا حصل للشركة أو المستثمرين أو السوق أو القارئ السعودي.
+لا تخمّن أثراً غير موجود في المصدر، ولا تقدّم نصيحة استثمارية.
+مثال: «الراجحي جمع تمويلاً من المستثمرين عبر الصكوك لتمويل مشاريع مؤهلة ذات أثر اجتماعي».
+""".strip()
+
+
+def install_financial_takeaway_guidance(news_bot_module):
+    """Make finance cards explain significance instead of repeating the event."""
+    if FINANCIAL_TAKEAWAY_GUIDANCE not in news_bot_module.SYSTEM_PROMPT:
+        news_bot_module.SYSTEM_PROMPT = (
+            news_bot_module.SYSTEM_PROMPT.rstrip()
+            + "\n\n"
+            + FINANCIAL_TAKEAWAY_GUIDANCE
+        )
+    return news_bot_module
+
+
 def install_recent_photo_fail_closed(news_bot_module):
     """Prevent scheduled News from recycling a recently used photo."""
     original_local = news_bot_module.fetch_local_photo
@@ -55,6 +75,7 @@ def main():
     import news_bot
 
     daily_news_runner.configure(news_bot)
+    install_financial_takeaway_guidance(news_bot)
     install_recent_photo_fail_closed(news_bot)
     install_news_notification_labels(news_bot)
     news_bot.main()
