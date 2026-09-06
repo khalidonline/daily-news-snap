@@ -57,6 +57,22 @@ class ModelUsageIntegrationTests(unittest.TestCase):
 
         self.assertEqual((rows[0]["bot"], rows[0]["purpose"]), ("news", "editorial"))
 
+    def test_news_editorial_marks_stable_prompt_for_provider_cache(self):
+        payload = {
+            "id": "news-cache-msg",
+            "usage": {"input_tokens": 10, "output_tokens": 5},
+            "content": [{"type": "text", "text": '{"caption":"x","stories":[]}'}],
+        }
+        items = [{"source": "source", "title": "title", "summary": "summary"}]
+        with patch.object(news_bot, "ANTHROPIC_API_KEY", "key"), patch.object(
+            news_bot.urllib.request, "urlopen", return_value=FakeResponse(payload)
+        ) as api:
+            news_bot.summarize(items)
+
+        request = json.loads(api.call_args.args[0].data)
+        self.assertEqual(request["system"][0]["cache_control"], {"type": "ephemeral"})
+        self.assertIn("محرر موجز أخبار", request["system"][0]["text"])
+
     def test_topic_research_response_is_metered(self):
         payload = {
             "id": "topic-msg",
