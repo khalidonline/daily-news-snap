@@ -55,8 +55,13 @@ jobs:
                     -f "client_payload[confirmed_event]=${confirmed_event}"
                   continue
                 fi
+                gh api --method POST "repos/${GITHUB_REPOSITORY}/dispatches" \
+                  -f event_type="$event_type"
+              else
+                requested_slot="$(awk 'NF { print $1; exit }' "$trigger_path")"
+                gh api --method POST "repos/${GITHUB_REPOSITORY}/dispatches" \
+                  -f event_type="$event_type" \
+                  -f "client_payload[slot]=${requested_slot}"
               fi
-              gh api --method POST "repos/${GITHUB_REPOSITORY}/dispatches" \
-                -f event_type="$event_type"
             fi
           done
