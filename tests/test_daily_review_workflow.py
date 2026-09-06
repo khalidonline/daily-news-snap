@@ -7,8 +7,7 @@ class DailyReviewWorkflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
         cls.news_runner = Path("daily_news_fresh_runner.py").read_text(encoding="utf-8")
-        cls.editorial_prompt = Path("news_editorial_prompt.txt").read_text(encoding="utf-8")
-        cls.news_bot = Path("news_bot.py").read_text(encoding="utf-8")
+        cls.breaking_runner = Path("breaking_news_runner.py").read_text(encoding="utf-8")
 
     def test_keeps_github_heartbeat_only_as_temporary_fallback(self):
         self.assertIn('- cron: "10,25,40,55 4-20 * * *"', self.workflow)
@@ -71,11 +70,11 @@ class DailyReviewWorkflowTests(unittest.TestCase):
 
     def test_financial_news_explains_what_the_news_means(self):
         required = "في الأخبار المالية، اجعل takeaway يشرح ببساطة ماذا يعني الخبر"
-        self.assertIn(required, self.editorial_prompt)
-        self.assertIn(required, self.news_bot)
-        self.assertIn("صكوك", self.editorial_prompt)
-        self.assertIn("اكتتاب", self.editorial_prompt)
-        self.assertIn("تمويل", self.editorial_prompt)
+        for runner in (self.news_runner, self.breaking_runner):
+            self.assertIn(required, runner)
+            self.assertIn("صكوك", runner)
+            self.assertIn("اكتتاب", runner)
+            self.assertIn("تمويل", runner)
 
     def test_runtime_budget_covers_strict_image_search(self):
         self.assertIn("timeout-minutes: 30", self.workflow)
