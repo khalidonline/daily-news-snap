@@ -72,6 +72,19 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         watch.assert_called_once_with()
         call.assert_not_called()
 
+    @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": EVENT, "BREAKING_RUN_MODE": "repair_visual"}, clear=False)
+    @mock.patch.object(entry.breaking_watch, "watch")
+    @mock.patch.object(entry.subprocess, "call", return_value=0)
+    def test_manual_recovery_passes_cache_first_mode_to_runner(self, call, watch):
+        entry.run()
+        watch.assert_not_called()
+        self.assertEqual("repair_visual", call.call_args.kwargs["env"]["BREAKING_RUN_MODE"])
+
+    def test_workflow_defaults_manual_runs_to_visual_repair(self):
+        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
+        for mode in ("repair_visual", "regenerate_editorial", "new_event"):
+            self.assertIn(mode, workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
