@@ -50,7 +50,12 @@ class ModelUsageWorkflowTests(unittest.TestCase):
         expected = {
             "daily": ("python daily_news_fresh_runner.py", "0.50", "2", "20"),
             "topic": ("python topic_snapchat.py", "1.50", "2", "20"),
-            "breaking": ("python breaking_watch_entry.py", "0.60", "2", "12"),
+            "breaking": (
+                "python breaking_watch_entry.py",
+                "${{ inputs.mode == 'repair_visual' && '0.15' || '0.60' }}",
+                "1",
+                "12",
+            ),
         }
         for name, (command, dollars, editorial_calls, vision_calls) in expected.items():
             with self.subTest(workflow=name):

@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+import json
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -167,6 +168,29 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
                 )
         self.assertEqual(verdict, "no")
 
+    def test_visual_verdict_cache_avoids_second_paid_call(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        with tempfile.TemporaryDirectory() as td:
+            photo = Path(td) / "candidate.jpg"
+            Image.new("RGB", (20, 20), "white").save(photo)
+            response = {"content": [{"type": "text", "text": "نعم — مرتبطة"}], "usage": {}}
+            body = json.dumps(response).encode()
+            class FakeResponse:
+                def __enter__(self): return self
+                def __exit__(self, *_args): return False
+                def read(self): return body
+            with patch.object(runner, "CACHE_FILE", Path(td) / "cache.json"), \
+                    patch.object(runner.urllib.request, "urlopen", return_value=FakeResponse()) as api, \
+                    patch.object(runner.model_meter, "require_response_capacity"), \
+                    patch.object(runner.model_meter, "require_run_cost_capacity"), \
+                    patch.object(runner.model_meter, "note_successful_response"), \
+                    patch.object(runner.model_meter, "record_anthropic_response"):
+                first = runner._strict_vision_verdict(bot, photo, bot.PINNED_EVENT)
+                second = runner._strict_vision_verdict(bot, photo, bot.PINNED_EVENT)
+        self.assertEqual(("yes", "yes"), (first, second))
+        self.assertEqual(1, api.call_count)
+
     def test_rejected_local_candidate_is_removed_from_breaking_pipeline(self):
         runner = self.runner()
         bot = self.fake_bot()
@@ -198,6 +222,44 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as raised:
                 runner.run_bot(bot)
         self.assertEqual(runner.BREAKING_VISUAL_EXIT, raised.exception.code)
+
+
+class BreakingEditorialCacheTests(unittest.TestCase):
+    def test_visual_repair_reuses_editorial_without_calling_model(self):
+        import breaking_news_runner as runner
+        event = "قرار سعودي عاجل مؤكد الآن"
+        cached = {"caption": "خبر", "stories": [{"headline": "عنوان"}]}
+        with tempfile.TemporaryDirectory() as td:
+            cache = Path(td) / "cache.json"
+            cache.write_text(json.dumps({"editorial": {runner._event_fingerprint(event): {"result": cached}}}, ensure_ascii=False), encoding="utf-8")
+            calls = []
+            bot = SimpleNamespace(summarize=lambda *_a, **_k: calls.append(1))
+            with patch.object(runner, "CACHE_FILE", cache):
+                runner.install_editorial_cache(bot, event, "repair_visual")
+                result = bot.summarize([], pinned=event)
+        self.assertEqual(cached, result)
+        self.assertEqual([], calls)
+
+    def test_visual_repair_without_cache_fails_before_model_call(self):
+        import breaking_news_runner as runner
+        calls = []
+        bot = SimpleNamespace(summarize=lambda *_a, **_k: calls.append(1))
+        with tempfile.TemporaryDirectory() as td, patch.object(runner, "CACHE_FILE", Path(td) / "missing.json"):
+            runner.install_editorial_cache(bot, "حدث جديد", "repair_visual")
+            with self.assertRaises(SystemExit):
+                bot.summarize([], pinned="حدث جديد")
+        self.assertEqual([], calls)
+
+    def test_regenerate_editorial_refreshes_cached_result_once(self):
+        import breaking_news_runner as runner
+        result = {"caption": "جديد", "stories": [{"headline": "عنوان جديد"}]}
+        calls = []
+        bot = SimpleNamespace(summarize=lambda *_a, **_k: calls.append(1) or result, commit_and_push=lambda *_a, **_k: None)
+        with tempfile.TemporaryDirectory() as td, patch.object(runner, "CACHE_FILE", Path(td) / "cache.json"):
+            runner.install_editorial_cache(bot, "حدث مؤكد", "regenerate_editorial")
+            actual = bot.summarize([], pinned="حدث مؤكد")
+        self.assertEqual(result, actual)
+        self.assertEqual([1], calls)
 
 
 if __name__ == "__main__":
