@@ -1,0 +1,142 @@
+{
+  "brief": {
+    "caption": "من سور طيني إلى أطول مترو بلا سائق بالعالم… هذي حكاية الرياض 🏙️",
+    "frames": [
+      {
+        "heading": "بلدة خلف سور من الطين",
+        "image_keywords": [
+          "old Riyadh",
+          "Najd mud town",
+          "Riyadh 1900s",
+          "الرياض القديمة",
+          "سور الرياض",
+          "نجد"
+        ],
+        "image_keywords_ar": [
+          "الرياض القديمة",
+          "سور الرياض",
+          "نجد"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "قبل أكثر من مئة عام، الرياض بلدة صغيرة تحيط بها أسوار من الطين. مساحتها كانت نحو كيلومتر مربع واحد فقط، يسكنها نحو عشرة آلاف نسمة."
+      },
+      {
+        "heading": "1902: نقطة التحوّل",
+        "image_keywords": [
+          "Masmak Fortress",
+          "Riyadh 1902",
+          "قصر المصمك",
+          "الرياض 1902",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "قصر المصمك",
+          "الرياض 1902"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "وهنا تغيّر مسار المدينة. في 1902 استعاد الملك عبدالعزيز الرياض. واتخذها قاعدة لحروب التوحيد التي استمرت 30 عاماً. وانتهت تلك الحروب بتأسيس المملكة العربية السعودية عام 1932."
+      },
+      {
+        "heading": "1951: يصل أول قطار",
+        "image_keywords": [
+          "Riyadh Dammam railway 1951",
+          "King Abdulaziz train",
+          "سكة حديد الرياض الدمام",
+          "الملك عبدالعزيز",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "سكة حديد الرياض الدمام",
+          "الملك عبدالعزيز"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "ولذلك في 1944 أُزيلت أسوار المدينة القديمة لتستوعب سكاناً جدداً. وفي 1951 وصل أول قطار من الدمام إلى الرياض، عبر خط بطول 565 كيلومتراً استغرق إنشاؤه أربع سنوات. الخط ربط العاصمة بالمنطقة الشرقية ونشاطها الاقتصادي للمرة الأولى."
+      },
+      {
+        "heading": "من 8 كم² إلى 1800 كم²",
+        "image_keywords": [
+          "Riyadh construction 1970s",
+          "Riyadh urban growth",
+          "الرياض 1975",
+          "عمران الرياض",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "الرياض 1975",
+          "عمران الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "وبعد أن انفتحت المدينة على العالم، بدأ عدد سكانها يتضاعف: من 40 ألفاً عام 1935 إلى 83 ألفاً عام 1949. وواصلت النمو حتى بلغت 150 ألف نسمة في الستينات. وخلال نصف قرن اتسعت مساحتها إلى 1800 كيلومتر مربع."
+      },
+      {
+        "heading": "أطول مترو بلا سائق بالعالم",
+        "image_keywords": [
+          "Riyadh Metro",
+          "Riyadh skyline",
+          "مترو الرياض",
+          "أفق الرياض",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "مترو الرياض",
+          "أفق الرياض"
+        ],
+        "punch": "",
+        "subject_kind": "place_city",
+        "text": "واليوم يسكن الرياض أكثر من 7 ملايين نسمة، وفق تعداد 2022. وفي ديسمبر 2024 افتتح مترو الرياض بطول 176 كيلومتراً عبر ست خطوط، ليصبح أطول شبكة قطارات ذاتية القيادة في العالم."
+      },
+      {
+        "heading": "رقم من قلب المدينة",
+        "image_keywords": [
+          "Riyadh skyline",
+          "Riyadh downtown",
+          "أفق الرياض",
+          "برج المملكة",
+          "Riyadh",
+          "الرياض"
+        ],
+        "image_keywords_ar": [
+          "أفق الرياض",
+          "برج المملكة"
+        ],
+        "punch": "هذا هو حجم التحوّل الذي عاشته المدينة التي كانت خلف سور من الطين.",
+        "subject_kind": "place_city",
+        "text": "وفي 2023 سجّلت الرياض وحدها 200.4 مليار ريال في مبيعات نقاط البيع."
+      }
+    ],
+    "image_prompt": "A small historic mud-walled town in the Arabian desert at dusk, traditional Najdi mud-brick buildings and a fortified gate, warm sandy tones, no people, no text, no logos",
+    "image_queries": [
+      "old mud wall Najd Arabia",
+      "traditional Najdi mud architecture",
+      "Masmak Fortress Riyadh"
+    ],
+    "image_queries_ar": [
+      "الرياض القديمة",
+      "قصر المصمك",
+      "سور الرياض"
+    ],
+    "sources": [
+      "ويكيبيديا",
+      "وكالة الأنباء السعودية",
+      "CNN Arabic",
+      "DataSaudi"
+    ],
+    "title": "من بلدة مسوّرة إلى عاصمة اقتصادية"
+  },
+  "input_tokens": 231770,
+  "message_id": "msg_011Cen5EC2vMudDrHSRvme8y",
+  "model": "claude-sonnet-5",
+  "output_tokens": 14875,
+  "prompt_hash": "a04f44c249e1743aec80426c5a881eb20f8d0773f9a81ebd03b4579147f97a72",
+  "revision": "d49452df653ed03bb8324c162aa2c03a63d5f32c95ab5c9f3b01cc74471480d2",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
