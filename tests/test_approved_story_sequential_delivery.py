@@ -9,7 +9,7 @@ sender = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(sender)
 
 
-def test_send_verified_frames_uses_one_photo_album(tmp_path, monkeypatch):
+def test_send_verified_frames_uses_the_riyadh_document_album_path(tmp_path, monkeypatch):
     frames = []
     for index in range(1, 7):
         p = tmp_path / f"frame-{index}.png"
@@ -17,18 +17,12 @@ def test_send_verified_frames_uses_one_photo_album(tmp_path, monkeypatch):
         frames.append(p)
 
     calls = []
-    monkeypatch.setattr(
-        sender,
-        "_send_photo_album",
-        lambda paths, caption="": calls.append(
-            ([Path(path).name for path in paths], caption)
-        ) or list(range(201, 207)),
-    )
+    monkeypatch.setattr(sender.rsp.sb, "notify_album", lambda caption, paths, as_documents=False: calls.append((caption, [Path(path).name for path in paths], as_documents)) or True)
 
-    ids = sender.send_verified_frames_as_album(frames, story="Hormuz")
+    confirmed = sender.send_verified_frames_like_riyadh(frames, story="Hormuz")
 
-    assert calls == [([f"frame-{i}.png" for i in range(1, 7)], "[APPROVED] Hormuz\n6 frames")]
-    assert ids == list(range(201, 207))
+    assert calls == [("[READY] Hormuz\nFinal publication candidate", [f"frame-{i}.png" for i in range(1, 7)], True)]
+    assert confirmed is True
 
 
 def test_send_verified_frames_sequentially_sends_all_six(tmp_path, monkeypatch):
