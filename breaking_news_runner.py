@@ -17,6 +17,14 @@ import model_usage as model_meter
 
 BREAKING_VISUAL_EXIT = 42
 
+FINANCIAL_TAKEAWAY_GUIDANCE = """
+في الأخبار المالية، اجعل takeaway يشرح ببساطة ماذا يعني الخبر، لا أن يعيد العنوان.
+طبّق ذلك خصوصاً على: صكوك، اكتتاب، تمويل، إصدار، نتائج مالية، استحواذ وطرح.
+اشرح الأثر المباشر بلغة بسيطة: ماذا حصل للشركة أو المستثمرين أو السوق أو القارئ السعودي.
+لا تخمّن أثراً غير موجود في المصدر، ولا تقدّم نصيحة استثمارية.
+مثال: «الراجحي جمع تمويلاً من المستثمرين عبر الصكوك لتمويل مشاريع مؤهلة ذات أثر اجتماعي».
+""".strip()
+
 _BREAKING_VISION_PROMPT = """أنت بوابة صور صارمة لبطاقة «خبر عاجل» على سناب شات.
 
 الحدث العاجل:
@@ -43,6 +51,15 @@ _BREAKING_VISION_PROMPT = """أنت بوابة صور صارمة لبطاقة «
 قاعدة مهمة جداً: مجرد كون الحدث سعودياً لا يجعل أي صورة للرياض أو السعودية
 صالحة. سوق قديم، أفق مدينة، صحراء، كورنيش، أو معلم عام = لا، ما لم يكن ذلك
 المكان نفسه جزءاً محدداً من الحدث. في العاجل، الشك لا يمر."""
+
+
+def install_financial_takeaway_guidance(bot):
+    """Make financial breaking cards explain significance in plain Arabic."""
+    if FINANCIAL_TAKEAWAY_GUIDANCE not in bot.SYSTEM_PROMPT:
+        bot.SYSTEM_PROMPT = (
+            bot.SYSTEM_PROMPT.rstrip() + "\n\n" + FINANCIAL_TAKEAWAY_GUIDANCE
+        )
+    return bot
 
 
 def _strict_vision_verdict(bot, photo_path, context):
@@ -240,6 +257,7 @@ def _abort_no_visual(bot, event, state):
 
 
 def run_bot(bot=news_bot):
+    install_financial_takeaway_guidance(bot)
     event = (getattr(bot, "PINNED_EVENT", "") or "").strip()
     if not event:
         return bot.main()
