@@ -8,6 +8,7 @@ from unittest.mock import patch
 
 from PIL import Image
 
+import daily_news_fresh_runner
 import daily_news_runner
 
 
@@ -351,6 +352,42 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertEqual(photo, str(target))
             self.assertEqual(credit, "Sajetpa / CC BY-SA 3.0")
 
+    def test_curated_publisher_recovery_photo_is_allowlisted_with_credit(self):
+        source = io.BytesIO()
+        Image.effect_noise((160, 100), 30).convert("RGB").save(
+            source, format="JPEG", quality=92
+        )
+        image_data = source.getvalue()
+
+        class Response:
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit=-1):
+                return image_data
+
+        story = {
+            "recovery_image_url": (
+                "https://arabic.arabianbusiness.com/cloud/2024/11/03/"
+                "9ASXhkUp-12-1024x683.jpg"
+            ),
+            "recovery_photo_credit": "Arabian Business",
+        }
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "sah.jpg"
+            photo, credit = daily_news_runner.fetch_verified_official_visual(
+                story, target, opener=lambda *args, **kwargs: Response()
+            )
+            self.assertEqual(photo, str(target))
+            self.assertEqual(credit, "Arabian Business")
+
+    def test_news_guidance_rejects_old_coins_for_modern_financial_products(self):
+        guidance = daily_news_fresh_runner.NEWS_VISUAL_QUALITY_GUIDANCE
+        self.assertIn("العملات القديمة", guidance)
+        self.assertIn("أكوام النقود", guidance)
+        self.assertIn("قناة الاكتتاب", guidance)
+
     def test_curated_recovery_photo_without_attribution_is_rejected(self):
         story = {
             "recovery_image_url": (
@@ -359,6 +396,34 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             )
         }
         photo, credit = daily_news_runner.fetch_verified_official_visual(story, "x")
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
+    def test_neutral_old_coin_photo_is_too_generic_for_sah_sukuk(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "neutral", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "neutral",
+            "stock": "no",
+        }, calls, commons_title="File:Saudi coins (1).jpg")
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "اكتتاب في صكوك صح بعائد 4.8% حتى 8 سبتمبر",
+                "summary": "فتح المركز الوطني لإدارة الدين الاكتتاب في صكوك صح.",
+                "takeaway": "الصكوك أداة ادخار حكومية بعائد ثابت.",
+                "link": "https://alyaum.com/sah-sukuk",
+                "scope": "saudi",
+                "image_queries": ["saudi riyal coins savings"],
+                "image_queries_ar": ["صكوك صح"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            photo, credit = fake.fetch_local_photo(
+                ["صكوك صح"], ["saudi riyal coins savings"], Path(td) / "hero.jpg"
+            )
+
         self.assertIsNone(photo)
         self.assertIsNone(credit)
 
