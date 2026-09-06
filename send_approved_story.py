@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Send a human-approved frozen Story artifact to Telegram without rerendering.
-
-Approved Story delivery deliberately uses six confirmed single-document sends.
-A Telegram media-group timeout must never degrade to one-frame success.
-"""
+"""Send a human-approved frozen Story artifact to Telegram without rerendering."""
 
 from __future__ import annotations
 
@@ -44,7 +40,6 @@ def _send_document(path: Path, caption: str = "") -> int:
     chat_id = os.getenv("TELEGRAM_CHAT_ID", "").strip()
     if not token or not chat_id:
         raise RuntimeError("Telegram credentials are missing")
-
     fields = {"chat_id": chat_id}
     if caption:
         fields["caption"] = caption
@@ -70,6 +65,69 @@ def _send_document(path: Path, caption: str = "") -> int:
     raise RuntimeError(f"Telegram frame delivery failed after 3 attempts: {last_error}")
 
 
+def _multipart_album(fields, frames):
+    boundary = f"----daily-news-snap-{uuid.uuid4().hex}"
+    chunks = []
+    for name, value in fields.items():
+        chunks.append(f"--{boundary}\r\n".encode())
+        chunks.append(f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode())
+        chunks.append(str(value).encode("utf-8"))
+        chunks.append(b"\r\n")
+    for index, frame in enumerate(frames, start=1):
+        field = f"frame{index}"
+        chunks.append(f"--{boundary}\r\n".encode())
+        chunks.append(
+            f'Content-Disposition: form-data; name="{field}"; filename="{frame.name}"\r\n'.encode()
+        )
+        chunks.append(b"Content-Type: image/png\r\n\r\n")
+        chunks.append(frame.read_bytes())
+        chunks.append(b"\r\n")
+    chunks.append(f"--{boundary}--\r\n".encode())
+    return b"".join(chunks), f"multipart/form-data; boundary={boundary}"
+
+
+def _send_photo_album(frames, caption: str = "") -> list[int]:
+    token = os.getenv("TELEGRAM_TOKEN", "").strip()
+    chat_id = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+    if not token or not chat_id:
+        raise RuntimeError("Telegram credentials are missing")
+    frames = [Path(frame) for frame in frames]
+    media = []
+    for index in range(1, len(frames) + 1):
+        item = {"type": "photo", "media": f"attach://frame{index}"}
+        if index == 1 and caption:
+            item["caption"] = caption
+        media.append(item)
+    body, content_type = _multipart_album(
+        {"chat_id": chat_id, "media": json.dumps(media, ensure_ascii=False)},
+        frames,
+    )
+    last_error = None
+    for attempt in range(1, 4):
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{token}/sendMediaGroup",
+            data=body,
+            headers={"Content-Type": content_type},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                payload = json.loads(resp.read())
+            if not payload.get("ok"):
+                raise RuntimeError(f"Telegram rejected album: {payload}")
+            message_ids = [int(item["message_id"]) for item in payload.get("result", [])]
+            if len(message_ids) != len(frames):
+                raise RuntimeError(
+                    f"Telegram confirmed {len(message_ids)} of {len(frames)} album frames"
+                )
+            return message_ids
+        except Exception as exc:
+            last_error = exc
+            if attempt < 3:
+                time.sleep(attempt * 2)
+    raise RuntimeError(f"Telegram album delivery failed after 3 attempts: {last_error}")
+
+
 def send_verified_frames_sequentially(frames, *, story: str):
     frames = [Path(p) for p in frames]
     if len(frames) != 6:
@@ -83,17 +141,28 @@ def send_verified_frames_sequentially(frames, *, story: str):
     return message_ids
 
 
+def send_verified_frames_as_album(frames, *, story: str):
+    frames = [Path(p) for p in frames]
+    if len(frames) != 6:
+        raise RuntimeError(f"approved Story must contain exactly 6 frames, got {len(frames)}")
+    message_ids = _send_photo_album(
+        frames,
+        caption=f"[APPROVED] {story}\n6 frames",
+    )
+    print(f"    Telegram approved photo album confirmed: {len(message_ids)}/6")
+    return message_ids
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("manifest", type=Path)
     args = parser.parse_args()
-
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     frames = rsp.verify_review_manifest(manifest, args.manifest.parent)
-    message_ids = send_verified_frames_sequentially(frames, story=manifest["story"])
+    message_ids = send_verified_frames_as_album(frames, story=manifest["story"])
     if len(message_ids) != 6:
         raise SystemExit("approved Story delivery incomplete")
-    print(f"APPROVED_STORY_SENT_6_OF_6: {args.manifest}")
+    print(f"APPROVED_STORY_SENT_ALBUM_6_OF_6: {args.manifest}")
 
 
 if __name__ == "__main__":
