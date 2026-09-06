@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "8327549f48beaabcd89930a63a44ac205dcc79c326d441d22e0cc714d34fe9a5",
@@ -142,8 +143,175 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-06T11:06:21.821553+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "77ffc1746e6afc9601d8cb3bbb9a4f77607bccbee1f17e03da38b02a206bfffb",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية"
+  "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
+  "story_quality_dimensions": {
+    "claim_precision": "PASS",
+    "final_frame_currency": "PASS",
+    "narrative_chronology": "BLOCKED",
+    "subject_focus": "BLOCKED",
+    "visual_chronology": "PASS"
+  },
+  "story_quality_findings": [
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 4,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 4,
+      "message": "narrative year regresses from 1951 to 1800 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 5,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 1,
+      "subject_overlap": [
+        "بلدة",
+        "رياض"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1900
+      ]
+    },
+    {
+      "copy_years": [
+        1902,
+        1902,
+        1932
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 2,
+      "subject_overlap": [
+        "رياض"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1902,
+        1902,
+        1902
+      ]
+    },
+    {
+      "copy_years": [
+        1951,
+        1944,
+        1951
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 3,
+      "subject_overlap": [
+        "رياض",
+        "عاصمة"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1951
+      ]
+    },
+    {
+      "copy_years": [
+        1800,
+        1935,
+        1949,
+        1800
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "رياض"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1970,
+        1975,
+        1975
+      ]
+    },
+    {
+      "copy_years": [
+        2022,
+        2024
+      ],
+      "current": true,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 5,
+      "subject_overlap": [
+        "رياض"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2024
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 6,
+      "subject_overlap": [
+        "اقتصادية",
+        "بلدة",
+        "رياض",
+        "مسورة"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "narrative_chronology",
+      "subject_focus"
+    ],
+    "frame_modes": {
+      "4": "editorial_frame",
+      "5": "editorial_frame"
+    },
+    "frames": [
+      4,
+      5
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "4": [
+        "keep the frame centered on the named Story subject",
+        "restore chronological order or make the flashback explicit"
+      ],
+      "5": [
+        "keep the frame centered on the named Story subject"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
