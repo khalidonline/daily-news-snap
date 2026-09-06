@@ -48,7 +48,7 @@ class ModelUsageWorkflowTests(unittest.TestCase):
 
     def test_normal_workflows_have_tight_per_run_cost_guards(self):
         expected = {
-            "daily": ("python daily_news_fresh_runner.py", "0.50", "2", "20"),
+            "daily": ("python daily_news_fresh_runner.py", "0.50", "1", "12"),
             "topic": ("python topic_snapchat.py", "1.50", "2", "20"),
             "breaking": (
                 "python breaking_watch_entry.py",
@@ -64,6 +64,12 @@ class ModelUsageWorkflowTests(unittest.TestCase):
                 editorial_key = "TOPIC_MAX_PAID_RESPONSES" if name == "topic" else "NEWS_MAX_PAID_RESPONSES"
                 self.assertEqual(env[editorial_key], editorial_calls)
                 self.assertEqual(env["VISION_MAX_PAID_RESPONSES"], vision_calls)
+
+    def test_news_limits_full_copy_and_runaway_photo_checks(self):
+        env = self.run_env("daily", "python daily_news_fresh_runner.py")
+        self.assertEqual(env["CANDIDATES"], "5")
+        self.assertEqual(env["NEWS_MAX_PAID_RESPONSES"], "1")
+        self.assertEqual(env["VISION_MAX_PAID_RESPONSES"], "12")
 
     def test_routine_selection_and_breaking_classification_use_haiku(self):
         topic = self.run_env("topic", "python topic_snapchat.py")
