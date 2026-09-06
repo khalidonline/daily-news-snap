@@ -6,8 +6,11 @@ used only after breaking_watch.py has pinned a confirmed breaking event.
 """
 
 import base64
+import hashlib
 import json
+import os
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 from PIL import Image
@@ -16,6 +19,9 @@ import news_bot
 import model_usage as model_meter
 
 BREAKING_VISUAL_EXIT = 42
+CACHE_FILE = Path("state/breaking_generation_cache.json")
+CACHE_VERSION = 1
+VALID_RUN_MODES = {"new_event", "repair_visual", "regenerate_editorial"}
 
 FINANCIAL_TAKEAWAY_GUIDANCE = """
 في الأخبار المالية، اجعل takeaway يشرح ببساطة ماذا يعني الخبر، لا أن يعيد العنوان.
@@ -53,6 +59,74 @@ _BREAKING_VISION_PROMPT = """أنت بوابة صور صارمة لبطاقة «
 المكان نفسه جزءاً محدداً من الحدث. في العاجل، الشك لا يمر."""
 
 
+def _event_fingerprint(event):
+    normalized = " ".join(
+        "".join(ch if ch.isalnum() else " " for ch in event.casefold()).split()
+    )
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:24]
+
+
+def _load_cache():
+    try:
+        data = json.loads(CACHE_FILE.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        data = {}
+    if not isinstance(data, dict):
+        data = {}
+    data.setdefault("version", CACHE_VERSION)
+    data.setdefault("editorial", {})
+    data.setdefault("visual", {})
+    return data
+
+
+def _write_cache(data):
+    CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    CACHE_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+def _persist_cache(bot, message):
+    commit = getattr(bot, "commit_and_push", None)
+    if callable(commit):
+        commit(CACHE_FILE, message)
+
+
+def install_editorial_cache(bot, event, mode):
+    """Reuse confirmed-event editorial output unless regeneration is explicit."""
+    original = getattr(bot, "summarize", None)
+    if not callable(original) or not event:
+        return
+    if mode not in VALID_RUN_MODES:
+        raise SystemExit(f"invalid BREAKING_RUN_MODE: {mode}")
+    key = _event_fingerprint(event)
+
+    def cached_summarize(*args, **kwargs):
+        cache = _load_cache()
+        entry = cache["editorial"].get(key)
+        if mode != "regenerate_editorial" and entry:
+            print("  breaking editorial cache hit — paid generation avoided")
+            return entry["result"]
+        if mode == "repair_visual":
+            raise SystemExit("visual repair has no cached editorial; rerun as new_event")
+        result = original(*args, **kwargs)
+        cache["editorial"][key] = {
+            "event": event,
+            "saved_at": datetime.now(timezone.utc).isoformat(),
+            "result": result,
+        }
+        cache["editorial"] = dict(list(cache["editorial"].items())[-20:])
+        _write_cache(cache)
+        _persist_cache(bot, "cache breaking editorial for recovery")
+        return result
+
+    bot.summarize = cached_summarize
+
+
+def _visual_cache_key(photo_path, context):
+    digest = hashlib.sha256(Path(photo_path).read_bytes()).hexdigest()
+    prompt_version = hashlib.sha256(_BREAKING_VISION_PROMPT.encode("utf-8")).hexdigest()[:12]
+    return f"{_event_fingerprint(context)}:{digest}:{prompt_version}"
+
+
 def install_financial_takeaway_guidance(bot):
     """Make financial breaking cards explain significance in plain Arabic."""
     prompt = getattr(bot, "SYSTEM_PROMPT", "")
@@ -82,6 +156,13 @@ def _strict_vision_verdict(bot, photo_path, context):
     except Exception as exc:
         print(f"  ! breaking visual unreadable ({exc}) — rejecting")
         return "no"
+
+    cache_key = _visual_cache_key(photo_path, context)
+    cache = _load_cache()
+    cached = cache["visual"].get(cache_key)
+    if cached and cached.get("verdict") in {"yes", "neutral", "no"}:
+        print("    breaking visual cache hit — paid vision check avoided")
+        return cached["verdict"]
 
     payload = {
         "model": getattr(bot, "VISION_MODEL", "claude-haiku-4-5-20251001"),
@@ -133,6 +214,12 @@ def _strict_vision_verdict(bot, photo_path, context):
     found = [(pos, word) for word, pos in positions.items() if pos >= 0]
     word = min(found)[1] if found else "لا"
     verdict = {"نعم": "yes", "محايدة": "neutral", "لا": "no"}[word]
+    cache["visual"][cache_key] = {
+        "verdict": verdict,
+        "saved_at": datetime.now(timezone.utc).isoformat(),
+    }
+    cache["visual"] = dict(list(cache["visual"].items())[-200:])
+    _write_cache(cache)
     print(f"    breaking visual gate: {verdict} — {text[:140]}")
     return verdict
 
@@ -263,8 +350,14 @@ def run_bot(bot=news_bot):
     if not event:
         return bot.main()
 
+    mode = os.getenv("BREAKING_RUN_MODE", "new_event").strip() or "new_event"
+    install_editorial_cache(bot, event, mode)
     state = install_strict_visual_gate(bot)
-    result = bot.main()
+    try:
+        result = bot.main()
+    finally:
+        if CACHE_FILE.exists():
+            _persist_cache(bot, "cache breaking visual verdicts")
 
     # news_bot currently returns normally when REQUIRE_PHOTO exhausts all
     # sources. In breaking mode that must not be interpreted by the watcher as
