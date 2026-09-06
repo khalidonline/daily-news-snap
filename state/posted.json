@@ -1,11 +1,5 @@
 [
  {
-  "headline": "استثمارات المركزي السعودي بالخارج تتجاوز تريليون ريال",
-  "at": "2026-09-03T10:19:24.144840+00:00",
-  "source_link": "https://alwatan.com.sa/article/1184999",
-  "lane": "saudi_core"
- },
- {
   "headline": "مسؤول بالفدرالي الأمريكي يرجّح تثبيت الفائدة سبتمبر",
   "at": "2026-09-03T13:09:47.810448+00:00",
   "source_link": "https://cnbc.com/2026/09/03/fed-governor-waller-indicates-he-will-support-holding-rates-steady-at-september-meeting.html",
@@ -147,6 +141,12 @@
   "headline": "بدء التسجيل العيني لـ46.5 ألف قطعة عقارية بالرياض والقصيم",
   "at": "2026-09-06T10:15:35.038207+00:00",
   "source_link": "https://alyaum.com/articles/6681378/%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF/%D8%B9%D9%82%D8%A7%D8%B1%D8%A7%D8%AA/%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D8%A7%D9%84%D8%B9%D9%8A%D9%86%D9%8A-%D9%84465-%D8%A3%D9%84%D9%81-%D9%82%D8%B7%D8%B9%D8%A9-%D8%B9%D9%82%D8%A7%D8%B1%D9%8A%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6-%D9%88%D8%A7%D9%84%D9%82%D8%B5%D9%8A%D9%85",
+  "lane": "saudi_core"
+ },
+ {
+  "headline": "أكوا باور تشغّل منظومة طاقة البحر الأحمر بالكامل",
+  "at": "2026-09-06T12:15:58.733145+00:00",
+  "source_link": "https://aawsat.com/node/5315247",
   "lane": "saudi_core"
  }
 ]
