@@ -557,16 +557,27 @@ OFFICIAL_VISUAL_HOSTS = {
     "mof.gov.sa", "www.mof.gov.sa",
     "spa.gov.sa", "www.spa.gov.sa",
 }
+CURATED_RECOVERY_VISUAL_HOSTS = {"upload.wikimedia.org"}
 
 
 def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlopen):
     """Download an exact recovery visual from an allowlisted official host."""
-    url = str(story.get("official_image_url") or "").strip()
+    official_url = str(story.get("official_image_url") or "").strip()
+    recovery_url = str(story.get("recovery_image_url") or "").strip()
+    url = official_url or recovery_url
     if not url:
         return None, None
     parsed = urllib.parse.urlparse(url)
-    if parsed.scheme != "https" or parsed.hostname not in OFFICIAL_VISUAL_HOSTS:
-        print("  ! exact recovery visual is not from an allowlisted official host")
+    is_curated = bool(recovery_url and not official_url)
+    allowed_hosts = (
+        CURATED_RECOVERY_VISUAL_HOSTS if is_curated else OFFICIAL_VISUAL_HOSTS
+    )
+    credit = str(story.get("recovery_photo_credit") or "").strip() if is_curated else None
+    if parsed.scheme != "https" or parsed.hostname not in allowed_hosts:
+        print("  ! exact recovery visual is not from an allowlisted host")
+        return None, None
+    if is_curated and not credit:
+        print("  ! curated recovery visual is missing required attribution")
         return None, None
     try:
         request = urllib.request.Request(
@@ -596,8 +607,9 @@ def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlope
     _marker(target, ".official-subject").write_text(
         f"official:{url}", encoding="utf-8"
     )
-    print(f"    photo: verified official subject visual from {parsed.hostname}")
-    return str(target), None
+    kind = "curated" if is_curated else "official"
+    print(f"    photo: verified {kind} subject visual from {parsed.hostname}")
+    return str(target), credit
 
 
 def install_auto_image_selector(news_bot_module):
@@ -749,6 +761,12 @@ def install_auto_image_selector(news_bot_module):
 
         candidate = prepare("official")
         photo, credit = fetch_verified_official_visual(story, candidate)
+        graphic_check = getattr(news_bot_module, "looks_like_a_graphic", None)
+        if photo and graphic_check and graphic_check(photo):
+            print("  ! exact recovery visual is a logo or graphic — rejecting")
+            Path(photo).unlink(missing_ok=True)
+            _marker(photo, ".official-subject").unlink(missing_ok=True)
+            photo = None
         if photo:
             selected = (Path(photo), credit, "official")
             print("      auto image relevance [official]: verified direct subject")
