@@ -13,6 +13,7 @@ import os
 import re
 import shutil
 import urllib.parse
+import urllib.request
 from pathlib import Path
 
 from news_editorial import (
@@ -49,7 +50,10 @@ AUTO_IMAGE_REQUIRED_ATTRS = (
     "photo_shows",
 )
 
-_IMAGE_MARKERS = (".exempt", ".generated", ".recentkeep", ".commons-title")
+_IMAGE_MARKERS = (
+    ".exempt", ".generated", ".recentkeep", ".commons-title",
+    ".official-subject",
+)
 _NEUTRAL_PRIORITY = {
     "article": 0,
     "commons": 1,
@@ -545,6 +549,43 @@ def _promote_candidate(candidate, hero):
     return str(hero)
 
 
+OFFICIAL_VISUAL_HOSTS = {
+    "ndmc.gov.sa", "www.ndmc.gov.sa",
+    "mof.gov.sa", "www.mof.gov.sa",
+    "spa.gov.sa", "www.spa.gov.sa",
+}
+
+
+def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlopen):
+    """Download an exact recovery visual from an allowlisted official host."""
+    url = str(story.get("official_image_url") or "").strip()
+    if not url:
+        return None, None
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme != "https" or parsed.hostname not in OFFICIAL_VISUAL_HOSTS:
+        print("  ! exact recovery visual is not from an allowlisted official host")
+        return None, None
+    try:
+        request = urllib.request.Request(
+            url, headers={"User-Agent": "daily-news-snap/1.0"}
+        )
+        with opener(request, timeout=60) as response:
+            data = response.read(8_000_001)
+    except Exception as exc:
+        print(f"  ! official recovery visual download failed: {exc}")
+        return None, None
+    if len(data) < 5_000 or len(data) > 8_000_000:
+        print("  ! official recovery visual has an invalid size")
+        return None, None
+    target = Path(out_path)
+    target.write_bytes(data)
+    _marker(target, ".official-subject").write_text(
+        f"official:{url}", encoding="utf-8"
+    )
+    print(f"    photo: verified official subject visual from {parsed.hostname}")
+    return str(target), None
+
+
 def install_auto_image_selector(news_bot_module):
     """Search all approved providers once, ranking relevance before source.
 
@@ -692,12 +733,19 @@ def install_auto_image_selector(news_bot_module):
 
         selected = None
 
+        candidate = prepare("official")
+        photo, credit = fetch_verified_official_visual(story, candidate)
+        if photo:
+            selected = (Path(photo), credit, "official")
+            print("      auto image relevance [official]: verified direct subject")
+
         candidate = prepare("local")
-        photo, credit = originals["local"](
-            q_ar, q_en, candidate,
-            respect_cooldown=respect_cooldown, exclude=exclude,
-        )
-        selected = judge("local", photo, credit, candidate)
+        if selected is None:
+            photo, credit = originals["local"](
+                q_ar, q_en, candidate,
+                respect_cooldown=respect_cooldown, exclude=exclude,
+            )
+            selected = judge("local", photo, credit, candidate)
 
         if selected is None and link:
             candidate = prepare("article")

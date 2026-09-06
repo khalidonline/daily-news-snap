@@ -285,6 +285,30 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIsNone(photo)
         self.assertIsNone(credit)
 
+    def test_verified_official_visual_download_is_allowlisted(self):
+        class Response:
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit=-1):
+                return b"official-subject-image" * 1000
+
+        story = {
+            "official_image_url": (
+                "https://www.ndmc.gov.sa/en/mediacenter/news/"
+                "PublishingImages/Pages/NDMC-SAH-logo2.jpg?RenditionID=6"
+            )
+        }
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "official.jpg"
+            photo, credit = daily_news_runner.fetch_verified_official_visual(
+                story, target, opener=lambda *args, **kwargs: Response()
+            )
+            self.assertEqual(photo, str(target))
+            self.assertIsNone(credit)
+            self.assertTrue(Path(str(target) + ".official-subject").exists())
+
     def test_no_candidate_is_never_promoted(self):
         calls = []
         fake = self.make_module({

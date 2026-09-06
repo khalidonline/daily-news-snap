@@ -53,7 +53,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Authorize exact News recovery
+        if: ${{ github.event.action == 'news-recovery' && github.event.client_payload.story_b64 != '' }}
+        env:
+          RECOVERY_STORY_B64: ${{ github.event.client_payload.story_b64 }}
+        run: |
+          echo "RUN_SCHEDULED_BOT=1" >> "$GITHUB_ENV"
+          echo "SCHEDULE_SLOT_ID=" >> "$GITHUB_ENV"
+          echo "exact News recovery — schedule gate bypassed"
+
       - name: Resolve News schedule slot
+        if: ${{ env.RUN_SCHEDULED_BOT != '1' }}
         env:
           REQUESTED_SLOT: ${{ github.event.client_payload.slot || inputs.scheduled_slot || '' }}
         run: |
