@@ -34,18 +34,18 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Rebuild all six cards with the native Riyadh renderer
-        run: python render_approved_hormuz_native.py
+      - name: Rebuild approved frame 4 inside the original light template
+        run: python render_approved_hormuz_frame4.py
       - name: Freeze and verify exact six-frame deck
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           import ready_story_publish as rsp
-          frames = [Path(f"2026-09-06-hormuz-native-story-{i:02d}.png") for i in range(1, 7)]
+          frames = [Path(f"2026-09-06-hormuz-final-v4-story-{i:02d}.png") for i in range(1, 7)]
           manifest = rsp.build_review_manifest(
               "مضيق هرمز: من مشترياتك إلى الموانئ العالمية",
-              "2026-09-06-hormuz-native-riyadh-format",
+              "2026-09-06-hormuz-original-light-format",
               "READY",
               frames,
           )
