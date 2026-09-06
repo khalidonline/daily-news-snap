@@ -59,6 +59,14 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
         self.assertIn("client_payload[confirmed_event]", receiver)
         self.assertIn("base64 --decode", receiver)
 
+    def test_external_clock_forwards_exact_slots_to_scheduled_bots(self):
+        receiver = Path(".github/workflows/external-clock-receiver.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("requested_slot=", receiver)
+        self.assertIn("awk 'NF { print $1; exit }'", receiver)
+        self.assertIn("client_payload[slot]", receiver)
+
     def test_external_clock_receiver_dispatches_each_bot_without_model_calls(self):
         receiver_path = Path(".github/workflows/external-clock-receiver.yml")
         text = receiver_path.read_text(encoding="utf-8")
