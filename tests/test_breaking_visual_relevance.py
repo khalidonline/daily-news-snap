@@ -121,16 +121,37 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
         self.assertIn("tanker docks", marker)
         self.assertIn("NASA", marker)
 
-    def test_curated_kharg_terminal_asset_is_indexed(self):
-        asset = Path("images/kharg-island-oil-terminal-nasa.jpg")
-        self.assertTrue(asset.exists())
-        index = Path("images/images.txt").read_text(encoding="utf-8")
+    def test_verified_commons_context_reaches_visual_gate(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        with tempfile.TemporaryDirectory() as td:
+            photo = Path(td) / "candidate.jpg"
+            photo.write_bytes(b"candidate")
+            Path(str(photo) + ".commons-context").write_text(
+                "File:ISS005-E-11900 lrg.jpg\\n"
+                "Kharg Island oil terminal; tanker docks, tanks and infrastructure\\n"
+                "NASA Johnson Space Center / Public domain",
+                encoding="utf-8",
+            )
+            with patch.object(
+                runner, "_strict_vision_verdict", return_value="yes"
+            ) as judge:
+                accepted = runner._breaking_photo_acceptable(
+                    bot, photo, "انفجارات قرب جزيرة خرج"
+                )
+        self.assertTrue(accepted)
+        context = judge.call_args.args[2]
+        self.assertIn("ISS005-E-11900", context)
+        self.assertIn("tanker docks", context)
+        self.assertIn("NASA", context)
+
+    def test_curated_commons_kharg_terminal_is_registered(self):
+        import news_bot
+        resolver = getattr(news_bot, "_curated_commons_file_titles", lambda _q: [])
         self.assertIn(
-            "kharg-island-oil-terminal-nasa.jpg | "
-            "Kharg Island oil terminal Iran",
-            index,
+            "File:ISS005-E-11900 lrg.jpg",
+            resolver(["Kharg Island oil terminal Iran"]),
         )
-        self.assertIn("NASA Johnson Space Center", index)
 
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
