@@ -51,6 +51,14 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
             {f"scheduler/triggers/{bot}.txt" for bot in CLOCK_DISPATCHES},
         )
 
+    def test_news_clock_can_forward_an_exact_recovery_story(self):
+        receiver = Path(".github/workflows/external-clock-receiver.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("recovery_story=", receiver)
+        self.assertIn("event_type=\"news-recovery\"", receiver)
+        self.assertIn("client_payload[story_b64]", receiver)
+
     def test_breaking_clock_can_forward_an_exact_recovery_event(self):
         receiver = Path(".github/workflows/external-clock-receiver.yml").read_text(
             encoding="utf-8"
