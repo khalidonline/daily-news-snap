@@ -77,7 +77,7 @@ def _multipart_album(fields, frames):
         field = f"frame{index}"
         chunks.append(f"--{boundary}\r\n".encode())
         chunks.append(
-            f'Content-Disposition: form-data; name="{field}"; filename="{frame.name}"\r\n'.encode()
+            f'Content-Disposition: form-data; name="{field}"; filename="{index:02d}-{frame.name}"\r\n'.encode()
         )
         chunks.append(b"Content-Type: image/png\r\n\r\n")
         chunks.append(frame.read_bytes())
@@ -86,7 +86,7 @@ def _multipart_album(fields, frames):
     return b"".join(chunks), f"multipart/form-data; boundary={boundary}"
 
 
-def _send_photo_album(frames, caption: str = "") -> list[int]:
+def _send_document_album(frames, caption: str = "") -> list[int]:
     token = os.getenv("TELEGRAM_TOKEN", "").strip()
     chat_id = os.getenv("TELEGRAM_CHAT_ID", "").strip()
     if not token or not chat_id:
@@ -94,7 +94,7 @@ def _send_photo_album(frames, caption: str = "") -> list[int]:
     frames = [Path(frame) for frame in frames]
     media = []
     for index in range(1, len(frames) + 1):
-        item = {"type": "photo", "media": f"attach://frame{index}"}
+        item = {"type": "document", "media": f"attach://frame{index}"}
         if index == 1 and caption:
             item["caption"] = caption
         media.append(item)
@@ -141,16 +141,31 @@ def send_verified_frames_sequentially(frames, *, story: str):
     return message_ids
 
 
-def send_verified_frames_as_album(frames, *, story: str):
+def send_verified_frames_as_document_album(frames, *, story: str):
     frames = [Path(p) for p in frames]
     if len(frames) != 6:
         raise RuntimeError(f"approved Story must contain exactly 6 frames, got {len(frames)}")
-    message_ids = _send_photo_album(
+    message_ids = _send_document_album(
         frames,
         caption=f"[APPROVED] {story}\n6 frames",
     )
-    print(f"    Telegram approved photo album confirmed: {len(message_ids)}/6")
+    print(f"    Telegram approved document album confirmed: {len(message_ids)}/6")
     return message_ids
+
+
+def send_verified_frames_like_riyadh(frames, *, story: str, status: str = "READY"):
+    frames = [Path(p) for p in frames]
+    if len(frames) != 6:
+        raise RuntimeError(f"approved Story must contain exactly 6 frames, got {len(frames)}")
+    confirmed = rsp.sb.notify_album(
+        f"[{status}] {story}\nFinal publication candidate",
+        frames,
+        as_documents=True,
+    )
+    if confirmed is not True:
+        raise RuntimeError("Telegram did not confirm the Riyadh-format document album")
+    print("    Telegram Riyadh-format document album confirmed: 6/6")
+    return True
 
 
 def main() -> None:
@@ -159,10 +174,12 @@ def main() -> None:
     args = parser.parse_args()
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     frames = rsp.verify_review_manifest(manifest, args.manifest.parent)
-    message_ids = send_verified_frames_as_album(frames, story=manifest["story"])
-    if len(message_ids) != 6:
-        raise SystemExit("approved Story delivery incomplete")
-    print(f"APPROVED_STORY_SENT_ALBUM_6_OF_6: {args.manifest}")
+    send_verified_frames_like_riyadh(
+        frames,
+        story=manifest["story"],
+        status=manifest.get("status", "READY"),
+    )
+    print(f"APPROVED_STORY_SENT_RIYADH_FORMAT_6_OF_6: {args.manifest}")
 
 
 if __name__ == "__main__":
