@@ -69,7 +69,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install image-test dependency
-        run: pip install Pillow
+        run: pip install Pillow fonttools
       - name: Run Saudi Snapchat editorial regressions
         # Includes source identity, legacy dedupe, Arabic clitics, rolling sports balance, schedule recovery, visual freshness, article-image relevance, and legacy-match precision.
         run: |
