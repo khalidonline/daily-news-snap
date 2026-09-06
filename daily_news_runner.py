@@ -8,6 +8,7 @@ legacy renderer.
 """
 
 import base64
+import io
 import json
 import os
 import re
@@ -15,6 +16,8 @@ import shutil
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+from PIL import Image
 
 from news_editorial import (
     DEFAULT_LOOKBACK_HOURS,
@@ -578,7 +581,18 @@ def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlope
         print("  ! official recovery visual has an invalid size")
         return None, None
     target = Path(out_path)
-    target.write_bytes(data)
+    try:
+        with Image.open(io.BytesIO(data)) as source:
+            source.load()
+            rgba = source.convert("RGBA")
+            background = Image.new("RGBA", rgba.size, (245, 242, 236, 255))
+            background.alpha_composite(rgba)
+            background.convert("RGB").save(
+                target, format="JPEG", quality=95, optimize=True
+            )
+    except Exception as exc:
+        print(f"  ! official recovery visual is not a valid image: {exc}")
+        return None, None
     _marker(target, ".official-subject").write_text(
         f"official:{url}", encoding="utf-8"
     )
