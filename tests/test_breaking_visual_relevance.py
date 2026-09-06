@@ -73,6 +73,86 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
         self.assertIn("لا يشترط أن تُظهر لحظة الحدث", prompt)
         self.assertIn("صورة أرشيفية", prompt)
 
+    def test_verified_asset_provenance_reaches_visual_gate(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        with tempfile.TemporaryDirectory() as td:
+            photo = Path(td) / "candidate.jpg"
+            photo.write_bytes(b"candidate")
+            Path(str(photo) + ".exempt").write_text(
+                "local:kharg-island-oil-terminal-nasa.jpg\\n"
+                "tags: Kharg Island oil terminal Iran, tanker docks, oil tanks\\n"
+                "credit: NASA / Public domain — Wikimedia Commons",
+                encoding="utf-8",
+            )
+            with patch.object(
+                runner, "_strict_vision_verdict", return_value="yes"
+            ) as judge:
+                accepted = runner._breaking_photo_acceptable(
+                    bot, photo, "انفجارات قرب جزيرة خرج"
+                )
+        self.assertTrue(accepted)
+        context = judge.call_args.args[2]
+        self.assertIn("kharg-island-oil-terminal-nasa.jpg", context)
+        self.assertIn("tanker docks", context)
+        self.assertIn("NASA", context)
+
+    def test_local_asset_marker_carries_curated_provenance(self):
+        import news_bot
+        with tempfile.TemporaryDirectory() as td:
+            asset = Path(td) / "kharg-island-oil-terminal-nasa.jpg"
+            asset.write_bytes(b"candidate")
+            hero = Path(td) / "hero.jpg"
+            entry = {
+                "path": asset,
+                "tags": ["Kharg Island oil terminal Iran", "tanker docks"],
+                "credit": "NASA / Public domain — Wikimedia Commons",
+            }
+            with patch.object(news_bot, "load_local_images", return_value=[entry]), \
+                    patch.object(news_bot, "MIN_PHOTO_SCORE", 10):
+                photo, credit = news_bot.fetch_local_photo(
+                    [], ["Kharg Island oil terminal Iran"], hero,
+                    respect_cooldown=False,
+                )
+            marker = Path(str(hero) + ".exempt").read_text(encoding="utf-8")
+        self.assertEqual(photo, str(hero))
+        self.assertEqual(credit, entry["credit"])
+        self.assertIn("Kharg Island oil terminal Iran", marker)
+        self.assertIn("tanker docks", marker)
+        self.assertIn("NASA", marker)
+
+    def test_verified_commons_context_reaches_visual_gate(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        with tempfile.TemporaryDirectory() as td:
+            photo = Path(td) / "candidate.jpg"
+            photo.write_bytes(b"candidate")
+            Path(str(photo) + ".commons-context").write_text(
+                "File:ISS005-E-11900 lrg.jpg\\n"
+                "Kharg Island oil terminal; tanker docks, tanks and infrastructure\\n"
+                "NASA Johnson Space Center / Public domain",
+                encoding="utf-8",
+            )
+            with patch.object(
+                runner, "_strict_vision_verdict", return_value="yes"
+            ) as judge:
+                accepted = runner._breaking_photo_acceptable(
+                    bot, photo, "انفجارات قرب جزيرة خرج"
+                )
+        self.assertTrue(accepted)
+        context = judge.call_args.args[2]
+        self.assertIn("ISS005-E-11900", context)
+        self.assertIn("tanker docks", context)
+        self.assertIn("NASA", context)
+
+    def test_curated_commons_kharg_terminal_is_registered(self):
+        import news_bot
+        resolver = getattr(news_bot, "_curated_commons_file_titles", lambda _q: [])
+        self.assertIn(
+            "File:ISS005-E-11900 lrg.jpg",
+            resolver(["Kharg Island oil terminal Iran"]),
+        )
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()
