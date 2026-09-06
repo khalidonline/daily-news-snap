@@ -1748,6 +1748,20 @@ WIKI_LANGS = tuple(l for l in (os.getenv("WIKI_LANGS", "").strip()
 
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 
+# Exact, editor-reviewed Commons files for named locations whose imagery is
+# difficult to identify from pixels alone. The strict Breaking vision gate
+# still evaluates the image and receives bounded provenance; this registry
+# only ensures the verified candidate is tried before looser search results.
+_CURATED_COMMONS_FILES = (
+    (("kharg", "island", "oil", "terminal"), "File:ISS005-E-11900 lrg.jpg"),
+)
+
+
+def _curated_commons_file_titles(queries):
+    text = " ".join(str(query).casefold() for query in (queries or []))
+    return [title for terms, title in _CURATED_COMMONS_FILES
+            if all(term in text for term in terms)]
+
 # Commons is free-content only, but "free" there still covers licences we
 # can't use: match what we ask Openverse for — commercial use and modification.
 _BAD_LICENCE = re.compile(
@@ -1988,7 +2002,9 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
     fetch_openverse_photo so the two are interchangeable.
     """
     commons_title_marker = Path(str(out_path) + ".commons-title")
+    commons_context_marker = Path(str(out_path) + ".commons-context")
     commons_title_marker.unlink(missing_ok=True)
+    commons_context_marker.unlink(missing_ok=True)
     if isinstance(queries, str):
         queries = [queries]
     queries = [q.strip() for q in queries if q and q.strip()]
@@ -2001,7 +2017,10 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
     candidates = []
     for query in queries:
         terms = [t for t in re.split(r"\W+", query.lower()) if len(t) > 2]
-        found = _commons_search(query)
+        curated = _commons_fileinfo(_curated_commons_file_titles([query]))
+        for page, _info in curated:
+            page["_curated"] = True
+        found = curated + _commons_search(query)
         lead = _commons_fileinfo(_wikipedia_lead_files(query))
         for page, _info in lead:
             page["_lead"] = True      # scored differently: see below
@@ -2027,6 +2046,8 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
             score = hits * 10 + _geo_adjust(described)
             if (info.get("width") or 0) >= (info.get("height") or 1):
                 score += 3
+            if page.get("_curated", False):
+                score += 100
             if from_article:
                 # The article title had to carry every word of the query to
                 # get here, so this really is a picture of the subject. That
@@ -2076,6 +2097,15 @@ def fetch_commons_photo(queries, out_path, need_saudi=None, min_hits=None,
             credit = _commons_credit(info)
             title = page.get("title", "")
             commons_title_marker.write_text(title, encoding="utf-8")
+            commons_context_marker.write_text(
+                "\n".join(filter(None, [
+                    title,
+                    _commons_depicts(page, info),
+                    _commons_meta(info, "Categories").replace("|", ", "),
+                    credit,
+                ]))[:1800],
+                encoding="utf-8",
+            )
             print(f"    photo: {title[:70]} — {credit} [{query}]")
             return str(out_path), credit
 
