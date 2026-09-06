@@ -1,0 +1,98 @@
+name: Send Al Rajhi meaning review once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/send-alrajhi-meaning-review-once.yml"
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  send:
+    if: github.event.head_commit.message == 'ops: send Al Rajhi meaning review once'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install Pillow
+
+      - name: Build updated card with meaning block
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/alrajhi-card
+          gh run download 34023665948 -n breaking-card-34023665948 -D /tmp/alrajhi-card
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://upload.wikimedia.org/wikipedia/commons/d/dd/KAFD_20230411_114620.jpg' \
+            -o /tmp/alrajhi-card/alrajhi.jpg
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps, ImageDraw, ImageFont
+
+          card_path = Path('/tmp/alrajhi-card/2026-09-06-12pm-brief.png')
+          photo_path = Path('/tmp/alrajhi-card/alrajhi.jpg')
+          out_path = Path('/tmp/alrajhi-card/alrajhi-breaking-meaning.png')
+
+          card = Image.open(card_path).convert('RGB')
+          photo = Image.open(photo_path).convert('RGB')
+          draw = ImageDraw.Draw(card)
+
+          # Keep the Al Rajhi-relevant visual the owner approved in the previous review.
+          box = (96, 509, 984, 1201)
+          w, h = box[2] - box[0], box[3] - box[1]
+          fitted = ImageOps.fit(photo, (w, h), method=Image.Resampling.LANCZOS, centering=(0.43, 0.5))
+          mask = Image.new('L', (w, h), 0)
+          ImageDraw.Draw(mask).rounded_rectangle((0, 0, w, h), radius=34, fill=255)
+          card.paste(fitted, box[:2], mask)
+
+          # Replace the old generic takeaway with a plain-language significance block.
+          bg = card.getpixel((30, 30))
+          draw.rectangle((65, 1390, 1015, 1605), fill=bg)
+          red = (187, 30, 45)
+          navy = (24, 58, 91)
+          bold = ImageFont.truetype('fonts/Almarai-Bold.ttf', 50)
+          regular = ImageFont.truetype('fonts/Almarai-Regular.ttf', 39)
+
+          draw.text((540, 1432), 'وش يعني؟', font=bold, fill=red,
+                    anchor='mm', direction='rtl', language='ar')
+          lines = [
+              'الراجحي جمع تمويلاً طويل الأجل من المستثمرين عبر الصكوك',
+              'ومصنّف اجتماعياً لتمويل مشاريع مؤهلة ذات أثر اجتماعي',
+          ]
+          y = 1502
+          for line in lines:
+              draw.text((540, y), line, font=regular, fill=navy,
+                        anchor='mm', direction='rtl', language='ar')
+              y += 54
+
+          card.save(out_path, quality=95)
+          print(out_path)
+          PY
+
+      - name: Send updated card to Telegram
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          response="$(curl -sS --fail \
+            -F "chat_id=${TELEGRAM_CHAT_ID}" \
+            -F "photo=@/tmp/alrajhi-card/alrajhi-breaking-meaning.png" \
+            -F "caption=نسخة محدثة — أضفنا «وش يعني؟» لتوضيح دلالة الخبر" \
+            "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto")"
+          python - "$response" <<'PY'
+          import json, sys
+          payload = json.loads(sys.argv[1])
+          if not payload.get('ok'):
+              raise SystemExit(f"Telegram send failed: {payload}")
+          print('telegram: updated Al Rajhi meaning card sent')
+          PY
