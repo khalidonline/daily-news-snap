@@ -296,8 +296,8 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
 
         story = {
             "official_image_url": (
-                "https://www.ndmc.gov.sa/en/mediacenter/news/"
-                "PublishingImages/Pages/NDMC-SAH-logo2.jpg?RenditionID=6"
+                "https://sukuk.ndmc.gov.sa/image/layout_set_logo"
+                "?img_id=155814&t=1779205254815"
             )
         }
         with tempfile.TemporaryDirectory() as td:
