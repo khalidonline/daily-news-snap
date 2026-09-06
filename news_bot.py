@@ -1127,7 +1127,11 @@ def summarize(items, already_posted=(), pinned=""):
         payload = {
             "model": CLAUDE_MODEL,
             "max_tokens": budget,
-            "system": SYSTEM_PROMPT.format(n=CANDIDATES),
+            "system": [{
+                "type": "text",
+                "text": SYSTEM_PROMPT.format(n=CANDIDATES),
+                "cache_control": {"type": "ephemeral"},
+            }],
             "messages": [{"role": "user", "content": user_msg}],
         }
         if pinned:
