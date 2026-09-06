@@ -563,33 +563,64 @@ CURATED_RECOVERY_VISUAL_HOSTS = {
 
 
 def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlopen):
-    """Download an exact recovery visual from an allowlisted official host."""
+    """Load an exact recovery visual from a trusted URL or repository asset."""
     official_url = str(story.get("official_image_url") or "").strip()
     recovery_url = str(story.get("recovery_image_url") or "").strip()
-    url = official_url or recovery_url
-    if not url:
-        return None, None
-    parsed = urllib.parse.urlparse(url)
-    is_curated = bool(recovery_url and not official_url)
-    allowed_hosts = (
-        CURATED_RECOVERY_VISUAL_HOSTS if is_curated else OFFICIAL_VISUAL_HOSTS
-    )
-    credit = str(story.get("recovery_photo_credit") or "").strip() if is_curated else None
-    if parsed.scheme != "https" or parsed.hostname not in allowed_hosts:
-        print("  ! exact recovery visual is not from an allowlisted host")
-        return None, None
-    if is_curated and not credit:
-        print("  ! curated recovery visual is missing required attribution")
-        return None, None
-    try:
-        request = urllib.request.Request(
-            url, headers={"User-Agent": "daily-news-snap/1.0"}
+    asset_name = str(story.get("recovery_image_b64_path") or "").strip()
+    credit = str(story.get("recovery_photo_credit") or "").strip()
+
+    if asset_name:
+        asset = Path(asset_name)
+        if (
+            asset.is_absolute()
+            or ".." in asset.parts
+            or asset.parts[:2] != ("assets", "recovery")
+            or asset.suffix != ".b64"
+        ):
+            print("  ! exact recovery asset path is not allowlisted")
+            return None, None
+        if not credit:
+            print("  ! curated recovery visual is missing required attribution")
+            return None, None
+        try:
+            data = base64.b64decode(asset.read_text(encoding="ascii"), validate=True)
+        except Exception as exc:
+            print(f"  ! exact recovery asset could not be decoded: {exc}")
+            return None, None
+        is_curated = True
+        source_label = asset_name
+        provenance = f"asset:{asset_name}"
+    else:
+        url = official_url or recovery_url
+        if not url:
+            return None, None
+        parsed = urllib.parse.urlparse(url)
+        is_curated = bool(recovery_url and not official_url)
+        allowed_hosts = (
+            CURATED_RECOVERY_VISUAL_HOSTS if is_curated else OFFICIAL_VISUAL_HOSTS
         )
-        with opener(request, timeout=60) as response:
-            data = response.read(8_000_001)
-    except Exception as exc:
-        print(f"  ! official recovery visual download failed: {exc}")
-        return None, None
+        if parsed.scheme != "https" or parsed.hostname not in allowed_hosts:
+            print("  ! exact recovery visual is not from an allowlisted host")
+            return None, None
+        if is_curated and not credit:
+            print("  ! curated recovery visual is missing required attribution")
+            return None, None
+        try:
+            request = urllib.request.Request(
+                url,
+                headers={
+                    "User-Agent": "Mozilla/5.0 (compatible; daily-news-snap/1.0)",
+                    "Referer": f"{parsed.scheme}://{parsed.netloc}/",
+                },
+            )
+            with opener(request, timeout=60) as response:
+                data = response.read(8_000_001)
+        except Exception as exc:
+            print(f"  ! official recovery visual download failed: {exc}")
+            return None, None
+        source_label = parsed.hostname
+        provenance = f"url:{url}"
+
     if len(data) < 5_000 or len(data) > 8_000_000:
         print("  ! official recovery visual has an invalid size")
         return None, None
@@ -607,10 +638,10 @@ def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlope
         print(f"  ! official recovery visual is not a valid image: {exc}")
         return None, None
     _marker(target, ".official-subject").write_text(
-        f"official:{url}", encoding="utf-8"
+        provenance, encoding="utf-8"
     )
     kind = "curated" if is_curated else "official"
-    print(f"    photo: verified {kind} subject visual from {parsed.hostname}")
+    print(f"    photo: verified {kind} subject visual from {source_label}")
     return str(target), credit
 
 
