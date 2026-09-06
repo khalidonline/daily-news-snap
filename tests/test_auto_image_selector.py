@@ -251,6 +251,40 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIsNone(photo)
         self.assertIsNone(credit)
 
+    def test_neutral_financial_district_photo_is_too_generic_for_sukuk(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "neutral", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "neutral",
+            "stock": "no",
+        }, calls, commons_title="File:Financial District Riyadh 2012.jpg")
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "اكتتاب في صكوك صح بعائد 4.8% حتى 8 سبتمبر",
+                "summary": "فتح المركز الوطني لإدارة الدين الاكتتاب في صكوك صح.",
+                "takeaway": "الصكوك أداة ادخار حكومية بعائد ثابت.",
+                "link": "https://alyaum.com/sah-sukuk",
+                "scope": "saudi",
+                "image_queries": [
+                    "riyadh financial district",
+                    "saudi national debt office",
+                ],
+                "image_queries_ar": ["صكوك صح", "المركز الوطني لإدارة الدين"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["صكوك صح", "المركز الوطني لإدارة الدين"],
+                ["riyadh financial district", "saudi national debt office"],
+                hero,
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
     def test_no_candidate_is_never_promoted(self):
         calls = []
         fake = self.make_module({
