@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 
+import daily_news_fresh_runner
 import daily_news_runner
 import news_bot
 
@@ -20,6 +21,24 @@ class ArticleImageRelevanceRegressionTests(unittest.TestCase):
         metadata = "Saudi emergency response exercise at a United States air base"
 
         self.assertLess(news_bot._geo_adjust(metadata), 0)
+
+    def test_news_quality_prompt_rejects_dominant_unrelated_vehicles(self):
+        fake = SimpleNamespace(_VISION_JUDGE="base prompt")
+        daily_news_fresh_runner.install_news_visual_quality_guidance(fake)
+        self.assertIn("سيارات أو حافلات", fake._VISION_JUDGE)
+        self.assertIn("مقدمة الصورة", fake._VISION_JUDGE)
+        self.assertIn("ازدحام بصري", fake._VISION_JUDGE)
+
+    def test_card_hides_photo_credit_but_external_caption_keeps_it(self):
+        credit = "Diken81 / CC BY-SA 3.0"
+        self.assertEqual(
+            news_bot.story_footer_texts({"sources": ["اليوم"]}, credit),
+            ["المصدر: اليوم"],
+        )
+        self.assertEqual(
+            news_bot.photo_attribution_suffix(credit),
+            "\n\nالصورة: Diken81 / CC BY-SA 3.0",
+        )
 
     def test_neutral_article_photo_is_rejected_instead_of_used_as_fallback(self):
         calls = []
