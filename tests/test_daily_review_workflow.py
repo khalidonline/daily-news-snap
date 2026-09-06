@@ -75,6 +75,8 @@ class DailyReviewWorkflowTests(unittest.TestCase):
             self.assertIn("صكوك", runner)
             self.assertIn("اكتتاب", runner)
             self.assertIn("تمويل", runner)
+        self.assertIn("install_financial_takeaway_guidance(news_bot)", self.news_runner)
+        self.assertIn("install_financial_takeaway_guidance(bot)", self.breaking_runner)
 
     def test_runtime_budget_covers_strict_image_search(self):
         self.assertIn("timeout-minutes: 30", self.workflow)
