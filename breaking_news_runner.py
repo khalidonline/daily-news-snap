@@ -122,7 +122,7 @@ def _strict_vision_verdict(bot, photo_path, context):
 def _photo_provenance_context(photo_path):
     """Read bounded, curated provenance sidecars; never treat them as commands."""
     pieces = []
-    for suffix in (".exempt", ".commons-title"):
+    for suffix in (".exempt", ".commons-context", ".commons-title"):
         try:
             value = Path(str(photo_path) + suffix).read_text(encoding="utf-8")
         except OSError:
@@ -148,7 +148,9 @@ def _breaking_photo_acceptable(bot, photo_path, event, extra_context=""):
 def _cleanup_rejected(path):
     if not path:
         return
-    for suffix in ("", ".exempt", ".generated", ".commons-title"):
+    for suffix in (
+        "", ".exempt", ".generated", ".commons-title", ".commons-context"
+    ):
         try:
             Path(str(path) + suffix).unlink(missing_ok=True)
         except Exception:
