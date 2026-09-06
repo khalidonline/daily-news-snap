@@ -125,7 +125,7 @@ jobs:
           MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
           THEME: "light"
           STORIES_PER_DAY: "1"
-          CANDIDATES: "8"
+          CANDIDATES: "5"
           REQUIRE_PHOTO: "1"
           IMAGE_SOURCE: ${{ inputs.image_source || 'auto' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
@@ -134,8 +134,8 @@ jobs:
           MODEL_BOT: "news"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
           MODEL_MAX_USD_PER_RUN: "0.50"
-          NEWS_MAX_PAID_RESPONSES: "2"
-          VISION_MAX_PAID_RESPONSES: "20"
+          NEWS_MAX_PAID_RESPONSES: "1"
+          VISION_MAX_PAID_RESPONSES: "12"
         run: python daily_news_fresh_runner.py
 
       - name: Verify News card was produced
