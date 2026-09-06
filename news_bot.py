@@ -2628,6 +2628,19 @@ def render_number(brief, out_path, photo_credit=None):
     return out_path
 
 
+def story_footer_texts(brief, photo_credit=None):
+    """Visible card footer: editorial sources only, never photo licensing."""
+    sources = [str(source).strip() for source in brief.get("sources", [])
+               if str(source).strip()][:3]
+    return ["المصدر: " + "، ".join(sources)] if sources else []
+
+
+def photo_attribution_suffix(photo_credit):
+    """Keep required image attribution in delivery text, outside artwork."""
+    credit = str(photo_credit or "").strip()
+    return f"\n\nالصورة: {credit}" if credit else ""
+
+
 def render_story(brief, out_path, photo_path=None, photo_credit=None):
     """Light card: photo, a short paragraph, one line in red. Centred.
     Everything is measured before it is drawn, so nothing can overflow."""
@@ -2784,21 +2797,7 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
             text = text.rsplit("، ", 1)[0] if "، " in text else text[:-4]
         return text
 
-    def norm(text):
-        return "".join((text or "").split()).replace("ـ", "").lower()
-
-    src_list = [s for s in brief.get("sources", []) if s][:3]
-    lines = []
-    if src_list:
-        lines.append(fit("المصدر: " + "، ".join(src_list)))
-
-    # when the photo came from the same outlet, one credit line is enough
-    same = photo_credit and any(norm(photo_credit) == norm(s) or
-                                norm(s) in norm(photo_credit)
-                                for s in src_list)
-    if photo_credit and not same:
-        # its own line, so a long source list can never truncate it away
-        lines.append(fit(f"الصورة: {photo_credit}"))
+    lines = [fit(line) for line in story_footer_texts(brief, photo_credit)]
 
     if lines:
         top = H - 176 if len(lines) == 1 else H - 206
@@ -4121,6 +4120,9 @@ def main():
         chosen, photo, credit = stories[0], None, None
 
     stories = [chosen]
+    if photo and Path(str(photo) + ".generated").exists():
+        credit = None
+    attribution_suffix = photo_attribution_suffix(credit)
     card = render_story({
         "title": chosen["headline"],
         "body": chosen.get("summary", ""),
@@ -4139,7 +4141,8 @@ def main():
         # A held card written only to disk/artifact is a card never seen.
         notify(f"{RECENT_REUSE_WARNING}[DRY RUN] would have posted: "
                f"{chosen['headline']}\n({stamp} — البطاقة مرفقة؛ "
-               "للنشر فعلاً شغّل daily مع تفعيل post)",
+               "للنشر فعلاً شغّل daily مع تفعيل post)"
+               f"{attribution_suffix}",
                card)
         return
 
@@ -4155,7 +4158,7 @@ def main():
         # still record it, so the next run doesn't pick the same story
         commit_and_push(save_posted(posted, stories), f"card {stamp}")
         notify(f"{RECENT_REUSE_WARNING}📰 {stamp}\n{chosen['headline']}\n\n"
-               f"{chosen.get('takeaway', '')}", card)
+               f"{chosen.get('takeaway', '')}{attribution_suffix}", card)
         return
 
     if not quota_ok():
@@ -4171,7 +4174,9 @@ def main():
     if POST_PROVIDER != "bundle":
         url = publish_via_github(card) if MEDIA_MODE == "github" else upload_media(card)
         print(f"    media: {url}")
-    response = post_story(caption, [url] if url else [], card)
+    response = post_story(
+        f"{caption}{attribution_suffix}", [url] if url else [], card
+    )
     print("   ", response)
 
     # only record them as covered once the post actually went out

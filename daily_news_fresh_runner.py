@@ -31,6 +31,25 @@ def install_financial_takeaway_guidance(news_bot_module):
     return news_bot_module
 
 
+NEWS_VISUAL_QUALITY_GUIDANCE = """
+قاعدة جودة إضافية لبطاقات الأخبار: احكم بـ«لا» إذا كانت سيارات أو حافلات
+أو حركة مرور لا تخص الخبر تهيمن على مقدمة الصورة، أو إذا حجبت العناصر
+الموضوع الأساسي. واحكم بـ«لا» على موقع إنشاء مزدحم أو لقطة رديئة التكوين
+تجعل الموضوع غير واضح؛ ازدحام بصري ليس دليلاً على صلة الصورة.
+ولا تعتبر منظراً عاماً لمنطقة مالية أو مبنى مكتب دليلاً على صك أو اكتتاب
+أو منتج مالي محدد ما لم يظهر اسم الجهة أو المنتج بوضوح.
+""".strip()
+
+
+def install_news_visual_quality_guidance(news_bot_module):
+    """Reject low-quality or generic imagery in scheduled News only."""
+    guidance = NEWS_VISUAL_QUALITY_GUIDANCE
+    prompt = getattr(news_bot_module, "_VISION_JUDGE", "")
+    if guidance not in prompt:
+        news_bot_module._VISION_JUDGE = prompt.rstrip() + "\n\n" + guidance
+    return news_bot_module
+
+
 def install_recent_photo_fail_closed(news_bot_module):
     """Prevent scheduled News from recycling a recently used photo."""
     original_local = news_bot_module.fetch_local_photo
@@ -76,6 +95,7 @@ def main():
 
     daily_news_runner.configure(news_bot)
     install_financial_takeaway_guidance(news_bot)
+    install_news_visual_quality_guidance(news_bot)
     install_recent_photo_fail_closed(news_bot)
     install_news_notification_labels(news_bot)
     news_bot.main()

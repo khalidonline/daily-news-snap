@@ -55,9 +55,10 @@ _BREAKING_VISION_PROMPT = """أنت بوابة صور صارمة لبطاقة «
 
 def install_financial_takeaway_guidance(bot):
     """Make financial breaking cards explain significance in plain Arabic."""
-    if FINANCIAL_TAKEAWAY_GUIDANCE not in bot.SYSTEM_PROMPT:
+    prompt = getattr(bot, "SYSTEM_PROMPT", "")
+    if FINANCIAL_TAKEAWAY_GUIDANCE not in prompt:
         bot.SYSTEM_PROMPT = (
-            bot.SYSTEM_PROMPT.rstrip() + "\n\n" + FINANCIAL_TAKEAWAY_GUIDANCE
+            prompt.rstrip() + "\n\n" + FINANCIAL_TAKEAWAY_GUIDANCE
         )
     return bot
 
