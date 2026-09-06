@@ -10,6 +10,11 @@ on:
       - "render_approved_hormuz_native.py"
       - "send_approved_story.py"
       - ".github/workflows/send-approved-hormuz-telegram.yml"
+  pull_request:
+    branches:
+      - repair/all-story-visuals-2026-08-29
+    paths:
+      - "render_approved_hormuz_native.py"
 
 permissions:
   contents: read
