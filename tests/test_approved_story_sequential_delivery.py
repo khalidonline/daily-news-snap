@@ -9,6 +9,28 @@ sender = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(sender)
 
 
+def test_send_verified_frames_uses_one_photo_album(tmp_path, monkeypatch):
+    frames = []
+    for index in range(1, 7):
+        p = tmp_path / f"frame-{index}.png"
+        p.write_bytes(f"frame-{index}".encode())
+        frames.append(p)
+
+    calls = []
+    monkeypatch.setattr(
+        sender,
+        "_send_photo_album",
+        lambda paths, caption="": calls.append(
+            ([Path(path).name for path in paths], caption)
+        ) or list(range(201, 207)),
+    )
+
+    ids = sender.send_verified_frames_as_album(frames, story="Hormuz")
+
+    assert calls == [([f"frame-{i}.png" for i in range(1, 7)], "[APPROVED] Hormuz\n6 frames")]
+    assert ids == list(range(201, 207))
+
+
 def test_send_verified_frames_sequentially_sends_all_six(tmp_path, monkeypatch):
     frames = []
     for index in range(1, 7):
@@ -36,6 +58,7 @@ def test_send_verified_frames_sequentially_fails_if_any_frame_fails(tmp_path, mo
         frames.append(p)
 
     count = {"n": 0}
+
     def fail_on_four(path, caption=""):
         count["n"] += 1
         if count["n"] == 4:
