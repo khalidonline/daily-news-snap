@@ -772,6 +772,11 @@ def install_auto_image_selector(news_bot_module):
                     # relevant to a specific sukuk, IPO, bank product, or deal.
                     "financial", "finance", "district", "market", "office",
                     "building", "business", "bank",
+                    # An empty venue does not depict a named athlete, coach,
+                    # club, or transfer merely because the search asked for
+                    # a football setting.
+                    "sport", "sports", "football", "soccer", "stadium",
+                    "arena", "venue", "field", "pitch",
                     # Literal money objects are not sufficient context for a
                     # modern named investment or savings product.
                     "coin", "coins", "currency", "money", "riyal", "riyals",
