@@ -321,6 +321,47 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
                 pixel = rendered.convert("RGB").getpixel((60, 40))
             self.assertTrue(all(channel > 230 for channel in pixel))
 
+    def test_curated_recovery_photo_requires_attribution(self):
+        source = io.BytesIO()
+        Image.new("RGB", (120, 80), (145, 98, 45)).save(
+            source, format="PNG", compress_level=0
+        )
+        image_data = source.getvalue()
+
+        class Response:
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit=-1):
+                return image_data
+
+        story = {
+            "recovery_image_url": (
+                "https://upload.wikimedia.org/wikipedia/commons/1/1a/"
+                "Saudi_coins_%281%29.jpg"
+            ),
+            "recovery_photo_credit": "Sajetpa / CC BY-SA 3.0",
+        }
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "coins.jpg"
+            photo, credit = daily_news_runner.fetch_verified_official_visual(
+                story, target, opener=lambda *args, **kwargs: Response()
+            )
+            self.assertEqual(photo, str(target))
+            self.assertEqual(credit, "Sajetpa / CC BY-SA 3.0")
+
+    def test_curated_recovery_photo_without_attribution_is_rejected(self):
+        story = {
+            "recovery_image_url": (
+                "https://upload.wikimedia.org/wikipedia/commons/1/1a/"
+                "Saudi_coins_%281%29.jpg"
+            )
+        }
+        photo, credit = daily_news_runner.fetch_verified_official_visual(story, "x")
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
     def test_no_candidate_is_never_promoted(self):
         calls = []
         fake = self.make_module({
