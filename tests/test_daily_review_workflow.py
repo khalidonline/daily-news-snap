@@ -1,5 +1,8 @@
 import unittest
+import os
 from pathlib import Path
+import subprocess
+import sys
 
 
 class DailyReviewWorkflowTests(unittest.TestCase):
@@ -55,6 +58,28 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn('REMEMBER_DAYS: "3"', self.workflow)
         self.assertIn('LOOKBACK_HOURS: "48"', self.workflow)
         self.assertIn("run: python daily_news_fresh_runner.py", self.workflow)
+
+    def test_news_runner_defaults_to_standard_light_card_without_workflow_theme(self):
+        env = os.environ.copy()
+        env.pop("THEME", None)
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    "import daily_news_fresh_runner; "
+                    "import news_bot; "
+                    "print(news_bot.THEME); "
+                    "print(news_bot.BG_TOP)"
+                ),
+            ],
+            cwd=Path(__file__).resolve().parents[1],
+            env=env,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(result.stdout.splitlines(), ["light", "(238, 232, 227)"])
 
     def test_photo_only_recovery_loads_exact_story_from_explicit_input(self):
         self.assertIn("Load exact News recovery story", self.workflow)
