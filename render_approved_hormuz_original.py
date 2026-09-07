@@ -18,7 +18,8 @@ BACKGROUND = (242, 237, 230)
 TEXT_COLOUR = (18, 62, 111)
 ACCENT = (190, 150, 0)
 MUTED = (143, 136, 129)
-# Riyadh rule: sources appear on the closing frame only.\nCONSOLIDATED_SOURCES = (
+# Riyadh rule: sources appear on the closing frame only.
+CONSOLIDATED_SOURCES = (
     "المصادر: المنظمة البحرية الدولية، وكالة الطاقة الدولية، "
     "موانئ دبي العالمية، كلية لندن للاقتصاد"
 )
