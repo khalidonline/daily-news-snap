@@ -1,11 +1,5 @@
 [
  {
-  "headline": "تحقيق فيدرالي يلاحق Cybercab من Tesla بعد أيام من إطلاقها",
-  "at": "2026-09-04T19:15:24.398426+00:00",
-  "source_link": "https://engadget.com/2251066/tesla-cybercab-under-federal-investigation-almost-immediately-after-hitting-streets",
-  "lane": "business_tech"
- },
- {
   "headline": "أبل تستعد لأكبر إطلاق لها في سبتمبر",
   "at": "2026-09-04T20:39:37.686329+00:00",
   "source_link": "https://theverge.com/tech/989692/apple-iphone-launch-event-september-2026-how-to-watch",
@@ -201,5 +195,11 @@
   "at": "2026-09-07T18:15:13.584762+00:00",
   "source_link": "https://alwatan.com.sa/article/1185195",
   "lane": "saudi_core"
+ },
+ {
+  "headline": "Next تفوز بإلغاء حكم مساواة أجور بقيمة 30 مليون جنيه",
+  "at": "2026-09-07T20:15:51.338337+00:00",
+  "source_link": "https://bbc.co.uk/news/articles/c05r61rqe4yo?at_medium=RSS&at_campaign=rss",
+  "lane": "business_tech"
  }
 ]
