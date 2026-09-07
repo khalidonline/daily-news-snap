@@ -219,6 +219,76 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
 
+    def test_neutral_commons_rejects_generic_store_for_named_retailer(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "neutral", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title=(
+            "File:Convenience Store on High Street, Ingatestone.jpg"
+        ))
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "Next تفوز بإلغاء حكم مساواة أجور",
+                "summary": "قضت محكمة بأن Next يمكنها دفع أجور مختلفة.",
+                "takeaway": "الحكم يخص متاجر Next وعمال المستودعات.",
+                "link": "https://bbc.co.uk/news/next-equal-pay",
+                "scope": "world",
+                "image_queries": [
+                    "Next retailer UK store",
+                    "UK high street store",
+                ],
+                "image_queries_ar": ["شركة Next البريطانية"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["شركة Next البريطانية"],
+                ["Next retailer UK store", "UK high street store"],
+                hero,
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
+    def test_neutral_commons_rejects_generic_gulf_view_for_khafji(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "neutral", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title="File:Colours of the Persian Gulf.jpg")
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "صندوق الاستثمارات يطلق شركة لتطوير ساحل الخفجي",
+                "summary": "شركة جديدة لتطوير وجهة سياحية وسكنية في الخفجي.",
+                "takeaway": "المشروع يستهدف ساحل الخفجي.",
+                "link": "https://alwatan.com.sa/article/1185242",
+                "scope": "saudi",
+                "image_queries": [
+                    "Khafji coast Saudi Arabia",
+                    "eastern province gulf coast",
+                ],
+                "image_queries_ar": ["ساحل الخفجي"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["ساحل الخفجي"],
+                ["Khafji coast Saudi Arabia", "eastern province gulf coast"],
+                hero,
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
     def test_neutral_commons_rejects_wrong_ministry_despite_riyadh_match(self):
         calls = []
         fake = self.make_module({

@@ -772,6 +772,12 @@ def install_auto_image_selector(news_bot_module):
                     # relevant to a specific sukuk, IPO, bank product, or deal.
                     "financial", "finance", "district", "market", "office",
                     "building", "business", "bank",
+                    # Generic retail and geography words can overlap a model
+                    # query while depicting the wrong company or place.  A
+                    # random high-street shop is not Next, and a wide Gulf
+                    # view is not evidence that the image shows Khafji.
+                    "store", "shop", "retail", "retailer", "street", "high",
+                    "coast", "coastal", "gulf", "eastern", "province",
                     # A commodity or facility type alone does not connect a
                     # generic industrial scene to a live price or supply-risk
                     # story. A specific company, location, vessel, or event
