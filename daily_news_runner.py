@@ -797,9 +797,15 @@ def install_auto_image_selector(news_bot_module):
                         r"[A-Za-z0-9]+", query_text
                     ) if len(token) > 2 and token.casefold() not in generic
                 }
-                title_years = set(re.findall(
-                    r"\b(?:19|20)\d{2}\b", commons_title
-                ))
+                # A modern capture date in a filename is provenance, not an
+                # archival subject. Keep the veto for genuinely historical
+                # pre-2000 material such as the 1949 refinery, while allowing
+                # named current subjects photographed in the digital era.
+                title_years = {
+                    year for year in re.findall(
+                        r"\b(?:19|20)\d{2}\b", commons_title
+                    ) if int(year) < 2000
+                }
                 context_years = set(re.findall(
                     r"\b(?:19|20)\d{2}\b", context
                 ))
