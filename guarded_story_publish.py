@@ -56,6 +56,14 @@ def _personal_resolve_story():
     # attempt an inventory-PASS story so it can earn current-policy evidence.
     if rsp.sb.STORY:
         story = rsp.sb.resolve_story_input(rsp.sb.STORY)
+        if os.getenv("STORY_SELECTION_MODE", "manual").strip() == "scheduled":
+            result = sp.evaluate_story(story)
+            if not result["publishable"]:
+                raise SystemExit(
+                    "scheduled story is not prevalidated for all required "
+                    f"frames: {result['status']}: {story}"
+                )
+            return story
         photos, _logos, status = rsp.sr.coverage(story)
         if status != "PASS" or len(photos) < 4:
             raise SystemExit(
@@ -65,19 +73,6 @@ def _personal_resolve_story():
     story = rsp.sr.choose_runtime_story()
     if story:
         return story
-
-    # A policy upgrade can make every persisted frame-evidence record stale.
-    # Keep the publication gate fail-closed, but let the scheduled review run
-    # bootstrap fresh evidence from a story with adequate authentic inventory.
-    candidates = []
-    for candidate in rsp.sb.load_stories():
-        photos, _logos, status = rsp.sr.coverage(candidate)
-        if status == "PASS" and len(photos) >= 4:
-            candidates.append((len(photos), candidate))
-    if candidates:
-        _photo_count, candidate = max(candidates, key=lambda item: item[0])
-        print(f"    review bootstrap candidate: {candidate}")
-        return candidate
     return ""
 
 
