@@ -135,7 +135,10 @@ jobs:
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
           MODEL_MAX_USD_PER_RUN: "0.50"
           NEWS_MAX_PAID_RESPONSES: "1"
-          VISION_MAX_PAID_RESPONSES: "12"
+          # Five ranked stories can each require several safe visual checks.
+          # Keep the total dollar guard below while preventing early weak
+          # candidates from exhausting vision capacity before later stories.
+          VISION_MAX_PAID_RESPONSES: "20"
         run: python daily_news_fresh_runner.py
 
       - name: Verify News card was produced
