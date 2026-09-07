@@ -59,6 +59,32 @@ class StoryArchivalVisualTests(unittest.TestCase):
         self.assertIsNone(result)
         self.assertEqual(1, len(bank))
 
+    def test_story_passes_punch_year_into_frame_photo_context(self):
+        captured = []
+
+        def find_photo(_spec, _slot, _seen, context, **_kwargs):
+            captured.append(context)
+            return None
+
+        brief = {
+            "frames": [{
+                "heading": "البداية",
+                "text": "كانت المصفاة صغيرة.",
+                "punch": "وفي 1949 تغيّر كل شيء.",
+                "subject_kind": "place",
+                "image_keywords": ["Saudi oil refinery"],
+                "image_keywords_ar": [],
+            }]
+        }
+
+        with patch.object(story_bot, "find_photo", side_effect=find_photo), \
+                patch.object(story_bot, "register_photos"), \
+                patch.object(story_bot, "vision_gate_summary"):
+            story_bot.find_all_photos(brief)
+
+        self.assertTrue(captured)
+        self.assertTrue(all("1949" in context for context in captured))
+
 
 if __name__ == "__main__":
     unittest.main()
