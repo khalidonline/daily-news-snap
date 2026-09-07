@@ -6,7 +6,14 @@ wrong for the scheduled News card: a recent image rejected for one ranked
 story must never become another story's final fallback.
 """
 
+import os
 from pathlib import Path
+
+
+# News cards always use the approved cream template. Keep this default at the
+# entrypoint so recovery or local invocations cannot silently fall back to the
+# shared renderer's legacy dark theme when a workflow omits THEME.
+os.environ.setdefault("THEME", "light")
 
 import daily_news_runner
 
