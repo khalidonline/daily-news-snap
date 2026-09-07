@@ -351,6 +351,38 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIsNone(photo)
         self.assertIsNone(credit)
 
+    def test_neutral_named_subject_photo_is_not_archival_only_due_to_2009_date(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title=(
+            "File:Flynas A320-214, VP-CXP, MSN 3889 (05 2009), "
+            "as XY 72 Riyadh.jpg"
+        ))
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "طيران ناس تستحوذ على حصة في سويسبورت السعودية",
+                "summary": "أعلنت طيران ناس استحواذها على حصة في الشركة.",
+                "takeaway": "الصفقة توسع حضور الناقلة في خدمات المطارات.",
+                "link": "https://aawsat.com/flynas-swissport",
+                "scope": "saudi",
+                "image_queries": ["flynas aircraft Riyadh airport"],
+                "image_queries_ar": ["طيران ناس"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["طيران ناس"], ["flynas aircraft Riyadh airport"], hero,
+            )
+
+        self.assertEqual(str(hero), photo)
+        self.assertEqual("Commons credit", credit)
+
     def test_neutral_financial_district_photo_is_too_generic_for_sukuk(self):
         calls = []
         fake = self.make_module({
