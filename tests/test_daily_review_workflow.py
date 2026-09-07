@@ -1,5 +1,8 @@
 import unittest
+import os
 from pathlib import Path
+import subprocess
+import sys
 
 
 class DailyReviewWorkflowTests(unittest.TestCase):
@@ -55,6 +58,67 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn('REMEMBER_DAYS: "3"', self.workflow)
         self.assertIn('LOOKBACK_HOURS: "48"', self.workflow)
         self.assertIn("run: python daily_news_fresh_runner.py", self.workflow)
+
+    def test_news_runner_defaults_to_standard_light_card_without_workflow_theme(self):
+        env = os.environ.copy()
+        env.pop("THEME", None)
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    "import daily_news_fresh_runner; "
+                    "news_bot = daily_news_fresh_runner.load_news_bot(); "
+                    "print(news_bot.THEME); "
+                    "print(news_bot.BG_TOP)"
+                ),
+            ],
+            cwd=Path(__file__).resolve().parents[1],
+            env=env,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(result.stdout.splitlines(), ["light", "(238, 232, 227)"])
+
+    def test_importing_news_runner_does_not_mutate_theme_environment(self):
+        env = os.environ.copy()
+        env.pop("THEME", None)
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                "import daily_news_fresh_runner, os; print('THEME' in os.environ)",
+            ],
+            cwd=Path(__file__).resolve().parents[1],
+            env=env,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(result.stdout.strip(), "False")
+
+    def test_news_runner_respects_explicit_theme_override(self):
+        env = os.environ.copy()
+        env["THEME"] = "dark"
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    "import daily_news_fresh_runner; "
+                    "news_bot = daily_news_fresh_runner.load_news_bot(); "
+                    "print(news_bot.THEME); "
+                    "print(news_bot.BG_TOP)"
+                ),
+            ],
+            cwd=Path(__file__).resolve().parents[1],
+            env=env,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(result.stdout.splitlines(), ["dark", "(14, 17, 26)"])
 
     def test_photo_only_recovery_loads_exact_story_from_explicit_input(self):
         self.assertIn("Load exact News recovery story", self.workflow)

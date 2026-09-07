@@ -6,6 +6,7 @@ wrong for the scheduled News card: a recent image rejected for one ranked
 story must never become another story's final fallback.
 """
 
+import os
 from pathlib import Path
 
 import daily_news_runner
@@ -96,8 +97,17 @@ def install_news_notification_labels(news_bot_module):
     return news_bot_module
 
 
-def main():
+def load_news_bot():
+    """Load the shared renderer with the approved News theme as its default."""
+    # Recovery or local invocations may omit THEME. Scope the default to the
+    # executable entrypoint so importing News policy helpers has no side effect.
+    os.environ.setdefault("THEME", "light")
     import news_bot
+    return news_bot
+
+
+def main():
+    news_bot = load_news_bot()
 
     daily_news_runner.configure(news_bot)
     install_financial_takeaway_guidance(news_bot)
