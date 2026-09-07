@@ -772,6 +772,12 @@ def install_auto_image_selector(news_bot_module):
                     # relevant to a specific sukuk, IPO, bank product, or deal.
                     "financial", "finance", "district", "market", "office",
                     "building", "business", "bank",
+                    # A commodity or facility type alone does not connect a
+                    # generic industrial scene to a live price or supply-risk
+                    # story. A specific company, location, vessel, or event
+                    # must still match.
+                    "oil", "crude", "petroleum", "energy", "refinery",
+                    "terminal", "tanker", "tankers", "pipeline",
                     # An empty venue does not depict a named athlete, coach,
                     # club, or transfer merely because the search asked for
                     # a football setting.
@@ -791,7 +797,16 @@ def install_auto_image_selector(news_bot_module):
                         r"[A-Za-z0-9]+", query_text
                     ) if len(token) > 2 and token.casefold() not in generic
                 }
-                if title_tokens & subject_tokens:
+                title_years = set(re.findall(
+                    r"\b(?:19|20)\d{2}\b", commons_title
+                ))
+                context_years = set(re.findall(
+                    r"\b(?:19|20)\d{2}\b", context
+                ))
+                if title_years - context_years:
+                    print("      auto image: rejected neutral Commons photo "
+                          "with an unmentioned archival year")
+                elif title_tokens & subject_tokens:
                     neutral = (Path(photo), credit, name)
                 else:
                     print("      auto image: rejected neutral Commons photo "

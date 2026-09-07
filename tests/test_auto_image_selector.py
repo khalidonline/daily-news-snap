@@ -289,6 +289,68 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIsNone(photo)
         self.assertIsNone(credit)
 
+    def test_neutral_commons_rejects_generic_refinery_for_oil_price_story(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title="File:Saudi Arabia oil refinery.jpg")
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "أسعار النفط تتجاوز 96 دولاراً مع توتر في هرمز",
+                "summary": "واصل النفط ارتفاعه مع مخاوف من اضطراب الإمدادات.",
+                "takeaway": "ارتفاع النفط يعني عادة إيرادات أعلى للمصدرين.",
+                "link": "https://aawsat.com/node/5315462",
+                "scope": "saudi",
+                "image_queries": ["saudi arabia oil refinery"],
+                "image_queries_ar": ["أسعار النفط مضيق هرمز"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["أسعار النفط مضيق هرمز"],
+                ["saudi arabia oil refinery"],
+                hero,
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
+    def test_neutral_commons_rejects_unmentioned_archival_year(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "neutral", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title="File:A view of the Bahrein Refinery, 1949.jpg")
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "أسعار النفط تتجاوز 96 دولاراً مع توتر في هرمز",
+                "summary": "واصل النفط ارتفاعه مع مخاوف من اضطراب الإمدادات.",
+                "takeaway": "ارتفاع النفط يعني عادة إيرادات أعلى للمصدرين.",
+                "link": "https://aawsat.com/node/5315462",
+                "scope": "saudi",
+                "image_queries": ["Bahrein oil refinery"],
+                "image_queries_ar": ["أسعار النفط مضيق هرمز"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["أسعار النفط مضيق هرمز"],
+                ["Bahrein oil refinery"],
+                hero,
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
     def test_neutral_financial_district_photo_is_too_generic_for_sukuk(self):
         calls = []
         fake = self.make_module({
