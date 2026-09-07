@@ -1616,7 +1616,7 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
             stale.unlink()
     bank_local = {}
 
-    def take(result, tier=0):
+    def take(result, tier=0, provider=""):
         photo = result[0] if isinstance(result, tuple) else result
         if not photo:
             return None
@@ -1630,6 +1630,23 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
         verdict = photo_shows(photo, context)
         if verdict == "yes":
             return photo
+        if verdict == "neutral" and provider == "commons":
+            try:
+                commons_title = Path(
+                    str(photo) + ".commons-title"
+                ).read_text(encoding="utf-8")
+            except OSError:
+                commons_title = ""
+            title_years = set(re.findall(
+                r"\b(?:19|20)\d{2}\b", commons_title
+            ))
+            context_years = set(re.findall(
+                r"\b(?:19|20)\d{2}\b", context
+            ))
+            if title_years - context_years:
+                print("      story image: rejected neutral Commons photo "
+                      "with an unmentioned archival year")
+                return None
         # Widened searches must not bank neutrals at all: story-level
         # fallback plus a generic Arabic single («صحراء») once pulled a
         # Tunisian tourism photo onto a Saudi story.
@@ -1706,12 +1723,14 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
         if photo:
             break
         photo = take(fetch_commons_photo([keyword], out_path, need_saudi=False,
-                                         min_hits=1, subject_mode=True))
+                                         min_hits=1, subject_mode=True),
+                     provider="commons")
     for keyword in keywords_ar:
         if photo:
             break
         photo = take(fetch_commons_photo([keyword], out_path, need_saudi=False,
-                                         min_hits=1, subject_mode=True), tier=1)
+                                         min_hits=1, subject_mode=True), tier=1,
+                     provider="commons")
     # LoC is an English-language archive — Arabic keywords would be wasted
     for keyword in keywords:
         if photo:
