@@ -24,6 +24,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
+import story_format
+
 try:
     from news_bot import (
         ANTHROPIC_API_KEY, DRY_RUN, OUT_DIR, CARDS_DIR, W, H,
@@ -53,6 +55,7 @@ STORY_MODEL = _clean_model_id(os.getenv("STORY_MODEL"), "claude-sonnet-5")
 MAX_TOKENS = int(os.getenv("MAX_TOKENS", "").strip() or "16000")
 MAX_SEARCHES = int(os.getenv("MAX_SEARCHES", "").strip() or "6")
 BRAND = os.getenv("BRAND", "ملخص تنفيذي - قصة")
+STORY_FORMAT = story_format.require_story_format(os.getenv("STORY_FORMAT"))
 # 4 is terse, 6 gives a story room to breathe. Snapchat's own guidance
 # favours 5-8 frame stories with a clear beginning, middle and end.
 STORY_FRAMES = max(4, min(7, int(os.getenv("STORY_FRAMES", "").strip() or "6")))
@@ -1224,9 +1227,15 @@ def _frame_figure(text, punch="", heading=""):
 
 def render_frame(path, kicker, counter, big, big_size, sub=None,
                  sub_colour=None, photo=None, footer=None, punch=None):
+    if (W, H) != story_format.CANVAS:
+        raise ValueError(
+            f"{story_format.FORMAT_ID} requires {story_format.CANVAS}, "
+            f"got {(W, H)}"
+        )
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
-    margin, centre, right = 96, W // 2, W - 96
+    margin = story_format.MARGIN
+    centre, right = W // 2, W - margin
     max_w = W - 2 * margin
     _, kw = ar("م")
 
@@ -1234,17 +1243,19 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         shaped, k = ar(text)
         draw.text((centre, y), shaped, font=font, fill=fill, anchor="ma", **k)
 
-    draw.rectangle([right - 110, 170, right, 180], fill=BRAND_INK)
+    draw.rectangle(story_format.HEADER_RULE, fill=BRAND_INK)
     shaped, k = ar(kicker)
-    draw.text((right, 216), shaped, font=load_font(32, bold=True),
+    draw.text((right, story_format.KICKER_Y), shaped,
+              font=load_font(32, bold=True),
               fill=BRAND_INK, anchor="ra", **k)
     draw_brand_badge(img)
     # the badge holds the corner, so the frame counter tucks in under it
     shaped, k = ar(counter)
-    draw.text((margin, 292), shaped, font=load_font(28), fill=MUTED,
+    draw.text((margin, story_format.COUNTER_Y), shaped,
+              font=load_font(28), fill=MUTED,
               anchor="la", **k)
 
-    y = 420
+    y = story_format.PHOTO_TOP
     pic = None
     if photo:
         try:
@@ -1258,7 +1269,8 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
                   "floor instead")
     if pic is not None:
         try:
-            box_w, box_h = max_w, int(max_w * 0.72)
+            box_w = max_w
+            box_h = int(max_w * story_format.PHOTO_ASPECT_HEIGHT)
             pw, ph = pic.size
             if pw / ph > box_w / box_h:
                 new_w = int(ph * box_w / box_h)
@@ -1267,14 +1279,14 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             else:
                 pic = pic.crop((0, 0, pw, int(pw * box_h / box_w)))
             pic = pic.resize((box_w, box_h), Image.LANCZOS)
-            rounded = _rounded(pic, 36)
+            rounded = _rounded(pic, story_format.PHOTO_RADIUS)
             img.paste(rounded, (margin, y), rounded)
             seal_photo(img, margin + box_w, y + box_h)
-            y += box_h + 80
+            y += box_h + story_format.PHOTO_TEXT_GAP
         except Exception as exc:
             print(f"  ! couldn't place photo: {exc}")
 
-    size = big_size
+    size = story_format.TITLE_SIZE
     while size > 44:
         f_big = load_font(size, bold=True)
         lines = _wrap(draw, big, f_big, max_w, kw)
@@ -1345,7 +1357,7 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         y += 46
         # longer frames are allowed now, so shrink until the text fits the space
         available = bottom - y - punch_block
-        sub_size, line_gap = 42, 60
+        sub_size, line_gap = story_format.BODY_SIZE, 60
         while sub_size > 28:
             f_sub = load_font(sub_size, bold=sub_colour == ACCENT)
             lines = _wrap(draw, sub, f_sub, max_w, kw)
