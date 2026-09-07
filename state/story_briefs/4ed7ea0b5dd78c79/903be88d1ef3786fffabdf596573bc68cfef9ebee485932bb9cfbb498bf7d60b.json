@@ -1,0 +1,109 @@
+{
+  "brief": {
+    "caption": "قصة Jack Ma: من رفضته وظيفة توصيل الدجاج إلى مؤسس واحدة من أكبر شركات التجارة في العالم.",
+    "frames": [
+      {
+        "heading": "الصين قبل الإنترنت",
+        "image_keywords": [
+          "Hangzhou 1990s",
+          "China street market"
+        ],
+        "image_keywords_ar": [],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في مطلع التسعينات، الصين كانت شبه بلا بنية تحتية للإنترنت. معظم الناس لم يكونوا يعرفون حتى معنى أن يكون المرء متصلاً بالشبكة. والمصانع الصغيرة لم تكن تملك وسيلة سهلة للوصول إلى مشترين خارج حدودها."
+      },
+      {
+        "heading": "معلّم رفضته الوظائف",
+        "image_keywords": [
+          "Jack Ma",
+          "KFC restaurant"
+        ],
+        "image_keywords_ar": [
+          "جاك ما"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "وفي تلك البلاد نفسها كان يعيش معلّم لغة إنجليزية اسمه Jack Ma. بعد تخرّجه تقدّم لثلاثين وظيفة في مدينته، ورُفض من كل واحدة. حتى مطعم KFC رفضه: تقدّم مع 23 شخصاً آخر، وقُبلوا جميعاً إلا هو."
+      },
+      {
+        "heading": "رحلة إلى Seattle",
+        "image_keywords": [
+          "Jack Ma",
+          "Seattle"
+        ],
+        "image_keywords_ar": [
+          "جاك ما"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "وهنا تغيّر كل شيء. سنة 1995 سافر Jack Ma إلى مدينة Seattle الأمريكية، ورأى الإنترنت لأول مرة. جرّب البحث عن كلمة beer فظهرت نتائج كثيرة، ثم بحث عن كلمة China فلم يظهر شيء على الإطلاق."
+      },
+      {
+        "heading": "ليلة الشك في الشقة",
+        "image_keywords": [
+          "Alibaba founders 1999",
+          "Hangzhou apartment"
+        ],
+        "image_keywords_ar": [
+          "علي بابا"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ولتحويل الفكرة إلى شركة، جمع Jack Ma سبعة عشر من أصدقائه وزملائه في شقته بمدينة Hangzhou، في فبراير 1999. تحدّث لساعات عن مشروع سمّاه Alibaba. في النهاية قال له الجميع تقريباً إنها فكرة غير معقولة، إلا واحداً منهم. ومع ذلك بدأوا برأس مال لا يتجاوز 60 ألف دولار."
+      },
+      {
+        "heading": "أكبر طرح في تاريخ الأسواق",
+        "image_keywords": [
+          "Alibaba IPO 2014",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [
+          "علي بابا"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وبعد خمس عشرة سنة من تلك الليلة، طرحت Alibaba أسهمها في بورصة نيويورك سنة 2014. جمعت الشركة 25 مليار دولار في يوم واحد، في أكبر طرح عام أوّلي شهدته الأسواق المالية حتى ذلك الوقت."
+      },
+      {
+        "heading": "ما تبقى من تلك الشقة",
+        "image_keywords": [
+          "Alibaba Group",
+          "Jack Ma"
+        ],
+        "image_keywords_ar": [
+          "علي بابا",
+          "جاك ما"
+        ],
+        "punch": "المعلم الذي رفضته KFC صار يدير سوقاً لم يستطع أحد رفضه.",
+        "subject_kind": "company",
+        "text": "واليوم، منصة Taobao التابعة لـAlibaba غيّرت قطاع التجزئة في الصين بالكامل."
+      }
+    ],
+    "image_prompt": "A quiet street in Hangzhou, China during the early 1990s: small shopfronts, bicycles parked along the road, faded signage, muted color tones typical of that era, documentary photography style, no people close up, no visible text or logos.",
+    "image_queries": [
+      "Hangzhou old street 1990s",
+      "Chinese market stall 1990s",
+      "small Chinese factory 1990s"
+    ],
+    "image_queries_ar": [
+      "هانزو",
+      "الصين"
+    ],
+    "sources": [
+      "CNBC",
+      "Yahoo News",
+      "Benzinga",
+      "CKGSB"
+    ],
+    "title": "المعلم الذي رُفض 30 مرة وبنى Alibaba"
+  },
+  "input_tokens": 177309,
+  "message_id": "msg_011CeoxhUjxMmSuGscYBjFHo",
+  "model": "claude-sonnet-5",
+  "output_tokens": 18312,
+  "prompt_hash": "cca0e5f67460cc193d48fb18b7fdbb3bb3efd1b0d6a92353e0240f003da59865",
+  "revision": "903be88d1ef3786fffabdf596573bc68cfef9ebee485932bb9cfbb498bf7d60b",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
