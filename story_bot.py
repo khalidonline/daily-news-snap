@@ -1637,9 +1637,13 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
                 ).read_text(encoding="utf-8")
             except OSError:
                 commons_title = ""
-            title_years = set(re.findall(
-                r"\b(?:19|20)\d{2}\b", commons_title
-            ))
+            # Modern capture dates are provenance rather than evidence that
+            # the depicted subject belongs to another historical era.
+            title_years = {
+                year for year in re.findall(
+                    r"\b(?:19|20)\d{2}\b", commons_title
+                ) if int(year) < 2000
+            }
             context_years = set(re.findall(
                 r"\b(?:19|20)\d{2}\b", context
             ))
