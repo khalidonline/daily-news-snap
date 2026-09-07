@@ -12,6 +12,7 @@ FONT_FAMILY = "Almarai"
 TITLE_SIZE = 58
 BODY_START_SIZE = 38
 TITLE_TOP = 1160
+# Frame 4 is the locked visual reference for every card.
 TEXT_REGION = (72, 1110, 1008, 1680)
 FOOTER_REGION = (48, 1832, 1032, 1918)
 BACKGROUND = (242, 237, 230)
