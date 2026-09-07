@@ -1,35 +1,5 @@
 [
  {
-  "headline": "Sam Altman يعتذر عن مشاكل إطلاق GPT-6 Astra",
-  "at": "2026-09-04T10:46:53.381849+00:00",
-  "source_link": "https://theverge.com/ai-artificial-intelligence/990060/altman-apologizes-messy-astra-rollout",
-  "lane": "business_tech"
- },
- {
-  "headline": "تسلا تطلق سيارتها الذاتية القيادة بلا مقود",
-  "at": "2026-09-04T10:51:24.851974+00:00",
-  "source_link": "https://engadget.com/2250874/tesla-offering-cybercab-robotaxi-rides",
-  "lane": "business_tech"
- },
- {
-  "headline": "NVIDIA تضخ 99 مليار دولار في شركات الذكاء الاصطناعي",
-  "at": "2026-09-04T10:55:07.300171+00:00",
-  "source_link": "https://cnbc.com/2026/09/04/nvidia-ai-investments-99-billion.html",
-  "lane": "business_tech"
- },
- {
-  "headline": "فولكس فاغن تعلن تسريح 100 ألف موظف بحلول 2030",
-  "at": "2026-09-04T10:58:51.583439+00:00",
-  "source_link": "https://bbc.co.uk/news/articles/cx2z0kvy4n4o?at_medium=RSS&at_campaign=rss",
-  "lane": "business_tech"
- },
- {
-  "headline": "الاتحاد يرفع عرضه لـ37.5 مليون يورو لضم حاج موسى",
-  "at": "2026-09-04T12:10:52.801120+00:00",
-  "source_link": "https://alyaum.com/articles/6681147/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A/%D8%B9%D8%A7%D8%AC%D9%84-%D8%B9%D8%B1%D8%B6-%D9%85%D8%A7%D9%84%D9%8A-%D8%B6%D8%AE%D9%85-%D9%85%D9%86-%D8%A7%D9%84%D8%A7%D8%AA%D8%AD%D8%A7%D8%AF-%D9%84%D8%AD%D8%B3%D9%85-%D8%B5%D9%81%D9%82%D8%A9-%D8%A7%D9%84%D8%AC%D8%B2%D8%A7%D8%A6%D8%B1%D9%8A-%D8%A3%D9%86%D9%8A%D8%B3-%D8%AD%D8%A7%D8%AC-%D9%85%D9%88%D8%B3%D9%89",
-  "lane": "sports"
- },
- {
   "headline": "أرقام الوظائف الأمريكية المفاجئة تقوي احتمال رفع الفائدة",
   "at": "2026-09-04T14:11:18.047620+00:00",
   "source_link": "https://cnbc.com/2026/09/04/jobs-report-august-2026.html",
@@ -208,6 +178,12 @@
   "headline": "الصين تضخ 54 مليار دولار في بنوكها وشركات التأمين",
   "at": "2026-09-07T10:16:59.980425+00:00",
   "source_link": "https://cnbc.com/2026/09/07/china-state-banks-lenders-insurers-capital-solvency-bankrupt-nim-.html",
+  "lane": "business_tech"
+ },
+ {
+  "headline": "جاكوار لاند روفر تسرّح 4000 موظف خلال عامين",
+  "at": "2026-09-07T12:17:35.429625+00:00",
+  "source_link": "https://bbc.co.uk/news/articles/c36lx560jjko?at_medium=RSS&at_campaign=rss",
   "lane": "business_tech"
  }
 ]
