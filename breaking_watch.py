@@ -203,7 +203,10 @@ CLASSIFIER_OUTPUT_SCHEMA = {
 
 
 def ksa_now():
-    return datetime.now(timezone.utc) + timedelta(hours=3)
+    # Keep both the Riyadh wall clock and its real UTC offset. Adding three
+    # hours to a UTC datetime leaves a misleading +00:00 suffix in persisted
+    # state, which can corrupt age and de-duplication decisions across runs.
+    return datetime.now(timezone(timedelta(hours=3)))
 
 
 def load_state():

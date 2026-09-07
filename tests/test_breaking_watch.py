@@ -22,6 +22,14 @@ sys.modules.setdefault("news_bot", _fake_news_bot)
 import breaking_watch
 
 
+class BreakingWatchClockTests(unittest.TestCase):
+    def test_ksa_now_carries_the_riyadh_utc_offset(self):
+        self.assertEqual(
+            breaking_watch.ksa_now().utcoffset(),
+            timedelta(hours=3),
+        )
+
+
 class FakeResponse:
     def __init__(self, body):
         self.body = body
