@@ -48,7 +48,7 @@ class ModelUsageWorkflowTests(unittest.TestCase):
 
     def test_normal_workflows_have_tight_per_run_cost_guards(self):
         expected = {
-            "daily": ("python daily_news_fresh_runner.py", "0.50", "1", "35"),
+            "daily": ("python daily_news_fresh_runner.py", "0.50", "1", "12"),
             "topic": ("python topic_snapchat.py", "1.50", "2", "20"),
             "breaking": (
                 "python breaking_watch_entry.py",
@@ -69,18 +69,14 @@ class ModelUsageWorkflowTests(unittest.TestCase):
         env = self.run_env("daily", "python daily_news_fresh_runner.py")
         self.assertEqual(env["CANDIDATES"], "5")
         self.assertEqual(env["NEWS_MAX_PAID_RESPONSES"], "1")
-        self.assertEqual(env["VISION_MAX_PAID_RESPONSES"], "35")
+        self.assertEqual(env["VISION_MAX_PAID_RESPONSES"], "12")
+        self.assertEqual(env["REQUIRE_PHOTO"], "0")
 
-    def test_news_visual_budget_covers_every_ranked_story_provider(self):
+    def test_news_visual_budget_is_bounded_before_safe_text_fallback(self):
         env = self.run_env("daily", "python daily_news_fresh_runner.py")
-        ranked_stories = int(env["CANDIDATES"])
-        providers_per_saudi_story = 7
         vision_checks = int(env["VISION_MAX_PAID_RESPONSES"])
-        self.assertGreaterEqual(
-            vision_checks,
-            ranked_stories * providers_per_saudi_story,
-            "an earlier story must not exhaust checks reserved for later stories",
-        )
+        self.assertLessEqual(vision_checks, 12)
+        self.assertEqual(env["REQUIRE_PHOTO"], "0")
 
     def test_routine_selection_and_breaking_classification_use_haiku(self):
         topic = self.run_env("topic", "python topic_snapchat.py")
