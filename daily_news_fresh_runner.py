@@ -9,12 +9,6 @@ story must never become another story's final fallback.
 import os
 from pathlib import Path
 
-
-# News cards always use the approved cream template. Keep this default at the
-# entrypoint so recovery or local invocations cannot silently fall back to the
-# shared renderer's legacy dark theme when a workflow omits THEME.
-os.environ.setdefault("THEME", "light")
-
 import daily_news_runner
 
 
@@ -103,8 +97,17 @@ def install_news_notification_labels(news_bot_module):
     return news_bot_module
 
 
-def main():
+def load_news_bot():
+    """Load the shared renderer with the approved News theme as its default."""
+    # Recovery or local invocations may omit THEME. Scope the default to the
+    # executable entrypoint so importing News policy helpers has no side effect.
+    os.environ.setdefault("THEME", "light")
     import news_bot
+    return news_bot
+
+
+def main():
+    news_bot = load_news_bot()
 
     daily_news_runner.configure(news_bot)
     install_financial_takeaway_guidance(news_bot)
