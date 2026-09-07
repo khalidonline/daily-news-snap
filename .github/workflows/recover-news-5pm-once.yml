@@ -1,0 +1,59 @@
+name: Recover 5pm News card once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/recover-news-5pm-once.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news-brief
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    if: "github.event.head_commit.message == 'ops: recover 5pm News card once'"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Render and send exact recovery card
+        env:
+          RUN_SCHEDULED_BOT: "1"
+          NEWS_RECOVERY_STORY_B64: "eyJoZWFkbGluZSI6ICLYo9mI2KjZgysg2KrZj9io2YLZiiDYpdmG2KrYp9isINij2YPYqtmI2KjYsSDYr9mI2YYg2KrYutmK2YrYsSIsICJzdW1tYXJ5IjogItmC2LHYsdiqINiz2KjYuSDYr9mI2YQg2YHZiiDYo9mI2KjZgyvYjCDYqNmK2YbZh9inINin2YTYs9i52YjYr9mK2KnYjCDYp9mE2KXYqNmC2KfYoSDYudmE2Ykg2YXYs9iq2YjZitin2Kog2KXZhtiq2KfYrCDYs9io2KrZhdio2LEg2K7ZhNin2YQg2KPZg9iq2YjYqNixIDIwMjbYjCDYqNi52K8g2LPYqtipINij2LTZh9ixINmF2YYg2LLZitin2K/Yp9iqINmF2KrYqtin2YTZitipLiIsICJ0YWtlYXdheSI6ICLYqtir2KjZitiqINin2YTYpdmG2KrYp9isINmK2YXZhtitINij2YjYqNmDKyDZiNmC2KrYp9mLINmE2YXYsdin2KzYudipINit2LXYtSAyMDI32Iwg2KjZitmG2YXYpyDYqti42YQg2KXZhdiv2KfYr9in2Kog2KfZhNmF2YbYt9mC2Kkg2KrYrdiqINi22LrYtyDYp9i22LfYsdin2KjYp9iqINin2YTZhdmE2KfYrdipLiIsICJsaW5rIjogImh0dHBzOi8vd3d3Lm9wZWMub3JnL3ByLWRldGFpbC8xODM1NjEzLTYtc2VwdGVtYmVyLTIwMjYuaHRtbCIsICJzY29wZSI6ICJzYXVkaSIsICJpbWFnZV9xdWVyaWVzIjogWyJPUEVDIGhlYWRxdWFydGVycyBWaWVubmEiLCAiT1BFQyBvaWwgcHJvZHVjdGlvbiBtZWV0aW5nIl0sICJpbWFnZV9xdWVyaWVzX2FyIjogWyLYo9mI2KjZgyIsICLYpdmG2KrYp9isINin2YTZhtmB2LciXSwgInJlY292ZXJ5X2ltYWdlX3VybCI6ICJodHRwczovL3VwbG9hZC53aWtpbWVkaWEub3JnL3dpa2lwZWRpYS9jb21tb25zL2QvZDcvV2llbl8tX09QRUMtWmVudHJhbGUlMkNfUG9ydGFsLkpQRyIsICJyZWNvdmVyeV9waG90b19jcmVkaXQiOiAiQy5TdGFkbGVyL0J3YWcgLyBXaWtpbWVkaWEgQ29tbW9ucyAvIENDIEJZLVNBIDQuMCJ9"
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.NEWS_MODEL || 'claude-sonnet-5' }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          POST_PROVIDER: "bundle"
+          DRY_RUN: ""
+          MEDIA_MODE: "github"
+          POST_TO_SNAPCHAT: "0"
+          MONTHLY_POST_LIMIT: "145"
+          BRIEF_TITLE: "ملخص تنفيذي - خبر"
+          BRAND: "ملخص تنفيذي - خبر"
+          FONT_FAMILY: "Almarai"
+          REQUIRE_PHOTO: "1"
+          IMAGE_SOURCE: "auto"
+          LOOKBACK_HOURS: "48"
+          REMEMBER_DAYS: "3"
+          MODEL_BOT: "news"
+          MODEL_USAGE_PATH: "out/model_usage.jsonl"
+          VISION_MAX_PAID_RESPONSES: "35"
+        run: python daily_news_fresh_runner.py
+
+      - name: Verify card
+        run: test -n "$(find out -maxdepth 1 -name '*.png' -print -quit)"
+
+# armed after installation
