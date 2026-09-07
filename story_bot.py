@@ -1616,7 +1616,7 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
             stale.unlink()
     bank_local = {}
 
-    def take(result, tier=0, provider=""):
+    def take(result, tier=0, provider="", subject=""):
         photo = result[0] if isinstance(result, tuple) else result
         if not photo:
             return None
@@ -1637,12 +1637,14 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
                 ).read_text(encoding="utf-8")
             except OSError:
                 commons_title = ""
+            all_title_years = set(re.findall(
+                r"\b(?:19|20)\d{2}\b", commons_title
+            ))
             # Modern capture dates are provenance rather than evidence that
-            # the depicted subject belongs to another historical era.
+            # the depicted subject belongs to another historical era, but a
+            # neutral modern photo still has to name the searched subject.
             title_years = {
-                year for year in re.findall(
-                    r"\b(?:19|20)\d{2}\b", commons_title
-                ) if int(year) < 2000
+                year for year in all_title_years if int(year) < 2000
             }
             context_years = set(re.findall(
                 r"\b(?:19|20)\d{2}\b", context
@@ -1651,6 +1653,27 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
                 print("      story image: rejected neutral Commons photo "
                       "with an unmentioned archival year")
                 return None
+            if all_title_years - context_years:
+                generic = {
+                    "file", "photo", "image", "saudi", "arabia",
+                    "riyadh", "jeddah", "airport", "aircraft", "plane",
+                    "oil", "crude", "petroleum", "energy", "refinery",
+                    "market", "building", "city", "stadium", "football",
+                }
+                title_tokens = {
+                    token.casefold() for token in re.findall(
+                        r"[A-Za-z0-9]+", commons_title
+                    ) if len(token) > 2
+                }
+                subject_tokens = {
+                    token.casefold() for token in re.findall(
+                        r"[A-Za-z0-9]+", str(subject)
+                    ) if len(token) > 2 and token.casefold() not in generic
+                }
+                if not title_tokens & subject_tokens:
+                    print("      story image: rejected neutral modern dated "
+                          "Commons photo without a named subject match")
+                    return None
         # Widened searches must not bank neutrals at all: story-level
         # fallback plus a generic Arabic single («صحراء») once pulled a
         # Tunisian tourism photo onto a Saudi story.
@@ -1728,13 +1751,13 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
             break
         photo = take(fetch_commons_photo([keyword], out_path, need_saudi=False,
                                          min_hits=1, subject_mode=True),
-                     provider="commons")
+                     provider="commons", subject=keyword)
     for keyword in keywords_ar:
         if photo:
             break
         photo = take(fetch_commons_photo([keyword], out_path, need_saudi=False,
                                          min_hits=1, subject_mode=True), tier=1,
-                     provider="commons")
+                     provider="commons", subject=keyword)
     # LoC is an English-language archive — Arabic keywords would be wasted
     for keyword in keywords:
         if photo:
