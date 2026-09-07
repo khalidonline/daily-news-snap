@@ -59,6 +59,15 @@ class StoryArchivalVisualTests(unittest.TestCase):
         self.assertIsNone(result)
         self.assertEqual(1, len(bank))
 
+    def test_story_keeps_neutral_named_subject_photo_dated_2009(self):
+        result, bank = self._find_neutral_commons(
+            "File:Flynas A320 at Riyadh airport (2009).jpg",
+            "طيران ناس توسع خدماتها في المطارات السعودية",
+        )
+
+        self.assertIsNone(result)
+        self.assertEqual(1, len(bank))
+
     def test_story_passes_punch_year_into_frame_photo_context(self):
         captured = []
 
