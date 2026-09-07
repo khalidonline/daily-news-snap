@@ -7,7 +7,8 @@ import story_bot
 
 
 class StoryArchivalVisualTests(unittest.TestCase):
-    def _find_neutral_commons(self, title, context):
+    def _find_neutral_commons(self, title, context,
+                              keyword="Saudi oil refinery"):
         with tempfile.TemporaryDirectory() as raw:
             out_path = Path(raw) / "frame.jpg"
             bank = []
@@ -34,7 +35,7 @@ class StoryArchivalVisualTests(unittest.TestCase):
                 story_bot, "photo_shows", return_value="neutral"
             ):
                 result = story_bot.find_photo(
-                    {"image_keywords": ["Saudi oil refinery"]},
+                    {"image_keywords": [keyword]},
                     out_path,
                     context=context,
                     bank=bank,
@@ -58,6 +59,26 @@ class StoryArchivalVisualTests(unittest.TestCase):
 
         self.assertIsNone(result)
         self.assertEqual(1, len(bank))
+
+    def test_story_keeps_neutral_named_subject_photo_dated_2009(self):
+        result, bank = self._find_neutral_commons(
+            "File:Flynas A320 at Riyadh airport (2009).jpg",
+            "طيران ناس توسع خدماتها في المطارات السعودية",
+            keyword="Flynas aircraft",
+        )
+
+        self.assertIsNone(result)
+        self.assertEqual(1, len(bank))
+
+    def test_story_rejects_unrelated_modern_dated_neutral_commons(self):
+        result, bank = self._find_neutral_commons(
+            "File:Perth CBD 2009.jpg",
+            "طيران ناس توسع خدماتها في المطارات السعودية",
+            keyword="Flynas aircraft",
+        )
+
+        self.assertIsNone(result)
+        self.assertEqual([], bank)
 
     def test_story_passes_punch_year_into_frame_photo_context(self):
         captured = []
