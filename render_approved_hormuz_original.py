@@ -13,9 +13,15 @@ TITLE_SIZE = 58
 BODY_START_SIZE = 38
 TITLE_TOP = 1160
 TEXT_REGION = (72, 1110, 1008, 1680)
+FOOTER_REGION = (48, 1832, 1032, 1918)
 BACKGROUND = (242, 237, 230)
 TEXT_COLOUR = (18, 62, 111)
 ACCENT = (190, 150, 0)
+MUTED = (143, 136, 129)
+CONSOLIDATED_SOURCES = (
+    "المصادر: المنظمة البحرية الدولية، وكالة الطاقة الدولية، "
+    "موانئ دبي العالمية، كلية لندن للاقتصاد"
+)
 
 FRAMES = [
     {
@@ -59,7 +65,7 @@ def _draw_centred(draw, lines, y, selected_font, gap, colour, centre):
     return y
 
 
-def rebuild_frame(path, copy):
+def rebuild_frame(path, copy, footer=None):
     path = Path(path)
     image = Image.open(path).convert("RGB")
     draw = ImageDraw.Draw(image)
@@ -95,6 +101,22 @@ def rebuild_frame(path, copy):
     if punch_lines:
         _draw_centred(draw, punch_lines, y + 30, punch_font, punch_gap, ACCENT, centre)
 
+    # Riyadh format: the source band is reserved on every frame, but text
+    # appears only once on the closing frame.
+    draw.rectangle(FOOTER_REGION, fill=BACKGROUND)
+    if footer:
+        footer_size = 22
+        footer_font = font(footer_size)
+        shaped, footer_kwargs = ar(footer)
+        while footer_size > 16 and draw.textlength(
+                shaped, font=footer_font, **footer_kwargs) > 920:
+            footer_size -= 1
+            footer_font = font(footer_size)
+        draw.text(
+            (centre, 1870), shaped, font=footer_font, fill=MUTED,
+            anchor="ma", **footer_kwargs,
+        )
+
     image.save(path, "PNG", optimize=True)
     return path
 
@@ -103,7 +125,14 @@ def rebuild_deck(paths):
     paths = [Path(path) for path in paths]
     if len(paths) != 6:
         raise ValueError("Hormuz deck must contain exactly six frames")
-    return [rebuild_frame(path, copy) for path, copy in zip(paths, FRAMES)]
+    return [
+        rebuild_frame(
+            path,
+            copy,
+            footer=CONSOLIDATED_SOURCES if index == len(paths) else None,
+        )
+        for index, (path, copy) in enumerate(zip(paths, FRAMES), start=1)
+    ]
 
 
 def main():
