@@ -6,14 +6,24 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 from news_bot_core import ar, _wrap
+from story_format import (
+    BODY_SIZE,
+    CANVAS,
+    FOOTER_REGION,
+    FOOTER_Y,
+    MARGIN,
+    PHOTO_ASPECT_HEIGHT,
+    PHOTO_TEXT_GAP,
+    PHOTO_TOP,
+    TITLE_SIZE,
+)
 
 
 FONT_FAMILY = "Almarai"
-TITLE_SIZE = 58
-BODY_START_SIZE = 38
-TITLE_TOP = 1160
-TEXT_REGION = (72, 1110, 1008, 1680)
-FOOTER_REGION = (48, 1832, 1032, 1918)
+BODY_START_SIZE = BODY_SIZE
+PHOTO_HEIGHT = int((CANVAS[0] - 2 * MARGIN) * PHOTO_ASPECT_HEIGHT)
+TITLE_TOP = PHOTO_TOP + PHOTO_HEIGHT + PHOTO_TEXT_GAP
+TEXT_REGION = (72, TITLE_TOP - 48, 1008, 1680)
 BACKGROUND = (242, 237, 230)
 TEXT_COLOUR = (18, 62, 111)
 ACCENT = (190, 150, 0)
@@ -65,6 +75,19 @@ def _draw_centred(draw, lines, y, selected_font, gap, colour, centre):
     return y
 
 
+def save_verified_png(image, path):
+    """Write a complete PNG before replacing the reviewed frame."""
+    path = Path(path)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    try:
+        image.save(temporary, "PNG")
+        with Image.open(temporary) as rendered:
+            rendered.verify()
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def rebuild_frame(path, copy, footer=None):
     path = Path(path)
     image = Image.open(path).convert("RGB")
@@ -113,11 +136,11 @@ def rebuild_frame(path, copy, footer=None):
             footer_size -= 1
             footer_font = font(footer_size)
         draw.text(
-            (centre, 1870), shaped, font=footer_font, fill=MUTED,
+            (centre, FOOTER_Y), shaped, font=footer_font, fill=MUTED,
             anchor="ma", **footer_kwargs,
         )
 
-    image.save(path, "PNG", optimize=True)
+    save_verified_png(image, path)
     return path
 
 
