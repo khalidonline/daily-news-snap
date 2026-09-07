@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   send:
-    if: github.event.head_commit.message == 'ops: send corrected oil-price review once'
+    if: "github.event.head_commit.message == 'ops: send corrected oil-price review once'"
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
