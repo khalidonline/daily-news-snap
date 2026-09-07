@@ -516,6 +516,12 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         self.assertIn("أكوام النقود", guidance)
         self.assertIn("قناة الاكتتاب", guidance)
 
+    def test_news_guidance_accepts_literal_commodity_named_in_headline(self):
+        guidance = daily_news_fresh_runner.NEWS_VISUAL_QUALITY_GUIDANCE
+        self.assertIn("سبائك الذهب", guidance)
+        self.assertIn("الذهب نفسه", guidance)
+        self.assertIn("ليست عن منتج مالي مسمّى", guidance)
+
     def test_repository_recovery_asset_is_decoded_with_credit(self):
         story = {
             "recovery_image_b64_path": (
