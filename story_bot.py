@@ -2165,7 +2165,9 @@ def find_all_photos(brief):
                 line += f"  |  {', '.join(spec['image_keywords_ar'][:3])}"
             print(f"    frame {n}: {line}")
 
-        context = f"{frame.get('heading', '')}\n{frame.get('text', '')}".strip()
+        context = (f"{frame.get('heading', '')}\n"
+                   f"{frame.get('text', '')}\n"
+                   f"{frame.get('punch', '')}").strip()
         slot = OUT_DIR / f"story-frame-{n}.jpg"
         # The ladder is keyed by what the MODEL says the frame is about —
         # an unsure model writes "abstract". Order per the owner's revision
