@@ -1130,7 +1130,6 @@ def summarize(items, already_posted=(), pinned=""):
             "system": [{
                 "type": "text",
                 "text": SYSTEM_PROMPT.format(n=CANDIDATES),
-                "cache_control": {"type": "ephemeral"},
             }],
             "messages": [{"role": "user", "content": user_msg}],
         }

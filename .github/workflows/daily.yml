@@ -126,7 +126,9 @@ jobs:
           THEME: "light"
           STORIES_PER_DAY: "1"
           CANDIDATES: "5"
-          REQUIRE_PHOTO: "1"
+          # A relevant photo remains preferred. If every verified source is
+          # exhausted, render the clean text layout instead of losing the slot.
+          REQUIRE_PHOTO: "0"
           IMAGE_SOURCE: ${{ inputs.image_source || 'auto' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           LOOKBACK_HOURS: "48"
@@ -135,11 +137,9 @@ jobs:
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
           MODEL_MAX_USD_PER_RUN: "0.50"
           NEWS_MAX_PAID_RESPONSES: "1"
-          # Five ranked Saudi stories can each reach seven providers. Cover
-          # the complete finite search path so an early weak story cannot
-          # exhaust checks reserved for a later, publishable story. The
-          # separate $0.50 total run guard remains authoritative.
-          VISION_MAX_PAID_RESPONSES: "35"
+          # Successful production cards have needed at most 11 checks. Bound
+          # the search at 12, then use the safe text layout above.
+          VISION_MAX_PAID_RESPONSES: "12"
         run: python daily_news_fresh_runner.py
 
       - name: Verify News card was produced
