@@ -1,1 +1,5 @@
-{"review_run_id":34190686611,"artifact_id":10042171957,"deck_hash":"a81d506514a8ec51efb3d0b89b67b997ab1f852eb9fb3d1fcd7a77b60a290f59"}
+{
+  "review_run_id": 34190686611,
+  "artifact_id": 10042171957,
+  "deck_hash": "a81d506514a8ec51efb3d0b89b67b997ab1f852eb9fb3d1fcd7a77b60a290f59"
+}
