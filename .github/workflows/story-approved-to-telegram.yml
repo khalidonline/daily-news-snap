@@ -116,12 +116,12 @@ jobs:
             "repos/$GITHUB_REPOSITORY/actions/artifacts/$APPROVED_STORY_ARTIFACT_ID/zip" \
             > approved_story.zip
           unzip -q approved_story.zip -d approved_story
-          test -f approved_story/story-review.json
+          test -f approved_story/out/story-review.json
 
       - name: Verify approved deck identity
         run: |
           set -euo pipefail
-          MANIFEST_HASH="$(jq -r '.deck_hash // empty' approved_story/story-review.json | tr '[:upper:]' '[:lower:]')"
+          MANIFEST_HASH="$(jq -r '.deck_hash // empty' approved_story/out/story-review.json | tr '[:upper:]' '[:lower:]')"
           if [ "$MANIFEST_HASH" != "$APPROVED_STORY_DECK_HASH" ]; then
             echo "Approved deck hash does not match downloaded artifact"
             echo "expected=$APPROVED_STORY_DECK_HASH"
@@ -136,4 +136,4 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           POST_TO_SNAPCHAT: "0"
           DRY_RUN: "0"
-        run: python send_approved_story.py approved_story/story-review.json
+        run: python send_approved_story.py approved_story/out/story-review.json
