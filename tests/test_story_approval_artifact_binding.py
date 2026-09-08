@@ -30,3 +30,8 @@ def test_delivery_verifies_artifact_belongs_to_review_run_and_deck_hash():
 def test_legacy_numeric_pointer_fails_closed():
     text = WORKFLOW.read_text(encoding='utf-8')
     assert 'Legacy numeric-only Story approval pointers are rejected' in text
+
+
+def test_delivery_uses_manifest_path_preserved_by_artifact_upload():
+    text = WORKFLOW.read_text(encoding='utf-8')
+    assert 'approved_story/out/story-review.json' in text
