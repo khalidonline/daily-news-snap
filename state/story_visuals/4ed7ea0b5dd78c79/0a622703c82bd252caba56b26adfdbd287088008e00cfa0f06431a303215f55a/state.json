@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "d6ffb59b1424c59e2d0f9d8a661eb6a205a4140a7ceb061fc45af3c07dbb5cfd",
@@ -119,8 +120,173 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-08T05:31:18.328910+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "0a622703c82bd252caba56b26adfdbd287088008e00cfa0f06431a303215f55a",
   "schema": "story-visual-v1",
   "status": "VISUAL_ASSEMBLY",
-  "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة"
+  "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة",
+  "story_quality_dimensions": {
+    "claim_precision": "BLOCKED",
+    "final_frame_currency": "BLOCKED",
+    "narrative_chronology": "PASS",
+    "subject_focus": "BLOCKED",
+    "visual_chronology": "BLOCKED"
+  },
+  "story_quality_findings": [
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 1,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNSUPPORTED_EXCLUSIVITY",
+      "dimension": "claim_precision",
+      "frame": 2,
+      "message": "exclusive wording requires narrower evidence-backed phrasing",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "VISUAL_TIME_REGRESSION",
+      "dimension": "visual_chronology",
+      "frame": 5,
+      "message": "visual evidence regresses from 1995 to 1975",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "CURRENT_COPY_UNPROVEN_VISUAL",
+      "dimension": "final_frame_currency",
+      "frame": 6,
+      "message": "current ending needs positive modern/current visual evidence",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DRIFT",
+      "frame": 1,
+      "subject_overlap": [],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1990
+      ]
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 2,
+      "subject_overlap": [
+        "معلم"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        1995
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 3,
+      "subject_overlap": [
+        "مرة"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1995
+      ]
+    },
+    {
+      "copy_years": [
+        1999,
+        2001
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 4,
+      "subject_overlap": [
+        "alibaba",
+        "رفض"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2014
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 5,
+      "subject_overlap": [
+        "alibaba"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1975
+      ]
+    },
+    {
+      "copy_years": [
+        2019
+      ],
+      "current": true,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 6,
+      "subject_overlap": [
+        "alibaba",
+        "رفض"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "claim_precision",
+      "final_frame_currency",
+      "subject_focus",
+      "visual_chronology"
+    ],
+    "frame_modes": {
+      "1": "editorial_frame",
+      "2": "editorial_frame",
+      "5": "visual_only",
+      "6": "visual_only"
+    },
+    "frames": [
+      1,
+      2,
+      5,
+      6
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "1": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "2": [
+        "rewrite the claim precisely and remove unsupported exclusivity or ambiguity"
+      ],
+      "5": [
+        "replace the visual with one matching this frame's time period"
+      ],
+      "6": [
+        "use a clearly current visual for the present-day ending"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
