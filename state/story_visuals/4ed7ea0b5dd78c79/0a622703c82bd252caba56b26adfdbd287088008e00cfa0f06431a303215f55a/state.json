@@ -1,0 +1,126 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "d6ffb59b1424c59e2d0f9d8a661eb6a205a4140a7ceb061fc45af3c07dbb5cfd",
+      "frame_payload": {
+        "heading": "هانغتشو قبل الإنترنت",
+        "image_keywords": [
+          "Hangzhou old street",
+          "China 1990s market"
+        ],
+        "image_keywords_ar": [
+          "هانغتشو"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في تسعينيات القرن الماضي كانت مصانع الصين الصغيرة تعمل بمعزل عن العالم. لا إنترنت يربطها بمشترين في الخارج، ولا وسيلة تعرّف بها منتجاتها لأحد. حتى إيجاد وظيفة عادية في مدينة هانغتشو الصينية كان يحتاج حظاً لا يملكه كثيرون."
+      },
+      "image_source": "state/story_visuals/4ed7ea0b5dd78c79/0a622703c82bd252caba56b26adfdbd287088008e00cfa0f06431a303215f55a/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "bc95a15aecfa6ccafa880acfd6f99660db07800064fd781200d16171a145533b",
+      "frame_payload": {
+        "heading": "معلّم رفضته حتى KFC",
+        "image_keywords": [
+          "Jack Ma",
+          "Hangzhou China"
+        ],
+        "image_keywords_ar": [
+          "جاك ما"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "في تلك المدينة كان يعلّم الإنجليزية شاب تعلّمها بنفسه من حديثه مع السياح، اسمه Jack Ma. <cite index=\"2-1,2-2,2-3\">بعد التخرج تقدّم لثلاثين وظيفة في مدينة هانغتشو ورُفض من جميعها، حتى وظيفة في مطعم KFC الأمريكي حيث قُبل 23 من أصل 24 متقدماً وكان هو الوحيد المرفوض</cite>."
+      },
+      "image_source": "state/story_visuals/4ed7ea0b5dd78c79/0a622703c82bd252caba56b26adfdbd287088008e00cfa0f06431a303215f55a/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": null,
+      "frame_payload": {
+        "heading": "أول لقاء مع الإنترنت",
+        "image_keywords": [
+          "Jack Ma",
+          "United States 1995"
+        ],
+        "image_keywords_ar": [
+          "جاك ما"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "ثم تغيّر كل شيء. <cite index=\"5-9\">سنة 1995 زار Jack Ma الولايات المتحدة واستخدم الإنترنت لأول مرة في حياته</cite>. <cite index=\"5-10\">كتب كلمة beer في محرك البحث، فظهرت نتائج من أمريكا وألمانيا ولم تظهر أي نتيجة من الصين</cite>."
+      },
+      "image_source": null,
+      "qa_reasons": [
+        "no approved visual selected"
+      ],
+      "status": "FAIL"
+    },
+    "4": {
+      "asset_hash": "28b73d012a39afb790fc751d962d162e68118f232a6347c2d69636b8d9b1351d",
+      "frame_payload": {
+        "heading": "شقة و17 صديقاً",
+        "image_keywords": [
+          "Jack Ma",
+          "Alibaba"
+        ],
+        "image_keywords_ar": [
+          "جاك ما",
+          "علي بابا"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن الفكرة وحدها لا تكفي. <cite index=\"32-1\">سنة 1999 بدأ Jack Ma مع 17 من زملائه شركة Alibaba من شقة صغيرة في هانغتشو كان يسكنها مع زوجته</cite>. <cite index=\"3-14\">جمعوا معاً 60 ألف دولار لتشغيل Alibaba.com</cite>. <cite index=\"2-15\">وحين حاولوا سنة 2001 جمع 5 ملايين دولار من مستثمرين أمريكيين، رُفض طلبهم بالكامل</cite>."
+      },
+      "image_source": "state/story_visuals/4ed7ea0b5dd78c79/0a622703c82bd252caba56b26adfdbd287088008e00cfa0f06431a303215f55a/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "395dc7dba631ebb60931eddd58e5b38b6ee983ab90130d0d556c1975ab7e1efb",
+      "frame_payload": {
+        "heading": "الاكتتاب العام في نيويورك",
+        "image_keywords": [
+          "Alibaba IPO",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [
+          "علي بابا"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ومع ذلك استمرت الشركة. <cite index=\"13-12\">في سبتمبر 2014 طرحت Alibaba أسهمها للاكتتاب العام وجمعت 21.8 مليار دولار، في أكبر طرح أولي في تاريخ البورصات الأمريكية</cite>. من 60 ألف دولار في شقة إلى هذا الرقم، عشر سنوات فقط."
+      },
+      "image_source": "state/story_visuals/4ed7ea0b5dd78c79/0a622703c82bd252caba56b26adfdbd287088008e00cfa0f06431a303215f55a/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "88e42c41408cfef3bdb80d6ad3396c8afaa64e27b6372e64d0875cf4087d7e8a",
+      "frame_payload": {
+        "heading": "الرجل الذي لم يتوقف",
+        "image_keywords": [
+          "Jack Ma",
+          "Alibaba Group"
+        ],
+        "image_keywords_ar": [
+          "جاك ما",
+          "علي بابا"
+        ],
+        "punch": "الرفض الذي طارده في شبابه صار قصة يرويها هو نفسه اليوم.",
+        "subject_kind": "person",
+        "text": "<cite index=\"43-3\">تخلّى Jack Ma عن رئاسة مجلس إدارة Alibaba سنة 2019</cite>، <cite index=\"43-2\">لكن الشركة التي بناها صارت واحدة من أكبر شركات التجارة الإلكترونية في العالم</cite>."
+      },
+      "image_source": "state/story_visuals/4ed7ea0b5dd78c79/0a622703c82bd252caba56b26adfdbd287088008e00cfa0f06431a303215f55a/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "0a622703c82bd252caba56b26adfdbd287088008e00cfa0f06431a303215f55a",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_ASSEMBLY",
+  "story": "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة"
+}
