@@ -158,6 +158,17 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         return fake.fetch_local_photo(
             ["آيفون"], ["apple iphone saudi arabia"], hero)
 
+    def test_news_never_promotes_uncertain_device_from_filename(self):
+        fake = self.make_module(dict.fromkeys(
+            ["local", "article", "spa", "commons", "loc", "openverse", "stock"],
+            "neutral"), [], commons_title="File:Apple iPhone launch.jpg")
+        daily_news_fresh_runner.install_news_visual_quality_guidance(fake)
+        self.remember_story()
+        with tempfile.TemporaryDirectory() as td:
+            photo, credit = self.run_auto(fake, Path(td) / "hero.jpg")
+            self.assertIsNone(photo)
+            self.assertIsNone(credit)
+
     def test_later_yes_beats_earlier_neutral_in_one_auto_search(self):
         calls = []
         fake = self.make_module({
