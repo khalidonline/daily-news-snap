@@ -24,6 +24,8 @@ class DailyCostLeakPolicyTests(unittest.TestCase):
         self.assertIn("RECOVERY_STORY_B64", story_workflow)
         self.assertIn("STORY_RECOVERY_STORY", story_workflow)
         self.assertIn("github.event.action == 'story-recovery'", story_workflow)
+        self.assertIn("github.event.action == 'story-recovery' && 'regenerate_editorial'", story_workflow)
+        self.assertIn("github.event.action == 'story-recovery' && github.run_id", story_workflow)
         self.assertIn('if [ "$bot" = "story" ]', receiver)
         self.assertIn('[[ "$trigger_value" == recovery_story=* ]]', receiver)
         self.assertIn('-f event_type="story-recovery"', receiver)
