@@ -238,11 +238,18 @@ class NewsEditorialTests(unittest.TestCase):
             "ربع واحد لا يصنع اتجاهاً",
             "كل ريال تدفعه",
             "image_queries_ar",
-            "أشخاص بوجوه واضحة",
+            "لا صور أسلحة أو عنف أو إصابات",
             "لا تذكر أي معلومة غير موجودة",
             "Maraya، Aramco، NEOM",
         ):
             self.assertIn(token, SYSTEM_PROMPT)
+
+    def test_photo_queries_keep_named_subject_and_allow_public_portraits(self):
+        self.assertIn('Assala Nasri', SYSTEM_PROMPT)
+        self.assertIn('أبق هذا', SYSTEM_PROMPT)
+        self.assertIn('الاسم في كل بديل', SYSTEM_PROMPT)
+        self.assertIn('ولا تحظر الوجوه المعروفة', SYSTEM_PROMPT)
+        self.assertNotIn('ممنوع منعاً باتاً طلب صور: أشخاص بوجوه واضحة', SYSTEM_PROMPT)
 
     def test_age_helpers(self):
         item = self.make_item("business_tech", 1, age_hours=4.9)
