@@ -128,6 +128,10 @@ jobs:
             echo "actual=$MANIFEST_HASH"
             exit 1
           fi
+          # The immutable frame identity is verified above. This pointer is the explicit
+          # approval event, so promote only the manifest status; frame bytes stay frozen.
+          jq '.status = "READY"' approved_story/out/story-review.json > approved_story/out/story-review.approved.json
+          mv approved_story/out/story-review.approved.json approved_story/out/story-review.json
           echo "Exact approved Story identity verified: run=$APPROVED_STORY_RUN_ID artifact=$APPROVED_STORY_ARTIFACT_ID deck=${APPROVED_STORY_DECK_HASH:0:12}"
 
       - name: Verify frozen deck and send to Telegram
