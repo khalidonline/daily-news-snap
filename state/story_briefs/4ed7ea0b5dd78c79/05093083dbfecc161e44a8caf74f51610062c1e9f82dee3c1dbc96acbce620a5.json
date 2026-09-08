@@ -1,0 +1,111 @@
+{
+  "brief": {
+    "caption": "معلّم إنجليزي رفضته KFC والشرطة وهارفارد، فبنى واحدة من أكبر شركات التجارة الإلكترونية في العالم.",
+    "frames": [
+      {
+        "heading": "هانغتشو قبل الإنترنت",
+        "image_keywords": [
+          "Hangzhou old street",
+          "China 1990s market"
+        ],
+        "image_keywords_ar": [
+          "هانغتشو"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في تسعينيات القرن الماضي كانت مصانع الصين الصغيرة تعمل بمعزل عن العالم. لا إنترنت يربطها بمشترين في الخارج، ولا وسيلة تعرّف بها منتجاتها لأحد. حتى إيجاد وظيفة عادية في مدينة هانغتشو الصينية كان يحتاج حظاً لا يملكه كثيرون."
+      },
+      {
+        "heading": "معلّم رفضته حتى KFC",
+        "image_keywords": [
+          "Jack Ma",
+          "Hangzhou China"
+        ],
+        "image_keywords_ar": [
+          "جاك ما"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "في تلك المدينة كان يعلّم الإنجليزية شاب تعلّمها بنفسه من حديثه مع السياح، اسمه Jack Ma. <cite index=\"2-1,2-2,2-3\">بعد التخرج تقدّم لثلاثين وظيفة في مدينة هانغتشو ورُفض من جميعها، حتى وظيفة في مطعم KFC الأمريكي حيث قُبل 23 من أصل 24 متقدماً وكان هو الوحيد المرفوض</cite>."
+      },
+      {
+        "heading": "أول لقاء مع الإنترنت",
+        "image_keywords": [
+          "Jack Ma",
+          "United States 1995"
+        ],
+        "image_keywords_ar": [
+          "جاك ما"
+        ],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "ثم تغيّر كل شيء. <cite index=\"5-9\">سنة 1995 زار Jack Ma الولايات المتحدة واستخدم الإنترنت لأول مرة في حياته</cite>. <cite index=\"5-10\">كتب كلمة beer في محرك البحث، فظهرت نتائج من أمريكا وألمانيا ولم تظهر أي نتيجة من الصين</cite>."
+      },
+      {
+        "heading": "شقة و17 صديقاً",
+        "image_keywords": [
+          "Jack Ma",
+          "Alibaba"
+        ],
+        "image_keywords_ar": [
+          "جاك ما",
+          "علي بابا"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "لكن الفكرة وحدها لا تكفي. <cite index=\"32-1\">سنة 1999 بدأ Jack Ma مع 17 من زملائه شركة Alibaba من شقة صغيرة في هانغتشو كان يسكنها مع زوجته</cite>. <cite index=\"3-14\">جمعوا معاً 60 ألف دولار لتشغيل Alibaba.com</cite>. <cite index=\"2-15\">وحين حاولوا سنة 2001 جمع 5 ملايين دولار من مستثمرين أمريكيين، رُفض طلبهم بالكامل</cite>."
+      },
+      {
+        "heading": "الاكتتاب العام في نيويورك",
+        "image_keywords": [
+          "Alibaba IPO",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [
+          "علي بابا"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "ومع ذلك استمرت الشركة. <cite index=\"13-12\">في سبتمبر 2014 طرحت Alibaba أسهمها للاكتتاب العام وجمعت 21.8 مليار دولار، في أكبر طرح أولي في تاريخ البورصات الأمريكية</cite>. من 60 ألف دولار في شقة إلى هذا الرقم، عشر سنوات فقط."
+      },
+      {
+        "heading": "الرجل الذي لم يتوقف",
+        "image_keywords": [
+          "Jack Ma",
+          "Alibaba Group"
+        ],
+        "image_keywords_ar": [
+          "جاك ما",
+          "علي بابا"
+        ],
+        "punch": "الرفض الذي طارده في شبابه صار قصة يرويها هو نفسه اليوم.",
+        "subject_kind": "person",
+        "text": "<cite index=\"43-3\">تخلّى Jack Ma عن رئاسة مجلس إدارة Alibaba سنة 2019</cite>، <cite index=\"43-2\">لكن الشركة التي بناها صارت واحدة من أكبر شركات التجارة الإلكترونية في العالم</cite>."
+      }
+    ],
+    "image_prompt": "A narrow old street in Hangzhou, China in the early 1990s, small shopfronts, bicycles parked along the road, muted documentary color, no people close-up, no text or logos visible",
+    "image_queries": [
+      "Hangzhou old street 1990s",
+      "China small workshop 1990s",
+      "Hangzhou West Lake view"
+    ],
+    "image_queries_ar": [
+      "هانغتشو"
+    ],
+    "sources": [
+      "CNBC",
+      "South China Morning Post",
+      "CKGSB",
+      "Forbes"
+    ],
+    "title": "رُفض 30 مرة... ثم بنى Alibaba"
+  },
+  "input_tokens": 324590,
+  "message_id": "msg_011CeqRGf3XXkCB2DDGYswXP",
+  "model": "claude-sonnet-5",
+  "output_tokens": 15171,
+  "prompt_hash": "0dc9af0390a835ae705c3bc76afbd81c2aa84c840300d88ec30e3d67189bf2df",
+  "revision": "05093083dbfecc161e44a8caf74f51610062c1e9f82dee3c1dbc96acbce620a5",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
