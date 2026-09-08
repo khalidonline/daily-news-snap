@@ -68,6 +68,7 @@ NEWS_PHOTO_JUDGE = """قيّم صورة فوتوغرافية لبطاقة خبر
 
 def install_news_visual_quality_guidance(news_bot_module):
     """Reject low-quality or generic imagery in scheduled News only."""
+    news_bot_module.NEWS_REQUIRE_VERIFIED_VISUAL = True
     news_bot_module._VISION_JUDGE = NEWS_PHOTO_JUDGE
     guidance = NEWS_VISUAL_QUALITY_GUIDANCE
     prompt = getattr(news_bot_module, "_VISION_JUDGE", "")
