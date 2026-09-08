@@ -53,6 +53,12 @@ class RuntimeRelevanceTests(unittest.TestCase):
         self.assertTrue(asset_countable("rt-shared.jpg", "Story A", ledger))
         self.assertFalse(asset_countable("rt-shared.jpg", "Story B", ledger))
 
+    def test_reviewed_alibaba_assets_are_countable_for_the_alibaba_story(self):
+        story = "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة"
+        ledger = Path("images/relevance.json")
+        self.assertTrue(asset_countable("rt-jack-ma-1.jpg", story, ledger))
+        self.assertTrue(asset_countable("rt-jack-ma-2.jpg", story, ledger))
+
     def test_generated_asset_is_rejected_even_when_marked_direct(self):
         ledger = self.write_ledger({
             "assets": {
