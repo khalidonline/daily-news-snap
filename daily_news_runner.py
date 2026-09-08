@@ -68,6 +68,16 @@ _NEUTRAL_PRIORITY = {
 }
 _STORY_CONTEXTS = {}
 
+_PRODUCT_CLASS_WORDS = {
+    "android", "camera", "fold", "foldable", "galaxy", "iphone", "ipad",
+    "macbook", "mix", "model", "phone", "pixel", "playstation", "pro",
+    "series", "smartphone", "ultra", "watch", "xbox",
+}
+_NUMBERED_PRODUCT_WORDS = _PRODUCT_CLASS_WORDS | {
+    "apple", "google", "honor", "huawei", "meta", "oneplus", "oppo",
+    "samsung", "xiaomi",
+}
+
 SNAPCHAT_SIGNALS = frozenset({
     "saudi_relevance",
     "surprise",
@@ -132,6 +142,28 @@ def _query_key(values):
         for value in (values or [])
         if str(value).strip()
     )
+
+
+def _commons_misses_numbered_product_model(query_text, commons_title):
+    """True when a product photo omits the requested numbered model."""
+    query_tokens = re.findall(r"[A-Za-z0-9]+", str(query_text).casefold())
+    requested = {
+        token for index, token in enumerate(query_tokens)
+        if token.isdigit() and len(token) <= 3 and any(
+            query_tokens[nearby] in _NUMBERED_PRODUCT_WORDS
+            for nearby in range(max(0, index - 1), min(len(query_tokens), index + 2))
+            if nearby != index
+        )
+    }
+    if not requested:
+        return False
+    title_tokens = re.findall(r"[A-Za-z0-9]+", str(commons_title).casefold())
+    if not set(title_tokens).intersection(_PRODUCT_CLASS_WORDS):
+        # A company headquarters or launch venue can still be relevant context.
+        return False
+    title_numbers = {token for token in title_tokens if token.isdigit()
+                     and len(token) <= 3}
+    return not requested.issubset(title_numbers)
 
 
 def _story_context_key(story):
@@ -788,6 +820,21 @@ def install_auto_image_selector(news_bot_module):
                 photo, judge_context
             )).strip().lower()
             print(f"      auto image relevance [{name}]: {verdict}")
+            if name == "commons" and verdict == "yes":
+                title_marker = _marker(candidate, ".commons-title")
+                try:
+                    commons_title = title_marker.read_text(encoding="utf-8")
+                except OSError:
+                    commons_title = ""
+                query_text = " ".join(
+                    str(item) for item in
+                    (q_en if isinstance(q_en, (list, tuple)) else [q_en])
+                )
+                if _commons_misses_numbered_product_model(
+                        query_text, commons_title):
+                    print("      auto image: rejected Commons photo for a "
+                          "different numbered product model")
+                    return None
             if verdict == "yes":
                 return (Path(photo), credit, name)
             if (verdict == "neutral" and name == "commons"
