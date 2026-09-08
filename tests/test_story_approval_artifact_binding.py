@@ -35,3 +35,11 @@ def test_legacy_numeric_pointer_fails_closed():
 def test_delivery_uses_manifest_path_preserved_by_artifact_upload():
     text = WORKFLOW.read_text(encoding='utf-8')
     assert 'approved_story/out/story-review.json' in text
+
+
+def test_explicit_approval_promotes_review_manifest_only_after_identity_check():
+    text = WORKFLOW.read_text(encoding='utf-8')
+    identity = text.index('Approved deck hash does not match downloaded artifact')
+    promotion = text.index("'.status = \"READY\"'")
+    delivery = text.index('send_approved_story.py')
+    assert identity < promotion < delivery
