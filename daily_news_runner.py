@@ -68,6 +68,17 @@ _NEUTRAL_PRIORITY = {
 }
 _STORY_CONTEXTS = {}
 
+SNAPCHAT_SIGNALS = frozenset({
+    "saudi_relevance",
+    "surprise",
+    "practical_impact",
+    "human_interest",
+    "shareability",
+    "visual_strength",
+})
+MIN_SNAPCHAT_SCORE = 6
+MIN_SNAPCHAT_SIGNALS = 2
+
 # Cross-run mix guard. Sports remains a valid lane, but after one sports card
 # the next three selected cards should come from other lanes when at least one
 # valid alternative can be illustrated. This prevents famous club/player names
@@ -223,6 +234,41 @@ def validate_ranked_result(result, shortlist):
     if len(kept) != len(stories):
         print(f"    post-model scope gate: kept {len(kept)}/{len(stories)} ranked stories")
     return validated
+
+
+def enforce_snapchat_selection_gate(result):
+    """Keep only stories with explicit evidence of Snapchat audience value."""
+    if not isinstance(result, dict):
+        return result
+    stories = result.get("stories")
+    if not isinstance(stories, list):
+        return result
+
+    kept = []
+    for story in stories:
+        if not isinstance(story, dict):
+            continue
+        score = story.get("snap_score")
+        signals = story.get("snap_signals")
+        if isinstance(score, bool) or not isinstance(score, (int, float)):
+            continue
+        if not isinstance(signals, list):
+            continue
+        recognized = {
+            signal for signal in signals
+            if isinstance(signal, str) and signal in SNAPCHAT_SIGNALS
+        }
+        if (
+            MIN_SNAPCHAT_SCORE <= score <= 10
+            and len(recognized) >= MIN_SNAPCHAT_SIGNALS
+        ):
+            kept.append(story)
+
+    gated = dict(result)
+    gated["stories"] = kept
+    if len(kept) != len(stories):
+        print(f"    Snapchat selection gate: kept {len(kept)}/{len(stories)} stories")
+    return gated
 
 
 def _story_lane(story, shortlist):
@@ -511,9 +557,10 @@ def make_summarizer(news_bot_module):
         decorated = decorate_model_items(shortlist)
         raw = original_summarize(decorated, already_posted, pinned)
         validated = validate_ranked_result(raw, shortlist)
+        selected = enforce_snapchat_selection_gate(validated)
         load_posted = getattr(news_bot_module, "load_posted", None)
         posted = load_posted() if callable(load_posted) else []
-        balanced = rebalance_ranked_result(validated, shortlist, posted)
+        balanced = rebalance_ranked_result(selected, shortlist, posted)
         return remember_story_contexts(balanced)
 
     return _summarize
