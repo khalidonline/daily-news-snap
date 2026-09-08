@@ -13,6 +13,16 @@ import daily_news_runner
 
 
 class AutoImageSourcePolicyTests(unittest.TestCase):
+    def test_news_judge_uses_news_context_without_changing_shared_story_prompt(self):
+        news = SimpleNamespace(_VISION_JUDGE="historical frame policy")
+        story = SimpleNamespace(_VISION_JUDGE="historical frame policy")
+        daily_news_fresh_runner.install_news_visual_quality_guidance(news)
+        self.assertIn("لا يلزم أن توثق الصورة", news._VISION_JUDGE)
+        self.assertIn("جهة أو شخص آخر", news._VISION_JUDGE)
+        self.assertIn("{context}", news._VISION_JUDGE)
+        self.assertEqual(story._VISION_JUDGE, "historical frame policy")
+        self.assertNotIn("historical frame policy", news._VISION_JUDGE)
+
     def test_normalize_image_source_defaults_and_aliases(self):
         self.assertEqual(daily_news_runner.normalize_image_source(None), "auto")
         self.assertEqual(daily_news_runner.normalize_image_source(""), "auto")
