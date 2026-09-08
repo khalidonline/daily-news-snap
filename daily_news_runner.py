@@ -743,7 +743,8 @@ def install_auto_image_selector(news_bot_module):
             print(f"      auto image relevance [{name}]: {verdict}")
             if verdict == "yes":
                 return (Path(photo), credit, name)
-            if verdict == "neutral" and name == "commons":
+            if (verdict == "neutral" and name == "commons"
+                    and not getattr(news_bot_module, "NEWS_REQUIRE_VERIFIED_VISUAL", False)):
                 # A neutral verdict alone does not prove topicality. Commons
                 # search can return a generic scene whose description happens
                 # to contain a query word (for example, a Perth street for an
