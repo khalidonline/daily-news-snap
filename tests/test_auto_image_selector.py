@@ -169,6 +169,68 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
 
+    def test_news_rejects_older_model_photo_for_numbered_product_launch(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "yes", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title="File:Mi MIX Fold back.jpg")
+        daily_news_fresh_runner.install_news_visual_quality_guidance(fake)
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "Xiaomi تكشف هاتفها 18 Fold القابل للطي",
+                "summary": "عرضت Xiaomi هاتف 18 Fold قبل إطلاقه.",
+                "takeaway": "المنافسة على الهواتف القابلة للطي تتصاعد.",
+                "link": "https://engadget.com/xiaomi-18-fold",
+                "scope": "world",
+                "image_queries": ["Xiaomi 18 Fold IFA 2026"],
+                "image_queries_ar": ["هاتف شاومي 18 فولد"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            photo, credit = fake.fetch_local_photo(
+                ["هاتف شاومي 18 فولد"],
+                ["Xiaomi 18 Fold IFA 2026"],
+                Path(td) / "hero.jpg",
+            )
+
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+
+    def test_news_allows_institutional_context_for_numbered_product_launch(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "yes", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls, commons_title="File:Apple Park aerial view.jpg")
+        daily_news_fresh_runner.install_news_visual_quality_guidance(fake)
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "Apple تستعد للكشف عن iPhone 17",
+                "summary": "تعقد Apple حدثها في مقرها Apple Park.",
+                "takeaway": "الأنظار تتجه إلى أحدث هواتف الشركة.",
+                "link": "https://example.com/apple-event",
+                "scope": "world",
+                "image_queries": ["Apple iPhone 17 event Apple Park"],
+                "image_queries_ar": ["حدث أبل آيفون 17"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            photo, credit = fake.fetch_local_photo(
+                ["حدث أبل آيفون 17"],
+                ["Apple iPhone 17 event Apple Park"],
+                Path(td) / "hero.jpg",
+            )
+
+        self.assertIsNotNone(photo)
+        self.assertEqual(credit, "Commons credit")
+
     def test_later_yes_beats_earlier_neutral_in_one_auto_search(self):
         calls = []
         fake = self.make_module({
