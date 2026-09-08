@@ -1,11 +1,5 @@
 [
  {
-  "headline": "التضخم الأميركي يضع الأسواق أمام مفترق طرق",
-  "at": "2026-09-05T08:13:47.744618+00:00",
-  "source_link": "https://aawsat.com/node/5314901",
-  "lane": "saudi_core"
- },
- {
   "headline": "عاجل: إنزاغي يطلب صفقة جديدة في الهلال",
   "at": "2026-09-05T10:15:24.928602+00:00",
   "source_link": "https://alyaum.com/articles/6681216/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A/%D8%B9%D8%A7%D8%AC%D9%84-%D8%A5%D9%86%D8%B2%D8%A7%D8%BA%D9%8A-%D9%8A%D8%B7%D9%84%D8%A8-%D9%85%D9%86-%D8%A7%D9%84%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A9-%D8%AD%D8%B3%D9%85-%D8%B5%D9%81%D9%82%D8%A9-%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D9%87%D9%84%D8%A7%D9%84",
@@ -189,5 +183,11 @@
   "at": "2026-09-08T08:11:29.798580+00:00",
   "source_link": "https://engadget.com/2252401/xiaomi-18-fold-hands-on-ifa-2026",
   "lane": "business_tech"
+ },
+ {
+  "headline": "موعد توصيل الطلب يتغيّر بعد الدفع",
+  "at": "2026-09-08T10:19:50.915939+00:00",
+  "source_link": "https://alwatan.com.sa/article/1185286",
+  "lane": "entertainment_culture"
  }
 ]
