@@ -69,7 +69,7 @@ def publishability_from_visual_state(
 
     opening_ok = 1 in approved
     closing_ok = int(frame_count) in approved
-    publishable = opening_ok and closing_ok and len(missing) <= 1
+    publishable = opening_ok and closing_ok and not missing
     result.update({
         "status": "READY_FOR_PUBLISH" if publishable else "BLOCKED_FRAME_COVERAGE",
         "publishable": publishable,
