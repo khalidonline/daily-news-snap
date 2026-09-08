@@ -121,7 +121,7 @@ def visual_report_is_ready(report: dict) -> bool:
         return False
     if 1 not in approved_frames or frame_count not in approved_frames:
         return False
-    return missing <= 1
+    return missing == 0 and len(approved_frames) == frame_count
 
 
 def print_visual_accounting(visual_state: dict, frame_count: int = 6) -> dict:
