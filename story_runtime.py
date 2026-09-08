@@ -226,7 +226,7 @@ sb._person_frame_photo = _person_frame_photo_with_curated_pin
 
 
 def personal_visual_slots_ready(photos) -> bool:
-    """Protect the hook/payoff while allowing one genuine middle-card fallback.
+    """Require a meaningful image on every Story frame.
 
     This function never limits how many visuals may appear. If all six frames
     have strong visuals, all six should be used. Frame 1 and the final frame are
@@ -235,14 +235,12 @@ def personal_visual_slots_ready(photos) -> bool:
     values = list(photos or [])
     if not values:
         return False
-    if values[0] is None or values[-1] is None:
-        return False
-    return sum(1 for photo in values if photo is None) <= 1
+    return all(photo is not None for photo in values)
 
 
 # Do not let typographic numbers/dates hide a weak visual deck. The renderer may
 # style them nicely, but opening and closing frames still need meaningful visuals
-# and at most one middle frame may fall back to text-only.
+# and no frame may fall back to text-only.
 _personal_find_all_photos = sb.find_all_photos
 
 
@@ -400,57 +398,3 @@ def choose_runtime_story():
     return ""
 
 
-def _filtered_index(story, approved_paths):
-    """Write a story-specific image index containing every approved file."""
-    allowed = {Path(p).name for p in approved_paths}
-    source = nb.IMAGES_INDEX
-    lines = []
-    try:
-        raw = source.read_text(encoding="utf-8").splitlines()
-    except OSError:
-        raw = []
-    for line in raw:
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#"):
-            continue
-        filename = stripped.split("|", 1)[0].strip()
-        if filename in allowed:
-            lines.append(line)
-    sb.OUT_DIR.mkdir(parents=True, exist_ok=True)
-    dest = sb.OUT_DIR / "runtime-images-approved.txt"
-    dest.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
-    return dest
-
-
-def main():
-    if sb.STORY:
-        story = sb.resolve_story_input(sb.STORY)
-    else:
-        story = choose_runtime_story()
-
-    if not story:
-        raise SystemExit("no runtime-PASS story available (needs enough approved source visuals to attempt)")
-
-    photos, logos, status = coverage(story)
-    if not runtime_pass(len(photos), len(logos)):
-        raise SystemExit(
-            f"story blocked by runtime relevance gate: {status}; "
-            f"{len(photos)} approved visual(s): {story}")
-
-    filtered = _filtered_index(story, photos)
-    nb.IMAGES_INDEX = filtered
-    os.environ["IMAGES_INDEX"] = str(filtered)
-    sb.STORY = story
-    if (os.getenv("STORY_SUPPRESS_TELEGRAM") or "").strip() == "1":
-        sb.notify = lambda *args, **kwargs: None
-        sb.notify_album = lambda *args, **kwargs: None
-        print("    intermediate Telegram notifications suppressed")
-    print(f"    runtime gate PASS: {story}")
-    print("    approved authentic visuals: " + ", ".join(p.name for p in photos))
-    if logos:
-        print("    optional logo(s): " + ", ".join(p.name for p in logos))
-    sb.main()
-
-
-if __name__ == "__main__":
-    main()
