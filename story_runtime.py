@@ -398,3 +398,57 @@ def choose_runtime_story():
     return ""
 
 
+def _filtered_index(story, approved_paths):
+    """Write a story-specific image index containing every approved file."""
+    allowed = {Path(p).name for p in approved_paths}
+    source = nb.IMAGES_INDEX
+    lines = []
+    try:
+        raw = source.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        raw = []
+    for line in raw:
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        filename = stripped.split("|", 1)[0].strip()
+        if filename in allowed:
+            lines.append(line)
+    sb.OUT_DIR.mkdir(parents=True, exist_ok=True)
+    dest = sb.OUT_DIR / "runtime-images-approved.txt"
+    dest.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
+    return dest
+
+
+def main():
+    if sb.STORY:
+        story = sb.resolve_story_input(sb.STORY)
+    else:
+        story = choose_runtime_story()
+
+    if not story:
+        raise SystemExit("no runtime-PASS story available (needs enough approved source visuals to attempt)")
+
+    photos, logos, status = coverage(story)
+    if not runtime_pass(len(photos), len(logos)):
+        raise SystemExit(
+            f"story blocked by runtime relevance gate: {status}; "
+            f"{len(photos)} approved visual(s): {story}")
+
+    filtered = _filtered_index(story, photos)
+    nb.IMAGES_INDEX = filtered
+    os.environ["IMAGES_INDEX"] = str(filtered)
+    sb.STORY = story
+    if (os.getenv("STORY_SUPPRESS_TELEGRAM") or "").strip() == "1":
+        sb.notify = lambda *args, **kwargs: None
+        sb.notify_album = lambda *args, **kwargs: None
+        print("    intermediate Telegram notifications suppressed")
+    print(f"    runtime gate PASS: {story}")
+    print("    approved authentic visuals: " + ", ".join(p.name for p in photos))
+    if logos:
+        print("    optional logo(s): " + ", ".join(p.name for p in logos))
+    sb.main()
+
+
+if __name__ == "__main__":
+    main()
