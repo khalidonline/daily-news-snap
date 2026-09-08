@@ -126,9 +126,9 @@ jobs:
           THEME: "light"
           STORIES_PER_DAY: "1"
           CANDIDATES: "5"
-          # A relevant photo remains preferred. If every verified source is
-          # exhausted, render the clean text layout instead of losing the slot.
-          REQUIRE_PHOTO: "0"
+          # Every News card must include a relevant photo. Failed image
+          # selection must be recovered, never delivered as a text-only card.
+          REQUIRE_PHOTO: "1"
           IMAGE_SOURCE: ${{ inputs.image_source || 'auto' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           LOOKBACK_HOURS: "48"
@@ -137,8 +137,7 @@ jobs:
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
           MODEL_MAX_USD_PER_RUN: "0.50"
           NEWS_MAX_PAID_RESPONSES: "1"
-          # Successful production cards have needed at most 11 checks. Bound
-          # the search at 12, then use the safe text layout above.
+          # Bound paid vision checks without weakening photo requirements.
           VISION_MAX_PAID_RESPONSES: "12"
         run: python daily_news_fresh_runner.py
 
