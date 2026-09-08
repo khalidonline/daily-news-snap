@@ -25,9 +25,10 @@ class StoryPublishabilityTests(unittest.TestCase):
         self.assertEqual(result["status"], "READY_FOR_PUBLISH")
         self.assertTrue(result["publishable"])
 
-    def test_one_middle_text_only_frame_is_publishable(self):
+    def test_one_middle_text_only_frame_is_not_publishable(self):
         result = self._evaluate(self._state(failed=(3,), policy=sp.PUBLISHABILITY_POLICY))
-        self.assertEqual(result["status"], "READY_FOR_PUBLISH")
+        self.assertEqual(result["status"], "BLOCKED_FRAME_COVERAGE")
+        self.assertFalse(result["publishable"])
         self.assertEqual(result["usable_frames"], 5)
 
     def test_opening_frame_failure_blocks_story(self):
