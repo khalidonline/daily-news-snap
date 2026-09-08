@@ -14,6 +14,20 @@ class DailyCostLeakPolicyTests(unittest.TestCase):
         self.assertIn("STORY_SELECTION_MODE:", workflow)
         self.assertIn("github.event_name == 'workflow_dispatch'", workflow)
 
+    def test_explicit_story_recovery_can_bootstrap_visual_validation(self):
+        story_workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
+        receiver = Path(".github/workflows/external-clock-receiver.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("story-recovery", story_workflow)
+        self.assertIn("RECOVERY_STORY_B64", story_workflow)
+        self.assertIn("STORY_RECOVERY_STORY", story_workflow)
+        self.assertIn("github.event.action == 'story-recovery'", story_workflow)
+        self.assertIn('if [ "$bot" = "story" ]', receiver)
+        self.assertIn('[[ "$trigger_value" == recovery_story=* ]]', receiver)
+        self.assertIn('-f event_type="story-recovery"', receiver)
+
 
 if __name__ == "__main__":
     unittest.main()
