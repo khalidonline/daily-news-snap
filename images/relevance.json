@@ -260,6 +260,20 @@
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:Ali_Al-Naimi.jpg",
       "note": "Licensed portrait of Ali Al-Naimi in Saudi dress."
+    },
+    "rt-jack-ma-1.jpg": {
+      "stories": {
+        "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Alibaba_provisional_office_in_Hangzhou.jpg",
+      "note": "Alibaba Group building; direct company-history visual."
+    },
+    "rt-jack-ma-2.jpg": {
+      "stories": {
+        "من بنى Alibaba؟ قصة معلم إنجليزي رُفض 30 مرة": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jack_Ma_at_the_31st_ISC-Symposium.jpg",
+      "note": "Jack Ma speaking; direct founder-story visual."
     }
   }
 }
