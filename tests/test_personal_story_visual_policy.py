@@ -66,13 +66,13 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         self.assertEqual(report["approved_visual_count"], 6)
         self.assertTrue(gsp.visual_report_is_ready(report))
 
-    def test_middle_text_only_card_can_still_be_ready(self):
+    def test_middle_text_only_card_is_not_ready(self):
         state = {"frames": {
             "1": {"status": "PASS"}, "2": {"status": "PASS"},
             "3": {"status": "FAIL"}, "4": {"status": "PASS"},
             "5": {"status": "PASS"}, "6": {"status": "PASS"},
         }}
-        self.assertTrue(gsp.visual_report_is_ready(gsp.visual_accounting(state, 6)))
+        self.assertFalse(gsp.visual_report_is_ready(gsp.visual_accounting(state, 6)))
 
     def test_frame_one_must_have_a_meaningful_visual(self):
         state = {"frames": {
@@ -101,7 +101,7 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
     def test_pre_render_visual_gate_requires_open_and_close_when_slots_are_known(self):
         import story_runtime as sr
         self.assertTrue(sr.personal_visual_slots_ready(["1", "2", "3", "4", "5", "6"]))
-        self.assertTrue(sr.personal_visual_slots_ready(["1", "2", None, "4", "5", "6"]))
+        self.assertFalse(sr.personal_visual_slots_ready(["1", "2", None, "4", "5", "6"]))
         self.assertFalse(sr.personal_visual_slots_ready([None, "2", "3", "4", "5", "6"]))
         self.assertFalse(sr.personal_visual_slots_ready(["1", "2", "3", "4", "5", None]))
         self.assertFalse(sr.personal_visual_slots_ready(["1", "2", None, "4", None, "6"]))
