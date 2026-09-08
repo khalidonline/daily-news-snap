@@ -176,7 +176,7 @@ class SharedScheduleGateTests(unittest.TestCase):
 
     def test_story_workflow_accepts_external_slot_and_preserves_repair_branch(self):
         workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
-        self.assertIn("types: [story-schedule]", workflow)
+        self.assertIn("types: [story-schedule, story-recovery]", workflow)
         self.assertIn("--bot story", workflow)
         self.assertIn("state/story_schedule_slots.json", workflow)
         self.assertIn("ref: repair/all-story-visuals-2026-08-29", workflow)
