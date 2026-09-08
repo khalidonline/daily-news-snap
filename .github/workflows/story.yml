@@ -138,6 +138,7 @@ jobs:
           STORY_MODEL_OUTPUT_USD_PER_M: "10"
           MODEL_MAX_USD_PER_RUN: "1.00"
           STORY_MAX_PAID_RESPONSES: "1"
+          MAX_TOKENS: ${{ github.event.action == 'story-recovery' && '32000' || '16000' }}
           STORY_AUX_MAX_PAID_RESPONSES: "24"
           STORY_FRAMES: "6"
           ALLOW_GENERATED: "0"
