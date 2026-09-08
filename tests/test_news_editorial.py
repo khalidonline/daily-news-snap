@@ -244,6 +244,16 @@ class NewsEditorialTests(unittest.TestCase):
         ):
             self.assertIn(token, SYSTEM_PROMPT)
 
+    def test_prompt_requires_a_distinctive_verified_fact_for_every_story(self):
+        for token in (
+            "معلومة واحدة مميزة",
+            "مفاجئة وموثوقة",
+            "مرتبطة مباشرة بالخبر",
+            "ليست معلومة عامة",
+            "لا تذكر أي معلومة غير موجودة",
+        ):
+            self.assertIn(token, SYSTEM_PROMPT)
+
     def test_age_helpers(self):
         item = self.make_item("business_tech", 1, age_hours=4.9)
         self.assertAlmostEqual(publication_age_hours(item, self.FIXED_NOW), 4.9, places=5)
