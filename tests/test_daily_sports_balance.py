@@ -25,6 +25,8 @@ class DailySportsBalanceTests(unittest.TestCase):
         ), patch.object(
             daily_news_runner, "validate_ranked_result", side_effect=lambda result, items: result
         ), patch.object(
+            daily_news_runner, "enforce_snapchat_selection_gate", side_effect=lambda result: result
+        ), patch.object(
             daily_news_runner, "remember_story_contexts", side_effect=lambda result: result
         ):
             return daily_news_runner.make_summarizer(module)([], [], "")
