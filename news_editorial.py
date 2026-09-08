@@ -171,6 +171,19 @@ _ROUTINE_RESULT_RE = re.compile(
     r"\bbeats?\b|\bdefeats?\b|\bwins?\b|\bloses?\b|\bdraws?\b|final score)",
     re.IGNORECASE,
 )
+_ROUTINE_STREAK_RESULT_RE = re.compile(
+    r"(?:يوقف|أوقف|انهى|أنهى|ينهي|انتهت|توقفت)[^.]{0,90}"
+    r"(?:سلسلة|بلا خسارة|دون خسارة|بدون خسارة)|"
+    r"(?:سلسلة|بلا خسارة|دون خسارة|بدون خسارة)[^.]{0,90}"
+    r"(?:يوقف|أوقف|انهى|أنهى|ينهي|انتهت|توقفت)",
+    re.IGNORECASE,
+)
+_DECISIVE_MAJOR_SPORTS_EVENT_RE = re.compile(
+    r"(?:نهائي|النهائي|يتوج|توج|بطولة|كأس العالم|دوري أبطال|كأس آسيا|"
+    r"يتأهل|التأهل|لقب|ميدالية|final|champion|championship|world cup|"
+    r"champions league|qualif(?:y|ies|ied|ication)|title|medal)",
+    re.IGNORECASE,
+)
 _MAJOR_SPORTS_RE = re.compile(
     r"(?:نهائي|النهائي|يتوج|توج|بطولة|كأس العالم|دوري أبطال|كأس آسيا|"
     r"يتأهل|التأهل|لقب|رقم قياسي|تاريخي|ميدالية|final|champion|championship|"
@@ -256,6 +269,16 @@ def hard_scope_eligible(item):
     # eventual move would be "official". A club announcement/confirmed deal has
     # no proximity/negotiation wording and remains eligible.
     if lane == "sports" and _UNCONFIRMED_TRANSFER_RE.search(text):
+        return False
+
+    # Ending a club's unbeaten/winning streak is still a match recap. Words
+    # such as "historic" or the streak length must not promote it unless the
+    # match itself decided a final, title, qualification or medal.
+    if (
+        lane == "sports"
+        and _ROUTINE_STREAK_RESULT_RE.search(text)
+        and not _DECISIVE_MAJOR_SPORTS_EVENT_RE.search(text)
+    ):
         return False
 
     # Ordinary match recaps never consume a national card; major titles,

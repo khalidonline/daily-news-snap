@@ -130,6 +130,15 @@ class NewsEditorialTests(unittest.TestCase):
             summary="فاز الهلال بنتيجة كبيرة في مباراة دوري عادية.")
         self.assertFalse(gate(item))
 
+    def test_yesterdays_neom_streak_result_is_hard_rejected(self):
+        gate = self.hard_gate()
+        item = self.make_item(
+            "sports", 209, source="الوطن", age_hours=21,
+            title="نيوم يوقف سلسلة الهلال بعد 47 مباراة بدون خسارة",
+            summary="سلسلة الهلال التاريخية بلا خسارة انتهت عند نيوم رغم بقائه في الصدارة.",
+        )
+        self.assertFalse(gate(item))
+
     def test_obscure_company_borrowing_for_nvidia_is_hard_rejected(self):
         gate = self.hard_gate()
         item = self.make_item(
