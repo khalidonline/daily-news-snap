@@ -53,6 +53,13 @@ jobs:
                   -f "client_payload[story_b64]=${encoded}"
                 continue
               fi
+              if [ "$bot" = "story" ] && [[ "$trigger_value" == recovery_story=* ]]; then
+                encoded="${trigger_value#recovery_story=}"
+                gh api --method POST "repos/${GITHUB_REPOSITORY}/dispatches" \
+                  -f event_type="story-recovery" \
+                  -f "client_payload[story_b64]=${encoded}"
+                continue
+              fi
               if [ "$bot" = "breaking" ]; then
                 if [[ "$trigger_value" == confirmed_event=* ]]; then
                   encoded="${trigger_value#confirmed_event=}"
