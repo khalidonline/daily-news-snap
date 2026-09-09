@@ -122,6 +122,10 @@ _SPORTS_MEMORY_HILAL_CONTEXT_TOKENS = {
 
 _DEDUPE_TOKEN_RE = re.compile(r"[A-Za-z0-9\u0600-\u06ff]+")
 _ARABIC_DIACRITICS_RE = re.compile(r"[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06edـ]")
+_FIRST_CLAIM_RE = re.compile(
+    r"(?<![\w])(?:أول|الأول|أولى|الأولى|لأول\s+مرة|first)(?![\w])",
+    re.IGNORECASE,
+)
 _ARABIC_NORMALIZATION = str.maketrans({
     "أ": "ا", "إ": "ا", "آ": "ا", "ى": "ي", "ؤ": "و", "ئ": "ي",
 })
@@ -239,6 +243,16 @@ def _model_story_scope_item(story, source_item):
     return candidate
 
 
+def _introduces_unsupported_first_claim(story, source_item):
+    """Reject a first-ever claim introduced by the generated headline."""
+    headline = str(story.get("headline", "") or "")
+    source_title = str(source_item.get("title", "") or "")
+    return bool(
+        _FIRST_CLAIM_RE.search(headline)
+        and not _FIRST_CLAIM_RE.search(source_title)
+    )
+
+
 def validate_ranked_result(result, shortlist):
     """Remove model-ranked stories that violate hard editorial boundaries.
 
@@ -264,6 +278,8 @@ def validate_ranked_result(result, shortlist):
         if item_no < 1 or item_no > len(shortlist):
             continue
         source_item = shortlist[item_no - 1]
+        if _introduces_unsupported_first_claim(story, source_item):
+            continue
         if not hard_scope_eligible(source_item):
             continue
         if not audience_fit_eligible(source_item):

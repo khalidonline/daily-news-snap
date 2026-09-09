@@ -429,6 +429,42 @@ class DailyNewsRunnerTests(unittest.TestCase):
         filtered = daily_news_runner.validate_ranked_result(result, shortlist)
         self.assertEqual([story["item"] for story in filtered["stories"]], [2])
 
+    def test_post_model_validation_rejects_unsupported_first_ever_claim(self):
+        import daily_news_runner
+
+        shortlist = [{
+            "lane": "sports",
+            "source": "اليوم",
+            "title": "كينيونيس يكتب تاريخ القادسية في قائمة الكرة الذهبية",
+            "summary": "ترشح مهاجم القادسية ضمن قائمة تضم لاعباً آخر من دوري روشن.",
+        }]
+        result = {"stories": [{
+            "item": 1,
+            "headline": "كينيونيس أول لاعب بدوري روشن في مرشحي الكرة الذهبية",
+        }]}
+
+        filtered = daily_news_runner.validate_ranked_result(result, shortlist)
+
+        self.assertEqual(filtered["stories"], [])
+
+    def test_post_model_validation_keeps_first_claim_stated_in_source_title(self):
+        import daily_news_runner
+
+        shortlist = [{
+            "lane": "sports",
+            "source": "Saudi Pro League",
+            "title": "First Saudi player nominated for global football award",
+            "summary": "The official shortlist was announced today.",
+        }]
+        result = {"stories": [{
+            "item": 1,
+            "headline": "أول لاعب سعودي يترشح للجائزة العالمية",
+        }]}
+
+        filtered = daily_news_runner.validate_ranked_result(result, shortlist)
+
+        self.assertEqual(filtered["stories"], result["stories"])
+
     def test_configure_applies_48h_prompt_and_balanced_summarizer(self):
         import os
         from types import SimpleNamespace
