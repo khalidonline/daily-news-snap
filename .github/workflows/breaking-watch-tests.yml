@@ -5,6 +5,7 @@ on:
     paths:
       - "breaking_watch.py"
       - "breaking_news_runner.py"
+      - "breaking_resilient_runner.py"
       - "breaking_watch_entry.py"
       - "news_bot.py"
       - "tests/test_breaking_watch.py"
@@ -12,6 +13,7 @@ on:
       - "tests/test_breaking_watch_seen_memory.py"
       - "tests/test_breaking_visual_relevance.py"
       - "tests/test_breaking_manual_reproduction.py"
+      - "tests/test_breaking_map_time_fallback.py"
       - "tests/test_model_usage_workflows.py"
       - ".github/workflows/breaking.yml"
       - ".github/workflows/breaking-watch-tests.yml"
@@ -19,6 +21,7 @@ on:
     paths:
       - "breaking_watch.py"
       - "breaking_news_runner.py"
+      - "breaking_resilient_runner.py"
       - "breaking_watch_entry.py"
       - "news_bot.py"
       - "tests/test_breaking_watch.py"
@@ -26,6 +29,7 @@ on:
       - "tests/test_breaking_watch_seen_memory.py"
       - "tests/test_breaking_visual_relevance.py"
       - "tests/test_breaking_manual_reproduction.py"
+      - "tests/test_breaking_map_time_fallback.py"
       - "tests/test_model_usage_workflows.py"
       - ".github/workflows/breaking.yml"
       - ".github/workflows/breaking-watch-tests.yml"
@@ -47,6 +51,6 @@ jobs:
       - name: Run breaking watcher regressions
         run: |
           python -m unittest tests.test_breaking_watch tests.test_breaking_watch_notifications tests.test_breaking_watch_seen_memory -v
-          python -m unittest tests.test_breaking_visual_relevance -v
+          python -m unittest tests.test_breaking_visual_relevance tests.test_breaking_map_time_fallback -v
           python -m unittest tests.test_breaking_manual_reproduction tests.test_model_usage_workflows -v
-          python -m py_compile breaking_watch.py breaking_news_runner.py breaking_watch_entry.py news_bot.py
+          python -m py_compile breaking_watch.py breaking_news_runner.py breaking_resilient_runner.py breaking_watch_entry.py news_bot.py
