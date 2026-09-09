@@ -40,7 +40,7 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         call.assert_called_once()
         command = call.call_args.args[0]
         env = call.call_args.kwargs["env"]
-        self.assertEqual(command, [entry.sys.executable, "breaking_news_runner.py"])
+        self.assertEqual(command, [entry.sys.executable, "breaking_resilient_runner.py"])
         self.assertEqual(env["PINNED_EVENT"], EVENT)
         self.assertEqual(env["DRY_RUN"], "1")
         self.assertEqual(env["POST_TO_SNAPCHAT"], "0")

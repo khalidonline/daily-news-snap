@@ -21,6 +21,16 @@ _TRUSTED_VERIFICATION_RULE = """
 يوجد تأكيد من Reuters/AP/مصدر رسمي.
 """
 
+_EVENT_TIME_RULE = """
+
+وقت الحدث إلزامي في حكم العاجل حتى نعرف هل ما زال عاجلاً:
+إذا كان breaking=true، اختم حقل event دائماً بـ «— وقت الحدث: HH:MM بتوقيت
+السعودية» مستخدماً وقت وقوع/إعلان الحدث من المصدر، لا وقت تشغيل المراقب.
+إذا لم يعطِ أي مصدر وقتاً دقيقاً فاكتب «— وقت الحدث: غير محدد» ولا تخمّن.
+خذ عمر الحدث في الحسبان عند تطبيق شرط «عمره ساعات لا أيام»: تحديث قديم لا
+يصبح عاجلاً لمجرد أن مقالاً جديداً أعاد نشره، أما تطور جديد مستقل فله وقته.
+"""
+
 
 def _run_strict_news_bot(extra_env):
     env = os.environ.copy()
@@ -28,7 +38,7 @@ def _run_strict_news_bot(extra_env):
     # Review phase: breaking cards may be generated and sent to Telegram,
     # but this entrypoint must never allow a direct Snapchat publish.
     env["POST_TO_SNAPCHAT"] = "0"
-    return subprocess.call([sys.executable, "breaking_news_runner.py"], env=env)
+    return subprocess.call([sys.executable, "breaking_resilient_runner.py"], env=env)
 
 
 def _install_quiet_notifications():
@@ -46,15 +56,15 @@ def _install_quiet_notifications():
 
 
 def _install_trusted_verification_rule():
-    """Tighten the existing single search for severe Gulf candidates.
+    """Tighten the existing single search for severe Gulf candidates."""
+    if _TRUSTED_VERIFICATION_RULE.strip() not in breaking_watch.WATCH_PROMPT:
+        breaking_watch.WATCH_PROMPT += _TRUSTED_VERIFICATION_RULE
 
-    This changes verification quality only. It does not increase the watcher's
-    web-search budget, add a paid classifier response, or loosen the breaking
-    threshold.
-    """
-    if _TRUSTED_VERIFICATION_RULE.strip() in breaking_watch.WATCH_PROMPT:
-        return
-    breaking_watch.WATCH_PROMPT += _TRUSTED_VERIFICATION_RULE
+
+def _install_breaking_time_guidance():
+    """Make source-based event time part of every positive breaking verdict."""
+    if _EVENT_TIME_RULE.strip() not in breaking_watch.WATCH_PROMPT:
+        breaking_watch.WATCH_PROMPT += _EVENT_TIME_RULE
 
 
 breaking_watch._run_news_bot = _run_strict_news_bot
@@ -78,6 +88,7 @@ def run():
 
     _install_quiet_notifications()
     _install_trusted_verification_rule()
+    _install_breaking_time_guidance()
     breaking_watch.watch()
     return 0
 

@@ -28,7 +28,7 @@ class ModelUsageWorkflowTests(unittest.TestCase):
 
     def test_story_workflow_prices_editorial_usage_and_reports_it(self):
         text = self.workflow("story")
-        env = self.run_env("story", "python guarded_story_publish.py")
+        env = self.run_env("story", "python /tmp/story_delivery_recovery.py")
         self.assertEqual(env["STORY_MODEL"], "claude-sonnet-5")
         self.assertEqual(env["STORY_MODEL_INPUT_USD_PER_M"], "2")
         self.assertEqual(env["STORY_MODEL_OUTPUT_USD_PER_M"], "10")
