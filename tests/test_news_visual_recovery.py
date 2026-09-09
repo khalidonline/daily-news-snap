@@ -92,6 +92,25 @@ class NewsVisualRecoveryTests(unittest.TestCase):
             self.assertTrue(logo.is_file())
             call.assert_called_once()
 
+    def test_acronym_logo_uses_domain_verified_wikidata_fallback(self):
+        import json
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            index = root / "index.json"
+            index.write_text(json.dumps({"oecd.org": ["OECD"]}))
+            target = [{"kind": "organization", "name_en": "OECD"}]
+            def download(url, path):
+                Path(path).write_bytes(b"logo")
+            with patch("logo_fetch.fetch_current", return_value=None), \
+                 patch("logo_fetch.wikidata_p154_logo", return_value="OECD logo.svg") as identity, \
+                 patch("logo_fetch._commons_fileinfo", return_value=[({}, {"thumburl": "https://upload.wikimedia.org/logo.png"})]), \
+                 patch("logo_fetch._download", side_effect=download), \
+                 patch("logo_fetch._renders_as_a_mark", return_value=True):
+                logo, entity = exact_logo_for_targets(target, root, index)
+            identity.assert_called_once_with(["OECD"], "oecd.org")
+            self.assertTrue(logo.is_file())
+            self.assertEqual(entity, "OECD")
+
     def test_unknown_organization_has_no_logo(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
