@@ -15,6 +15,8 @@ class TopicRecoveryHandoffTests(unittest.TestCase):
         self.assertIn("Authorize exact Topic recovery", workflow)
         self.assertIn("github.event.action == 'topic-recovery'", workflow)
         self.assertIn("github.event.client_payload.brief_b64 != ''", workflow)
+        self.assertIn('echo "RUN_SCHEDULED_BOT=1" >> "$GITHUB_ENV"', workflow)
+        self.assertIn('echo "SCHEDULE_SLOT_ID=" >> "$GITHUB_ENV"', workflow)
         self.assertIn("exact Topic recovery — schedule gate bypassed", workflow)
         self.assertIn(
             "- name: Resolve Topic schedule slot\n"
