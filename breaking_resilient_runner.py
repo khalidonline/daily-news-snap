@@ -6,7 +6,6 @@ nothing usable for a severe Saudi security event do we try a free Commons map
 of Saudi Arabia. This is contextual artwork, not a claimed photo of the event.
 """
 
-import os
 import re
 
 import breaking_news_runner as base
@@ -70,13 +69,16 @@ def install_resilient_visual_fallback(bot=news_bot):
             # Maps are intentionally graphics. Commons still enforces licence,
             # download integrity and recent-use checks; the strict breaking
             # vision gate evaluates relevance after this function returns.
-            return original(
+            photo, credit = original(
                 fallback,
                 out_path,
                 need_saudi=False,
                 min_hits=0,
                 subject_mode=True,
             )
+            if photo:
+                credit = "خريطة توضيحية / " + (credit or "Wikimedia Commons")
+            return photo, credit
         finally:
             if callable(graphic_check):
                 bot.looks_like_a_graphic = graphic_check
