@@ -130,6 +130,14 @@ city_visual_v3.configure(sb)
 # Exact story+frame repairs. These do not broaden global relevance: each pin
 # is a previously reviewed local asset assigned to one specific narrative beat.
 _CURATED_FRAME_VISUALS = {
+    "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": (
+        (("قبل الانهيار: قروض بلا حدود",), "foreclosure-2008.jpg"),
+        (("سبتمبر 2008: الشرخ الأول",), "targeted-2008-nyse-sept8.jpg"),
+        (("15 سبتمبر: سقوط بنك عملاق",), "lehman-2008.jpg"),
+        (("الثمن: ملايين بلا وظائف",), "targeted-2008-nyse-trading-floor.jpg"),
+        (("خطة الإنقاذ الكبرى",), "targeted-2008-wall-street-october.jpg"),
+        (("ما لم يعد كما كان",), "targeted-2008-nyse-oct23.jpg"),
+    ),
     "قصة تأسيس مؤسسة النقد ساما": (
         (("نقود من فضة", "فضة فقط"), "silver-riyal.png"),
         (("ورقة صُنعت لأجل الحجاج", "إيصال الحج"), "first-hajj-receipt.png"),
