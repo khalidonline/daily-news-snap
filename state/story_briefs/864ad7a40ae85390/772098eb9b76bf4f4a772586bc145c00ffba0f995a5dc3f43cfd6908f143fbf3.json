@@ -1,0 +1,107 @@
+{
+  "brief": {
+    "caption": "من فقاعة إسكان أمريكية إلى أكبر إفلاس في تاريخ أمريكا — قصة الأزمة التي غيّرت قواعد البنوك للأبد.",
+    "frames": [
+      {
+        "heading": "فقاعة لا تنفجر",
+        "image_keywords": [
+          "American suburban houses",
+          "for sale sign real estate"
+        ],
+        "image_keywords_ar": [],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "في أمريكا خلال العقد الأول من الألفين، شملت أسباب ما جاء لاحقاً المضاربة المفرطة على قيم العقارات وظهور فقاعة إسكان ضخمة. وتفاقم الوضع بسبب الإقراض الجائر للرهون العقارية عالية المخاطر — قروض مُنحت لأشخاص لا يقدرون على سدادها."
+      },
+      {
+        "heading": "أول شرخ",
+        "image_keywords": [
+          "foreclosure sign 2007",
+          "subprime mortgage crisis"
+        ],
+        "image_keywords_ar": [
+          "الرهن العقاري",
+          "أزمة 2008"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولما عجز كثير من هؤلاء عن السداد، ظهرت أولى علامات الانهيار. في أبريل 2007 أعلنت شركة New Century Financial، أكبر شركات إقراض الرهن العقاري عالي المخاطر في أمريكا، إفلاسها — بداية ما سيُعرف بأزمة الرهن العقاري عالي المخاطر."
+      },
+      {
+        "heading": "سقوط ليمان براذرز",
+        "image_keywords": [
+          "Lehman Brothers",
+          "Wall Street 2008"
+        ],
+        "image_keywords_ar": [
+          "ليمان براذرز",
+          "الأزمة المالية"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا انهار العملاق. في 15 سبتمبر 2008 أعلن بنك الاستثمار الأمريكي Lehman Brothers إفلاسه، بأصول 639 مليار دولار وديون 619 مليار دولار — أكبر إفلاس في تاريخ أمريكا. خسر مؤشر داو جونز 4.5% من قيمته في يوم واحد."
+      },
+      {
+        "heading": "ثمن الذعر",
+        "image_keywords": [
+          "Wall Street October 2008",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [
+          "وول ستريت",
+          "أزمة 2008"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولأن ليمان لم يكن بنكاً عادياً، انتشر الذعر فوراً. خسرت الأسواق العالمية 10 تريليونات دولار من قيمتها، وتوقفت البنوك عن الإقراض. في أمريكا، خسر أكثر من 6 ملايين أسرة منازلها، وارتفعت البطالة إلى 10.2% في أكتوبر 2009."
+      },
+      {
+        "heading": "من القاع إلى القمة",
+        "image_keywords": [
+          "Dow Jones Industrial Average",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "لكن السوق التي انهارت لم تبقَ منهارة. بين قمة أكتوبر 2007 وقاع 9 مارس 2009، فقد مؤشر داو جونز نحو 54% من قيمته، ليهبط إلى 6,469 نقطة. لكنه عاد فوق 10 آلاف نقطة بحلول منتصف 2010، وسجّل أرقاماً قياسية جديدة بحلول 2013."
+      },
+      {
+        "heading": "القواعد التي تغيّرت",
+        "image_keywords": [
+          "United States Capitol",
+          "Federal Reserve building"
+        ],
+        "image_keywords_ar": [],
+        "punch": "الأزمة التي كادت تُسقط النظام المالي هي من أعاد كتابة قواعده.",
+        "subject_kind": "abstract",
+        "text": "ولهذا لم يمرّ العالم من الأزمة دون تغيير القواعد. اليوم تخضع البنوك الكبرى لاختبارات ضغط سنوية إلزامية بموجب قانون Dodd-Frank الذي أقرّته أمريكا سنة 2010."
+      }
+    ],
+    "image_prompt": "A quiet suburban American street lined with two-story houses, several front yards showing realtor for-sale signs, overcast afternoon light, early-2000s residential atmosphere, no people, no logos, no text.",
+    "image_queries": [
+      "American suburban houses 2000s",
+      "for sale sign real estate",
+      "empty suburban street houses"
+    ],
+    "image_queries_ar": [
+      "أزمة 2008",
+      "الرهن العقاري"
+    ],
+    "sources": [
+      "Wikipedia",
+      "Britannica",
+      "Federal Reserve History",
+      "Benzinga"
+    ],
+    "title": "أزمة 2008: كيف بدأت وكيف انتهت؟"
+  },
+  "input_tokens": 178794,
+  "message_id": "msg_011Cet6PTmcK5oLuJHroMJn1",
+  "model": "claude-sonnet-5",
+  "output_tokens": 15742,
+  "prompt_hash": "9f4f6941ab4a125bfcd928eb454a8c08faf8bb50f42f95bfbab344c22b0c9c3e",
+  "revision": "772098eb9b76bf4f4a772586bc145c00ffba0f995a5dc3f43cfd6908f143fbf3",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
