@@ -9,6 +9,19 @@ import topic_bot
 
 
 class TopicRecoveryHandoffTests(unittest.TestCase):
+    def test_exact_recovery_bypasses_completed_schedule_slot(self):
+        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
+
+        self.assertIn("Authorize exact Topic recovery", workflow)
+        self.assertIn("github.event.action == 'topic-recovery'", workflow)
+        self.assertIn("github.event.client_payload.brief_b64 != ''", workflow)
+        self.assertIn("exact Topic recovery — schedule gate bypassed", workflow)
+        self.assertIn(
+            "- name: Resolve Topic schedule slot\n"
+            "        if: ${{ env.RUN_SCHEDULED_BOT != '1' }}",
+            workflow,
+        )
+
     def test_selected_topic_brief_is_saved_before_visual_search(self):
         brief = {
             "title": "عنوان محفوظ",
