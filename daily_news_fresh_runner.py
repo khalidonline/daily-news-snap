@@ -7,6 +7,8 @@ story must never become another story's final fallback.
 """
 
 import os
+import json
+from functools import wraps
 from pathlib import Path
 
 import daily_news_runner
@@ -107,6 +109,11 @@ def install_news_notification_labels(news_bot_module):
     original_notify = news_bot_module.notify
 
     def news_notify(text, *args, **kwargs):
+        if str(text).startswith('⚠️ ') and ' — no card:' in str(text):
+            # The delivery owner inspects failed jobs and their saved story.
+            # Keep failure evidence in logs; routine retries are not user work.
+            print(f'  ! recovery pending: {text}')
+            return None
         text = str(text).replace(
             "stories had a usable photo", "news items had a usable photo"
         ).replace(
@@ -115,6 +122,26 @@ def install_news_notification_labels(news_bot_module):
         return original_notify(text, *args, **kwargs)
 
     news_bot_module.notify = news_notify
+    return news_bot_module
+
+
+def install_news_recovery_handoff(news_bot_module):
+    """Retain exact selected copy before image work, without another paid call."""
+    original = news_bot_module.summarize
+
+    @wraps(original)
+    def summarize(*args, **kwargs):
+        path = news_bot_module.OUT_DIR / 'news_recovery_story.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.unlink(missing_ok=True)
+        result = original(*args, **kwargs)
+        stories = result.get('stories') or []
+        if stories:
+            path.write_text(json.dumps(stories[0], ensure_ascii=False, indent=2),
+                            encoding='utf-8')
+        return result
+
+    news_bot_module.summarize = summarize
     return news_bot_module
 
 
@@ -135,6 +162,7 @@ def main():
     install_news_visual_quality_guidance(news_bot)
     install_recent_photo_fail_closed(news_bot)
     install_news_notification_labels(news_bot)
+    install_news_recovery_handoff(news_bot)
     news_bot.main()
 
 
