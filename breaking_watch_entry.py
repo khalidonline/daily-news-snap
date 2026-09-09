@@ -41,6 +41,36 @@ def _run_strict_news_bot(extra_env):
     return subprocess.call([sys.executable, "breaking_resilient_runner.py"], env=env)
 
 
+def _manual_delivery_context(event):
+    now = breaking_watch.ksa_now()
+    state = breaking_watch.load_state()
+    return now, state, breaking_watch.event_fp(event)
+
+
+def _manual_delivery_already_recorded(now, state, fingerprint):
+    return (
+        state.get("date") == now.date().isoformat()
+        and state.get("event_fp") == fingerprint
+        and bool(state.get("reviewed") or state.get("posted"))
+    )
+
+
+def _record_manual_review_delivery(now, state, fingerprint):
+    today = now.date().isoformat()
+    same_day = state.get("date") == today
+    updated = dict(state)
+    updated.update(
+        date=today,
+        posted=bool(state.get("posted")) if same_day else False,
+        reviewed=True,
+        event_fp=fingerprint,
+        lock_at="",
+        stamps=(list(state.get("stamps", [])) if same_day else [])
+        + [breaking_watch.ksa_stamp()],
+    )
+    breaking_watch.save_state(updated)
+
+
 def _install_quiet_notifications():
     """Silence routine watcher status while preserving real alerts/failures."""
     send = breaking_watch.notify
@@ -77,14 +107,22 @@ def run():
         or os.getenv("TRIGGER_CONFIRMED_EVENT", "").strip()
     )
     if confirmed_event:
+        now, state, fingerprint = _manual_delivery_context(confirmed_event)
+        if _manual_delivery_already_recorded(now, state, fingerprint):
+            print("manual Breaking recovery already delivered to Telegram today — quiet duplicate")
+            return 0
+
         mode = os.getenv("BREAKING_RUN_MODE", "repair_visual").strip()
         print(f"manual confirmed-event reproduction ({mode}) — classifier bypassed, dry run forced")
-        return _run_strict_news_bot({
+        rc = _run_strict_news_bot({
             "PINNED_EVENT": confirmed_event,
             "BREAKING_RUN_MODE": mode,
             "POST_TO_SNAPCHAT": "0",
             "DRY_RUN": "1",
         })
+        if rc == 0 and breaking_watch.PERSIST_REVIEW_STATE:
+            _record_manual_review_delivery(now, state, fingerprint)
+        return rc
 
     _install_quiet_notifications()
     _install_trusted_verification_rule()
