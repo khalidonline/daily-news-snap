@@ -131,12 +131,12 @@ city_visual_v3.configure(sb)
 # is a previously reviewed local asset assigned to one specific narrative beat.
 _CURATED_FRAME_VISUALS = {
     "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": (
-        (("قبل الانهيار: قروض بلا حدود",), "foreclosure-2008.jpg"),
-        (("سبتمبر 2008: الشرخ الأول",), "targeted-2008-nyse-sept8.jpg"),
-        (("15 سبتمبر: سقوط بنك عملاق",), "lehman-2008.jpg"),
-        (("الثمن: ملايين بلا وظائف",), "targeted-2008-nyse-trading-floor.jpg"),
-        (("خطة الإنقاذ الكبرى",), "targeted-2008-wall-street-october.jpg"),
-        (("ما لم يعد كما كان",), "targeted-2008-nyse-oct23.jpg"),
+        (("قبل الانهيار: قروض بلا حدود", "فقاعة لا تنفجر"), "foreclosure-2008.jpg"),
+        (("سبتمبر 2008: الشرخ الأول", "أول شرخ"), "targeted-2008-nyse-sept8.jpg"),
+        (("15 سبتمبر: سقوط بنك عملاق", "سقوط ليمان براذرز"), "lehman-2008.jpg"),
+        (("الثمن: ملايين بلا وظائف", "ثمن الذعر"), "targeted-2008-nyse-trading-floor.jpg"),
+        (("خطة الإنقاذ الكبرى", "من القاع إلى القمة"), "targeted-2008-wall-street-october.jpg"),
+        (("ما لم يعد كما كان", "القواعد التي تغيّرت"), "targeted-2008-nyse-oct23.jpg"),
     ),
     "قصة تأسيس مؤسسة النقد ساما": (
         (("نقود من فضة", "فضة فقط"), "silver-riyal.png"),
