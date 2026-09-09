@@ -39,17 +39,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Authorize exact Topic recovery
+      - name: Check exact Topic recovery duplicate
         if: ${{ github.event.action == 'topic-recovery' && github.event.client_payload.brief_b64 != '' }}
+        env:
+          RECOVERY_BRIEF_B64: ${{ github.event.client_payload.brief_b64 }}
+        run: |
+          python3 topic_delivery_guard.py check \
+            --payload-b64 "$RECOVERY_BRIEF_B64" \
+            --state state/topic_telegram_deliveries.json \
+            --github-env "$GITHUB_ENV"
+
+      - name: Authorize exact Topic recovery
+        if: ${{ github.event.action == 'topic-recovery' && github.event.client_payload.brief_b64 != '' && env.RECOVERY_ALREADY_DELIVERED != '1' }}
         env:
           RECOVERY_BRIEF_B64: ${{ github.event.client_payload.brief_b64 }}
         run: |
           echo "RUN_SCHEDULED_BOT=1" >> "$GITHUB_ENV"
           echo "SCHEDULE_SLOT_ID=" >> "$GITHUB_ENV"
-          echo "exact Topic recovery — schedule gate bypassed"
+          echo "exact Topic recovery — schedule gate bypassed after delivery dedupe"
 
       - name: Resolve Topic schedule slot
-        if: ${{ env.RUN_SCHEDULED_BOT != '1' }}
+        if: ${{ env.RUN_SCHEDULED_BOT == '' }}
         env:
           REQUESTED_SLOT: ${{ github.event.client_payload.slot || inputs.scheduled_slot || '' }}
         run: |
@@ -141,7 +151,14 @@ jobs:
           IMAGE_GEN_MAX_PAID_RESPONSES: "2"
           ARK_IMAGE_USD_PER_CALL: ${{ vars.ARK_IMAGE_USD_PER_CALL }}
           FAL_IMAGE_USD_PER_CALL: ${{ vars.FAL_IMAGE_USD_PER_CALL }}
-        run: python topic_snapchat.py
+        run: |
+          mkdir -p out
+          set -o pipefail
+          python topic_snapchat.py 2>&1 | tee out/topic_run.log
+          if [ "${DRY_RUN:-}" != "1" ] && ! grep -Fq "telegram: sent" out/topic_run.log; then
+            echo "Topic card was not confirmed delivered to Telegram"
+            exit 1
+          fi
 
       - name: Verify Topic card was produced
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
@@ -149,6 +166,21 @@ jobs:
           if ! compgen -G "out/*.png" > /dev/null; then
             echo "Topic run completed without producing a card"
             exit 1
+          fi
+
+      - name: Record confirmed Topic Telegram delivery
+        if: ${{ success() && env.RUN_SCHEDULED_BOT != '0' && (github.event_name != 'workflow_dispatch' || inputs.dry_run != true) }}
+        run: |
+          python3 topic_delivery_guard.py record \
+            --topics-used state/topics_used.json \
+            --state state/topic_telegram_deliveries.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/topic_telegram_deliveries.json
+          if ! git diff --cached --quiet; then
+            git commit -m "state: confirm Topic Telegram delivery"
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
 
       - name: Model cost summary
@@ -174,6 +206,7 @@ jobs:
           path: |
             out/*.png
             out/topic_recovery_brief.json
+            out/topic_run.log
             out/model_usage.jsonl
           retention-days: 7
           if-no-files-found: ignore
