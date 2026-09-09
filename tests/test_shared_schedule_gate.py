@@ -164,7 +164,9 @@ class SharedScheduleGateTests(unittest.TestCase):
 
     def test_topic_workflow_accepts_external_slot_and_marks_it(self):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-        self.assertIn("types: [topic-schedule]", workflow)
+        self.assertIn("types: [topic-schedule, topic-recovery]", workflow)
+        self.assertIn("topic-recovery", workflow)
+        self.assertIn("TOPIC_RECOVERY_BRIEF_B64", workflow)
         self.assertIn("--bot topic", workflow)
         self.assertIn("state/topic_schedule_slots.json", workflow)
         self.assertIn("python3 shared_schedule_gate.py mark", workflow)
