@@ -1,0 +1,134 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "866ef723f7d9f53bdf2a6ff08f91d9b5299b7ba61664d6415714e83929f18865",
+      "frame_payload": {
+        "heading": "أمريكا قبل الانهيار",
+        "image_keywords": [
+          "US housing bubble 2006",
+          "American suburb houses",
+          "subprime mortgage"
+        ],
+        "image_keywords_ar": [
+          "فقاعة الإسكان الأمريكي",
+          "قروض عقارية أمريكا"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "لعقد كامل كان سوق الإسكان الأمريكي في توسع متواصل. البنوك توسّعت في منح قروض عقارية لأشخاص بلا دخل ثابت أو تاريخ ائتماني جيد، فيما عُرف بقروض subprime. ديون الرهن العقاري للأسر الأمريكية قفزت من 61% من الناتج المحلي سنة 1998 إلى 97% سنة 2006."
+      },
+      "image_source": "state/story_visuals/864ad7a40ae85390/3085ea37e492420fa2f85a3f5779d3e010dcbbee090f760cd57493695a5286ad/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "7e7226a450c767994d8e74fe06b95dd190e39c4aac5c4f9c6354545ea2d98b8c",
+      "frame_payload": {
+        "heading": "قروض تتحول لقنبلة",
+        "image_keywords": [
+          "Wall Street 2008",
+          "2008 financial crisis",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [
+          "وول ستريت",
+          "الأزمة المالية 2008"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولأن هذه القروض بيعت وأعيد تجميعها في أدوات استثمارية معقدة تُعرف بمجمّعات الرهن العقاري (MBS)، انتقلت المخاطر من البنوك المحلية إلى محافظ مؤسسات مالية حول العالم. وبحلول منتصف 2007 بدأت أزمة سيولة تضرب مؤسسات كبرى واحدة تلو الأخرى."
+      },
+      "image_source": "state/story_visuals/864ad7a40ae85390/3085ea37e492420fa2f85a3f5779d3e010dcbbee090f760cd57493695a5286ad/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "f8bbeb26bc43cac04eca5d46b7b47584e8ab814dcb61b85d3f1dba81b3980812",
+      "frame_payload": {
+        "heading": "ليلة انهيار ليمان",
+        "image_keywords": [
+          "Lehman Brothers",
+          "Lehman Brothers bankruptcy 2008",
+          "Wall Street"
+        ],
+        "image_keywords_ar": [
+          "ليمان براذرز",
+          "الأزمة المالية 2008"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا انفجرت الأزمة. في 15 سبتمبر 2008 أعلن بنك الاستثمار الأمريكي Lehman Brothers إفلاسه بأكثر من 600 مليار دولار من الأصول، أكبر إفلاس في تاريخ الولايات المتحدة. رفضت الحكومة الأمريكية إنقاذه هذه المرة، فانهارت الثقة بين البنوك بين ليلة وضحاها."
+      },
+      "image_source": "state/story_visuals/864ad7a40ae85390/3085ea37e492420fa2f85a3f5779d3e010dcbbee090f760cd57493695a5286ad/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "6d78ede2ad637e9da4d646c01fe10c37bfc0826d2992b2fa34c5c47160cea391",
+      "frame_payload": {
+        "heading": "ثمن الانهيار",
+        "image_keywords": [
+          "home foreclosure sign",
+          "unemployment line 2009",
+          "foreclosure 2008"
+        ],
+        "image_keywords_ar": [
+          "حجز الرهن العقاري",
+          "بطالة 2009"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولأن أحداً لم يوقف الانهيار، خسر الاقتصاد الأمريكي نحو 8.7 مليون وظيفة، وارتفعت نسبة البطالة من 4.7% في نوفمبر 2007 إلى 10% في أكتوبر 2009. وخسرت قرابة 10 ملايين أسرة منازلها بسبب حجز الرهن العقاري بين 2006 و2014."
+      },
+      "image_source": "state/story_visuals/864ad7a40ae85390/3085ea37e492420fa2f85a3f5779d3e010dcbbee090f760cd57493695a5286ad/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "e243d2b49577b7bc15ca9e8484487ba08d34bbabeea85c3e402e5fb7d7801bc3",
+      "frame_payload": {
+        "heading": "خطة الإنقاذ الحكومية",
+        "image_keywords": [
+          "Wall Street October 2008",
+          "New York Stock Exchange",
+          "financial bailout"
+        ],
+        "image_keywords_ar": [
+          "وول ستريت",
+          "بورصة نيويورك"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولوقف الانهيار الكامل، أقرّ الكونغرس في أكتوبر 2008 برنامج الإنقاذ المالي TARP بسقف يصل إلى 700 مليار دولار لشراء الأصول المتعثرة من البنوك. صرفت الحكومة فعلياً نحو 443 مليار دولار، واسترد معظمها لاحقاً مع فوائد."
+      },
+      "image_source": "state/story_visuals/864ad7a40ae85390/3085ea37e492420fa2f85a3f5779d3e010dcbbee090f760cd57493695a5286ad/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "dfda59dcd4676163ec3f1ea5686e831dd2424682b16cff3c424a1ed6792dde19",
+      "frame_payload": {
+        "heading": "الأثر الذي لم يُمحَ",
+        "image_keywords": [
+          "New York Stock Exchange trading floor",
+          "Wall Street sign",
+          "financial markets"
+        ],
+        "image_keywords_ar": [
+          "بورصة نيويورك",
+          "وول ستريت"
+        ],
+        "punch": "العالم غيّر قواعد البنوك كي لا تتكرر لحظة Lehman Brothers.",
+        "subject_kind": "abstract",
+        "text": "واليوم لا تزال قواعد الرقابة على البنوك حول العالم مبنية على الدرس الذي تركته تلك الأزمة، وعلى رأسها قانون Dodd-Frank الأمريكي الذي وضع رقابة صارمة على البنوك الكبرى."
+      },
+      "image_source": "state/story_visuals/864ad7a40ae85390/3085ea37e492420fa2f85a3f5779d3e010dcbbee090f760cd57493695a5286ad/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "3085ea37e492420fa2f85a3f5779d3e010dcbbee090f760cd57493695a5286ad",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_READY",
+  "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟"
+}
