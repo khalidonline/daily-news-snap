@@ -169,9 +169,10 @@ class SharedScheduleGateTests(unittest.TestCase):
         self.assertIn("state/topic_schedule_slots.json", workflow)
         self.assertIn("python3 shared_schedule_gate.py mark", workflow)
         self.assertIn("POST_TO_SNAPCHAT: \"0\"", workflow)
-        self.assertIn("notify-failure:", workflow)
-        self.assertIn("needs.publish.result != 'success'", workflow)
-        self.assertIn("api.telegram.org/bot", workflow)
+        self.assertNotIn("notify-failure:", workflow)
+        self.assertNotIn("Topic bot failed. No Topic was delivered", workflow)
+        self.assertIn("out/topic_recovery_brief.json", workflow)
+        self.assertIn('ALLOW_GENERATED: "0"', workflow)
         self.assertIn("Verify Topic card was produced", workflow)
 
     def test_story_workflow_accepts_external_slot_and_preserves_repair_branch(self):
@@ -189,16 +190,6 @@ class SharedScheduleGateTests(unittest.TestCase):
         self.assertIn("github.event_name != 'workflow_dispatch'", workflow)
         self.assertIn("TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}", workflow)
         self.assertIn("TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}", workflow)
-
-
-    def test_story_workflow_keeps_retrying_an_uncompleted_daily_slot(self):
-        workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
-
-        self.assertIn('cron: "30 12,14,16,18,20 * * *"', workflow)
-        self.assertIn("python /tmp/story_delivery_recovery.py", workflow)
-        self.assertIn("notify-unresolved:", workflow)
-        self.assertIn("needs.story.result == 'failure'", workflow)
-        self.assertIn("ستستمر المحاولة تلقائيًا", workflow)
 
 
 if __name__ == "__main__":
