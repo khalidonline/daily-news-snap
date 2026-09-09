@@ -1,5 +1,6 @@
 import os
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 from unittest import mock
 
@@ -79,6 +80,55 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         entry.run()
         watch.assert_not_called()
         self.assertEqual("repair_visual", call.call_args.kwargs["env"]["BREAKING_RUN_MODE"])
+
+    @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": EVENT}, clear=False)
+    @mock.patch.object(entry.breaking_watch, "save_state")
+    @mock.patch.object(entry.breaking_watch, "load_state")
+    @mock.patch.object(entry.breaking_watch, "ksa_now")
+    @mock.patch.object(entry.subprocess, "call")
+    def test_manual_recovery_skips_event_already_delivered_today(
+        self, call, ksa_now, load_state, save_state
+    ):
+        now = datetime(2026, 9, 9, 21, 0, tzinfo=timezone.utc)
+        ksa_now.return_value = now
+        load_state.return_value = {
+            "date": now.date().isoformat(),
+            "event_fp": entry.breaking_watch.event_fp(EVENT),
+            "reviewed": True,
+            "stamps": ["earlier-delivery"],
+        }
+
+        self.assertEqual(0, entry.run())
+
+        call.assert_not_called()
+        save_state.assert_not_called()
+
+    @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": EVENT}, clear=False)
+    @mock.patch.object(entry.breaking_watch, "ksa_stamp", return_value="delivery-stamp")
+    @mock.patch.object(entry.breaking_watch, "save_state")
+    @mock.patch.object(entry.breaking_watch, "load_state")
+    @mock.patch.object(entry.breaking_watch, "ksa_now")
+    @mock.patch.object(entry.subprocess, "call", return_value=0)
+    def test_successful_manual_recovery_records_review_delivery(
+        self, call, ksa_now, load_state, save_state, _ksa_stamp
+    ):
+        now = datetime(2026, 9, 9, 21, 0, tzinfo=timezone.utc)
+        ksa_now.return_value = now
+        load_state.return_value = {
+            "date": now.date().isoformat(),
+            "event_fp": entry.breaking_watch.event_fp(EVENT),
+            "reviewed": False,
+            "stamps": [],
+        }
+
+        self.assertEqual(0, entry.run())
+
+        call.assert_called_once()
+        saved = save_state.call_args.args[0]
+        self.assertTrue(saved["reviewed"])
+        self.assertEqual(saved["event_fp"], entry.breaking_watch.event_fp(EVENT))
+        self.assertEqual(saved["stamps"], ["delivery-stamp"])
+        self.assertEqual(saved["lock_at"], "")
 
     def test_workflow_defaults_manual_runs_to_visual_repair(self):
         workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
