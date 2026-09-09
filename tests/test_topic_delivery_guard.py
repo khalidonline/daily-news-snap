@@ -26,8 +26,7 @@ class TopicDeliveryGuardTests(unittest.TestCase):
 
             duplicate = guard.check_recovery(
                 self.payload("الطاقة المتجددة"), state, env,
-                now=datetime(2026, 9, 9, 17, 0, tzinfo=timezone.utc)
-                if False else guard.DEFAULT_COOLDOWN_DAYS,
+                now=datetime(2026, 9, 9, 17, 0, tzinfo=timezone.utc),
             )
 
             self.assertTrue(duplicate)
@@ -42,6 +41,7 @@ class TopicDeliveryGuardTests(unittest.TestCase):
             env = root / "github_env"
             duplicate = guard.check_recovery(
                 self.payload("موضوع لم يصل"), state, env,
+                now=datetime(2026, 9, 9, 17, 0, tzinfo=timezone.utc),
             )
             self.assertFalse(duplicate)
             self.assertEqual(env.read_text(encoding="utf-8"),
