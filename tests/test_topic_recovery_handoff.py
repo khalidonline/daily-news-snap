@@ -1,4 +1,5 @@
 import json
+import base64
 import tempfile
 import unittest
 from pathlib import Path
@@ -29,6 +30,33 @@ class TopicRecoveryHandoffTests(unittest.TestCase):
                 "slot — no topic card: none had a usable photo"
             )
         sender.assert_not_called()
+
+    def test_recovery_payload_reuses_exact_brief_without_research(self):
+        brief = {
+            "title": "العنوان نفسه",
+            "body": "النص نفسه",
+            "takeaway": "الخلاصة نفسها",
+            "source_url": "https://example.com/source",
+            "image_queries": ["exact subject"],
+            "image_queries_ar": ["الموضوع نفسه"],
+        }
+        encoded = base64.b64encode(json.dumps({
+            "topic": "الموضوع المختار",
+            "brief": brief,
+        }, ensure_ascii=False).encode("utf-8")).decode("ascii")
+        recovered = topic_bot.load_topic_recovery_handoff(encoded)
+        self.assertEqual(recovered, {"topic": "الموضوع المختار", "brief": brief})
+
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch.object(topic_bot, "OUT_DIR", Path(tmp)), \
+                patch.object(topic_bot, "research") as research, \
+                patch.object(topic_bot, "fetch_local_photo", return_value=("hero.jpg", None)):
+            actual, photo, _credit = topic_bot.build_card(
+                recovered["topic"], recovered["brief"]
+            )
+        research.assert_not_called()
+        self.assertEqual(actual, brief)
+        self.assertEqual(photo, "hero.jpg")
 
 
 if __name__ == "__main__":
