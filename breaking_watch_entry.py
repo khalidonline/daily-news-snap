@@ -120,7 +120,7 @@ def run():
             "POST_TO_SNAPCHAT": "0",
             "DRY_RUN": "1",
         })
-        if rc == 0:
+        if rc == 0 and breaking_watch.PERSIST_REVIEW_STATE:
             _record_manual_review_delivery(now, state, fingerprint)
         return rc
 
