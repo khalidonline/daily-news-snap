@@ -181,6 +181,7 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
 
     def test_install_uses_full_cooldown_snapchat_brand_shared_model_and_auto_images(self):
         rendered_credits = []
+        generated_calls = []
 
         def renderer(brief, out_path, photo_path=None, photo_credit=None):
             rendered_credits.append(photo_credit)
@@ -191,6 +192,10 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
 
         def stock(*args, **kwargs):
             return None
+
+        def generated(prompt, out_path):
+            generated_calls.append((prompt, out_path))
+            return Path(out_path), "AI generated"
 
         bot = SimpleNamespace(
             COOLDOWN_DAYS=21,
@@ -213,11 +218,12 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
             fetch_loc_photo=pair,
             fetch_openverse_photo=pair,
             fetch_photo=stock,
+            fetch_generated_photo=generated,
             photo_shows=lambda photo, context: "neutral",
             recent_fallback=lambda path: "old-unrelated-photo.jpg",
             _AUTO_IMAGE_SELECTOR_INSTALLED=False,
         )
-        with patch.dict("os.environ", {}, clear=False):
+        with patch.dict("os.environ", {"ALLOW_GENERATED": "0"}, clear=False):
             install(bot)
         self.assertEqual(bot.HARD_COOLDOWN_DAYS, 21)
         self.assertEqual(bot.KICKER, "معلومة تهمك")
@@ -227,11 +233,15 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         self.assertNotIn("بلسان سعودي رسمي", bot.SYSTEM_PROMPT)
         self.assertIn("سناب شات", bot.SELECT_PROMPT)
 
-        # Topic Brief is stricter than Daily News: neutral imagery and unrelated
-        # recent-photo reuse are not valid fallbacks. A generated topic-specific
-        # image can run after the real-photo search is exhausted.
+        # Topic Brief is stricter than Daily News: neutral imagery, unrelated
+        # recent-photo reuse, and generated imagery are not valid fallbacks.
         self.assertEqual(bot.photo_shows(Path("candidate.jpg"), "topic"), "no")
         self.assertIsNone(bot.recent_fallback(Path("hero.jpg")))
+        self.assertEqual(
+            bot.fetch_generated_photo("topic prompt", Path("hero.jpg")),
+            (None, None),
+        )
+        self.assertEqual(generated_calls, [])
 
         # The bot surfaces what matters; it does not tell the follower what to do.
         self.assertIn("ليس دورك أن تعلّم", bot.SYSTEM_PROMPT)
