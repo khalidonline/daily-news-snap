@@ -74,6 +74,24 @@ class NewsVisualRecoveryTests(unittest.TestCase):
                 self.assertIsNone(logo)
                 self.assertIsNone(entity)
 
+    def test_missing_registered_logo_is_fetched_with_verified_domain(self):
+        import json
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            index = root / "index.json"
+            index.write_text(json.dumps({"anthropic.com": ["Anthropic"]}))
+            target = [{"kind": "organization", "name_en": "Anthropic"}]
+            def fetch(slug, names, require_domain=None):
+                self.assertEqual(require_domain, "anthropic.com")
+                path = root / (slug + "-current.png")
+                path.write_bytes(b"verified-logo")
+                return path
+            with patch("logo_fetch.fetch_current", side_effect=fetch) as call:
+                logo, entity = exact_logo_for_targets(target, root, index)
+            self.assertEqual(entity, "Anthropic")
+            self.assertTrue(logo.is_file())
+            call.assert_called_once()
+
     def test_unknown_organization_has_no_logo(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
