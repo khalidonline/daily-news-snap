@@ -3,6 +3,7 @@ name: Daily Story review / manual Snapchat
 on:
   schedule:
     - cron: "0 11 * * *"       # temporary fallback: 14:00 KSA daily
+    - cron: "30 12,14,16,18,20 * * *" # recover until the daily slot is confirmed
   repository_dispatch:
     types: [story-schedule, story-recovery]
   workflow_dispatch:
@@ -98,6 +99,10 @@ jobs:
             --catalog stories.txt \
             --github-env "$GITHUB_ENV"
 
+      - name: Prepare bounded Story delivery recovery
+        if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
+        run: cp story_delivery_recovery.py /tmp/story_delivery_recovery.py
+
       - name: Checkout Story repair branch
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         uses: actions/checkout@v4
@@ -140,6 +145,7 @@ jobs:
           STORY_MAX_PAID_RESPONSES: "1"
           MAX_TOKENS: ${{ github.event.action == 'story-recovery' && '32000' || '16000' }}
           STORY_AUX_MAX_PAID_RESPONSES: "24"
+          STORY_DELIVERY_MAX_ATTEMPTS: "3"
           STORY_FRAMES: "6"
           ALLOW_GENERATED: "0"
           ALLOW_STORY_GENERATION: "0"
@@ -147,7 +153,7 @@ jobs:
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_MODEL: ${{ vars.ARK_MODEL }}
-        run: python guarded_story_publish.py
+        run: python /tmp/story_delivery_recovery.py
 
       - name: Story cost summary
         if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' }}
@@ -178,3 +184,19 @@ jobs:
           git commit -m "state: complete story slot $SCHEDULE_SLOT_ID"
           git pull --rebase origin main
           git push origin HEAD:main
+
+  notify-unresolved:
+    needs: story
+    if: ${{ always() && needs.story.result == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report that automatic recovery remains active
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          text='⚠️ تعذر تسليم قصة اليوم بعد ثلاث محاولات. لم يُرسل شيء ناقص، وستستمر المحاولة تلقائيًا في موعد الاسترداد التالي.'
+          curl --fail-with-body --silent --show-error \
+            --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
+            --data-urlencode "text=$text" \
+            "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage"
