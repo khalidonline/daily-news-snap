@@ -64,9 +64,10 @@ def _append_env(path, key, value):
         handle.write(f"{key}={value}\n")
 
 
-def check_recovery(payload_b64, state_path, github_env, days=DEFAULT_COOLDOWN_DAYS):
+def check_recovery(payload_b64, state_path, github_env,
+                   days=DEFAULT_COOLDOWN_DAYS, now=None):
     topic = recovery_topic(payload_b64)
-    duplicate = delivered_recently(topic, state_path, days=days)
+    duplicate = delivered_recently(topic, state_path, days=days, now=now)
     _append_env(github_env, "RECOVERY_ALREADY_DELIVERED", "1" if duplicate else "0")
     if duplicate:
         _append_env(github_env, "RUN_SCHEDULED_BOT", "0")
