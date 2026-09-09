@@ -4,6 +4,24 @@ import story_runtime as sr
 
 
 class NearestStoryRepairTests(unittest.TestCase):
+    def test_2008_crisis_has_six_distinct_reviewed_frame_pins(self):
+        story = "قصة أزمة 2008: كيف بدأت وكيف انتهت؟"
+        cases = [
+            ({"heading": "قبل الانهيار: قروض بلا حدود"}, "foreclosure-2008.jpg"),
+            ({"heading": "سبتمبر 2008: الشرخ الأول"}, "targeted-2008-nyse-sept8.jpg"),
+            ({"heading": "15 سبتمبر: سقوط بنك عملاق"}, "lehman-2008.jpg"),
+            ({"heading": "الثمن: ملايين بلا وظائف"}, "targeted-2008-nyse-trading-floor.jpg"),
+            ({"heading": "خطة الإنقاذ الكبرى"}, "targeted-2008-wall-street-october.jpg"),
+            ({"heading": "ما لم يعد كما كان"}, "targeted-2008-nyse-oct23.jpg"),
+        ]
+        actual = []
+        for frame, expected in cases:
+            with self.subTest(expected=expected):
+                selected = sr.curated_frame_visual_filename(story, frame)
+                self.assertEqual(selected, expected)
+                actual.append(selected)
+        self.assertEqual(len(set(actual)), 6)
+
     def test_sama_curated_frame_assignments_are_specific(self):
         story = "قصة تأسيس مؤسسة النقد ساما"
         cases = [
