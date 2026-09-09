@@ -169,6 +169,142 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             self.assertIsNone(photo)
             self.assertIsNone(credit)
 
+    def test_news_uses_metadata_screened_openverse_neutral_before_dead_run(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "no", "loc": "no", "openverse": "neutral",
+            "stock": "no",
+        }, calls)
+        daily_news_fresh_runner.install_news_visual_quality_guidance(fake)
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "قراصنة يستنزفون رصيد اشتراكات مستخدمي Claude",
+                "summary": "استغل مهاجمون حسابات Claude لاستهلاك الرصيد.",
+                "takeaway": "المستخدم قد يكتشف استنزاف رصيده دون علمه.",
+                "link": "https://techcrunch.com/claude-credits",
+                "scope": "world",
+                "image_queries": ["Anthropic Claude AI"],
+                "image_queries_ar": ["أنثروبيك كلود"],
+            }]
+        })
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["أنثروبيك كلود"], ["Anthropic Claude AI"], hero,
+            )
+
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "Openverse credit")
+            self.assertEqual(hero.read_bytes(), b"openverse")
+
+    def test_named_person_recovers_with_strict_commons_portrait(self):
+        calls = []
+        fake = self.make_module({name: "no" for name in (
+            "local", "article", "spa", "commons", "loc", "openverse", "stock"
+        )}, calls)
+
+        def portrait(name, out_path):
+            calls.append(f"portrait:{name}")
+            Path(out_path).write_bytes(b"portrait")
+            return str(out_path), "Portrait credit"
+
+        fake.fetch_commons_portrait = portrait
+        daily_news_runner.remember_story_contexts({"stories": [{
+            "headline": "شخصية عامة تعلن قراراً",
+            "summary": "قرار جديد.",
+            "takeaway": "القرار يهم المتابع.",
+            "link": "https://example.com/person",
+            "scope": "world",
+            "image_queries": ["Satya Nadella"],
+            "image_queries_ar": ["ساتيا ناديلا"],
+            "visual_targets": [{
+                "kind": "person", "name_en": "Satya Nadella",
+                "name_ar": "ساتيا ناديلا",
+            }],
+        }]})
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["ساتيا ناديلا"], ["Satya Nadella"], hero
+            )
+
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "Portrait credit")
+            self.assertEqual(hero.read_bytes(), b"portrait")
+        self.assertIn("portrait:Satya Nadella", calls)
+
+    def test_named_organization_recovers_with_exact_current_logo(self):
+        calls = []
+        fake = self.make_module({name: "no" for name in (
+            "local", "article", "spa", "commons", "loc", "openverse", "stock"
+        )}, calls)
+        daily_news_runner.remember_story_contexts({"stories": [{
+            "headline": "OpenAI تعلن تحديثاً مهماً",
+            "summary": "التحديث يصل إلى المستخدمين.",
+            "takeaway": "قد يتغير استخدام الخدمة.",
+            "link": "https://example.com/openai",
+            "scope": "world",
+            "image_queries": ["OpenAI"],
+            "image_queries_ar": ["أوبن أي آي"],
+            "visual_targets": [{
+                "kind": "organization", "name_en": "OpenAI", "name_ar": ""
+            }],
+        }]})
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            hero = Path(td) / "hero.jpg"
+            photo, credit = fake.fetch_local_photo(
+                ["أوبن أي آي"], ["OpenAI"], hero
+            )
+
+            self.assertEqual(photo, str(hero))
+            self.assertEqual(credit, "OpenAI")
+            self.assertTrue(Path(str(hero) + ".exempt").exists())
+            with Image.open(hero) as rendered:
+                self.assertEqual(rendered.mode, "RGB")
+                self.assertTrue(all(channel > 230 for channel in rendered.getpixel((5, 5))))
+
+    def test_visual_targets_expand_every_live_provider_search(self):
+        calls = []
+        seen_queries = []
+        fake = self.make_module({name: "no" for name in (
+            "local", "article", "spa", "commons", "loc", "openverse", "stock"
+        )}, calls)
+
+        def commons(queries, out_path, need_saudi=None):
+            seen_queries.extend(queries)
+            return None, None
+
+        fake.fetch_commons_photo = commons
+        daily_news_runner.remember_story_contexts({"stories": [{
+            "headline": "شركة تعلن تحديثاً",
+            "summary": "تحديث لخدمة رقمية.",
+            "takeaway": "قد يتغير استخدام الخدمة.",
+            "link": "https://example.com/update",
+            "scope": "world",
+            "image_queries": ["hard event query"],
+            "image_queries_ar": ["حدث صعب"],
+            "visual_targets": [
+                {"kind": "organization", "name_en": "OpenAI", "name_ar": ""},
+                {"kind": "context", "name_en": "AI research", "name_ar": "أبحاث الذكاء الاصطناعي"},
+            ],
+        }]})
+        daily_news_runner.install_auto_image_selector(fake)
+
+        with tempfile.TemporaryDirectory() as td:
+            fake.fetch_local_photo(
+                ["حدث صعب"], ["hard event query"], Path(td) / "hero.jpg"
+            )
+
+        self.assertIn("OpenAI", seen_queries)
+        self.assertIn("AI research", seen_queries)
+
     def test_news_rejects_older_model_photo_for_numbered_product_launch(self):
         calls = []
         fake = self.make_module({
