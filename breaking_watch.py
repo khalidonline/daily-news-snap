@@ -209,6 +209,29 @@ def ksa_now():
     return datetime.now(timezone(timedelta(hours=3)))
 
 
+def _late_recovery_slot_is_valid(now):
+    """Allow a recent due slot to finish after the live watch window."""
+    raw = os.getenv("BREAKING_RECOVERY_SLOT", "").strip()
+    if not raw:
+        return False
+    try:
+        slot = datetime.fromisoformat(raw)
+    except ValueError:
+        return False
+    if slot.tzinfo is None:
+        return False
+    slot = slot.astimezone(timezone(timedelta(hours=3)))
+    now = now.astimezone(timezone(timedelta(hours=3)))
+    slot_hour = slot.hour + slot.minute / 60
+    age = now - slot
+    return (
+        slot.minute in (0, 30)
+        and slot.second == 0
+        and WATCH_START_H <= slot_hour <= 22.5
+        and timedelta(0) <= age <= timedelta(hours=6)
+    )
+
+
 def load_state():
     try:
         return json.loads(STATE_FILE.read_text(encoding="utf-8"))
@@ -582,13 +605,19 @@ def _watch():
     hour = now.hour + now.minute / 60
     # The cron schedules through 22:30 KSA, but hosted runners can start
     # late. Accept a delayed final cycle until 23:00, then stay safely off.
-    if not WATCH_START_H <= hour < WATCH_END_H:
+    late_recovery = _late_recovery_slot_is_valid(now)
+    if not WATCH_START_H <= hour < WATCH_END_H and not late_recovery:
         print(f"outside the watch window ({now:%H:%M} KSA) — exiting")
         notify(f"⚪️ {ksa_stamp()} — مراقب العاجل: خارج نافذة المراقبة "
                f"({now:%H:%M} بتوقيت السعودية؛ الجدول 08:00–22:30 "
                "مع مهلة تأخير حتى 23:00). لم يُفحص شيء — "
                "لا توجد دورة مسائية بديلة.")
         return
+    if late_recovery and not WATCH_START_H <= hour < WATCH_END_H:
+        print(
+            "late recovery accepted for scheduled slot "
+            f"{os.environ['BREAKING_RECOVERY_SLOT']}"
+        )
 
     state = load_state()
     today = now.date().isoformat()
