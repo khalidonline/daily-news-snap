@@ -136,6 +136,9 @@ jobs:
           MODEL_BOT: "news"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
           MODEL_MAX_USD_PER_RUN: "0.50"
+          # Typed visual targets can make Sonnet's first response exceed 16k.
+          # Start at the existing retry ceiling so the one-call guard can hold.
+          MAX_TOKENS: "32000"
           NEWS_MAX_PAID_RESPONSES: "1"
           # Bound paid vision checks without weakening photo requirements.
           VISION_MAX_PAID_RESPONSES: "12"
