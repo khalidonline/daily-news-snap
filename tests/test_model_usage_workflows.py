@@ -68,6 +68,7 @@ class ModelUsageWorkflowTests(unittest.TestCase):
     def test_news_limits_full_copy_and_requires_a_visual(self):
         env = self.run_env("daily", "python daily_news_fresh_runner.py")
         self.assertEqual(env["CANDIDATES"], "5")
+        self.assertEqual(env.get("MAX_TOKENS"), "32000")
         self.assertEqual(env["NEWS_MAX_PAID_RESPONSES"], "1")
         self.assertEqual(env["VISION_MAX_PAID_RESPONSES"], "12")
         self.assertEqual(env["REQUIRE_PHOTO"], "1")
