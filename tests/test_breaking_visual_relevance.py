@@ -154,6 +154,14 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
             resolver(["Kharg Island oil terminal Iran"]),
         )
 
+    def test_curated_commons_saudi_map_is_registered(self):
+        import news_bot
+        resolver = getattr(news_bot, "_curated_commons_file_titles", lambda _q: [])
+        self.assertIn(
+            "File:Saudi Arabia map-ar.png",
+            resolver(["Saudi Arabia map"]),
+        )
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()

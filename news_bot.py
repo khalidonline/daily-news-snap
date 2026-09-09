@@ -1767,6 +1767,7 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 # only ensures the verified candidate is tried before looser search results.
 _CURATED_COMMONS_FILES = (
     (("kharg", "island", "oil", "terminal"), "File:ISS005-E-11900 lrg.jpg"),
+    (("saudi", "arabia", "map"), "File:Saudi Arabia map-ar.png"),
 )
 
 
