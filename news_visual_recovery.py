@@ -87,4 +87,21 @@ def exact_logo_for_targets(targets, logos_dir, index_path):
             matches = sorted(logos_dir.glob(f"{key}.*"))
         if matches:
             return matches[0], canonical_alias
+        # Only registered canonical domains may authorize an online lookup.
+        # Never derive a domain from model output or an ambiguous alias.
+        if re.fullmatch(r"[a-z0-9-]+(?:\.[a-z0-9-]+)+", key):
+            import logo_fetch
+            try:
+                old_dir = logo_fetch.LOGOS_DIR
+                logo_fetch.LOGOS_DIR = logos_dir
+                logos_dir.mkdir(parents=True, exist_ok=True)
+                fetched = logo_fetch.fetch_current(
+                    key, [canonical_alias], require_domain=key
+                )
+                if fetched and Path(fetched).is_file():
+                    return Path(fetched), canonical_alias
+            except Exception as exc:
+                print(f"  ! verified logo lookup failed for {key}: {exc}")
+            finally:
+                logo_fetch.LOGOS_DIR = old_dir
     return None, None
