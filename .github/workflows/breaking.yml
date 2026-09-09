@@ -88,6 +88,7 @@ jobs:
           POST_TO_SNAPCHAT: "0"
           CONFIRMED_BREAKING_EVENT: ${{ github.event.client_payload.confirmed_event || inputs.confirmed_event || '' }}
           BREAKING_RUN_MODE: ${{ github.event.client_payload.mode || inputs.mode || 'new_event' }}
+          BREAKING_RECOVERY_SLOT: ${{ github.event.client_payload.slot || '' }}
           MEDIA_MODE: "github"
           MONTHLY_POST_LIMIT: "145"
           BRIEF_TITLE: "ملخص تنفيذي - أعمال وتقنية"
