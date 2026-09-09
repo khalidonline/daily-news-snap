@@ -173,6 +173,6 @@
 "takeaway": "...", "source": "...", "item": 0, "scope": "world", "snap_score": 0,
 "snap_signals": ["saudi_relevance", "practical_impact"], "image_queries": ["...", "...", "..."],
 "image_queries_ar": ["...", "..."], "visual_targets": [
-{"kind": "organization", "name_en": "OpenAI", "name_ar": ""},
-{"kind": "context", "name_en": "AI research", "name_ar": "أبحاث الذكاء الاصطناعي"}
+{{"kind": "organization", "name_en": "OpenAI", "name_ar": ""}},
+{{"kind": "context", "name_en": "AI research", "name_ar": "أبحاث الذكاء الاصطناعي"}}
 ]}}]}}
