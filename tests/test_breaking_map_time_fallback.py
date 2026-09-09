@@ -9,6 +9,7 @@ class BreakingMapFallbackTests(unittest.TestCase):
         fake_news = types.ModuleType("news_bot")
         fake_news.PINNED_EVENT = event
         fake_news.looks_like_a_graphic = lambda path: True
+        fake_news._commons_safe = lambda _page, _info: False
         sys.modules["news_bot"] = fake_news
 
         fake_base = types.ModuleType("breaking_news_runner")
@@ -36,7 +37,13 @@ class BreakingMapFallbackTests(unittest.TestCase):
         calls = []
 
         def commons(queries, out_path, **kwargs):
-            calls.append((queries, kwargs, bot.looks_like_a_graphic("x")))
+            calls.append((
+                queries,
+                kwargs,
+                bot.looks_like_a_graphic("x"),
+                bot._commons_safe({"title": "File:Saudi Arabia map-ar.png"}, {}),
+                bot._commons_safe({"title": "blocked"}, {}),
+            ))
             if len(calls) == 1:
                 return None, None
             return "map.png", "Wikimedia Commons"
@@ -48,7 +55,10 @@ class BreakingMapFallbackTests(unittest.TestCase):
         self.assertEqual(credit, "خريطة توضيحية / Wikimedia Commons")
         self.assertEqual(calls[1][0], ["Saudi Arabia map"])
         self.assertFalse(calls[1][2])
+        self.assertTrue(calls[1][3])
+        self.assertFalse(calls[1][4])
         self.assertTrue(bot.looks_like_a_graphic("x"))
+        self.assertFalse(bot._commons_safe({"title": "blocked"}, {}))
 
     def test_visual_prompt_explicitly_allows_map_for_multicity_saudi_security_event(self):
         mod, _, base = self._load("هجوم على منشآت في جيزان ونجران")

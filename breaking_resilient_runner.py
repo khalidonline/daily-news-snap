@@ -23,6 +23,7 @@ _SEVERE_SECURITY_RE = re.compile(
     r"\b(?:attack|missile|drone|injur|killed|explosion|strike|facility|airport|base|defen[cs]e)\w*\b)",
     re.IGNORECASE,
 )
+_SAUDI_MAP_TITLE = "File:Saudi Arabia map-ar.png"
 
 _VISUAL_FALLBACK_RULE = """
 
@@ -63,8 +64,15 @@ def install_resilient_visual_fallback(bot=news_bot):
 
         print("    breaking visual fallback: trying contextual Saudi map")
         graphic_check = getattr(bot, "looks_like_a_graphic", None)
+        commons_safe = getattr(bot, "_commons_safe", None)
         if callable(graphic_check):
             bot.looks_like_a_graphic = lambda _path: False
+        if callable(commons_safe):
+            def allow_exact_saudi_map(page, info):
+                if page.get("title") == _SAUDI_MAP_TITLE:
+                    return True
+                return commons_safe(page, info)
+            bot._commons_safe = allow_exact_saudi_map
         try:
             # Maps are intentionally graphics. Commons still enforces licence,
             # download integrity and recent-use checks; the strict breaking
@@ -82,6 +90,8 @@ def install_resilient_visual_fallback(bot=news_bot):
         finally:
             if callable(graphic_check):
                 bot.looks_like_a_graphic = graphic_check
+            if callable(commons_safe):
+                bot._commons_safe = commons_safe
 
     bot.fetch_commons_photo = commons_with_context_fallback
 
