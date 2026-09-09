@@ -106,13 +106,16 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         save_state.assert_not_called()
 
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": EVENT}, clear=False)
+    @mock.patch.object(
+        entry.breaking_watch, "PERSIST_REVIEW_STATE", True, create=True
+    )
     @mock.patch.object(entry.breaking_watch, "ksa_stamp", return_value="delivery-stamp")
     @mock.patch.object(entry.breaking_watch, "save_state")
     @mock.patch.object(entry.breaking_watch, "load_state")
     @mock.patch.object(entry.breaking_watch, "ksa_now")
     @mock.patch.object(entry.subprocess, "call", return_value=0)
     def test_successful_manual_recovery_records_review_delivery(
-        self, call, ksa_now, load_state, save_state, _ksa_stamp
+        self, call, ksa_now, load_state, save_state, _ksa_stamp, _persist_review
     ):
         now = datetime(2026, 9, 9, 21, 0, tzinfo=timezone.utc)
         ksa_now.return_value = now
