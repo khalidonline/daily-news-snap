@@ -1,17 +1,5 @@
 [
  {
-  "story": "lucidmotors",
-  "name": "شركة بطاريات قررت أن تصنع سيارة",
-  "reason": "no_logo_insufficient_visuals",
-  "at": "2026-08-25T20:16:19.964109"
- },
- {
-  "story": "lucid",
-  "name": "كيف صار للسعودية مصنع سيارات",
-  "reason": "no_logo_insufficient_visuals",
-  "at": "2026-08-25T20:23:39.436307"
- },
- {
   "story": "قصة الرياض: من بلدة مسورة إلى عاصمة اقتصادية",
   "name": "الرياض: بلدة داخل سور من طين",
   "reason": "no_logo_insufficient_visuals",
@@ -160,5 +148,11 @@
   "name": "المعلم الذي رُفض 30 مرة وبنى Alibaba",
   "reason": "no_logo_insufficient_visuals",
   "at": "2026-09-08T05:06:16.793157"
+ },
+ {
+  "story": "قصة أزمة 2008: كيف بدأت وكيف انتهت؟",
+  "name": "أزمة 2008: كيف بدأت وكيف انتهت؟",
+  "reason": "no_logo_insufficient_visuals",
+  "at": "2026-09-09T13:53:09.061589"
  }
 ]
