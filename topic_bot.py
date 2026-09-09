@@ -1090,11 +1090,31 @@ def render_topic(brief, out_path, photo_path=None, photo_credit=None):
 
 # --------------------------------------------------------------------------
 
+def save_topic_recovery_handoff(topic, brief):
+    """Persist the paid editorial result before any visual work can fail."""
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    path = OUT_DIR / "topic_recovery_brief.json"
+    pending = path.with_suffix(".json.tmp")
+    pending.write_text(
+        json.dumps({"topic": topic, "brief": brief}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    pending.replace(path)
+    print(f"    recovery handoff: {path}")
+    return path
+
+
+def report_recoverable_topic_failure(message):
+    """Keep routine recovery failures in logs; the delivery watch owns retries."""
+    print(f"  ! recoverable Topic failure retained for delivery watch: {message}")
+
+
 def build_card(topic):
     """Research one topic and find it a photo.
     Returns (brief, photo, credit) — photo is None if nothing was found."""
     print(f"1/3 researching: {topic}")
     brief = research(topic)
+    save_topic_recovery_handoff(topic, brief)
     print(f"    {brief['title']}")
     warn_about_bare_numbers(brief)
     print(f"    body:     {brief.get('body', '')[:80]}...")
@@ -1177,8 +1197,10 @@ def main():
     if photo is None and REQUIRE_PHOTO and IMAGE_SOURCE != "none":
         print(f"  ! tried {len(tried)} topic(s) and found no photo — "
               "not publishing a bare card.")
-        notify(f"⚠️ {ksa_stamp()} — no topic card: tried {len(tried)} "
-               "topic(s) and none had a usable photo")
+        report_recoverable_topic_failure(
+            f"{ksa_stamp()} — no topic card: tried {len(tried)} topic(s) "
+            "and none had a usable photo"
+        )
         return
 
     print("3/3 rendering card...")
