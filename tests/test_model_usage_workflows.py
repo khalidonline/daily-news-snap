@@ -15,7 +15,7 @@ class ModelUsageWorkflowTests(unittest.TestCase):
             step["env"]
             for job in jobs
             for step in job["steps"]
-            if step.get("run") == command
+            if command in step.get("run", "")
         )
 
     def test_primary_bot_workflows_publish_usage_summaries_and_artifacts(self):
