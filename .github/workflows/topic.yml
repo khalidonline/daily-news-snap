@@ -92,7 +92,7 @@ jobs:
           SCORE_TRIGGER: ${{ vars.SCORE_TRIGGER }}
           SCORE_SEASON: ${{ vars.SCORE_SEASON }}
           SCORE_MONTHLY: ${{ vars.SCORE_MONTHLY }}
-          ALLOW_GENERATED: "1"
+          ALLOW_GENERATED: "0"
           IMAGE_GEN: "byteplus"
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_URL: ${{ vars.ARK_URL }}
@@ -162,23 +162,7 @@ jobs:
           name: topic-card
           path: |
             out/*.png
+            out/topic_recovery_brief.json
             out/model_usage.jsonl
           retention-days: 7
           if-no-files-found: ignore
-
-  notify-failure:
-    if: ${{ always() && needs.publish.result != 'success' }}
-    needs: publish
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Telegram that Topic failed
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          curl --fail --silent --show-error \
-            --request POST \
-            "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=⚠️ Topic bot failed. No Topic was delivered. Run: ${RUN_URL}"
