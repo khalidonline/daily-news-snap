@@ -210,8 +210,19 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as raised:
                 runner.run_bot(bot)
         self.assertEqual(raised.exception.code, runner.BREAKING_VISUAL_EXIT)
-        self.assertTrue(bot._notices)
-        self.assertIn("صورة", bot._notices[-1])
+        self.assertEqual([], bot._notices)
+
+
+    def test_recoverable_visual_no_card_notice_stays_internal(self):
+        runner = self.runner()
+        bot = self.fake_bot()
+        runner.install_recovery_notification_filter(bot)
+        bot.notify(
+            "⚠️ slot — no card: visual recovery infrastructure failed for: event"
+        )
+        self.assertEqual([], bot._notices)
+        bot.notify("[DRY RUN] would have posted: delivered", "card.png")
+        self.assertEqual(["[DRY RUN] would have posted: delivered"], bot._notices)
 
     def test_review_mode_no_photo_also_aborts_instead_of_false_success(self):
         runner = self.runner()

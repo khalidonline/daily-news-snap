@@ -332,13 +332,25 @@ def install_strict_visual_gate(bot):
     return state
 
 
+def install_recovery_notification_filter(bot):
+    """Keep recoverable visual misses in logs until the watch resolves them."""
+    original = getattr(bot, "notify", None)
+    if not callable(original):
+        return
+
+    def notify(text, *args, **kwargs):
+        message = str(text)
+        if "no card: visual recovery infrastructure failed" in message:
+            print("  recoverable Breaking visual failure retained for delivery watch")
+            return None
+        return original(text, *args, **kwargs)
+
+    bot.notify = notify
+
+
 def _abort_no_visual(bot, event, state):
     if not state.get("notified"):
-        bot.notify(
-            f"🚨⏸️ {bot.ksa_stamp()} — تأكد الحدث العاجل لكن لم يُنشر: "
-            "لم توجد صورة مرتبطة بالحدث بما يكفي\n"
-            f"{event[:150]}"
-        )
+        print("  recoverable Breaking visual failure retained for delivery watch")
         state["notified"] = True
     print("  ! confirmed breaking event withheld — no sufficiently relevant visual")
     raise SystemExit(BREAKING_VISUAL_EXIT)
@@ -352,6 +364,7 @@ def run_bot(bot=news_bot):
 
     mode = os.getenv("BREAKING_RUN_MODE", "new_event").strip() or "new_event"
     install_editorial_cache(bot, event, mode)
+    install_recovery_notification_filter(bot)
     state = install_strict_visual_gate(bot)
     try:
         result = bot.main()
