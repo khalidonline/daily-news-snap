@@ -287,6 +287,24 @@ class BreakingWatchClassifierJsonTests(unittest.TestCase):
 
 
 class BreakingWatchWindowTests(unittest.TestCase):
+    def test_late_recovery_uses_its_due_slot_instead_of_wall_clock_window(self):
+        now = datetime(
+            2026, 9, 9, 23, 28,
+            tzinfo=timezone(timedelta(hours=3)),
+        )
+        with patch.dict(
+                "os.environ",
+                {"BREAKING_RECOVERY_SLOT": "2026-09-09T22:00:00+03:00"},
+                clear=False,
+        ), patch.object(breaking_watch, "ksa_now", return_value=now), \
+                patch.object(breaking_watch, "load_state", return_value={}), \
+                patch.object(
+                    breaking_watch, "feed_fresh_items", return_value=([], True)
+                ) as feed, \
+                patch.object(breaking_watch, "notify"):
+            breaking_watch._watch()
+        feed.assert_called_once_with()
+
     def test_delayed_1930_schedule_is_still_checked_at_1940(self):
         now = datetime(2026, 8, 29, 19, 40, tzinfo=timezone.utc)
         with patch.object(breaking_watch, "ksa_now", return_value=now), \
