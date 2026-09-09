@@ -191,5 +191,15 @@ class SharedScheduleGateTests(unittest.TestCase):
         self.assertIn("TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}", workflow)
 
 
+    def test_story_workflow_keeps_retrying_an_uncompleted_daily_slot(self):
+        workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
+
+        self.assertIn('cron: "30 12,14,16,18,20 * * *"', workflow)
+        self.assertIn("python /tmp/story_delivery_recovery.py", workflow)
+        self.assertIn("notify-unresolved:", workflow)
+        self.assertIn("needs.story.result == 'failure'", workflow)
+        self.assertIn("ستستمر المحاولة تلقائيًا", workflow)
+
+
 if __name__ == "__main__":
     unittest.main()
