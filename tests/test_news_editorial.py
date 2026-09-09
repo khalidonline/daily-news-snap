@@ -343,6 +343,10 @@ class DailyNewsRunnerTests(unittest.TestCase):
         self.assertIn("لا تستبدله بخبر أضعف لأن صورته أسهل", SYSTEM_PROMPT)
         self.assertIn("شعاراً مطابقاً أو صورة شخصية مؤكدة", SYSTEM_PROMPT)
 
+    def test_prompt_visual_target_example_survives_candidate_formatting(self):
+        formatted = SYSTEM_PROMPT.format(n=5)
+        self.assertIn('{"kind": "organization"', formatted)
+
     def test_remember_story_contexts_normalizes_visual_targets(self):
         import daily_news_runner
 
