@@ -1,17 +1,5 @@
 [
  {
-  "headline": "ديابي يجتاز الفحص الطبي تمهيداً للانتقال للأهلي",
-  "at": "2026-09-06T18:14:50.729574+00:00",
-  "source_link": "https://alyaum.com/articles/6681436/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A/%D8%B9%D8%A7%D8%AC%D9%84-%D8%AF%D9%8A%D8%A7%D8%A8%D9%8A-%D9%8A%D8%AC%D8%AA%D8%A7%D8%B2-%D8%A7%D9%84%D9%81%D8%AD%D8%B5-%D8%A7%D9%84%D8%B7%D8%A8%D9%8A-%D8%AA%D9%85%D9%87%D9%8A%D8%AF%D8%A7-%D9%84%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D8%A3%D9%87%D9%84%D9%8A",
-  "lane": "sports"
- },
- {
-  "headline": "أول صاروخ تجاري أوروبي بالكامل يصل للمدار بنجاح",
-  "at": "2026-09-06T20:11:26.426953+00:00",
-  "source_link": "https://theverge.com/science/990906/isar-aerospace-europe-orbital-rocket-launch",
-  "lane": "business_tech"
- },
- {
   "headline": "ثوران بركان يعطل مئات الرحلات في مطار بآسيا",
   "at": "2026-09-07T04:15:09.069905+00:00",
   "source_link": "https://cnbc.com/2026/09/07/flights-canceled-jakarta-airport-anak-krakatau-eruption-disrupts-regional-travel-volcano.html",
@@ -171,5 +159,11 @@
   "at": "2026-09-09T18:14:41.582583+00:00",
   "source_link": "https://alwatan.com.sa/article/1185356",
   "lane": "entertainment_culture"
+ },
+ {
+  "headline": "أبل ترفع أسعار آيفون 16 و17 وAir بـ100 دولار",
+  "at": "2026-09-09T20:17:23.369472+00:00",
+  "source_link": "https://techcrunch.com/2026/09/09/there-are-new-shiny-iphones-so-apple-is-making-you-pay-more-for-older-models",
+  "lane": "business_tech"
  }
 ]
