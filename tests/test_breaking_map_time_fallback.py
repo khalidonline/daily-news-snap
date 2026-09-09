@@ -1,7 +1,9 @@
 import importlib
 import sys
+import tempfile
 import types
 import unittest
+from pathlib import Path
 
 
 class BreakingMapFallbackTests(unittest.TestCase):
@@ -65,6 +67,23 @@ class BreakingMapFallbackTests(unittest.TestCase):
         mod.install_resilient_visual_prompt(base)
         self.assertIn("خريطة السعودية", base._BREAKING_VISION_PROMPT)
         self.assertIn("شعار الجهة الرسمية", base._BREAKING_VISION_PROMPT)
+
+    def test_exact_verified_saudi_map_bypasses_subjective_vision_only_for_severe_event(self):
+        mod, bot, base = self._load("هجوم على منشآت في جيزان ونجران")
+        base._breaking_photo_acceptable = lambda *_a, **_k: False
+        mod.install_exact_map_acceptance(base)
+        with tempfile.TemporaryDirectory() as td:
+            photo = Path(td) / "map.png"
+            photo.write_bytes(b"map")
+            Path(str(photo) + ".commons-title").write_text(
+                "File:Saudi Arabia map-ar.png", encoding="utf-8"
+            )
+            self.assertTrue(base._breaking_photo_acceptable(
+                bot, photo, "هجوم صاروخي على أبها وجيزان"
+            ))
+            self.assertFalse(base._breaking_photo_acceptable(
+                bot, photo, "شركة سعودية تعلن نتائجها"
+            ))
 
 
 class BreakingTimeGuidanceTests(unittest.TestCase):

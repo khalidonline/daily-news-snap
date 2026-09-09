@@ -7,6 +7,7 @@ of Saudi Arabia. This is contextual artwork, not a claimed photo of the event.
 """
 
 import re
+from pathlib import Path
 
 import breaking_news_runner as base
 import news_bot
@@ -47,6 +48,27 @@ def install_resilient_visual_prompt(module=base):
     rule = _VISUAL_FALLBACK_RULE.strip()
     if rule not in module._BREAKING_VISION_PROMPT:
         module._BREAKING_VISION_PROMPT += _VISUAL_FALLBACK_RULE
+
+
+def install_exact_map_acceptance(module=base):
+    """Accept the one verified map only where the narrow fallback applies."""
+    original = getattr(module, "_breaking_photo_acceptable", None)
+    if not callable(original):
+        return
+
+    def acceptable(bot, photo_path, event, extra_context=""):
+        try:
+            title = Path(str(photo_path) + ".commons-title").read_text(
+                encoding="utf-8"
+            ).strip()
+        except OSError:
+            title = ""
+        if title == _SAUDI_MAP_TITLE and _fallback_queries(event):
+            print("    exact verified Saudi map accepted as contextual artwork")
+            return True
+        return original(bot, photo_path, event, extra_context)
+
+    module._breaking_photo_acceptable = acceptable
 
 
 def install_resilient_visual_fallback(bot=news_bot):
@@ -98,6 +120,7 @@ def install_resilient_visual_fallback(bot=news_bot):
 
 def run():
     install_resilient_visual_prompt(base)
+    install_exact_map_acceptance(base)
     install_resilient_visual_fallback(news_bot)
     return base.run_bot(news_bot)
 
