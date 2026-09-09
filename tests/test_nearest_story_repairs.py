@@ -32,6 +32,25 @@ class NearestStoryRepairTests(unittest.TestCase):
         self.assertNotIn(None, actual)
         self.assertEqual(len(set(actual)), 6)
 
+    def test_2008_crisis_locked_september_9_brief_keeps_six_pins(self):
+        story = "قصة أزمة 2008: كيف بدأت وكيف انتهت؟"
+        headings = [
+            "أمريكا قبل الانهيار",
+            "قروض تتحول لقنبلة",
+            "ليلة انهيار ليمان",
+            "ثمن الانهيار",
+            "خطة الإنقاذ الحكومية",
+            "الأثر الذي لم يُمحَ",
+        ]
+
+        actual = [
+            sr.curated_frame_visual_filename(story, {"heading": heading})
+            for heading in headings
+        ]
+
+        self.assertNotIn(None, actual)
+        self.assertEqual(len(set(actual)), 6)
+
     def test_sama_curated_frame_assignments_are_specific(self):
         story = "قصة تأسيس مؤسسة النقد ساما"
         cases = [
