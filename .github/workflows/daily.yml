@@ -172,5 +172,6 @@ jobs:
           path: |
             out/*.png
             out/model_usage.jsonl
+            out/news_recovery_story.json
           retention-days: 7
           if-no-files-found: ignore
