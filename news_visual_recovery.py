@@ -100,6 +100,20 @@ def exact_logo_for_targets(targets, logos_dir, index_path):
                 )
                 if fetched and Path(fetched).is_file():
                     return Path(fetched), canonical_alias
+                # Acronyms may redirect to a spelled-out article title.
+                # P154 binds the logo directly to an official-domain-verified
+                # entity, avoiding fuzzy title or filename selection.
+                filename = logo_fetch.wikidata_p154_logo([canonical_alias], key)
+                if filename:
+                    title = filename if filename.startswith("File:") else "File:" + filename
+                    for _page, info in logo_fetch._commons_fileinfo([title]):
+                        url = info.get("thumburl") or info.get("url")
+                        if not url:
+                            continue
+                        dest = logos_dir / (key + "-current.png")
+                        logo_fetch._download(url, dest)
+                        if logo_fetch._renders_as_a_mark(dest):
+                            return dest, canonical_alias
             except Exception as exc:
                 print(f"  ! verified logo lookup failed for {key}: {exc}")
             finally:
