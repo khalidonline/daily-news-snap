@@ -9,20 +9,31 @@ import topic_bot
 
 
 class TopicRecoveryHandoffTests(unittest.TestCase):
-    def test_exact_recovery_bypasses_completed_schedule_slot(self):
+    def test_exact_recovery_bypasses_schedule_only_after_delivery_dedupe(self):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
 
+        self.assertIn("Check exact Topic recovery duplicate", workflow)
+        self.assertIn("topic_delivery_guard.py check", workflow)
+        self.assertIn("state/topic_telegram_deliveries.json", workflow)
         self.assertIn("Authorize exact Topic recovery", workflow)
         self.assertIn("github.event.action == 'topic-recovery'", workflow)
         self.assertIn("github.event.client_payload.brief_b64 != ''", workflow)
+        self.assertIn("env.RECOVERY_ALREADY_DELIVERED != '1'", workflow)
         self.assertIn('echo "RUN_SCHEDULED_BOT=1" >> "$GITHUB_ENV"', workflow)
         self.assertIn('echo "SCHEDULE_SLOT_ID=" >> "$GITHUB_ENV"', workflow)
-        self.assertIn("exact Topic recovery — schedule gate bypassed", workflow)
+        self.assertIn("schedule gate bypassed after delivery dedupe", workflow)
         self.assertIn(
             "- name: Resolve Topic schedule slot\n"
-            "        if: ${{ env.RUN_SCHEDULED_BOT != '1' }}",
+            "        if: ${{ env.RUN_SCHEDULED_BOT == '' }}",
             workflow,
         )
+
+    def test_workflow_requires_actual_telegram_confirmation(self):
+        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
+        self.assertIn('grep -Fq "telegram: sent" out/topic_run.log', workflow)
+        self.assertIn("Topic card was not confirmed delivered to Telegram", workflow)
+        self.assertIn("Record confirmed Topic Telegram delivery", workflow)
+        self.assertIn("topic_delivery_guard.py record", workflow)
 
     def test_selected_topic_brief_is_saved_before_visual_search(self):
         brief = {
