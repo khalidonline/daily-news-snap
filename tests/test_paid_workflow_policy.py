@@ -42,6 +42,24 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
         triggers = self.load_workflow("breaking.yml")["on"]
         self.assertIn("breaking-recovery", triggers["repository_dispatch"]["types"])
 
+    def test_breaking_recovery_forwards_and_exposes_the_exact_due_slot(self):
+        receiver = Path(".github/workflows/external-clock-receiver.yml").read_text(
+            encoding="utf-8"
+        )
+        workflow = Path(".github/workflows/breaking.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            'requested_slot="$(awk \'NF { value=$1 } END { print value }\' '
+            '"$trigger_path")"',
+            receiver,
+        )
+        self.assertIn('-f "client_payload[slot]=${requested_slot}"', receiver)
+        self.assertIn(
+            "BREAKING_RECOVERY_SLOT: ${{ github.event.client_payload.slot || '' }}",
+            workflow,
+        )
+
     def test_external_clock_receiver_is_path_scoped(self):
         receiver = self.load_workflow("external-clock-receiver.yml")
         triggers = receiver["on"]["push"]
