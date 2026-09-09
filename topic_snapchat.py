@@ -217,12 +217,20 @@ def _install_topic_image_policy(bot: Any) -> None:
         bot._TOPIC_DIRECT_IMAGE_JUDGE_INSTALLED = True
 
     if hasattr(bot, "fetch_generated_photo") and not getattr(bot, "_TOPIC_TEXT_FREE_AI_INSTALLED", False):
-        if shared_news is None:
-            import news_bot as shared_news
-        bot.fetch_generated_photo = _topic_generated_photo(
-            bot.fetch_generated_photo,
-            cleaner=getattr(shared_news, "generated_image_clean", None),
-        )
+        allow_generated = os.getenv("ALLOW_GENERATED", "0").strip() == "1"
+        if allow_generated:
+            if shared_news is None:
+                import news_bot as shared_news
+            bot.fetch_generated_photo = _topic_generated_photo(
+                bot.fetch_generated_photo,
+                cleaner=getattr(shared_news, "generated_image_clean", None),
+            )
+        else:
+            # topic_bot historically called its generator unconditionally after
+            # exhausting real-photo providers. Enforce the workflow's explicit
+            # ALLOW_GENERATED=0 policy at the provider boundary so the existing
+            # REQUIRE_PHOTO gate fails closed instead of shipping synthetic art.
+            bot.fetch_generated_photo = lambda _prompt, _out_path: (None, None)
         bot._TOPIC_TEXT_FREE_AI_INSTALLED = True
 
     bot.recent_fallback = lambda _hero: None
