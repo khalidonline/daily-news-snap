@@ -121,6 +121,42 @@ def install_editorial_cache(bot, event, mode):
     bot.summarize = cached_summarize
 
 
+def install_visible_event_time(bot, event):
+    """Keep the event-time marker visible even when cached copy omits it."""
+    original = getattr(bot, "summarize", None)
+    if not callable(original):
+        return
+    marker = "وقت الحدث:"
+    if marker in str(event):
+        detail = str(event).split(marker, 1)[1].strip()
+        stamp = f"{marker} {detail}"[:140]
+    else:
+        stamp = f"{marker} غير محدد"
+
+    def stamped_summarize(*args, **kwargs):
+        result = original(*args, **kwargs)
+        if not isinstance(result, dict):
+            return result
+        stories = result.get("stories")
+        if isinstance(stories, list):
+            for story in stories:
+                if not isinstance(story, dict):
+                    continue
+                visible = " ".join(str(story.get(key, "")) for key in (
+                    "headline", "summary", "takeaway"
+                ))
+                if marker not in visible:
+                    summary = str(story.get("summary", "")).strip()
+                    story["summary"] = "\n".join(filter(None, (summary, stamp)))
+        elif marker not in " ".join(str(result.get(key, "")) for key in (
+                "title", "body", "punch")):
+            body = str(result.get("body", "")).strip()
+            result["body"] = "\n".join(filter(None, (body, stamp)))
+        return result
+
+    bot.summarize = stamped_summarize
+
+
 def _visual_cache_key(photo_path, context):
     digest = hashlib.sha256(Path(photo_path).read_bytes()).hexdigest()
     prompt_version = hashlib.sha256(_BREAKING_VISION_PROMPT.encode("utf-8")).hexdigest()[:12]
@@ -364,6 +400,7 @@ def run_bot(bot=news_bot):
 
     mode = os.getenv("BREAKING_RUN_MODE", "new_event").strip() or "new_event"
     install_editorial_cache(bot, event, mode)
+    install_visible_event_time(bot, event)
     install_recovery_notification_filter(bot)
     state = install_strict_visual_gate(bot)
     try:

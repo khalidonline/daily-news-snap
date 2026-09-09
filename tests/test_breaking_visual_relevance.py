@@ -244,6 +244,38 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
 
 
 class BreakingEditorialCacheTests(unittest.TestCase):
+    def test_event_time_is_forced_into_cached_story_summary(self):
+        import breaking_news_runner as runner
+        cached = {
+            "stories": [{
+                "headline": "هجوم حوثي جنوب السعودية",
+                "summary": "أصيب 73 مدنياً",
+                "takeaway": "رُفعت حالة التأهب",
+            }]
+        }
+        bot = SimpleNamespace(summarize=lambda *_a, **_k: cached)
+        runner.install_visible_event_time(
+            bot,
+            "هجوم مؤكد — وقت الحدث: غير محدد (8 سبتمبر 2026)",
+        )
+        result = bot.summarize([])
+        self.assertIn(
+            "وقت الحدث: غير محدد (8 سبتمبر 2026)",
+            result["stories"][0]["summary"],
+        )
+
+    def test_existing_event_time_is_not_duplicated(self):
+        import breaking_news_runner as runner
+        cached = {"stories": [{"summary": "وقت الحدث: 18:30 بتوقيت السعودية"}]}
+        bot = SimpleNamespace(summarize=lambda *_a, **_k: cached)
+        runner.install_visible_event_time(
+            bot, "حدث مؤكد — وقت الحدث: 18:30 بتوقيت السعودية"
+        )
+        result = bot.summarize([])
+        self.assertEqual(
+            1, result["stories"][0]["summary"].count("وقت الحدث:")
+        )
+
     def test_visual_repair_reuses_editorial_without_calling_model(self):
         import breaking_news_runner as runner
         event = "قرار سعودي عاجل مؤكد الآن"
