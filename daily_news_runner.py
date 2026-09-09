@@ -17,6 +17,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from news_visual_recovery import exact_logo_for_targets, normalize_visual_targets
+
 from PIL import Image
 
 from news_editorial import (
@@ -67,6 +69,8 @@ _NEUTRAL_PRIORITY = {
     "stock": 6,
 }
 _STORY_CONTEXTS = {}
+_LOGOS_DIR = Path("images/logos")
+_LOGOS_INDEX = _LOGOS_DIR / "index.json"
 
 _PRODUCT_CLASS_WORDS = {
     "android", "camera", "fold", "foldable", "galaxy", "iphone", "ipad",
@@ -76,6 +80,10 @@ _PRODUCT_CLASS_WORDS = {
 _NUMBERED_PRODUCT_WORDS = _PRODUCT_CLASS_WORDS | {
     "apple", "google", "honor", "huawei", "meta", "oneplus", "oppo",
     "samsung", "xiaomi",
+}
+_OPENVERSE_NEUTRAL_DIGITAL_SUBJECTS = {
+    "ai", "anthropic", "app", "application", "artificial", "claude",
+    "intelligence", "meta", "muse", "openai", "platform", "software",
 }
 
 SNAPCHAT_SIGNALS = frozenset({
@@ -144,10 +152,9 @@ def _query_key(values):
     )
 
 
-def _commons_misses_numbered_product_model(query_text, commons_title):
-    """True when a product photo omits the requested numbered model."""
+def _numbered_product_request(query_text):
     query_tokens = re.findall(r"[A-Za-z0-9]+", str(query_text).casefold())
-    requested = {
+    return {
         token for index, token in enumerate(query_tokens)
         if token.isdigit() and len(token) <= 3 and any(
             query_tokens[nearby] in _NUMBERED_PRODUCT_WORDS
@@ -155,6 +162,11 @@ def _commons_misses_numbered_product_model(query_text, commons_title):
             if nearby != index
         )
     }
+
+
+def _commons_misses_numbered_product_model(query_text, commons_title):
+    """True when a product photo omits the requested numbered model."""
+    requested = _numbered_product_request(query_text)
     if not requested:
         return False
     title_tokens = re.findall(r"[A-Za-z0-9]+", str(commons_title).casefold())
@@ -195,7 +207,9 @@ def remember_story_contexts(result):
         if not any(key):
             continue
         if _story_context_text(story):
-            _STORY_CONTEXTS[key] = dict(story)
+            remembered = dict(story)
+            remembered["visual_targets"] = normalize_visual_targets(story)
+            _STORY_CONTEXTS[key] = remembered
     return result
 
 
@@ -631,6 +645,24 @@ def _promote_candidate(candidate, hero):
     return str(hero)
 
 
+def _promote_exact_logo(logo_path, hero, entity):
+    """Place an exact logo on a clean image canvas for the card renderer."""
+    hero = Path(hero)
+    hero.parent.mkdir(parents=True, exist_ok=True)
+    with Image.open(logo_path) as source:
+        logo = source.convert("RGBA")
+        logo.thumbnail((760, 460), Image.Resampling.LANCZOS)
+        canvas = Image.new("RGBA", (1280, 960), (245, 242, 236, 255))
+        x = (canvas.width - logo.width) // 2
+        y = (canvas.height - logo.height) // 2
+        canvas.alpha_composite(logo, (x, y))
+        canvas.convert("RGB").save(hero, "JPEG", quality=94)
+    _marker(hero, ".exempt").write_text(
+        f"logo:{entity}", encoding="utf-8"
+    )
+    return str(hero)
+
+
 OFFICIAL_VISUAL_HOSTS = {
     "ndmc.gov.sa", "www.ndmc.gov.sa", "sukuk.ndmc.gov.sa",
     "mof.gov.sa", "www.mof.gov.sa",
@@ -789,8 +821,21 @@ def install_auto_image_selector(news_bot_module):
             queries_en, queries_ar)
         saudi = story.get("scope", "world") == "saudi"
         link = str(story.get("link", "") or "").strip()
-        q_en = story.get("image_queries", queries_en) or queries_en
-        q_ar = story.get("image_queries_ar", queries_ar) or queries_ar
+        targets = normalize_visual_targets(story)
+
+        def expanded_queries(original, field):
+            values = list(original if isinstance(original, (list, tuple)) else [original])
+            values.extend(target.get(field, "") for target in targets)
+            return list(dict.fromkeys(
+                str(value).strip() for value in values if str(value).strip()
+            ))
+
+        q_en = expanded_queries(
+            story.get("image_queries", queries_en) or queries_en, "name_en"
+        )
+        q_ar = expanded_queries(
+            story.get("image_queries_ar", queries_ar) or queries_ar, "name_ar"
+        )
 
         neutral = None
         recentkeep = None
@@ -802,15 +847,15 @@ def install_auto_image_selector(news_bot_module):
             candidates.append(candidate)
             return candidate
 
-        def record_recent(candidate):
+        def record_recent(candidate, credit):
             nonlocal recentkeep
             keep = _marker(candidate, ".recentkeep")
             if recentkeep is None and keep.exists():
-                recentkeep = keep
+                recentkeep = (keep, credit)
 
         def judge(name, photo, credit, candidate):
             nonlocal neutral
-            record_recent(candidate)
+            record_recent(candidate, credit)
             if not photo:
                 return None
             judge_context = context
@@ -837,6 +882,27 @@ def install_auto_image_selector(news_bot_module):
                     return None
             if verdict == "yes":
                 return (Path(photo), credit, name)
+            if verdict == "neutral" and name == "openverse":
+                # Openverse has already required the candidate's own title,
+                # tags and attribution to match the search terms, then the
+                # vision gate confirmed it was not unrelated.  Keep that
+                # metadata-screened photo as a last resort so a run does not
+                # die only because the model could not verify exact identity.
+                # Numbered products remain affirmative-only: an older model
+                # must never illustrate a newly announced one.
+                query_text = " ".join(
+                    str(item) for item in
+                    (q_en if isinstance(q_en, (list, tuple)) else [q_en])
+                )
+                query_tokens = set(re.findall(
+                    r"[A-Za-z0-9]+", query_text.casefold()
+                ))
+                if (not _numbered_product_request(query_text)
+                        and not query_tokens.intersection(_PRODUCT_CLASS_WORDS)
+                        and query_tokens.intersection(
+                            _OPENVERSE_NEUTRAL_DIGITAL_SUBJECTS
+                        )):
+                    neutral = (Path(photo), credit, name)
             if (verdict == "neutral" and name == "commons"
                     and not getattr(news_bot_module, "NEWS_REQUIRE_VERIFIED_VISUAL", False)):
                 # A neutral verdict alone does not prove topicality. Commons
@@ -979,10 +1045,45 @@ def install_auto_image_selector(news_bot_module):
             photo = originals["stock"](q_en, candidate, need_saudi=saudi)
             selected = judge("stock", photo, "Pexels" if photo else None, candidate)
 
+        portrait_fetcher = getattr(
+            news_bot_module, "fetch_commons_portrait", None
+        )
+        if selected is None and portrait_fetcher:
+            for index, target in enumerate(targets):
+                if target.get("kind") != "person":
+                    continue
+                name = target.get("name_en") or target.get("name_ar")
+                candidate = prepare(f"portrait-{index}")
+                photo, credit = portrait_fetcher(name, candidate)
+                if photo:
+                    selected = (Path(photo), credit, "portrait")
+                    print(f"      auto image recovery: exact portrait for {name}")
+                    break
+
+        if selected is None:
+            logo, entity = exact_logo_for_targets(
+                targets, _LOGOS_DIR, _LOGOS_INDEX
+            )
+            if logo:
+                result = _promote_exact_logo(logo, hero, entity)
+                for candidate in candidates:
+                    _clear_candidate(candidate)
+                print(f"      auto image recovery: exact logo for {entity}")
+                return result, entity
+
         if selected is None and neutral is not None:
             selected = neutral
-            print("      auto image: using curated Commons photo as "
-                  "topical fallback")
+            print(f"      auto image: using metadata-screened {neutral[2]} "
+                  "photo as topical fallback")
+
+        if selected is None and recentkeep is not None:
+            keep, recent_credit = recentkeep
+            _clear_candidate(hero, image=True)
+            shutil.copy2(keep, hero)
+            for candidate in candidates:
+                _clear_candidate(candidate)
+            print("      auto image recovery: reusing same-story verified photo")
+            return str(hero), recent_credit
 
         if selected is not None:
             selected_path, selected_credit, _ = selected
@@ -994,7 +1095,7 @@ def install_auto_image_selector(news_bot_module):
         # Preserve the legacy exhaustion fallback for a provider that rejected
         # an otherwise usable image only because it appeared on a recent card.
         if recentkeep is not None and not _marker(hero, ".recentkeep").exists():
-            shutil.copy2(recentkeep, _marker(hero, ".recentkeep"))
+            shutil.copy2(recentkeep[0], _marker(hero, ".recentkeep"))
         for candidate in candidates:
             _clear_candidate(candidate)
         return None, None

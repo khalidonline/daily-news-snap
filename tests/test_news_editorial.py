@@ -335,6 +335,39 @@ class NewsEditorialTests(unittest.TestCase):
 
 
 class DailyNewsRunnerTests(unittest.TestCase):
+    def test_prompt_requests_typed_visual_recovery_targets(self):
+        self.assertIn("visual_targets", SYSTEM_PROMPT)
+        for kind in ("person", "organization", "place", "object", "context"):
+            self.assertIn(kind, SYSTEM_PROMPT)
+        self.assertIn("8", SYSTEM_PROMPT)
+        self.assertIn("لا تستبدله بخبر أضعف لأن صورته أسهل", SYSTEM_PROMPT)
+        self.assertIn("شعاراً مطابقاً أو صورة شخصية مؤكدة", SYSTEM_PROMPT)
+
+    def test_remember_story_contexts_normalizes_visual_targets(self):
+        import daily_news_runner
+
+        story = {
+            "headline": "OpenAI تعلن تحديثاً",
+            "summary": "تحديث جديد لخدمة معروفة.",
+            "takeaway": "قد يتغير استخدام الخدمة.",
+            "image_queries": ["OpenAI"],
+            "image_queries_ar": ["أوبن أي آي"],
+            "visual_targets": [
+                {"kind": "organization", "name_en": "OpenAI", "name_ar": ""},
+                {"kind": "organization", "name_en": " openai ", "name_ar": ""},
+                {"kind": "guess", "name_en": "wrong", "name_ar": ""},
+            ],
+        }
+
+        daily_news_runner.remember_story_contexts({"stories": [story]})
+        remembered = daily_news_runner._story_for_queries(
+            ["OpenAI"], ["أوبن أي آي"]
+        )
+
+        self.assertEqual(remembered["visual_targets"], [{
+            "kind": "organization", "name_en": "OpenAI", "name_ar": ""
+        }])
+
     def test_post_model_validation_removes_hard_ineligible_item_even_if_ranked_first(self):
         import daily_news_runner
 

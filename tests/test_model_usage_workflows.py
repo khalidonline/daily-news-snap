@@ -65,18 +65,18 @@ class ModelUsageWorkflowTests(unittest.TestCase):
                 self.assertEqual(env[editorial_key], editorial_calls)
                 self.assertEqual(env["VISION_MAX_PAID_RESPONSES"], vision_calls)
 
-    def test_news_limits_full_copy_and_runaway_photo_checks(self):
+    def test_news_limits_full_copy_and_requires_a_visual(self):
         env = self.run_env("daily", "python daily_news_fresh_runner.py")
         self.assertEqual(env["CANDIDATES"], "5")
         self.assertEqual(env["NEWS_MAX_PAID_RESPONSES"], "1")
         self.assertEqual(env["VISION_MAX_PAID_RESPONSES"], "12")
-        self.assertEqual(env["REQUIRE_PHOTO"], "0")
+        self.assertEqual(env["REQUIRE_PHOTO"], "1")
 
-    def test_news_visual_budget_is_bounded_before_safe_text_fallback(self):
+    def test_news_visual_budget_is_bounded_while_visuals_remain_required(self):
         env = self.run_env("daily", "python daily_news_fresh_runner.py")
         vision_checks = int(env["VISION_MAX_PAID_RESPONSES"])
         self.assertLessEqual(vision_checks, 12)
-        self.assertEqual(env["REQUIRE_PHOTO"], "0")
+        self.assertEqual(env["REQUIRE_PHOTO"], "1")
 
     def test_routine_selection_and_breaking_classification_use_haiku(self):
         topic = self.run_env("topic", "python topic_snapchat.py")

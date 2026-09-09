@@ -137,6 +137,12 @@ class DailyReviewWorkflowTests(unittest.TestCase):
         self.assertIn('"model returned no news items"', self.news_runner)
         self.assertIn("install_news_notification_labels(news_bot)", self.news_runner)
 
+    def test_news_ci_runs_visual_recovery_regressions(self):
+        workflow = Path(".github/workflows/news-editorial-tests.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("tests.test_news_visual_recovery", workflow)
+
     def test_financial_news_explains_what_the_news_means(self):
         required = "في الأخبار المالية، اجعل takeaway يشرح ببساطة ماذا يعني الخبر"
         for runner in (self.news_runner, self.breaking_runner):

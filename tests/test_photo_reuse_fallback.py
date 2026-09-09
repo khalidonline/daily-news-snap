@@ -55,7 +55,7 @@ class RecentPhotoFallbackTests(unittest.TestCase):
             }]
         })
 
-    def test_recent_photo_is_not_exposed_as_legacy_fallback(self):
+    def test_same_story_recent_photo_is_reused_inside_auto_selector(self):
         fake = self.make_module()
         self.install(fake)
         self.remember("استثمارات المركزي السعودي", "sama")
@@ -63,13 +63,25 @@ class RecentPhotoFallbackTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             hero = Path(td) / "hero.jpg"
             photo, credit = fake.fetch_local_photo(["sama"], ["sama"], hero)
-            self.assertIsNone(photo)
+            self.assertEqual(photo, str(hero))
             self.assertIsNone(credit)
             self.assertFalse(Path(str(hero) + ".recentkeep").exists())
             self.assertIsNone(fake.recent_fallback(hero))
 
     def test_recent_fallback_cannot_leak_from_one_story_to_the_next(self):
         fake = self.make_module()
+        recent_only = fake.fetch_local_photo
+
+        def first_story_only(queries_ar, queries_en, out_path,
+                             respect_cooldown=True, exclude=()):
+            if "sama" not in list(queries_ar) + list(queries_en):
+                return None, None
+            return recent_only(
+                queries_ar, queries_en, out_path,
+                respect_cooldown=respect_cooldown, exclude=exclude,
+            )
+
+        fake.fetch_local_photo = first_story_only
         self.install(fake)
 
         with tempfile.TemporaryDirectory() as td:

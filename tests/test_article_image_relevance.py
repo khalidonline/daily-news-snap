@@ -28,6 +28,7 @@ class ArticleImageRelevanceRegressionTests(unittest.TestCase):
         self.assertIn("سيارات أو حافلات", fake._VISION_JUDGE)
         self.assertIn("مقدمة الصورة", fake._VISION_JUDGE)
         self.assertIn("ازدحام بصري", fake._VISION_JUDGE)
+        self.assertTrue(fake.NEWS_LOCK_TOP_STORY_VISUAL)
 
     def test_card_hides_photo_credit_but_external_caption_keeps_it(self):
         credit = "Diken81 / CC BY-SA 3.0"

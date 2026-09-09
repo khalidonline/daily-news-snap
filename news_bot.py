@@ -53,6 +53,7 @@ STORIES_PER_DAY = int(os.getenv("STORIES_PER_DAY", "1"))
 # ask for several ranked candidates so we can skip any we can't illustrate
 CANDIDATES = int(os.getenv("CANDIDATES", "5"))
 REQUIRE_PHOTO = os.getenv("REQUIRE_PHOTO", "1").strip() not in ("", "0", "false")
+NEWS_LOCK_TOP_STORY_VISUAL = False
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "30"))
 MAX_HEADLINES_TO_MODEL = 60
 
@@ -3982,6 +3983,17 @@ def post_story(caption, media_urls, card_path=None):
 
 # --------------------------------------------------------------------------
 
+def visual_story_candidates(stories):
+    """Keep legacy backups unless scheduled News locks its editorial winner."""
+    stories = list(stories or [])
+    return stories[:1] if NEWS_LOCK_TOP_STORY_VISUAL else stories
+
+
+def visual_recovery_failure_message(story):
+    headline = str((story or {}).get("headline") or "selected News story")
+    return f"visual recovery infrastructure failed for: {headline}"
+
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"    Arabic shaping via {'libraqm' if HAS_RAQM else 'arabic-reshaper'}")
@@ -4087,11 +4099,12 @@ def main():
         order.insert(0, IMAGE_SOURCE)
     print(f"    photo order: local, {', '.join(order)}")
 
-    for i, story in enumerate(stories, 1):
+    visual_stories = visual_story_candidates(stories)
+    for i, story in enumerate(visual_stories, 1):
         if IMAGE_SOURCE == "none":
             chosen = story
             break
-        print(f"    [{i}/{len(stories)}] {story['headline']}")
+        print(f"    [{i}/{len(visual_stories)}] {story['headline']}")
 
         photo, credit = _local(story)
         for name in order:
@@ -4115,10 +4128,9 @@ def main():
 
     if chosen is None:
         if REQUIRE_PHOTO:
-            print(f"  ! none of the {len(stories)} stories could be illustrated "
-                  "— not posting this run")
-            notify(f"⚠️ {ksa_stamp()} — no card: none of the "
-                   f"{len(stories)} stories had a usable photo")
+            failure = visual_recovery_failure_message(visual_stories[0])
+            print(f"  ! {failure} — not posting this run")
+            notify(f"⚠️ {ksa_stamp()} — no card: {failure}")
             return
         chosen, photo, credit = stories[0], None, None
 
