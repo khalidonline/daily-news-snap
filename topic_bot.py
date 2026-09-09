@@ -12,6 +12,7 @@ card and posted the same way as the news bot.
 Reuses the fetch/post/render plumbing from news_bot.py.
 """
 
+import base64
 import json
 import os
 import re
@@ -52,6 +53,7 @@ except ImportError as exc:
     )
 
 TOPIC = os.getenv("TOPIC", "").strip()
+TOPIC_RECOVERY_BRIEF_B64 = os.getenv("TOPIC_RECOVERY_BRIEF_B64", "").strip()
 TOPICS_FILE = Path(os.getenv("TOPICS_FILE", "topics.txt"))
 REQUESTS_FILE = Path(os.getenv("REQUESTS_FILE", "requests.txt"))
 
@@ -1104,16 +1106,36 @@ def save_topic_recovery_handoff(topic, brief):
     return path
 
 
+def load_topic_recovery_handoff(encoded=None):
+    """Decode an exact prior editorial result supplied by the delivery watch."""
+    encoded = TOPIC_RECOVERY_BRIEF_B64 if encoded is None else str(encoded).strip()
+    if not encoded:
+        return None
+    try:
+        payload = json.loads(base64.b64decode(encoded, validate=True).decode("utf-8"))
+    except Exception as exc:
+        raise SystemExit(f"Invalid Topic recovery payload: {exc}") from exc
+    topic = str(payload.get("topic", "") or "").strip()
+    brief = payload.get("brief")
+    if not topic or not isinstance(brief, dict) or not brief.get("title"):
+        raise SystemExit("Invalid Topic recovery payload: topic and brief are required")
+    return {"topic": topic, "brief": brief}
+
+
 def report_recoverable_topic_failure(message):
     """Keep routine recovery failures in logs; the delivery watch owns retries."""
     print(f"  ! recoverable Topic failure retained for delivery watch: {message}")
 
 
-def build_card(topic):
+def build_card(topic, recovered_brief=None):
     """Research one topic and find it a photo.
     Returns (brief, photo, credit) — photo is None if nothing was found."""
     print(f"1/3 researching: {topic}")
-    brief = research(topic)
+    if recovered_brief is None:
+        brief = research(topic)
+    else:
+        brief = dict(recovered_brief)
+        print("    reusing retained Topic brief — no paid editorial call")
     save_topic_recovery_handoff(topic, brief)
     print(f"    {brief['title']}")
     warn_about_bare_numbers(brief)
@@ -1175,21 +1197,24 @@ def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     tried, brief, photo, credit, topic = [], None, None, None, None
+    recovery = load_topic_recovery_handoff()
 
     for attempt in range(1, TOPIC_ATTEMPTS + 1):
-        topic = TOPIC or choose_topic(exclude=tried)
+        topic = recovery["topic"] if recovery else TOPIC or choose_topic(exclude=tried)
         if not topic:
             raise SystemExit(f"No topic given and none found in {TOPICS_FILE}")
         if attempt > 1:
             print(f"--- attempt {attempt} of {TOPIC_ATTEMPTS} ---")
 
-        brief, photo, credit = build_card(topic)
+        brief, photo, credit = build_card(
+            topic, recovery["brief"] if recovery else None
+        )
 
         if photo is not None or not REQUIRE_PHOTO or IMAGE_SOURCE == "none":
             break
 
         tried.append(topic)
-        if TOPIC or IMAGE_SOURCE == "generate":
+        if recovery or TOPIC or IMAGE_SOURCE == "generate":
             break                       # a forced topic or a generation test
         if attempt < TOPIC_ATTEMPTS:
             print(f"  ! no photo for {topic!r} — trying a different topic")
