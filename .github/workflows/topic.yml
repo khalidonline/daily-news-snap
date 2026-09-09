@@ -39,7 +39,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Authorize exact Topic recovery
+        if: ${{ github.event.action == 'topic-recovery' && github.event.client_payload.brief_b64 != '' }}
+        env:
+          RECOVERY_BRIEF_B64: ${{ github.event.client_payload.brief_b64 }}
+        run: |
+          echo "RUN_SCHEDULED_BOT=1" >> "$GITHUB_ENV"
+          echo "SCHEDULE_SLOT_ID=" >> "$GITHUB_ENV"
+          echo "exact Topic recovery — schedule gate bypassed"
+
       - name: Resolve Topic schedule slot
+        if: ${{ env.RUN_SCHEDULED_BOT != '1' }}
         env:
           REQUESTED_SLOT: ${{ github.event.client_payload.slot || inputs.scheduled_slot || '' }}
         run: |
