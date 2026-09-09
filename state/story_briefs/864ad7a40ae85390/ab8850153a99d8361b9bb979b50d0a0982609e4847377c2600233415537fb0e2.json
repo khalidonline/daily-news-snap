@@ -1,0 +1,122 @@
+{
+  "brief": {
+    "caption": "من قرض عقاري سهل إلى أكبر إفلاس في تاريخ أمريكا — كيف انهار النظام المالي العالمي في أسابيع؟",
+    "frames": [
+      {
+        "heading": "قبل الانهيار: قروض بلا حدود",
+        "image_keywords": [
+          "American suburb 2006",
+          "subprime mortgage",
+          "new home construction"
+        ],
+        "image_keywords_ar": [
+          "الرهن العقاري",
+          "أزمة الإسكان الأمريكية"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "قبل عام 2007 وسّعت البنوك الأمريكية تمويل الرهن العقاري لأي شخص تقريباً، بصرف النظر عن دخله أو تاريخه الائتماني. الجميع افترض أن أسعار البيوت لن تتوقف عن الارتفاع."
+      },
+      {
+        "heading": "سبتمبر 2008: الشرخ الأول",
+        "image_keywords": [
+          "Fannie Mae Freddie Mac",
+          "New York Stock Exchange September 2008",
+          "Wall Street trading floor"
+        ],
+        "image_keywords_ar": [
+          "فاني ماي",
+          "فريدي ماك",
+          "بورصة نيويورك"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وفي النصف الأول من 2007 انخفضت أسعار العقارات الأمريكية بشكل حاد، وتوقف كثير من المقترضين عن السداد. وبحلول 7 سبتمبر 2008 وضعت الحكومة الأمريكية عملاقي التمويل العقاري Fannie Mae وFreddie Mac تحت وصايتها، وضمنت ديونهما حتى 200 مليار دولار. لكن الأسوأ كان بعدها بأسبوع واحد."
+      },
+      {
+        "heading": "15 سبتمبر: سقوط بنك عملاق",
+        "image_keywords": [
+          "Lehman Brothers headquarters",
+          "Lehman Brothers 2008",
+          "Wall Street sign"
+        ],
+        "image_keywords_ar": [
+          "ليمان براذرز",
+          "أزمة 2008"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "وهنا تغيّر كل شيء. بنك الاستثمار الأمريكي Lehman Brothers أعلن إفلاسه بأصول 639 مليار دولار وديون 613 مليار دولار — أكبر إفلاس في تاريخ الولايات المتحدة. في ذلك اليوم فقد مؤشر داو جونز أكثر من 500 نقطة، أكبر هبوط له منذ هجمات سبتمبر 2001."
+      },
+      {
+        "heading": "الثمن: ملايين بلا وظائف",
+        "image_keywords": [
+          "home foreclosure sign 2008",
+          "unemployment line 2008",
+          "foreclosure United States"
+        ],
+        "image_keywords_ar": [
+          "الرهن العقاري",
+          "بطالة أمريكا"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولذلك تجمّد الإقراض بين البنوك حول العالم، وانهارت أسواق المال. خسر الاقتصاد الأمريكي 8.7 مليون وظيفة، وارتفعت البطالة إلى 10% بحلول أكتوبر 2009. الأسواق العالمية خسرت أكثر من 10 تريليونات دولار من قيمتها خلال أسابيع قليلة."
+      },
+      {
+        "heading": "خطة الإنقاذ الكبرى",
+        "image_keywords": [
+          "Wall Street October 2008",
+          "US Treasury Department",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [
+          "وول ستريت",
+          "وزارة الخزانة الأمريكية"
+        ],
+        "punch": "من وعد بـ700 مليار إلى فاتورة نهائية بـ31 مليار فقط.",
+        "subject_kind": "abstract",
+        "text": "وللسيطرة على الانهيار، أقرّ الكونغرس الأمريكي في أكتوبر 2008 برنامج TARP لإنقاذ النظام المالي بسقف 700 مليار دولار. انتهى البرنامج رسمياً في 30 سبتمبر 2023 بعد سداد آخر دولار منه. التكلفة النهائية على دافعي الضرائب كانت 31.1 مليار دولار فقط."
+      },
+      {
+        "heading": "ما لم يعد كما كان",
+        "image_keywords": [
+          "New York Stock Exchange October 2008",
+          "Wall Street"
+        ],
+        "image_keywords_ar": [
+          "بورصة نيويورك",
+          "وول ستريت"
+        ],
+        "punch": "أزمة بدأت بقرض سهل، غيّرت قواعد المال العالمي إلى الأبد.",
+        "subject_kind": "abstract",
+        "text": "واليوم تخضع البنوك الكبرى في أمريكا لقواعد رأسمال ورقابة صارمة فرضها قانون الإصلاح المالي Dodd-Frank، ولم تكن موجودة قبل سقوط ليمان."
+      }
+    ],
+    "image_prompt": "A quiet American suburban street lined with newly built tract houses, multiple 'For Sale' signs on front lawns, overcast lighting, no people visible, realistic photographic style, wide shot.",
+    "image_queries": [
+      "empty suburban housing development",
+      "for sale sign residential street",
+      "American suburb aerial view"
+    ],
+    "image_queries_ar": [
+      "الأزمة المالية 2008",
+      "الرهن العقاري الأمريكي"
+    ],
+    "sources": [
+      "Federal Reserve History",
+      "Congressional Budget Office (CBO)",
+      "US Government Accountability Office (GAO)",
+      "Britannica"
+    ],
+    "title": "أزمة 2008: كيف بدأت وكيف انتهت؟"
+  },
+  "input_tokens": 110950,
+  "message_id": "msg_011Cesy24B94avj3HYExvFCE",
+  "model": "claude-sonnet-5",
+  "output_tokens": 17045,
+  "prompt_hash": "9f4f6941ab4a125bfcd928eb454a8c08faf8bb50f42f95bfbab344c22b0c9c3e",
+  "revision": "ab8850153a99d8361b9bb979b50d0a0982609e4847377c2600233415537fb0e2",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
