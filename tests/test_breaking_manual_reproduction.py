@@ -62,6 +62,8 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         self.assertIn('POST_TO_SNAPCHAT: "0"', workflow)
         self.assertIn("github.event.client_payload.confirmed_event", workflow)
         self.assertIn("types: [breaking-recovery]", workflow)
+        self.assertIn("Refresh latest Breaking delivery state", workflow)
+        self.assertIn("git checkout origin/main -- state/breaking.json", workflow)
 
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": ""}, clear=False)
     @mock.patch.object(entry.breaking_watch, "watch")
