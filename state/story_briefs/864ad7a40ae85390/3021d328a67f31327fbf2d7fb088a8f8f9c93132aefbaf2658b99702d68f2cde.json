@@ -1,0 +1,122 @@
+{
+  "brief": {
+    "caption": "قروض عقارية بسيطة تحوّلت إلى أكبر انهيار مالي منذ الكساد الكبير. قصة أزمة 2008 في 6 لقطات.",
+    "frames": [
+      {
+        "heading": "أمريكا قبل الانهيار",
+        "image_keywords": [
+          "US housing bubble 2006",
+          "American suburb houses",
+          "subprime mortgage"
+        ],
+        "image_keywords_ar": [
+          "فقاعة الإسكان الأمريكي",
+          "قروض عقارية أمريكا"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "لعقد كامل كان سوق الإسكان الأمريكي في توسع متواصل. البنوك توسّعت في منح قروض عقارية لأشخاص بلا دخل ثابت أو تاريخ ائتماني جيد، فيما عُرف بقروض subprime. ديون الرهن العقاري للأسر الأمريكية قفزت من 61% من الناتج المحلي سنة 1998 إلى 97% سنة 2006."
+      },
+      {
+        "heading": "قروض تتحول لقنبلة",
+        "image_keywords": [
+          "Wall Street 2008",
+          "2008 financial crisis",
+          "New York Stock Exchange"
+        ],
+        "image_keywords_ar": [
+          "وول ستريت",
+          "الأزمة المالية 2008"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولأن هذه القروض بيعت وأعيد تجميعها في أدوات استثمارية معقدة تُعرف بمجمّعات الرهن العقاري (MBS)، انتقلت المخاطر من البنوك المحلية إلى محافظ مؤسسات مالية حول العالم. وبحلول منتصف 2007 بدأت أزمة سيولة تضرب مؤسسات كبرى واحدة تلو الأخرى."
+      },
+      {
+        "heading": "ليلة انهيار ليمان",
+        "image_keywords": [
+          "Lehman Brothers",
+          "Lehman Brothers bankruptcy 2008",
+          "Wall Street"
+        ],
+        "image_keywords_ar": [
+          "ليمان براذرز",
+          "الأزمة المالية 2008"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا انفجرت الأزمة. في 15 سبتمبر 2008 أعلن بنك الاستثمار الأمريكي Lehman Brothers إفلاسه بأكثر من 600 مليار دولار من الأصول، أكبر إفلاس في تاريخ الولايات المتحدة. رفضت الحكومة الأمريكية إنقاذه هذه المرة، فانهارت الثقة بين البنوك بين ليلة وضحاها."
+      },
+      {
+        "heading": "ثمن الانهيار",
+        "image_keywords": [
+          "home foreclosure sign",
+          "unemployment line 2009",
+          "foreclosure 2008"
+        ],
+        "image_keywords_ar": [
+          "حجز الرهن العقاري",
+          "بطالة 2009"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولأن أحداً لم يوقف الانهيار، خسر الاقتصاد الأمريكي نحو 8.7 مليون وظيفة، وارتفعت نسبة البطالة من 4.7% في نوفمبر 2007 إلى 10% في أكتوبر 2009. وخسرت قرابة 10 ملايين أسرة منازلها بسبب حجز الرهن العقاري بين 2006 و2014."
+      },
+      {
+        "heading": "خطة الإنقاذ الحكومية",
+        "image_keywords": [
+          "Wall Street October 2008",
+          "New York Stock Exchange",
+          "financial bailout"
+        ],
+        "image_keywords_ar": [
+          "وول ستريت",
+          "بورصة نيويورك"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "ولوقف الانهيار الكامل، أقرّ الكونغرس في أكتوبر 2008 برنامج الإنقاذ المالي TARP بسقف يصل إلى 700 مليار دولار لشراء الأصول المتعثرة من البنوك. صرفت الحكومة فعلياً نحو 443 مليار دولار، واسترد معظمها لاحقاً مع فوائد."
+      },
+      {
+        "heading": "الأثر الذي لم يُمحَ",
+        "image_keywords": [
+          "New York Stock Exchange trading floor",
+          "Wall Street sign",
+          "financial markets"
+        ],
+        "image_keywords_ar": [
+          "بورصة نيويورك",
+          "وول ستريت"
+        ],
+        "punch": "العالم غيّر قواعد البنوك كي لا تتكرر لحظة Lehman Brothers.",
+        "subject_kind": "abstract",
+        "text": "واليوم لا تزال قواعد الرقابة على البنوك حول العالم مبنية على الدرس الذي تركته تلك الأزمة، وعلى رأسها قانون Dodd-Frank الأمريكي الذي وضع رقابة صارمة على البنوك الكبرى."
+      }
+    ],
+    "image_prompt": "A quiet American suburban street in the mid-2000s lined with newly built houses, multiple 'for sale' signs on front lawns, soft afternoon light, no people, no text, no logos.",
+    "image_queries": [
+      "American suburban houses 2006",
+      "for sale signs neighborhood",
+      "housing bubble suburb street"
+    ],
+    "image_queries_ar": [
+      "أزمة الرهن العقاري",
+      "الإسكان الأمريكي 2006"
+    ],
+    "sources": [
+      "Federal Reserve History",
+      "Britannica",
+      "US Bureau of Labor Statistics",
+      "Federal Reserve Bank of St. Louis"
+    ],
+    "title": "أزمة 2008: كيف بدأت وكيف انتهت؟"
+  },
+  "input_tokens": 177895,
+  "message_id": "msg_011Cet7QJfaUWMDY64Nhh5zn",
+  "model": "claude-sonnet-5",
+  "output_tokens": 11596,
+  "prompt_hash": "9f4f6941ab4a125bfcd928eb454a8c08faf8bb50f42f95bfbab344c22b0c9c3e",
+  "revision": "3021d328a67f31327fbf2d7fb088a8f8f9c93132aefbaf2658b99702d68f2cde",
+  "schema": "story-brief-v1",
+  "status": "EDITORIAL_LOCKED"
+}
