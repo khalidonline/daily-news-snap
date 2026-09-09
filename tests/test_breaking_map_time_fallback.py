@@ -1,9 +1,7 @@
 import importlib
-import os
 import sys
 import types
 import unittest
-from unittest.mock import patch
 
 
 class BreakingMapFallbackTests(unittest.TestCase):
@@ -46,7 +44,8 @@ class BreakingMapFallbackTests(unittest.TestCase):
         bot.fetch_commons_photo = commons
         mod.install_resilient_visual_fallback(bot)
         photo, credit = bot.fetch_commons_photo(["Jizan attack"], "out.png")
-        self.assertEqual((photo, credit), ("map.png", "Wikimedia Commons"))
+        self.assertEqual(photo, "map.png")
+        self.assertEqual(credit, "خريطة توضيحية / Wikimedia Commons")
         self.assertEqual(calls[1][0], ["Saudi Arabia map"])
         self.assertFalse(calls[1][2])
         self.assertTrue(bot.looks_like_a_graphic("x"))
