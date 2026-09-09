@@ -115,7 +115,7 @@ class ManualBreakingReproductionTests(unittest.TestCase):
     @mock.patch.object(entry.breaking_watch, "ksa_now")
     @mock.patch.object(entry.subprocess, "call", return_value=0)
     def test_successful_manual_recovery_records_review_delivery(
-        self, call, ksa_now, load_state, save_state, _ksa_stamp, _persist_review
+        self, call, ksa_now, load_state, save_state, _ksa_stamp
     ):
         now = datetime(2026, 9, 9, 21, 0, tzinfo=timezone.utc)
         ksa_now.return_value = now
