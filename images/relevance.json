@@ -2,6 +2,20 @@
   "version": 2,
   "policy": "Only DIRECT and STRONG_CONTEXT count. Unreviewed rt-* assets fail closed. Graphics, homonyms, generic filler and wrong entities do not count.",
   "assets": {
+    "foreclosure-2008.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/",
+      "note": "Reviewed documentary foreclosure photo for the US housing-crisis opening beat."
+    },
+    "lehman-2008.jpg": {
+      "stories": {
+        "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/wiki/File:Lehman_Brothers-20080915.jpg",
+      "note": "Lehman Brothers headquarters photographed on 15 September 2008."
+    },
     "edison-stock-ticker.jpg": {
       "stories": {
         "Jack Bogle": "WEAK_GENERIC"
