@@ -1,29 +1,5 @@
 [
  {
-  "headline": "Oura تتجه للطرح العام وسط منافسة الخواتم الذكية",
-  "at": "2026-09-05T18:13:17.657735+00:00",
-  "source_link": "https://techcrunch.com/2026/09/05/oura-is-going-public-but-these-smart-ring-companies-are-coming-for-its-crown",
-  "lane": "business_tech"
- },
- {
-  "headline": "سيدات النصر بطلات السوبر السعودي برباعية في الهلال",
-  "at": "2026-09-05T20:14:06.278484+00:00",
-  "source_link": "https://alyaum.com/articles/6681316/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D9%84%D8%B9%D8%A8%D8%A7%D8%AA-%D9%85%D8%AE%D8%AA%D9%84%D9%81%D8%A9/%D8%B9%D8%A7%D8%AC%D9%84-%D8%A7%D9%84%D9%86%D8%B5%D8%B1-%D8%A8%D8%B7%D9%84%D8%A7-%D9%84%D9%84%D8%B3%D9%88%D8%A8%D8%B1-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A-%D9%84%D9%84%D8%B3%D9%8A%D8%AF%D8%A7%D8%AA-%D8%A8%D8%B1%D8%A8%D8%A7%D8%B9%D9%8A%D8%A9-%D9%81%D9%8A-%D8%B4%D8%A8%D8%A7%D9%83-%D8%A7%D9%84%D9%87%D9%84%D8%A7%D9%84",
-  "lane": "sports"
- },
- {
-  "headline": "شركة «هيومين» السعودية تستعد للطرح العام",
-  "at": "2026-09-06T06:18:01.054584+00:00",
-  "source_link": "https://aawsat.com/node/5315171",
-  "lane": "saudi_core"
- },
- {
-  "headline": "متسلقون يُنقذون بعد اتباع نصيحة خاطئة من Gemini",
-  "at": "2026-09-06T06:29:17.445063+00:00",
-  "source_link": "https://techcrunch.com/2026/09/05/hikers-rescued-after-using-google-gemini-for-planning",
-  "lane": "business_tech"
- },
- {
   "headline": "البنك الإسلامي للتنمية يصدر صكوكاً بـ1.5 مليار دولار",
   "at": "2026-09-06T08:18:15.206507+00:00",
   "source_link": "https://alwatan.com.sa/article/1185172",
@@ -193,6 +169,12 @@
   "headline": "أعطال فنية تعطل رحلات في مطاري هيثرو وغاتويك",
   "at": "2026-09-08T18:13:32.909287+00:00",
   "source_link": "https://bbc.co.uk/news/articles/ce8x3dp1zpxo?at_medium=RSS&at_campaign=rss",
+  "lane": "business_tech"
+ },
+ {
+  "headline": "آيفون القابل للطي يحمل اسم Duo وسعره من 2000 دولار",
+  "at": "2026-09-09T07:45:12.608026+00:00",
+  "source_link": "https://theverge.com/tech/991884/apple-iphone-duo-rumor-foldable",
   "lane": "business_tech"
  }
 ]
