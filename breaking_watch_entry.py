@@ -8,6 +8,20 @@ import sys
 import breaking_watch
 
 
+_TRUSTED_VERIFICATION_RULE = """
+
+قاعدة تحقق إلزامية للحوادث عالية الخطورة في السعودية والخليج:
+إذا كان أي مرشح يتعلق بهجوم عسكري أو صاروخي/مسير، إصابات أو وفيات،
+مطارات أو قواعد أو منشآت طاقة، سفن أو مضيق هرمز أو الملاحة الخليجية،
+فاستخدم بحث التحقق المتاح تحديداً للتحقق من Reuters أو AP أو مصدر رسمي
+سعودي/خليجي ذي صلة قبل الرفض بسبب نقص التأكيد. لا ترفض هذا النوع لمجرد
+أن أول عنوان غير رسمي؛ افحص المصدر الموثوق أولاً. لا يغيّر هذا شروط
+العاجل الأخرى ولا يضيف بحثاً مدفوعاً آخر: إذا لم يؤكد مصدر موثوق الحدث
+بعد هذا البحث فالأصل الرفض. قبل الرفض دوّن في reason ما إذا وُجد أو لم
+يوجد تأكيد من Reuters/AP/مصدر رسمي.
+"""
+
+
 def _run_strict_news_bot(extra_env):
     env = os.environ.copy()
     env.update(extra_env)
@@ -31,6 +45,18 @@ def _install_quiet_notifications():
     breaking_watch.notify = notify
 
 
+def _install_trusted_verification_rule():
+    """Tighten the existing single search for severe Gulf candidates.
+
+    This changes verification quality only. It does not increase the watcher's
+    web-search budget, add a paid classifier response, or loosen the breaking
+    threshold.
+    """
+    if _TRUSTED_VERIFICATION_RULE.strip() in breaking_watch.WATCH_PROMPT:
+        return
+    breaking_watch.WATCH_PROMPT += _TRUSTED_VERIFICATION_RULE
+
+
 breaking_watch._run_news_bot = _run_strict_news_bot
 
 
@@ -51,6 +77,7 @@ def run():
         })
 
     _install_quiet_notifications()
+    _install_trusted_verification_rule()
     breaking_watch.watch()
     return 0
 
