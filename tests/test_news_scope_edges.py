@@ -8,6 +8,24 @@ from news_editorial import hard_scope_eligible
 
 
 class NewsScopeEdgeTests(unittest.TestCase):
+    def test_league_upset_does_not_inherit_opponents_old_title(self):
+        self.assertFalse(hard_scope_eligible({
+            "lane": "sports", "title": "القادسية يصعق الأهلي بطل آسيا بثلاثية",
+            "summary": "الأهلي حامل لقب دوري أبطال آسيا في الموسمين الماضيين يخسر في الدوري.",
+        }))
+
+    def test_yesterday_result_cannot_be_republished_as_fresh_sports(self):
+        self.assertFalse(hard_scope_eligible({
+            "lane": "sports", "title": "الفريق يفوز بثلاثية في النهائي",
+            "summary": "تقرير عن مباراة أمس وتأثيرها على الجماهير.",
+        }))
+
+    def test_current_final_result_remains_eligible(self):
+        self.assertTrue(hard_scope_eligible({
+            "lane": "sports", "title": "الأهلي يفوز بثلاثية في نهائي دوري أبطال آسيا",
+            "summary": "حسم اللقب القاري اليوم.",
+        }))
+
     def test_foreign_politics_with_saudi_name_but_no_concrete_impact_is_rejected(self):
         item = {
             "lane": "saudi_core",

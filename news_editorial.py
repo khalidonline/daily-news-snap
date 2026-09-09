@@ -166,7 +166,7 @@ _SAFETY_RULE_CHANGE_RE = re.compile(
     re.IGNORECASE,
 )
 _ROUTINE_RESULT_RE = re.compile(
-    r"(?:يسحق|يهزم|يتغلب|يفوز|فاز|خسر|تعادل|يتعادل|بخماسية|برباعية|"
+    r"(?:يصعق|يفاجئ|يسحق|يهزم|يتغلب|يفوز|فاز|خسر|تعادل|يتعادل|بخماسية|برباعية|"
     r"بثلاثية|نتيجة\s+(?:المباراة|اللقاء)|انتهت المباراة|\b\d+\s*[-–:]\s*\d+\b|"
     r"\bbeats?\b|\bdefeats?\b|\bwins?\b|\bloses?\b|\bdraws?\b|final score)",
     re.IGNORECASE,
@@ -188,6 +188,15 @@ _MAJOR_SPORTS_RE = re.compile(
     r"(?:نهائي|النهائي|يتوج|توج|بطولة|كأس العالم|دوري أبطال|كأس آسيا|"
     r"يتأهل|التأهل|لقب|رقم قياسي|تاريخي|ميدالية|final|champion|championship|"
     r"world cup|champions league|qualif(?:y|ies|ied|ication)|title|record|historic|medal)",
+    re.IGNORECASE,
+)
+_CURRENT_DECISIVE_RESULT_RE = re.compile(
+    r"(?:في|بـ?)\s*(?:النهائي|نهائي)|(?:يتوج|توج|يحسم|حسم|يحرز|أحرز)\s+(?:بلقب|اللقب|لقب|البطولة)|"
+    r"(?:يتأهل|تأهل|يحسم التأهل)|(?:wins? the (?:title|final)|in the final|qualifies for)",
+    re.IGNORECASE,
+)
+_OLD_EVENT_RE = re.compile(
+    r"(?:أمس|بالأمس|البارحة|الموسم الماضي|الموسمين الماضيين|yesterday|last night|last season)",
     re.IGNORECASE,
 )
 _UNCONFIRMED_TRANSFER_RE = re.compile(
@@ -283,8 +292,13 @@ def hard_scope_eligible(item):
 
     # Ordinary match recaps never consume a national card; major titles,
     # qualification, finals and records remain eligible.
-    if lane == "sports" and _ROUTINE_RESULT_RE.search(text) and not _MAJOR_SPORTS_RE.search(text):
-        return False
+    if lane == "sports" and (_ROUTINE_RESULT_RE.search(text) or _ROUTINE_STREAK_RESULT_RE.search(text)):
+        # A club's previous titles do not make today's league recap decisive.
+        # Require the headline itself to describe the final/title/qualification.
+        if not _CURRENT_DECISIVE_RESULT_RE.search(title):
+            return False
+        if _OLD_EVENT_RE.search(text):
+            return False
 
     # Large funding numbers and a famous chip/vendor name should not make an
     # unfamiliar startup into mainstream news for this audience.
