@@ -4,6 +4,24 @@ import story_runtime as sr
 
 
 class NearestStoryRepairTests(unittest.TestCase):
+    def test_tsmc_locked_brief_has_six_distinct_subject_ordered_pins(self):
+        story = "كيف بنت TSMC احتكاراً على رقائق العالم"
+        cases = [
+            ({"heading": "فكرة مختلفة بدأت في 1987"}, "targeted-tsmc-morris-chang-2018.jpg"),
+            ({"heading": "مصنع لا ينافس عملاءه"}, "tsmc-fab14.jpg"),
+            ({"heading": "المصمم لم يعد يحتاج مصنعاً"}, "tsmc-rnd.jpg"),
+            ({"heading": "534 عميلاً في عام واحد"}, "tsmc-fab18.jpg"),
+            ({"heading": "طاقة تتجاوز 17 مليون رقاقة"}, "rt-tsmc-1.jpg"),
+            ({"heading": "لماذا أصبحت حلقة لا تُستبدل بسهولة؟"}, "rt-tsmc-2.jpg"),
+        ]
+        actual = []
+        for frame, expected in cases:
+            with self.subTest(expected=expected):
+                selected = sr.curated_frame_visual_filename(story, frame)
+                self.assertEqual(selected, expected)
+                actual.append(selected)
+        self.assertEqual(len(set(actual)), 6)
+
     def test_2008_crisis_has_six_distinct_reviewed_frame_pins(self):
         story = "قصة أزمة 2008: كيف بدأت وكيف انتهت؟"
         cases = [
