@@ -1,6 +1,6 @@
 import os
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
 
@@ -11,17 +11,16 @@ EVENT = (
     "وزير خارجية تركيا يعلن بدء تشكيل الهيكل الأساسي لاتفاق مكة الدفاعي "
     "بين السعودية وتركيا وباكستان"
 )
+KSA = timezone(timedelta(hours=3))
 TODAY_OCCURRED_AT = entry.breaking_watch.ksa_now().date().isoformat() + "T08:00:00+03:00"
 TEST_OCCURRED_AT = "2026-09-09T20:00:00+03:00"
 
 
 class ManualBreakingReproductionTests(unittest.TestCase):
-    @mock.patch.dict(
-        os.environ,
-        {"CONFIRMED_BREAKING_EVENT": "", "TRIGGER_CONFIRMED_EVENT": EVENT,
-         "CONFIRMED_BREAKING_OCCURRED_AT": TODAY_OCCURRED_AT},
-        clear=False,
-    )
+    @mock.patch.dict(os.environ, {
+        "CONFIRMED_BREAKING_EVENT": "", "TRIGGER_CONFIRMED_EVENT": EVENT,
+        "CONFIRMED_BREAKING_OCCURRED_AT": TODAY_OCCURRED_AT,
+    }, clear=False)
     @mock.patch.object(entry.breaking_watch, "watch")
     @mock.patch.object(entry.subprocess, "call", return_value=0)
     def test_trigger_file_confirmed_event_bypasses_classifier(self, call, watch):
@@ -97,7 +96,7 @@ class ManualBreakingReproductionTests(unittest.TestCase):
     @mock.patch.object(entry.breaking_watch, "ksa_now")
     @mock.patch.object(entry.subprocess, "call")
     def test_manual_recovery_skips_event_already_delivered_today(self, call, ksa_now, load_state, save_state):
-        now = datetime(2026, 9, 9, 21, 0, tzinfo=timezone.utc)
+        now = datetime(2026, 9, 9, 21, 0, tzinfo=KSA)
         ksa_now.return_value = now
         load_state.return_value = {
             "date": now.date().isoformat(),
@@ -120,7 +119,7 @@ class ManualBreakingReproductionTests(unittest.TestCase):
     @mock.patch.object(entry.breaking_watch, "ksa_now")
     @mock.patch.object(entry.subprocess, "call", return_value=0)
     def test_successful_manual_recovery_records_review_delivery(self, call, ksa_now, load_state, save_state, _ksa_stamp):
-        now = datetime(2026, 9, 9, 21, 0, tzinfo=timezone.utc)
+        now = datetime(2026, 9, 9, 21, 0, tzinfo=KSA)
         ksa_now.return_value = now
         load_state.return_value = {
             "date": now.date().isoformat(),
