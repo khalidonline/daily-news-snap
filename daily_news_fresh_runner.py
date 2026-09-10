@@ -137,7 +137,11 @@ def install_news_recovery_handoff(news_bot_module):
         result = original(*args, **kwargs)
         stories = result.get('stories') or []
         if stories:
-            path.write_text(json.dumps(stories[0], ensure_ascii=False, indent=2),
+            selected = dict(stories[0])
+            slot = os.getenv('SCHEDULE_SLOT_ID', '').strip()
+            if slot:
+                selected.setdefault('recovery_for_slot', slot)
+            path.write_text(json.dumps(selected, ensure_ascii=False, indent=2),
                             encoding='utf-8')
         return result
 
