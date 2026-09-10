@@ -8,6 +8,7 @@ legacy renderer.
 """
 
 import base64
+import hashlib
 import io
 import json
 import os
@@ -586,6 +587,45 @@ def make_fetcher(news_bot_module):
     return _fetch
 
 
+def cached_news_editorial(bot, generate):
+    """Reuse identical feed requests within a scheduled slot, before revalidation.
+
+    Feed content, posted history, policy, model and slot are all part of the
+    identity. Pinned events always need fresh verification. Failed or empty
+    responses are never retained. Visual checks remain outside this cache.
+    """
+    def summarize(items, already_posted=(), pinned=""):
+        root = os.getenv("NEWS_EDITORIAL_CACHE_DIR", "").strip()
+        slot = os.getenv("SCHEDULE_SLOT_ID", "").strip()
+        if not root or not slot or pinned:
+            return generate(items, already_posted, pinned)
+        material = json.dumps({
+            "schema": 1, "slot": slot, "items": items,
+            "posted": list(already_posted), "prompt": bot.SYSTEM_PROMPT,
+            "model": bot.CLAUDE_MODEL, "candidates": bot.CANDIDATES,
+        }, ensure_ascii=False, sort_keys=True)
+        key = hashlib.sha256(material.encode("utf-8")).hexdigest()
+        path = Path(root) / (key + ".json")
+        try:
+            cached = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(cached, dict) and isinstance(cached.get("stories"), list) and cached["stories"]:
+                print("    editorial request cache hit — revalidating saved result")
+                return cached
+        except (OSError, ValueError, UnicodeError):
+            pass
+        result = generate(items, already_posted, pinned)
+        if isinstance(result, dict) and isinstance(result.get("stories"), list) and result["stories"]:
+            try:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                temp = path.with_suffix(".tmp")
+                temp.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
+                temp.replace(path)
+            except OSError:
+                print("    editorial cache unavailable — continuing with paid result")
+        return result
+    return summarize
+
+
 def make_summarizer(news_bot_module):
     original_summarize = news_bot_module.summarize
 
@@ -617,7 +657,14 @@ def make_summarizer(news_bot_module):
                 f"{lane}={counts.get(lane, 0)}" for lane in LANE_ORDER
             ))
         decorated = decorate_model_items(shortlist)
-        raw = original_summarize(decorated, already_posted, pinned)
+        def generate_validated(feed, posted, event):
+            generated = original_summarize(feed, posted, event)
+            return enforce_snapchat_selection_gate(
+                validate_ranked_result(generated, shortlist)
+            )
+        raw = cached_news_editorial(news_bot_module, generate_validated)(
+            decorated, already_posted, pinned
+        )
         validated = validate_ranked_result(raw, shortlist)
         selected = enforce_snapchat_selection_gate(validated)
         load_posted = getattr(news_bot_module, "load_posted", None)

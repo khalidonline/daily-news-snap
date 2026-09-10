@@ -97,6 +97,15 @@ jobs:
       - run: pip install -r requirements.txt
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
 
+      - name: Restore editorial results for this News slot
+        if: ${{ env.RUN_SCHEDULED_BOT != '0' && env.SCHEDULE_SLOT_ID != '' }}
+        uses: actions/cache/restore@v4
+        with:
+          path: .news-editorial-cache
+          key: news-editorial-v1-${{ env.SCHEDULE_SLOT_ID }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            news-editorial-v1-${{ env.SCHEDULE_SLOT_ID }}-
+
       - name: Run bot
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
@@ -135,6 +144,7 @@ jobs:
           REMEMBER_DAYS: "3"
           MODEL_BOT: "news"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
+          NEWS_EDITORIAL_CACHE_DIR: ".news-editorial-cache"
           MODEL_MAX_USD_PER_RUN: "0.50"
           # Typed visual targets can make Sonnet's first response exceed 16k.
           # Start at the existing retry ceiling so the one-call guard can hold.
@@ -143,6 +153,13 @@ jobs:
           # Bound paid vision checks without weakening photo requirements.
           VISION_MAX_PAID_RESPONSES: "12"
         run: python daily_news_fresh_runner.py
+
+      - name: Save editorial results even when visual recovery fails
+        if: ${{ always() && env.RUN_SCHEDULED_BOT != '0' && env.SCHEDULE_SLOT_ID != '' && hashFiles('.news-editorial-cache/*.json') != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: .news-editorial-cache
+          key: news-editorial-v1-${{ env.SCHEDULE_SLOT_ID }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Verify News card was produced
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
