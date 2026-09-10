@@ -35,7 +35,27 @@ def _run_guarded_story() -> int:
         [sys.executable, "guarded_story_publish.py"],
         check=False,
         env=os.environ.copy(),
+        capture_output=True,
+        text=True,
     )
+    stdout = completed.stdout or ""
+    stderr = completed.stderr or ""
+    if stdout:
+        print(stdout, end="")
+    if stderr:
+        print(stderr, end="", file=sys.stderr)
+    combined = stdout + "\n" + stderr
+    if (
+        completed.returncode == 0
+        and "duplicate suppressed" in combined
+        and "Telegram final candidate sent" not in combined
+    ):
+        print(
+            "STORY_DELIVERY_UNCONFIRMED: duplicate suppression is not a "
+            "Telegram delivery",
+            flush=True,
+        )
+        return 1
     return completed.returncode
 
 
