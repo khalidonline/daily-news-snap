@@ -1,4 +1,5 @@
 {
+  "final_release_status": "READY",
   "frames": {
     "1": {
       "asset_hash": "278cf18c916737cc22b647f02fcbf87faaf3c37cf1170efa96bd1373004b38e7",
@@ -121,8 +122,115 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-10T12:53:05.906564+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "كيف بنت TSMC احتكاراً على رقائق العالم"
+  "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+  "story_quality_dimensions": {
+    "claim_precision": "PASS",
+    "final_frame_currency": "PASS",
+    "narrative_chronology": "PASS",
+    "subject_focus": "PASS",
+    "visual_chronology": "PASS"
+  },
+  "story_quality_findings": [],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [
+        1987,
+        1987
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 1,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1987
+      ]
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 2,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 3,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2025
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2025
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 5,
+      "subject_overlap": [
+        "tsmc"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 6,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [],
+    "frame_modes": {},
+    "frames": [],
+    "full_deck_regeneration": false,
+    "instructions": {}
+  },
+  "story_quality_status": "PASS"
 }
