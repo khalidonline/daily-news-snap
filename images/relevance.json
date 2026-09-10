@@ -288,6 +288,41 @@
       },
       "source_url": "https://commons.wikimedia.org/wiki/File:Jack_Ma_at_the_31st_ISC-Symposium.jpg",
       "note": "Jack Ma speaking; direct founder-story visual."
+    },
+    "rt-tsmc-1.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/",
+      "note": "Reviewed clear TSMC facility with visible company sign; direct context for the exact TSMC history story."
+    },
+    "rt-tsmc-2.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/",
+      "note": "Reviewed clear TSMC fabrication building with prominent company logo; direct context for the exact TSMC history story."
+    },
+    "tsmc-fab14.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/",
+      "note": "Reviewed clear TSMC Fab 14 building with visible company logo; direct context for the exact TSMC history story."
+    },
+    "tsmc-fab18.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/",
+      "note": "Reviewed clear TSMC Fab 18 semiconductor facility with visible company logo; direct context for the exact TSMC history story."
+    },
+    "tsmc-rnd.jpg": {
+      "stories": {
+        "كيف بنت TSMC احتكاراً على رقائق العالم": "DIRECT"
+      },
+      "source_url": "https://commons.wikimedia.org/",
+      "note": "Reviewed clear TSMC R&D/fabrication campus; direct context for the exact TSMC history story."
     }
   }
 }
