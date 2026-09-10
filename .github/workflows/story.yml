@@ -184,19 +184,3 @@ jobs:
           git commit -m "state: complete story slot $SCHEDULE_SLOT_ID"
           git pull --rebase origin main
           git push origin HEAD:main
-
-  notify-unresolved:
-    needs: story
-    if: ${{ always() && needs.story.result == 'failure' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Report that automatic recovery remains active
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          text='⚠️ تعذر تسليم قصة اليوم بعد ثلاث محاولات. لم يُرسل شيء ناقص، وستستمر المحاولة تلقائيًا في موعد الاسترداد التالي.'
-          curl --fail-with-body --silent --show-error \
-            --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
-            --data-urlencode "text=$text" \
-            "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage"
