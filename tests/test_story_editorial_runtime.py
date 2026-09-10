@@ -92,6 +92,31 @@ class FakeHttpStoryBot(FakeStoryBot):
         return good_brief()
 
 
+class FakeTransportFailureStoryBot(FakeStoryBot):
+    def __init__(self):
+        super().__init__()
+        self.http_attempts = 0
+
+        def urlopen(*args, **kwargs):
+            self.http_attempts += 1
+            if self.http_attempts == 1:
+                raise ConnectionResetError("connection closed before response")
+            return _FakeResponse({
+                "id": "msg_retry",
+                "usage": {"input_tokens": 20, "output_tokens": 10},
+                "content": [],
+            })
+
+        self.urllib = types.SimpleNamespace(
+            request=types.SimpleNamespace(urlopen=urlopen)
+        )
+
+    def research(self, story):
+        with self.urllib.request.urlopen("request") as response:
+            response.read()
+        return good_brief()
+
+
 class EditorialRuntimeTests(unittest.TestCase):
     def setUp(self):
         self.tmp_briefs = tempfile.TemporaryDirectory()
@@ -242,6 +267,17 @@ class EditorialRuntimeTests(unittest.TestCase):
         self.assertEqual(1, len(model_rows))
         self.assertEqual("msg_http_1", model_rows[0]["message_id"])
         self.assertEqual(2, model_rows[0]["web_search_requests"])
+
+    def test_transport_failure_before_response_can_retry_same_revision(self):
+        sb = FakeTransportFailureStoryBot()
+        ser.configure(sb)
+
+        with self.assertRaises(ConnectionResetError):
+            sb.research("قصة انقطع اتصالها")
+
+        brief = sb.research("قصة انقطع اتصالها")
+        self.assertEqual(good_brief(), brief)
+        self.assertEqual(2, sb.http_attempts)
 
     def test_revision_prompt_receives_the_active_story(self):
         sb = FakeStoryBot()
