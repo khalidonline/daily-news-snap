@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 
+import breaking_freshness
 import breaking_watch
 
 
@@ -24,15 +25,30 @@ _TRUSTED_VERIFICATION_RULE = """
 _EVENT_TIME_RULE = """
 
 وقت الحدث إلزامي في حكم العاجل حتى نعرف هل ما زال عاجلاً:
-إذا كان breaking=true، اختم حقل event دائماً بـ «— وقت الحدث: HH:MM بتوقيت
-السعودية» مستخدماً وقت وقوع/إعلان الحدث من المصدر، لا وقت تشغيل المراقب.
-إذا لم يعطِ أي مصدر وقتاً دقيقاً فاكتب «— وقت الحدث: غير محدد» ولا تخمّن.
-خذ عمر الحدث في الحسبان عند تطبيق شرط «عمره ساعات لا أيام»: تحديث قديم لا
-يصبح عاجلاً لمجرد أن مقالاً جديداً أعاد نشره، أما تطور جديد مستقل فله وقته.
+إذا كان breaking=true، اختم حقل event دائماً بالصيغة الدقيقة
+«— وقت الحدث: YYYY-MM-DD HH:MM بتوقيت السعودية» مستخدماً وقت وقوع/إعلان
+الحدث من المصدر، لا وقت تشغيل المراقب ولا وقت نشر مقال يعيد تغطية الحدث.
+إذا لم تستطع إثبات تاريخ وقوع الحدث نفسه فلا تجعله breaking=true.
+خبر وقع في تاريخ سعودي سابق لا يكون «خبر عاجل» اليوم حتى لو ظهر له مقال
+جديد اليوم؛ تطور جديد مستقل فقط يمكن أن يكون عاجلاً، وله تاريخ ووقت جديدان.
 """
 
 
+def _event_time_from_env_or_event(extra_env):
+    return (
+        str(extra_env.get("PINNED_EVENT_OCCURRED_AT", "") or "").strip()
+        or str(extra_env.get("PINNED_EVENT", "") or "").strip()
+    )
+
+
 def _run_strict_news_bot(extra_env):
+    # Hard fail-closed freshness gate. This runs before editorial generation,
+    # visual search, Telegram delivery, or any direct publishing path.
+    event_time = _event_time_from_env_or_event(extra_env)
+    if not breaking_freshness.is_same_ksa_day(event_time, breaking_watch.ksa_now()):
+        print("stale/unknown Breaking event time — refused before card generation")
+        return 0
+
     env = os.environ.copy()
     env.update(extra_env)
     # Review phase: breaking cards may be generated and sent to Telegram,
@@ -92,7 +108,7 @@ def _install_trusted_verification_rule():
 
 
 def _install_breaking_time_guidance():
-    """Make source-based event time part of every positive breaking verdict."""
+    """Make source-based event date/time mandatory for a positive verdict."""
     if _EVENT_TIME_RULE.strip() not in breaking_watch.WATCH_PROMPT:
         breaking_watch.WATCH_PROMPT += _EVENT_TIME_RULE
 
@@ -112,10 +128,18 @@ def run():
             print("manual Breaking recovery already delivered to Telegram today — quiet duplicate")
             return 0
 
+        occurred_at = os.getenv("CONFIRMED_BREAKING_OCCURRED_AT", "").strip()
+        if not breaking_freshness.is_same_ksa_day(
+            occurred_at or confirmed_event, now
+        ):
+            print("manual Breaking recovery is stale or lacks same-day event time — refused")
+            return 0
+
         mode = os.getenv("BREAKING_RUN_MODE", "repair_visual").strip()
         print(f"manual confirmed-event reproduction ({mode}) — classifier bypassed, dry run forced")
         rc = _run_strict_news_bot({
             "PINNED_EVENT": confirmed_event,
+            "PINNED_EVENT_OCCURRED_AT": occurred_at,
             "BREAKING_RUN_MODE": mode,
             "POST_TO_SNAPCHAT": "0",
             "DRY_RUN": "1",
