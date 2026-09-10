@@ -182,16 +182,17 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
             )
             resilient.install_exact_official_logo_acceptance(base)
             bot = self.fake_bot()
-            accepted = base._breaking_photo_acceptable(
-                bot,
-                photo,
-                "القيادة المركزية الأمريكية تعلن تدمير ناقلات إيرانية",
-            )
-            rejected = base._breaking_photo_acceptable(
-                bot,
-                photo,
-                "جهة أخرى تعلن خبراً عاجلاً",
-            )
+            with patch.object(base, "_strict_vision_verdict", return_value="no"):
+                accepted = base._breaking_photo_acceptable(
+                    bot,
+                    photo,
+                    "القيادة المركزية الأمريكية تعلن تدمير ناقلات إيرانية",
+                )
+                rejected = base._breaking_photo_acceptable(
+                    bot,
+                    photo,
+                    "جهة أخرى تعلن خبراً عاجلاً",
+                )
         self.assertTrue(accepted)
         self.assertFalse(rejected)
 
