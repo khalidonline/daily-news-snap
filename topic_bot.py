@@ -1136,6 +1136,11 @@ def build_card(topic, recovered_brief=None):
     else:
         brief = dict(recovered_brief)
         print("    reusing retained Topic brief — no paid editorial call")
+    # Recovery skips research_with_validation(), which normally registers this
+    # context. Without it the auto selector falls back to an unjudged local
+    # image. Bind the actual brief for both fresh and recovered cards.
+    from topic_snapchat import _remember_topic_image_context
+    _remember_topic_image_context(brief)
     save_topic_recovery_handoff(topic, brief)
     print(f"    {brief['title']}")
     warn_about_bare_numbers(brief)

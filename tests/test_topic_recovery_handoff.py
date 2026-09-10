@@ -6,9 +6,39 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 import topic_bot
+from daily_news_runner import remember_story_contexts, _story_for_queries
 
 
 class TopicRecoveryHandoffTests(unittest.TestCase):
+    def test_recovered_brief_restores_image_context_before_local_selection(self):
+        brief = {
+            "title": "حصيلة الضريبة",
+            "body": "المصدر وزارة المالية وليس البنك المركزي.",
+            "takeaway": "إيرادات الميزانية العامة",
+            "source_url": "https://www.mof.gov.sa/",
+            "image_queries": ["Saudi Ministry of Finance"],
+            "image_queries_ar": ["وزارة المالية"],
+        }
+        remember_story_contexts({"stories": []})
+        self.addCleanup(remember_story_contexts, {"stories": []})
+
+        def select_photo(ar, en, path):
+            context = _story_for_queries(en, ar)
+            self.assertIsNotNone(context, "Recovery must not bypass the relevance selector")
+            self.assertEqual(context["headline"], brief["title"])
+            self.assertEqual(context["summary"], brief["body"])
+            self.assertEqual(context["link"], brief["source_url"])
+            return "hero.jpg", None
+
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch.object(topic_bot, "OUT_DIR", Path(tmp)), \
+                patch.object(topic_bot, "IMAGE_SOURCE", "auto"), \
+                patch.object(topic_bot, "research", side_effect=AssertionError("No paid research")), \
+                patch.object(topic_bot, "fetch_local_photo", side_effect=select_photo):
+            actual, photo, _ = topic_bot.build_card("الضريبة", brief)
+        self.assertEqual(actual, brief)
+        self.assertEqual(photo, "hero.jpg")
+
     def test_exact_recovery_bypasses_schedule_only_after_delivery_dedupe(self):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
 
