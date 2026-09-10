@@ -130,6 +130,14 @@ city_visual_v3.configure(sb)
 # Exact story+frame repairs. These do not broaden global relevance: each pin
 # is a previously reviewed local asset assigned to one specific narrative beat.
 _CURATED_FRAME_VISUALS = {
+    "كيف بنت TSMC احتكاراً على رقائق العالم": (
+        (("فكرة مختلفة بدأت في 1987",), "targeted-tsmc-morris-chang-2018.jpg"),
+        (("مصنع لا ينافس عملاءه",), "tsmc-fab14.jpg"),
+        (("المصمم لم يعد يحتاج مصنعاً",), "tsmc-rnd.jpg"),
+        (("534 عميلاً في عام واحد",), "tsmc-fab18.jpg"),
+        (("طاقة تتجاوز 17 مليون رقاقة",), "rt-tsmc-1.jpg"),
+        (("لماذا أصبحت حلقة لا تُستبدل بسهولة؟",), "rt-tsmc-2.jpg"),
+    ),
     "قصة أزمة 2008: كيف بدأت وكيف انتهت؟": (
         (("قبل الانهيار: قروض بلا حدود", "فقاعة لا تنفجر", "أمريكا قبل الانهيار"), "foreclosure-2008.jpg"),
         (("سبتمبر 2008: الشرخ الأول", "أول شرخ", "قروض تتحول لقنبلة"), "targeted-2008-nyse-sept8.jpg"),
