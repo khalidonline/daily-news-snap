@@ -164,6 +164,22 @@ class NewsVisualRecoveryTests(unittest.TestCase):
             self.assertTrue(logo.is_file())
             call.assert_called_once()
 
+    def test_curated_base64_asset_allows_trailing_newline(self):
+        root = Path(__file__).resolve().parents[1]
+        story = {
+            "recovery_image_b64_path": "assets/recovery/kaust-official-logo.png.b64",
+            "recovery_photo_credit": "KAUST",
+        }
+
+        with tempfile.TemporaryDirectory() as td:
+            output = Path(td) / "kaust.jpg"
+            image, credit = daily_news_runner.fetch_verified_official_visual(
+                story, output
+            )
+
+        self.assertEqual(image, str(output))
+        self.assertEqual(credit, "KAUST")
+
     def test_unknown_organization_has_no_logo(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
