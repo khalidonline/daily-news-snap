@@ -27,6 +27,7 @@ on:
       - "image_precheck.py"
       - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
+      - "tests/test_story_explicit_recovery_cooldown.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_story_workflow_choices.py"
       - "tests/test_story_workflow_choice.py"
@@ -76,6 +77,7 @@ on:
       - "image_precheck.py"
       - "ready_story_publish.py"
       - "tests/test_runtime_relevance.py"
+      - "tests/test_story_explicit_recovery_cooldown.py"
       - "tests/test_ready_story_publish.py"
       - "tests/test_story_workflow_choices.py"
       - "tests/test_story_workflow_choice.py"
@@ -116,6 +118,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Relevance policy unit tests
         run: python -m unittest -v tests/test_runtime_relevance.py
+      - name: Explicit Story recovery cooldown regression
+        run: python -m unittest -v tests/test_story_explicit_recovery_cooldown.py
       - name: Ready-pool publishing unit tests
         run: POST_TO_SNAPCHAT=0 python -m unittest -v tests/test_ready_story_publish.py
       - name: Story workflow choice regression
