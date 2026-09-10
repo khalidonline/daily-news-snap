@@ -1,9 +1,7 @@
 name: Bootstrap current Story publishability pool
 
 on:
-  push:
-    paths:
-      - '.github/workflows/bootstrap-current-story-pool.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write

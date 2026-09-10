@@ -1,9 +1,10 @@
 name: Validate nearest Story repairs
 
 on:
-  push:
-    paths:
-      - '.github/workflows/validate-nearest-story-repairs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 env:
   DAILY_BUDGET_GITHUB_TOKEN: ${{ github.token }}
