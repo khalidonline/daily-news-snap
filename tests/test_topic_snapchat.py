@@ -169,6 +169,22 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         errors = topic_snapchat.validate_brief(brief)
         self.assertTrue(any("state each institution's decision separately" in error for error in errors), errors)
 
+    def test_verified_ministry_finance_photo_is_direct_for_tax_topic(self):
+        photo = Path("ministry-of-finance.jpg")
+        context = (
+            "حصيلة ضريبة القيمة المضافة: أين تذهب؟ "
+            "بلغت الضرائب على السلع والخدمات 288.8 مليار ريال بحسب وزارة المالية."
+        )
+        with patch.object(
+            topic_snapchat,
+            "_local_provenance_name",
+            return_value="ministry-of-finance",
+        ):
+            judge = topic_snapchat._direct_relevance_only(
+                lambda candidate, story: "neutral"
+            )
+            self.assertEqual(judge(photo, context), "yes")
+
     def test_credit_policy_rejects_attribution_required_open_images(self):
         policy = getattr(topic_snapchat, "_credit_requires_visible", None)
         self.assertIsNotNone(policy)
