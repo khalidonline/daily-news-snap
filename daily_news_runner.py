@@ -615,16 +615,19 @@ def cached_news_editorial(bot, generate):
             pass
         result = generate(items, already_posted, pinned)
         if isinstance(result, dict) and isinstance(result.get("stories"), list) and result["stories"]:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            temp = path.with_suffix(".tmp")
-            temp.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
-            temp.replace(path)
+            try:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                temp = path.with_suffix(".tmp")
+                temp.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
+                temp.replace(path)
+            except OSError:
+                print("    editorial cache unavailable — continuing with paid result")
         return result
     return summarize
 
 
 def make_summarizer(news_bot_module):
-    original_summarize = cached_news_editorial(news_bot_module, news_bot_module.summarize)
+    original_summarize = news_bot_module.summarize
 
     def _summarize(items, already_posted=(), pinned=""):
         encoded_recovery = os.getenv("NEWS_RECOVERY_STORY_B64", "").strip()
@@ -654,7 +657,14 @@ def make_summarizer(news_bot_module):
                 f"{lane}={counts.get(lane, 0)}" for lane in LANE_ORDER
             ))
         decorated = decorate_model_items(shortlist)
-        raw = original_summarize(decorated, already_posted, pinned)
+        def generate_validated(feed, posted, event):
+            generated = original_summarize(feed, posted, event)
+            return enforce_snapchat_selection_gate(
+                validate_ranked_result(generated, shortlist)
+            )
+        raw = cached_news_editorial(news_bot_module, generate_validated)(
+            decorated, already_posted, pinned
+        )
         validated = validate_ranked_result(raw, shortlist)
         selected = enforce_snapchat_selection_gate(validated)
         load_posted = getattr(news_bot_module, "load_posted", None)

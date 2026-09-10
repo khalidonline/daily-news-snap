@@ -8,6 +8,31 @@ import daily_news_runner as runner
 
 
 class EditorialCacheTests(unittest.TestCase):
+    def test_editorially_rejected_result_is_not_retained(self):
+        calls = []
+        def generate(*args):
+            calls.append(args)
+            return {'stories': [{'item': 1, 'headline': 'no Snapchat score'}]}
+        bot = SimpleNamespace(SYSTEM_PROMPT='p', CLAUDE_MODEL='m', CANDIDATES=1,
+                              MAX_HEADLINES_TO_MODEL=1, summarize=generate)
+        item = {'source': 'Example', 'title': 'New consumer technology', 'summary': '', 'link': 'https://example.com/a'}
+        with tempfile.TemporaryDirectory() as root, patch.dict(os.environ, {
+            'NEWS_EDITORIAL_CACHE_DIR': root, 'SCHEDULE_SLOT_ID': 'slot'
+        }), patch.object(runner, 'balanced_shortlist', return_value=[item]), patch.object(runner, 'validate_ranked_result', side_effect=lambda result, shortlist: result):
+            fn = runner.make_summarizer(bot)
+            self.assertEqual(fn([item])['stories'], [])
+            self.assertEqual(fn([item])['stories'], [])
+            self.assertEqual(len(calls), 2)
+
+    def test_cache_write_error_does_not_discard_paid_result(self):
+        bot = SimpleNamespace(SYSTEM_PROMPT='p', CLAUDE_MODEL='m', CANDIDATES=1)
+        result = {'stories': [{'headline': 'saved'}]}
+        with tempfile.TemporaryDirectory() as root, patch.dict(os.environ, {
+            'NEWS_EDITORIAL_CACHE_DIR': root, 'SCHEDULE_SLOT_ID': 'slot'
+        }), patch('pathlib.Path.write_text', side_effect=OSError('disk full')):
+            fn = runner.cached_news_editorial(bot, lambda *args: result)
+            self.assertEqual(fn([]), result)
+
     def test_same_slot_request_reuses_paid_result_across_instances(self):
         calls = []
         def generate(items, posted=(), pinned=''):
