@@ -15,6 +15,12 @@ class NewsVisualRecoveryTests(unittest.TestCase):
             daily_news_runner.CURATED_RECOVERY_VISUAL_HOSTS,
         )
 
+    def test_alyaum_article_image_is_allowlisted_for_curated_recovery(self):
+        self.assertIn(
+            "www.alyaum.com",
+            daily_news_runner.CURATED_RECOVERY_VISUAL_HOSTS,
+        )
+
     def test_scheduled_news_visual_search_is_locked_to_top_story(self):
         stories = [{"headline": "top"}, {"headline": "easy backup"}]
         with patch.object(news_bot, "NEWS_LOCK_TOP_STORY_VISUAL", True, create=True):
