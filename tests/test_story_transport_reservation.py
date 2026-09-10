@@ -27,7 +27,7 @@ class TransportReservationTests(unittest.TestCase):
             input_tokens=0,
             output_tokens=0,
             web_search_requests=0,
-            status="error",
+            status="transport_error",
         )
 
         second = scg.reserve_editorial_call("story", "rev", "auto")
@@ -40,6 +40,21 @@ class TransportReservationTests(unittest.TestCase):
             model="claude-sonnet-5",
             message_id="msg_1",
             input_tokens=10,
+            output_tokens=0,
+            web_search_requests=0,
+            status="error",
+        )
+
+        with self.assertRaises(scg.EditorialSpendBlocked):
+            scg.reserve_editorial_call("story", "rev", "auto")
+
+    def test_generic_error_without_usage_keeps_reservation_locked(self):
+        first = scg.reserve_editorial_call("story", "rev", "auto")
+        scg.record_model_result(
+            first,
+            model="claude-sonnet-5",
+            message_id=None,
+            input_tokens=0,
             output_tokens=0,
             web_search_requests=0,
             status="error",
