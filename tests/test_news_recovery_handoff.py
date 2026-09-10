@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import daily_news_fresh_runner as runner
 
@@ -29,6 +29,21 @@ class RecoveryHandoffTests(unittest.TestCase):
             saved = json.loads((Path(tmp) / 'news_recovery_story.json').read_text())
             self.assertEqual(saved, story)
             bot.summarize.__wrapped__.assert_called_once_with([], [], pinned=None)
+
+    def test_selected_story_carries_original_slot_for_idempotent_recovery(self):
+        story = {'headline': 'عنوان', 'summary': 'ملخص', 'visual_targets': []}
+        result = {'stories': [story]}
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(
+            'os.environ', {'SCHEDULE_SLOT_ID': '2026-09-10T17:10+03:00'}
+        ):
+            bot = SimpleNamespace(OUT_DIR=Path(tmp), summarize=Mock(return_value=result))
+            runner.install_news_recovery_handoff(bot)
+            bot.summarize([], [])
+            saved = json.loads((Path(tmp) / 'news_recovery_story.json').read_text())
+            self.assertEqual(
+                saved['recovery_for_slot'], '2026-09-10T17:10+03:00'
+            )
+            self.assertNotIn('recovery_for_slot', story)
 
     def test_empty_result_removes_stale_story(self):
         with tempfile.TemporaryDirectory() as tmp:
