@@ -1384,11 +1384,12 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
                 break
             sub_size -= 2
         if len(lines) * line_gap > available:
-            # the seal band wins its space; a cramped body is reviewable,
-            # an overlapped seal is not — say it loudly for the review pass
-            print(f"  ! frame text overflows the seal band even at minimum "
-                  f"size ({len(lines)} lines, {available}px available) — "
-                  f"REVIEW THIS FRAME")
+            # Never send a card whose text enters the closing seal/footer
+            # band. A visually broken review is not a successful delivery.
+            raise RuntimeError(
+                "frame text overflows the seal/footer band "
+                f"({len(lines)} lines, {available}px available)"
+            )
         for line in lines:
             mid(y, line, f_sub, sub_colour or BODY)
             y += line_gap
