@@ -25,6 +25,12 @@ _SEVERE_SECURITY_RE = re.compile(
     re.IGNORECASE,
 )
 _SAUDI_MAP_TITLE = "File:Saudi Arabia map-ar.png"
+_CENTCOM_SEAL_TITLE = "File:Seal of the United States Central Command.png"
+_CENTCOM_RE = re.compile(
+    r"(?:القيادة\s+المركزية\s+(?:الأمريكية|للولايات\s+المتحدة)|"
+    r"\b(?:united\s+states\s+central\s+command|uscentcom|centcom)\b)",
+    re.IGNORECASE,
+)
 
 _VISUAL_FALLBACK_RULE = """
 
@@ -41,13 +47,45 @@ def _fallback_queries(event):
     text = str(event or "")
     if _SAUDI_RE.search(text) and _SEVERE_SECURITY_RE.search(text):
         return ["Saudi Arabia map"]
+    if _CENTCOM_RE.search(text):
+        return ["United States Central Command official seal"]
     return []
+
+
+def _exact_context_visual(title, event):
+    text = str(event or "")
+    if title == _SAUDI_MAP_TITLE:
+        return bool(_SAUDI_RE.search(text) and _SEVERE_SECURITY_RE.search(text))
+    if title == _CENTCOM_SEAL_TITLE:
+        return bool(_CENTCOM_RE.search(text))
+    return False
 
 
 def install_resilient_visual_prompt(module=base):
     rule = _VISUAL_FALLBACK_RULE.strip()
     if rule not in module._BREAKING_VISION_PROMPT:
         module._BREAKING_VISION_PROMPT += _VISUAL_FALLBACK_RULE
+
+
+def install_exact_official_logo_acceptance(module=base):
+    """Accept only a verified exact organization mark named in the event."""
+    original = getattr(module, "_breaking_photo_acceptable", None)
+    if not callable(original):
+        return
+
+    def acceptable(bot, photo_path, event, extra_context=""):
+        try:
+            title = Path(str(photo_path) + ".commons-title").read_text(
+                encoding="utf-8"
+            ).strip()
+        except OSError:
+            title = ""
+        if title == _CENTCOM_SEAL_TITLE and _exact_context_visual(title, event):
+            print("    exact verified CENTCOM seal accepted as official identity")
+            return True
+        return original(bot, photo_path, event, extra_context)
+
+    module._breaking_photo_acceptable = acceptable
 
 
 def install_exact_map_acceptance(module=base):
@@ -63,7 +101,7 @@ def install_exact_map_acceptance(module=base):
             ).strip()
         except OSError:
             title = ""
-        if title == _SAUDI_MAP_TITLE and _fallback_queries(event):
+        if title == _SAUDI_MAP_TITLE and _exact_context_visual(title, event):
             print("    exact verified Saudi map accepted as contextual artwork")
             return True
         return original(bot, photo_path, event, extra_context)
@@ -91,7 +129,7 @@ def install_resilient_visual_fallback(bot=news_bot):
             bot.looks_like_a_graphic = lambda _path: False
         if callable(commons_safe):
             def allow_exact_saudi_map(page, info):
-                if page.get("title") == _SAUDI_MAP_TITLE:
+                if _exact_context_visual(page.get("title"), event):
                     return True
                 return commons_safe(page, info)
             bot._commons_safe = allow_exact_saudi_map
@@ -107,7 +145,14 @@ def install_resilient_visual_fallback(bot=news_bot):
                 subject_mode=True,
             )
             if photo:
-                credit = "خريطة توضيحية / " + (credit or "Wikimedia Commons")
+                try:
+                    title = Path(str(photo) + ".commons-title").read_text(
+                        encoding="utf-8"
+                    ).strip()
+                except OSError:
+                    title = ""
+                label = "شعار رسمي" if title == _CENTCOM_SEAL_TITLE else "خريطة توضيحية"
+                credit = label + " / " + (credit or "Wikimedia Commons")
             return photo, credit
         finally:
             if callable(graphic_check):
@@ -121,6 +166,7 @@ def install_resilient_visual_fallback(bot=news_bot):
 def run():
     install_resilient_visual_prompt(base)
     install_exact_map_acceptance(base)
+    install_exact_official_logo_acceptance(base)
     install_resilient_visual_fallback(news_bot)
     return base.run_bot(news_bot)
 
