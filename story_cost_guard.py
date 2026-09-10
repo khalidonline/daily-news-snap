@@ -76,6 +76,37 @@ def _append_row(row: dict[str, Any]) -> None:
         handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
 
 
+def _has_releasable_transport_failure(marker: Path, guard_revision: str) -> bool:
+    """Return true only when the marker's run ended before any paid response."""
+    try:
+        reservation = json.loads(marker.read_text(encoding="utf-8"))
+        rows = [
+            json.loads(line)
+            for line in usage_ledger_path().read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+    except (OSError, ValueError, AttributeError, json.JSONDecodeError):
+        return False
+
+    for row in reversed(rows):
+        if row.get("event") != "model_result":
+            continue
+        if row.get("guard_revision") != guard_revision:
+            continue
+        if row.get("run_id") != reservation.get("run_id"):
+            continue
+        if row.get("run_attempt") != reservation.get("run_attempt"):
+            continue
+        return (
+            row.get("status") == "transport_error"
+            and not row.get("message_id")
+            and int(row.get("input_tokens") or 0) == 0
+            and int(row.get("output_tokens") or 0) == 0
+            and int(row.get("web_search_requests") or 0) == 0
+        )
+    return False
+
+
 def _run_identity(run_id: str | None = None, run_attempt: str | None = None) -> tuple[str | None, str | None]:
     return (
         str(run_id) if run_id is not None else (os.getenv("GITHUB_RUN_ID") or None),
@@ -121,23 +152,45 @@ def reserve_editorial_call(story: str, revision: str, mode: str | OperationMode)
         "run_id": run_id,
         "run_attempt": run_attempt,
     }
-    try:
+    def write_marker() -> None:
         with marker.open("x", encoding="utf-8") as handle:
             json.dump(payload, handle, ensure_ascii=False, sort_keys=True)
             handle.write("\n")
+
+    try:
+        write_marker()
     except FileExistsError as exc:
-        _append_row({
-            "timestamp": _utcnow(),
-            "event": "call_block",
-            "story": story,
-            "revision": revision,
-            "guard_revision": guard_revision,
-            "mode": selected,
-            "run_id": run_id,
-            "run_attempt": run_attempt,
-            "reason": "editorial call already reserved for revision",
-        })
-        raise EditorialSpendBlocked("editorial call already reserved for revision") from exc
+        if _has_releasable_transport_failure(marker, guard_revision):
+            try:
+                marker.unlink()
+                write_marker()
+            except (FileNotFoundError, FileExistsError):
+                pass
+            else:
+                _append_row({
+                    "timestamp": _utcnow(),
+                    "event": "transport_reservation_released",
+                    "story": story,
+                    "revision": revision,
+                    "guard_revision": guard_revision,
+                    "mode": selected,
+                    "run_id": run_id,
+                    "run_attempt": run_attempt,
+                })
+                exc = None
+        if exc is not None:
+            _append_row({
+                "timestamp": _utcnow(),
+                "event": "call_block",
+                "story": story,
+                "revision": revision,
+                "guard_revision": guard_revision,
+                "mode": selected,
+                "run_id": run_id,
+                "run_attempt": run_attempt,
+                "reason": "editorial call already reserved for revision",
+            })
+            raise EditorialSpendBlocked("editorial call already reserved for revision") from exc
 
     return CallReservation(
         story=story,
