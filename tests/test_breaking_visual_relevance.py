@@ -196,6 +196,42 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
         self.assertTrue(accepted)
         self.assertFalse(rejected)
 
+    def test_centcom_seal_uses_retained_official_source_when_event_says_us_military(self):
+        import breaking_resilient_runner as resilient
+        import breaking_news_runner as base
+        event = "الجيش الأمريكي يعلن تدمير خمس ناقلات نفط إيرانية"
+        cached = {
+            "version": 1,
+            "editorial": {
+                base._event_fingerprint(event): {
+                    "event": event,
+                    "result": {
+                        "stories": [{"source": "CENTCOM / NPR / Al Jazeera"}],
+                    },
+                },
+            },
+            "visual": {},
+        }
+        with tempfile.TemporaryDirectory() as td:
+            cache = Path(td) / "breaking.json"
+            cache.write_text(
+                json.dumps(cached, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            photo = Path(td) / "candidate.png"
+            Image.new("RGB", (40, 40), "white").save(photo)
+            Path(str(photo) + ".commons-title").write_text(
+                "File:Seal of the United States Central Command.png",
+                encoding="utf-8",
+            )
+            with patch.object(base, "CACHE_FILE", cache), \
+                    patch.object(base, "_strict_vision_verdict", return_value="no"):
+                resilient.install_exact_official_logo_acceptance(base)
+                accepted = base._breaking_photo_acceptable(
+                    self.fake_bot(), photo, event
+                )
+        self.assertTrue(accepted)
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()
