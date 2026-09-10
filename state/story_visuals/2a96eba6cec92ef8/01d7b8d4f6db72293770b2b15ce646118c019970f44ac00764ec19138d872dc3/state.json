@@ -1,0 +1,128 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "562f88456b8a84fb020a2d646fc2fc21a26ee692fa6a0c0c3e19ddfe9d7a0b7d",
+      "frame_payload": {
+        "heading": "فكرة مختلفة بدأت في 1987",
+        "image_keywords": [
+          "Morris Chang TSMC 1987",
+          "TSMC founder"
+        ],
+        "image_keywords_ar": [
+          "موريس تشانغ",
+          "مؤسس TSMC"
+        ],
+        "punch": "مصنع ضخم يعمل خلف الكواليس.",
+        "subject_kind": "person",
+        "text": "أسس موريس تشانغ شركة TSMC في تايوان عام 1987. لم تكن الفكرة بيع حواسيب أو هواتف، بل إنشاء مصنع متخصص يصنع الرقائق التي تصممها شركات أخرى."
+      },
+      "image_source": "state/story_visuals/2a96eba6cec92ef8/01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "7a10e0d1a16b3e460291904fb56aabfa76fe48456e23c2b9efe37208cc145be3",
+      "frame_payload": {
+        "heading": "مصنع لا ينافس عملاءه",
+        "image_keywords": [
+          "TSMC semiconductor fab",
+          "TSMC Fab 14"
+        ],
+        "image_keywords_ar": [
+          "مصنع TSMC",
+          "مصنع أشباه الموصلات"
+        ],
+        "punch": "نجاح العميل هو أساس نموذجها.",
+        "subject_kind": "company",
+        "text": "قدمت TSMC نموذج المصنع المتخصص: تركز على التصنيع فقط، ولا تطلق رقائق تحمل اسمها لمنافسة العملاء. لذلك تستطيع شركات التصميم تسليمها مخططاتها الحساسة بثقة أكبر."
+      },
+      "image_source": "state/story_visuals/2a96eba6cec92ef8/01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "a8902374db675f38fab1aae0e78bc2d3534b5b05cab27990af517569909258d1",
+      "frame_payload": {
+        "heading": "المصمم لم يعد يحتاج مصنعاً",
+        "image_keywords": [
+          "TSMC research and development",
+          "semiconductor wafer TSMC"
+        ],
+        "image_keywords_ar": [
+          "أبحاث TSMC",
+          "رقائق أشباه الموصلات"
+        ],
+        "punch": "الفكرة وسّعت سوق شركات الرقائق بلا مصانع.",
+        "subject_kind": "company",
+        "text": "هذا النموذج فصل تصميم الشريحة عن تصنيعها. صار بإمكان شركات التقنية التركيز على هندسة الرقائق، بينما تتولى TSMC المصانع شديدة التعقيد والكلفة."
+      },
+      "image_source": "state/story_visuals/2a96eba6cec92ef8/01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "a3d66df7d9fc3ccaedb8b77951d6a75455271832d722613ea4e419aa7e949492",
+      "frame_payload": {
+        "heading": "534 عميلاً في عام واحد",
+        "image_keywords": [
+          "TSMC Fab 18",
+          "TSMC wafer manufacturing"
+        ],
+        "image_keywords_ar": [
+          "مصنع TSMC 18",
+          "تصنيع الرقائق"
+        ],
+        "punch": "التنوع يكشف حجم الاعتماد عليها.",
+        "subject_kind": "company",
+        "text": "بحسب ملف الشركة الرسمي، صنعت TSMC خلال 2025 نحو 12,682 منتجاً مختلفاً لـ534 عميلاً، باستخدام 305 تقنيات تصنيع. هذه المنتجات تخدم الحوسبة عالية الأداء والهواتف والسيارات وإنترنت الأشياء."
+      },
+      "image_source": "state/story_visuals/2a96eba6cec92ef8/01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "a29ea3f872efd986100c33876d84f5fd62ff1719b23babc5eb75e8009483f9a8",
+      "frame_payload": {
+        "heading": "طاقة تتجاوز 17 مليون رقاقة",
+        "image_keywords": [
+          "TSMC Fab 14",
+          "TSMC Arizona fab"
+        ],
+        "image_keywords_ar": [
+          "مصانع TSMC",
+          "مصنع TSMC أريزونا"
+        ],
+        "punch": "التوسع يقرّب الإنتاج من أسواق العملاء.",
+        "subject_kind": "company",
+        "text": "تقول TSMC إن الطاقة السنوية للمصانع التي تديرها تجاوزت 17 مليون رقاقة مكافئة بقياس 12 بوصة في 2025. أغلب مصانعها في تايوان، مع توسع في أريزونا واليابان وألمانيا."
+      },
+      "image_source": "state/story_visuals/2a96eba6cec92ef8/01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "278cf18c916737cc22b647f02fcbf87faaf3c37cf1170efa96bd1373004b38e7",
+      "frame_payload": {
+        "heading": "لماذا أصبحت حلقة لا تُستبدل بسهولة؟",
+        "image_keywords": [
+          "TSMC semiconductor factory exterior",
+          "TSMC advanced fab"
+        ],
+        "image_keywords_ar": [
+          "مصنع TSMC",
+          "مصنع رقائق متقدم"
+        ],
+        "punch": "قوتها ليست في منتج واحد، بل في المصنع الذي تعتمد عليه منتجات كثيرة.",
+        "subject_kind": "company",
+        "text": "لأن إنشاء مصنع متقدم يحتاج سنوات واستثمارات وخبرة تشغيلية هائلة، أصبح نموذج TSMC عنقاً مركزياً في سلسلة التقنية. الشركة لا تبيع الهاتف أو السيارة، لكنها تصنع الشرائح التي تجعل كثيراً منها يعمل."
+      },
+      "image_source": "state/story_visuals/2a96eba6cec92ef8/01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_READY",
+  "story": "كيف بنت TSMC احتكاراً على رقائق العالم"
+}
