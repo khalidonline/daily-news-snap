@@ -1,11 +1,5 @@
 [
  {
-  "headline": "Next تفوز بإلغاء حكم مساواة أجور بقيمة 30 مليون جنيه",
-  "at": "2026-09-07T20:15:51.338337+00:00",
-  "source_link": "https://bbc.co.uk/news/articles/c05r61rqe4yo?at_medium=RSS&at_campaign=rss",
-  "lane": "business_tech"
- },
- {
   "headline": "جدة تتفوق على الرياض بقيمة الصفقات العقارية",
   "at": "2026-09-08T04:13:01.242897+00:00",
   "source_link": "https://alwatan.com.sa/article/1185254",
@@ -159,5 +153,11 @@
   "headline": "غداً.. الشوط رقم 4000 في مهرجان ولي العهد للهجن",
   "at": "2026-09-10T18:18:10.437942+00:00",
   "source_link": "https://alyaum.com/articles/6682055"
+ },
+ {
+  "headline": "دلتا تحصل على تصريح رحلات مباشرة إلى الرياض",
+  "at": "2026-09-10T21:20:44.084420+00:00",
+  "source_link": "https://aawsat.com/node/5316880",
+  "lane": "saudi_core"
  }
 ]
