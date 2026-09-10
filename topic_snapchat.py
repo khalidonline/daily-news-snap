@@ -118,17 +118,18 @@ def _local_provenance_name(photo) -> str:
 
 
 def _curated_subject_override(photo, context: str) -> bool:
-    """Recognize the verified SAMA artifact even when final copy omits its name.
+    """Recognize verified Saudi financial-institution artifacts by provenance.
 
     The local-library selector already chose the asset from the current story's
     image queries. Its provenance marker is therefore stronger evidence than a
-    generic vision model calling a known central-bank building "architecture".
-    We still require a finance/rates context when the final copy does not name
-    SAMA explicitly, so the asset can never override an unrelated topic.
+    generic vision model calling a known institution building "architecture".
+    A matching financial context is still required, so provenance can never
+    override an unrelated topic.
     """
     name = Path(str(photo)).name.lower().replace("_", "-")
     provenance = _local_provenance_name(photo)
     text = str(context or "").lower()
+
     sama_artifact = "sama" in name or "sama" in provenance
     sama_topic = (
         "sama" in text
@@ -136,11 +137,23 @@ def _curated_subject_override(photo, context: str) -> bool:
         or "البنك المركزي السعودي" in text
         or "المركزي السعودي" in text
     )
-    finance_context = any(token in text for token in (
+    rates_context = any(token in text for token in (
         "فائدة", "الفائدة", "تمويل", "الفيدرالي", "سايبور",
         "interest rate", "interest-rate", "financing", "banking",
     ))
-    return sama_artifact and (sama_topic or finance_context)
+
+    ministry_artifact = any(token in name or token in provenance for token in (
+        "ministry-of-finance", "saudi-ministry-of-finance",
+    ))
+    tax_context = any(token in text for token in (
+        "ضريب", "القيمة المضافة", "الإيرادات العامة", "وزارة المالية",
+        "tax", "vat", "public revenue",
+    ))
+
+    return (
+        (sama_artifact and (sama_topic or rates_context))
+        or (ministry_artifact and tax_context)
+    )
 
 
 def _direct_relevance_only(judge):
