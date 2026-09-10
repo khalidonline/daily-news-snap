@@ -30,6 +30,37 @@ class AutoImageSourcePolicyTests(unittest.TestCase):
         self.assertEqual(daily_news_runner.normalize_image_source("pexels"), "stock")
         self.assertEqual(daily_news_runner.normalize_image_source("bogus"), "auto")
 
+    def test_exact_recovery_logo_must_match_named_organization(self):
+        story = {
+            "recovery_visual_kind": "exact_organization_logo",
+            "recovery_logo_entity": "KAUST",
+            "recovery_image_b64_path": (
+                "assets/recovery/kaust-official-logo.png.b64"
+            ),
+            "visual_targets": [
+                {"kind": "organization", "name_en": "KAUST"},
+                {"kind": "context", "name_en": "marine research"},
+            ],
+        }
+        self.assertTrue(
+            daily_news_runner._exact_recovery_logo_allowed(story)
+        )
+
+        wrong_entity = dict(story, recovery_logo_entity="Other University")
+        self.assertFalse(
+            daily_news_runner._exact_recovery_logo_allowed(wrong_entity)
+        )
+
+        wrong_asset = dict(
+            story,
+            recovery_image_b64_path=(
+                "assets/recovery/other-university-logo.png.b64"
+            ),
+        )
+        self.assertFalse(
+            daily_news_runner._exact_recovery_logo_allowed(wrong_asset)
+        )
+
     def make_module(self):
         def noop_pair(*args, **kwargs):
             return None, None
