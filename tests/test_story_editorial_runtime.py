@@ -180,6 +180,57 @@ class EditorialRuntimeTests(unittest.TestCase):
         self.assertEqual(2, sb.calls)
         self.assertIsNotNone(sbs.load_locked_brief("قصة اختبار", regen_revision))
 
+    def test_auto_and_visual_recovery_reuse_latest_validated_regeneration(self):
+        sb = FakeStoryBot()
+        ser.configure(sb)
+        sb.research("قصة اختبار")
+        sb.brief['frames'][0]['heading'] = 'صياغة مصححة'
+        os.environ['STORY_OPERATION_MODE'] = 'regenerate_editorial'
+        os.environ['STORY_REGENERATION_NONCE'] = 'approved-revision'
+        expected = sb.research('قصة اختبار')
+        revision = ser.revision_for(sb, 'قصة اختبار')
+        for mode in ('auto', 'visual_only'):
+            os.environ['STORY_OPERATION_MODE'] = mode
+            fresh = FakeStoryBot()
+            ser.configure(fresh)
+            self.assertEqual(ser.revision_for(fresh, 'قصة اختبار'), revision)
+            self.assertEqual(fresh.research('قصة اختبار'), expected)
+            self.assertEqual(fresh.calls, 0)
+        sb.SYSTEM_PROMPT = 'changed policy {n}'
+        self.assertNotEqual(ser.revision_for(sb, 'قصة اختبار'), revision)
+
+    def test_regeneration_cache_hit_repairs_interrupted_preference_write(self):
+        from unittest.mock import patch
+        sb = FakeStoryBot()
+        ser.configure(sb)
+        sb.research('test story')
+        os.environ['STORY_OPERATION_MODE'] = 'regenerate_editorial'
+        os.environ['STORY_REGENERATION_NONCE'] = 'interrupted'
+        with patch.object(sbs, 'prefer_locked_revision', side_effect=OSError('interrupted')):
+            with self.assertRaises(OSError):
+                sb.research('test story')
+        revision = ser.revision_for(sb, 'test story')
+        expected = sb.research('test story')
+        os.environ['STORY_OPERATION_MODE'] = 'auto'
+        self.assertEqual(ser.revision_for(sb, 'test story'), revision)
+        self.assertEqual(sb.research('test story'), expected)
+        self.assertEqual(sb.calls, 2)
+
+    def test_failed_regeneration_keeps_previous_validated_revision(self):
+        sb = FakeStoryBot()
+        ser.configure(sb)
+        expected = sb.research('قصة اختبار')
+        base = ser.revision_for(sb, 'قصة اختبار')
+        sb.brief['sources'] = []
+        os.environ['STORY_OPERATION_MODE'] = 'regenerate_editorial'
+        os.environ['STORY_REGENERATION_NONCE'] = 'weak-revision'
+        with self.assertRaises(SystemExit):
+            sb.research('قصة اختبار')
+        os.environ['STORY_OPERATION_MODE'] = 'auto'
+        self.assertEqual(ser.revision_for(sb, 'قصة اختبار'), base)
+        self.assertEqual(sb.research('قصة اختبار'), expected)
+        self.assertEqual(sb.calls, 2)
+
     def test_second_successful_anthropic_response_is_blocked(self):
         sb = FakeHttpStoryBot()
         ser.configure(sb)

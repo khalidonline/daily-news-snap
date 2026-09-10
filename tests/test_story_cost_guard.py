@@ -103,6 +103,16 @@ class CostGuardTests(unittest.TestCase):
         with self.assertRaises(scg.AuxModelSpendBlocked):
             scg.require_aux_model_capacity()
 
+    def test_aux_ceiling_survives_recovery_process_restart(self):
+        os.environ['GITHUB_RUN_ID'] = 'same-run'
+        os.environ['STORY_AUX_MAX_PAID_RESPONSES'] = '1'
+        scg.record_aux_model_result(purpose='vision_photo', model='m', response={'usage': {}})
+        scg.reset_aux_run_state()
+        with self.assertRaises(scg.AuxModelSpendBlocked):
+            scg.require_aux_model_capacity()
+        os.environ['GITHUB_RUN_ID'] = 'next-run'
+        scg.require_aux_model_capacity()
+
     def test_regeneration_requires_explicit_nonce_and_is_separately_auditable(self):
         with self.assertRaises(scg.EditorialSpendBlocked):
             scg.reserve_editorial_call("story", "rev", "regenerate_editorial")

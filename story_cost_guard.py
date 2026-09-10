@@ -209,9 +209,22 @@ def record_model_result(
 
 def require_aux_model_capacity() -> None:
     limit = int(os.getenv("STORY_AUX_MAX_PAID_RESPONSES", "50") or "50")
-    if limit < 1 or _aux_paid_responses >= limit:
+    observed = _aux_paid_responses
+    run_id = os.getenv('GITHUB_RUN_ID')
+    path = usage_ledger_path()
+    if run_id and path.exists():
+        try:
+            rows = [json.loads(line) for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
+            persisted = sum(
+                row.get('event') == 'aux_model_result' and row.get('run_id') == run_id
+                for row in rows
+            )
+        except (OSError, ValueError, AttributeError) as exc:
+            raise AuxModelSpendBlocked('cannot verify persisted auxiliary usage') from exc
+        observed = max(observed, persisted)
+    if limit < 1 or observed >= limit:
         raise AuxModelSpendBlocked(
-            f"auxiliary paid-response ceiling reached: {_aux_paid_responses}/{limit}"
+            f"auxiliary paid-response ceiling reached: {observed}/{limit}"
         )
 
 

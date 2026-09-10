@@ -44,12 +44,15 @@ def revision_for(sb: Any, story: str, mode: str | None = None) -> str:
         prompt = prompt + "\n[explicit-regeneration:" + hashlib.sha256(
             nonce.encode("utf-8")
         ).hexdigest() + "]"
-    return sbs.revision_key(
+    revision = sbs.revision_key(
         story,
         prompt,
         str(getattr(sb, "STORY_MODEL", "")),
         int(getattr(sb, "STORY_FRAMES", 6)),
     )
+    if selected != scg.OperationMode.REGENERATE_EDITORIAL.value:
+        return sbs.preferred_locked_revision(story, revision)
+    return revision
 
 
 def _usage(sb: Any) -> dict[str, Any]:
@@ -165,6 +168,12 @@ def configure(story_bot_module: Any) -> Any:
         # raise BriefCacheError here and never become permission to regenerate.
         cached = sbs.load_locked_brief(story, revision)
         if cached is not None:
+            if selected == scg.OperationMode.REGENERATE_EDITORIAL.value:
+                base = sbs.revision_key(
+                    story, _active_prompt(sb), str(getattr(sb, "STORY_MODEL", "")),
+                    int(getattr(sb, "STORY_FRAMES", 6)),
+                )
+                sbs.prefer_locked_revision(story, base, revision)
             print(f"    EDITORIAL_CACHE_HIT {revision[:12]}")
             scg.record_cache_hit(story, revision)
             return copy.deepcopy(cached["brief"])
@@ -217,6 +226,12 @@ def configure(story_bot_module: Any) -> Any:
                 ).hexdigest(),
             },
         )
+        if selected == scg.OperationMode.REGENERATE_EDITORIAL.value:
+            base = sbs.revision_key(
+                story, _active_prompt(sb), str(getattr(sb, "STORY_MODEL", "")),
+                int(getattr(sb, "STORY_FRAMES", 6)),
+            )
+            sbs.prefer_locked_revision(story, base, revision)
         print(f"    EDITORIAL_LOCKED {revision[:12]}")
         return copy.deepcopy(brief)
 
