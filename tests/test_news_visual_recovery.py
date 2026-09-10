@@ -164,6 +164,32 @@ class NewsVisualRecoveryTests(unittest.TestCase):
             self.assertTrue(logo.is_file())
             call.assert_called_once()
 
+    def test_sabic_agri_nutrients_logo_uses_verified_official_domain(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as td:
+            logos = Path(td)
+            target = [{
+                "kind": "organization",
+                "name_en": "SABIC Agri-Nutrients",
+            }]
+
+            def fetch(slug, names, require_domain=None):
+                self.assertEqual(slug, "sabic-agrinutrients.com")
+                self.assertEqual(names, ["SABIC Agri-Nutrients"])
+                self.assertEqual(require_domain, "sabic-agrinutrients.com")
+                path = logos / (slug + "-current.png")
+                path.write_bytes(b"verified-logo")
+                return path
+
+            with patch("logo_fetch.fetch_current", side_effect=fetch) as call:
+                logo, entity = exact_logo_for_targets(
+                    target, logos, root / "images" / "logos" / "index.json"
+                )
+
+            self.assertEqual(entity, "SABIC Agri-Nutrients")
+            self.assertTrue(logo.is_file())
+            call.assert_called_once()
+
     def test_curated_base64_asset_allows_trailing_newline(self):
         root = Path(__file__).resolve().parents[1]
         story = {
