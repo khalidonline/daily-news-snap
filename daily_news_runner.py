@@ -733,6 +733,7 @@ OFFICIAL_VISUAL_HOSTS = {
 }
 CURATED_RECOVERY_VISUAL_HOSTS = {
     "upload.wikimedia.org", "arabic.arabianbusiness.com",
+    "www.alwatan.com.sa",
 }
 
 
