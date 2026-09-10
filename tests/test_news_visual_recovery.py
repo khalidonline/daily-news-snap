@@ -111,6 +111,29 @@ class NewsVisualRecoveryTests(unittest.TestCase):
             self.assertTrue(logo.is_file())
             self.assertEqual(entity, "OECD")
 
+    def test_federal_reserve_logo_uses_verified_official_domain(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as td:
+            logos = Path(td)
+            target = [{"kind": "organization", "name_en": "Federal Reserve"}]
+
+            def fetch(slug, names, require_domain=None):
+                self.assertEqual(slug, "federalreserve.gov")
+                self.assertEqual(names, ["Federal Reserve"])
+                self.assertEqual(require_domain, "federalreserve.gov")
+                path = logos / (slug + "-current.png")
+                path.write_bytes(b"verified-logo")
+                return path
+
+            with patch("logo_fetch.fetch_current", side_effect=fetch) as call:
+                logo, entity = exact_logo_for_targets(
+                    target, logos, root / "images" / "logos" / "index.json"
+                )
+
+            self.assertEqual(entity, "Federal Reserve")
+            self.assertTrue(logo.is_file())
+            call.assert_called_once()
+
     def test_unknown_organization_has_no_logo(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
