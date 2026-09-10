@@ -1768,6 +1768,10 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 _CURATED_COMMONS_FILES = (
     (("kharg", "island", "oil", "terminal"), "File:ISS005-E-11900 lrg.jpg"),
     (("saudi", "arabia", "map"), "File:Saudi Arabia map-ar.png"),
+    (
+        ("united", "states", "central", "command", "seal"),
+        "File:Seal of the United States Central Command.png",
+    ),
 )
 
 
