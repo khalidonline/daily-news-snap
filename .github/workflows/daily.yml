@@ -134,7 +134,9 @@ jobs:
           MIN_PHOTO_SCORE: ${{ vars.MIN_PHOTO_SCORE }}
           THEME: "light"
           STORIES_PER_DAY: "1"
-          CANDIDATES: "5"
+          # Write one publishable choice plus two complete alternatives.
+          # The full headline pool and all relevance/visual gates stay intact.
+          CANDIDATES: "3"
           # Every News card must include a relevant photo. Failed image
           # selection must be recovered, never delivered as a text-only card.
           REQUIRE_PHOTO: "1"
