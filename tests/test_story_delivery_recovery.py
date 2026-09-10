@@ -1,4 +1,6 @@
 import unittest
+from pathlib import Path
+from unittest import mock
 
 import story_delivery_recovery as recovery
 
@@ -26,6 +28,23 @@ class StoryDeliveryRecoveryTests(unittest.TestCase):
 
         self.assertEqual(result, 1)
         self.assertEqual(attempts, [1, 2, 3])
+
+
+    def test_duplicate_suppression_is_not_counted_as_delivery(self):
+        completed = mock.Mock(
+            returncode=0,
+            stdout="Telegram READY candidate unchanged — duplicate suppressed\n",
+            stderr="",
+        )
+        with mock.patch.object(recovery.subprocess, "run", return_value=completed):
+            result = recovery._run_guarded_story()
+
+        self.assertEqual(result, 1)
+
+    def test_story_workflow_does_not_send_routine_failure_warnings(self):
+        workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
+        self.assertNotIn("notify-unresolved:", workflow)
+        self.assertNotIn("تعذر تسليم قصة اليوم", workflow)
 
 
 if __name__ == "__main__":
