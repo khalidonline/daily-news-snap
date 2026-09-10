@@ -1,4 +1,5 @@
 import unittest
+from unittest import mock
 
 import story_delivery_recovery as recovery
 
@@ -26,6 +27,18 @@ class StoryDeliveryRecoveryTests(unittest.TestCase):
 
         self.assertEqual(result, 1)
         self.assertEqual(attempts, [1, 2, 3])
+
+
+    def test_duplicate_suppression_is_not_counted_as_delivery(self):
+        completed = mock.Mock(
+            returncode=0,
+            stdout="Telegram READY candidate unchanged — duplicate suppressed\n",
+            stderr="",
+        )
+        with mock.patch.object(recovery.subprocess, "run", return_value=completed):
+            result = recovery._run_guarded_story()
+
+        self.assertEqual(result, 1)
 
 
 if __name__ == "__main__":
