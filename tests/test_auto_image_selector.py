@@ -189,7 +189,9 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         })
 
         def exact_visual(story, out_path):
-            Path(out_path).write_bytes(b"exact-kaust-logo")
+            Image.new("RGB", (1200, 300), (0, 0, 0)).save(
+                out_path, "JPEG", quality=95
+            )
             Path(str(out_path) + ".official-subject").write_text(
                 "asset:kaust-logo", encoding="utf-8"
             )
@@ -200,7 +202,12 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
             side_effect=exact_visual,
         ):
             photo, credit = self.run_auto(fake, Path(td) / "hero.jpg")
-            self.assertEqual(Path(photo).read_bytes(), b"exact-kaust-logo")
+            with Image.open(photo) as rendered:
+                self.assertEqual(rendered.size, (1280, 960))
+                self.assertTrue(all(channel > 230 for channel in
+                                    rendered.getpixel((10, 10))))
+                self.assertTrue(all(channel < 20 for channel in
+                                    rendered.getpixel((640, 480))))
             self.assertEqual(credit, "KAUST")
 
     def test_news_never_promotes_uncertain_device_from_filename(self):
