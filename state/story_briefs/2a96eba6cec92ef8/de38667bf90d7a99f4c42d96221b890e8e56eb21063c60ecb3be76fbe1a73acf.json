@@ -1,0 +1,68 @@
+{
+  "schema": "story-brief-v1",
+  "revision": "de38667bf90d7a99f4c42d96221b890e8e56eb21063c60ecb3be76fbe1a73acf",
+  "status": "EDITORIAL_LOCKED",
+  "brief": {
+    "title": "كيف بنت TSMC احتكاراً على رقائق العالم",
+    "caption": "بدأت TSMC عام 1987 بفكرة غير مألوفة: مصنع رقائق لا يصمم منتجات تنافس عملاءه. هكذا أصبحت حلقة حاسمة خلف الهواتف والذكاء الاصطناعي والسيارات.",
+    "frames": [
+      {
+        "heading": "فكرة مختلفة بدأت في 1987",
+        "text": "أسس موريس تشانغ شركة TSMC في تايوان عام 1987. لم تكن الفكرة بيع حواسيب أو هواتف، بل إنشاء مصنع متخصص يصنع الرقائق التي تصممها شركات أخرى.",
+        "punch": "مصنع ضخم يعمل خلف الكواليس.",
+        "subject_kind": "person",
+        "image_keywords": ["Morris Chang TSMC 1987", "TSMC founder"],
+        "image_keywords_ar": ["موريس تشانغ", "مؤسس TSMC"]
+      },
+      {
+        "heading": "مصنع لا ينافس عملاءه",
+        "text": "قدمت TSMC نموذج المصنع المتخصص: تركز على التصنيع فقط، ولا تطلق رقائق تحمل اسمها لمنافسة العملاء. لذلك تستطيع شركات التصميم تسليمها مخططاتها الحساسة بثقة أكبر.",
+        "punch": "نجاح العميل هو أساس نموذجها.",
+        "subject_kind": "company",
+        "image_keywords": ["TSMC semiconductor fab", "TSMC Fab 14"],
+        "image_keywords_ar": ["مصنع TSMC", "مصنع أشباه الموصلات"]
+      },
+      {
+        "heading": "المصمم لم يعد يحتاج مصنعاً",
+        "text": "هذا النموذج فصل تصميم الشريحة عن تصنيعها. صار بإمكان شركات التقنية التركيز على هندسة الرقائق، بينما تتولى TSMC المصانع شديدة التعقيد والكلفة.",
+        "punch": "الفكرة وسّعت سوق شركات الرقائق بلا مصانع.",
+        "subject_kind": "company",
+        "image_keywords": ["TSMC research and development", "semiconductor wafer TSMC"],
+        "image_keywords_ar": ["أبحاث TSMC", "رقائق أشباه الموصلات"]
+      },
+      {
+        "heading": "534 عميلاً في عام واحد",
+        "text": "بحسب ملف الشركة الرسمي، صنعت TSMC خلال 2025 نحو 12,682 منتجاً مختلفاً لـ534 عميلاً، باستخدام 305 تقنيات تصنيع. هذه المنتجات تخدم الحوسبة عالية الأداء والهواتف والسيارات وإنترنت الأشياء.",
+        "punch": "التنوع يكشف حجم الاعتماد عليها.",
+        "subject_kind": "company",
+        "image_keywords": ["TSMC Fab 18", "TSMC wafer manufacturing"],
+        "image_keywords_ar": ["مصنع TSMC 18", "تصنيع الرقائق"]
+      },
+      {
+        "heading": "طاقة تتجاوز 17 مليون رقاقة",
+        "text": "تقول TSMC إن الطاقة السنوية للمصانع التي تديرها تجاوزت 17 مليون رقاقة مكافئة بقياس 12 بوصة في 2025. أغلب مصانعها في تايوان، مع توسع في أريزونا واليابان وألمانيا.",
+        "punch": "التوسع يقرّب الإنتاج من أسواق العملاء.",
+        "subject_kind": "company",
+        "image_keywords": ["TSMC Fab 14", "TSMC Arizona fab"],
+        "image_keywords_ar": ["مصانع TSMC", "مصنع TSMC أريزونا"]
+      },
+      {
+        "heading": "لماذا أصبحت حلقة لا تُستبدل بسهولة؟",
+        "text": "بناء مصنع متقدم يحتاج سنوات واستثمارات وخبرة تشغيلية هائلة؛ لذلك أصبحت TSMC عنقاً مركزياً في سلسلة التقنية العالمية.",
+        "punch": "قوتها في مصنع تعتمد عليه منتجات كثيرة.",
+        "subject_kind": "company",
+        "image_keywords": ["TSMC semiconductor factory exterior", "TSMC advanced fab"],
+        "image_keywords_ar": ["مصنع TSMC", "مصنع رقائق متقدم"]
+      }
+    ],
+    "image_prompt": "Editorial documentary photographs of TSMC semiconductor fabrication facilities, wafer manufacturing, research laboratories, and founder Morris Chang; authentic photography only; no generated imagery; no text overlays.",
+    "image_queries": ["TSMC Fab 14 official", "TSMC Fab 18 official", "TSMC R&D official", "Morris Chang TSMC official"],
+    "image_queries_ar": ["مصنع TSMC", "موريس تشانغ", "تصنيع الرقائق"],
+    "sources": ["TSMC Company Profile (2026)", "TSMC official corporate information"]
+  },
+  "model": "verified-manual-recovery",
+  "message_id": null,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "prompt_hash": "official-tsmc-company-profile-2026"
+}
