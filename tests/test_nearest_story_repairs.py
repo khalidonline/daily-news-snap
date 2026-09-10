@@ -1,9 +1,49 @@
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
+import story_bot as sb
 import story_runtime as sr
 
 
 class NearestStoryRepairTests(unittest.TestCase):
+    def test_tsmc_recovery_revision_keeps_facts_but_fits_the_closing_frame(self):
+        path = Path(
+            "state/story_briefs/2a96eba6cec92ef8/"
+            "de38667bf90d7a99f4c42d96221b890e8e56eb21063c60ecb3be76fbe1a73acf.json"
+        )
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        closing = payload["brief"]["frames"][5]
+        self.assertIn("عنقاً مركزياً", closing["text"])
+        self.assertEqual(
+            "قوتها في مصنع تعتمد عليه منتجات كثيرة.", closing["punch"]
+        )
+
+    def test_tsmc_closing_frame_fits_the_footer_safety_band(self):
+        frame = {
+            "heading": "لماذا أصبحت حلقة لا تُستبدل بسهولة؟",
+            "text": (
+                "بناء مصنع متقدم يحتاج سنوات واستثمارات وخبرة تشغيلية هائلة؛ "
+                "لذلك أصبحت TSMC عنقاً مركزياً في سلسلة التقنية العالمية."
+            ),
+            "punch": "قوتها في مصنع تعتمد عليه منتجات كثيرة.",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "tsmc-closing.png"
+            sb.render_frame(
+                output,
+                sb.BRAND,
+                "6 / 6",
+                frame["heading"],
+                60,
+                sub=frame["text"],
+                photo=Path("images/rt-tsmc-2.jpg"),
+                punch=frame["punch"],
+                footer="المصدر: TSMC",
+            )
+            self.assertTrue(output.exists())
+
     def test_tsmc_locked_brief_has_six_distinct_subject_ordered_pins(self):
         story = "كيف بنت TSMC احتكاراً على رقائق العالم"
         cases = [
