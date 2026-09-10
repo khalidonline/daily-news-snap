@@ -87,14 +87,14 @@ jobs:
           set -euo pipefail
           for batch in $(seq 1 "$MAX_BATCHES"); do
             set +e
-            PYTHONPATH=. python tools/bulk_visual_repair.py \
+            PYTHONPATH="$RUNNER_TEMP/daily-budget:." python tools/bulk_visual_repair.py \
               --batch-stories "$BATCH_STORIES" \
               --max-candidates-per-beat "$MAX_CANDIDATES"
             rc=$?
             set -e
 
             python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py
-            PYTHONPATH=. python tools/build_runtime_review.py
+            PYTHONPATH="$RUNNER_TEMP/daily-budget:." python tools/build_runtime_review.py
 
             if ! git diff --quiet -- images stories.txt; then
               git config user.name "story-visual-repair-bot"
@@ -117,7 +117,7 @@ jobs:
           {
             echo "## Bulk visual repair"
             echo
-            PYTHONPATH=. python - <<'PY' || echo "Authoritative board generation failed."
+            PYTHONPATH="$RUNNER_TEMP/daily-budget:." python - <<'PY' || echo "Authoritative board generation failed."
           from tools.bulk_visual_board import build_board
           board = build_board()
           passed = sum(row.status == "PASS" for row in board)
