@@ -193,3 +193,15 @@ class GitHubStoreTests(unittest.TestCase):
                 env={**os.environ, 'PYTHONPATH': target}, capture_output=True, text=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('unpriced paid provider blocked', result.stderr)
+
+class WorkflowBudgetTests(unittest.TestCase):
+    def test_paid_workflows_cannot_override_guard_python_path(self):
+        from pathlib import Path
+        for path in Path('.github/workflows').glob('*.yml'):
+            text = path.read_text()
+            if 'secrets.ANTHROPIC_API_KEY' not in text:
+                continue
+            self.assertIn('Install shared $3 daily budget guard', text, str(path))
+            for line in text.splitlines():
+                if 'PYTHONPATH=' in line or 'PYTHONPATH:' in line:
+                    self.assertIn('daily-budget', line, f'{path}: {line}')

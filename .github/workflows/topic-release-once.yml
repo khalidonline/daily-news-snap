@@ -2,10 +2,7 @@ name: Topic release once
 # live release: verified SAMA image and finance wording gates
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/topic-release-once.yml"
+  workflow_dispatch:
 
 permissions:
   contents: write
