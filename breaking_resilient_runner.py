@@ -31,6 +31,7 @@ _CENTCOM_RE = re.compile(
     r"\b(?:united\s+states\s+central\s+command|uscentcom|centcom)\b)",
     re.IGNORECASE,
 )
+_CENTCOM_SOURCE_RE = re.compile(r"\b(?:uscentcom|centcom)\b", re.IGNORECASE)
 
 _VISUAL_FALLBACK_RULE = """
 
@@ -43,21 +44,43 @@ _VISUAL_FALLBACK_RULE = """
 """
 
 
-def _fallback_queries(event):
+def _retained_official_sources(event, module=base):
+    """Read source labels from the cached editorial for this exact event."""
+    try:
+        cache = module._load_cache()
+        entry = cache.get("editorial", {}).get(module._event_fingerprint(event), {})
+        stories = entry.get("result", {}).get("stories", [])
+    except (AttributeError, TypeError):
+        return ""
+    return " / ".join(
+        str(story.get("source", "")).strip()
+        for story in stories
+        if isinstance(story, dict) and story.get("source")
+    )
+
+
+def _has_centcom_context(event, source_text=""):
+    return bool(
+        _CENTCOM_RE.search(str(event or ""))
+        or _CENTCOM_SOURCE_RE.search(str(source_text or ""))
+    )
+
+
+def _fallback_queries(event, source_text=""):
     text = str(event or "")
     if _SAUDI_RE.search(text) and _SEVERE_SECURITY_RE.search(text):
         return ["Saudi Arabia map"]
-    if _CENTCOM_RE.search(text):
+    if _has_centcom_context(text, source_text):
         return ["United States Central Command official seal"]
     return []
 
 
-def _exact_context_visual(title, event):
+def _exact_context_visual(title, event, source_text=""):
     text = str(event or "")
     if title == _SAUDI_MAP_TITLE:
         return bool(_SAUDI_RE.search(text) and _SEVERE_SECURITY_RE.search(text))
     if title == _CENTCOM_SEAL_TITLE:
-        return bool(_CENTCOM_RE.search(text))
+        return _has_centcom_context(text, source_text)
     return False
 
 
@@ -80,7 +103,9 @@ def install_exact_official_logo_acceptance(module=base):
             ).strip()
         except OSError:
             title = ""
-        if title == _CENTCOM_SEAL_TITLE and _exact_context_visual(title, event):
+        source_text = _retained_official_sources(event, module)
+        if title == _CENTCOM_SEAL_TITLE and _exact_context_visual(
+                title, event, source_text):
             print("    exact verified CENTCOM seal accepted as official identity")
             return True
         return original(bot, photo_path, event, extra_context)
@@ -112,7 +137,8 @@ def install_exact_map_acceptance(module=base):
 def install_resilient_visual_fallback(bot=news_bot):
     """Retry Commons once with a Saudi map; no model/search-provider spend."""
     event = (getattr(bot, "PINNED_EVENT", "") or "").strip()
-    fallback = _fallback_queries(event)
+    source_text = _retained_official_sources(event, base)
+    fallback = _fallback_queries(event, source_text)
     original = getattr(bot, "fetch_commons_photo", None)
     if not fallback or not callable(original):
         return
@@ -129,7 +155,8 @@ def install_resilient_visual_fallback(bot=news_bot):
             bot.looks_like_a_graphic = lambda _path: False
         if callable(commons_safe):
             def allow_exact_saudi_map(page, info):
-                if _exact_context_visual(page.get("title"), event):
+                if _exact_context_visual(
+                        page.get("title"), event, source_text):
                     return True
                 return commons_safe(page, info)
             bot._commons_safe = allow_exact_saudi_map
