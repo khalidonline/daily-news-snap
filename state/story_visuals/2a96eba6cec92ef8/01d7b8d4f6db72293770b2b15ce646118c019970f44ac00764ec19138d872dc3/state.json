@@ -1,8 +1,7 @@
 {
-  "final_release_status": "REVIEW",
   "frames": {
     "1": {
-      "asset_hash": "562f88456b8a84fb020a2d646fc2fc21a26ee692fa6a0c0c3e19ddfe9d7a0b7d",
+      "asset_hash": "278cf18c916737cc22b647f02fcbf87faaf3c37cf1170efa96bd1373004b38e7",
       "frame_payload": {
         "heading": "فكرة مختلفة بدأت في 1987",
         "image_keywords": [
@@ -22,7 +21,7 @@
       "status": "PASS"
     },
     "2": {
-      "asset_hash": "7a10e0d1a16b3e460291904fb56aabfa76fe48456e23c2b9efe37208cc145be3",
+      "asset_hash": "562f88456b8a84fb020a2d646fc2fc21a26ee692fa6a0c0c3e19ddfe9d7a0b7d",
       "frame_payload": {
         "heading": "مصنع لا ينافس عملاءه",
         "image_keywords": [
@@ -62,7 +61,7 @@
       "status": "PASS"
     },
     "4": {
-      "asset_hash": "a3d66df7d9fc3ccaedb8b77951d6a75455271832d722613ea4e419aa7e949492",
+      "asset_hash": "7a10e0d1a16b3e460291904fb56aabfa76fe48456e23c2b9efe37208cc145be3",
       "frame_payload": {
         "heading": "534 عميلاً في عام واحد",
         "image_keywords": [
@@ -82,7 +81,7 @@
       "status": "PASS"
     },
     "5": {
-      "asset_hash": "a29ea3f872efd986100c33876d84f5fd62ff1719b23babc5eb75e8009483f9a8",
+      "asset_hash": "a3d66df7d9fc3ccaedb8b77951d6a75455271832d722613ea4e419aa7e949492",
       "frame_payload": {
         "heading": "طاقة تتجاوز 17 مليون رقاقة",
         "image_keywords": [
@@ -102,7 +101,7 @@
       "status": "PASS"
     },
     "6": {
-      "asset_hash": "278cf18c916737cc22b647f02fcbf87faaf3c37cf1170efa96bd1373004b38e7",
+      "asset_hash": "a29ea3f872efd986100c33876d84f5fd62ff1719b23babc5eb75e8009483f9a8",
       "frame_payload": {
         "heading": "لماذا أصبحت حلقة لا تُستبدل بسهولة؟",
         "image_keywords": [
@@ -113,149 +112,17 @@
           "مصنع TSMC",
           "مصنع رقائق متقدم"
         ],
-        "punch": "قوتها ليست في منتج واحد، بل في المصنع الذي تعتمد عليه منتجات كثيرة.",
+        "punch": "مصانعها تشغّل منتجات شركات كثيرة.",
         "subject_kind": "company",
-        "text": "لأن إنشاء مصنع متقدم يحتاج سنوات واستثمارات وخبرة تشغيلية هائلة، أصبح نموذج TSMC عنقاً مركزياً في سلسلة التقنية. الشركة لا تبيع الهاتف أو السيارة، لكنها تصنع الشرائح التي تجعل كثيراً منها يعمل."
+        "text": "مصانع الرقائق المتقدمة تحتاج سنوات وخبرة ضخمة؛ لذلك أصبحت TSMC حلقة مركزية في التقنية."
       },
       "image_source": "state/story_visuals/2a96eba6cec92ef8/01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3/assets/frame-06.jpg",
       "qa_reasons": [],
       "status": "PASS"
     }
   },
-  "publishability_evaluated_at": "2026-09-10T12:42:25.834222+00:00",
-  "publishability_policy": "frame-relevance-v2",
   "revision": "01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
-  "story_quality_dimensions": {
-    "claim_precision": "PASS",
-    "final_frame_currency": "PASS",
-    "narrative_chronology": "PASS",
-    "subject_focus": "BLOCKED",
-    "visual_chronology": "PASS"
-  },
-  "story_quality_findings": [
-    {
-      "code": "CRITICAL_FRAME_NOT_DIRECT",
-      "dimension": "subject_focus",
-      "frame": 6,
-      "message": "frame does not materially advance the named Story subject",
-      "severity": "BLOCK"
-    },
-    {
-      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
-      "dimension": "subject_focus",
-      "frame": 6,
-      "message": "supporting context dominates too many consecutive frames",
-      "severity": "BLOCK"
-    }
-  ],
-  "story_quality_frame_evidence": [
-    {
-      "copy_years": [
-        1987,
-        1987
-      ],
-      "current": false,
-      "flashback": false,
-      "focus": "DIRECT",
-      "frame": 1,
-      "subject_overlap": [
-        "tsmc",
-        "رقائق"
-      ],
-      "visual_era": "HISTORICAL",
-      "visual_years": [
-        1987
-      ]
-    },
-    {
-      "copy_years": [],
-      "current": false,
-      "flashback": false,
-      "focus": "DIRECT",
-      "frame": 2,
-      "subject_overlap": [
-        "tsmc",
-        "رقائق"
-      ],
-      "visual_era": "UNKNOWN",
-      "visual_years": []
-    },
-    {
-      "copy_years": [],
-      "current": false,
-      "flashback": false,
-      "focus": "DIRECT",
-      "frame": 3,
-      "subject_overlap": [
-        "tsmc",
-        "رقائق"
-      ],
-      "visual_era": "UNKNOWN",
-      "visual_years": []
-    },
-    {
-      "copy_years": [
-        2025
-      ],
-      "current": false,
-      "flashback": false,
-      "focus": "SUPPORTING",
-      "frame": 4,
-      "subject_overlap": [
-        "tsmc",
-        "رقائق"
-      ],
-      "visual_era": "UNKNOWN",
-      "visual_years": []
-    },
-    {
-      "copy_years": [
-        2025
-      ],
-      "current": false,
-      "flashback": false,
-      "focus": "SUPPORTING",
-      "frame": 5,
-      "subject_overlap": [
-        "tsmc"
-      ],
-      "visual_era": "UNKNOWN",
-      "visual_years": []
-    },
-    {
-      "copy_years": [],
-      "current": false,
-      "flashback": false,
-      "focus": "SUPPORTING",
-      "frame": 6,
-      "subject_overlap": [
-        "tsmc",
-        "رقائق"
-      ],
-      "visual_era": "UNKNOWN",
-      "visual_years": []
-    }
-  ],
-  "story_quality_policy": "story-quality-v1",
-  "story_quality_repair": {
-    "dimensions": [
-      "subject_focus"
-    ],
-    "frame_modes": {
-      "6": "editorial_frame"
-    },
-    "frames": [
-      6
-    ],
-    "full_deck_regeneration": false,
-    "instructions": {
-      "6": [
-        "keep the frame centered on the named Story subject"
-      ]
-    }
-  },
-  "story_quality_status": "BLOCKED"
+  "story": "كيف بنت TSMC احتكاراً على رقائق العالم"
 }
