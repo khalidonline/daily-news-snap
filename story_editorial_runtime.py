@@ -168,6 +168,12 @@ def configure(story_bot_module: Any) -> Any:
         # raise BriefCacheError here and never become permission to regenerate.
         cached = sbs.load_locked_brief(story, revision)
         if cached is not None:
+            if selected == scg.OperationMode.REGENERATE_EDITORIAL.value:
+                base = sbs.revision_key(
+                    story, _active_prompt(sb), str(getattr(sb, "STORY_MODEL", "")),
+                    int(getattr(sb, "STORY_FRAMES", 6)),
+                )
+                sbs.prefer_locked_revision(story, base, revision)
             print(f"    EDITORIAL_CACHE_HIT {revision[:12]}")
             scg.record_cache_hit(story, revision)
             return copy.deepcopy(cached["brief"])

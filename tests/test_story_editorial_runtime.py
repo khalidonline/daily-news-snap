@@ -199,6 +199,23 @@ class EditorialRuntimeTests(unittest.TestCase):
         sb.SYSTEM_PROMPT = 'changed policy {n}'
         self.assertNotEqual(ser.revision_for(sb, 'قصة اختبار'), revision)
 
+    def test_regeneration_cache_hit_repairs_interrupted_preference_write(self):
+        from unittest.mock import patch
+        sb = FakeStoryBot()
+        ser.configure(sb)
+        sb.research('test story')
+        os.environ['STORY_OPERATION_MODE'] = 'regenerate_editorial'
+        os.environ['STORY_REGENERATION_NONCE'] = 'interrupted'
+        with patch.object(sbs, 'prefer_locked_revision', side_effect=OSError('interrupted')):
+            with self.assertRaises(OSError):
+                sb.research('test story')
+        revision = ser.revision_for(sb, 'test story')
+        expected = sb.research('test story')
+        os.environ['STORY_OPERATION_MODE'] = 'auto'
+        self.assertEqual(ser.revision_for(sb, 'test story'), revision)
+        self.assertEqual(sb.research('test story'), expected)
+        self.assertEqual(sb.calls, 2)
+
     def test_failed_regeneration_keeps_previous_validated_revision(self):
         sb = FakeStoryBot()
         ser.configure(sb)
