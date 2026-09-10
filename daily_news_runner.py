@@ -1062,6 +1062,20 @@ def install_auto_image_selector(news_bot_module):
             Path(photo).unlink(missing_ok=True)
             _marker(photo, ".official-subject").unlink(missing_ok=True)
             photo = None
+        if photo and explicit_logo:
+            entity = credit or next(
+                (
+                    target.get("name_en") or target.get("name_ar")
+                    for target in targets
+                    if target.get("kind") == "organization"
+                ),
+                "organization",
+            )
+            result = _promote_exact_logo(photo, hero, entity)
+            for prepared in candidates:
+                _clear_candidate(prepared)
+            print(f"      auto image recovery: contained exact logo for {entity}")
+            return result, credit or entity
         if photo:
             selected = (Path(photo), credit, "official")
             print("      auto image relevance [official]: verified direct subject")
