@@ -51,12 +51,28 @@ concurrency:
   group: story
   cancel-in-progress: true
 
+env:
+  DAILY_BUDGET_GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   story:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
+      - name: Checkout shared daily budget guard
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .daily-budget-source
+          sparse-checkout: daily_budget.py
+          sparse-checkout-cone-mode: false
+
+      - name: Install shared $3 daily budget guard
+        run: |
+          python3 .daily-budget-source/daily_budget.py install --target "$RUNNER_TEMP/daily-budget"
+          echo "PYTHONPATH=$RUNNER_TEMP/daily-budget" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
         with:
           ref: repair/all-story-visuals-2026-08-29

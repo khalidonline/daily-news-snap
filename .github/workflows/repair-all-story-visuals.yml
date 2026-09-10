@@ -1,11 +1,7 @@
 name: Repair remaining story visuals
 
 on:
-  push:
-    branches:
-      - repair/all-story-visuals-2026-08-29
-    paths:
-      - ".github/repair-all-stories-trigger"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,11 +10,27 @@ concurrency:
   group: repair-all-story-visuals-2026-08-29
   cancel-in-progress: false
 
+env:
+  DAILY_BUDGET_GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   repair:
     runs-on: ubuntu-latest
     timeout-minutes: 100
     steps:
+      - name: Checkout shared daily budget guard
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .daily-budget-source
+          sparse-checkout: daily_budget.py
+          sparse-checkout-cone-mode: false
+
+      - name: Install shared $3 daily budget guard
+        run: |
+          python3 .daily-budget-source/daily_budget.py install --target "$RUNNER_TEMP/daily-budget"
+          echo "PYTHONPATH=$RUNNER_TEMP/daily-budget" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
         with:
           ref: repair/all-story-visuals-2026-08-29
@@ -78,7 +90,7 @@ jobs:
 
       - name: Verify repair engine before writes
         env:
-          PYTHONPATH: /tmp/story-repair-engine
+          PYTHONPATH: ${{ runner.temp }}/daily-budget:/tmp/story-repair-engine
         run: |
           cd /tmp/story-repair-engine
           python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py tests/test_apply_repair_assets.py
@@ -86,7 +98,7 @@ jobs:
       - name: Repair remaining catalogue in bounded rounds
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          PYTHONPATH: /tmp/story-repair-engine
+          PYTHONPATH: ${{ runner.temp }}/daily-budget:/tmp/story-repair-engine
         shell: bash
         run: |
           set -euo pipefail
@@ -123,7 +135,7 @@ jobs:
       - name: Final authoritative summary
         if: always()
         env:
-          PYTHONPATH: /tmp/story-repair-engine
+          PYTHONPATH: ${{ runner.temp }}/daily-budget:/tmp/story-repair-engine
         shell: bash
         run: |
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"

@@ -10,6 +10,9 @@ concurrency:
   group: three-story-cost-pilot
   cancel-in-progress: false
 
+env:
+  DAILY_BUDGET_GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   pilot:
     runs-on: ubuntu-latest
@@ -39,6 +42,19 @@ jobs:
       ARK_MODEL: ${{ vars.ARK_MODEL }}
 
     steps:
+      - name: Checkout shared daily budget guard
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .daily-budget-source
+          sparse-checkout: daily_budget.py
+          sparse-checkout-cone-mode: false
+
+      - name: Install shared $3 daily budget guard
+        run: |
+          python3 .daily-budget-source/daily_budget.py install --target "$RUNNER_TEMP/daily-budget"
+          echo "PYTHONPATH=$RUNNER_TEMP/daily-budget" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
         with:
           ref: optimize/all-stories-publication-ready

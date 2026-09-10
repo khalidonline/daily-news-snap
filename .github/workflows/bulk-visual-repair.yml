@@ -19,11 +19,27 @@ on:
 permissions:
   contents: read
 
+env:
+  DAILY_BUDGET_GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   wrong-branch:
     if: github.ref_name != 'repair/story-visual-coverage'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout shared daily budget guard
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .daily-budget-source
+          sparse-checkout: daily_budget.py
+          sparse-checkout-cone-mode: false
+
+      - name: Install shared $3 daily budget guard
+        run: |
+          python3 .daily-budget-source/daily_budget.py install --target "$RUNNER_TEMP/daily-budget"
+          echo "PYTHONPATH=$RUNNER_TEMP/daily-budget" >> "$GITHUB_ENV"
+
       - run: |
           echo "Run this workflow from branch repair/story-visual-coverage."
           exit 1
@@ -35,6 +51,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
+      - name: Checkout shared daily budget guard
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .daily-budget-source
+          sparse-checkout: daily_budget.py
+          sparse-checkout-cone-mode: false
+
+      - name: Install shared $3 daily budget guard
+        run: |
+          python3 .daily-budget-source/daily_budget.py install --target "$RUNNER_TEMP/daily-budget"
+          echo "PYTHONPATH=$RUNNER_TEMP/daily-budget" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
         with:
           ref: repair/story-visual-coverage
@@ -58,14 +87,14 @@ jobs:
           set -euo pipefail
           for batch in $(seq 1 "$MAX_BATCHES"); do
             set +e
-            PYTHONPATH=. python tools/bulk_visual_repair.py \
+            PYTHONPATH="$RUNNER_TEMP/daily-budget:." python tools/bulk_visual_repair.py \
               --batch-stories "$BATCH_STORIES" \
               --max-candidates-per-beat "$MAX_CANDIDATES"
             rc=$?
             set -e
 
             python -m unittest -v tests/test_bulk_visual_*.py tests/test_runtime_relevance.py
-            PYTHONPATH=. python tools/build_runtime_review.py
+            PYTHONPATH="$RUNNER_TEMP/daily-budget:." python tools/build_runtime_review.py
 
             if ! git diff --quiet -- images stories.txt; then
               git config user.name "story-visual-repair-bot"
@@ -88,7 +117,7 @@ jobs:
           {
             echo "## Bulk visual repair"
             echo
-            PYTHONPATH=. python - <<'PY' || echo "Authoritative board generation failed."
+            PYTHONPATH="$RUNNER_TEMP/daily-budget:." python - <<'PY' || echo "Authoritative board generation failed."
           from tools.bulk_visual_board import build_board
           board = build_board()
           passed = sum(row.status == "PASS" for row in board)

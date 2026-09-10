@@ -1,9 +1,7 @@
 name: Bootstrap current Story publishability pool
 
 on:
-  push:
-    paths:
-      - '.github/workflows/bootstrap-current-story-pool.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,11 +10,27 @@ concurrency:
   group: story-publishability-bootstrap
   cancel-in-progress: true
 
+env:
+  DAILY_BUDGET_GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   validate:
     runs-on: ubuntu-24.04
     timeout-minutes: 75
     steps:
+      - name: Checkout shared daily budget guard
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .daily-budget-source
+          sparse-checkout: daily_budget.py
+          sparse-checkout-cone-mode: false
+
+      - name: Install shared $3 daily budget guard
+        run: |
+          python3 .daily-budget-source/daily_budget.py install --target "$RUNNER_TEMP/daily-budget"
+          echo "PYTHONPATH=$RUNNER_TEMP/daily-budget" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
         with:
           ref: fix/global-story-publishability
