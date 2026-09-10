@@ -48,9 +48,15 @@ jobs:
               trigger_value="$(tail -n 1 "$trigger_path")"
               if [ "$bot" = "news" ] && [[ "$trigger_value" == recovery_story=* ]]; then
                 encoded="${trigger_value#recovery_story=}"
+                recovery_slot="$(printf '%s' "$encoded" | base64 --decode | python3 -c 'import json, sys; print(json.load(sys.stdin).get("recovery_for_slot", ""))')"
+                if [ -z "$recovery_slot" ]; then
+                  echo "News recovery payload is missing recovery_for_slot" >&2
+                  exit 1
+                fi
                 gh api --method POST "repos/${GITHUB_REPOSITORY}/dispatches" \
                   -f event_type="news-recovery" \
-                  -f "client_payload[story_b64]=${encoded}"
+                  -f "client_payload[story_b64]=${encoded}" \
+                  -f "client_payload[slot]=${recovery_slot}"
                 continue
               fi
               if [ "$bot" = "story" ] && [[ "$trigger_value" == recovery_story=* ]]; then
