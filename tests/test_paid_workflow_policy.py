@@ -90,7 +90,8 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("requested_slot=", receiver)
-        self.assertIn("awk 'NF { print $1; exit }'", receiver)
+        self.assertIn("awk 'NF { value=$1 } END { print value }'", receiver)
+        self.assertNotIn("awk 'NF { print $1; exit }'", receiver)
         self.assertIn("client_payload[slot]", receiver)
 
     def test_external_clock_receiver_dispatches_each_bot_without_model_calls(self):
