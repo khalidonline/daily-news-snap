@@ -173,6 +173,8 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
                 "takeaway": "مصدر غذائي بديل.",
                 "link": "https://www.alyaum.com/articles/6681982",
                 "scope": "saudi",
+                "image_queries": ["apple iphone saudi arabia"],
+                "image_queries_ar": ["آيفون"],
                 "visual_targets": [{
                     "kind": "organization",
                     "name_en": "KAUST",
