@@ -34,5 +34,21 @@ class ExplicitStoryRecoveryCooldownTests(unittest.TestCase):
         self.assertTrue(all(value is False for value in calls))
 
 
+    def test_text_overflow_blocks_render(self):
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaises(RuntimeError):
+                sb.render_frame(
+                    Path(td) / "overflow.png",
+                    "ملخص تنفيذي - قصة",
+                    "6 / 6",
+                    "عنوان طويل للاختبار",
+                    60,
+                    sub=("نص طويل جداً " * 180),
+                    photo=None,
+                    punch=("خلاصة طويلة " * 30),
+                    footer="المصدر: اختبار",
+                )
+
+
 if __name__ == "__main__":
     unittest.main()
