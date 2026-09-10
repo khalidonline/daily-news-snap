@@ -1,11 +1,5 @@
 [
  {
-  "headline": "ثوران بركان يعطل مئات الرحلات في مطار بآسيا",
-  "at": "2026-09-07T04:15:09.069905+00:00",
-  "source_link": "https://cnbc.com/2026/09/07/flights-canceled-jakarta-airport-anak-krakatau-eruption-disrupts-regional-travel-volcano.html",
-  "lane": "business_tech"
- },
- {
   "headline": "أسعار النفط تتجاوز 96 دولاراً مع توتر في هرمز",
   "at": "2026-09-07T06:16:52.638156+00:00",
   "source_link": "https://aawsat.com/node/5315462",
@@ -165,5 +159,11 @@
   "at": "2026-09-09T20:17:23.369472+00:00",
   "source_link": "https://techcrunch.com/2026/09/09/there-are-new-shiny-iphones-so-apple-is-making-you-pay-more-for-older-models",
   "lane": "business_tech"
+ },
+ {
+  "headline": "احتمالات رفع الفائدة الأمريكية تعود مجدداً",
+  "at": "2026-09-10T04:37:43.732502+00:00",
+  "source_link": "https://alwatan.com.sa/article/1185316",
+  "lane": "saudi_core"
  }
 ]
