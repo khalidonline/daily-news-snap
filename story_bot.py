@@ -1673,8 +1673,13 @@ def find_photo(spec, out_path, seen=(), context="", allow_neutral=True,
     # six blank frames, a skipped story with the right seed on disk.
     photo, tried_local = None, list(spec.get("lib_exclude") or [])
     for _ in range(6):     # a 5-seed subject needs the walk to reach them all
-        cand, _lc = fetch_local_photo([], keywords, out_path,
-                                      exclude=tried_local)
+        cand, _lc = fetch_local_photo(
+            [], keywords, out_path,
+            # An explicit STORY is a recovery/editorial request. Failed or
+            # unsent attempts must not put its reviewed assets into cooldown.
+            respect_cooldown=not bool(STORY),
+            exclude=tried_local,
+        )
         if not cand:
             break
         d0 = _photo_digest(cand)
