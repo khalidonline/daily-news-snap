@@ -8,6 +8,8 @@ on:
       - "story_bot.py"
       - "news_bot.py"
       - "topic_snapchat.py"
+      - "story_delivery_recovery.py"
+      - "tests/test_story_delivery_recovery.py"
       - "tests/test_runtime_relevance.py"
       - "tests/test_ai_image_attribution.py"
       - "images/relevance.json"
@@ -48,6 +50,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Relevance and AI-attribution policy unit tests
         run: python -m unittest -v tests/test_runtime_relevance.py tests/test_ai_image_attribution.py
+      - name: Story delivery acknowledgement regressions
+        run: python -m unittest -v tests/test_story_delivery_recovery.py
       - name: Compile guarded story entrypoint
         run: python -m py_compile runtime_relevance.py story_runtime.py story_bot.py preflight_stories.py image_precheck.py news_bot.py topic_snapchat.py
       - name: Image precheck self-test
