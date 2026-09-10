@@ -54,9 +54,9 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
             '"$trigger_path")"',
             receiver,
         )
-        self.assertIn('-f "client_payload[slot]=${requested_slot}"'.replace('\$','$'), receiver)
+        self.assertIn('-f "client_payload[slot]=${requested_slot}"', receiver)
         self.assertIn(
-            "BREAKING_RECOVERY_SLOT: ${{ github.event.client_payload.slot || '' }}".replace('\$','$'),
+            "BREAKING_RECOVERY_SLOT: ${{ github.event.client_payload.slot || '' }}",
             workflow,
         )
 
@@ -74,7 +74,7 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("recovery_story=", receiver)
-        self.assertIn('event_type="news-recovery"', receiver)
+        self.assertIn("event_type=\"news-recovery\"", receiver)
         self.assertIn("client_payload[story_b64]", receiver)
         self.assertIn("recovery_for_slot", receiver)
         self.assertIn("client_payload[slot]", receiver)
@@ -84,7 +84,7 @@ class PaidWorkflowPolicyTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn('[[ "$trigger_value" == *"recovery_story="* ]]', receiver)
-        self.assertIn('encoded="${trigger_value##*recovery_story=}"'.replace('\$','$'), receiver)
+        self.assertIn('encoded="${trigger_value##*recovery_story=}"', receiver)
 
     def test_breaking_clock_can_forward_an_exact_recovery_event(self):
         receiver = Path(".github/workflows/external-clock-receiver.yml").read_text(
