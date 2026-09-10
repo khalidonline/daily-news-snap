@@ -158,6 +158,51 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
         return fake.fetch_local_photo(
             ["آيفون"], ["apple iphone saudi arabia"], hero)
 
+    def test_explicit_exact_organization_logo_bypasses_generic_graphic_gate(self):
+        calls = []
+        fake = self.make_module({
+            "local": "no", "article": "no", "spa": "no",
+            "commons": "no", "loc": "no", "openverse": "no",
+            "stock": "no",
+        }, calls)
+        fake.looks_like_a_graphic = lambda path: True
+        daily_news_runner.remember_story_contexts({
+            "stories": [{
+                "headline": "دراسة كاوست عن الغذاء العالمي",
+                "summary": "دراسة تقودها كاوست عن اللافقاريات المائية.",
+                "takeaway": "مصدر غذائي بديل.",
+                "link": "https://www.alyaum.com/articles/6681982",
+                "scope": "saudi",
+                "image_queries": ["apple iphone saudi arabia"],
+                "image_queries_ar": ["آيفون"],
+                "visual_targets": [{
+                    "kind": "organization",
+                    "name_en": "KAUST",
+                    "name_ar": "كاوست",
+                }],
+                "recovery_visual_kind": "organization_logo",
+                "recovery_image_b64_path": (
+                    "assets/recovery/kaust-official-logo.png.b64"
+                ),
+                "recovery_photo_credit": "KAUST",
+            }]
+        })
+
+        def exact_visual(story, out_path):
+            Path(out_path).write_bytes(b"exact-kaust-logo")
+            Path(str(out_path) + ".official-subject").write_text(
+                "asset:kaust-logo", encoding="utf-8"
+            )
+            return str(out_path), "KAUST"
+
+        with tempfile.TemporaryDirectory() as td, patch(
+            "daily_news_runner.fetch_verified_official_visual",
+            side_effect=exact_visual,
+        ):
+            photo, credit = self.run_auto(fake, Path(td) / "hero.jpg")
+            self.assertEqual(Path(photo).read_bytes(), b"exact-kaust-logo")
+            self.assertEqual(credit, "KAUST")
+
     def test_news_never_promotes_uncertain_device_from_filename(self):
         fake = self.make_module(dict.fromkeys(
             ["local", "article", "spa", "commons", "loc", "openverse", "stock"],
