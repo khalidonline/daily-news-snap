@@ -133,6 +133,7 @@ def _research_with_paid_response_ceiling(sb: Any, research_fn: Any, story: str):
         return research_fn(story)
 
     successful_responses = 0
+    sb._EDITORIAL_HTTP_RESPONSE_OBTAINED = False
 
     def guarded_urlopen(*args, **kwargs):
         nonlocal successful_responses
@@ -142,6 +143,7 @@ def _research_with_paid_response_ceiling(sb: Any, research_fn: Any, story: str):
             )
         response = original_urlopen(*args, **kwargs)
         successful_responses += 1
+        sb._EDITORIAL_HTTP_RESPONSE_OBTAINED = True
         return _CapturedResponse(response, sb)
 
     request_module.urlopen = guarded_urlopen
@@ -193,7 +195,12 @@ def configure(story_bot_module: Any) -> Any:
         try:
             brief = _research_with_paid_response_ceiling(sb, original_research, story)
         except BaseException:
-            _record_result(sb, reservation, "error")
+            status = (
+                "error_after_response"
+                if getattr(sb, "_EDITORIAL_HTTP_RESPONSE_OBTAINED", False)
+                else "transport_error"
+            )
+            _record_result(sb, reservation, status)
             raise
 
         quality = seq.evaluate_brief(
