@@ -27,8 +27,8 @@ _SEVERE_SECURITY_RE = re.compile(
 _SAUDI_MAP_TITLE = "File:Saudi Arabia map-ar.png"
 _CENTCOM_SEAL_TITLE = "File:Seal of the United States Central Command.png"
 _CENTCOM_RE = re.compile(
-    r"(?:القيادة\\s+المركزية\\s+(?:الأمريكية|للولايات\\s+المتحدة)|"
-    r"\\b(?:united\\s+states\\s+central\\s+command|uscentcom|centcom)\\b)",
+    r"(?:القيادة\s+المركزية\s+(?:الأمريكية|للولايات\s+المتحدة)|"
+    r"\b(?:united\s+states\s+central\s+command|uscentcom|centcom)\b)",
     re.IGNORECASE,
 )
 
