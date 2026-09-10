@@ -162,6 +162,39 @@ class BreakingVisualRelevanceTests(unittest.TestCase):
             resolver(["Saudi Arabia map"]),
         )
 
+    def test_curated_commons_centcom_seal_is_registered(self):
+        import news_bot
+        resolver = getattr(news_bot, "_curated_commons_file_titles", lambda _q: [])
+        self.assertIn(
+            "File:Seal of the United States Central Command.png",
+            resolver(["United States Central Command official seal"]),
+        )
+
+    def test_exact_centcom_seal_is_allowed_only_for_centcom_event(self):
+        import breaking_resilient_runner as resilient
+        import breaking_news_runner as base
+        with tempfile.TemporaryDirectory() as td:
+            photo = Path(td) / "candidate.png"
+            Image.new("RGB", (40, 40), "white").save(photo)
+            Path(str(photo) + ".commons-title").write_text(
+                "File:Seal of the United States Central Command.png",
+                encoding="utf-8",
+            )
+            resilient.install_exact_official_logo_acceptance(base)
+            bot = self.fake_bot()
+            accepted = base._breaking_photo_acceptable(
+                bot,
+                photo,
+                "القيادة المركزية الأمريكية تعلن تدمير ناقلات إيرانية",
+            )
+            rejected = base._breaking_photo_acceptable(
+                bot,
+                photo,
+                "جهة أخرى تعلن خبراً عاجلاً",
+            )
+        self.assertTrue(accepted)
+        self.assertFalse(rejected)
+
     def test_strict_vision_gate_fails_closed_when_api_is_unavailable(self):
         runner = self.runner()
         bot = self.fake_bot()
