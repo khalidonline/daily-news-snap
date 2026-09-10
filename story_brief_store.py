@@ -104,3 +104,30 @@ def load_locked_brief(story: str, revision: str) -> dict[str, Any] | None:
         raise BriefCacheError("story brief cache is missing a valid brief object")
 
     return {key: value for key, value in stored.items() if key not in {"schema", "revision"}}
+
+
+def prefer_locked_revision(story: str, base: str, revision: str) -> None:
+    """Select a validated regeneration without overwriting older evidence."""
+    if load_locked_brief(story, revision) is None:
+        raise BriefCacheError("preferred revision must have a locked brief")
+    path = brief_path(story, base).parent / 'preferred' / f'{_safe_revision(base)}.json'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_suffix('.tmp')
+    temp.write_text(json.dumps({'base': base, 'revision': revision}), encoding='utf-8')
+    temp.replace(path)
+
+
+def preferred_locked_revision(story: str, base: str) -> str:
+    path = brief_path(story, base).parent / 'preferred' / f'{_safe_revision(base)}.json'
+    if not path.exists():
+        return base
+    try:
+        pointer = json.loads(path.read_text(encoding='utf-8'))
+        if not isinstance(pointer, dict) or pointer.get('base') != base:
+            raise ValueError('preferred revision base mismatch')
+        revision = _safe_revision(pointer.get('revision'))
+        if load_locked_brief(story, revision) is None:
+            raise ValueError('preferred brief is missing')
+        return revision
+    except (OSError, ValueError, UnicodeError) as exc:
+        raise BriefCacheError('invalid preferred editorial revision') from exc
