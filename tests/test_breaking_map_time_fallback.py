@@ -40,9 +40,7 @@ class BreakingMapFallbackTests(unittest.TestCase):
 
         def commons(queries, out_path, **kwargs):
             calls.append((
-                queries,
-                kwargs,
-                bot.looks_like_a_graphic("x"),
+                queries, kwargs, bot.looks_like_a_graphic("x"),
                 bot._commons_safe({"title": "File:Saudi Arabia map-ar.png"}, {}),
                 bot._commons_safe({"title": "blocked"}, {}),
             ))
@@ -63,9 +61,7 @@ class BreakingMapFallbackTests(unittest.TestCase):
         self.assertFalse(bot._commons_safe({"title": "blocked"}, {}))
 
     def test_rejected_generic_commons_photo_falls_through_to_exact_centcom_seal(self):
-        mod, bot, base = self._load(
-            "القيادة المركزية الأمريكية تعلن تدمير ناقلات إيرانية"
-        )
+        mod, bot, base = self._load("القيادة المركزية الأمريكية تعلن تدمير ناقلات إيرانية")
         calls = []
 
         def commons(queries, out_path, **kwargs):
@@ -74,8 +70,7 @@ class BreakingMapFallbackTests(unittest.TestCase):
             if len(calls) == 1:
                 return str(out_path), "generic warship"
             Path(str(out_path) + ".commons-title").write_text(
-                "File:Seal of the United States Central Command.png",
-                encoding="utf-8",
+                "File:Seal of the United States Central Command.png", encoding="utf-8"
             )
             return str(out_path), "Wikimedia Commons"
 
@@ -86,17 +81,11 @@ class BreakingMapFallbackTests(unittest.TestCase):
         base._cleanup_rejected = lambda photo: Path(photo).unlink(missing_ok=True)
         bot.fetch_commons_photo = commons
         mod.install_resilient_visual_fallback(bot)
-
-        photo, credit = bot.fetch_commons_photo(
-            ["US Navy warship Persian Gulf"], "out.png"
-        )
-
+        photo, credit = bot.fetch_commons_photo(["US Navy warship Persian Gulf"], "out.png")
         self.assertEqual("out.png", photo)
         self.assertEqual("شعار رسمي / Wikimedia Commons", credit)
         self.assertEqual(2, len(calls))
-        self.assertEqual(
-            ["United States Central Command official seal"], calls[1][0]
-        )
+        self.assertEqual(["United States Central Command official seal"], calls[1][0])
 
     def test_visual_prompt_explicitly_allows_map_for_multicity_saudi_security_event(self):
         mod, _, base = self._load("هجوم على منشآت في جيزان ونجران")
@@ -124,14 +113,13 @@ class BreakingMapFallbackTests(unittest.TestCase):
 
 class BreakingTimeGuidanceTests(unittest.TestCase):
     def test_entrypoint_requires_event_time_in_breaking_event(self):
-        from pathlib import Path
         text = Path("breaking_watch_entry.py").read_text(encoding="utf-8")
         self.assertIn("وقت الحدث", text)
-        self.assertIn("غير محدد", text)
+        self.assertIn("YYYY-MM-DD HH:MM", text)
+        self.assertIn("تاريخ سعودي سابق", text)
         self.assertIn("WATCH_PROMPT", text)
 
     def test_entrypoint_launches_resilient_runner(self):
-        from pathlib import Path
         text = Path("breaking_watch_entry.py").read_text(encoding="utf-8")
         self.assertIn("breaking_resilient_runner.py", text)
 
