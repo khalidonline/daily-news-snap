@@ -1106,6 +1106,20 @@ def pick_story(exclude=()):
     return "", misses
 
 
+def story_search_tool():
+    # Filter irrelevant search content before it enters the writing context.
+    # Keep the search allowance and final editorial/visual gates unchanged.
+    # The legacy version remains an explicit rollback; never purchase a
+    # second generation automatically because a tool response failed.
+    version = (os.getenv("STORY_WEB_SEARCH_TYPE") or "web_search_20260318").strip()
+    if version not in {"web_search_20250305", "web_search_20260209", "web_search_20260318"}:
+        raise ValueError(f"Unsupported STORY_WEB_SEARCH_TYPE: {version}")
+    tool = {"type": version, "name": "web_search", "max_uses": MAX_SEARCHES}
+    if version == "web_search_20260318":
+        tool["response_inclusion"] = "excluded"
+    return tool
+
+
 def research(story):
     if not ANTHROPIC_API_KEY:
         raise SystemExit("ANTHROPIC_API_KEY is not set")
@@ -1124,8 +1138,7 @@ def research(story):
             "max_tokens": budget,
             "system": SYSTEM_PROMPT.format(n=STORY_FRAMES),
             "messages": messages,
-            "tools": [{"type": "web_search_20250305", "name": "web_search",
-                       "max_uses": MAX_SEARCHES}],
+            "tools": [story_search_tool()],
         }
         req = urllib.request.Request(
             "https://api.anthropic.com/v1/messages",
@@ -1165,8 +1178,13 @@ def research(story):
                 import time as _t
                 _t.sleep(8)
 
-        searches += sum(1 for b in data.get("content", [])
-                        if b.get("type") == "server_tool_use")
+        # Filtered results need not include raw search blocks. The usage field
+        # remains authoritative, and code-execution blocks are not searches.
+        search_usage = (data.get("usage") or {}).get("server_tool_use") or {}
+        searches += int(search_usage.get("web_search_requests", sum(
+            1 for b in data.get("content", [])
+            if b.get("type") == "server_tool_use" and b.get("name") == "web_search"
+        )) or 0)
 
         if data.get("stop_reason") == "pause_turn":
             messages.append({"role": "assistant", "content": data["content"]})

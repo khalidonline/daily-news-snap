@@ -22,6 +22,7 @@ on:
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_search_cost.py"
       - "tests/test_story_workflow_choice.py"
       - "tests/test_three_story_cost_pilot_workflow.py"
       - "tests/test_story_visual_state.py"
@@ -57,6 +58,7 @@ on:
       - "tests/test_story_editorial_quality.py"
       - "tests/test_story_cost_guard.py"
       - "tests/test_story_editorial_runtime.py"
+      - "tests/test_story_search_cost.py"
       - "tests/test_story_workflow_choice.py"
       - "tests/test_three_story_cost_pilot_workflow.py"
       - "tests/test_story_visual_state.py"
@@ -94,6 +96,8 @@ jobs:
         run: python -m unittest -v tests/test_story_cost_guard.py
       - name: Cached editorial runtime
         run: python -m unittest -v tests/test_story_editorial_runtime.py
+      - name: Filtered research and usage accounting
+        run: python -m unittest -v tests/test_story_search_cost.py
       - name: Story operation modes
         run: python -m unittest -v tests/test_story_workflow_choice.py
       - name: Bounded three-story cost pilot workflow
