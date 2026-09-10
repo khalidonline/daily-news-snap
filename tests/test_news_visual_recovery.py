@@ -4,10 +4,17 @@ from pathlib import Path
 from unittest.mock import patch
 
 import news_bot
+import daily_news_runner
 from news_visual_recovery import exact_logo_for_targets, normalize_visual_targets
 
 
 class NewsVisualRecoveryTests(unittest.TestCase):
+    def test_alwatan_article_image_is_allowlisted_for_curated_recovery(self):
+        self.assertIn(
+            "www.alwatan.com.sa",
+            daily_news_runner.CURATED_RECOVERY_VISUAL_HOSTS,
+        )
+
     def test_scheduled_news_visual_search_is_locked_to_top_story(self):
         stories = [{"headline": "top"}, {"headline": "easy backup"}]
         with patch.object(news_bot, "NEWS_LOCK_TOP_STORY_VISUAL", True, create=True):
