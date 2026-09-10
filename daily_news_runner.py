@@ -1056,7 +1056,8 @@ def install_auto_image_selector(news_bot_module):
         candidate = prepare("official")
         photo, credit = fetch_verified_official_visual(story, candidate)
         graphic_check = getattr(news_bot_module, "looks_like_a_graphic", None)
-        if photo and graphic_check and graphic_check(photo):
+        explicit_logo = story.get("recovery_visual_kind") == "organization_logo"
+        if photo and graphic_check and graphic_check(photo) and not explicit_logo:
             print("  ! exact recovery visual is a logo or graphic — rejecting")
             Path(photo).unlink(missing_ok=True)
             _marker(photo, ".official-subject").unlink(missing_ok=True)
