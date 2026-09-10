@@ -1,27 +1,5 @@
 [
  {
-  "headline": "أوبك+ تُبقي إنتاج أكتوبر دون تغيير",
-  "at": "2026-09-07T14:48:08.916318+00:00",
-  "source_link": "https://opec.org/pr-detail/1835613-6-september-2026.html"
- },
- {
-  "headline": "أسعار الهواتف الجديدة قد ترتفع بسبب أزمة الذاكرة",
-  "at": "2026-09-07T15:11:17.707608+00:00",
-  "source_link": "https://theverge.com/tech/988225/ram-shortage-supply-chain-micron-apple-iphone",
-  "lane": "business_tech"
- },
- {
-  "headline": "أوبك+ تُبقي إنتاج أكتوبر دون تغيير",
-  "at": "2026-09-07T15:42:45.734253+00:00",
-  "source_link": "https://opec.org/pr-detail/1835613-6-september-2026.html"
- },
- {
-  "headline": "صندوق الاستثمارات يطلق شركة لتطوير ساحل الخفجي",
-  "at": "2026-09-07T16:15:41.274924+00:00",
-  "source_link": "https://alwatan.com.sa/article/1185242",
-  "lane": "saudi_core"
- },
- {
   "headline": "الذهب يتصدر عوائد المدخرات السعودية في 2025",
   "at": "2026-09-07T18:15:13.584762+00:00",
   "source_link": "https://alwatan.com.sa/article/1185195",
@@ -177,5 +155,10 @@
   "headline": "وزارة الصناعة تعالج 1,182 طلباً للإعفاء الجمركي",
   "at": "2026-09-10T14:36:54.434282+00:00",
   "source_link": "https://alyaum.com/articles/6682028"
+ },
+ {
+  "headline": "ذكاء IBM وناسا يرصد جليد القمر بدقة أعلى 23%",
+  "at": "2026-09-10T16:33:23.317226+00:00",
+  "source_link": "https://reuters.com/science/ibm-nasa-launch-ai-model-help-map-ice-craters-moon-2026-09-10"
  }
 ]
