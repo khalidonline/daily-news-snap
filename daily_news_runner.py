@@ -730,6 +730,7 @@ OFFICIAL_VISUAL_HOSTS = {
     "ndmc.gov.sa", "www.ndmc.gov.sa", "sukuk.ndmc.gov.sa",
     "mof.gov.sa", "www.mof.gov.sa",
     "spa.gov.sa", "www.spa.gov.sa",
+    "apple.com", "www.apple.com",
 }
 CURATED_RECOVERY_VISUAL_HOSTS = {
     "upload.wikimedia.org", "arabic.arabianbusiness.com",
