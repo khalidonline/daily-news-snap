@@ -59,6 +59,16 @@ class RuntimeRelevanceTests(unittest.TestCase):
         self.assertTrue(asset_countable("rt-jack-ma-1.jpg", story, ledger))
         self.assertTrue(asset_countable("rt-jack-ma-2.jpg", story, ledger))
 
+    def test_reviewed_tsmc_documentary_assets_cover_the_full_story(self):
+        story = "كيف بنت TSMC احتكاراً على رقائق العالم"
+        ledger = Path("images/relevance.json")
+        reviewed = (
+            "rt-tsmc-1.jpg",
+            "rt-tsmc-2.jpg",
+            "targeted-tsmc-morris-chang-2018.jpg",
+        )
+        self.assertTrue(all(asset_countable(name, story, ledger) for name in reviewed))
+
     def test_generated_asset_is_rejected_even_when_marked_direct(self):
         ledger = self.write_ledger({
             "assets": {
