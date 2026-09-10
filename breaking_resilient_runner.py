@@ -146,9 +146,21 @@ def install_resilient_visual_fallback(bot=news_bot):
     def commons_with_context_fallback(queries, out_path, *args, **kwargs):
         photo, credit = original(queries, out_path, *args, **kwargs)
         if photo:
-            return photo, credit
+            acceptable = getattr(base, "_breaking_photo_acceptable", None)
+            context = " | ".join(str(query) for query in (queries or []))
+            if not callable(acceptable) or acceptable(
+                    bot, photo, event, context):
+                return photo, credit
+            print("      generic Commons visual rejected — trying exact fallback")
+            cleanup = getattr(base, "_cleanup_rejected", None)
+            if callable(cleanup):
+                cleanup(photo)
+            photo, credit = None, None
 
-        print("    breaking visual fallback: trying contextual Saudi map")
+        label = "official identity" if _has_centcom_context(
+            event, source_text
+        ) else "contextual Saudi map"
+        print(f"    breaking visual fallback: trying {label}")
         graphic_check = getattr(bot, "looks_like_a_graphic", None)
         commons_safe = getattr(bot, "_commons_safe", None)
         if callable(graphic_check):
