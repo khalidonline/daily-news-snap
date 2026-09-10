@@ -791,6 +791,39 @@ class RelevanceFirstWrapperTests(unittest.TestCase):
                 pixel = rendered.convert("RGB").getpixel((60, 40))
             self.assertTrue(all(channel > 230 for channel in pixel))
 
+    def test_apple_newsroom_visual_is_allowlisted_for_exact_recovery(self):
+        source = io.BytesIO()
+        Image.new("RGBA", (160, 100), (40, 80, 120, 255)).save(
+            source, format="PNG", compress_level=0
+        )
+        image_data = source.getvalue()
+
+        class Response:
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit=-1):
+                return image_data
+
+        story = {
+            "official_image_url": (
+                "https://www.apple.com/newsroom/images/2026/09/"
+                "apple-unveils-iphone-duo/article/"
+                "Apple-iPhone-Duo-colors-260909_big.jpg.large.jpg"
+            )
+        }
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "iphone-duo.jpg"
+            photo, credit = daily_news_runner.fetch_verified_official_visual(
+                story, target, opener=lambda *args, **kwargs: Response()
+            )
+
+            self.assertEqual(photo, str(target))
+            self.assertIsNone(credit)
+            marker = Path(str(target) + ".official-subject")
+            self.assertIn("www.apple.com", marker.read_text(encoding="utf-8"))
+
     def test_curated_recovery_photo_requires_attribution(self):
         source = io.BytesIO()
         Image.new("RGB", (120, 80), (145, 98, 45)).save(
