@@ -46,8 +46,8 @@ jobs:
 
             if grep -Fxq "$trigger_path" <<<"$changed"; then
               trigger_value="$(tail -n 1 "$trigger_path")"
-              if [ "$bot" = "news" ] && [[ "$trigger_value" == recovery_story=* ]]; then
-                encoded="${trigger_value#recovery_story=}"
+              if [ "$bot" = "news" ] && [[ "$trigger_value" == *"recovery_story="* ]]; then
+                encoded="${trigger_value##*recovery_story=}"
                 recovery_slot="$(printf '%s' "$encoded" | base64 --decode | python3 -c 'import json, sys; print(json.load(sys.stdin).get("recovery_for_slot", ""))')"
                 if [ -z "$recovery_slot" ]; then
                   echo "News recovery payload is missing recovery_for_slot" >&2
