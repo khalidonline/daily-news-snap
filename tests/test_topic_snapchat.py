@@ -10,6 +10,79 @@ from topic_snapchat import install, prepare_shortlist, research_with_validation
 
 
 class TopicSnapchatRuntimeTests(unittest.TestCase):
+    def test_selector_offers_live_event_and_hands_source_to_research(self):
+        import io
+        import json
+        from datetime import datetime, timezone
+        event = {"title": "Apple announces a major product", "summary": "A confirmed price change",
+                 "source": "Example", "link": "https://example.com/launch",
+                 "lane": "business_tech", "published_at": datetime.now(timezone.utc).isoformat()}
+        bot = SimpleNamespace(load_topics=lambda: [{"topic": "Evergreen"}], load_used=lambda: [],
+            FORCE_SEASON="", fetch_headlines=lambda: [event], score_topics=lambda *a: [],
+            report_shortlist=lambda *a: None, ANTHROPIC_API_KEY="test", SELECT_MODEL="test",
+            SELECT_PROMPT="select", TOPIC_SELECT_MAX_PAID_RESPONSES=1, MODEL_MAX_USD_PER_RUN=0)
+        response = {"content": [{"type": "text", "text": '{"index":0,"why":"timely explainer"}'}]}
+        with patch.object(topic_snapchat, "prepare_shortlist", return_value=[]), \
+             patch.object(topic_snapchat.urllib.request, "urlopen", return_value=io.BytesIO(json.dumps(response).encode())) as call, \
+             patch.object(topic_snapchat.model_meter, "require_response_capacity"), \
+             patch.object(topic_snapchat.model_meter, "record_anthropic_response"), \
+             patch.object(topic_snapchat.model_meter, "note_successful_response"):
+            selected = topic_snapchat._make_choose_topic(bot)()
+        self.assertEqual(selected, "ما وراء الخبر: " + event["title"])
+        self.assertEqual(bot._TOPIC_EVENTS[selected]["link"], event["link"])
+        self.assertEqual(call.call_count, 1)
+        payload = json.loads(call.call_args.args[0].data)
+        self.assertIn(event["published_at"], payload["messages"][0]["content"])
+
+    def test_no_event_uses_catalog_and_clears_previous_event_context(self):
+        bot = SimpleNamespace(load_topics=lambda: [{"topic": "Evergreen"}], load_used=lambda: [],
+            FORCE_SEASON="", fetch_headlines=lambda: [],
+            score_topics=lambda *a: [{"topic": "Evergreen", "score": 5}],
+            report_shortlist=lambda *a: None, ANTHROPIC_API_KEY="",
+            _TOPIC_EVENTS={"Previous": {"title": "old event"}})
+        with patch.object(topic_snapchat, "prepare_shortlist", return_value=[{"topic": "Evergreen"}]):
+            self.assertEqual(topic_snapchat._make_choose_topic(bot)(), "Evergreen")
+        self.assertEqual(bot._TOPIC_EVENTS, {})
+
+    def test_event_candidates_exclude_stale_undated_and_used_topics(self):
+        from datetime import datetime, timezone
+        now = datetime(2026, 9, 10, 12, tzinfo=timezone.utc)
+        def item(title, published):
+            return {"title": title, "summary": "A major consumer product change",
+                    "source": "Example", "link": "https://example.com/" + title,
+                    "lane": "business_tech", "published_at": published}
+        items = [item("Apple launch", "2026-09-10T10:00:00+00:00"),
+                 item("Old launch", "2026-09-06T10:00:00+00:00"),
+                 item("Undated launch", None),
+                 item("Future launch", "2026-09-11T10:00:00+00:00")]
+        rows = topic_snapchat.event_topic_candidates(items, set(), now=now)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["event"]["link"], "https://example.com/Apple launch")
+        self.assertEqual(topic_snapchat.event_topic_candidates(items, {rows[0]["topic"]}, now=now), [])
+
+    def test_event_research_receives_source_context_and_restores_prompt(self):
+        bot = SimpleNamespace(SYSTEM_PROMPT="base", _TOPIC_EVENTS={
+            "Chosen": {"title": "Apple {launch}", "source": "Example",
+                       "link": "https://example.com/launch", "published_at": "2026-09-10T10:00:00Z"}})
+        received = []
+        def research(topic):
+            received.append((topic, bot.SYSTEM_PROMPT.format(n=3)))
+            return {"title": "Draft"}
+        with patch.object(topic_snapchat, "research_with_validation", side_effect=lambda b, fn, t: fn(t)):
+            topic_snapchat.research_for_event(bot, research, "Chosen")
+            topic_snapchat.research_for_event(bot, research, "Manual unrelated")
+        self.assertIn("https://example.com/launch", received[0][1])
+        self.assertEqual(received[0][0], "Chosen")
+        self.assertEqual(received[1][1], "base")
+        self.assertEqual(bot.SYSTEM_PROMPT, "base")
+
+    def test_event_research_restores_prompt_after_failure(self):
+        bot = SimpleNamespace(SYSTEM_PROMPT="base", _TOPIC_EVENTS={"Chosen": {"title": "event"}})
+        with patch.object(topic_snapchat, "research_with_validation", side_effect=RuntimeError("failed")):
+            with self.assertRaises(RuntimeError):
+                topic_snapchat.research_for_event(bot, lambda t: {}, "Chosen")
+        self.assertEqual(bot.SYSTEM_PROMPT, "base")
+
     def test_prepare_shortlist_uses_bounded_performance_and_categories(self):
         with tempfile.TemporaryDirectory() as td:
             topics_path = Path(td) / "topics.txt"
