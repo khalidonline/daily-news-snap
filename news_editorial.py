@@ -463,19 +463,27 @@ def shortlist_lane_counts(items):
 
 
 def decorate_model_items(items, now=None):
-    """Copy candidates and add internal lane/age tags to the supplied summary.
+    """Copy candidates with timing context visible in the model's feed text.
 
     The public source/title/link fields stay unchanged. The system prompt tells
     the model these bracketed tags are metadata and must never be copied to card
     text.
     """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    # Hour precision matches the existing age tags and keeps retries cacheable.
+    # Publication time is provenance, never a substitute for event time.
+    review_hour = now.astimezone(timezone(timedelta(hours=3))).strftime("%Y-%m-%dT%H+03:00")
     result = []
     for item in items:
         copy = dict(item)
         summary = copy.get("summary", "")
         copy["summary"] = (
             f"[lane={copy.get('lane', 'business_tech')}] "
-            f"[age={format_age_label(copy, now=now)}] {summary}"
+            f"[age={format_age_label(copy, now=now)}] "
+            f"[review_hour_ksa={review_hour}] "
+            f"[published_at={copy.get('published_at') or 'unknown'}] {summary}"
         ).strip()
         result.append(copy)
     return result

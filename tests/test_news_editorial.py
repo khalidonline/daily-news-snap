@@ -300,6 +300,28 @@ class NewsEditorialTests(unittest.TestCase):
         self.assertEqual(decorated["source"], item["source"])
         self.assertEqual(decorated["title"], item["title"])
 
+    def test_timing_context_crosses_ksa_midnight_without_inventing_event_time(self):
+        item = {"title": "Apple announcement", "source": "Example",
+                "summary": "A confirmed change", "published_at": "2026-09-10T20:00:00+00:00"}
+        before = dict(item)
+        result = decorate_model_items([item], now=datetime(2026, 9, 10, 21, 10, tzinfo=timezone.utc))[0]
+        self.assertIn("[review_hour_ksa=2026-09-11T00+03:00]", result["summary"])
+        self.assertIn("[published_at=2026-09-10T20:00:00+00:00]", result["summary"])
+        self.assertNotIn("event_at=", result["summary"])
+        self.assertEqual(item, before)
+
+    def test_timing_context_is_stable_for_same_hour_retries(self):
+        item = {"title": "Event", "summary": "Confirmed detail", "published_at": "2026-09-10T20:00:00+00:00"}
+        first = decorate_model_items([item], now=datetime(2026, 9, 10, 21, 10, tzinfo=timezone.utc))
+        retry = decorate_model_items([item], now=datetime(2026, 9, 10, 21, 20, tzinfo=timezone.utc))
+        later = decorate_model_items([item], now=datetime(2026, 9, 10, 22, 10, tzinfo=timezone.utc))
+        self.assertEqual(first, retry)
+        self.assertNotEqual(first, later)
+
+    def test_missing_publication_time_stays_unknown(self):
+        result = decorate_model_items([{"title": "Undated", "summary": "No timestamp"}], now=self.FIXED_NOW)
+        self.assertIn("[published_at=unknown]", result[0]["summary"])
+
     def test_fetch_headlines_carries_lane_dedupes_and_retains_utc_date(self):
         rss = """<?xml version='1.0'?>
         <rss><channel><item>
