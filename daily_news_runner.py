@@ -737,6 +737,41 @@ CURATED_RECOVERY_VISUAL_HOSTS = {
 }
 
 
+def _visual_identity_key(value):
+    return "".join(
+        re.findall(r"[A-Za-z0-9\u0600-\u06ff]+", str(value).casefold())
+    )
+
+
+def _exact_recovery_logo_allowed(story):
+    """Allow only an explicitly declared logo matching the named organization."""
+    if str(story.get("recovery_visual_kind") or "").strip() != (
+        "exact_organization_logo"
+    ):
+        return False
+    entity = str(story.get("recovery_logo_entity") or "").strip()
+    entity_key = _visual_identity_key(entity)
+    source = str(
+        story.get("recovery_image_b64_path")
+        or story.get("official_image_url")
+        or story.get("recovery_image_url")
+        or ""
+    )
+    if len(entity_key) < 3 or entity_key not in _visual_identity_key(source):
+        return False
+    for target in story.get("visual_targets") or []:
+        if not isinstance(target, dict) or target.get("kind") != "organization":
+            continue
+        for field in ("name_en", "name_ar"):
+            target_key = _visual_identity_key(target.get(field) or "")
+            if target_key and (
+                entity_key == target_key
+                or (len(entity_key) >= 4 and entity_key in target_key)
+            ):
+                return True
+    return False
+
+
 def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlopen):
     """Load an exact recovery visual from a trusted URL or repository asset."""
     official_url = str(story.get("official_image_url") or "").strip()
@@ -1057,10 +1092,17 @@ def install_auto_image_selector(news_bot_module):
         photo, credit = fetch_verified_official_visual(story, candidate)
         graphic_check = getattr(news_bot_module, "looks_like_a_graphic", None)
         if photo and graphic_check and graphic_check(photo):
-            print("  ! exact recovery visual is a logo or graphic — rejecting")
-            Path(photo).unlink(missing_ok=True)
-            _marker(photo, ".official-subject").unlink(missing_ok=True)
-            photo = None
+            if _exact_recovery_logo_allowed(story):
+                entity = str(story.get("recovery_logo_entity")).strip()
+                _marker(photo, ".exempt").write_text(
+                    f"logo:{entity}", encoding="utf-8"
+                )
+                print("    exact recovery visual: accepted matching organization logo")
+            else:
+                print("  ! exact recovery visual is a logo or graphic — rejecting")
+                Path(photo).unlink(missing_ok=True)
+                _marker(photo, ".official-subject").unlink(missing_ok=True)
+                photo = None
         if photo:
             selected = (Path(photo), credit, "official")
             print("      auto image relevance [official]: verified direct subject")
