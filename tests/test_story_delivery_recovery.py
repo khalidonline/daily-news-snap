@@ -46,6 +46,15 @@ class StoryDeliveryRecoveryTests(unittest.TestCase):
         self.assertNotIn("notify-unresolved:", workflow)
         self.assertNotIn("تعذر تسليم قصة اليوم", workflow)
 
+    def test_explicit_story_recovery_reuses_locked_brief(self):
+        workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
+        nonce_line = next(
+            line for line in workflow.splitlines()
+            if "STORY_REGENERATION_NONCE:" in line
+        )
+        self.assertNotIn("story-recovery", nonce_line)
+        self.assertIn("regenerate_editorial", nonce_line)
+
 
 if __name__ == "__main__":
     unittest.main()
