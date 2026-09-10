@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "562f88456b8a84fb020a2d646fc2fc21a26ee692fa6a0c0c3e19ddfe9d7a0b7d",
@@ -121,8 +122,140 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-10T12:42:25.834222+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "01d7b8d4f6db72293770b2b15ce646118c019970f44ac00764ec19138d872dc3",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "كيف بنت TSMC احتكاراً على رقائق العالم"
+  "story": "كيف بنت TSMC احتكاراً على رقائق العالم",
+  "story_quality_dimensions": {
+    "claim_precision": "PASS",
+    "final_frame_currency": "PASS",
+    "narrative_chronology": "PASS",
+    "subject_focus": "BLOCKED",
+    "visual_chronology": "PASS"
+  },
+  "story_quality_findings": [
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 6,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 6,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [
+        1987,
+        1987
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 1,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1987
+      ]
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 2,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 3,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2025
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2025
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 5,
+      "subject_overlap": [
+        "tsmc"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 6,
+      "subject_overlap": [
+        "tsmc",
+        "رقائق"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "subject_focus"
+    ],
+    "frame_modes": {
+      "6": "editorial_frame"
+    },
+    "frames": [
+      6
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "6": [
+        "keep the frame centered on the named Story subject"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
