@@ -758,7 +758,8 @@ def fetch_verified_official_visual(story, out_path, opener=urllib.request.urlope
             print("  ! curated recovery visual is missing required attribution")
             return None, None
         try:
-            data = base64.b64decode(asset.read_text(encoding="ascii"), validate=True)
+            encoded_asset = asset.read_text(encoding="ascii").strip()
+            data = base64.b64decode(encoded_asset, validate=True)
         except Exception as exc:
             print(f"  ! exact recovery asset could not be decoded: {exc}")
             return None, None
