@@ -1,11 +1,5 @@
 [
  {
-  "headline": "موعد توصيل الطلب يتغيّر بعد الدفع",
-  "at": "2026-09-08T10:19:50.915939+00:00",
-  "source_link": "https://alwatan.com.sa/article/1185286",
-  "lane": "entertainment_culture"
- },
- {
   "headline": "أبل تستعد للكشف عن أول آيفون قابل للطي غداً",
   "at": "2026-09-08T14:05:24.556565+00:00",
   "source_link": "https://theverge.com/tech/991141/apple-first-foldable-iphone-launch-influence-john-ternus",
@@ -159,5 +153,11 @@
   "at": "2026-09-11T08:29:57.274697+00:00",
   "source_link": "https://aawsat.com/node/5317052",
   "lane": "entertainment_culture"
+ },
+ {
+  "headline": "تأمين السيارات: الشركات ترفض خفض الأسعار حالياً",
+  "at": "2026-09-11T13:07:10.635708+00:00",
+  "source_link": "https://alwatan.com.sa/article/1185443",
+  "lane": "saudi_core"
  }
 ]
