@@ -19,6 +19,7 @@ import urllib.request
 from pathlib import Path
 
 from news_visual_recovery import exact_logo_for_targets, normalize_visual_targets
+from news_event_timing import has_relative_date, prepare_news_delivery
 
 from PIL import Image
 
@@ -289,6 +290,19 @@ def validate_ranked_result(result, shortlist):
         if not hard_scope_eligible(card_item):
             continue
         if not audience_fit_eligible(card_item):
+            continue
+        # Bind timing evidence to the actual feed item, never model-supplied
+        # source text. Persist it with the selected story for later recovery.
+        story = dict(story)
+        if has_relative_date(story) or story.get('event_date'):
+            story['timing_source'] = {
+                key: source_item.get(key, '')
+                for key in ('title', 'summary', 'published_at')
+            }
+        try:
+            story = prepare_news_delivery(story)
+        except ValueError as exc:
+            print(f'    News timing gate: {exc}')
             continue
         kept.append(story)
 
@@ -640,7 +654,7 @@ def make_summarizer(news_bot_module):
             if not isinstance(story, dict) or any(not story.get(k) for k in required):
                 raise ValueError("exact News recovery payload is missing required fields")
             print("    exact News recovery: preserving original story copy")
-            return remember_story_contexts({"stories": [story]})
+            return remember_story_contexts({"stories": [prepare_news_delivery(story)]})
 
         if pinned:
             # Pinned events keep the original verified-search path. Remembering
@@ -1203,6 +1217,7 @@ def configure(news_bot_module):
     news_bot_module.SYSTEM_PROMPT = SYSTEM_PROMPT
     news_bot_module.fetch_headlines = make_fetcher(news_bot_module)
     news_bot_module.summarize = make_summarizer(news_bot_module)
+    news_bot_module.prepare_story_for_delivery = prepare_news_delivery
     if hasattr(news_bot_module, "save_posted"):
         news_bot_module.save_posted = make_source_aware_save_posted(news_bot_module)
     if news_bot_module.IMAGE_SOURCE == "auto":

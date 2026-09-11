@@ -1,0 +1,12 @@
+[
+  {
+    "article": "reuters.com/science/ibm-nasa-launch-ai-model-help-map-ice-craters-moon-2026-09-10",
+    "reason": "Reuters reports up to 23% higher benchmark accuracy identifying lunar features, not a fixed ice-only improvement.",
+    "fields": {
+      "headline": {
+        "before": "ذكاء IBM وناسا يرصد جليد القمر بدقة أعلى 23%",
+        "after": "رصد معالم القمر بدقة أعلى تصل إلى 23% مع IBM وناسا"
+      }
+    }
+  }
+]

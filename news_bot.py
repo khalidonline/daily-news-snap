@@ -4139,6 +4139,11 @@ def main():
             return
         chosen, photo, credit = stories[0], None, None
 
+    # News installs this hook; other users of the shared renderer keep their
+    # own policy. Recheck after image work, which can cross Saudi midnight.
+    prepare_delivery = globals().get('prepare_story_for_delivery')
+    if prepare_delivery:
+        chosen = prepare_delivery(chosen)
     stories = [chosen]
     if photo and Path(str(photo) + ".generated").exists():
         credit = None
