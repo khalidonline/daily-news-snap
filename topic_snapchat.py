@@ -61,7 +61,7 @@ def prepare_shortlist(bot: Any, scored: list[dict[str, Any]], performance: dict[
 
 def topic_image_story(brief: dict[str, Any]) -> dict[str, Any]:
     """Translate a topic card into the story shape used by the shared image judge."""
-    return {
+    story = {
         "headline": str(brief.get("title", "") or "").strip(),
         "summary": str(brief.get("body", "") or "").strip(),
         "takeaway": str(brief.get("takeaway", "") or "").strip(),
@@ -70,6 +70,15 @@ def topic_image_story(brief: dict[str, Any]) -> dict[str, Any]:
         "image_queries": list(brief.get("image_queries", []) or []),
         "image_queries_ar": list(brief.get("image_queries_ar", []) or []),
     }
+    for field in (
+        "recovery_image_b64_path",
+        "recovery_photo_credit",
+        "recovery_visual_kind",
+    ):
+        value = str(brief.get(field, "") or "").strip()
+        if value:
+            story[field] = value
+    return story
 
 
 def _remember_topic_image_context(brief: dict[str, Any]) -> None:

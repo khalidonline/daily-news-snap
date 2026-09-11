@@ -212,6 +212,34 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         self.assertEqual(story["link"], brief["source_url"])
         remember_story_contexts({"stories": []})
 
+    def test_topic_image_story_preserves_exact_recovery_visual(self):
+        brief = {
+            "title": "لماذا تراجعت الأسهم اليابانية؟",
+            "body": "تراجع مؤشر نيكي قبل اجتماع بنك اليابان.",
+            "takeaway": "السوق يواجه طاقة أغلى وتمويلاً أعلى كلفة.",
+            "source_url": "https://example.com/source",
+            "image_queries": ["Bank of Japan", "Nikkei", "Tokyo Stock Exchange"],
+            "image_queries_ar": ["بنك اليابان", "نيكي", "بورصة طوكيو"],
+            "recovery_image_b64_path": "assets/recovery/bank-of-japan.jpg.b64",
+            "recovery_photo_credit": "Verified photographer / license",
+            "recovery_visual_kind": "organization_logo",
+        }
+
+        story = topic_snapchat.topic_image_story(brief)
+
+        self.assertEqual(
+            story["recovery_image_b64_path"],
+            brief["recovery_image_b64_path"],
+        )
+        self.assertEqual(
+            story["recovery_photo_credit"],
+            brief["recovery_photo_credit"],
+        )
+        self.assertEqual(
+            story["recovery_visual_kind"],
+            brief["recovery_visual_kind"],
+        )
+
     def test_run_74_teacher_like_action_line_is_publish_blocking(self):
         brief = {
             "title": "وش يعني ثبات الفائدة للتمويل المتغير؟",
