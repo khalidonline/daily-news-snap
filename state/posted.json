@@ -1,17 +1,5 @@
 [
  {
-  "headline": "جدة تتفوق على الرياض بقيمة الصفقات العقارية",
-  "at": "2026-09-08T04:13:01.242897+00:00",
-  "source_link": "https://alwatan.com.sa/article/1185254",
-  "lane": "saudi_core"
- },
- {
-  "headline": "استهداف منشآت طاقة جنوب السعودية يوقف عمليات مؤقتاً",
-  "at": "2026-09-08T06:15:44.432407+00:00",
-  "source_link": "https://aawsat.com/node/5315860",
-  "lane": "saudi_core"
- },
- {
   "headline": "Xiaomi تكشف هاتفها القابل للطي قبل Apple بأيام",
   "at": "2026-09-08T08:11:29.798580+00:00",
   "source_link": "https://engadget.com/2252401/xiaomi-18-fold-hands-on-ifa-2026",
@@ -165,5 +153,11 @@
   "at": "2026-09-11T04:16:52.740925+00:00",
   "source_link": "https://techcrunch.com/2026/09/10/jensen-huang-explains-why-nvidia-will-grow-an-astounding-70-next-year",
   "lane": "business_tech"
+ },
+ {
+  "headline": "الأهلي يرفض رحيل ماثيوس ورسالة غامضة منه",
+  "at": "2026-09-11T07:26:24.047326+00:00",
+  "source_link": "https://alyaum.com/articles/6682079/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A/%D8%B9%D8%A7%D8%AC%D9%84-%D8%B1%D8%B3%D8%A7%D9%84%D8%A9-%D9%85%D8%AB%D9%8A%D8%B1%D8%A9-%D9%85%D9%86-%D9%85%D8%AD%D8%AA%D8%B1%D9%81-%D8%A7%D9%84%D8%A3%D9%87%D9%84%D9%8A-%D8%A8%D8%B9%D8%AF-%D8%B1%D9%81%D8%B6-%D8%B1%D8%AD%D9%8A%D9%84%D9%87-%D8%B9%D9%86-%D8%A7%D9%84%D9%81%D8%B1%D9%8A%D9%82",
+  "lane": "sports"
  }
 ]
