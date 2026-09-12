@@ -130,6 +130,14 @@ city_visual_v3.configure(sb)
 # Exact story+frame repairs. These do not broaden global relevance: each pin
 # is a previously reviewed local asset assigned to one specific narrative beat.
 _CURATED_FRAME_VISUALS = {
+    "كيف بدأت Amazon كمتجر كتب على الإنترنت": (
+        (("قبل أن يشتري أحد من النت",), "targeted-amazon-founding-site.jpg"),
+        (("الشاب الذي ترك وول ستريت",), "amazon-bezos-early.jpg"),
+        (("الموقع يفتح للناس",), "amazon-garage-recreation.jpg"),
+        (("سنوات الخسائر والسخرية",), "rt-amazon-1.jpg"),
+        (("من الكتب إلى كل شيء",), "targeted-amazon-fulfillment-center.jpg"),
+        (("ماذا بقي من متجر الكتب",), "targeted-souq-amazon-robotics.jpg"),
+    ),
     "قصة سكة حديد الرياض الدمام 1951": (
         (("لا طرق.. فقط مسارات رملية",), "railway-construction-1951.jpg"),
         (("خط قصير من الميناء",), "rt-riyadh-dammam-railway-1.jpg"),
