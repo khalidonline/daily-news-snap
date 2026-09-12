@@ -185,6 +185,18 @@ class GenerationTests(unittest.TestCase):
             with self.subTest(content=content), self.assertRaises(ProviderError):
                 generate("anthropic", "x", env={"ANTHROPIC_API_KEY": "key"}, transport=RecordingTransport({"status_code": 200, "body": body}))
 
+    def test_anthropic_extracts_answer_after_thinking_blocks(self):
+        from publishing_v2.providers import _parse_anthropic
+        for block in ({"type": "thinking", "thinking": "", "signature": "opaque"},
+                      {"type": "redacted_thinking", "data": "opaque"}):
+            body = {"stop_reason": "end_turn", "content": [block, {"type": "text", "text": "answer"}]}
+            self.assertEqual("answer", _parse_anthropic(body))
+            with self.assertRaises(ProviderError):
+                _parse_anthropic({**body, "content": [block]})
+            with self.assertRaises(ProviderError):
+                _parse_anthropic({**body, "stop_reason": "max_tokens"})
+
+
 
 class GettyTests(unittest.TestCase):
     def test_editorial_search_returns_metadata_without_licensing_claim(self):

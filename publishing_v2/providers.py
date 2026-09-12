@@ -199,6 +199,11 @@ def _parse_anthropic(body: dict[str, Any]) -> str:
             raise ProviderError("malformed_response", "Provider returned a malformed response.")
         if part["type"] == "refusal":
             raise ProviderError("refused", "Provider refused the generation request.")
+        # The canonical answer is in text blocks; reasoning is not answer text.
+        if part["type"] == "thinking" and isinstance(part.get("thinking"), str) and isinstance(part.get("signature"), str):
+            continue
+        if part["type"] == "redacted_thinking" and isinstance(part.get("data"), str):
+            continue
         if part["type"] != "text" or not isinstance(part.get("text"), str):
             raise ProviderError("malformed_response", "Provider returned a malformed response.")
         texts.append(part["text"])
