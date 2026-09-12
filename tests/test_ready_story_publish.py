@@ -257,5 +257,25 @@ class ReadyStoryPublishTests(unittest.TestCase):
             self.assertGreater(max(luminance) - min(luminance), 60)
 
 
+    def test_explicit_recovery_blocks_a_previously_delivered_story_by_default(self):
+        with mock.patch.object(rsp.sb, "STORY", "قصة قديمة"), \
+                mock.patch.object(rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
+                mock.patch.object(rsp.sns, "story_was_delivered", return_value=True), \
+                mock.patch.object(rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")), \
+                mock.patch.dict("os.environ", {}, clear=False):
+            import os
+            os.environ.pop("STORY_ALLOW_DELIVERED_CORRECTION", None)
+            with self.assertRaisesRegex(SystemExit, "already delivered"):
+                rsp._resolve_story()
+
+    def test_explicit_correction_can_opt_in_to_a_delivered_story(self):
+        with mock.patch.object(rsp.sb, "STORY", "قصة قديمة"), \
+                mock.patch.object(rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
+                mock.patch.object(rsp.sns, "story_was_delivered", return_value=True), \
+                mock.patch.object(rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")), \
+                mock.patch.dict("os.environ", {"STORY_ALLOW_DELIVERED_CORRECTION": "1"}):
+            self.assertEqual("قصة قديمة", rsp._resolve_story())
+
+
 if __name__ == "__main__":
     unittest.main()
