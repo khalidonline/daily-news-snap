@@ -71,6 +71,11 @@ class TopicRecoveryHandoffTests(unittest.TestCase):
         self.assertIn("Record confirmed Topic Telegram delivery", workflow)
         self.assertIn("topic_delivery_guard.py record", workflow)
 
+    def test_workflow_cancels_stale_overlap_and_reads_current_main_state(self):
+        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
+        self.assertIn("cancel-in-progress: true", workflow)
+        self.assertGreaterEqual(workflow.count("ref: main"), 2)
+
     def test_selected_topic_brief_is_saved_before_visual_search(self):
         brief = {
             "title": "عنوان محفوظ",
