@@ -29,7 +29,7 @@ permissions:
 
 concurrency:
   group: topic-brief
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   DAILY_BUDGET_GITHUB_TOKEN: ${{ github.token }}
@@ -54,6 +54,8 @@ jobs:
           echo "PYTHONPATH=$RUNNER_TEMP/daily-budget" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Check exact Topic recovery duplicate
         if: ${{ github.event.action == 'topic-recovery' && github.event.client_payload.brief_b64 != '' }}
