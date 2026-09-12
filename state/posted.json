@@ -1,46 +1,5 @@
 [
  {
-  "headline": "أبل تستعد للكشف عن أول آيفون قابل للطي غداً",
-  "at": "2026-09-08T14:05:24.556565+00:00",
-  "source_link": "https://theverge.com/tech/991141/apple-first-foldable-iphone-launch-influence-john-ternus",
-  "lane": "business_tech"
- },
- {
-  "headline": "أبل تستعد للكشف عن أول آيفون قابل للطي غداً",
-  "at": "2026-09-08T14:17:25.278900+00:00",
-  "source_link": "https://theverge.com/tech/991141/apple-first-foldable-iphone-launch-influence-john-ternus"
- },
- {
-  "headline": "نيوم يوقف سلسلة الهلال بعد 47 مباراة بدون خسارة",
-  "at": "2026-09-08T17:18:28.289446+00:00",
-  "source_link": "https://alwatan.com.sa/article/1185287",
-  "lane": "sports"
- },
- {
-  "headline": "أعطال فنية تعطل رحلات في مطاري هيثرو وغاتويك",
-  "at": "2026-09-08T18:13:32.909287+00:00",
-  "source_link": "https://bbc.co.uk/news/articles/ce8x3dp1zpxo?at_medium=RSS&at_campaign=rss",
-  "lane": "business_tech"
- },
- {
-  "headline": "آيفون القابل للطي يحمل اسم Duo وسعره من 2000 دولار",
-  "at": "2026-09-09T07:45:12.608026+00:00",
-  "source_link": "https://theverge.com/tech/991884/apple-iphone-duo-rumor-foldable",
-  "lane": "business_tech"
- },
- {
-  "headline": "برنت يتجاوز 100 دولار لأول مرة منذ يوليو",
-  "at": "2026-09-09T07:49:44.280337+00:00",
-  "source_link": "https://aawsat.com/node/5316303",
-  "lane": "saudi_core"
- },
- {
-  "headline": "القادسية يصعق الأهلي بطل آسيا بثلاثية",
-  "at": "2026-09-09T08:13:42.723655+00:00",
-  "source_link": "https://alwatan.com.sa/article/1185363",
-  "lane": "sports"
- },
- {
   "headline": "باحث Anthropic يحذر: الذكاء الاصطناعي قد يقتل البشر",
   "at": "2026-09-09T13:40:23.897058+00:00",
   "source_link": "https://bbc.co.uk/news/articles/ckgwy1k42w4o?at_medium=RSS&at_campaign=rss",
@@ -159,5 +118,11 @@
   "at": "2026-09-11T13:07:10.635708+00:00",
   "source_link": "https://alwatan.com.sa/article/1185443",
   "lane": "saudi_core"
+ },
+ {
+  "headline": "لائحة جديدة للضيافة: 30 يوماً لاسترداد مبلغك",
+  "at": "2026-09-12T09:06:35.764959+00:00",
+  "source_link": "https://alyaum.com/articles/6682204/%D8%A7%D9%84%D8%AD%D9%8A%D8%A7%D8%A9/%D8%B3%D9%8A%D8%A7%D8%AD%D8%A9-%D9%88%D8%B3%D9%81%D8%B1/%D9%84%D8%A7%D8%A6%D8%AD%D8%A9-%D8%A7%D9%84%D8%B6%D9%8A%D8%A7%D9%81%D8%A9-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-20-%D8%B3%D8%A7%D8%B9%D8%A9-%D9%84%D9%84%D8%A5%D9%82%D8%A7%D9%85%D8%A9-%D9%8830-%D9%8A%D9%88%D9%85%D8%A7-%D9%84%D8%A7%D8%B3%D8%AA%D8%B1%D8%AF%D8%A7%D8%AF-%D8%A7%D9%84%D9%85%D8%A8%D8%A7%D9%84%D8%BA-%D9%88%D8%AD%D8%B8%D8%B1-%D9%86%D8%B3%D8%AE-%D9%87%D9%88%D9%8A%D8%A9-%D8%A7%D9%84%D8%B3%D8%A7%D8%A6%D8%AD",
+  "lane": "travel_lifestyle"
  }
 ]
