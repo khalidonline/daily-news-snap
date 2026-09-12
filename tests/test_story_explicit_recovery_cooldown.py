@@ -50,5 +50,33 @@ class ExplicitStoryRecoveryCooldownTests(unittest.TestCase):
                 )
 
 
+    def test_railway_story_pins_six_distinct_reviewed_visuals(self):
+        story = "قصة سكة حديد الرياض الدمام 1951"
+        headings = [
+            "لا طرق.. فقط مسارات رملية",
+            "خط قصير من الميناء",
+            "أمر واحد غيّر نهاية الخط",
+            "البحر الضحل وقف في الطريق",
+            "من رحلة واحدة إلى رحلات يومية",
+            "ما بقي من ذلك القرار",
+        ]
+        expected = [
+            "railway-construction-1951.jpg",
+            "rt-riyadh-dammam-railway-1.jpg",
+            "king-golden-spike.jpg",
+            "railway-workers-1951.jpg",
+            "sar-train-modern.jpg",
+            "riyadh-dammam-train.jpg",
+        ]
+
+        actual = [
+            sb.curated_frame_visual_filename(story, {"heading": heading})
+            for heading in headings
+        ]
+
+        self.assertEqual(expected, actual)
+        self.assertEqual(6, len(set(actual)))
+
+
 if __name__ == "__main__":
     unittest.main()
