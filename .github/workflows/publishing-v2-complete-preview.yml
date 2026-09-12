@@ -1,22 +1,22 @@
-name: Publishing v2 first Info preview
+name: Publishing v2 complete review package
 on:
   workflow_dispatch:
     inputs:
       send_telegram:
-        description: Send the reviewed Info card to the existing Telegram review chat
+        description: Send all eight reviewed cards to the existing Telegram review chat
         type: boolean
         required: true
         default: false
 permissions:
   contents: read
 concurrency:
-  group: publishing-v2-first-preview
+  group: publishing-v2-complete-preview
   cancel-in-progress: false
 jobs:
   preview:
     if: github.ref == 'refs/heads/main' && github.run_attempt == 1
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,12 +37,12 @@ jobs:
           DRY_RUN: '1'
         shell: bash
         run: |
-          args=(--output preview-output --review)
+          args=(--output complete-preview-output --review)
           if [[ "$SEND_TELEGRAM" == "true" ]]; then args+=(--send); fi
-          python -m publishing_v2.preview "${args[@]}"
+          python -m publishing_v2.preview_package "${args[@]}"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: first-info-preview-${{ github.run_id }}
-          path: preview-output/
+          name: complete-preview-${{ github.run_id }}
+          path: complete-preview-output/
           retention-days: 30
