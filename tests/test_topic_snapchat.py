@@ -223,6 +223,7 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
             "recovery_image_b64_path": "assets/recovery/bank-of-japan.jpg.b64",
             "recovery_photo_credit": "Verified photographer / license",
             "recovery_visual_kind": "organization_logo",
+            "official_image_url": "https://www.aramco.com/-/jssmedia/project/aramcocom/aramco-logo.webp",
         }
 
         story = topic_snapchat.topic_image_story(brief)
@@ -238,6 +239,10 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         self.assertEqual(
             story["recovery_visual_kind"],
             brief["recovery_visual_kind"],
+        )
+        self.assertEqual(
+            story["official_image_url"],
+            brief["official_image_url"],
         )
 
     def test_run_74_teacher_like_action_line_is_publish_blocking(self):
