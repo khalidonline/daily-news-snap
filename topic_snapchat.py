@@ -74,6 +74,7 @@ def topic_image_story(brief: dict[str, Any]) -> dict[str, Any]:
         "recovery_image_b64_path",
         "recovery_photo_credit",
         "recovery_visual_kind",
+        "official_image_url",
     ):
         value = str(brief.get(field, "") or "").strip()
         if value:
