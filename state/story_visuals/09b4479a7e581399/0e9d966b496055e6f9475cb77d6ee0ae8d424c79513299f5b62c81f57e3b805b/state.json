@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "488b98e892e5d37ec455e841e1fa6b49d792ee15b58c0a5a3c37d90a54e1d3bf",
@@ -124,8 +125,203 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-12T11:41:15.351264+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "0e9d966b496055e6f9475cb77d6ee0ae8d424c79513299f5b62c81f57e3b805b",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "قصة سكة حديد الرياض الدمام 1951"
+  "story": "قصة سكة حديد الرياض الدمام 1951",
+  "story_quality_dimensions": {
+    "claim_precision": "PASS",
+    "final_frame_currency": "PASS",
+    "narrative_chronology": "PASS",
+    "subject_focus": "BLOCKED",
+    "visual_chronology": "PASS"
+  },
+  "story_quality_findings": [
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 1,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 3,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 4,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 5,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 6,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "TOO_MUCH_SUPPORTING_CONTEXT",
+      "dimension": "subject_focus",
+      "frame": 6,
+      "message": "supporting context dominates too many consecutive frames",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 1,
+      "subject_overlap": [
+        "دمام"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1940,
+        1940
+      ]
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 2,
+      "subject_overlap": [
+        "حديد",
+        "دمام",
+        "رياض",
+        "سكة"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        1947
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 3,
+      "subject_overlap": [
+        "1951",
+        "حديد",
+        "دمام",
+        "رياض",
+        "سكة"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1951
+      ]
+    },
+    {
+      "copy_years": [
+        1950
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "1951",
+        "حديد",
+        "دمام",
+        "رياض",
+        "سكة"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1951,
+        1950,
+        1951
+      ]
+    },
+    {
+      "copy_years": [
+        1951,
+        2026
+      ],
+      "current": true,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 5,
+      "subject_overlap": [
+        "1951",
+        "حديد",
+        "سكة"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 6,
+      "subject_overlap": [
+        "رياض"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "subject_focus"
+    ],
+    "frame_modes": {
+      "1": "editorial_frame",
+      "3": "editorial_frame",
+      "4": "editorial_frame",
+      "5": "editorial_frame",
+      "6": "editorial_frame"
+    },
+    "frames": [
+      1,
+      3,
+      4,
+      5,
+      6
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "1": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "3": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "4": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "5": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "6": [
+        "keep the frame centered on the named Story subject"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
