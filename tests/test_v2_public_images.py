@@ -50,6 +50,15 @@ class PublicImagesTests(unittest.TestCase):
         self.assertEqual(item['license'], 'review_required')
         self.assertFalse(item['licensing_verified'])
 
+    def test_nasa_http_media_links_are_upgraded_only_for_official_host(self):
+        search = {'collection': {'items': [{'data': [{'nasa_id': 'voyager', 'title': 'Voyager', 'media_type': 'image'}]}]}}
+        asset = {'collection': {'items': [{'href': 'http://evil.test/wrong.jpg'},
+                  {'href': candidate()['download_url'].replace('https:', 'http:')}]}}
+        with patch.object(images, 'get_json', side_effect=[search, asset]):
+            results = images.search_nasa('Voyager')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['download_url'], candidate()['download_url'])
+
     def test_invalid_or_tiny_image_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             with self.assertRaises(images.ImageSourceError):
@@ -89,6 +98,27 @@ class PublicImagesTests(unittest.TestCase):
             report = images.acquire('Voyager', Path(d), sources=[('nasa', lambda q: [first, candidate()])], fetch=fetch)
         self.assertEqual(report['status'], 'downloaded_review_required')
         self.assertEqual(report['attempts'][0]['status'], 'candidate_failed')
+
+    def test_rate_limited_download_moves_to_next_provider(self):
+        first = candidate('commons'); second = candidate('commons')
+        second['download_url'] += '?second'
+        nasa = candidate(); nasa['download_url'] += '?nasa'
+        requested = []
+        def fetch(url):
+            requested.append(url)
+            if url == first['download_url']: raise images.ImageSourceError('http_429')
+            return jpeg()
+        with tempfile.TemporaryDirectory() as d:
+            report = images.acquire('Voyager', Path(d), sources=[('commons', lambda q: [first, second]),
+                      ('nasa', lambda q: [nasa])], fetch=fetch)
+        self.assertEqual(report['asset']['provider'], 'nasa')
+        self.assertNotIn(second['download_url'], requested)
+
+    def test_nasa_rate_limited_asset_stops_further_asset_requests(self):
+        payload = {'collection': {'items': [{'data': [{'nasa_id': str(i), 'media_type': 'image'}]} for i in range(5)]}}
+        with patch.object(images, 'get_json', side_effect=[payload] + [images.ImageSourceError('http_429')] * 5) as fetch:
+            with self.assertRaises(images.ImageSourceError): images.search_nasa('Voyager')
+        self.assertEqual(fetch.call_count, 2)
 
     def test_all_sources_failed_is_not_success_and_errors_are_sanitized(self):
         def fail(q): raise RuntimeError('SECRET-SENTINEL')

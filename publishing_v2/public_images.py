@@ -10,7 +10,7 @@ import warnings
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.error import HTTPError
-from urllib.parse import quote, urlencode, urlsplit
+from urllib.parse import quote, urlencode, urlsplit, urlunsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from PIL import Image
@@ -135,6 +135,9 @@ def search_nasa(query, limit=5):
             # Prefer a large rendition; the byte/dimension checks still decide usability.
             urls.sort(key=lambda u: (0 if '~large.' in u else 1 if '~orig.' in u else 2))
             for url in urls:
+                parts = urlsplit(url)
+                if parts.scheme == 'http' and parts.netloc == 'images-assets.nasa.gov':
+                    url = urlunsplit(('https', parts.netloc, parts.path, parts.query, parts.fragment))
                 try: validate_url(url)
                 except ImageSourceError: continue
                 results.append({'provider': 'nasa', 'asset_id': asset_id, 'title': plain(data.get('title', '')),
@@ -143,7 +146,12 @@ def search_nasa(query, limit=5):
                     'license': 'review_required', 'license_url': NASA_TERMS, 'date_created': data.get('date_created'),
                     'licensing_verified': False})
                 break
-        except (KeyError, IndexError, TypeError, ImageSourceError):
+        except ImageSourceError as error:
+            if str(error) == 'http_429':
+                if results: return results
+                raise
+            continue
+        except (KeyError, IndexError, TypeError):
             continue
     return results
 
@@ -223,6 +231,12 @@ def acquire(query, output, *, sources=None, fetch=None):
             try:
                 if candidate['provider'] != provider: raise ImageSourceError('provider_mismatch')
                 result = store_candidate(candidate, output, fetch=fetch)
+            except ImageSourceError as error:
+                if str(error) == 'http_429':
+                    attempts.append({'provider': provider, 'status': 'rate_limited'})
+                    break
+                attempts.append({'provider': provider, 'status': 'candidate_failed'})
+                continue
             except Exception:
                 attempts.append({'provider': provider, 'status': 'candidate_failed'})
                 continue
