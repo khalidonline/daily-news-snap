@@ -85,10 +85,21 @@ def review_card(path, brief, *, env, transport=None):
                     'image_url': 'data:image/jpeg;base64,' + base64.b64encode(data.getvalue()).decode()}]}]}
     status, body = providers._request(transport, 'POST', 'https://api.openai.com/v1/responses',
                                      {'Authorization': 'Bearer '+credential, 'Content-Type': 'application/json'}, payload)
+    parse_response = providers._parse_openai
+    if status == 429 and env.get('ANTHROPIC_API_KEY', '').strip():
+        print(json.dumps({'stage': 'visual_review', 'provider': 'openai', 'http_status': status, 'fallback': 'anthropic'}))
+        payload = {'model': 'claude-sonnet-5', 'max_tokens': 2500, 'messages': [{'role': 'user', 'content': [
+            {'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/jpeg',
+             'data': base64.b64encode(data.getvalue()).decode()}},
+            {'type': 'text', 'text': prompt}]}]}
+        status, body = providers._request(transport, 'POST', 'https://api.anthropic.com/v1/messages',
+            {'x-api-key': env['ANTHROPIC_API_KEY'].strip(), 'anthropic-version': '2023-06-01',
+             'Content-Type': 'application/json'}, payload)
+        parse_response = providers._parse_anthropic
     if status != 200:
-        print(json.dumps({'stage': 'visual_review', 'http_status': status}))
+        print(json.dumps({'stage': 'visual_review', 'model': payload['model'], 'http_status': status}))
         raise RuntimeError('visual_review_http_' + str(status))
-    decision = json.loads(providers._parse_openai(body))
+    decision = json.loads(parse_response(body))
     fields = ('relevant', 'crop_suitable', 'historically_appropriate', 'readable')
     if not isinstance(decision, dict) or any(type(decision.get(k)) is not bool for k in fields):
         raise ValueError('invalid_visual_decision')
@@ -161,7 +172,7 @@ def main():
     report={'status':'rendered', 'production_ready':False, 'spec':spec}
     atomic_write(output/'report.json',json.dumps(report,ensure_ascii=False).encode())
     if args.review:
-        # One bounded API request per invocation. No paid retries or generation loop.
+        # At most two bounded API requests: one alternate only after an explicit 429.
         review=review_card(card,spec,env=os.environ)
         atomic_write(output/'visual-review.json',json.dumps(review,ensure_ascii=False).encode())
         print(json.dumps({'visual_review_passed':review['passed'],'model':review['model'],'usage':review['usage'],'reason':review['reason']},ensure_ascii=False))

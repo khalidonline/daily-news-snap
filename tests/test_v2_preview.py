@@ -28,6 +28,24 @@ class PreviewTests(unittest.TestCase):
                 preview.review_card(p, {'title':'Moon'}, env={'OPENAI_API_KEY':'test'}, transport=transport)
         self.assertTrue(calls[0]['input'][0]['content'][1]['image_url'].startswith('data:image/jpeg;base64,'))
 
+    def test_openai_rate_limit_uses_anthropic_pixels_once(self):
+        from test_v2_public_images import jpeg
+        calls=[]
+        def transport(method,url,headers,body):
+            calls.append((url,body))
+            if len(calls)==1:
+                return {'status_code':429,'body':{'error':{'code':'insufficient_quota'}}}
+            return {'status_code':200,'body':{'id':'msg1','stop_reason':'end_turn',
+                'usage':{'input_tokens':100,'output_tokens':50},'content':[{'type':'text','text':json.dumps({
+                'relevant':True,'crop_suitable':True,'historically_appropriate':True,'readable':True,'reason':'Fits'})}]}}
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'card.jpg';path.write_bytes(jpeg())
+            result=preview.review_card(path,{'title':'Moon'},env={'OPENAI_API_KEY':'x','ANTHROPIC_API_KEY':'y'},transport=transport)
+        self.assertTrue(result['passed'])
+        self.assertEqual(result['model'],'claude-sonnet-5')
+        self.assertEqual(len(calls),2)
+        self.assertEqual(calls[1][1]['messages'][0]['content'][0]['source']['type'],'base64')
+
     def test_unknown_telegram_send_cannot_be_retried_locally(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/'card.jpg';p.write_bytes(b'photo')
