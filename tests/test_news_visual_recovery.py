@@ -1,3 +1,5 @@
+import base64
+import io
 import tempfile
 import unittest
 from pathlib import Path
@@ -20,6 +22,32 @@ class NewsVisualRecoveryTests(unittest.TestCase):
             "www.alyaum.com",
             daily_news_runner.CURATED_RECOVERY_VISUAL_HOSTS,
         )
+
+    def test_pep_ministry_logo_is_accepted_as_an_official_visual(self):
+        root = Path(__file__).resolve().parents[1]
+        payload = base64.b64decode(
+            (root / "assets/recovery/kaust-official-logo.png.b64")
+            .read_text(encoding="ascii")
+            .strip()
+        )
+        story = {
+            "official_image_url": (
+                "https://pep.gov.sa/sites/default/files/2022-09/"
+                "%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-"
+                "%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%AD%D8%A9_2.png"
+            )
+        }
+
+        with tempfile.TemporaryDirectory() as td:
+            output = Path(td) / "ministry.jpg"
+            image, credit = daily_news_runner.fetch_verified_official_visual(
+                story,
+                output,
+                opener=lambda request, timeout: io.BytesIO(payload),
+            )
+            self.assertEqual(image, str(output))
+            self.assertTrue(output.is_file())
+        self.assertIsNone(credit)
 
     def test_scheduled_news_visual_search_is_locked_to_top_story(self):
         stories = [{"headline": "top"}, {"headline": "easy backup"}]
