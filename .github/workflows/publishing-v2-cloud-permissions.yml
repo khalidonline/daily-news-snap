@@ -1,0 +1,44 @@
+name: Publishing v2 cloud permission audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publishing-v2-cloud-permissions.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Report evaluation credential presence
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GETTY_API_KEY: ${{ secrets.GETTY_API_KEY }}
+        run: |
+          for name in OPENAI_API_KEY ANTHROPIC_API_KEY GETTY_API_KEY; do
+            if [ -n "${!name:-}" ]; then status=configured; else status=missing; fi
+            echo "$name: $status" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+      - name: Authenticate through GitHub federation
+        id: cloud
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: daily-news-snap-508412
+          workload_identity_provider: projects/1052421432660/locations/global/workloadIdentityPools/github-actions/providers/github
+          service_account: snap-github@daily-news-snap-508412.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_lifetime: 300s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Audit fixed project permissions
+        env:
+          CLOUD_ACCESS_TOKEN: ${{ steps.cloud.outputs.access_token }}
+        run: python -m publishing_v2.cloud_permissions
