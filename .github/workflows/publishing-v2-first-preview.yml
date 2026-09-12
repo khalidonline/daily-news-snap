@@ -1,0 +1,47 @@
+name: Publishing v2 first Info preview
+on:
+  workflow_dispatch:
+    inputs:
+      send_telegram:
+        description: Send the reviewed Info card to the existing Telegram review chat
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: publishing-v2-first-preview
+  cancel-in-progress: false
+jobs:
+  preview:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image dependency
+        run: pip install -r requirements-v2-images.txt
+      - name: Test preview safeguards
+        run: python -m unittest discover -s tests -p 'test_v2_*.py'
+      - name: Render, inspect pixels, and optionally deliver
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SEND_TELEGRAM: ${{ inputs.send_telegram }}
+          POST_TO_SNAPCHAT: '0'
+          DRY_RUN: '1'
+        shell: bash
+        run: |
+          args=(--output preview-output --review)
+          if [[ "$SEND_TELEGRAM" == "true" ]]; then args+=(--send); fi
+          python -m publishing_v2.preview "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: first-info-preview-${{ github.run_id }}
+          path: preview-output/
+          retention-days: 30

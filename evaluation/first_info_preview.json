@@ -1,0 +1,33 @@
+{
+  "activation_date": "2026-09-12",
+  "trigger_url": "https://apod.nasa.gov/apod/ap260912.html",
+  "trigger_type": "daily_editorial_feature",
+  "trigger_label": "من صورة الفلك اليوم · 12 سبتمبر 2026",
+  "historical_event_date": "1969-07-20",
+  "title_lines": [
+    "راحوا للقمر…",
+    "ورجعوا بعينة من الشمس!"
+  ],
+  "body_lines": [
+    "في أبولو 11 عام 1969، نشر باز ألدرين",
+    "رقاقة معدنية على سطح القمر.",
+    "التقطت جسيمات الرياح الشمسية،",
+    "ثم أُعيدت إلى الأرض لتحليلها."
+  ],
+  "closing_lines": [
+    "مادة من الشمس…",
+    "من دون الاقتراب منها."
+  ],
+  "image_url": "https://apod.nasa.gov/apod/image/2609/AS11-40-5872HR1024.jpg",
+  "image_sha256": "545886667ed34d1067decaba2e043a562bfd613d910cab274488454ccea91ee2",
+  "image_credit": "Photo: NASA / Neil Armstrong · Scan: Kipp Teague",
+  "image_description": "Apollo 11 photo AS11-40-5872: Buzz Aldrin unfurling the solar wind composition experiment beside Eagle, July 20 1969.",
+  "rights_source": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+  "rights_scope": "Informational editorial Telegram preview with NASA photo acknowledgment; no endorsement or promotional use.",
+  "verified_facts": [
+    "Apollo 11 solar wind collector was a sheet of foil.",
+    "Facing the Sun, it trapped particles from the solar wind.",
+    "The collector returned to Earth for laboratory analysis."
+  ],
+  "telegram_caption": "معاينة أولى للاستراتيجية الجديدة — معلومة\nراحوا للقمر… ورجعوا بعينة من الشمس!\n\nالمحفّز: صورة الفلك اليوم، 12 سبتمبر 2026. الصورة والحدث من أبولو 11 عام 1969، وليسا حدثًا جديدًا.\nللمراجعة فقط؛ لم تُنشر على سناب شات.\nhttps://apod.nasa.gov/apod/ap260912.html\nPhoto: NASA / Neil Armstrong; scan: Kipp Teague"
+}
