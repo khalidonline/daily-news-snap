@@ -20,7 +20,7 @@
 - No secret values, request headers, raw authentication errors, or signed URLs in reports.
 - No paid calls by default. The manual model comparison has a finite $10 per-invocation ceiling, no server-side tools, and no automatic retry of an ambiguous paid request. This ceiling is an experiment bound, not a new production budget.
 - The existing production $3 guard is not removed or bypassed. New evaluation code has a separate explicit spend ledger.
-- A production rollout requires provider access, negotiated image rights, a cloud project, an operations owner, and a successful 14-day Telegram trial. Missing access does not prevent building or testing offline.
+- A production rollout requires provider access, negotiated image rights, a cloud project, an operations owner, and a successful 3-day Telegram trial. Missing access does not prevent building or testing offline.
 
 ## Task 1: Provider clients and access checks
 
@@ -77,4 +77,4 @@ Steps:
 
 ## Completion reporting
 
-Separate built/tested, live supplier evidence, access blockers, and deployment status. Do not claim the paid comparison, licensed photo download evaluation, production migration, staffed support, or 14-day trial is complete without corresponding evidence.
+Separate built/tested, live supplier evidence, access blockers, and deployment status. Do not claim the paid comparison, licensed photo download evaluation, production migration, staffed support, or 3-day trial is complete without corresponding evidence.
