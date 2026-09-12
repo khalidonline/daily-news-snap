@@ -1,0 +1,34 @@
+name: Publishing v2 public image evidence
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publishing-v2-public-images.yml']
+permissions:
+  contents: read
+concurrency:
+  group: publishing-v2-public-image-evidence
+  cancel-in-progress: false
+jobs:
+  evidence:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-v2-images.txt
+      - run: python -m unittest discover -s tests -p 'test_v2_public_images.py' -v
+      - name: Probe downloads and forced source outage without Getty
+        run: python -m publishing_v2.image_probe --output public-image-evidence
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-image-evidence-${{ github.run_id }}
+          path: public-image-evidence/
+          retention-days: 7
+      - name: Record scope
+        if: always()
+        run: echo 'Download evidence only. Asset rights, subject/date match, crop and final Story frames require review. No posts sent.' >> "$GITHUB_STEP_SUMMARY"
