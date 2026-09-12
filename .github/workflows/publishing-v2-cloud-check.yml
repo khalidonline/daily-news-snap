@@ -1,0 +1,32 @@
+name: Publishing v2 cloud connection check
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authenticate:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Authenticate through the configured identity pool
+        id: cloud
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: daily-news-snap-508412
+          workload_identity_provider: projects/1052421432660/locations/global/workloadIdentityPools/github-actions/providers/github
+          service_account: snap-github@daily-news-snap-508412.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_lifetime: 300s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Confirm authentication without exposing credentials
+        env:
+          CLOUD_ACCESS_TOKEN: ${{ steps.cloud.outputs.access_token }}
+        run: |
+          test -n "$CLOUD_ACCESS_TOKEN"
+          echo "GitHub successfully authenticated as snap-github."
+          echo "Authentication only: resource deployment permissions have not been tested." >> "$GITHUB_STEP_SUMMARY"
