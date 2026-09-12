@@ -745,6 +745,7 @@ OFFICIAL_VISUAL_HOSTS = {
     "mof.gov.sa", "www.mof.gov.sa",
     "spa.gov.sa", "www.spa.gov.sa",
     "pep.gov.sa", "www.pep.gov.sa",
+    "aramco.com", "www.aramco.com",
     "apple.com", "www.apple.com",
 }
 CURATED_RECOVERY_VISUAL_HOSTS = {
