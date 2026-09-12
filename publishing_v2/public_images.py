@@ -215,8 +215,15 @@ def store_candidate(candidate, output, *, fetch=None):
     return {**receipt, 'manifest': manifest}
 
 
-def acquire(query, output, *, sources=None, fetch=None):
+def acquire(query, output, *, sources=None, fetch=None, frame_brief=None, reviewer=None):
     query_params(query, 5)
+    screening = reviewer is not None
+    if screening and (not callable(reviewer) or not isinstance(frame_brief, dict) or not frame_brief):
+        raise ValueError('screening_requires_frame_brief_and_reviewer')
+    if frame_brief is not None and not screening:
+        raise ValueError('frame_brief_requires_reviewer')
+    # Snapshot the caller's complete context before any external callback can mutate it.
+    brief_json = json.dumps(frame_brief, ensure_ascii=False, sort_keys=True, allow_nan=False)
     sources = sources if sources is not None else [('commons', search_commons), ('nasa', search_nasa)]
     attempts = []
     for provider, search in sources:
@@ -240,5 +247,32 @@ def acquire(query, output, *, sources=None, fetch=None):
             except Exception:
                 attempts.append({'provider': provider, 'status': 'candidate_failed'})
                 continue
+            if screening:
+                try:
+                    decision = reviewer(dict(result), Path(output) / result['file'], json.loads(brief_json))
+                    checks = ('relevant', 'crop_suitable', 'historically_appropriate')
+                    if not isinstance(decision, dict) or any(type(decision.get(k)) is not bool for k in checks):
+                        raise ValueError('invalid_review')
+                    reason = decision.get('reason')
+                    if not isinstance(reason, str) or not reason.strip() or len(reason) > 2000:
+                        raise ValueError('invalid_review_reason')
+                    # A review records evidence; it never grants publication or licensing approval.
+                    review = {'asset_sha256': result['sha256'], 'asset_manifest': result['manifest'],
+                              'frame_brief': json.loads(brief_json),
+                              'decision': {k: decision[k] for k in checks}, 'reason': reason,
+                              'production_ready': False}
+                    if hashlib.sha256((Path(output) / result['file']).read_bytes()).hexdigest() != result['sha256']:
+                        raise ValueError('asset_changed_during_review')
+                    encoded = json.dumps(review, ensure_ascii=False, sort_keys=True).encode()
+                    review_manifest = 'review-' + hashlib.sha256(encoded).hexdigest() + '.json'
+                    atomic_write(Path(output) / review_manifest, encoded)
+                    if not all(decision[k] is True for k in checks):
+                        attempts.append({'provider': provider, 'status': 'review_rejected', 'review_manifest': review_manifest})
+                        continue
+                except Exception:
+                    attempts.append({'provider': provider, 'status': 'review_failed'})
+                    continue
+                return {'status': 'screened_review_required', 'asset': result, 'review_manifest': review_manifest,
+                        'attempts': attempts, 'production_ready': False}
             return {'status': 'downloaded_review_required', 'asset': result, 'attempts': attempts, 'production_ready': False}
-    return {'status': 'no_download', 'attempts': attempts, 'production_ready': False}
+    return {'status': 'no_suitable_image' if screening else 'no_download', 'attempts': attempts, 'production_ready': False}
