@@ -5,6 +5,7 @@ on:
       - 'publishing_v2/**'
       - 'tests/test_v2_*.py'
       - 'evaluation/**'
+      - 'deploy/publishing-v2/**'
       - '.github/workflows/publishing-v2-*.yml'
   push:
     branches: ['build/event-publishing-v2']
@@ -12,6 +13,7 @@ on:
       - 'publishing_v2/**'
       - 'tests/test_v2_*.py'
       - 'evaluation/**'
+      - 'deploy/publishing-v2/**'
       - '.github/workflows/publishing-v2-*.yml'
 permissions:
   contents: read
@@ -26,6 +28,16 @@ jobs:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p 'test_v2_*.py' -v
       - run: python -m publishing_v2.evaluate --mode offline --output evaluation-output
+      - name: Build and run isolated container
+        run: |
+          context="$RUNNER_TEMP/publishing-v2-context"
+          mkdir -p "$context/evaluation"
+          cp -R publishing_v2 "$context/publishing_v2"
+          cp evaluation/event_packages.json evaluation/failure_cases.json "$context/evaluation/"
+          cp deploy/publishing-v2/Dockerfile deploy/publishing-v2/.dockerignore "$context/"
+          docker build --platform linux/amd64 --tag publishing-v2-offline:test "$context"
+          docker run --rm publishing-v2-offline:test | tee "$RUNNER_TEMP/cloud-smoke.json"
+          python -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["status"]=="offline_ready"; assert not any(r[k] for k in ("editorial_approved","visual_approved","licensing_verified","production_deployed"))' "$RUNNER_TEMP/cloud-smoke.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

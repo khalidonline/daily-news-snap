@@ -1,0 +1,8 @@
+*
+!Dockerfile
+!.dockerignore
+!publishing_v2/
+!publishing_v2/**
+!evaluation/
+!evaluation/event_packages.json
+!evaluation/failure_cases.json
