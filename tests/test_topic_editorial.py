@@ -70,6 +70,15 @@ class TopicEditorialTests(unittest.TestCase):
     def test_validate_brief_accepts_complete_snapchat_brief(self):
         self.assertEqual(validate_brief(self._complete_brief()), [])
 
+    def test_validate_brief_rejects_truncated_arabic_title_fragment(self):
+        brief = self._complete_brief()
+        brief["title"] = "نقل النفط تحت الضغط: خط شرق-غرب متوقف مؤ"
+
+        self.assertIn(
+            "title ends with a truncated Arabic fragment",
+            validate_brief(brief),
+        )
+
     def test_validate_brief_rejects_oversized_fields(self):
         brief = {
             "title": "ط" * 46,
