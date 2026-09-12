@@ -62,7 +62,7 @@ class TopicRecoveryHandoffTests(unittest.TestCase):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
         self.assertIn("TOPIC_MODEL:", workflow)
         self.assertIn("vars.TOPIC_MODEL", workflow)
-        self.assertIn('MAX_TOKENS: "7000"', workflow)
+        self.assertIn('MAX_TOKENS: "3000"', workflow)
 
     def test_workflow_requires_actual_telegram_confirmation(self):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
