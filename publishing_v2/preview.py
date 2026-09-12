@@ -99,7 +99,14 @@ def review_card(path, brief, *, env, transport=None):
     if status != 200:
         print(json.dumps({'stage': 'visual_review', 'model': payload['model'], 'http_status': status}))
         raise RuntimeError('visual_review_http_' + str(status))
-    decision = json.loads(parse_response(body))
+    response_text = parse_response(body).strip()
+    # Providers may wrap otherwise-valid JSON in one Markdown code block.
+    # Remove only that complete wrapper, never extract JSON from mixed prose.
+    lines = response_text.splitlines()
+    if len(lines) >= 3 and lines[0] in ('```json', '```') and lines[-1] == '```':
+        response_text = '\n'.join(lines[1:-1])
+        print(json.dumps({'stage': 'visual_review', 'response_format': 'fenced_json'}))
+    decision = json.loads(response_text)
     fields = ('relevant', 'crop_suitable', 'historically_appropriate', 'readable')
     if not isinstance(decision, dict) or any(type(decision.get(k)) is not bool for k in fields):
         raise ValueError('invalid_visual_decision')
