@@ -85,7 +85,7 @@ def _request(transport: Transport | None, method: str, url: str, headers: dict[s
 def _matches_model(model_id: Any, requested: str) -> bool:
     if model_id == requested:
         return True
-    if not isinstance(model_id, str):
+    if not isinstance(model_id, str) or not model_id.startswith(requested + "-"):
         return False
     suffix = model_id.removeprefix(requested + "-")
     return bool(re.fullmatch(r"(?:\d{8}|\d{4}-\d{2}-\d{2})", suffix))

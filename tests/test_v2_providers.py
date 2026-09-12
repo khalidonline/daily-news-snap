@@ -66,7 +66,7 @@ class AccessTests(unittest.TestCase):
         self.assertEqual("unavailable", result["status"])
 
     def test_model_access_rejects_wrong_or_empty_model_id(self):
-        for model_id in ("", "different-model", "gpt-6-astra-preview"):
+        for model_id in ("", "different-model", "gpt-6-astra-preview", "20260101", "2026-01-01"):
             with self.subTest(model_id=model_id):
                 result = check_access("openai", {"OPENAI_API_KEY": "key"}, RecordingTransport({"status_code": 200, "body": {"id": model_id}}))
                 self.assertEqual("unavailable", result["status"])
