@@ -9,7 +9,7 @@ Use is informational/editorial with photo acknowledgment, without endorsement or
 
 The source bytes are pinned by SHA-256. Rendering preserves the entire photograph and uses the repository's Almarai fonts. A live GPT-6 Astra request inspects the actual rendered pixels, Arabic readability, relevance and historical context. A passing review is necessary for Telegram delivery; it does not authorize Snapchat publication or general licensing.
 
-The manual-only workflow makes one bounded visual-model request (1080×1920 image maximum, 12,000-character prompt maximum, 2,500 output tokens maximum), with no paid retries. It runs only on main and the first workflow attempt. The card expires at midnight Saudi time at the start of 14 September.
+The manual-only workflow makes at most two bounded visual-model requests (1080×1920 image maximum, 12,000-character prompt maximum, 2,500 output tokens maximum), with no same-provider retries. An explicit OpenAI HTTP 429 switches once to the configured Claude Sonnet 5 account using the same pixels and criteria. A content rejection never triggers model shopping. It runs only on main and the first workflow attempt. The card expires at midnight Saudi time at the start of 14 September.
 
 Telegram uses the existing configured review destination. A local exclusive journal records unknown status before sending and the message ID after confirmation. Timeout or ambiguous response stops without retrying. Artifacts retain the card, visual review and delivery journal. This is a one-shot supervised preview: the journal is not shared across fresh workflow dispatches. Inspect previous delivery receipts before a new dispatch; do not treat this as a production scheduler or durable global deduplication system.
 
