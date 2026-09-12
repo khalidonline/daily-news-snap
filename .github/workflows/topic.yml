@@ -111,8 +111,8 @@ jobs:
         if: ${{ env.RUN_SCHEDULED_BOT != '0' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_MODEL: ${{ vars.TOPIC_MODEL || 'claude-sonnet-5' }}
-          TOPIC_MODEL: ${{ vars.TOPIC_MODEL || 'claude-sonnet-5' }}
+          CLAUDE_MODEL: "claude-haiku-4-5-20251001"
+          TOPIC_MODEL: "claude-haiku-4-5-20251001"
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           POST_PROVIDER: "bundle"
@@ -159,7 +159,7 @@ jobs:
           IMAGE_SOURCE: "auto"
           POINTS: "3"
           MAX_SEARCHES: "6"
-          MAX_TOKENS: "3000"
+          MAX_TOKENS: "8000"
           MODEL_BOT: "topic"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
           MODEL_MAX_USD_PER_RUN: "1.50"
