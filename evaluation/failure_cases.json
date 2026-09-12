@@ -1,0 +1,53 @@
+{
+  "purpose": "Observed audit symptoms mapped to tests; original external outages are not reproduced offline.",
+  "cases": [
+    {
+      "id": "news-image-rejection",
+      "evidence_type": "observed_run",
+      "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/34683688170",
+      "symptom": "Source 404/403 and rejected images left no deliverable card.",
+      "required_behavior": "Reject unusable assets before scheduling; independent supplier access and visual acceptance must be proven.",
+      "verification": "supplier_trial_pending"
+    },
+    {
+      "id": "topic-budget-reservation",
+      "evidence_type": "observed_run",
+      "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/34685083595",
+      "symptom": "Production budget reservation blocked a model call.",
+      "required_behavior": "Reserve bounded experiment spend before each call; keep unknown charges reserved.",
+      "verification": "test_v2_evaluate.py"
+    },
+    {
+      "id": "topic-source-image-access",
+      "evidence_type": "observed_run",
+      "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/34686742434",
+      "symptom": "Reuters 401 and Pexels 403 preceded image rejection.",
+      "required_behavior": "Report missing access separately from model/content quality.",
+      "verification": "test_v2_providers.py"
+    },
+    {
+      "id": "story-incomplete-package",
+      "evidence_type": "observed_run",
+      "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/34623350873",
+      "symptom": "Only 5 of 123 candidates reached READY_FOR_SNAP; three attempts did not yield a fresh complete story.",
+      "required_behavior": "Require six validated frames and six receipts; failed delivery must not regenerate content.",
+      "verification": "test_v2_delivery.py"
+    },
+    {
+      "id": "skipped-run-is-not-delivered",
+      "evidence_type": "observed_run",
+      "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/34647816565",
+      "symptom": "Successful workflow run skipped production steps.",
+      "required_behavior": "Only stored receipts can establish delivery.",
+      "verification": "test_v2_delivery.py"
+    },
+    {
+      "id": "ambiguous-send",
+      "evidence_type": "synthetic",
+      "run_url": null,
+      "symptom": "A send may be accepted remotely before the client times out.",
+      "required_behavior": "Mark unknown; never automatically resend without reconciliation evidence.",
+      "verification": "test_v2_delivery.py"
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "purpose": "Historical controlled evaluation only; never current news or publishable assets.",
+  "cases": [
+    {
+      "id": "iphone16-2024",
+      "event_date": "2024-09-09",
+      "replay_date": "2024-09-09",
+      "historical_replay": true,
+      "trigger": "Apple announces iPhone 16 and iPhone 16 Plus.",
+      "image_query": "Apple iPhone 16 September 2024 Camera Control",
+      "objectives": {
+        "info": "Explain one useful Camera Control detail.",
+        "topic": "Why close-up phone photography is interesting: macro capability, without invented optical claims.",
+        "story": "Tell the real January 2007 first-iPhone introduction: three device roles in one. No invented backstage drama."
+      },
+      "sources": [
+        {
+          "id": "apple16",
+          "url": "https://www.apple.com/newsroom/2024/09/apple-introduces-iphone-16-and-iphone-16-plus/",
+          "facts": [
+            {
+              "id": "apple16-1",
+              "text": "Apple announced iPhone 16 and 16 Plus on September 9, 2024, with the A18 chip and Camera Control."
+            },
+            {
+              "id": "apple16-2",
+              "text": "Camera Control gives a new way to interact with the camera system."
+            },
+            {
+              "id": "apple16-3",
+              "text": "The new Ultra Wide camera enables macro photography."
+            },
+            {
+              "id": "apple16-4",
+              "text": "The 48MP Fusion camera offers a 2x option."
+            }
+          ]
+        },
+        {
+          "id": "apple07",
+          "url": "https://www.apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/",
+          "facts": [
+            {
+              "id": "apple07-1",
+              "text": "On January 9, 2007, Steve Jobs introduced the first iPhone at Macworld in San Francisco."
+            },
+            {
+              "id": "apple07-2",
+              "text": "The product combined a mobile phone, a widescreen iPod and an internet communications device."
+            },
+            {
+              "id": "apple07-3",
+              "text": "The interface used finger-driven multi-touch."
+            },
+            {
+              "id": "apple07-4",
+              "text": "It offered an on-screen QWERTY keyboard."
+            },
+            {
+              "id": "apple07-5",
+              "text": "The original model had a 2-megapixel camera and a 3.5-inch display."
+            },
+            {
+              "id": "apple07-6",
+              "text": "Apple planned a June 2007 US release, followed by Europe later in 2007 and Asia in 2008."
+            }
+          ]
+        }
+      ],
+      "cautions": [
+        "Announcement date is not worldwide retail availability.",
+        "Do not imply future AI features were all available at launch.",
+        "Historical first-iPhone images must not be passed off as iPhone 16."
+      ]
+    },
+    {
+      "id": "riyadh-metro-2024",
+      "event_date": "2024-11-27",
+      "replay_date": "2024-11-27",
+      "historical_replay": true,
+      "trigger": "Riyadh Metro inauguration, with phased opening of its network.",
+      "image_query": "Riyadh Metro Olaya station November 2024",
+      "objectives": {
+        "info": "The surprising depth of STC Olaya Station.",
+        "topic": "Explore the scale and design of an interconnected metro network, without claiming all lines opened together.",
+        "story": "Follow the documented start of Mneefah tunneling in 2015 toward the 2024 inauguration; no invented incidents or completion dates."
+      },
+      "sources": [
+        {
+          "id": "metro24",
+          "url": "https://www.bechtel.com/press-releases/bechtel-celebrates-opening-of-riyadh-metro-project/",
+          "facts": [
+            {
+              "id": "metro24-1",
+              "text": "The Riyadh Metro inauguration took place on November 27, 2024, with phased opening."
+            },
+            {
+              "id": "metro24-2",
+              "text": "The network has six lines and 85 stations."
+            },
+            {
+              "id": "metro24-3",
+              "text": "STC Olaya Station extends more than 100 feet underground."
+            },
+            {
+              "id": "metro24-4",
+              "text": "KAFD Station has an undulating roof."
+            },
+            {
+              "id": "metro24-5",
+              "text": "The BACS consortium was responsible for the Blue and Red lines, totaling 63.1 kilometers and 40 stations."
+            }
+          ]
+        },
+        {
+          "id": "metro15",
+          "url": "https://www.bechtel.com/press-releases/bechtel-led-team-starts-tunneling-on-saudi-arabias-first-metro-system/",
+          "facts": [
+            {
+              "id": "metro15-1",
+              "text": "Bechtel reported the start of Line 1 tunneling on July 7, 2015."
+            },
+            {
+              "id": "metro15-2",
+              "text": "The first tunnel boring machine was named Mneefah."
+            },
+            {
+              "id": "metro15-3",
+              "text": "The machine name honored a horse belonging to the founder of Saudi Arabia."
+            },
+            {
+              "id": "metro15-4",
+              "text": "The planned excavation rate was an average of 100 meters per week; this is a target, not a verified achievement."
+            },
+            {
+              "id": "metro15-5",
+              "text": "Seven machines were planned to excavate more than 35 kilometers of tunnels."
+            },
+            {
+              "id": "metro15-6",
+              "text": "Agreement on the central-city alignment was secured before detailed design."
+            }
+          ]
+        }
+      ],
+      "cautions": [
+        "Do not confuse inauguration with all lines starting passenger service.",
+        "Do not describe planned capacity as actual ridership.",
+        "Do not invent construction incidents."
+      ]
+    },
+    {
+      "id": "voyager-confirmation-2013",
+      "event_date": "2013-09-12",
+      "replay_date": "2013-09-12",
+      "historical_replay": true,
+      "trigger": "NASA confirms Voyager 1 has reached interstellar space.",
+      "image_query": "Voyager 1 spacecraft 1977 NASA",
+      "objectives": {
+        "info": "A Voyager 1 signal took about 17 hours to reach Earth in September 2013.",
+        "topic": "How a distant spacecraft communicates: low-power radio, slow data, enormous antennas.",
+        "story": "The real detective story of confirming an earlier crossing using plasma waves after a solar eruption."
+      },
+      "sources": [
+        {
+          "id": "nasa13",
+          "url": "https://www.nasa.gov/news-release/nasa-spacecraft-embarks-on-historic-journey-into-interstellar-space/",
+          "facts": [
+            {
+              "id": "nasa13-1",
+              "text": "NASA announced Voyager 1’s interstellar arrival on September 12, 2013."
+            },
+            {
+              "id": "nasa13-2",
+              "text": "At that time, a signal from Voyager 1 took about 17 hours to reach Earth."
+            },
+            {
+              "id": "nasa13-3",
+              "text": "Voyager signals were emitted at about 23 watts; instrument data typically traveled at 160 bits per second."
+            },
+            {
+              "id": "nasa13-4",
+              "text": "NASA received the data using 34-meter and 70-meter Deep Space Network antennas."
+            },
+            {
+              "id": "nasa13-5",
+              "text": "Voyager 1 lacked a working plasma sensor, requiring another way to locate the craft."
+            },
+            {
+              "id": "nasa13-6",
+              "text": "A March 2012 solar eruption reached its location in April 2013 and excited plasma oscillations."
+            },
+            {
+              "id": "nasa13-7",
+              "text": "On April 9, the plasma wave instrument detected oscillations indicating plasma over 40 times denser than in the outer heliosphere."
+            },
+            {
+              "id": "nasa13-8",
+              "text": "Scientists then found weaker oscillations in October and November 2012 data."
+            },
+            {
+              "id": "nasa13-9",
+              "text": "The analysis placed arrival in August 2012; the team generally accepted August 25 as the crossing date."
+            },
+            {
+              "id": "nasa13-10",
+              "text": "Both Voyager craft launched in 1977 and visited Jupiter and Saturn."
+            }
+          ]
+        }
+      ],
+      "cautions": [
+        "All distances, radio delay and spacecraft status are historical as of September 2013.",
+        "Interstellar arrival is not a claim that every definition of the solar system has been left behind.",
+        "Spacecraft artist illustrations must be labelled; they are not documentary photos from deep space."
+      ]
+    }
+  ]
+}

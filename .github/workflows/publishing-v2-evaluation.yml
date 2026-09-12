@@ -1,0 +1,47 @@
+name: Publishing v2 manual evaluation
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Readiness checks access; models/images make live requests'
+        required: true
+        default: readiness
+        type: choice
+        options: [readiness, models, images]
+      allow_paid:
+        description: 'Allow live models/images evaluation (models capped at $10 per invocation)'
+        required: true
+        default: false
+        type: boolean
+permissions:
+  contents: read
+concurrency:
+  group: publishing-v2-evaluation
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Evaluate historical packages
+        env:
+          EVALUATION_MODE: ${{ inputs.mode }}
+          ALLOW_PAID: ${{ inputs.allow_paid }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GETTY_API_KEY: ${{ secrets.GETTY_API_KEY }}
+        shell: bash
+        run: |
+          args=(--mode "$EVALUATION_MODE" --output evaluation-output)
+          if [[ "$ALLOW_PAID" == "true" ]]; then args+=(--allow-paid); fi
+          python -m publishing_v2.evaluate "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: publishing-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evaluation-output/
+          retention-days: 30
