@@ -56,6 +56,10 @@ def _personal_resolve_story():
     # attempt an inventory-PASS story so it can earn current-policy evidence.
     if rsp.sb.STORY:
         story = rsp.sb.resolve_story_input(rsp.sb.STORY)
+        if not rsp.delivered_story_recovery_allowed(story):
+            raise SystemExit(
+                f"requested story was already delivered to Telegram: {story}"
+            )
         if os.getenv("STORY_SELECTION_MODE", "manual").strip() == "scheduled":
             result = sp.evaluate_story(story)
             if not result["publishable"]:
