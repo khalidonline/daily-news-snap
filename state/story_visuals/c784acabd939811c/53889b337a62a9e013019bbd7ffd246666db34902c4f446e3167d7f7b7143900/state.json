@@ -1,4 +1,5 @@
 {
+  "final_release_status": "REVIEW",
   "frames": {
     "1": {
       "asset_hash": "58346016e91010ab117667207ff7269ae6abc03f60fa5186f70dafc701af7f7d",
@@ -115,8 +116,186 @@
       "status": "PASS"
     }
   },
+  "publishability_evaluated_at": "2026-09-12T11:55:43.253047+00:00",
+  "publishability_policy": "frame-relevance-v2",
   "revision": "53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900",
   "schema": "story-visual-v1",
   "status": "VISUAL_READY",
-  "story": "كيف بدأت Amazon كمتجر كتب على الإنترنت"
+  "story": "كيف بدأت Amazon كمتجر كتب على الإنترنت",
+  "story_quality_dimensions": {
+    "claim_precision": "PASS",
+    "final_frame_currency": "PASS",
+    "narrative_chronology": "BLOCKED",
+    "subject_focus": "BLOCKED",
+    "visual_chronology": "PASS"
+  },
+  "story_quality_findings": [
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 1,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 2,
+      "message": "narrative year regresses from 2000 to 1994 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 3,
+      "message": "narrative year regresses from 2000 to 1995 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "UNEXPLAINED_TIME_REGRESSION",
+      "dimension": "narrative_chronology",
+      "frame": 4,
+      "message": "narrative year regresses from 2000 to 1998 without flashback",
+      "severity": "BLOCK"
+    },
+    {
+      "code": "CRITICAL_FRAME_NOT_DIRECT",
+      "dimension": "subject_focus",
+      "frame": 6,
+      "message": "frame does not materially advance the named Story subject",
+      "severity": "BLOCK"
+    }
+  ],
+  "story_quality_frame_evidence": [
+    {
+      "copy_years": [
+        2000
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 1,
+      "subject_overlap": [
+        "انترنت"
+      ],
+      "visual_era": "HISTORICAL",
+      "visual_years": [
+        1990
+      ]
+    },
+    {
+      "copy_years": [
+        1994,
+        1994
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 2,
+      "subject_overlap": [
+        "انترنت",
+        "كتب"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        1995
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 3,
+      "subject_overlap": [
+        "amazon"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        1998,
+        1999
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 4,
+      "subject_overlap": [
+        "amazon"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [
+        2020,
+        2025
+      ],
+      "current": false,
+      "flashback": false,
+      "focus": "DIRECT",
+      "frame": 5,
+      "subject_overlap": [
+        "بدات",
+        "كتب"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    },
+    {
+      "copy_years": [],
+      "current": false,
+      "flashback": false,
+      "focus": "SUPPORTING",
+      "frame": 6,
+      "subject_overlap": [
+        "amazon",
+        "كتب"
+      ],
+      "visual_era": "UNKNOWN",
+      "visual_years": []
+    }
+  ],
+  "story_quality_policy": "story-quality-v1",
+  "story_quality_repair": {
+    "dimensions": [
+      "narrative_chronology",
+      "subject_focus"
+    ],
+    "frame_modes": {
+      "1": "editorial_frame",
+      "2": "editorial_frame",
+      "3": "editorial_frame",
+      "4": "editorial_frame",
+      "6": "editorial_frame"
+    },
+    "frames": [
+      1,
+      2,
+      3,
+      4,
+      6
+    ],
+    "full_deck_regeneration": false,
+    "instructions": {
+      "1": [
+        "keep the frame centered on the named Story subject"
+      ],
+      "2": [
+        "restore chronological order or make the flashback explicit"
+      ],
+      "3": [
+        "restore chronological order or make the flashback explicit"
+      ],
+      "4": [
+        "restore chronological order or make the flashback explicit"
+      ],
+      "6": [
+        "keep the frame centered on the named Story subject"
+      ]
+    }
+  },
+  "story_quality_status": "BLOCKED"
 }
