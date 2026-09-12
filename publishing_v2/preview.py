@@ -86,6 +86,7 @@ def review_card(path, brief, *, env, transport=None):
     status, body = providers._request(transport, 'POST', 'https://api.openai.com/v1/responses',
                                      {'Authorization': 'Bearer '+credential, 'Content-Type': 'application/json'}, payload)
     if status != 200:
+        print(json.dumps({'stage': 'visual_review', 'http_status': status}))
         raise RuntimeError('visual_review_http_' + str(status))
     decision = json.loads(providers._parse_openai(body))
     fields = ('relevant', 'crop_suitable', 'historically_appropriate', 'readable')
