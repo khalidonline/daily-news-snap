@@ -1,0 +1,33 @@
+name: Publishing v2 offline checks
+on:
+  pull_request:
+    paths:
+      - 'publishing_v2/**'
+      - 'tests/test_v2_*.py'
+      - 'evaluation/**'
+      - '.github/workflows/publishing-v2-*.yml'
+  push:
+    branches: ['build/event-publishing-v2']
+    paths:
+      - 'publishing_v2/**'
+      - 'tests/test_v2_*.py'
+      - 'evaluation/**'
+      - '.github/workflows/publishing-v2-*.yml'
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_v2_*.py' -v
+      - run: python -m publishing_v2.evaluate --mode offline --output evaluation-output
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: publishing-v2-offline-${{ github.run_id }}
+          path: evaluation-output/
