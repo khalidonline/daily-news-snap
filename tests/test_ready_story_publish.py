@@ -262,7 +262,7 @@ class ReadyStoryPublishTests(unittest.TestCase):
                 mock.patch.object(rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
                 mock.patch.object(rsp.sns, "story_was_delivered", return_value=True), \
                 mock.patch.object(rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")), \
-                mock.patch.dict("os.environ", {"STORY_ALLOW_DELIVERED_CORRECTION": "0"}):
+                mock.patch.object(rsp.os, "getenv", return_value="0"):
             with self.assertRaisesRegex(SystemExit, "already delivered"):
                 rsp._resolve_story()
 
@@ -271,7 +271,7 @@ class ReadyStoryPublishTests(unittest.TestCase):
                 mock.patch.object(rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
                 mock.patch.object(rsp.sns, "story_was_delivered", return_value=True), \
                 mock.patch.object(rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")), \
-                mock.patch.dict("os.environ", {"STORY_ALLOW_DELIVERED_CORRECTION": "1"}):
+                mock.patch.object(rsp.os, "getenv", return_value="1"):
             self.assertEqual("قصة قديمة", rsp._resolve_story())
 
 
