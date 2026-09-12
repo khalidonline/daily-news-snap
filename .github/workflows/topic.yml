@@ -159,7 +159,7 @@ jobs:
           IMAGE_SOURCE: "auto"
           POINTS: "3"
           MAX_SEARCHES: "6"
-          MAX_TOKENS: "7000"
+          MAX_TOKENS: "3000"
           MODEL_BOT: "topic"
           MODEL_USAGE_PATH: "out/model_usage.jsonl"
           MODEL_MAX_USD_PER_RUN: "1.50"
