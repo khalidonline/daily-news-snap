@@ -95,7 +95,16 @@ def review_card(path, brief, *, env, transport=None):
     if status != 200:
         print(json.dumps({'stage': 'visual_review', 'model': payload['model'], 'http_status': status}))
         raise RuntimeError('visual_review_http_' + str(status))
-    response_text = parse_response(body).strip()
+    print(json.dumps({'stage': 'visual_review_response', 'model': payload['model'],
+                      'complete': body.get('status') == 'completed' or body.get('stop_reason') == 'end_turn',
+                      'token_limit': body.get('stop_reason') == 'max_tokens',
+                      'content_types': [part.get('type') for part in body.get('content', [])
+                                        if isinstance(part, dict) and part.get('type') in ('text', 'thinking', 'refusal', 'redacted_thinking')]}), flush=True)
+    try:
+        response_text = parse_response(body).strip()
+    except providers.ProviderError as error:
+        print(json.dumps({'stage': 'visual_review_parse', 'code': error.code}), flush=True)
+        raise
     # Providers may wrap otherwise-valid JSON in one Markdown code block.
     # Remove only that complete wrapper, never extract JSON from mixed prose.
     lines = response_text.splitlines()
