@@ -41,6 +41,19 @@ class PublicImagesTests(unittest.TestCase):
         self.assertEqual(item['license'], 'CC BY 4.0')
         self.assertFalse(item['licensing_verified'])
 
+    def test_commons_current_thumbnail_host_is_accepted(self):
+        url = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Phone.jpg/1600px-Phone.jpg'
+        response = {'query': {'pages': [{'pageid': 1, 'title': 'File:Phone.jpg', 'imageinfo': [{
+            'url': 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Phone.jpg',
+            'thumburl': url, 'descriptionurl': 'https://commons.wikimedia.org/wiki/File:Phone.jpg',
+            'mime': 'image/jpeg', 'extmetadata': {}}]}]}}
+        with patch.object(images, 'get_json', return_value=response):
+            results = images.search_commons('Phone')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['download_url'], url)
+        with self.assertRaises(images.ImageSourceError):
+            images.validate_url(url.replace('thumb.wikimedia.org', 'thumb.wikimedia.org.evil.test'))
+
     def test_nasa_keeps_copyright_review_required(self):
         search = {'collection': {'items': [{'data': [{'nasa_id': 'voyager', 'title': 'Voyager',
                    'description': 'Artist concept, third-party credit', 'media_type': 'image'}]}]}}

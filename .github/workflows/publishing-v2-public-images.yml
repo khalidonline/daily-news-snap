@@ -1,3 +1,4 @@
+# Evidence includes the current Wikimedia thumbnail host.
 name: Publishing v2 public image evidence
 on:
   workflow_dispatch:
