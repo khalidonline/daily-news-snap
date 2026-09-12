@@ -9,3 +9,11 @@ Every rendered card must pass the bounded pixel review and its digest must still
 The trigger is NASA's September 12, 2026 astronomy feature; the Apollo story is historical, from July 1969. The identity expires at the end of September 13 Saudi time. No Snapchat publishing or three-day live trial is enabled by this workflow.
 
 Validation: 84 unit tests; local rendering and inspection of all eight cards. Live delivery status must be established from the workflow receipt, not inferred from these checks.
+
+## Live result, September 12, 2026
+
+Run 34709623719 (job 103595862098, commit 52fcf9676bfaf46356bfe23faa508c4286ee47ba) passed all 85 tests and all eight actual pixel reviews using Claude Sonnet 5 after OpenAI HTTP 429. Review eight completed at 17:56:00 UTC. The Telegram album operation timed out approximately 45 seconds later without a confirmed receipt. Delivery is UNKNOWN, not failed or confirmed sent. Do not redispatch or resend this package until the chat has been reconciled. The unknown journal and eight review receipts are retained in the run artifact.
+
+Earlier runs 34709327910 and 34709437912 stopped before any delivery due to unsupported Anthropic thinking blocks; PR 194 fixes this supported response shape while retaining strict answer gates.
+
+All eight cards were also supplied directly to the user as Snap-Preview-September-12.pdf, preserving the established design, with photo credits and sources appended. Daily unattended posting and the three-day trial remain unstarted.
