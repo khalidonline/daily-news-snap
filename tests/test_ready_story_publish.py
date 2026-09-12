@@ -258,19 +258,19 @@ class ReadyStoryPublishTests(unittest.TestCase):
 
 
     def test_explicit_recovery_blocks_a_previously_delivered_story_by_default(self):
-        with mock.patch.object(rsp.sb, "STORY", "قصة قديمة"), \
-                mock.patch.object(rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
-                mock.patch.object(rsp, "delivered_story_recovery_allowed", return_value=False), \
-                mock.patch.object(rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")):
+        with mock.patch.object(gsp.rsp.sb, "STORY", "قصة قديمة"), \
+                mock.patch.object(gsp.rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
+                mock.patch.object(gsp.rsp, "delivered_story_recovery_allowed", return_value=False), \
+                mock.patch.object(gsp.rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")):
             with self.assertRaisesRegex(SystemExit, "already delivered"):
-                rsp._resolve_story()
+                gsp._personal_resolve_story()
 
     def test_explicit_correction_can_opt_in_to_a_delivered_story(self):
-        with mock.patch.object(rsp.sb, "STORY", "قصة قديمة"), \
-                mock.patch.object(rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
-                mock.patch.object(rsp, "delivered_story_recovery_allowed", return_value=True), \
-                mock.patch.object(rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")):
-            self.assertEqual("قصة قديمة", rsp._resolve_story())
+        with mock.patch.object(gsp.rsp.sb, "STORY", "قصة قديمة"), \
+                mock.patch.object(gsp.rsp.sb, "resolve_story_input", return_value="قصة قديمة"), \
+                mock.patch.object(gsp.rsp, "delivered_story_recovery_allowed", return_value=True), \
+                mock.patch.object(gsp.rsp.sr, "coverage", return_value=(["p"] * 4, ["logo"], "PASS")):
+            self.assertEqual("قصة قديمة", gsp._personal_resolve_story())
 
     def test_delivered_story_recovery_requires_explicit_correction_flag(self):
         with mock.patch.object(rsp.sns, "story_was_delivered", return_value=True):
