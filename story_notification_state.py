@@ -22,6 +22,31 @@ def notification_claim_dir() -> Path:
     return ledger.parent / "story_notification_claims"
 
 
+def story_was_delivered(story: str, ledger: Path | None = None) -> bool:
+    """Return True only after Telegram confirmed this normalized Story title."""
+    target = " ".join(str(story or "").split())
+    if not target:
+        return False
+    path = Path(ledger) if ledger is not None else notification_ledger_path()
+    if not path.exists() or not path.is_file():
+        return False
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return False
+    for line in lines:
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except (TypeError, ValueError):
+            continue
+        if row.get("event") != "telegram_sent":
+            continue
+        if " ".join(str(row.get("story") or "").split()) == target:
+            return True
+    return False
+
 def should_notify(status: str) -> bool:
     return str(status or "").strip().upper() in NOTIFIABLE_STATUSES
 
