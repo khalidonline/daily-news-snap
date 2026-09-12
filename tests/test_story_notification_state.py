@@ -60,5 +60,17 @@ class NotificationStateTests(unittest.TestCase):
         self.assertIsNotNone(sns.claim_notification("story", "rev", "READY", digest))
 
 
+    def test_story_delivery_history_matches_normalized_story_title(self):
+        ledger = sns.notification_ledger_path()
+        ledger.write_text(
+            '{"event":"telegram_sent","story":"  قصة   قديمة  "}\n'
+            '{"event":"rendered","story":"قصة غير مرسلة"}\n',
+            encoding="utf-8",
+        )
+
+        self.assertTrue(sns.story_was_delivered("قصة قديمة"))
+        self.assertFalse(sns.story_was_delivered("قصة جديدة"))
+
+
 if __name__ == "__main__":
     unittest.main()
