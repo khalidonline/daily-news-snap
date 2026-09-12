@@ -60,9 +60,9 @@ class TopicRecoveryHandoffTests(unittest.TestCase):
 
     def test_workflow_bounds_topic_research_for_the_shared_daily_cap(self):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-        self.assertIn("TOPIC_MODEL:", workflow)
-        self.assertIn("vars.TOPIC_MODEL", workflow)
-        self.assertIn('MAX_TOKENS: "3000"', workflow)
+        self.assertIn('CLAUDE_MODEL: "claude-haiku-4-5-20251001"', workflow)
+        self.assertIn('TOPIC_MODEL: "claude-haiku-4-5-20251001"', workflow)
+        self.assertIn('MAX_TOKENS: "8000"', workflow)
 
     def test_workflow_requires_actual_telegram_confirmation(self):
         workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
