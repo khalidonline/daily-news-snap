@@ -308,7 +308,7 @@ def validate_brief(brief: Any) -> list[str]:
             errors.append(f"{field} exceeds {max_chars} characters")
         if re.search(r"<[^>]+>|\[\d+\]", value):
             errors.append(f"{field} contains citation markup")
-        if field == "title" and re.search(r"(?:^|\\s)[\\u0600-\\u06FF]{1,2}$", value.strip()):
+        if field == "title" and re.search(r"(?:^|\s)[\u0600-\u06FF]{1,2}$", value.strip()):
             errors.append("title ends with a truncated Arabic fragment")
 
     sources = brief.get("sources")
