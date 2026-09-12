@@ -49,6 +49,9 @@ class NewsVisualRecoveryTests(unittest.TestCase):
             self.assertTrue(output.is_file())
         self.assertIsNone(credit)
 
+    def test_aramco_logo_is_accepted_from_the_official_site(self):
+        self.assertIn("www.aramco.com", daily_news_runner.OFFICIAL_VISUAL_HOSTS)
+
     def test_scheduled_news_visual_search_is_locked_to_top_story(self):
         stories = [{"headline": "top"}, {"headline": "easy backup"}]
         with patch.object(news_bot, "NEWS_LOCK_TOP_STORY_VISUAL", True, create=True):
