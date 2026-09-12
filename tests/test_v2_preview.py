@@ -36,8 +36,8 @@ class PreviewTests(unittest.TestCase):
             if len(calls)==1:
                 return {'status_code':429,'body':{'error':{'code':'insufficient_quota'}}}
             return {'status_code':200,'body':{'id':'msg1','stop_reason':'end_turn',
-                'usage':{'input_tokens':100,'output_tokens':50},'content':[{'type':'text','text':json.dumps({
-                'relevant':True,'crop_suitable':True,'historically_appropriate':True,'readable':True,'reason':'Fits'})}]}}
+                'usage':{'input_tokens':100,'output_tokens':50},'content':[{'type':'text','text':'```json\n'+json.dumps({
+                'relevant':True,'crop_suitable':True,'historically_appropriate':True,'readable':True,'reason':'Fits'})+'\n```'}]}}
         with tempfile.TemporaryDirectory() as d:
             path=Path(d)/'card.jpg';path.write_bytes(jpeg())
             result=preview.review_card(path,{'title':'Moon'},env={'OPENAI_API_KEY':'x','ANTHROPIC_API_KEY':'y'},transport=transport)
