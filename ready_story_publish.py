@@ -430,6 +430,11 @@ def _mark_story_complete(story):
 def _resolve_story():
     if sb.STORY:
         story = sb.resolve_story_input(sb.STORY)
+        correction = os.getenv("STORY_ALLOW_DELIVERED_CORRECTION", "0") == "1"
+        if sns.story_was_delivered(story) and not correction:
+            raise SystemExit(
+                f"requested story was already delivered to Telegram: {story}"
+            )
         photos, logos, status = sr.coverage(story)
         if status != "PASS" or len(photos) < 4 or not logos:
             raise SystemExit(
