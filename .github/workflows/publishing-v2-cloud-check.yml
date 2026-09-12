@@ -1,6 +1,9 @@
 name: Publishing v2 cloud connection check
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publishing-v2-cloud-check.yml']
 permissions:
   contents: read
 jobs:
