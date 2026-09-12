@@ -1,0 +1,122 @@
+{
+  "frames": {
+    "1": {
+      "asset_hash": "58346016e91010ab117667207ff7269ae6abc03f60fa5186f70dafc701af7f7d",
+      "frame_payload": {
+        "heading": "قبل أن يشتري أحد من النت",
+        "image_keywords": [
+          "Seattle 1990s",
+          "Bellevue Washington"
+        ],
+        "image_keywords_ar": [
+          "سياتل"
+        ],
+        "punch": "",
+        "subject_kind": "abstract",
+        "text": "منتصف التسعينات. الإنترنت كان جديداً على الناس، والشراء منه فكرة لم يجرّبها أحد تقريباً. من يريد كتاباً معيناً يذهب إلى المكتبة، وإن لم يجده يطلبه وينتظر أسابيع. لكن استخدام الويب كان ينمو بأكثر من 2000% في السنة، وأحد لم يكن يعرف ماذا يفعل بهذا الرقم."
+      },
+      "image_source": "state/story_visuals/c784acabd939811c/53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900/assets/frame-01.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "2": {
+      "asset_hash": "d850567cd162dde43ca3a1970392e201260a4dc9295476321bb0b209f8346521",
+      "frame_payload": {
+        "heading": "الشاب الذي ترك وول ستريت",
+        "image_keywords": [
+          "Jeff Bezos"
+        ],
+        "image_keywords_ar": [],
+        "punch": "",
+        "subject_kind": "person",
+        "text": "لكن موظفاً في شركة استثمار بوول ستريت اسمه Jeff Bezos قرأ الرقم بطريقة أخرى. في 1994 ترك وظيفته وانتقل إلى بلدة Bellevue، واستأجر بيتاً من ثلاث غرف وبدأ العمل في مرأبه. فكرته: متجر كتب على الإنترنت يعرض ما لا يتسع له أي رف. لكن الشركة التي سجّلها في 5 يوليو 1994 لم تكن تحمل اسم أمازون أصلاً."
+      },
+      "image_source": "state/story_visuals/c784acabd939811c/53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900/assets/frame-02.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "3": {
+      "asset_hash": "8d47c21eda23f65834d4ba6a852c6a3e27dfcbe4510689830ef6692ad06ab585",
+      "frame_payload": {
+        "heading": "الموقع يفتح للناس",
+        "image_keywords": [
+          "Amazon garage",
+          "Amazon first office",
+          "Bellevue founding site"
+        ],
+        "image_keywords_ar": [
+          "أمازون"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وهنا تغيّر كل شيء. الاسم المسجَّل كان Cadabra، لكن محاميه سمعه «cadaver» أي جثة، فغيّره إلى أمازون على اسم أكبر نهر في العالم. في 16 يوليو 1995 فُتح الموقع للبيع، وأول كتاب بيع كان مؤلَّفاً في الذكاء الاصطناعي. في الأسبوع الأول وصلت طلبات بقيمة 12 ألف دولار — وكل طلب كان يكلّف الشركة أكثر مما تكسبه منه."
+      },
+      "image_source": "state/story_visuals/c784acabd939811c/53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900/assets/frame-03.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "4": {
+      "asset_hash": "1096d9a36b597deb773deac018ea0e8a47b1904695f6f0f198920cbc817d368d",
+      "frame_payload": {
+        "heading": "سنوات الخسائر والسخرية",
+        "image_keywords": [
+          "Amazon",
+          "Jeff Bezos"
+        ],
+        "image_keywords_ar": [
+          "أمازون"
+        ],
+        "punch": "وصفت المجلة صاحبها بأنه «مجرد وسيط آخر».",
+        "subject_kind": "company",
+        "text": "ولذلك ظلت الخسائر تكبر سنة بعد سنة. في 1998 خسرت أمازون نحو 125 مليون دولار على مبيعات 610 ملايين. وفي مايو 1999 نشرت مجلة Barron's المالية غلافاً بعنوان «Amazon.bomb» قالت فيه إن السهم مبالغ في سعره وإن القصة الجميلة لا تصنع شركة. وفي تلك السنة نفسها بلغت خسارة أمازون 719.9 مليون دولار."
+      },
+      "image_source": "state/story_visuals/c784acabd939811c/53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900/assets/frame-04.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "5": {
+      "asset_hash": "850da3f8b34692680fd2a85a8eb5c25a6c8390264ffd5bc2bd1b60d7bae7ca27",
+      "frame_payload": {
+        "heading": "من الكتب إلى كل شيء",
+        "image_keywords": [
+          "Amazon fulfillment center",
+          "Souq.com",
+          "Amazon logistics"
+        ],
+        "image_keywords_ar": [
+          "أمازون",
+          "سوق.كوم"
+        ],
+        "punch": "",
+        "subject_kind": "company",
+        "text": "وحتى مع هذه الخسائر لم تتوقف عن التوسع: صنف بعد صنف، وسوق بعد سوق. في 17 يونيو 2020 تحوّل موقع سوق.كوم في السعودية إلى متجر أمازون السعودية. وفي 2025 أعلنت أمازون مبيعات سنوية بلغت 716.9 مليار دولار — الشركة نفسها التي بدأت بطلبات قيمتها 12 ألف دولار في أسبوع."
+      },
+      "image_source": "state/story_visuals/c784acabd939811c/53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900/assets/frame-05.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    },
+    "6": {
+      "asset_hash": "f14242b633acd893152919ad1644167e483b5aad6491a2e46e6d6abaa64249f0",
+      "frame_payload": {
+        "heading": "ماذا بقي من متجر الكتب",
+        "image_keywords": [
+          "Amazon",
+          "Amazon fulfillment center"
+        ],
+        "image_keywords_ar": [
+          "أمازون"
+        ],
+        "punch": "أمازون لم تكبر فقط — غيّرت طريقة شراء الناس لكل شيء.",
+        "subject_kind": "company",
+        "text": "وهكذا صارت الكتب قسماً واحداً بين عشرات الأقسام داخل المتجر نفسه."
+      },
+      "image_source": "state/story_visuals/c784acabd939811c/53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900/assets/frame-06.jpg",
+      "qa_reasons": [],
+      "status": "PASS"
+    }
+  },
+  "revision": "53889b337a62a9e013019bbd7ffd246666db34902c4f446e3167d7f7b7143900",
+  "schema": "story-visual-v1",
+  "status": "VISUAL_READY",
+  "story": "كيف بدأت Amazon كمتجر كتب على الإنترنت"
+}
