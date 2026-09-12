@@ -28,31 +28,27 @@ def validate_date(activation, now=None):
 
 
 def render_card(spec, source, output):
-    """Measured Arabic text, uncropped documentary photo, same light/red visual language."""
-    image = Image.new('RGB', (1080, 1920), '#F7F5EF')
-    draw = ImageDraw.Draw(image)
-    def text(lines, top, size, color='#222222', bold=False):
-        font = ImageFont.truetype(str(ROOT / 'fonts' / ('Almarai-Bold.ttf' if bold else 'Almarai-Regular.ttf')), size)
-        for line in lines:
-            box = draw.textbbox((540, top), line, font=font, direction='rtl', anchor='mt')
-            if box[0] < 70 or box[2] > 1010 or box[3] > 1800:
-                raise ValueError('text_overflow')
-            draw.text((540, top), line, font=font, fill=color, direction='rtl', anchor='mt')
-            top += int(size * 1.6)
-        return top
-    draw.rounded_rectangle((466, 120, 614, 128), radius=4, fill='#B73732')
-    text(['معلومة'], 164, 38, '#B73732', True)
-    text(spec['title_lines'], 252, 59, bold=True)
-    photo = ImageOps.contain(Image.open(source).convert('RGB'), (904, 790), Image.Resampling.LANCZOS)
-    image.paste(photo, ((1080-photo.width)//2, 496+(790-photo.height)//2))
-    text(spec['body_lines'], 1340, 39)
-    text(spec['closing_lines'], 1595, 43, '#B73732', True)
-    text([spec['trigger_label']], 1730, 25, '#666666')
-    creditfont = ImageFont.truetype(str(ROOT / 'fonts/Almarai-Regular.ttf'), 19)
-    draw.text((540, 1810), spec['image_credit'], font=creditfont, fill='#777777', anchor='mt')
-    output = Path(output)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    image.save(output, 'JPEG', quality=94)
+    """Use the established light News/Topic renderer and brand assets."""
+    os.environ['THEME'] = 'light'
+    os.environ['FONT_FAMILY'] = 'Almarai'
+    import news_bot
+    if news_bot.THEME != 'light' or news_bot.FONT_FAMILY != 'Almarai':
+        raise ValueError('renderer_configuration_mismatch')
+    if news_bot.brand_badge(150) is None:
+        raise ValueError('missing_original_brand_badge')
+    brief = {'title': ' '.join(spec['title_lines']), 'body': ' '.join(spec['body_lines']),
+             'punch': ' '.join(spec['closing_lines'])}
+    output = Path(output); output.parent.mkdir(parents=True, exist_ok=True)
+    previous_brand = news_bot.BRAND
+    try:
+        news_bot.BRAND = spec.get('brand', 'معلومة تهمك')
+        news_bot.render_story(brief, output.with_suffix('.png'), photo_path=source, photo_credit=None)
+    finally:
+        news_bot.BRAND = previous_brand
+    # Delivery uses JPEG, preserving the existing renderer's layout and colors.
+    with Image.open(output.with_suffix('.png')) as rendered:
+        rgb = rendered.convert('RGB')
+    rgb.save(output, 'JPEG', quality=95)
     return output
 
 
