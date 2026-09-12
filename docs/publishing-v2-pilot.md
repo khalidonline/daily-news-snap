@@ -56,9 +56,19 @@ Theme expiry is midnight at the beginning of the third Saudi calendar day, regar
 | Editorial package | Distinct Info/Topic and six-frame factual Story; approved final visuals | Historical corpus ready; live comparison pending |
 | Durable production service | Cloud Run workers, Workflows recovery, Firestore transactions, Storage artifacts, Scheduler and monitoring | Not provisioned |
 | Managed operations | Named person/service owns incidents, supplier renewals, credentials and missed deadlines | Owner not appointed |
-| Telegram acceptance trial | 14 consecutive days, every planned package delivered with receipts, zero duplicate frames, no owner troubleshooting; outage drills | Not started |
+| Telegram acceptance trial | 3 consecutive days, every planned package delivered with receipts, zero duplicate frames, no owner troubleshooting; outage drills | Not started |
 | Rollout | Acceptance evidence reviewed; reversible schedule cutover | Not started |
 
 Cloud architecture reference: [Google Cloud Workflows](https://docs.cloud.google.com/workflows/docs/overview). The review dashboard should show event expiry, content preview, factual sources, photo rights, delivery receipts and exceptions. Khalid reviews editorial decisions; the designated operations service handles technical exceptions. No operations service or background monitoring is activated by this branch.
 
 Do not remove the current schedules or budget guard until the new service meets these gates. Snapchat direct publishing remains disabled pending its own reviewed integration and account access.
+
+## Approved three-day acceptance window
+
+The owner approved three days instead of fourteen. Day 1 begins when the live Telegram pilot delivers its first complete scheduled event package; preparation and offline tests do not count.
+
+- Day 1: verify a complete Info, Topic and six-frame Story package, factual sources, relevant licensed visuals and delivery receipts.
+- Day 2: verify event-window continuity or replacement and exercise supplier failure, interrupted delivery and uncertain-send recovery in an isolated test destination.
+- Day 3: verify another complete scheduled day and review delivery, duplicates, content quality and outstanding incidents before gradual rollout.
+
+Keep Telegram review throughout. Move to gradual rollout after the three-day evidence is acceptable; unresolved delivery or visual-quality failures must be fixed before expansion. Three days is an initial acceptance sample, not a guarantee of flawless operation. Technical exceptions belong to the operations owner, with continued monitoring after rollout.
