@@ -427,11 +427,17 @@ def _mark_story_complete(story):
     sb.commit_and_push(nb.quota_bump(), f"quota story: {slug}")
 
 
+
+def delivered_story_recovery_allowed(story, correction=None):
+    """Block prior Telegram Stories unless an explicit correction opts in."""
+    if correction is None:
+        correction = os.getenv("STORY_ALLOW_DELIVERED_CORRECTION", "0") == "1"
+    return bool(correction) or not sns.story_was_delivered(story)
+
 def _resolve_story():
     if sb.STORY:
         story = sb.resolve_story_input(sb.STORY)
-        correction = os.getenv("STORY_ALLOW_DELIVERED_CORRECTION", "0") == "1"
-        if sns.story_was_delivered(story) and not correction:
+        if not delivered_story_recovery_allowed(story):
             raise SystemExit(
                 f"requested story was already delivered to Telegram: {story}"
             )
