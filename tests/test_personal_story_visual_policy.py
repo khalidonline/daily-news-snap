@@ -221,5 +221,35 @@ class PersonalStoryVisualPolicyTests(unittest.TestCase):
         self.assertEqual(6, len(set(actual)))
 
 
+    def test_amazon_story_uses_six_distinct_reviewed_visuals(self):
+        import story_runtime as sr
+
+        story = "كيف بدأت Amazon كمتجر كتب على الإنترنت"
+        headings = [
+            "قبل أن يشتري أحد من النت",
+            "الشاب الذي ترك وول ستريت",
+            "الموقع يفتح للناس",
+            "سنوات الخسائر والسخرية",
+            "من الكتب إلى كل شيء",
+            "ماذا بقي من متجر الكتب",
+        ]
+        expected = [
+            "targeted-amazon-founding-site.jpg",
+            "amazon-bezos-early.jpg",
+            "amazon-garage-recreation.jpg",
+            "rt-amazon-1.jpg",
+            "targeted-amazon-fulfillment-center.jpg",
+            "targeted-souq-amazon-robotics.jpg",
+        ]
+
+        actual = [
+            sr.curated_frame_visual_filename(story, {"heading": heading})
+            for heading in headings
+        ]
+
+        self.assertEqual(expected, actual)
+        self.assertEqual(6, len(set(actual)))
+
+
 if __name__ == "__main__":
     unittest.main()
