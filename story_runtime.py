@@ -130,6 +130,14 @@ city_visual_v3.configure(sb)
 # Exact story+frame repairs. These do not broaden global relevance: each pin
 # is a previously reviewed local asset assigned to one specific narrative beat.
 _CURATED_FRAME_VISUALS = {
+    "قصة سكة حديد الرياض الدمام 1951": (
+        (("لا طرق.. فقط مسارات رملية",), "railway-construction-1951.jpg"),
+        (("خط قصير من الميناء",), "rt-riyadh-dammam-railway-1.jpg"),
+        (("أمر واحد غيّر نهاية الخط",), "king-golden-spike.jpg"),
+        (("البحر الضحل وقف في الطريق",), "railway-workers-1951.jpg"),
+        (("من رحلة واحدة إلى رحلات يومية",), "sar-train-modern.jpg"),
+        (("ما بقي من ذلك القرار",), "riyadh-dammam-train.jpg"),
+    ),
     "كيف بنت TSMC احتكاراً على رقائق العالم": (
         (("فكرة مختلفة بدأت في 1987",), "targeted-tsmc-morris-chang-2018.jpg"),
         (("مصنع لا ينافس عملاءه",), "tsmc-fab14.jpg"),
