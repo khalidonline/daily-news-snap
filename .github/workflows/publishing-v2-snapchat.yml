@@ -1,0 +1,55 @@
+name: Approved Snapchat API
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publishing-v2-snapchat.yml', 'publishing_v2/bundle_api.py']
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Check connection or publish an approved package
+        type: choice
+        options: [check, publish]
+        default: check
+      manifest:
+        description: Repository path to approved JSON manifest (publish only)
+        type: string
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  check:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify API key and connected Snapchat account (read only)
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+        run: python -m publishing_v2.bundle_api check
+  publish:
+    needs: check
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'publish'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Publish approved media sequentially with durable receipts
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          APPROVED_MANIFEST: ${{ inputs.manifest }}
+        run: python -m publishing_v2.bundle_api publish --manifest "$APPROVED_MANIFEST"
