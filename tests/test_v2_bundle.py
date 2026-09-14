@@ -1,6 +1,8 @@
 import copy
 import unittest
-from publishing_v2.bundle_api import publish, BundleError, verify_account
+from unittest.mock import patch
+import io
+from publishing_v2.bundle_api import publish, BundleError, verify_account, BundleClient
 
 class Journal:
     def __init__(self): self.state = {}; self.fail = False
@@ -20,6 +22,13 @@ class Client:
         if self.status != 'POSTED': raise BundleError('pending')
 
 class PublishingTests(unittest.TestCase):
+    def test_bundle_identifies_its_api_client(self):
+        with patch.dict('os.environ', {'BUNDLE_API_KEY':'test-key','BUNDLE_TEAM_ID':'team'}):
+            with patch('urllib.request.urlopen', return_value=io.BytesIO(b'{}')) as opened:
+                BundleClient().call('/health')
+                self.assertEqual(opened.call_args.args[0].get_header('User-agent'),
+                                 'ExecutiveSaudiPublisher/1.0')
+
     def test_resuming_completed_package_does_not_send_again(self):
         c,j=Client(),Journal()
         publish(c,j,'story',['one','two'])

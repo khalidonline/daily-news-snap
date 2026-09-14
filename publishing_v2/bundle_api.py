@@ -56,7 +56,8 @@ class BundleClient:
 
     def call(self, path, method='GET', data=None, content_type='application/json'):
         return request('https://api.bundle.social/api/v1' + path,
-                       {'x-api-key': self.key, 'Content-Type': content_type}, method, data)
+                       {'x-api-key': self.key, 'Content-Type': content_type,
+                        'User-Agent':'ExecutiveSaudiPublisher/1.0', 'Accept':'application/json'}, method, data)
 
     def check(self):
         query = urllib.parse.urlencode({'type':'SNAPCHAT','teamId':self.team})
