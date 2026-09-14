@@ -1,0 +1,28 @@
+{
+  "account": "executivesaudi",
+  "approved": true,
+  "title": "Foldable reviewed 2026-09-14",
+  "expires_at": "2026-09-14T20:59:00Z",
+  "media": [
+    {
+      "path": "approved/foldable-20260914-revised/card-1.jpg",
+      "sha256": "eec17e2f535c85108cfea43cd9a645322483f7eaea5239bf21630c6bd36b4841"
+    },
+    {
+      "path": "approved/foldable-20260914-revised/card-2.jpg",
+      "sha256": "7d9fcdf5e14a86664c7d92a5539639c6172b761c749525df834670c57f05b7a9"
+    },
+    {
+      "path": "approved/foldable-20260914-revised/card-3.jpg",
+      "sha256": "5a16c7ea2f70fb96347ca7357317a4666409d195934c0b6cfee4f221c1752ac6"
+    },
+    {
+      "path": "approved/foldable-20260914-revised/card-4.jpg",
+      "sha256": "8963b64f0e9dfa1bcbf3b91feb8f0ff0b32d4788c5cbeda01babeca3f3122017"
+    },
+    {
+      "path": "approved/foldable-20260914-revised/card-5.jpg",
+      "sha256": "9841b82119da2139b1f63bba2329d405940270a77c55ac940dbefe5b4a3c1383"
+    }
+  ]
+}
