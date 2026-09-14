@@ -28,7 +28,7 @@ All categories remain eligible without fixed rotation or automatic category pref
 | --- | --- | --- |
 | Info / معلومة | A short surprising fact connected to the active event | One verified detail that earns attention; the headline reveals or opens curiosity about the fact, rather than repeating the announcement |
 | Topic / موضوع | An interesting question, phenomenon, or comparison connected to the event | A satisfying explanation with evidence; no routine buying advice or generic news recap |
-| Story / قصة | A documented real story connected to the event | People or a concrete subject, stakes, a turning point, and an outcome; preserve the approved six-frame format and visual standards |
+| Story / قصة | A documented real story connected to the event | People or a concrete subject, stakes, a turning point, and an outcome; use only as many frames as add distinct value, preserving the approved visual identity |
 
 The connection may be through the event's people, technology, competitors, or history. It must be immediately understandable to the viewer. Do not fabricate a connection simply to use an existing card.
 
@@ -93,3 +93,12 @@ Preserve Telegram review and existing delivery validation. Snapchat publishing r
 - Review a complete event package using verified evidence: one Info, one Topic, and one six-frame Story. The package must visibly demonstrate why it is relevant today and why each post is worth sharing.
 - Report deployment separately from this editorial approval.
 
+
+## Owner update: everyday Saudi Arabic and gentle questions
+
+Use natural everyday Saudi Arabic with less formal phrasing. Keep facts and
+technical terms precise. Avoid exaggerated slang, pressure, and repetitive calls
+to action. When a question serves the story, prefer «هل تفكر تشتري جوال قابل للطي؟»
+over «وش يمنعك تشتري…؟». A question is optional, not a required ending.
+Story and Info must add different content; remove repetitive cards rather than
+fill a predetermined count. This update supersedes earlier six-frame defaults.
