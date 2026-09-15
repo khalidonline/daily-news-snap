@@ -1,0 +1,24 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "السياحية الممتازة — ملخص تنفيذي",
+  "expires_at": "2026-09-16T16:33:15.171355+00:00",
+  "media": [
+    {
+      "path": "approved/premium-economy-20260915/card-1.jpg",
+      "sha256": "ba3a1e0dea4579ed172e21e2995528b100d3b305ac017d2dc2b7f3b19207d80d"
+    },
+    {
+      "path": "approved/premium-economy-20260915/card-2.jpg",
+      "sha256": "79cdc4746443fbe2d5d348df20d52df2ee90bc838c438d398b2d9c0dc673e008"
+    },
+    {
+      "path": "approved/premium-economy-20260915/card-3.jpg",
+      "sha256": "3254a394ce05381637807db1a8db5ac8decc0ce2425b444c2ee560eabcefd9ec"
+    },
+    {
+      "path": "approved/premium-economy-20260915/card-4.jpg",
+      "sha256": "081d6752bf37fb1ce75f6c136020ffe82d85b3d095bcb24e4208eb61549d4728"
+    }
+  ]
+}
