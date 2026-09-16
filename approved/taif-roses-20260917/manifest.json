@@ -1,0 +1,25 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ملخص تنفيذي — الورد الطائفي",
+  "not_before": "2026-09-17T06:00:00Z",
+  "expires_at": "2026-09-17T09:00:00Z",
+  "media": [
+    {
+      "path": "approved/taif-roses-20260917/card-1.jpg",
+      "sha256": "9845672115f4af3683929f1674cc6b683c28035a6fe73fbf80bf22aacfd05ca7"
+    },
+    {
+      "path": "approved/taif-roses-20260917/card-2.jpg",
+      "sha256": "7f3d7cd7513d4ae141822e14fe3001db8c9ef23a3204f6a20f213e80f3edcd5a"
+    },
+    {
+      "path": "approved/taif-roses-20260917/card-3.jpg",
+      "sha256": "a3526b9a67a07e60fe2beef049773a65b0de5a2a007fc9f03cc03c717684ff0e"
+    },
+    {
+      "path": "approved/taif-roses-20260917/card-4.jpg",
+      "sha256": "6145a9d2dc5e7b022da4626a7c63175589d0b17a0c99168d1c06c5c01ec4f032"
+    }
+  ]
+}
