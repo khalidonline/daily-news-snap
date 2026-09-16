@@ -1,0 +1,28 @@
+name: Publish approved coupons once
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-coupons-once.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.event.head_commit.message == 'Publish user-approved coupons package once 20260916'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 10e30c7837edaca64ba324a1129bd526fda19ba9
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Publish exactly the four user-approved cards with existing duplicate protection
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m publishing_v2.bundle_api publish --manifest approved/coupons-20260916-v2/manifest.json
