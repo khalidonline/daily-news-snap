@@ -1,0 +1,24 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ملخص تنفيذي — قصة الكوبونات — 16 سبتمبر 2026",
+  "expires_at": "2026-09-17T19:46:51Z",
+  "media": [
+    {
+      "path": "approved/coupons-20260916-v2/card-1.jpg",
+      "sha256": "f45edad0d17780df1a230e7bb5130e9ea76a6509fd21a6e2f0d7ad7c1c25ca02"
+    },
+    {
+      "path": "approved/coupons-20260916-v2/card-2.jpg",
+      "sha256": "facd1f4209c269d033acf99f56ae2afcd36e870356a6bba5ea9848365b90f2b0"
+    },
+    {
+      "path": "approved/coupons-20260916-v2/card-3.jpg",
+      "sha256": "0283e6bd63e9f05c390a386bea3f81d40197999af8cf929affe913065bff347c"
+    },
+    {
+      "path": "approved/coupons-20260916-v2/card-4.jpg",
+      "sha256": "1f0a0406626e227c251e529ebb376019c7593a07ee3ce96fbcf8a3b5544ae676"
+    }
+  ]
+}
