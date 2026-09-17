@@ -21,8 +21,10 @@ Every paid call uses `daily_budget.Ledger`, including visual selection and revie
 Failed or ambiguous calls keep their conservative reservations. The daily ledger,
 not the per-run report, is authoritative for total spend/reservations.
 
-Default workers use the existing priced Haiku model; the final reviewer uses the
-existing priced Sonnet model. `AUTOPILOT_<ROLE>_MODEL` can select another model
+All specialist roles now default to the priced Sonnet model. Research selects
+numbered, exact source passages; the program resolves quotations and keeps the
+persisted source excerpts below 200 words per source. The independent reviewer
+still receives the original retrieved source context. `AUTOPILOT_<ROLE>_MODEL` can select another model
 already in `daily_budget.PRICES`. New providers require a reviewed price/usage
 adapter. This initial wiring does not make a claim that these models are optimal.
 
@@ -69,7 +71,9 @@ attempt cost and the Actions link; shadow output is explicitly identified.
   documentary imagery. Limited availability can hold a package after recovery.
 - Audience analytics are not connected. Delivery receipts prove provider-reported
   posting, not audience engagement; no learning or growth claims are made.
-- The $3 ceiling can stop a run before both packages finish. Actual provider
-  quality and costs must be measured in shadow before declaring daily reliability.
+- The workflow explicitly sets `AUTOPILOT_DAILY_LIMIT_MICRO_USD=10000000`
+  for a shared $10/day commissioning ceiling; standalone runtime defaults to $3. Existing charges and outstanding
+  reservations survive the CAS-protected upgrade; legacy callers retain their
+  own $3 reservation limit. Actual quality and costs are measured in shadow.
 
 Tests: `python -m unittest discover -s tests -p 'test_v2_*.py' -q`.

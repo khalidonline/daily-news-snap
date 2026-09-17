@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Shared $3/day paid API ceiling, independent of bot, branch, run or retry.
+"""Shared paid API ceiling, default $3/day, independent of bot or retry.
+
+Explicit commissioning callers can raise the shared ceiling up to $10/day.
+Each caller still enforces its own ceiling against all shared charges.
 
 Prices: https://platform.claude.com/docs/en/about-claude/pricing (2026-09-10).
 Reservations use conservative request bounds, never average historic costs.
@@ -25,6 +28,7 @@ from decimal import Decimal, ROUND_CEILING
 from pathlib import Path
 
 LIMIT_MICRO_USD = 3_000_000
+MAX_LIMIT_MICRO_USD = 10_000_000
 KSA = timezone(timedelta(hours=3))
 LEDGER_BRANCH = 'cost-ledger'
 # Input, output USD/MTok, maximum context. Reject new models until reviewed.
@@ -96,25 +100,33 @@ class GitHubStore:
 
 
 class Ledger:
-    def __init__(self, store, now=None):
+    def __init__(self, store, now=None, limit_micro_usd=LIMIT_MICRO_USD):
+        if (type(limit_micro_usd) is not int
+                or not LIMIT_MICRO_USD <= limit_micro_usd <= MAX_LIMIT_MICRO_USD):
+            raise BudgetBlocked('daily ceiling must be integer micro-USD between $3 and $10')
         self.store = store
         self.now = now or (lambda: datetime.now(timezone.utc))
+        self.limit_micro_usd = limit_micro_usd
 
     def change(self, day, change):
         for attempt in range(50):
             version, row = self.store.read(day)
             if row is None:
-                row = {'version': 1, 'day': day, 'limit_micro_usd': LIMIT_MICRO_USD,
+                row = {'version': 1, 'day': day, 'limit_micro_usd': self.limit_micro_usd,
                        'entries': {}}
             try:
                 assert row['version'] == 1 and row['day'] == day
-                assert row['limit_micro_usd'] == LIMIT_MICRO_USD
+                assert type(row['limit_micro_usd']) is int
+                assert LIMIT_MICRO_USD <= row['limit_micro_usd'] <= MAX_LIMIT_MICRO_USD
                 assert isinstance(row['entries'], dict)
                 for entry in row['entries'].values():
                     assert type(entry['charged_micro_usd']) is int
                     assert entry['charged_micro_usd'] >= 0
             except (KeyError, TypeError, AssertionError):
                 raise BudgetBlocked('daily budget ledger is invalid')
+            # Upgrade only validated state, within the same CAS as the charge.
+            # A lower-ceiling caller never downgrades or resets shared history.
+            row['limit_micro_usd'] = max(row['limit_micro_usd'], self.limit_micro_usd)
             change(row)
             if self.store.write(day, version, row):
                 return
@@ -122,13 +134,13 @@ class Ledger:
         raise BudgetBlocked('daily budget is busy; no paid request authorized')
 
     def reserve(self, amount, bot):
-        if type(amount) is not int or not 0 < amount <= LIMIT_MICRO_USD:
-            raise BudgetBlocked('request cannot fit within the $3 daily ceiling')
+        if type(amount) is not int or not 0 < amount <= self.limit_micro_usd:
+            raise BudgetBlocked(f'request cannot fit within the ${self.limit_micro_usd / 1e6:g} daily ceiling')
         day, ident = day_key(self.now()), uuid.uuid4().hex
         def update(row):
             total = sum(e['charged_micro_usd'] for e in row['entries'].values())
-            if total + amount > LIMIT_MICRO_USD:
-                raise BudgetBlocked(f'$3 daily budget: ${total / 1e6:.4f} spent/reserved; request held')
+            if total + amount > self.limit_micro_usd:
+                raise BudgetBlocked(f'${self.limit_micro_usd / 1e6:g} daily budget: ${total / 1e6:.4f} spent/reserved; request held')
             row['entries'][ident] = {
                 'bot': bot, 'run_id': os.getenv('GITHUB_RUN_ID'),
                 'run_attempt': os.getenv('GITHUB_RUN_ATTEMPT'),

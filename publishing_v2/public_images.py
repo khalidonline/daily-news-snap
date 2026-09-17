@@ -85,10 +85,12 @@ def query_params(query, limit):
         raise ValueError('limit must be 1-5')
 
 
-def search_commons(query, limit=5):
+def search_commons(query, limit=5, *, offset=0):
     query_params(query, limit)
+    if type(offset) is not int or not 0 <= offset <= 20:
+        raise ValueError('offset must be 0-20')
     params = {'action': 'query', 'format': 'json', 'formatversion': 2, 'generator': 'search',
-              'gsrsearch': query, 'gsrnamespace': 6, 'gsrlimit': limit, 'prop': 'imageinfo',
+              'gsrsearch': query, 'gsrnamespace': 6, 'gsrlimit': limit, 'gsroffset': offset, 'prop': 'imageinfo',
               'iiprop': 'url|mime|extmetadata', 'iiurlwidth': 1600}
     response = get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params))
     if not isinstance(response, dict) or 'error' in response:
