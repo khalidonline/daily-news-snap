@@ -1,0 +1,112 @@
+"""Deterministic constraints. Model output cannot grant authority."""
+import hashlib
+import json
+from datetime import datetime, timedelta, time
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+RIYADH = ZoneInfo('Asia/Riyadh')
+REVIEW_CHECKS = ('factual', 'timely', 'saudi_language', 'broad_appeal',
+                 'story_coherent', 'distinct_value', 'visual_identity', 'safe_routine')
+
+
+def digest(data):
+    return hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False,
+                                     allow_nan=False).encode()).hexdigest()
+
+
+def text(value, maximum=2000):
+    if not isinstance(value, str) or not value.strip() or len(value) > maximum:
+        raise ValueError('invalid_text')
+    return value
+
+
+def expiry(now):
+    return datetime.combine(now.astimezone(RIYADH).date() + timedelta(days=2),
+                            time.min, RIYADH).isoformat()
+
+
+def validate_research(data, sources, lane, now):
+    by_id = {s['id']: s for s in sources}
+    claims = data.get('claims', [])
+    if not 1 <= len(claims) <= 16 or len({c['id'] for c in claims}) != len(claims):
+        raise ValueError('invalid_claims')
+    for claim in claims:
+        text(claim['id'], 80); text(claim['fact'], 500)
+        quote = text(claim['quote'], 1000)
+        if len(quote) < 12 or quote not in by_id.get(claim['source_id'], {}).get('text', ''):
+            raise ValueError('unsupported_quote')
+    if data.get('sensitive') is not False:
+        raise ValueError('sensitive_or_uncertain_topic')
+    if lane == 'daily':
+        event = datetime.fromisoformat(data['event_date']).date()
+        today = now.astimezone(RIYADH).date()
+        if not today - timedelta(days=1) <= event <= today + timedelta(days=1):
+            raise ValueError('event_outside_window')
+        quote = text(data['event_quote'], 500)
+        if len(quote) < 8 or quote not in by_id.get(data['event_source_id'], {}).get('text', ''):
+            raise ValueError('unsupported_event_time')
+
+
+def evidence_snapshot(data, sources):
+    """Persist supporting excerpts and provenance, not full copied articles."""
+    quotes = {}
+    for claim in data['claims']:
+        quotes.setdefault(claim['source_id'], []).append(claim['quote'])
+    if data.get('event_source_id') and data.get('event_quote'):
+        quotes.setdefault(data['event_source_id'], []).append(data['event_quote'])
+    rows = []
+    for source in sources:
+        excerpts = list(dict.fromkeys(quotes.get(source['id'], [])))
+        body = '\n'.join(excerpts)
+        if len(body.split()) > 200:
+            raise ValueError('source_excerpt_limit')
+        if body:
+            rows.append({'id': source['id'], 'url': source['url'], 'text': body,
+                         'retrieved_text_sha256': hashlib.sha256(source['text'].encode()).hexdigest()})
+    return rows
+
+
+def validate_draft(data, research):
+    if set(data) != {'title', 'cards'}:
+        raise ValueError('unexpected_draft_fields')
+    text(data.get('title'), 100)
+    cards = data.get('cards', [])
+    if not 3 <= len(cards) <= 7 or [c.get('kind') for c in cards] != ['info'] + ['story'] * (len(cards) - 1):
+        raise ValueError('info_and_two_to_six_story_cards_required')
+    known = {c['id'] for c in research['claims']}
+    for card in cards:
+        if set(card) != {'kind', 'title', 'body', 'punch', 'claim_ids', 'image_query'}:
+            raise ValueError('unexpected_card_fields')
+        text(card.get('title'), 85); text(card.get('body'), 240)
+        if not isinstance(card.get('punch'), str) or len(card['punch']) > 100:
+            raise ValueError('invalid_closing')
+        text(card.get('image_query'), 180)
+        ids = card.get('claim_ids')
+        if not isinstance(ids, list) or not ids or any(i not in known for i in ids):
+            raise ValueError('unsupported_card_claim')
+
+
+def validate_review(review, count):
+    text(review.get('reason'), 2000)
+    checks = review.get('checks', {})
+    if any(checks.get(k) is not True for k in REVIEW_CHECKS):
+        raise ValueError('editorial_review_rejected')
+    rows = review.get('card_checks', [])
+    if len(rows) != count or any(r.get('readable') is not True or r.get('relevant') is not True for r in rows):
+        raise ValueError('visual_review_rejected')
+
+
+def seal(package, paths):
+    return {'package_sha256': digest(package),
+            'media_sha256': [hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths]}
+
+
+def verify_seal(package, paths, approval, now):
+    if now.tzinfo is None:
+        raise ValueError('timezone_required')
+    expires = datetime.fromisoformat(package['expires_at'])
+    if expires.tzinfo is None or now >= expires:
+        raise ValueError('package_expired')
+    if not paths or approval != seal(package, paths):
+        raise ValueError('approved_package_changed')
