@@ -46,6 +46,98 @@ class DailyBudgetTests(unittest.TestCase):
         with self.assertRaises(budget.BudgetBlocked):
             self.ledger.reserve(1, 'breaking')
 
+    def test_explicit_upgrade_preserves_settled_and_reserved_charges(self):
+        settled = self.ledger.reserve(1_000_000, 'news')
+        self.ledger.settle(settled, 200_000)
+        self.ledger.reserve(2_000_000, 'story')
+        _, original = self.store.read('2026-09-12')
+        commissioning = budget.Ledger(self.store, now=lambda: self.now,
+                                      limit_micro_usd=10_000_000)
+        commissioning.reserve(7_800_000, 'commissioning')
+        _, row = self.store.read('2026-09-12')
+        self.assertEqual(row['limit_micro_usd'], 10_000_000)
+        for ident, entry in original['entries'].items():
+            self.assertEqual(row['entries'][ident], entry)
+        with self.assertRaises(budget.BudgetBlocked):
+            commissioning.reserve(1, 'retry')
+
+    def test_legacy_caller_keeps_lower_ceiling_and_can_settle_upgraded_row(self):
+        old = self.ledger.reserve(2_000_000, 'news')
+        commissioning = budget.Ledger(self.store, now=lambda: self.now,
+                                      limit_micro_usd=10_000_000)
+        newer = commissioning.reserve(6_000_000, 'commissioning')
+        with self.assertRaises(budget.BudgetBlocked):
+            self.ledger.reserve(1, 'legacy')
+        self.ledger.settle(old, 500_000)
+        self.ledger.settle(newer, 1_000_000)
+        self.ledger.reserve(1_500_000, 'legacy')
+        with self.assertRaises(budget.BudgetBlocked):
+            self.ledger.reserve(1, 'legacy')
+        self.assertEqual(self.store.read(old[0])[1]['limit_micro_usd'], 10_000_000)
+        commissioning.reserve(7_000_000, 'commissioning')
+
+    def test_configured_ceiling_requires_integer_between_three_and_ten_dollars(self):
+        for limit in [None, True, False, 3_000_000.0, '10000000', -1, 0,
+                      2_999_999, 10_000_001]:
+            with self.subTest(limit=limit), self.assertRaises(budget.BudgetBlocked):
+                budget.Ledger(self.store, limit_micro_usd=limit)
+        for limit in [3_000_000, 5_500_000, 10_000_000]:
+            ledger = budget.Ledger(MemoryStore(), limit_micro_usd=limit)
+            ledger.reserve(limit, 'commissioning')
+            with self.assertRaises(budget.BudgetBlocked):
+                ledger.reserve(1, 'retry')
+
+    def test_invalid_shared_ceiling_blocks_upgrade_without_reset(self):
+        for limit in [True, 3_000_000.0, '3000000', 2_999_999, 10_000_001]:
+            original = {'version': 1, 'day': '2026-09-12',
+                        'limit_micro_usd': limit, 'entries': {}}
+            self.store.rows['2026-09-12'] = (1, original)
+            commissioning = budget.Ledger(self.store, now=lambda: self.now,
+                                          limit_micro_usd=10_000_000)
+            with self.subTest(limit=limit), self.assertRaises(budget.BudgetBlocked):
+                commissioning.reserve(1, 'commissioning')
+            self.assertEqual(self.store.read('2026-09-12'), (1, original))
+
+    def test_concurrent_upgrade_and_legacy_reservations_share_ten_dollar_cap(self):
+        self.ledger.reserve(2_000_000, 'existing')
+        commissioning = budget.Ledger(self.store, now=lambda: self.now,
+                                      limit_micro_usd=10_000_000)
+        def reserve(index):
+            ledger = commissioning if index % 2 else self.ledger
+            try:
+                ledger.reserve(500_000, 'concurrent')
+                return 1
+            except budget.BudgetBlocked:
+                return 0
+        with ThreadPoolExecutor(max_workers=12) as pool:
+            accepted = sum(pool.map(reserve, range(64)))
+        self.assertEqual(accepted, 16)
+        row = self.store.read('2026-09-12')[1]
+        self.assertEqual(sum(e['charged_micro_usd'] for e in row['entries'].values()),
+                         10_000_000)
+
+    def test_upgrade_conflict_reloads_intervening_charge(self):
+        self.ledger.reserve(2_000_000, 'existing')
+        commissioning = budget.Ledger(self.store, now=lambda: self.now,
+                                      limit_micro_usd=10_000_000)
+        write = self.store.write
+        raced = False
+        def racing_write(day, version, row):
+            nonlocal raced
+            if not raced:
+                raced = True
+                self.ledger.reserve(500_000, 'other-run')
+            return write(day, version, row)
+        with patch.object(self.store, 'write', side_effect=racing_write):
+            with self.assertRaises(budget.BudgetBlocked):
+                commissioning.reserve(8_000_000, 'commissioning')
+        row = self.store.read('2026-09-12')[1]
+        self.assertEqual(len(row['entries']), 2)
+        self.assertEqual(row['limit_micro_usd'], 3_000_000)
+        commissioning.reserve(7_500_000, 'commissioning')
+        with self.assertRaises(budget.BudgetBlocked):
+            commissioning.reserve(1, 'retry')
+
     def test_concurrent_reservations_never_exceed_limit(self):
         def reserve(_):
             try:

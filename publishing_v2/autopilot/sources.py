@@ -1,6 +1,7 @@
 """Bounded read-only discovery and source retrieval; no model-supplied hosts."""
 import hashlib
 import json
+import re
 from datetime import timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
@@ -83,6 +84,7 @@ def reusable_image(row):
 class Sources:
     def __init__(self):
         self.image_cache = {}
+        self.image_search_cache = {}
 
     def discover(self, lane, now):
         if lane == 'local':
@@ -130,20 +132,77 @@ class Sources:
 
     def images(self, query):
         query = ' '.join(str(query).split())[:130]
+        if not query:
+            return []
         if query in self.image_cache:
             return self.image_cache[query]
-        # Official Commons structured-data search for CC0; still verify metadata.
-        # https://commons.wikimedia.org/wiki/Help:Searching
-        searches = [query, query + ' haswbstatement:P275=Q6938433']
-        errors = []
+        # Commons ANDs all words. Recover the named subject from descriptive
+        # briefs before spending the request budget on lower-ranked results.
+        subjects = [query]
+        for topic in sorted(LOCAL_TOPICS, key=len, reverse=True):
+            if re.search(r'(?<!\w)' + re.escape(topic) + r'(?!\w)', query, re.I):
+                subjects.append(topic)
+                break
+        words = query.split()
+        if len(words) > 3:
+            subjects.extend([' '.join(words[:3]), ' '.join(words[:2])])
+        subjects = list(dict.fromkeys(subjects))[:3]
+        searches = [search for subject in subjects for search in
+                    (subject, subject + ' haswbstatement:P275=Q6938433')]
+        errors, deeper, collected = [], [], []
+        seen = set()
+
+        def lookup(search, offset=0):
+            key = (search, offset)
+            if key not in self.image_search_cache:
+                self.image_search_cache[key] = search_commons(search, limit=5, offset=offset)
+            rows = self.image_search_cache[key]
+            usable = [r for r in rows if reusable_image(r)]
+            for row in usable:
+                identity = (row.get('provider', 'commons'), row.get('asset_id') or row.get('download_url')
+                            or json.dumps(row, sort_keys=True))
+                if identity not in seen:
+                    seen.add(identity)
+                    collected.append(row)
+            return rows, usable
+
+        # Up to six first-page requests, then six additional pages, never
+        # broadening rights. Search operators only narrow discovery; source
+        # metadata independently decides eligibility on every returned row.
         for search in searches:
             try:
-                rows = [r for r in search_commons(search, limit=5) if reusable_image(r)]
+                rows, usable = lookup(search)
+                if len(collected) >= 5:
+                    self.image_cache[query] = collected[:5]
+                    return collected[:5]
+                # The adapter drops unsupported formats, so fewer than five
+                # returned images does not mean the API page was exhausted.
                 if rows:
-                    self.image_cache[query] = rows
-                    return rows
+                    deeper.append(search)
             except Exception as error:
                 errors.append(type(error).__name__)
+                if len(errors) >= 2:
+                    break
+        if collected:
+            self.image_cache[query] = collected[:5]
+            return collected[:5]
+        attempts = 0
+        if len(errors) < 2:
+            for offset in (5, 10, 15, 20):
+                for search in list(deeper):
+                    if attempts >= 6 or len(errors) >= 2:
+                        break
+                    attempts += 1
+                    try:
+                        rows, usable = lookup(search, offset)
+                        if usable:
+                            self.image_cache[query] = usable
+                            self.image_cache[search] = usable
+                            return usable
+                        if not rows:
+                            deeper.remove(search)
+                    except Exception as error:
+                        errors.append(type(error).__name__)
         self.image_cache[query] = []
         print(json.dumps({'stage': 'image_search', 'query': query, 'usable': 0, 'errors': errors}), flush=True)
         return []

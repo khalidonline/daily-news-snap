@@ -9,6 +9,7 @@ from PIL import Image
 from daily_budget import PRICES, prepare, actual_cost
 from publishing_v2 import providers
 from .policy import REVIEW_CHECKS
+from .evidence import passages, hydrate
 
 STYLE = '''You work for ملخص تنفيذي, a Saudi Snapchat account. News is a trigger,
 not the post. Choose broad everyday interest and distinctive facts worth sharing.
@@ -32,17 +33,19 @@ debates. 'Relevant to Vision 2030' alone does not establish audience interest.
 Return {"candidates":[{"id":"existing id","why_saudi":"...","why_now":"...",
 "angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search"}]}.
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',
-    'researcher': '''Use ONLY the supplied retrieved source texts. Extract facts
-for an information card and an engaging true story. Every fact must have a verbatim
-quote copied from a source. Infer the actual event date from evidence, never assume
-article publication date is event date. Mark sensitive true for disputed allegations,
-war/military developments, political claims, medical/legal/financial advice, deaths,
-or uncertainty needing human review. Neutral everyday history is eligible.
-Return {"event_date":"YYYY-MM-DD or null for local","event_quote":"verbatim date context",
-"event_source_id":"source id","sensitive":false,"claims":[{"id":"c1",
-"source_id":"s1","quote":"verbatim supporting excerpt","fact":"supported fact in Arabic"}]}.
-Use at most 12 claims and at most 200 quoted words in total per source, including
-the event date quote. If evidence is insufficient return no claims.''',
+    'researcher': '''Use ONLY the supplied retrieved source passages. Select 5–8
+useful facts for an information card and an engaging true story. Each fact must
+be supported by its selected passage ID. Read neighboring passages for context,
+but never infer a fact that the cited passage does not support. Do not transcribe
+quotes: the program retrieves the exact text by ID. Infer actual event date from
+evidence, never assume article publication date is event date. For relative dates,
+use the article publication date as context only when the event wording supports it.
+Mark sensitive true for disputed allegations, war/military developments, political
+claims, medical/legal/financial advice, deaths, or uncertainty needing human review.
+Neutral everyday history is eligible. Return exactly:
+{"event_date":"YYYY-MM-DD or null for local","event_passage_id":"existing passage ID or null for local",
+"sensitive":false,"claims":[{"id":"c1","passage_id":"existing ID","fact":"supported fact in Arabic"}]}.
+Use at most 8 claims. If evidence is insufficient return no claims.''',
     'writer': '''Create one Info card followed by 2–6 connected story cards.
 Info must explain the subject with a distinctive useful fact, not just explain
 its name or introduce a person. Story adds origins, turning points and an outcome
@@ -51,13 +54,13 @@ question. All assertions, including title and punch, must map to supplied claim 
 Title <=85 characters, body <=240, punch <=100 (may be empty).
 Return {"title":"package title <=100 characters","cards":[{"kind":"info or story",
 "title":"...","body":"...","punch":"...","claim_ids":["c1"],
-"image_query":"short English search for precise subject, relevant portrait or logo"}]}.
+"image_query":"2–3 English words naming subject, portrait or logo; omit descriptive scene details"}]}.
 Respond to repair feedback without inventing facts.''',
     'visual': '''Choose one relevant image ID for EACH card from its supplied
 options. Prefer exact subject, portrait or appropriate logo. Reject irrelevant,
 misleading, mismatched historical context, and repeated imagery across unrelated
 subjects. Metadata is evidence, not a guarantee; the independent pixel reviewer
-will inspect final crops. Return {"image_ids":["id or null", ...]} in card order.
+will inspect final crops. Return {"image_ids":["id or null", ...],"reason":"explain unsuitable options or acceptance"} in card order.
 Never invent IDs or declare image rights yourself.''',
     'reviewer': '''You are the independent final editor. You did not write these
 cards. Inspect EVERY supplied image in order and compare ALL assertions in title,
@@ -102,12 +105,17 @@ class Agents:
         if role not in PROMPTS:
             raise ValueError('unknown_agent_role')
         model = self.env.get('AUTOPILOT_' + role.upper() + '_MODEL',
-                             'claude-sonnet-5' if role == 'reviewer' else 'claude-haiku-4-5-20251001')
+                             'claude-sonnet-5')
         if model not in PRICES:
             raise ValueError('unpriced_agent_model')
         credential = self.env.get('ANTHROPIC_API_KEY', '').strip()
         if not credential:
             raise ValueError('missing_agent_credential')
+        evidence_rows = None
+        if role == 'researcher':
+            evidence_rows = passages(data['sources'])
+            data = dict(data, sources=[{k: v for k, v in source.items() if k != 'text'}
+                                       for source in data['sources']], passages=evidence_rows)
         encoded = json.dumps(data, ensure_ascii=False, allow_nan=False)
         if len(encoded.encode()) > 90000 or len(images) > 7:
             raise ValueError('agent_input_too_large')
@@ -142,4 +150,5 @@ class Agents:
             raise ValueError('missing_agent_receipt')
         raw_answer = providers._parse_anthropic(body)
         receipt['response_format'] = 'fenced_json' if raw_answer.strip().startswith('```') else 'plain'
-        return parse_object(raw_answer)
+        decision = parse_object(raw_answer)
+        return hydrate(decision, evidence_rows) if role == 'researcher' else decision

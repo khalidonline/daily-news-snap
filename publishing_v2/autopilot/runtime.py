@@ -34,7 +34,8 @@ class Renderer:
                 if not rows and package.get('candidate', {}).get('title'):
                     # Relevant subject-level photo/portrait/logo recovery; the
                     # independent reviewer must still approve its actual use.
-                    rows = self.sources.images(package['candidate']['title'][:130])
+                    rows = self.sources.images(package['candidate'].get('editorial', {}).get(
+                        'research_query', package['candidate']['title'])[:130])
                 choices.append(rows)
             if any(not row for row in choices):
                 raise ValueError('relevant_reusable_image_unavailable')
@@ -45,7 +46,8 @@ class Renderer:
             for card, rows, ident in zip(cards, choices, ids):
                 matches = [r for r in rows if r['asset_id'] == ident]
                 if len(matches) != 1:
-                    raise ValueError('unknown_visual_selection')
+                    raise ValueError('unknown_visual_selection: ' + card['image_query'] + ': '
+                                     + str(selected.get('reason', ''))[:800])
                 card['image'] = dict(matches[0])
         os.environ['THEME'] = 'light'; os.environ['FONT_FAMILY'] = 'Almarai'
         import story_bot
@@ -151,7 +153,8 @@ def main():
     now = lambda: datetime.now(timezone.utc)
     output = Path(args.output).resolve(); output.mkdir(parents=True, exist_ok=True)
     token = os.environ.get('DAILY_BUDGET_GITHUB_TOKEN') or os.environ.get('GITHUB_TOKEN')
-    ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token))
+    ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token),
+                    limit_micro_usd=int(os.environ.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD', '3000000')))
     readiness = GitHubJournal('autopilot-readiness')
     engine = engine_id()
     verified = rollout_ready(readiness.read(), engine, now())

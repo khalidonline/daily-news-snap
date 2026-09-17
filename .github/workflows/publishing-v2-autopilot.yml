@@ -48,6 +48,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
           AUTOPILOT_MODE: ${{ github.event_name == 'push' && 'shadow' || inputs.mode || vars.AUTOPILOT_MODE || 'shadow' }}
+          # Explicit commissioning ceiling; all reservations share the durable ledger.
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '10000000'
           AUTOPILOT_LANE: ${{ inputs.lane || 'both' }}
           POST_TO_SNAPCHAT: '0'
           DRY_RUN: '1'
