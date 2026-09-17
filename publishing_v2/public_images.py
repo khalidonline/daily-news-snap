@@ -111,8 +111,8 @@ def search_commons(query, limit=5, *, offset=0):
                 'source_url': info['descriptionurl'], 'credit': field('Artist'), 'credit_line': field('Credit'),
                 'license': field('LicenseShortName'), 'license_url': field('LicenseUrl'),
                 'attribution_required': field('AttributionRequired'), 'restrictions': field('Restrictions'),
-                'date_created': field('DateTimeOriginal'), 'width': info.get('thumbwidth', info.get('width')),
-                'height': info.get('thumbheight', info.get('height')), 'licensing_verified': False})
+                'date_created': field('DateTimeOriginal'), 'width': min([v for v in (info.get('width'), info.get('thumbwidth')) if isinstance(v, int) and v > 0], default=None),
+                'height': min([v for v in (info.get('height'), info.get('thumbheight')) if isinstance(v, int) and v > 0], default=None), 'licensing_verified': False})
         except (KeyError, IndexError, TypeError, ImageSourceError):
             continue
     return results

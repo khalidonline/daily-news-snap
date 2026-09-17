@@ -55,3 +55,32 @@ class EvidenceTests(unittest.TestCase):
         agent = Agents(env={'ANTHROPIC_API_KEY': 'test'}, ledger=Ledger(), transport=transport)
         result = agent.run('researcher', {'sources': self.sources})
         self.assertEqual(result['claims'][0]['quote'], self.rows[0]['quote'])
+
+    def test_wrong_id_types_are_rejected_without_crashing_coordinator(self):
+        for ident in [[], {}, None, 12]:
+            with self.subTest(ident=ident), self.assertRaises(ValueError):
+                hydrate({'event_date': None, 'event_passage_id': None, 'sensitive': False,
+                         'claims': [{'id': 'c1', 'fact': 'Fact', 'passage_id': ident}]}, self.rows)
+
+    def test_missing_daily_date_is_a_candidate_rejection(self):
+        from datetime import datetime, timezone
+        from publishing_v2.autopilot.policy import validate_research
+        data = hydrate({'event_date': None, 'event_passage_id': None, 'sensitive': False,
+                        'claims': [{'id': 'c1', 'fact': 'Fact', 'passage_id': self.rows[0]['id']}]}, self.rows)
+        with self.assertRaisesRegex(ValueError, 'missing_event_date'):
+            validate_research(data, self.sources, 'daily', datetime.now(timezone.utc))
+
+    def test_current_report_does_not_assert_underlying_event_date(self):
+        from datetime import datetime, timezone
+        from publishing_v2.autopilot.policy import reporting_time, validate_research
+        sources = [dict(self.sources[0], source_type='news_article')]
+        research = hydrate({'event_date': None, 'event_passage_id': None, 'sensitive': False,
+            'claims': [{'id': 'c1', 'fact': 'Fact', 'passage_id': self.rows[0]['id']}]}, self.rows)
+        result = reporting_time(research, sources,
+            {'url': 'https://example.com', 'published_at': '2026-09-18T01:00:00+00:00'}, 'daily')
+        self.assertEqual(result['timing_basis'], 'report_date')
+        validate_research(result, sources, 'daily', datetime(2026,9,18,tzinfo=timezone.utc))
+        with self.assertRaisesRegex(ValueError, 'event_outside_window'):
+            validate_research(result, sources, 'daily', datetime(2026,9,22,tzinfo=timezone.utc))
+        self.assertIs(reporting_time(research, self.sources,
+            {'published_at': '2026-09-18T01:00:00+00:00'}, 'daily'), research)
