@@ -5,7 +5,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from PIL import Image
 from daily_budget import BudgetBlocked, Ledger
-from publishing_v2.autopilot.agents import Agents
+from publishing_v2.autopilot.agents import Agents, parse_object
 from publishing_v2.autopilot.sources import safe_url, reusable_image
 
 
@@ -16,6 +16,10 @@ class Store:
 
 
 class AgentTests(unittest.TestCase):
+    def test_complete_json_fence_is_normalized_but_mixed_prose_rejected(self):
+        self.assertEqual(parse_object('```json\n{"candidates": []}\n```'), {'candidates': []})
+        with self.assertRaises(ValueError): parse_object('Here is the answer: {"candidates": []}')
+
     def setUp(self):
         self.store = Store()
         self.ledger = Ledger(self.store, now=lambda: datetime(2026, 9, 17, tzinfo=timezone.utc))
