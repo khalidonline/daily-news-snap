@@ -5,6 +5,7 @@ import json
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from PIL import Image
 from daily_budget import GitHubStore, Ledger, day_key
@@ -72,6 +73,11 @@ class Renderer:
                 card['image'] = dict(matches[0])
         os.environ['THEME'] = 'light'; os.environ['FONT_FAMILY'] = 'Almarai'
         import story_bot
+        names = {'en.wikipedia.org': 'ويكيبيديا', 'ar.wikipedia.org': 'ويكيبيديا',
+                 'bbc.co.uk': 'BBC', 'bbc.com': 'BBC', 'alyaum.com': 'اليوم',
+                 'aawsat.com': 'الشرق الأوسط'}
+        hosts = [urlsplit(row['url']).hostname.removeprefix('www.') for row in package.get('sources', [])]
+        source_names = '، '.join(dict.fromkeys(names.get(host, host) for host in hosts))
         paths = []
         for i, card in enumerate(cards):
             image = card['image']
@@ -96,7 +102,8 @@ class Renderer:
             else:
                 story_bot.render_frame(target.with_suffix('.png'), 'ملخص تنفيذي - قصة',
                     f'{i} من {len(cards)-1}', card['title'], 64, sub=card['body'],
-                    photo=source, punch=card['punch'])
+                    photo=source, punch=card['punch'],
+                    footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names else None)
                 with Image.open(target.with_suffix('.png')) as image:
                     image.convert('RGB').save(target, 'JPEG', quality=95)
             with Image.open(target) as rendered:

@@ -26,8 +26,10 @@ def hydrate(data, rows):
         raise ValueError('invalid_claims')
     result = {'event_date': data['event_date'], 'sensitive': data['sensitive'], 'claims': []}
     for claim in claims:
-        if set(claim) != {'id', 'fact', 'passage_id'}:
+        if not isinstance(claim, dict) or set(claim) != {'id', 'fact', 'passage_id'}:
             raise ValueError('unexpected_claim_fields')
+        if not isinstance(claim['passage_id'], str):
+            raise ValueError('invalid_evidence_passage_id')
         row = known.get(claim['passage_id'])
         if row is None:
             raise ValueError('unknown_evidence_passage')
@@ -35,6 +37,8 @@ def hydrate(data, rows):
                                 'source_id': row['source_id'], 'quote': row['quote'],
                                 'passage_id': row['id']})
     if data['event_passage_id'] is not None:
+        if not isinstance(data['event_passage_id'], str):
+            raise ValueError('invalid_event_passage_id')
         row = known.get(data['event_passage_id'])
         if row is None:
             raise ValueError('unknown_event_passage')

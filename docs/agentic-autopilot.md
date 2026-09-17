@@ -6,7 +6,8 @@ Riyadh daily and on deployment of its code. Deployments always run in shadow.
 
 The coordinator selects up to two candidates per lane. Separate requests perform
 research, writing, visual selection and independent review of sources and actual
-rendered cards. The existing templates render one Info plus 2–6 story cards.
+rendered cards. The existing templates render one Info plus 2–6 story cards,
+with source names on the final story frame only.
 Rejected cards get one full rewrite/render/review; then a replacement candidate
 is attempted. At most four drafts per lane. No model has publishing credentials
 or an external mutation tool. Sources and model responses are untrusted data.
@@ -66,6 +67,10 @@ attempt cost and the Actions link; shadow output is explicitly identified.
 - Discovery uses a bounded set of existing news feeds and everyday Saudi local
   seeds, with retrieved articles and encyclopedia context. It does not yet cover
   every event or a paid research supplier. Unsupported dates/facts are rejected.
+  When an underlying event date is unknown, substantive current reporting may
+  supply the attention date from verified feed metadata. This is explicitly
+  marked `report_date`; cards must not claim the underlying event happened today,
+  and the reviewer rejects recycled/evergreen coverage.
 - Automated image sourcing initially accepts only Commons public-domain/CC0
   metadata without stated restrictions; no paid Getty dependency or generated
   documentary imagery. Limited availability can hold a package after recovery.

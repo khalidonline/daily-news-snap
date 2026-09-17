@@ -55,19 +55,20 @@ class RuntimeTests(unittest.TestCase):
             raw = image_path.read_bytes()
             meta = {'download_url': 'https://upload.wikimedia.org/test.png',
                     'license': 'CC0', 'sha256': hashlib.sha256(raw).hexdigest()}
-            package = {'cards': [dict(kind=kind, title='عنوان', body='معلومة', punch='', image=meta.copy())
+            package = {'sources': [{'url': 'https://en.wikipedia.org/wiki/Coffee'}], 'cards': [dict(kind=kind, title='عنوان', body='معلومة', punch='', image=meta.copy())
                                  for kind in ['info', 'story', 'story']]}
             def frame(path, kicker, counter, *args, **kwargs):
-                counters.append(counter); Image.new('RGB', (1080, 1920)).save(path)
+                counters.append(counter); footers.append(kwargs.get('footer')); Image.new('RGB', (1080, 1920)).save(path)
             def info(spec, source, output):
                 brands.append(spec['brand']); Image.new('RGB', (1080, 1920)).save(output)
-            counters, brands = [], []
+            counters, brands, footers = [], [], []
             with patch('publishing_v2.autopilot.runtime.get_bytes', return_value=raw), \
                  patch('publishing_v2.autopilot.runtime.render_card', side_effect=info), \
                  patch.dict('sys.modules', {'story_bot': SimpleNamespace(render_frame=frame)}):
                 result = Renderer(None, None)(package, Path(tmp) / 'render')
             self.assertEqual(len(result), 3)
             self.assertEqual(counters, ['1 من 2', '2 من 2'])
+            self.assertEqual(footers, [None, 'المصادر: ويكيبيديا'])
             self.assertEqual(brands, ['ملخص تنفيذي - معلومة'])
             self.assertEqual(package['cards'][0]['image']['sha256'], meta['sha256'])
 

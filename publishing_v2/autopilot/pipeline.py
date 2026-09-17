@@ -84,6 +84,7 @@ class Pipeline:
                     sources = self.sources.research(candidate)
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
                                                             'lane': lane, 'now': self.now().isoformat()})
+                    research = policy.reporting_time(research, sources, candidate, lane)
                     policy.validate_research(research, sources, lane, self.now())
                     original_sources = sources
                     sources = policy.evidence_snapshot(research, sources)

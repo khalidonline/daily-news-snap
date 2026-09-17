@@ -26,6 +26,26 @@ def expiry(now):
                             time.min, RIYADH).isoformat()
 
 
+def reporting_time(data, sources, candidate, lane):
+    """Fresh verified reporting may trigger a story without dating its history."""
+    if lane != 'daily' or data.get('event_date') is not None:
+        return data
+    article = next((s for s in sources if s.get('source_type') == 'news_article'), None)
+    published = candidate.get('published_at')
+    if not article or not isinstance(published, str):
+        return data
+    stamp = datetime.fromisoformat(published)
+    if stamp.tzinfo is None:
+        raise ValueError('undated_reporting_source')
+    quote = 'Reported at ' + published
+    source = {'id': 'verified-feed-time', 'url': candidate['url'], 'text': quote,
+              'source_type': 'retrieved_feed_metadata'}
+    sources.append(source)
+    return dict(data, event_date=stamp.astimezone(RIYADH).date().isoformat(),
+                event_quote=quote, event_source_id=source['id'], timing_basis='report_date',
+                timing_note='Current reporting is the trigger. Do not claim the underlying event happened today.')
+
+
 def validate_research(data, sources, lane, now):
     by_id = {s['id']: s for s in sources}
     claims = data.get('claims', [])
@@ -39,7 +59,10 @@ def validate_research(data, sources, lane, now):
     if data.get('sensitive') is not False:
         raise ValueError('sensitive_or_uncertain_topic')
     if lane == 'daily':
-        event = datetime.fromisoformat(data['event_date']).date()
+        event_text = data.get('event_date')
+        if not isinstance(event_text, str):
+            raise ValueError('missing_event_date')
+        event = datetime.fromisoformat(event_text).date()
         today = now.astimezone(RIYADH).date()
         if not today - timedelta(days=1) <= event <= today + timedelta(days=1):
             raise ValueError('event_outside_window')

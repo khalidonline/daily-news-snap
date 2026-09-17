@@ -38,7 +38,9 @@ useful facts for an information card and an engaging true story. Each fact must
 be supported by its selected passage ID. Read neighboring passages for context,
 but never infer a fact that the cited passage does not support. Do not transcribe
 quotes: the program retrieves the exact text by ID. Infer actual event date from
-evidence, never assume article publication date is event date. For relative dates,
+evidence; return null when its date is unknown. Never assume article publication
+date is event date. The coordinator can separately establish a verified report date
+as an attention trigger. For relative dates,
 use the article publication date as context only when the event wording supports it.
 Mark sensitive true for disputed allegations, war/military developments, political
 claims, medical/legal/financial advice, deaths, or uncertainty needing human review.
@@ -66,8 +68,11 @@ Never invent IDs or declare image rights yourself.''',
     'reviewer': '''You are the independent final editor. You did not write these
 cards. Inspect EVERY supplied image in order and compare ALL assertions in title,
 body and closing to the ORIGINAL source texts, not just the research summary.
-Check that event_date really follows from the quoted event context, not the date
-of an article. For daily reject stale timing even if a story is interesting.
+When research.timing_basis is report_date, the verified feed timestamp dates the
+report only: verify the original article contains substantive current coverage,
+not an evergreen or recycled article. Reject any card that presents this as the
+underlying event happening today. Otherwise event_date must follow from the quoted
+event context. For daily reject stale timing even if a story is interesting.
 For local, timeless Saudi everyday subjects are acceptable. Check natural Saudi
 wording, coherent progression, broad interest, useful Info card, no repetition,
 and the established light background/Almarai brand. Inspect actual Arabic pixels
@@ -154,4 +159,10 @@ class Agents:
         raw_answer = providers._parse_anthropic(body)
         receipt['response_format'] = 'fenced_json' if raw_answer.strip().startswith('```') else 'plain'
         decision = parse_object(raw_answer)
-        return hydrate(decision, evidence_rows) if role == 'researcher' else decision
+        if role == 'researcher':
+            receipt['research_shape'] = {
+                'event_date': decision.get('event_date') if isinstance(decision.get('event_date'), str) else None,
+                'event_passage_type': type(decision.get('event_passage_id')).__name__,
+                'claim_count': len(decision.get('claims', [])) if isinstance(decision.get('claims'), list) else None}
+            return hydrate(decision, evidence_rows)
+        return decision

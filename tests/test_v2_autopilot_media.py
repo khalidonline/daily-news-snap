@@ -68,4 +68,16 @@ class MediaRecoveryTests(unittest.TestCase):
             search.assert_not_called()
 
 
+
+    def test_advertised_thumbnail_upscale_cannot_hide_small_original(self):
+        page = {'pageid': 1, 'title': 'File:Old port.jpg', 'imageinfo': [{
+            'mime': 'image/jpeg', 'url': 'https://upload.wikimedia.org/a.jpg',
+            'thumburl': 'https://upload.wikimedia.org/a.jpg',
+            'descriptionurl': 'https://commons.wikimedia.org/wiki/File:Old_port.jpg',
+            'width': 895, 'height': 544, 'thumbwidth': 1600, 'thumbheight': 973}]}
+        with patch('publishing_v2.public_images.get_json', return_value={'query': {'pages': [page]}}):
+            row = public_images.search_commons('Mokha port')[0]
+        self.assertEqual((row['width'], row['height']), (895, 544))
+
+
 if __name__ == '__main__': unittest.main()
