@@ -144,7 +144,7 @@ class Sources:
                 subjects.append(topic)
                 break
         words = query.split()
-        if len(words) > 3:
+        if len(words) > 2:
             subjects.extend([' '.join(words[:3]), ' '.join(words[:2])])
         subjects = list(dict.fromkeys(subjects))[:3]
         searches = [search for subject in subjects for search in

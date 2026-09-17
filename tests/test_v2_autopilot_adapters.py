@@ -43,6 +43,17 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(result, {'candidates': []})
         self.assertTrue(all(e['status'] == 'settled' for e in self.store.row['entries'].values()))
 
+    def test_incomplete_response_is_accounted_and_diagnosable(self):
+        def transport(method, url, headers, payload):
+            self.assertGreaterEqual(payload['max_tokens'], 6000)
+            return {'status_code': 200, 'body': {'id': 'truncated', 'stop_reason': 'max_tokens',
+                'usage': {'input_tokens': 100, 'output_tokens': 2000},
+                'content': [{'type': 'text', 'text': '{'}]}}
+        agent = self.agent(transport)
+        with self.assertRaises(RuntimeError): agent.run('editor', {'candidates': []})
+        self.assertEqual(agent.receipts[0]['stop_reason'], 'max_tokens')
+        self.assertTrue(all(e['status'] == 'settled' for e in self.store.row['entries'].values()))
+
     def test_ambiguous_provider_error_keeps_reservation(self):
         def transport(*args): raise TimeoutError()
         with self.assertRaises(RuntimeError): self.agent(transport).run('writer', {})
