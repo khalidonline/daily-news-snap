@@ -31,6 +31,10 @@ class Renderer:
                     rows = self.sources.images(card['image_query'])
                 except Exception:
                     rows = []
+                if not rows and package.get('candidate', {}).get('title'):
+                    # Relevant subject-level photo/portrait/logo recovery; the
+                    # independent reviewer must still approve its actual use.
+                    rows = self.sources.images(package['candidate']['title'][:130])
                 choices.append(rows)
             if any(not row for row in choices):
                 raise ValueError('relevant_reusable_image_unavailable')

@@ -160,6 +160,17 @@ class PipelineTests(unittest.TestCase):
         self.agent.run = run
         self.assertEqual(self.pipeline().run('local', 'shadow')['status'], 'shadow_passed')
 
+    def test_research_rejection_records_specific_validation_reason(self):
+        original = self.agent.run
+        def run(role, data, images=()):
+            value = original(role, data, images)
+            if role == 'researcher': value['claims'] = []
+            return value
+        self.agent.run = run
+        result = self.pipeline().run('local', 'shadow')
+        events = [e for e in result['audit'] if e['event'] == 'candidate_rejected']
+        self.assertEqual(events[0]['reason'], 'invalid_claims')
+
 
 class PolicyTests(unittest.TestCase):
     def test_writer_cannot_supply_image_rights_or_extra_authority_fields(self):

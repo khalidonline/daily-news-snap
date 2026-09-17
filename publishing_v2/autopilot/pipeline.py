@@ -20,7 +20,10 @@ class Pipeline:
 
     def save(self, state, event, **values):
         state.update(values)
-        state.setdefault('audit', []).append({'event': event, 'at': self.now().isoformat()})
+        entry = {'event': event, 'at': self.now().isoformat()}
+        for key in ('reason', 'feedback'):
+            if key in values: entry[key] = values[key]
+        state.setdefault('audit', []).append(entry)
         receipts = state.setdefault('agent_receipts', [])
         for receipt in getattr(self.agent, 'receipts', []):
             if receipt not in receipts:
@@ -95,6 +98,7 @@ class Pipeline:
                             draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
                                                               'feedback': feedback})
                             policy.validate_draft(draft, research)
+                            self.save(state, 'drafted', draft=draft)
                             package = dict(draft, sources=sources, research=research, lane=lane,
                                            candidate=candidate, expires_at=expires, as_of=self.now().isoformat())
                             folder = self.output / choice['id'] / str(attempt)
@@ -125,7 +129,7 @@ class Pipeline:
                 except BudgetBlocked:
                     raise
                 except (ValueError, RuntimeError, OSError) as error:
-                    self.save(state, 'candidate_rejected', reason=type(error).__name__)
+                    self.save(state, 'candidate_rejected', reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__)
             self.save(state, 'exhausted_candidates', status='held', reason='no_package_passed_review')
         except PersistenceError:
             raise
