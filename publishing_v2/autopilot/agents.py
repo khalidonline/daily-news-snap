@@ -72,6 +72,16 @@ All check values must be strict booleans. No score or majority vote can override
 }
 
 
+def parse_object(answer):
+    lines = answer.strip().splitlines()
+    if len(lines) >= 3 and lines[0] in {'```json', '```'} and lines[-1] == '```':
+        answer = '\n'.join(lines[1:-1])
+    result = json.loads(answer)
+    if not isinstance(result, dict):
+        raise ValueError('agent_json_object_required')
+    return result
+
+
 class Agents:
     def __init__(self, *, env, ledger, transport=None):
         self.env, self.ledger, self.transport = env, ledger, transport
@@ -119,7 +129,6 @@ class Agents:
         self.receipts.append(receipt)
         if not receipt['response_id']:
             raise ValueError('missing_agent_receipt')
-        answer = json.loads(providers._parse_anthropic(body))
-        if not isinstance(answer, dict):
-            raise ValueError('agent_json_object_required')
-        return answer
+        raw_answer = providers._parse_anthropic(body)
+        receipt['response_format'] = 'fenced_json' if raw_answer.strip().startswith('```') else 'plain'
+        return parse_object(raw_answer)
