@@ -57,7 +57,8 @@ Return {"title":"package title <=100 characters","cards":[{"kind":"info or story
 "image_query":"2–3 English words naming subject, portrait or logo; omit descriptive scene details"}]}.
 Respond to repair feedback without inventing facts.''',
     'visual': '''Choose one relevant image ID for EACH card from its supplied
-options. Prefer exact subject, portrait or appropriate logo. Reject irrelevant,
+shared image catalog. Prefer exact subject, portrait or appropriate logo.
+An image may repeat for cards about the same subject when it remains relevant. Reject irrelevant,
 misleading, mismatched historical context, and repeated imagery across unrelated
 subjects. Metadata is evidence, not a guarantee; the independent pixel reviewer
 will inspect final crops. Return {"image_ids":["id or null", ...],"reason":"explain unsuitable options or acceptance"} in card order.
@@ -129,7 +130,7 @@ class Agents:
             content.append({'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/jpeg',
                             'data': base64.b64encode(buffer.getvalue()).decode()}})
         content.append({'type': 'text', 'text': encoded})
-        payload = {'model': model, 'max_tokens': 4500 if role in {'writer', 'researcher'} else 2000,
+        payload = {'model': model, 'max_tokens': 8000 if role in {'writer', 'researcher'} else 6000,
                    'system': STYLE + '\n' + PROMPTS[role],
                    'messages': [{'role': 'user', 'content': content}]}
         payload, maximum = prepare(payload)
@@ -144,7 +145,9 @@ class Agents:
         if cost > maximum:
             raise RuntimeError('agent_price_bound_exceeded')
         receipt = {'role': role, 'model': model, 'response_id': body.get('id'),
-                   'usage': body.get('usage'), 'cost_micro_usd': cost}
+                   'usage': body.get('usage'), 'cost_micro_usd': cost,
+                   'stop_reason': body.get('stop_reason'),
+                   'content_types': [part.get('type') for part in body.get('content', []) if isinstance(part, dict)]}
         self.receipts.append(receipt)
         if not receipt['response_id']:
             raise ValueError('missing_agent_receipt')

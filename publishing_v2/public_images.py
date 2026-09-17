@@ -91,7 +91,7 @@ def search_commons(query, limit=5, *, offset=0):
         raise ValueError('offset must be 0-20')
     params = {'action': 'query', 'format': 'json', 'formatversion': 2, 'generator': 'search',
               'gsrsearch': query, 'gsrnamespace': 6, 'gsrlimit': limit, 'gsroffset': offset, 'prop': 'imageinfo',
-              'iiprop': 'url|mime|extmetadata', 'iiurlwidth': 1600}
+              'iiprop': 'url|mime|size|extmetadata', 'iiurlwidth': 1600}
     response = get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params))
     if not isinstance(response, dict) or 'error' in response:
         raise ImageSourceError('malformed_response')
@@ -111,7 +111,8 @@ def search_commons(query, limit=5, *, offset=0):
                 'source_url': info['descriptionurl'], 'credit': field('Artist'), 'credit_line': field('Credit'),
                 'license': field('LicenseShortName'), 'license_url': field('LicenseUrl'),
                 'attribution_required': field('AttributionRequired'), 'restrictions': field('Restrictions'),
-                'date_created': field('DateTimeOriginal'), 'licensing_verified': False})
+                'date_created': field('DateTimeOriginal'), 'width': info.get('thumbwidth', info.get('width')),
+                'height': info.get('thumbheight', info.get('height')), 'licensing_verified': False})
         except (KeyError, IndexError, TypeError, ImageSourceError):
             continue
     return results

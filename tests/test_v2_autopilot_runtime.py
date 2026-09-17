@@ -23,6 +23,31 @@ class RuntimeTests(unittest.TestCase):
         self.assertTrue(rollout_ready({'daily': entry, 'local': entry}, 'abc', now))
         self.assertFalse(rollout_ready({'daily': entry, 'local': entry}, 'changed', now))
 
+    def test_subject_alternatives_are_available_even_when_specific_results_exist(self):
+        class Sources:
+            def images(self, query):
+                return ([{'asset_id': 'wrong', 'title': 'Coconut'}] if query == 'dates fruit varieties'
+                        else [{'asset_id': 'right', 'title': 'Date fruit'}, {'asset_id': 'wrong'}])
+        rows = Renderer(None, Sources()).image_options({'image_query': 'dates fruit varieties'},
+                {'candidate': {'title': 'Date palm', 'editorial': {'research_query': 'Date fruit'}}})
+        self.assertEqual([r['asset_id'] for r in rows], ['wrong', 'right'])
+
+    def test_cards_share_relevant_assets_found_by_other_card_queries(self):
+        class Sources:
+            def images(self, query):
+                return [{'asset_id': query}]
+        catalog = Renderer(None, Sources()).image_catalog({'cards': [
+            {'image_query': 'date palm'}, {'image_query': 'dried dates'}]})
+        self.assertEqual([r['asset_id'] for r in catalog], ['date palm', 'dried dates'])
+
+    def test_known_low_resolution_images_are_excluded_before_selection(self):
+        class Sources:
+            def images(self, query):
+                return [{'asset_id': 'tiny', 'width': 400, 'height': 400},
+                        {'asset_id': 'large', 'width': 1600, 'height': 900}]
+        rows = Renderer(None, Sources()).image_options({'image_query': 'Mocha port'}, {})
+        self.assertEqual([r['asset_id'] for r in rows], ['large'])
+
     def test_render_uses_flexible_numbering_and_preserves_image_hashes(self):
         with tempfile.TemporaryDirectory() as tmp:
             image_path = Path(tmp) / 'source.png'

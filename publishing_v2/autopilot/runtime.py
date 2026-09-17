@@ -21,25 +21,46 @@ class Renderer:
     def __init__(self, agent, sources):
         self.agent, self.sources = agent, sources
 
+    def image_options(self, card, package):
+        candidate = package.get('candidate', {})
+        subject = candidate.get('editorial', {}).get('research_query') or candidate.get('title')
+        queries = list(dict.fromkeys([card['image_query']] + ([subject[:130]] if subject else [])))
+        rows, seen = [], set()
+        for query in queries:
+            try:
+                for row in self.sources.images(query):
+                    if (row.get('width') and row.get('height')
+                            and (min(row['width'], row['height']) < 600
+                                 or max(row['width'], row['height']) < 1000)):
+                        continue
+                    if row['asset_id'] not in seen:
+                        seen.add(row['asset_id']); rows.append(row)
+            except Exception:
+                continue
+        return rows[:10]
+
+    def image_catalog(self, package):
+        catalog = {}
+        for card in package['cards']:
+            for row in self.image_options(card, package):
+                catalog.setdefault(row['asset_id'], row)
+        return list(catalog.values())[:35]
+
     def __call__(self, package, output):
         output = Path(output); output.mkdir(parents=True, exist_ok=True)
         cards = package['cards']
         if not all('image' in c for c in cards):
-            choices = []
-            for card in cards:
-                try:
-                    rows = self.sources.images(card['image_query'])
-                except Exception:
-                    rows = []
-                if not rows and package.get('candidate', {}).get('title'):
-                    # Relevant subject-level photo/portrait/logo recovery; the
-                    # independent reviewer must still approve its actual use.
-                    rows = self.sources.images(package['candidate'].get('editorial', {}).get(
-                        'research_query', package['candidate']['title'])[:130])
-                choices.append(rows)
-            if any(not row for row in choices):
+            catalog = self.image_catalog(package)
+            if not catalog:
                 raise ValueError('relevant_reusable_image_unavailable')
-            selected = self.agent.run('visual', {'cards': cards, 'options': choices})
+            # Share the subject's catalog across cards: a date-fruit photo
+            # retrieved for one card can correctly illustrate another card.
+            choices = [catalog for card in cards]
+            options = [{'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
+                        'description': row.get('description', '')[:900],
+                        'date_created': row.get('date_created', '')[:100]}
+                       for row in catalog]
+            selected = self.agent.run('visual', {'cards': cards, 'options': options})
             ids = selected.get('image_ids', [])
             if len(ids) != len(cards):
                 raise ValueError('incomplete_visual_selection')
@@ -59,8 +80,9 @@ class Renderer:
             try:
                 raw = get_bytes(image['download_url'])
                 inspect_image(raw)
-            except Exception:
-                raise ValueError('image_download_or_validation_failed') from None
+            except Exception as error:
+                raise ValueError('image_download_or_validation_failed: ' + str(image.get('asset_id'))
+                                 + ': ' + str(error)[:150]) from None
             sha = hashlib.sha256(raw).hexdigest()
             if image.get('sha256') and sha != image['sha256']:
                 raise ValueError('source_image_changed')
