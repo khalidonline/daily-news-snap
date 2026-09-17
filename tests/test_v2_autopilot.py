@@ -1,0 +1,195 @@
+import copy
+import hashlib
+import tempfile
+import unittest
+from datetime import datetime, timezone
+from pathlib import Path
+
+from publishing_v2.autopilot import policy
+from publishing_v2.autopilot.pipeline import Pipeline
+
+
+NOW = datetime(2026, 9, 17, 9, tzinfo=timezone.utc)
+
+
+class MemoryStore:
+    def __init__(self): self.data = {}
+    def read(self): return copy.deepcopy(self.data)
+    def save(self, data): self.data = copy.deepcopy(data)
+
+
+def evidence():
+    return [{'id': 's1', 'url': 'https://www.bbc.com/news/a',
+             'text': 'The event began on 17 September 2026. A useful historical fact.'}]
+
+
+def research():
+    return {'event_date': '2026-09-17', 'event_quote': '17 September 2026',
+            'event_source_id': 's1', 'sensitive': False,
+            'claims': [{'id': 'c1', 'source_id': 's1', 'quote': 'A useful historical fact.',
+                        'fact': 'حقيقة مفيدة'}]}
+
+
+def draft():
+    return {'title': 'قصة قريبة من الناس', 'cards': [
+        {'kind': kind, 'title': 'حكاية المكان', 'body': 'معلومة واضحة وقريبة من الناس',
+         'punch': '', 'claim_ids': ['c1'], 'image_query': 'Jeddah'}
+        for kind in ['info', 'story', 'story']]}
+
+
+class FakeAgent:
+    def __init__(self, reject=0): self.reject, self.calls = reject, []
+    def run(self, role, data, images=()):
+        self.calls.append(role)
+        if role == 'editor':
+            return {'candidates': [{'id': 'a', 'why_saudi': 'قريب من الناس',
+                                    'angle': 'قصة', 'why_now': 'اليوم', 'share_reason': 'معلومة جديدة',
+                                    'research_query': 'Jeddah'},
+                                   {'id': 'b', 'why_saudi': 'قريب من الناس',
+                                    'angle': 'قصة', 'why_now': 'اليوم', 'share_reason': 'معلومة جديدة',
+                                    'research_query': 'Jeddah'}]}
+        if role == 'researcher': return research()
+        if role == 'writer': return draft()
+        if role == 'reviewer':
+            passed = self.reject <= 0
+            self.reject -= 1
+            return {'checks': {key: passed for key in policy.REVIEW_CHECKS},
+                    'reason': 'Checked against evidence and images',
+                    'card_checks': [{'readable': passed, 'relevant': passed} for _ in images]}
+        raise AssertionError(role)
+
+
+class FakeSources:
+    def discover(self, lane, now): return [{'id': x, 'title': x} for x in ['a', 'b']]
+    def research(self, candidate): return evidence()
+
+
+class PipelineTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.store, self.agent, self.sent = MemoryStore(), FakeAgent(), []
+        self.renders = 0
+
+    def render(self, package, output):
+        self.renders += 1
+        output.mkdir(parents=True, exist_ok=True)
+        paths = []
+        for i, card in enumerate(package['cards']):
+            path = output / f'{i}.jpg'
+            path.write_bytes(f'pixels {i}'.encode())
+            paths.append(path)
+        return paths
+
+    def publish(self, package, paths):
+        self.sent.append(package)
+        return {'status': 'POSTED', 'post_ids': ['one', 'two', 'three']}
+
+    def pipeline(self, **kwargs):
+        return Pipeline(agent=self.agent, sources=FakeSources(), render=self.render,
+                        store=self.store, publish=kwargs.get('publish', self.publish),
+                        output=Path(self.temp.name), now=lambda: NOW)
+
+    def test_shadow_finishes_with_independent_review_without_publishing(self):
+        result = self.pipeline().run('daily', 'shadow')
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertEqual(self.sent, [])
+        self.assertIn('reviewer', self.agent.calls)
+        self.assertEqual(len(result['approval']['media_sha256']), 3)
+
+    def test_rejected_package_is_repaired_and_reviewed_again(self):
+        self.agent.reject = 1
+        result = self.pipeline().run('local', 'shadow')
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertEqual(self.agent.calls.count('reviewer'), 2)
+        self.assertEqual(self.renders, 2)
+
+    def test_rejections_are_bounded_and_never_publish(self):
+        self.agent.reject = 99
+        result = self.pipeline().run('daily', 'shadow')
+        self.assertEqual(result['status'], 'held')
+        self.assertEqual(self.agent.calls.count('reviewer'), 4)
+        self.assertEqual(self.sent, [])
+
+    def test_slot_rerun_does_not_pay_for_generation_again(self):
+        first = self.pipeline().run('daily', 'shadow')
+        count = len(self.agent.calls)
+        self.assertEqual(self.pipeline().run('daily', 'shadow'), first)
+        self.assertEqual(len(self.agent.calls), count)
+
+    def test_live_requires_verified_rollout(self):
+        with self.assertRaisesRegex(ValueError, 'rollout'):
+            self.pipeline().run('daily', 'live')
+        self.assertEqual(self.agent.calls, [])
+
+    def test_publish_failure_never_regenerates_slot(self):
+        def fail(package, paths): raise RuntimeError('ambiguous create')
+        pipe = self.pipeline(publish=fail)
+        result = pipe.run('daily', 'live', rollout_verified=True)
+        self.assertEqual(result['status'], 'delivery_pending')
+        count = len(self.agent.calls)
+        result = pipe.run('daily', 'live', rollout_verified=True)
+        self.assertEqual(result['status'], 'delivery_pending')
+        self.assertEqual(len(self.agent.calls), count)
+
+    def test_journal_failure_after_publish_never_reenters_generation(self):
+        original = self.store.save
+        def flaky(state):
+            if state['audit'][-1]['event'] in {'delivery_verified', 'delivery_unresolved'}:
+                raise OSError('journal unavailable')
+            original(state)
+        self.store.save = flaky
+        with self.assertRaises(Exception):
+            self.pipeline().run('daily', 'live', rollout_verified=True)
+        self.assertEqual(len(self.sent), 1)
+        self.assertEqual(self.agent.calls.count('writer'), 1)
+
+    def test_receipts_are_durable_before_publication(self):
+        self.agent.receipts = [{'role': 'reviewer', 'response_id': 'independent-response'}]
+        def publish(package, paths):
+            self.assertEqual(self.store.read()['agent_receipts'], self.agent.receipts)
+            return {'status': 'POSTED', 'post_ids': ['a', 'b', 'c']}
+        self.assertEqual(self.pipeline(publish=publish).run('daily', 'live', rollout_verified=True)['status'], 'published')
+
+    def test_reviewer_gets_full_source_context_not_only_selected_quotes(self):
+        original = self.agent.run
+        def run(role, data, images=()):
+            if role == 'reviewer':
+                self.assertEqual(data['original_sources'], evidence())
+            return original(role, data, images)
+        self.agent.run = run
+        self.assertEqual(self.pipeline().run('local', 'shadow')['status'], 'shadow_passed')
+
+
+class PolicyTests(unittest.TestCase):
+    def test_writer_cannot_supply_image_rights_or_extra_authority_fields(self):
+        data = draft(); data['cards'][0]['image'] = {'license': 'CC0', 'download_url': 'invented'}
+        with self.assertRaises(ValueError): policy.validate_draft(data, research())
+    def test_fabricated_quote_is_rejected(self):
+        data = research(); data['claims'][0]['quote'] = 'Invented supporting evidence'
+        with self.assertRaises(ValueError): policy.validate_research(data, evidence(), 'daily', NOW)
+
+    def test_old_event_cannot_be_refreshed_by_current_article(self):
+        data = research(); data['event_date'] = '2026-09-14'
+        with self.assertRaises(ValueError): policy.validate_research(data, evidence(), 'daily', NOW)
+
+    def test_string_true_and_missing_card_reviews_do_not_approve(self):
+        checks = {key: True for key in policy.REVIEW_CHECKS}
+        checks['factual'] = 'true'
+        with self.assertRaises(ValueError): policy.validate_review({'checks': checks}, 3)
+
+    def test_writer_cannot_reference_unknown_claim(self):
+        data = draft(); data['cards'][0]['claim_ids'] = ['invented']
+        with self.assertRaises(ValueError): policy.validate_draft(data, research())
+
+    def test_approval_detects_changed_image_or_package(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'a.jpg'; path.write_bytes(b'original')
+            package = {'title': 'approved', 'expires_at': '2026-09-18T21:00:00+00:00'}
+            approval = policy.seal(package, [path])
+            policy.verify_seal(package, [path], approval, NOW)
+            path.write_bytes(b'changed')
+            with self.assertRaises(ValueError): policy.verify_seal(package, [path], approval, NOW)
+
+
+if __name__ == '__main__': unittest.main()

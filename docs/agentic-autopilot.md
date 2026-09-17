@@ -1,0 +1,75 @@
+# Agentic daily and local packages
+
+Run `python -m publishing_v2.autopilot.runtime --mode shadow --lane both` in the
+configured main-branch GitHub Actions environment. The workflow runs at 08:00
+Riyadh daily and on deployment of its code. Deployments always run in shadow.
+
+The coordinator selects up to two candidates per lane. Separate requests perform
+research, writing, visual selection and independent review of sources and actual
+rendered cards. The existing templates render one Info plus 2–6 story cards.
+Rejected cards get one full rewrite/render/review; then a replacement candidate
+is attempted. At most four drafts per lane. No model has publishing credentials
+or an external mutation tool. Sources and model responses are untrusted data.
+
+## Runtime requirements
+
+Existing secrets: `ANTHROPIC_API_KEY`, `BUNDLE_API_KEY`, `BUNDLE_TEAM_ID`,
+`TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID`. GitHub Actions receives contents-write
+authority for its durable journals. The existing `cost-ledger` branch must exist.
+`DAILY_BUDGET_GITHUB_TOKEN` is optional when the workflow token can write it.
+Every paid call uses `daily_budget.Ledger`, including visual selection and review.
+Failed or ambiguous calls keep their conservative reservations. The daily ledger,
+not the per-run report, is authoritative for total spend/reservations.
+
+Default workers use the existing priced Haiku model; the final reviewer uses the
+existing priced Sonnet model. `AUTOPILOT_<ROLE>_MODEL` can select another model
+already in `daily_budget.PRICES`. New providers require a reviewed price/usage
+adapter. This initial wiring does not make a claim that these models are optimal.
+
+## Rollout
+
+Shadow mode does not publish. A real successful shadow package for **each** lane
+records engine fingerprint, review seal, slot, and timestamp. Live mode requires
+both records, with the same implementation fingerprint and age under three days.
+Manual dispatch with `mode=live` uses this gate. Missing or stale validation
+automatically runs both lanes in shadow; it never bypasses the gate. Successful
+live runs refresh validation for their lane, so routine operation stays autonomous.
+For unattended live schedules,
+set repository variable `AUTOPILOT_MODE=live` after real shadow validation.
+The initial deployment leaves that variable unset. A failed shadow never silently
+enables publishing. Existing manually approved package publishing is preserved.
+
+On live runs, the approved package and review hashes are saved before calling the
+existing Bundle publisher. All public creates use its saved intent and receipts.
+Reruns reconcile saved post IDs and never regenerate a publishing slot. Unknown
+creates require provider reconciliation; blind retries risk duplicates and are
+deliberately prohibited. An expired package cannot start another public create.
+
+## State and visibility
+
+`snapchat-api-state/api-receipts/autopilot-*` contains slot decisions and receipts;
+the existing publisher's hash identities deduplicate across manual and agentic
+paths. GitHub compare-and-swap saves and a shared workflow concurrency group
+serialize operations. Do not delete state to retry a failed slot. Interrupted
+generation is held to prevent unbounded spend; publishing recovery retains the
+exact approved package. This repo is public: journals contain editorial records,
+never API credentials or private audience information.
+
+Actions artifacts contain source metadata, agent receipts, finished cards, review
+decisions and per-lane JSON. The operational Telegram report provides status,
+attempt cost and the Actions link; shadow output is explicitly identified.
+
+## Initial limits
+
+- Discovery uses a bounded set of existing news feeds and everyday Saudi local
+  seeds, with retrieved articles and encyclopedia context. It does not yet cover
+  every event or a paid research supplier. Unsupported dates/facts are rejected.
+- Automated image sourcing initially accepts only Commons public-domain/CC0
+  metadata without stated restrictions; no paid Getty dependency or generated
+  documentary imagery. Limited availability can hold a package after recovery.
+- Audience analytics are not connected. Delivery receipts prove provider-reported
+  posting, not audience engagement; no learning or growth claims are made.
+- The $3 ceiling can stop a run before both packages finish. Actual provider
+  quality and costs must be measured in shadow before declaring daily reliability.
+
+Tests: `python -m unittest discover -s tests -p 'test_v2_*.py' -q`.

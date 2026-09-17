@@ -1,0 +1,152 @@
+"""Coordinator: bounded work, durable handoffs, no agent publishing tools."""
+import copy
+from datetime import datetime
+from pathlib import Path
+
+from daily_budget import BudgetBlocked
+from . import policy
+
+
+class PersistenceError(Exception):
+    """An uncertain journal must stop work, never trigger generation repair."""
+
+
+class Pipeline:
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test'):
+        self.agent, self.sources, self.render = agent, sources, render
+        self.store, self.publish = store, publish
+        self.output, self.now = Path(output), now
+        self.engine = engine
+
+    def save(self, state, event, **values):
+        state.update(values)
+        state.setdefault('audit', []).append({'event': event, 'at': self.now().isoformat()})
+        receipts = state.setdefault('agent_receipts', [])
+        for receipt in getattr(self.agent, 'receipts', []):
+            if receipt not in receipts:
+                receipts.append(copy.deepcopy(receipt))
+        try:
+            self.store.save(state)
+        except Exception:
+            raise PersistenceError('journal_write_unconfirmed') from None
+
+    def run(self, lane, mode, *, rollout_verified=False):
+        state = self.prepare(lane, mode, rollout_verified=rollout_verified)
+        # Delivery is deliberately outside ALL generation-repair handlers.
+        if mode == 'live' and state['status'] in {'approved', 'publishing', 'delivery_pending'}:
+            return self.deliver(state)
+        return state
+
+    def prepare(self, lane, mode, *, rollout_verified=False):
+        if lane not in {'daily', 'local'} or mode not in {'shadow', 'live'}:
+            raise ValueError('invalid_lane_or_mode')
+        if mode == 'live' and not rollout_verified:
+            raise ValueError('live_rollout_not_verified')
+        state = self.store.read()
+        if state:
+            if state.get('engine') != self.engine:
+                raise ValueError('slot_engine_changed')
+            if state.get('lane') != lane or state.get('mode') != mode:
+                raise ValueError('slot_identity_changed')
+            if state['status'] in {'shadow_passed', 'published', 'held'}:
+                return state
+            if state['status'] in {'approved', 'publishing', 'delivery_pending'}:
+                return state
+            # A crashed generation attempt cannot start an unlimited new paid run.
+            self.save(state, 'interrupted_generation', status='held', reason='generation_interrupted')
+            return state
+        state = {'version': 1, 'engine': self.engine, 'lane': lane, 'mode': mode, 'status': 'working',
+                 'started_at': self.now().isoformat(), 'expires_at': policy.expiry(self.now()), 'audit': []}
+        self.save(state, 'started')
+        try:
+            candidates = self.sources.discover(lane, self.now())
+            if not candidates:
+                raise ValueError('no_current_candidates')
+            selected = self.agent.run('editor', {'lane': lane, 'now': self.now().isoformat(),
+                                                'candidates': candidates})
+            ids = {c['id']: c for c in candidates}
+            ranked = selected.get('candidates', [])
+            if not 1 <= len(ranked) <= 2:
+                raise ValueError('invalid_selection')
+            used = set()
+            for choice in ranked:
+                if choice.get('id') not in ids or choice['id'] in used:
+                    raise ValueError('unknown_or_duplicate_candidate')
+                used.add(choice['id'])
+                for key in ('why_saudi', 'angle', 'why_now', 'share_reason', 'research_query'):
+                    policy.text(choice.get(key), 500)
+                candidate = dict(ids[choice['id']], editorial=choice)
+                self.save(state, 'selected', candidate=candidate)
+                try:
+                    sources = self.sources.research(candidate)
+                    research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
+                                                            'lane': lane, 'now': self.now().isoformat()})
+                    policy.validate_research(research, sources, lane, self.now())
+                    original_sources = sources
+                    sources = policy.evidence_snapshot(research, sources)
+                    expires = state['expires_at']
+                    if lane == 'daily':
+                        activation = datetime.fromisoformat(research['event_date']).replace(tzinfo=policy.RIYADH)
+                        expires = min(expires, policy.expiry(activation))
+                    self.save(state, 'researched', sources=sources, research=research)
+                    feedback = ''
+                    for attempt in range(2):
+                        try:
+                            draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
+                                                              'feedback': feedback})
+                            policy.validate_draft(draft, research)
+                            package = dict(draft, sources=sources, research=research, lane=lane,
+                                           candidate=candidate, expires_at=expires, as_of=self.now().isoformat())
+                            folder = self.output / choice['id'] / str(attempt)
+                            paths = self.render(package, folder)
+                            if len(paths) != len(package['cards']):
+                                raise ValueError('missing_rendered_cards')
+                            snapshot = policy.seal(package, paths)
+                            # Fresh request: no writer conversation or self-review is reused.
+                            review_input = dict(copy.deepcopy(package), original_sources=original_sources)
+                            review = self.agent.run('reviewer', review_input, images=paths)
+                            review['input_sha256'] = policy.digest(review_input)
+                            policy.validate_review(review, len(paths))
+                            policy.verify_seal(package, paths, snapshot, self.now())
+                            self.save(state, 'review_passed', status='approved', package=package,
+                                      paths=[str(p) for p in paths], approval=snapshot, review=review)
+                            if mode == 'shadow':
+                                self.save(state, 'shadow_complete', status='shadow_passed')
+                                return state
+                            return state
+                        except BudgetBlocked:
+                            raise
+                        except (ValueError, RuntimeError, OSError) as error:
+                            feedback = str(error) if isinstance(error, ValueError) else type(error).__name__
+                            # Reviewer reasoning is useful repair feedback, not new instructions.
+                            if 'review' in locals() and isinstance(review, dict):
+                                feedback += ': ' + str(review.get('reason', ''))[:2000]
+                            self.save(state, 'repair_required', feedback=feedback)
+                except BudgetBlocked:
+                    raise
+                except (ValueError, RuntimeError, OSError) as error:
+                    self.save(state, 'candidate_rejected', reason=type(error).__name__)
+            self.save(state, 'exhausted_candidates', status='held', reason='no_package_passed_review')
+        except PersistenceError:
+            raise
+        except Exception as error:
+            self.save(state, 'stopped', status='held', reason=type(error).__name__)
+        return state
+
+    def deliver(self, state):
+        package = state['package']
+        try:
+            paths = [Path(p) for p in state['paths']]
+            if not all(p.is_file() for p in paths):
+                # Rehydrate only the sealed package, never select/write a new one.
+                paths = self.render(package, self.output / 'resume')
+            policy.validate_review(state['review'], len(paths))
+            policy.verify_seal(package, paths, state['approval'], self.now())
+            self.save(state, 'publishing', status='publishing')
+            receipt = self.publish(package, paths)
+            if receipt.get('status') != 'POSTED' or len(receipt.get('post_ids', [])) != len(paths):
+                raise RuntimeError('delivery_not_confirmed')
+            self.save(state, 'delivery_verified', status='published', receipt=receipt)
+        except Exception as error:
+            self.save(state, 'delivery_unresolved', status='delivery_pending', reason=type(error).__name__)
+        return state
