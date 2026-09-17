@@ -81,6 +81,9 @@ def reusable_image(row):
 
 
 class Sources:
+    def __init__(self):
+        self.image_cache = {}
+
     def discover(self, lane, now):
         if lane == 'local':
             start = now.date().toordinal() % len(LOCAL_TOPICS)
@@ -126,4 +129,21 @@ class Sources:
         return rows
 
     def images(self, query):
-        return [row for row in search_commons(query, limit=5) if reusable_image(row)]
+        query = ' '.join(str(query).split())[:130]
+        if query in self.image_cache:
+            return self.image_cache[query]
+        # Official Commons structured-data search for CC0; still verify metadata.
+        # https://commons.wikimedia.org/wiki/Help:Searching
+        searches = [query, query + ' haswbstatement:P275=Q6938433']
+        errors = []
+        for search in searches:
+            try:
+                rows = [r for r in search_commons(search, limit=5) if reusable_image(r)]
+                if rows:
+                    self.image_cache[query] = rows
+                    return rows
+            except Exception as error:
+                errors.append(type(error).__name__)
+        self.image_cache[query] = []
+        print(json.dumps({'stage': 'image_search', 'query': query, 'usable': 0, 'errors': errors}), flush=True)
+        return []

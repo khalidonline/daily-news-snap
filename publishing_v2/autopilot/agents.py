@@ -24,6 +24,10 @@ PROMPTS = {
     'editor': '''Select up to TWO ranked candidates by ID from supplied candidates.
 No fixed category rotation or category preference. Daily requires a verified
 today/tomorrow attention moment; local requires everyday Saudi relevance.
+Select routine consumer, culture, travel, sport or everyday life subjects that
+ordinary Saudis care about. Reject political commentary, leaders' warnings,
+war/military developments, disputed claims and technical AI/scientific risk
+debates. 'Relevant to Vision 2030' alone does not establish audience interest.
 Return {"candidates":[{"id":"existing id","why_saudi":"...","why_now":"...",
 "angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search"}]}.
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',

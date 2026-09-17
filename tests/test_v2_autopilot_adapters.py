@@ -2,11 +2,12 @@ import copy
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 from datetime import datetime, timezone
 from PIL import Image
 from daily_budget import BudgetBlocked, Ledger
 from publishing_v2.autopilot.agents import Agents, parse_object
-from publishing_v2.autopilot.sources import safe_url, reusable_image
+from publishing_v2.autopilot.sources import safe_url, reusable_image, Sources
 
 
 class Store:
@@ -65,6 +66,14 @@ class AgentTests(unittest.TestCase):
 
 
 class SourceTests(unittest.TestCase):
+    def test_image_recovery_searches_cc0_and_caches_success(self):
+        good = {'asset_id': 'one', 'license': 'CC0'}
+        with patch('publishing_v2.autopilot.sources.search_commons', side_effect=[
+                [{'license': 'CC BY-SA 4.0'}], [good]]):
+            source = Sources()
+            self.assertEqual(source.images('date palm'), [good])
+            self.assertEqual(source.images('date palm'), [good])
+
     def test_retrieval_rejects_credentials_private_and_unlisted_hosts(self):
         for url in ['http://www.bbc.com/news/a', 'https://127.0.0.1/a',
                     'https://www.bbc.com@evil.com/a', 'https://www.bbc.com:8443/a',
