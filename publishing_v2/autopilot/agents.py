@@ -2,6 +2,7 @@
 import base64
 import io
 import json
+import re
 from pathlib import Path
 from PIL import Image
 
@@ -77,9 +78,15 @@ All check values must be strict booleans. No score or majority vote can override
 
 
 def parse_object(answer):
-    lines = answer.strip().splitlines()
-    if len(lines) >= 3 and lines[0] in {'```json', '```'} and lines[-1] == '```':
-        answer = '\n'.join(lines[1:-1])
+    answer = answer.strip()
+    fenced = re.fullmatch(r'```(?:json)?[ \t]*\r?\n(.*?)\r?\n```(.*)', answer, re.I | re.S)
+    if fenced:
+        body, rationale = fenced.groups()
+        # Some workers append plain rationale. It cannot introduce another
+        # object/array/code block or change the sole validated decision.
+        if any(mark in rationale for mark in ('{', '[', '```')):
+            raise ValueError('ambiguous_agent_response')
+        answer = body
     result = json.loads(answer)
     if not isinstance(result, dict):
         raise ValueError('agent_json_object_required')

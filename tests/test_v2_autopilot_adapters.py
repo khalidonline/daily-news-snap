@@ -21,6 +21,10 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(parse_object('```json\n{"candidates": []}\n```'), {'candidates': []})
         with self.assertRaises(ValueError): parse_object('Here is the answer: {"candidates": []}')
 
+    def test_fenced_decision_with_plain_rationale_accepts_only_single_object(self):
+        self.assertEqual(parse_object('```JSON\n{"image_ids": [null]}\n```\nNo suitable image found.'), {'image_ids': [None]})
+        with self.assertRaises(ValueError): parse_object('```json\n{}\n```\n{"image_ids": ["different"]}')
+
     def setUp(self):
         self.store = Store()
         self.ledger = Ledger(self.store, now=lambda: datetime(2026, 9, 17, tzinfo=timezone.utc))
