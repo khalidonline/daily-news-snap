@@ -29,6 +29,25 @@ class StoryVideoTests(unittest.TestCase):
                     self.assertEqual(decoded.size,(1080,1920))
                 _check_frame(source,review)
 
+    def test_mixed_editorial_and_credits_jpeg_subsampling_preserves_timeline(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = []
+            for index, color in enumerate(['#a93030', '#308030', '#3040a0', '#f7f4ee']):
+                path = root / f'card-{index}.jpg'
+                frame = Image.new('RGB', (1080, 1920), color)
+                ImageDraw.Draw(frame).text((100, 200), f'Card {index}', fill='black', font_size=60)
+                # Match actual runtime editorial JPEGs and final credits JPEG.
+                frame.save(path, quality=95, **({'subsampling': 0} if index == 3 else {}))
+                paths.append(path)
+            specification, reviews = compile_story(paths, root / 'compiled')
+            self.assertEqual(specification['duration_seconds'], 45)
+            self.assertEqual(len(reviews), 4)
+            for source, review in zip(paths, reviews):
+                _check_frame(source, review)
+            with Image.open(reviews[-1]) as credits:
+                self.assertGreater(min(credits.getpixel((540, 960))), 225)
+
     def test_bounds_fail_before_encoding(self):
         with tempfile.TemporaryDirectory() as root:
             with self.assertRaisesRegex(ValueError,'attributed_video_requires_at_most_four_editorial_cards'):

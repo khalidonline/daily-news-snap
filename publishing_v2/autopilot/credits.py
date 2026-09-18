@@ -29,7 +29,13 @@ def attribution_eligible(row):
             return False
         if any(ord(char) < 32 and char not in '\n\t\r' for char in value):
             return False
-    if row['credit'].strip().casefold() in {'unknown', 'n/a', 'none', 'own work', 'self'}:
+    # Commons templates can repeat a placeholder, even without whitespace
+    # after HTML stripping. Normalize separators only for this validation;
+    # retain the original supplied credit for rendering.
+    credit_key = ''.join(char for char in row['credit'].casefold() if char.isalnum())
+    if (credit_key in {'na', 'none'}
+            or re.fullmatch(r'(?:unknown(?:author|artist|photographer|creator)?|authorunknown|ownwork|self)+',
+                            credit_key)):
         return False
     if not re.fullmatch(r'[0-9]+', str(row.get('asset_id', ''))):
         return False

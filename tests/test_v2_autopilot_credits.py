@@ -30,6 +30,22 @@ class CreditsTests(unittest.TestCase):
                         {'source_url':'https://commons.wikimedia.org.evil.test/a'}]:
             with self.subTest(changes=changes):self.assertFalse(attribution_eligible(asset(**changes)))
 
+    def test_unknown_author_placeholder_variants_cannot_authorize_cc_by(self):
+        from publishing_v2.public_images import plain
+        credits = ['Unknown author Unknown author', 'UNKNOWN AUTHOR', 'Unknown photographer',
+                   'Unknown authorUnknown author', ' Unknown\n author / Unknown\tauthor ',
+                   'Unknown author · Own work',
+                   plain('<span>Unknown author</span> <a>Unknown author</a>')]
+        for credit in credits:
+            with self.subTest(credit=credit):
+                row = asset(credit=credit, asset_id='182749874', title='File:Raphinha (2025).png')
+                self.assertFalse(attribution_eligible(row))
+                with self.assertRaisesRegex(ValueError, 'incomplete_image_attribution'):
+                    _layout(package([row]))
+        for credit in ['Aisha Photographer', 'John Self', 'Author: Aisha', 'Unknowns Photography', 'Nana']:
+            with self.subTest(real_credit=credit):
+                self.assertTrue(attribution_eligible(asset(credit=credit)))
+
     def test_layout_preserves_full_credit_deduplicates_and_stays_in_bounds(self):
         rows=_layout(package([asset(),asset()]))
         text='\n'.join(row['text'] for row in rows)

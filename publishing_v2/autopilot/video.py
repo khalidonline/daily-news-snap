@@ -1,7 +1,6 @@
 """One atomic video delivery keeps attributed editorial images with their credits."""
 import hashlib
 import json
-import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -71,10 +70,14 @@ def compile_story(paths, outputdir):
         temporary = Path(scratch)
         manifest = ['ffconcat version 1.0']
         for index, (source, seconds) in enumerate(zip(paths,durations)):
-            name = f'input-{index:02d}.jpg'
-            shutil.copyfile(source,temporary/name)
+            # Mixed JPEG chroma subsampling changes the decoder pixel format
+            # mid-stream and resets ffmpeg's fps filter timeline. Use identical
+            # lossless RGB inputs so editorial cards and credits stay in order.
+            name = f'input-{index:02d}.png'
+            with Image.open(source) as frame:
+                frame.convert('RGB').save(temporary/name, 'PNG')
             manifest.extend([f"file '{name}'",f'duration {seconds}'])
-        manifest.append(f"file 'input-{len(paths)-1:02d}.jpg'")
+        manifest.append(f"file 'input-{len(paths)-1:02d}.png'")
         listing = temporary/'frames.ffconcat'
         listing.write_text('\n'.join(manifest)+'\n',encoding='utf-8')
         movie = temporary/'story.mp4'
