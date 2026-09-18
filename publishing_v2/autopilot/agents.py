@@ -91,6 +91,13 @@ wording, coherent progression, broad interest, useful Info card, no repetition,
 and the established light background/Almarai brand. Inspect actual Arabic pixels
 for clipping, overlap, readability, photo relevance and appropriate historical
 context. A modern illustrative photograph cannot masquerade as a historical scene.
+Identify the visible objects in each photo from its PIXELS before consulting its
+filename or description; those labels may be wrong or refer to another species.
+Reject ambiguous lookalikes (for example jujubes or nuts used as Saudi palm dates),
+tiny/obscured subjects and crops dominated by empty sky. If you cannot confidently
+recognize the subject, mark that card relevant false. Prefer a repeated clear photo
+of the exact subject over an uncertain new image. In your reason briefly describe
+what is visibly shown in each photo, independently of its metadata.
 Reject uncertain sensitive claims or advice. Missing evidence means false.
 Return {"checks":{CHECK_FIELDS},"card_checks":[{"readable":true,"relevant":true},...],
 "reason":"specific corrections when rejecting; otherwise explain evidence checked"}.
