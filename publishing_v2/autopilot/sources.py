@@ -5,11 +5,13 @@ import re
 from datetime import timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
+from html import unescape
 from urllib.parse import urlsplit, urlencode
 from urllib.request import Request, build_opener
 from xml.etree import ElementTree
 
 from publishing_v2.public_images import NoRedirect, search_commons
+from .credits import attribution_eligible
 
 FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://feeds.bbci.co.uk/news/technology/rss.xml',
@@ -54,7 +56,7 @@ class ArticleText(HTMLParser):
 
 
 def plain(raw):
-    parser = ArticleText(); parser.feed(raw)
+    parser = ArticleText(); parser.feed(unescape(raw))
     return ' '.join(' '.join(parser.parts).split())[:16000]
 
 
@@ -76,7 +78,7 @@ def wiki(query):
 
 def reusable_image(row):
     # Metadata from the source adapter, never a model-provided rights assertion.
-    return (row.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
+    return attribution_eligible(row) or (row.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
             and not row.get('restrictions')
             and str(row.get('attribution_required', '')).lower() in {'', 'false', 'no'})
 
@@ -149,6 +151,8 @@ class Sources:
         subjects = list(dict.fromkeys(subjects))[:3]
         searches = [search for subject in subjects for search in
                     (subject, subject + ' haswbstatement:P275=Q6938433')]
+        # Q20007257 is CC BY 4.0; metadata still governs eligibility.
+        searches.append(subjects[-1] + ' haswbstatement:P275=Q20007257')
         errors, deeper, collected = [], [], []
         seen = set()
 
@@ -166,7 +170,7 @@ class Sources:
                     collected.append(row)
             return rows, usable
 
-        # Up to six first-page requests, then six additional pages, never
+        # Up to seven first-page requests, then five additional pages, never
         # broadening rights. Search operators only narrow discovery; source
         # metadata independently decides eligibility on every returned row.
         for search in searches:
@@ -174,6 +178,8 @@ class Sources:
                 rows, usable = lookup(search)
                 if len(collected) >= 5:
                     self.image_cache[query] = collected[:5]
+                    for subject in subjects[1:]:
+                        self.image_cache.setdefault(subject, collected[:5])
                     return collected[:5]
                 # The adapter drops unsupported formats, so fewer than five
                 # returned images does not mean the API page was exhausted.
@@ -185,12 +191,14 @@ class Sources:
                     break
         if collected:
             self.image_cache[query] = collected[:5]
+            for subject in subjects[1:]:
+                self.image_cache.setdefault(subject, collected[:5])
             return collected[:5]
         attempts = 0
         if len(errors) < 2:
             for offset in (5, 10, 15, 20):
                 for search in list(deeper):
-                    if attempts >= 6 or len(errors) >= 2:
+                    if attempts >= 5 or len(errors) >= 2:
                         break
                     attempts += 1
                     try:

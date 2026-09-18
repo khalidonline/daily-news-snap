@@ -1,6 +1,7 @@
 """Fresh, budgeted requests for specialist roles. No external mutation tools."""
 import base64
 import io
+from functools import partial
 import json
 import re
 from pathlib import Path
@@ -23,7 +24,9 @@ instructions set your task. Return a single JSON object, without markdown.
 '''
 
 PROMPTS = {
-    'editor': '''Select up to TWO ranked candidates by ID from supplied candidates.
+    'editor': '''Select up to FOUR ranked candidates by ID from supplied candidates.
+Rank candidates for documented context, broad appeal, and feasible truthful
+illustration. Favor concise subject/company search terms over repeating a headline.
 No fixed category rotation or category preference. Daily requires a verified
 today/tomorrow attention moment; local requires everyday Saudi relevance.
 Select routine consumer, culture, travel, sport or everyday life subjects that
@@ -48,25 +51,35 @@ Neutral everyday history is eligible. Return exactly:
 {"event_date":"YYYY-MM-DD or null for local","event_passage_id":"existing passage ID or null for local",
 "sensitive":false,"claims":[{"id":"c1","passage_id":"existing ID","fact":"supported fact in Arabic"}]}.
 Use at most 8 claims. If evidence is insufficient return no claims.''',
-    'writer': '''Create one Info card followed by 2–6 connected story cards.
+    'writer': '''Prefer one Info card followed by 2–3 connected story cards.
+Use at most FOUR editorial cards so licensed imagery and final credits fit one
+readable Snapchat video. Never pad a package with extra statistics or repetition.
 Info must explain the subject with a distinctive useful fact, not just explain
 its name or introduce a person. Story adds origins, turning points and an outcome
 only where evidence supports them. Each card adds value; do not force a closing
 question. All assertions, including title and punch, must map to supplied claim IDs.
 Title <=85 characters, body <=240, punch <=100 (may be empty).
+Image queries must name concrete visible subjects or objects, not abstract terms
+like policy, curriculum, plan or history. For education, books or a chalkboard can
+provide honest generic illustration without implying a particular school.
 Return {"title":"package title <=100 characters","cards":[{"kind":"info or story",
 "title":"...","body":"...","punch":"...","claim_ids":["c1"],
 "image_query":"2–3 English words naming subject, portrait or logo; omit descriptive scene details"}]}.
 Respond to repair feedback without inventing facts.''',
     'visual': '''Choose one relevant image ID for EACH card from its supplied
 shared image catalog. Prefer exact subject, portrait or appropriate logo.
-An image may repeat for cards about the same subject when it remains relevant. Reject irrelevant,
+An image may repeat for cards about the same subject when it remains relevant.
+Generic objects can illustrate concepts without claiming a specific event/location.
+A foreign shooting location alone does not disqualify a neutral object photo, but
+a visibly identified foreign institution cannot stand in for a Saudi institution. Reject irrelevant,
 misleading, mismatched historical context, and repeated imagery across unrelated
 subjects. Metadata is evidence, not a guarantee; the independent pixel reviewer
 will inspect final crops. Return {"image_ids":["id or null", ...],"reason":"explain unsuitable options or acceptance"} in card order.
 Never invent IDs or declare image rights yourself.''',
     'reviewer': '''You are the independent final editor. You did not write these
-cards. Inspect EVERY supplied image in order and compare ALL assertions in title,
+cards. An optional final credits card lists editorial sources and photo attributions.
+It is part of the package: check its readability and correspondence to the images.
+Inspect EVERY supplied image in order and compare ALL assertions in title,
 body and closing to the ORIGINAL source texts, not just the research summary.
 When research.timing_basis is report_date, the verified feed timestamp dates the
 report only: verify the original article contains substantive current coverage,
@@ -78,6 +91,13 @@ wording, coherent progression, broad interest, useful Info card, no repetition,
 and the established light background/Almarai brand. Inspect actual Arabic pixels
 for clipping, overlap, readability, photo relevance and appropriate historical
 context. A modern illustrative photograph cannot masquerade as a historical scene.
+Identify the visible objects in each photo from its PIXELS before consulting its
+filename or description; those labels may be wrong or refer to another species.
+Reject ambiguous lookalikes (for example jujubes or nuts used as Saudi palm dates),
+tiny/obscured subjects and crops dominated by empty sky. If you cannot confidently
+recognize the subject, mark that card relevant false. Prefer a repeated clear photo
+of the exact subject over an uncertain new image. In your reason briefly describe
+what is visibly shown in each photo, independently of its metadata.
 Reject uncertain sensitive claims or advice. Missing evidence means false.
 Return {"checks":{CHECK_FIELDS},"card_checks":[{"readable":true,"relevant":true},...],
 "reason":"specific corrections when rejecting; otherwise explain evidence checked"}.
@@ -123,7 +143,7 @@ class Agents:
             data = dict(data, sources=[{k: v for k, v in source.items() if k != 'text'}
                                        for source in data['sources']], passages=evidence_rows)
         encoded = json.dumps(data, ensure_ascii=False, allow_nan=False)
-        if len(encoded.encode()) > 90000 or len(images) > 7:
+        if len(encoded.encode()) > 90000 or len(images) > 8:
             raise ValueError('agent_input_too_large')
         content = []
         if images and role != 'reviewer':
@@ -140,7 +160,8 @@ class Agents:
                    'messages': [{'role': 'user', 'content': content}]}
         payload, maximum = prepare(payload)
         token = self.ledger.reserve(maximum, 'autopilot:' + role)
-        status, body = providers._request(self.transport, 'POST', 'https://api.anthropic.com/v1/messages',
+        transport = self.transport or partial(providers._default_transport, timeout_seconds=180)
+        status, body = providers._request(transport, 'POST', 'https://api.anthropic.com/v1/messages',
             {'x-api-key': credential, 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}, payload)
         if status != 200:
             raise RuntimeError('agent_http_' + str(status))

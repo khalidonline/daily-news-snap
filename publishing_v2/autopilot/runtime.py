@@ -1,5 +1,6 @@
 """Production wiring: established design, shared budget and Bundle receipts."""
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -14,8 +15,10 @@ from publishing_v2.preview import render_card
 from publishing_v2.public_images import get_bytes, inspect_image, atomic_write
 from .agents import Agents
 from .pipeline import Pipeline
-from .policy import RIYADH, digest
+from .policy import RIYADH, digest, validate_review
 from .sources import Sources, reusable_image
+from .credits import attribution_eligible, render_credits
+from .video import compile_story
 
 
 class Renderer:
@@ -43,13 +46,15 @@ class Renderer:
     def image_catalog(self, package):
         catalog = {}
         for card in package['cards']:
+            if card.get('kind') == 'credits':
+                continue
             for row in self.image_options(card, package):
                 catalog.setdefault(row['asset_id'], row)
         return list(catalog.values())[:35]
 
     def __call__(self, package, output):
         output = Path(output); output.mkdir(parents=True, exist_ok=True)
-        cards = package['cards']
+        cards = [card for card in package['cards'] if card.get('kind') != 'credits']
         if not all('image' in c for c in cards):
             catalog = self.image_catalog(package)
             if not catalog:
@@ -71,6 +76,10 @@ class Renderer:
                     raise ValueError('unknown_visual_selection: ' + card['image_query'] + ': '
                                      + str(selected.get('reason', ''))[:800])
                 card['image'] = dict(matches[0])
+        needs_credits = any(attribution_eligible(card['image']) for card in cards)
+        existing_credits = [card for card in package['cards'] if card.get('kind') == 'credits']
+        if existing_credits and (not needs_credits or len(existing_credits) != 1):
+            raise ValueError('invalid_credits_card')
         os.environ['THEME'] = 'light'; os.environ['FONT_FAMILY'] = 'Almarai'
         import story_bot
         names = {'en.wikipedia.org': 'ويكيبيديا', 'ar.wikipedia.org': 'ويكيبيديا',
@@ -103,23 +112,54 @@ class Renderer:
                 story_bot.render_frame(target.with_suffix('.png'), 'ملخص تنفيذي - قصة',
                     f'{i} من {len(cards)-1}', card['title'], 64, sub=card['body'],
                     photo=source, punch=card['punch'],
-                    footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names else None)
+                    footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names and not needs_credits else None)
                 with Image.open(target.with_suffix('.png')) as image:
                     image.convert('RGB').save(target, 'JPEG', quality=95)
             with Image.open(target) as rendered:
                 if rendered.size != (1080, 1920):
                     raise ValueError('wrong_frame_dimensions')
             paths.append(target)
+        if needs_credits:
+            if len(cards) > 4:
+                raise ValueError('attributed_video_requires_at_most_four_editorial_cards')
+            credit_card = {'kind': 'credits', 'title': 'المصادر والصور',
+                           'body': 'Editorial sources and photo attribution',
+                           'image': dict(cards[0]['image'])}
+            if existing_credits:
+                if existing_credits[0] != credit_card:
+                    raise ValueError('credits_card_changed')
+            else:
+                package['cards'].append(credit_card)
+            target = output / f'card-{len(cards):02d}.jpg'
+            render_credits(package, output / 'source-00.jpg', target)
+            paths.append(target)
+            package['delivery'], paths = compile_story(paths, output)
         return paths
 
 
 def publish_package(package, paths, *, client=None, journal_factory=GitHubJournal):
+    media = [(Path(p), Path(p).read_bytes()) for p in paths]
+    frame_hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
+    if len(frame_hashes) != len(set(frame_hashes)):
+        raise ValueError('duplicate_rendered_card')
+    attributed = any(card.get('image', {}).get('license') == 'CC BY 4.0'
+                     for card in package.get('cards', []))
+    delivery = package.get('delivery')
+    if attributed and (not delivery or package['cards'][-1].get('kind') != 'credits'):
+        raise ValueError('attribution_requires_single_video_delivery')
+    if delivery:
+        if (delivery.get('kind') != 'video' or delivery.get('filename') != 'story.mp4'
+                or delivery.get('frame_sha256') != frame_hashes
+                or not 5 <= delivery.get('duration_seconds', 0) <= 60):
+            raise ValueError('invalid_video_delivery')
+        video = Path(paths[0]).parent / 'story.mp4'
+        raw = video.read_bytes()
+        if not 0 < len(raw) <= 100_000_000 or hashlib.sha256(raw).hexdigest() != delivery['sha256']:
+            raise ValueError('approved_video_changed')
+        media = [(video, raw)]
+    hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
     client = client or BundleClient()
     client.check()
-    media = [(Path(p), Path(p).read_bytes()) for p in paths]
-    hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
-    if len(hashes) != len(set(hashes)):
-        raise ValueError('duplicate_rendered_card')
     # Same identity as the existing manual publisher: cross-route deduplication.
     identity = hashlib.sha256(('executivesaudi:' + ':'.join(hashes)).encode()).hexdigest()
     journal = journal_factory(identity)
@@ -133,10 +173,11 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
         def wait(self, post_id): return client.wait(post_id)
     publish(TimedClient(), journal, package['title'], media)
     state = journal.read()
-    rows = [state.get(str(i + 1), {}) for i in range(len(paths))]
+    rows = [state.get(str(i + 1), {}) for i in range(len(media))]
     if any(row.get('status') != 'POSTED' or not row.get('post_id') for row in rows):
         raise ValueError('incomplete_delivery_receipts')
-    return {'status': 'POSTED', 'identity': identity, 'post_ids': [r['post_id'] for r in rows]}
+    return {'status': 'POSTED', 'identity': identity, 'post_ids': [r['post_id'] for r in rows],
+            'card_count': len(paths), 'media_count': len(media)}
 
 
 def engine_id():
@@ -169,6 +210,25 @@ def rollout_ready(state, engine, now):
         return False
 
 
+def promotable_shadow(state, engine, lane, now, source_slot):
+    """Reuse today's exact approved package; never regenerate during promotion."""
+    try:
+        if (state.get('status') != 'shadow_passed' or state.get('mode') != 'shadow'
+                or state.get('engine') != engine or state.get('lane') != lane
+                or day_key(datetime.fromisoformat(state['started_at'])) != day_key(now)
+                or datetime.fromisoformat(state['package']['expires_at']) <= now
+                or digest(state['package']) != state['approval']['package_sha256']
+                or len(state['approval']['media_sha256']) != len(state['package']['cards'])):
+            return None
+        validate_review(state['review'], len(state['package']['cards']))
+    except (KeyError, TypeError, ValueError):
+        return None
+    result = copy.deepcopy(state)
+    result.update(mode='live', status='approved', source_shadow_slot=source_slot)
+    result['audit'].append({'event':'promoted_shadow', 'at':now.isoformat(), 'source_slot':source_slot})
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=['shadow', 'live'], default='shadow')
@@ -198,6 +258,13 @@ def main():
         if args.mode == 'shadow':
             slot += '-' + engine[:16]
         store = GitHubJournal(slot)
+        if args.mode == 'live' and verified and not store.read():
+            record = readiness.read().get(lane, {})
+            if record.get('status') == 'shadow_passed' and record.get('slot'):
+                shadow = GitHubJournal(record['slot']).read()
+                promoted = promotable_shadow(shadow, engine, lane, now(), record['slot'])
+                if promoted:
+                    store.save(promoted)
         pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
             store=store, publish=publish_package, output=output / lane, now=now, engine=engine)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)

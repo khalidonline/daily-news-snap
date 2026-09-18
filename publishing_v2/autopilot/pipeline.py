@@ -69,7 +69,7 @@ class Pipeline:
                                                 'candidates': candidates})
             ids = {c['id']: c for c in candidates}
             ranked = selected.get('candidates', [])
-            if not 1 <= len(ranked) <= 2:
+            if not 1 <= len(ranked) <= 4:
                 raise ValueError('invalid_selection')
             used = set()
             for choice in ranked:
@@ -95,6 +95,7 @@ class Pipeline:
                     self.save(state, 'researched', sources=sources, research=research)
                     feedback = ''
                     for attempt in range(2):
+                        review = None
                         try:
                             draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
                                                               'feedback': feedback})
@@ -149,7 +150,8 @@ class Pipeline:
             policy.verify_seal(package, paths, state['approval'], self.now())
             self.save(state, 'publishing', status='publishing')
             receipt = self.publish(package, paths)
-            if receipt.get('status') != 'POSTED' or len(receipt.get('post_ids', [])) != len(paths):
+            expected_posts = 1 if package.get('delivery', {}).get('kind') == 'video' else len(paths)
+            if receipt.get('status') != 'POSTED' or len(receipt.get('post_ids', [])) != expected_posts:
                 raise RuntimeError('delivery_not_confirmed')
             self.save(state, 'delivery_verified', status='published', receipt=receipt)
         except Exception as error:

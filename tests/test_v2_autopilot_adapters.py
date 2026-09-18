@@ -54,6 +54,14 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(agent.receipts[0]['stop_reason'], 'max_tokens')
         self.assertTrue(all(e['status'] == 'settled' for e in self.store.row['entries'].values()))
 
+    def test_production_agent_uses_bounded_long_review_timeout(self):
+        reply = {'status_code': 200, 'body': {'id': 'r', 'stop_reason': 'end_turn',
+                 'usage': {'input_tokens': 10, 'output_tokens': 10},
+                 'content': [{'type': 'text', 'text': '{"candidates": []}'}]}}
+        with patch('publishing_v2.providers._default_transport', return_value=reply) as transport:
+            self.agent(None).run('editor', {'candidates': []})
+        self.assertEqual(transport.call_args.kwargs['timeout_seconds'], 180)
+
     def test_ambiguous_provider_error_keeps_reservation(self):
         def transport(*args): raise TimeoutError()
         with self.assertRaises(RuntimeError): self.agent(transport).run('writer', {})
@@ -94,6 +102,10 @@ class SourceTests(unittest.TestCase):
                     'https://www.bbc.com@evil.com/a', 'https://www.bbc.com:8443/a',
                     'https://www.bbc.com.evil.com/a']:
             with self.subTest(url=url), self.assertRaises(ValueError): safe_url(url)
+
+    def test_encoded_feed_markup_does_not_reach_editor_as_links(self):
+        from publishing_v2.autopilot.sources import plain
+        self.assertEqual(plain('News &lt;a href="https://example.com"&gt;subject&lt;/a&gt;'), 'News subject')
 
     def test_model_cannot_self_authorize_image_rights(self):
         self.assertFalse(reusable_image({'license': 'CC BY-SA 4.0', 'licensing_verified': True}))

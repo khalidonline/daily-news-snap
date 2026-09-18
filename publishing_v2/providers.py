@@ -36,14 +36,16 @@ class _NoRedirects(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def _default_transport(method: str, url: str, headers: dict[str, str], payload: dict[str, Any] | None) -> dict[str, Any]:
+def _default_transport(method: str, url: str, headers: dict[str, str], payload: dict[str, Any] | None, *, timeout_seconds: int = _TIMEOUT_SECONDS) -> dict[str, Any]:
+    if type(timeout_seconds) is not int or not 1 <= timeout_seconds <= 180:
+        raise ValueError("invalid_provider_timeout")
     if urllib.parse.urlsplit(url).scheme != "https":
         raise ProviderError("unsafe_url", "Provider requests require HTTPS.")
     data = None if payload is None else json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(url, data=data, headers=headers, method=method)
     opener = urllib.request.build_opener(_NoRedirects())
     try:
-        response = opener.open(request, timeout=_TIMEOUT_SECONDS)
+        response = opener.open(request, timeout=timeout_seconds)
     except urllib.error.HTTPError as exc:
         response = exc
     raw = response.read(_MAX_RESPONSE_BYTES + 1)

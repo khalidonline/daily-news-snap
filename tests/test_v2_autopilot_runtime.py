@@ -9,7 +9,7 @@ from unittest.mock import patch
 from types import SimpleNamespace
 from PIL import Image
 
-from publishing_v2.autopilot.runtime import Renderer, rollout_ready, publish_package, shadow_record
+from publishing_v2.autopilot.runtime import Renderer, rollout_ready, publish_package, shadow_record, promotable_shadow
 
 
 class RuntimeTests(unittest.TestCase):
@@ -48,6 +48,27 @@ class RuntimeTests(unittest.TestCase):
         rows = Renderer(None, Sources()).image_options({'image_query': 'Mocha port'}, {})
         self.assertEqual([r['asset_id'] for r in rows], ['large'])
 
+    def test_promotion_preserves_reviewed_package_and_rejects_changed_or_old_state(self):
+        from publishing_v2.autopilot.policy import digest, REVIEW_CHECKS
+        now=datetime(2026,9,18,9,tzinfo=timezone.utc)
+        package={'cards':[{}, {}, {}], 'expires_at':'2026-09-19T00:00:00+03:00'}
+        state={'status':'shadow_passed','mode':'shadow','engine':'engine','lane':'daily',
+               'started_at':now.isoformat(),'package':package,'audit':[],
+               'approval':{'package_sha256':digest(package),'media_sha256':['a','b','c']},
+               'review':{'checks':{k:True for k in REVIEW_CHECKS},'reason':'approved',
+                         'card_checks':[{'readable':True,'relevant':True} for _ in range(3)]}}
+        promoted=promotable_shadow(state,'engine','daily',now,'shadow-slot')
+        self.assertEqual(promoted['status'],'approved')
+        self.assertEqual(promoted['mode'],'live')
+        self.assertEqual(promoted['approval'],state['approval'])
+        self.assertEqual(promoted['package'],state['package'])
+        self.assertEqual(state['mode'],'shadow')
+        self.assertIsNone(promotable_shadow(state,'different','daily',now,'slot'))
+        changed=copy.deepcopy(state); changed['package']['cards'][0]['body']='changed'
+        self.assertIsNone(promotable_shadow(changed,'engine','daily',now,'slot'))
+        state['started_at']='2026-09-17T00:00:00+00:00'
+        self.assertIsNone(promotable_shadow(state,'engine','daily',now,'slot'))
+
     def test_render_uses_flexible_numbering_and_preserves_image_hashes(self):
         with tempfile.TemporaryDirectory() as tmp:
             image_path = Path(tmp) / 'source.png'
@@ -71,6 +92,68 @@ class RuntimeTests(unittest.TestCase):
             self.assertEqual(footers, [None, 'المصادر: ويكيبيديا'])
             self.assertEqual(brands, ['ملخص تنفيذي - معلومة'])
             self.assertEqual(package['cards'][0]['image']['sha256'], meta['sha256'])
+
+    def test_attributed_images_add_one_deterministic_reviewed_final_frame(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            from publishing_v2.autopilot.policy import seal
+            source = Path(tmp) / 'input.png'
+            Image.new('RGB', (1600,1200), 'green').save(source)
+            raw = source.read_bytes()
+            meta = {'asset_id': '123', 'license': 'CC BY 4.0', 'credit': 'Photographer',
+                    'title': 'File:Classroom.jpg', 'credit_line': 'Own work',
+                    'license_url': 'https://creativecommons.org/licenses/by/4.0/',
+                    'source_url': 'https://commons.wikimedia.org/wiki/File:Classroom.jpg',
+                    'download_url': 'https://upload.wikimedia.org/classroom.jpg'}
+            package = {'sources': [], 'cards': [dict(kind=kind,title='عنوان',body='معلومة',punch='',image=meta.copy())
+                         for kind in ['info','story','story']]}
+            def frame(path, *args, **kwargs): Image.new('RGB', (1080,1920)).save(path)
+            def info(spec, source, output): Image.new('RGB', (1080,1920)).save(output)
+            with patch('publishing_v2.autopilot.runtime.get_bytes', return_value=raw), \
+                 patch('publishing_v2.autopilot.runtime.render_card', side_effect=info), \
+                 patch.dict('sys.modules', {'story_bot': SimpleNamespace(render_frame=frame)}):
+                renderer = Renderer(None,None)
+                paths = renderer(package,Path(tmp)/'first')
+                approved = seal(package,paths)
+                resumed = renderer(package,Path(tmp)/'resume')
+            self.assertEqual(len(paths),4)
+            self.assertEqual(package['cards'][-1]['kind'],'credits')
+            self.assertEqual(len(package['cards']),4)
+            self.assertEqual(approved,seal(package,resumed))
+
+    def test_attributed_package_uploads_only_verified_video(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            paths = []
+            for i in range(3):
+                path = Path(tmp)/f'review-{i}.png'; path.write_bytes(str(i).encode()); paths.append(path)
+            video = Path(tmp)/'story.mp4'; video.write_bytes(b'verified complete video including credits')
+            package = {'title': 'test', 'expires_at': '2999-01-01T00:00:00+00:00',
+                       'cards': [{'kind':'info','image':{'license':'CC BY 4.0'}},{'kind':'story'},{'kind':'credits'}]}
+            class Client:
+                def __init__(self): self.uploads=[]; self.creates=0
+                def check(self): pass
+                def upload(self,item): self.uploads.append(item); return 'upload'
+                def create(self,title,upload): self.creates+=1; return 'post'
+                def wait(self,ident): pass
+            class Journal:
+                def __init__(self): self.state={}
+                def read(self): return copy.deepcopy(self.state)
+                def save(self,state): self.state=copy.deepcopy(state)
+            client=Client(); journal=Journal()
+            with self.assertRaisesRegex(ValueError,'attribution_requires_single_video_delivery'):
+                publish_package(package,paths,client=client,journal_factory=lambda ident:journal)
+            self.assertEqual(client.uploads,[])
+            package['delivery']={'kind':'video','filename':'story.mp4','duration_seconds':35,
+                'sha256':hashlib.sha256(video.read_bytes()).hexdigest(),
+                'frame_sha256':[hashlib.sha256(p.read_bytes()).hexdigest() for p in paths]}
+            receipt=publish_package(package,paths,client=client,journal_factory=lambda ident:journal)
+            self.assertEqual(client.creates,1)
+            self.assertEqual([item[0].suffix for item in client.uploads],['.mp4'])
+            self.assertEqual(receipt['post_ids'],['post'])
+            self.assertEqual(receipt['card_count'],3)
+            video.write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError,'approved_video_changed'):
+                publish_package(package,paths,client=client,journal_factory=lambda ident:journal)
+            self.assertEqual(client.creates,1)
 
     def test_receipt_identity_is_hash_bound_and_posted_requires_all_cards(self):
         with tempfile.TemporaryDirectory() as tmp:

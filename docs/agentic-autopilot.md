@@ -4,12 +4,16 @@ Run `python -m publishing_v2.autopilot.runtime --mode shadow --lane both` in the
 configured main-branch GitHub Actions environment. The workflow runs at 08:00
 Riyadh daily and on deployment of its code. Deployments always run in shadow.
 
-The coordinator selects up to two candidates per lane. Separate requests perform
+The coordinator selects up to four candidates per lane. Separate requests perform
 research, writing, visual selection and independent review of sources and actual
 rendered cards. The existing templates render one Info plus 2–6 story cards,
-with source names on the final story frame only.
+with source names on the final story frame only. Packages using CC BY 4.0
+images contain at most four editorial frames plus complete end credits, delivered
+as one 45–55 second MP4 so images cannot publish without their attribution.
+The reviewer sees frames decoded from the final video; its hash is checked before
+upload. Public-domain/CC0-only packages can still publish as individual images.
 Rejected cards get one full rewrite/render/review; then a replacement candidate
-is attempted. At most four drafts per lane. No model has publishing credentials
+is attempted. At most eight drafts per lane. No model has publishing credentials
 or an external mutation tool. Sources and model responses are untrusted data.
 
 ## Runtime requirements
@@ -19,6 +23,7 @@ Existing secrets: `ANTHROPIC_API_KEY`, `BUNDLE_API_KEY`, `BUNDLE_TEAM_ID`,
 authority for its durable journals. The existing `cost-ledger` branch must exist.
 `DAILY_BUDGET_GITHUB_TOKEN` is optional when the workflow token can write it.
 Every paid call uses `daily_budget.Ledger`, including visual selection and review.
+Requests have a bounded 180-second timeout to accommodate image-heavy review.
 Failed or ambiguous calls keep their conservative reservations. The daily ledger,
 not the per-run report, is authoritative for total spend/reservations.
 
@@ -41,6 +46,11 @@ For unattended live schedules,
 set repository variable `AUTOPILOT_MODE=live` after real shadow validation.
 The initial deployment leaves that variable unset. A failed shadow never silently
 enables publishing. Existing manually approved package publishing is preserved.
+
+On activation, an intact, unexpired shadow package from the same Saudi day and
+engine can be promoted into an empty live slot. Its existing review and seal are
+preserved; rehydrated media is checked again before publishing. Older shadow
+packages are not reused as today's content.
 
 On live runs, the approved package and review hashes are saved before calling the
 existing Bundle publisher. All public creates use its saved intent and receipts.
@@ -71,9 +81,11 @@ attempt cost and the Actions link; shadow output is explicitly identified.
   supply the attention date from verified feed metadata. This is explicitly
   marked `report_date`; cards must not claim the underlying event happened today,
   and the reviewer rejects recycled/evergreen coverage.
-- Automated image sourcing initially accepts only Commons public-domain/CC0
-  metadata without stated restrictions; no paid Getty dependency or generated
-  documentary imagery. Limited availability can hold a package after recovery.
+- Automated image sourcing accepts Commons public-domain/CC0 metadata without
+  stated restrictions, plus CC BY 4.0 assets with complete attribution metadata.
+  Required credits are never truncated. Source and license links, creator/title,
+  supplied credit notices and crop/resize disclosure travel with the same video.
+  No generated documentary imagery or paid Getty dependency is introduced.
 - Audience analytics are not connected. Delivery receipts prove provider-reported
   posting, not audience engagement; no learning or growth claims are made.
 - The workflow explicitly sets `AUTOPILOT_DAILY_LIMIT_MICRO_USD=10000000`
