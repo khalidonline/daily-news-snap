@@ -90,6 +90,33 @@ class PipelineTests(unittest.TestCase):
                         store=self.store, publish=kwargs.get('publish', self.publish),
                         output=Path(self.temp.name), now=lambda: NOW)
 
+    def test_four_rejected_candidates_are_bounded_and_audited(self):
+        class MoreCandidates(FakeAgent):
+            def run(self, role, data, images=()):
+                result = super().run(role, data, images)
+                if role == 'editor':
+                    result['candidates'] = [dict(result['candidates'][0], id=ident) for ident in 'abcd']
+                if role == 'researcher': result['sensitive'] = True
+                return result
+        pipeline = self.pipeline()
+        pipeline.agent = MoreCandidates()
+        pipeline.sources.discover = lambda lane, now: [{'id': ident, 'title': ident} for ident in 'abcd']
+        result = pipeline.run('daily', 'shadow')
+        self.assertEqual(result['status'], 'held')
+        self.assertEqual(pipeline.agent.calls.count('researcher'), 4)
+        self.assertEqual(sum(e['event'] == 'candidate_rejected' for e in result['audit']), 4)
+
+    def test_single_video_receipt_covers_all_reviewed_frames(self):
+        pipeline=self.pipeline(publish=lambda package,paths:{'status':'POSTED','post_ids':['video-post']})
+        def render(package,output):
+            package['delivery']={'kind':'video'}
+            return self.render(package,output)
+        pipeline.render=render
+        result=pipeline.run('daily','live',rollout_verified=True)
+        self.assertEqual(result['status'],'published')
+        self.assertEqual(len(result['paths']),3)
+        self.assertEqual(result['receipt']['post_ids'],['video-post'])
+
     def test_shadow_finishes_with_independent_review_without_publishing(self):
         result = self.pipeline().run('daily', 'shadow')
         self.assertEqual(result['status'], 'shadow_passed')

@@ -1,0 +1,158 @@
+"""Complete, bounded CC BY 4.0 attribution in a reviewed final image frame.
+
+License conditions: https://creativecommons.org/licenses/by/4.0/legalcode.en#s3
+The Commons material URI also exposes supplied notices and modification history.
+"""
+import re
+from pathlib import Path
+from urllib.parse import urlsplit
+
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+
+LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/'
+FONT_ROOT = Path(__file__).resolve().parents[2] / 'fonts'
+
+
+def attribution_eligible(row):
+    if not isinstance(row, dict):
+        return False
+    if row.get('license') != 'CC BY 4.0' or row.get('restrictions'):
+        return False
+    if row.get('license_url') not in {LICENSE_URL, LICENSE_URL.rstrip('/'), LICENSE_URL.replace('https:', 'http:'),
+                                       LICENSE_URL.replace('https:', 'http:').rstrip('/')}:
+        return False
+    for key, maximum in (('credit', 120), ('title', 180), ('credit_line', 200)):
+        value = row.get(key, '')
+        if not isinstance(value, str) or len(value) > maximum:
+            return False
+        if key != 'credit_line' and not value.strip():
+            return False
+        if any(ord(char) < 32 and char not in '\n\t\r' for char in value):
+            return False
+    if row['credit'].strip().casefold() in {'unknown', 'n/a', 'none', 'own work', 'self'}:
+        return False
+    if not re.fullmatch(r'[0-9]+', str(row.get('asset_id', ''))):
+        return False
+    try:
+        url = urlsplit(row.get('source_url', ''))
+        if (url.scheme != 'https' or url.hostname != 'commons.wikimedia.org'
+                or url.username or url.password or url.port not in (None, 443) or url.fragment):
+            return False
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
+def _font(size, bold=False):
+    return ImageFont.truetype(str(FONT_ROOT / ('Almarai-Bold.ttf' if bold else 'Almarai-Regular.ttf')), size)
+
+
+def _direction(text):
+    return 'rtl' if re.search(r'[\u0600-\u06ff]', text) else 'ltr'
+
+
+def _blocks(package):
+    assets = {}
+    for card in package.get('cards', []):
+        image = card.get('image', {})
+        if image.get('license') == 'CC BY 4.0':
+            if not attribution_eligible(image):
+                raise ValueError('incomplete_image_attribution')
+            identity = str(image['asset_id'])
+            if identity in assets and any(assets[identity].get(key) != image.get(key)
+                    for key in ('title', 'credit', 'credit_line', 'license_url')):
+                raise ValueError('conflicting_image_attribution')
+            assets[identity] = image
+    if len(assets) > 6:
+        raise ValueError('too_many_credited_assets')
+    blocks = [('المصادر وحقوق الصور', True)]
+    if assets:
+        blocks.append(('Photo credits · CC BY 4.0', True))
+        for number, (identity, row) in enumerate(assets.items(), 1):
+            blocks.append((f"{number}. {row['title']}", True))
+            blocks.append((row['credit'], False))
+            if row.get('credit_line') and row['credit_line'].strip() != row['credit'].strip():
+                blocks.append((row['credit_line'], False))
+            blocks.append((f'https://commons.wikimedia.org/?curid={identity}', False))
+        blocks.append((LICENSE_URL, False))
+        blocks.append(('Images cropped/resized. No endorsement implied.', False))
+    else:
+        blocks.append(('Images: public domain / CC0', False))
+    names = {'bbc.com':'BBC', 'bbc.co.uk':'BBC', 'alyaum.com':'اليوم',
+             'aawsat.com':'الشرق الأوسط', 'en.wikipedia.org':'Wikipedia', 'ar.wikipedia.org':'ويكيبيديا'}
+    hosts = []
+    for source in package.get('sources', []):
+        try:
+            host = urlsplit(source.get('url', '')).hostname
+        except ValueError:
+            raise ValueError('invalid_editorial_source') from None
+        if not host:
+            raise ValueError('invalid_editorial_source')
+        host = host.removeprefix('www.')
+        if host not in hosts:
+            hosts.append(host)
+    if hosts:
+        blocks.append(('المصادر التحريرية', True))
+        blocks.extend((f'{names[host]} · {host}' if host in names else host, False) for host in hosts)
+    return blocks
+
+
+def _wrap(draw, text, font, width):
+    # Preserve every character (including long URLs); only insert line breaks.
+    lines = []
+    for paragraph in text.splitlines() or ['']:
+        line = ''
+        for token in re.findall(r'\S+\s*', paragraph):
+            if draw.textlength(line + token, font=font, direction=_direction(line + token)) <= width:
+                line += token
+                continue
+            if line:
+                lines.append(line.rstrip()); line = ''
+            for char in token:
+                if line and draw.textlength(line + char, font=font, direction=_direction(line + char)) > width:
+                    lines.append(line.rstrip()); line = ''
+                line += char
+        lines.append(line.rstrip())
+    return lines
+
+
+def _layout(package):
+    blocks = _blocks(package)
+    draw = ImageDraw.Draw(Image.new('RGB', (1080, 1920)))
+    for size in (34, 32, 30, 28, 26):
+        rows, y = [], 390
+        for text, bold in blocks:
+            font = _font(size, bold)
+            for line in _wrap(draw, text, font, 952):
+                direction = _direction(line)
+                box = draw.textbbox((0, 0), line, font=font, direction=direction)
+                width, height = box[2] - box[0], box[3] - box[1]
+                x = 1016-width if direction == 'rtl' else 64
+                rows.append({'text':line, 'size':size, 'bold':bold, 'direction':direction,
+                             'bounds':(x, y, x+width, y+height), 'origin':(x-box[0], y-box[1])})
+                y += max(height+8, size+8)
+            y += 6
+        if y <= 1820 and all(row['bounds'][2] <= 1016 for row in rows):
+            return rows
+    raise ValueError('credits_layout_overflow')
+
+
+def render_credits(package, source_path, target):
+    """Render complete attribution or raise before writing an incomplete frame."""
+    rows = _layout(package)
+    canvas = Image.new('RGB', (1080, 1920), '#f7f4ee')
+    draw = ImageDraw.Draw(canvas)
+    with Image.open(source_path) as source:
+        strip = ImageOps.fit(source.convert('RGB'), (952, 248), Image.Resampling.LANCZOS)
+        canvas.paste(strip, (64, 104))
+    brand = 'ملخص تنفيذي'
+    font = _font(28, True)
+    draw.text((1016, 54), brand, font=font, fill='#17483f', direction='rtl', anchor='ra')
+    draw.line((64, 372, 1016, 372), fill='#c9bb9c', width=3)
+    for row in rows:
+        draw.text(row['origin'], row['text'], font=_font(row['size'], row['bold']),
+                  fill='#183b35' if row['bold'] else '#26352f', direction=row['direction'])
+    target = Path(target)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(target, 'JPEG', quality=95, subsampling=0)
+    return target
