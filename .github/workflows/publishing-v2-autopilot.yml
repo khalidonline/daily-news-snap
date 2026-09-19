@@ -53,7 +53,7 @@ jobs:
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
-          AUTOPILOT_MODE: ${{ github.event_name == 'push' && 'shadow' || inputs.mode || vars.AUTOPILOT_MODE || 'shadow' }}
+          AUTOPILOT_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
           # Explicit commissioning ceiling; all reservations share the durable ledger.
           AUTOPILOT_DAILY_LIMIT_MICRO_USD: '10000000'
           AUTOPILOT_REVIEWER_MODEL: 'claude-opus-5'
