@@ -152,7 +152,9 @@ for local, require a real Saudi person/place or recorded historical development.
 Species traits and generic encyclopedia lists cannot pass as a story.
 Set visual_variety false for repeated photos, near-identical crops or a sequence
 of visually interchangeable subject shots. Set story_numbering false unless
-story counters use Arabic digits in the correct reading order, e.g. ١ من ٣.
+story counters show the correct ordinal and total in the correct reading order.
+Both numeral forms are valid: 1 من 3 and ١ من ٣. The established renderer uses
+Western digits; never reject a correct counter solely for its numeral form.
 Check
 the established light background/Almarai brand. Inspect actual Arabic pixels
 for clipping, overlap, readability, photo relevance and appropriate historical

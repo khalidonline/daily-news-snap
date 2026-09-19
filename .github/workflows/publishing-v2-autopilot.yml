@@ -51,6 +51,10 @@ jobs:
           AUTOPILOT_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
           # Explicit commissioning ceiling; all reservations share the durable ledger.
           AUTOPILOT_DAILY_LIMIT_MICRO_USD: '20000000'
+          AUTOPILOT_EDITOR_MODEL: 'claude-opus-5'
+          AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
+          AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
+          AUTOPILOT_VISUAL_MODEL: 'claude-opus-5'
           AUTOPILOT_REVIEWER_MODEL: 'claude-opus-5'
           AUTOPILOT_LANE: ${{ inputs.lane || 'both' }}
           POST_TO_SNAPCHAT: '0'
