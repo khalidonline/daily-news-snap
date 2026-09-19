@@ -12,44 +12,34 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-Deployed recovery milestones:
+All current code corrections deployed; final stronger-model trial in progress.
 - PR #210 / fa8d05e: bounded malformed-JSON retry and validated article redirects.
-- PR #211 / 3849dde: explicit $20/day commissioning ceiling, historical charges
-  and unknown reservations preserved; lower caller ceilings remain enforced.
-- PR #212 / c6fcd5a: recover local image subjects, reject undersized results before
-  filling the pool, and page partial pools within existing 12-request limit.
-- 187 publishing tests and independent review passed before latest deployment.
-- Trial 35465831225: daily passed after factual/visual repair; local held for
-  imagery; $0.840751. All approved daily frames inspected. Previous engine only.
-- Trial 35466789920: both held; daily exhausted factual/visual repairs and source
-  alternatives, local could not retrieve articles. $0.525544; Telegram report step
-  succeeded. Final engine a2804a998ea95d77d83d776f22ec6a3963303a60a50b367e664de0b1f7d276db.
-- Direct retrieval of last failed local article (alyaum /6683349) succeeds from
-  this environment (169090 bytes, 5378 text chars), so runner failure is not proof
-  the publisher article is permanently unavailable.
-- PR #213 / 4713dd9: publisher RSS fallback deployed. Substantial
-  text from same allowlisted publisher, exact cached ID/URL/timestamp, at least
-  500 characters and 80 words. Original article preferred. Source type/feed URL
-  retained, no headlines/search snippets promoted, independent review unchanged.
-  Seven focused tests passed independently; no blocking review findings.
-  All 194 publishing tests and CI passed. Real feed recovered 303 words for
-  the exact failed article /6683349.
-- Final deployed-engine shadow/both trial 35468390489 is RUNNING.
-  Engine 9df6d5279f3d1d73a2e3c0c5ddec3e9c52a2ccc895b2a73e9bff09a9896400d6.
-- Final trial exposed a rubric/rendering contradiction: reviewer demanded Indic
-  digits, while news_bot.ar/sanitize deliberately renders Western digits (verified
-  directly: '١ من ٣' becomes '1 من 3'). Prompt-only correction permits both forms
-  while still requiring the correct ordinal, total and reading order. In review.
-- Repeated writer factual errors were correctly identified by the Opus reviewer.
-  Configure editor, researcher, writer and visual selector to use the same stronger
-  priced Opus model in separate role contexts; keep independent review and $20 cap.
-  Validate model configuration and actual output before clearing posting.
-No final-engine daily/local pair is cleared. No posts were made during these trials.
+- PR #211 / 3849dde: $20/day commissioning ceiling; preserve all old charges and
+  unresolved reservations, and each lower-ceiling caller's own limit.
+- PR #212 / c6fcd5a: recover local image subjects, filter undersized images before
+  filling the pool, page partial pools within the existing 12-request bound.
+- PR #213 / 4713dd9: substantive same-publisher RSS fallback, exact ID/URL/time,
+  recorded provenance, no short summaries. Real failed article recovered303words.
+- PR #214 / 27c9c1f: accept both numeral glyph forms in counters while checking
+  correct sequence; editor/researcher/writer/visual use the stronger priced Opus
+  model in separate contexts, with independent Opus review. $20 cap unchanged.
+- All 194 publishing tests and CI passed before the final model deployment.
+  Independent reviews found no blocking defects; 13 runtime tests also passed.
+- Trial 35465831225: prior daily pass, local held; $0.840751; frames inspected.
+- Trial 35466789920: both held for content/imagery/source retrieval; $0.525544.
+- Trial 35468390489: both held; repeated writer factual/visual errors and counter
+  rubric contradiction confirmed; $1.481482. Operational report step succeeded.
+- September19 ledger: $7.496990 settled, $0.115566 unresolved reservation retained.
+- ACTIVE: shadow/both trial 35469293403 on final stronger-model configuration.
+  Engine aae4c2c27caae454e71b671768447eb57bc6a782eeeccf441ea6ba27240e1064.
+  New slots use Saudi date2026-09-20. No publishing during this validation.
+No final-engine daily/local pair is cleared yet. Do not claim posting readiness.
 
 ## Milestones
 | Stage | Scope | Status | Completion evidence required |
 | --- | --- | --- | --- |
 | 0 | Specialist editorial agents, independent review, bounded repairs, publishing journals, budget and Telegram reporting | Deployed; prior engine verified live | Launch run 35438752317 confirmed two packages / eight frames on September 19; recheck current engine before claiming readiness |
+| 0a | Current-engine editorial recovery and posting qualification | Deployed; validation in progress | Both lanes pass shadow on the final code/model fingerprint; inspect actual frames and readiness journal |
 | 1 | Detect missing, stalled, incomplete and successful daily runs | Planned; next | Deterministic tests plus read-only comparison with actual run and receipt state; no paid generation or publishing |
 | 2 | Bounded safe recovery | Planned | Tests for missed run, partial delivery, concurrent run, budget exhaustion, expired package and ambiguous provider result; preserve receipt identity, review gates and budget |
 | 3 | Schedule watchdog and concise Telegram incident/recovery reports | Planned | Deployed workflow and real monitor execution; deduplicated alerts; obey pause mode; document shared GitHub scheduler outage limitation |
@@ -59,10 +49,10 @@ No final-engine daily/local pair is cleared. No posts were made during these tri
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Inspect trial 35468390489 to completion; do not restart an active or held slot.
-Record actual daily/local outcomes, costs, report delivery, artifact inspection
-and exact posting readiness. Code fixes are deployed; both final-engine passes
-are still required. No publishing during this validation run.
+Inspect trial35469293403 to completion, including Saudi-date2026-09-20 journals.
+Do not cancel/restart working or held slots. Inspect approved artifacts and record
+actual costs, operational report delivery and final readiness. The schedule remains
+05:00UTC /08:00Riyadh; live falls back to shadow until both final-engine lanes pass.
 
 ## Resume procedure
 1. Read this tracker, current main and open implementation PRs.
