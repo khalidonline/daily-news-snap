@@ -17,6 +17,11 @@ class Store:
 
 
 class AgentTests(unittest.TestCase):
+    def test_plain_newlines_inside_json_strings_are_normalized_safely(self):
+        self.assertEqual(parse_object('{"reason":"first\nsecond"}'), {'reason': 'first\nsecond'})
+        with self.assertRaises(ValueError): parse_object('{"reason":"bad\x00value"}')
+        with self.assertRaises(ValueError): parse_object('{}\n{}')
+
     def test_complete_json_fence_is_normalized_but_mixed_prose_rejected(self):
         self.assertEqual(parse_object('```json\n{"candidates": []}\n```'), {'candidates': []})
         with self.assertRaises(ValueError): parse_object('Here is the answer: {"candidates": []}')

@@ -95,7 +95,7 @@ class Pipeline:
                     self.save(state, 'researched', sources=sources, research=research)
                     feedback = ''
                     excluded_images = set()
-                    for attempt in range(2):
+                    for attempt in range(3):
                         review = None
                         try:
                             draft = self.agent.run('writer', {'candidate': candidate, 'research': research,

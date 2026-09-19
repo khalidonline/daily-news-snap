@@ -148,7 +148,18 @@ def parse_object(answer):
         if any(mark in rationale for mark in ('{', '[', '```')):
             raise ValueError('ambiguous_agent_response')
         answer = body
-    result = json.loads(answer)
+    # Providers sometimes emit literal newlines in explanatory JSON strings.
+    # Accept whitespace controls, but never extra objects or nontext controls.
+    result = json.loads(answer, strict=False)
+    def safe_strings(value):
+        if isinstance(value, str):
+            if any(ord(char) < 32 and char not in '\n\r\t' for char in value):
+                raise ValueError('invalid_agent_control_character')
+        elif isinstance(value, dict):
+            for key, item in value.items(): safe_strings(key); safe_strings(item)
+        elif isinstance(value, list):
+            for item in value: safe_strings(item)
+    safe_strings(result)
     if not isinstance(result, dict):
         raise ValueError('agent_json_object_required')
     return result
