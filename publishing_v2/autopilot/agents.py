@@ -27,6 +27,11 @@ PROMPTS = {
     'editor': '''Select up to FOUR ranked candidates by ID from supplied candidates.
 Rank candidates for documented context, broad appeal, and feasible truthful
 illustration. Favor concise subject/company search terms over repeating a headline.
+Choose one main subject behind the trigger: a person, company, organization,
+place, object or practice. The angle must explain that subject, not recap the
+news. Keep the trigger in why_now. research_query must be only the subject's
+canonical English name with a short disambiguator if needed; omit event actions,
+opponents, scores, dates and headline wording.
 No fixed category rotation or category preference. Daily requires a verified
 today/tomorrow attention moment; local requires everyday Saudi relevance.
 Select routine consumer, culture, travel, sport or everyday life subjects that
@@ -38,6 +43,11 @@ Return {"candidates":[{"id":"existing id","why_saudi":"...","why_now":"...",
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',
     'researcher': '''Use ONLY the supplied retrieved source passages. Select 5–8
 useful facts for an information card and an engaging true story. Each fact must
+explain the selected subject and support the editor's angle: a distinctive defining
+fact followed by connected background, developments or consequences. Do not
+substitute unrelated facts about an associated organization or a recent season.
+The trigger establishes timing, not the whole story. Return no claims if the
+sources cannot support the explanatory angle. Each selected fact must
 be supported by its selected passage ID. Read neighboring passages for context,
 but never infer a fact that the cited passage does not support. Do not transcribe
 quotes: the program retrieves the exact text by ID. Infer actual event date from
@@ -56,12 +66,18 @@ Use at most FOUR editorial cards so licensed imagery and final credits fit one
 readable Snapchat video. Never pad a package with extra statistics or repetition.
 Info must explain the subject with a distinctive useful fact, not just explain
 its name or introduce a person. Story adds origins, turning points and an outcome
-only where evidence supports them. Each card adds value; do not force a closing
+only where evidence supports them. The Info title and body must explain what the selected subject is and
+give a distinctive fact; its main content cannot be the triggering result,
+announcement or headline. Later cards develop the same subject and explanatory
+angle, not disconnected background statistics. A brief trigger reference is optional.
+Each card must advance or explain the preceding material. Do not force a closing
 question. All assertions, including title and punch, must map to supplied claim IDs.
 Title <=85 characters, body <=240, punch <=100 (may be empty).
 Image queries must name concrete visible subjects or objects, not abstract terms
 like policy, curriculum, plan or history. For education, books or a chalkboard can
 provide honest generic illustration without implying a particular school.
+Prefer a clear photo of the subject over a specific event, award certificate or
+trophy. A subject photo can truthfully illustrate its history or recognition.
 Return {"title":"package title <=100 characters","cards":[{"kind":"info or story",
 "title":"...","body":"...","punch":"...","claim_ids":["c1"],
 "image_query":"2–3 English words naming subject, portrait or logo; omit descriptive scene details"}]}.
@@ -71,8 +87,10 @@ shared image catalog. Prefer exact subject, portrait or appropriate logo.
 An image may repeat for cards about the same subject when it remains relevant.
 Generic objects can illustrate concepts without claiming a specific event/location.
 A foreign shooting location alone does not disqualify a neutral object photo, but
-a visibly identified foreign institution cannot stand in for a Saudi institution. Reject irrelevant,
-misleading, mismatched historical context, and repeated imagery across unrelated
+a visibly identified foreign institution cannot stand in for a Saudi institution.
+For a subject's history, awards or recognition, a clear photo of that subject is
+valid generic illustration; an event photo, certificate or trophy is not required.
+Reject irrelevant or misleading images, mismatched historical context, and repeated imagery across unrelated
 subjects. Metadata is evidence, not a guarantee; the independent pixel reviewer
 will inspect final crops. Return {"image_ids":["id or null", ...],"reason":"explain unsuitable options or acceptance"} in card order.
 Never invent IDs or declare image rights yourself.''',
@@ -87,8 +105,12 @@ not an evergreen or recycled article. Reject any card that presents this as the
 underlying event happening today. Otherwise event_date must follow from the quoted
 event context. For daily reject stale timing even if a story is interesting.
 For local, timeless Saudi everyday subjects are acceptable. Check natural Saudi
-wording, coherent progression, broad interest, useful Info card, no repetition,
-and the established light background/Almarai brand. Inspect actual Arabic pixels
+wording, coherent progression, broad interest, useful Info card and no repetition.
+Set distinct_value false if Info mainly recaps the triggering news instead of
+explaining the selected subject through a distinctive fact. Set story_coherent
+false if later cards switch subjects or merely collect unrelated facts. Factual
+accuracy alone does not pass these editorial gates. Check
+the established light background/Almarai brand. Inspect actual Arabic pixels
 for clipping, overlap, readability, photo relevance and appropriate historical
 context. A modern illustrative photograph cannot masquerade as a historical scene.
 Identify the visible objects in each photo from its PIXELS before consulting its
@@ -155,9 +177,13 @@ class Agents:
             content.append({'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/jpeg',
                             'data': base64.b64encode(buffer.getvalue()).decode()}})
         content.append({'type': 'text', 'text': encoded})
-        payload = {'model': model, 'max_tokens': 8000 if role in {'writer', 'researcher'} else 6000,
+        payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else 8192,
                    'system': STYLE + '\n' + PROMPTS[role],
                    'messages': [{'role': 'user', 'content': content}]}
+        # Adaptive thinking defaults to high on these models and shares the
+        # output ceiling. Leave room for JSON; reserve deeper work for review.
+        if model in {'claude-sonnet-5', 'claude-opus-5'}:
+            payload['output_config'] = {'effort': 'high' if role == 'reviewer' else 'medium'}
         payload, maximum = prepare(payload)
         token = self.ledger.reserve(maximum, 'autopilot:' + role)
         transport = self.transport or partial(providers._default_transport, timeout_seconds=180)

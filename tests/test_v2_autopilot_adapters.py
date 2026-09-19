@@ -34,6 +34,8 @@ class AgentTests(unittest.TestCase):
 
     def test_budget_is_reserved_before_request_and_settled(self):
         def transport(method, url, headers, payload):
+            self.assertEqual(payload['output_config']['effort'], 'medium')
+            self.assertGreaterEqual(payload['max_tokens'], 8000)
             self.assertGreater(sum(e['charged_micro_usd'] for e in self.store.row['entries'].values()), 0)
             self.assertNotIn('test', payload['system'])
             return {'status_code': 200, 'body': {'id': 'receipt', 'stop_reason': 'end_turn',
@@ -77,6 +79,8 @@ class AgentTests(unittest.TestCase):
 
     def test_reviewer_gets_images_in_a_fresh_request(self):
         def transport(method, url, headers, payload):
+            self.assertEqual(payload['output_config']['effort'], 'high')
+            self.assertGreaterEqual(payload['max_tokens'], 16000)
             self.assertEqual(len(payload['messages']), 1)
             self.assertEqual(payload['messages'][0]['content'][0]['type'], 'image')
             self.assertNotIn('tools', payload)

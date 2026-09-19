@@ -13,6 +13,24 @@ from publishing_v2.autopilot.runtime import Renderer, rollout_ready, publish_pac
 
 
 class RuntimeTests(unittest.TestCase):
+    def test_repair_retains_selected_images_but_not_other_candidates(self):
+        class Sources:
+            def images(self, query):
+                return [{'asset_id': query, 'title': query}]
+        class Agent:
+            def run(self, role, data):
+                return {'image_ids': ['dates', None], 'reason': 'second image unavailable'}
+        renderer = Renderer(Agent(), Sources())
+        first = {'candidate': {'id': 'palm'}, 'cards': [
+            {'image_query': 'dates'}, {'image_query': 'history'}]}
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaisesRegex(ValueError, 'unknown_visual_selection'):
+                renderer(first, root)
+        repaired = {'candidate': {'id': 'palm'}, 'cards': [{'image_query': 'new query'}]}
+        self.assertIn('dates', [r['asset_id'] for r in renderer.image_catalog(repaired)])
+        other = {'candidate': {'id': 'coffee'}, 'cards': [{'image_query': 'coffee pot'}]}
+        self.assertNotIn('dates', [r['asset_id'] for r in renderer.image_catalog(other)])
+
     def test_existing_shadow_cannot_be_restamped_as_new_engine(self):
         result = {'engine': 'old', 'status': 'shadow_passed', 'started_at': '2026-09-17T00:00:00+00:00', 'approval': {}}
         with self.assertRaises(ValueError): shadow_record(result, 'new', 'slot')
