@@ -12,21 +12,22 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-Recovery fix deployed through PR #210, merge fa8d05e45cd17520a89628e24b317db412034ca5.
-All 184 publishing tests and independent review passed. The workflow trial
-35465530726 is running in shadow mode for both lanes; no posting in this trial.
-- One separately budgeted JSON-format retry; no retries of refusals, unknown costs
-  or semantic rejection. Format errors recorded without raw response text.
-- At most three source redirects, each validated by the existing URL allowlist.
-- Eligible subject images checked before paid research; catalogue passed to writer.
-- Budget headroom correction in progress: September 19 ledger has $4.475385 settled
-  and $0.115566 outstanding, leaving less than the reviewer's $5.4096 conservative
-  reservation under $10. Explicit commissioning ceiling increased to $20/day under
-  existing owner authorization; legacy callers retain their $3 default and existing
-  $10 callers retain their own cap. No charges or unknown reservations removed.
-- Budget regression tests: 22 pass, including preservation of old entries and cap
-  enforcement. A pre-existing workflow test assumes every workflow uses legacy
-  PYTHONPATH injection; native v2 instead reserves and settles directly.
+Recovery and commissioning headroom deployed:
+- PR #210 merged as fa8d05e45cd17520a89628e24b317db412034ca5: separately budgeted
+  malformed-JSON retry, validated redirects, visual availability before drafting.
+- PR #211 merged as 3849dde3a0c589d877ca706fbf499f4bf929939c: explicit $20/day
+  commissioning ceiling; legacy default $3 and lower caller caps preserved.
+- 184 publishing tests pass; independent review and CI pass for both changes.
+  22 budget and 5 store tests also independently pass. The pre-existing legacy
+  WorkflowBudgetTests assertion does not recognize native v2 budget integration.
+- Trial 35465530726 finished held: daily reached rendering then BudgetBlocked;
+  local exhausted three candidates with insufficient eligible images. Cost $0.173828.
+- Final-engine trial 35465831225 is RUNNING, shadow/both, no publishing.
+  Engine 3643ea84b8f86e478ebf9618a3fe8fd2c6dfd4bc8bd72a04c0e619495bc11f34.
+  Reviewer reservation succeeded under $20. Daily M&S draft received factual and
+  visual repair feedback: 100 years making clothing is not company founding;
+  repeated storefront imagery needs more variety. Allow bounded repairs to finish.
+- All historical charges and unresolved reservations remain intact.
 No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 
 ## Milestones
@@ -42,9 +43,10 @@ No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Finish the $20 commissioning headroom deployment and run the resulting main engine
-in shadow mode for both lanes. Inspect resulting cards and current-source evidence.
-Record actual outcomes and cost; preserve all prior held slots and reservations.
+Inspect completion of shadow trial 35465831225 and its daily/local journals under
+snapchat-api-state. Do not cancel or repeat a working run. Resolve concrete remaining
+failures if needed, then inspect successful rendered cards and current-source evidence.
+Record actual outcomes and cost; preserve prior held slots and reservations.
 Do not claim tomorrow's posting is ready until both lanes clear validation.
 
 ## Resume procedure
