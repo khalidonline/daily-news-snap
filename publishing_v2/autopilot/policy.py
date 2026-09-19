@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from .feedback import rejected_trigger
+from .sources import attention_source
 
 RIYADH = ZoneInfo('Asia/Riyadh')
 REVIEW_CHECKS = ('factual', 'timely', 'saudi_language', 'broad_appeal',
@@ -57,7 +58,7 @@ def reporting_time(data, sources, candidate, lane):
     """Fresh verified reporting may trigger a story without dating its history."""
     if data.get('event_date') is not None:
         return data
-    article = next((s for s in sources if s.get('source_type') == 'news_article'), None)
+    article = next((s for s in sources if attention_source(s, candidate)), None)
     published = candidate.get('published_at')
     if not article or not isinstance(published, str):
         return data
@@ -112,8 +113,11 @@ def evidence_snapshot(data, sources):
         if len(body.split()) > 200:
             raise ValueError('source_excerpt_limit')
         if body:
-            rows.append({'id': source['id'], 'url': source['url'], 'text': body,
-                         'retrieved_text_sha256': hashlib.sha256(source['text'].encode()).hexdigest()})
+            snapshot = {'id': source['id'], 'url': source['url'], 'text': body,
+                        'retrieved_text_sha256': hashlib.sha256(source['text'].encode()).hexdigest()}
+            if source.get('source_type') == 'publisher_feed':
+                snapshot.update({key: source[key] for key in ('source_type', 'feed_url', 'published_at')})
+            rows.append(snapshot)
     return rows
 
 

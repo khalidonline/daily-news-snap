@@ -12,28 +12,27 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-Recovery and commissioning headroom deployed:
-- PR #210 merged as fa8d05e45cd17520a89628e24b317db412034ca5: separately budgeted
-  malformed-JSON retry, validated redirects, visual availability before drafting.
-- PR #211 merged as 3849dde3a0c589d877ca706fbf499f4bf929939c: explicit $20/day
-  commissioning ceiling; legacy default $3 and lower caller caps preserved.
-- 184 publishing tests pass; independent review and CI pass for both changes.
-  22 budget and 5 store tests also independently pass. The pre-existing legacy
-  WorkflowBudgetTests assertion does not recognize native v2 budget integration.
-- Trial 35465530726 finished held: daily reached rendering then BudgetBlocked;
-  local exhausted three candidates with insufficient eligible images. Cost $0.173828.
-- Trial 35465831225 finished: daily shadow_passed after factual/visual repair;
-  local held for lack of suitable images. No publishing. Cost $0.840751.
-  Engine 3643ea84b8f86e478ebf9618a3fe8fd2c6dfd4bc8bd72a04c0e619495bc11f34.
-  Downloaded artifact and inspected all four decoded daily frames; readable and
-  correct light/Almarai layout, corrected 100-years-clothing claim, final credits.
-- Last retrieval correction in validation: recover Abha/Asir/Khamis Mushait from
-  descriptive briefs; do not count images below existing resolution thresholds
-  toward the pool; continue paging partial pools within existing 12-request cap.
-  Three regression failures reproduced then fixed. Ten media tests and fourteen
-  adapter tests pass; independent review found no blocking issues.
-- All historical charges and unresolved reservations remain intact.
-No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
+Deployed recovery milestones:
+- PR #210 / fa8d05e: bounded malformed-JSON retry and validated article redirects.
+- PR #211 / 3849dde: explicit $20/day commissioning ceiling, historical charges
+  and unknown reservations preserved; lower caller ceilings remain enforced.
+- PR #212 / c6fcd5a: recover local image subjects, reject undersized results before
+  filling the pool, and page partial pools within existing 12-request limit.
+- 187 publishing tests and independent review passed before latest deployment.
+- Trial 35465831225: daily passed after factual/visual repair; local held for
+  imagery; $0.840751. All approved daily frames inspected. Previous engine only.
+- Trial 35466789920: both held; daily exhausted factual/visual repairs and source
+  alternatives, local could not retrieve articles. $0.525544; Telegram report step
+  succeeded. Final engine a2804a998ea95d77d83d776f22ec6a3963303a60a50b367e664de0b1f7d276db.
+- Direct retrieval of last failed local article (alyaum /6683349) succeeds from
+  this environment (169090 bytes, 5378 text chars), so runner failure is not proof
+  the publisher article is permanently unavailable.
+- Publisher RSS fallback now implemented, in final testing/review: substantial
+  text from same allowlisted publisher, exact cached ID/URL/timestamp, at least
+  500 characters and 80 words. Original article preferred. Source type/feed URL
+  retained, no headlines/search snippets promoted, independent review unchanged.
+  Seven focused tests passed independently; no blocking review findings.
+No final-engine daily/local pair is cleared. No posts were made during these trials.
 
 ## Milestones
 | Stage | Scope | Status | Completion evidence required |
@@ -48,10 +47,10 @@ No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Complete tests/deploy the final image-retrieval repair, then validate resulting
-main engine in shadow mode for both lanes. Inspect actual output and record costs.
-Daily passed on the prior engine; local has not cleared, so rollout remains blocked.
-Preserve prior held slots and reservations; never force a weak package through.
+Finish full publishing tests, deploy the publisher-feed fallback, and validate the
+resulting main engine in shadow mode for both lanes. Record actual outputs, costs,
+report delivery and exact posting readiness. Preserve held slots and reservations.
+Do not force candidates past factual, current-attention or visual quality gates.
 
 ## Resume procedure
 1. Read this tracker, current main and open implementation PRs.
