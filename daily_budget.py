@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Shared paid API ceiling, default $3/day, independent of bot or retry.
 
-Explicit commissioning callers can raise the shared ceiling up to $10/day.
+Explicit commissioning callers can raise the shared ceiling up to $20/day.
 Each caller still enforces its own ceiling against all shared charges.
 
 Prices: https://platform.claude.com/docs/en/about-claude/pricing (2026-09-10).
@@ -28,7 +28,7 @@ from decimal import Decimal, ROUND_CEILING
 from pathlib import Path
 
 LIMIT_MICRO_USD = 3_000_000
-MAX_LIMIT_MICRO_USD = 10_000_000
+MAX_LIMIT_MICRO_USD = 20_000_000
 KSA = timezone(timedelta(hours=3))
 LEDGER_BRANCH = 'cost-ledger'
 # Input, output USD/MTok, maximum context. Reject new models until reviewed.
@@ -103,7 +103,7 @@ class Ledger:
     def __init__(self, store, now=None, limit_micro_usd=LIMIT_MICRO_USD):
         if (type(limit_micro_usd) is not int
                 or not LIMIT_MICRO_USD <= limit_micro_usd <= MAX_LIMIT_MICRO_USD):
-            raise BudgetBlocked('daily ceiling must be integer micro-USD between $3 and $10')
+            raise BudgetBlocked('daily ceiling must be integer micro-USD between $3 and $20')
         self.store = store
         self.now = now or (lambda: datetime.now(timezone.utc))
         self.limit_micro_usd = limit_micro_usd
