@@ -5,6 +5,7 @@ from pathlib import Path
 
 from daily_budget import BudgetBlocked
 from . import policy
+from .feedback import EDITORIAL_FEEDBACK
 
 
 class PersistenceError(Exception):
@@ -66,6 +67,7 @@ class Pipeline:
             if not candidates:
                 raise ValueError('no_current_candidates')
             selected = self.agent.run('editor', {'lane': lane, 'now': self.now().isoformat(),
+                                                'editorial_feedback': EDITORIAL_FEEDBACK,
                                                 'candidates': candidates})
             ids = {c['id']: c for c in candidates}
             ranked = selected.get('candidates', [])
@@ -81,7 +83,11 @@ class Pipeline:
                 candidate = dict(ids[choice['id']], editorial=choice)
                 self.save(state, 'selected', candidate=candidate)
                 try:
+                    policy.validate_attention(candidate, self.now())
                     sources = self.sources.research(candidate)
+                    if not any(s.get('source_type') == 'news_article'
+                               and s.get('url') == candidate['url'] for s in sources):
+                        raise ValueError('attention_article_not_retrieved')
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
                                                             'lane': lane, 'now': self.now().isoformat()})
                     research = policy.reporting_time(research, sources, candidate, lane)
@@ -89,7 +95,7 @@ class Pipeline:
                     original_sources = sources
                     sources = policy.evidence_snapshot(research, sources)
                     expires = state['expires_at']
-                    if lane == 'daily':
+                    if lane in {'daily', 'local'}:
                         activation = datetime.fromisoformat(research['event_date']).replace(tzinfo=policy.RIYADH)
                         expires = min(expires, policy.expiry(activation))
                     self.save(state, 'researched', sources=sources, research=research)
@@ -103,6 +109,7 @@ class Pipeline:
                             policy.validate_draft(draft, research)
                             self.save(state, 'drafted', draft=draft)
                             package = dict(draft, sources=sources, research=research, lane=lane,
+                                           editorial_feedback=EDITORIAL_FEEDBACK,
                                            candidate=candidate, expires_at=expires, as_of=self.now().isoformat(),
                                            repair={'feedback': feedback, 'excluded_image_ids': sorted(excluded_images)})
                             folder = self.output / choice['id'] / str(attempt)

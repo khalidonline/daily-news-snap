@@ -20,7 +20,7 @@ class MemoryStore:
 
 def evidence():
     return [{'id': 's1', 'url': 'https://www.bbc.com/news/a',
-             'text': 'The event began on 17 September 2026. A useful historical fact.'}]
+             'source_type': 'news_article', 'text': 'The event began on 17 September 2026. A useful historical fact.'}]
 
 
 def research():
@@ -60,7 +60,7 @@ class FakeAgent:
 
 
 class FakeSources:
-    def discover(self, lane, now): return [{'id': x, 'title': x} for x in ['a', 'b']]
+    def discover(self, lane, now): return [{'id': x, 'title': x, 'url': 'https://www.bbc.com/news/a', 'published_at': now.isoformat()} for x in ['a', 'b']]
     def research(self, candidate): return evidence()
 
 
@@ -114,7 +114,7 @@ class PipelineTests(unittest.TestCase):
                 return result
         pipeline = self.pipeline()
         pipeline.agent = MoreCandidates()
-        pipeline.sources.discover = lambda lane, now: [{'id': ident, 'title': ident} for ident in 'abcd']
+        pipeline.sources.discover = lambda lane, now: [{'id': ident, 'title': ident, 'url': 'https://www.bbc.com/news/a', 'published_at': now.isoformat()} for ident in 'abcd']
         result = pipeline.run('daily', 'shadow')
         self.assertEqual(result['status'], 'held')
         self.assertEqual(pipeline.agent.calls.count('researcher'), 4)

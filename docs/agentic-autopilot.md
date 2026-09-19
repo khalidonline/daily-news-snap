@@ -2,7 +2,7 @@
 
 Run `python -m publishing_v2.autopilot.runtime --mode shadow --lane both` in the
 configured main-branch GitHub Actions environment. The workflow runs at 08:00
-Riyadh daily and on deployment of its code. It requests live mode by default;
+Riyadh daily. Paid runs are not triggered by code pushes. It requests live mode by default;
 the runtime automatically runs both lanes in shadow when the exact engine lacks
 recent validation. GitHub Actions schedules can be delayed by runner availability.
 
@@ -81,8 +81,10 @@ attempt cost and the Actions link; shadow output is explicitly identified.
 
 ## Initial limits
 
-- Discovery uses a bounded set of existing news feeds and everyday Saudi local
-  seeds, with retrieved articles and encyclopedia context. It does not yet cover
+- Both lanes use dated news feeds with retrieved original articles and encyclopedia
+  context. Local topics additionally require Saudi everyday/cultural relevance.
+  No timeless local seed fallback remains. Each feed has bounded space so earlier
+  sources cannot crowd Saudi feeds out of discovery. It does not yet cover
   every event or a paid research supplier. Unsupported dates/facts are rejected.
   When an underlying event date is unknown, substantive current reporting may
   supply the attention date from verified feed metadata. This is explicitly
@@ -101,3 +103,16 @@ attempt cost and the Actions link; shadow output is explicitly identified.
   own $3 reservation limit. Actual quality and costs are measured in shadow.
 
 Tests: `python -m unittest discover -s tests -p 'test_v2_*.py' -q`.
+
+## Current attention and owner feedback
+
+Both lanes require a retrieved news article from the last 24 hours and supported
+timing. The independent reviewer must explicitly pass `current_attention`: the
+article must establish a concrete current development and audience reason, not
+just have a fresh date. The trigger may remain off the finished cards.
+`feedback.py` stores versioned owner rejections shared with editor and reviewer.
+Exact rejected triggers are excluded before research, including URL slug/query
+variants of the recorded article. Subjects are not permanently banned: a distinct
+current development and better narrative may qualify. Feedback changes invalidate
+old engine validation. Add future owner rejections there; this is curated feedback,
+not an automatic chat ingestion or audience analytics system.

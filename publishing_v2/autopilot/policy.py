@@ -4,9 +4,11 @@ import json
 from datetime import datetime, timedelta, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from .feedback import rejected_trigger
 
 RIYADH = ZoneInfo('Asia/Riyadh')
 REVIEW_CHECKS = ('factual', 'timely', 'saudi_language', 'broad_appeal',
+                 'current_attention', 'feedback_respected',
                  'story_coherent', 'documented_story', 'distinct_value',
                  'visual_variety', 'story_numbering', 'visual_identity', 'safe_routine')
 
@@ -40,9 +42,20 @@ def expiry(now):
                             time.min, RIYADH).isoformat()
 
 
+def validate_attention(candidate, now):
+    if rejected_trigger(candidate):
+        raise ValueError('owner_rejected_trigger')
+    published = candidate.get('published_at')
+    if not isinstance(published, str) or not candidate.get('url'):
+        raise ValueError('missing_attention_source')
+    stamp = datetime.fromisoformat(published)
+    if stamp.tzinfo is None or not now - timedelta(days=1) <= stamp <= now:
+        raise ValueError('attention_outside_window')
+
+
 def reporting_time(data, sources, candidate, lane):
     """Fresh verified reporting may trigger a story without dating its history."""
-    if lane != 'daily' or data.get('event_date') is not None:
+    if data.get('event_date') is not None:
         return data
     article = next((s for s in sources if s.get('source_type') == 'news_article'), None)
     published = candidate.get('published_at')
@@ -72,7 +85,7 @@ def validate_research(data, sources, lane, now):
             raise ValueError('unsupported_quote')
     if data.get('sensitive') is not False:
         raise ValueError('sensitive_or_uncertain_topic')
-    if lane == 'daily':
+    if lane in {'daily', 'local'}:
         event_text = data.get('event_date')
         if not isinstance(event_text, str):
             raise ValueError('missing_event_date')
