@@ -81,7 +81,7 @@ attempt cost and the Actions link; shadow output is explicitly identified.
 
 ## Initial limits
 
-- Both lanes use dated news feeds with retrieved original articles and encyclopedia
+- Both lanes use dated news feeds with retrieved original publisher text and encyclopedia
   context. Local topics additionally require Saudi everyday/cultural relevance.
   No timeless local seed fallback remains. Each feed has bounded space so earlier
   sources cannot crowd Saudi feeds out of discovery. It does not yet cover
@@ -106,7 +106,7 @@ Tests: `python -m unittest discover -s tests -p 'test_v2_*.py' -q`.
 
 ## Current attention and owner feedback
 
-Both lanes require a retrieved news article from the last 24 hours and supported
+Both lanes require retrieved publisher reporting from the last 24 hours and supported
 timing. The independent reviewer must explicitly pass `current_attention`: the
 article must establish a concrete current development and audience reason, not
 just have a fresh date. The trigger may remain off the finished cards.
@@ -128,3 +128,13 @@ ports and credentials at every hop. Image rights and download rules are unchange
 Before paid research/drafting, the renderer checks for at least three eligible
 subject images and provides their metadata to the writer. This is feasibility,
 not image approval: the final selection and pixel review still apply.
+
+When article retrieval fails, substantive publisher RSS text may establish the
+current trigger. This fallback uses text fetched during discovery from the same
+allowlisted publisher, with the exact article URL and publication timestamp.
+It requires at least 500 characters and 80 words; headlines and short summaries
+do not qualify. The coordinator records `source_type=publisher_feed`, `feed_url`
+and publication time in the evidence snapshot. The researcher and independent
+reviewer still assess supported claims and the actual current development.
+No search snippets, model-supplied sources, or access-control workarounds are used.
+Article retrieval failures now record the exception type and HTTP status.

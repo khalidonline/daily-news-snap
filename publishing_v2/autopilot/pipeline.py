@@ -6,6 +6,7 @@ from pathlib import Path
 from daily_budget import BudgetBlocked
 from . import policy
 from .feedback import EDITORIAL_FEEDBACK
+from .sources import attention_source
 
 
 class PersistenceError(Exception):
@@ -85,8 +86,7 @@ class Pipeline:
                 try:
                     policy.validate_attention(candidate, self.now())
                     sources = self.sources.research(candidate)
-                    if not any(s.get('source_type') == 'news_article'
-                               and s.get('url') == candidate['url'] for s in sources):
+                    if not any(attention_source(s, candidate) for s in sources):
                         raise ValueError('attention_article_not_retrieved')
                     visual_options = []
                     planner = getattr(self.render, 'plan_visuals', None)

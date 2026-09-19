@@ -24,6 +24,25 @@ LOCAL_TOPICS = ('Abha', 'Asir', 'Khamis Mushait', 'Saudi coffee', 'Jeddah', 'Tai
                 'Al-Ahsa Oasis', 'Saudi Arabian cuisine', 'Diriyah', 'Date palm', 'Souq')
 
 
+FEED_PUBLISHERS = {feed: ({'www.alyaum.com'} if 'alyaum.com' in feed else
+                         {'aawsat.com', 'www.aawsat.com'} if 'aawsat.com' in feed else
+                         {'bbc.com', 'www.bbc.com', 'bbc.co.uk', 'www.bbc.co.uk'})
+                   for feed in FEEDS}
+
+
+def attention_source(source, candidate):
+    if source.get('url') != candidate.get('url'):
+        return False
+    if source.get('source_type') == 'news_article':
+        return True
+    if source.get('source_type') != 'publisher_feed':
+        return False
+    body = source.get('text', '')
+    return (urlsplit(source.get('url', '')).hostname in FEED_PUBLISHERS.get(source.get('feed_url'), set())
+            and source.get('published_at') == candidate.get('published_at')
+            and isinstance(body, str) and len(body) >= 500 and len(body.split()) >= 80)
+
+
 def safe_url(url):
     try:
         part = urlsplit(url)
@@ -99,6 +118,7 @@ def reusable_image(row):
 
 class Sources:
     def __init__(self):
+        self.publisher_articles = {}
         self.image_cache = {}
         self.image_search_cache = {}
 
@@ -126,6 +146,13 @@ class Sources:
                         'published_at': published.isoformat()}
                     if rejected_trigger(candidate):
                         continue
+                    body = plain(item.findtext('{http://purl.org/rss/1.0/modules/content/}encoded', '')
+                                 or item.findtext('description', ''))
+                    publisher = {'id': 'article', 'url': link, 'text': body,
+                                 'source_type': 'publisher_feed', 'feed_url': url,
+                                 'published_at': published.isoformat()}
+                    if attention_source(publisher, candidate):
+                        self.publisher_articles[(candidate['id'], link, candidate['published_at'])] = publisher
                     results.append(candidate)
                     accepted += 1
                     # Reserve room for later Saudi feeds in the bounded pool.
@@ -143,8 +170,14 @@ class Sources:
                 if len(body) > 200:
                     rows.append({'id': 'article', 'url': candidate['url'], 'text': body,
                                  'source_type': 'news_article'})
-            except Exception:
-                pass
+            except Exception as error:
+                print(json.dumps({'stage': 'article_retrieval_failed', 'url': candidate['url'],
+                                  'error': type(error).__name__, 'http_status': getattr(error, 'code', None)}), flush=True)
+        if not rows:
+            publisher = self.publisher_articles.get((candidate.get('id'), candidate.get('url'),
+                                                     candidate.get('published_at')))
+            if publisher and attention_source(publisher, candidate):
+                rows.append(dict(publisher))
         try:
             rows.extend(wiki(candidate['editorial']['research_query']))
         except Exception:
