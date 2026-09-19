@@ -1,10 +1,5 @@
 name: Agentic daily and local packages
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'publishing_v2/autopilot/**'
-      - '.github/workflows/publishing-v2-autopilot.yml'
   schedule:
     - cron: '0 5 * * *'
   workflow_dispatch:

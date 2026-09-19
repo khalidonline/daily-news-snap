@@ -7,7 +7,21 @@ from zoneinfo import ZoneInfo
 
 RIYADH = ZoneInfo('Asia/Riyadh')
 REVIEW_CHECKS = ('factual', 'timely', 'saudi_language', 'broad_appeal',
-                 'story_coherent', 'distinct_value', 'visual_identity', 'safe_routine')
+                 'story_coherent', 'documented_story', 'distinct_value',
+                 'visual_variety', 'story_numbering', 'visual_identity', 'safe_routine')
+
+
+def story_counter(index, total):
+    return f'{index} من {total}'.translate(str.maketrans('0123456789', '٠١٢٣٤٥٦٧٨٩'))
+
+
+def validate_image_variety(cards):
+    editorial = [c for c in cards if c.get('kind') != 'credits']
+    for key in ('asset_id', 'sha256'):
+        values = [c.get('image', {}).get(key) for c in editorial]
+        values = [v for v in values if v]
+        if len(values) != len(set(values)):
+            raise ValueError('duplicate_source_image: choose different relevant photos or fewer cards')
 
 
 def digest(data):

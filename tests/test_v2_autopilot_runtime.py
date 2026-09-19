@@ -1,5 +1,6 @@
 import copy
 import hashlib
+import io
 import json
 import tempfile
 import unittest
@@ -13,6 +14,38 @@ from publishing_v2.autopilot.runtime import Renderer, rollout_ready, publish_pac
 
 
 class RuntimeTests(unittest.TestCase):
+    def test_quality_gates_cannot_be_omitted_or_overruled(self):
+        from publishing_v2.autopilot.policy import validate_review, REVIEW_CHECKS
+        for key in ('documented_story', 'visual_variety', 'story_numbering'):
+            for missing in (False, True):
+                checks = dict.fromkeys(REVIEW_CHECKS, True)
+                if missing:
+                    del checks[key]
+                else:
+                    checks[key] = False
+                with self.assertRaisesRegex(ValueError, 'editorial_review_rejected'):
+                    validate_review({'checks': checks, 'reason': 'Evidence reviewed',
+                        'card_checks': [{'readable': True, 'relevant': True}] * 3}, 3)
+
+    def test_duplicate_sources_block_publication_even_with_different_card_bytes(self):
+        from publishing_v2.autopilot.policy import validate_image_variety
+        for key in ('asset_id', 'sha256'):
+            cards = [{'kind': 'info', 'image': {key: 'same'}},
+                     {'kind': 'story', 'image': {key: 'same'}}]
+            with self.assertRaisesRegex(ValueError, 'duplicate_source_image'):
+                publish_package({'cards': cards}, [], client=object())
+            cards[1]['kind'] = 'credits'
+            validate_image_variety(cards)
+
+    @staticmethod
+    def source_bytes():
+        result = []
+        for color in ('green', 'blue', 'red'):
+            buffer = io.BytesIO()
+            Image.new('RGB', (1600, 1200), color).save(buffer, 'PNG')
+            result.append(buffer.getvalue())
+        return result
+
     def test_repair_retains_selected_images_but_not_other_candidates(self):
         class Sources:
             def images(self, query):
@@ -93,22 +126,25 @@ class RuntimeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             image_path = Path(tmp) / 'source.png'
             Image.new('RGB', (1200, 1200), '#809070').save(image_path)
-            raw = image_path.read_bytes()
+            raws = self.source_bytes()
+            raw = raws[0]
             meta = {'download_url': 'https://upload.wikimedia.org/test.png',
                     'license': 'CC0', 'sha256': hashlib.sha256(raw).hexdigest()}
             package = {'sources': [{'url': 'https://en.wikipedia.org/wiki/Coffee'}], 'cards': [dict(kind=kind, title='عنوان', body='معلومة', punch='', image=meta.copy())
                                  for kind in ['info', 'story', 'story']]}
+            for card, data in zip(package['cards'], raws):
+                card['image']['sha256'] = hashlib.sha256(data).hexdigest()
             def frame(path, kicker, counter, *args, **kwargs):
                 counters.append(counter); footers.append(kwargs.get('footer')); Image.new('RGB', (1080, 1920)).save(path)
             def info(spec, source, output):
                 brands.append(spec['brand']); Image.new('RGB', (1080, 1920)).save(output)
             counters, brands, footers = [], [], []
-            with patch('publishing_v2.autopilot.runtime.get_bytes', return_value=raw), \
+            with patch('publishing_v2.autopilot.runtime.get_bytes', side_effect=raws), \
                  patch('publishing_v2.autopilot.runtime.render_card', side_effect=info), \
                  patch.dict('sys.modules', {'story_bot': SimpleNamespace(render_frame=frame)}):
                 result = Renderer(None, None)(package, Path(tmp) / 'render')
             self.assertEqual(len(result), 3)
-            self.assertEqual(counters, ['1 من 2', '2 من 2'])
+            self.assertEqual(counters, ['١ من ٢', '٢ من ٢'])
             self.assertEqual(footers, [None, 'المصادر: ويكيبيديا'])
             self.assertEqual(brands, ['ملخص تنفيذي - معلومة'])
             self.assertEqual(package['cards'][0]['image']['sha256'], meta['sha256'])
@@ -126,9 +162,11 @@ class RuntimeTests(unittest.TestCase):
                     'download_url': 'https://upload.wikimedia.org/classroom.jpg'}
             package = {'sources': [], 'cards': [dict(kind=kind,title='عنوان',body='معلومة',punch='',image=meta.copy())
                          for kind in ['info','story','story']]}
+            for i, card in enumerate(package['cards']):
+                card['image']['asset_id'] = str(i)
             def frame(path, *args, **kwargs): Image.new('RGB', (1080,1920)).save(path)
             def info(spec, source, output): Image.new('RGB', (1080,1920)).save(output)
-            with patch('publishing_v2.autopilot.runtime.get_bytes', return_value=raw), \
+            with patch('publishing_v2.autopilot.runtime.get_bytes', side_effect=self.source_bytes() * 2), \
                  patch('publishing_v2.autopilot.runtime.render_card', side_effect=info), \
                  patch.dict('sys.modules', {'story_bot': SimpleNamespace(render_frame=frame)}):
                 renderer = Renderer(None,None)

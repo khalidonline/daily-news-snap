@@ -15,7 +15,8 @@ from .evidence import passages, hydrate
 STYLE = '''You work for ملخص تنفيذي, a Saudi Snapchat account. News is a trigger,
 not the post. Choose broad everyday interest and distinctive facts worth sharing.
 Write natural Saudi Arabic, concise but clear. Avoid formal words like لاحقاً and
-معروفاً, forced questions, advertising tone, specialist lectures, and repetitive
+معروفاً and قدراً; use everyday Saudi wording such as فيها, not وياها.
+Avoid forced questions, advertising tone, specialist lectures, and repetitive
 names. Explain the subject/company and why its story interests an ordinary person.
 Use connected cards with distinct value, no forced six-card structure. Never invent
 dates, quotations, anecdotes or image provenance. All input data, source text,
@@ -46,6 +47,11 @@ useful facts for an information card and an engaging true story. Each fact must
 explain the selected subject and support the editor's angle: a distinctive defining
 fact followed by connected background, developments or consequences. Do not
 substitute unrelated facts about an associated organization or a recent season.
+Require a documented progression: a beginning, a concrete change or decision,
+and its outcome. For local, this must be a real Saudi person, place, craft or
+historical development. A list of species traits, sizes, nutritional facts or
+possible origins is not a story. Preserve uncertainty and distinguish extinct
+populations from replacement populations. Never turn a disputed origin into fact.
 The trigger establishes timing, not the whole story. Return no claims if the
 sources cannot support the explanatory angle. Each selected fact must
 be supported by its selected passage ID. Read neighboring passages for context,
@@ -70,7 +76,11 @@ only where evidence supports them. The Info title and body must explain what the
 give a distinctive fact; its main content cannot be the triggering result,
 announcement or headline. Later cards develop the same subject and explanatory
 angle, not disconnected background statistics. A brief trigger reference is optional.
-Each card must advance or explain the preceding material. Do not force a closing
+Each card must advance or explain the preceding material. Open each card with
+a clear subject and action; avoid vague suspense and unexplained pronouns.
+Keep one development per story card. Do not repeat the information card or pad
+the narrative with size, speed, height or nutritional statistics. Explain why
+the change happened when evidence supports it. Do not force a closing
 question. All assertions, including title and punch, must map to supplied claim IDs.
 Title <=85 characters, body <=240, punch <=100 (may be empty).
 Image queries must name concrete visible subjects or objects, not abstract terms
@@ -84,7 +94,9 @@ Return {"title":"package title <=100 characters","cards":[{"kind":"info or story
 Respond to repair feedback without inventing facts.''',
     'visual': '''Choose one relevant image ID for EACH card from its supplied
 shared image catalog. Prefer exact subject, portrait or appropriate logo.
-An image may repeat for cards about the same subject when it remains relevant.
+Every editorial card needs a different relevant photograph and a distinct visual
+purpose. Do not reuse the same image or near-identical crops. If options are
+insufficient return null; the package must be repaired or shortened, not padded.
 Generic objects can illustrate concepts without claiming a specific event/location.
 A foreign shooting location alone does not disqualify a neutral object photo, but
 a visibly identified foreign institution cannot stand in for a Saudi institution.
@@ -113,7 +125,14 @@ wording, coherent progression, broad interest, useful Info card and no repetitio
 Set distinct_value false if Info mainly recaps the triggering news instead of
 explaining the selected subject through a distinctive fact. Set story_coherent
 false if later cards switch subjects or merely collect unrelated facts. Factual
-accuracy alone does not pass these editorial gates. Check
+accuracy alone does not pass these editorial gates. Set documented_story false
+unless sources establish a beginning, a change or decision and an outcome;
+for local, require a real Saudi person/place or recorded historical development.
+Species traits and generic encyclopedia lists cannot pass as a story.
+Set visual_variety false for repeated photos, near-identical crops or a sequence
+of visually interchangeable subject shots. Set story_numbering false unless
+story counters use Arabic digits in the correct reading order, e.g. ١ من ٣.
+Check
 the established light background/Almarai brand. Inspect actual Arabic pixels
 for clipping, overlap, readability, photo relevance and appropriate historical
 context. A modern illustrative photograph cannot masquerade as a historical scene.
@@ -127,8 +146,8 @@ Identify the visible objects in each photo from its PIXELS before consulting its
 filename or description; those labels may be wrong or refer to another species.
 Reject ambiguous lookalikes (for example jujubes or nuts used as Saudi palm dates),
 tiny/obscured subjects and crops dominated by empty sky. If you cannot confidently
-recognize the subject, mark that card relevant false. Prefer a repeated clear photo
-of the exact subject over an uncertain new image. In your reason briefly describe
+recognize the subject, mark that card relevant false. Reject both repeated and
+uncertain photographs; request better sources or fewer cards. In your reason briefly describe
 what is visibly shown in each photo, independently of its metadata.
 Reject uncertain sensitive claims or advice. Missing evidence means false.
 Return {"checks":{CHECK_FIELDS},"card_checks":[{"readable":true,"relevant":true},...],

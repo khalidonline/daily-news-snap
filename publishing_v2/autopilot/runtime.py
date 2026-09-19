@@ -15,7 +15,7 @@ from publishing_v2.preview import render_card
 from publishing_v2.public_images import get_bytes, inspect_image, atomic_write
 from .agents import Agents
 from .pipeline import Pipeline
-from .policy import RIYADH, digest, validate_review
+from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
 from .sources import Sources, reusable_image
 from .credits import attribution_eligible, render_credits
 from .video import compile_story
@@ -90,6 +90,7 @@ class Renderer:
                     raise ValueError('unknown_visual_selection: ' + card['image_query'] + ': '
                                      + str(selected.get('reason', ''))[:800])
                 card['image'] = dict(matches[0])
+        validate_image_variety(cards)
         needs_credits = any(attribution_eligible(card['image']) for card in cards)
         existing_credits = [card for card in package['cards'] if card.get('kind') == 'credits']
         if existing_credits and (not needs_credits or len(existing_credits) != 1):
@@ -116,6 +117,7 @@ class Renderer:
             if image.get('sha256') and sha != image['sha256']:
                 raise ValueError('source_image_changed')
             image['sha256'] = sha
+            validate_image_variety(cards)
             source = output / f'source-{i:02d}.jpg'
             atomic_write(source, raw)
             target = output / f'card-{i:02d}.jpg'
@@ -124,7 +126,7 @@ class Renderer:
                              'closing_lines': [card['punch']], 'brand': 'ملخص تنفيذي - معلومة'}, source, target)
             else:
                 story_bot.render_frame(target.with_suffix('.png'), 'ملخص تنفيذي - قصة',
-                    f'{i} من {len(cards)-1}', card['title'], 64, sub=card['body'],
+                    story_counter(i, len(cards)-1), card['title'], 64, sub=card['body'],
                     photo=source, punch=card['punch'],
                     footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names and not needs_credits else None)
                 with Image.open(target.with_suffix('.png')) as image:
@@ -152,6 +154,7 @@ class Renderer:
 
 
 def publish_package(package, paths, *, client=None, journal_factory=GitHubJournal):
+    validate_image_variety(package.get('cards', []))
     media = [(Path(p), Path(p).read_bytes()) for p in paths]
     frame_hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
     if len(frame_hashes) != len(set(frame_hashes)):
