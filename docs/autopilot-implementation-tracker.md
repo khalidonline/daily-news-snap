@@ -12,29 +12,20 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-Focused selection correction deployed via PR #209, merge 6e78f87e077ce8be6330e4a02f702aa4f72ae342.
-Shadow run 35460577945 completed with both lanes held; no publishing occurred.
-Production engine (includes reviewer model environment):
-c3d82729c5dd608f3c038e238f71d373cb5c44e8f59eaf7891e533e5864afa80.
-- Daily: editor returned malformed JSON; stopped before a package was drafted.
-- Local: first candidate exhausted visual repair/invalid_text attempts; second
-  candidate lacked the original news article. No package passed final review.
-- Telegram report journal confirms sent. Trial cost $0.236012.
-- Daily settled AI spend $4.475385, plus $0.115566 retained from the previous
-  interrupted writer call, within the $10 ceiling. These figures are a checkpoint,
-  not a promise that later runs will not change the ledger. No new package is cleared for posting yet.
-- Both lanes use dated reporting and require the matching original article.
-- Local timing checks and expiry now match daily behavior; no evergreen seed fallback.
-- Independent review explicitly checks current attention and owner feedback.
-- Exact rejected triggers are excluded before research; new developments on the
-  same subject remain eligible. Curated feedback is versioned in feedback.py.
-- Each feed gets bounded candidate space, retaining Saudi-source opportunities.
-- Final full v2 suite passed 175 tests; independent reviewer also passed all 12
-  attention tests and found no blocking issues. GitHub offline CI passed.
-  Bot compile/import checks passed.
-Previous shadow run 35459403406 was cancelled without completed/cleared packages.
-Its historical state and cost reservations remain intact.
-Watchdog and audience analytics remain unimplemented and outside this slice.
+Bounded recovery correction implemented; validation/deployment pending.
+Previous trial 35460577945 diagnosed: malformed complete editor JSON, a legitimate
+HTTP301 article URL rejected by blanket redirect blocking, and drafts requiring
+unavailable imagery. The exact aawsat /node/5320224 redirect was reproduced and
+its canonical article is now retrieved successfully without widening host access.
+- One separately budgeted JSON-format retry; no retries of refusals, unknown costs
+  or semantic rejection. Format errors are recorded without raw response text.
+- At most three source redirects, each validated by the existing URL allowlist.
+- At least three eligible subject-image options checked before paid research,
+  with available-image metadata passed to the writer.
+- Full publishing suite: 184 tests pass. Nine new focused tests also independently
+  passed; code review found no blocking defects. Bot compile/import checks pass.
+- Existing current-attention, owner feedback, budget and publishing gates remain.
+No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 
 ## Milestones
 | Stage | Scope | Status | Completion evidence required |
@@ -49,15 +40,10 @@ Watchdog and audience analytics remain unimplemented and outside this slice.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Next bounded slice: recover malformed editorial responses with limited budgeted
-attempts, diagnose original-article retrieval failures, and improve candidate
-feasibility before paying for drafts needing unavailable visuals. Start from
-actual run 35460577945 evidence; do not weaken current-attention, image or review
-gates. Add tests and deploy separately, then run a new shadow trial under the
-new engine. Preserve held slots and reservations; never reset them for a retry.
-No final daily/local pair is cleared for posting.
-Then resume watchdog stage 1. A GitHub watchdog cannot independently recover
-from a GitHub scheduler outage; assess an external scheduler separately.
+Complete full publishing tests, merge this recovery fix, then run main in shadow
+mode for both lanes. Inspect resulting cards and original-source attention evidence.
+Record actual outcomes and cost; preserve all prior held slots and reservations.
+Do not claim tomorrow's posting is ready until both lanes clear validation.
 
 ## Resume procedure
 1. Read this tracker, current main and open implementation PRs.

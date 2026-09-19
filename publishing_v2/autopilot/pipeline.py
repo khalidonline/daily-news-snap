@@ -88,6 +88,12 @@ class Pipeline:
                     if not any(s.get('source_type') == 'news_article'
                                and s.get('url') == candidate['url'] for s in sources):
                         raise ValueError('attention_article_not_retrieved')
+                    visual_options = []
+                    planner = getattr(self.render, 'plan_visuals', None)
+                    if planner:
+                        visual_options = planner(candidate)
+                        if len({r['asset_id'] for r in visual_options}) < 3:
+                            raise ValueError('insufficient_subject_visuals_before_drafting')
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
                                                             'lane': lane, 'now': self.now().isoformat()})
                     research = policy.reporting_time(research, sources, candidate, lane)
@@ -105,6 +111,7 @@ class Pipeline:
                         review = None
                         try:
                             draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
+                                                              'visual_options': visual_options,
                                                               'feedback': feedback})
                             policy.validate_draft(draft, research)
                             self.save(state, 'drafted', draft=draft)

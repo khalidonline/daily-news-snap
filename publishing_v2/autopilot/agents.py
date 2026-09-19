@@ -99,6 +99,12 @@ trophy. A subject photo can truthfully illustrate its history or recognition.
 Return {"title":"package title <=100 characters","cards":[{"kind":"info or story",
 "title":"...","body":"...","punch":"...","claim_ids":["c1"],
 "image_query":"2–3 English words naming subject, portrait or logo; omit descriptive scene details"}]}.
+Use visual_options as a feasibility guide: plan connected beats that have distinct
+honest illustrations in the supplied subject catalog. Do not invent an event,
+location or claim to fit a photo. Generic subject imagery may illustrate history
+without pretending to show the historical event. Avoid requiring a logo, unique
+ceremony or exact weather-event photo unless the catalog actually contains it.
+Prefer three strong editorial cards to four if the fourth lacks evidence or imagery.
 Respond to repair feedback without inventing facts.''',
     'visual': '''Choose one relevant image ID for EACH card from its supplied
 shared image catalog. Prefer exact subject, portrait or appropriate logo.
@@ -199,12 +205,24 @@ def parse_object(answer):
     return result
 
 
+class InvalidAgentResponse(ValueError):
+    """Completed and accounted response whose JSON could not be read."""
+
+
 class Agents:
     def __init__(self, *, env, ledger, transport=None):
         self.env, self.ledger, self.transport = env, ledger, transport
         self.receipts = []
 
     def run(self, role, data, images=()):
+        for attempt in range(2):
+            try:
+                return self._run_once(role, data, images, format_retry=bool(attempt))
+            except InvalidAgentResponse:
+                if attempt:
+                    raise
+
+    def _run_once(self, role, data, images=(), *, format_retry=False):
         if role not in PROMPTS:
             raise ValueError('unknown_agent_role')
         model = self.env.get('AUTOPILOT_' + role.upper() + '_MODEL',
@@ -235,6 +253,10 @@ class Agents:
         payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else 8192,
                    'system': STYLE + '\n' + PROMPTS[role],
                    'messages': [{'role': 'user', 'content': content}]}
+        if format_retry:
+            payload['system'] += ('\nYour previous response was unreadable JSON. Re-evaluate the same inputs '
+                                  'and return one valid JSON object. Escape internal quotes; no prose or fences. '
+                                  'Keep all factual and quality requirements unchanged.')
         # Adaptive thinking defaults to high on these models and shares the
         # output ceiling. Leave room for JSON; reserve deeper work for review.
         if model in {'claude-sonnet-5', 'claude-opus-5'}:
@@ -260,7 +282,14 @@ class Agents:
             raise ValueError('missing_agent_receipt')
         raw_answer = providers._parse_anthropic(body)
         receipt['response_format'] = 'fenced_json' if raw_answer.strip().startswith('```') else 'plain'
-        decision = parse_object(raw_answer)
+        try:
+            decision = parse_object(raw_answer)
+        except ValueError as error:
+            # Keep diagnostics without publishing the raw model/source text.
+            receipt['format_error'] = type(error).__name__
+            if isinstance(error, json.JSONDecodeError):
+                receipt['format_error_position'] = error.pos
+            raise InvalidAgentResponse('agent_json_invalid') from error
         if role == 'researcher':
             receipt['research_shape'] = {
                 'event_date': decision.get('event_date') if isinstance(decision.get('event_date'), str) else None,
