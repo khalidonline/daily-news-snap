@@ -2,7 +2,9 @@
 
 Run `python -m publishing_v2.autopilot.runtime --mode shadow --lane both` in the
 configured main-branch GitHub Actions environment. The workflow runs at 08:00
-Riyadh daily and on deployment of its code. Deployments always run in shadow.
+Riyadh daily and on deployment of its code. It requests live mode by default;
+the runtime automatically runs both lanes in shadow when the exact engine lacks
+recent validation. GitHub Actions schedules can be delayed by runner availability.
 
 The coordinator selects up to four candidates per lane. Separate requests perform
 research, writing, visual selection and independent review of sources and actual
@@ -47,10 +49,10 @@ both records, with the same implementation fingerprint and age under three days.
 Manual dispatch with `mode=live` uses this gate. Missing or stale validation
 automatically runs both lanes in shadow; it never bypasses the gate. Successful
 live runs refresh validation for their lane, so routine operation stays autonomous.
-For unattended live schedules,
-set repository variable `AUTOPILOT_MODE=live` after real shadow validation.
-The initial deployment leaves that variable unset. A failed shadow never silently
-enables publishing. Existing manually approved package publishing is preserved.
+Unattended live scheduling is enabled after real validation of both lanes.
+Set repository variable `AUTOPILOT_MODE=shadow` to pause scheduled/deployment
+publication; explicit manual dispatch mode takes priority. A failed shadow never
+silently enables publishing. Existing manually approved package publishing is preserved.
 
 On activation, an intact, unexpired shadow package from the same Saudi day and
 engine can be promoted into an empty live slot. Its existing review and seal are
