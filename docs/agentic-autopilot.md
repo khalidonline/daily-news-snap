@@ -12,8 +12,10 @@ images contain at most four editorial frames plus complete end credits, delivere
 as one 45–55 second MP4 so images cannot publish without their attribution.
 The reviewer sees frames decoded from the final video; its hash is checked before
 upload. Public-domain/CC0-only packages can still publish as individual images.
-Rejected cards get one full rewrite/render/review; then a replacement candidate
-is attempted. At most eight drafts per lane. No model has publishing credentials
+Rejected cards get at most two full rewrite/render/review attempts; then a replacement candidate
+is attempted. At most twelve drafts per lane, always within the shared spending
+ceiling. Review feedback reaches both writer and visual selector, and image IDs
+rejected for relevance are excluded from that candidate's retries. No model has publishing credentials
 or an external mutation tool. Sources and model responses are untrusted data.
 
 ## Runtime requirements

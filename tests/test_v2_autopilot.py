@@ -149,7 +149,15 @@ class PipelineTests(unittest.TestCase):
         self.agent.reject = 99
         result = self.pipeline().run('daily', 'shadow')
         self.assertEqual(result['status'], 'held')
-        self.assertEqual(self.agent.calls.count('reviewer'), 4)
+        self.assertEqual(self.agent.calls.count('reviewer'), 6)
+        self.assertEqual(self.sent, [])
+
+    def test_two_review_rejections_can_be_repaired_without_new_candidate(self):
+        self.agent.reject = 2
+        result = self.pipeline().run('local', 'shadow')
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertEqual(self.agent.calls.count('reviewer'), 3)
+        self.assertEqual(self.agent.calls.count('researcher'), 1)
         self.assertEqual(self.sent, [])
 
     def test_slot_rerun_does_not_pay_for_generation_again(self):
