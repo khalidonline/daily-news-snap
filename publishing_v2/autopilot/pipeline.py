@@ -94,6 +94,7 @@ class Pipeline:
                         expires = min(expires, policy.expiry(activation))
                     self.save(state, 'researched', sources=sources, research=research)
                     feedback = ''
+                    excluded_images = set()
                     for attempt in range(2):
                         review = None
                         try:
@@ -102,7 +103,8 @@ class Pipeline:
                             policy.validate_draft(draft, research)
                             self.save(state, 'drafted', draft=draft)
                             package = dict(draft, sources=sources, research=research, lane=lane,
-                                           candidate=candidate, expires_at=expires, as_of=self.now().isoformat())
+                                           candidate=candidate, expires_at=expires, as_of=self.now().isoformat(),
+                                           repair={'feedback': feedback, 'excluded_image_ids': sorted(excluded_images)})
                             folder = self.output / choice['id'] / str(attempt)
                             paths = self.render(package, folder)
                             if len(paths) != len(package['cards']):
@@ -127,6 +129,10 @@ class Pipeline:
                             # Reviewer reasoning is useful repair feedback, not new instructions.
                             if 'review' in locals() and isinstance(review, dict):
                                 feedback += ': ' + str(review.get('reason', ''))[:2000]
+                                for card, check in zip(package['cards'], review.get('card_checks', [])):
+                                    ident = card.get('image', {}).get('asset_id')
+                                    if isinstance(check, dict) and check.get('relevant') is False and isinstance(ident, str):
+                                        excluded_images.add(ident)
                             self.save(state, 'repair_required', feedback=feedback)
                 except BudgetBlocked:
                     raise

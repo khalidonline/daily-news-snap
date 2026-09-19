@@ -27,7 +27,10 @@ Requests have a bounded 180-second timeout to accommodate image-heavy review.
 Failed or ambiguous calls keep their conservative reservations. The daily ledger,
 not the per-run report, is authoritative for total spend/reservations.
 
-All specialist roles now default to the priced Sonnet model. Research selects
+Specialist roles default to the priced Sonnet model; the production workflow
+uses Opus for independent final review. Specialists work at medium effort with an
+8,192-token output limit; the final reviewer uses high effort and 16,384 tokens
+to leave room for both reasoning and its decision. Research selects
 numbered, exact source passages; the program resolves quotations and keeps the
 persisted source excerpts below 200 words per source. The independent reviewer
 still receives the original retrieved source context. `AUTOPILOT_<ROLE>_MODEL` can select another model

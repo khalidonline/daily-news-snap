@@ -90,6 +90,10 @@ A foreign shooting location alone does not disqualify a neutral object photo, bu
 a visibly identified foreign institution cannot stand in for a Saudi institution.
 For a subject's history, awards or recognition, a clear photo of that subject is
 valid generic illustration; an event photo, certificate or trophy is not required.
+An identifiable different brand, team, organization or event cannot illustrate a
+named entity's event. A generic topic match does not excuse visible wrong branding.
+For Saudi qahwa, prefer a dallah, handleless finjan or cardamom; do not substitute
+espresso, Turkish coffee or an ambiguous foamy coffee in a handled cup.
 Reject irrelevant or misleading images, mismatched historical context, and repeated imagery across unrelated
 subjects. Metadata is evidence, not a guarantee; the independent pixel reviewer
 will inspect final crops. Return {"image_ids":["id or null", ...],"reason":"explain unsuitable options or acceptance"} in card order.
@@ -113,6 +117,12 @@ accuracy alone does not pass these editorial gates. Check
 the established light background/Almarai brand. Inspect actual Arabic pixels
 for clipping, overlap, readability, photo relevance and appropriate historical
 context. A modern illustrative photograph cannot masquerade as a historical scene.
+Reject an identifiable different brand, team, organization or event used to
+illustrate the named entity's activity. For example, another designer's branded
+runway cannot stand in for a retailer's fashion show, even if the topic is fashion.
+This requires relevant=false, not a qualified acceptance in the reason.
+For Saudi qahwa, reject espresso/Turkish-style or ambiguous foamy coffee in a
+handled cup; a dallah, handleless finjan, or cardamom is a safer relevant illustration.
 Identify the visible objects in each photo from its PIXELS before consulting its
 filename or description; those labels may be wrong or refer to another species.
 Reject ambiguous lookalikes (for example jujubes or nuts used as Saudi palm dates),

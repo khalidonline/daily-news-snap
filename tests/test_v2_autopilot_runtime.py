@@ -28,6 +28,8 @@ class RuntimeTests(unittest.TestCase):
                 renderer(first, root)
         repaired = {'candidate': {'id': 'palm'}, 'cards': [{'image_query': 'new query'}]}
         self.assertIn('dates', [r['asset_id'] for r in renderer.image_catalog(repaired)])
+        repaired['repair'] = {'excluded_image_ids': ['dates']}
+        self.assertNotIn('dates', [r['asset_id'] for r in renderer.image_catalog(repaired)])
         other = {'candidate': {'id': 'coffee'}, 'cards': [{'image_query': 'coffee pot'}]}
         self.assertNotIn('dates', [r['asset_id'] for r in renderer.image_catalog(other)])
 
