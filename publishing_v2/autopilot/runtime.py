@@ -24,6 +24,7 @@ from .video import compile_story
 class Renderer:
     def __init__(self, agent, sources):
         self.agent, self.sources = agent, sources
+        self._catalog_key, self._catalog, self._selected = None, {}, []
 
     def image_options(self, card, package):
         candidate = package.get('candidate', {})
@@ -44,13 +45,22 @@ class Renderer:
         return rows[:10]
 
     def image_catalog(self, package):
-        catalog = {}
+        key = package.get('candidate', {}).get('id')
+        if not key or key != self._catalog_key:
+            self._catalog_key, self._catalog, self._selected = key, {}, []
+        # Keep selected source metadata available when a rewrite changes queries.
+        # Selection is reconsidered; no previous visual approval is carried over.
+        catalog = {ident: self._catalog[ident] for ident in self._selected
+                   if ident in self._catalog}
         for card in package['cards']:
             if card.get('kind') == 'credits':
                 continue
             for row in self.image_options(card, package):
                 catalog.setdefault(row['asset_id'], row)
-        return list(catalog.values())[:35]
+        for ident, row in self._catalog.items():
+            catalog.setdefault(ident, row)
+        self._catalog = dict(list(catalog.items())[:35])
+        return list(self._catalog.values())
 
     def __call__(self, package, output):
         output = Path(output); output.mkdir(parents=True, exist_ok=True)
@@ -70,6 +80,8 @@ class Renderer:
             ids = selected.get('image_ids', [])
             if len(ids) != len(cards):
                 raise ValueError('incomplete_visual_selection')
+            self._selected = list(dict.fromkeys(ident for ident in ids
+                if isinstance(ident, str) and ident in self._catalog))
             for card, rows, ident in zip(cards, choices, ids):
                 matches = [r for r in rows if r['asset_id'] == ident]
                 if len(matches) != 1:
