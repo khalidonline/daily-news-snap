@@ -44,6 +44,39 @@ class MediaRecoveryTests(unittest.TestCase):
         with patch('publishing_v2.autopilot.sources.search_commons', side_effect=search):
             self.assertEqual(Sources().images('Jeddah'), [one, two])
 
+    def test_abha_brief_recovers_canonical_city_query(self):
+        good = {'asset_id': 'abha', 'license': 'CC0', 'width': 1600, 'height': 900}
+        def search(query, limit=5, offset=0):
+            return [good] if query == 'Abha' and offset == 0 else []
+        with patch('publishing_v2.autopilot.sources.search_commons', side_effect=search) as call:
+            self.assertEqual(Sources().images('Abha city view'), [good])
+            self.assertLessEqual(call.call_count, 12)
+
+    def test_small_images_do_not_fill_pool_before_usable_second_page(self):
+        small = [{'asset_id': 'small-' + str(i), 'license': 'CC0',
+                  'width': 300, 'height': 300} for i in range(5)]
+        good = [{'asset_id': 'good-' + str(i), 'license': 'CC0',
+                 'width': 1600, 'height': 900} for i in range(3)]
+        def search(query, limit=5, offset=0):
+            return (small if offset == 0 else good) if query == 'Abha' else []
+        with patch('publishing_v2.autopilot.sources.search_commons', side_effect=search) as call:
+            self.assertEqual(Sources().images('Abha'), good)
+            self.assertLessEqual(call.call_count, 12)
+
+    def test_partial_usable_pool_continues_paging_without_losing_first_image(self):
+        good = [{'asset_id': str(i), 'license': 'CC0', 'width': 1600, 'height': 900}
+                for i in range(3)]
+        def search(query, limit=5, offset=0):
+            if query != 'Abha': return []
+            return good[:1] if offset == 0 else good[1:] if offset == 5 else []
+        source = Sources()
+        with patch('publishing_v2.autopilot.sources.search_commons', side_effect=search) as call:
+            self.assertEqual(source.images('Abha'), good)
+            before = call.call_count
+            self.assertEqual(source.images('Abha'), good)
+            self.assertEqual(call.call_count, before)
+            self.assertLessEqual(before, 12)
+
     def test_empty_results_are_cached_and_searches_bounded(self):
         with patch('publishing_v2.autopilot.sources.search_commons', return_value=[]) as search:
             source = Sources()
