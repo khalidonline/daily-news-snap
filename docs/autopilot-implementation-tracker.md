@@ -27,11 +27,15 @@ Deployed recovery milestones:
 - Direct retrieval of last failed local article (alyaum /6683349) succeeds from
   this environment (169090 bytes, 5378 text chars), so runner failure is not proof
   the publisher article is permanently unavailable.
-- Publisher RSS fallback now implemented, in final testing/review: substantial
+- PR #213 / 4713dd9: publisher RSS fallback deployed. Substantial
   text from same allowlisted publisher, exact cached ID/URL/timestamp, at least
   500 characters and 80 words. Original article preferred. Source type/feed URL
   retained, no headlines/search snippets promoted, independent review unchanged.
   Seven focused tests passed independently; no blocking review findings.
+  All 194 publishing tests and CI passed. Real feed recovered 303 words for
+  the exact failed article /6683349.
+- Final deployed-engine shadow/both trial 35468390489 is RUNNING.
+  Engine 9df6d5279f3d1d73a2e3c0c5ddec3e9c52a2ccc895b2a73e9bff09a9896400d6.
 No final-engine daily/local pair is cleared. No posts were made during these trials.
 
 ## Milestones
@@ -47,10 +51,10 @@ No final-engine daily/local pair is cleared. No posts were made during these tri
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Finish full publishing tests, deploy the publisher-feed fallback, and validate the
-resulting main engine in shadow mode for both lanes. Record actual outputs, costs,
-report delivery and exact posting readiness. Preserve held slots and reservations.
-Do not force candidates past factual, current-attention or visual quality gates.
+Inspect trial 35468390489 to completion; do not restart an active or held slot.
+Record actual daily/local outcomes, costs, report delivery, artifact inspection
+and exact posting readiness. Code fixes are deployed; both final-engine passes
+are still required. No publishing during this validation run.
 
 ## Resume procedure
 1. Read this tracker, current main and open implementation PRs.
