@@ -12,7 +12,15 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-Tracker established. Next implementation stage: 1, watchdog detection.
+Current priority: validate updated daily/local packages in shadow mode before posting.
+User moved this readiness checkpoint ahead of watchdog implementation.
+Run 35459403406 on commit 6c2846819cad7e14ecff134247f5d960faa0452b:
+software safeguards passed; editorial generation/review is in progress.
+This run uses mode=shadow, lane=both; it does not publish.
+Readiness issue found: local discovery uses evergreen seeds and the reviewer allows
+ timeless local subjects, so it does not enforce the latest requirement for a
+current public-attention/news trigger on every story. Do not mark local ready
+without evidence of a current trigger, even if automated review passes.
 Watchdog and audience analytics have NOT been implemented.
 Latest main inspected when creating this checkpoint:
 93fe5f87b6b1a397a7a8e66e5e69ad68757a2d73.
@@ -32,7 +40,9 @@ do not overwrite those changes or assume earlier launch validation validates it.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Read current workflow, runtime, pipeline, receipt store and tests on main.
+Finish run 35459403406, inspect actual daily/local cards and sources, record
+acceptance or precise blockers, and address the local attention-trigger gap.
+Then read current workflow, runtime, pipeline, receipt store and tests on main.
 Implement stage 1 as a read-only decision module with explicit Saudi-day/deadline
 handling. Verify before adding recovery mutations in stage 2.
 A check running on GitHub is not an independent fallback for a GitHub outage.
