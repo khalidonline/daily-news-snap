@@ -22,11 +22,16 @@ Recovery and commissioning headroom deployed:
   WorkflowBudgetTests assertion does not recognize native v2 budget integration.
 - Trial 35465530726 finished held: daily reached rendering then BudgetBlocked;
   local exhausted three candidates with insufficient eligible images. Cost $0.173828.
-- Final-engine trial 35465831225 is RUNNING, shadow/both, no publishing.
+- Trial 35465831225 finished: daily shadow_passed after factual/visual repair;
+  local held for lack of suitable images. No publishing. Cost $0.840751.
   Engine 3643ea84b8f86e478ebf9618a3fe8fd2c6dfd4bc8bd72a04c0e619495bc11f34.
-  Reviewer reservation succeeded under $20. Daily M&S draft received factual and
-  visual repair feedback: 100 years making clothing is not company founding;
-  repeated storefront imagery needs more variety. Allow bounded repairs to finish.
+  Downloaded artifact and inspected all four decoded daily frames; readable and
+  correct light/Almarai layout, corrected 100-years-clothing claim, final credits.
+- Last retrieval correction in validation: recover Abha/Asir/Khamis Mushait from
+  descriptive briefs; do not count images below existing resolution thresholds
+  toward the pool; continue paging partial pools within existing 12-request cap.
+  Three regression failures reproduced then fixed. Ten media tests and fourteen
+  adapter tests pass; independent review found no blocking issues.
 - All historical charges and unresolved reservations remain intact.
 No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 
@@ -43,11 +48,10 @@ No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Inspect completion of shadow trial 35465831225 and its daily/local journals under
-snapchat-api-state. Do not cancel or repeat a working run. Resolve concrete remaining
-failures if needed, then inspect successful rendered cards and current-source evidence.
-Record actual outcomes and cost; preserve prior held slots and reservations.
-Do not claim tomorrow's posting is ready until both lanes clear validation.
+Complete tests/deploy the final image-retrieval repair, then validate resulting
+main engine in shadow mode for both lanes. Inspect actual output and record costs.
+Daily passed on the prior engine; local has not cleared, so rollout remains blocked.
+Preserve prior held slots and reservations; never force a weak package through.
 
 ## Resume procedure
 1. Read this tracker, current main and open implementation PRs.

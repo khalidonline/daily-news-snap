@@ -20,7 +20,7 @@ FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://www.alyaum.com/rssFeed/1005', 'https://aawsat.com/feed')
 HOSTS = {'feeds.bbci.co.uk', 'www.bbc.com', 'www.bbc.co.uk', 'bbc.com', 'bbc.co.uk',
          'www.alyaum.com', 'aawsat.com', 'www.aawsat.com', 'en.wikipedia.org', 'ar.wikipedia.org'}
-LOCAL_TOPICS = ('Saudi coffee', 'Jeddah', 'Taif rose', 'Bisht', 'Al-Qatt Al-Asiri',
+LOCAL_TOPICS = ('Abha', 'Asir', 'Khamis Mushait', 'Saudi coffee', 'Jeddah', 'Taif rose', 'Bisht', 'Al-Qatt Al-Asiri',
                 'Al-Ahsa Oasis', 'Saudi Arabian cuisine', 'Diriyah', 'Date palm', 'Souq')
 
 
@@ -182,7 +182,10 @@ class Sources:
             if key not in self.image_search_cache:
                 self.image_search_cache[key] = search_commons(search, limit=5, offset=offset)
             rows = self.image_search_cache[key]
-            usable = [r for r in rows if reusable_image(r)]
+            usable = [r for r in rows if reusable_image(r)
+                      and not (r.get('width') and r.get('height')
+                               and (min(r['width'], r['height']) < 600
+                                    or max(r['width'], r['height']) < 1000))]
             for row in usable:
                 identity = (row.get('provider', 'commons'), row.get('asset_id') or row.get('download_url')
                             or json.dumps(row, sort_keys=True))
@@ -210,28 +213,28 @@ class Sources:
                 errors.append(type(error).__name__)
                 if len(errors) >= 2:
                     break
-        if collected:
-            self.image_cache[query] = collected[:5]
-            for subject in subjects[1:]:
-                self.image_cache.setdefault(subject, collected[:5])
-            return collected[:5]
         attempts = 0
         if len(errors) < 2:
             for offset in (5, 10, 15, 20):
+                if len(collected) >= 5:
+                    break
                 for search in list(deeper):
                     if attempts >= 5 or len(errors) >= 2:
                         break
                     attempts += 1
                     try:
                         rows, usable = lookup(search, offset)
-                        if usable:
-                            self.image_cache[query] = usable
-                            self.image_cache[search] = usable
-                            return usable
+                        if len(collected) >= 5:
+                            break
                         if not rows:
                             deeper.remove(search)
                     except Exception as error:
                         errors.append(type(error).__name__)
+        if collected:
+            self.image_cache[query] = collected[:5]
+            for subject in subjects[1:]:
+                self.image_cache.setdefault(subject, collected[:5])
+            return collected[:5]
         self.image_cache[query] = []
         print(json.dumps({'stage': 'image_search', 'query': query, 'usable': 0, 'errors': errors}), flush=True)
         return []
