@@ -116,3 +116,15 @@ variants of the recorded article. Subjects are not permanently banned: a distinc
 current development and better narrative may qualify. Feedback changes invalidate
 old engine validation. Add future owner rejections there; this is curated feedback,
 not an automatic chat ingestion or audience analytics system.
+
+## Bounded editorial recovery
+
+A completed, usage-accounted response with unreadable JSON gets at most one fresh
+request, reserved separately against the same daily budget. HTTP errors, refusals,
+unknown usage and valid negative review decisions do not trigger this retry.
+Format diagnostics are kept in receipts without storing raw model output.
+Original articles may follow at most three redirects, validating HTTPS, hosts,
+ports and credentials at every hop. Image rights and download rules are unchanged.
+Before paid research/drafting, the renderer checks for at least three eligible
+subject images and provides their metadata to the writer. This is feasibility,
+not image approval: the final selection and pixel review still apply.

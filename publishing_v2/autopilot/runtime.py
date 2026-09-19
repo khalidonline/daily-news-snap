@@ -26,6 +26,13 @@ class Renderer:
         self.agent, self.sources = agent, sources
         self._catalog_key, self._catalog, self._selected = None, {}, []
 
+    def plan_visuals(self, candidate):
+        subject = candidate['editorial']['research_query']
+        rows = self.image_options({'image_query': subject}, {'candidate': candidate})
+        return [{'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
+                 'description': row.get('description', '')[:900]}
+                for row in rows if reusable_image(row)]
+
     def image_options(self, card, package):
         candidate = package.get('candidate', {})
         subject = candidate.get('editorial', {}).get('research_query') or candidate.get('title')

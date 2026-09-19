@@ -7,10 +7,10 @@ from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from html import unescape
 from urllib.parse import urlsplit, urlencode
-from urllib.request import Request, build_opener
+from urllib.request import Request, build_opener, HTTPRedirectHandler
 from xml.etree import ElementTree
 
-from publishing_v2.public_images import NoRedirect, search_commons
+from publishing_v2.public_images import search_commons
 from .credits import attribution_eligible
 from .feedback import rejected_trigger
 
@@ -36,9 +36,22 @@ def safe_url(url):
     return url
 
 
+class SourceRedirect(HTTPRedirectHandler):
+    """Article canonicalization may redirect, but every hop stays allowlisted."""
+    def __init__(self):
+        self.hops = 0
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        safe_url(newurl)
+        self.hops += 1
+        if self.hops > 3:
+            raise ValueError('source_redirect_limit')
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
 def fetch(url):
     request = Request(safe_url(url), headers={'User-Agent': 'DailyNewsSnap/2.0 (editorial research)'})
-    with build_opener(NoRedirect()).open(request, timeout=15) as response:
+    with build_opener(SourceRedirect()).open(request, timeout=15) as response:
         raw = response.read(2_000_001)
     if len(raw) > 2_000_000:
         raise ValueError('source_too_large')
