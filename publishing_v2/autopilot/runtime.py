@@ -59,7 +59,8 @@ class Renderer:
                 catalog.setdefault(row['asset_id'], row)
         for ident, row in self._catalog.items():
             catalog.setdefault(ident, row)
-        self._catalog = dict(list(catalog.items())[:35])
+        excluded = set(package.get('repair', {}).get('excluded_image_ids', []))
+        self._catalog = dict([(ident, row) for ident, row in catalog.items() if ident not in excluded][:35])
         return list(self._catalog.values())
 
     def __call__(self, package, output):
@@ -76,7 +77,8 @@ class Renderer:
                         'description': row.get('description', '')[:900],
                         'date_created': row.get('date_created', '')[:100]}
                        for row in catalog]
-            selected = self.agent.run('visual', {'cards': cards, 'options': options})
+            selected = self.agent.run('visual', {'cards': cards, 'options': options,
+                                               'repair': package.get('repair', {})})
             ids = selected.get('image_ids', [])
             if len(ids) != len(cards):
                 raise ValueError('incomplete_visual_selection')

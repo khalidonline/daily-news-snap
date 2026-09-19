@@ -65,6 +65,20 @@ class FakeSources:
 
 
 class PipelineTests(unittest.TestCase):
+    def test_image_rejection_is_handed_to_the_next_render(self):
+        self.agent.reject = 1
+        seen = []
+        def render(package, output):
+            seen.append(copy.deepcopy(package))
+            for i, card in enumerate(package['cards']):
+                card['image'] = {'asset_id': str(i)}
+            return self.render(package, output)
+        pipeline = self.pipeline()
+        pipeline.render = render
+        self.assertEqual(pipeline.run('daily', 'shadow')['status'], 'shadow_passed')
+        self.assertEqual(seen[1]['repair']['excluded_image_ids'], ['0', '1', '2'])
+        self.assertIn('Checked against evidence', seen[1]['repair']['feedback'])
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
