@@ -177,9 +177,13 @@ class Agents:
             content.append({'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/jpeg',
                             'data': base64.b64encode(buffer.getvalue()).decode()}})
         content.append({'type': 'text', 'text': encoded})
-        payload = {'model': model, 'max_tokens': 8000 if role in {'writer', 'researcher'} else 6000,
+        payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else 8192,
                    'system': STYLE + '\n' + PROMPTS[role],
                    'messages': [{'role': 'user', 'content': content}]}
+        # Adaptive thinking defaults to high on these models and shares the
+        # output ceiling. Leave room for JSON; reserve deeper work for review.
+        if model in {'claude-sonnet-5', 'claude-opus-5'}:
+            payload['output_config'] = {'effort': 'high' if role == 'reviewer' else 'medium'}
         payload, maximum = prepare(payload)
         token = self.ledger.reserve(maximum, 'autopilot:' + role)
         transport = self.transport or partial(providers._default_transport, timeout_seconds=180)
