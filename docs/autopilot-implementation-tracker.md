@@ -15,7 +15,13 @@ Code deployed is not the same as live behavior verified.
 Current priority: validate updated daily/local packages in shadow mode before posting.
 User moved this readiness checkpoint ahead of watchdog implementation.
 Run 35459403406 on commit 6c2846819cad7e14ecff134247f5d960faa0452b:
-software safeguards passed; editorial generation/review is in progress.
+software safeguards passed; trial was cancelled after selection-rule review.
+No final daily/local pair was completed or cleared; nothing was published.
+Observed first daily draft selected the previously criticized ostrich subject and
+stat-heavy copy. The pipeline subsequently moved to M&S and rejected unsuitable
+visual choices before cancellation; do not describe a final package as reviewed.
+Cancellation confirmed via Actions. Preserve any outstanding budget reservations
+and held slot state; do not clear journals or rerun this interrupted slot blindly.
 This run uses mode=shadow, lane=both; it does not publish.
 Readiness issue found: local discovery uses evergreen seeds and the reviewer allows
  timeless local subjects, so it does not enforce the latest requirement for a
@@ -40,8 +46,10 @@ do not overwrite those changes or assume earlier launch validation validates it.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Finish run 35459403406, inspect actual daily/local cards and sources, record
-acceptance or precise blockers, and address the local attention-trigger gap.
+Next focused slice: require verified current attention for local discovery and
+review, and incorporate rejected-topic feedback into candidate selection.
+Add deterministic tests, then run a fresh bounded shadow trial and inspect both
+completed packages. Do not say ready until actual outputs meet the latest brief.
 Then read current workflow, runtime, pipeline, receipt store and tests on main.
 Implement stage 1 as a read-only decision module with explicit Saudi-day/deadline
 handling. Verify before adding recovery mutations in stage 2.
