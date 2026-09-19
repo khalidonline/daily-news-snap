@@ -12,19 +12,21 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-Bounded recovery correction implemented; validation/deployment pending.
-Previous trial 35460577945 diagnosed: malformed complete editor JSON, a legitimate
-HTTP301 article URL rejected by blanket redirect blocking, and drafts requiring
-unavailable imagery. The exact aawsat /node/5320224 redirect was reproduced and
-its canonical article is now retrieved successfully without widening host access.
+Recovery fix deployed through PR #210, merge fa8d05e45cd17520a89628e24b317db412034ca5.
+All 184 publishing tests and independent review passed. The workflow trial
+35465530726 is running in shadow mode for both lanes; no posting in this trial.
 - One separately budgeted JSON-format retry; no retries of refusals, unknown costs
-  or semantic rejection. Format errors are recorded without raw response text.
+  or semantic rejection. Format errors recorded without raw response text.
 - At most three source redirects, each validated by the existing URL allowlist.
-- At least three eligible subject-image options checked before paid research,
-  with available-image metadata passed to the writer.
-- Full publishing suite: 184 tests pass. Nine new focused tests also independently
-  passed; code review found no blocking defects. Bot compile/import checks pass.
-- Existing current-attention, owner feedback, budget and publishing gates remain.
+- Eligible subject images checked before paid research; catalogue passed to writer.
+- Budget headroom correction in progress: September 19 ledger has $4.475385 settled
+  and $0.115566 outstanding, leaving less than the reviewer's $5.4096 conservative
+  reservation under $10. Explicit commissioning ceiling increased to $20/day under
+  existing owner authorization; legacy callers retain their $3 default and existing
+  $10 callers retain their own cap. No charges or unknown reservations removed.
+- Budget regression tests: 22 pass, including preservation of old entries and cap
+  enforcement. A pre-existing workflow test assumes every workflow uses legacy
+  PYTHONPATH injection; native v2 instead reserves and settles directly.
 No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 
 ## Milestones
@@ -40,8 +42,8 @@ No new daily/local pair is cleared for posting. Watchdog/analytics are separate.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Complete full publishing tests, merge this recovery fix, then run main in shadow
-mode for both lanes. Inspect resulting cards and original-source attention evidence.
+Finish the $20 commissioning headroom deployment and run the resulting main engine
+in shadow mode for both lanes. Inspect resulting cards and current-source evidence.
 Record actual outcomes and cost; preserve all prior held slots and reservations.
 Do not claim tomorrow's posting is ready until both lanes clear validation.
 
@@ -57,7 +59,7 @@ Do not claim tomorrow's posting is ready until both lanes clear validation.
 - Historical live launch: https://github.com/khalidonline/daily-news-snap/actions/runs/35438752317
 - Existing operations: docs/agentic-autopilot.md (may lag newer workflow edits).
 - Existing implementation plan: docs/superpowers/plans/2026-09-17-agentic-autopilot.md
-  is historical; its original $3 ceiling is superseded by the deployed $10/day
+  is historical; its original $3 ceiling is superseded by the explicit $20/day
   commissioning ceiling authorized in this session.
 - Keep existing Saudi Arabic style, broad audience relevance, flexible story
   length, relevant images and independent factual/visual review.

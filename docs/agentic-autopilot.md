@@ -97,8 +97,8 @@ attempt cost and the Actions link; shadow output is explicitly identified.
   No generated documentary imagery or paid Getty dependency is introduced.
 - Audience analytics are not connected. Delivery receipts prove provider-reported
   posting, not audience engagement; no learning or growth claims are made.
-- The workflow explicitly sets `AUTOPILOT_DAILY_LIMIT_MICRO_USD=10000000`
-  for a shared $10/day commissioning ceiling; standalone runtime defaults to $3. Existing charges and outstanding
+- The workflow explicitly sets `AUTOPILOT_DAILY_LIMIT_MICRO_USD=20000000`
+  for a shared $20/day commissioning ceiling; standalone runtime defaults to $3. Existing charges and outstanding
   reservations survive the CAS-protected upgrade; legacy callers retain their
   own $3 reservation limit. Actual quality and costs are measured in shadow.
 

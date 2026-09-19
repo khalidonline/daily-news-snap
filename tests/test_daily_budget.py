@@ -61,6 +61,26 @@ class DailyBudgetTests(unittest.TestCase):
         with self.assertRaises(budget.BudgetBlocked):
             commissioning.reserve(1, 'retry')
 
+    def test_twenty_dollar_upgrade_keeps_unknown_reservations_and_ten_dollar_callers_bounded(self):
+        old = budget.Ledger(self.store, now=lambda: self.now, limit_micro_usd=10_000_000)
+        settled = old.reserve(4_500_000, 'prior-runs')
+        old.settle(settled, 4_475_385)
+        old.reserve(115_566, 'unknown-writer')
+        before = self.store.read('2026-09-12')[1]
+        with self.assertRaises(budget.BudgetBlocked):
+            old.reserve(5_409_600, 'visual-review')
+        upgraded = budget.Ledger(self.store, now=lambda: self.now, limit_micro_usd=20_000_000)
+        review = upgraded.reserve(5_409_600, 'visual-review')
+        after = self.store.read('2026-09-12')[1]
+        for ident, entry in before['entries'].items():
+            self.assertEqual(after['entries'][ident], entry)
+        with self.assertRaises(budget.BudgetBlocked):
+            old.reserve(1, 'old-run')
+        upgraded.settle(review, 200_000)
+        upgraded.reserve(15_209_049, 'remaining-headroom')
+        with self.assertRaises(budget.BudgetBlocked):
+            upgraded.reserve(1, 'over-cap')
+
     def test_legacy_caller_keeps_lower_ceiling_and_can_settle_upgraded_row(self):
         old = self.ledger.reserve(2_000_000, 'news')
         commissioning = budget.Ledger(self.store, now=lambda: self.now,
@@ -76,19 +96,19 @@ class DailyBudgetTests(unittest.TestCase):
         self.assertEqual(self.store.read(old[0])[1]['limit_micro_usd'], 10_000_000)
         commissioning.reserve(7_000_000, 'commissioning')
 
-    def test_configured_ceiling_requires_integer_between_three_and_ten_dollars(self):
+    def test_configured_ceiling_requires_integer_between_three_and_twenty_dollars(self):
         for limit in [None, True, False, 3_000_000.0, '10000000', -1, 0,
-                      2_999_999, 10_000_001]:
+                      2_999_999, 20_000_001]:
             with self.subTest(limit=limit), self.assertRaises(budget.BudgetBlocked):
                 budget.Ledger(self.store, limit_micro_usd=limit)
-        for limit in [3_000_000, 5_500_000, 10_000_000]:
+        for limit in [3_000_000, 5_500_000, 10_000_000, 20_000_000]:
             ledger = budget.Ledger(MemoryStore(), limit_micro_usd=limit)
             ledger.reserve(limit, 'commissioning')
             with self.assertRaises(budget.BudgetBlocked):
                 ledger.reserve(1, 'retry')
 
     def test_invalid_shared_ceiling_blocks_upgrade_without_reset(self):
-        for limit in [True, 3_000_000.0, '3000000', 2_999_999, 10_000_001]:
+        for limit in [True, 3_000_000.0, '3000000', 2_999_999, 20_000_001]:
             original = {'version': 1, 'day': '2026-09-12',
                         'limit_micro_usd': limit, 'entries': {}}
             self.store.rows['2026-09-12'] = (1, original)
