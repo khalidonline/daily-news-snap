@@ -13,8 +13,16 @@ Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
 Focused selection correction deployed via PR #209, merge 6e78f87e077ce8be6330e4a02f702aa4f72ae342.
-Fresh shadow run 35460577945 is in progress, mode=shadow/lane=both.
-Engine: 8190bec79f39e9f9f5dbd16d7511df7a5532feabf8fa2d9e9933a739a422ab3a. No new package is cleared for posting yet.
+Shadow run 35460577945 completed with both lanes held; no publishing occurred.
+Production engine (includes reviewer model environment):
+c3d82729c5dd608f3c038e238f71d373cb5c44e8f59eaf7891e533e5864afa80.
+- Daily: editor returned malformed JSON; stopped before a package was drafted.
+- Local: first candidate exhausted visual repair/invalid_text attempts; second
+  candidate lacked the original news article. No package passed final review.
+- Telegram report journal confirms sent. Trial cost $0.236012.
+- Daily settled AI spend $4.475385, plus $0.115566 retained from the previous
+  interrupted writer call, within the $10 ceiling. These figures are a checkpoint,
+  not a promise that later runs will not change the ledger. No new package is cleared for posting yet.
 - Both lanes use dated reporting and require the matching original article.
 - Local timing checks and expiry now match daily behavior; no evergreen seed fallback.
 - Independent review explicitly checks current attention and owner feedback.
@@ -41,9 +49,13 @@ Watchdog and audience analytics remain unimplemented and outside this slice.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Finish shadow run 35460577945, inspect completed cards and original-source
-attention evidence, and record
-exact pass/hold reasons. Do not publish during this validation step.
+Next bounded slice: recover malformed editorial responses with limited budgeted
+attempts, diagnose original-article retrieval failures, and improve candidate
+feasibility before paying for drafts needing unavailable visuals. Start from
+actual run 35460577945 evidence; do not weaken current-attention, image or review
+gates. Add tests and deploy separately, then run a new shadow trial under the
+new engine. Preserve held slots and reservations; never reset them for a retry.
+No final daily/local pair is cleared for posting.
 Then resume watchdog stage 1. A GitHub watchdog cannot independently recover
 from a GitHub scheduler outage; assess an external scheduler separately.
 
