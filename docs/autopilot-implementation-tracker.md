@@ -12,16 +12,18 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-Focused selection correction implemented and tested locally; awaiting deployment
-and a fresh review-only trial. No new package is cleared for posting yet.
+Focused selection correction deployed via PR #209, merge 6e78f87e077ce8be6330e4a02f702aa4f72ae342.
+Fresh shadow run 35460577945 is in progress, mode=shadow/lane=both.
+Engine: 8190bec79f39e9f9f5dbd16d7511df7a5532feabf8fa2d9e9933a739a422ab3a. No new package is cleared for posting yet.
 - Both lanes use dated reporting and require the matching original article.
 - Local timing checks and expiry now match daily behavior; no evergreen seed fallback.
 - Independent review explicitly checks current attention and owner feedback.
 - Exact rejected triggers are excluded before research; new developments on the
   same subject remain eligible. Curated feedback is versioned in feedback.py.
 - Each feed gets bounded candidate space, retaining Saudi-source opportunities.
-- Full v2 suite passed (200 tests before removing duplicate inherited test runs);
-  final focused attention suite passed 12 tests. Bot compile/import checks passed.
+- Final full v2 suite passed 175 tests; independent reviewer also passed all 12
+  attention tests and found no blocking issues. GitHub offline CI passed.
+  Bot compile/import checks passed.
 Previous shadow run 35459403406 was cancelled without completed/cleared packages.
 Its historical state and cost reservations remain intact.
 Watchdog and audience analytics remain unimplemented and outside this slice.
@@ -39,8 +41,8 @@ Watchdog and audience analytics remain unimplemented and outside this slice.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Deploy this focused correction after review, run main in shadow mode for both
-lanes, inspect completed cards and original-source attention evidence, and record
+Finish shadow run 35460577945, inspect completed cards and original-source
+attention evidence, and record
 exact pass/hold reasons. Do not publish during this validation step.
 Then resume watchdog stage 1. A GitHub watchdog cannot independently recover
 from a GitHub scheduler outage; assess an external scheduler separately.
