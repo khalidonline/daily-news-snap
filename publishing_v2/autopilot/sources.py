@@ -12,6 +12,7 @@ from xml.etree import ElementTree
 
 from publishing_v2.public_images import NoRedirect, search_commons
 from .credits import attribution_eligible
+from .feedback import rejected_trigger
 
 FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://feeds.bbci.co.uk/news/technology/rss.xml',
@@ -89,15 +90,15 @@ class Sources:
         self.image_search_cache = {}
 
     def discover(self, lane, now):
-        if lane == 'local':
-            start = now.date().toordinal() % len(LOCAL_TOPICS)
-            return [{'id': 'local-' + hashlib.sha256(topic.encode()).hexdigest()[:12],
-                     'title': topic, 'local': True}
-                    for topic in (LOCAL_TOPICS[(start + i) % len(LOCAL_TOPICS)] for i in range(5))]
+        if lane not in {'daily', 'local'}:
+            raise ValueError('invalid_lane')
+        # Both lanes need a real attention moment. LOCAL_TOPICS only helps image
+        # search; a date-based rotation is not evidence that people care today.
         results, seen = [], set()
         for url in FEEDS:
             try:
                 root = ElementTree.fromstring(fetch(url))
+                accepted = 0
                 for item in list(root.iter('item'))[:25]:
                     link = item.findtext('link', '')
                     if link in seen: continue
@@ -106,10 +107,17 @@ class Sources:
                     if published.tzinfo is None or not now - timedelta(days=1) <= published <= now:
                         continue
                     seen.add(link)
-                    results.append({'id': hashlib.sha256(link.encode()).hexdigest()[:16],
+                    candidate = {'id': hashlib.sha256(link.encode()).hexdigest()[:16],
                         'title': plain(item.findtext('title', ''))[:250], 'url': link,
                         'summary': plain(item.findtext('description', ''))[:1000],
-                        'published_at': published.isoformat()})
+                        'published_at': published.isoformat()}
+                    if rejected_trigger(candidate):
+                        continue
+                    results.append(candidate)
+                    accepted += 1
+                    # Reserve room for later Saudi feeds in the bounded pool.
+                    if accepted >= 12:
+                        break
             except Exception:
                 continue
         return results[:60]

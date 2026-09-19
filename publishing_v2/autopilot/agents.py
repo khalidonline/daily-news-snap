@@ -33,8 +33,16 @@ place, object or practice. The angle must explain that subject, not recap the
 news. Keep the trigger in why_now. research_query must be only the subject's
 canonical English name with a short disambiguator if needed; omit event actions,
 opponents, scores, dates and headline wording.
-No fixed category rotation or category preference. Daily requires a verified
-today/tomorrow attention moment; local requires everyday Saudi relevance.
+No fixed category rotation or category preference. BOTH daily and local require a verified current attention moment (طاري), not
+just an article with today's timestamp. Local must additionally concern everyday
+Saudi culture, a Saudi place or Saudi life; generic foreign news is not local.
+Explain the concrete current development and why ordinary Saudis would care now.
+Reject evergreen explainers, old announcements and routine institutional coverage
+without a compelling current hook. Weigh the hook AND the quality of the possible
+Info/story, not novelty alone. The trigger need not appear in the final cards.
+Apply supplied editorial_feedback: exclude rejected triggers/angles. A subject is
+not banned forever, but returning to it requires a genuinely different, verified
+current development and a materially better documented story.
 Select routine consumer, culture, travel, sport or everyday life subjects that
 ordinary Saudis care about. Reject political commentary, leaders' warnings,
 war/military developments, disputed claims and technical AI/scientific risk
@@ -64,7 +72,7 @@ use the article publication date as context only when the event wording supports
 Mark sensitive true for disputed allegations, war/military developments, political
 claims, medical/legal/financial advice, deaths, or uncertainty needing human review.
 Neutral everyday history is eligible. Return exactly:
-{"event_date":"YYYY-MM-DD or null for local","event_passage_id":"existing passage ID or null for local",
+{"event_date":"YYYY-MM-DD or null if underlying event date is unknown","event_passage_id":"existing passage ID or null when event date is unknown",
 "sensitive":false,"claims":[{"id":"c1","passage_id":"existing ID","fact":"supported fact in Arabic"}]}.
 Use at most 8 claims. If evidence is insufficient return no claims.''',
     'writer': '''Prefer one Info card followed by 2–3 connected story cards.
@@ -119,8 +127,15 @@ When research.timing_basis is report_date, the verified feed timestamp dates the
 report only: verify the original article contains substantive current coverage,
 not an evergreen or recycled article. Reject any card that presents this as the
 underlying event happening today. Otherwise event_date must follow from the quoted
-event context. For daily reject stale timing even if a story is interesting.
-For local, timeless Saudi everyday subjects are acceptable. Check natural Saudi
+event context. For BOTH lanes reject stale timing even if the story is interesting.
+Set current_attention false unless original news evidence supports a concrete
+current development tied to this subject and a persuasive reason ordinary Saudis
+care now. A fresh timestamp, a historical anniversary inferred by the model,
+general Saudi relevance or an evergreen article is not enough. Local also needs
+a Saudi cultural/place/everyday-life subject. Explain that evidence in reason.
+Set feedback_respected false when the package repeats a rejected trigger/angle
+from editorial_feedback. A familiar subject needs a distinct verified development
+and a better narrative. Never require the trigger to be written on the cards. Check natural Saudi
 wording, coherent progression, broad interest, useful Info card and no repetition.
 Set distinct_value false if Info mainly recaps the triggering news instead of
 explaining the selected subject through a distinctive fact. Set story_coherent
