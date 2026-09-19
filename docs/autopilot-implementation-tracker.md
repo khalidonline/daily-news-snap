@@ -40,6 +40,10 @@ Deployed recovery milestones:
   digits, while news_bot.ar/sanitize deliberately renders Western digits (verified
   directly: '١ من ٣' becomes '1 من 3'). Prompt-only correction permits both forms
   while still requiring the correct ordinal, total and reading order. In review.
+- Repeated writer factual errors were correctly identified by the Opus reviewer.
+  Configure editor, researcher, writer and visual selector to use the same stronger
+  priced Opus model in separate role contexts; keep independent review and $20 cap.
+  Validate model configuration and actual output before clearing posting.
 No final-engine daily/local pair is cleared. No posts were made during these trials.
 
 ## Milestones
