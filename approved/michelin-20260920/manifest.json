@@ -1,0 +1,20 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ملخص تنفيذي — ميشلان",
+  "expires_at": "2026-09-20T21:00:00Z",
+  "media": [
+    {
+      "path": "approved/michelin-20260920/card-1.jpg",
+      "sha256": "45d9befac86c8a299e436ee1f2cb746e0f0f68f046be93f34efade33620b601c"
+    },
+    {
+      "path": "approved/michelin-20260920/card-2.png",
+      "sha256": "3a64fb064da250833ac028647c804fa2ae9398be3ee1b112db2af0b0495beb49"
+    },
+    {
+      "path": "approved/michelin-20260920/card-3.png",
+      "sha256": "1ffbd8f9f7e9540f29fd97f734d8537b323dee08352646d108053d8ec93e874a"
+    }
+  ]
+}
