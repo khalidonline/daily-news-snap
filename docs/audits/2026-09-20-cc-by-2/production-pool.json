@@ -1,0 +1,288 @@
+{
+  "paid_ai_calls": 0,
+  "downloads": [
+    {
+      "provider": "commons",
+      "asset_id": "29365429",
+      "title": "File:Jose Mourinho and Jose Morais.jpg",
+      "description": "Jose Mourinho and Jose Morais",
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Jose_Mourinho_and_Jose_Morais.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Jose_Mourinho_and_Jose_Morais.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_and_Jose_Morais.jpg",
+      "credit": "Ronnie Macdonald from Chelmsford, United Kingdom",
+      "credit_line": "Jose Mourinho and Jose Morais Uploaded by Dudek1337",
+      "rights_links": "https://www.flickr.com/photos/ronmacphotos/10628840434/ https://commons.wikimedia.org/wiki/User:Dudek1337",
+      "copyright_notice": "",
+      "attribution_notice": "",
+      "usage_terms": "Creative Commons Attribution 2.0",
+      "disclaimer": "",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "attribution_required": "true",
+      "restrictions": "",
+      "date_created": "2013-10-29 20:23",
+      "width": 1281,
+      "height": 1984,
+      "licensing_verified": false,
+      "download_test": "passed",
+      "credits_layout": "passed"
+    },
+    {
+      "provider": "commons",
+      "asset_id": "29365430",
+      "title": "File:Jose Mourinho 2013.jpg",
+      "description": "Jose Mourinho",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Jose_Mourinho_2013.jpg/1920px-Jose_Mourinho_2013.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Jose_Mourinho_2013.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_2013.jpg",
+      "credit": "Ronnie Macdonald from Chelmsford, United Kingdom",
+      "credit_line": "Jose Mourinho Uploaded by Dudek1337",
+      "rights_links": "https://www.flickr.com/photos/ronmacphotos/10628895364/ https://commons.wikimedia.org/wiki/User:Dudek1337",
+      "copyright_notice": "",
+      "attribution_notice": "",
+      "usage_terms": "Creative Commons Attribution 2.0",
+      "disclaimer": "",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "attribution_required": "true",
+      "restrictions": "",
+      "date_created": "2013-10-29 21:10",
+      "width": 1600,
+      "height": 1067,
+      "licensing_verified": false,
+      "download_test": "passed",
+      "credits_layout": "passed"
+    }
+  ],
+  "production_queries": [
+    {
+      "query": "Jose Mourinho",
+      "offset": 0,
+      "ids": [
+        "31371455",
+        "107727410",
+        "123096236",
+        "159786471",
+        "160302495"
+      ]
+    },
+    {
+      "query": "Jose Mourinho haswbstatement:P275=Q6938433",
+      "offset": 0,
+      "ids": [
+        "162534011",
+        "162534022",
+        "162534023",
+        "162534046",
+        "162534059"
+      ]
+    },
+    {
+      "query": "Jose Mourinho haswbstatement:P275=Q20007257",
+      "offset": 0,
+      "ids": [
+        "148580393",
+        "148580487",
+        "159786471",
+        "159786514",
+        "159792606"
+      ]
+    },
+    {
+      "query": "Jose Mourinho",
+      "offset": 5,
+      "ids": [
+        "8627022",
+        "29365429",
+        "29365430",
+        "110715147",
+        "128796877"
+      ]
+    },
+    {
+      "query": "Jose Mourinho haswbstatement:P275=Q6938433",
+      "offset": 5,
+      "ids": [
+        "162533989",
+        "162534022",
+        "162534023",
+        "162534030",
+        "162534058"
+      ]
+    },
+    {
+      "query": "Jose Mourinho haswbstatement:P275=Q20007257",
+      "offset": 5,
+      "ids": [
+        "148580371",
+        "148580435",
+        "148580480",
+        "148580481",
+        "148580486"
+      ]
+    },
+    {
+      "query": "Jose Mourinho",
+      "offset": 10,
+      "ids": [
+        "8626955",
+        "8626965",
+        "8627021",
+        "8627023",
+        "34614344"
+      ]
+    },
+    {
+      "query": "Jose Mourinho haswbstatement:P275=Q6938433",
+      "offset": 10,
+      "ids": [
+        "162533978",
+        "162533993",
+        "162533995",
+        "162534021",
+        "162534050"
+      ]
+    },
+    {
+      "query": "Diego Simeone",
+      "offset": 0,
+      "ids": [
+        "28316941",
+        "64166987",
+        "72702431",
+        "72995269",
+        "82736699"
+      ]
+    },
+    {
+      "query": "Diego Simeone haswbstatement:P275=Q6938433",
+      "offset": 0,
+      "ids": [
+        "48226137",
+        "61207983",
+        "154312081",
+        "157065364",
+        "183916431"
+      ]
+    },
+    {
+      "query": "Diego Simeone haswbstatement:P275=Q20007257",
+      "offset": 0,
+      "ids": [
+        "76681690",
+        "145121896",
+        "145121908",
+        "145121931",
+        "145121974"
+      ]
+    },
+    {
+      "query": "Diego Simeone",
+      "offset": 5,
+      "ids": [
+        "147930613",
+        "147930633",
+        "147930650",
+        "147930663",
+        "193477960"
+      ]
+    },
+    {
+      "query": "Diego Simeone haswbstatement:P275=Q6938433",
+      "offset": 5,
+      "ids": [
+        "90902525",
+        "150597493",
+        "150597506",
+        "150597512",
+        "154311992"
+      ]
+    },
+    {
+      "query": "Diego Simeone haswbstatement:P275=Q20007257",
+      "offset": 5,
+      "ids": [
+        "145121910",
+        "145121919",
+        "145121943",
+        "145121950",
+        "145121952"
+      ]
+    },
+    {
+      "query": "Diego Simeone",
+      "offset": 10,
+      "ids": [
+        "64166626",
+        "67422849",
+        "67422851",
+        "67422854",
+        "150867567"
+      ]
+    },
+    {
+      "query": "Diego Simeone haswbstatement:P275=Q6938433",
+      "offset": 10,
+      "ids": [
+        "150597488",
+        "150597494",
+        "150597498",
+        "150597501",
+        "150597502"
+      ]
+    }
+  ],
+  "production_pool": {
+    "Jose Mourinho": [
+      {
+        "provider": "commons",
+        "asset_id": "29365429",
+        "title": "File:Jose Mourinho and Jose Morais.jpg",
+        "description": "Jose Mourinho and Jose Morais",
+        "download_url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Jose_Mourinho_and_Jose_Morais.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Jose_Mourinho_and_Jose_Morais.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_and_Jose_Morais.jpg",
+        "credit": "Ronnie Macdonald from Chelmsford, United Kingdom",
+        "credit_line": "Jose Mourinho and Jose Morais Uploaded by Dudek1337",
+        "rights_links": "https://www.flickr.com/photos/ronmacphotos/10628840434/ https://commons.wikimedia.org/wiki/User:Dudek1337",
+        "copyright_notice": "",
+        "attribution_notice": "",
+        "usage_terms": "Creative Commons Attribution 2.0",
+        "disclaimer": "",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0",
+        "attribution_required": "true",
+        "restrictions": "",
+        "date_created": "2013-10-29 20:23",
+        "width": 1281,
+        "height": 1984,
+        "licensing_verified": false
+      },
+      {
+        "provider": "commons",
+        "asset_id": "29365430",
+        "title": "File:Jose Mourinho 2013.jpg",
+        "description": "Jose Mourinho",
+        "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Jose_Mourinho_2013.jpg/1920px-Jose_Mourinho_2013.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Jose_Mourinho_2013.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_2013.jpg",
+        "credit": "Ronnie Macdonald from Chelmsford, United Kingdom",
+        "credit_line": "Jose Mourinho Uploaded by Dudek1337",
+        "rights_links": "https://www.flickr.com/photos/ronmacphotos/10628895364/ https://commons.wikimedia.org/wiki/User:Dudek1337",
+        "copyright_notice": "",
+        "attribution_notice": "",
+        "usage_terms": "Creative Commons Attribution 2.0",
+        "disclaimer": "",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0",
+        "attribution_required": "true",
+        "restrictions": "",
+        "date_created": "2013-10-29 21:10",
+        "width": 1600,
+        "height": 1067,
+        "licensing_verified": false
+      }
+    ],
+    "Diego Simeone": []
+  }
+}

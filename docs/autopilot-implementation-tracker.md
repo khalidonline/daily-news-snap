@@ -204,3 +204,11 @@ recommending any budget increase; never raise the cap automatically.
 - Principal sample exclusions: unsupported BY-SA/BY 2.0, public-domain image size, and one BY 4.0 personality flag. No connectivity failures in this probe.
 - Next: explicit separate verified subjects plus correctly implemented CC BY 2.0 attribution/delivery, then unpaid image-only feasibility check before another paid generation run. Do not relax all restrictions or infer provider replacement is necessary.
 - Audit cost $0 AI; no production/publishing/budget changes. Previous unexplained budget hold remains separate.
+
+
+## Separate subjects and CC BY 2.0 implementation — 2026-09-20
+- PR #221 adds independently verified one/two-subject searches and exact-version CC BY 2.0/4.0 credits, supplied notices/source links, and same-video attribution delivery safeguards.
+- Free live production-pool probe: Mourinho 2 eligible photos, Simeone 0. Both Mourinho files downloaded/decoded and rendered complete credits; combined credits fit. No paid AI or publication.
+- Evidence: docs/audits/2026-09-20-cc-by-2/README.md, results.json, production-pool.json.
+- Existing 210 v2 tests and 15 focused tests passed locally. Final PR CI passed and PR #221 merged.
+- This rivalry package remains held for missing Simeone imagery. Next: an adequately sized, verified, properly licensed Simeone source or another image-feasible angle, before fresh paid generation. No automated 08:00 qualification or budget change.
