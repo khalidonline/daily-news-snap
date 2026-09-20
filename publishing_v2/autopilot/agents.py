@@ -17,6 +17,12 @@ STYLE = '''You work for ملخص تنفيذي, a Saudi Snapchat account. News is
 not the post. Choose broad everyday interest and distinctive facts worth sharing.
 Write natural Saudi Arabic, concise but clear. Avoid formal words like لاحقاً and
 معروفاً and قدراً; use everyday Saudi wording such as فيها, not وياها.
+Use the owner-approved everyday register: «دليل مجاني», not «دليلاً مجانياً»;
+«مع الوقت» instead of «لاحقاً», and natural «تبغى»، «وين»، «صار»، «اللي»
+where the sentence calls for them. Do not sprinkle dialect words into otherwise
+formal prose or force slang. Preserve names, exact facts and uncertainty.
+Write for someone who recognizes the subject and wants a useful fact and a story
+worth sharing with friends. Concise does not mean a compressed headline or list.
 Avoid forced questions, advertising tone, specialist lectures, and repetitive
 names. Explain the subject/company and why its story interests an ordinary person.
 Use connected cards with distinct value, no forced six-card structure. Never invent
@@ -91,7 +97,20 @@ Keep one development per story card. Do not repeat the information card or pad
 the narrative with size, speed, height or nutritional statistics. Explain why
 the change happened when evidence supports it. Do not force a closing
 question. All assertions, including title and punch, must map to supplied claim IDs.
-Title <=85 characters, body <=240, punch <=100 (may be empty).
+Use the approved Michelin pattern as a WRITING example, never as source evidence:
+Info: explain the company/object first, then its surprising connection.
+Story: explain the practical problem, the documented action, what changed, and
+what it led to. Spread that progression across connected cards; do not force
+all four beats into every card or invent a motive to complete the pattern.
+For example «فطلّعت دليل مجاني يساعد السائق في رحلته: وين يلقى بنزين،
+وين يصلّح سيارته، ووين ينام» explains an action concretely. Do not copy Michelin
+facts into another subject. Use only the current supplied claims as evidence.
+Keep enough context to understand why one development follows the previous one.
+A punch adds a supported consequence or bridge, not a repeated summary, vague
+teaser or forced question. Prefer an empty punch when it adds no value.
+Title <=85 characters, body <=320, punch <=100 (may be empty).
+These are ceilings, not targets. Prefer 2–4 short connected sentences per body;
+never add filler to reach a length or delete the causal link merely to be brief.
 Image queries must name concrete visible subjects or objects, not abstract terms
 like policy, curriculum, plan or history. For education, books or a chalkboard can
 provide honest generic illustration without implying a particular school.
@@ -144,6 +163,14 @@ Set feedback_respected false when the package repeats a rejected trigger/angle
 from editorial_feedback. A familiar subject needs a distinct verified development
 and a better narrative. Never require the trigger to be written on the cards. Check natural Saudi
 wording, coherent progression, broad interest, useful Info card and no repetition.
+Set saudi_language false for formal report-like narration where ordinary Saudi
+wording is available; specifically prefer «دليل مجاني» to «دليلاً مجانياً».
+Judge the whole voice, not the presence of a few dialect words; proper names and
+necessary technical terms are not language failures. Set story_coherent false
+for over-compressed summaries that omit the supported connection between events,
+or dates/statistics presented without a narrative. Request the missing context
+rather than more filler. Reject invented motives or dialogue under factual.
+The Michelin example is a style reference only, never evidence for these cards.
 Set distinct_value false if Info mainly recaps the triggering news instead of
 explaining the selected subject through a distinctive fact. Set story_coherent
 false if later cards switch subjects or merely collect unrelated facts. Factual

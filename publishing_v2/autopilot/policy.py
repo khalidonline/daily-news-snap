@@ -132,7 +132,7 @@ def validate_draft(data, research):
     for card in cards:
         if set(card) != {'kind', 'title', 'body', 'punch', 'claim_ids', 'image_query'}:
             raise ValueError('unexpected_card_fields')
-        text(card.get('title'), 85); text(card.get('body'), 240)
+        text(card.get('title'), 85); text(card.get('body'), 320)
         if not isinstance(card.get('punch'), str) or len(card['punch']) > 100:
             raise ValueError('invalid_closing')
         text(card.get('image_query'), 180)
