@@ -53,7 +53,7 @@ Code deployed is not the same as live behavior verified.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Michelin preview approved and published: all three cards confirmed POSTED. Next implementation step: carry the approved Saudi storytelling style into automated generation, then qualify a fresh output within the $3/day cap.
+Michelin preview approved and published: all three cards confirmed POSTED. Saudi writing standard merged in PR #218. Next: check remaining daily budget, then one fresh automated review-only package within the $3/day cap; no old story retries.
 This is an assistant-prepared content/design preview, not an automated agent pass. Do not resume old story retries or expand to more paid runs.
 Report milestones separately. Monitor actual cost and approved output before
 recommending any budget increase; never raise the cap automatically.
@@ -122,3 +122,13 @@ recommending any budget increase; never raise the cap automatically.
 - Updated Michelin Info preview rendered and visually checked. Six existing preview tests passed offline; no paid generation.
 - Future Info renders include the footer logo. Published Michelin media was not replaced or reposted.
 - Saudi writing-standard implementation remains the next editorial task.
+
+## Saudi writing standard deployed — 2026-09-20
+- PR #218 merged: 539fab1c5607eeb3d654bc26c84ea3099a070db1.
+- Shared voice: everyday Saudi wording, including «دليل مجاني», with proper names and factual uncertainty preserved.
+- Writer: useful subject-first Info plus documented, connected story beats; no invented motives, filler or repetitive closing lines. Michelin is a style example only, not evidence for new subjects.
+- Reviewer: explicit language and over-compression criteria feed existing blocking checks.
+- Body ceiling increased from 240 to 320 for optional context; ceilings are not targets. Approved Michelin bodies (198/233/218 chars) already fit the former cap; extra headroom is not a claim that the former cap alone caused weak writing.
+- Verification: 103 autopilot tests, 22 focused pipeline/policy tests including new boundaries and rejection checks, two footer-layout tests; CI 35498377169 passed.
+- No paid generation, budget changes or publishing in this step. Actual output quality and 08:00 autonomous posting remain unqualified.
+- Next checkpoint: reconcile current remaining budget, run one fresh automated review-only package if affordable, inspect its actual cards and review receipt. Do not regenerate Michelin or bypass quality gates.
