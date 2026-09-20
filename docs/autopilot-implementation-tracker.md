@@ -12,34 +12,32 @@ Use precise states: planned, implementing, tested, deployed, verified live, bloc
 Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
-All current code corrections deployed; final stronger-model trial in progress.
-- PR #210 / fa8d05e: bounded malformed-JSON retry and validated article redirects.
-- PR #211 / 3849dde: $20/day commissioning ceiling; preserve all old charges and
-  unresolved reservations, and each lower-ceiling caller's own limit.
-- PR #212 / c6fcd5a: recover local image subjects, filter undersized images before
-  filling the pool, page partial pools within the existing 12-request bound.
-- PR #213 / 4713dd9: substantive same-publisher RSS fallback, exact ID/URL/time,
-  recorded provenance, no short summaries. Real failed article recovered303words.
-- PR #214 / 27c9c1f: accept both numeral glyph forms in counters while checking
-  correct sequence; editor/researcher/writer/visual use the stronger priced Opus
-  model in separate contexts, with independent Opus review. $20 cap unchanged.
-- All 194 publishing tests and CI passed before the final model deployment.
-  Independent reviews found no blocking defects; 13 runtime tests also passed.
-- Trial 35465831225: prior daily pass, local held; $0.840751; frames inspected.
-- Trial 35466789920: both held for content/imagery/source retrieval; $0.525544.
-- Trial 35468390489: both held; repeated writer factual/visual errors and counter
-  rubric contradiction confirmed; $1.481482. Operational report step succeeded.
-- September19 ledger: $7.496990 settled, $0.115566 unresolved reservation retained.
-- ACTIVE: shadow/both trial 35469293403 on final stronger-model configuration.
-  Engine aae4c2c27caae454e71b671768447eb57bc6a782eeeccf441ea6ba27240e1064.
-  New slots use Saudi date2026-09-20. No publishing during this validation.
-No final-engine daily/local pair is cleared yet. Do not claim posting readiness.
+2026-09-20: user restored a $3/day shared cap for production and trials.
+- Budget change: tested, awaiting deployment; $20 commissioning permission is superseded.
+- First gradual model reduction: editor uses Sonnet 5. Researcher, writer, visual
+  selector and independent reviewer retain Opus 5; no quality gate is relaxed.
+- Reviewer reservation uses conservative text bytes plus 8192 tokens per locally
+  resized image and the full output ceiling, rather than a whole model context.
+  Official vision documentation caps these models at 4784 visual tokens/image.
+- Verification: 197 publishing tests and 27 shared-budget/store tests pass.
+- September 20 ledger at check: $2.261592 settled, no unresolved reservations;
+  approximately $0.74 remains. No paid generation triggered by this change.
+- Existing charges and unresolved reservations remain counted; no ledger reset.
+- Budget holds produce a Telegram request to review costs. Any cap increase
+  requires user approval; a hold alone does not establish that more money is needed.
+- Trial 35469293403 completed: both packages held, no publishing. Previous
+  checkpoint incorrectly called it active. No current-engine posting clearance.
+- Fresh-start agreement: one NEW topic, Info + connected story, preview for user
+  review before expanding automation. This fresh trial has not started.
+- Known unresolved issues: image relevance/variety and watermark/text overlap.
+- Existing two-package 08:00 Riyadh schedule is unchanged. This budget change
+  does not implement the fresh single-package flow or establish posting readiness.
 
 ## Milestones
 | Stage | Scope | Status | Completion evidence required |
 | --- | --- | --- | --- |
 | 0 | Specialist editorial agents, independent review, bounded repairs, publishing journals, budget and Telegram reporting | Deployed; prior engine verified live | Launch run 35438752317 confirmed two packages / eight frames on September 19; recheck current engine before claiming readiness |
-| 0a | Current-engine editorial recovery and posting qualification | Deployed; validation in progress | Both lanes pass shadow on the final code/model fingerprint; inspect actual frames and readiness journal |
+| 0a | Current-engine editorial recovery and posting qualification | Blocked; fresh preview pending | Both lanes pass shadow on the final code/model fingerprint; inspect actual frames and readiness journal |
 | 1 | Detect missing, stalled, incomplete and successful daily runs | Planned; next | Deterministic tests plus read-only comparison with actual run and receipt state; no paid generation or publishing |
 | 2 | Bounded safe recovery | Planned | Tests for missed run, partial delivery, concurrent run, budget exhaustion, expired package and ambiguous provider result; preserve receipt identity, review gates and budget |
 | 3 | Schedule watchdog and concise Telegram incident/recovery reports | Planned | Deployed workflow and real monitor execution; deduplicated alerts; obey pause mode; document shared GitHub scheduler outage limitation |
@@ -49,10 +47,11 @@ No final-engine daily/local pair is cleared yet. Do not claim posting readiness.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Inspect trial35469293403 to completion, including Saudi-date2026-09-20 journals.
-Do not cancel/restart working or held slots. Inspect approved artifacts and record
-actual costs, operational report delivery and final readiness. The schedule remains
-05:00UTC /08:00Riyadh; live falls back to shadow until both final-engine lanes pass.
+Deploy the tested budget change without starting a paid trial.
+Then fix the watermark layout in one small stage and prepare the agreed fresh
+single-topic preview. Do not resume old story retries or expand to more paid runs.
+Report milestones separately. Monitor actual cost and approved output before
+recommending any budget increase; never raise the cap automatically.
 
 ## Resume procedure
 1. Read this tracker, current main and open implementation PRs.
@@ -66,8 +65,8 @@ actual costs, operational report delivery and final readiness. The schedule rema
 - Historical live launch: https://github.com/khalidonline/daily-news-snap/actions/runs/35438752317
 - Existing operations: docs/agentic-autopilot.md (may lag newer workflow edits).
 - Existing implementation plan: docs/superpowers/plans/2026-09-17-agentic-autopilot.md
-  is historical; its original $3 ceiling is superseded by the explicit $20/day
-  commissioning ceiling authorized in this session.
+  is historical; its $3 ceiling is restored by the latest user instruction; the temporary
+  $20/day commissioning ceiling is no longer authorized.
 - Keep existing Saudi Arabic style, broad audience relevance, flexible story
   length, relevant images and independent factual/visual review.
 - Audience learning and sustained reliability are not yet established.
