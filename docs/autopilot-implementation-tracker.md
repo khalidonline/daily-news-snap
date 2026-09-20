@@ -324,3 +324,11 @@ recommending any budget increase; never raise the cap automatically.
 - Exact title/quote/source mention checks remain. Angle/why_now may translate or shorten the name; independent factual/current_attention review assesses semantic identity.
 - 32 focused tests passed. No paid generation or posting. Audit: docs/audits/2026-09-20-translated-editor-names.md.
 - Remaining blocker: public-compatible image supply/attribution. No paid full retry until that is addressed; source cards remain review-only.
+
+### Attribution delivery feasibility — 20 September
+- Owner: assistant. Read current Bundle platform field documentation (https://info.bundle.social/api-reference/platform-parameters): Snapchat STORY lists media upload/type; text/description are Spotlight-only, and no Story attachment-link field is documented. Direct raw OpenAPI fetch returned HTTP 403, so undocumented link support is unverified, not declared impossible.
+- CC BY 2.0 section 4 requires license URI and reasonable author/title/source attribution; a private review-only source card is not a public attribution delivery mechanism (https://creativecommons.org/licenses/by/2.0/legalcode).
+- No undocumented payload fields, public attribution page, provider purchase, code change or paid production trial was attempted. Existing PD/CC0 publication gate stays in place.
+- Read-only Flickr BY probe for Mohamed Salah returned a different person (worker Medhat Mohamed Salah); not a footballer photo, not accepted or used as a mockup. Names and licensing alone do not establish relevance.
+- Concrete design decision pending owner preference: retain review-only sources card; optionally place an on-card photo-credit strip only for attribution-required photos, carrying creator, supplied title, source/license URI and modification notice as applicable. This changes the owner's prior preference against visible photo-source labels, so do not enable it without that choice. Alternative: obtain a supplier agreement explicitly permitting the intended editorial Snapchat use without visible credit; no price/access/waiver is yet confirmed.
+- Next implementation only after that presentation/licensing choice. No additional paid package runs while public imagery remains blocked.
