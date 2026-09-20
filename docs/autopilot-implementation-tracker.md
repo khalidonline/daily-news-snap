@@ -29,7 +29,7 @@ Code deployed is not the same as live behavior verified.
   checkpoint incorrectly called it active. No current-engine posting clearance.
 - Fresh-start agreement: one NEW topic, Info + connected story, preview for user
   review before expanding automation. This fresh trial has not started.
-- Watermark layout fix: tested; deployment pending. Crowded cards retry
+- Watermark layout fix: deployed in PR #216 (0d6d2b0); GitHub CI passed. Crowded cards retry
   with a shorter photo area; glyph bounds enforce footer clearance. No text is
   removed. Impossible layouts return to repair rather than saving overlaps.
 - Verification: 199 publishing tests passed with Almarai; actual crowded cards
@@ -53,8 +53,7 @@ Code deployed is not the same as live behavior verified.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Deploy the verified watermark fix, then prepare the agreed fresh single-topic
-preview in a separate stage. Do not resume old story retries or expand to more paid runs.
+Prepare the agreed fresh single-topic preview in a separate stage. Do not resume old story retries or expand to more paid runs.
 Report milestones separately. Monitor actual cost and approved output before
 recommending any budget increase; never raise the cap automatically.
 
