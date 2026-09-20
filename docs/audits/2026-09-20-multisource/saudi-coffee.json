@@ -1,0 +1,95 @@
+{
+  "query": "Saudi coffee",
+  "seconds": 100.37,
+  "paid_ai_calls": 0,
+  "download_verified": 2,
+  "rows": [
+    {
+      "provider": "flickr",
+      "asset_id": "flickr:385807779",
+      "title": "saudi arabia",
+      "description": "Young Saudi Arabian woman in the souq of Abha. Abha's well known daily market is always busy with activity and people. Locals bargain for fruits, vegetables, coffee beans and other wares. Local handicrafts like ornate silver Bedouin jewelry and hand woven basketry are specialty items.",
+      "source_url": "https://www.flickr.com/photos/waltercallens/385807779/",
+      "download_url": "https://live.staticflickr.com/147/385807779_2ebc3a992b_b.jpg",
+      "original_url": "https://live.staticflickr.com/147/385807779_2ebc3a992b_o.jpg",
+      "width": 683,
+      "height": 1024,
+      "credit": "Retlaw Snellac Photography",
+      "credit_line": "",
+      "copyright_notice": "",
+      "rights_links": "https://www.flickr.com/photos/waltercallens",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "restrictions": "",
+      "attribution_required": "true",
+      "source_verified": true,
+      "licensing_verified": false,
+      "date_created": "",
+      "image_role": "subject illustration; event date requires review",
+      "sha256": "22b6e68e640ab5ccc44a75f7180e2356c63338162cd9bca9cf682f716513e369",
+      "origin_key": "flickr:385807779",
+      "credits_layout_pass": true
+    },
+    {
+      "provider": "flickr",
+      "asset_id": "flickr:24966665319",
+      "title": "Wayne’s Coffee Clock Sign Albin Rydberg 1928 on Södermalm in Stockholm Sweden",
+      "description": "Wayne's Coffee is a Swedish-based coffeehouse chain founded in Stockholm at Kungsgatan in 1994. The chain grew with locations in several Scandinavian countries as well as further out into the Baltic region and Saudi Arabia. (Source: Wikipedia). Public Clock Photography by Arjan Richter",
+      "source_url": "https://www.flickr.com/photos/arjanrichter/24966665319/",
+      "download_url": "https://live.staticflickr.com/1576/24966665319_2b8e453da0_b.jpg",
+      "original_url": "https://live.staticflickr.com/1576/24966665319_5ebf748140_o.jpg",
+      "width": 1024,
+      "height": 768,
+      "credit": "Arjan Richter",
+      "credit_line": "",
+      "copyright_notice": "",
+      "rights_links": "https://www.flickr.com/photos/arjanrichter",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "restrictions": "",
+      "attribution_required": "true",
+      "source_verified": true,
+      "licensing_verified": false,
+      "date_created": "",
+      "image_role": "subject illustration; event date requires review",
+      "sha256": "53ca625fab970077a94a6e1895ed92a43aa111732b8544351084f95f9be14c1b",
+      "origin_key": "flickr:24966665319",
+      "credits_layout_pass": true
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "commons",
+      "returned": 5,
+      "accepted": 0,
+      "rejections": {
+        "subject": 1,
+        "rights": 4
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "commons_collection",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {}
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "flickr",
+      "returned": 5,
+      "accepted": 2,
+      "rejections": {
+        "subject": 2
+      }
+    }
+  ],
+  "final_metadata_pass_ids": []
+}

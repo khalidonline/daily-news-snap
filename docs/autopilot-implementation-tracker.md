@@ -212,3 +212,14 @@ recommending any budget increase; never raise the cap automatically.
 - Evidence: docs/audits/2026-09-20-cc-by-2/README.md, results.json, production-pool.json.
 - Existing 210 v2 tests and 15 focused tests passed locally. Final PR CI passed and PR #221 merged.
 - This rivalry package remains held for missing Simeone imagery. Next: an adequately sized, verified, properly licensed Simeone source or another image-feasible angle, before fresh paid generation. No automated 08:00 qualification or budget change.
+
+
+## Fresh multi-source recovery merged — 2026-09-20
+- PR #222 merged after final CI passed (offline tests, actual layout checks, and isolated container).
+- Production preflight now searches Commons, dedicated Commons collections and public Flickr photo pages, validates source identity/license and actual downloads, and attempts original renditions before paid drafting. Bounded request counts/deadline; duplicate originals rejected across providers.
+- No permanent local photo collection. Preflight retains metadata/hashes only; render sources use temporary files removed on success/failure. Final review cards/video remain normal workflow artifacts.
+- Free live coverage: Jeddah 5 candidates, iPhone 3, date palm 2 (Commons + Flickr), Saudi coffee 1 (Flickr), Simeone 0. Counts are retrieval/rights/metadata candidates, not final visual approvals.
+- Initial coffee false positives (market portrait and Swedish cafe sign) were found during review and excluded with a proximity filter. Final coffee query retrieved the specifically titled Saudi Coffee photo. Evidence: docs/audits/2026-09-20-multisource/README.md and per-topic JSON.
+- Openverse returned HTTP 403/timeouts; no dependency, access bypass, subscription or account was added. Flickr source failures remain possible and recovery continues to another stage.
+- 225 v2 tests passed locally before the final regression; 21 focused tests including it passed, followed by final full PR CI success. AI cost $0; no publishing or budget changes.
+- Next checkpoint: expand verified source/alias coverage or implement adaptive small-portrait layouts, then a fresh reviewed package. Current Simeone/coffee/date-palm pools do not meet the three-image preflight target. No automatic 08:00 qualification and no paid retries on unchanged inadequate pools.

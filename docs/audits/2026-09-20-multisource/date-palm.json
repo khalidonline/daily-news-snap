@@ -1,0 +1,101 @@
+{
+  "query": "Date palm",
+  "seconds": 90.91,
+  "paid_ai_calls": 0,
+  "download_verified": 2,
+  "rows": [
+    {
+      "provider": "commons",
+      "asset_id": "83471011",
+      "title": "File:Date palm at night 2019 G2.jpg",
+      "original_width": 5400,
+      "original_height": 4000,
+      "description": "Date palm in night illumination. Marmaris, Turkey",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Date_palm_at_night_2019_G2.jpg/1920px-Date_palm_at_night_2019_G2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Date_palm_at_night_2019_G2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Date_palm_at_night_2019_G2.jpg",
+      "credit": "George Chernilevsky",
+      "credit_line": "Own work",
+      "rights_links": "",
+      "copyright_notice": "",
+      "attribution_notice": "",
+      "usage_terms": "Public domain",
+      "disclaimer": "",
+      "license": "Public domain",
+      "license_url": "",
+      "attribution_required": "false",
+      "restrictions": "",
+      "date_created": "2019-10-03 20:52:51",
+      "width": 1920,
+      "height": 1422,
+      "licensing_verified": false,
+      "sha256": "ebf0adb7e78c670da2f2109c5eecd3f8ca80fbbb6d1411dc275ca841d4e75e25",
+      "origin_key": "83471011",
+      "image_role": "subject illustration; event date requires review",
+      "credits_layout_pass": true
+    },
+    {
+      "provider": "flickr",
+      "asset_id": "flickr:51558752781",
+      "title": "Pot Date Palm & Flowers - In the new Winter Quarters",
+      "description": "Pot Date Palm & Flowers (3 Types) by .:Tm:.Creation @ Tres Chic Event (closes October 9th) copy, modify, no transfer, 3LI each Pot ➼ .:Tm:.Creation Marketplace ➼ .:Tm:.Creation Inworldstore",
+      "source_url": "https://www.flickr.com/photos/mysteriadeluxe/51558752781/",
+      "download_url": "https://live.staticflickr.com/65535/51558752781_55241f4531_h.jpg",
+      "original_url": "https://live.staticflickr.com/65535/51558752781_ccd976309a_o.png",
+      "width": 1600,
+      "height": 900,
+      "credit": "Mysteria Bloodbane-Ragnarok",
+      "credit_line": "",
+      "copyright_notice": "",
+      "rights_links": "https://www.flickr.com/photos/mysteriadeluxe",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "restrictions": "",
+      "attribution_required": "true",
+      "source_verified": true,
+      "licensing_verified": false,
+      "date_created": "",
+      "image_role": "subject illustration; event date requires review",
+      "sha256": "5d87b3d0ded1d2ad0acf3f67641e6faf8bba0f5f4df3e3fc2566c8408d6539b4",
+      "origin_key": "flickr:51558752781",
+      "credits_layout_pass": true
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "image_recovery",
+      "query": "Date palm",
+      "subject": "Date palm",
+      "provider": "commons",
+      "returned": 5,
+      "accepted": 1,
+      "rejections": {
+        "rights": 3,
+        "subject": 1
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Date palm",
+      "subject": "Date palm",
+      "provider": "commons_collection",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {},
+      "error": "ImageSourceError:request_failed"
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Date palm",
+      "subject": "Date palm",
+      "provider": "flickr",
+      "returned": 4,
+      "accepted": 1,
+      "rejections": {}
+    }
+  ],
+  "final_metadata_pass_ids": [
+    "83471011",
+    "flickr:51558752781"
+  ]
+}

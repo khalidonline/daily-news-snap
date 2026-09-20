@@ -1,0 +1,35 @@
+{
+  "query": "Diego Simeone",
+  "seconds": 101.21,
+  "paid_ai_calls": 0,
+  "download_verified": 0,
+  "rows": [],
+  "diagnostics": [
+    {
+      "stage": "image_recovery",
+      "query": "Diego Simeone",
+      "subject": "Diego Simeone",
+      "provider": "commons",
+      "returned": 5,
+      "accepted": 0,
+      "rejections": {
+        "rights": 2,
+        "download:image_recovery_failed: insufficient_resolution, request_failed": 1,
+        "download:image_recovery_failed: insufficient_resolution, insufficient_resolution": 2
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Diego Simeone",
+      "subject": "Diego Simeone",
+      "provider": "commons_collection",
+      "returned": 20,
+      "accepted": 0,
+      "rejections": {
+        "rights": 1,
+        "download:image_recovery_failed: insufficient_resolution, insufficient_resolution": 1
+      }
+    }
+  ],
+  "final_metadata_pass_ids": []
+}

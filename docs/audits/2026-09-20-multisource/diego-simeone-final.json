@@ -1,0 +1,63 @@
+{
+  "query": "Diego Simeone",
+  "paid_ai_calls": 0,
+  "download_verified": 0,
+  "rows": [],
+  "diagnostics": [
+    {
+      "stage": "image_recovery",
+      "query": "Diego Simeone",
+      "subject": "Diego Simeone",
+      "provider": "commons",
+      "returned": 5,
+      "accepted": 0,
+      "rejections": {
+        "rights": 2,
+        "original_too_small": 3
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Diego Simeone",
+      "subject": "Diego Simeone",
+      "provider": "commons_collection",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {},
+      "error": "ImageSourceError:request_failed"
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Diego Simeone",
+      "subject": "Diego Simeone",
+      "provider": "flickr",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {}
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Diego Simeone",
+      "subject": "Diego Simeone",
+      "provider": "commons_page_2",
+      "returned": 5,
+      "accepted": 0,
+      "rejections": {
+        "rights": 4,
+        "original_too_small": 1
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Diego Simeone",
+      "subject": "Diego Simeone",
+      "provider": "commons_page_3",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {},
+      "error": "ImageSourceError:request_failed"
+    }
+  ],
+  "version": "after small-original filter",
+  "final_metadata_pass_ids": []
+}

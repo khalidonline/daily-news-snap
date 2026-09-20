@@ -1,0 +1,158 @@
+{
+  "query": "iPhone",
+  "seconds": 83.13,
+  "paid_ai_calls": 0,
+  "download_verified": 3,
+  "rows": [
+    {
+      "provider": "commons",
+      "asset_id": "179309158",
+      "title": "File:Apple iPad 11 gen. & Apple iPhone 16 (still in a box) (2025-12-02).jpg",
+      "original_width": 4032,
+      "original_height": 3024,
+      "description": "Apple iPad 11 gen. & Apple iPhone 16 (still in a box)",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Apple_iPad_11_gen._%26_Apple_iPhone_16_%28still_in_a_box%29_%282025-12-02%29.jpg/1920px-Apple_iPad_11_gen._%26_Apple_iPhone_16_%28still_in_a_box%29_%282025-12-02%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Apple_iPad_11_gen._%26_Apple_iPhone_16_%28still_in_a_box%29_%282025-12-02%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Apple_iPad_11_gen._%26_Apple_iPhone_16_(still_in_a_box)_(2025-12-02).jpg",
+      "credit": "Olgierd Rudak",
+      "credit_line": "Own work",
+      "rights_links": "",
+      "copyright_notice": "",
+      "attribution_notice": "",
+      "usage_terms": "Creative Commons Zero, Public Domain Dedication",
+      "disclaimer": "",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "attribution_required": "false",
+      "restrictions": "",
+      "date_created": "2025-12-02 13:55:17",
+      "width": 1920,
+      "height": 1440,
+      "licensing_verified": false,
+      "sha256": "63af8434308c9228424d1b8e74caf744ef0f146a8af4624e9e2cbf1059925a49",
+      "origin_key": "179309158",
+      "image_role": "subject illustration; event date requires review",
+      "credits_layout_pass": true
+    },
+    {
+      "provider": "commons",
+      "asset_id": "144805066",
+      "title": "File:Apple iPhone 15.png",
+      "original_width": 4624,
+      "original_height": 3472,
+      "description": "iPhone",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Apple_iPhone_15.png/1920px-Apple_iPhone_15.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Apple_iPhone_15.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Apple_iPhone_15.png",
+      "credit": "Ka Kit Pang",
+      "credit_line": "Apple iPhone 15.jpeg",
+      "rights_links": "https://commons.wikimedia.org/wiki/File:Apple_iPhone_15.jpeg",
+      "copyright_notice": "",
+      "attribution_notice": "",
+      "usage_terms": "Public domain",
+      "disclaimer": "",
+      "license": "Public domain",
+      "license_url": "",
+      "attribution_required": "false",
+      "restrictions": "",
+      "date_created": "2023-12-31",
+      "width": 1920,
+      "height": 1442,
+      "licensing_verified": false,
+      "sha256": "d92207aa572d85235f46e91fc0999f182c5d40b34b68b2fced079adc93332b9e",
+      "origin_key": "144805066",
+      "image_role": "subject illustration; event date requires review",
+      "credits_layout_pass": true
+    },
+    {
+      "provider": "commons",
+      "asset_id": "156369026",
+      "title": "File:Apple IPhone 2024.jpg",
+      "original_width": 3024,
+      "original_height": 4032,
+      "description": "Apple IPhone in 2024",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Apple_IPhone_2024.jpg/1920px-Apple_IPhone_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Apple_IPhone_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Apple_IPhone_2024.jpg",
+      "credit": "OneTrueKingLives",
+      "credit_line": "Own work",
+      "rights_links": "",
+      "copyright_notice": "",
+      "attribution_notice": "",
+      "usage_terms": "Creative Commons Zero, Public Domain Dedication",
+      "disclaimer": "",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "attribution_required": "false",
+      "restrictions": "",
+      "date_created": "2024-12-07 09:01:22",
+      "width": 1920,
+      "height": 2560,
+      "licensing_verified": false,
+      "sha256": "5c25fa740bbb30c86b184d2436647a0f7f7ae90492ce7727b77744e1e3e78f5a",
+      "origin_key": "156369026",
+      "image_role": "subject illustration; event date requires review",
+      "credits_layout_pass": true
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "image_recovery",
+      "query": "iPhone",
+      "subject": "iPhone",
+      "provider": "commons",
+      "returned": 4,
+      "accepted": 0,
+      "rejections": {
+        "rights": 4
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "iPhone",
+      "subject": "iPhone",
+      "provider": "commons_collection",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {},
+      "error": "ImageSourceError:request_failed"
+    },
+    {
+      "stage": "image_recovery",
+      "query": "iPhone",
+      "subject": "iPhone",
+      "provider": "flickr",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {},
+      "error": "ImageSourceError:request_failed"
+    },
+    {
+      "stage": "image_recovery",
+      "query": "iPhone",
+      "subject": "iPhone",
+      "provider": "commons_page_2",
+      "returned": 4,
+      "accepted": 1,
+      "rejections": {
+        "rights": 3
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "iPhone",
+      "subject": "iPhone",
+      "provider": "commons_page_3",
+      "returned": 5,
+      "accepted": 2,
+      "rejections": {
+        "rights": 3
+      }
+    }
+  ],
+  "final_metadata_pass_ids": [
+    "179309158",
+    "144805066",
+    "156369026"
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "query": "Saudi coffee",
+  "paid_ai_calls": 0,
+  "download_verified": 1,
+  "rows": [
+    {
+      "provider": "flickr",
+      "asset_id": "flickr:52578239478",
+      "title": "Saudi Coffee",
+      "description": "At a friend's house yesterday.",
+      "source_url": "https://www.flickr.com/photos/kretyen/52578239478/",
+      "download_url": "https://live.staticflickr.com/65535/52578239478_378b6248b5_b.jpg",
+      "original_url": "https://live.staticflickr.com/65535/52578239478_bbceb68d6e_o.jpg",
+      "width": 1024,
+      "height": 1024,
+      "credit": "Ken Bosma",
+      "credit_line": "",
+      "copyright_notice": "",
+      "rights_links": "https://www.flickr.com/photos/kretyen",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "restrictions": "",
+      "attribution_required": "true",
+      "source_verified": true,
+      "licensing_verified": false,
+      "date_created": "",
+      "image_role": "subject illustration; event date requires review",
+      "sha256": "e78314d2d7a1283217add7155bb97f46bf38b06e48569f5edc06eb2290ee29fc",
+      "origin_key": "flickr:52578239478"
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "commons",
+      "returned": 5,
+      "accepted": 0,
+      "rejections": {
+        "subject": 1,
+        "rights": 4
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "commons_collection",
+      "returned": 0,
+      "accepted": 0,
+      "rejections": {}
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "flickr",
+      "returned": 1,
+      "accepted": 1,
+      "rejections": {}
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "commons_page_2",
+      "returned": 5,
+      "accepted": 0,
+      "rejections": {
+        "rights": 3,
+        "subject": 2
+      }
+    },
+    {
+      "stage": "image_recovery",
+      "query": "Saudi coffee",
+      "subject": "Saudi coffee",
+      "provider": "commons_page_3",
+      "returned": 4,
+      "accepted": 0,
+      "rejections": {
+        "rights": 3,
+        "subject": 1
+      }
+    }
+  ],
+  "version": "after proximity filter"
+}
