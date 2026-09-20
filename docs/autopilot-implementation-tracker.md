@@ -154,3 +154,12 @@ recommending any budget increase; never raise the cap automatically.
 - Terminal status BudgetBlocked after the last writer step. The current pipeline stores only the exception class; the exact cause is NOT established and must not be described as exhausting the $5 cap. Earlier calls above $3 confirm the temporary cap took effect.
 - Next implementation: retain safe structured budget failure diagnostics and improve image feasibility before writing. Do not spend on another generic rerun or raise budget again without evidence.
 - Current trial slot: autopilot-2026-09-20-daily-shadow-aa09930baddb0afc. Artifact 10600883624 retains rejected output. No publication; no current-engine qualification or 08:00 promise.
+
+## Budget diagnostics and image preflight deployed — 2026-09-20
+- PR #219 merged: ba988515334f2c088e4217a074e2e3a950e62bd7; final GitHub offline checks passed.
+- Budget reservation failures now retain safe codes, actual configured cap, requested reservation and charged balance; agent role is attached. Saved state, summary and report carry these diagnostics without raw exception/provider text. Unknown historical cap is not reported as $3.
+- Preflight now requires canonical subject words in title/description, normalizes accents, and does not treat partial-name unrelated art/restaurants as subject photos. Licensing/dimension checks remain, followed by mandatory independent pixel review.
+- Removed cross-query result-cache aliases that could contaminate broader subject searches. Exact search responses and repeated identical queries remain cached.
+- Five targeted regression tests and ten media recovery tests pass; full CI passed after replacing obsolete cross-query-cache expectation. One legacy test_daily_budget workflow-presence assertion still fails against the unchanged read-only cloud audit workflow; budget unit tests otherwise passed.
+- No paid trial or publishing during this change. Historical BudgetBlocked cause is still unknown; diagnostics are instrumentation, not proof that it is fixed. Preflight may reject genuine images whose metadata lacks full subject names; it does not prove relevance or provide new image suppliers.
+- Next: reconcile remaining approved budget, then one fresh daily shadow trial on this engine; assess actual selection, images, Saudi narration and final review. Do not resume the rejected prior-engine output.
