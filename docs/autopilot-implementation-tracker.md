@@ -185,3 +185,8 @@ recommending any budget increase; never raise the cap automatically.
 - Preflight filters irrelevant image metadata before filling the bounded pool, allowing later pages to contribute. Filtered caches are separate; exact API responses remain reusable. Same licensing/dimension/pixel-review safeguards and request bounds.
 - Four new unit/integration tests plus existing diagnostics, media and recovery tests passed; full CI passed. No paid calls or publication.
 - Next: reconcile approved remaining budget and run one new-engine daily shadow trial. Actual image availability and output quality remain unproven; no 08:00 qualification. No new image supplier has been added.
+
+## Post-resolution trial started — 2026-09-20
+- User authorized next trial after PR #220. Run 35500652285: daily, shadow, current main. No publishing.
+- Opening settled balance $3.219743; $1.780257 remains under today's approved $5 shared cap.
+- Engine 639f0b653e5396cfcd9402609039df9d1fc0af0d46b44aa42daa8fc5026474e3. Monitor this single run and persist its outcome before any further work.
