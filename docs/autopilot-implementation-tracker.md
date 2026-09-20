@@ -28,14 +28,14 @@ Code deployed is not the same as live behavior verified.
 - Trial 35469293403 completed: both packages held, no publishing. Previous
   checkpoint incorrectly called it active. No current-engine posting clearance.
 - Fresh-start agreement: one NEW topic, Info + connected story, preview for user
-  review before expanding automation. This fresh trial has not started.
+  review before expanding automation. An assistant-prepared fresh preview is now ready; no automated qualification run.
 - Watermark layout fix: deployed in PR #216 (0d6d2b0); GitHub CI passed. Crowded cards retry
   with a shorter photo area; glyph bounds enforce footer clearance. No text is
   removed. Impossible layouts return to repair rather than saving overlaps.
 - Verification: 199 publishing tests passed with Almarai; actual crowded cards
   inspected with and without source footers; shared bot imports passed.
   Independent review found no blockers. No paid generation or posting.
-- Known unresolved issue: image relevance/variety. Fresh preview still pending.
+- Known unresolved issue: image relevance/variety. Fresh preview ready for user review.
 - Existing two-package 08:00 Riyadh schedule is unchanged. This budget change
   does not implement the fresh single-package flow or establish posting readiness.
 
@@ -53,7 +53,8 @@ Code deployed is not the same as live behavior verified.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Prepare the agreed fresh single-topic preview in a separate stage. Do not resume old story retries or expand to more paid runs.
+Review the fresh Michelin preview with the user; revise if needed before publishing.
+This is an assistant-prepared content/design preview, not an automated agent pass. Do not resume old story retries or expand to more paid runs.
 Report milestones separately. Monitor actual cost and approved output before
 recommending any budget increase; never raise the cap automatically.
 
@@ -76,3 +77,20 @@ recommending any budget increase; never raise the cap automatically.
 - Audience learning and sustained reliability are not yet established.
 - A historical POSTED receipt is evidence of delivery at that time, not proof a
   post remains visible; account for subsequent deletions or replacements.
+
+## Fresh preview checkpoint — 2026-09-20
+- Topic: Michelin, from tyre company to restaurant guide.
+- Current trigger: Asharq Al-Awsat, “أطباق من أجلها يسافر الذواقة حول العالم”,
+  published 20 September 2026, https://aawsat.com/node/5320313.
+- Facts: https://en.wikipedia.org/wiki/Michelin_Guide; first guide 1900,
+  restaurant stars 1926 and three-star hierarchy 1931.
+- Delivered michelin-fresh-preview.pdf: one Info + two connected story cards,
+  then a separate review-notes/source page (not a Snapchat card).
+- Images: Commons 117592989 (CC0, modern Michelin tyre display),
+  128634934 (public domain, 1900 guide cover), 49390080 (CC0, company mascot).
+  Full subjects preserved in photo windows; provenance links in PDF.
+- Actual final PDF pages inspected: Almarai/light, numbered 1 of 2 and 2 of 2,
+  no missing image or watermark/text overlap observed.
+- No paid model API calls; no Telegram or Snapchat publication.
+- Assistant-prepared preview only. Independent automated review/readiness remains
+  outstanding; do not record this preview as a shadow pass or posting clearance.
