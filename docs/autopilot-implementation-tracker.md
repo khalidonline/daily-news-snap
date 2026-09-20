@@ -177,3 +177,11 @@ recommending any budget increase; never raise the cap automatically.
 - Last selected research query was 'Saudi Arabia national football team squad Dawnis', showing the editor still emits descriptive/noncanonical search queries. This makes exact-word metadata screening overly restrictive for such queries; not evidence that no usable photos exist.
 - Next implementation should address canonical subject resolution and image-source coverage together. Do not weaken independent pixel review or retry the same pool blindly. Prior budget cause remains unproven; this trial had no budget failure.
 - Automatic 08:00 posting is still not qualified. No additional budget increase.
+
+## Subject resolution and image-pool fix deployed — 2026-09-20
+- PR #220 merged; final GitHub offline checks passed.
+- Research resolves only a unique retrieved encyclopedia title matching the query exactly or a leading phrase of at least two words and 60% of query tokens. Retains source ID; unrelated/ambiguous results are not promoted.
+- Renderer uses that resolved subject for image preflight and fallback. No model-selected arbitrary URLs or unverified alias substitution.
+- Preflight filters irrelevant image metadata before filling the bounded pool, allowing later pages to contribute. Filtered caches are separate; exact API responses remain reusable. Same licensing/dimension/pixel-review safeguards and request bounds.
+- Four new unit/integration tests plus existing diagnostics, media and recovery tests passed; full CI passed. No paid calls or publication.
+- Next: reconcile approved remaining budget and run one new-engine daily shadow trial. Actual image availability and output quality remain unproven; no 08:00 qualification. No new image supplier has been added.
