@@ -4,8 +4,6 @@ import copy
 import hashlib
 import json
 import os
-import re
-import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -18,20 +16,9 @@ from publishing_v2.public_images import get_bytes, inspect_image, atomic_write
 from .agents import Agents
 from .pipeline import Pipeline
 from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
-from .sources import Sources, reusable_image
+from .sources import Sources, reusable_image, subject_metadata_matches
 from .credits import attribution_eligible, render_credits
 from .video import compile_story
-
-
-def subject_metadata_matches(subject, row):
-    """Cheap subject feasibility only; never a substitute for pixel review."""
-    def words(value):
-        plain = ''.join(c for c in unicodedata.normalize('NFKD', value.casefold())
-                        if not unicodedata.combining(c))
-        return set(re.findall(r'[^\W_]+', plain, re.UNICODE))
-    required = words(subject) - {'the', 'of', 'and'}
-    metadata = words(str(row.get('title', '')) + ' ' + str(row.get('description', '')))
-    return bool(required) and required.issubset(metadata)
 
 
 class Renderer:
@@ -40,15 +27,18 @@ class Renderer:
         self._catalog_key, self._catalog, self._selected = None, {}, []
 
     def plan_visuals(self, candidate):
-        subject = candidate['editorial']['research_query']
-        rows = self.image_options({'image_query': subject}, {'candidate': candidate})
+        subject = candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']
+        subject_search = getattr(self.sources, 'subject_images', None)
+        rows = (subject_search(subject, subject) if subject_search else
+                self.image_options({'image_query': subject}, {'candidate': candidate}))
         return [{'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
                  'description': row.get('description', '')[:900]}
                 for row in rows if reusable_image(row) and subject_metadata_matches(subject, row)]
 
     def image_options(self, card, package):
         candidate = package.get('candidate', {})
-        subject = candidate.get('editorial', {}).get('research_query') or candidate.get('title')
+        subject = (candidate.get('resolved_subject', {}).get('name')
+                   or candidate.get('editorial', {}).get('research_query') or candidate.get('title'))
         queries = list(dict.fromkeys([card['image_query']] + ([subject[:130]] if subject else [])))
         rows, seen = [], set()
         for query in queries:
