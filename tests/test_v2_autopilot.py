@@ -222,6 +222,23 @@ class PipelineTests(unittest.TestCase):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_story_context_fits_bounded_expanded_body(self):
+        data = draft()
+        data['cards'][1]['body'] = 'ب' * 320
+        policy.validate_draft(data, research())
+        data['cards'][1]['body'] += 'ب'
+        with self.assertRaises(ValueError):
+            policy.validate_draft(data, research())
+
+    def test_language_and_story_failures_each_block_approval(self):
+        for key in ('saudi_language', 'story_coherent'):
+            checks = dict.fromkeys(policy.REVIEW_CHECKS, True)
+            checks[key] = False
+            review = {'checks': checks, 'reason': 'Needs editorial repair',
+                      'card_checks': [{'readable': True, 'relevant': True}] * 3}
+            with self.assertRaisesRegex(ValueError, 'editorial_review_rejected'):
+                policy.validate_review(review, 3)
+
     def test_writer_cannot_supply_image_rights_or_extra_authority_fields(self):
         data = draft(); data['cards'][0]['image'] = {'license': 'CC0', 'download_url': 'invented'}
         with self.assertRaises(ValueError): policy.validate_draft(data, research())
