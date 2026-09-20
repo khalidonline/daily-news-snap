@@ -139,3 +139,10 @@ recommending any budget increase; never raise the cap automatically.
 - Held before any paid call: current five-role cycle needs at least $1.2288 of worst-case output/image allowance for three cards, even before textual input (Sonnet editor 8192 output tokens, three Opus roles at 8192 each, Opus reviewer at 16384, three 8192-token image allowances). This is reservation headroom, not predicted actual spend.
 - No new workflow dispatched; no paid model calls or publishing. No budget increase requested or applied.
 - Next: one fresh daily shadow trial with adequate available daily headroom. Do not treat this note as a scheduled automation or claim 08:00 posting is qualified.
+
+## Authorized fresh trial started — 2026-09-20
+- User authorized additional budget and continuation. Temporary total shared cap: $5 for daily shadow mode on September 20 only; regular cap remains $3 for other modes/dates.
+- Workflow guard committed as 755becebbcfd6fae1517db5e0befd0e736429a9f; date evaluated in Asia/Riyadh. No ongoing budget increase.
+- Started run https://github.com/khalidonline/daily-news-snap/actions/runs/35498778289 with mode=shadow, lane=daily on current main. No Snapchat publishing.
+- Opening ledger balance: $2.261592 spent, zero reserved. Maximum additional spend under temporary cap: $2.738408.
+- In progress: monitor THIS run and inspect its final package/review/cost. Do not launch another run or revisit old trials.
