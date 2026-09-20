@@ -43,11 +43,17 @@ class FakeAgent:
         self.calls.append(role)
         if role == 'editor':
             return {'candidates': [{'id': 'a', 'why_saudi': 'قريب من الناس',
-                                    'angle': 'قصة', 'why_now': 'اليوم', 'share_reason': 'معلومة جديدة',
-                                    'research_query': 'Jeddah'},
+                                    'angle': 'قصة جدة', 'why_now': 'اليوم', 'share_reason': 'معلومة جديدة',
+                                    'research_query': 'Jeddah', 'subjects': ['Jeddah'],
+                                    'source_title': next(c['title'] for c in data['candidates'] if c['id'] == 'a'),
+                                    'subject_evidence': [{'subject':'Jeddah','mention':'جدة',
+                                        'quote':'بدأ مهرجان جدة اليوم في المنطقة التاريخية'}]},
                                    {'id': 'b', 'why_saudi': 'قريب من الناس',
-                                    'angle': 'قصة', 'why_now': 'اليوم', 'share_reason': 'معلومة جديدة',
-                                    'research_query': 'Jeddah'}]}
+                                    'angle': 'قصة جدة', 'why_now': 'اليوم', 'share_reason': 'معلومة جديدة',
+                                    'research_query': 'Jeddah', 'subjects': ['Jeddah'],
+                                    'source_title': next(c['title'] for c in data['candidates'] if c['id'] == 'b'),
+                                    'subject_evidence': [{'subject':'Jeddah','mention':'جدة',
+                                        'quote':'بدأ مهرجان جدة اليوم في المنطقة التاريخية'}]}]}
         if role == 'researcher': return research()
         if role == 'writer': return draft()
         if role == 'reviewer':
@@ -60,7 +66,7 @@ class FakeAgent:
 
 
 class FakeSources:
-    def discover(self, lane, now): return [{'id': x, 'title': x, 'url': 'https://www.bbc.com/news/a', 'published_at': now.isoformat()} for x in ['a', 'b']]
+    def discover(self, lane, now): return [{'id': x, 'title': x, 'summary': 'بدأ مهرجان جدة اليوم في المنطقة التاريخية', 'url': 'https://www.bbc.com/news/a', 'published_at': now.isoformat()} for x in ['a', 'b']]
     def research(self, candidate): return evidence()
 
 
@@ -109,12 +115,12 @@ class PipelineTests(unittest.TestCase):
             def run(self, role, data, images=()):
                 result = super().run(role, data, images)
                 if role == 'editor':
-                    result['candidates'] = [dict(result['candidates'][0], id=ident) for ident in 'abcd']
+                    result['candidates'] = [dict(result['candidates'][0], id=ident, source_title=ident) for ident in 'abcd']
                 if role == 'researcher': result['sensitive'] = True
                 return result
         pipeline = self.pipeline()
         pipeline.agent = MoreCandidates()
-        pipeline.sources.discover = lambda lane, now: [{'id': ident, 'title': ident, 'url': 'https://www.bbc.com/news/a', 'published_at': now.isoformat()} for ident in 'abcd']
+        pipeline.sources.discover = lambda lane, now: [{'id': ident, 'title': ident, 'summary': 'بدأ مهرجان جدة اليوم في المنطقة التاريخية', 'url': 'https://www.bbc.com/news/a', 'published_at': now.isoformat()} for ident in 'abcd']
         result = pipeline.run('daily', 'shadow')
         self.assertEqual(result['status'], 'held')
         self.assertEqual(pipeline.agent.calls.count('researcher'), 4)

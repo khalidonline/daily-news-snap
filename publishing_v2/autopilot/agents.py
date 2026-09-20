@@ -63,7 +63,16 @@ Select routine consumer, culture, travel, sport or everyday life subjects that
 ordinary Saudis care about. Reject political commentary, leaders' warnings,
 war/military developments, disputed claims and technical AI/scientific risk
 debates. 'Relevant to Vision 2030' alone does not establish audience interest.
-Return {"candidates":[{"id":"existing id","why_saudi":"...","why_now":"...",
+For each selection copy source_title EXACTLY from the candidate with that ID.
+For EACH English subject provide subject_evidence: its English subject, a specific
+source-language name as mention, and a verbatim quote from that SAME candidate
+title or summary containing the mention (12-1000 characters). Use that exact
+mention in angle or why_now as well. Do not join quotes across candidates or
+invent translations as quotes. An ID alone is not evidence. If a subject is not
+named in that source, select another subject or skip the candidate.
+Return {"candidates":[{"id":"existing id","source_title":"exact source title",
+"subject_evidence":[{"subject":"English entity","mention":"name as written in source","quote":"verbatim title or summary excerpt"}],
+"why_saudi":"...","why_now":"...",
 "angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search","subjects":["primary entity","optional second entity"]}]}.
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',
     'researcher': '''Use ONLY the supplied retrieved source passages. Select 5–8

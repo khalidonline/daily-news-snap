@@ -23,7 +23,7 @@ class Pipeline:
     def save(self, state, event, **values):
         state.update(values)
         entry = {'event': event, 'at': self.now().isoformat()}
-        for key in ('reason', 'feedback'):
+        for key in ('reason', 'feedback', 'candidate_id', 'source_title'):
             if key in values: entry[key] = values[key]
         state.setdefault('audit', []).append(entry)
         receipts = state.setdefault('agent_receipts', [])
@@ -84,6 +84,7 @@ class Pipeline:
                 candidate = dict(ids[choice['id']], editorial=choice)
                 self.save(state, 'selected', candidate=candidate)
                 try:
+                    policy.validate_editor_binding(candidate)
                     policy.validate_attention(candidate, self.now())
                     sources = self.sources.research(candidate)
                     if not any(attention_source(s, candidate) for s in sources):
@@ -151,7 +152,8 @@ class Pipeline:
                 except BudgetBlocked:
                     raise
                 except (ValueError, RuntimeError, OSError) as error:
-                    self.save(state, 'candidate_rejected', reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__)
+                    self.save(state, 'candidate_rejected', reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__,
+                              candidate_id=candidate['id'], source_title=candidate['title'])
             self.save(state, 'exhausted_candidates', status='held', reason='no_package_passed_review')
         except PersistenceError:
             raise

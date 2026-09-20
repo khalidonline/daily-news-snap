@@ -294,3 +294,9 @@ recommending any budget increase; never raise the cap automatically.
 - Candidate ID membership is currently checked, but it does not establish semantic agreement between the source and selected angle/subject. Next small implementation: preserve/validate source-to-angle identity before downstream work, and diagnose unresolved names for this run without another paid full trial. Do not weaken subject matching or merely add another image provider.
 - Only one paid editor call: $0.061214. Verified settled daily total $3.476365; $1.523635 remains within today's existing $5 shadow cap. No budget increase and no repeated run.
 - State: snapchat-api-state/api-receipts/autopilot-2026-09-20-daily-shadow-8548eb751b287677.json. Full automatic readiness remains unconfirmed.
+
+### Small follow-up: source-to-angle binding
+- Owner: assistant. Added exact source-title and per-subject verbatim evidence validation before research/image planning. Invalid binding rejects that candidate and continues the bounded ranking.
+- Every rejection now preserves candidate ID and source title in audit; no need to inspect older story archives to understand which candidate failed.
+- 35 focused tests passed; no paid run or publishing. Audit: docs/audits/2026-09-20-editor-source-binding.md.
+- Limit: lexical binding does not prove translated entity identity or semantic truth; existing source/reviewer gates remain. Next: diagnose unresolved names in run 35513642131 before another paid trial.
