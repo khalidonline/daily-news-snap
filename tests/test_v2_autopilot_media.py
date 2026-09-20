@@ -20,7 +20,11 @@ class MediaRecoveryTests(unittest.TestCase):
             self.assertEqual(source.images('Jeddah traditional historic buildings street daylight'), [good])
             self.assertEqual(len(calls), count)
             self.assertEqual(source.images('Jeddah'), [good])
-            self.assertEqual(len(calls), count)
+            # Reuse exact API queries, but build a separate subject result cache.
+            self.assertEqual(calls.count(('Jeddah', 0)), 1)
+            subject_count = len(calls)
+            self.assertEqual(source.images('Jeddah'), [good])
+            self.assertEqual(len(calls), subject_count)
         self.assertLessEqual(count, 12)
 
     def test_deeper_pool_recovers_pd_when_first_page_contains_filtered_formats(self):
