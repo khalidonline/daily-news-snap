@@ -311,3 +311,10 @@ recommending any budget increase; never raise the cap automatically.
 - Owner: assistant. Run 35516891749, daily SHADOW on 6ffd9c31f4c6213135905b4862a215a10b88782a, combines source binding, Arabic exact-name recovery and public image sourcing. No Snapchat posting.
 - Opening settled daily cost $3.476365; no pending reservations. Remaining $1.523635 within today's existing $5 shadow cap. No budget increase.
 - One run only; outcome pending. Follow candidate audit, package review and exact final cost before claiming success. No archive scan or extra paid rerun.
+
+### Combined run 35516891749 — final outcome, 17:36 Riyadh
+- HELD before research/writing/design; no cards or post. Only editor was charged: $0.072170. Daily settled total verified at $3.548535; no automatic rerun or budget increase.
+- Bisht and Mohamed Salah passed source binding/subject resolution, then failed public image feasibility. Bisht 0 accepted; Salah 1. Provider logs show rights rejection dominates. Exact parenthetical subject metadata also rejects 2 Bisht results; no claim that all image availability failures are licensing alone.
+- Medical-group and Luke Littler candidates failed editor_subject_mention_not_grounded. Final Littler candidate has the correct BBC title and verbatim English quote, but Arabic angle uses ليتلر instead of exact Luke Littler. The literal mention-in-angle requirement creates a false rejection for translated/shortened names. Do not treat that as source fabrication or weaken exact quote-to-source checks.
+- Next bounded correction: separate verbatim source-name grounding from translated Arabic presentation; preserve source identity verification. Broader remaining decision: public-compatible image supply versus a reviewed attribution solution. PD/CC0-only coverage is insufficient for these actual subjects; repeated provider searches/full paid retries are not a solution.
+- Full package, visual review and autonomous readiness remain unproven. Do not start another full paid trial until these concrete gates are addressed. State: api-receipts/autopilot-2026-09-20-daily-shadow-7b28546baf6d36e3.json on snapchat-api-state.
