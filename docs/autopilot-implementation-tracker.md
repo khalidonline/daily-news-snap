@@ -163,3 +163,9 @@ recommending any budget increase; never raise the cap automatically.
 - Five targeted regression tests and ten media recovery tests pass; full CI passed after replacing obsolete cross-query-cache expectation. One legacy test_daily_budget workflow-presence assertion still fails against the unchanged read-only cloud audit workflow; budget unit tests otherwise passed.
 - No paid trial or publishing during this change. Historical BudgetBlocked cause is still unknown; diagnostics are instrumentation, not proof that it is fixed. Preflight may reject genuine images whose metadata lacks full subject names; it does not prove relevance or provide new image suppliers.
 - Next: reconcile remaining approved budget, then one fresh daily shadow trial on this engine; assess actual selection, images, Saudi narration and final review. Do not resume the rejected prior-engine output.
+
+## Post-fix fresh trial started — 2026-09-20
+- User authorized next review-only trial after PR #219.
+- Run 35499984096, main 6075e04baaa19c367aaf07fa6113c0c8cf35cea9; mode shadow, daily only. No publication.
+- Opening settled spend $3.159117; $1.840883 remains under today's approved temporary $5 cap. No further increase.
+- Monitor this run to completion and inspect its final review plus any structured budget diagnosis. Do not restart the previous engine's trial.
