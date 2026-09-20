@@ -29,7 +29,7 @@ def _page_id(url):
     return match[1]
 
 
-def photo(url):
+def photo(url, *, publication_only=False):
     identity = _page_id(url)
     html = get_bytes(url, limit=2_000_000).decode('utf-8')
     rows = _models(html).get('photo-models', [])
@@ -39,7 +39,10 @@ def photo(url):
         raise ImageSourceError('flickr_photo_identity_mismatch')
     model = models[0]
     # Require independent agreement between the page's model and ImageObject.
-    if model.get('license') != 4 or model.get('safetyLevel') != 0:
+    license_id = 9 if publication_only else 4
+    license_url = ('https://creativecommons.org/publicdomain/zero/1.0/' if publication_only
+                   else 'https://creativecommons.org/licenses/by/2.0/')
+    if model.get('license') != license_id or model.get('safetyLevel') != 0:
         raise ImageSourceError('flickr_rights_not_supported')
     objects = []
     for match in re.finditer(r'<script[^>]*type=[\"\']application/ld\+json[\"\'][^>]*>(.*?)</script>', html, re.S):
@@ -49,7 +52,7 @@ def photo(url):
         except (ValueError, AttributeError):
             continue
     records = [r for r in objects if r.get('@type') == 'ImageObject'
-               and r.get('license') == 'https://creativecommons.org/licenses/by/2.0/']
+               and r.get('license') == license_url]
     records = [r for r in records if _page_id(r.get('acquireLicensePage', '')) == identity]
     if len(records) != 1:
         raise ImageSourceError('flickr_license_unverified')
@@ -78,16 +81,16 @@ def photo(url):
             'download_url':download, 'original_url':renditions[-1][1],
             'width':width, 'height':height, 'credit':plain(author.get('name')),
             'credit_line':plain(record.get('creditText', '')), 'copyright_notice':plain(record.get('copyrightNotice', '')),
-            'rights_links':author.get('url', ''), 'license':'CC BY 2.0',
-            'license_url':record['license'], 'restrictions':'', 'attribution_required':'true',
+            'rights_links':author.get('url', ''), 'license':'CC0' if publication_only else 'CC BY 2.0',
+            'license_url':record['license'], 'restrictions':'', 'attribution_required':'false' if publication_only else 'true',
             'source_verified':True, 'licensing_verified':False,
             'date_created':plain(record.get('dateCreated', '')), 'image_role':'subject illustration; event date unverified'}
 
 
-def search_flickr(query, limit=5, *, deadline=None, accept_metadata=None):
+def search_flickr(query, limit=5, *, deadline=None, accept_metadata=None, publication_only=False):
     query_params(query, limit)
     html = get_bytes('https://www.flickr.com/search/?' + urlencode(
-        {'text':query, 'license':'4', 'sort':'relevance'}), limit=2_000_000).decode('utf-8')
+        {'text':query, 'license':'9' if publication_only else '4', 'sort':'relevance'}), limit=2_000_000).decode('utf-8')
     search = _models(html).get('search-photos-lite-models', [])
     if not search:
         raise ImageSourceError('flickr_search_metadata_missing')
@@ -108,7 +111,8 @@ def search_flickr(query, limit=5, *, deadline=None, accept_metadata=None):
         seen.add(identity)
         checked += 1
         try:
-            results.append(photo('https://www.flickr.com/photos/' + quote(owner, safe='') + '/' + identity + '/'))
+            results.append(photo('https://www.flickr.com/photos/' + quote(owner, safe='') + '/' + identity + '/',
+                                 publication_only=publication_only))
         except (ImageSourceError, ValueError, KeyError, TypeError):
             continue
     return results

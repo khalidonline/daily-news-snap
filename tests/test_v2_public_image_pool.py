@@ -25,8 +25,8 @@ class PublicImagePoolTests(unittest.TestCase):
              patch('publishing_v2.autopilot.sources.download_image', side_effect=download):
             rows = source.subject_images('Jeddah', 'Jeddah')
             planned = Renderer(None, source).plan_visuals({'resolved_subjects':[{'name':'Jeddah'}]})
-            if publication_only:
-                flickr.assert_not_called()  # This adapter returns only CC BY 2.0.
+            if publication_only and recovery:
+                self.assertTrue(flickr.call_args.kwargs['publication_only'])
         return rows, planned, downloads
 
     def test_recovery_reaches_public_images_beyond_first_five_credited_images(self):
