@@ -1,0 +1,1 @@
+{"version": 1, "engine": "7b28546baf6d36e3de56756ea24d6c3bc6fe9dcd429357938deef827f4766a48", "lane": "daily", "mode": "shadow", "status": "working", "started_at": "2026-09-20T14:35:45.194603+00:00", "expires_at": "2026-09-22T00:00:00+03:00", "audit": [{"event": "started", "at": "2026-09-20T14:35:45.194642+00:00"}], "agent_receipts": []}
