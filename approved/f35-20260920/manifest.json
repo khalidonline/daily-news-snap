@@ -1,0 +1,28 @@
+{
+  "account": "executivesaudi",
+  "approved": true,
+  "title": "F-35 — معلومة وقصة المنافسة",
+  "expires_at": "2026-09-20T17:57:46.688352+00:00",
+  "media": [
+    {
+      "path": "approved/f35-20260920/card-1.jpg",
+      "sha256": "e41ca0308abd71bf90141c4127b479c1065634943057d99728cc6ea1983205d9"
+    },
+    {
+      "path": "approved/f35-20260920/card-2.jpg",
+      "sha256": "46428750811005b0c3159ca4fb1ed0d82b0a4754be6d6e6a8d4e621cdc17e294"
+    },
+    {
+      "path": "approved/f35-20260920/card-3.jpg",
+      "sha256": "df098b43600b80f8f331bc4988861ea83772d30c23d821157281cb3bb3830ada"
+    },
+    {
+      "path": "approved/f35-20260920/card-4.jpg",
+      "sha256": "de069071a58ea3f0c0d87c7a25cfa01e553faf09b425c215de24d8150c9a6c71"
+    },
+    {
+      "path": "approved/f35-20260920/card-5.jpg",
+      "sha256": "51698e8d6c1a932fb1dae0fe2a9a98060b8bffd4ab77e791d031d930791c0b2b"
+    }
+  ]
+}
