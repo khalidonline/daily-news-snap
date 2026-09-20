@@ -115,3 +115,10 @@ recommending any budget increase; never raise the cap automatically.
 - Durable receipt: snapchat-api-state/api-receipts/cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229.json.
 - Exact approved media reused; no model generation or paid model calls for publication.
 - Manual approved delivery is complete. This does not qualify autonomous generation or change the $3/day budget.
+
+## Info footer identity fix — 2026-09-20
+- User requested the same footer brand logo as story cards after reviewing the published Info card.
+- PR #217 merged (b58aed50f626f07cbc32138acbdb478640700e1e): closing logo renders independently of source footer text; uses existing reserved space.
+- Updated Michelin Info preview rendered and visually checked. Six existing preview tests passed offline; no paid generation.
+- Future Info renders include the footer logo. Published Michelin media was not replaced or reposted.
+- Saudi writing-standard implementation remains the next editorial task.
