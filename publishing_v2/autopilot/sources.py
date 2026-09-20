@@ -14,6 +14,7 @@ from xml.etree import ElementTree
 
 from publishing_v2.public_images import search_commons, search_commons_category, download_image
 from publishing_v2.flickr_images import search_flickr
+from publishing_v2.met_images import search_met
 from .credits import attribution_eligible
 from publishing_v2.publication import image_without_public_credit
 from .feedback import rejected_trigger
@@ -323,6 +324,7 @@ class Sources:
                    lambda: search_flickr(subject, limit=5, deadline=deadline,
                           publication_only=self.publication_only,
                           accept_metadata=lambda row: subject_metadata_matches(subject, row))),
+                  ('met_open_access', lambda: search_met(subject, limit=3, deadline=deadline)),
                   ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
                   ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
         for provider, search in stages:
@@ -355,7 +357,12 @@ class Sources:
                         reject('original_too_small'); continue
                     origin = re.search(r'flickr.com/photos/[^/\s]+/([0-9]+)',
                         ' '.join(str(row.get(k, '')) for k in ('source_url', 'credit_line', 'rights_links')))
-                    origin_key = 'flickr:' + origin[1] if origin else str(row['asset_id'])
+                    met_origin = re.search(r'https://(?:www\.)?metmuseum\.org/art/collection/(?:search/)?([0-9]+)(?=[/?#\s\"\']|$)',
+                        ' '.join(str(row.get(k, '')) for k in ('source_url', 'credit_line', 'rights_links')))
+                    # A Commons thumbnail and the museum original remain one
+                    # object even when resizing changes the bytes.
+                    origin_key = ('met:' + met_origin[1] if met_origin else
+                                  'flickr:' + origin[1] if origin else str(row['asset_id']))
                     if origin_key in origins:
                         reject('duplicate_origin'); continue
                     attempts += 1
@@ -370,7 +377,7 @@ class Sources:
                     # Copied metadata is retained in the remote package journal;
                     # original image bytes are discarded after this check.
                     row.update(sha256=sha, origin_key=origin_key,
-                               image_role='subject illustration; event date requires review')
+                               image_role=row.get('image_role', 'subject illustration; event date requires review'))
                     found.append(row); hashes.add(sha); origins.add(origin_key)
                     event['accepted'] += 1
             except Exception as error:
