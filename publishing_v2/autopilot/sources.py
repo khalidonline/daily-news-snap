@@ -100,16 +100,28 @@ def wiki(query):
     # Query text cannot select arbitrary URLs or redirect retrieval elsewhere.
     query = str(query)[:180]
     base = 'https://en.wikipedia.org/w/api.php?'
+    direct = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
+        'titles': query, 'redirects': 1, 'prop': 'extracts|pageprops',
+        'explaintext': 1, 'exchars': 10000})))
+    pages = list(direct.get('query', {}).get('pages', {}).values())
+    if len(pages) == 1:
+        page = pages[0]
+        if (page.get('pageid', -1) > 0 and page.get('extract')
+                and 'disambiguation' not in page.get('pageprops', {})):
+            return [{'id': 'wiki-' + str(page['pageid']),
+                'url': 'https://en.wikipedia.org/?curid=' + str(page['pageid']),
+                'text': str(page['extract'])[:10000], 'title': page['title'],
+                'verified_aliases': [query], 'source_type': 'encyclopedia'}]
     search = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
                         'list': 'search', 'srsearch': query, 'srlimit': 2})))
     ids = [str(p['pageid']) for p in search.get('query', {}).get('search', [])[:2]]
     if not ids: return []
     result = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
-        'pageids': '|'.join(ids), 'prop': 'extracts', 'explaintext': 1, 'exchars': 10000})))
+        'pageids': '|'.join(ids), 'prop': 'extracts|pageprops', 'explaintext': 1, 'exchars': 10000})))
     return [{'id': 'wiki-' + str(page['pageid']), 'url': 'https://en.wikipedia.org/?curid=' + str(page['pageid']),
              'text': str(page.get('extract', ''))[:10000], 'title': page.get('title'),
              'source_type': 'encyclopedia'}
-            for page in result.get('query', {}).get('pages', {}).values() if page.get('extract')]
+            for page in result.get('query', {}).get('pages', {}).values() if page.get('extract') and 'disambiguation' not in page.get('pageprops', {})]
 
 
 def reusable_image(row):
@@ -149,7 +161,8 @@ def resolve_subject(query, rows):
             continue
         words = normalize(title)
         # Never turn a short ambiguous query into an unrelated longer entity.
-        if (words == wanted or (len(words) >= 2 and wanted[:len(words)] == words
+        if (any(normalize(alias) == wanted for alias in row.get('verified_aliases', []))
+                or words == wanted or (len(words) >= 2 and wanted[:len(words)] == words
                                 and len(words) / max(1, len(wanted)) >= 0.6)):
             matches[title] = {'name': title, 'source_id': row['id']}
     return next(iter(matches.values())) if len(matches) == 1 else None

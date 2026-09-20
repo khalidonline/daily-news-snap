@@ -171,7 +171,7 @@ class Pipeline:
             policy.verify_seal(package, paths, state['approval'], self.now())
             self.save(state, 'publishing', status='publishing')
             receipt = self.publish(package, paths)
-            expected_posts = 1 if package.get('delivery', {}).get('kind') == 'video' else len(paths)
+            expected_posts = 1 if package.get('delivery', {}).get('kind') == 'video' else sum(c.get('kind') != 'credits' for c in package['cards'])
             if receipt.get('status') != 'POSTED' or len(receipt.get('post_ids', [])) != expected_posts:
                 raise RuntimeError('delivery_not_confirmed')
             self.save(state, 'delivery_verified', status='published', receipt=receipt)

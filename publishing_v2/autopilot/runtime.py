@@ -20,6 +20,7 @@ from .policy import RIYADH, digest, validate_review, story_counter, validate_ima
 from .sources import Sources, reusable_image, subject_metadata_matches
 from .credits import LICENSE_URLS, attribution_eligible, render_credits
 from .video import compile_story
+from publishing_v2.publication import publication_indices, image_without_public_credit
 
 
 class Renderer:
@@ -36,7 +37,7 @@ class Renderer:
             subject_search = getattr(self.sources, 'subject_images', None)
             rows = (subject_search(subject, subject) if subject_search else
                     self.image_options({'image_query': subject}, {'candidate': candidate}))
-            usable = [row for row in rows if reusable_image(row) and subject_metadata_matches(subject, row)]
+            usable = [row for row in rows if image_without_public_credit(row) and subject_metadata_matches(subject, row)]
             if not usable:
                 return []
             for row in usable:
@@ -60,6 +61,8 @@ class Renderer:
                 subject_search = getattr(self.sources, 'subject_images', None)
                 options = subject_search(query, query) if subject_search and (recovery or query in subjects) else self.sources.images(query)
                 for row in options:
+                    if not image_without_public_credit(row):
+                        continue
                     if (row.get('width') and row.get('height')
                             and (min(row['width'], row['height']) < 600
                                  or max(row['width'], row['height']) < 1000)):
@@ -122,7 +125,7 @@ class Renderer:
                                      + str(selected.get('reason', ''))[:800])
                 card['image'] = dict(matches[0])
         validate_image_variety(cards)
-        needs_credits = any(attribution_eligible(card['image']) for card in cards)
+        needs_credits = True  # Every review includes sources; public selection excludes this card.
         existing_credits = [card for card in package['cards'] if card.get('kind') == 'credits']
         if existing_credits and (not needs_credits or len(existing_credits) != 1):
             raise ValueError('invalid_credits_card')
@@ -166,8 +169,6 @@ class Renderer:
                     raise ValueError('wrong_frame_dimensions')
             paths.append(target)
         if needs_credits:
-            if len(cards) > 4:
-                raise ValueError('attributed_video_requires_at_most_four_editorial_cards')
             credit_card = {'kind': 'credits', 'title': 'المصادر والصور',
                            'body': 'Editorial sources and photo attribution',
                            'image': dict(cards[0]['image'])}
@@ -179,21 +180,24 @@ class Renderer:
             target = output / f'card-{len(cards):02d}.jpg'
             render_credits(package, source_root / 'source-00.jpg', target)
             paths.append(target)
-            package['delivery'], paths = compile_story(paths, output)
+            if package.get('delivery'):
+                raise ValueError('review_video_requires_fresh_review')
         return paths
 
 
 def publish_package(package, paths, *, client=None, journal_factory=GitHubJournal):
     validate_image_variety(package.get('cards', []))
-    media = [(Path(p), Path(p).read_bytes()) for p in paths]
+    cards = package.get('cards', [])
+    indices = publication_indices(cards)
+    if len(cards) != len(paths):
+        raise ValueError('review_media_count_mismatch')
+    if package.get('delivery') and len(indices) != len(cards):
+        raise ValueError('review_video_not_publishable')
+    media = [(Path(paths[i]), Path(paths[i]).read_bytes()) for i in indices]
     frame_hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
     if len(frame_hashes) != len(set(frame_hashes)):
         raise ValueError('duplicate_rendered_card')
-    attributed = any(card.get('image', {}).get('license') in LICENSE_URLS
-                     for card in package.get('cards', []))
     delivery = package.get('delivery')
-    if attributed and (not delivery or package['cards'][-1].get('kind') != 'credits'):
-        raise ValueError('attribution_requires_single_video_delivery')
     if delivery:
         if (delivery.get('kind') != 'video' or delivery.get('filename') != 'story.mp4'
                 or delivery.get('frame_sha256') != frame_hashes
@@ -204,7 +208,10 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
         if not 0 < len(raw) <= 100_000_000 or hashlib.sha256(raw).hexdigest() != delivery['sha256']:
             raise ValueError('approved_video_changed')
         media = [(video, raw)]
-    hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
+    # Bind the complete review identity, matching the manual publisher. A
+    # previously sent package must not resend when its final credits are omitted.
+    hashes = ([hashlib.sha256(raw).hexdigest() for _, raw in media] if delivery else
+              [hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths])
     client = client or BundleClient()
     client.check()
     # Same identity as the existing manual publisher: cross-route deduplication.
@@ -224,7 +231,7 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
     if any(row.get('status') != 'POSTED' or not row.get('post_id') for row in rows):
         raise ValueError('incomplete_delivery_receipts')
     return {'status': 'POSTED', 'identity': identity, 'post_ids': [r['post_id'] for r in rows],
-            'card_count': len(paths), 'media_count': len(media)}
+            'card_count': len(indices), 'review_card_count': len(paths), 'media_count': len(media)}
 
 
 def engine_id():

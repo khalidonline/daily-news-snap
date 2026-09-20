@@ -53,3 +53,20 @@ account. API access removes routine browser login, not platform reauthorization.
 Official references:
 - https://info.bundle.social/api-reference/client/socialaccount/get-social-account-by-team-and-type
 - https://info.bundle.social/api-reference/platforms/snapchat
+
+## Review-only sources (20 September 2026)
+
+The owner removed F-35's source card from Snapchat. Do not recreate it.
+Every automatic review now includes a final sources card, but public delivery
+selects only explicitly typed `info` and `story` media. Manual manifest rows must
+include `kind` and adapter-verified `image` rights metadata (`license`, restrictions,
+and attribution requirement). Untyped legacy manifests stop before upload.
+
+CC BY 2.0/4.0 attribution remains supported in review artifacts. Private credits
+alone do not satisfy public attribution: automatic public candidates currently
+use Public domain/CC0 assets. CC BY images require a separate reviewed, visible
+attribution implementation before public use; never strip their credits and post.
+Videos containing a review credits frame are rejected, and the automatic renderer
+no longer compiles that credits card into public video. Manual video manifests are
+held pending an explicit editorial-frame delivery contract. Photos publish normally.
+No previous approved or published package should be reclassified and reposted.

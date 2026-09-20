@@ -66,3 +66,22 @@ class SubjectResolutionTests(unittest.TestCase):
         for names in [[], ['A', 'B', 'C'], ['A', 'a'], 'A', [None]]:
             with self.subTest(names=names), self.assertRaisesRegex(ValueError, 'invalid_editorial_subjects'):
                 Sources().research({'editorial': {'subjects': names, 'research_query': 'A'}})
+
+class RedirectResolutionTests(unittest.TestCase):
+    def test_verified_redirect_resolves_without_accepting_unrelated_similar_title(self):
+        row={'id':'wiki-12842989','title':'Saudi Arabian cuisine','source_type':'encyclopedia',
+             'text':'Saudi Arabian cuisine is the cuisine of Saudi Arabia.',
+             'verified_aliases':['Saudi cuisine']}
+        self.assertEqual(resolve_subject('Saudi cuisine',[row]),
+                         {'name':'Saudi Arabian cuisine','source_id':'wiki-12842989'})
+        self.assertIsNone(resolve_subject('Saudi cuisine',[dict(row,verified_aliases=[])]))
+
+    def test_wiki_uses_canonical_redirect_before_general_search(self):
+        import json
+        from publishing_v2.autopilot.sources import wiki
+        response={'query':{'redirects':[{'from':'Saudi cuisine','to':'Saudi Arabian cuisine'}],
+            'pages':{'12842989':{'pageid':12842989,'title':'Saudi Arabian cuisine','extract':'Verified food context'}}}}
+        with patch('publishing_v2.autopilot.sources.fetch',return_value=json.dumps(response).encode()):
+            rows=wiki('Saudi cuisine')
+        self.assertEqual(rows[0]['verified_aliases'],['Saudi cuisine'])
+        self.assertIsNotNone(resolve_subject('Saudi cuisine',rows))
