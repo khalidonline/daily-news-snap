@@ -231,3 +231,12 @@ recommending any budget increase; never raise the cap automatically.
 - Opening settled daily AI cost $3.286369; no reservations. $1.713631 remains under the already approved $5 shared trial cap for today. No budget increase.
 - Checkpoints: (1) current trigger and sufficient visuals; (2) Saudi-language Info + connected story, design and quality review; (3) finished frames, actual incremental cost, and owner approval.
 - If a candidate remains blocked, move to another strong current candidate. Success is the finished package, not another technical fix.
+
+
+### Outcome delivered: assisted Saudi food package
+- Fresh automatic run 35503159394 held before writing: all four candidates failed subject resolution. This is not a successful unattended cycle.
+- Delivered an assisted review package based on Al Yaum article 6683413, published 20 September 2026: one Info card, two connected Story frames, and one complete CC BY 2.0 credits frame. Saudi Arabic; existing light Almarai design and footer logo.
+- Final PDF uses decoded frames of the verified 1080x1920 H.264 video, 45 seconds. All four frames visually inspected; readable, no clipped text. Three distinct archival subject photos, no paid image generation. Raw source images downloaded temporarily and discarded.
+- Run cost $0.066122; settled daily API cost $3.352491. No further paid production calls for assisted completion. No budget increase.
+- Package content, source metadata, image provenance, and exact video/frame hashes: docs/audits/2026-09-20-food-review/package.json.
+- Status: finished assisted package awaiting owner review; NOT published. Next: owner reviews this package; separately, resolve subject matching as the concrete blocker before demonstrating repeated unattended cycles. Do not claim 8am automatic posting is ready.
