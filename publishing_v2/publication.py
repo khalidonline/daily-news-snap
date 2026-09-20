@@ -7,6 +7,27 @@ def image_without_public_credit(image):
             and str(image.get('attribution_required', '')).lower() in {'', 'false', 'no'})
 
 
+def image_publication_eligible(image):
+    from .autopilot.credits import public_attribution_eligible
+    return image_without_public_credit(image) or public_attribution_eligible(image)
+
+
+def validate_public_attribution(card, raw=None):
+    import hashlib
+    from .autopilot.credits import attribution_identity, public_attribution_eligible
+    image = card.get('image')
+    if image_without_public_credit(image):
+        return
+    receipt = card.get('public_attribution', {})
+    if (not public_attribution_eligible(image) or receipt.get('version') != 1
+            or receipt.get('image_sha256') != attribution_identity(image)
+            or not isinstance(receipt.get('media_sha256'), str)
+            or len(receipt['media_sha256']) != 64):
+        raise ValueError('public_attribution_required')
+    if raw is not None and hashlib.sha256(raw).hexdigest() != receipt['media_sha256']:
+        raise ValueError('public_attribution_media_changed')
+
+
 def publication_indices(cards):
     if not cards or any(card.get('kind') not in {'info', 'story', 'credits'} for card in cards):
         raise ValueError('explicit_media_kind_required')
@@ -17,8 +38,5 @@ def publication_indices(cards):
     if not indices:
         raise ValueError('no_editorial_media')
     for i in indices:
-        if not image_without_public_credit(cards[i].get('image')):
-            # CC BY remains available for review. It cannot be published with its
-            # required attribution removed. Select a no-credit alternative first.
-            raise ValueError('public_attribution_required')
+        validate_public_attribution(cards[i])
     return indices

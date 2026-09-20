@@ -16,7 +16,7 @@ from publishing_v2.public_images import search_commons, search_commons_category,
 from publishing_v2.flickr_images import search_flickr
 from publishing_v2.met_images import search_met
 from .credits import attribution_eligible
-from publishing_v2.publication import image_without_public_credit
+from publishing_v2.publication import image_publication_eligible
 from .feedback import rejected_trigger
 
 FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
@@ -324,6 +324,10 @@ class Sources:
                    lambda: search_flickr(subject, limit=5, deadline=deadline,
                           publication_only=self.publication_only,
                           accept_metadata=lambda row: subject_metadata_matches(subject, row))),
+                  *([('flickr_attribution',
+                   lambda: search_flickr(subject, limit=5, deadline=deadline,
+                          publication_only=False,
+                          accept_metadata=lambda row: subject_metadata_matches(subject, row)))] if self.publication_only else []),
                   ('met_open_access', lambda: search_met(subject, limit=3, deadline=deadline)),
                   ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
                   ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
@@ -348,7 +352,7 @@ class Sources:
                         reject('rights'); continue
                     # Review-only images must not consume the public pool or
                     # its download budget before the renderer filters them.
-                    if self.publication_only and not image_without_public_credit(row):
+                    if self.publication_only and not image_publication_eligible(row):
                         reject('public_attribution_required'); continue
                     if not subject_metadata_matches(subject, row):
                         reject('subject'); continue
@@ -418,7 +422,7 @@ class Sources:
                 self.image_search_cache[key] = search_commons(search, limit=5, offset=offset)
             rows = self.image_search_cache[key]
             usable = [r for r in rows if reusable_image(r)
-                      and (not self.publication_only or image_without_public_credit(r))
+                      and (not self.publication_only or image_publication_eligible(r))
                       and (not subject or subject_metadata_matches(subject, r))
                       and not (r.get('width') and r.get('height')
                                and (min(r['width'], r['height']) < 600

@@ -178,3 +178,57 @@ def render_credits(package, source_path, target):
     target.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(target, 'JPEG', quality=95, subsampling=0)
     return target
+
+
+def public_attribution_layout(image):
+    """Fit complete image-specific notices in a bounded public footer."""
+    if not attribution_eligible(image):
+        raise ValueError('incomplete_image_attribution')
+    blocks = _blocks({'cards':[{'image':image}]})[2:]
+    draw = ImageDraw.Draw(Image.new('RGB', (1080,1920)))
+    font = _font(26)
+    rows = []
+    for text, _ in blocks:
+        rows.extend(_wrap(draw, text, font, 952))
+    height = len(rows)*34+24
+    if height > 340:
+        raise ValueError('public_attribution_layout_overflow')
+    return rows, height
+
+
+def public_attribution_eligible(image):
+    try:
+        public_attribution_layout(image)
+        return True
+    except (ValueError, TypeError, KeyError):
+        return False
+
+
+def attribution_identity(image):
+    import hashlib
+    import json
+    return hashlib.sha256(json.dumps(image, sort_keys=True, ensure_ascii=False,
+                                      separators=(',', ':')).encode()).hexdigest()
+
+
+def render_public_attribution(card, path):
+    """Keep all original content and branding; reserve a separate rights band."""
+    import hashlib
+    rows, height = public_attribution_layout(card['image'])
+    with Image.open(path) as original:
+        if original.size != (1080,1920):
+            raise ValueError('wrong_frame_dimensions')
+        canvas = Image.new('RGB', (1080,1920), original.convert('RGB').getpixel((0,0)))
+        content = ImageOps.contain(original.convert('RGB'), (1080,1820-height-16), Image.Resampling.LANCZOS)
+        canvas.paste(content, ((1080-content.width)//2,0))
+    draw = ImageDraw.Draw(canvas)
+    y = 1820-height
+    draw.line((64,y-8,1016,y-8), fill='#c9bb9c', width=2)
+    for text in rows:
+        direction = _direction(text)
+        draw.text((1016 if direction == 'rtl' else 64,y),text,font=_font(26),
+                  fill='#26352f',direction=direction,anchor='rt' if direction=='rtl' else 'lt')
+        y += 34
+    canvas.save(path,'JPEG',quality=95,subsampling=0)
+    card['public_attribution'] = {'version':1,'image_sha256':attribution_identity(card['image']),
+                                 'media_sha256':hashlib.sha256(Path(path).read_bytes()).hexdigest()}

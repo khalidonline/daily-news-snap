@@ -16,7 +16,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
-from .publication import publication_indices
+from .publication import publication_indices, validate_public_attribution
 
 
 class BundleError(RuntimeError):
@@ -175,6 +175,8 @@ def load_package(manifest):
     frames = data.get('media', [])
     if not 1 <= len(frames) <= 10: raise BundleError('Expected 1–10 approved media files')
     try:
+        from .autopilot.policy import validate_image_variety
+        validate_image_variety(frames)
         indices = publication_indices(frames)
     except ValueError as error:
         raise BundleError(str(error)) from None
@@ -185,6 +187,11 @@ def load_package(manifest):
             raise BundleError('Unsupported media path')
         if not 0 < source.stat().st_size <= 100_000_000: raise BundleError('Invalid media size')
         content = source.read_bytes()
+        if frame.get('kind') != 'credits':
+            try:
+                validate_public_attribution(frame, content)
+            except ValueError as error:
+                raise BundleError(str(error)) from None
         digest = hashlib.sha256(content).hexdigest()
         if digest != frame['sha256']: raise BundleError('Media changed after approval')
         hashes.append(digest)
