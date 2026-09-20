@@ -223,3 +223,11 @@ recommending any budget increase; never raise the cap automatically.
 - Openverse returned HTTP 403/timeouts; no dependency, access bypass, subscription or account was added. Flickr source failures remain possible and recovery continues to another stage.
 - 225 v2 tests passed locally before the final regression; 21 focused tests including it passed, followed by final full PR CI success. AI cost $0; no publishing or budget changes.
 - Next checkpoint: expand verified source/alias coverage or implement adaptive small-portrait layouts, then a fresh reviewed package. Current Simeone/coffee/date-palm pools do not meet the three-image preflight target. No automatic 08:00 qualification and no paid retries on unchanged inadequate pools.
+
+
+## Outcome checkpoint: one complete fresh package — 2026-09-20
+- Owner redirected work from isolated improvements to a complete reviewable package. Do not start another enhancement project during this checkpoint.
+- Run 35503159394 started on main 1f44e2ca53b626a15ee8bf3d69a0297b479167db: daily lane, shadow/review only. No publishing authorized until owner reviews final frames.
+- Opening settled daily AI cost $3.286369; no reservations. $1.713631 remains under the already approved $5 shared trial cap for today. No budget increase.
+- Checkpoints: (1) current trigger and sufficient visuals; (2) Saudi-language Info + connected story, design and quality review; (3) finished frames, actual incremental cost, and owner approval.
+- If a candidate remains blocked, move to another strong current candidate. Success is the finished package, not another technical fix.
