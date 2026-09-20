@@ -78,6 +78,28 @@ def plain(value):
     return ' '.join(' '.join(parser.parts).split())[:12000]
 
 
+class RightsLinks(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.links = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'a':
+            href = dict(attrs).get('href', '')
+            if href.startswith('//'):
+                href = 'https:' + href
+            if href.startswith(('https://', 'http://')) and href not in self.links:
+                self.links.append(href)
+
+
+def rights_links(meta):
+    parser = RightsLinks()
+    for key in ('Credit', 'Copyright', 'Attribution', 'Disclaimer'):
+        parser.feed(meta.get(key, {}).get('value', '') or '')
+    # Do not truncate notices/links into apparently eligible partial credits.
+    return ' '.join(parser.links)
+
+
 def query_params(query, limit):
     if not isinstance(query, str) or not query.strip() or len(query) > 200:
         raise ValueError('query must contain 1-200 characters')
@@ -109,6 +131,8 @@ def search_commons(query, limit=5, *, offset=0):
             results.append({'provider': 'commons', 'asset_id': str(page['pageid']), 'title': plain(page['title']),
                 'description': field('ImageDescription'), 'download_url': url, 'original_url': info['url'],
                 'source_url': info['descriptionurl'], 'credit': field('Artist'), 'credit_line': field('Credit'),
+                'rights_links': rights_links(meta), 'copyright_notice': field('Copyright'), 'attribution_notice': field('Attribution'),
+                'usage_terms': field('UsageTerms'), 'disclaimer': field('Disclaimer'),
                 'license': field('LicenseShortName'), 'license_url': field('LicenseUrl'),
                 'attribution_required': field('AttributionRequired'), 'restrictions': field('Restrictions'),
                 'date_created': field('DateTimeOriginal'), 'width': min([v for v in (info.get('width'), info.get('thumbwidth')) if isinstance(v, int) and v > 0], default=None),
