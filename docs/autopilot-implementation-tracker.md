@@ -197,3 +197,10 @@ recommending any budget increase; never raise the cap automatically.
 - Subject-resolution/paging changes have NOT demonstrated improved live coverage. Do not claim image sourcing is solved or schedule qualified posting.
 - Next is an unpaid source-retrieval/rights audit using actual queries and returned records. Preserve query, canonical resolution, raw count, license rejection count, size count and subject-match count to distinguish retrieval gaps from overly strict filters.
 - Two consecutive preflight holds justify reconsidering source acquisition/provider coverage, rather than another generic paid rerun or speculative prompt patch. No further budget increase.
+
+## Unpaid source audit complete — 2026-09-20
+- Evidence and findings: docs/audits/2026-09-20-images/README.md and raw metadata.
+- Combined rivalry query: zero files. Individual-name samples: 30 files, 25 large enough, 28 metadata matches, zero passing all current gates.
+- Principal sample exclusions: unsupported BY-SA/BY 2.0, public-domain image size, and one BY 4.0 personality flag. No connectivity failures in this probe.
+- Next: explicit separate verified subjects plus correctly implemented CC BY 2.0 attribution/delivery, then unpaid image-only feasibility check before another paid generation run. Do not relax all restrictions or infer provider replacement is necessary.
+- Audit cost $0 AI; no production/publishing/budget changes. Previous unexplained budget hold remains separate.

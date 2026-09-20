@@ -1,0 +1,485 @@
+{
+  "paid_calls": 0,
+  "results": [
+    {
+      "query": "Jose Mourinho Diego Simeone rivalry",
+      "pages": [
+        {
+          "offset": 0,
+          "counts": {},
+          "records": []
+        },
+        {
+          "offset": 5,
+          "counts": {},
+          "records": []
+        },
+        {
+          "offset": 10,
+          "counts": {},
+          "records": []
+        }
+      ],
+      "encyclopedia_titles": [
+        "Diego Simeone"
+      ],
+      "resolved": null
+    },
+    {
+      "query": "Jose Mourinho",
+      "pages": [
+        {
+          "offset": 0,
+          "counts": {
+            "returned": 5,
+            "rights_pass": 1,
+            "size_pass": 4,
+            "subject_pass": 5,
+            "all_pass": 0
+          },
+          "records": [
+            {
+              "asset_id": "31371455",
+              "title": "File:Jose Mourinho'14.JPG",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho%2714.JPG",
+              "width": 1459,
+              "height": 1154,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "107727410",
+              "title": "File:José Mourinho 2020 (cropped).jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9_Mourinho_2020_(cropped).jpg",
+              "width": 1600,
+              "height": 2240,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "123096236",
+              "title": "File:A graffito in honour of Jose Mourinho in the streets of Rome.jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:A_graffito_in_honour_of_Jose_Mourinho_in_the_streets_of_Rome.jpg",
+              "width": 1600,
+              "height": 2133,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "159786471",
+              "title": "File:José Mourinho 20250206 (1).jpg",
+              "license": "CC BY 4.0",
+              "license_url": "https://creativecommons.org/licenses/by/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9_Mourinho_20250206_(1).jpg",
+              "width": 1600,
+              "height": 2009,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "160302495",
+              "title": "File:Fenerbahce manager Jose Mourinho and Ali Koç, June 2024 (cropped).jpg",
+              "license": "Public domain",
+              "license_url": "",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Fenerbahce_manager_Jose_Mourinho_and_Ali_Ko%C3%A7,_June_2024_(cropped).jpg",
+              "width": 674,
+              "height": 900,
+              "rights_pass": true,
+              "size_pass": false,
+              "subject_pass": true
+            }
+          ]
+        },
+        {
+          "offset": 5,
+          "counts": {
+            "returned": 5,
+            "rights_pass": 0,
+            "size_pass": 5,
+            "subject_pass": 4,
+            "all_pass": 0
+          },
+          "records": [
+            {
+              "asset_id": "8627022",
+              "title": "File:Jose Mourinho - Inter Mailand (5).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_-_Inter_Mailand_(5).jpg",
+              "width": 1600,
+              "height": 2400,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "29365429",
+              "title": "File:Jose Mourinho and Jose Morais.jpg",
+              "license": "CC BY 2.0",
+              "license_url": "https://creativecommons.org/licenses/by/2.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_and_Jose_Morais.jpg",
+              "width": 1281,
+              "height": 1984,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "29365430",
+              "title": "File:Jose Mourinho 2013.jpg",
+              "license": "CC BY 2.0",
+              "license_url": "https://creativecommons.org/licenses/by/2.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_2013.jpg",
+              "width": 1600,
+              "height": 1067,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "110715147",
+              "title": "File:GlobeSoccer Awards 2012 - Jose Mourinho (cropped).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:GlobeSoccer_Awards_2012_-_Jose_Mourinho_(cropped).jpg",
+              "width": 1600,
+              "height": 2081,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "128796877",
+              "title": "File:FC Salzburg gegen AS Roma (UEFA Euroleague play-off, 2023-02-16) 42.jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:FC_Salzburg_gegen_AS_Roma_(UEFA_Euroleague_play-off,_2023-02-16)_42.jpg",
+              "width": 1600,
+              "height": 1794,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": false
+            }
+          ]
+        },
+        {
+          "offset": 10,
+          "counts": {
+            "returned": 5,
+            "rights_pass": 0,
+            "size_pass": 5,
+            "subject_pass": 5,
+            "all_pass": 0
+          },
+          "records": [
+            {
+              "asset_id": "8626955",
+              "title": "File:Jose Mourinho - Inter Mailand (1).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_-_Inter_Mailand_(1).jpg",
+              "width": 1600,
+              "height": 2400,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "8626965",
+              "title": "File:Jose Mourinho - Inter Mailand (2).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_-_Inter_Mailand_(2).jpg",
+              "width": 1600,
+              "height": 2400,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "8626966",
+              "title": "File:Jose Mourinho - Inter Mailand (3).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_-_Inter_Mailand_(3).jpg",
+              "width": 1600,
+              "height": 2400,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "8627021",
+              "title": "File:Jose Mourinho - Inter Mailand (4).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Mourinho_-_Inter_Mailand_(4).jpg",
+              "width": 1600,
+              "height": 1600,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "34614344",
+              "title": "File:José Mourinho'14.JPG",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9_Mourinho%2714.JPG",
+              "width": 1600,
+              "height": 1535,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            }
+          ]
+        }
+      ],
+      "encyclopedia_titles": [
+        "José Mourinho"
+      ],
+      "resolved": {
+        "name": "José Mourinho",
+        "source_id": "wiki-739547"
+      }
+    },
+    {
+      "query": "Diego Simeone",
+      "pages": [
+        {
+          "offset": 0,
+          "counts": {
+            "returned": 5,
+            "rights_pass": 2,
+            "size_pass": 2,
+            "subject_pass": 5,
+            "all_pass": 0
+          },
+          "records": [
+            {
+              "asset_id": "28316941",
+              "title": "File:Diego Simeone - 01.jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Diego_Simeone_-_01.jpg",
+              "width": 1600,
+              "height": 2400,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "64166987",
+              "title": "File:Diego Pablo Simeone en la presentación de la promoción de la estación Estadio Metropolitano.jpg",
+              "license": "CC BY 2.0",
+              "license_url": "https://creativecommons.org/licenses/by/2.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Diego_Pablo_Simeone_en_la_presentaci%C3%B3n_de_la_promoci%C3%B3n_de_la_estaci%C3%B3n_Estadio_Metropolitano.jpg",
+              "width": 588,
+              "height": 785,
+              "rights_pass": false,
+              "size_pass": false,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "72702431",
+              "title": "File:Simeone 1987.jpg",
+              "license": "Public domain",
+              "license_url": "",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Simeone_1987.jpg",
+              "width": 779,
+              "height": 960,
+              "rights_pass": true,
+              "size_pass": false,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "72995269",
+              "title": "File:Simeone 1988.jpg",
+              "license": "Public domain",
+              "license_url": "",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Simeone_1988.jpg",
+              "width": 800,
+              "height": 573,
+              "rights_pass": true,
+              "size_pass": false,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "82736699",
+              "title": "File:Diego Simeone.jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Diego_Simeone.jpg",
+              "width": 754,
+              "height": 1131,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            }
+          ]
+        },
+        {
+          "offset": 5,
+          "counts": {
+            "returned": 5,
+            "rights_pass": 1,
+            "size_pass": 4,
+            "subject_pass": 5,
+            "all_pass": 0
+          },
+          "records": [
+            {
+              "asset_id": "147930613",
+              "title": "File:25th Laureus World Sports Awards - Red Carpet - Cholo Simeone - 240422 192608.jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Cholo_Simeone_-_240422_192608.jpg",
+              "width": 1600,
+              "height": 2400,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "147930633",
+              "title": "File:25th Laureus World Sports Awards - Red Carpet - Cholo Simeone - 240422 192618-2.jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Cholo_Simeone_-_240422_192618-2.jpg",
+              "width": 1600,
+              "height": 1067,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "147930650",
+              "title": "File:25th Laureus World Sports Awards - Red Carpet - Cholo Simeone - 240422 192621-2.jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Cholo_Simeone_-_240422_192621-2.jpg",
+              "width": 1600,
+              "height": 1067,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "147930663",
+              "title": "File:25th Laureus World Sports Awards - Red Carpet - Cholo Simeone - 240422 192642.jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Cholo_Simeone_-_240422_192642.jpg",
+              "width": 1600,
+              "height": 2400,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "193477960",
+              "title": "File:Diego Simeone wearing shemagh in 1989.jpg",
+              "license": "Public domain",
+              "license_url": "",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Diego_Simeone_wearing_shemagh_in_1989.jpg",
+              "width": 368,
+              "height": 512,
+              "rights_pass": true,
+              "size_pass": false,
+              "subject_pass": true
+            }
+          ]
+        },
+        {
+          "offset": 10,
+          "counts": {
+            "returned": 5,
+            "rights_pass": 0,
+            "size_pass": 5,
+            "subject_pass": 4,
+            "all_pass": 0
+          },
+          "records": [
+            {
+              "asset_id": "64166626",
+              "title": "File:Utiliza el Metro para acudir al nuevo estadio del Atlético de Madrid - 36250882174.jpg",
+              "license": "CC BY 2.0",
+              "license_url": "https://creativecommons.org/licenses/by/2.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Utiliza_el_Metro_para_acudir_al_nuevo_estadio_del_Atl%C3%A9tico_de_Madrid_-_36250882174.jpg",
+              "width": 1600,
+              "height": 984,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": false
+            },
+            {
+              "asset_id": "67422849",
+              "title": "File:Loko-AM2018 tren (12).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Loko-AM2018_tren_(12).jpg",
+              "width": 1145,
+              "height": 1000,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "67422851",
+              "title": "File:Loko-AM2018 tren (15).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Loko-AM2018_tren_(15).jpg",
+              "width": 1207,
+              "height": 1000,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "67422854",
+              "title": "File:Loko-AM2018 tren (18).jpg",
+              "license": "CC BY-SA 3.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:Loko-AM2018_tren_(18).jpg",
+              "width": 1135,
+              "height": 1000,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            },
+            {
+              "asset_id": "150867567",
+              "title": "File:25th Laureus World Sports Awards - Red Carpet - Diego Simeone - 240422 192621-2 (cropped).jpg",
+              "license": "CC BY-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+              "source_url": "https://commons.wikimedia.org/wiki/File:25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Diego_Simeone_-_240422_192621-2_(cropped).jpg",
+              "width": 1600,
+              "height": 2135,
+              "rights_pass": false,
+              "size_pass": true,
+              "subject_pass": true
+            }
+          ]
+        }
+      ],
+      "encyclopedia_titles": [
+        "Diego Simeone"
+      ],
+      "resolved": {
+        "name": "Diego Simeone",
+        "source_id": "wiki-1133034"
+      }
+    }
+  ]
+}
