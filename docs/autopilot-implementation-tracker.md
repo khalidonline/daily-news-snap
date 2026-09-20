@@ -240,3 +240,14 @@ recommending any budget increase; never raise the cap automatically.
 - Run cost $0.066122; settled daily API cost $3.352491. No further paid production calls for assisted completion. No budget increase.
 - Package content, source metadata, image provenance, and exact video/frame hashes: docs/audits/2026-09-20-food-review/package.json.
 - Status: finished assisted package awaiting owner review; NOT published. Next: owner reviews this package; separately, resolve subject matching as the concrete blocker before demonstrating repeated unattended cycles. Do not claim 8am automatic posting is ready.
+
+
+### 20 September: review-only sources deployed; fresh trial active
+- Owner deleted the accidentally published F-35 source card. Do not republish it or the package.
+- PR #223 merged as fbae9e42bfb8ece1de61ef010cea0c57fdab28d7 after 231 v2 tests and GitHub offline/container checks passed; independent review found no blockers.
+- Review always includes sources. Snapchat selects editorial frames only; untyped manual manifests and old source-card videos stop before upload.
+- CC BY remains review-supported, not publicly publishable with its attribution removed. Automatic public selection uses PD/CC0 until visible attribution is designed and reviewed.
+- Verified Wikipedia aliases now resolve exact redirects (Saudi cuisine → Saudi Arabian cuisine). Real free image probe still found zero suitable cuisine images: do not label the entire image-recovery problem solved.
+- Fresh daily SHADOW run 35511704697 started. No new public posting in this step. Opening daily settled $3.352491; existing date-limited $5 trial cap, no increase.
+- Detailed implementation and full-suite legacy failures: docs/audits/2026-09-20-review-only-sources.md.
+- Next: inspect actual trial result, cost and images; fix concrete remaining blockers before scheduling a three-day reliability test. 8am unattended publishing is not confirmed.
