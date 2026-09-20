@@ -2808,9 +2808,11 @@ def render_story(brief, out_path, photo_path=None, photo_credit=None):
 
     lines = [fit(line) for line in story_footer_texts(brief, photo_credit)]
 
+    # The brand closes every card, even when sources appear only on the
+    # final story card. Text fitting already reserves this footer band.
+    top = H - 206 if len(lines) > 1 else H - 176
+    closing_seal(img, top - 70)
     if lines:
-        top = H - 176 if len(lines) == 1 else H - 206
-        closing_seal(img, top - 70)
         y = top + 46
         for line in lines:
             mid((centre, y), line, f_foot, muted)
