@@ -39,7 +39,10 @@ Choose one main subject behind the trigger: a person, company, organization,
 place, object or practice. The angle must explain that subject, not recap the
 news. Keep the trigger in why_now. research_query must be only the subject's
 canonical English name with a short disambiguator if needed; omit event actions,
-opponents, scores, dates and headline wording.
+opponents, scores, dates and headline wording. Also return subjects: one or two
+canonical English entity names. For a comparison or rivalry, list each person
+separately; never combine their names into one search. Each name must be
+verifiable from retrieved encyclopedia evidence.
 No fixed category rotation or category preference. BOTH daily and local require a verified current attention moment (طاري), not
 just an article with today's timestamp. Local must additionally concern everyday
 Saudi culture, a Saudi place or Saudi life; generic foreign news is not local.
@@ -55,7 +58,7 @@ ordinary Saudis care about. Reject political commentary, leaders' warnings,
 war/military developments, disputed claims and technical AI/scientific risk
 debates. 'Relevant to Vision 2030' alone does not establish audience interest.
 Return {"candidates":[{"id":"existing id","why_saudi":"...","why_now":"...",
-"angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search"}]}.
+"angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search","subjects":["primary entity","optional second entity"]}]}.
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',
     'researcher': '''Use ONLY the supplied retrieved source passages. Select 5–8
 useful facts for an information card and an engaging true story. Each fact must

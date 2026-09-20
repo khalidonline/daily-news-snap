@@ -17,7 +17,7 @@ from .agents import Agents
 from .pipeline import Pipeline
 from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
 from .sources import Sources, reusable_image, subject_metadata_matches
-from .credits import attribution_eligible, render_credits
+from .credits import LICENSE_URLS, attribution_eligible, render_credits
 from .video import compile_story
 
 
@@ -27,19 +27,28 @@ class Renderer:
         self._catalog_key, self._catalog, self._selected = None, {}, []
 
     def plan_visuals(self, candidate):
-        subject = candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']
-        subject_search = getattr(self.sources, 'subject_images', None)
-        rows = (subject_search(subject, subject) if subject_search else
-                self.image_options({'image_query': subject}, {'candidate': candidate}))
-        return [{'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
-                 'description': row.get('description', '')[:900]}
-                for row in rows if reusable_image(row) and subject_metadata_matches(subject, row)]
+        subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
+        if not subjects:
+            subjects = [candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']]
+        found = {}
+        for subject in subjects:
+            subject_search = getattr(self.sources, 'subject_images', None)
+            rows = (subject_search(subject, subject) if subject_search else
+                    self.image_options({'image_query': subject}, {'candidate': candidate}))
+            usable = [row for row in rows if reusable_image(row) and subject_metadata_matches(subject, row)]
+            if not usable:
+                return []
+            for row in usable:
+                found[row['asset_id']] = {'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
+                    'description': row.get('description', '')[:900]}
+        return list(found.values())
 
     def image_options(self, card, package):
         candidate = package.get('candidate', {})
         subject = (candidate.get('resolved_subject', {}).get('name')
                    or candidate.get('editorial', {}).get('research_query') or candidate.get('title'))
-        queries = list(dict.fromkeys([card['image_query']] + ([subject[:130]] if subject else [])))
+        subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
+        queries = list(dict.fromkeys([card['image_query']] + subjects + ([subject[:130]] if subject else [])))
         rows, seen = [], set()
         for query in queries:
             try:
@@ -169,7 +178,7 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
     frame_hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
     if len(frame_hashes) != len(set(frame_hashes)):
         raise ValueError('duplicate_rendered_card')
-    attributed = any(card.get('image', {}).get('license') == 'CC BY 4.0'
+    attributed = any(card.get('image', {}).get('license') in LICENSE_URLS
                      for card in package.get('cards', []))
     delivery = package.get('delivery')
     if attributed and (not delivery or package['cards'][-1].get('kind') != 'credits'):

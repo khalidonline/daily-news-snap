@@ -1,4 +1,4 @@
-"""Complete, bounded CC BY 4.0 attribution in a reviewed final image frame.
+"""Complete, bounded CC BY 2.0 and 4.0 attribution in a reviewed final image frame.
 
 License conditions: https://creativecommons.org/licenses/by/4.0/legalcode.en#s3
 The Commons material URI also exposes supplied notices and modification history.
@@ -10,22 +10,26 @@ from urllib.parse import urlsplit
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/'
+LICENSE_URLS = {f'CC BY {version}': f'https://creativecommons.org/licenses/by/{version}/'
+                for version in ('2.0', '4.0')}
+NOTICE_FIELDS = ('copyright_notice', 'attribution_notice', 'usage_terms', 'disclaimer', 'rights_links')
 FONT_ROOT = Path(__file__).resolve().parents[2] / 'fonts'
 
 
 def attribution_eligible(row):
     if not isinstance(row, dict):
         return False
-    if row.get('license') != 'CC BY 4.0' or row.get('restrictions'):
+    if row.get('license') not in LICENSE_URLS or row.get('restrictions'):
         return False
-    if row.get('license_url') not in {LICENSE_URL, LICENSE_URL.rstrip('/'), LICENSE_URL.replace('https:', 'http:'),
-                                       LICENSE_URL.replace('https:', 'http:').rstrip('/')}:
+    license_url = LICENSE_URLS[row['license']]
+    if row.get('license_url') not in {license_url, license_url.rstrip('/'), license_url.replace('https:', 'http:'),
+                                       license_url.replace('https:', 'http:').rstrip('/')}:
         return False
-    for key, maximum in (('credit', 120), ('title', 180), ('credit_line', 200)):
+    for key, maximum in (('credit', 120), ('title', 180), ('credit_line', 200)) + tuple((key, 400) for key in NOTICE_FIELDS):
         value = row.get(key, '')
         if not isinstance(value, str) or len(value) > maximum:
             return False
-        if key != 'credit_line' and not value.strip():
+        if key in {'credit', 'title'} and not value.strip():
             return False
         if any(ord(char) < 32 and char not in '\n\t\r' for char in value):
             return False
@@ -61,26 +65,30 @@ def _blocks(package):
     assets = {}
     for card in package.get('cards', []):
         image = card.get('image', {})
-        if image.get('license') == 'CC BY 4.0':
+        if image.get('license') in LICENSE_URLS:
             if not attribution_eligible(image):
                 raise ValueError('incomplete_image_attribution')
             identity = str(image['asset_id'])
             if identity in assets and any(assets[identity].get(key) != image.get(key)
-                    for key in ('title', 'credit', 'credit_line', 'license_url')):
+                    for key in ('title', 'credit', 'credit_line', 'license', 'license_url') + NOTICE_FIELDS):
                 raise ValueError('conflicting_image_attribution')
             assets[identity] = image
     if len(assets) > 6:
         raise ValueError('too_many_credited_assets')
     blocks = [('المصادر وحقوق الصور', True)]
     if assets:
-        blocks.append(('Photo credits · CC BY 4.0', True))
+        blocks.append(('Photo credits', True))
         for number, (identity, row) in enumerate(assets.items(), 1):
             blocks.append((f"{number}. {row['title']}", True))
             blocks.append((row['credit'], False))
             if row.get('credit_line') and row['credit_line'].strip() != row['credit'].strip():
                 blocks.append((row['credit_line'], False))
+            for key in NOTICE_FIELDS:
+                if row.get(key):
+                    blocks.append((row[key], False))
             blocks.append((f'https://commons.wikimedia.org/?curid={identity}', False))
-        blocks.append((LICENSE_URL, False))
+            blocks.append((row['license'], False))
+            blocks.append((LICENSE_URLS[row['license']], False))
         blocks.append(('Images cropped/resized. No endorsement implied.', False))
     else:
         blocks.append(('Images: public domain / CC0', False))

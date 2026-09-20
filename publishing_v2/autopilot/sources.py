@@ -211,15 +211,31 @@ class Sources:
                                                      candidate.get('published_at')))
             if publisher and attention_source(publisher, candidate):
                 rows.append(dict(publisher))
-        try:
-            rows.extend(wiki(candidate['editorial']['research_query']))
-        except Exception:
-            pass
+        editorial = candidate['editorial']
+        subjects = editorial.get('subjects')
+        if subjects is not None and (not isinstance(subjects, list) or not 1 <= len(subjects) <= 2
+                or any(not isinstance(name, str) or not name.strip() or len(name) > 130 for name in subjects)
+                or len({name.casefold().strip() for name in subjects}) != len(subjects)):
+            raise ValueError('invalid_editorial_subjects')
+        candidate.pop('resolved_subjects', None)
+        candidate.pop('resolved_subject', None)
+        resolved_subjects = []
+        for query in subjects or [editorial['research_query']]:
+            try:
+                evidence = wiki(query)
+            except Exception:
+                evidence = []
+            rows.extend(row for row in evidence if row['id'] not in {r['id'] for r in rows})
+            resolved = resolve_subject(query, evidence)
+            if resolved:
+                resolved_subjects.append(resolved)
+            elif subjects is not None:
+                raise ValueError('unresolved_editorial_subject')
         if not rows:
             raise ValueError('no_retrieved_evidence')
-        resolved = resolve_subject(candidate['editorial']['research_query'], rows)
-        if resolved:
-            candidate['resolved_subject'] = resolved
+        if resolved_subjects:
+            candidate['resolved_subject'] = resolved_subjects[0]
+            candidate['resolved_subjects'] = resolved_subjects
         return rows
 
     def subject_images(self, query, subject):

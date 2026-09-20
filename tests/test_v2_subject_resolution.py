@@ -41,3 +41,28 @@ class SubjectResolutionTests(unittest.TestCase):
             Renderer(object(), source).plan_visuals(candidate)
         search.assert_called_once_with(rows[0]['title'], rows[0]['title'])
         self.assertEqual(candidate['resolved_subject']['source_id'], 'wiki-1')
+
+    def test_two_people_resolve_and_search_separately(self):
+        from publishing_v2.autopilot.runtime import Renderer
+        names = ['Jose Mourinho', 'Diego Simeone']
+        candidate = {'editorial': {'research_query': 'rivalry', 'subjects': names}}
+        def evidence(name):
+            return [{'title': name, 'id': name, 'text': 'context', 'source_type': 'encyclopedia'}]
+        source = Sources()
+        with patch('publishing_v2.autopilot.sources.wiki', side_effect=evidence) as wiki:
+            source.research(candidate)
+            self.assertEqual([c.args[0] for c in wiki.call_args_list], names)
+        def images(query, subject):
+            return [{'asset_id': subject, 'title': subject, 'license': 'CC0'}]
+        with patch.object(source, 'subject_images', side_effect=images) as search:
+            self.assertEqual(len(Renderer(object(), source).plan_visuals(candidate)), 2)
+            self.assertEqual([c.args for c in search.call_args_list], [(n, n) for n in names])
+        with patch('publishing_v2.autopilot.sources.wiki', side_effect=[evidence(names[0]), []]):
+            with self.assertRaisesRegex(ValueError, 'unresolved_editorial_subject'):
+                source.research(candidate)
+        self.assertNotIn('resolved_subjects', candidate)
+
+    def test_invalid_subject_lists_hold(self):
+        for names in [[], ['A', 'B', 'C'], ['A', 'a'], 'A', [None]]:
+            with self.subTest(names=names), self.assertRaisesRegex(ValueError, 'invalid_editorial_subjects'):
+                Sources().research({'editorial': {'subjects': names, 'research_query': 'A'}})
