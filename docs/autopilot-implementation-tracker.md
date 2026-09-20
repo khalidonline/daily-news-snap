@@ -190,3 +190,10 @@ recommending any budget increase; never raise the cap automatically.
 - User authorized next trial after PR #220. Run 35500652285: daily, shadow, current main. No publishing.
 - Opening settled balance $3.219743; $1.780257 remains under today's approved $5 shared cap.
 - Engine 639f0b653e5396cfcd9402609039df9d1fc0af0d46b44aa42daa8fc5026474e3. Monitor this single run and persist its outcome before any further work.
+
+## Post-resolution trial result — 2026-09-20
+- Run 35500652285 held: no_package_passed_review. Four candidates again failed insufficient_subject_visuals_before_drafting; editor was the only paid role.
+- Trial cost $0.066626. Authoritative settled daily total $3.286369; no reservations outstanding. No writing, generated cards, final review or publication.
+- Subject-resolution/paging changes have NOT demonstrated improved live coverage. Do not claim image sourcing is solved or schedule qualified posting.
+- Next is an unpaid source-retrieval/rights audit using actual queries and returned records. Preserve query, canonical resolution, raw count, license rejection count, size count and subject-match count to distinguish retrieval gaps from overly strict filters.
+- Two consecutive preflight holds justify reconsidering source acquisition/provider coverage, rather than another generic paid rerun or speculative prompt patch. No further budget increase.
