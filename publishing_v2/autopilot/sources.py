@@ -3,6 +3,7 @@ import hashlib
 import json
 import re
 import unicodedata
+import time
 from datetime import timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
@@ -11,7 +12,8 @@ from urllib.parse import urlsplit, urlencode
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from xml.etree import ElementTree
 
-from publishing_v2.public_images import search_commons
+from publishing_v2.public_images import search_commons, search_commons_category, download_image
+from publishing_v2.flickr_images import search_flickr
 from .credits import attribution_eligible
 from .feedback import rejected_trigger
 
@@ -122,10 +124,14 @@ def subject_metadata_matches(subject, row):
     def words(value):
         plain = ''.join(c for c in unicodedata.normalize('NFKD', value.casefold())
                         if not unicodedata.combining(c))
-        return set(re.findall(r'[^\W_]+', plain, re.UNICODE))
-    required = words(subject) - {'the', 'of', 'and'}
-    metadata = words(str(row.get('title', '')) + ' ' + str(row.get('description', '')))
-    return bool(required) and required.issubset(metadata)
+        return re.findall(r'[^\W_]+', plain, re.UNICODE)
+    required = set(words(subject)) - {'the', 'of', 'and'}
+    metadata = words(str(row.get('title', '')) + ' ' + str(row.get('description', '')) + ' ' + str(row.get('collection_subject', '')))
+    # A passing mention elsewhere in a long caption cannot join unrelated
+    # title words into an apparent subject match. Allow short name modifiers.
+    window = len(required) + 2
+    return bool(required) and any(required.issubset(metadata[i:i + window])
+                                  for i in range(len(metadata)))
 
 
 
@@ -150,7 +156,10 @@ def resolve_subject(query, rows):
 
 
 class Sources:
-    def __init__(self):
+    def __init__(self, *, recovery=False):
+        self.recovery = recovery
+        self.recovery_cache = {}
+        self.image_diagnostics = []
         self.publisher_articles = {}
         self.image_cache = {}
         self.image_search_cache = {}
@@ -239,7 +248,74 @@ class Sources:
         return rows
 
     def subject_images(self, query, subject):
-        return self.images(query, subject=subject)
+        return self.recover_images(query, subject) if self.recovery else self.images(query, subject=subject)
+
+    def recover_images(self, query, subject):
+        """Fresh source queries; bounded time/requests; cache metadata, never photos."""
+        key = (query, subject)
+        if key in self.recovery_cache:
+            return self.recovery_cache[key]
+        if not isinstance(query, str) or not query.strip() or not isinstance(subject, str) or not subject.strip():
+            return []
+        deadline = time.monotonic() + 90
+        found, identities, hashes, origins = [], set(), set(), set()
+        attempts = 0
+        stages = [('commons', lambda: search_commons(query, limit=5)),
+                  ('commons_collection', lambda: search_commons_category(subject, limit=5)),
+                  ('flickr', lambda: search_flickr(subject, limit=5, deadline=deadline,
+                          accept_metadata=lambda row: subject_metadata_matches(subject, row))),
+                  ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
+                  ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
+        for provider, search in stages:
+            if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
+                break
+            event = {'stage':'image_recovery', 'query':query, 'subject':subject, 'provider':provider,
+                     'returned':0, 'accepted':0, 'rejections':{}}
+            def reject(reason):
+                event['rejections'][reason] = event['rejections'].get(reason, 0) + 1
+            try:
+                rows = search()
+                event['returned'] = len(rows)
+                for original in rows:
+                    if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
+                        break
+                    row = dict(original)
+                    identity = (row.get('provider'), row.get('asset_id'))
+                    if identity in identities: continue
+                    identities.add(identity)
+                    if not reusable_image(row):
+                        reject('rights'); continue
+                    if not subject_metadata_matches(subject, row):
+                        reject('subject'); continue
+                    dimensions = (row.get('original_width'), row.get('original_height'))
+                    if all(type(v) is int and v > 0 for v in dimensions) and (min(dimensions) < 600 or max(dimensions) < 1000):
+                        reject('original_too_small'); continue
+                    origin = re.search(r'flickr.com/photos/[^/\s]+/([0-9]+)',
+                        ' '.join(str(row.get(k, '')) for k in ('source_url', 'credit_line', 'rights_links')))
+                    origin_key = 'flickr:' + origin[1] if origin else str(row['asset_id'])
+                    if origin_key in origins:
+                        reject('duplicate_origin'); continue
+                    attempts += 1
+                    try:
+                        raw = download_image(row)
+                    except Exception as error:
+                        reject('download:' + str(error)[:100]); continue
+                    sha = hashlib.sha256(raw).hexdigest()
+                    del raw
+                    if sha in hashes:
+                        reject('duplicate_bytes'); continue
+                    # Copied metadata is retained in the remote package journal;
+                    # original image bytes are discarded after this check.
+                    row.update(sha256=sha, origin_key=origin_key,
+                               image_role='subject illustration; event date requires review')
+                    found.append(row); hashes.add(sha); origins.add(origin_key)
+                    event['accepted'] += 1
+            except Exception as error:
+                event['error'] = type(error).__name__ + ':' + str(error)[:120]
+            self.image_diagnostics.append(event)
+            print(json.dumps(event), flush=True)
+        self.recovery_cache[key] = found
+        return found
 
     def images(self, query, *, subject=None):
         query = ' '.join(str(query).split())[:130]

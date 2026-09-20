@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import os
+import tempfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -12,7 +13,7 @@ from PIL import Image
 from daily_budget import GitHubStore, Ledger, day_key
 from publishing_v2.bundle_api import BundleClient, GitHubJournal, publish
 from publishing_v2.preview import render_card
-from publishing_v2.public_images import get_bytes, inspect_image, atomic_write
+from publishing_v2.public_images import get_bytes, inspect_image, atomic_write, download_image
 from .agents import Agents
 from .pipeline import Pipeline
 from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
@@ -40,7 +41,8 @@ class Renderer:
                 return []
             for row in usable:
                 found[row['asset_id']] = {'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
-                    'description': row.get('description', '')[:900]}
+                    'description': row.get('description', '')[:900],
+                    'image_role': row.get('image_role', 'subject illustration; event date requires review')}
         return list(found.values())
 
     def image_options(self, card, package):
@@ -49,10 +51,15 @@ class Renderer:
                    or candidate.get('editorial', {}).get('research_query') or candidate.get('title'))
         subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
         queries = list(dict.fromkeys([card['image_query']] + subjects + ([subject[:130]] if subject else [])))
+        recovery = getattr(self.sources, 'recovery', False) is True
+        if recovery:
+            queries = subjects or ([subject] if subject else [card['image_query']])
         rows, seen = [], set()
         for query in queries:
             try:
-                for row in self.sources.images(query):
+                subject_search = getattr(self.sources, 'subject_images', None)
+                options = subject_search(query, query) if subject_search and (recovery or query in subjects) else self.sources.images(query)
+                for row in options:
                     if (row.get('width') and row.get('height')
                             and (min(row['width'], row['height']) < 600
                                  or max(row['width'], row['height']) < 1000)):
@@ -83,6 +90,10 @@ class Renderer:
         return list(self._catalog.values())
 
     def __call__(self, package, output):
+        with tempfile.TemporaryDirectory(prefix='snap-source-') as temporary:
+            return self._render(package, output, Path(temporary))
+
+    def _render(self, package, output, source_root):
         output = Path(output); output.mkdir(parents=True, exist_ok=True)
         cards = [card for card in package['cards'] if card.get('kind') != 'credits']
         if not all('image' in c for c in cards):
@@ -94,7 +105,8 @@ class Renderer:
             choices = [catalog for card in cards]
             options = [{'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
                         'description': row.get('description', '')[:900],
-                        'date_created': row.get('date_created', '')[:100]}
+                        'date_created': row.get('date_created', '')[:100],
+                        'image_role': row.get('image_role', 'subject illustration; event date requires review')}
                        for row in catalog]
             selected = self.agent.run('visual', {'cards': cards, 'options': options,
                                                'repair': package.get('repair', {})})
@@ -127,8 +139,7 @@ class Renderer:
             if not reusable_image(image):
                 raise ValueError('image_rights_not_supported')
             try:
-                raw = get_bytes(image['download_url'])
-                inspect_image(raw)
+                raw = download_image(image, fetch=get_bytes)
             except Exception as error:
                 raise ValueError('image_download_or_validation_failed: ' + str(image.get('asset_id'))
                                  + ': ' + str(error)[:150]) from None
@@ -137,7 +148,7 @@ class Renderer:
                 raise ValueError('source_image_changed')
             image['sha256'] = sha
             validate_image_variety(cards)
-            source = output / f'source-{i:02d}.jpg'
+            source = source_root / f'source-{i:02d}.jpg'
             atomic_write(source, raw)
             target = output / f'card-{i:02d}.jpg'
             if card['kind'] == 'info':
@@ -166,7 +177,7 @@ class Renderer:
             else:
                 package['cards'].append(credit_card)
             target = output / f'card-{len(cards):02d}.jpg'
-            render_credits(package, output / 'source-00.jpg', target)
+            render_credits(package, source_root / 'source-00.jpg', target)
             paths.append(target)
             package['delivery'], paths = compile_story(paths, output)
         return paths
@@ -289,7 +300,7 @@ def main():
         args.lane = 'both'
     results = []
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
-        agent, sources = Agents(env=os.environ, ledger=ledger), Sources()
+        agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True)
         slot = f'autopilot-{day_key(now())}-{lane}-{args.mode}'
         if args.mode == 'shadow':
             slot += '-' + engine[:16]

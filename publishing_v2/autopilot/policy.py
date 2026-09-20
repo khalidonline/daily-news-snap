@@ -20,7 +20,7 @@ def story_counter(index, total):
 
 def validate_image_variety(cards):
     editorial = [c for c in cards if c.get('kind') != 'credits']
-    for key in ('asset_id', 'sha256'):
+    for key in ('asset_id', 'sha256', 'origin_key'):
         values = [c.get('image', {}).get(key) for c in editorial]
         values = [v for v in values if v]
         if len(values) != len(set(values)):
