@@ -251,3 +251,12 @@ recommending any budget increase; never raise the cap automatically.
 - Fresh daily SHADOW run 35511704697 started. No new public posting in this step. Opening daily settled $3.352491; existing date-limited $5 trial cap, no increase.
 - Detailed implementation and full-suite legacy failures: docs/audits/2026-09-20-review-only-sources.md.
 - Next: inspect actual trial result, cost and images; fix concrete remaining blockers before scheduling a three-day reliability test. 8am unattended publishing is not confirmed.
+
+
+### Fresh trial 35511704697 outcome
+- HELD, no package written/designed and no public post. This is NOT unattended success.
+- Four candidate attempts: two `insufficient_subject_visuals_before_drafting`, two `unresolved_editorial_subject`.
+- The Shawshank Redemption and PepsiCo reached multi-provider visual search; new canonical resolution works for some topics. Remaining abstract subject example: `Aging and metabolism` (not a concrete entity).
+- Actual incremental cost $0.062660; verified settled daily total $3.415151. No additional rerun and no budget increase.
+- Completed checkpoint: review/public source separation is deployed and tested. Remaining stage: concrete visual subject planning plus sufficient eligible public imagery. Strict no-source-card publication currently excludes CC BY; public attribution requires a reviewed non-card solution or alternative licensed/public-domain assets. Do not weaken identity or license checks just to obtain a pass.
+- Next implementation should address these concrete failures before another paid full-cycle attempt. The three-day reliability trial has not started. User wants gradual checkpoints; do not repeat the completed separation work or claim 8am readiness.
