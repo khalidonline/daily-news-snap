@@ -260,3 +260,10 @@ recommending any budget increase; never raise the cap automatically.
 - Actual incremental cost $0.062660; verified settled daily total $3.415151. No additional rerun and no budget increase.
 - Completed checkpoint: review/public source separation is deployed and tested. Remaining stage: concrete visual subject planning plus sufficient eligible public imagery. Strict no-source-card publication currently excludes CC BY; public attribution requires a reviewed non-card solution or alternative licensed/public-domain assets. Do not weaken identity or license checks just to obtain a pass.
 - Next implementation should address these concrete failures before another paid full-cycle attempt. The three-day reliability trial has not started. User wants gradual checkpoints; do not repeat the completed separation work or claim 8am readiness.
+
+### Small follow-up: concrete subject naming
+- Only the two unresolved subjects from run 35511704697 examined: Bisht and Aging and metabolism.
+- Explicit disambiguator instructions, bounded same-name contextual resolution and per-subject diagnostics implemented; 12 targeted tests pass.
+- Corrected Bisht (clothing) lookup verified against live source. Abstract compound remains rejected, without replacing it with unrelated stock imagery.
+- No paid generation, new package run, stories.txt review or broad local test suite.
+- Next remains image diversity. Do not claim the live editor or complete package has passed on the strength of these tests.

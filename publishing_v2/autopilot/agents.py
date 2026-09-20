@@ -43,6 +43,12 @@ opponents, scores, dates and headline wording. Also return subjects: one or two
 canonical English entity names. For a comparison or rivalry, list each person
 separately; never combine their names into one search. Each name must be
 verifiable from retrieved encyclopedia evidence.
+Use a short parenthetical disambiguator for a shared name, e.g. Bisht (clothing),
+not a bare name that also denotes a surname. subjects must identify concrete
+visible entities, not explanatory themes such as "Aging and metabolism".
+Do not replace an abstract theme with a stock doctor, elderly person, scale or
+unrelated object just to find a photo. If the trigger does not support a named
+visible subject, omit that candidate and rank another current strong topic.
 No fixed category rotation or category preference. BOTH daily and local require a verified current attention moment (طاري), not
 just an article with today's timestamp. Local must additionally concern everyday
 Saudi culture, a Saudi place or Saudi life; generic foreign news is not local.
