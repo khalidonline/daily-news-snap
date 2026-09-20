@@ -306,3 +306,8 @@ recommending any budget increase; never raise the cap automatically.
 - Added exact Arabic source-name/official-redirect fallback after English failure, gated by #227 binding validation. Preserve canonical Arabic identity and language-scoped source IDs. No fuzzy replacement or forced English alias.
 - Free probes resolved الأحساء and مجموعة الدكتور سليمان الحبيب للخدمات الطبية → مجموعة الحبيب الطبية. 20 focused tests passed; no paid package or posting.
 - Audit: docs/audits/2026-09-20-native-subjects.md. Next: one fresh shadow package within approved budget; image availability and live editor performance remain unproven.
+
+### Combined fresh trial — 20 September, 17:34 Riyadh
+- Owner: assistant. Run 35516891749, daily SHADOW on 6ffd9c31f4c6213135905b4862a215a10b88782a, combines source binding, Arabic exact-name recovery and public image sourcing. No Snapchat posting.
+- Opening settled daily cost $3.476365; no pending reservations. Remaining $1.523635 within today's existing $5 shadow cap. No budget increase.
+- One run only; outcome pending. Follow candidate audit, package review and exact final cost before claiming success. No archive scan or extra paid rerun.
