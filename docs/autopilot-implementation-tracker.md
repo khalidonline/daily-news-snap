@@ -132,3 +132,10 @@ recommending any budget increase; never raise the cap automatically.
 - Verification: 103 autopilot tests, 22 focused pipeline/policy tests including new boundaries and rejection checks, two footer-layout tests; CI 35498377169 passed.
 - No paid generation, budget changes or publishing in this step. Actual output quality and 08:00 autonomous posting remain unqualified.
 - Next checkpoint: reconcile current remaining budget, run one fresh automated review-only package if affordable, inspect its actual cards and review receipt. Do not regenerate Michelin or bypass quality gates.
+
+## Fresh trial preflight — 2026-09-20
+- User authorized one fresh automated review-only package after writing-standard deployment.
+- Authoritative cost-ledger/daily/2026-09-20.json: $2.261592 settled, no outstanding reservations; $0.738408 remains under the active $3 cap.
+- Held before any paid call: current five-role cycle needs at least $1.2288 of worst-case output/image allowance for three cards, even before textual input (Sonnet editor 8192 output tokens, three Opus roles at 8192 each, Opus reviewer at 16384, three 8192-token image allowances). This is reservation headroom, not predicted actual spend.
+- No new workflow dispatched; no paid model calls or publishing. No budget increase requested or applied.
+- Next: one fresh daily shadow trial with adequate available daily headroom. Do not treat this note as a scheduled automation or claim 08:00 posting is qualified.
