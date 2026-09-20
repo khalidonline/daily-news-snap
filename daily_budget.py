@@ -41,7 +41,13 @@ _transport = urllib.request.urlopen
 
 
 class BudgetBlocked(RuntimeError):
-    pass
+    def __init__(self, message, *, code='budget_guard', limit=None, requested=None, charged=None):
+        super().__init__(message)
+        self.diagnostic = {'code': code}
+        for key, value in [('limit_micro_usd', limit), ('requested_micro_usd', requested),
+                           ('charged_micro_usd', charged)]:
+            if type(value) is int and value >= 0:
+                self.diagnostic[key] = value
 
 
 def day_key(now=None):
@@ -131,16 +137,16 @@ class Ledger:
             if self.store.write(day, version, row):
                 return
             time.sleep(min(0.005 * (attempt + 1), 0.1))
-        raise BudgetBlocked('daily budget is busy; no paid request authorized')
+        raise BudgetBlocked('daily budget is busy; no paid request authorized', code='ledger_contention', limit=self.limit_micro_usd)
 
     def reserve(self, amount, bot):
         if type(amount) is not int or not 0 < amount <= self.limit_micro_usd:
-            raise BudgetBlocked(f'request cannot fit within the ${self.limit_micro_usd / 1e6:g} daily ceiling')
+            raise BudgetBlocked(f'request cannot fit within the ${self.limit_micro_usd / 1e6:g} daily ceiling', code='request_exceeds_ceiling', limit=self.limit_micro_usd, requested=amount)
         day, ident = day_key(self.now()), uuid.uuid4().hex
         def update(row):
             total = sum(e['charged_micro_usd'] for e in row['entries'].values())
             if total + amount > self.limit_micro_usd:
-                raise BudgetBlocked(f'${self.limit_micro_usd / 1e6:g} daily budget: ${total / 1e6:.4f} spent/reserved; request held')
+                raise BudgetBlocked(f'${self.limit_micro_usd / 1e6:g} daily budget: ${total / 1e6:.4f} spent/reserved; request held', code='insufficient_remaining', limit=self.limit_micro_usd, requested=amount, charged=total)
             row['entries'][ident] = {
                 'bot': bot, 'run_id': os.getenv('GITHUB_RUN_ID'),
                 'run_attempt': os.getenv('GITHUB_RUN_ATTEMPT'),

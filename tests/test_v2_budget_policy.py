@@ -51,7 +51,8 @@ class BudgetPolicyTests(unittest.TestCase):
 
     def test_budget_hold_report_requests_approval_without_automatic_increase(self):
         summary = {'mode': 'shadow', 'results': [{'lane': 'daily', 'status': 'held',
-            'cost_micro_usd': 1200000, 'reason': 'BudgetBlocked'}]}
+            'cost_micro_usd': 1200000, 'reason': 'BudgetBlocked',
+            'budget_diagnostic': {'code': 'insufficient_remaining', 'limit_micro_usd': 5000000}}]}
         sent = []
         def request(url, headers, method, data):
             sent.append(json.loads(data)['text'])
@@ -59,6 +60,7 @@ class BudgetPolicyTests(unittest.TestCase):
         with patch.dict('os.environ', {'TELEGRAM_TOKEN': 'test', 'TELEGRAM_CHAT_ID': '123', 'GITHUB_RUN_ID': '42'}), patch.object(report.Path, 'exists', return_value=True), patch.object(report.Path, 'read_text', return_value=json.dumps(summary)), patch.object(report, 'GitHubJournal') as journal, patch.object(report, 'request', side_effect=request):
             journal.return_value.read.return_value = {}
             self.assertEqual(report.main(), 0)
-        self.assertIn('$3/day', sent[0])
+        self.assertIn('$5 shared budget', sent[0])
+        self.assertNotIn('$3/day', sent[0])
         self.assertIn('approval', sent[0])
         self.assertIn('BudgetBlocked', sent[0])
