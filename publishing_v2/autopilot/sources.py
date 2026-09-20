@@ -2,6 +2,7 @@
 import hashlib
 import json
 import re
+import unicodedata
 from datetime import timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
@@ -116,6 +117,38 @@ def reusable_image(row):
             and str(row.get('attribution_required', '')).lower() in {'', 'false', 'no'})
 
 
+def subject_metadata_matches(subject, row):
+    """Cheap subject feasibility only; never a substitute for pixel review."""
+    def words(value):
+        plain = ''.join(c for c in unicodedata.normalize('NFKD', value.casefold())
+                        if not unicodedata.combining(c))
+        return set(re.findall(r'[^\W_]+', plain, re.UNICODE))
+    required = words(subject) - {'the', 'of', 'and'}
+    metadata = words(str(row.get('title', '')) + ' ' + str(row.get('description', '')))
+    return bool(required) and required.issubset(metadata)
+
+
+
+def resolve_subject(query, rows):
+    """Resolve only a unique retrieved title matching the query's main phrase."""
+    def normalize(value):
+        value = ''.join(c for c in unicodedata.normalize('NFKD', value.casefold())
+                        if not unicodedata.combining(c))
+        return re.findall(r'[^\W_]+', value, re.UNICODE)
+    wanted = normalize(query)
+    matches = {}
+    for row in rows:
+        title = row.get('title')
+        if row.get('source_type') != 'encyclopedia' or not title or not row.get('text'):
+            continue
+        words = normalize(title)
+        # Never turn a short ambiguous query into an unrelated longer entity.
+        if (words == wanted or (len(words) >= 2 and wanted[:len(words)] == words
+                                and len(words) / max(1, len(wanted)) >= 0.6)):
+            matches[title] = {'name': title, 'source_id': row['id']}
+    return next(iter(matches.values())) if len(matches) == 1 else None
+
+
 class Sources:
     def __init__(self):
         self.publisher_articles = {}
@@ -184,14 +217,21 @@ class Sources:
             pass
         if not rows:
             raise ValueError('no_retrieved_evidence')
+        resolved = resolve_subject(candidate['editorial']['research_query'], rows)
+        if resolved:
+            candidate['resolved_subject'] = resolved
         return rows
 
-    def images(self, query):
+    def subject_images(self, query, subject):
+        return self.images(query, subject=subject)
+
+    def images(self, query, *, subject=None):
         query = ' '.join(str(query).split())[:130]
         if not query:
             return []
-        if query in self.image_cache:
-            return self.image_cache[query]
+        cache_key = (query, subject) if subject else query
+        if cache_key in self.image_cache:
+            return self.image_cache[cache_key]
         # Commons ANDs all words. Recover the named subject from descriptive
         # briefs before spending the request budget on lower-ranked results.
         subjects = [query]
@@ -216,6 +256,7 @@ class Sources:
                 self.image_search_cache[key] = search_commons(search, limit=5, offset=offset)
             rows = self.image_search_cache[key]
             usable = [r for r in rows if reusable_image(r)
+                      and (not subject or subject_metadata_matches(subject, r))
                       and not (r.get('width') and r.get('height')
                                and (min(r['width'], r['height']) < 600
                                     or max(r['width'], r['height']) < 1000))]
@@ -234,7 +275,7 @@ class Sources:
             try:
                 rows, usable = lookup(search)
                 if len(collected) >= 5:
-                    self.image_cache[query] = collected[:5]
+                    self.image_cache[cache_key] = collected[:5]
                     return collected[:5]
                 # The adapter drops unsupported formats, so fewer than five
                 # returned images does not mean the API page was exhausted.
@@ -262,8 +303,8 @@ class Sources:
                     except Exception as error:
                         errors.append(type(error).__name__)
         if collected:
-            self.image_cache[query] = collected[:5]
+            self.image_cache[cache_key] = collected[:5]
             return collected[:5]
-        self.image_cache[query] = []
+        self.image_cache[cache_key] = []
         print(json.dumps({'stage': 'image_search', 'query': query, 'usable': 0, 'errors': errors}), flush=True)
         return []
