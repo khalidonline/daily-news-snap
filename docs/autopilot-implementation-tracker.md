@@ -169,3 +169,11 @@ recommending any budget increase; never raise the cap automatically.
 - Run 35499984096, main 6075e04baaa19c367aaf07fa6113c0c8cf35cea9; mode shadow, daily only. No publication.
 - Opening settled spend $3.159117; $1.840883 remains under today's approved temporary $5 cap. No further increase.
 - Monitor this run to completion and inspect its final review plus any structured budget diagnosis. Do not restart the previous engine's trial.
+
+## Post-fix trial completed — 2026-09-20
+- Run 35499984096 completed held: no_package_passed_review. All four selected candidates failed insufficient_subject_visuals_before_drafting.
+- Only editor ran: cost $0.060626. Daily settled total $3.219743; no outstanding reservations. $1.780257 remains under today's temporary $5 cap.
+- No research/writing/rendering/final review or publication occurred. Early screening prevented additional spend, but did not produce publishable content.
+- Last selected research query was 'Saudi Arabia national football team squad Dawnis', showing the editor still emits descriptive/noncanonical search queries. This makes exact-word metadata screening overly restrictive for such queries; not evidence that no usable photos exist.
+- Next implementation should address canonical subject resolution and image-source coverage together. Do not weaken independent pixel review or retry the same pool blindly. Prior budget cause remains unproven; this trial had no budget failure.
+- Automatic 08:00 posting is still not qualified. No additional budget increase.
