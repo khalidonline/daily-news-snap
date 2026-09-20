@@ -18,9 +18,9 @@ from .agents import Agents
 from .pipeline import Pipeline
 from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
 from .sources import Sources, reusable_image, subject_metadata_matches
-from .credits import LICENSE_URLS, attribution_eligible, render_credits
+from .credits import LICENSE_URLS, attribution_eligible, render_credits, render_public_attribution
 from .video import compile_story
-from publishing_v2.publication import publication_indices, image_without_public_credit
+from publishing_v2.publication import publication_indices, image_publication_eligible, validate_public_attribution
 
 
 class Renderer:
@@ -37,7 +37,7 @@ class Renderer:
             subject_search = getattr(self.sources, 'subject_images', None)
             rows = (subject_search(subject, subject) if subject_search else
                     self.image_options({'image_query': subject}, {'candidate': candidate}))
-            usable = [row for row in rows if image_without_public_credit(row) and subject_metadata_matches(subject, row)]
+            usable = [row for row in rows if image_publication_eligible(row) and subject_metadata_matches(subject, row)]
             if not usable:
                 return []
             for row in usable:
@@ -61,7 +61,7 @@ class Renderer:
                 subject_search = getattr(self.sources, 'subject_images', None)
                 options = subject_search(query, query) if subject_search and (recovery or query in subjects) else self.sources.images(query)
                 for row in options:
-                    if not image_without_public_credit(row):
+                    if not image_publication_eligible(row):
                         continue
                     if (row.get('width') and row.get('height')
                             and (min(row['width'], row['height']) < 600
@@ -164,6 +164,10 @@ class Renderer:
                     footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names and not needs_credits else None)
                 with Image.open(target.with_suffix('.png')) as image:
                     image.convert('RGB').save(target, 'JPEG', quality=95)
+            if card['image'].get('license') in LICENSE_URLS:
+                render_public_attribution(card, target)
+            else:
+                card.pop('public_attribution', None)
             with Image.open(target) as rendered:
                 if rendered.size != (1080, 1920):
                     raise ValueError('wrong_frame_dimensions')
@@ -194,6 +198,8 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
     if package.get('delivery') and len(indices) != len(cards):
         raise ValueError('review_video_not_publishable')
     media = [(Path(paths[i]), Path(paths[i]).read_bytes()) for i in indices]
+    for index, (_, raw) in zip(indices, media):
+        validate_public_attribution(cards[index], raw)
     frame_hashes = [hashlib.sha256(raw).hexdigest() for _, raw in media]
     if len(frame_hashes) != len(set(frame_hashes)):
         raise ValueError('duplicate_rendered_card')
