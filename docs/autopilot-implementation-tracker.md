@@ -94,3 +94,10 @@ recommending any budget increase; never raise the cap automatically.
 - No paid model API calls; no Telegram or Snapchat publication.
 - Assistant-prepared preview only. Independent automated review/readiness remains
   outstanding; do not record this preview as a shadow pass or posting clearance.
+
+## Saudi wording revision checkpoint — 2026-09-20
+- User approved the richer Saudi story wording with the exact phrase «دليل مجاني».
+- Applied that wording to all three Michelin cards; retained approved design and images.
+- Updated preview specification and regenerated the PDF; visually inspected all three cards for readability, numbering and footer clearance.
+- Revised PDF delivered for final visual review. No paid model calls, production code changes or publishing in this step.
+- Next: user reviews revised cards before publication; automated agent qualification remains outstanding.
