@@ -307,7 +307,7 @@ def main():
         args.lane = 'both'
     results = []
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
-        agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True)
+        agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True, publication_only=True)
         slot = f'autopilot-{day_key(now())}-{lane}-{args.mode}'
         if args.mode == 'shadow':
             slot += '-' + engine[:16]

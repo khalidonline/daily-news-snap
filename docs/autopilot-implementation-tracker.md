@@ -267,3 +267,10 @@ recommending any budget increase; never raise the cap automatically.
 - Corrected Bisht (clothing) lookup verified against live source. Abstract compound remains rejected, without replacing it with unrelated stock imagery.
 - No paid generation, new package run, stories.txt review or broad local test suite.
 - Next remains image diversity. Do not claim the live editor or complete package has passed on the strength of these tests.
+
+### Small follow-up: public image pool starvation
+- Owner: assistant. Scope: image sourcing only; no stories.txt, paid package run or posting.
+- Found and fixed a collector/renderer mismatch: attribution-required review assets filled the five-image pool before public filtering. Production now applies public eligibility before the pool/download caps.
+- Public recovery skips the current CC-BY-only Flickr adapter; review sourcing retains it. Existing request and download limits unchanged.
+- 25 focused tests passed; independent review found no blockers. Details: docs/audits/2026-09-20-public-image-pool.md.
+- Public image availability remains an open gate. Next: resolve eligible visual supply before a fresh paid package; do not claim autonomous publishing readiness.
