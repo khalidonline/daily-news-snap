@@ -1242,16 +1242,38 @@ def _frame_figure(text, punch="", heading=""):
     return ""
 
 
+class StoryLayoutError(ValueError):
+    """The complete text cannot fit safely above the closing seal."""
+
+
 def render_frame(path, kicker, counter, big, big_size, sub=None,
                  sub_colour=None, photo=None, footer=None, punch=None):
+    # Preserve the usual layout; recover crowded cards by giving text more
+    # room, keeping the photo, footer and all supplied words.
+    for photo_height in (639, 520, 420, 360):
+        try:
+            return _render_frame(path, kicker, counter, big, big_size, sub,
+                                 sub_colour, photo, footer, punch, photo_height)
+        except StoryLayoutError:
+            if not photo or photo_height == 360:
+                raise
+
+
+def _render_frame(path, kicker, counter, big, big_size, sub,
+                  sub_colour, photo, footer, punch, photo_height):
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
     margin, centre, right = 96, W // 2, W - 96
     max_w = W - 2 * margin
     _, kw = ar("م")
+    seal_centre = (H - 276) if footer else (H - 166)
+    bottom = seal_centre - 60 - 36
 
-    def mid(y, text, font, fill):
+    def mid(y, text, font, fill, *, content=True):
         shaped, k = ar(text)
+        bounds = draw.textbbox((centre, y), shaped, font=font, anchor="ma", **k)
+        if content and bounds[3] > bottom:
+            raise StoryLayoutError('story_text_exceeds_footer_clearance')
         draw.text((centre, y), shaped, font=font, fill=fill, anchor="ma", **k)
 
     draw.rectangle([right - 110, 170, right, 180], fill=BRAND_INK)
@@ -1278,7 +1300,7 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
                   "floor instead")
     if pic is not None:
         try:
-            box_w, box_h = max_w, int(max_w * 0.72)
+            box_w, box_h = max_w, photo_height
             pw, ph = pic.size
             if pw / ph > box_w / box_h:
                 new_w = int(ph * box_w / box_h)
@@ -1295,12 +1317,12 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
             print(f"  ! couldn't place photo: {exc}")
 
     size = big_size
-    while size > 44:
+    while True:
         f_big = load_font(size, bold=True)
         lines = _wrap(draw, big, f_big, max_w, kw)
-        if len(lines) <= (2 if photo else 3):
+        if len(lines) <= (2 if photo else 3) or size <= 44:
             break
-        size -= 8
+        size = max(44, size - 8)
     if pic is None:
         # Designed text-only. First choice: the TYPOGRAPHIC treatment —
         # the frame's own strongest figure (a number, a year) set huge in
@@ -1335,15 +1357,6 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         mid(y, line, f_big, TEXT)
         y += int(size * 1.25)
 
-    # The closing seal's band is reserved BEFORE any text is sized — the
-    # Mrsool 6/6 frame drew the seal over the punch's last line because the
-    # old floor (H-260) sat BELOW the seal's own top edge. The seal is
-    # 120px; the band adds breathing room above it, and body/punch flow in
-    # the space that remains ABOVE the band, never into it.
-    SEAL_SIZE, SEAL_AIR = 120, 36
-    seal_centre = (H - 276) if footer else (H - 166)
-    bottom = seal_centre - SEAL_SIZE // 2 - SEAL_AIR
-
     # The punch is the one line on the frame that must not be squeezed, so it
     # is measured before the body and the body gets what is left. Sizing it
     # after the body would let a long paragraph shrink the very line the
@@ -1352,11 +1365,11 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
     punch_lines, f_punch, punch_gap = [], None, 0
     if punch:
         punch_size = 46
-        while punch_size > 32:
+        while True:
             f_punch = load_font(punch_size, bold=True)
             punch_lines = _wrap(draw, punch, f_punch, max_w, kw)
             punch_gap = int(punch_size * 1.34)
-            if len(punch_lines) <= 2:
+            if len(punch_lines) <= 2 or punch_size == 32:
                 break
             punch_size -= 2
     punch_block = (len(punch_lines) * punch_gap + PUNCH_GAP) if punch_lines else 0
@@ -1366,19 +1379,15 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
         # longer frames are allowed now, so shrink until the text fits the space
         available = bottom - y - punch_block
         sub_size, line_gap = 42, 60
-        while sub_size > 28:
+        while True:
             f_sub = load_font(sub_size, bold=sub_colour == ACCENT)
             lines = _wrap(draw, sub, f_sub, max_w, kw)
             line_gap = int(sub_size * 1.42)
-            if len(lines) * line_gap <= available:
+            if len(lines) * line_gap <= available or sub_size == 28:
                 break
             sub_size -= 2
         if len(lines) * line_gap > available:
-            # the seal band wins its space; a cramped body is reviewable,
-            # an overlapped seal is not — say it loudly for the review pass
-            print(f"  ! frame text overflows the seal band even at minimum "
-                  f"size ({len(lines)} lines, {available}px available) — "
-                  f"REVIEW THIS FRAME")
+            raise StoryLayoutError('story_body_exceeds_footer_clearance')
         for line in lines:
             mid(y, line, f_sub, sub_colour or BODY)
             y += line_gap
@@ -1400,7 +1409,7 @@ def render_frame(path, kicker, counter, big, big_size, sub=None,
                 text = text.rsplit("، ", 1)[0]      # drop the last source
             else:
                 text = text[:-4]
-        mid(H - 160, text, f_foot, MUTED)
+        mid(H - 160, text, f_foot, MUTED, content=False)
 
     img.save(path, "PNG", optimize=True)
     return path

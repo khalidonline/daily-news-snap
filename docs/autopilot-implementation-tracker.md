@@ -29,7 +29,13 @@ Code deployed is not the same as live behavior verified.
   checkpoint incorrectly called it active. No current-engine posting clearance.
 - Fresh-start agreement: one NEW topic, Info + connected story, preview for user
   review before expanding automation. This fresh trial has not started.
-- Known unresolved issues: image relevance/variety and watermark/text overlap.
+- Watermark layout fix: tested; deployment pending. Crowded cards retry
+  with a shorter photo area; glyph bounds enforce footer clearance. No text is
+  removed. Impossible layouts return to repair rather than saving overlaps.
+- Verification: 199 publishing tests passed with Almarai; actual crowded cards
+  inspected with and without source footers; shared bot imports passed.
+  Independent review found no blockers. No paid generation or posting.
+- Known unresolved issue: image relevance/variety. Fresh preview still pending.
 - Existing two-package 08:00 Riyadh schedule is unchanged. This budget change
   does not implement the fresh single-package flow or establish posting readiness.
 
@@ -47,8 +53,8 @@ Code deployed is not the same as live behavior verified.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Fix the watermark layout in one small stage and prepare the agreed fresh
-single-topic preview. Do not resume old story retries or expand to more paid runs.
+Deploy the verified watermark fix, then prepare the agreed fresh single-topic
+preview in a separate stage. Do not resume old story retries or expand to more paid runs.
 Report milestones separately. Monitor actual cost and approved output before
 recommending any budget increase; never raise the cap automatically.
 
