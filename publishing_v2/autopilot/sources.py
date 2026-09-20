@@ -298,14 +298,12 @@ class Sources:
         attempts = 0
         stages = [('commons', lambda: search_commons(query, limit=5)),
                   ('commons_collection', lambda: search_commons_category(subject, limit=5)),
-                  ('flickr', lambda: search_flickr(subject, limit=5, deadline=deadline,
+                  ('flickr_cc0' if self.publication_only else 'flickr',
+                   lambda: search_flickr(subject, limit=5, deadline=deadline,
+                          publication_only=self.publication_only,
                           accept_metadata=lambda row: subject_metadata_matches(subject, row))),
                   ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
                   ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
-        # The current Flickr adapter searches CC BY 2.0 only. Do not spend
-        # the public search deadline on assets that cannot enter its pool.
-        if self.publication_only:
-            stages = [(provider, search) for provider, search in stages if provider != 'flickr']
         for provider, search in stages:
             if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
                 break

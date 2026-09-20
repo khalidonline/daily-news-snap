@@ -274,3 +274,10 @@ recommending any budget increase; never raise the cap automatically.
 - Public recovery skips the current CC-BY-only Flickr adapter; review sourcing retains it. Existing request and download limits unchanged.
 - 25 focused tests passed; independent review found no blockers. Details: docs/audits/2026-09-20-public-image-pool.md.
 - Public image availability remains an open gate. Next: resolve eligible visual supply before a fresh paid package; do not claim autonomous publishing readiness.
+
+### Small follow-up: Flickr CC0 discovery
+- Owner: assistant. Added a public-compatible second source through existing Flickr adapter: CC0 search plus independent photo-page verification. Default review CC BY remains supported.
+- Source, subject, dimension and deduplication checks retained. No paid calls, story archive scan or posting.
+- 17 focused tests passed; independent review found no blockers. Audit: docs/audits/2026-09-20-flickr-cc0.md.
+- Next gate: confirm a candidate has enough distinct and relevant visual options, then one fresh shadow package. No unattended-success or schedule-readiness claim.
+- Live outcome: PepsiCo now reaches 3 downloaded eligible assets (previously 2); all factory photographs, so perceptual diversity/editorial fit still needs review. Flickr CC0 returned 3 metadata-verified Jeddah results and 0 Shawshank results.
