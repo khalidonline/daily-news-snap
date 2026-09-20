@@ -146,3 +146,11 @@ recommending any budget increase; never raise the cap automatically.
 - Started run https://github.com/khalidonline/daily-news-snap/actions/runs/35498778289 with mode=shadow, lane=daily on current main. No Snapchat publishing.
 - Opening ledger balance: $2.261592 spent, zero reserved. Maximum additional spend under temporary cap: $2.738408.
 - In progress: monitor THIS run and inspect its final package/review/cost. Do not launch another run or revisit old trials.
+
+## Fresh trial result — 2026-09-20
+- Run 35498778289 completed held/failed. Trial cost $0.897525; authoritative daily total $3.159117, no reservations outstanding, $1.840883 below today's temporary $5 ceiling.
+- One Wembley draft reached independent pixel review; rejected for wrong-event branding, poor image quality and misleading sporting-event illustrations. Repairs could not find a full appropriate image set.
+- Subsequent Mourinho/Simeone candidate also lacked relevant portraits/event imagery; selected results included unrelated art, restaurants and other sports. It was not approved.
+- Terminal status BudgetBlocked after the last writer step. The current pipeline stores only the exception class; the exact cause is NOT established and must not be described as exhausting the $5 cap. Earlier calls above $3 confirm the temporary cap took effect.
+- Next implementation: retain safe structured budget failure diagnostics and improve image feasibility before writing. Do not spend on another generic rerun or raise budget again without evidence.
+- Current trial slot: autopilot-2026-09-20-daily-shadow-aa09930baddb0afc. Artifact 10600883624 retains rejected output. No publication; no current-engine qualification or 08:00 promise.
