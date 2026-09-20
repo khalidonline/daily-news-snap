@@ -14,6 +14,39 @@ REVIEW_CHECKS = ('factual', 'timely', 'saudi_language', 'broad_appeal',
                  'visual_variety', 'story_numbering', 'visual_identity', 'safe_routine')
 
 
+def validate_editor_binding(candidate):
+    """Bind editor evidence to one discovered source; not a semantic fact check."""
+    edit = candidate['editorial']
+    if edit.get('source_title') != candidate.get('title'):
+        raise ValueError('editor_source_title_mismatch')
+    subjects, evidence = edit.get('subjects'), edit.get('subject_evidence')
+    if (not isinstance(subjects, list) or not 1 <= len(subjects) <= 2
+            or any(not isinstance(s, str) or not s.strip() for s in subjects)
+            or len(set(subjects)) != len(subjects)
+            or not isinstance(evidence, list) or len(evidence) != len(subjects)):
+        raise ValueError('editor_subject_evidence_required')
+    normalize = lambda value: ' '.join(value.split())
+    source_parts = [normalize(candidate.get(key, '')) for key in ('title', 'summary')]
+    angle_parts = [normalize(edit.get(key, '')) for key in ('angle', 'why_now')]
+    seen = set()
+    for row in evidence:
+        if (not isinstance(row, dict) or not isinstance(row.get('subject'), str)
+                or row['subject'] not in subjects or row['subject'] in seen):
+            raise ValueError('editor_subject_evidence_mismatch')
+        seen.add(row['subject'])
+        quote, mention = row.get('quote'), row.get('mention')
+        if not isinstance(quote, str) or not 12 <= len(quote.strip()) <= 1000:
+            raise ValueError('editor_subject_quote_required')
+        quote = normalize(quote)
+        if not any(quote in part for part in source_parts):
+            raise ValueError('editor_subject_quote_not_in_source')
+        if not isinstance(mention, str) or not 3 <= len(mention.strip()) <= 150:
+            raise ValueError('editor_subject_mention_required')
+        mention = normalize(mention)
+        if mention not in quote or not any(mention in part for part in angle_parts):
+            raise ValueError('editor_subject_mention_not_grounded')
+
+
 def story_counter(index, total):
     return f'{index} من {total}'.translate(str.maketrans('0123456789', '٠١٢٣٤٥٦٧٨٩'))
 
