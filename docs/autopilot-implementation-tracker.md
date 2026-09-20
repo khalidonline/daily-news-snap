@@ -287,3 +287,10 @@ recommending any budget increase; never raise the cap automatically.
 - Opening settled daily cost $3.415151; no pending reservations. Existing date-limited $5 daily-shadow cap applies; no budget increase.
 - Active: fresh discovery → editor → visual feasibility → research/writing/design/review if gates pass. Track this run only; no stories.txt backlog scan or repeated runs.
 - Outcome pending. Do not claim readiness until the actual package, sources separation, visual/editorial review and cost are checked.
+
+### Fresh shadow 35513642131 — final outcome, 16:31 Riyadh
+- HELD after three unresolved_editorial_subject rejections. No research/writer/visual/reviewer calls, rendered cards, publication or new readiness pass. Existing workflow's 242 offline checks passed; operational generation did not.
+- New concrete editorial integrity defect in final candidate: source ID f178695245978b9f/title about Yemeni army operations west of Taiz (https://aawsat.com/node/5320469) was paired with editor angle about Saudi footballer Musab Al-Juwayer's apology. Wikipedia lookup for Musab Al-Juwayer returned no retrieved titles. Do not describe this as only an image-availability failure.
+- Candidate ID membership is currently checked, but it does not establish semantic agreement between the source and selected angle/subject. Next small implementation: preserve/validate source-to-angle identity before downstream work, and diagnose unresolved names for this run without another paid full trial. Do not weaken subject matching or merely add another image provider.
+- Only one paid editor call: $0.061214. Verified settled daily total $3.476365; $1.523635 remains within today's existing $5 shadow cap. No budget increase and no repeated run.
+- State: snapchat-api-state/api-receipts/autopilot-2026-09-20-daily-shadow-8548eb751b287677.json. Full automatic readiness remains unconfirmed.
