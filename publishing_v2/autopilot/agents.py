@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 from PIL import Image
 
-from daily_budget import PRICES, prepare, actual_cost
+from daily_budget import PRICES, prepare, actual_cost, BudgetBlocked
 from publishing_v2 import providers
 from .policy import REVIEW_CHECKS
 from .evidence import passages, hydrate
@@ -248,6 +248,12 @@ class Agents:
         for attempt in range(2):
             try:
                 return self._run_once(role, data, images, format_retry=bool(attempt))
+            except BudgetBlocked as error:
+                error.diagnostic['role'] = role
+                limit = getattr(self.ledger, 'limit_micro_usd', None)
+                if type(limit) is int:
+                    error.diagnostic.setdefault('limit_micro_usd', limit)
+                raise
             except InvalidAgentResponse:
                 if attempt:
                     raise

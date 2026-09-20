@@ -16,10 +16,15 @@ def main():
     for row in summary.get('results', []):
         lines.append(f"{row['lane']}: {row['status']} · ${row['cost_micro_usd']/1e6:.4f} this attempt")
         if row.get('reason') == 'BudgetBlocked':
-            lines.append('BudgetBlocked: $3/day shared budget guard stopped this package. '
+            detail = row.get('budget_diagnostic') or {}
+            cap = detail.get('limit_micro_usd')
+            label = f'${cap / 1e6:g}' if type(cap) is int else 'configured'
+            lines.append(f'BudgetBlocked: {label} shared budget guard stopped this package. '
                          'Previous spending and unresolved reservations still count. '
                          'Review costs before deciding whether an increase is needed; '
                          'any increase requires your approval. No automatic increase.')
+            if detail:
+                lines.append('Budget diagnostic: ' + json.dumps(detail, sort_keys=True))
     lines.append('https://github.com/khalidonline/daily-news-snap/actions/runs/' + os.environ['GITHUB_RUN_ID'])
     journal = GitHubJournal('autopilot-report-' + os.environ['GITHUB_RUN_ID'])
     if journal.read():

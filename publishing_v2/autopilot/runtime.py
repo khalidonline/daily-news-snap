@@ -4,6 +4,8 @@ import copy
 import hashlib
 import json
 import os
+import re
+import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -21,6 +23,17 @@ from .credits import attribution_eligible, render_credits
 from .video import compile_story
 
 
+def subject_metadata_matches(subject, row):
+    """Cheap subject feasibility only; never a substitute for pixel review."""
+    def words(value):
+        plain = ''.join(c for c in unicodedata.normalize('NFKD', value.casefold())
+                        if not unicodedata.combining(c))
+        return set(re.findall(r'[^\W_]+', plain, re.UNICODE))
+    required = words(subject) - {'the', 'of', 'and'}
+    metadata = words(str(row.get('title', '')) + ' ' + str(row.get('description', '')))
+    return bool(required) and required.issubset(metadata)
+
+
 class Renderer:
     def __init__(self, agent, sources):
         self.agent, self.sources = agent, sources
@@ -31,7 +44,7 @@ class Renderer:
         rows = self.image_options({'image_query': subject}, {'candidate': candidate})
         return [{'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
                  'description': row.get('description', '')[:900]}
-                for row in rows if reusable_image(row)]
+                for row in rows if reusable_image(row) and subject_metadata_matches(subject, row)]
 
     def image_options(self, card, package):
         candidate = package.get('candidate', {})
@@ -304,7 +317,8 @@ def main():
             readiness.save(state)
         results.append({'lane': lane, 'status': result['status'], 'slot': slot,
                         'cost_micro_usd': sum(r['cost_micro_usd'] for r in agent.receipts),
-                        'reason': result.get('reason'), 'receipt': result.get('receipt')})
+                        'reason': result.get('reason'), 'budget_diagnostic': result.get('budget_diagnostic'),
+                        'receipt': result.get('receipt')})
     summary = {'mode': args.mode, 'engine': engine, 'results': results,
                'note': 'Costs here cover this attempt; shared ledger includes retained reservations and other runs.'}
     atomic_write(output / 'summary.json', json.dumps(summary, ensure_ascii=False).encode())

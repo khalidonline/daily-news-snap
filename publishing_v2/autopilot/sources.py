@@ -235,8 +235,6 @@ class Sources:
                 rows, usable = lookup(search)
                 if len(collected) >= 5:
                     self.image_cache[query] = collected[:5]
-                    for subject in subjects[1:]:
-                        self.image_cache.setdefault(subject, collected[:5])
                     return collected[:5]
                 # The adapter drops unsupported formats, so fewer than five
                 # returned images does not mean the API page was exhausted.
@@ -265,8 +263,6 @@ class Sources:
                         errors.append(type(error).__name__)
         if collected:
             self.image_cache[query] = collected[:5]
-            for subject in subjects[1:]:
-                self.image_cache.setdefault(subject, collected[:5])
             return collected[:5]
         self.image_cache[query] = []
         print(json.dumps({'stage': 'image_search', 'query': query, 'usable': 0, 'errors': errors}), flush=True)

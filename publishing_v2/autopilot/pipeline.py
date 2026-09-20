@@ -156,7 +156,8 @@ class Pipeline:
         except PersistenceError:
             raise
         except Exception as error:
-            self.save(state, 'stopped', status='held', reason=type(error).__name__)
+            details = {'budget_diagnostic': error.diagnostic} if isinstance(error, BudgetBlocked) else {}
+            self.save(state, 'stopped', status='held', reason=type(error).__name__, **details)
         return state
 
     def deliver(self, state):
