@@ -1,5 +1,6 @@
 """Fresh, budgeted requests for specialist roles. No external mutation tools."""
 import base64
+import copy
 import io
 from functools import partial
 import json
@@ -264,6 +265,17 @@ class Agents:
         if model in {'claude-sonnet-5', 'claude-opus-5'}:
             payload['output_config'] = {'effort': 'high' if role == 'reviewer' else 'medium'}
         payload, maximum = prepare(payload)
+        if images and model in {'claude-sonnet-5', 'claude-opus-5'}:
+            # Only our locally resized JPEG blocks qualify. Keep prepare's
+            # validation and its full-context fallback for other model families.
+            # Native images are capped at 4784 visual tokens on these models:
+            # https://platform.claude.com/docs/en/build-with-claude/vision
+            # Reserve 8192 per image for visual tokens and framing overhead,
+            # plus the existing UTF-8 text bound and full output allowance.
+            text_payload = copy.deepcopy(payload)
+            text_payload['messages'][0]['content'] = [content[-1]]
+            _, text_maximum = prepare(text_payload)
+            maximum = text_maximum + len(images) * 8192 * PRICES[model][0]
         token = self.ledger.reserve(maximum, 'autopilot:' + role)
         transport = self.transport or partial(providers._default_transport, timeout_seconds=180)
         status, body = providers._request(transport, 'POST', 'https://api.anthropic.com/v1/messages',

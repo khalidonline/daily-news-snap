@@ -49,9 +49,10 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
           AUTOPILOT_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
-          # Explicit commissioning ceiling; all reservations share the durable ledger.
-          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '20000000'
-          AUTOPILOT_EDITOR_MODEL: 'claude-opus-5'
+          # User-approved shared cap for production and trials; no automatic increase.
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
+          # Reduce one role first; preserve writing/research and independent review quality.
+          AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
           AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
           AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
           AUTOPILOT_VISUAL_MODEL: 'claude-opus-5'
