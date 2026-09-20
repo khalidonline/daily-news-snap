@@ -97,10 +97,14 @@ def plain(raw):
     return ' '.join(' '.join(parser.parts).split())[:16000]
 
 
-def wiki(query):
+def wiki(query, *, language="en", exact_only=False):
     # Query text cannot select arbitrary URLs or redirect retrieval elsewhere.
     query = str(query)[:180]
-    base = 'https://en.wikipedia.org/w/api.php?'
+    if language not in {'en', 'ar'}:
+        raise ValueError('unsupported_source_language')
+    site = 'https://' + language + '.wikipedia.org/'
+    prefix = 'wiki-' if language == 'en' else 'wiki-ar-'
+    base = site + 'w/api.php?'
     direct = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
         'titles': query, 'redirects': 1, 'prop': 'extracts|pageprops',
         'explaintext': 1, 'exchars': 10000})))
@@ -109,10 +113,12 @@ def wiki(query):
         page = pages[0]
         if (page.get('pageid', -1) > 0 and page.get('extract')
                 and 'disambiguation' not in page.get('pageprops', {})):
-            return [{'id': 'wiki-' + str(page['pageid']),
-                'url': 'https://en.wikipedia.org/?curid=' + str(page['pageid']),
+            return [{'id': prefix + str(page['pageid']),
+                'url': site + '?curid=' + str(page['pageid']),
                 'text': str(page['extract'])[:10000], 'title': page['title'],
                 'verified_aliases': [query], 'source_type': 'encyclopedia'}]
+    if exact_only:
+        return []
     # Title-constrained recovery prevents a common surname from crowding out
     # the same-named object; resolution still requires source-backed context.
     disambiguation = any('disambiguation' in p.get('pageprops', {}) for p in pages)
@@ -124,7 +130,7 @@ def wiki(query):
     if not ids: return []
     result = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
         'pageids': '|'.join(ids), 'prop': 'extracts|pageprops', 'explaintext': 1, 'exchars': 10000})))
-    return [{'id': 'wiki-' + str(page['pageid']), 'url': 'https://en.wikipedia.org/?curid=' + str(page['pageid']),
+    return [{'id': prefix + str(page['pageid']), 'url': site + '?curid=' + str(page['pageid']),
              'text': str(page.get('extract', ''))[:10000], 'title': page.get('title'),
              'source_type': 'encyclopedia'}
             for page in result.get('query', {}).get('pages', {}).values() if page.get('extract') and 'disambiguation' not in page.get('pageprops', {})]
@@ -266,10 +272,25 @@ class Sources:
                 evidence = wiki(query)
             except Exception:
                 evidence = []
-            rows.extend(row for row in evidence if row['id'] not in {r['id'] for r in rows})
             resolved = resolve_subject(query, evidence, context=editorial['research_query'])
+            resolution_query = query
+            if not resolved and editorial.get('subject_evidence'):
+                # A native name must be grounded in this source, never invented
+                # from an English spelling or borrowed from another candidate.
+                try:
+                    from .policy import validate_editor_binding
+                    validate_editor_binding(candidate)
+                    native = next(r['mention'] for r in editorial['subject_evidence'] if r['subject'] == query)
+                    if re.search(r'[\u0600-\u06ff]', native):
+                        native_rows = wiki(native, language='ar', exact_only=True)
+                        native_resolved = resolve_subject(native, native_rows)
+                        if native_resolved:
+                            evidence, resolved, resolution_query = native_rows, native_resolved, native
+                except (ValueError, KeyError, TypeError, StopIteration, OSError):
+                    pass
+            rows.extend(row for row in evidence if row['id'] not in {r['id'] for r in rows})
             candidate['subject_resolution'].append({'query': query,
-                'context': editorial['research_query'],
+                'context': editorial['research_query'], 'resolution_query': resolution_query,
                 'retrieved_titles': [r.get('title') for r in evidence],
                 'status': 'resolved' if resolved else 'needs_concrete_subject'})
             if resolved:

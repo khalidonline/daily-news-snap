@@ -300,3 +300,9 @@ recommending any budget increase; never raise the cap automatically.
 - Every rejection now preserves candidate ID and source title in audit; no need to inspect older story archives to understand which candidate failed.
 - 35 focused tests passed; no paid run or publishing. Audit: docs/audits/2026-09-20-editor-source-binding.md.
 - Limit: lexical binding does not prove translated entity identity or semantic truth; existing source/reviewer gates remain. Next: diagnose unresolved names in run 35513642131 before another paid trial.
+
+### Small follow-up: source-language subject recovery
+- Owner: assistant. Diagnosed only run 35513642131: Bisht and Red Sea Global already resolved; second subjects Al-Ahsa and the medical group failed English lookup. Football candidate had invalid source binding and is not a recovery target.
+- Added exact Arabic source-name/official-redirect fallback after English failure, gated by #227 binding validation. Preserve canonical Arabic identity and language-scoped source IDs. No fuzzy replacement or forced English alias.
+- Free probes resolved الأحساء and مجموعة الدكتور سليمان الحبيب للخدمات الطبية → مجموعة الحبيب الطبية. 20 focused tests passed; no paid package or posting.
+- Audit: docs/audits/2026-09-20-native-subjects.md. Next: one fresh shadow package within approved budget; image availability and live editor performance remain unproven.
