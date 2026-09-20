@@ -33,11 +33,11 @@ class LicenseVersionsTests(unittest.TestCase):
                            ('usage_terms','UsageTerms'),('disclaimer','Disclaimer')]:
             self.assertEqual(row[key], fields[field])
 
-    def test_by_two_cannot_publish_without_attached_credit_video(self):
+    def test_by_two_cannot_publish_with_only_private_attribution(self):
         from publishing_v2.autopilot.runtime import publish_package
         row = asset(license='CC BY 2.0', license_url='https://creativecommons.org/licenses/by/2.0/')
-        with self.assertRaisesRegex(ValueError, 'attribution_requires_single_video_delivery'):
-            publish_package(package([row]), [], client=object())
+        with self.assertRaisesRegex(ValueError, 'public_attribution_required'):
+            publish_package({'cards':[{'kind':'info','image':row}]}, [], client=object())
 
     def test_credit_links_are_retained_without_truncation(self):
         from publishing_v2.public_images import rights_links

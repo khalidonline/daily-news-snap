@@ -49,7 +49,7 @@ class RuntimeTests(unittest.TestCase):
     def test_repair_retains_selected_images_but_not_other_candidates(self):
         class Sources:
             def images(self, query):
-                return [{'asset_id': query, 'title': query}]
+                return [{'license': 'CC0', 'asset_id': query, 'title': query}]
         class Agent:
             def run(self, role, data):
                 return {'image_ids': ['dates', None], 'reason': 'second image unavailable'}
@@ -79,8 +79,8 @@ class RuntimeTests(unittest.TestCase):
     def test_subject_alternatives_are_available_even_when_specific_results_exist(self):
         class Sources:
             def images(self, query):
-                return ([{'asset_id': 'wrong', 'title': 'Coconut'}] if query == 'dates fruit varieties'
-                        else [{'asset_id': 'right', 'title': 'Date fruit'}, {'asset_id': 'wrong'}])
+                return ([{'license': 'CC0', 'asset_id': 'wrong', 'title': 'Coconut'}] if query == 'dates fruit varieties'
+                        else [{'license': 'CC0', 'asset_id': 'right', 'title': 'Date fruit'}, {'license': 'CC0', 'asset_id': 'wrong'}])
         rows = Renderer(None, Sources()).image_options({'image_query': 'dates fruit varieties'},
                 {'candidate': {'title': 'Date palm', 'editorial': {'research_query': 'Date fruit'}}})
         self.assertEqual([r['asset_id'] for r in rows], ['wrong', 'right'])
@@ -88,7 +88,7 @@ class RuntimeTests(unittest.TestCase):
     def test_cards_share_relevant_assets_found_by_other_card_queries(self):
         class Sources:
             def images(self, query):
-                return [{'asset_id': query}]
+                return [{'license': 'CC0', 'asset_id': query}]
         catalog = Renderer(None, Sources()).image_catalog({'cards': [
             {'image_query': 'date palm'}, {'image_query': 'dried dates'}]})
         self.assertEqual([r['asset_id'] for r in catalog], ['date palm', 'dried dates'])
@@ -96,8 +96,8 @@ class RuntimeTests(unittest.TestCase):
     def test_known_low_resolution_images_are_excluded_before_selection(self):
         class Sources:
             def images(self, query):
-                return [{'asset_id': 'tiny', 'width': 400, 'height': 400},
-                        {'asset_id': 'large', 'width': 1600, 'height': 900}]
+                return [{'license': 'CC0', 'asset_id': 'tiny', 'width': 400, 'height': 400},
+                        {'license': 'CC0', 'asset_id': 'large', 'width': 1600, 'height': 900}]
         rows = Renderer(None, Sources()).image_options({'image_query': 'Mocha port'}, {})
         self.assertEqual([r['asset_id'] for r in rows], ['large'])
 
@@ -143,9 +143,9 @@ class RuntimeTests(unittest.TestCase):
                  patch('publishing_v2.autopilot.runtime.render_card', side_effect=info), \
                  patch.dict('sys.modules', {'story_bot': SimpleNamespace(render_frame=frame)}):
                 result = Renderer(None, None)(package, Path(tmp) / 'render')
-            self.assertEqual(len(result), 3)
+            self.assertEqual(len(result), 4)
             self.assertEqual(counters, ['١ من ٢', '٢ من ٢'])
-            self.assertEqual(footers, [None, 'المصادر: ويكيبيديا'])
+            self.assertEqual(footers, [None, None])
             self.assertEqual(brands, ['ملخص تنفيذي - معلومة'])
             self.assertEqual(package['cards'][0]['image']['sha256'], meta['sha256'])
 
@@ -178,41 +178,6 @@ class RuntimeTests(unittest.TestCase):
             self.assertEqual(len(package['cards']),4)
             self.assertEqual(approved,seal(package,resumed))
 
-    def test_attributed_package_uploads_only_verified_video(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            paths = []
-            for i in range(3):
-                path = Path(tmp)/f'review-{i}.png'; path.write_bytes(str(i).encode()); paths.append(path)
-            video = Path(tmp)/'story.mp4'; video.write_bytes(b'verified complete video including credits')
-            package = {'title': 'test', 'expires_at': '2999-01-01T00:00:00+00:00',
-                       'cards': [{'kind':'info','image':{'license':'CC BY 4.0'}},{'kind':'story'},{'kind':'credits'}]}
-            class Client:
-                def __init__(self): self.uploads=[]; self.creates=0
-                def check(self): pass
-                def upload(self,item): self.uploads.append(item); return 'upload'
-                def create(self,title,upload): self.creates+=1; return 'post'
-                def wait(self,ident): pass
-            class Journal:
-                def __init__(self): self.state={}
-                def read(self): return copy.deepcopy(self.state)
-                def save(self,state): self.state=copy.deepcopy(state)
-            client=Client(); journal=Journal()
-            with self.assertRaisesRegex(ValueError,'attribution_requires_single_video_delivery'):
-                publish_package(package,paths,client=client,journal_factory=lambda ident:journal)
-            self.assertEqual(client.uploads,[])
-            package['delivery']={'kind':'video','filename':'story.mp4','duration_seconds':35,
-                'sha256':hashlib.sha256(video.read_bytes()).hexdigest(),
-                'frame_sha256':[hashlib.sha256(p.read_bytes()).hexdigest() for p in paths]}
-            receipt=publish_package(package,paths,client=client,journal_factory=lambda ident:journal)
-            self.assertEqual(client.creates,1)
-            self.assertEqual([item[0].suffix for item in client.uploads],['.mp4'])
-            self.assertEqual(receipt['post_ids'],['post'])
-            self.assertEqual(receipt['card_count'],3)
-            video.write_bytes(b'changed')
-            with self.assertRaisesRegex(ValueError,'approved_video_changed'):
-                publish_package(package,paths,client=client,journal_factory=lambda ident:journal)
-            self.assertEqual(client.creates,1)
-
     def test_receipt_identity_is_hash_bound_and_posted_requires_all_cards(self):
         with tempfile.TemporaryDirectory() as tmp:
             paths = []
@@ -228,7 +193,8 @@ class RuntimeTests(unittest.TestCase):
                 def create(self, title, upload): return title
                 def wait(self, id): pass
             journal = Journal()
-            result = publish_package({'title': 'test', 'expires_at': '2999-01-01T00:00:00+00:00'}, paths,
+            result = publish_package({'title': 'test', 'expires_at': '2999-01-01T00:00:00+00:00',
+                'cards': [{'kind':kind,'image':{'license':'CC0'}} for kind in ['info','story','story']]}, paths,
                                      client=Client(), journal_factory=lambda id: journal)
             self.assertEqual(result['status'], 'POSTED')
             self.assertEqual(len(result['post_ids']), 3)

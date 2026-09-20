@@ -16,6 +16,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
+from .publication import publication_indices
 
 
 class BundleError(RuntimeError):
@@ -173,6 +174,10 @@ def load_package(manifest):
         raise BundleError('Approval expired; recheck event timing and content')
     frames = data.get('media', [])
     if not 1 <= len(frames) <= 10: raise BundleError('Expected 1–10 approved media files')
+    try:
+        indices = publication_indices(frames)
+    except ValueError as error:
+        raise BundleError(str(error)) from None
     media, hashes = [], []
     for frame in frames:
         source = (root / frame['path']).resolve()
@@ -187,7 +192,10 @@ def load_package(manifest):
     if len(set(hashes)) != len(hashes): raise BundleError('Duplicate card in package')
     # Changing title/filename/expiry cannot cause an identical package to be resent.
     identity = hashlib.sha256(('executivesaudi:' + ':'.join(hashes)).encode()).hexdigest()
-    return identity, str(data['title']), media
+    selected = [media[i] for i in indices]
+    if any(path.suffix.lower() == '.mp4' for path, _ in selected):
+        raise BundleError('manual_video_requires_editorial_frame_review')
+    return identity, str(data['title']), selected
 
 
 def main():
