@@ -318,3 +318,9 @@ recommending any budget increase; never raise the cap automatically.
 - Medical-group and Luke Littler candidates failed editor_subject_mention_not_grounded. Final Littler candidate has the correct BBC title and verbatim English quote, but Arabic angle uses ليتلر instead of exact Luke Littler. The literal mention-in-angle requirement creates a false rejection for translated/shortened names. Do not treat that as source fabrication or weaken exact quote-to-source checks.
 - Next bounded correction: separate verbatim source-name grounding from translated Arabic presentation; preserve source identity verification. Broader remaining decision: public-compatible image supply versus a reviewed attribution solution. PD/CC0-only coverage is insufficient for these actual subjects; repeated provider searches/full paid retries are not a solution.
 - Full package, visual review and autonomous readiness remain unproven. Do not start another full paid trial until these concrete gates are addressed. State: api-receipts/autopilot-2026-09-20-daily-shadow-7b28546baf6d36e3.json on snapchat-api-state.
+
+### Small follow-up: allow Arabic presentation of source names
+- Owner: assistant. Corrected #227 false rejection reproduced by Luke Littler → ليتلر in run 35516891749.
+- Exact title/quote/source mention checks remain. Angle/why_now may translate or shorten the name; independent factual/current_attention review assesses semantic identity.
+- 32 focused tests passed. No paid generation or posting. Audit: docs/audits/2026-09-20-translated-editor-names.md.
+- Remaining blocker: public-compatible image supply/attribution. No paid full retry until that is addressed; source cards remain review-only.
