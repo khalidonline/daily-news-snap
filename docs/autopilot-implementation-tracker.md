@@ -281,3 +281,9 @@ recommending any budget increase; never raise the cap automatically.
 - 17 focused tests passed; independent review found no blockers. Audit: docs/audits/2026-09-20-flickr-cc0.md.
 - Next gate: confirm a candidate has enough distinct and relevant visual options, then one fresh shadow package. No unattended-success or schedule-readiness claim.
 - Live outcome: PepsiCo now reaches 3 downloaded eligible assets (previously 2); all factory photographs, so perceptual diversity/editorial fit still needs review. Flickr CC0 returned 3 metadata-verified Jeddah results and 0 Shawshank results.
+
+### Fresh shadow checkpoint — 20 September, 16:29 Riyadh
+- Owner: assistant. Run 35513642131, daily SHADOW on 48c9fe784de0f6abf7b9471e041cadf98af56573; one fresh package attempt, no Snapchat publication.
+- Opening settled daily cost $3.415151; no pending reservations. Existing date-limited $5 daily-shadow cap applies; no budget increase.
+- Active: fresh discovery → editor → visual feasibility → research/writing/design/review if gates pass. Track this run only; no stories.txt backlog scan or repeated runs.
+- Outcome pending. Do not claim readiness until the actual package, sources separation, visual/editorial review and cost are checked.
