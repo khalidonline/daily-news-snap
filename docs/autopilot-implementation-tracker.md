@@ -344,3 +344,12 @@ recommending any budget increase; never raise the cap automatically.
 - Decision: none of these sources is yet demonstrated to solve the actual celebrity-image blocker; do not buy a subscription or add a production adapter merely from catalog size or license-summary wording.
 - CANCELLED by subsequent owner instruction: do not reuse the same image within a story. Earlier reuse permission does not authorize within-story repetition. Do not lower distinct-image requirements or implement the proposed one-photo fallback.
 - Full unattended production remains unproven. Last verified daily spend remains $3.548535; no additional paid trial in this checkpoint.
+
+
+### Distinct-image requirement retained; Bisht feasibility checkpoint
+- Owner instruction: no reuse of the same photograph within a story. Cancelled the proposed one-photo/repeated-crop fallback in this tracker. No production-code change was made.
+- Read-only live adapter probes for "Bisht", "بشت", and "Bisht haswbstatement:P275=Q6938433" all returned request_failed in this execution environment. These are transport failures, NOT zero-image results and NOT evidence of a GitHub production outage. Initial limit=10 probe was rejected locally by the adapter; corrected to supported limit=5 before the requests.
+- Public source pages were independently accessible. Category:Bisht is a Russian village (https://commons.wikimedia.org/wiki/Category:Bisht); Category:Bisht_(clothing) is the correct garment (https://commons.wikimedia.org/wiki/Category:Bisht_(clothing)). Do not fix canonical-name matching by blindly dropping the disambiguator from collection selection.
+- Correct garment category lists four files: a 427x561 historical portrait, two versions of the same official portrait, and one sewing photograph. Inspected all four file pages. Official portrait versions and sewing photo explicitly carry CC BY-SA 4.0; historical portrait is below current minimum dimensions and has mixed derivative-license notices. This category does not supply three distinct currently eligible images; changing text matching alone does not resolve this sample.
+- No new images accepted, downloaded or published; no paid AI or full workflow dispatch. Do not report sourcing as fixed.
+- Remaining work is actual licensed image supply for strong current subjects. A supplier integration must demonstrate distinct relevant samples and permission for this no-visible-credit publishing use before production activation. Preserve public-source-card exclusion and current distinct-image checks.
