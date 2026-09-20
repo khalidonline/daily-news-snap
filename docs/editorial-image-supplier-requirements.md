@@ -8,7 +8,7 @@ Account: Snapchat executivesaudi. Saudi Arabic informational cards and connected
 
 The user now explicitly accepts visible source/photographer attribution. This supersedes the earlier no-visible-credit preference. The private research/source card must still never be published. Public image-specific credits can accompany each image; include the full required attribution, license reference and modification notice, as applicable. Attribution alone does not grant permission to use an otherwise unlicensed image.
 
-This is a requirements update only: the runtime publication gate and rendered credit support have NOT been changed or verified by this document update.
+Implementation checkpoint: PR #231 is merged (733f64c55252e66177ba491d477db7508bcfff45). Supported CC BY 2.0/4.0 photos now receive complete visible per-card attribution with metadata/pixel binding and public eligibility checks. All 266 v2 tests, offline evaluation and container checks passed. Other supplier integrations and license families are not automatically enabled; a fresh end-to-end package still requires qualification.
 
 ## Required rights and delivery
 
@@ -73,4 +73,4 @@ Visible attribution is now accepted, so credit requirements alone no longer excl
 - NASA: investigate asset-specific ownership/credit notices, including third-party exceptions. https://www.nasa.gov/nasa-brand-center/images-and-media/
 - Openverse API endpoint returned HTTP 403 during this research; no successful integration or coverage claim.
 
-Next implementation checkpoint: visible per-image attribution rendering and publication eligibility for supported CC BY licenses; verify on distinct relevant photos before a paid package run. No paid generation or publishing performed during this research.
+Next checkpoint: verify a fresh package using distinct relevant photos and the implemented visible CC BY attribution before a paid package run. No paid generation or publishing performed during this research.
