@@ -27,7 +27,6 @@ def validate_editor_binding(candidate):
         raise ValueError('editor_subject_evidence_required')
     normalize = lambda value: ' '.join(value.split())
     source_parts = [normalize(candidate.get(key, '')) for key in ('title', 'summary')]
-    angle_parts = [normalize(edit.get(key, '')) for key in ('angle', 'why_now')]
     seen = set()
     for row in evidence:
         if (not isinstance(row, dict) or not isinstance(row.get('subject'), str)
@@ -43,7 +42,9 @@ def validate_editor_binding(candidate):
         if not isinstance(mention, str) or not 3 <= len(mention.strip()) <= 150:
             raise ValueError('editor_subject_mention_required')
         mention = normalize(mention)
-        if mention not in quote or not any(mention in part for part in angle_parts):
+        # Presentation may translate or shorten the name. Only source evidence
+        # is checked literally; semantic alignment belongs to source review.
+        if mention not in quote:
             raise ValueError('editor_subject_mention_not_grounded')
 
 

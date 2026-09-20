@@ -66,8 +66,11 @@ debates. 'Relevant to Vision 2030' alone does not establish audience interest.
 For each selection copy source_title EXACTLY from the candidate with that ID.
 For EACH English subject provide subject_evidence: its English subject, a specific
 source-language name as mention, and a verbatim quote from that SAME candidate
-title or summary containing the mention (12-1000 characters). Use that exact
-mention in angle or why_now as well. Do not join quotes across candidates or
+title or summary containing the mention (12-1000 characters). Keep mention and
+quote in the source language. angle and why_now should use natural Saudi Arabic;
+translate or shorten the name there when appropriate, without changing the entity.
+Do not require an English source name to appear in the Arabic presentation.
+Do not join quotes across candidates or
 invent translations as quotes. An ID alone is not evidence. If a subject is not
 named in that source, select another subject or skip the candidate.
 Return {"candidates":[{"id":"existing id","source_title":"exact source title",
@@ -172,6 +175,10 @@ report only: verify the original article contains substantive current coverage,
 not an evergreen or recycled article. Reject any card that presents this as the
 underlying event happening today. Otherwise event_date must follow from the quoted
 event context. For BOTH lanes reject stale timing even if the story is interesting.
+Check that translated or shortened names in the Arabic angle and cards denote
+the same subject as the original article and subject_evidence. Shared words alone
+do not prove identity; an unrelated entity or unsupported angle must fail factual
+and current_attention checks.
 Set current_attention false unless original news evidence supports a concrete
 current development tied to this subject and a persuasive reason ordinary Saudis
 care now. A fresh timestamp, a historical anniversary inferred by the model,

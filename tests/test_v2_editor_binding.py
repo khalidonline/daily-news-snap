@@ -27,13 +27,31 @@ class BindingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'editor_subject_quote_not_in_source'):
             policy.validate_editor_binding(row)
 
+    def test_translated_and_short_names_do_not_change_source_evidence(self):
+        row = {'title':'Littler could boycott Dutch events over booing',
+               'summary':'Luke Littler threatens a boycott of playing in the Netherlands.',
+               'editorial':{'source_title':'Littler could boycott Dutch events over booing',
+                   'subjects':['Luke Littler'], 'angle':'قصة ليتلر',
+                   'why_now':'هدد بمقاطعة الفعاليات في هولندا',
+                   'subject_evidence':[{'subject':'Luke Littler','mention':'Luke Littler',
+                       'quote':'Luke Littler threatens a boycott of playing in the Netherlands.'}]}}
+        policy.validate_editor_binding(row)
+        row['editorial']['subject_evidence'][0]['mention'] = 'ليتلر'
+        with self.assertRaisesRegex(ValueError, 'editor_subject_mention_not_grounded'):
+            policy.validate_editor_binding(row)
+
+    def test_short_arabic_presentation_preserves_full_source_name(self):
+        row = candidate()
+        row['editorial'].update(angle='قصة الجوير', why_now='اعتذاره اليوم')
+        policy.validate_editor_binding(row)
+
     def test_every_subject_needs_actual_source_mention(self):
-        for mutation in ['missing','extra_subject','invented_mention','unrelated_angle','short_quote']:
+        for mutation in ['missing','extra_subject','invented_mention','altered_quote','short_quote']:
             row=candidate();edit=row['editorial']
             if mutation=='missing':edit.pop('subject_evidence')
             if mutation=='extra_subject':edit['subjects'].append('Another player')
             if mutation=='invented_mention':edit['subject_evidence'][0]['mention']='ليونيل ميسي'
-            if mutation=='unrelated_angle':edit['angle']='قصة الحرب';edit['why_now']='معارك اليوم'
+            if mutation=='altered_quote':edit['subject_evidence'][0]['quote']='قصة أخرى لا وجود لها في المصدر الأصلي'
             if mutation=='short_quote':edit['subject_evidence'][0]['quote']='مصعب'
             with self.subTest(mutation=mutation), self.assertRaises(ValueError):
                 policy.validate_editor_binding(row)
