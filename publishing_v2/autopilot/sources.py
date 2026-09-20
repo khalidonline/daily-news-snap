@@ -15,6 +15,7 @@ from xml.etree import ElementTree
 from publishing_v2.public_images import search_commons, search_commons_category, download_image
 from publishing_v2.flickr_images import search_flickr
 from .credits import attribution_eligible
+from publishing_v2.publication import image_without_public_credit
 from .feedback import rejected_trigger
 
 FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
@@ -185,8 +186,9 @@ def resolve_subject(query, rows, *, context=""):
 
 
 class Sources:
-    def __init__(self, *, recovery=False):
+    def __init__(self, *, recovery=False, publication_only=False):
         self.recovery = recovery
+        self.publication_only = publication_only
         self.recovery_cache = {}
         self.image_diagnostics = []
         self.publisher_articles = {}
@@ -300,6 +302,10 @@ class Sources:
                           accept_metadata=lambda row: subject_metadata_matches(subject, row))),
                   ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
                   ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
+        # The current Flickr adapter searches CC BY 2.0 only. Do not spend
+        # the public search deadline on assets that cannot enter its pool.
+        if self.publication_only:
+            stages = [(provider, search) for provider, search in stages if provider != 'flickr']
         for provider, search in stages:
             if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
                 break
@@ -319,6 +325,10 @@ class Sources:
                     identities.add(identity)
                     if not reusable_image(row):
                         reject('rights'); continue
+                    # Review-only images must not consume the public pool or
+                    # its download budget before the renderer filters them.
+                    if self.publication_only and not image_without_public_credit(row):
+                        reject('public_attribution_required'); continue
                     if not subject_metadata_matches(subject, row):
                         reject('subject'); continue
                     dimensions = (row.get('original_width'), row.get('original_height'))
@@ -382,6 +392,7 @@ class Sources:
                 self.image_search_cache[key] = search_commons(search, limit=5, offset=offset)
             rows = self.image_search_cache[key]
             usable = [r for r in rows if reusable_image(r)
+                      and (not self.publication_only or image_without_public_credit(r))
                       and (not subject or subject_metadata_matches(subject, r))
                       and not (r.get('width') and r.get('height')
                                and (min(r['width'], r['height']) < 600
