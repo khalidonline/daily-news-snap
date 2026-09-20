@@ -60,7 +60,13 @@ jobs:
           AUTOPILOT_LANE: ${{ inputs.lane || 'both' }}
           POST_TO_SNAPCHAT: '0'
           DRY_RUN: '1'
-        run: python -m publishing_v2.autopilot.runtime --mode "$AUTOPILOT_MODE" --lane "$AUTOPILOT_LANE"
+        run: |
+          # Owner approved $5 total for today's fresh review trial only.
+          # Expired dates, live mode and other lanes retain the regular $3 cap.
+          if [ "$(TZ=Asia/Riyadh date +%F)" = "2026-09-20" ] && [ "$AUTOPILOT_MODE" = "shadow" ] && [ "$AUTOPILOT_LANE" = "daily" ]; then
+            export AUTOPILOT_DAILY_LIMIT_MICRO_USD=5000000
+          fi
+          python -m publishing_v2.autopilot.runtime --mode "$AUTOPILOT_MODE" --lane "$AUTOPILOT_LANE"
       - name: Send concise operational report
         if: always()
         env:
