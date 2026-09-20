@@ -85,3 +85,54 @@ class RedirectResolutionTests(unittest.TestCase):
             rows=wiki('Saudi cuisine')
         self.assertEqual(rows[0]['verified_aliases'],['Saudi cuisine'])
         self.assertIsNotNone(resolve_subject('Saudi cuisine',rows))
+
+class ConcreteSubjectTests(unittest.TestCase):
+    def test_context_disambiguates_bisht_clothing_without_fuzzy_name_matching(self):
+        rows=[{'id':'clothing','source_type':'encyclopedia','title':'Bisht (clothing)',
+               'text':'A traditional cloak worn in Saudi Arabia.'},
+              {'id':'surname','source_type':'encyclopedia','title':'Bisht (surname)',
+               'text':'A surname used in India and Nepal.'}]
+        self.assertEqual(resolve_subject('Bisht',rows,context='Bisht Saudi Arabia craft'),
+                         {'name':'Bisht (clothing)','source_id':'clothing'})
+        self.assertIsNone(resolve_subject('Bisht',rows))
+        self.assertIsNone(resolve_subject('Different name',rows,context='Saudi Arabia'))
+        rows[1]['text']='A person working in Saudi Arabia.'
+        self.assertIsNone(resolve_subject('Bisht',rows,context='Bisht Saudi Arabia craft'))
+
+    def test_abstract_compound_is_not_replaced_by_one_of_its_components(self):
+        rows=[{'id':'aging','source_type':'encyclopedia','title':'Ageing', 'text':'Metabolism changes with age.'},
+              {'id':'metabolism','source_type':'encyclopedia','title':'Metabolism','text':'Chemical processes in living organisms.'}]
+        self.assertIsNone(resolve_subject('Aging and metabolism',rows,context='weight gain aging metabolism'))
+
+    def test_research_uses_subject_context_and_records_rejection_without_searching_photos(self):
+        bisht={'editorial':{'subjects':['Bisht'],'research_query':'Bisht Saudi Arabia craft'}}
+        row={'id':'clothing','source_type':'encyclopedia','title':'Bisht (clothing)',
+             'text':'A traditional cloak worn in Saudi Arabia.'}
+        with patch('publishing_v2.autopilot.sources.wiki',return_value=[row]):
+            Sources().research(bisht)
+        self.assertEqual(bisht['resolved_subject']['name'],'Bisht (clothing)')
+        abstract={'editorial':{'subjects':['Aging and metabolism'],'research_query':'weight gain aging metabolism'}}
+        with patch('publishing_v2.autopilot.sources.wiki',return_value=[]):
+            with self.assertRaisesRegex(ValueError,'unresolved_editorial_subject'):
+                Sources().research(abstract)
+        self.assertEqual(abstract['subject_resolution'][0]['query'],'Aging and metabolism')
+        self.assertEqual(abstract['subject_resolution'][0]['status'],'needs_concrete_subject')
+
+    def test_disambiguation_lookup_retrieves_same_name_object_instead_of_people(self):
+        import json
+        from urllib.parse import urlsplit, parse_qs
+        from publishing_v2.autopilot.sources import wiki
+        def fetched(url):
+            params=parse_qs(urlsplit(url).query)
+            if 'titles' in params:
+                data={'query':{'pages':{'1':{'pageid':1,'title':'Bisht','extract':'Several meanings',
+                                           'pageprops':{'disambiguation':''}}}}}
+            elif 'list' in params:
+                data={'query':{'search':[{'pageid':2}] if params['srsearch']==['intitle:Bisht'] else []}}
+            else:
+                data={'query':{'pages':{'2':{'pageid':2,'title':'Bisht (clothing)',
+                                           'extract':'A cloak worn in Saudi Arabia.'}}}}
+            return json.dumps(data).encode()
+        with patch('publishing_v2.autopilot.sources.fetch',side_effect=fetched):
+            result=resolve_subject('Bisht',wiki('Bisht'),context='Bisht Saudi Arabia craft')
+        self.assertEqual(result,{'name':'Bisht (clothing)','source_id':'wiki-2'})

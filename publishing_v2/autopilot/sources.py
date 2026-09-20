@@ -112,9 +112,14 @@ def wiki(query):
                 'url': 'https://en.wikipedia.org/?curid=' + str(page['pageid']),
                 'text': str(page['extract'])[:10000], 'title': page['title'],
                 'verified_aliases': [query], 'source_type': 'encyclopedia'}]
+    # Title-constrained recovery prevents a common surname from crowding out
+    # the same-named object; resolution still requires source-backed context.
+    disambiguation = any('disambiguation' in p.get('pageprops', {}) for p in pages)
+    search_query = 'intitle:' + query if disambiguation else query
+    search_limit = 5 if disambiguation else 2
     search = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
-                        'list': 'search', 'srsearch': query, 'srlimit': 2})))
-    ids = [str(p['pageid']) for p in search.get('query', {}).get('search', [])[:2]]
+                        'list': 'search', 'srsearch': search_query, 'srlimit': search_limit})))
+    ids = [str(p['pageid']) for p in search.get('query', {}).get('search', [])[:search_limit]]
     if not ids: return []
     result = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
         'pageids': '|'.join(ids), 'prop': 'extracts|pageprops', 'explaintext': 1, 'exchars': 10000})))
@@ -147,7 +152,7 @@ def subject_metadata_matches(subject, row):
 
 
 
-def resolve_subject(query, rows):
+def resolve_subject(query, rows, *, context=""):
     """Resolve only a unique retrieved title matching the query's main phrase."""
     def normalize(value):
         value = ''.join(c for c in unicodedata.normalize('NFKD', value.casefold())
@@ -155,6 +160,8 @@ def resolve_subject(query, rows):
         return re.findall(r'[^\W_]+', value, re.UNICODE)
     wanted = normalize(query)
     matches = {}
+    contextual = {}
+    context_words = set(normalize(context)) - set(wanted) - {'the', 'of', 'and', 'in', 'for', 'a', 'an'}
     for row in rows:
         title = row.get('title')
         if row.get('source_type') != 'encyclopedia' or not title or not row.get('text'):
@@ -165,7 +172,16 @@ def resolve_subject(query, rows):
                 or words == wanted or (len(words) >= 2 and wanted[:len(words)] == words
                                 and len(words) / max(1, len(wanted)) >= 0.6)):
             matches[title] = {'name': title, 'source_id': row['id']}
-    return next(iter(matches.values())) if len(matches) == 1 else None
+        # Disambiguate only the SAME base name, using retrieved context.
+        # Never shorten arbitrary titles (Michelin Guide != Michelin), nor
+        # replace an abstract phrase with a loosely related concrete object.
+        parenthetical = re.fullmatch(r'(.+?) \([^()]+\)', title)
+        if (parenthetical and normalize(parenthetical[1]) == wanted
+                and len(context_words & set(normalize(row['text'][:1200]))) >= 2):
+            contextual[title] = {'name': title, 'source_id': row['id']}
+    if matches:
+        return next(iter(matches.values())) if len(matches) == 1 else None
+    return next(iter(contextual.values())) if len(contextual) == 1 else None
 
 
 class Sources:
@@ -242,13 +258,18 @@ class Sources:
         candidate.pop('resolved_subjects', None)
         candidate.pop('resolved_subject', None)
         resolved_subjects = []
+        candidate['subject_resolution'] = []
         for query in subjects or [editorial['research_query']]:
             try:
                 evidence = wiki(query)
             except Exception:
                 evidence = []
             rows.extend(row for row in evidence if row['id'] not in {r['id'] for r in rows})
-            resolved = resolve_subject(query, evidence)
+            resolved = resolve_subject(query, evidence, context=editorial['research_query'])
+            candidate['subject_resolution'].append({'query': query,
+                'context': editorial['research_query'],
+                'retrieved_titles': [r.get('title') for r in evidence],
+                'status': 'resolved' if resolved else 'needs_concrete_subject'})
             if resolved:
                 resolved_subjects.append(resolved)
             elif subjects is not None:
