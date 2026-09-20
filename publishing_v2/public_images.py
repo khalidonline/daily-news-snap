@@ -15,7 +15,7 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from PIL import Image
 
-HOSTS = {'apod.nasa.gov', 'commons.wikimedia.org', 'upload.wikimedia.org', 'thumb.wikimedia.org', 'images-api.nasa.gov', 'images-assets.nasa.gov'}
+HOSTS = {'www.flickr.com', 'live.staticflickr.com', 'apod.nasa.gov', 'commons.wikimedia.org', 'upload.wikimedia.org', 'thumb.wikimedia.org', 'images-api.nasa.gov', 'images-assets.nasa.gov'}
 MAX_BYTES = 16 * 1024 * 1024
 MAX_PIXELS = 40_000_000
 NASA_TERMS = 'https://www.nasa.gov/nasa-brand-center/images-and-media/'
@@ -47,6 +47,8 @@ def get_bytes(url, *, limit=MAX_BYTES):
     try:
         with build_opener(NoRedirect()).open(request, timeout=12) as response:
             data = response.read(limit + 1)
+    except ImageSourceError:
+        raise
     except HTTPError as error:
         raise ImageSourceError(f'http_{error.code}') from None
     except Exception:
@@ -115,6 +117,10 @@ def search_commons(query, limit=5, *, offset=0):
               'gsrsearch': query, 'gsrnamespace': 6, 'gsrlimit': limit, 'gsroffset': offset, 'prop': 'imageinfo',
               'iiprop': 'url|mime|size|extmetadata', 'iiurlwidth': 1600}
     response = get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params))
+    return _commons_results(response, limit)
+
+
+def _commons_results(response, limit):
     if not isinstance(response, dict) or 'error' in response:
         raise ImageSourceError('malformed_response')
     pages = response.get('query', {}).get('pages', [])
@@ -129,6 +135,7 @@ def search_commons(query, limit=5, *, offset=0):
             url = info.get('thumburl') or info['url']
             validate_url(url)
             results.append({'provider': 'commons', 'asset_id': str(page['pageid']), 'title': plain(page['title']),
+                'original_width': info.get('width'), 'original_height': info.get('height'),
                 'description': field('ImageDescription'), 'download_url': url, 'original_url': info['url'],
                 'source_url': info['descriptionurl'], 'credit': field('Artist'), 'credit_line': field('Credit'),
                 'rights_links': rights_links(meta), 'copyright_notice': field('Copyright'), 'attribution_notice': field('Attribution'),
@@ -140,6 +147,36 @@ def search_commons(query, limit=5, *, offset=0):
         except (KeyError, IndexError, TypeError, ImageSourceError):
             continue
     return results
+
+
+def search_commons_category(subject, limit=5):
+    query_params(subject, limit)
+    params = {'action':'query', 'format':'json', 'formatversion':2,
+              'generator':'categorymembers', 'gcmtitle':'Category:' + subject,
+              'gcmtype':'file', 'gcmlimit':20, 'prop':'imageinfo',
+              'iiprop':'url|mime|size|extmetadata', 'iiurlwidth':1600}
+    response = get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params))
+    rows = _commons_results(response, 20)
+    for row in rows:
+        row['collection_subject'] = subject
+    return rows
+
+
+def download_image(row, *, fetch=None):
+    """Recover a rendition of the same source asset; bytes live only in memory."""
+    fetch = fetch or get_bytes
+    urls = list(dict.fromkeys(u for u in (row.get('download_url'), row.get('original_url')) if u))
+    errors = []
+    for url in urls[:2]:
+        try:
+            validate_url(url)
+            raw = fetch(url)
+            width, height, _ = inspect_image(raw)
+            row.update(download_url=url, width=width, height=height)
+            return raw
+        except ImageSourceError as error:
+            errors.append(str(error))
+    raise ImageSourceError('image_recovery_failed: ' + ', '.join(errors))
 
 
 def search_nasa(query, limit=5):

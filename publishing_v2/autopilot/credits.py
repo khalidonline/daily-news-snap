@@ -41,11 +41,18 @@ def attribution_eligible(row):
             or re.fullmatch(r'(?:unknown(?:author|artist|photographer|creator)?|authorunknown|ownwork|self)+',
                             credit_key)):
         return False
-    if not re.fullmatch(r'[0-9]+', str(row.get('asset_id', ''))):
-        return False
     try:
         url = urlsplit(row.get('source_url', ''))
-        if (url.scheme != 'https' or url.hostname != 'commons.wikimedia.org'
+        flickr = row.get('provider') == 'flickr'
+        identity = str(row.get('asset_id', ''))
+        if flickr:
+            match = re.fullmatch(r'flickr:([0-9]+)', identity)
+            if (not match or row.get('source_verified') is not True or url.query
+                    or not re.fullmatch(r'/photos/[^/]+/' + match[1] + r'/?', url.path)):
+                return False
+        elif row.get('provider', 'commons') != 'commons' or not identity.isdigit():
+            return False
+        if (url.scheme != 'https' or url.hostname != ('www.flickr.com' if flickr else 'commons.wikimedia.org')
                 or url.username or url.password or url.port not in (None, 443) or url.fragment):
             return False
     except (TypeError, ValueError):
@@ -86,7 +93,8 @@ def _blocks(package):
             for key in NOTICE_FIELDS:
                 if row.get(key):
                     blocks.append((row[key], False))
-            blocks.append((f'https://commons.wikimedia.org/?curid={identity}', False))
+            blocks.append((row['source_url'] if row.get('provider') == 'flickr'
+                           else f'https://commons.wikimedia.org/?curid={identity}', False))
             blocks.append((row['license'], False))
             blocks.append((LICENSE_URLS[row['license']], False))
         blocks.append(('Images cropped/resized. No endorsement implied.', False))
