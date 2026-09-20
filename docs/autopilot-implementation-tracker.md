@@ -101,3 +101,9 @@ recommending any budget increase; never raise the cap automatically.
 - Updated preview specification and regenerated the PDF; visually inspected all three cards for readability, numbering and footer clearance.
 - Revised PDF delivered for final visual review. No paid model calls, production code changes or publishing in this step.
 - Next: user reviews revised cards before publication; automated agent qualification remains outstanding.
+
+## Approved Michelin publication checkpoint — 2026-09-20
+- Owner reviewed and approved the revised three cards.
+- Exact media and hash-checked manifest committed at approved/michelin-20260920/manifest.json.
+- Automatic approval review blocked the publishing workflow submission: it requires explicit confirmation of immediate public Snapchat publication beyond approval of the cards.
+- No successful publishing submission or delivery receipt in this step. Await explicit publish-now confirmation; do not duplicate or regenerate media.
