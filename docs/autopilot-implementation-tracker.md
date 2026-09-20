@@ -13,7 +13,7 @@ Code deployed is not the same as live behavior verified.
 
 ## Current checkpoint
 2026-09-20: user restored a $3/day shared cap for production and trials.
-- Budget change: tested, awaiting deployment; $20 commissioning permission is superseded.
+- Budget change: deployed in PR #215; $20 commissioning permission is superseded.
 - First gradual model reduction: editor uses Sonnet 5. Researcher, writer, visual
   selector and independent reviewer retain Opus 5; no quality gate is relaxed.
 - Reviewer reservation uses conservative text bytes plus 8192 tokens per locally
@@ -47,8 +47,7 @@ Code deployed is not the same as live behavior verified.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Deploy the tested budget change without starting a paid trial.
-Then fix the watermark layout in one small stage and prepare the agreed fresh
+Fix the watermark layout in one small stage and prepare the agreed fresh
 single-topic preview. Do not resume old story retries or expand to more paid runs.
 Report milestones separately. Monitor actual cost and approved output before
 recommending any budget increase; never raise the cap automatically.
