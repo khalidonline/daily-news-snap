@@ -53,7 +53,7 @@ Code deployed is not the same as live behavior verified.
 | 7 | Review platform/model efficiency | Planned | Compare measured output quality, delivery reliability, latency and total cost; vendor-neutral decisions |
 
 ## Immediate next action
-Review the fresh Michelin preview with the user; revise if needed before publishing.
+Michelin preview approved and published: all three cards confirmed POSTED. Next implementation step: carry the approved Saudi storytelling style into automated generation, then qualify a fresh output within the $3/day cap.
 This is an assistant-prepared content/design preview, not an automated agent pass. Do not resume old story retries or expand to more paid runs.
 Report milestones separately. Monitor actual cost and approved output before
 recommending any budget increase; never raise the cap automatically.
@@ -107,3 +107,11 @@ recommending any budget increase; never raise the cap automatically.
 - Exact media and hash-checked manifest committed at approved/michelin-20260920/manifest.json.
 - Automatic approval review blocked the publishing workflow submission: it requires explicit confirmation of immediate public Snapchat publication beyond approval of the cards.
 - No successful publishing submission or delivery receipt in this step. Await explicit publish-now confirmation; do not duplicate or regenerate media.
+
+## Michelin delivery completed — 2026-09-20
+- User explicitly confirmed immediate Snapchat publication.
+- Approved Snapchat API run: https://github.com/khalidonline/daily-news-snap/actions/runs/35497827987.
+- All three approved cards confirmed POSTED in order on @executivesaudi.
+- Durable receipt: snapchat-api-state/api-receipts/cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229.json.
+- Exact approved media reused; no model generation or paid model calls for publication.
+- Manual approved delivery is complete. This does not qualify autonomous generation or change the $3/day budget.
