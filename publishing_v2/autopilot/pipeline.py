@@ -25,7 +25,7 @@ class Pipeline:
     def save(self, state, event, **values):
         state.update(values)
         entry = {'event': event, 'at': self.now().isoformat()}
-        for key in ('reason', 'feedback', 'candidate_id', 'source_title'):
+        for key in ('reason', 'feedback', 'candidate_id', 'source_title', 'editor_round'):
             if key in values: entry[key] = values[key]
         state.setdefault('audit', []).append(entry)
         receipts = state.setdefault('agent_receipts', [])
@@ -81,18 +81,8 @@ class Pipeline:
             candidates = eligible
             if not candidates:
                 raise ValueError('no_current_candidates')
-            selected = self.agent.run('editor', {'lane': lane, 'now': self.now().isoformat(),
-                                                'editorial_feedback': EDITORIAL_FEEDBACK,
-                                                'candidates': candidates})
             ids = {c['id']: c for c in candidates}
-            ranked = selected.get('candidates', [])
-            if not 1 <= len(ranked) <= 4:
-                raise ValueError('invalid_selection')
-            used = set()
-            for choice in ranked:
-                if choice.get('id') not in ids or choice['id'] in used:
-                    raise ValueError('unknown_or_duplicate_candidate')
-                used.add(choice['id'])
+            for choice in self.editor_choices(state, lane, candidates):
                 for key in ('why_saudi', 'angle', 'why_now', 'share_reason', 'research_query'):
                     policy.text(choice.get(key), 500)
                 candidate = dict(ids[choice['id']], editorial=choice)
@@ -183,6 +173,32 @@ class Pipeline:
             details = {'budget_diagnostic': error.diagnostic} if isinstance(error, BudgetBlocked) else {}
             self.save(state, 'stopped', status='held', reason=type(error).__name__, **details)
         return state
+
+    def editor_choices(self, state, lane, candidates):
+        """Try at most two shortlists, never researching a candidate twice."""
+        used = set()
+        for round_number in range(1, 3):
+            remaining = [candidate for candidate in candidates if candidate['id'] not in used]
+            if not remaining:
+                return
+            allowed = {candidate['id'] for candidate in remaining}
+            self.save(state, 'editor_round_started', editor_round=round_number)
+            selected = self.agent.run('editor', {
+                'lane': lane, 'now': self.now().isoformat(),
+                'editorial_feedback': EDITORIAL_FEEDBACK,
+                'candidates': remaining,
+                'previous_rejections': [
+                    {'candidate_id': entry['candidate_id'], 'reason': entry['reason']}
+                    for entry in state['audit'] if entry['event'] == 'candidate_rejected'],
+            })
+            ranked = selected.get('candidates', [])
+            if not isinstance(ranked, list) or not 1 <= len(ranked) <= 4:
+                raise ValueError('invalid_selection')
+            for choice in ranked:
+                if not isinstance(choice, dict) or choice.get('id') not in allowed or choice['id'] in used:
+                    raise ValueError('unknown_or_duplicate_candidate')
+                used.add(choice['id'])
+                yield choice
 
     def deliver(self, state):
         package = state['package']
