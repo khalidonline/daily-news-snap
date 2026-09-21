@@ -18,6 +18,7 @@ from publishing_v2.met_images import search_met
 from .credits import attribution_eligible
 from publishing_v2.publication import image_publication_eligible
 from .feedback import rejected_trigger
+from .eligibility import routine_trigger_rejection
 
 FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://feeds.bbci.co.uk/news/technology/rss.xml',
@@ -201,6 +202,7 @@ class Sources:
         self.publisher_articles = {}
         self.image_cache = {}
         self.image_search_cache = {}
+        self.discovery_rejections = []
 
     def discover(self, lane, now):
         if lane not in {'daily', 'local'}:
@@ -208,6 +210,7 @@ class Sources:
         # Both lanes need a real attention moment. LOCAL_TOPICS only helps image
         # search; a date-based rotation is not evidence that people care today.
         results, seen = [], set()
+        self.discovery_rejections = []
         for url in FEEDS:
             try:
                 root = ElementTree.fromstring(fetch(url))
@@ -225,6 +228,11 @@ class Sources:
                         'summary': plain(item.findtext('description', ''))[:1000],
                         'published_at': published.isoformat()}
                     if rejected_trigger(candidate):
+                        continue
+                    reason = routine_trigger_rejection(candidate)
+                    if reason:
+                        self.discovery_rejections.append({'candidate_id': candidate['id'],
+                            'source_title': candidate['title'], 'reason': reason})
                         continue
                     body = plain(item.findtext('{http://purl.org/rss/1.0/modules/content/}encoded', '')
                                  or item.findtext('description', ''))
