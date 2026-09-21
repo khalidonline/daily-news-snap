@@ -1,0 +1,60 @@
+name: Publishing v2 source retrieval diagnostics
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publishing-v2-source-probe.yml']
+permissions:
+  contents: read
+jobs:
+  probe:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-v2-images.txt
+      - name: Probe exact source retrieval without AI or publication
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from publishing_v2.autopilot.sources import fetch, wiki, resolve_subject
+          report = []
+          for query in ['Cole Palmer', 'Moringa peregrina']:
+              row = {'query': query}
+              try:
+                  raw = fetch('https://en.wikipedia.org/w/api.php?' + urlencode({
+                      'action': 'query', 'format': 'json', 'titles': query,
+                      'redirects': 1, 'prop': 'extracts|pageprops',
+                      'explaintext': 1, 'exchars': 10000}))
+                  response = json.loads(raw)
+                  row['api_errors'] = response.get('error')
+                  row['api_warnings'] = response.get('warnings')
+                  row['pages'] = [{'id': p.get('pageid'), 'title': p.get('title'),
+                      'text_length': len(p.get('extract', '')), 'missing': 'missing' in p}
+                      for p in response.get('query', {}).get('pages', {}).values()]
+              except Exception as error:
+                  row['error'] = type(error).__name__
+                  row['http_status'] = getattr(error, 'code', None)
+              try:
+                  rows = wiki(query)
+                  row['resolved'] = resolve_subject(query, rows)
+                  row['retrieved_titles'] = [r.get('title') for r in rows]
+              except Exception as error:
+                  row['adapter_error'] = type(error).__name__
+                  row['adapter_http_status'] = getattr(error, 'code', None)
+              print(json.dumps(row), flush=True)
+              report.append(row)
+          Path('source-probe.json').write_text(json.dumps(report, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: source-probe-${{ github.run_id }}
+          path: source-probe.json
+          retention-days: 7
