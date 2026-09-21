@@ -320,7 +320,27 @@ recommending any budget increase; never raise the cap automatically.
 - Full package, visual review and autonomous readiness remain unproven. Do not start another full paid trial until these concrete gates are addressed. State: api-receipts/autopilot-2026-09-20-daily-shadow-7b28546baf6d36e3.json on snapchat-api-state.
 
 ### Small follow-up: allow Arabic presentation of source names
-- Owner: assistant. Corrected #227 false rejection reproduced by Luke Littler → ليتلر in run 3551…996 tokens truncated…sult counts do not prove footballer coverage. Pixabay exposed broad Muhammad/religious tags; neither probe yielded a verified accepted footballer asset. This is NOT proof that the catalogs contain no Salah photos. No authenticated API coverage test was performed.
+- Owner: assistant. Corrected #227 false rejection reproduced by Luke Littler → ليتلر in run 35516891749.
+- Exact title/quote/source mention checks remain. Angle/why_now may translate or shorten the name; independent factual/current_attention review assesses semantic identity.
+- 32 focused tests passed. No paid generation or posting. Audit: docs/audits/2026-09-20-translated-editor-names.md.
+- Remaining blocker: public-compatible image supply/attribution. No paid full retry until that is addressed; source cards remain review-only.
+
+### Attribution delivery feasibility — 20 September
+- Owner: assistant. Read current Bundle platform field documentation (https://info.bundle.social/api-reference/platform-parameters): Snapchat STORY lists media upload/type; text/description are Spotlight-only, and no Story attachment-link field is documented. Direct raw OpenAPI fetch returned HTTP 403, so undocumented link support is unverified, not declared impossible.
+- CC BY 2.0 section 4 requires license URI and reasonable author/title/source attribution; a private review-only source card is not a public attribution delivery mechanism (https://creativecommons.org/licenses/by/2.0/legalcode).
+- No undocumented payload fields, public attribution page, provider purchase, code change or paid production trial was attempted. Existing PD/CC0 publication gate stays in place.
+- Read-only Flickr BY probe for Mohamed Salah returned a different person (worker Medhat Mohamed Salah); not a footballer photo, not accepted or used as a mockup. Names and licensing alone do not establish relevance.
+- Concrete design decision pending owner preference: retain review-only sources card; optionally place an on-card photo-credit strip only for attribution-required photos, carrying creator, supplied title, source/license URI and modification notice as applicable. This changes the owner's prior preference against visible photo-source labels, so do not enable it without that choice. Alternative: obtain a supplier agreement explicitly permitting the intended editorial Snapchat use without visible credit; no price/access/waiver is yet confirmed.
+- Next implementation only after that presentation/licensing choice. No additional paid package runs while public imagery remains blocked.
+
+
+### No-visible-credit supplier checkpoint — 20 September
+- Owner explicitly declined the proposed visible credit strip ("لا مايحتاج"). Keep the sources card in review only; do not treat this as permission to remove required attribution.
+- Completed read-only provider feasibility check; no AI spend, source-photo storage, supplier purchase, publication, or production code changes.
+- Pexels general license permits use without attribution (https://www.pexels.com/license/). Its API separately requires a prominent Pexels link and credits when possible, plus an API key (https://www.pexels.com/api/documentation/). General-license permission alone does not establish this automated publishing integration's compliance.
+- Pixabay general license permits adapted use without attribution, subject to other rights/restrictions (https://pixabay.com/service/license-summary/). API docs request source identification in search results, require 24-hour request caching, prohibit systematic mass downloads and permanent hotlinking, and require downloading selected images to the server (https://pixabay.com/api/docs/). Temporary rendering downloads may fit the owner's no-permanent-photo-library preference; this has not been implemented or supplier-confirmed.
+- Unsplash API terms sections 6/9 require hotlinking/download event reporting and application attribution (https://unsplash.com/api-terms). Do not classify all API output as attribution-free based on the ordinary image license, or claim that final-export attribution is conclusively settled.
+- Actual public search pages for Mohamed Salah were inspected: https://www.pexels.com/search/mohamed%20salah/ and https://pixabay.com/images/search/mohamed%20salah/. Their headline result counts do not prove footballer coverage. Pixabay exposed broad Muhammad/religious tags; neither probe yielded a verified accepted footballer asset. This is NOT proof that the catalogs contain no Salah photos. No authenticated API coverage test was performed.
 - Decision: none of these sources is yet demonstrated to solve the actual celebrity-image blocker; do not buy a subscription or add a production adapter merely from catalog size or license-summary wording.
 - CANCELLED by subsequent owner instruction: do not reuse the same image within a story. Earlier reuse permission does not authorize within-story repetition. Do not lower distinct-image requirements or implement the proposed one-photo fallback.
 - Full unattended production remains unproven. Last verified daily spend remains $3.548535; no additional paid trial in this checkpoint.
