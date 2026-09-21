@@ -172,6 +172,9 @@ def load_package(manifest):
     expires = datetime.fromisoformat(data['expires_at'].replace('Z','+00:00'))
     if expires.tzinfo is None or expires <= datetime.now(timezone.utc):
         raise BundleError('Approval expired; recheck event timing and content')
+    if data.get('format') == 'owner-generated-design-v1':
+        from .owner_design import validate_owner_design
+        return validate_owner_design(data, root)
     frames = data.get('media', [])
     if not 1 <= len(frames) <= 10: raise BundleError('Expected 1–10 approved media files')
     try:
@@ -207,10 +210,15 @@ def load_package(manifest):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('mode', choices=['check','publish'], default='check', nargs='?')
+    parser.add_argument('mode', choices=['check','validate','publish'], default='check', nargs='?')
     parser.add_argument('--manifest', default='')
     args = parser.parse_args()
     try:
+        if args.mode == 'validate':
+            identity, title, media = load_package(args.manifest)
+            print(json.dumps({'status': 'validated_not_published', 'identity': identity,
+                              'card_count': len(media)}, sort_keys=True))
+            return
         client = BundleClient()
         client.check()
         print('API verified: Snapchat executivesaudi is connected.')
