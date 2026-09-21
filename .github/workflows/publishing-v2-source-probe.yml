@@ -23,8 +23,9 @@ jobs:
           import json
           from pathlib import Path
           from urllib.parse import urlencode
-          from publishing_v2.autopilot.sources import fetch, wiki, resolve_subject
+          from publishing_v2.autopilot.sources import fetch, wiki, resolve_subject, Sources
           report = []
+          image_sources = Sources(recovery=True, publication_only=True)
           for query in ['Cole Palmer', 'Moringa peregrina']:
               row = {'query': query}
               try:
@@ -49,6 +50,13 @@ jobs:
               except Exception as error:
                   row['adapter_error'] = type(error).__name__
                   row['adapter_http_status'] = getattr(error, 'code', None)
+              try:
+                  images = image_sources.subject_images(query, query)
+                  row['accepted_images'] = [{'id': image['asset_id'],
+                      'title': image.get('title'), 'license': image.get('license')}
+                      for image in images]
+              except Exception as error:
+                  row['image_error'] = type(error).__name__
               print(json.dumps(row), flush=True)
               report.append(row)
           Path('source-probe.json').write_text(json.dumps(report, indent=2))
