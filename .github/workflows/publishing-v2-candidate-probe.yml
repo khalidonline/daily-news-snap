@@ -1,0 +1,89 @@
+name: Publishing v2 isolated candidate shadow probe
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_id:
+        description: Current discovered candidate ID for diagnosis only
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  probe:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          ffmpeg -version
+          python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Evaluate one current candidate without publication or rollout promotion
+        env:
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
+          AUTOPILOT_EDITOR_MODEL: claude-sonnet-5
+          AUTOPILOT_RESEARCHER_MODEL: claude-opus-5
+          AUTOPILOT_WRITER_MODEL: claude-opus-5
+          AUTOPILOT_VISUAL_MODEL: claude-opus-5
+          AUTOPILOT_REVIEWER_MODEL: claude-opus-5
+          POST_TO_SNAPCHAT: '0'
+          DRY_RUN: '1'
+        run: |
+          python - <<'PY'
+          import json, os, re
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from daily_budget import GitHubStore, Ledger, day_key
+          from publishing_v2.bundle_api import GitHubJournal
+          from publishing_v2.autopilot.agents import Agents
+          from publishing_v2.autopilot.pipeline import Pipeline
+          from publishing_v2.autopilot.runtime import Renderer, engine_id
+          from publishing_v2.autopilot.sources import Sources
+          ident = os.environ['CANDIDATE_ID']
+          if not re.fullmatch(r'[a-f0-9]{16}', ident):
+              raise ValueError('invalid_candidate_id')
+          class CandidateSources(Sources):
+              def discover(self, lane, now):
+                  rows = [row for row in super().discover(lane, now) if row['id'] == ident]
+                  if len(rows) != 1:
+                      raise ValueError('candidate_not_currently_discovered')
+                  return rows
+          def never_publish(*args, **kwargs):
+              raise RuntimeError('diagnostic_publication_forbidden')
+          now = lambda: datetime.now(timezone.utc)
+          engine = engine_id()
+          token = os.environ.get('DAILY_BUDGET_GITHUB_TOKEN') or os.environ['GITHUB_TOKEN']
+          ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token), limit_micro_usd=3000000)
+          agent = Agents(env=os.environ, ledger=ledger)
+          sources = CandidateSources(recovery=True, publication_only=True)
+          slot = f'candidate-probe-{day_key(now())}-{ident}-{engine[:16]}'
+          store = GitHubJournal(slot)
+          output = Path('candidate-probe-output').resolve()
+          output.mkdir(parents=True, exist_ok=True)
+          pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
+              store=store, publish=never_publish, output=output, now=now, engine=engine)
+          result = pipeline.run('daily', 'shadow')
+          (output / 'result.json').write_text(json.dumps(result, ensure_ascii=False, indent=2))
+          summary = {'status': result['status'], 'slot': slot, 'reason': result.get('reason'),
+                     'budget_diagnostic': result.get('budget_diagnostic'),
+                     'cost_micro_usd': sum(r['cost_micro_usd'] for r in agent.receipts),
+                     'note': 'Targeted diagnosis only; does not qualify autonomous selection or update readiness.'}
+          (output / 'summary.json').write_text(json.dumps(summary, indent=2))
+          print(json.dumps(summary))
+          raise SystemExit(0 if result['status'] == 'shadow_passed' else 1)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: candidate-probe-${{ github.run_id }}
+          path: candidate-probe-output/
+          retention-days: 14
