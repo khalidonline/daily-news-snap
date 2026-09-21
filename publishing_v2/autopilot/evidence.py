@@ -2,6 +2,32 @@
 import re
 
 
+def hydrate_editor(choice, candidate):
+    """Resolve selected source fields without model-authored titles or quotes."""
+    from .policy import validate_editor_binding
+    fields = {'id', 'evidence_format', 'why_saudi', 'why_now', 'angle',
+              'share_reason', 'research_query', 'subject_evidence'}
+    if (not isinstance(choice, dict) or set(choice) != fields
+            or choice['evidence_format'] != 'source-fields-v1'
+            or choice['id'] != candidate['id']):
+        raise ValueError('invalid_editor_source_selection')
+    rows = choice['subject_evidence']
+    if not isinstance(rows, list) or not 1 <= len(rows) <= 2:
+        raise ValueError('editor_subject_evidence_required')
+    resolved = []
+    for row in rows:
+        if (not isinstance(row, dict) or set(row) != {'subject', 'mention', 'source_field'}
+                or not isinstance(row['source_field'], str)
+                or row['source_field'] not in {'title', 'summary'}):
+            raise ValueError('invalid_editor_source_field')
+        resolved.append({'subject': row['subject'], 'mention': row['mention'],
+                         'quote': candidate.get(row['source_field'], '')})
+    result = dict(choice, source_title=candidate['title'],
+                  subjects=[row['subject'] for row in resolved], subject_evidence=resolved)
+    validate_editor_binding(dict(candidate, editorial=result))
+    return result
+
+
 def passages(sources):
     rows = []
     for source in sources:

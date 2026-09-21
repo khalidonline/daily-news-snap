@@ -39,12 +39,12 @@ Choose one main subject behind the trigger: a person, company, organization,
 place, object or practice. The angle must explain that subject, not recap the
 news. Keep the trigger in why_now. research_query must be only the subject's
 canonical English name with a short disambiguator if needed; omit event actions,
-opponents, scores, dates and headline wording. Also return subjects: one or two
-canonical English entity names. For a comparison or rivalry, list each person
+opponents, scores, dates and headline wording. Return one or two subject_evidence
+entries with canonical English entity names. For a comparison or rivalry, list each person
 separately; never combine their names into one search. Each name must be
 verifiable from retrieved encyclopedia evidence.
 Use a short parenthetical disambiguator for a shared name, e.g. Bisht (clothing),
-not a bare name that also denotes a surname. subjects must identify concrete
+not a bare name that also denotes a surname. Each subject must identify concrete
 visible entities, not explanatory themes such as "Aging and metabolism".
 Do not replace an abstract theme with a stock doctor, elderly person, scale or
 unrelated object just to find a photo. If the trigger does not support a named
@@ -63,20 +63,25 @@ Select routine consumer, culture, travel, sport or everyday life subjects that
 ordinary Saudis care about. Reject political commentary, leaders' warnings,
 war/military developments, disputed claims and technical AI/scientific risk
 debates. 'Relevant to Vision 2030' alone does not establish audience interest.
-For each selection copy source_title EXACTLY from the candidate with that ID.
 For EACH English subject provide subject_evidence: its English subject, a specific
-source-language name as mention, and a verbatim quote from that SAME candidate
-title or summary containing the mention (12-1000 characters). Keep mention and
-quote in the source language. angle and why_now should use natural Saudi Arabic;
+source-language name copied exactly as mention, and source_field set to title or
+summary from that SAME candidate, containing the mention. The selected source
+field must be 12-1000 characters; the copied mention must be 3-150 characters.
+The program retrieves that entire original field as evidence. Do not return a
+quote, source_title or separate subjects list; write each English subject once.
+Keep mention in the source language. angle and why_now should use natural Saudi Arabic;
 translate or shorten the name there when appropriate, without changing the entity.
 Do not require an English source name to appear in the Arabic presentation.
-Do not join quotes across candidates or
-invent translations as quotes. An ID alone is not evidence. If a subject is not
+Do not borrow mentions from other candidates or invent translations as mentions.
+An ID alone is not evidence. If a subject is not
 named in that source, select another subject or skip the candidate.
-Return {"candidates":[{"id":"existing id","source_title":"exact source title",
-"subject_evidence":[{"subject":"English entity","mention":"name as written in source","quote":"verbatim title or summary excerpt"}],
+Interpret relative words like today/yesterday against that article's published_at,
+not the current clock. In why_now prefer the explicit supported calendar date;
+never describe yesterday's event as happening today because you read it today.
+Return {"candidates":[{"id":"existing id","evidence_format":"source-fields-v1",
+"subject_evidence":[{"subject":"English entity","mention":"name as written in source","source_field":"title or summary"}],
 "why_saudi":"...","why_now":"...",
-"angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search","subjects":["primary entity","optional second entity"]}]}.
+"angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search"}]}.
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',
     'researcher': '''Use ONLY the supplied retrieved source passages. Select 5–8
 useful facts for an information card and an engaging true story. Each fact must
