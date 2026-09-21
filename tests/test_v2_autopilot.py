@@ -126,6 +126,64 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(pipeline.agent.calls.count('researcher'), 4)
         self.assertEqual(sum(e['event'] == 'candidate_rejected' for e in result['audit']), 4)
 
+    def recovery_pipeline(self, *, succeed=None, repeat=False, block=False):
+        pipeline = self.pipeline()
+        rows = [dict(FakeSources().discover('daily', NOW)[0], id=x, title=x) for x in 'abcdefghij']
+        pipeline.sources.discover = lambda lane, now: rows
+        base = FakeAgent().run('editor', {'candidates': FakeSources().discover('daily', NOW)})['candidates'][0]
+        pools, researched = [], []
+        original = self.agent.run
+        def run(role, data, images=()):
+            if role == 'editor':
+                pools.append([c['id'] for c in data['candidates']])
+                if block and len(pools) == 2:
+                    from daily_budget import BudgetBlocked
+                    raise BudgetBlocked('daily_cap')
+                selected = rows[:4] if repeat else data['candidates'][:4]
+                return {'candidates': [dict(base, id=c['id'], source_title=c['title']) for c in selected]}
+            return original(role, data, images)
+        self.agent.run = run
+        def retrieve(candidate):
+            researched.append(candidate['id'])
+            if candidate['id'] != succeed:
+                raise ValueError('unresolved_editorial_subject')
+            return evidence()
+        pipeline.sources.research = retrieve
+        return pipeline, pools, researched
+
+    def test_second_editor_round_uses_remaining_candidates_and_can_finish(self):
+        pipeline, pools, researched = self.recovery_pipeline(succeed='e')
+        result = pipeline.run('daily', 'shadow')
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertEqual(pools, [list('abcdefghij'), list('efghij')])
+        self.assertEqual(researched, list('abcde'))
+        self.assertEqual(self.sent, [])
+
+    def test_first_round_success_does_not_select_again(self):
+        pipeline, pools, researched = self.recovery_pipeline(succeed='a')
+        self.assertEqual(pipeline.run('daily', 'shadow')['status'], 'shadow_passed')
+        self.assertEqual(len(pools), 1)
+
+    def test_selection_recovery_stops_after_two_rounds(self):
+        pipeline, pools, researched = self.recovery_pipeline()
+        self.assertEqual(pipeline.run('daily', 'shadow')['status'], 'held')
+        self.assertEqual(len(pools), 2)
+        self.assertEqual(researched, list('abcdefgh'))
+
+    def test_repeated_candidate_in_second_round_is_not_retried(self):
+        pipeline, pools, researched = self.recovery_pipeline(repeat=True)
+        self.assertEqual(pipeline.run('daily', 'shadow')['status'], 'held')
+        self.assertEqual(len(pools), 2)
+        self.assertEqual(researched, list('abcd'))
+
+    def test_second_round_budget_block_stops_recovery(self):
+        pipeline, pools, researched = self.recovery_pipeline(block=True)
+        result = pipeline.run('daily', 'shadow')
+        self.assertEqual(result['status'], 'held')
+        self.assertEqual(result['reason'], 'BudgetBlocked')
+        self.assertEqual(len(pools), 2)
+        self.assertEqual(researched, list('abcd'))
+
     def test_single_video_receipt_covers_all_reviewed_frames(self):
         pipeline=self.pipeline(publish=lambda package,paths:{'status':'POSTED','post_ids':['video-post']})
         def render(package,output):
