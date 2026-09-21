@@ -6,6 +6,7 @@ from pathlib import Path
 from daily_budget import BudgetBlocked
 from . import policy
 from .feedback import EDITORIAL_FEEDBACK
+from .evidence import hydrate_editor
 from .sources import attention_source
 
 
@@ -84,6 +85,8 @@ class Pipeline:
                 candidate = dict(ids[choice['id']], editorial=choice)
                 self.save(state, 'selected', candidate=candidate)
                 try:
+                    if 'evidence_format' in choice:
+                        candidate['editorial'] = hydrate_editor(choice, candidate)
                     policy.validate_editor_binding(candidate)
                     policy.validate_attention(candidate, self.now())
                     sources = self.sources.research(candidate)
