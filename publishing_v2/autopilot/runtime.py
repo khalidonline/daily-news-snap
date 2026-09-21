@@ -32,7 +32,7 @@ class Renderer:
         subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
         if not subjects:
             subjects = [candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']]
-        found = {}
+        found, hashes, origins = {}, set(), set()
         for subject in subjects:
             subject_search = getattr(self.sources, 'subject_images', None)
             rows = (subject_search(subject, subject) if subject_search else
@@ -41,6 +41,16 @@ class Renderer:
             if not usable:
                 return []
             for row in usable:
+                # Different providers, resized copies and multi-subject searches
+                # can expose the same photograph under different asset IDs.
+                sha, origin = row.get('sha256'), row.get('origin_key')
+                if (row['asset_id'] in found or (sha and sha in hashes)
+                        or (origin and origin in origins)):
+                    continue
+                if sha:
+                    hashes.add(sha)
+                if origin:
+                    origins.add(origin)
                 found[row['asset_id']] = {'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
                     'description': row.get('description', '')[:900],
                     'image_role': row.get('image_role', 'subject illustration; event date requires review')}

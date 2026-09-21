@@ -83,7 +83,8 @@ class Pipeline:
                 for key in ('why_saudi', 'angle', 'why_now', 'share_reason', 'research_query'):
                     policy.text(choice.get(key), 500)
                 candidate = dict(ids[choice['id']], editorial=choice)
-                self.save(state, 'selected', candidate=candidate)
+                self.save(state, 'candidate_considered', candidate=candidate,
+                          candidate_id=candidate['id'], visual_preflight=None)
                 try:
                     if 'evidence_format' in choice:
                         candidate['editorial'] = hydrate_editor(choice, candidate)
@@ -98,6 +99,11 @@ class Pipeline:
                         visual_options = planner(candidate)
                         if len({r['asset_id'] for r in visual_options}) < 3:
                             raise ValueError('insufficient_subject_visuals_before_drafting')
+                        self.save(state, 'visual_preflight_passed', candidate_id=candidate['id'], visual_preflight={
+                            'candidate_id': candidate['id'],
+                            'asset_ids': [r['asset_id'] for r in visual_options],
+                            'distinct_count': len(visual_options)})
+                    self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
                                                             'lane': lane, 'now': self.now().isoformat()})
                     research = policy.reporting_time(research, sources, candidate, lane)
