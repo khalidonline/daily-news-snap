@@ -10,6 +10,7 @@ from html.parser import HTMLParser
 from html import unescape
 from urllib.parse import urlsplit, urlencode
 from urllib.request import Request, build_opener, HTTPRedirectHandler
+from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
 
 from publishing_v2.public_images import search_commons, search_commons_category, download_image
@@ -99,6 +100,30 @@ def plain(raw):
     return ' '.join(' '.join(parser.parts).split())[:16000]
 
 
+def wiki_json(url):
+    """Two bounded read attempts; permanent denial never triggers a retry."""
+    for attempt in range(2):
+        try:
+            result = json.loads(fetch(url))
+        except HTTPError as error:
+            if attempt or error.code not in {502, 503, 504}:
+                raise
+        except (URLError, TimeoutError):
+            if attempt:
+                raise
+        else:
+            if not isinstance(result, dict):
+                raise ValueError('encyclopedia_invalid_response')
+            if not result.get('error'):
+                return result
+            code = str(result['error'].get('code', 'unknown'))
+            if not re.fullmatch(r'[a-zA-Z0-9_-]{1,50}', code):
+                code = 'unknown'
+            if attempt or code not in {'maxlag', 'readonly'}:
+                raise ValueError('encyclopedia_api_error:' + code)
+        time.sleep(1)
+
+
 def wiki(query, *, language="en", exact_only=False):
     # Query text cannot select arbitrary URLs or redirect retrieval elsewhere.
     query = str(query)[:180]
@@ -107,9 +132,9 @@ def wiki(query, *, language="en", exact_only=False):
     site = 'https://' + language + '.wikipedia.org/'
     prefix = 'wiki-' if language == 'en' else 'wiki-ar-'
     base = site + 'w/api.php?'
-    direct = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
+    direct = wiki_json(base + urlencode({'action': 'query', 'format': 'json',
         'titles': query, 'redirects': 1, 'prop': 'extracts|pageprops',
-        'explaintext': 1, 'exchars': 10000})))
+        'explaintext': 1}))
     pages = list(direct.get('query', {}).get('pages', {}).values())
     if len(pages) == 1:
         page = pages[0]
@@ -126,12 +151,14 @@ def wiki(query, *, language="en", exact_only=False):
     disambiguation = any('disambiguation' in p.get('pageprops', {}) for p in pages)
     search_query = 'intitle:' + query if disambiguation else query
     search_limit = 5 if disambiguation else 2
-    search = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
-                        'list': 'search', 'srsearch': search_query, 'srlimit': search_limit})))
+    search = wiki_json(base + urlencode({'action': 'query', 'format': 'json',
+                        'list': 'search', 'srsearch': search_query, 'srlimit': search_limit}))
     ids = [str(p['pageid']) for p in search.get('query', {}).get('search', [])[:search_limit]]
     if not ids: return []
-    result = json.loads(fetch(base + urlencode({'action': 'query', 'format': 'json',
-        'pageids': '|'.join(ids), 'prop': 'extracts|pageprops', 'explaintext': 1, 'exchars': 10000})))
+    # Multiple extracts require exintro; direct exact titles get full history.
+    result = wiki_json(base + urlencode({'action': 'query', 'format': 'json',
+        'pageids': '|'.join(ids), 'prop': 'extracts|pageprops', 'explaintext': 1,
+        'exintro': 1, 'exlimit': len(ids)}))
     return [{'id': prefix + str(page['pageid']), 'url': site + '?curid=' + str(page['pageid']),
              'text': str(page.get('extract', ''))[:10000], 'title': page.get('title'),
              'source_type': 'encyclopedia'}
@@ -277,10 +304,13 @@ class Sources:
         resolved_subjects = []
         candidate['subject_resolution'] = []
         for query in subjects or [editorial['research_query']]:
+            retrieval_error = None
             try:
                 evidence = wiki(query)
-            except Exception:
+            except Exception as error:
                 evidence = []
+                retrieval_error = {'error_type': type(error).__name__,
+                                   'http_status': getattr(error, 'code', None)}
             resolved = resolve_subject(query, evidence, context=editorial['research_query'])
             resolution_query = query
             if not resolved and editorial.get('subject_evidence'):
@@ -301,7 +331,8 @@ class Sources:
             candidate['subject_resolution'].append({'query': query,
                 'context': editorial['research_query'], 'resolution_query': resolution_query,
                 'retrieved_titles': [r.get('title') for r in evidence],
-                'status': 'resolved' if resolved else 'needs_concrete_subject'})
+                'status': 'resolved' if resolved else 'retrieval_failed' if retrieval_error else 'needs_concrete_subject',
+                **(retrieval_error or {})})
             if resolved:
                 resolved_subjects.append(resolved)
             elif subjects is not None:

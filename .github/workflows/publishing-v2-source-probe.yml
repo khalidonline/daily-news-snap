@@ -23,15 +23,16 @@ jobs:
           import json
           from pathlib import Path
           from urllib.parse import urlencode
-          from publishing_v2.autopilot.sources import fetch, wiki, resolve_subject
+          from publishing_v2.autopilot.sources import fetch, wiki, resolve_subject, Sources
           report = []
+          image_sources = Sources(recovery=True, publication_only=True)
           for query in ['Cole Palmer', 'Moringa peregrina']:
               row = {'query': query}
               try:
                   raw = fetch('https://en.wikipedia.org/w/api.php?' + urlencode({
                       'action': 'query', 'format': 'json', 'titles': query,
                       'redirects': 1, 'prop': 'extracts|pageprops',
-                      'explaintext': 1, 'exchars': 10000}))
+                      'explaintext': 1}))
                   response = json.loads(raw)
                   row['api_errors'] = response.get('error')
                   row['api_warnings'] = response.get('warnings')
@@ -45,9 +46,17 @@ jobs:
                   rows = wiki(query)
                   row['resolved'] = resolve_subject(query, rows)
                   row['retrieved_titles'] = [r.get('title') for r in rows]
+                  row['retrieved_text_lengths'] = [len(r.get('text', '')) for r in rows]
               except Exception as error:
                   row['adapter_error'] = type(error).__name__
                   row['adapter_http_status'] = getattr(error, 'code', None)
+              try:
+                  images = image_sources.subject_images(query, query)
+                  row['accepted_images'] = [{'id': image['asset_id'],
+                      'title': image.get('title'), 'license': image.get('license')}
+                      for image in images]
+              except Exception as error:
+                  row['image_error'] = type(error).__name__
               print(json.dumps(row), flush=True)
               report.append(row)
           Path('source-probe.json').write_text(json.dumps(report, indent=2))
