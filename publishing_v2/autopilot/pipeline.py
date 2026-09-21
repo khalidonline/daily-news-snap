@@ -7,6 +7,7 @@ from daily_budget import BudgetBlocked
 from . import policy
 from .feedback import EDITORIAL_FEEDBACK
 from .evidence import hydrate_editor
+from .eligibility import routine_trigger_rejection
 from .sources import attention_source
 
 
@@ -66,6 +67,18 @@ class Pipeline:
         self.save(state, 'started')
         try:
             candidates = self.sources.discover(lane, self.now())
+            excluded = list(getattr(self.sources, 'discovery_rejections', []))
+            eligible = []
+            for candidate in candidates:
+                reason = routine_trigger_rejection(candidate)
+                if reason:
+                    excluded.append({'candidate_id': candidate['id'],
+                                     'source_title': candidate['title'], 'reason': reason})
+                else:
+                    eligible.append(candidate)
+            if excluded:
+                self.save(state, 'triggers_filtered', eligibility_rejections=excluded)
+            candidates = eligible
             if not candidates:
                 raise ValueError('no_current_candidates')
             selected = self.agent.run('editor', {'lane': lane, 'now': self.now().isoformat(),
