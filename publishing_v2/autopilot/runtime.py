@@ -406,7 +406,9 @@ def main():
         results.append({'lane': lane, 'status': result['status'], 'slot': slot,
                         'cost_micro_usd': sum(r['cost_micro_usd'] for r in agent.receipts),
                         'reason': result.get('reason'), 'budget_diagnostic': result.get('budget_diagnostic'),
-                        'receipt': result.get('receipt')})
+                        'receipt': result.get('receipt'),
+                        'title': result.get('package', {}).get('title'),
+                        'delivery_kind': result.get('package', {}).get('delivery', {}).get('kind')})
     summary = {'mode': args.mode, 'engine': engine, 'results': results,
                'note': 'Costs here cover this attempt; shared ledger includes retained reservations and other runs.'}
     atomic_write(output / 'summary.json', json.dumps(summary, ensure_ascii=False).encode())

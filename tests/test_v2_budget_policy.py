@@ -57,10 +57,10 @@ class BudgetPolicyTests(unittest.TestCase):
         def request(url, headers, method, data):
             sent.append(json.loads(data)['text'])
             return {'ok': True, 'result': {'message_id': 1, 'chat': {'id': 123}}}
-        with patch.dict('os.environ', {'TELEGRAM_TOKEN': 'test', 'TELEGRAM_CHAT_ID': '123', 'GITHUB_RUN_ID': '42'}), patch.object(report.Path, 'exists', return_value=True), patch.object(report.Path, 'read_text', return_value=json.dumps(summary)), patch.object(report, 'GitHubJournal') as journal, patch.object(report, 'request', side_effect=request):
+        with patch.dict('os.environ', {'TELEGRAM_TOKEN': 'test', 'TELEGRAM_CHAT_ID': '123', 'GITHUB_RUN_ID': '42', 'AUTOPILOT_REQUESTED_MODE': 'live'}), patch.object(report.Path, 'exists', return_value=True), patch.object(report.Path, 'read_text', return_value=json.dumps(summary)), patch.object(report, 'GitHubJournal') as journal, patch.object(report, 'request', side_effect=request):
             journal.return_value.read.return_value = {}
             self.assertEqual(report.main(), 0)
-        self.assertIn('$5 shared budget', sent[0])
+        self.assertIn('ميزانية اليوم', sent[0])
         self.assertNotIn('$3/day', sent[0])
-        self.assertIn('approval', sent[0])
-        self.assertIn('BudgetBlocked', sent[0])
+        self.assertIn('بدون رفع السقف', sent[0])
+        self.assertNotIn('BudgetBlocked', sent[0])
