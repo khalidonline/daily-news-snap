@@ -1,0 +1,121 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "سير.. من التأسيس إلى أول سياراتها",
+  "expires_at": "2026-09-22T21:00:00Z",
+  "media": [
+    {
+      "kind": "info",
+      "title": "سير.. شركة سيارات سعودية",
+      "body": "«سير» علامة سيارات سعودية، تأسست بشراكة بين صندوق الاستثمارات العامة و«فوكسكون»، مع الاستفادة من تقنيات «بي إم دبليو». وأول سياراتها تحمل اسم «إكزوبوت»، بنسختين كهربائيتين: سيدان وSUV.",
+      "punch": "",
+      "image_query": "EXOBOT Sedan Exterior",
+      "image": {
+        "provider": "official_media",
+        "asset_id": "official:93dffa7f1ce3efda92cc",
+        "title": "EXOBOT Sedan Exterior",
+        "description": "Ceer Motors: EXOBOT Sedan Exterior",
+        "download_url": "https://assets.ceermotors.com/uploads/assets/EXOBOT_Sedan_Exterior_157a274824.jpg",
+        "original_url": "https://assets.ceermotors.com/uploads/assets/EXOBOT_Sedan_Exterior_157a274824.jpg",
+        "source_url": "https://ceermotors.com/news/exobot-bold-extraordinary-saudi/",
+        "width": 4000,
+        "height": 2233,
+        "credit": "CEER",
+        "license": "All rights reserved",
+        "terms_url": "https://ceermotors.com/terms-of-use/",
+        "rights_status": "owner_accepted_editorial_use",
+        "licensing_verified": false,
+        "image_role": "official media asset; verify relevance and usage before publication",
+        "owner_use_decision": "owner-official-editorial-use-2026-09-22",
+        "collection_subject": "Ceer Motors",
+        "sha256": "cd9ab3a1dc1ac8d7a6e8c2778e54dfc90365417543ef17092756a81b380b1197",
+        "origin_key": "official:93dffa7f1ce3efda92cc"
+      },
+      "path": "approved/ceer-20260922/card-00.jpg",
+      "sha256": "03ed6ef4005f00eb0c834e355a78f0f999fecfc30842146a6e94a43b47beff72"
+    },
+    {
+      "kind": "story",
+      "title": "قبل السيارة.. كان لازم يُبنى المصنع",
+      "body": "بدأت سير في ٢٠٢٢ بالإعلان عن الشركة والعلامة. وفي ٢٠٢٣ حصلت على الترخيص الصناعي، ثم بدأت بناء مصنعها في ٢٠٢٤ بمدينة الملك عبدالله الاقتصادية. وراء السيارة اللي نشوفها اليوم، سنوات من تجهيز الشركة والمصنع وتطوير المنتج.",
+      "punch": "",
+      "image_query": "EXOBOT Sedan Exterior",
+      "image": {
+        "provider": "official_media",
+        "asset_id": "official:93dffa7f1ce3efda92cc",
+        "title": "EXOBOT Sedan Exterior",
+        "description": "Ceer Motors: EXOBOT Sedan Exterior",
+        "download_url": "https://assets.ceermotors.com/uploads/assets/EXOBOT_Sedan_Exterior_157a274824.jpg",
+        "original_url": "https://assets.ceermotors.com/uploads/assets/EXOBOT_Sedan_Exterior_157a274824.jpg",
+        "source_url": "https://ceermotors.com/news/exobot-bold-extraordinary-saudi/",
+        "width": 4000,
+        "height": 2233,
+        "credit": "CEER",
+        "license": "All rights reserved",
+        "terms_url": "https://ceermotors.com/terms-of-use/",
+        "rights_status": "owner_accepted_editorial_use",
+        "licensing_verified": false,
+        "image_role": "official media asset; verify relevance and usage before publication",
+        "owner_use_decision": "owner-official-editorial-use-2026-09-22",
+        "collection_subject": "Ceer Motors",
+        "sha256": "cd9ab3a1dc1ac8d7a6e8c2778e54dfc90365417543ef17092756a81b380b1197",
+        "origin_key": "official:93dffa7f1ce3efda92cc"
+      },
+      "path": "approved/ceer-20260922/card-01.jpg",
+      "sha256": "4e14a17f7c4f7002871316fb194d27bfe5e264ee65527d37a8a97e648ff0e752"
+    },
+    {
+      "kind": "story",
+      "title": "حتى الأنوار فيها حكاية",
+      "body": "في سبتمبر ٢٠٢٦ كشفت سير عن أول سياراتها. وبحسب الشركة، تصميم «إكزوبوت» يستلهم عمارة الحِجر، وأبوابها مستوحاة من جناح الشاهين. وحتى وحدات الإضاءة الـ٣٢ لها معنى: إشارة إلى سنة توحيد المملكة، ١٩٣٢.",
+      "punch": "",
+      "image_query": "EXOBOT SUV Doors Open",
+      "image": {
+        "provider": "official_media",
+        "asset_id": "official:9758eb68aedb6a359b87",
+        "title": "EXOBOT SUV Doors Open",
+        "description": "Ceer Motors: EXOBOT SUV Doors Open",
+        "download_url": "https://assets.ceermotors.com/uploads/assets/EXOBOT_SUV_Doors_Open_bd9f5f4e00.jpg",
+        "original_url": "https://assets.ceermotors.com/uploads/assets/EXOBOT_SUV_Doors_Open_bd9f5f4e00.jpg",
+        "source_url": "https://ceermotors.com/news/exobot-bold-extraordinary-saudi/",
+        "width": 4000,
+        "height": 2231,
+        "credit": "CEER",
+        "license": "All rights reserved",
+        "terms_url": "https://ceermotors.com/terms-of-use/",
+        "rights_status": "owner_accepted_editorial_use",
+        "licensing_verified": false,
+        "image_role": "official media asset; verify relevance and usage before publication",
+        "owner_use_decision": "owner-official-editorial-use-2026-09-22",
+        "collection_subject": "Ceer Motors",
+        "sha256": "c9f1c8d05a40d1452727ec5eef25ef3284f5cbbaae13a05aee0825a8f106e121",
+        "origin_key": "official:9758eb68aedb6a359b87"
+      },
+      "path": "approved/ceer-20260922/card-02.jpg",
+      "sha256": "b6a8f394d38d3d1689c953f18cede441c3522d59ce7a17065a164e55a55ee9a3"
+    }
+  ],
+  "sources": [
+    {
+      "id": "history",
+      "url": "https://ceermotors.com/our-story/",
+      "text": "Official timeline: 2022 incorporation; 2023 industrial license; 2024 manufacturing facility construction."
+    },
+    {
+      "id": "launch",
+      "url": "https://ceermotors.com/news/exobot-bold-extraordinary-saudi/",
+      "text": "21 September 2026 reveal. Sedan and SUV. Hegra-inspired design, Shahin Wing Doors, 32 signature light bars inspired by 1932."
+    },
+    {
+      "id": "partners",
+      "url": "https://aawsat.com/node/5320797",
+      "text": "Ceer joint venture between PIF and Foxconn with BMW technology; manufacturing complex at KAEC."
+    }
+  ],
+  "owner_review": {
+    "decision": "User approved the displayed three cards and explicitly requested publication",
+    "date": "2026-09-22",
+    "public_cards": 3,
+    "credits": "internal only"
+  }
+}
