@@ -99,3 +99,32 @@ class NativeDisambiguationTests(unittest.TestCase):
              'text':'هو اسم في كتاب من الكتب عن شخص.'}
         self.assertIsNone(sources.resolve_subject('سير',[row],
                           context='سير في السعودية من الشركات عن السيارات'))
+
+
+class QuotedNativeNameTests(unittest.TestCase):
+    def test_extracts_single_source_quoted_name_without_descriptive_suffix(self):
+        for mention in ['«سير» الوطنية للسيارات', 'شركة «سير» الوطنية', '“سير” الوطنية', '"سير" الوطنية']:
+            with self.subTest(mention=mention):
+                self.assertEqual(sources.native_subject_name(mention), 'سير')
+
+    def test_does_not_guess_between_multiple_names_or_shorten_unquoted_names(self):
+        for mention in ['«سير» و«إكزوبوت»', 'سير الوطنية للسيارات', 'عبد الله بن محمد']:
+            self.assertEqual(sources.native_subject_name(mention), mention)
+
+    def test_actual_failed_mention_queries_company_name(self):
+        title='«سير» تكشف تفاصيل «إكزوبوت»... أولى سياراتها الكهربائية السعودية'
+        summary='كشفت شركة «سير» الوطنية للسيارات التفاصيل التقنية والتصميمية لأولى سياراتها «إكزوبوت».'
+        row={'title':title,'summary':summary,'editorial':{'source_title':title,
+             'subjects':['Ceer (automotive company)'],'research_query':'Ceer (automotive company)',
+             'subject_evidence':[{'subject':'Ceer (automotive company)',
+                                  'mention':'«سير» الوطنية للسيارات','quote':summary}]}}
+        def wiki(query, **kwargs):
+            if query=='سير':
+                return [{'id':'wiki-ar-8974233','title':'سير (شركة)',
+                         'source_type':'encyclopedia',
+                         'text':'شركة سير، أول علامة تجارية سعودية لصناعة السيارات الكهربائية في المملكة العربية السعودية.'}]
+            return []
+        with patch.object(sources,'wiki',side_effect=wiki) as lookup:
+            sources.Sources().research(row)
+        self.assertEqual(row['resolved_subject']['name'],'سير (شركة)')
+        self.assertEqual(lookup.call_count,2)

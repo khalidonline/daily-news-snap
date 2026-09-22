@@ -166,6 +166,16 @@ def wiki(query, *, language="en", exact_only=False):
             for page in result.get('query', {}).get('pages', {}).values() if page.get('extract') and 'disambiguation' not in page.get('pageprops', {})]
 
 
+def native_subject_name(mention):
+    """Use a single quoted name from an already source-validated mention."""
+    quoted = re.findall(r'«([^«»]+)»|“([^“”]+)”|"([^"\n]+)"', mention)
+    if len(quoted) == 1:
+        name = next(part for part in quoted[0] if part).strip()
+        if name:
+            return name
+    return mention.strip()
+
+
 def reusable_image(row):
     # Metadata from the source adapter, never a model-provided rights assertion.
     return owner_editorial_use(row) or attribution_eligible(row) or (row.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
@@ -336,7 +346,7 @@ class Sources:
                     # Strip only presentation quotes after validating the original
                     # mention. Resolve ambiguous native names against this news
                     # source, with the same bounded, exact-base-name guards.
-                    native = native.strip().strip('«»“”\"').strip()
+                    native = native_subject_name(native)
                     if re.search(r'[\u0600-\u06ff]', native):
                         native_rows = wiki(native, language='ar')
                         native_context = ' '.join(str(candidate.get(k, '')) for k in ('title', 'summary'))
