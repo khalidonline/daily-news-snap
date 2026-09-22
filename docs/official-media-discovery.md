@@ -36,3 +36,19 @@ source-level editorial use grant or licensed supplier remain necessary.
 
 Verification: 313 publishing-v2 tests passed; live discovery and three downloads
 passed. Existing design and attribution rendering were not changed.
+
+
+## Owner decision — 22 September 2026
+
+The owner explicitly directed: «لاتشيل هم التصريح. خذ الصور وانا المسؤول».
+The first-party route now records owner_accepted_editorial_use for verified
+profile-bound official media. This is the owner's editorial-use decision, not a
+claim of written permission from CEER. Original copyright and terms metadata are
+preserved and licensing_verified remains false. Other providers' CC attribution
+requirements remain unchanged. No model output can enable this decision for an
+unregistered source or change the bound asset URL.
+
+Official images now enter the existing download, decode, deduplication and visual
+review pipeline first. Distinct product views are prioritized over generic album
+thumbnails. Their sources appear in the internal review credits without labeling
+them public-domain. No new credit labels are added to the editorial frames.

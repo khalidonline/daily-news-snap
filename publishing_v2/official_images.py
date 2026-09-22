@@ -107,3 +107,50 @@ def search_official(subject, *, limit=50, fetch=None):
             if len(rows) >= limit:
                 return rows
     return rows
+
+
+# Owner's explicit editorial-use decision, 2026-09-22:
+# «لاتشيل هم التصريح. خذ الصور وانا المسؤول»
+# Records the owner's decision, not a license grant from the copyright holder.
+OWNER_USE_DECISION = 'owner-official-editorial-use-2026-09-22'
+
+
+def official_source_asset(row):
+    if not isinstance(row, dict) or row.get('provider') != 'official_media':
+        return False
+    try:
+        source = urlsplit(row['source_url'])
+        original = row['original_url']
+        asset = urlsplit(original)
+        profile = next((p for p in PROFILES if urlsplit(p['newsroom']).netloc == source.netloc), None)
+        return bool(profile and source.scheme == asset.scheme == 'https'
+            and source.path.startswith('/news/') and source.path != '/news/'
+            and not source.query and not source.fragment
+            and asset.netloc == profile['asset_host']
+            and re.fullmatch(r'/uploads/assets/[^/]+\.(?:jpg|jpeg|png|webp)', asset.path, re.I)
+            and not asset.query and not asset.fragment
+            and row.get('download_url') == original
+            and row.get('asset_id') == 'official:' + hashlib.sha256(original.encode()).hexdigest()[:20]
+            and row.get('terms_url') == profile['terms']
+            and row.get('license') == 'All rights reserved')
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
+def owner_editorial_use(row):
+    return (official_source_asset(row)
+            and row.get('owner_use_decision') == OWNER_USE_DECISION
+            and row.get('rights_status') == 'owner_accepted_editorial_use')
+
+
+def varied_official_images(rows):
+    """Offer distinct visual roles before filling the bounded download pool."""
+    selected = []
+    for pattern in (r'exterior|front view', r'cockpit|interior|seats', r'doors',
+                    r'factory|manufactur', r'logo', r'charging|charger'):
+        item = next((i for i, row in enumerate(rows) if i not in selected
+                     and re.search(pattern, row.get('title', ''), re.I)), None)
+        if item is not None:
+            selected.append(item)
+    selected.extend(i for i in range(len(rows)) if i not in selected)
+    return [rows[i] for i in selected]

@@ -1,7 +1,8 @@
 """Keep review-only material and unresolved attribution out of public delivery."""
 
 def image_without_public_credit(image):
-    return (isinstance(image, dict)
+    from .official_images import owner_editorial_use
+    return owner_editorial_use(image) or (isinstance(image, dict)
             and image.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
             and not image.get('restrictions')
             and str(image.get('attribution_required', '')).lower() in {'', 'false', 'no'})
