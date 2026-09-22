@@ -21,7 +21,7 @@ def validate_public_attribution(card, raw=None):
     if image_without_public_credit(image):
         return
     receipt = card.get('public_attribution', {})
-    if (not public_attribution_eligible(image) or receipt.get('version') != 1
+    if (not public_attribution_eligible(image) or receipt.get('version') not in {1, 2}
             or receipt.get('image_sha256') != attribution_identity(image)
             or not isinstance(receipt.get('media_sha256'), str)
             or len(receipt['media_sha256']) != 64):
@@ -41,4 +41,21 @@ def publication_indices(cards):
         raise ValueError('no_editorial_media')
     for i in indices:
         validate_public_attribution(cards[i])
+    compact = [cards[i] for i in indices if cards[i].get('public_attribution', {}).get('version') == 2]
+    if compact:
+        if len(credits) != 1:
+            raise ValueError('compact_attribution_companion_required')
+        companion = cards[credits[0]]
+        proof = companion.get('attribution_companion', {})
+        from .autopilot.credits import attribution_identity
+        digest = companion.get('sha256')
+        if (not isinstance(digest, str) or len(digest) != 64
+                or proof.get('media_sha256') != digest):
+            raise ValueError('compact_attribution_companion_changed')
+        for card in compact:
+            receipt = card['public_attribution']
+            if (receipt.get('companion_sha256') != digest
+                    or attribution_identity(card['image']) not in proof.get('images', [])):
+                raise ValueError('compact_attribution_companion_mismatch')
+        indices += credits
     return indices
