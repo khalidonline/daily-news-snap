@@ -58,8 +58,8 @@ def validate_image_variety(cards):
     for key in ('asset_id', 'sha256', 'origin_key'):
         values = [c.get('image', {}).get(key) for c in editorial]
         values = [v for v in values if v]
-        if len(values) != len(set(values)):
-            raise ValueError('duplicate_source_image: choose different relevant photos or fewer cards')
+        if any(values.count(value) > 2 for value in set(values)):
+            raise ValueError('duplicate_source_image: one photo may appear on at most two editorial cards')
 
 
 def digest(data):

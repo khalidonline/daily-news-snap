@@ -112,7 +112,7 @@ class Pipeline:
                         if discovered:
                             self.save(state, 'official_images_discovered', candidate_id=candidate['id'],
                                       official_image_candidates=discovered)
-                        if len({r['asset_id'] for r in visual_options}) < 3:
+                        if len({r['asset_id'] for r in visual_options}) < 2:
                             if discovered:
                                 raise ValueError('images_found_usage_clearance_required')
                             raise ValueError('insufficient_subject_visuals_before_drafting')
@@ -154,6 +154,9 @@ class Pipeline:
                             review_input = dict(copy.deepcopy(package), original_sources=original_sources)
                             review = self.agent.run('reviewer', review_input, images=paths)
                             review['input_sha256'] = policy.digest(review_input)
+                            learn = getattr(self.sources, 'record_visual_feedback', None)
+                            if learn:
+                                learn(candidate, package, review)
                             policy.validate_review(review, len(paths))
                             policy.verify_seal(package, paths, snapshot, self.now())
                             self.save(state, 'review_passed', status='approved', package=package,

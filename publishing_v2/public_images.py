@@ -164,6 +164,15 @@ def search_commons_category(subject, limit=5):
 
 def download_image(row, *, fetch=None):
     """Recover a rendition of the same source asset; bytes live only in memory."""
+    from .primary_images import owner_primary_use, primary_bytes
+    if owner_primary_use(row):
+        try:
+            raw = primary_bytes(row['original_url'])
+            width, height, _ = inspect_image(raw)
+            row.update(width=width, height=height)
+            return raw
+        except (ValueError, OSError) as error:
+            raise ImageSourceError('primary_download_failed') from error
     fetch = fetch or get_bytes
     urls = list(dict.fromkeys(u for u in (row.get('download_url'), row.get('original_url')) if u))
     errors = []

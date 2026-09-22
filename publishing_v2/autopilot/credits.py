@@ -98,16 +98,17 @@ def _blocks(package):
             blocks.append((row['license'], False))
             blocks.append((LICENSE_URLS[row['license']], False))
         blocks.append(('Images cropped/resized. No endorsement implied.', False))
-    else:
-        from publishing_v2.official_images import owner_editorial_use
-        official = {c.get('image', {}).get('source_url'): c.get('image', {})
-                    for c in package.get('cards', []) if owner_editorial_use(c.get('image'))}
-        if official:
-            blocks.append(('Official media · owner-directed editorial use', False))
-            for url, row in official.items():
-                blocks.append((row.get('credit', '') + ' · ' + url, False))
-        else:
-            blocks.append(('Images: public domain / CC0', False))
+    from publishing_v2.official_images import owner_editorial_use
+    from publishing_v2.primary_images import owner_primary_use
+    official = {c.get('image', {}).get('source_url'): c.get('image', {})
+                for c in package.get('cards', [])
+                if owner_editorial_use(c.get('image')) or owner_primary_use(c.get('image', {}))}
+    if official:
+        blocks.append(('Source media · owner-directed editorial use', False))
+        for url, row in official.items():
+            blocks.append((row.get('credit', '') + ' · ' + url, False))
+    elif not assets:
+        blocks.append(('Images: public domain / CC0', False))
     names = {'bbc.com':'BBC', 'bbc.co.uk':'BBC', 'alyaum.com':'اليوم',
              'aawsat.com':'الشرق الأوسط', 'en.wikipedia.org':'Wikipedia', 'ar.wikipedia.org':'ويكيبيديا'}
     hosts = []

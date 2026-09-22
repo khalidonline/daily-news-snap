@@ -13,11 +13,12 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
 
-from publishing_v2.public_images import search_commons, search_commons_category, download_image, ImageSourceError
+from publishing_v2.public_images import search_commons, search_commons_category, search_nasa, download_image, ImageSourceError
 from publishing_v2.flickr_images import search_flickr
-from publishing_v2.met_images import search_met
+from publishing_v2.met_images import search_met, OBJECTS
 from .credits import attribution_eligible
-from publishing_v2.official_images import owner_editorial_use
+from publishing_v2.official_images import owner_editorial_use, PROFILES
+from publishing_v2.primary_images import ImageMemory, page_images, official_site_images, owner_primary_use, OWNER_DECISION
 from publishing_v2.publication import image_publication_eligible
 from .feedback import rejected_trigger
 from .eligibility import routine_trigger_rejection
@@ -27,7 +28,7 @@ FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://feeds.bbci.co.uk/sport/rss.xml',
          'https://www.alyaum.com/rssFeed/1005', 'https://aawsat.com/feed')
 HOSTS = {'feeds.bbci.co.uk', 'www.bbc.com', 'www.bbc.co.uk', 'bbc.com', 'bbc.co.uk',
-         'www.alyaum.com', 'aawsat.com', 'www.aawsat.com', 'en.wikipedia.org', 'ar.wikipedia.org'}
+         'www.alyaum.com', 'aawsat.com', 'www.aawsat.com', 'en.wikipedia.org', 'ar.wikipedia.org', 'www.wikidata.org'}
 LOCAL_TOPICS = ('Abha', 'Asir', 'Khamis Mushait', 'Saudi coffee', 'Jeddah', 'Taif rose', 'Bisht', 'Al-Qatt Al-Asiri',
                 'Al-Ahsa Oasis', 'Saudi Arabian cuisine', 'Diriyah', 'Date palm', 'Souq')
 
@@ -144,7 +145,7 @@ def wiki(query, *, language="en", exact_only=False):
             return [{'id': prefix + str(page['pageid']),
                 'url': site + '?curid=' + str(page['pageid']),
                 'text': str(page['extract'])[:10000], 'title': page['title'],
-                'verified_aliases': [query], 'source_type': 'encyclopedia'}]
+                'verified_aliases': [query], 'website_entity': page.get('pageprops', {}).get('wikibase_item'), 'source_type': 'encyclopedia'}]
     if exact_only:
         return []
     # Title-constrained recovery prevents a common surname from crowding out
@@ -162,7 +163,7 @@ def wiki(query, *, language="en", exact_only=False):
         'exintro': 1, 'exlimit': len(ids)}))
     return [{'id': prefix + str(page['pageid']), 'url': site + '?curid=' + str(page['pageid']),
              'text': str(page.get('extract', ''))[:10000], 'title': page.get('title'),
-             'source_type': 'encyclopedia'}
+             'source_type': 'encyclopedia', 'website_entity': page.get('pageprops', {}).get('wikibase_item')}
             for page in result.get('query', {}).get('pages', {}).values() if page.get('extract') and 'disambiguation' not in page.get('pageprops', {})]
 
 
@@ -178,7 +179,7 @@ def native_subject_name(mention):
 
 def reusable_image(row):
     # Metadata from the source adapter, never a model-provided rights assertion.
-    return owner_editorial_use(row) or attribution_eligible(row) or (row.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
+    return owner_editorial_use(row) or owner_primary_use(row) or attribution_eligible(row) or (row.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
             and not row.get('restrictions')
             and str(row.get('attribution_required', '')).lower() in {'', 'false', 'no'})
 
@@ -233,11 +234,17 @@ def resolve_subject(query, rows, *, context=""):
 
 
 class Sources:
-    def __init__(self, *, recovery=False, publication_only=False):
+    def __init__(self, *, recovery=False, publication_only=False, image_memory=None):
         self.recovery = recovery
         self.publication_only = publication_only
         self.recovery_cache = {}
         self.image_diagnostics = []
+        self.image_memory = image_memory or ImageMemory()
+        self.article_html = {}
+        self.primary_pools = {}
+        self.primary_context = {}
+        self.subject_entities = {}
+        self.image_bytes = {}
         self.publisher_articles = {}
         self.attention_cache = {}
         self.official_image_cache = {}
@@ -299,7 +306,9 @@ class Sources:
         rows = []
         if candidate.get('url'):
             try:
-                body = plain(fetch(candidate['url']).decode('utf-8', errors='replace'))
+                html = fetch(candidate['url']).decode('utf-8', errors='replace')
+                self.article_html[candidate['url']] = html
+                body = plain(html)
                 if len(body) > 200:
                     rows.append({'id': 'article', 'url': candidate['url'], 'text': body,
                                  'source_type': 'news_article'})
@@ -362,6 +371,7 @@ class Sources:
                 'status': 'resolved' if resolved else 'retrieval_failed' if retrieval_error else 'needs_concrete_subject',
                 **(retrieval_error or {})})
             if resolved:
+                self.subject_entities[resolved['name']] = next((r.get('website_entity') for r in evidence if r['id'] == resolved['source_id']), None)
                 resolved_subjects.append(resolved)
             elif subjects is not None:
                 raise ValueError('unresolved_editorial_subject')
@@ -371,6 +381,41 @@ class Sources:
             candidate['resolved_subject'] = resolved_subjects[0]
             candidate['resolved_subjects'] = resolved_subjects
         return rows
+
+    def prime_images(self, candidate, subject):
+        """Reuse the original article; use the exact entity's official website next."""
+        if not candidate.get('url') and subject not in self.subject_entities:
+            return
+        if subject in self.primary_pools and self.primary_context.get(subject) == candidate.get('url'):
+            return
+        self.primary_context[subject] = candidate.get('url')
+        self.recovery_cache.pop((subject, subject), None)
+        rows = page_images(self.article_html.get(candidate.get('url'), ''),
+                           candidate.get('url', ''), subject, kind='article')
+        entity = self.subject_entities.get(subject)
+        known_official = any(subject.casefold().strip() in p['aliases'] for p in PROFILES)
+        if not known_official and isinstance(entity, str) and re.fullmatch(r'Q[1-9][0-9]*', entity):
+            try:
+                data = wiki_json('https://www.wikidata.org/w/api.php?' + urlencode({
+                    'action':'wbgetclaims','format':'json','entity':entity,'property':'P856'}))
+                sites = [r.get('mainsnak', {}).get('datavalue', {}).get('value')
+                         for r in data.get('claims', {}).get('P856', []) if r.get('rank') != 'deprecated']
+                site = next((u.replace('http://','https://',1) for u in sites
+                             if isinstance(u,str) and u.startswith(('https://','http://'))), None)
+                if site:
+                    rows += official_site_images(site, entity, subject)
+            except (ValueError, OSError):
+                self.image_diagnostics.append({'stage':'official_site','subject':subject,'status':'unavailable'})
+        self.primary_pools[subject] = rows
+
+    def record_visual_feedback(self, candidate, package, review):
+        subject = candidate.get('resolved_subject', {}).get('name')
+        if not subject:
+            return
+        for card, check in zip(package.get('cards', []), review.get('card_checks', [])):
+            if card.get('kind') != 'credits' and check.get('relevant') is False and card.get('image'):
+                self.image_memory.record(subject, card['image'], False)
+        self.image_memory.save()
 
     def official_images(self, subject):
         from publishing_v2.official_images import search_official, PROFILES, official_source_asset, OWNER_USE_DECISION, varied_official_images
@@ -404,7 +449,8 @@ class Sources:
         deadline = time.monotonic() + 90
         found, identities, hashes, origins = [], set(), set(), set()
         attempts = 0
-        stages = [('official_media', lambda: self.official_images(subject)),
+        stages = [('primary_media', lambda: self.primary_pools.get(subject, [])),
+                  ('official_media', lambda: self.official_images(subject)),
                   ('commons', lambda: search_commons(query, limit=5)),
                   ('commons_collection', lambda: search_commons_category(subject, limit=5)),
                   ('flickr_cc0' if self.publication_only else 'flickr',
@@ -418,7 +464,18 @@ class Sources:
                   ('met_open_access', lambda: search_met(subject, limit=3, deadline=deadline)),
                   ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
                   ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
+        # Route specialized subjects before general stock catalogs. Learned
+        # successes rank only fallback providers; primary sources always lead.
+        if re.search(r'equinox|solstice|space|planet|astronom|اعتدال|فلك', subject, re.I):
+            stages.insert(2, ('nasa', lambda: search_nasa(query, limit=5)))
+        if OBJECTS.search(subject):
+            met = next(pair for pair in stages if pair[0]=='met_open_access')
+            stages.remove(met); stages.insert(2, met)
+        preferred = self.image_memory.preferred(subject)
+        stages = stages[:2] + sorted(stages[2:], key=lambda pair: pair[0].split('_')[0] not in preferred)
         for provider, search in stages:
+            if provider not in {'primary_media','official_media'} and len(found) >= 2:
+                break
             if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
                 break
             event = {'stage':'image_recovery', 'query':query, 'subject':subject, 'provider':provider,
@@ -432,9 +489,14 @@ class Sources:
                     if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
                         break
                     row = dict(original)
+                    if provider == 'nasa':
+                        row.update(original_url=row.get('download_url'),owner_use_decision=OWNER_DECISION,
+                                   rights_status='owner_accepted_editorial_use')
                     identity = (row.get('provider'), row.get('asset_id'))
                     if identity in identities: continue
                     identities.add(identity)
+                    if self.image_memory.rejected(subject, row):
+                        reject('previously_rejected_for_subject'); continue
                     if not reusable_image(row):
                         reject('rights'); continue
                     # Review-only images must not consume the public pool or
@@ -462,7 +524,7 @@ class Sources:
                     except Exception as error:
                         reject('download:' + str(error)[:100]); continue
                     sha = hashlib.sha256(raw).hexdigest()
-                    del raw
+                    self.image_bytes[row['asset_id']] = raw
                     if sha in hashes:
                         reject('duplicate_bytes'); continue
                     # Copied metadata is retained in the remote package journal;

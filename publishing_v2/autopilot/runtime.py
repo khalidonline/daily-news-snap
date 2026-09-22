@@ -15,6 +15,7 @@ from publishing_v2.bundle_api import BundleClient, GitHubJournal, publish
 from publishing_v2.preview import render_card
 from publishing_v2.public_images import get_bytes, inspect_image, atomic_write, download_image
 from .agents import Agents
+from publishing_v2.primary_images import ImageMemory
 from .pipeline import Pipeline
 from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
 from .sources import Sources, reusable_image, subject_metadata_matches
@@ -32,6 +33,10 @@ class Renderer:
         subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
         if not subjects:
             subjects = [candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']]
+        prime = getattr(self.sources, 'prime_images', None)
+        if prime:
+            for subject in subjects:
+                prime(candidate, subject)
         official = getattr(self.sources, 'official_images', None)
         if official:
             discovered = {}
@@ -45,6 +50,15 @@ class Renderer:
             rows = (subject_search(subject, subject) if subject_search else
                     self.image_options({'image_query': subject}, {'candidate': candidate}))
             usable = [row for row in rows if image_publication_eligible(row) and subject_metadata_matches(subject, row)]
+            if usable and getattr(self.sources, 'image_bytes', {}):
+                usable = self.check_source_images(candidate, subject, usable)
+                if len(usable) < 2:
+                    # One targeted refill skips the source images just rejected,
+                    # reaches the routed fallback, and never restarts the writer.
+                    self.sources.recovery_cache.pop((subject, subject), None)
+                    refill = self.sources.subject_images(subject, subject)
+                    usable = self.check_source_images(candidate, subject, refill) if refill else []
+                self.sources.recovery_cache[(subject, subject)] = usable
             if not usable:
                 return []
             for row in usable:
@@ -62,6 +76,29 @@ class Renderer:
                     'description': row.get('description', '')[:900],
                     'image_role': row.get('image_role', 'subject illustration; event date requires review')}
         return list(found.values())
+
+    def check_source_images(self, candidate, subject, rows):
+        rows = rows[:5]
+        with tempfile.TemporaryDirectory(prefix='snap-image-preflight-') as temporary:
+            paths = []
+            for i, row in enumerate(rows):
+                raw = self.sources.image_bytes.get(row['asset_id'])
+                if raw is None:
+                    raise ValueError('missing_preflight_pixels')
+                path = Path(temporary) / f'{i}.jpg'
+                path.write_bytes(raw); paths.append(path)
+            decision = self.agent.run('image_check', {
+                'subject':subject, 'source_title':candidate.get('title'),
+                'options':[{'asset_id':r['asset_id'], 'title':r.get('title','')[:200],
+                            'source_url':r.get('source_url','')} for r in rows]}, images=paths)
+        accepted = decision.get('accepted_ids')
+        allowed = {r['asset_id'] for r in rows}
+        if not isinstance(accepted,list) or any(not isinstance(i,str) or i not in allowed for i in accepted):
+            raise ValueError('invalid_preflight_image_ids')
+        for row in rows:
+            self.sources.image_memory.record(subject,row,row['asset_id'] in accepted)
+        self.sources.image_memory.save()
+        return [r for r in rows if r['asset_id'] in accepted]
 
     def image_options(self, card, package):
         candidate = package.get('candidate', {})
@@ -330,7 +367,8 @@ def main():
         args.lane = 'both'
     results = []
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
-        agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True, publication_only=True)
+        agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True, publication_only=True,
+            image_memory=ImageMemory(GitHubJournal('autopilot-image-memory')))
         slot = f'autopilot-{day_key(now())}-{lane}-{args.mode}'
         if args.mode == 'shadow':
             slot += '-' + engine[:16]

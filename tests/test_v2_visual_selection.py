@@ -34,7 +34,7 @@ class VisualSelectionTests(unittest.TestCase):
         pipeline = self.pipeline()
         options = [{'asset_id':str(i)} for i in range(3)]
         def render(package, output): return self.render(package, output)
-        render.plan_visuals = lambda candidate: options[:2] if candidate['id'] == 'a' else options
+        render.plan_visuals = lambda candidate: options[:1] if candidate['id'] == 'a' else options
         pipeline.render = render
         original, researched = self.agent.run, []
         def run(role, data, images=()):

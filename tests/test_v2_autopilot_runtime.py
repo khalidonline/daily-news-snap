@@ -27,10 +27,11 @@ class RuntimeTests(unittest.TestCase):
                     validate_review({'checks': checks, 'reason': 'Evidence reviewed',
                         'card_checks': [{'readable': True, 'relevant': True}] * 3}, 3)
 
-    def test_duplicate_sources_block_publication_even_with_different_card_bytes(self):
+    def test_three_uses_block_publication_even_with_different_card_bytes(self):
         from publishing_v2.autopilot.policy import validate_image_variety
         for key in ('asset_id', 'sha256'):
             cards = [{'kind': 'info', 'image': {key: 'same'}},
+                     {'kind': 'story', 'image': {key: 'same'}},
                      {'kind': 'story', 'image': {key: 'same'}}]
             with self.assertRaisesRegex(ValueError, 'duplicate_source_image'):
                 publish_package({'cards': cards}, [], client=object())

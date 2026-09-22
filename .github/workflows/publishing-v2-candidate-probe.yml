@@ -53,6 +53,7 @@ jobs:
           from publishing_v2.autopilot.pipeline import Pipeline
           from publishing_v2.autopilot.runtime import Renderer, engine_id
           from publishing_v2.autopilot.sources import Sources
+          from publishing_v2.primary_images import ImageMemory
           ident = os.environ['CANDIDATE_ID']
           if not re.fullmatch(r'[a-f0-9]{16}', ident):
               raise ValueError('invalid_candidate_id')
@@ -69,7 +70,8 @@ jobs:
           token = os.environ.get('DAILY_BUDGET_GITHUB_TOKEN') or os.environ['GITHUB_TOKEN']
           ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token), limit_micro_usd=5000000)
           agent = Agents(env=os.environ, ledger=ledger)
-          sources = CandidateSources(recovery=True, publication_only=True)
+          sources = CandidateSources(recovery=True, publication_only=True,
+              image_memory=ImageMemory(GitHubJournal('autopilot-image-memory')))
           slot = f'candidate-probe-{day_key(now())}-{ident}-{engine[:16]}'
           store = GitHubJournal(slot)
           output = Path('candidate-probe-output').resolve()

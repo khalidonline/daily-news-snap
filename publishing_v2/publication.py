@@ -2,7 +2,8 @@
 
 def image_without_public_credit(image):
     from .official_images import owner_editorial_use
-    return owner_editorial_use(image) or (isinstance(image, dict)
+    from .primary_images import owner_primary_use
+    return owner_editorial_use(image) or owner_primary_use(image) or (isinstance(image, dict)
             and image.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
             and not image.get('restrictions')
             and str(image.get('attribution_required', '')).lower() in {'', 'false', 'no'})
