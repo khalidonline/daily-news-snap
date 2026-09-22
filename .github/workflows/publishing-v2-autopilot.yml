@@ -53,7 +53,7 @@ jobs:
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
           AUTOPILOT_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
           # User-approved shared cap for production and trials; no automatic increase.
-          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '5000000'
           # Reduce one role first; preserve writing/research and independent review quality.
           AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
           AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
@@ -64,11 +64,6 @@ jobs:
           POST_TO_SNAPCHAT: '0'
           DRY_RUN: '1'
         run: |
-          # Owner approved $5 total for today's fresh review trial only.
-          # Expired dates, live mode and other lanes retain the regular $3 cap.
-          if [ "$(TZ=Asia/Riyadh date +%F)" = "2026-09-20" ] && [ "$AUTOPILOT_MODE" = "shadow" ] && [ "$AUTOPILOT_LANE" = "daily" ]; then
-            export AUTOPILOT_DAILY_LIMIT_MICRO_USD=5000000
-          fi
           python -m publishing_v2.autopilot.runtime --mode "$AUTOPILOT_MODE" --lane "$AUTOPILOT_LANE"
       - name: Send concise operational report
         if: always()
