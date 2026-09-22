@@ -80,8 +80,12 @@ class TimingPreflightTests(unittest.TestCase):
     def test_timing_request_has_small_budgeted_output(self):
         import json
         from test_v2_autopilot_recovery import FormatRecoveryTests
-        agent, ledger, calls = FormatRecoveryTests().agent([json.dumps(timing())])
-        self.assertEqual(agent.run('timing', {'sources': fixtures.evidence()}), timing())
+        decision = {k: v for k, v in timing().items() if k not in {'event_quote', 'event_source_id'}}
+        decision['event_passage_id'] = 's1:p0'
+        agent, ledger, calls = FormatRecoveryTests().agent([json.dumps(decision)])
+        result = agent.run('timing', {'sources': fixtures.evidence()})
+        self.assertEqual(result['event_quote'], fixtures.evidence()[0]['text'])
+        self.assertEqual(result['event_date'], timing()['event_date'])
         self.assertEqual(calls[0]['model'], 'claude-sonnet-5')
         self.assertEqual(calls[0]['max_tokens'], 2048)
         self.assertEqual(len(ledger.reserved), 1)

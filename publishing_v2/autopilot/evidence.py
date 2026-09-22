@@ -78,3 +78,19 @@ def hydrate(data, rows):
             raise ValueError('unknown_event_passage')
         result.update(event_source_id=row['source_id'], event_quote=row['quote'])
     return result
+
+
+def hydrate_timing(data, rows):
+    """Select exact original timing evidence; never accept a rewritten quotation."""
+    if set(data) != {'eligible', 'event_date', 'event_passage_id', 'timing_basis', 'reason'}:
+        raise ValueError('unexpected_timing_fields')
+    result = {key: value for key, value in data.items() if key != 'event_passage_id'}
+    if data.get('eligible') is not True:
+        return result
+    ident = data.get('event_passage_id')
+    if not isinstance(ident, str):
+        raise ValueError('invalid_timing_passage_id')
+    row = next((row for row in rows if row['id'] == ident), None)
+    if row is None:
+        raise ValueError('unknown_timing_passage')
+    return dict(result, event_source_id=row['source_id'], event_quote=row['quote'])

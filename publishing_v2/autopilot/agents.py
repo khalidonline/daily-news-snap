@@ -11,7 +11,7 @@ from PIL import Image
 from daily_budget import PRICES, prepare, actual_cost, BudgetBlocked
 from publishing_v2 import providers
 from .policy import REVIEW_CHECKS
-from .evidence import passages, hydrate
+from .evidence import passages, hydrate, hydrate_timing
 
 STYLE = '''You work for ملخص تنفيذي, a Saudi Snapchat account. News is a trigger,
 not the post. Choose broad everyday interest and distinctive facts worth sharing.
@@ -41,9 +41,11 @@ an identifiable substantive NEW current development; identify that development.
 Reject uncertain dates, unsupported timing and sensitive political/military topics.
 Use the supplied now and yesterday-through-tomorrow Riyadh calendar window.
 Return {"eligible":true/false,"event_date":"YYYY-MM-DD or null",
-"event_source_id":"original source ID","event_quote":"exact excerpt, 8-500 characters",
+"event_passage_id":"existing supplied passage ID, or null when ineligible",
 "timing_basis":"event or report","reason":"brief explanation, at most 500 characters"}.
-The excerpt must substantiate the dated development, not just mention the subject.
+The selected passage must substantiate the dated development, not just mention the subject.
+Read neighboring passages for context. Select its ID; never transcribe, shorten or
+combine quotations. The program copies the original passage exactly.
 If uncertain return eligible:false and event_date:null. Never infer freshness from
 publication metadata alone.''',
     'editor': '''Select up to FOUR ranked candidates by ID from supplied candidates.
@@ -315,7 +317,7 @@ class Agents:
         if not credential:
             raise ValueError('missing_agent_credential')
         evidence_rows = None
-        if role == 'researcher':
+        if role in {'researcher', 'timing'}:
             evidence_rows = passages(data['sources'])
             data = dict(data, sources=[{k: v for k, v in source.items() if k != 'text'}
                                        for source in data['sources']], passages=evidence_rows)
@@ -383,6 +385,8 @@ class Agents:
             if isinstance(error, json.JSONDecodeError):
                 receipt['format_error_position'] = error.pos
             raise InvalidAgentResponse('agent_json_invalid') from error
+        if role == 'timing':
+            return hydrate_timing(decision, evidence_rows)
         if role == 'researcher':
             receipt['research_shape'] = {
                 'event_date': decision.get('event_date') if isinstance(decision.get('event_date'), str) else None,
