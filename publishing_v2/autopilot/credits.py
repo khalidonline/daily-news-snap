@@ -241,3 +241,43 @@ def render_public_attribution(card, path):
     canvas.save(path,'JPEG',quality=95,subsampling=0)
     card['public_attribution'] = {'version':1,'image_sha256':attribution_identity(card['image']),
                                  'media_sha256':hashlib.sha256(Path(path).read_bytes()).hexdigest()}
+
+
+def render_compact_attribution(package, paths, source_path):
+    """Owner-approved short labels with a required, hash-bound public credits card.
+
+    Input paths must be clean editorial renders without the older rights band.
+    Preserve complete attribution metadata; publish the companion with the cards.
+    """
+    import hashlib
+    cards = package['cards']
+    if len(paths) != len(cards) or cards[-1].get('kind') != 'credits':
+        raise ValueError('compact_attribution_companion_required')
+    selected = []
+    for card, path in zip(cards[:-1], paths[:-1]):
+        if card.get('image', {}).get('license') not in LICENSE_URLS:
+            continue
+        if not attribution_eligible(card['image']):
+            raise ValueError('incomplete_image_attribution')
+        label = card['image']['credit'].strip()
+        if not 1 <= len(label.split()) <= 2:
+            raise ValueError('compact_credit_needs_owner_label')
+        with Image.open(path) as original:
+            canvas = original.convert('RGB')
+        if canvas.size != (1080, 1920):
+            raise ValueError('wrong_frame_dimensions')
+        draw = ImageDraw.Draw(canvas)
+        draw.text((540, 1850), label, font=_font(24), fill='#79736b', anchor='mt')
+        canvas.save(path, 'JPEG', quality=95, subsampling=0)
+        selected.append((card, path))
+    render_credits(package, source_path, paths[-1])
+    digest = hashlib.sha256(Path(paths[-1]).read_bytes()).hexdigest()
+    cards[-1]['sha256'] = digest
+    cards[-1]['attribution_companion'] = {
+        'media_sha256': digest,
+        'images': [attribution_identity(card['image']) for card, _ in selected]}
+    for card, path in selected:
+        card['public_attribution'] = {
+            'version': 2, 'image_sha256': attribution_identity(card['image']),
+            'media_sha256': hashlib.sha256(Path(path).read_bytes()).hexdigest(),
+            'companion_sha256': digest}

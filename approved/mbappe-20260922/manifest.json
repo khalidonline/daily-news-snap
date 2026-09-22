@@ -1,0 +1,162 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ملخص تنفيذي — قصة مبابي",
+  "expires_at": "2026-09-22T21:00:00Z",
+  "media": [
+    {
+      "kind": "info",
+      "title": "كيليان مبابي: أرقام هدّاف ما يشبه أحد",
+      "body": "مبابي مهاجم فرنسي سجّل أكثر من 400 هدف في مسيرته، وهو الهداف التاريخي لباريس سان جيرمان بـ256 هدفاً، ولمنتخب فرنسا بـ66 هدفاً، ولكأس العالم بـ22 هدفاً. ومع كل هذي الأرقام، لين الآن ما توّج بالكرة الذهبية، ويقول إن الجائزة تكافئ اللاعب اللي يخطف الأنظار مو الفريق الفائز.",
+      "punch": "وقصته بدت وهو عمره 14 سنة.",
+      "claim_ids": [
+        "c1",
+        "c6"
+      ],
+      "image_query": "Kylian Mbappe portrait",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:aa0ae8c3bac9e9289b0ed0f1",
+        "original_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1788043.jpeg.webp?VersionId=1cKslacg0okrG71vFMnL6UDcSKj_QPjB",
+        "download_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1788043.jpeg.webp?VersionId=1cKslacg0okrG71vFMnL6UDcSKj_QPjB",
+        "source_url": "https://aawsat.com/node/5321113",
+        "source_kind": "article",
+        "title": "Kylian Mbappé: source illustration; identity unverified",
+        "description": "Kylian Mbappé",
+        "collection_subject": "Kylian Mbappé",
+        "credit": "aawsat.com",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1200,
+        "height": 797,
+        "sha256": "936087c9f6bbb1de3c87a3b1de770063eadde2d7e898823b087c9135529bd2fa",
+        "origin_key": "primary:aa0ae8c3bac9e9289b0ed0f1"
+      },
+      "path": "approved/mbappe-20260922/card-00.jpg",
+      "sha256": "bf7e6d36a9f5be81b753bed9bfdc04877cb3b2087686b9e4c692e16fbdcc017c"
+    },
+    {
+      "kind": "story",
+      "title": "بدايته مع موناكو",
+      "body": "في يوليو 2013 دخل مبابي أكاديمية موناكو وعمره 14 سنة، رغم اهتمام ريال مدريد فيه. وفي ديسمبر 2015 لعب مع الفريق الأول وعمره 16، وصار أصغر لاعب في تاريخ النادي، وكسر رقم تييري هنري المسجّل من 1994.",
+      "punch": "",
+      "claim_ids": [
+        "c2",
+        "c3"
+      ],
+      "image_query": "Kylian Mbappe portrait",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:aa0ae8c3bac9e9289b0ed0f1",
+        "original_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1788043.jpeg.webp?VersionId=1cKslacg0okrG71vFMnL6UDcSKj_QPjB",
+        "download_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1788043.jpeg.webp?VersionId=1cKslacg0okrG71vFMnL6UDcSKj_QPjB",
+        "source_url": "https://aawsat.com/node/5321113",
+        "source_kind": "article",
+        "title": "Kylian Mbappé: source illustration; identity unverified",
+        "description": "Kylian Mbappé",
+        "collection_subject": "Kylian Mbappé",
+        "credit": "aawsat.com",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1200,
+        "height": 797,
+        "sha256": "936087c9f6bbb1de3c87a3b1de770063eadde2d7e898823b087c9135529bd2fa",
+        "origin_key": "primary:aa0ae8c3bac9e9289b0ed0f1"
+      },
+      "path": "approved/mbappe-20260922/card-01.jpg",
+      "sha256": "12f39fcf464118dae8bde08deaac31ac50a5c467df904ba78bac3486f9e928d5"
+    },
+    {
+      "kind": "story",
+      "title": "لقب لموناكو بعد 17 سنة، وانتقال بـ180 مليون",
+      "body": "موسم 2016-2017 فاز موناكو بلقب الدوري الفرنسي، وهو أول لقب دوري للنادي من 17 سنة، ومبابي وقتها مراهق داخل الفريق. وفي 2017، وهو بعمر 18، انتقل لباريس سان جيرمان بصفقة 180 مليون يورو خلّته أغلى لاعب مراهق في التاريخ وثاني أغلى لاعب على الإطلاق بعد زميله نيمار.",
+      "punch": "من لاعب ناشئ في موناكو إلى رقم قياسي في سوق الانتقالات خلال سنتين.",
+      "claim_ids": [
+        "c4",
+        "c5"
+      ],
+      "image_query": "Kylian Mbappe PSG",
+      "image": {
+        "provider": "commons",
+        "asset_id": "80748002",
+        "title": "File:Kylian Mbappé (46369981091).jpg",
+        "original_width": 3500,
+        "original_height": 2186,
+        "description": "Kylian Mbappé",
+        "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Kylian_Mbapp%C3%A9_%2846369981091%29.jpg/1920px-Kylian_Mbapp%C3%A9_%2846369981091%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Kylian_Mbapp%C3%A9_%2846369981091%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Kylian_Mbapp%C3%A9_(46369981091).jpg",
+        "credit": "Balkan Photos",
+        "credit_line": "Kylian Mbappé",
+        "rights_links": "https://www.flickr.com/photos/142872259@N05/46369981091/",
+        "copyright_notice": "",
+        "attribution_notice": "",
+        "usage_terms": "Creative Commons Attribution 2.0",
+        "disclaimer": "",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0",
+        "attribution_required": "true",
+        "restrictions": "",
+        "date_created": "2018-12-11 22:42",
+        "width": 1920,
+        "height": 1199,
+        "licensing_verified": false,
+        "sha256": "7cda34447280c3b10c3f5f678e5e6a2c90891254e91b83206ee462ebcf9b9876",
+        "origin_key": "flickr:46369981091",
+        "image_role": "subject illustration; event date requires review"
+      },
+      "display_credit": "Balkan Photos",
+      "public_attribution": {
+        "version": 2,
+        "image_sha256": "adaa01dcb3041e50053004922bad0a0e98051b94135ac526aabdc01c3535bba4",
+        "media_sha256": "f5fb4831e8d8ae55c9423faf7e83d40d538a8f5264c49917fe62b0f3924e074a",
+        "companion_sha256": "3b7b4e27fa0bdd6d74cc378510265f2edebf39d0a736da7eae5f0ccd280cb639"
+      },
+      "path": "approved/mbappe-20260922/card-02.jpg",
+      "sha256": "f5fb4831e8d8ae55c9423faf7e83d40d538a8f5264c49917fe62b0f3924e074a"
+    },
+    {
+      "kind": "credits",
+      "title": "المصادر والصور",
+      "body": "Editorial sources and photo attribution",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:aa0ae8c3bac9e9289b0ed0f1",
+        "original_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1788043.jpeg.webp?VersionId=1cKslacg0okrG71vFMnL6UDcSKj_QPjB",
+        "download_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1788043.jpeg.webp?VersionId=1cKslacg0okrG71vFMnL6UDcSKj_QPjB",
+        "source_url": "https://aawsat.com/node/5321113",
+        "source_kind": "article",
+        "title": "Kylian Mbappé: source illustration; identity unverified",
+        "description": "Kylian Mbappé",
+        "collection_subject": "Kylian Mbappé",
+        "credit": "aawsat.com",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1200,
+        "height": 797,
+        "sha256": "936087c9f6bbb1de3c87a3b1de770063eadde2d7e898823b087c9135529bd2fa",
+        "origin_key": "primary:aa0ae8c3bac9e9289b0ed0f1"
+      },
+      "sha256": "3b7b4e27fa0bdd6d74cc378510265f2edebf39d0a736da7eae5f0ccd280cb639",
+      "attribution_companion": {
+        "media_sha256": "3b7b4e27fa0bdd6d74cc378510265f2edebf39d0a736da7eae5f0ccd280cb639",
+        "images": [
+          "adaa01dcb3041e50053004922bad0a0e98051b94135ac526aabdc01c3535bba4"
+        ]
+      },
+      "path": "approved/mbappe-20260922/card-03.jpg"
+    }
+  ],
+  "owner_review": {
+    "reference": "Owner accepted corrected cards and two-word credit: تمام كمل, 2026-09-22"
+  }
+}
