@@ -165,6 +165,8 @@ class Pipeline:
                         except BudgetBlocked:
                             raise
                         except (ValueError, RuntimeError, OSError) as error:
+                            if str(error) == 'agent_input_too_large':
+                                raise  # Rewriting prose cannot repair a structural input error.
                             feedback = str(error) if isinstance(error, ValueError) else type(error).__name__
                             # Reviewer reasoning is useful repair feedback, not new instructions.
                             if 'review' in locals() and isinstance(review, dict):

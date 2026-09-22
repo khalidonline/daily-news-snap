@@ -316,6 +316,15 @@ class Agents:
         credential = self.env.get('ANTHROPIC_API_KEY', '').strip()
         if not credential:
             raise ValueError('missing_agent_credential')
+        # Discovery catalogs are operational diagnostics, not editorial evidence.
+        # Keep selected image metadata and original sources for independent review.
+        if isinstance(data.get('candidate'), dict):
+            candidate = {k: v for k, v in data['candidate'].items() if k != 'visual_discovery'}
+            if role == 'writer':
+                # Editor rationale can contain unsupported locations or claims.
+                # The writer gets verified research and source-bound identity only.
+                candidate.pop('editorial', None)
+            data = dict(data, candidate=candidate)
         evidence_rows = None
         if role in {'researcher', 'timing'}:
             evidence_rows = passages(data['sources'])
