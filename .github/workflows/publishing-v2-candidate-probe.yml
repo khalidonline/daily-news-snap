@@ -67,7 +67,7 @@ jobs:
           now = lambda: datetime.now(timezone.utc)
           engine = engine_id()
           token = os.environ.get('DAILY_BUDGET_GITHUB_TOKEN') or os.environ['GITHUB_TOKEN']
-          ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token), limit_micro_usd=3000000)
+          ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token), limit_micro_usd=5000000)
           agent = Agents(env=os.environ, ledger=ledger)
           sources = CandidateSources(recovery=True, publication_only=True)
           slot = f'candidate-probe-{day_key(now())}-{ident}-{engine[:16]}'
