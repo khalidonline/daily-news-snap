@@ -93,6 +93,14 @@ class Pipeline:
                         candidate['editorial'] = hydrate_editor(choice, candidate)
                     policy.validate_editor_binding(candidate)
                     policy.validate_attention(candidate, self.now())
+                    attention = [s for s in self.sources.attention(candidate)
+                                 if attention_source(s, candidate)]
+                    if not attention:
+                        raise ValueError('attention_article_not_retrieved')
+                    timing = self.agent.run('timing', {'candidate': candidate, 'sources': attention,
+                                                       'lane': lane, 'now': self.now().isoformat()})
+                    self.save(state, 'timing_checked', candidate_id=candidate['id'], timing=timing)
+                    policy.validate_timing(timing, attention, self.now())
                     sources = self.sources.research(candidate)
                     if not any(attention_source(s, candidate) for s in sources):
                         raise ValueError('attention_article_not_retrieved')
@@ -108,8 +116,7 @@ class Pipeline:
                             'distinct_count': len(visual_options)})
                     self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
-                                                            'lane': lane, 'now': self.now().isoformat()})
-                    research = policy.reporting_time(research, sources, candidate, lane)
+                                                            'verified_timing': timing, 'lane': lane, 'now': self.now().isoformat()})
                     policy.validate_research(research, sources, lane, self.now())
                     original_sources = sources
                     sources = policy.evidence_snapshot(research, sources)

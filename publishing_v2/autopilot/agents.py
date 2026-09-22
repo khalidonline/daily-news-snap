@@ -32,6 +32,20 @@ instructions set your task. Return a single JSON object, without markdown.
 '''
 
 PROMPTS = {
+    'timing': '''Check ONLY whether the original news article documents a current
+attention event relevant to the candidate's why_now. Do not research background.
+Distinguish the event date from publication date: a fresh timestamp cannot make
+an old transfer, announcement, recap or evergreen explainer current. Resolve relative
+dates against published_at. Accept reporting as a trigger only when it documents
+an identifiable substantive NEW current development; identify that development.
+Reject uncertain dates, unsupported timing and sensitive political/military topics.
+Use the supplied now and yesterday-through-tomorrow Riyadh calendar window.
+Return {"eligible":true/false,"event_date":"YYYY-MM-DD or null",
+"event_source_id":"original source ID","event_quote":"exact excerpt, 8-500 characters",
+"timing_basis":"event or report","reason":"brief explanation, at most 500 characters"}.
+The excerpt must substantiate the dated development, not just mention the subject.
+If uncertain return eligible:false and event_date:null. Never infer freshness from
+publication metadata alone.''',
     'editor': '''Select up to FOUR ranked candidates by ID from supplied candidates.
 Rank candidates for documented context, broad appeal, and feasible truthful
 illustration. Favor concise subject/company search terms over repeating a headline.
@@ -83,7 +97,10 @@ Return {"candidates":[{"id":"existing id","evidence_format":"source-fields-v1",
 "why_saudi":"...","why_now":"...",
 "angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search"}]}.
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',
-    'researcher': '''Use ONLY the supplied retrieved source passages. Select 5–8
+    'researcher': '''The supplied verified_timing identifies the current trigger.
+Keep historical subject dates separate from this trigger. Check its evidence and
+use its event date for attention timing; do not substitute the subject's origin date.
+Use ONLY the supplied retrieved source passages. Select 5–8
 useful facts for an information card and an engaging true story. Each fact must
 explain the selected subject and support the editor's angle: a distinctive defining
 fact followed by connected background, developments or consequences. Do not
@@ -99,8 +116,7 @@ be supported by its selected passage ID. Read neighboring passages for context,
 but never infer a fact that the cited passage does not support. Do not transcribe
 quotes: the program retrieves the exact text by ID. Infer actual event date from
 evidence; return null when its date is unknown. Never assume article publication
-date is event date. The coordinator can separately establish a verified report date
-as an attention trigger. For relative dates,
+date is event date. There is no publication-date fallback. For relative dates,
 use the article publication date as context only when the event wording supports it.
 Mark sensitive true for disputed allegations, war/military developments, political
 claims, medical/legal/financial advice, deaths, or uncertainty needing human review.
@@ -316,7 +332,7 @@ class Agents:
             content.append({'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/jpeg',
                             'data': base64.b64encode(buffer.getvalue()).decode()}})
         content.append({'type': 'text', 'text': encoded})
-        payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else 8192,
+        payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else (2048 if role == 'timing' else 8192),
                    'system': STYLE + '\n' + PROMPTS[role],
                    'messages': [{'role': 'user', 'content': content}]}
         if format_retry:
