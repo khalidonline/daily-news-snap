@@ -64,8 +64,8 @@ ordinary Saudis care about. Reject political commentary, leaders' warnings,
 war/military developments, disputed claims and technical AI/scientific risk
 debates. 'Relevant to Vision 2030' alone does not establish audience interest.
 For EACH English subject provide subject_evidence: its English subject, a specific
-source-language name copied exactly as mention, and source_field set to title or
-summary from that SAME candidate, containing the mention. The selected source
+source-language name copied exactly as mention, and source_field set to the literal JSON string "title" or "summary" from that SAME
+candidate, containing the mention. Never put article text in source_field. The selected source
 field must be 12-1000 characters; the copied mention must be 3-150 characters.
 The program retrieves that entire original field as evidence. Do not return a
 quote, source_title or separate subjects list; write each English subject once.
@@ -79,7 +79,7 @@ Interpret relative words like today/yesterday against that article's published_a
 not the current clock. In why_now prefer the explicit supported calendar date;
 never describe yesterday's event as happening today because you read it today.
 Return {"candidates":[{"id":"existing id","evidence_format":"source-fields-v1",
-"subject_evidence":[{"subject":"English entity","mention":"name as written in source","source_field":"title or summary"}],
+"subject_evidence":[{"subject":"English entity","mention":"name as written in source","source_field":"summary"}],
 "why_saudi":"...","why_now":"...",
 "angle":"...","share_reason":"...","research_query":"short English subject for encyclopedia search"}]}.
 If none is worth publishing return an empty candidates list. Do not manufacture news.''',

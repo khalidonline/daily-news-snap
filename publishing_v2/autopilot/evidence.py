@@ -17,11 +17,19 @@ def hydrate_editor(choice, candidate):
     resolved = []
     for row in rows:
         if (not isinstance(row, dict) or set(row) != {'subject', 'mention', 'source_field'}
-                or not isinstance(row['source_field'], str)
-                or row['source_field'] not in {'title', 'summary'}):
+                or not isinstance(row['source_field'], str)):
             raise ValueError('invalid_editor_source_field')
+        field = row['source_field']
+        if field not in {'title', 'summary'}:
+            # Some responses copy the field's value instead of its selector.
+            # Recover only an exact full original value, never inferred text.
+            matches = [key for key in ('title', 'summary')
+                       if field and candidate.get(key) == field]
+            if not matches:
+                raise ValueError('invalid_editor_source_field')
+            field = matches[0]
         resolved.append({'subject': row['subject'], 'mention': row['mention'],
-                         'quote': candidate.get(row['source_field'], '')})
+                         'quote': candidate.get(field, '')})
     result = dict(choice, source_title=candidate['title'],
                   subjects=[row['subject'] for row in resolved], subject_evidence=resolved)
     validate_editor_binding(dict(candidate, editorial=result))
