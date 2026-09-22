@@ -54,6 +54,8 @@ class FakeAgent:
                                     'source_title': next(c['title'] for c in data['candidates'] if c['id'] == 'b'),
                                     'subject_evidence': [{'subject':'Jeddah','mention':'جدة',
                                         'quote':'بدأ مهرجان جدة اليوم في المنطقة التاريخية'}]}]}
+        if role == 'timing':
+            return dict(research(), eligible=True, timing_basis='event', reason='Current event')
         if role == 'researcher': return research()
         if role == 'writer': return draft()
         if role == 'reviewer':
@@ -67,6 +69,7 @@ class FakeAgent:
 
 class FakeSources:
     def discover(self, lane, now): return [{'id': x, 'title': x, 'summary': 'بدأ مهرجان جدة اليوم في المنطقة التاريخية', 'url': 'https://www.bbc.com/news/a', 'published_at': now.isoformat()} for x in ['a', 'b']]
+    def attention(self, candidate): return evidence()
     def research(self, candidate): return evidence()
 
 

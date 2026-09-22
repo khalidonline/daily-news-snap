@@ -227,6 +227,7 @@ class Sources:
         self.recovery_cache = {}
         self.image_diagnostics = []
         self.publisher_articles = {}
+        self.attention_cache = {}
         self.image_cache = {}
         self.image_search_cache = {}
         self.discovery_rejections = []
@@ -277,7 +278,11 @@ class Sources:
                 continue
         return results[:60]
 
-    def research(self, candidate):
+    def attention(self, candidate):
+        """Retrieve the trigger once, before encyclopedia or image searches."""
+        key = (candidate.get("id"), candidate.get("url"), candidate.get("published_at"))
+        if key in self.attention_cache:
+            return [dict(row) for row in self.attention_cache[key]]
         rows = []
         if candidate.get('url'):
             try:
@@ -293,6 +298,11 @@ class Sources:
                                                      candidate.get('published_at')))
             if publisher and attention_source(publisher, candidate):
                 rows.append(dict(publisher))
+        self.attention_cache[key] = [dict(row) for row in rows]
+        return rows
+
+    def research(self, candidate):
+        rows = self.attention(candidate)
         editorial = candidate['editorial']
         subjects = editorial.get('subjects')
         if subjects is not None and (not isinstance(subjects, list) or not 1 <= len(subjects) <= 2

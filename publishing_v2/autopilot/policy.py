@@ -1,6 +1,7 @@
 """Deterministic constraints. Model output cannot grant authority."""
 import hashlib
 import json
+import re
 from datetime import datetime, timedelta, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -86,6 +87,26 @@ def validate_attention(candidate, now):
     stamp = datetime.fromisoformat(published)
     if stamp.tzinfo is None or not now - timedelta(days=1) <= stamp <= now:
         raise ValueError('attention_outside_window')
+
+
+def validate_timing(data, sources, now):
+    """Fail closed on the original article before expensive downstream work."""
+    if not isinstance(data, dict) or data.get('eligible') is not True:
+        raise ValueError('ineligible_or_uncertain_event_time')
+    if data.get('timing_basis') not in {'event', 'report'}:
+        raise ValueError('unsupported_timing_basis')
+    value = data.get('event_date')
+    if not isinstance(value, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}', value):
+        raise ValueError('missing_event_date')
+    event = datetime.fromisoformat(value).date()
+    today = now.astimezone(RIYADH).date()
+    if not today - timedelta(days=1) <= event <= today + timedelta(days=1):
+        raise ValueError('event_outside_window')
+    quote = text(data.get('event_quote'), 500)
+    source = next((s for s in sources if s['id'] == data.get('event_source_id')), {})
+    if len(quote) < 8 or quote not in source.get('text', ''):
+        raise ValueError('unsupported_event_time')
+    text(data.get('reason'), 500)
 
 
 def reporting_time(data, sources, candidate, lane):
