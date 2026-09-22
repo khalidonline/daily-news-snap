@@ -13,7 +13,7 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
 
-from publishing_v2.public_images import search_commons, search_commons_category, download_image
+from publishing_v2.public_images import search_commons, search_commons_category, download_image, ImageSourceError
 from publishing_v2.flickr_images import search_flickr
 from publishing_v2.met_images import search_met
 from .credits import attribution_eligible
@@ -228,6 +228,7 @@ class Sources:
         self.image_diagnostics = []
         self.publisher_articles = {}
         self.attention_cache = {}
+        self.official_image_cache = {}
         self.image_cache = {}
         self.image_search_cache = {}
         self.discovery_rejections = []
@@ -353,6 +354,20 @@ class Sources:
             candidate['resolved_subject'] = resolved_subjects[0]
             candidate['resolved_subjects'] = resolved_subjects
         return rows
+
+    def official_images(self, subject):
+        from publishing_v2.official_images import search_official, PROFILES
+        key = subject.casefold().strip()
+        profile = next((p for p in PROFILES if key in p['aliases']), None)
+        key = profile['newsroom'] if profile else key
+        if key not in self.official_image_cache:
+            try:
+                self.official_image_cache[key] = search_official(subject)
+            except (ValueError, OSError, RuntimeError, ImageSourceError) as error:
+                self.image_diagnostics.append({'stage': 'official_media', 'subject': subject,
+                                               'error': type(error).__name__})
+                self.official_image_cache[key] = []
+        return [dict(row) for row in self.official_image_cache[key]]
 
     def subject_images(self, query, subject):
         return self.recover_images(query, subject) if self.recovery else self.images(query, subject=subject)

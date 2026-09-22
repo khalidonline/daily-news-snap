@@ -15,7 +15,7 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from PIL import Image
 
-HOSTS = {'collectionapi.metmuseum.org', 'images.metmuseum.org', 'www.flickr.com', 'live.staticflickr.com', 'apod.nasa.gov', 'commons.wikimedia.org', 'upload.wikimedia.org', 'thumb.wikimedia.org', 'images-api.nasa.gov', 'images-assets.nasa.gov'}
+HOSTS = {'ceermotors.com', 'assets.ceermotors.com', 'collectionapi.metmuseum.org', 'images.metmuseum.org', 'www.flickr.com', 'live.staticflickr.com', 'apod.nasa.gov', 'commons.wikimedia.org', 'upload.wikimedia.org', 'thumb.wikimedia.org', 'images-api.nasa.gov', 'images-assets.nasa.gov'}
 MAX_BYTES = 16 * 1024 * 1024
 MAX_PIXELS = 40_000_000
 NASA_TERMS = 'https://www.nasa.gov/nasa-brand-center/images-and-media/'
