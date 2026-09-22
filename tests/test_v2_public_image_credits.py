@@ -19,7 +19,7 @@ class PublicCreditsTests(unittest.TestCase):
             validate_public_attribution(card,path.read_bytes())
             with Image.open(path) as image:
                 self.assertEqual(image.size,(1080,1920))
-                self.assertGreater(len(image.crop((64,1550,1016,1820)).getcolors(952*270)),50)
+                self.assertGreater(len(image.crop((64,1840,1016,1900)).getcolors(952*60)),50)
             with self.assertRaisesRegex(ValueError,'public_attribution'):
                 validate_public_attribution(card,b'changed pixels')
             card['image']['credit']='Different photographer'

@@ -10,7 +10,7 @@ class PublicImagePoolTests(unittest.TestCase):
     def run_pool(self, recovery, publication_only, overflowing=True):
         source = Sources(recovery=recovery, publication_only=publication_only)
         credited = [dict(asset(asset_id=str(i)), title='Jeddah waterfront',
-                         width=1600, height=1100, rights_links=('W'*400 if overflowing else '')) for i in range(5)]
+                         width=1600, height=1100, credit=('W'*120 if overflowing else 'Aisha Photographer')) for i in range(5)]
         public = [dict(row, asset_id=str(10+i), license='CC0',
                        attribution_required='false') for i, row in enumerate(credited[:3])]
         def search(query, limit=5, offset=0):
