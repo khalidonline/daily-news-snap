@@ -11,7 +11,7 @@ from urllib.parse import urljoin, urlsplit
 from .public_images import get_bytes, ImageSourceError
 
 PROFILES = ({
-    'aliases': {'ceer', 'ceer motors', 'ceer exobot', 'exobot', 'سير', 'إكزوبوت'},
+    'aliases': {'ceer', 'ceer motors', 'ceer exobot', 'exobot', 'سير', 'سير (شركة)', 'سير موتورز', 'إكزوبوت'},
     'newsroom': 'https://ceermotors.com/news/',
     'asset_host': 'assets.ceermotors.com',
     'terms': 'https://ceermotors.com/terms-of-use/',

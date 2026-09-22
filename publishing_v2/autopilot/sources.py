@@ -198,7 +198,8 @@ def resolve_subject(query, rows, *, context=""):
     wanted = normalize(query)
     matches = {}
     contextual = {}
-    context_words = set(normalize(context)) - set(wanted) - {'the', 'of', 'and', 'in', 'for', 'a', 'an'}
+    stop_words = set(normalize('the of and in for a an في من إلى على عن هو هي أن إن مع أو هذا هذه ذلك التي الذي أول كل وقد كما خلال بعد قبل'))
+    context_words = set(normalize(context)) - set(wanted) - stop_words
     for row in rows:
         title = row.get('title')
         if row.get('source_type') != 'encyclopedia' or not title or not row.get('text'):
@@ -332,9 +333,14 @@ class Sources:
                     from .policy import validate_editor_binding
                     validate_editor_binding(candidate)
                     native = next(r['mention'] for r in editorial['subject_evidence'] if r['subject'] == query)
+                    # Strip only presentation quotes after validating the original
+                    # mention. Resolve ambiguous native names against this news
+                    # source, with the same bounded, exact-base-name guards.
+                    native = native.strip().strip('«»“”\"').strip()
                     if re.search(r'[\u0600-\u06ff]', native):
-                        native_rows = wiki(native, language='ar', exact_only=True)
-                        native_resolved = resolve_subject(native, native_rows)
+                        native_rows = wiki(native, language='ar')
+                        native_context = ' '.join(str(candidate.get(k, '')) for k in ('title', 'summary'))
+                        native_resolved = resolve_subject(native, native_rows, context=native_context)
                         if native_resolved:
                             evidence, resolved, resolution_query = native_rows, native_resolved, native
                 except (ValueError, KeyError, TypeError, StopIteration, OSError):
