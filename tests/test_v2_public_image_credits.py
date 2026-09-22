@@ -71,6 +71,7 @@ class PublicCreditsTests(unittest.TestCase):
                 self.assertEqual(len(load_package('manifest.json')[2]),3)
                 duplicate=copy.deepcopy(manifest)
                 duplicate['media'][1]['image']=copy.deepcopy(duplicate['media'][0]['image'])
+                duplicate['media'][2]['image']=copy.deepcopy(duplicate['media'][0]['image'])
                 target.write_text(json.dumps(duplicate))
                 with self.assertRaisesRegex(BundleError,'duplicate'):
                     load_package('manifest.json')
@@ -97,5 +98,7 @@ class PublicCreditsTests(unittest.TestCase):
              patch('publishing_v2.autopilot.sources.search_flickr',side_effect=lambda *a,**k:[] if k['publication_only'] else [row]), \
              patch('publishing_v2.autopilot.sources.download_image',return_value=b'downloaded'):
             source=Sources(recovery=True,publication_only=True)
-            planned=Renderer(None,source).plan_visuals({'resolved_subjects':[{'name':'Jeddah'}]})
+            renderer=Renderer(None,source)
+            renderer.check_source_images=lambda candidate,subject,rows:rows
+            planned=renderer.plan_visuals({'resolved_subjects':[{'name':'Jeddah'}]})
             self.assertEqual([r['asset_id'] for r in planned],['flickr:123'])

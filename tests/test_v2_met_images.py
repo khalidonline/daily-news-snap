@@ -82,7 +82,7 @@ class MetImagesTests(unittest.TestCase):
              patch('publishing_v2.autopilot.sources.search_met',return_value=[original]), \
              patch('publishing_v2.autopilot.sources.download_image',side_effect=lambda r:r['asset_id'].encode()):
             found=Sources(recovery=True,publication_only=True).recover_images('Coffee pot','Coffee pot')
-        self.assertEqual([r['asset_id'] for r in found],['777'])
+        self.assertEqual([r['asset_id'] for r in found],['met:443173'])
         self.assertEqual(found[0]['origin_key'],'met:443173')
 
 if __name__=='__main__': unittest.main()

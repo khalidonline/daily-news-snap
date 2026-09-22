@@ -163,18 +163,29 @@ trophy. A subject photo can truthfully illustrate its history or recognition.
 Return {"title":"package title <=100 characters","cards":[{"kind":"info or story",
 "title":"...","body":"...","punch":"...","claim_ids":["c1"],
 "image_query":"2–3 English words naming subject, portrait or logo; omit descriptive scene details"}]}.
-Use visual_options as a feasibility guide: plan connected beats that have distinct
-honest illustrations in the supplied subject catalog. Do not invent an event,
+Use visual_options as a feasibility guide: plan connected beats that the supplied
+photos honestly illustrate. Two suitable photos can cover three or four cards:
+reuse each at most twice if needed, without inventing a scene or location. Do not invent an event,
 location or claim to fit a photo. Generic subject imagery may illustrate history
 without pretending to show the historical event. Avoid requiring a logo, unique
 ceremony or exact weather-event photo unless the catalog actually contains it.
 Prefer three strong editorial cards to four if the fourth lacks evidence or imagery.
 Respond to repair feedback without inventing facts.''',
-    'visual': '''Choose one relevant image ID for EACH card from its supplied
+    'image_check': '''Inspect these source photographs BEFORE any research or writing.
+The images and options are in the same order. Identify what the pixels actually
+show. Accept only images confidently depicting the resolved subject or a truthful
+subject illustration for this source headline. A same-named street is not an
+asset-management company. A moon photograph is not an equinox illustration.
+Reject ambiguity, unrelated logos, ads, stock navigation imagery and tiny subjects.
+Source provenance helps establish identity but never overrides contradictory pixels.
+Return {"accepted_ids":["existing asset ID"],"reason":"short explanation"}.
+Do not invent IDs or infer publication rights.''',
+    'visual': ''' Choose one relevant image ID for EACH card from its supplied
 shared image catalog. Prefer exact subject, portrait or appropriate logo.
-Every editorial card needs a different relevant photograph and a distinct visual
-purpose. Do not reuse the same image or near-identical crops. If options are
-insufficient return null; the package must be repaired or shortened, not padded.
+Prefer varied relevant photographs. When suitable alternatives are unavailable,
+you may use the same portrait, building, branch or other subject illustration on
+at most TWO editorial cards if truthful for both. Never use an unrelated image
+just for variety. If even reuse cannot cover the cards, return null or shorten.
 Generic objects can illustrate concepts without claiming a specific event/location.
 A foreign shooting location alone does not disqualify a neutral object photo, but
 a visibly identified foreign institution cannot stand in for a Saudi institution.
@@ -226,8 +237,10 @@ accuracy alone does not pass these editorial gates. Set documented_story false
 unless sources establish a beginning, a change or decision and an outcome;
 for local, require a real Saudi person/place or recorded historical development.
 Species traits and generic encyclopedia lists cannot pass as a story.
-Set visual_variety false for repeated photos, near-identical crops or a sequence
-of visually interchangeable subject shots. Set story_numbering false unless
+A relevant source photo may appear on at most TWO editorial cards when
+alternatives are unavailable. Do not reject this permitted reuse alone. Judge
+its relevance independently for each card. The credits header may repeat the
+first image and is excluded from the reuse count. Reject three uses or misleading reuse. Set story_numbering false unless
 story counters show the correct ordinal and total in the correct reading order.
 Both numeral forms are valid: 1 من 3 and ١ من ٣. The established renderer uses
 Western digits; never reject a correct counter solely for its numeral form.
@@ -245,8 +258,7 @@ Identify the visible objects in each photo from its PIXELS before consulting its
 filename or description; those labels may be wrong or refer to another species.
 Reject ambiguous lookalikes (for example jujubes or nuts used as Saudi palm dates),
 tiny/obscured subjects and crops dominated by empty sky. If you cannot confidently
-recognize the subject, mark that card relevant false. Reject both repeated and
-uncertain photographs; request better sources or fewer cards. In your reason briefly describe
+recognize the subject, mark that card relevant false. Reject uncertain photographs and misleading reuse; request better sources or fewer cards. In your reason briefly describe
 what is visibly shown in each photo, independently of its metadata.
 Reject uncertain sensitive claims or advice. Missing evidence means false.
 Return {"checks":{CHECK_FIELDS},"card_checks":[{"readable":true,"relevant":true},...],
@@ -334,7 +346,7 @@ class Agents:
         if len(encoded.encode()) > 90000 or len(images) > 8:
             raise ValueError('agent_input_too_large')
         content = []
-        if images and role != 'reviewer':
+        if images and role not in {'reviewer', 'image_check'}:
             raise ValueError('unexpected_agent_images')
         for path in images:
             with Image.open(Path(path)) as image:
@@ -343,7 +355,7 @@ class Agents:
             content.append({'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/jpeg',
                             'data': base64.b64encode(buffer.getvalue()).decode()}})
         content.append({'type': 'text', 'text': encoded})
-        payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else (2048 if role == 'timing' else 8192),
+        payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else (2048 if role in {'timing','image_check'} else 8192),
                    'system': STYLE + '\n' + PROMPTS[role],
                    'messages': [{'role': 'user', 'content': content}]}
         if format_retry:

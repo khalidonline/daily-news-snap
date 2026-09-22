@@ -24,7 +24,9 @@ class PublicImagePoolTests(unittest.TestCase):
              patch('publishing_v2.autopilot.sources.search_flickr', return_value=[]) as flickr, \
              patch('publishing_v2.autopilot.sources.download_image', side_effect=download):
             rows = source.subject_images('Jeddah', 'Jeddah')
-            planned = Renderer(None, source).plan_visuals({'resolved_subjects':[{'name':'Jeddah'}]})
+            renderer = Renderer(None, source)
+            renderer.check_source_images = lambda candidate, subject, rows: rows
+            planned = renderer.plan_visuals({'resolved_subjects':[{'name':'Jeddah'}]})
             if publication_only and recovery:
                 self.assertTrue(any(call.kwargs['publication_only'] for call in flickr.call_args_list))
         return rows, planned, downloads

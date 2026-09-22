@@ -80,10 +80,11 @@ class MultiSourceTests(unittest.TestCase):
             obj['license']='https://creativecommons.org/licenses/by-nc/2.0/'
             with self.assertRaises(images.ImageSourceError):flickr_images.photo(photo['source_url'])
 
-    def test_cross_provider_original_is_not_used_twice(self):
+    def test_cross_provider_original_is_not_used_three_times(self):
         from publishing_v2.autopilot.policy import validate_image_variety
         cards=[{'image':{'asset_id':'123','origin_key':'flickr:456'}},
-               {'image':{'asset_id':'flickr:456','origin_key':'flickr:456'}}]
+               {'image':{'asset_id':'flickr:456','origin_key':'flickr:456'}},
+               {'image':{'asset_id':'another-copy','origin_key':'flickr:456'}}]
         with self.assertRaisesRegex(ValueError,'duplicate_source_image'):validate_image_variety(cards)
 
     def test_production_catalog_uses_download_verified_pool(self):
