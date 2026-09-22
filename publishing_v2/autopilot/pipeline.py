@@ -16,11 +16,12 @@ class PersistenceError(Exception):
 
 
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test'):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None):
         self.agent, self.sources, self.render = agent, sources, render
         self.store, self.publish = store, publish
         self.output, self.now = Path(output), now
         self.engine = engine
+        self.candidate_memory = candidate_memory
 
     def save(self, state, event, **values):
         state.update(values)
@@ -71,6 +72,8 @@ class Pipeline:
             eligible = []
             for candidate in candidates:
                 reason = routine_trigger_rejection(candidate)
+                if not reason and self.candidate_memory:
+                    reason = self.candidate_memory.reason(candidate, self.engine)
                 if reason:
                     excluded.append({'candidate_id': candidate['id'],
                                      'source_title': candidate['title'], 'reason': reason})
@@ -179,10 +182,13 @@ class Pipeline:
                                     if isinstance(check, dict) and check.get('relevant') is False and isinstance(ident, str):
                                         excluded_images.add(ident)
                             self.save(state, 'repair_required', feedback=feedback)
+                    raise ValueError('editorial_repairs_exhausted')
                 except BudgetBlocked:
                     raise
                 except (ValueError, RuntimeError, OSError) as error:
-                    self.save(state, 'candidate_rejected', reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__,
+                    reason = str(error)[:250] if isinstance(error, ValueError) else type(error).__name__
+                    self.remember_rejection(candidate, reason)
+                    self.save(state, 'candidate_rejected', reason=reason,
                               candidate_id=candidate['id'], source_title=candidate['title'])
             self.save(state, 'exhausted_candidates', status='held', reason='no_package_passed_review')
         except PersistenceError:
@@ -191,6 +197,13 @@ class Pipeline:
             details = {'budget_diagnostic': error.diagnostic} if isinstance(error, BudgetBlocked) else {}
             self.save(state, 'stopped', status='held', reason=type(error).__name__, **details)
         return state
+
+    def remember_rejection(self, candidate, reason):
+        if self.candidate_memory:
+            try:
+                self.candidate_memory.record(candidate, reason, self.engine)
+            except Exception:
+                raise PersistenceError('candidate_memory_write_unconfirmed') from None
 
     def editor_choices(self, state, lane, candidates):
         """Try at most two shortlists, never researching a candidate twice."""
@@ -210,8 +223,10 @@ class Pipeline:
                     for entry in state['audit'] if entry['event'] == 'candidate_rejected'],
             })
             ranked = selected.get('candidates', [])
-            if not isinstance(ranked, list) or not 1 <= len(ranked) <= 4:
+            if not isinstance(ranked, list) or not 0 <= len(ranked) <= 4:
                 raise ValueError('invalid_selection')
+            if not ranked:
+                return
             for choice in ranked:
                 if not isinstance(choice, dict) or choice.get('id') not in allowed or choice['id'] in used:
                     raise ValueError('unknown_or_duplicate_candidate')

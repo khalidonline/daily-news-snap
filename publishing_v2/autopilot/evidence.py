@@ -28,6 +28,16 @@ def hydrate_editor(choice, candidate):
             if not matches:
                 raise ValueError('invalid_editor_source_field')
             field = matches[0]
+        # Recover a wrong selector only when the literal mention exists in the
+        # other original field. Never translate, infer or fuzzy-match a name.
+        mention = row['mention']
+        normalize = lambda value: ' '.join(value.split())
+        if isinstance(mention, str) and mention.strip():
+            if normalize(mention) not in normalize(candidate.get(field, '')):
+                for alternate in ('title', 'summary'):
+                    if normalize(mention) in normalize(candidate.get(alternate, '')):
+                        field = alternate
+                        break
         resolved.append({'subject': row['subject'], 'mention': row['mention'],
                          'quote': candidate.get(field, '')})
     result = dict(choice, source_title=candidate['title'],

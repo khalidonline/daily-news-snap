@@ -388,8 +388,10 @@ def main():
                 promoted = promotable_shadow(shadow, engine, lane, now(), record['slot'])
                 if promoted:
                     store.save(promoted)
+        from .candidate_memory import CandidateMemory
+        candidate_memory = CandidateMemory(GitHubJournal('autopilot-candidate-memory'), now)
         pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
-            store=store, publish=publish_package, output=output / lane, now=now, engine=engine)
+            store=store, publish=publish_package, output=output / lane, now=now, engine=engine, candidate_memory=candidate_memory)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
         atomic_write(output / f'{lane}.json', json.dumps(result, ensure_ascii=False).encode())
         if result['status'] == 'shadow_passed':

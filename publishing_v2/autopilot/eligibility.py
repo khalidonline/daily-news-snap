@@ -20,4 +20,10 @@ def routine_trigger_rejection(candidate):
     english_advice = re.search(r'\b(?:eat|eating|foods?|diet|drinks?|supplements?)\b', title)
     if (arabic_condition and arabic_advice) or (english_condition and english_advice):
         return 'medical_advice_trigger'
+    if (re.search(r'(?:امير|محافظ|وزير).*\bيستقبل\b.*(?:مدير|رئيس|سفير)', title)
+            or re.search(r'\b(?:governor|minister)\b.*\breceives\b.*\b(?:ambassador|director)\b', title)):
+        return 'routine_official_reception'
+    if (re.search(r"martha[’']?s rule|\b(?:sexual abuse|child abuse|rape allegations)\b", title)
+            or re.search(r'(?:اعتداء جنسي|اساءة معاملة الاطفال)', title)):
+        return 'sensitive_trigger'
     return None
