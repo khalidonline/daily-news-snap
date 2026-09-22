@@ -17,6 +17,7 @@ from publishing_v2.public_images import search_commons, search_commons_category,
 from publishing_v2.flickr_images import search_flickr
 from publishing_v2.met_images import search_met
 from .credits import attribution_eligible
+from publishing_v2.official_images import owner_editorial_use
 from publishing_v2.publication import image_publication_eligible
 from .feedback import rejected_trigger
 from .eligibility import routine_trigger_rejection
@@ -167,7 +168,7 @@ def wiki(query, *, language="en", exact_only=False):
 
 def reusable_image(row):
     # Metadata from the source adapter, never a model-provided rights assertion.
-    return attribution_eligible(row) or (row.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
+    return owner_editorial_use(row) or attribution_eligible(row) or (row.get('license') in {'Public domain', 'CC0', 'CC0 1.0'}
             and not row.get('restrictions')
             and str(row.get('attribution_required', '')).lower() in {'', 'false', 'no'})
 
@@ -356,7 +357,7 @@ class Sources:
         return rows
 
     def official_images(self, subject):
-        from publishing_v2.official_images import search_official, PROFILES
+        from publishing_v2.official_images import search_official, PROFILES, official_source_asset, OWNER_USE_DECISION, varied_official_images
         key = subject.casefold().strip()
         profile = next((p for p in PROFILES if key in p['aliases']), None)
         key = profile['newsroom'] if profile else key
@@ -367,7 +368,12 @@ class Sources:
                 self.image_diagnostics.append({'stage': 'official_media', 'subject': subject,
                                                'error': type(error).__name__})
                 self.official_image_cache[key] = []
-        return [dict(row) for row in self.official_image_cache[key]]
+        rows = [dict(row) for row in self.official_image_cache[key]]
+        for row in rows:
+            if official_source_asset(row):
+                row.update(owner_use_decision=OWNER_USE_DECISION,
+                           rights_status='owner_accepted_editorial_use', collection_subject=subject)
+        return varied_official_images(rows)
 
     def subject_images(self, query, subject):
         return self.recover_images(query, subject) if self.recovery else self.images(query, subject=subject)
@@ -382,7 +388,8 @@ class Sources:
         deadline = time.monotonic() + 90
         found, identities, hashes, origins = [], set(), set(), set()
         attempts = 0
-        stages = [('commons', lambda: search_commons(query, limit=5)),
+        stages = [('official_media', lambda: self.official_images(subject)),
+                  ('commons', lambda: search_commons(query, limit=5)),
                   ('commons_collection', lambda: search_commons_category(subject, limit=5)),
                   ('flickr_cc0' if self.publication_only else 'flickr',
                    lambda: search_flickr(subject, limit=5, deadline=deadline,

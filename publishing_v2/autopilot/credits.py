@@ -99,7 +99,15 @@ def _blocks(package):
             blocks.append((LICENSE_URLS[row['license']], False))
         blocks.append(('Images cropped/resized. No endorsement implied.', False))
     else:
-        blocks.append(('Images: public domain / CC0', False))
+        from publishing_v2.official_images import owner_editorial_use
+        official = {c.get('image', {}).get('source_url'): c.get('image', {})
+                    for c in package.get('cards', []) if owner_editorial_use(c.get('image'))}
+        if official:
+            blocks.append(('Official media · owner-directed editorial use', False))
+            for url, row in official.items():
+                blocks.append((row.get('credit', '') + ' · ' + url, False))
+        else:
+            blocks.append(('Images: public domain / CC0', False))
     names = {'bbc.com':'BBC', 'bbc.co.uk':'BBC', 'alyaum.com':'اليوم',
              'aawsat.com':'الشرق الأوسط', 'en.wikipedia.org':'Wikipedia', 'ar.wikipedia.org':'ويكيبيديا'}
     hosts = []
