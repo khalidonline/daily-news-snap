@@ -357,7 +357,7 @@ def main():
     output = Path(args.output).resolve(); output.mkdir(parents=True, exist_ok=True)
     token = os.environ.get('DAILY_BUDGET_GITHUB_TOKEN') or os.environ.get('GITHUB_TOKEN')
     ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token),
-                    limit_micro_usd=int(os.environ.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD', '5000000')))
+                    limit_micro_usd=int(os.environ.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD', '8000000')))
     readiness = GitHubJournal('autopilot-readiness')
     engine = engine_id()
     verified = rollout_ready(readiness.read(), engine, now())
