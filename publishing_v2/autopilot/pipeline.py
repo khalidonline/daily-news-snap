@@ -16,12 +16,13 @@ class PersistenceError(Exception):
 
 
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None):
         self.agent, self.sources, self.render = agent, sources, render
         self.store, self.publish = store, publish
         self.output, self.now = Path(output), now
         self.engine = engine
         self.candidate_memory = candidate_memory
+        self.published_memory = published_memory
 
     def save(self, state, event, **values):
         state.update(values)
@@ -71,7 +72,8 @@ class Pipeline:
             excluded = list(getattr(self.sources, 'discovery_rejections', []))
             eligible = []
             for candidate in candidates:
-                reason = routine_trigger_rejection(candidate)
+                reason = self.published_memory.reason(candidate) if self.published_memory else None
+                reason = reason or routine_trigger_rejection(candidate)
                 if not reason and self.candidate_memory:
                     reason = self.candidate_memory.reason(candidate, self.engine)
                 if reason:
