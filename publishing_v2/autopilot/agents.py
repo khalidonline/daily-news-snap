@@ -72,6 +72,12 @@ Explain the concrete current development and why ordinary Saudis would care now.
 Reject evergreen explainers, old announcements and routine institutional coverage
 without a compelling current hook. Weigh the hook AND the quality of the possible
 Info/story, not novelty alone. The trigger need not appear in the final cards.
+Use a removal test: without the current quote, result, announcement or race,
+would the proposed angle still offer a distinctive fact and a documented story
+worth sharing? Keep freshness in why_now; propose an evidence-seeking background
+angle, never a made-up historical claim. Current scoring totals, an award argument
+and a list of competitors are a news recap, not a subject story. Choose the subject
+for a feasible background story, not just because it is famous.
 Apply supplied editorial_feedback: exclude rejected triggers/angles. A subject is
 not banned forever, but returning to it requires a genuinely different, verified
 current development and a materially better documented story.
@@ -113,7 +119,14 @@ historical development. A list of species traits, sizes, nutritional facts or
 possible origins is not a story. Preserve uncertainty and distinguish extinct
 populations from replacement populations. Never turn a disputed origin into fact.
 The trigger establishes timing, not the whole story. Return no claims if the
-sources cannot support the explanatory angle. Each selected fact must
+sources cannot support the explanatory angle. Before selecting claims, remove
+current results, quotes and predictions mentally: identify a remaining documented
+beginning, change and outcome in the supplied background passages. Select those
+claims for the story. Current statistics followed by a quote, its interpretation
+and rivals do not qualify. The Info fact must add understanding beyond current
+performance totals. If this background progression is unavailable, return no
+claims now, before any writer or renderer spends on a news recap. Never invent a
+turning point or motive to satisfy the pattern. Each selected fact must
 be supported by its selected passage ID. Read neighboring passages for context,
 but never infer a fact that the cited passage does not support. Do not transcribe
 quotes: the program retrieves the exact text by ID. Infer actual event date from
@@ -135,6 +148,12 @@ only where evidence supports them. The Info title and body must explain what the
 give a distinctive fact; its main content cannot be the triggering result,
 announcement or headline. Later cards develop the same subject and explanatory
 angle, not disconnected background statistics. A brief trigger reference is optional.
+Apply the removal test to the whole package: removing the latest statement,
+result, announcement or competition must leave a useful Info fact and a connected
+subject story. Do not fill story cards with a current quote, an explanation of
+why the speaker said it, rivals, predictions or the next ceremony date. A report
+split into cards does not become a story. Use the supplied documented background
+progression; never invent history or motives to escape the news-recap pattern.
 Each card must advance or explain the preceding material. Open each card with
 a clear subject and action; avoid vague suspense and unexplained pronouns.
 Keep one development per story card. Do not repeat the information card or pad
@@ -233,7 +252,18 @@ The Michelin example is a style reference only, never evidence for these cards.
 Set distinct_value false if Info mainly recaps the triggering news instead of
 explaining the selected subject through a distinctive fact. Set story_coherent
 false if later cards switch subjects or merely collect unrelated facts. Factual
-accuracy alone does not pass these editorial gates. Set documented_story false
+accuracy alone does not pass these editorial gates. Apply the removal test to
+ALL editorial cards: mentally remove the current statement/result/announcement
+and ask what distinctive Info fact and documented subject story remain.
+A package of current scoring totals, a player's award quote, reasons for that
+quote and a list of rivals MUST fail distinct_value and documented_story even if
+accurate, timely, readable and popular. These are pieces of the triggering report,
+not a beginning, turning point and outcome in the subject's story. This rule applies
+to every category, not just sports. A short optional trigger reference is fine
+when the remaining cards genuinely develop the subject's background. In reason,
+identify the actual background progression and its source evidence; if absent,
+state that it is missing. Do not reward a news recap for being coherent alone.
+Set documented_story false
 unless sources establish a beginning, a change or decision and an outcome;
 for local, require a real Saudi person/place or recorded historical development.
 Species traits and generic encyclopedia lists cannot pass as a story.
