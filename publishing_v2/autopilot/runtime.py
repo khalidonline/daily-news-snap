@@ -32,6 +32,13 @@ class Renderer:
         subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
         if not subjects:
             subjects = [candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']]
+        official = getattr(self.sources, 'official_images', None)
+        if official:
+            discovered = {}
+            for subject in subjects:
+                for row in official(subject):
+                    discovered[row['asset_id']] = row
+            candidate['visual_discovery'] = list(discovered.values())[:50]
         found, hashes, origins = {}, set(), set()
         for subject in subjects:
             subject_search = getattr(self.sources, 'subject_images', None)

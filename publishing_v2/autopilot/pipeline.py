@@ -108,7 +108,13 @@ class Pipeline:
                     planner = getattr(self.render, 'plan_visuals', None)
                     if planner:
                         visual_options = planner(candidate)
+                        discovered = candidate.get('visual_discovery', [])
+                        if discovered:
+                            self.save(state, 'official_images_discovered', candidate_id=candidate['id'],
+                                      official_image_candidates=discovered)
                         if len({r['asset_id'] for r in visual_options}) < 3:
+                            if discovered:
+                                raise ValueError('images_found_usage_clearance_required')
                             raise ValueError('insufficient_subject_visuals_before_drafting')
                         self.save(state, 'visual_preflight_passed', candidate_id=candidate['id'], visual_preflight={
                             'candidate_id': candidate['id'],
