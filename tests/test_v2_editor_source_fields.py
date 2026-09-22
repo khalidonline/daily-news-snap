@@ -41,6 +41,29 @@ class SourceFieldsTests(unittest.TestCase):
         self.assertEqual(result['subject_evidence'][0]['quote'], source()['title'])
         policy.validate_editor_binding(dict(source(), editorial=result))
 
+    def test_exact_copied_source_field_recovers_without_changing_evidence(self):
+        for field, mention in [('title', 'جدة'), ('summary', 'واجهة روشن البحرية')]:
+            candidate, choice = source(), selection()
+            choice['subject_evidence'][0].update(source_field=candidate[field], mention=mention)
+            original = copy.deepcopy(choice)
+            result = self.hydrate(choice, candidate)
+            self.assertEqual(result['subject_evidence'][0]['quote'], candidate[field])
+            self.assertEqual(choice, original)
+
+    def test_copied_field_never_accepts_partial_paraphrased_or_other_source_text(self):
+        for value in [source()['summary'][:20], source()['summary'] + ' زيادة',
+                      source()['summary'].replace('جدة', 'الرياض'), '', [], None]:
+            choice = selection()
+            choice['subject_evidence'][0]['source_field'] = value
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'invalid_editor_source_field'):
+                self.hydrate(choice, source())
+
+    def test_exact_copied_field_still_requires_grounded_mention(self):
+        choice = selection()
+        choice['subject_evidence'][0].update(source_field=source()['summary'], mention='الرياض')
+        with self.assertRaisesRegex(ValueError, 'editor_subject_mention_not_grounded'):
+            self.hydrate(choice, source())
+
     def test_wrong_candidate_or_invented_evidence_cannot_be_hydrated(self):
         for change in ('id', 'field', 'mention', 'quote', 'subjects', 'title', 'duplicate', 'format'):
             choice = selection()
