@@ -35,14 +35,14 @@ class AgentTests(unittest.TestCase):
         self.ledger = Ledger(self.store, now=lambda: datetime(2026, 9, 17, tzinfo=timezone.utc))
 
     def agent(self, transport):
-        return Agents(env={'ANTHROPIC_API_KEY': 'test'}, ledger=self.ledger, transport=transport)
+        return Agents(env={'ANTHROPIC_API_KEY': 'credential-sentinel-never-in-prompts'}, ledger=self.ledger, transport=transport)
 
     def test_budget_is_reserved_before_request_and_settled(self):
         def transport(method, url, headers, payload):
             self.assertEqual(payload['output_config']['effort'], 'medium')
             self.assertGreaterEqual(payload['max_tokens'], 8000)
             self.assertGreater(sum(e['charged_micro_usd'] for e in self.store.row['entries'].values()), 0)
-            self.assertNotIn('test', payload['system'])
+            self.assertNotIn('credential-sentinel-never-in-prompts', payload['system'])
             return {'status_code': 200, 'body': {'id': 'receipt', 'stop_reason': 'end_turn',
                     'usage': {'input_tokens': 100, 'output_tokens': 10},
                     'content': [{'type': 'text', 'text': '{"candidates": []}'}]}}
