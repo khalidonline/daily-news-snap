@@ -21,11 +21,15 @@ def validate_public_attribution(card, raw=None):
     if image_without_public_credit(image):
         return
     receipt = card.get('public_attribution', {})
-    if (not public_attribution_eligible(image) or receipt.get('version') not in {1, 2}
+    if (not public_attribution_eligible(image) or receipt.get('version') not in {1, 2, 3}
             or receipt.get('image_sha256') != attribution_identity(image)
             or not isinstance(receipt.get('media_sha256'), str)
             or len(receipt['media_sha256']) != 64):
         raise ValueError('public_attribution_required')
+    if receipt.get('version') == 3:
+        from .autopilot.credits import public_attribution_layout
+        if receipt.get('display_label') != public_attribution_layout(image)[0][0]:
+            raise ValueError('public_attribution_label_changed')
     if raw is not None and hashlib.sha256(raw).hexdigest() != receipt['media_sha256']:
         raise ValueError('public_attribution_media_changed')
 
@@ -57,5 +61,5 @@ def publication_indices(cards):
             if (receipt.get('companion_sha256') != digest
                     or attribution_identity(card['image']) not in proof.get('images', [])):
                 raise ValueError('compact_attribution_companion_mismatch')
-        indices += credits
+        # Credits remain internal, including older version-2 packages.
     return indices

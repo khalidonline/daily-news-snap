@@ -74,6 +74,7 @@ class Renderer:
                     origins.add(origin)
                 found[row['asset_id']] = {'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
                     'description': row.get('description', '')[:900],
+                        'pixel_description': row.get('pixel_description', '')[:600],
                     'image_role': row.get('image_role', 'subject illustration; event date requires review')}
         return list(found.values())
 
@@ -95,7 +96,13 @@ class Renderer:
         allowed = {r['asset_id'] for r in rows}
         if not isinstance(accepted,list) or any(not isinstance(i,str) or i not in allowed for i in accepted):
             raise ValueError('invalid_preflight_image_ids')
+        descriptions = decision.get('descriptions', {})
+        if not isinstance(descriptions, dict):
+            descriptions = {}
         for row in rows:
+            description = descriptions.get(row['asset_id'])
+            if row['asset_id'] in accepted and isinstance(description, str) and description.strip():
+                row['pixel_description'] = description.strip()[:600]
             self.sources.image_memory.record(subject,row,row['asset_id'] in accepted)
         self.sources.image_memory.save()
         return [r for r in rows if r['asset_id'] in accepted]
@@ -162,6 +169,7 @@ class Renderer:
             choices = [catalog for card in cards]
             options = [{'asset_id': row['asset_id'], 'title': row.get('title', '')[:250],
                         'description': row.get('description', '')[:900],
+                        'pixel_description': row.get('pixel_description', '')[:600],
                         'date_created': row.get('date_created', '')[:100],
                         'image_role': row.get('image_role', 'subject illustration; event date requires review')}
                        for row in catalog]

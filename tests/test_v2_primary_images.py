@@ -79,10 +79,12 @@ class PrimaryImagesTests(unittest.TestCase):
                 self.role=role
                 assert len(images)==2
                 assert images[0].read_bytes()==b'pixels'
-                return {'accepted_ids':['building'],'reason':'Street is unrelated'}
+                return {'accepted_ids':['building'],'descriptions':{'building':'Glass building exterior','street':'Wrong subject'},'reason':'Street is unrelated'}
         agent=Agent();result=Renderer(agent,source).check_source_images({'title':'Company news'},'BlackRock',rows)
         self.assertEqual(agent.role,'image_check')
         self.assertEqual([r['asset_id'] for r in result],['building'])
+        self.assertEqual(result[0]['pixel_description'],'Glass building exterior')
+        self.assertNotIn('pixel_description',rows[0])
         self.assertTrue(source.image_memory.rejected('BlackRock',rows[0]))
         self.assertFalse(source.image_memory.rejected('BlackRock',rows[1]))
 

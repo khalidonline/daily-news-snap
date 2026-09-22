@@ -190,19 +190,17 @@ def render_credits(package, source_path, target):
 
 
 def public_attribution_layout(image):
-    """Fit complete image-specific notices in a bounded public footer."""
+    """Two-word maximum display label; complete notices stay in package metadata."""
     if not attribution_eligible(image):
         raise ValueError('incomplete_image_attribution')
-    blocks = _blocks({'cards':[{'image':image}]})[2:]
-    draw = ImageDraw.Draw(Image.new('RGB', (1080,1920)))
-    font = _font(26)
-    rows = []
-    for text, _ in blocks:
-        rows.extend(_wrap(draw, text, font, 952))
-    height = len(rows)*34+24
-    if height > 340:
+    label = image['credit'].strip()
+    if len(label.split()) > 2:
+        # Name the actual source provider instead of truncating a person's name.
+        label = 'Flickr' if image.get('provider') == 'flickr' else 'Wikimedia Commons'
+    draw = ImageDraw.Draw(Image.new('RGB', (1080, 1920)))
+    if draw.textlength(label, font=_font(24)) > 952:
         raise ValueError('public_attribution_layout_overflow')
-    return rows, height
+    return [label], 48
 
 
 def public_attribution_eligible(image):
@@ -221,33 +219,27 @@ def attribution_identity(image):
 
 
 def render_public_attribution(card, path):
-    """Keep all original content and branding; reserve a separate rights band."""
+    """Owner-directed compact source label without shrinking the approved design."""
     import hashlib
-    rows, height = public_attribution_layout(card['image'])
+    rows, _ = public_attribution_layout(card['image'])
     with Image.open(path) as original:
-        if original.size != (1080,1920):
+        if original.size != (1080, 1920):
             raise ValueError('wrong_frame_dimensions')
-        canvas = Image.new('RGB', (1080,1920), original.convert('RGB').getpixel((0,0)))
-        content = ImageOps.contain(original.convert('RGB'), (1080,1820-height-16), Image.Resampling.LANCZOS)
-        canvas.paste(content, ((1080-content.width)//2,0))
+        canvas = original.convert('RGB')
     draw = ImageDraw.Draw(canvas)
-    y = 1820-height
-    draw.line((64,y-8,1016,y-8), fill='#c9bb9c', width=2)
-    for text in rows:
-        direction = _direction(text)
-        draw.text((1016 if direction == 'rtl' else 64,y),text,font=_font(26),
-                  fill='#26352f',direction=direction,anchor='rt' if direction=='rtl' else 'lt')
-        y += 34
-    canvas.save(path,'JPEG',quality=95,subsampling=0)
-    card['public_attribution'] = {'version':1,'image_sha256':attribution_identity(card['image']),
-                                 'media_sha256':hashlib.sha256(Path(path).read_bytes()).hexdigest()}
+    draw.text((540, 1850), rows[0], font=_font(24), fill='#79736b', anchor='mt')
+    canvas.save(path, 'JPEG', quality=95, subsampling=0)
+    card['public_attribution'] = {
+        'version': 3, 'display_label': rows[0],
+        'image_sha256': attribution_identity(card['image']),
+        'media_sha256': hashlib.sha256(Path(path).read_bytes()).hexdigest()}
 
 
 def render_compact_attribution(package, paths, source_path):
-    """Owner-approved short labels with a required, hash-bound public credits card.
+    """Short labels with a hash-bound internal credits record.
 
     Input paths must be clean editorial renders without the older rights band.
-    Preserve complete attribution metadata; publish the companion with the cards.
+    Preserve complete attribution metadata; never publish the companion.
     """
     import hashlib
     cards = package['cards']

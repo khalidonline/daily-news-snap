@@ -57,7 +57,12 @@ news. Keep the trigger in why_now. research_query must be only the subject's
 canonical English name with a short disambiguator if needed; omit event actions,
 opponents, scores, dates and headline wording. Return one or two subject_evidence
 entries with canonical English entity names. For a comparison or rivalry, list each person
-separately; never combine their names into one search. Each name must be
+separately; never combine their names into one search. Otherwise provide ONE
+subject only. Do not add every person mentioned in the headline. For a child's
+Rubik cube record, choose Rubik's Cube alone when the proposed story is about the
+object: the record holder supplies the trigger but is not a second research entity.
+Retain the exact source mention for the chosen subject. Never replace a person
+with a similarly named person to make encyclopedia resolution succeed. Each name must be
 verifiable from retrieved encyclopedia evidence.
 Use a short parenthetical disambiguator for a shared name, e.g. Bisht (clothing),
 not a bare name that also denotes a surname. Each subject must identify concrete
@@ -197,10 +202,18 @@ subject illustration for this source headline. A same-named street is not an
 asset-management company. A moon photograph is not an equinox illustration.
 Reject ambiguity, unrelated logos, ads, stock navigation imagery and tiny subjects.
 Source provenance helps establish identity but never overrides contradictory pixels.
-Return {"accepted_ids":["existing asset ID"],"reason":"short explanation"}.
+Return {"accepted_ids":["existing asset ID"],
+"descriptions":{"accepted asset ID":"brief visible content, clothing/team/logo and setting"},
+"reason":"short explanation"}.
+Describe only visible pixels; do not guess dates, identity or locations from metadata.
+Descriptions go to the writer and image selector to avoid them guessing what is visible.
 Do not invent IDs or infer publication rights.''',
     'visual': ''' Choose one relevant image ID for EACH card from its supplied
 shared image catalog. Prefer exact subject, portrait or appropriate logo.
+Use pixel_description from the earlier visual inspection when supplied. Never
+invent visible clothing, club branding or scene details when a description is absent.
+A portrait of the same person can illustrate their career without depicting that
+historical event, provided the card does not claim the photograph is from that event.
 Prefer varied relevant photographs. When suitable alternatives are unavailable,
 you may use the same portrait, building, branch or other subject illustration on
 at most TWO editorial cards if truthful for both. Never use an unrelated image
