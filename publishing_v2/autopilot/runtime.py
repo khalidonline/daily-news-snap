@@ -373,6 +373,9 @@ def main():
         print('Live validation unavailable: running shadow to establish readiness')
         args.mode = 'shadow'
         args.lane = 'both'
+    from .published_memory import PublishedMemory
+    published_memory = PublishedMemory(GitHubJournal('autopilot-published-memory'), now)
+    published_memory.import_manual(Path('approved'), GitHubJournal)
     results = []
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
         agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True, publication_only=True,
@@ -391,7 +394,7 @@ def main():
         from .candidate_memory import CandidateMemory
         candidate_memory = CandidateMemory(GitHubJournal('autopilot-candidate-memory'), now)
         pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
-            store=store, publish=publish_package, output=output / lane, now=now, engine=engine, candidate_memory=candidate_memory)
+            store=store, publish=publish_package, output=output / lane, now=now, engine=engine, candidate_memory=candidate_memory, published_memory=published_memory)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
         atomic_write(output / f'{lane}.json', json.dumps(result, ensure_ascii=False).encode())
         if result['status'] == 'shadow_passed':
@@ -399,6 +402,7 @@ def main():
             state[lane] = shadow_record(result, engine, slot)
             readiness.save(state)
         elif result['status'] == 'published':
+            published_memory.record(result['package']['candidate'], result['receipt'])
             state = readiness.read()
             state[lane] = {'status': 'published', 'at': result['started_at'],
                            'engine': result['engine'], 'slot': slot, 'approval': result['approval']}
