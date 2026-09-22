@@ -65,10 +65,11 @@ jobs:
           DRY_RUN: '1'
         run: |
           python -m publishing_v2.autopilot.runtime --mode "$AUTOPILOT_MODE" --lane "$AUTOPILOT_LANE"
-      - name: Send concise operational report
+      - name: Send publication outcome
         if: always()
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          AUTOPILOT_REQUESTED_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m publishing_v2.autopilot.report
