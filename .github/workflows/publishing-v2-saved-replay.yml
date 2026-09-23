@@ -6,6 +6,10 @@ on:
         description: Saved autopilot shadow journal identifier
         type: string
         required: true
+      resume_slot:
+        description: Optional budget-blocked replay journal; review only, no writer
+        type: string
+        required: false
 permissions:
   contents: read
 concurrency:
@@ -29,6 +33,7 @@ jobs:
         run: PYTHONPATH=.:tests python -m unittest tests.test_v2_saved_replay tests.test_v2_editorial_density -q
       - name: Rewrite and review saved package only
         env:
+          RESUME_SLOT: ${{ inputs.resume_slot }}
           SOURCE_SLOT: ${{ inputs.source_slot }}
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
@@ -38,7 +43,7 @@ jobs:
           AUTOPILOT_REVIEWER_MODEL: 'claude-opus-5'
           POST_TO_SNAPCHAT: '0'
           DRY_RUN: '1'
-        run: python -m publishing_v2.autopilot.replay --source-slot "$SOURCE_SLOT"
+        run: python -m publishing_v2.autopilot.replay --source-slot "$SOURCE_SLOT" --resume-slot "$RESUME_SLOT"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
