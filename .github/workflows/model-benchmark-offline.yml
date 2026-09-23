@@ -26,6 +26,24 @@ jobs:
           python-version: '3.12'
       - name: Install offline test dependencies
         run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Candidate configuration
+        continue-on-error: true
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_candidates_are_bounded_and_production_baseline_is_included -v
+      - name: Hard reservation cap
+        continue-on-error: true
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_three_frozen_cases_fit_under_hard_reservation_cap -v
+      - name: Missing credential safeguard
+        continue-on-error: true
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_missing_credentials_make_no_paid_call -v
+      - name: Frozen claim input
+        continue-on-error: true
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_case_input_uses_only_frozen_case_claims -v
+      - name: Output validation
+        continue-on-error: true
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_validator_accepts_valid_shape_and_rejects_unknown_claim -v
+      - name: Workflow safeguards
+        continue-on-error: true
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_workflow_is_manual_only_and_cannot_publish -v
       - name: Verify blind experiment safeguards
         run: python -m unittest tests.test_model_role_experiment -v
       - name: Verify quality cost ranker
