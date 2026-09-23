@@ -1,0 +1,134 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "اليوم الوطني: الاسم اللي جمعنا",
+  "expires_at": "2026-09-24T00:00:00+03:00",
+  "media": [
+    {
+      "kind": "info",
+      "title": "وراء اسم المملكة.. مئات البرقيات",
+      "body": "اليوم الوطني يذكّرنا بتوحيد البلاد باسم المملكة العربية السعودية. وقبل إعلان الاسم عام 1932، وصلت مئات البرقيات من أنحاء البلاد تؤيد التسمية. الاسم اللي يجمعنا اليوم، رحّب فيه الناس من وقتها.",
+      "punch": "",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:c72f073f24124eafe3d12c36",
+        "original_url": "https://www.alyaum.com/uploads/images/2026/09/23/3129946.jpg",
+        "download_url": "https://www.alyaum.com/uploads/images/2026/09/23/3129946.jpg",
+        "source_url": "https://www.alyaum.com/articles/6683860/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D9%8A%D9%88%D9%85/%D8%A7%D9%84%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A-%D9%85%D8%AF%D9%86-%D8%AC%D8%A7%D8%B2%D8%A7%D9%86-%D9%88%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A7%D8%AA%D9%87%D8%A7-%D8%AA%D8%AA%D8%B2%D9%8A%D9%86-%D8%A8%D9%85%D8%B8%D8%A7%D9%87%D8%B1-%D8%A7%D9%84%D9%81%D8%B1%D8%AD-%D9%88%D8%A7%D9%84%D8%A8%D9%87%D8%AC%D8%A9",
+        "source_kind": "article",
+        "title": "Saudi National Day: source illustration; identity unverified",
+        "description": "Saudi National Day",
+        "collection_subject": "Saudi National Day",
+        "credit": "www.alyaum.com",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1000,
+        "height": 799,
+        "sha256": "41d13a4ff667b2f28abce33417f3cf65a3d81a24988d0314e6d5d23ee84dffc0",
+        "origin_key": "primary:c72f073f24124eafe3d12c36",
+        "pixel_description": "Stage event for Jazan Municipality's Saudi National Day celebration; men in traditional dress holding swords, children in white thobes with green Saudi National Day sashes holding flags, backdrop banner reads 'حفل أهالي منطقة جازان بمناسبة اليوم الوطني السعودي'"
+      },
+      "path": "approved/national-day-20260923/national-day-01.jpg",
+      "sha256": "f92381f2c47294c211f37a34912ee836d09366b5ce635b91c71e054578f7a5b9"
+    },
+    {
+      "kind": "story",
+      "title": "البداية كانت من الرياض",
+      "body": "في 1902، استعاد الملك عبدالعزيز الرياض. ومنها بدأت رحلة توحيد البلاد، منطقة بعد منطقة، على مدى نحو ثلاثين سنة. الاسم اللي نعرفه اليوم جاء بعد هالمشوار الطويل.",
+      "punch": "",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:ea455e131559a5178a1e20f1",
+        "original_url": "https://saudipedia.com/var/site/storage/images/7/1/7/3/2983717-1-ara-SA/d4c7ac08db34-64844.jpg",
+        "download_url": "https://saudipedia.com/var/site/storage/images/7/1/7/3/2983717-1-ara-SA/d4c7ac08db34-64844.jpg",
+        "source_url": "https://saudipedia.com/اليوم-الوطني-السعودي",
+        "source_kind": "official",
+        "title": "الملك عبدالعزيز",
+        "description": "صورة تاريخية للملك عبدالعزيز من سعوديبيديا",
+        "collection_subject": "King Abdulaziz",
+        "credit": "سعوديبيديا",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "historical portrait, not a photograph of the 1902 event",
+        "width": 564,
+        "height": 705,
+        "sha256": "76c84c5596f24d6f47ba362af9538a12824e41e2fd4d6a41f56f38f5851d4e53",
+        "origin_key": "saudipedia:king-abdulaziz-64844",
+        "pixel_description": "صورة تاريخية للملك عبدالعزيز جالساً، لا تمثل أحداث استعادة الرياض عام 1902.",
+        "website_entity": "Q124619388",
+        "official_site": "https://saudipedia.com",
+        "website_provenance": "https://www.wikidata.org/wiki/Q124619388#P856"
+      },
+      "path": "approved/national-day-20260923/national-day-02.jpg",
+      "sha256": "ca3369c930792cf639e95a7ba29e6bcc3475f7bc867fe4d4788fed3458bcc384"
+    },
+    {
+      "kind": "story",
+      "title": "بلاد توحّدت.. واسم جمعها",
+      "body": "في 23 سبتمبر 1932، بدأ العمل باسم «المملكة العربية السعودية» مع إعلان توحيد البلاد. ومن هالتاريخ نحتفل بيومنا الوطني كل سنة، ونستذكر الرحلة اللي جمعتنا تحت راية واحدة.",
+      "punch": "",
+      "image": {
+        "provider": "flickr",
+        "asset_id": "flickr:7378386142",
+        "title": "Saudi Arabia Grunge Flag",
+        "description": "Grunge textured flag of Saudi Arabia on vintage paper EDIT 4/22/2013 : This grunge flag is now released under a standard Creative Commons License - Attribution 3.0 Unported. It gives you a lot of freedom to use my work commercially as long as you credit and link back to the same free image from my website, www.freestock.ca",
+        "source_url": "https://www.flickr.com/photos/80497449@N04/7378386142/",
+        "download_url": "https://live.staticflickr.com/7213/7378386142_ae55784873_b.jpg",
+        "original_url": "https://live.staticflickr.com/7213/7378386142_42dc4a6692_o.jpg",
+        "width": 1024,
+        "height": 694,
+        "credit": "Nicolas Raymond",
+        "credit_line": "",
+        "copyright_notice": "",
+        "rights_links": "https://www.flickr.com/photos/80497449@N04",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "restrictions": "",
+        "attribution_required": "true",
+        "source_verified": true,
+        "licensing_verified": false,
+        "date_created": "",
+        "image_role": "subject illustration; event date unverified",
+        "sha256": "34d763f33fdc1cb31ba0a5835f36908317a766198214e148a08585161c3ad0ed",
+        "origin_key": "flickr:7378386142"
+      },
+      "public_attribution": {
+        "version": 3,
+        "display_label": "Nicolas Raymond",
+        "image_sha256": "61911b5fcf2c4eae7c5f93745a0eeba1e0510a93c86f5ab7eaac2eca3db86ff6",
+        "media_sha256": "9a4e43878420f90b1b35b29a397165dd9ccc384804b487fa59ef393581bc550a"
+      },
+      "path": "approved/national-day-20260923/national-day-03.jpg",
+      "sha256": "9a4e43878420f90b1b35b29a397165dd9ccc384804b487fa59ef393581bc550a"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://saudipedia.com/اليوم-الوطني-السعودي",
+      "supports": "hundreds of telegrams, 1932 naming, September 23 anniversary"
+    },
+    {
+      "url": "https://saudipedia.com/متى-أعلن-توحيد-المملكة-العربية-السعودية-رسميا؟",
+      "supports": "roughly thirty years; name effective September 23, 1932"
+    },
+    {
+      "url": "https://saudipedia.com/توحيد-المملكة-العربية-السعودية",
+      "supports": "recovery of Riyadh in 1902"
+    }
+  ],
+  "topic_aliases": [
+    "اليوم الوطني",
+    "اليوم الوطني السعودي",
+    "Saudi National Day"
+  ],
+  "owner_review": {
+    "reference": "Owner instructed كمل after reviewing these exact three cards on 2026-09-23",
+    "public_cards": 3,
+    "credits": "no source card"
+  }
+}
