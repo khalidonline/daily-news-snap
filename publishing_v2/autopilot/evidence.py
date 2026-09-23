@@ -95,9 +95,13 @@ def hydrate_timing(data, rows):
     required = {'eligible', 'event_date', 'event_passage_id', 'timing_basis', 'reason'}
     if not isinstance(data, dict) or not required.issubset(data):
         raise ValueError('unexpected_timing_fields')
-    # Models occasionally add explanatory fields despite the requested schema.
-    # Ignore them deterministically: only the required fields can influence the
-    # decision, and source identity/quotation are hydrated from event_passage_id.
+    extras = set(data) - required
+    # Explanatory extras (for example confidence/rationale metadata) cannot
+    # influence the decision and are ignored. Evidence-authority fields remain
+    # forbidden: the model may select a passage ID but may never supply its own
+    # quotation or source identity.
+    if extras & {'event_quote', 'event_source_id', 'quote', 'source_id'}:
+        raise ValueError('model_authored_timing_evidence')
     result = {key: data[key] for key in required if key != 'event_passage_id'}
     if data.get('eligible') is not True:
         return result
