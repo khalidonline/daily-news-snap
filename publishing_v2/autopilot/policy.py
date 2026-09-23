@@ -195,11 +195,15 @@ def validate_draft(data, research):
         raise ValueError('info_and_two_to_six_story_cards_required')
     known = {c['id'] for c in research['claims']}
     for card in cards:
-        if set(card) != {'kind', 'title', 'body', 'punch', 'claim_ids', 'image_query'}:
+        if set(card) - {'image_caption'} != {'kind', 'title', 'body', 'punch', 'claim_ids', 'image_query'}:
             raise ValueError('unexpected_card_fields')
         text(card.get('title'), 85); text(card.get('body'), 320)
         if not isinstance(card.get('punch'), str) or len(card['punch']) > 100:
             raise ValueError('invalid_closing')
+        if 'image_caption' in card:
+            if card['kind'] != 'story':
+                raise ValueError('photo_caption_story_only')
+            text(card['image_caption'], 50)
         text(card.get('image_query'), 180)
         ids = card.get('claim_ids')
         if not isinstance(ids, list) or not ids or any(i not in known for i in ids):

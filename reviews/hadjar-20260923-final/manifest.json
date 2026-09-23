@@ -1,0 +1,104 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "title": "إيزاك هادجار.. من الكارتينج إلى منصة التتويج",
+  "expires_at": "2026-09-25T00:00:00+03:00",
+  "media": [
+    {
+      "kind": "info",
+      "title": "إيزاك هادجار.. سائق فورمولا ون",
+      "body": "سائق فرنسي بدأ مشواره في بطولة الفورمولا ون عام 2025، وانتقل لفريق ريد بول الأول في 2026.",
+      "punch": "قبل الفورمولا ون، كانت بدايته بسيارة كارتينج.",
+      "photo": "portrait.jpg",
+      "path": "reviews/hadjar-20260923-final/hadjar-improved-01.jpg",
+      "sha256": "da2bbdb21da12bc478ceba93c62187701a2072fa1b312191a715e3b01398f053",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q105071364",
+        "official_site": "https://isackhadjar.com/",
+        "source_url": "https://isackhadjar.com/",
+        "original_url": "https://framerusercontent.com/assets/X8AFZnxHQpp5DkBgyZCY3ut17Dw.jpg",
+        "download_url": "https://framerusercontent.com/assets/X8AFZnxHQpp5DkBgyZCY3ut17Dw.jpg",
+        "asset_id": "primary:9ee72d7b7f1f2ad3493412dc",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "sha256": "dbf2b07e78cf6d20186ecc769f76bcbcbb9678adb3b061e8794094498d949e63"
+      }
+    },
+    {
+      "kind": "story",
+      "title": "بدأ السباقات وعمره سبع سنوات",
+      "body": "أهله اشتروا له سيارة كارتينج، وكان أبوه يجهّزها له. وفي أول موسم له بسيارات أكبر، واجه صعوبة بسبب قصر قامته.",
+      "punch": "ما كان يقدر يضغط دواسات السيارة بالكامل.",
+      "photo": "kart-illustration.jpg",
+      "image_caption": "صورة توضيحية للكارتينج",
+      "path": "reviews/hadjar-20260923-final/hadjar-improved-02.jpg",
+      "sha256": "faf51334bc85a21deac87d34f52095d77deec5af67dc4e19ce81e99da7ae0ee7",
+      "image": {
+        "source_url": "https://commons.wikimedia.org/wiki/File:Léon_Delorme_Karting.jpg",
+        "download_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/L%C3%A9on_Delorme_Karting.jpg/1280px-L%C3%A9on_Delorme_Karting.jpg",
+        "license": "CC0 1.0",
+        "credit": "Stephane AGNUS",
+        "image_role": "generic illustration of karting; depicts Leon Delorme, not Hadjar",
+        "sha256": "d543caabb243da372a8bbaf71236659cf901e7196da96389a9603c9c66c2e1a9"
+      }
+    },
+    {
+      "kind": "story",
+      "title": "أول سباق انتهى قبل البداية",
+      "body": "بعد سنوات من التدرّج، وصل للفورمولا ون في 2025. لكن ظهوره الأول بأستراليا انتهى بحادث في اللفة التحضيرية، قبل انطلاق السباق نفسه.",
+      "punch": "لكن موسمه الأول ما وقف عند هالبداية.",
+      "photo": "setback.webp",
+      "image_caption": "بعد حادث سباق أستراليا",
+      "path": "reviews/hadjar-20260923-final/hadjar-improved-03.jpg",
+      "sha256": "d0a9b6ce04806cf55a9492de7276b9f3fc3e760c74e0debd23bd8859b476df62",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q1968",
+        "official_site": "https://www.formula1.com/",
+        "source_url": "https://www.formula1.com/en/latest/article/i-felt-for-him-like-a-father-anthony-hamilton-shares-what-he-said-to-hadjar.tH3NeHMcbPBLtg3RHD5qB",
+        "original_url": "https://media.formula1.com/image/upload/t_16by9Centre/c_lfill%2Cw_3392/q_auto/v1740000001/trackside-images/2025/F1_Grand_Prix_Of_Australia/2205327485.webp",
+        "download_url": "https://media.formula1.com/image/upload/t_16by9Centre/c_lfill%2Cw_3392/q_auto/v1740000001/trackside-images/2025/F1_Grand_Prix_Of_Australia/2205327485.webp",
+        "asset_id": "primary:375b014a0c51f03094e32ff4",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "sha256": "1b6bb097e6395f6a07ace7710a1a0a01397a477bf6e41c7ad99e3038e000a37e"
+      }
+    },
+    {
+      "kind": "story",
+      "title": "في نفس الموسم.. وصل للمنصة",
+      "body": "أنهى سباق هولندا بالمركز الثالث، بعد أشهر من حادث البداية في أستراليا.",
+      "punch": "وفي الموسم التالي، انتقل لفريق ريد بول الأول.",
+      "photo": "podium.jpg",
+      "path": "reviews/hadjar-20260923-final/hadjar-improved-04.jpg",
+      "sha256": "7e1570487a8424c4db3085f868048e557d67e85f014cc47ab1258ab3e34c4510",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q2872502",
+        "official_site": "https://www.ffsaacademy.org/",
+        "source_url": "https://www.ffsaacademy.org/2025/09/01/premier-podium-en-f1-pour-isack-hadjar-a-zandvoort/",
+        "original_url": "https://www.ffsaacademy.org/wp-content/uploads/2025/09/ISACKPODIUMZANDVOORT.jpg",
+        "download_url": "https://www.ffsaacademy.org/wp-content/uploads/2025/09/ISACKPODIUMZANDVOORT.jpg",
+        "asset_id": "primary:36483e4c7cd11a4fd0280af7",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "sha256": "883dbd1b802bd7345a70989c3da4c7ab6ab3b41c3d431cb6489eac4102119734"
+      }
+    }
+  ],
+  "owner_review": {
+    "reference": "Revised following owner feedback; not republished",
+    "public_cards": 4
+  },
+  "status": "revised_not_republished"
+}

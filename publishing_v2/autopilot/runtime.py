@@ -222,7 +222,7 @@ class Renderer:
             else:
                 story_bot.render_frame(target.with_suffix('.png'), 'ملخص تنفيذي - قصة',
                     story_counter(i, len(cards)-1), card['title'], 64, sub=card['body'],
-                    photo=source, punch=card['punch'],
+                    photo=source, punch=card['punch'], photo_caption=card.get('image_caption'),
                     footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names and not needs_credits else None)
                 with Image.open(target.with_suffix('.png')) as image:
                     image.convert('RGB').save(target, 'JPEG', quality=95)
