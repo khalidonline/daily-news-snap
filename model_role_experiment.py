@@ -15,6 +15,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
+from daily_budget import GitHubStore, Ledger
 from publishing_v2.autopilot.agents import PROMPTS, STYLE, parse_object
 
 CANDIDATES = (
@@ -229,12 +230,28 @@ def blind_markdown(result: dict[str, Any]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def reserve_shared_budget(env: dict[str, str]):
+    repository = env.get("GITHUB_REPOSITORY", "").strip()
+    token = (env.get("DAILY_BUDGET_GITHUB_TOKEN", "") or env.get("GITHUB_TOKEN", "")).strip()
+    if not repository or not token:
+        if env.get("GITHUB_ACTIONS") == "true":
+            raise ExperimentError("shared_budget_credentials_required")
+        return None, None
+    ledger = Ledger(GitHubStore(repository, token))
+    reservation = ledger.reserve(
+        int(MAX_EXPERIMENT_COST_USD * 1_000_000),
+        "manual:model-role-experiment",
+    )
+    return ledger, reservation
+
+
 def run(cases_path: Path, output_dir: Path, env: dict[str, str]) -> dict[str, Any]:
     payload = json.loads(cases_path.read_text(encoding="utf-8"))
     cases = payload.get("cases", [])[:MAX_CASES]
     if len(cases) != MAX_CASES:
         raise ValueError("benchmark_requires_three_cases")
     output_dir.mkdir(parents=True, exist_ok=True)
+    ledger, budget_token = reserve_shared_budget(env)
     result = {
         "schema_version": 1,
         "purpose": "manual_blind_writer_model_benchmark",
@@ -283,6 +300,8 @@ def run(cases_path: Path, output_dir: Path, env: dict[str, str]) -> dict[str, An
         "note": "No Telegram/Snapchat publication and no production routing changes.",
     }
     (output_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+    if ledger is not None and budget_token is not None:
+        ledger.settle(budget_token, int(round(result["total_cost_usd"] * 1_000_000)))
     print(json.dumps(summary))
     return result
 
