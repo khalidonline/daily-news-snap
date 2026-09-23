@@ -27,14 +27,28 @@ CANDIDATES = (
      "input_price": 4.0, "output_price": 20.0, "credential": "OPENAI_API_KEY"},
 )
 LABELS = ("A", "B", "C")
-MAX_CASES = 3
-MAX_OUTPUT_TOKENS = 2048
+MAX_CASES = 2
+MAX_OUTPUT_TOKENS = 4096
 MAX_EXPERIMENT_COST_USD = 0.75
 TIMEOUT_SECONDS = 180
 
 
 class ExperimentError(RuntimeError):
     pass
+
+
+def _safe_http_error(status: int, raw: bytes) -> str:
+    detail = f"provider_http_{status}"
+    try:
+        body = json.loads(raw)
+        error = body.get("error") if isinstance(body, dict) else None
+        if isinstance(error, dict):
+            safe = error.get("code") or error.get("type")
+            if isinstance(safe, str) and safe and all(ch.isalnum() or ch in "._-" for ch in safe[:80]):
+                detail += "_" + safe[:80]
+    except Exception:
+        pass
+    return detail
 
 
 def _request(url: str, headers: dict[str, str], payload: dict[str, Any]) -> dict[str, Any]:
@@ -48,8 +62,8 @@ def _request(url: str, headers: dict[str, str], payload: dict[str, Any]) -> dict
         with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as response:
             raw = response.read(2 * 1024 * 1024 + 1)
     except urllib.error.HTTPError as exc:
-        exc.read(64 * 1024)
-        raise ExperimentError(f"provider_http_{exc.code}") from None
+        raw = exc.read(64 * 1024)
+        raise ExperimentError(_safe_http_error(exc.code, raw)) from None
     except Exception as exc:
         raise ExperimentError(type(exc).__name__) from None
     if len(raw) > 2 * 1024 * 1024:
@@ -72,8 +86,12 @@ def _anthropic(candidate: dict[str, Any], prompt: str, key: str):
          "output_config": {"effort": "medium"},
          "messages": [{"role": "user", "content": prompt}]},
     )
-    if body.get("stop_reason") != "end_turn" or not isinstance(body.get("content"), list):
-        raise ExperimentError("anthropic_incomplete")
+    if body.get("stop_reason") != "end_turn":
+        stop = body.get("stop_reason")
+        safe = stop if isinstance(stop, str) and stop else "unknown"
+        raise ExperimentError("anthropic_stop_" + safe[:80])
+    if not isinstance(body.get("content"), list):
+        raise ExperimentError("anthropic_content_invalid")
     text = "".join(
         row.get("text", "")
         for row in body["content"]
@@ -94,8 +112,14 @@ def _openai(candidate: dict[str, Any], prompt: str, key: str):
          "reasoning": {"effort": "medium"},
          "max_output_tokens": MAX_OUTPUT_TOKENS},
     )
-    if body.get("status") != "completed" or not isinstance(body.get("output"), list):
-        raise ExperimentError("openai_incomplete")
+    if body.get("status") != "completed":
+        status = body.get("status")
+        details = body.get("incomplete_details") if isinstance(body.get("incomplete_details"), dict) else {}
+        reason = details.get("reason")
+        safe = reason if isinstance(reason, str) and reason else (status if isinstance(status, str) else "unknown")
+        raise ExperimentError("openai_incomplete_" + safe[:80])
+    if not isinstance(body.get("output"), list):
+        raise ExperimentError("openai_output_invalid")
     texts = []
     for item in body["output"]:
         if not isinstance(item, dict) or item.get("type") == "reasoning":
@@ -249,7 +273,7 @@ def run(cases_path: Path, output_dir: Path, env: dict[str, str]) -> dict[str, An
     payload = json.loads(cases_path.read_text(encoding="utf-8"))
     cases = payload.get("cases", [])[:MAX_CASES]
     if len(cases) != MAX_CASES:
-        raise ValueError("benchmark_requires_three_cases")
+        raise ValueError("benchmark_requires_selected_cases")
     output_dir.mkdir(parents=True, exist_ok=True)
     ledger, budget_token = reserve_shared_budget(env)
     result = {
