@@ -137,6 +137,33 @@ def literal_numbers(value):
     return set(re.findall(r'\d+(?:[.,]\d+)*', normalized))
 
 
+def prune_unsupported_number_claims(data, sources):
+    """Drop only claims whose written numbers are not grounded in their quote.
+
+    The original strict validator remains unchanged and still rejects any
+    unsupported numeric claim that survives this deterministic projection.
+    """
+    if not isinstance(data, dict) or not isinstance(data.get('claims'), list):
+        return data, []
+    by_id = {source['id']: source for source in sources}
+    kept, dropped = [], []
+    for claim in data['claims']:
+        if not isinstance(claim, dict):
+            kept.append(claim)
+            continue
+        fact, quote, source_id = claim.get('fact'), claim.get('quote'), claim.get('source_id')
+        if not isinstance(fact, str) or not isinstance(quote, str) or source_id not in by_id:
+            kept.append(claim)
+            continue
+        if literal_numbers(fact).issubset(literal_numbers(quote)):
+            kept.append(claim)
+        else:
+            dropped.append(claim.get('id'))
+    if dropped and len(kept) < 3:
+        raise ValueError('insufficient_supported_claims_after_prune')
+    return dict(data, claims=kept), [ident for ident in dropped if isinstance(ident, str)]
+
+
 def validate_research(data, sources, lane, now):
     by_id = {s['id']: s for s in sources}
     claims = data.get('claims', [])
