@@ -92,9 +92,19 @@ def hydrate(data, rows):
 
 def hydrate_timing(data, rows):
     """Select exact original timing evidence; never accept model-authored evidence."""
-    required = {'eligible', 'event_date', 'event_passage_id', 'timing_basis', 'reason'}
+    required = {'eligible', 'timing_basis', 'reason'}
     if not isinstance(data, dict) or not required.issubset(data):
         raise ValueError('unexpected_timing_fields')
+    # Models may omit null-valued fields. Normalize those omissions only when
+    # the decision is ineligible; eligible timing still requires a concrete
+    # date and selected source passage before it can pass policy validation.
+    if data.get('eligible') is not True:
+        data = dict(data)
+        data.setdefault('event_date', None)
+        data.setdefault('event_passage_id', None)
+    elif 'event_date' not in data or 'event_passage_id' not in data:
+        raise ValueError('unexpected_timing_fields')
+    required = {'eligible', 'event_date', 'event_passage_id', 'timing_basis', 'reason'}
     extras = set(data) - required
     # Explanatory extras (for example confidence/rationale metadata) cannot
     # influence the decision and are ignored. Evidence-authority fields remain
