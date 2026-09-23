@@ -1,0 +1,30 @@
+name: Model benchmark offline checks
+
+on:
+  pull_request:
+    paths:
+      - 'model_role_experiment.py'
+      - 'model_quality_benchmark.py'
+      - 'tests/test_model_role_experiment.py'
+      - 'tests/test_model_quality_benchmark.py'
+      - '.github/workflows/model-role-experiment.yml'
+      - '.github/workflows/model-quality-benchmark.yml'
+      - '.github/workflows/model-benchmark-offline.yml'
+      - 'docs/model-routing-experiment.md'
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install offline test dependencies
+        run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Verify manual benchmark safeguards
+        run: python -m unittest tests.test_model_role_experiment tests.test_model_quality_benchmark -v
