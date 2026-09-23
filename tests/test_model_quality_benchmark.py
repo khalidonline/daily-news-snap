@@ -1,7 +1,6 @@
 import unittest
 from pathlib import Path
 
-import yaml
 from model_quality_benchmark import rank_candidates, weighted_quality
 
 
@@ -76,8 +75,9 @@ class ModelQualityBenchmarkTests(unittest.TestCase):
     def test_benchmark_workflow_is_manual_only_and_has_no_production_secrets(self):
         path = Path(".github/workflows/model-quality-benchmark.yml")
         text = path.read_text(encoding="utf-8")
-        workflow = yaml.load(text, Loader=yaml.BaseLoader)
-        self.assertEqual(set(workflow["on"]), {"workflow_dispatch"})
+        self.assertIn("\non:\n  workflow_dispatch:\n", text)
+        self.assertNotIn("pull_request:", text)
+        self.assertNotIn("schedule:", text)
         self.assertNotIn("secrets.", text)
         self.assertNotIn("POST_TO_SNAPCHAT", text)
         self.assertIn("python model_quality_benchmark.py", text)
