@@ -115,7 +115,7 @@ class Renderer:
         queries = list(dict.fromkeys([card['image_query']] + subjects + ([subject[:130]] if subject else [])))
         recovery = getattr(self.sources, 'recovery', False) is True
         if recovery:
-            queries = subjects or ([subject] if subject else [card['image_query']])
+            queries = list(dict.fromkeys((subjects or ([subject] if subject else []))[:2] + [card['image_query']]))
         rows, seen = [], set()
         for query in queries:
             try:
@@ -132,7 +132,7 @@ class Renderer:
                         seen.add(row['asset_id']); rows.append(row)
             except Exception:
                 continue
-        return rows[:10]
+        return rows[:30] if recovery else rows[:10]
 
     def image_catalog(self, package):
         key = package.get('candidate', {}).get('id')
@@ -364,8 +364,9 @@ def main():
     now = lambda: datetime.now(timezone.utc)
     output = Path(args.output).resolve(); output.mkdir(parents=True, exist_ok=True)
     token = os.environ.get('DAILY_BUDGET_GITHUB_TOKEN') or os.environ.get('GITHUB_TOKEN')
+    from daily_budget import autopilot_daily_limit
     ledger = Ledger(GitHubStore(os.environ['GITHUB_REPOSITORY'], token),
-                    limit_micro_usd=int(os.environ.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD', '8000000')))
+                    limit_micro_usd=autopilot_daily_limit(now(), os.environ.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD', '8000000')))
     readiness = GitHubJournal('autopilot-readiness')
     engine = engine_id()
     verified = rollout_ready(readiness.read(), engine, now())
