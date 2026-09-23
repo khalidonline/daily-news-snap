@@ -133,7 +133,16 @@ performance totals. If this background progression is unavailable, return no
 claims now, before any writer or renderer spends on a news recap. Never invent a
 turning point or motive to satisfy the pattern. Each selected fact must
 be supported by its selected passage ID. Read neighboring passages for context,
-but never infer a fact that the cited passage does not support. Do not transcribe
+but never infer a fact that the cited passage does not support.
+Every written number/year must appear in the selected passage, with Arabic digit
+translation allowed. Split a claim or omit an unsupported detail; do not borrow
+numbers from neighboring passages or calculate calendar conversions.
+Resolve conflicting dates and attributions BEFORE choosing claims. Prefer a
+relevant official record over an encyclopedia, while distinguishing decree date,
+effective date and first celebration. An official domain alone is not proof.
+Do not include contradictory alternatives disguised as "the table says".
+If supplied evidence cannot resolve a conflict, omit that disputed claim; if it
+is essential to the story, return no claims. Never fill gaps from memory. Do not transcribe
 quotes: the program retrieves the exact text by ID. Infer actual event date from
 evidence; return null when its date is unknown. Never assume article publication
 date is event date. There is no publication-date fallback. For relative dates,
@@ -236,6 +245,15 @@ cards. An optional final credits card lists editorial sources and photo attribut
 It is part of the package: check its readability and correspondence to the images.
 Inspect EVERY supplied image in order and compare ALL assertions in title,
 body and closing to the ORIGINAL source texts, not just the research summary.
+Faithful quotation is NOT sufficient for factual=true. Check contradictions both
+within a source and across sources, including years, rulers and "first" claims.
+A source's timeline can contradict its introduction. Repeating both versions or
+saying "the table mentions" does not resolve the contradiction. Require relevant
+supporting evidence that explains different decree/effective/celebration dates;
+otherwise set factual=false and identify the conflict. Prefer a relevant official
+record when it actually supports the assertion; never infer its contents from its
+URL. If correcting a conflict would require new evidence absent from this input,
+reject it; do not suggest replacing a year with a remembered unverified year.
 When research.timing_basis is report_date, the verified feed timestamp dates the
 report only: verify the original article contains substantive current coverage,
 not an evergreen or recycled article. Reject any card that presents this as the
@@ -383,7 +401,7 @@ class Agents:
         evidence_rows = None
         if role in {'researcher', 'timing'}:
             evidence_rows = passages(data['sources'])
-            data = dict(data, sources=[{k: v for k, v in source.items() if k != 'text'}
+            data = dict(data, sources=[{k: v for k, v in source.items() if k not in {'text', 'reference_urls'}}
                                        for source in data['sources']], passages=evidence_rows)
         encoded = json.dumps(data, ensure_ascii=False, allow_nan=False)
         if len(encoded.encode()) > 90000 or len(images) > 8:
