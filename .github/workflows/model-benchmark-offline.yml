@@ -26,5 +26,7 @@ jobs:
           python-version: '3.12'
       - name: Install offline test dependencies
         run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
-      - name: Verify manual benchmark safeguards
-        run: python -m unittest tests.test_model_role_experiment tests.test_model_quality_benchmark -v
+      - name: Verify blind experiment safeguards
+        run: python -m unittest tests.test_model_role_experiment -v
+      - name: Verify quality cost ranker
+        run: python -m unittest tests.test_model_quality_benchmark -v
