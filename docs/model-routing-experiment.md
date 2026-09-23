@@ -35,7 +35,8 @@ Candidates:
 - OpenAI candidate: gpt-5.6-sol
 
 The experiment is manual-only, cannot publish to Telegram or Snapchat, cannot
-change autopilot readiness, and has an experiment-side cost stop at $0.75.
+change autopilot readiness, reserves at most $0.75, and that reservation is made
+inside the same shared $3 daily ledger used by production.
 Missing credentials produce an unavailable result rather than falling back to a
 different model.
 
