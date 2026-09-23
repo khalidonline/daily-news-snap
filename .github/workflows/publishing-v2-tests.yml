@@ -10,12 +10,6 @@ on:
       - 'evaluation/**'
       - 'deploy/publishing-v2/**'
       - '.github/workflows/publishing-v2-*.yml'
-      - 'model_role_experiment.py'
-      - 'model_quality_benchmark.py'
-      - 'tests/test_model_role_experiment.py'
-      - 'tests/test_model_quality_benchmark.py'
-      - '.github/workflows/model-role-experiment.yml'
-      - '.github/workflows/model-quality-benchmark.yml'
   push:
     branches: ['build/event-publishing-v2']
     paths:
@@ -50,9 +44,7 @@ jobs:
         env:
           FONT_FAMILY: Almarai
           THEME: light
-        run: |
-          python -m unittest discover -s tests -p 'test_v2_*.py' -v
-          python -m unittest tests.test_model_role_experiment tests.test_model_quality_benchmark -v
+        run: python -m unittest discover -s tests -p 'test_v2_*.py' -v
       - run: python -m publishing_v2.evaluate --mode offline --output evaluation-output
       - name: Build and run isolated container
         run: |
