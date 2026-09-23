@@ -16,7 +16,7 @@ from .evidence import passages, hydrate, hydrate_timing
 STYLE = '''You work for ملخص تنفيذي, a Saudi Snapchat account. News is a trigger,
 not the post. Choose broad everyday interest and distinctive facts worth sharing.
 Write natural Saudi Arabic, concise but clear. Avoid formal words like لاحقاً and
-معروفاً and قدراً; use everyday Saudi wording such as فيها, not وياها.
+معروفاً and قدراً and قصصاً; use everyday Saudi wording such as فيها, not وياها.
 Use the owner-approved everyday register: «دليل مجاني», not «دليلاً مجانياً»;
 «مع الوقت» instead of «لاحقاً», and natural «تبغى»، «وين»، «صار»، «اللي»
 where the sentence calls for them. Do not sprinkle dialect words into otherwise
@@ -119,7 +119,13 @@ explain the selected subject and support the editor's angle: a distinctive defin
 fact followed by connected background, developments or consequences. Do not
 substitute unrelated facts about an associated organization or a recent season.
 Require a documented progression: a beginning, a concrete change or decision,
-and its outcome. For local, this must be a real Saudi person, place, craft or
+and its outcome. For an ongoing company/person, include a supported endpoint
+showing where it reached, with the observation year for dated achievements or
+figures. Select one meaningful endpoint, not a pile of statistics. Never call an
+old figure today's figure or borrow a national/group target for one company.
+If current status is absent, use an explicitly dated supported endpoint; never
+invent progress or silently imply the research reaches the present. For local,
+this must be a real Saudi person, place, craft or
 historical development. A list of species traits, sizes, nutritional facts or
 possible origins is not a story. Preserve uncertainty and distinguish extinct
 populations from replacement populations. Never turn a disputed origin into fact.
@@ -156,7 +162,7 @@ Use at most 8 claims. If evidence is insufficient return no claims.''',
     'writer': '''Prefer one Info card followed by 2–3 connected story cards.
 Use at most FOUR editorial cards so licensed imagery and final credits fit one
 readable Snapchat video. Never pad a package with extra statistics or repetition.
-Info introduces the subject and one useful present-day fact; do not preview the
+Info introduces the subject and one distinctive useful fact; do not preview the
 story's setback and ending. Save the journey for the story cards. Every secondary
 name must earn its place: omit competitors, relatives and colleagues unless their
 identity is necessary to understand the action; explain their role if retained.
@@ -168,7 +174,22 @@ its name or introduce a person. Story adds origins, turning points and an outcom
 only where evidence supports them. The Info title and body must explain what the selected subject is and
 give a distinctive fact; its main content cannot be the triggering result,
 announcement or headline. Later cards develop the same subject and explanatory
-angle, not disconnected background statistics. A brief trigger reference is optional.
+angle, not disconnected background statistics. Open Info with one short natural
+reference to the VERIFIED current trigger, then enter the distinctive fact.
+Explain why this subject comes up now without recapping the news or pretending
+the audience has heard it. «يمكن سمعت عن...» is optional wording, not a template.
+An occasion can motivate looking back; it does not establish a causal connection.
+For example National Day can introduce an airline's history, but never imply
+aviation caused unification or that the two histories are the same story.
+Do not invent a different trigger because the verified one is awkward. If a
+natural subject/trigger connection is unsupported, report it in repair handling.
+Plan the whole progression before writing: relevant occasion -> useful Info ->
+beginning -> meaningful development -> supported endpoint. The final story card
+must answer «وين وصل؟» or «وش كانت النتيجة؟». For ongoing subjects, use one dated,
+evidenced milestone showing their development; for finished events use the actual
+outcome. Do not end at an early intermediate date merely because cards ran out.
+A later fact is useful only if it completes this same story; never add a fourth
+card solely to reach a count. Preserve context so each card is quickly understood.
 Apply the removal test to the whole package: removing the latest statement,
 result, announcement or competition must leave a useful Info fact and a connected
 subject story. Do not fill story cards with a current quote, an explanation of
@@ -191,8 +212,11 @@ For example «فطلّعت دليل مجاني يساعد السائق في رح
 facts into another subject. Use only the current supplied claims as evidence.
 Keep enough context to understand why one development follows the previous one.
 A punch adds a supported consequence or bridge, not a repeated summary, vague
-teaser or forced question. Prefer an empty punch when it adds no value.
-Title <=85 characters, body <=320, punch <=100 (may be empty).
+teaser or forced question. Every editorial card needs a concise meaningful punch
+for the brand's red closing: a supported consequence or a clear bridge to the
+next card. If it only repeats the title, improve the card instead of omitting it.
+The final punch closes the journey rather than promising another missing card.
+Title <=85 characters, body <=320, punch <=100 (nonempty).
 These are ceilings, not targets. Prefer 2–4 short connected sentences per body;
 never add filler to reach a length or delete the causal link merely to be brief.
 Image queries must name concrete visible subjects or objects, not abstract terms
@@ -281,20 +305,36 @@ general Saudi relevance or an evergreen article is not enough. Local also needs
 a Saudi cultural/place/everyday-life subject. Explain that evidence in reason.
 Set feedback_respected false when the package repeats a rejected trigger/angle
 from editorial_feedback. A familiar subject needs a distinct verified development
-and a better narrative. Never require the trigger to be written on the cards. Check natural Saudi
-wording, coherent progression, broad interest, useful Info card and no repetition.
+and a better narrative. Require Info to open with a brief natural reference to
+the verified current trigger, then provide its own distinctive fact. Set
+current_attention false if that introduction substitutes a different unsupported
+trigger. Set story_coherent false for an absent or forced contextual bridge;
+an occasion is context, not proof of a causal connection (e.g. National Day does
+not mean aviation caused unification). Do not require «يمكن سمعت» or any stock
+phrase. Check natural Saudi wording, coherent progression, broad interest,
+useful Info card and no repetition.
 Also check for secondary names without a necessary role, Info revealing the story's
 whole arc, an obstacle whose stage is unclear, and repeated achievements across
 title/body/punch. Request a concise contextual repair, not more trivia. Never ask
 for an invented resolution to close a minor detail. Check any image_caption against
 the actual image and avoid unnecessary names there too.
 Set saudi_language false for formal report-like narration where ordinary Saudi
-wording is available; specifically prefer «دليل مجاني» to «دليلاً مجانياً».
+wording is available; specifically prefer «دليل مجاني» to «دليلاً مجانياً» and
+«قصص» to «قصصاً».
 Judge the whole voice, not the presence of a few dialect words; proper names and
 necessary technical terms are not language failures. Set story_coherent false
 for over-compressed summaries that omit the supported connection between events,
 or dates/statistics presented without a narrative. Request the missing context
-rather than more filler. Reject invented motives or dialogue under factual.
+rather than more filler. Read all cards as one story: can an ordinary viewer
+explain what began, what changed and where it reached? Set story_coherent false
+if it stops at an intermediate milestone without a supported outcome. For ongoing
+subjects, a dated endpoint is acceptable; never demand unsupported present-day
+statistics. Set factual false for stale figures labelled today, invented causal
+links, or a country/group ambition presented as a company's achieved result.
+Set story_coherent false for missing red-closing punches or closings that merely
+repeat headlines, describe the photo, or promise a continuation that never comes.
+Repair the weakest connection or ending, not the entire story or a list of trivia.
+Reject invented motives or dialogue under factual.
 The Michelin example is a style reference only, never evidence for these cards.
 Set distinct_value false if Info mainly recaps the triggering news instead of
 explaining the selected subject through a distinctive fact. Set story_coherent
@@ -306,8 +346,8 @@ A package of current scoring totals, a player's award quote, reasons for that
 quote and a list of rivals MUST fail distinct_value and documented_story even if
 accurate, timely, readable and popular. These are pieces of the triggering report,
 not a beginning, turning point and outcome in the subject's story. This rule applies
-to every category, not just sports. A short optional trigger reference is fine
-when the remaining cards genuinely develop the subject's background. In reason,
+to every category, not just sports. The short opening trigger reference must leave the remaining cards free to
+develop the subject's background. In reason,
 identify the actual background progression and its source evidence; if absent,
 state that it is missing. Do not reward a news recap for being coherent alone.
 Set documented_story false
