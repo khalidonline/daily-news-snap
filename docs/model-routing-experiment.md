@@ -21,12 +21,14 @@ The workflow is:
 
 ## First experiment
 
-The first writer comparison uses the three frozen cases already in
-evaluation/event_packages.json:
+The benchmark corpus contains three frozen cases in evaluation/event_packages.json.
+The bounded comparison run uses the two broadest audience cases so each model gets
+enough output headroom while the whole experiment still fits the $0.75 reservation:
 
 - iPhone 16 / first iPhone
 - Riyadh Metro
-- Voyager 1
+
+Voyager 1 remains available as a follow-up stress case after the primary comparison.
 
 Candidates:
 
