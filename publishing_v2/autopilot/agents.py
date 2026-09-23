@@ -121,7 +121,11 @@ substitute unrelated facts about an associated organization or a recent season.
 Require a documented progression: a beginning, a concrete change or decision,
 and its outcome. For an ongoing company/person, include a supported endpoint
 showing where it reached, with the observation year for dated achievements or
-figures. Select one meaningful endpoint, not a pile of statistics. Never call an
+figures. Select one meaningful endpoint, not a pile of statistics. Prefer facts explaining
+what changed for people using the place, product or service. An ownership transfer
+alone is not an audience-relevant turning point: retain it only when the sources
+explain a concrete resulting change. Do not fill the progression with company or
+architect names when evidence only supports a directory of organizations. Never call an
 old figure today's figure or borrow a national/group target for one company.
 If current status is absent, use an explicitly dated supported endpoint; never
 invent progress or silently imply the research reaches the present. For local,
@@ -190,6 +194,18 @@ evidenced milestone showing their development; for finished events use the actua
 outcome. Do not end at an early intermediate date merely because cards ran out.
 A later fact is useful only if it completes this same story; never add a fourth
 card solely to reach a count. Preserve context so each card is quickly understood.
+Before finalizing, apply the reader test: what does each card help a viewer
+understand about this subject? Remove administrative chains, designer credits and
+secondary names if replacing them with their role preserves the story. Keep a
+name only when that person's action is essential to this angle. This is not a ban
+on business history: an ownership change earns space when a sourced consequence
+explains what changed for the subject or its users. Never invent that consequence.
+Info needs one main takeaway, not a building count plus an area plus a location
+plus a list of facilities. Retain numbers only when they explain the takeaway.
+Use familiar units when already supported; omit unnecessary technical figures
+rather than calculating an unsupported conversion. Prefer two strong story cards
+to three cards of administrative history. Plain wording must retain the supported
+connection between events; chronological adjacency is not evidence of causation.
 Apply the removal test to the whole package: removing the latest statement,
 result, announcement or competition must leave a useful Info fact and a connected
 subject story. Do not fill story cards with a current quote, an explanation of
@@ -333,6 +349,20 @@ statistics. Set factual false for stale figures labelled today, invented causal
 links, or a country/group ambition presented as a company's achieved result.
 Set story_coherent false for missing red-closing punches or closings that merely
 repeat headlines, describe the photo, or promise a continuation that never comes.
+Apply the reader test separately from factual accuracy. Set distinct_value false
+when Info is a directory of counts, areas and facilities without one clear useful
+takeaway. Set story_coherent false when successive management/ownership or designer
+names stand in for concrete developments. A name earns space only when its action
+is necessary for this angle; do not fail a useful business story merely for naming
+an owner. State what practical change the sources support; if none, request removal
+or a better supported beat, never an invented benefit. A sequence of true facts
+joined by «وبعدها» or «مع هذا التحول» is not automatically a causal story.
+Set feedback_respected false for unnecessary secondary names, technical clutter
+or a closing that repeats the body's endpoint despite these explicit instructions.
+In reason, identify the viewer's main takeaway and the contribution of each story
+card. Do not pass solely because every sentence can be found in a source or because
+a few Saudi dialect words appear. Request a specific deletion/replacement using
+existing supported claims; preserve all unaffected cards and verified images.
 Repair the weakest connection or ending, not the entire story or a list of trivia.
 Reject invented motives or dialogue under factual.
 The Michelin example is a style reference only, never evidence for these cards.
