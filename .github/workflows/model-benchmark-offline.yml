@@ -29,7 +29,9 @@ jobs:
       - name: Candidate configuration
         run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_candidates_are_bounded_and_production_baseline_is_included -v
       - name: Hard reservation cap
-        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_three_frozen_cases_fit_under_hard_reservation_cap -v
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_selected_frozen_cases_fit_under_hard_reservation_cap -v
+      - name: Safe provider diagnostics
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_safe_http_error_reports_code_without_message -v
       - name: Missing credential safeguard
         run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_missing_credentials_make_no_paid_call -v
       - name: Frozen claim input
