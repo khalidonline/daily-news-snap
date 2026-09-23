@@ -15,6 +15,25 @@ class TimingPassageTests(unittest.TestCase):
         self.assertNotIn('text', payload['sources'][0])
         self.assertEqual(payload['passages'][0]['quote'], SOURCE['text'])
 
+    def test_ineligible_decision_may_omit_null_evidence_fields(self):
+        decision = {
+            'eligible': False,
+            'timing_basis': 'report',
+            'reason': 'No substantive current development',
+        }
+        agent, _, _ = helpers.FormatRecoveryTests().agent([json.dumps(decision)])
+        result = agent.run('timing', {'sources': [SOURCE]})
+        self.assertEqual(result['eligible'], False)
+        self.assertIsNone(result.get('event_date'))
+        self.assertNotIn('event_quote', result)
+        self.assertNotIn('event_source_id', result)
+
+    def test_eligible_decision_still_requires_date_and_passage(self):
+        decision = {'eligible': True, 'timing_basis': 'event', 'reason': 'Current'}
+        agent, _, _ = helpers.FormatRecoveryTests().agent([json.dumps(decision)])
+        with self.assertRaises(ValueError):
+            agent.run('timing', {'sources': [SOURCE]})
+
     def test_unknown_passage_and_model_authored_quote_are_rejected(self):
         for changes in ({'event_passage_id': 'invented'}, {'event_quote': 'Ceer ... launch'}):
             agent, _, _ = helpers.FormatRecoveryTests().agent([json.dumps(dict(DECISION, **changes))])
