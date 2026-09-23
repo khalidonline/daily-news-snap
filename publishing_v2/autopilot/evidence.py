@@ -91,10 +91,14 @@ def hydrate(data, rows):
 
 
 def hydrate_timing(data, rows):
-    """Select exact original timing evidence; never accept a rewritten quotation."""
-    if set(data) != {'eligible', 'event_date', 'event_passage_id', 'timing_basis', 'reason'}:
+    """Select exact original timing evidence; never accept model-authored evidence."""
+    required = {'eligible', 'event_date', 'event_passage_id', 'timing_basis', 'reason'}
+    if not isinstance(data, dict) or not required.issubset(data):
         raise ValueError('unexpected_timing_fields')
-    result = {key: value for key, value in data.items() if key != 'event_passage_id'}
+    # Models occasionally add explanatory fields despite the requested schema.
+    # Ignore them deterministically: only the required fields can influence the
+    # decision, and source identity/quotation are hydrated from event_passage_id.
+    result = {key: data[key] for key in required if key != 'event_passage_id'}
     if data.get('eligible') is not True:
         return result
     ident = data.get('event_passage_id')
