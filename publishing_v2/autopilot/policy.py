@@ -210,6 +210,19 @@ def validate_draft(data, research):
             raise ValueError('unsupported_card_claim')
 
 
+    # Narrow pre-render guard for the observed model-code-heavy draft. This is
+    # not a general readability score: dates and repeated subject names are fine.
+    visible = ' '.join(card.get(key, '') for card in cards
+                       for key in ('title', 'body', 'punch', 'image_caption'))
+    identifiers = {token.upper() for token in re.findall(
+        r'[A-Za-z][A-Za-z0-9]*(?:[-–‑][A-Za-z0-9]+)*', visible)
+        if any(ch.isdigit() for ch in token)}
+    if len(identifiers) > 3:
+        raise ValueError('technical_identifier_overload: keep at most three distinct '
+                         'model codes; replace nonessential codes with plain roles, '
+                         'not transliterations; retain the supported story and claims')
+
+
 def validate_review(review, count):
     # Internal evidence audit, not public card copy. Accommodate the bounded
     # reviewer response without paying to rewrite otherwise valid cards.
