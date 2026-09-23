@@ -1,0 +1,39 @@
+name: Blind model role experiment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install benchmark dependencies
+        run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Verify experiment safeguards
+        run: python -m unittest tests.test_model_role_experiment -q
+      - name: Run blind writer comparison
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python model_role_experiment.py
+      - name: Show blind comparison
+        if: always()
+        run: |
+          if [ -f model-experiment-output/model-experiment-blind.md ]; then
+            cat model-experiment-output/model-experiment-blind.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blind-model-role-experiment-${{ github.run_id }}
+          path: model-experiment-output/
+          retention-days: 30
