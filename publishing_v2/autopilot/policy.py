@@ -2,6 +2,7 @@
 import hashlib
 import json
 import re
+import unicodedata
 from datetime import datetime, timedelta, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -129,6 +130,13 @@ def reporting_time(data, sources, candidate, lane):
                 timing_note='Current reporting is the trigger. Do not claim the underlying event happened today.')
 
 
+def literal_numbers(value):
+    """Compare written numbers only; this is not semantic fact verification."""
+    normalized = ''.join(str(unicodedata.decimal(c)) if c.isdecimal() else c for c in value)
+    normalized = normalized.replace('٫', '.').replace('٬', ',')
+    return set(re.findall(r'\d+(?:[.,]\d+)*', normalized))
+
+
 def validate_research(data, sources, lane, now):
     by_id = {s['id']: s for s in sources}
     claims = data.get('claims', [])
@@ -139,6 +147,8 @@ def validate_research(data, sources, lane, now):
         quote = text(claim['quote'], 1000)
         if len(quote) < 12 or quote not in by_id.get(claim['source_id'], {}).get('text', ''):
             raise ValueError('unsupported_quote')
+        if not literal_numbers(claim['fact']).issubset(literal_numbers(quote)):
+            raise ValueError('unsupported_claim_number')
     if data.get('sensitive') is not False:
         raise ValueError('sensitive_or_uncertain_topic')
     if lane in {'daily', 'local'}:

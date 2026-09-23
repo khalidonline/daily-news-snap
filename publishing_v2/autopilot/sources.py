@@ -29,6 +29,8 @@ FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://www.alyaum.com/rssFeed/1005', 'https://aawsat.com/feed')
 HOSTS = {'feeds.bbci.co.uk', 'www.bbc.com', 'www.bbc.co.uk', 'bbc.com', 'bbc.co.uk',
          'www.alyaum.com', 'aawsat.com', 'www.aawsat.com', 'en.wikipedia.org', 'ar.wikipedia.org', 'www.wikidata.org'}
+OFFICIAL_HOSTS = {'www.spa.gov.sa', 'spa.gov.sa', 'saudipedia.com', 'www.mofa.gov.sa'}
+HOSTS |= OFFICIAL_HOSTS
 LOCAL_TOPICS = ('Abha', 'Asir', 'Khamis Mushait', 'Saudi coffee', 'Jeddah', 'Taif rose', 'Bisht', 'Al-Qatt Al-Asiri',
                 'Al-Ahsa Oasis', 'Saudi Arabian cuisine', 'Diriyah', 'Date palm', 'Souq')
 
@@ -135,7 +137,7 @@ def wiki(query, *, language="en", exact_only=False):
     prefix = 'wiki-' if language == 'en' else 'wiki-ar-'
     base = site + 'w/api.php?'
     direct = wiki_json(base + urlencode({'action': 'query', 'format': 'json',
-        'titles': query, 'redirects': 1, 'prop': 'extracts|pageprops',
+        'titles': query, 'redirects': 1, 'prop': 'extracts|pageprops|extlinks', 'ellimit': 50,
         'explaintext': 1}))
     pages = list(direct.get('query', {}).get('pages', {}).values())
     if len(pages) == 1:
@@ -145,6 +147,7 @@ def wiki(query, *, language="en", exact_only=False):
             return [{'id': prefix + str(page['pageid']),
                 'url': site + '?curid=' + str(page['pageid']),
                 'text': str(page['extract'])[:10000], 'title': page['title'],
+                'reference_urls': [link.get('*', '') for link in page.get('extlinks', [])],
                 'verified_aliases': [query], 'website_entity': page.get('pageprops', {}).get('wikibase_item'), 'source_type': 'encyclopedia'}]
     if exact_only:
         return []
@@ -159,12 +162,41 @@ def wiki(query, *, language="en", exact_only=False):
     if not ids: return []
     # Multiple extracts require exintro; direct exact titles get full history.
     result = wiki_json(base + urlencode({'action': 'query', 'format': 'json',
-        'pageids': '|'.join(ids), 'prop': 'extracts|pageprops', 'explaintext': 1,
+        'pageids': '|'.join(ids), 'prop': 'extracts|pageprops|extlinks', 'ellimit': 50, 'explaintext': 1,
         'exintro': 1, 'exlimit': len(ids)}))
     return [{'id': prefix + str(page['pageid']), 'url': site + '?curid=' + str(page['pageid']),
              'text': str(page.get('extract', ''))[:10000], 'title': page.get('title'),
+             'reference_urls': [link.get('*', '') for link in page.get('extlinks', [])],
              'source_type': 'encyclopedia', 'website_entity': page.get('pageprops', {}).get('wikibase_item')}
             for page in result.get('query', {}).get('pages', {}).values() if page.get('extract') and 'disambiguation' not in page.get('pageprops', {})]
+
+
+def official_references(rows):
+    """Fetch at most two unique official links actually returned by Wikipedia.
+
+    Domain provenance is not endorsement of every statement. The researcher
+    still has to reconcile dates and distinguish decree from effective date.
+    """
+    result, seen = [], set()
+    for row in rows:
+        for url in row.get('reference_urls', []):
+            try:
+                safe_url(url)
+                if urlsplit(url).hostname not in OFFICIAL_HOSTS or url in seen:
+                    continue
+            except (ValueError, TypeError):
+                continue
+            if len(seen) >= 2:
+                return result
+            seen.add(url)
+            try:
+                body = plain(fetch(url).decode('utf-8', errors='replace'))[:4000]
+            except (OSError, ValueError):
+                continue
+            if len(body) >= 12:
+                result.append({'id': 'official-' + hashlib.sha256(url.encode()).hexdigest()[:16],
+                               'url': url, 'text': body, 'source_type': 'official_reference'})
+    return result
 
 
 def native_subject_name(mention):
@@ -375,6 +407,8 @@ class Sources:
                 resolved_subjects.append(resolved)
             elif subjects is not None:
                 raise ValueError('unresolved_editorial_subject')
+        rows.extend(official_references(rows))
+        rows = [{k: v for k, v in row.items() if k != 'reference_urls'} for row in rows]
         if not rows:
             raise ValueError('no_retrieved_evidence')
         if resolved_subjects:
