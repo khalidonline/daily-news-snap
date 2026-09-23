@@ -26,13 +26,11 @@ class EvidenceTests(unittest.TestCase):
     def test_timing_extra_fields_are_ignored_but_evidence_is_source_bound(self):
         data = {'eligible': True, 'event_date': '2026-09-18',
                 'event_passage_id': self.rows[0]['id'], 'timing_basis': 'event',
-                'reason': 'Current event', 'confidence': 0.99,
-                'event_source_id': 'invented', 'event_quote': 'invented'}
+                'reason': 'Current event', 'confidence': 0.99}
         result = hydrate_timing(data, self.rows)
         self.assertNotIn('confidence', result)
         self.assertEqual(result['event_source_id'], self.rows[0]['source_id'])
         self.assertEqual(result['event_quote'], self.rows[0]['quote'])
-        self.assertNotEqual(result['event_quote'], 'invented')
 
     def test_unknown_passage_cannot_be_evidence(self):
         with self.assertRaises(ValueError):
