@@ -73,3 +73,37 @@ class SavedReplayTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'editorial_review_rejected'):self.run_replay()
         self.assertEqual(self.saved_events[-1]['status'],'held')
         self.assertFalse(self.saved_events[-1]['review']['checks']['story_coherent'])
+
+    def test_budget_resume_runs_reviewer_without_writer(self):
+        from daily_budget import BudgetBlocked
+        original=self.agent.run
+        def blocked(role,data,images=()):
+            if role=='reviewer':raise BudgetBlocked('daily budget: held')
+            return original(role,data,images)
+        self.agent.run=blocked
+        with self.assertRaises(BudgetBlocked):self.run_replay()
+        held=copy.deepcopy(self.saved_events[-1]);self.calls.clear()
+        self.agent.run=original
+        with tempfile.TemporaryDirectory() as out:
+            def render(package,folder):
+                p=Path(folder)/'card.jpg';p.write_bytes(b'rendered');return [p]*len(package['cards'])
+            result=replay(self.saved,agent=self.agent,render=render,output=out,now=lambda:NOW,
+                          restore=lambda row:row['text'],resume=held)
+        self.assertEqual(self.calls,['reviewer'])
+        self.assertEqual(result['status'],'replay_review_passed')
+
+    def test_resume_rejects_changed_source_identity_before_calls(self):
+        held={'status':'held','source_digest':'different','package':self.saved['package'],
+              'reason':'daily budget: held'}
+        with self.assertRaisesRegex(ValueError,'resume_source_mismatch'):
+            replay(self.saved,agent=self.agent,render=None,output='unused',now=lambda:NOW,
+                   restore=lambda row:row['text'],resume=held)
+        self.assertEqual(self.calls,[])
+
+    def test_resume_cannot_repeat_an_already_paid_review(self):
+        held={'status':'held','source_digest':policy.digest(self.saved),'package':self.saved['package'],
+              'reason':'daily budget: held','agent_receipts':[{'role':'reviewer','cost_micro_usd':10}]}
+        with self.assertRaisesRegex(ValueError,'unstarted_budget_blocked_review'):
+            replay(self.saved,agent=self.agent,render=None,output='unused',now=lambda:NOW,
+                   restore=lambda row:row['text'],resume=held)
+        self.assertEqual(self.calls,[])

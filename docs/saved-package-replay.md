@@ -7,3 +7,13 @@ Restores exact source URLs and verifies saved text hashes before paid calls. Reu
 Results and intermediate drafts persist separately; replay_review_passed never updates readiness or publishes. Source state stays unchanged. Repeated identical recorded attempts stop. Existing bounded agent formatting recovery and budget reservations apply. Source changes require fresh research.
 
 59 local tests passed including five replay tests for role isolation, stale/changed evidence, card counts and rejection persistence. No paid production replay yet.
+
+## Continue a budget-blocked review
+
+Set optional resume_slot to the existing replay journal. This mode requires a held
+budget-blocked package with no completed/charged reviewer receipt. It checks the
+original source digest and unchanged evidence, renders the saved text/photos and
+calls only reviewer. Prior writer receipts are retained; no paid writer is repeated.
+It never publishes or updates readiness. Expiry and the shared budget still apply.
+The manually simplified Black Hawk reference in evaluation is not automatic output
+and is not substituted into this path.

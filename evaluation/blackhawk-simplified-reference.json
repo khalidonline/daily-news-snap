@@ -1,0 +1,48 @@
+{
+  "status": "manual_editorial_reference_not_approved",
+  "source_slot": "autopilot-2026-09-23-daily-shadow-d4c12b945ae94016",
+  "replay_slot": "replay-7226c849e83294411be0ec5351861118",
+  "automated_success": false,
+  "additional_api_cost_usd": 0,
+  "notes": [
+    "Manual reference only; not injected into the automatic replay or counted as autonomous success.",
+    "Remove unnecessary names and technical specifications, preserve supported chronology.",
+    "Replace the erroneous تنختبر with تختبر when that sentence is retained."
+  ],
+  "cards": [
+    {
+      "kind": "info",
+      "title": "بلاك هوك.. مروحية بمهام متعددة",
+      "body": "مع عروض اليوم الوطني شمال الرياض، شاركت مروحيات «بلاك هوك» التابعة للحرس الوطني. وهي مروحية عسكرية متعددة المهام، من بينها النقل. وحكايتها بدأت لما احتاج الجيش الأمريكي بديل لمروحياته القديمة.",
+      "punch": "البداية كانت طلب مروحية بأداء أفضل.",
+      "claim_ids": [
+        "c1",
+        "c2",
+        "c7"
+      ]
+    },
+    {
+      "kind": "story",
+      "title": "من طلب مكتوب إلى أول رحلة",
+      "body": "في أواخر الستينات، طلب الجيش الأمريكي مروحية أفضل في الأداء وأكثر اعتمادية، بناءً على تجربته في فيتنام. بُنيت أربعة نماذج للتجربة، وطار أول واحد منها عام 1974.",
+      "punch": "بعد التجارب، اختارها الجيش للإنتاج عام 1976.",
+      "claim_ids": [
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
+    },
+    {
+      "kind": "story",
+      "title": "من الجيش الأمريكي إلى 35 دولة",
+      "body": "دخلت بلاك هوك الخدمة عام 1979 لتحل محل المروحية القديمة. ومع الوقت انتشرت خارج أمريكا، وصارت في الخدمة لدى 35 دولة حتى عام 2024.",
+      "punch": "بدأت بديل لمروحية.. وانتشرت حول العالم.",
+      "claim_ids": [
+        "c6",
+        "c7",
+        "c8"
+      ]
+    }
+  ]
+}
