@@ -11,6 +11,9 @@ on:
       - '.github/workflows/model-quality-benchmark.yml'
       - '.github/workflows/model-benchmark-offline.yml'
       - 'docs/model-routing-experiment.md'
+      - 'reviewer_visual_experiment.py'
+      - 'tests/test_reviewer_visual_experiment.py'
+      - '.github/workflows/reviewer-visual-experiment.yml'
 
 permissions:
   contents: read
@@ -42,3 +45,5 @@ jobs:
         run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_workflow_is_manual_only_and_cannot_publish -v
       - name: Verify quality cost ranker
         run: python -m unittest tests.test_model_quality_benchmark -v
+      - name: Verify reviewer and visual benchmark safeguards
+        run: python -m unittest tests.test_reviewer_visual_experiment -v
