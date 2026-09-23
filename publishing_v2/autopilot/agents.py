@@ -156,6 +156,13 @@ Use at most 8 claims. If evidence is insufficient return no claims.''',
     'writer': '''Prefer one Info card followed by 2–3 connected story cards.
 Use at most FOUR editorial cards so licensed imagery and final credits fit one
 readable Snapchat video. Never pad a package with extra statistics or repetition.
+Info introduces the subject and one useful present-day fact; do not preview the
+story's setback and ending. Save the journey for the story cards. Every secondary
+name must earn its place: omit competitors, relatives and colleagues unless their
+identity is necessary to understand the action; explain their role if retained.
+Place an obstacle in its specific stage; do not imply it persisted or invent a
+resolution. A minor detail with no clear connection to the next beat should go.
+Do not restate the title in the body or repeat the same achievement in the closing.
 Info must explain the subject with a distinctive useful fact, not just explain
 its name or introduce a person. Story adds origins, turning points and an outcome
 only where evidence supports them. The Info title and body must explain what the selected subject is and
@@ -196,6 +203,10 @@ trophy. A subject photo can truthfully illustrate its history or recognition.
 Return {"title":"package title <=100 characters","cards":[{"kind":"info or story",
 "title":"...","body":"...","punch":"...","claim_ids":["c1"],
 "image_query":"2–3 English words naming subject, portrait or logo; omit descriptive scene details"}]}.
+Optional image_caption on story cards only: a short Arabic clarification (<=50 characters)
+only when needed to distinguish
+a generic illustration from the actual person/event. It appears beside the photo;
+do not introduce unrelated people or invent image identity. Omit when unnecessary.
 Use visual_options as a feasibility guide: plan connected beats that the supplied
 photos honestly illustrate. Two suitable photos can cover three or four cards:
 reuse each at most twice if needed, without inventing a scene or location. Do not invent an event,
@@ -272,6 +283,11 @@ Set feedback_respected false when the package repeats a rejected trigger/angle
 from editorial_feedback. A familiar subject needs a distinct verified development
 and a better narrative. Never require the trigger to be written on the cards. Check natural Saudi
 wording, coherent progression, broad interest, useful Info card and no repetition.
+Also check for secondary names without a necessary role, Info revealing the story's
+whole arc, an obstacle whose stage is unclear, and repeated achievements across
+title/body/punch. Request a concise contextual repair, not more trivia. Never ask
+for an invented resolution to close a minor detail. Check any image_caption against
+the actual image and avoid unnecessary names there too.
 Set saudi_language false for formal report-like narration where ordinary Saudi
 wording is available; specifically prefer «دليل مجاني» to «دليلاً مجانياً».
 Judge the whole voice, not the presence of a few dialect words; proper names and

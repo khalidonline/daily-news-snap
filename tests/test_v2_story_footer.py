@@ -45,3 +45,19 @@ class StoryFooterTests(unittest.TestCase):
                                    sub='هذه قصة طويلة تحتاج مساحة واضحة للقراءة. ' * 300,
                                    punch='الخلاصة واضحة')
             self.assertFalse(target.exists())
+
+    def test_photo_caption_is_below_image_without_changing_brand_or_footer(self):
+        from PIL import ImageChops
+        with tempfile.TemporaryDirectory() as tmp:
+            photo = Path(tmp) / 'photo.png'
+            Image.new('RGB', (1080, 800), (110, 150, 180)).save(photo)
+            plain, captioned = Path(tmp)/'plain.png', Path(tmp)/'captioned.png'
+            options = dict(photo=photo, sub='بدأ السباقات وهو صغير.', footer='المصادر: الموقع الرسمي')
+            story.render_frame(plain, 'ملخص تنفيذي', '1 من 3', 'بداية القصة', 60, **options)
+            story.render_frame(captioned, 'ملخص تنفيذي', '1 من 3', 'بداية القصة', 60,
+                               photo_caption='صورة توضيحية للكارتينج', **options)
+            difference = ImageChops.difference(Image.open(plain), Image.open(captioned))
+            box = difference.getbbox()
+            self.assertIsNotNone(box)
+            self.assertGreaterEqual(box[1], 1059)
+            self.assertLess(box[3], 1139)

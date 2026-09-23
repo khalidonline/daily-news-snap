@@ -1247,20 +1247,20 @@ class StoryLayoutError(ValueError):
 
 
 def render_frame(path, kicker, counter, big, big_size, sub=None,
-                 sub_colour=None, photo=None, footer=None, punch=None):
+                 sub_colour=None, photo=None, footer=None, punch=None, photo_caption=None):
     # Preserve the usual layout; recover crowded cards by giving text more
     # room, keeping the photo, footer and all supplied words.
     for photo_height in (639, 520, 420, 360):
         try:
             return _render_frame(path, kicker, counter, big, big_size, sub,
-                                 sub_colour, photo, footer, punch, photo_height)
+                                 sub_colour, photo, footer, punch, photo_height, photo_caption)
         except StoryLayoutError:
             if not photo or photo_height == 360:
                 raise
 
 
 def _render_frame(path, kicker, counter, big, big_size, sub,
-                  sub_colour, photo, footer, punch, photo_height):
+                  sub_colour, photo, footer, punch, photo_height, photo_caption):
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
     margin, centre, right = 96, W // 2, W - 96
@@ -1315,6 +1315,13 @@ def _render_frame(path, kicker, counter, big, big_size, sub,
             y += box_h + 80
         except Exception as exc:
             print(f"  ! couldn't place photo: {exc}")
+
+    if pic is not None and photo_caption:
+        caption_font = load_font(28)
+        caption_text, caption_kwargs = ar(photo_caption)
+        if draw.textlength(caption_text, font=caption_font, **caption_kwargs) > max_w:
+            raise ValueError('photo_caption_too_long')
+        mid(y - 64, photo_caption, caption_font, MUTED)
 
     size = big_size
     while True:
