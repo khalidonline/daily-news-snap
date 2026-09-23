@@ -1,0 +1,219 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "إيزاك هدجار: من فيلم كرتون إلى مقعد بجانب فيرستابن",
+  "expires_at": "2026-09-25T00:00:00+03:00",
+  "media": [
+    {
+      "kind": "info",
+      "title": "سائق اسمه مأخوذ من إسحاق نيوتن، وميكانيكيه كان أبوه",
+      "body": "إيزاك هدجار سائق فورمولا ون فرنسي، ومسمّى على اسم الفيزيائي إسحاق نيوتن. تعلّق بعالم السيارات بعد ما شاف فيلم الرسوم المتحركة Cars. والده ياسين باحث في ميكانيكا الكم، وفي نفس الوقت كان هو الميكانيكي اللي يجهّز له عربية الكارتينج.",
+      "punch": "عائلة فيزياء، والابن اختار المضمار.",
+      "claim_ids": [
+        "c1",
+        "c2"
+      ],
+      "image_query": "Isack Hadjar portrait",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:8368eedba019e6ce078c61fe",
+        "original_url": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/6054/live/922c8bc0-b722-11f1-8d21-19ad84e0e822.jpg",
+        "download_url": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/6054/live/922c8bc0-b722-11f1-8d21-19ad84e0e822.jpg",
+        "source_url": "https://www.bbc.co.uk/sport/formula1/articles/cmde0j53zz90o?at_medium=RSS&at_campaign=rss",
+        "source_kind": "article",
+        "title": "Isack Hadjar: source illustration; identity unverified",
+        "description": "Isack Hadjar",
+        "collection_subject": "Isack Hadjar",
+        "credit": "www.bbc.co.uk",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1200,
+        "height": 675,
+        "sha256": "a03f2cc8de1cd74b6ad2ec24cf32e8e5dbd95f9f52bcde513454cf093062a551",
+        "origin_key": "primary:8368eedba019e6ce078c61fe",
+        "pixel_description": "صورة مقربة لشاب بشعر أسود مجعد يرتدي قميص بولو أزرق وكحلي بشعارات ريد بُل، كاسل، وPRYPCO"
+      },
+      "path": "approved/hadjar-20260923/card-00.jpg",
+      "sha256": "d0f573319a35a36eb21ded944276d2c9d7857327062540080d00542b2e7686fa"
+    },
+    {
+      "kind": "story",
+      "title": "بدأ بعربية كارتينج وعمره سبع سنوات",
+      "body": "أهله شروا له عربية كارتينج وعمره سبع سنوات، بعد سنة واحدة من بدايته في متابعة الفورمولا ون. وفي أول موسم له بفورمولا 4 الفرنسية سنة 2019 كانت المشكلة في طوله: ما يقدر يضغط دعسات السيارة كامل في بداية الموسم.",
+      "punch": "",
+      "claim_ids": [
+        "c3",
+        "c4"
+      ],
+      "image_query": "Isack Hadjar portrait",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:9ee72d7b7f1f2ad3493412dc",
+        "original_url": "https://framerusercontent.com/assets/X8AFZnxHQpp5DkBgyZCY3ut17Dw.jpg",
+        "download_url": "https://framerusercontent.com/assets/X8AFZnxHQpp5DkBgyZCY3ut17Dw.jpg",
+        "source_url": "https://isackhadjar.com/",
+        "source_kind": "official",
+        "title": "Isack Hadjar: source illustration; identity unverified",
+        "description": "Isack Hadjar",
+        "collection_subject": "Isack Hadjar",
+        "credit": "isackhadjar.com",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "website_entity": "Q105071364",
+        "official_site": "https://isackhadjar.com/",
+        "width": 3840,
+        "height": 2560,
+        "sha256": "dbf2b07e78cf6d20186ecc769f76bcbcbb9678adb3b061e8794094498d949e63",
+        "origin_key": "primary:9ee72d7b7f1f2ad3493412dc",
+        "pixel_description": "شاب يرتدي قبعة وقميص ريد بُل الأزرق الكحلي بشعارات أوراكل، موبيل 1، فورد، يقف أمام خلفية بيضاء وظله يظهر خلفه"
+      },
+      "path": "approved/hadjar-20260923/card-01.jpg",
+      "sha256": "fcddef591852f66335b134c265574bf80a82df95dfb7e10a087ea90d2cd80692"
+    },
+    {
+      "kind": "story",
+      "title": "في فورمولا 2 صار اسمه «بروست الصغير»",
+      "body": "انضم لأكاديمية ريد بول للشباب سنة 2022، وجاء وصيفاً لغابرييل بورتوليتو في فورمولا 2، ونجاحه هناك خلّى الإعلام الفرنسي يلقّبه «بروست الصغير». بدايته في الفورمولا ون مع ريسنغ بولز سنة 2025 ما كانت مثالية: اصطدم في لفة الاستعداد قبل انطلاق سباق أستراليا.",
+      "punch": "ومع ذلك الموسم ما انتهى عند تلك اللفة.",
+      "claim_ids": [
+        "c5",
+        "c6"
+      ],
+      "image_query": "Isack Hadjar Red Bull",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:9680cd55d32da90ca20d67ff",
+        "original_url": "https://framerusercontent.com/assets/YxLgsICbQySiqyZO33vkx95FD8.jpg",
+        "download_url": "https://framerusercontent.com/assets/YxLgsICbQySiqyZO33vkx95FD8.jpg",
+        "source_url": "https://isackhadjar.com/news",
+        "source_kind": "official",
+        "title": "Isack Hadjar: source illustration; identity unverified",
+        "description": "Isack Hadjar",
+        "collection_subject": "Isack Hadjar",
+        "credit": "isackhadjar.com",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "website_entity": "Q105071364",
+        "official_site": "https://isackhadjar.com/",
+        "width": 3840,
+        "height": 2160,
+        "sha256": "2444cdb99472d29e968f9c05b08509abbdea6039c5cdc373b0756228be67bab8",
+        "origin_key": "primary:9680cd55d32da90ca20d67ff",
+        "pixel_description": "شاب يقف واقفاً بقميص بولو ريد بُل الأزرق الكحلي بشعارات متعددة، أمام خلفية صفراء وحمراء كبيرة لشعار الثور"
+      },
+      "path": "approved/hadjar-20260923/card-02.jpg",
+      "sha256": "ef79723fdff6f6ae417fe6c3ab57ce23adf9ea688e5f4dd34693275e9d3e6591"
+    },
+    {
+      "kind": "story",
+      "title": "أول منصة تتويج في هولندا، وبعدها المقعد الكبير",
+      "body": "جمع نقاط في عدة سباقات بموسمه الأول ووصل لأول منصة تتويج له في جائزة هولندا الكبرى، وبعدها رُقّي لفريق ريد بول الأول سنة 2026 بجانب ماكس فيرستابن. هذا الأسبوع يرجع في جائزة أذربيجان الكبرى بعد غياب ثلاثة سباقات بسبب كسر في المعصم أصابه أثناء الملاكمة ضمن برنامجه التدريبي.",
+      "punch": "",
+      "claim_ids": [
+        "c7",
+        "c8"
+      ],
+      "image_query": "Isack Hadjar Red Bull",
+      "image": {
+        "provider": "commons",
+        "asset_id": "198753835",
+        "title": "File:F1 2026, Red Bull Racing, Red Bull RB22, Isack Hadjar, Spa Francorchamps (55425734799).jpg",
+        "original_width": 6000,
+        "original_height": 3376,
+        "description": "",
+        "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/F1_2026%2C_Red_Bull_Racing%2C_Red_Bull_RB22%2C_Isack_Hadjar%2C_Spa_Francorchamps_%2855425734799%29.jpg/1920px-F1_2026%2C_Red_Bull_Racing%2C_Red_Bull_RB22%2C_Isack_Hadjar%2C_Spa_Francorchamps_%2855425734799%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/F1_2026%2C_Red_Bull_Racing%2C_Red_Bull_RB22%2C_Isack_Hadjar%2C_Spa_Francorchamps_%2855425734799%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "source_url": "https://commons.wikimedia.org/wiki/File:F1_2026,_Red_Bull_Racing,_Red_Bull_RB22,_Isack_Hadjar,_Spa_Francorchamps_(55425734799).jpg",
+        "credit": "Der Alf",
+        "credit_line": "F1 2026, Red Bull Racing, Red Bull RB22, Isack Hadjar, Spa Francorchamps",
+        "rights_links": "https://www.flickr.com/photos/190587866@N04/55425734799",
+        "copyright_notice": "",
+        "attribution_notice": "",
+        "usage_terms": "Creative Commons Attribution 4.0",
+        "disclaimer": "",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0",
+        "attribution_required": "true",
+        "restrictions": "",
+        "date_created": "2026-07-28 12:52:34",
+        "width": 1920,
+        "height": 1080,
+        "licensing_verified": false,
+        "sha256": "51609ad5554f90ed5cdca09e8c982391e817ce21dc451d93ffa6eaac72595c29",
+        "origin_key": "flickr:55425734799",
+        "image_role": "subject illustration; event date requires review"
+      },
+      "public_attribution": {
+        "version": 3,
+        "display_label": "Der Alf",
+        "image_sha256": "ee77809c898e0b5248540c50aa125d676a6ef6dafbe1ab0957f26e2d35ec704e",
+        "media_sha256": "5b84b4c1ce614c9dd8acc11ed7577a227decbce893d335ab72da2eb5deca4fe1"
+      },
+      "path": "approved/hadjar-20260923/card-03.jpg",
+      "sha256": "5b84b4c1ce614c9dd8acc11ed7577a227decbce893d335ab72da2eb5deca4fe1"
+    },
+    {
+      "kind": "credits",
+      "title": "المصادر والصور",
+      "body": "Editorial sources and photo attribution",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:8368eedba019e6ce078c61fe",
+        "original_url": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/6054/live/922c8bc0-b722-11f1-8d21-19ad84e0e822.jpg",
+        "download_url": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/6054/live/922c8bc0-b722-11f1-8d21-19ad84e0e822.jpg",
+        "source_url": "https://www.bbc.co.uk/sport/formula1/articles/cmde0j53zz90o?at_medium=RSS&at_campaign=rss",
+        "source_kind": "article",
+        "title": "Isack Hadjar: source illustration; identity unverified",
+        "description": "Isack Hadjar",
+        "collection_subject": "Isack Hadjar",
+        "credit": "www.bbc.co.uk",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1200,
+        "height": 675,
+        "sha256": "a03f2cc8de1cd74b6ad2ec24cf32e8e5dbd95f9f52bcde513454cf093062a551",
+        "origin_key": "primary:8368eedba019e6ce078c61fe",
+        "pixel_description": "صورة مقربة لشاب بشعر أسود مجعد يرتدي قميص بولو أزرق وكحلي بشعارات ريد بُل، كاسل، وPRYPCO"
+      },
+      "path": "approved/hadjar-20260923/card-04.jpg",
+      "sha256": "ec2e9a556cec688d5c40ba2b0d746d9cefe5ea72c1bb12a5d071b8ae7c8a53ea"
+    }
+  ],
+  "sources": [
+    {
+      "id": "article",
+      "url": "https://www.bbc.co.uk/sport/formula1/articles/cmde0j53zz90o?at_medium=RSS&at_campaign=rss",
+      "text": "Bull for this weekend's Azerbaijan Grand Prix after missing the past three races with a broken wrist, an injury sustained while boxing\nHadjar is to stay at Red Bull as Max Verstappen's team-mate for the 2027 season. The 21-year-old was promoted to the senior",
+      "retrieved_text_sha256": "49500377458a8d116abc1341ed4c7aa14a193e84be29ef2cf33c40613bca36d8"
+    },
+    {
+      "id": "wiki-66494574",
+      "url": "https://en.wikipedia.org/?curid=66494574",
+      "text": "Algerian and French citizenship. Isack is named after famous physicist Isaac Newton.\nHadjar initially grew fond of motorsport after watching the Pixar\nand physicists. His father, Yassine Hadjar, is a researcher in quantum mechanics and also served as his kart mechanic. He holds dual\nanimated movie Cars. His parents bought him a go-kart when he was seven, a year after he started watching Formula One. He\ndebut in the French F4 Championship. Despite struggling to push down fully on the car's pedals owing to his low height at\nBortoleto the following season with Campos; his successes in Formula 2 saw him nicknamed \"le Petit Prost\" in French media.\nA member\nof the Red Bull Junior Team since 2022, Hadjar signed for Racing Bulls in 2025, making his Formula One debut at the\nAustralian Grand Prix, where he crashed on the formation lap. He scored several points finishes across his rookie season, including his maiden",
+      "retrieved_text_sha256": "3821f2c800881a854e997db21a343e64669e643128450ccc8d48eb0d8f57c8a9"
+    }
+  ],
+  "topic_aliases": [
+    "هادجار",
+    "هدجار",
+    "Isack Hadjar",
+    "Hadjar"
+  ],
+  "owner_review": {
+    "reference": "Owner approved the four displayed Hadjar cards: موافق, 2026-09-23",
+    "public_cards": 4,
+    "credits": "internal only"
+  }
+}
