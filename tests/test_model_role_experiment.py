@@ -20,6 +20,15 @@ class ModelRoleExperimentTests(unittest.TestCase):
         self.assertLessEqual(experiment.MAX_EXPERIMENT_COST_USD, 0.75)
         self.assertEqual(experiment.MAX_CASES, 3)
 
+    def test_three_frozen_cases_fit_under_hard_reservation_cap(self):
+        payload = json.loads(Path("evaluation/event_packages.json").read_text(encoding="utf-8"))
+        reserved = sum(
+            experiment.maximum_call_cost(candidate, experiment.prompt_for(case))
+            for case in payload["cases"][:experiment.MAX_CASES]
+            for candidate in experiment.CANDIDATES
+        )
+        self.assertLessEqual(reserved, experiment.MAX_EXPERIMENT_COST_USD)
+
     def test_missing_credentials_make_no_paid_call(self):
         for candidate in experiment.CANDIDATES:
             with self.subTest(candidate=candidate["id"]):
