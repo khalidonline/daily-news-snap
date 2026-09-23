@@ -110,6 +110,15 @@ def _openai(candidate: dict[str, Any], prompt: str, key: str):
     return text, {"input_tokens": tokens[0], "output_tokens": tokens[1]}, str(body.get("id") or "")
 
 
+def maximum_call_cost(candidate: dict[str, Any], prompt: str) -> float:
+    # UTF-8 bytes are a conservative upper bound on text token count.
+    input_tokens = len(prompt.encode("utf-8"))
+    return (
+        input_tokens * candidate["input_price"]
+        + MAX_OUTPUT_TOKENS * candidate["output_price"]
+    ) / 1_000_000
+
+
 def call_candidate(candidate: dict[str, Any], prompt: str, env: dict[str, str]) -> dict[str, Any]:
     key = env.get(candidate["credential"], "").strip()
     if not key:
@@ -237,13 +246,16 @@ def run(cases_path: Path, output_dir: Path, env: dict[str, str]) -> dict[str, An
         "cases": [],
     }
     total_cost = 0.0
+    reserved_maximum = 0.0
     for case in cases:
         prompt = prompt_for(case)
         row = {"id": case["id"], "trigger": case["trigger"], "outputs": []}
         for label, candidate in zip(LABELS, CANDIDATES):
-            if total_cost >= MAX_EXPERIMENT_COST_USD:
+            maximum = maximum_call_cost(candidate, prompt)
+            if reserved_maximum + maximum > MAX_EXPERIMENT_COST_USD:
                 generated = {"status": "cost_cap_reached"}
             else:
+                reserved_maximum += maximum
                 generated = call_candidate(candidate, prompt, env)
             output = {"label": label, **generated}
             if generated["status"] == "completed":
@@ -252,7 +264,8 @@ def run(cases_path: Path, output_dir: Path, env: dict[str, str]) -> dict[str, An
             row["outputs"].append(output)
         result["cases"].append(row)
     result["total_cost_usd"] = round(total_cost, 6)
-    if result["total_cost_usd"] > MAX_EXPERIMENT_COST_USD + 0.05:
+    result["reserved_maximum_usd"] = round(reserved_maximum, 6)
+    if result["total_cost_usd"] > MAX_EXPERIMENT_COST_USD:
         raise ExperimentError("experiment_cost_cap_exceeded")
     (output_dir / "model-experiment-key.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -264,6 +277,7 @@ def run(cases_path: Path, output_dir: Path, env: dict[str, str]) -> dict[str, An
         "failed_calls": sum(o["status"] == "failed" for c in result["cases"] for o in c["outputs"]),
         "total_cost_usd": result["total_cost_usd"],
         "cost_cap_usd": MAX_EXPERIMENT_COST_USD,
+        "reserved_maximum_usd": result["reserved_maximum_usd"],
         "note": "No Telegram/Snapchat publication and no production routing changes.",
     }
     (output_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
