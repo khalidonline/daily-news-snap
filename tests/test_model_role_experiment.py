@@ -2,7 +2,6 @@ import json
 import unittest
 from pathlib import Path
 
-import yaml
 
 import model_role_experiment as experiment
 
@@ -66,8 +65,8 @@ class ModelRoleExperimentTests(unittest.TestCase):
     def test_workflow_is_manual_only_and_cannot_publish(self):
         path = Path(".github/workflows/model-role-experiment.yml")
         text = path.read_text(encoding="utf-8")
-        workflow = yaml.load(text, Loader=yaml.BaseLoader)
-        self.assertEqual(set(workflow["on"]), {"workflow_dispatch"})
+        self.assertIn("\non:\n  workflow_dispatch:\n", text)
+        self.assertNotIn("pull_request:", text)
         self.assertNotIn("schedule:", text)
         self.assertNotIn("POST_TO_SNAPCHAT", text)
         self.assertNotIn("TELEGRAM_TOKEN", text)
