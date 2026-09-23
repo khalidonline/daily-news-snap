@@ -1,0 +1,42 @@
+name: Model benchmark offline checks
+
+on:
+  pull_request:
+    paths:
+      - 'model_role_experiment.py'
+      - 'model_quality_benchmark.py'
+      - 'tests/test_model_role_experiment.py'
+      - 'tests/test_model_quality_benchmark.py'
+      - '.github/workflows/model-role-experiment.yml'
+      - '.github/workflows/model-quality-benchmark.yml'
+      - '.github/workflows/model-benchmark-offline.yml'
+      - 'docs/model-routing-experiment.md'
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install offline test dependencies
+        run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Candidate configuration
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_candidates_are_bounded_and_production_baseline_is_included -v
+      - name: Hard reservation cap
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_three_frozen_cases_fit_under_hard_reservation_cap -v
+      - name: Missing credential safeguard
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_missing_credentials_make_no_paid_call -v
+      - name: Frozen claim input
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_case_input_uses_only_frozen_case_claims -v
+      - name: Output validation
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_validator_accepts_valid_shape_and_rejects_unknown_claim -v
+      - name: Workflow safeguards
+        run: python -m unittest tests.test_model_role_experiment.ModelRoleExperimentTests.test_workflow_is_manual_only_and_cannot_publish -v
+      - name: Verify quality cost ranker
+        run: python -m unittest tests.test_model_quality_benchmark -v
