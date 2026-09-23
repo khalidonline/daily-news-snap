@@ -17,9 +17,9 @@ class ModelRoleExperimentTests(unittest.TestCase):
             ["claude-opus-5", "claude-sonnet-5", "gpt-5.6-sol"],
         )
         self.assertLessEqual(experiment.MAX_EXPERIMENT_COST_USD, 0.75)
-        self.assertEqual(experiment.MAX_CASES, 3)
+        self.assertEqual(experiment.MAX_CASES, 2)
 
-    def test_three_frozen_cases_fit_under_hard_reservation_cap(self):
+    def test_selected_frozen_cases_fit_under_hard_reservation_cap(self):
         payload = json.loads(Path("evaluation/event_packages.json").read_text(encoding="utf-8"))
         reserved = sum(
             experiment.maximum_call_cost(candidate, experiment.prompt_for(case))
@@ -27,6 +27,12 @@ class ModelRoleExperimentTests(unittest.TestCase):
             for candidate in experiment.CANDIDATES
         )
         self.assertLessEqual(reserved, experiment.MAX_EXPERIMENT_COST_USD)
+
+    def test_safe_http_error_reports_code_without_message(self):
+        raw = json.dumps({"error": {"type": "rate_limit_error", "message": "secret text"}}).encode()
+        detail = experiment._safe_http_error(429, raw)
+        self.assertEqual(detail, "provider_http_429_rate_limit_error")
+        self.assertNotIn("secret", detail)
 
     def test_missing_credentials_make_no_paid_call(self):
         for candidate in experiment.CANDIDATES:
