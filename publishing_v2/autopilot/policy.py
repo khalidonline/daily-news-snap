@@ -197,7 +197,9 @@ def validate_draft(data, research):
 
 
 def validate_review(review, count):
-    text(review.get('reason'), 2000)
+    # Internal evidence audit, not public card copy. Accommodate the bounded
+    # reviewer response without paying to rewrite otherwise valid cards.
+    text(review.get('reason'), 100_000)
     checks = review.get('checks', {})
     if any(checks.get(k) is not True for k in REVIEW_CHECKS):
         raise ValueError('editorial_review_rejected')
