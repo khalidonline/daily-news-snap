@@ -204,7 +204,9 @@ Info needs one main takeaway, not a building count plus an area plus a location
 plus a list of facilities. Retain numbers only when they explain the takeaway.
 Use familiar units when already supported; omit unnecessary technical figures
 rather than calculating an unsupported conversion. Prefer two strong story cards
-to three cards of administrative history. Plain wording must retain the supported
+to three cards of administrative history. Public text may use at most three distinct alphanumeric model codes across the
+package. Omit nonessential codes or explain their roles; do not transliterate
+codes merely to avoid the pre-render check. Plain wording must retain the supported
 connection between events; chronological adjacency is not evidence of causation.
 Apply the removal test to the whole package: removing the latest statement,
 result, announcement or competition must leave a useful Info fact and a connected
