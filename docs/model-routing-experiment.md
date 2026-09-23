@@ -63,3 +63,33 @@ variables at once.
 - model-experiment-key.json keeps the label-to-model key and measurements.
 - .github/workflows/model-quality-benchmark.yml applies the existing frozen
   quality/cost ranking after scores are supplied.
+
+
+## Reviewer and visual benchmark result — 2026-09-24
+
+Frozen production artifacts were replayed through the exact production Agents
+implementation. No Writer or Researcher calls were repeated.
+
+Reviewer:
+- Opus cost across two cases: $0.482920.
+- Sonnet cost across two cases: $0.219088 (about 54.6% lower).
+- Same overall accept/reject decision in 2/2 cases.
+- 25/26 individual checks matched.
+- Sonnet produced zero unsafe passes where Opus rejected a check.
+- The one disagreement was conservative: Sonnet additionally rejected `timely`
+  on the Hadjar case while both models already rejected that package overall.
+
+Visual:
+- Opus cost across two cases: $0.062310.
+- Sonnet cost across two cases: $0.026234 (about 57.9% lower).
+- Sonnet matched the frozen selected image sequence in 2/2 cases.
+- Opus matched it in 1/2 cases.
+- Neither model selected the unrelated distractor.
+
+Routing decision:
+- Keep Researcher and Writer on Claude Opus 5.
+- Route Reviewer and Visual to Claude Sonnet 5.
+- Preserve all deterministic policy gates; a Sonnet review remains fail-closed if
+  any required boolean check or card relevance/readability check is false.
+- Validate the new routing in a full Daily + Local shadow run before treating it
+  as rollout-ready.
