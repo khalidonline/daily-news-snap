@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
           AUTOPILOT_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
-          # User-approved shared cap for production and trials; no automatic increase.
+          # Temporary requested cap; runtime clamps to $3 from 2026-09-24 Saudi time.
           AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
           # Reduce one role first; preserve writing/research and independent review quality.
           AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'

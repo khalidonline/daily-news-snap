@@ -31,6 +31,16 @@ LIMIT_MICRO_USD = 3_000_000
 MAX_LIMIT_MICRO_USD = 20_000_000
 KSA = timezone(timedelta(hours=3))
 LEDGER_BRANCH = 'cost-ledger'
+
+def autopilot_daily_limit(now, requested=8_000_000):
+    """Owner approved $8 on Sep 22-23 only; $3 thereafter (Saudi dates)."""
+    if now.tzinfo is None:
+        raise ValueError('timezone_required')
+    day = now.astimezone(KSA).date().isoformat()
+    ceiling = 8_000_000 if '2026-09-22' <= day <= '2026-09-23' else LIMIT_MICRO_USD
+    return min(int(requested), ceiling)
+
+
 # Input, output USD/MTok, maximum context. Reject new models until reviewed.
 PRICES = {
     'claude-sonnet-5': (2, 10, 1_000_000),
