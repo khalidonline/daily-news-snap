@@ -27,7 +27,7 @@ CANDIDATES = (
 )
 LABELS = ("A", "B", "C")
 MAX_CASES = 3
-MAX_OUTPUT_TOKENS = 1400
+MAX_OUTPUT_TOKENS = 2048
 MAX_EXPERIMENT_COST_USD = 0.75
 TIMEOUT_SECONDS = 180
 
@@ -68,6 +68,7 @@ def _anthropic(candidate: dict[str, Any], prompt: str, key: str):
         {"x-api-key": key, "anthropic-version": "2023-06-01",
          "Content-Type": "application/json"},
         {"model": candidate["model"], "max_tokens": MAX_OUTPUT_TOKENS,
+         "output_config": {"effort": "medium"},
          "messages": [{"role": "user", "content": prompt}]},
     )
     if body.get("stop_reason") != "end_turn" or not isinstance(body.get("content"), list):
@@ -89,6 +90,7 @@ def _openai(candidate: dict[str, Any], prompt: str, key: str):
         "https://api.openai.com/v1/responses",
         {"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
         {"model": candidate["model"], "input": prompt,
+         "reasoning": {"effort": "medium"},
          "max_output_tokens": MAX_OUTPUT_TOKENS},
     )
     if body.get("status") != "completed" or not isinstance(body.get("output"), list):
