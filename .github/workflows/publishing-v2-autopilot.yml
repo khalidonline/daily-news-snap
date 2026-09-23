@@ -58,8 +58,8 @@ jobs:
           AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
           AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
           AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
-          AUTOPILOT_VISUAL_MODEL: 'claude-opus-5'
-          AUTOPILOT_REVIEWER_MODEL: 'claude-opus-5'
+          AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
           AUTOPILOT_LANE: ${{ inputs.lane || 'both' }}
           POST_TO_SNAPCHAT: '0'
           DRY_RUN: '1'
