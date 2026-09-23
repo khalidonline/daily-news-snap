@@ -297,6 +297,34 @@ class PolicyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             policy.validate_draft(data, research())
 
+    def test_unsupported_numeric_claim_is_pruned_without_weakening_validator(self):
+        data = research()
+        data['claims'] = [
+            {'id': ident, 'source_id': 's1', 'quote': 'A useful historical fact.',
+             'fact': 'حقيقة مفيدة'}
+            for ident in ('c1', 'c2', 'c3')
+        ] + [
+            {'id': 'bad', 'source_id': 's1', 'quote': 'A useful historical fact.',
+             'fact': 'حقيقة في 2026'}
+        ]
+        cleaned, dropped = policy.prune_unsupported_number_claims(data, evidence())
+        self.assertEqual(dropped, ['bad'])
+        self.assertEqual([claim['id'] for claim in cleaned['claims']], ['c1', 'c2', 'c3'])
+        policy.validate_research(cleaned, evidence(), 'daily', NOW)
+        with self.assertRaisesRegex(ValueError, 'unsupported_claim_number'):
+            policy.validate_research(data, evidence(), 'daily', NOW)
+
+    def test_numeric_prune_fails_closed_when_too_little_story_evidence_remains(self):
+        data = research()
+        data['claims'] = [
+            {'id': 'c1', 'source_id': 's1', 'quote': 'A useful historical fact.',
+             'fact': 'حقيقة مفيدة'},
+            {'id': 'bad', 'source_id': 's1', 'quote': 'A useful historical fact.',
+             'fact': 'حقيقة في 2026'},
+        ]
+        with self.assertRaisesRegex(ValueError, 'insufficient_supported_claims_after_prune'):
+            policy.prune_unsupported_number_claims(data, evidence())
+
     def test_language_and_story_failures_each_block_approval(self):
         for key in ('saudi_language', 'story_coherent'):
             checks = dict.fromkeys(policy.REVIEW_CHECKS, True)

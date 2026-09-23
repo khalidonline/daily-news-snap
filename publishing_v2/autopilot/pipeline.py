@@ -128,6 +128,10 @@ class Pipeline:
                     self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
                                                             'verified_timing': timing, 'lane': lane, 'now': self.now().isoformat()})
+                    research, pruned_claim_ids = policy.prune_unsupported_number_claims(research, sources)
+                    if pruned_claim_ids:
+                        self.save(state, 'research_claims_pruned', candidate_id=candidate['id'],
+                                  pruned_claim_ids=pruned_claim_ids)
                     policy.validate_research(research, sources, lane, self.now())
                     original_sources = sources
                     sources = policy.evidence_snapshot(research, sources)

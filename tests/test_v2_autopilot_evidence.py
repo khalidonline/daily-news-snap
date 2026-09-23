@@ -1,5 +1,5 @@
 import unittest
-from publishing_v2.autopilot.evidence import passages, hydrate
+from publishing_v2.autopilot.evidence import passages, hydrate, hydrate_timing
 
 
 class EvidenceTests(unittest.TestCase):
@@ -22,6 +22,15 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(result['claims'][0]['quote'], self.rows[1]['quote'])
         data['claims'][0]['quote'] = 'invented'
         with self.assertRaises(ValueError): hydrate(data, self.rows)
+
+    def test_timing_extra_fields_are_ignored_but_evidence_is_source_bound(self):
+        data = {'eligible': True, 'event_date': '2026-09-18',
+                'event_passage_id': self.rows[0]['id'], 'timing_basis': 'event',
+                'reason': 'Current event', 'confidence': 0.99}
+        result = hydrate_timing(data, self.rows)
+        self.assertNotIn('confidence', result)
+        self.assertEqual(result['event_source_id'], self.rows[0]['source_id'])
+        self.assertEqual(result['event_quote'], self.rows[0]['quote'])
 
     def test_unknown_passage_cannot_be_evidence(self):
         with self.assertRaises(ValueError):
