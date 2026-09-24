@@ -1,2 +1,2 @@
 autopilot-2026-09-24-local-shadow-f8519ad8abf12116
-retry: saved-timing-evidence
+retry: bounded-4800
