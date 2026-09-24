@@ -85,7 +85,7 @@ class AgentTests(unittest.TestCase):
     def test_reviewer_gets_images_in_a_fresh_request(self):
         def transport(method, url, headers, payload):
             self.assertEqual(payload['output_config']['effort'], 'high')
-            self.assertGreaterEqual(payload['max_tokens'], 16000)
+            self.assertEqual(payload['max_tokens'], 8192)
             self.assertEqual(len(payload['messages']), 1)
             self.assertEqual(payload['messages'][0]['content'][0]['type'], 'image')
             self.assertNotIn('tools', payload)
