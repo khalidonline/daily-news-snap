@@ -41,7 +41,7 @@ class RuntimeTests(unittest.TestCase):
     def test_story_cards_require_distinct_source_photos(self):
         from publishing_v2.autopilot.policy import validate_image_variety
         cards = [
-            {'kind': 'info', 'image': {'asset_id': 'one'}},
+            {'kind': 'info', 'image': {'asset_id': 'info'}},
             {'kind': 'story', 'image': {'asset_id': 'one'}},
             {'kind': 'story', 'image': {'asset_id': 'two'}},
         ]
