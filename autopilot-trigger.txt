@@ -1,4 +1,4 @@
 External autopilot trigger file.
 This file is updated by the external scheduler to start the daily workflow.
-Last external trigger: 2026-09-24T14:12:00+03:00
 validation: readiness-replay
+Last external trigger: 2026-09-24T13:29:00+03:00
