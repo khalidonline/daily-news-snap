@@ -28,5 +28,13 @@ class ReviewerRecoveryTests(unittest.TestCase):
         self.assertEqual(restored[0]['recovery_source_mode'], 'refetched_exact')
 
 
+    def test_saved_timing_quote_is_attached_to_original_source(self):
+        sources = [{'id':'article','url':'https://example.com','text':'saved research excerpt'}]
+        timing = {'event_source_id':'article','event_quote':'exact saved timing quote'}
+        restored = recovery.attach_saved_timing_evidence(sources, timing)
+        self.assertIn('exact saved timing quote', restored[0]['text'])
+        self.assertEqual(restored[0]['recovery_timing_mode'], 'saved_exact_timing_quote')
+
+
 if __name__ == '__main__':
     unittest.main()
