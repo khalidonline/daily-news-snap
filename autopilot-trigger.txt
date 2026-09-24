@@ -1,0 +1,2 @@
+External autopilot trigger file.
+This file is updated by the external scheduler to start the daily workflow.
