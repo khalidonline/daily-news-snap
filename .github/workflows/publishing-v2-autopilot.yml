@@ -3,6 +3,10 @@ on:
   schedule:
     - cron: '3 13 * * *'
       timezone: 'Asia/Riyadh'
+  push:
+    branches: [main]
+    paths:
+      - 'autopilot-trigger.txt'
   workflow_dispatch:
     inputs:
       mode:
