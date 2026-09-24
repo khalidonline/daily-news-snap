@@ -18,7 +18,7 @@ from publishing_v2.autopilot.runtime import Renderer, shadow_record
 from publishing_v2.bundle_api import GitHubJournal
 
 SLOT_RE = re.compile(r"autopilot-\d{4}-\d{2}-\d{2}-(daily|local)-shadow-[a-f0-9]{16}")
-REVIEWER_MAX_TOKENS = 4096
+REVIEWER_MAX_TOKENS = 4800
 
 def restore_sources(rows):
     """Prefer a byte-identical refetch; otherwise use the immutable saved excerpt.
@@ -108,15 +108,23 @@ def review_once(review_input, images, *, env, ledger):
     payload = {
         "model": model,
         "max_tokens": REVIEWER_MAX_TOKENS,
-        "system": STYLE + "\n" + PROMPTS["reviewer"] + "\nFor recovery, some original sources may be immutable saved evidence excerpts from the exact earlier retrieval. Treat any context absent from those excerpts as unknown and reject claims that require missing context; never fill gaps from memory.",
+        "system": STYLE + "\n" + PROMPTS["reviewer"] + "\nFor recovery, some original sources may be immutable saved evidence excerpts from the exact earlier retrieval. Treat any context absent from those excerpts as unknown and reject claims that require missing context; never fill gaps from memory. Keep the final reason concise (at most 1200 characters); do not restate every source.",
         "messages": [{"role":"user","content":content}],
-        "output_config": {"effort":"high"},
+        "output_config": {"effort":"medium"},
     }
     payload, _ = prepare(payload)
     text_payload = copy.deepcopy(payload)
     text_payload["messages"][0]["content"] = [content[-1]]
-    _, text_maximum = prepare(text_payload)
-    maximum = text_maximum + len(images) * 8192 * PRICES[model][0]
+    prepare(text_payload)  # validate the text-only payload shape
+    input_price, output_price, _ = PRICES[model]
+    # Recovery uses locally resized images. Claude's documented native-image
+    # ceiling is 4,784 visual tokens per image. Text tokens cannot exceed UTF-8
+    # payload bytes; 4 KiB covers protocol framing without the production
+    # path's intentionally larger 8 KiB reserve.
+    text_bytes = len(json.dumps(text_payload, ensure_ascii=False).encode())
+    maximum = ((text_bytes + 4096) * input_price
+               + REVIEWER_MAX_TOKENS * output_price
+               + len(images) * 4784 * input_price)
 
     token = ledger.reserve(maximum, "autopilot:reviewer")
     transport = partial(providers._default_transport, timeout_seconds=180)
