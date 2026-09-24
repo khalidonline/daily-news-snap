@@ -504,7 +504,7 @@ class Agents:
             content.append({'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/jpeg',
                             'data': base64.b64encode(buffer.getvalue()).decode()}})
         content.append({'type': 'text', 'text': encoded})
-        payload = {'model': model, 'max_tokens': 16384 if role == 'reviewer' else (2048 if role in {'timing','image_check'} else 8192),
+        payload = {'model': model, 'max_tokens': 8192 if role == 'reviewer' else (2048 if role in {'timing','image_check'} else 8192),
                    'system': STYLE + '\n' + PROMPTS[role],
                    'messages': [{'role': 'user', 'content': content}]}
         if format_retry:
@@ -526,7 +526,7 @@ class Agents:
             text_payload = copy.deepcopy(payload)
             text_payload['messages'][0]['content'] = [content[-1]]
             _, text_maximum = prepare(text_payload)
-            maximum = text_maximum + len(images) * 8192 * PRICES[model][0]
+            maximum = text_maximum + len(images) * 4784 * PRICES[model][0]
         token = self.ledger.reserve(maximum, 'autopilot:' + role)
         transport = self.transport or partial(providers._default_transport, timeout_seconds=180)
         status, body = providers._request(transport, 'POST', 'https://api.anthropic.com/v1/messages',
