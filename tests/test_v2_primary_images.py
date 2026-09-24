@@ -39,12 +39,16 @@ class PrimaryImagesTests(unittest.TestCase):
         self.assertFalse(memory.rejected('Blackrock street',row))
         self.assertFalse(primary.ImageMemory(store,clock=lambda:100+8*86400).rejected('BlackRock',row))
 
-    def test_two_relevant_uses_allowed_but_third_rejected(self):
+    def test_info_story_reuse_allowed_but_story_reuse_rejected(self):
         from publishing_v2.autopilot.policy import validate_image_variety
-        card={'kind':'story','image':{'asset_id':'portrait','origin_key':'one-photo'}}
-        validate_image_variety([card,card,{'kind':'credits','image':card['image']}])
+        image={'asset_id':'portrait','origin_key':'one-photo'}
+        info={'kind':'info','image':image}
+        story={'kind':'story','image':image}
+        validate_image_variety([info,story,{'kind':'credits','image':image}])
+        with self.assertRaisesRegex(ValueError,'duplicate_story_image'):
+            validate_image_variety([story,story])
         with self.assertRaisesRegex(ValueError,'duplicate_source_image'):
-            validate_image_variety([card,card,card])
+            validate_image_variety([info,story,story])
 
     def test_article_pool_precedes_general_search(self):
         from publishing_v2.autopilot.sources import Sources
