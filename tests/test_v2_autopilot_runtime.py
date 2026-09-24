@@ -38,6 +38,18 @@ class RuntimeTests(unittest.TestCase):
             cards[1]['kind'] = 'credits'
             validate_image_variety(cards)
 
+    def test_story_cards_require_distinct_source_photos(self):
+        from publishing_v2.autopilot.policy import validate_image_variety
+        cards = [
+            {'kind': 'info', 'image': {'asset_id': 'one'}},
+            {'kind': 'story', 'image': {'asset_id': 'one'}},
+            {'kind': 'story', 'image': {'asset_id': 'two'}},
+        ]
+        validate_image_variety(cards)
+        cards[2]['image']['asset_id'] = 'one'
+        with self.assertRaisesRegex(ValueError, 'duplicate_story_image'):
+            validate_image_variety(cards)
+
     @staticmethod
     def source_bytes():
         result = []
