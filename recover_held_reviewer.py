@@ -43,6 +43,23 @@ def restore_sources(rows):
             restored.append(dict(row, text=saved, recovery_source_mode="saved_evidence_snapshot"))
     return restored
 
+def attach_saved_timing_evidence(sources, timing):
+    ident = timing.get("event_source_id")
+    quote = timing.get("event_quote")
+    if not isinstance(ident, str) or not isinstance(quote, str) or len(quote) < 8:
+        raise ValueError("saved_timing_evidence_missing")
+    found = False
+    for source in sources:
+        if source.get("id") == ident:
+            found = True
+            if quote not in source.get("text", ""):
+                source["text"] = source.get("text", "") + "\n" + quote
+                source["recovery_timing_mode"] = "saved_exact_timing_quote"
+            break
+    if not found:
+        raise ValueError("saved_timing_source_missing")
+    return sources
+
 def rebuild_package(state, now):
     draft = copy.deepcopy(state["draft"])
     package = dict(
@@ -146,7 +163,7 @@ def main():
         raise ValueError("slot_not_unstarted_budget_blocked_review")
 
     now = datetime.now(timezone.utc)
-    sources = restore_sources(state["sources"])
+    sources = attach_saved_timing_evidence(restore_sources(state["sources"]), state["timing"])
     policy.validate_attention(state["candidate"], now)
     policy.validate_timing(state["timing"], sources, now)
     policy.validate_research(state["research"], sources, state["lane"], now)
