@@ -7,7 +7,7 @@ import recover_held_reviewer as recovery
 
 class ReviewerRecoveryTests(unittest.TestCase):
     def test_reviewer_output_cap_is_bounded(self):
-        self.assertEqual(recovery.REVIEWER_MAX_TOKENS, 4096)
+        self.assertEqual(recovery.REVIEWER_MAX_TOKENS, 4800)
 
     def test_changed_source_uses_saved_evidence_snapshot(self):
         saved = 'original saved excerpt'
