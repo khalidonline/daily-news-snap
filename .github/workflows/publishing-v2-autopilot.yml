@@ -53,7 +53,7 @@ jobs:
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
-          AUTOPILOT_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
+          AUTOPILOT_MODE: ${{ inputs.mode || 'shadow' }}
           # Temporary requested cap; runtime clamps to $3 from 2026-09-24 Saudi time.
           AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
           # Reduce one role first; preserve writing/research and independent review quality.
@@ -71,7 +71,7 @@ jobs:
         if: always()
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          AUTOPILOT_REQUESTED_MODE: ${{ inputs.mode || vars.AUTOPILOT_MODE || 'live' }}
+          AUTOPILOT_REQUESTED_MODE: ${{ inputs.mode || 'shadow' }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m publishing_v2.autopilot.report
