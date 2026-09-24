@@ -1,7 +1,8 @@
 name: Agentic daily and local packages
 on:
   schedule:
-    - cron: '48 9 * * *'
+    - cron: '3 13 * * *'
+      timezone: 'Asia/Riyadh'
   workflow_dispatch:
     inputs:
       mode:
