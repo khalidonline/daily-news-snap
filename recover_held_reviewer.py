@@ -21,13 +21,26 @@ SLOT_RE = re.compile(r"autopilot-\d{4}-\d{2}-\d{2}-(daily|local)-shadow-[a-f0-9]
 REVIEWER_MAX_TOKENS = 4096
 
 def restore_sources(rows):
+    """Prefer a byte-identical refetch; otherwise use the immutable saved excerpt.
+
+    Evidence snapshots were persisted only after quote-in-source validation during
+    the original research pass. A publisher page can change later; that must not
+    force new Research or silently substitute new text during final review.
+    """
     restored = []
     for row in rows:
-        body = restore_text(row)
         expected = row.get("retrieved_text_sha256")
-        if not expected or hashlib.sha256(body.encode()).hexdigest() != expected:
-            raise ValueError("saved_source_changed")
-        restored.append(dict(row, text=body))
+        saved = row.get("text")
+        if not expected or not isinstance(saved, str) or not saved.strip():
+            raise ValueError("saved_source_provenance_missing")
+        try:
+            body = restore_text(row)
+        except Exception:
+            body = None
+        if isinstance(body, str) and hashlib.sha256(body.encode()).hexdigest() == expected:
+            restored.append(dict(row, text=body, recovery_source_mode="refetched_exact"))
+        else:
+            restored.append(dict(row, text=saved, recovery_source_mode="saved_evidence_snapshot"))
     return restored
 
 def rebuild_package(state, now):
@@ -78,7 +91,7 @@ def review_once(review_input, images, *, env, ledger):
     payload = {
         "model": model,
         "max_tokens": REVIEWER_MAX_TOKENS,
-        "system": STYLE + "\n" + PROMPTS["reviewer"],
+        "system": STYLE + "\n" + PROMPTS["reviewer"] + "\nFor recovery, some original sources may be immutable saved evidence excerpts from the exact earlier retrieval. Treat any context absent from those excerpts as unknown and reject claims that require missing context; never fill gaps from memory.",
         "messages": [{"role":"user","content":content}],
         "output_config": {"effort":"high"},
     }
