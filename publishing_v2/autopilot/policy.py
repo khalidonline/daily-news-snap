@@ -61,6 +61,14 @@ def validate_image_variety(cards):
         values = [v for v in values if v]
         if any(values.count(value) > 2 for value in set(values)):
             raise ValueError('duplicate_source_image: one photo may appear on at most two editorial cards')
+    # The owner accepts a repeated subject illustration between Info and Story
+    # only when needed, but the Story itself must visually move forward.
+    stories = [c for c in editorial if c.get('kind') == 'story']
+    for key in ('asset_id', 'sha256', 'origin_key'):
+        values = [c.get('image', {}).get(key) for c in stories]
+        values = [v for v in values if v]
+        if len(values) != len(set(values)):
+            raise ValueError('duplicate_story_image: story cards require distinct source photos')
 
 
 def digest(data):

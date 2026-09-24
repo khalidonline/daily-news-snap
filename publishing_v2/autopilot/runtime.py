@@ -378,6 +378,7 @@ def main():
     published_memory = PublishedMemory(GitHubJournal('autopilot-published-memory'), now)
     published_memory.import_manual(Path('approved'), GitHubJournal)
     results = []
+    sibling_candidate_ids = set()
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
         agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True, publication_only=True,
             image_memory=ImageMemory(GitHubJournal('autopilot-image-memory')))
@@ -395,8 +396,14 @@ def main():
         from .candidate_memory import CandidateMemory
         candidate_memory = CandidateMemory(GitHubJournal('autopilot-candidate-memory'), now)
         pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
-            store=store, publish=publish_package, output=output / lane, now=now, engine=engine, candidate_memory=candidate_memory, published_memory=published_memory)
+            store=store, publish=publish_package, output=output / lane, now=now, engine=engine,
+            candidate_memory=candidate_memory, published_memory=published_memory,
+            excluded_candidate_ids=sibling_candidate_ids)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
+        if result.get('status') in {'shadow_passed', 'approved', 'published'}:
+            candidate_id = result.get('package', {}).get('candidate', {}).get('id')
+            if candidate_id:
+                sibling_candidate_ids.add(candidate_id)
         atomic_write(output / f'{lane}.json', json.dumps(result, ensure_ascii=False).encode())
         if result['status'] == 'shadow_passed':
             state = readiness.read()
