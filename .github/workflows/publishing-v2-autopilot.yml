@@ -1,7 +1,7 @@
 name: Agentic daily and local packages
 on:
   schedule:
-    - cron: '7 5 * * *'
+    - cron: '7 7 * * *'
   workflow_dispatch:
     inputs:
       mode:
