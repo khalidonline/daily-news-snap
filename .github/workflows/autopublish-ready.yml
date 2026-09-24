@@ -1,0 +1,67 @@
+name: Auto-publish reviewed Snap packages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'autopublish-trigger.txt'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install publisher dependencies
+        run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Decide publishable lanes
+        id: gate
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
+          AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
+          AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
+        run: python auto_publish_gate.py
+      - name: Publish Daily reviewed package
+        if: steps.gate.outputs.daily == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
+          AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
+          AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
+          AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
+        run: python -m publishing_v2.autopilot.runtime --mode live --lane daily
+      - name: Publish Local reviewed package
+        if: steps.gate.outputs.local == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
+          AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
+          AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
+          AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
+        run: python -m publishing_v2.autopilot.runtime --mode live --lane local
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: autopublish-gate-${{ github.run_id }}
+          path: autopublish-output/
+          retention-days: 14
