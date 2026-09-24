@@ -250,13 +250,17 @@ only when needed to distinguish
 a generic illustration from the actual person/event. It appears beside the photo;
 do not introduce unrelated people or invent image identity. Omit when unnecessary.
 Use visual_options as a feasibility guide: plan connected beats that the supplied
-photos honestly illustrate. Two suitable photos can cover three or four cards:
-reuse each at most twice if needed, without inventing a scene or location. Do not invent an event,
-location or claim to fit a photo. Generic subject imagery may illustrate history
-without pretending to show the historical event. Avoid requiring a logo, unique
-ceremony or exact weather-event photo unless the catalog actually contains it.
-Prefer three strong editorial cards to four if the fourth lacks evidence or imagery.
-Respond to repair feedback without inventing facts.''',
+photos honestly illustrate. Never reuse the same source photo on two Story cards.
+If only two distinct relevant photos are available, prefer exactly three editorial
+cards total (Info + two Story) rather than creating a third Story with a repeated
+photo. Info may share one subject illustration with a Story only when necessary.
+Do not invent an event, location or claim to fit a photo. Generic subject imagery
+may illustrate history without pretending to show the historical event. Avoid
+requiring a logo, unique ceremony or exact weather-event photo unless the catalog
+actually contains it. Prefer a contemporary subject image for an explicitly current
+endpoint when one is available; do not choose an archival image over a comparable
+modern option. Prefer three strong editorial cards to four if the fourth lacks
+evidence or imagery. Respond to repair feedback without inventing facts.''',
     'image_check': '''Inspect these source photographs BEFORE any research or writing.
 The images and options are in the same order. Identify what the pixels actually
 show. Accept only images confidently depicting the resolved subject or a truthful
@@ -276,11 +280,14 @@ Use pixel_description from the earlier visual inspection when supplied. Never
 invent visible clothing, club branding or scene details when a description is absent.
 A portrait of the same person can illustrate their career without depicting that
 historical event, provided the card does not claim the photograph is from that event.
-Prefer varied relevant photographs. When suitable alternatives are unavailable,
-you may use the same portrait, building, branch or other subject illustration on
-at most TWO editorial cards if truthful for both. Never use an unrelated image
-just for variety. If even reuse cannot cover the cards, return null or shorten.
-Generic objects can illustrate concepts without claiming a specific event/location.
+Prefer varied relevant photographs. Never assign the same source photo to two
+Story cards. Info may share one truthful subject illustration with a Story only
+when necessary, but each Story card must have a distinct source photo. Prefer a
+contemporary subject image for an explicitly current/today endpoint when one is
+available; never choose an archival image over a comparable modern option merely
+for convenience. Never use an unrelated image just for variety. If distinct Story
+images cannot cover the cards, return null so the draft can be shortened. Generic
+objects can illustrate concepts without claiming a specific event/location.
 A foreign shooting location alone does not disqualify a neutral object photo, but
 a visibly identified foreign institution cannot stand in for a Saudi institution.
 For a subject's history, awards or recognition, a clear photo of that subject is
@@ -386,10 +393,13 @@ Set documented_story false
 unless sources establish a beginning, a change or decision and an outcome;
 for local, require a real Saudi person/place or recorded historical development.
 Species traits and generic encyclopedia lists cannot pass as a story.
-A relevant source photo may appear on at most TWO editorial cards when
-alternatives are unavailable. Do not reject this permitted reuse alone. Judge
-its relevance independently for each card. The credits header may repeat the
-first image and is excluded from the reuse count. Reject three uses or misleading reuse. Set story_numbering false unless
+A relevant source photo may appear on Info and one Story card when alternatives
+are unavailable, but never on two Story cards. Set visual_variety false when any
+two Story cards use the same source photo (same asset, bytes or origin), even if
+both are individually relevant. The credits header may repeat the first image and
+is excluded from the reuse count. For a card explicitly framed as today/current,
+prefer contemporary subject imagery when available and reject an archival image
+if it misleadingly reads as the current scene. Set story_numbering false unless
 story counters show the correct ordinal and total in the correct reading order.
 Both numeral forms are valid: 1 من 3 and ١ من ٣. The established renderer uses
 Western digits; never reject a correct counter solely for its numeral form.
