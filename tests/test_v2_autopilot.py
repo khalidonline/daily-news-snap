@@ -167,6 +167,35 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(pipeline.run('daily', 'shadow')['status'], 'shadow_passed')
         self.assertEqual(len(pools), 1)
 
+    def test_sibling_lane_candidate_is_filtered_before_editor_and_research(self):
+        pipeline = self.pipeline()
+        pipeline.excluded_candidate_ids = {'a'}
+        seen_pools, researched = [], []
+        original = self.agent.run
+        def run(role, data, images=()):
+            if role == 'editor':
+                seen_pools.append([c['id'] for c in data['candidates']])
+                choice = data['candidates'][0]
+                return {'candidates': [{
+                    'id': choice['id'], 'why_saudi': 'قريب من الناس',
+                    'angle': 'قصة جدة', 'why_now': 'اليوم',
+                    'share_reason': 'معلومة جديدة', 'research_query': 'Jeddah',
+                    'subjects': ['Jeddah'], 'source_title': choice['title'],
+                    'subject_evidence': [{'subject':'Jeddah','mention':'جدة',
+                        'quote':'بدأ مهرجان جدة اليوم في المنطقة التاريخية'}],
+                }]}
+            if role == 'researcher':
+                researched.append(data['candidate']['id'])
+            return original(role, data, images)
+        self.agent.run = run
+        result = pipeline.run('local', 'shadow')
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertEqual(seen_pools, [['b']])
+        self.assertEqual(researched, ['b'])
+        filtered = [row for row in result['eligibility_rejections']
+                    if row['candidate_id'] == 'a']
+        self.assertEqual(filtered[0]['reason'], 'selected_in_sibling_lane')
+
     def test_selection_recovery_stops_after_two_rounds(self):
         pipeline, pools, researched = self.recovery_pipeline()
         self.assertEqual(pipeline.run('daily', 'shadow')['status'], 'held')
