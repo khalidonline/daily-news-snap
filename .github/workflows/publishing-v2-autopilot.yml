@@ -1,8 +1,5 @@
 name: Agentic daily and local packages
 on:
-  schedule:
-    - cron: '3 13 * * *'
-      timezone: 'Asia/Riyadh'
   push:
     branches: [main]
     paths:
