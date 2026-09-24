@@ -277,6 +277,22 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(result['status'], 'delivery_pending')
         self.assertEqual(len(self.agent.calls), count)
 
+    def test_successful_delivery_clears_stale_error_reason(self):
+        calls = 0
+        def flaky_then_success(package, paths):
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                raise RuntimeError('temporary delivery issue')
+            return {'status': 'POSTED', 'post_ids': ['one', 'two', 'three']}
+        pipe = self.pipeline(publish=flaky_then_success)
+        first = pipe.run('daily', 'live', rollout_verified=True)
+        self.assertEqual(first['status'], 'delivery_pending')
+        self.assertEqual(first['reason'], 'RuntimeError')
+        second = pipe.run('daily', 'live', rollout_verified=True)
+        self.assertEqual(second['status'], 'published')
+        self.assertIsNone(second['reason'])
+
     def test_journal_failure_after_publish_never_reenters_generation(self):
         original = self.store.save
         def flaky(state):

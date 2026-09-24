@@ -255,7 +255,7 @@ class Pipeline:
             expected_posts = 1 if package.get('delivery', {}).get('kind') == 'video' else sum(c.get('kind') != 'credits' for c in package['cards'])
             if receipt.get('status') != 'POSTED' or len(receipt.get('post_ids', [])) != expected_posts:
                 raise RuntimeError('delivery_not_confirmed')
-            self.save(state, 'delivery_verified', status='published', receipt=receipt)
+            self.save(state, 'delivery_verified', status='published', reason=None, receipt=receipt)
         except Exception as error:
             self.save(state, 'delivery_unresolved', status='delivery_pending', reason=type(error).__name__)
         return state
