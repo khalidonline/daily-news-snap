@@ -46,6 +46,53 @@ jobs:
           FONT_FAMILY: Almarai
           THEME: light
         run: python -m unittest discover -s tests -p 'test_v2_*.py' -q
+      - name: Resolve shadow or live promotion
+        id: route
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_LANE: ${{ inputs.lane }}
+        run: |
+          python - <<'PY'
+          import base64, json, os, urllib.request
+          event = os.environ.get("GITHUB_EVENT_NAME", "")
+          message = os.environ.get("HEAD_COMMIT_MESSAGE", "")
+          mode = (os.environ.get("INPUT_MODE") or "shadow") if event != "push" else "shadow"
+          lane = (os.environ.get("INPUT_LANE") or "both") if event != "push" else "both"
+          duplicate = False
+          if event == "push" and message.startswith("automation: promote daily autopilot live"):
+              mode = "live"
+              repo = os.environ["GITHUB_REPOSITORY"]
+              token = os.environ["GITHUB_TOKEN"]
+              def load(name):
+                  url = f"https://api.github.com/repos/{repo}/contents/api-receipts/{name}.json?ref=snapchat-api-state"
+                  req = urllib.request.Request(url, headers={
+                      "Authorization": "Bearer " + token,
+                      "Accept": "application/vnd.github+json",
+                      "User-Agent": "daily-news-snap-live-route",
+                  })
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      row = json.load(response)
+                  return json.loads(base64.b64decode(row["content"]))
+              try:
+                  readiness = load("autopilot-readiness")
+                  daily = load(readiness["daily"]["slot"])
+                  local = load(readiness["local"]["slot"])
+                  daily_id = daily.get("package", {}).get("candidate", {}).get("id")
+                  local_id = local.get("package", {}).get("candidate", {}).get("id")
+                  if daily_id and daily_id == local_id:
+                      lane = "daily"
+                      duplicate = True
+              except Exception:
+                  # Runtime itself remains fail-closed if readiness cannot be verified.
+                  lane = "both"
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"mode={mode}\n")
+              out.write(f"lane={lane}\n")
+              out.write(f"duplicate={str(duplicate).lower()}\n")
+          print(json.dumps({"mode": mode, "lane": lane, "duplicate_lane_subject": duplicate}))
+          PY
       - name: Run coordinated editorial agents
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -53,7 +100,7 @@ jobs:
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
-          AUTOPILOT_MODE: ${{ inputs.mode || 'shadow' }}
+          AUTOPILOT_MODE: ${{ steps.route.outputs.mode }}
           # Temporary requested cap; runtime clamps to $3 from 2026-09-24 Saudi time.
           AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
           # Reduce one role first; preserve writing/research and independent review quality.
@@ -62,16 +109,16 @@ jobs:
           AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
           AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
           AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
-          AUTOPILOT_LANE: ${{ inputs.lane || 'both' }}
-          POST_TO_SNAPCHAT: '0'
-          DRY_RUN: '1'
+          AUTOPILOT_LANE: ${{ steps.route.outputs.lane }}
+          POST_TO_SNAPCHAT: ${{ steps.route.outputs.mode == 'live' && '1' || '0' }}
+          DRY_RUN: ${{ steps.route.outputs.mode == 'live' && '0' || '1' }}
         run: |
           python -m publishing_v2.autopilot.runtime --mode "$AUTOPILOT_MODE" --lane "$AUTOPILOT_LANE"
       - name: Send publication outcome
         if: always()
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          AUTOPILOT_REQUESTED_MODE: ${{ inputs.mode || 'shadow' }}
+          AUTOPILOT_REQUESTED_MODE: ${{ steps.route.outputs.mode }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m publishing_v2.autopilot.report
