@@ -1,1 +1,1 @@
-{"1": {"status": "SENDING", "upload_id": "43d1ee07-bff0-4964-90e3-ee53b5c7b7b2"}}
+{"1": {"status": "SENDING", "upload_id": "43d1ee07-bff0-4964-90e3-ee53b5c7b7b2"}, "reconciliation": {"status": "NOT_CREATED", "checked_at": "2026-09-25T19:42:25.719661+00:00", "evidence_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/36181287332", "method": "provider_exact_upload_posts_empty", "upload_id": "43d1ee07-bff0-4964-90e3-ee53b5c7b7b2"}}
