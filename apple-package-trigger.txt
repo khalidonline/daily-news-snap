@@ -1,1 +1,1 @@
-Publish approved Apple AI package 2026-09-25 retry simpler cluster visual.
+Publish approved Apple AI package 2026-09-25 retry provider publish only.
