@@ -257,6 +257,10 @@ def validate_draft(data, research):
                          'model codes; replace nonessential codes with plain roles, '
                          'not transliterations; retain the supported story and claims')
 
+    formal = ('لاحقاً', 'لاحقا', 'معروفاً', 'معروفا', 'قدراً', 'قدرا')
+    if any(word in visible for word in formal):
+        raise ValueError('owner_style_violation: use casual Saudi wording, not formal Arabic')
+
 
 def validate_review(review, count):
     # Internal evidence audit, not public card copy. Accommodate the bounded
