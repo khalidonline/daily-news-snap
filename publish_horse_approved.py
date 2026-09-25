@@ -41,6 +41,12 @@ def main():
       "candidate":{"id":"owner-approved-horse-20260925","title":TITLE,"resolved_subject":{"name":"Arabian horse"}},
       "lane":"local","expires_at":"2026-09-27T00:00:00+03:00","as_of":now.isoformat(),
       "editorial_feedback":[{"subject":"Owner approval","reason":"Owner selected horse package; simple Saudi style."}]}
+    from publishing_v2.editorial_production import approve_text
+    from publishing_v2.autopilot.sources import fetch, plain
+    for i, source in enumerate(package['sources']):
+        source['id'] = f'owner-source-{i}'
+        source['text'] = plain(fetch(source['url']).decode('utf-8',errors='replace'))
+    approve_text(package, agent)
     used=set(); hashes=set(); origins=set()
     for card in package["cards"]:
       chosen=None

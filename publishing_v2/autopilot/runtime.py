@@ -13,6 +13,7 @@ from PIL import Image
 from daily_budget import GitHubStore, Ledger, day_key
 from publishing_v2.bundle_api import BundleClient, GitHubJournal, publish
 from publishing_v2.preview import render_card
+from publishing_v2.editorial_production import require_text_approval, CardArtifacts, TEXT_FIELDS
 from publishing_v2.public_images import get_bytes, inspect_image, atomic_write, download_image
 from .agents import Agents
 from publishing_v2.primary_images import ImageMemory
@@ -154,13 +155,15 @@ class Renderer:
         return list(self._catalog.values())
 
     def __call__(self, package, output):
+        require_text_approval(package)
         with tempfile.TemporaryDirectory(prefix='snap-source-') as temporary:
             return self._render(package, output, Path(temporary))
 
     def _render(self, package, output, source_root):
         output = Path(output); output.mkdir(parents=True, exist_ok=True)
         cards = [card for card in package['cards'] if card.get('kind') != 'credits']
-        if not all('image' in c for c in cards):
+        missing = [i for i,c in enumerate(cards) if 'image' not in c]
+        if missing:
             catalog = self.image_catalog(package)
             if not catalog:
                 raise ValueError('relevant_reusable_image_unavailable')
@@ -173,14 +176,15 @@ class Renderer:
                         'date_created': row.get('date_created', '')[:100],
                         'image_role': row.get('image_role', 'subject illustration; event date requires review')}
                        for row in catalog]
-            selected = self.agent.run('visual', {'cards': cards, 'options': options,
+            selected = self.agent.run('visual', {'cards': [cards[i] for i in missing], 'options': options,
+                                               'fixed_images': [c['image']['asset_id'] for c in cards if 'image' in c],
                                                'repair': package.get('repair', {})})
             ids = selected.get('image_ids', [])
-            if len(ids) != len(cards):
+            if len(ids) != len(missing):
                 raise ValueError('incomplete_visual_selection')
             self._selected = list(dict.fromkeys(ident for ident in ids
                 if isinstance(ident, str) and ident in self._catalog))
-            for card, rows, ident in zip(cards, choices, ids):
+            for card, rows, ident in zip([cards[i] for i in missing], choices, ids):
                 matches = [r for r in rows if r['asset_id'] == ident]
                 if len(matches) != 1:
                     raise ValueError('unknown_visual_selection: ' + card['image_query'] + ': '
@@ -198,11 +202,31 @@ class Renderer:
                  'aawsat.com': 'الشرق الأوسط'}
         hosts = [urlsplit(row['url']).hostname.removeprefix('www.') for row in package.get('sources', [])]
         source_names = '، '.join(dict.fromkeys(names.get(host, host) for host in hosts))
+        # Version binds the drawing code; hashes also check the saved output bytes.
+        root = Path(__file__).resolve().parents[2]
+        version = digest({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in
+                          (Path(__file__), root/'story_bot.py', root/'news_bot.py', root/'publishing_v2/preview.py',
+                           Path(__file__).parent/'credits.py')})
+        cache = CardArtifacts(output, version)
+        def binding(card, index):
+            return {'card':{k:card[k] for k in (*TEXT_FIELDS,'image') if k in card},
+                    'position':index,'count':len(cards),'theme':'light','font':'Almarai'}
         paths = []
         for i, card in enumerate(cards):
             image = card['image']
             if not reusable_image(image):
                 raise ValueError('image_rights_not_supported')
+            target = output / f'card-{i:02d}.jpg'
+            stored_source = output / f'source-{i:02d}.jpg'
+            if cache.reuse(i, binding(card,i), target) and stored_source.is_file():
+                raw = stored_source.read_bytes()
+                if hashlib.sha256(raw).hexdigest() == image.get('sha256'):
+                    receipt = cache.metadata(i).get('public_attribution')
+                    if receipt: card['public_attribution'] = receipt
+                    validate_public_attribution(card, target.read_bytes())
+                    atomic_write(source_root / f'source-{i:02d}.jpg', raw)
+                    paths.append(target)
+                    continue
             try:
                 raw = download_image(image, fetch=get_bytes)
             except Exception as error:
@@ -215,6 +239,7 @@ class Renderer:
             validate_image_variety(cards)
             source = source_root / f'source-{i:02d}.jpg'
             atomic_write(source, raw)
+            atomic_write(stored_source, raw)
             target = output / f'card-{i:02d}.jpg'
             if card['kind'] == 'info':
                 render_card({'title_lines': [card['title']], 'body_lines': [card['body']],
@@ -233,14 +258,14 @@ class Renderer:
             with Image.open(target) as rendered:
                 if rendered.size != (1080, 1920):
                     raise ValueError('wrong_frame_dimensions')
+            cache.record(i, binding(card,i), target, {'public_attribution':card.get('public_attribution')})
             paths.append(target)
         if needs_credits:
             credit_card = {'kind': 'credits', 'title': 'المصادر والصور',
                            'body': 'Editorial sources and photo attribution',
                            'image': dict(cards[0]['image'])}
             if existing_credits:
-                if existing_credits[0] != credit_card:
-                    raise ValueError('credits_card_changed')
+                package['cards'][-1] = credit_card
             else:
                 package['cards'].append(credit_card)
             target = output / f'card-{len(cards):02d}.jpg'

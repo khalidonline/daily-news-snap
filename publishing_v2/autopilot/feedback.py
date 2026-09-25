@@ -52,9 +52,10 @@ def rejected_trigger(candidate):
         return True
     parsed = urlsplit(candidate.get('url', ''))
     for row in EDITORIAL_FEEDBACK:
-        if candidate.get('id') == row['rejected_candidate_id']:
+        if row.get('rejected_candidate_id') and candidate.get('id') == row['rejected_candidate_id']:
             return True
         host, path = row.get('rejected_article', (None, None))
         if host == parsed.hostname and (parsed.path == path or parsed.path.startswith(path + '/')):
             return True
     return False
+

@@ -112,6 +112,12 @@ def main():
         "editorial_feedback":[{"subject":"Owner approval","reason":"Exact owner-approved copy; no writer rewrite."}],
     }
 
+    from publishing_v2.editorial_production import approve_text
+    from publishing_v2.autopilot.sources import fetch, plain
+    for i, source in enumerate(package['sources']):
+        source['id'] = f'owner-source-{i}'
+        source['text'] = plain(fetch(source['url']).decode('utf-8',errors='replace'))
+    approve_text(package, agent)
     used_assets, used_hashes, used_origins = set(), set(), set()
     for card in package["cards"]:
         chosen = None

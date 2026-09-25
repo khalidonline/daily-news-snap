@@ -472,6 +472,38 @@ def parse_object(answer):
     return result
 
 
+PROMPTS['text_review'] = """Independently approve the TEXT before any design or paid image selection.
+Use original source text and verified timing. URLs alone are not evidence. Require a
+current dated attention event, one distinctive Info fact introducing the subject,
+and a documented beginning, change and outcome in a logical connected story.
+Check Saudi everyday language, factual support, broad Saudi appeal, repetition,
+ambiguous headings and overloaded cards. No academic tone or invented motives.
+Do not judge images at this stage. Every failed criterion must name the affected
+zero-based editorial card indices; a whole-story structural issue can identify
+multiple cards, but never request rewriting unaffected cards. Return exactly:
+{"checks":{"factual":true,"timely":true,"current_attention":true,"saudi_language":true,
+"broad_appeal":true,"story_coherent":true,"documented_story":true,"distinct_value":true,
+"owner_quality":true,"safe_routine":true},"repair_indices":[],"reason":"evidence and specific findings"}.
+Missing evidence means false. No approval by majority. On approval repair_indices
+must be empty. Verify chronology, why each change happened if known, the outcome,
+and that Info and story deliver different value. News is the reason to choose,
+not the entire story. No need to explicitly repeat the news in the public text."""
+PROMPTS['card_repair'] = PROMPTS['writer'] + """
+REPAIR MODE overrides the output format above. The existing draft is the only
+working version. Change ONLY cards listed in repair_indices, addressing feedback.
+Preserve the title, card count, card kinds and every unlisted card. Return ONLY
+{"patches":[{"index":0,"card":{...complete replacement card using writer fields...}}]}.
+Include exactly one replacement per requested index. Do not return a whole draft.
+Keep supported claims and narrative continuity with the unchanged neighbors.
+"""
+PROMPTS['reviewer'] += """
+When rejecting, also return repair_indices: zero-based EDITORIAL card indices
+that need changes. Keep unaffected cards out. Internal credits are not editorial
+cards; explain a credits-only fault in reason with repair_indices: [].
+This is required for targeted corrections; never ask to regenerate the package.
+"""
+
+
 class InvalidAgentResponse(ValueError):
     """Completed and accounted response whose JSON could not be read."""
 
@@ -508,8 +540,9 @@ class Agents:
     def _run_once(self, role, data, images=(), *, format_retry=False):
         if role not in PROMPTS:
             raise ValueError('unknown_agent_role')
+        fallback_role = {'card_repair':'WRITER','text_review':'REVIEWER'}.get(role, role.upper())
         model = self.env.get('AUTOPILOT_' + role.upper() + '_MODEL',
-                             'claude-sonnet-5')
+                             self.env.get('AUTOPILOT_' + fallback_role + '_MODEL','claude-sonnet-5'))
         if model not in PRICES:
             raise ValueError('unpriced_agent_model')
         credential = self.env.get('ANTHROPIC_API_KEY', '').strip()
@@ -519,7 +552,7 @@ class Agents:
         # Keep selected image metadata and original sources for independent review.
         if isinstance(data.get('candidate'), dict):
             candidate = {k: v for k, v in data['candidate'].items() if k != 'visual_discovery'}
-            if role == 'writer':
+            if role in {'writer', 'card_repair'}:
                 # Editor rationale can contain unsupported locations or claims.
                 # The writer gets verified research and source-bound identity only.
                 candidate.pop('editorial', None)

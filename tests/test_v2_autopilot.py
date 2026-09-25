@@ -57,12 +57,18 @@ class FakeAgent:
         if role == 'timing':
             return dict(research(), eligible=True, timing_basis='event', reason='Current event')
         if role == 'researcher': return research()
+        if role == 'text_review':
+            from publishing_v2.editorial_production import TEXT_CHECKS
+            return {'checks':dict.fromkeys(TEXT_CHECKS,True),'repair_indices':[],'reason':'Source text verified'}
+        if role == 'card_repair':
+            return {'patches':[{'index':i,'card':copy.deepcopy(data['draft']['cards'][i])} for i in data['repair_indices']]}
         if role == 'writer': return draft()
         if role == 'reviewer':
             passed = self.reject <= 0
             self.reject -= 1
             return {'checks': {key: passed for key in policy.REVIEW_CHECKS},
                     'reason': 'Checked against evidence and images',
+                    'repair_indices': [] if passed else list(range(len(data['cards']))),
                     'card_checks': [{'readable': passed, 'relevant': passed} for _ in images]}
         raise AssertionError(role)
 
@@ -196,11 +202,11 @@ class PipelineTests(unittest.TestCase):
                     if row['candidate_id'] == 'a']
         self.assertEqual(filtered[0]['reason'], 'selected_in_sibling_lane')
 
-    def test_selection_recovery_stops_after_two_rounds(self):
+    def test_selection_recovery_stops_after_three_rounds(self):
         pipeline, pools, researched = self.recovery_pipeline()
         self.assertEqual(pipeline.run('daily', 'shadow')['status'], 'held')
-        self.assertEqual(len(pools), 2)
-        self.assertEqual(researched, list('abcdefgh'))
+        self.assertEqual(len(pools), 3)
+        self.assertEqual(researched, list('abcdefghij'))
 
     def test_repeated_candidate_in_second_round_is_not_retried(self):
         pipeline, pools, researched = self.recovery_pipeline(repeat=True)
@@ -245,7 +251,7 @@ class PipelineTests(unittest.TestCase):
         self.agent.reject = 99
         result = self.pipeline().run('daily', 'shadow')
         self.assertEqual(result['status'], 'held')
-        self.assertEqual(self.agent.calls.count('reviewer'), 6)
+        self.assertEqual(self.agent.calls.count('reviewer'), 8)
         self.assertEqual(self.sent, [])
 
     def test_two_review_rejections_can_be_repaired_without_new_candidate(self):
@@ -410,3 +416,4 @@ class PolicyTests(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+

@@ -13,6 +13,14 @@ from PIL import Image
 from publishing_v2.autopilot.runtime import Renderer, rollout_ready, publish_package, shadow_record, promotable_shadow
 
 
+def approve_fixture(package):
+    from publishing_v2.editorial_production import approve_text,TEXT_CHECKS
+    class Agent:
+        def run(self,*args,**kwargs):
+            return {'checks':dict.fromkeys(TEXT_CHECKS,True),'repair_indices':[],'reason':'Fixture reviewed'}
+    package.setdefault('sources',[{'text':'fixture evidence'}])
+    approve_text(package,Agent())
+
 class RuntimeTests(unittest.TestCase):
     def test_quality_gates_cannot_be_omitted_or_overruled(self):
         from publishing_v2.autopilot.policy import validate_review, REVIEW_CHECKS
@@ -69,6 +77,7 @@ class RuntimeTests(unittest.TestCase):
         renderer = Renderer(Agent(), Sources())
         first = {'candidate': {'id': 'palm'}, 'cards': [
             {'image_query': 'dates'}, {'image_query': 'history'}]}
+        approve_fixture(first)
         with tempfile.TemporaryDirectory() as root:
             with self.assertRaisesRegex(ValueError, 'unknown_visual_selection'):
                 renderer(first, root)
@@ -155,6 +164,7 @@ class RuntimeTests(unittest.TestCase):
             with patch('publishing_v2.autopilot.runtime.get_bytes', side_effect=raws), \
                  patch('publishing_v2.autopilot.runtime.render_card', side_effect=info), \
                  patch.dict('sys.modules', {'story_bot': SimpleNamespace(render_frame=frame)}):
+                approve_fixture(package)
                 result = Renderer(None, None)(package, Path(tmp) / 'render')
             self.assertEqual(len(result), 4)
             self.assertEqual(counters, ['١ من ٢', '٢ من ٢'])
@@ -182,6 +192,7 @@ class RuntimeTests(unittest.TestCase):
             with patch('publishing_v2.autopilot.runtime.get_bytes', side_effect=self.source_bytes() * 2), \
                  patch('publishing_v2.autopilot.runtime.render_card', side_effect=info), \
                  patch.dict('sys.modules', {'story_bot': SimpleNamespace(render_frame=frame)}):
+                approve_fixture(package)
                 renderer = Renderer(None,None)
                 paths = renderer(package,Path(tmp)/'first')
                 approved = seal(package,paths)
@@ -190,6 +201,28 @@ class RuntimeTests(unittest.TestCase):
             self.assertEqual(package['cards'][-1]['kind'],'credits')
             self.assertEqual(len(package['cards']),4)
             self.assertEqual(approved,seal(package,resumed))
+
+    def test_edit_one_card_reuses_other_pixels_without_download_or_redraw(self):
+        raws=self.source_bytes(); draws=[]
+        package={'sources':[], 'cards':[dict(kind=k,title='عنوان',body='معلومة',punch='',
+            image={'asset_id':str(i),'download_url':'https://upload.wikimedia.org/'+str(i)+'.png',
+                   'license':'CC0','sha256':hashlib.sha256(raws[i]).hexdigest()})
+            for i,k in enumerate(['info','story','story'])]}
+        def frame(path,*args,**kwargs):
+            draws.append(Path(path).name);Image.new('RGB',(1080,1920),'green').save(path)
+        def info(spec,source,path):
+            draws.append(Path(path).name);Image.new('RGB',(1080,1920),'blue').save(path)
+        with tempfile.TemporaryDirectory() as d, \
+             patch('publishing_v2.autopilot.runtime.get_bytes',side_effect=raws+[raws[1]]) as download, \
+             patch('publishing_v2.autopilot.runtime.render_card',side_effect=info), \
+             patch.dict('sys.modules',{'story_bot':SimpleNamespace(render_frame=frame)}):
+            r=Renderer(None,None);approve_fixture(package);paths=r(package,Path(d))
+            unchanged=[paths[i].read_bytes() for i in [0,2]]
+            package['cards'][1]['body']='هذا تعديل بطاقة وحدة';approve_fixture(package)
+            r(package,Path(d))
+            self.assertEqual(draws,['card-00.jpg','card-01.png','card-02.png','card-01.png'])
+            self.assertEqual(download.call_count,4)
+            self.assertEqual(unchanged,[paths[i].read_bytes() for i in [0,2]])
 
     def test_receipt_identity_is_hash_bound_and_posted_requires_all_cards(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -202,6 +235,7 @@ class RuntimeTests(unittest.TestCase):
                 def save(self, value): self.state = copy.deepcopy(value)
             class Client:
                 def check(self): pass
+                def ensure_capacity(self,count): pass
                 def upload(self, media): return 'upload'
                 def create(self, title, upload): return title
                 def wait(self, id): pass
@@ -214,3 +248,4 @@ class RuntimeTests(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from daily_budget import BudgetBlocked
 from . import policy
+from publishing_v2.editorial_production import approve_text, TextRejected, repair_indices, apply_card_patches
 from .feedback import EDITORIAL_FEEDBACK
 from .evidence import hydrate_editor
 from .eligibility import routine_trigger_rejection
@@ -113,21 +114,6 @@ class Pipeline:
                     if not any(attention_source(s, candidate) for s in sources):
                         raise ValueError('attention_article_not_retrieved')
                     visual_options = []
-                    planner = getattr(self.render, 'plan_visuals', None)
-                    if planner:
-                        visual_options = planner(candidate)
-                        discovered = candidate.get('visual_discovery', [])
-                        if discovered:
-                            self.save(state, 'official_images_discovered', candidate_id=candidate['id'],
-                                      official_image_candidates=discovered)
-                        if len({r['asset_id'] for r in visual_options}) < 2:
-                            if discovered:
-                                raise ValueError('images_found_usage_clearance_required')
-                            raise ValueError('insufficient_subject_visuals_before_drafting')
-                        self.save(state, 'visual_preflight_passed', candidate_id=candidate['id'], visual_preflight={
-                            'candidate_id': candidate['id'],
-                            'asset_ids': [r['asset_id'] for r in visual_options],
-                            'distinct_count': len(visual_options)})
                     self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
                                                             'verified_timing': timing, 'lane': lane, 'now': self.now().isoformat()})
@@ -145,20 +131,56 @@ class Pipeline:
                     self.save(state, 'researched', sources=sources, research=research)
                     feedback = ''
                     excluded_images = set()
+                    draft = None
+                    package = None
+                    affected = []
+                    accepted_images = {}
                     for attempt in range(4):
                         review = None
                         try:
-                            draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
-                                                              'visual_options': visual_options,
-                                                              'feedback': feedback})
+                            if draft is None:
+                                draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
+                                    'visual_options': visual_options, 'feedback': feedback})
+                            elif affected:
+                                patches = self.agent.run('card_repair', {'candidate': candidate,
+                                    'research': research, 'draft': draft, 'repair_indices': affected,
+                                    'visual_options': visual_options, 'feedback': feedback})
+                                draft = apply_card_patches(draft, patches, affected)
+                            else:
+                                raise ValueError('repair_scope_missing_or_invalid')
                             policy.validate_draft(draft, research)
                             self.save(state, 'drafted', draft=draft)
-                            package = dict(draft, sources=sources, research=research, lane=lane,
+                            package = dict(copy.deepcopy(draft), sources=sources, research=research, lane=lane,
+                                           verified_timing=timing,
                                            editorial_feedback=EDITORIAL_FEEDBACK,
-                                           candidate=candidate, expires_at=expires, as_of=self.now().isoformat(),
+                                           candidate=candidate, expires_at=expires, as_of=state['started_at'],
                                            repair={'feedback': feedback, 'excluded_image_ids': sorted(excluded_images)})
-                            folder = self.output / choice['id'] / str(attempt)
+                            # Text approval is persisted before any render/visual-selection call.
+                            approve_text(package, self.agent, original_sources)
+                            self.save(state, 'text_approved', working_draft=copy.deepcopy(draft),
+                                      text_approval=package['text_approval'], revision=attempt + 1)
+                            planner = getattr(self.render, 'plan_visuals', None)
+                            if planner and not visual_options:
+                                visual_options = planner(candidate)
+                                discovered = candidate.get('visual_discovery', [])
+                                if discovered:
+                                    self.save(state, 'official_images_discovered', candidate_id=candidate['id'],
+                                              official_image_candidates=discovered)
+                                if len({r['asset_id'] for r in visual_options}) < 2:
+                                    if discovered:
+                                        raise ValueError('images_found_usage_clearance_required')
+                                    raise ValueError('insufficient_subject_visuals_before_drafting')
+                                self.save(state, 'visual_preflight_passed', candidate_id=candidate['id'], visual_preflight={
+                                    'candidate_id': candidate['id'],
+                                    'asset_ids': [r['asset_id'] for r in visual_options],
+                                    'distinct_count': len(visual_options)})
+                            for index, image in accepted_images.items():
+                                if index not in affected:
+                                    package['cards'][index]['image'] = copy.deepcopy(image)
+                            folder = self.output / choice['id'] / 'current'
                             paths = self.render(package, folder)
+                            accepted_images = {i:copy.deepcopy(c['image']) for i,c in enumerate(package['cards'])
+                                               if c.get('kind') != 'credits' and c.get('image')}
                             if len(paths) != len(package['cards']):
                                 raise ValueError('missing_rendered_cards')
                             snapshot = policy.seal(package, paths)
@@ -190,8 +212,13 @@ class Pipeline:
                                     ident = card.get('image', {}).get('asset_id')
                                     if isinstance(check, dict) and check.get('relevant') is False and isinstance(ident, str):
                                         excluded_images.add(ident)
+                            failure_review = error.review if isinstance(error, TextRejected) else review
+                            if not isinstance(failure_review, dict):
+                                raise  # Infrastructure/schema faults never trigger a full paid rewrite.
+                            affected = repair_indices(failure_review, len(draft['cards']))
                             self.save(state, 'repair_required', feedback=feedback,
-                                      recovery_policy='repair_then_replace_until_publishable')
+                                      affected_cards=affected, working_draft=copy.deepcopy(draft),
+                                      recovery_policy='patch_affected_cards_only')
                     raise ValueError('editorial_repairs_exhausted')
                 except BudgetBlocked:
                     raise
@@ -216,7 +243,7 @@ class Pipeline:
                 raise PersistenceError('candidate_memory_write_unconfirmed') from None
 
     def editor_choices(self, state, lane, candidates):
-        """Try at most two shortlists, never researching a candidate twice."""
+        """Try at most three shortlists, never researching a candidate twice."""
         used = set()
         for round_number in range(1, 4):
             remaining = [candidate for candidate in candidates if candidate['id'] not in used]
