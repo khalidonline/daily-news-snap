@@ -3,6 +3,11 @@ from urllib.parse import urlsplit
 import re
 
 EDITORIAL_FEEDBACK = (
+    {'subject': 'Rejection recovery',
+     'reason': ('A review rejection is not a stop condition. Repair the existing package first using saved '
+                'research/evidence/images when possible. If the angle itself remains weak, replace the candidate '
+                'and continue within the shared budget until a publishable package exists. Stop only for a real '
+                'budget, source, rights, safety, or delivery blocker.')},
     {'subject': 'Generic heritage angle',
      'reason': ('Owner rejects packages whose value is mainly that a subject is part of Saudi heritage, '
                 'has a special place, or is being introduced to a new generation. A current trigger must '
