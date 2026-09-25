@@ -93,6 +93,19 @@ jobs:
               out.write(f"duplicate={str(duplicate).lower()}\n")
           print(json.dumps({"mode": mode, "lane": lane, "duplicate_lane_subject": duplicate}))
           PY
+      - name: Recover held Local before live promotion
+        if: steps.route.outputs.mode == 'live'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
+          AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
+          AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
+          AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
+        run: python recover_held_local.py
       - name: Run coordinated editorial agents
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
