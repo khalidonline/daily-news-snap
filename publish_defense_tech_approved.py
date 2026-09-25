@@ -20,7 +20,7 @@ CARDS = [
         "body":"إذا سمعت «تطوير دفاع» يمكن أول شيء يجي ببالك طيارات أو دبابات جديدة. لكن الحروب اليوم تغيرت كثير.",
         "punch":"صار السؤال بعد: وش نقدر ننتجه ونطوره بأنفسنا؟",
         "claim_ids":["c1"],
-        "image_query":"modern radar antenna",
+        "image_query":"fighter aircraft",
     },
     {
         "kind":"story",
@@ -65,7 +65,7 @@ CARDS = [
 ]
 
 QUERY_FALLBACKS = {
-    "modern radar antenna":["radar antenna close up","weather radar antenna","phased array radar"],
+    "fighter aircraft":["military aircraft","fighter jet aircraft","jet aircraft"],
     "military drone UAV":["unmanned aerial vehicle","drone aircraft","UAV aircraft"],
     "modern surveillance radar":["radar antenna close up","radar station","surveillance radar"],
     "electronics manufacturing assembly line":["electronics factory assembly line","circuit board manufacturing","industrial assembly line"],
