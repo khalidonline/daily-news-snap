@@ -144,7 +144,7 @@ class Pipeline:
                     self.save(state, 'researched', sources=sources, research=research)
                     feedback = ''
                     excluded_images = set()
-                    for attempt in range(3):
+                    for attempt in range(4):
                         review = None
                         try:
                             draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
@@ -189,7 +189,8 @@ class Pipeline:
                                     ident = card.get('image', {}).get('asset_id')
                                     if isinstance(check, dict) and check.get('relevant') is False and isinstance(ident, str):
                                         excluded_images.add(ident)
-                            self.save(state, 'repair_required', feedback=feedback)
+                            self.save(state, 'repair_required', feedback=feedback,
+                                      recovery_policy='repair_then_replace_until_publishable')
                     raise ValueError('editorial_repairs_exhausted')
                 except BudgetBlocked:
                     raise
@@ -216,7 +217,7 @@ class Pipeline:
     def editor_choices(self, state, lane, candidates):
         """Try at most two shortlists, never researching a candidate twice."""
         used = set()
-        for round_number in range(1, 3):
+        for round_number in range(1, 4):
             remaining = [candidate for candidate in candidates if candidate['id'] not in used]
             if not remaining:
                 return
