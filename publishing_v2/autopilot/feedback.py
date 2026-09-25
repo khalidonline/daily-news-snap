@@ -3,6 +3,15 @@ from urllib.parse import urlsplit
 import re
 
 EDITORIAL_FEEDBACK = (
+    {'subject': 'Generic heritage angle',
+     'reason': ('Owner rejects packages whose value is mainly that a subject is part of Saudi heritage, '
+                'has a special place, or is being introduced to a new generation. A current trigger must '
+                'lead to a concrete memorable fact and a documented story worth sharing; otherwise reject '
+                'the angle before publication.')},
+    {'subject': 'Horse package 2026-09-25',
+     'rejected_candidate_id': 'owner-approved-horse-20260925',
+     'reason': ('Owner rejected the generic horse-heritage angle as too shallow. Do not reuse this angle; '
+                'future horse coverage needs a specific distinctive fact and stronger story progression.')},
     {'subject': 'Owner Snapchat style',
      'reason': ('Use casual Saudi wording and a clear Snapchat story progression. '
                 'Avoid academic/history-article framing, heavy prose, repeated names, '
