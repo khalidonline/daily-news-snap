@@ -358,6 +358,24 @@ statistics. Set factual false for stale figures labelled today, invented causal
 links, or a country/group ambition presented as a company's achieved result.
 Set story_coherent false for missing red-closing punches or closings that merely
 repeat headlines, describe the photo, or promise a continuation that never comes.
+Before any package can pass, apply an OWNER SNAPCHAT TEST from the perspective
+of an ordinary Saudi follower, not an editor defending the draft.
+Set snapchat_pull=false if the main takeaway is a generic truth that could have
+been written any day, such as "this is part of our heritage", "it has a special
+place in society", "the new generation can experience it", or "technology is
+changing things", unless the package quickly delivers a specific surprising fact,
+comparison, mechanism, or documented story that makes the viewer want to keep
+tapping and tell a friend. A current event is only the trigger; it does not make
+generic background interesting by itself.
+Set owner_quality=false when the package feels like a school report, brochure,
+institutional PR, encyclopedia summary, or a collection of correct but obvious
+facts. The first two editorial cards together must answer "why should I care?"
+with a concrete distinctive payoff. If a stronger supported angle is visible in
+the supplied evidence but the draft chose a generic angle, reject it and identify
+the stronger angle in reason. Do not pass merely because wording is casual Saudi.
+For local heritage topics specifically, "heritage + families/children + keeping
+traditions alive" is not sufficient value. Require one memorable fact or real
+documented progression beyond that framing.
 Apply the reader test separately from factual accuracy. Set distinct_value false
 when Info is a directory of counts, areas and facilities without one clear useful
 takeaway. Set story_coherent false when successive management/ownership or designer
