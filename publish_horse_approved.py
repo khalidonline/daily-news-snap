@@ -13,13 +13,13 @@ from publishing_v2.publication import image_publication_eligible
 TITLE="ليش الخيل للحين لها مكانة خاصة عندنا؟"
 CARDS=[
 {"kind":"info","title":"الخيل حاضرة بتجربة حية","body":"معرض الصقور والصيد 2026 ما وقف عند الصقور. فيه تجربة خيل وفروسية تخلي الزوار يشوفونها ويتفاعلون معها عن قرب.","punch":"الفكرة: الموروث يصير شيء تعيشه مو بس تسمع عنه.","claim_ids":["h1"],"image_query":"Arabian horse Saudi"},
-{"kind":"story","title":"ليش الخيل مهمة أصلًا؟","body":"الخيل ارتبطت عند أهل الجزيرة بالسفر والصيد والمهارة والمكانة. وعشان كذا علاقتها بالمجتمع أقدم من كونها رياضة.","punch":"هي جزء من قصة الناس قبل ما تكون بطولة.","claim_ids":["h2"],"image_query":"Arabian horse rider desert"},
+{"kind":"story","title":"ليش الخيل مهمة أصلًا؟","body":"الخيل ارتبطت عند أهل الجزيرة بالسفر والصيد والمهارة والمكانة. وعشان كذا علاقتها بالمجتمع أقدم من كونها رياضة.","punch":"هي جزء من قصة الناس قبل ما تكون بطولة.","claim_ids":["h2"],"image_query":"Arabian horse portrait"},
 {"kind":"story","title":"وش المختلف اليوم؟","body":"بدل ما تكون الفروسية قصة قديمة تنقال، صارت تجربة يشوفها الأطفال والشباب قدامهم: خيل، مهارات، وتفاعل مباشر.","punch":"الموروث إذا عاش قدامك.. يصير أقرب لك.","claim_ids":["h3"],"image_query":"horse riding family event"},
 {"kind":"story","title":"وهذا اللي يفسر حضورها","body":"الخيل والصقور اجتمعوا تاريخيًا حول الرحلات والصحراء والصيد. والمعرض يجمعهم اليوم في مكان واحد بشكل أقرب للناس.","punch":"نفس الموروث.. لكن بطريقة تناسب جيل اليوم.","claim_ids":["h4"],"image_query":"Arabian horse falcon desert"},
 ]
 FALLBACK={
 "Arabian horse Saudi":["Arabian horse","Saudi Arabian horse","Arabian stallion"],
-"Arabian horse rider desert":["Arabian horse rider","horse rider desert","equestrian Arabian horse"],
+"Arabian horse portrait":["Arabian horse","Arabian stallion","horse portrait"],
 "horse riding family event":["horse riding event","equestrian event","horse show audience"],
 "Arabian horse falcon desert":["Arabian horse desert","horse and falcon","equestrian desert"],
 }
