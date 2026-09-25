@@ -25,7 +25,7 @@ jobs:
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
-          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
           AUTOPILOT_IMAGE_CHECK_MODEL: 'claude-sonnet-5'
           POST_TO_SNAPCHAT: '1'
           DRY_RUN: '0'

@@ -153,7 +153,15 @@ def publish(client, journal, title, media):
             # Durable intent first: failure or cancellation after this point blocks recreation.
             state[key] = {'status':'SENDING', 'upload_id':upload}
             journal.save(state)
-            post_id = client.create(f'{title} [{key}/{len(media)}]', upload)
+            try:
+                post_id = client.create(f'{title} [{key}/{len(media)}]', upload)
+            except HTTPFailure as error:
+                # Keep the durable uncertain intent. A 403 is not permission to
+                # regenerate media or to bypass reconciliation with a new hash.
+                state[key]['error'] = {'operation': 'create', 'http_status': error.code,
+                                       'at': datetime.now(timezone.utc).isoformat()}
+                journal.save(state)
+                raise
             state[key]['post_id'] = post_id
             journal.save(state)
         client.wait(state[key]['post_id'])
@@ -162,11 +170,39 @@ def publish(client, journal, title, media):
         print(f'Card {key}/{len(media)}: POSTED ({state[key]["post_id"]})')
 
 
+def check_predecessors(identities, journal_factory=GitHubJournal):
+    """A new export cannot bypass an older unresolved delivery attempt.
+
+    Reconciliation is a separately evidenced operator action, never inferred
+    from a missing journal, a 403, or an absent post ID. This helper only reads.
+    """
+    for identity in identities:
+        if (not isinstance(identity, str) or len(identity) != 64
+                or any(c not in '0123456789abcdef' for c in identity)):
+            raise BundleError('Invalid predecessor identity')
+        state = journal_factory(identity).read()
+        proof = state.get('reconciliation', {})
+        rows = [v for k, v in state.items() if k.isdigit()]
+        status = proof.get('status')
+        try:
+            checked = datetime.fromisoformat(proof['checked_at'].replace('Z', '+00:00'))
+            valid_time = checked.tzinfo is not None and checked <= datetime.now(timezone.utc)
+        except (KeyError, TypeError, ValueError):
+            valid_time = False
+        if (not rows or status not in {'NOT_CREATED', 'DELETED'} or not valid_time
+                or not str(proof.get('evidence_url', '')).startswith('https://')
+                or (status == 'NOT_CREATED' and any(row.get('post_id') for row in rows))):
+            raise BundleError('Previous export needs documented provider reconciliation; no new post sent')
+
+
 def load_package(manifest):
     root = Path.cwd().resolve()
     path = (root / manifest).resolve()
     if not path.is_relative_to(root): raise BundleError('Manifest must be in the repository')
     data = json.loads(path.read_text())
+    if data.get('format') == 'apple-correction-v1':
+        from .apple_correction import validate_review
+        validate_review(path.parent)
     if data.get('approved') is not True or data.get('account') != 'executivesaudi':
         raise BundleError('An approved executivesaudi manifest is required')
     expires = datetime.fromisoformat(data['expires_at'].replace('Z','+00:00'))
@@ -224,6 +260,7 @@ def main():
         print('API verified: Snapchat executivesaudi is connected.')
         if args.mode == 'publish':
             identity, title, media = load_package(args.manifest)
+            check_predecessors(json.loads(Path(args.manifest).read_text()).get('predecessors', []))
             publish(client, GitHubJournal(identity), title, media)
     except (BundleError, KeyError, ValueError, OSError) as exc:
         print(str(exc) if isinstance(exc, BundleError) else 'Invalid package or state; no automatic retry')

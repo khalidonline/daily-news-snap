@@ -691,9 +691,7 @@ def _shaping_gaps(font_path):
 # Characters models commonly emit that many Arabic fonts don't include.
 # Mapped to equivalents present in essentially every font.
 CHAR_FIXES = {
-    # digits stay Latin no matter what the model writes
-    "٠": "0", "١": "1", "٢": "2", "٣": "3", "٤": "4",
-    "٥": "5", "٦": "6", "٧": "7", "٨": "8", "٩": "9",
+    # Preserve the owner's Arabic numbering; do not rewrite it during rendering.
     "۰": "0", "۱": "1", "۲": "2", "۳": "3", "۴": "4",
     "۵": "5", "۶": "6", "۷": "7", "۸": "8", "۹": "9",
     "٪": "%", "٬": ",", "٫": ".", "؊": "-",
@@ -704,7 +702,7 @@ CHAR_FIXES = {
 }
 
 # If the font can't draw these, meaning gets mangled — so we refuse to use it.
-REQUIRED_CHARS = "0123456789%-.,:()اب"
+REQUIRED_CHARS = "0123456789٠١٢٣٤٥٦٧٨٩%-.,:()اب"
 
 # Arabic misspellings the models produce now and then. Add as you spot them —
 # the key is the wrong form, the value the correct one.

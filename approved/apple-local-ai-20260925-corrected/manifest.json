@@ -1,0 +1,109 @@
+{
+  "approved": true,
+  "format": "apple-correction-v1",
+  "account": "executivesaudi",
+  "title": "ليش أبل تبي الذكاء الاصطناعي يشتغل عندك؟",
+  "expires_at": "2026-09-27T00:00:00+03:00",
+  "media": [
+    {
+      "path": "approved/apple-local-ai-20260925-corrected/card-00.jpg",
+      "kind": "info",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "asset_id": "primary:5f42b4cbbd1558fe81965a56",
+        "sha256": "4a753142b8d380adbc2b001754102ca580be32750938c6a370cd3cbef0e76a8d",
+        "credit": "Apple",
+        "title": "Mac Studio: hero",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "sha256": "99f2993cd5090f5a12b81f4d3963184aeca7b4c3cc989dc6f89fca09b0e3db81"
+    },
+    {
+      "path": "approved/apple-local-ai-20260925-corrected/card-01.jpg",
+      "kind": "story",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "asset_id": "primary:2862f68492759f18939469ce",
+        "sha256": "70df8578b78c244280c3d97ec36c00928cfe5927a16da76f2d8a0e26b7dad950",
+        "credit": "Apple",
+        "title": "Mac Studio: Draw-Things",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "sha256": "0901a93de8fb1fe2360939f064b81b9a55cb5ab62d8074df596ad9f30727282d"
+    },
+    {
+      "path": "approved/apple-local-ai-20260925-corrected/card-02.jpg",
+      "kind": "story",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-LM-Studio-and-MATLAB-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-LM-Studio-and-MATLAB-260825_big.jpg.large.jpg",
+        "asset_id": "primary:19f50bcaea8d7270c195bb2d",
+        "sha256": "35ced0553b7d5b144fcb725d207bd32aa3cabec0b3dc4d462c6834cec068657a",
+        "credit": "Apple",
+        "title": "Mac Studio: LM-Studio-and-MATLAB",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "sha256": "2bd7159722d3722bfd7a5d76a78be53958ad4e0377e8e0596f173ccc894afe51"
+    },
+    {
+      "path": "approved/apple-local-ai-20260925-corrected/card-03.jpg",
+      "kind": "story",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-rear-ports-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-rear-ports-260825_big.jpg.large.jpg",
+        "asset_id": "primary:a8c08233f4beb23d039205f1",
+        "sha256": "80e2e480b0e785073c338586d3984a6121c13d97512618ee2cf723124e06604f",
+        "credit": "Apple",
+        "title": "Mac Studio: rear-ports",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "sha256": "1d9fc55821ccf1ffabb31b9da8fd9d80d602b05504b670f14b45da8cbbd69055"
+    }
+  ],
+  "predecessors": [
+    "356d2118d7a908137474de401838f67183911696fc31d6cef4723c06bcbc283d"
+  ],
+  "spec_sha256": "84c11cad6f74c6283dc4ecb4208a60b79486b3b56ffe350b938a77d5a41e88ee"
+}

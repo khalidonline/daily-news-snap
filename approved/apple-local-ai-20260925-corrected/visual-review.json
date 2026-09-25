@@ -1,0 +1,24 @@
+{
+  "reviewed_at": "2026-09-25",
+  "reviewer": "Codex visual inspection of actual rendered cards",
+  "manifest_sha256": "ae6490dc110627bff87637d27d75662ae93a1a0be6f03db23b946c4c11ebb7e1",
+  "checks": {
+    "source_matches": true,
+    "current_trigger": true,
+    "facts": true,
+    "saudi_language": true,
+    "clear_sequence": true,
+    "readable": true,
+    "images_match": true,
+    "distinct_images": true,
+    "arabic_numbering": true,
+    "brand_preserved": true
+  },
+  "notes": [
+    "Official Mac Studio product photos replace unrelated iMac, laptop and cable photos.",
+    "The final photo explicitly shows connection ports, not a photographed four-system cluster.",
+    "The 512GB version is described as coming in late October; benchmark attribution is explicit.",
+    "Story counters are visibly Arabic. The full-size final card and four-card contact sheet were inspected.",
+    "Export hashes match the inspected preview exactly. This review does not reconcile prior publication attempts."
+  ]
+}

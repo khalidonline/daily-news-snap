@@ -99,7 +99,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
-          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
           AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
           AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
           AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
@@ -115,7 +115,7 @@ jobs:
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
           AUTOPILOT_MODE: ${{ steps.route.outputs.mode }}
           # Temporary requested cap; runtime clamps to $3 from 2026-09-24 Saudi time.
-          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
           # Reduce one role first; preserve writing/research and independent review quality.
           AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
           AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'

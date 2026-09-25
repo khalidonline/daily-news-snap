@@ -18,21 +18,18 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
-      - name: Publish package
+      - name: Publish saved corrected package (no generation)
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ github.token }}
-          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
-          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
-          AUTOPILOT_IMAGE_CHECK_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
           POST_TO_SNAPCHAT: '1'
           DRY_RUN: '0'
-        run: python publish_apple_ai_approved.py
+        run: python publish_apple_ai_approved.py --mode publish --output approved/apple-local-ai-20260925-corrected
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: package-${{ github.run_id }}
-          path: apple-package-output/
+          path: approved/apple-local-ai-20260925-corrected/
           retention-days: 14

@@ -1,0 +1,137 @@
+{
+  "title": "ليش أبل تبي الذكاء الاصطناعي يشتغل عندك؟",
+  "attention": {
+    "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+    "announced_at": "2026-08-25",
+    "event_date": "2026-09-22",
+    "event": "بدء توفر Mac Studio",
+    "status": "completed",
+    "valid_until": "2026-09-27T00:00:00+03:00"
+  },
+  "sources": [
+    {
+      "url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/"
+    }
+  ],
+  "claims": {
+    "a1": "Compact desktop supporting large on-device AI models.",
+    "a2": "Local model processing can keep requests on-device; this does not cover every app or network request.",
+    "a3": "Up to 512GB memory; this configuration is due late October, not September 22.",
+    "a4": "Apple reports up to 3x inference speed with four systems in its tests, not every task."
+  },
+  "cards": [
+    {
+      "kind": "info",
+      "title": "ليش أبل تبي الذكاء الاصطناعي عندك؟",
+      "body": "Mac Studio كمبيوتر مكتبي صغير من أبل. الجيل الجديد يقدر يشغّل نماذج ذكاء اصطناعي كبيرة على الجهاز نفسه، بدون ما يرسل كل طلب لسيرفر بعيد.",
+      "punch": "الفكرة: جزء أكبر من الشغل يصير عندك.",
+      "claim_ids": [
+        "a1"
+      ],
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "asset_id": "primary:5f42b4cbbd1558fe81965a56",
+        "sha256": "4a753142b8d380adbc2b001754102ca580be32750938c6a370cd3cbef0e76a8d",
+        "credit": "Apple",
+        "title": "Mac Studio: hero",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      }
+    },
+    {
+      "kind": "story",
+      "title": "طلبك يقدر يبقى داخل جهازك",
+      "body": "إذا كان النموذج يشتغل بالكامل على جهازك، يقدر يعالج طلبك محليًا. هذا يقلل حاجتك ترسل ملفاتك لسيرفرات خارجية.",
+      "punch": "لكن هذا يعتمد على البرنامج وطريقة تشغيله.",
+      "claim_ids": [
+        "a2"
+      ],
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "asset_id": "primary:2862f68492759f18939469ce",
+        "sha256": "70df8578b78c244280c3d97ec36c00928cfe5927a16da76f2d8a0e26b7dad950",
+        "credit": "Apple",
+        "title": "Mac Studio: Draw-Things",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      }
+    },
+    {
+      "kind": "story",
+      "title": "حجم صغير… وذاكرة كبيرة",
+      "body": "أبل رفعت ذاكرة Mac Studio إلى ٥١٢ غيغابايت، عشان يستوعب نماذج أكبر. هذي النسخة بتتوفر أواخر أكتوبر، بعد بداية طرح الجهاز في سبتمبر.",
+      "punch": "مو كل نسخ الجهاز نزلت بنفس الموعد.",
+      "claim_ids": [
+        "a3"
+      ],
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-LM-Studio-and-MATLAB-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-LM-Studio-and-MATLAB-260825_big.jpg.large.jpg",
+        "asset_id": "primary:19f50bcaea8d7270c195bb2d",
+        "sha256": "35ced0553b7d5b144fcb725d207bd32aa3cabec0b3dc4d462c6834cec068657a",
+        "credit": "Apple",
+        "title": "Mac Studio: LM-Studio-and-MATLAB",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      }
+    },
+    {
+      "kind": "story",
+      "title": "أربعة أجهزة تشتغل مع بعض",
+      "body": "تقدر تربط أكثر من Mac Studio عبر منافذ Thunderbolt. وبحسب اختبارات أبل، أربعة أجهزة وصلت لسرعة أعلى بثلاث مرات في بعض مهام الذكاء الاصطناعي مقارنة بجهاز واحد.",
+      "punch": "الزيادة تختلف حسب المهمة؛ مو وعد لكل استخدام.",
+      "claim_ids": [
+        "a4"
+      ],
+      "image_caption": "منافذ الربط في Mac Studio — صورة أبل",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-rear-ports-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-rear-ports-260825_big.jpg.large.jpg",
+        "asset_id": "primary:a8c08233f4beb23d039205f1",
+        "sha256": "80e2e480b0e785073c338586d3984a6121c13d97512618ee2cf723124e06604f",
+        "credit": "Apple",
+        "title": "Mac Studio: rear-ports",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      }
+    }
+  ]
+}
