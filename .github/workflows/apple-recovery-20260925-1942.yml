@@ -1,0 +1,76 @@
+name: Reconcile and publish approved Apple 20260925
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/apple-recovery-20260925-1942.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  recover:
+    if: github.event.head_commit.message == 'Run authorized Apple recovery 20260925-1942'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 0273d845fb749169de249b4631b00aef0cc6d883
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Reconcile exact upload and publish saved cards
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
+        run: |
+          python - <<'PY'
+          import json, os, sys, urllib.request, urllib.error, urllib.parse
+          from datetime import datetime, timezone
+          from publishing_v2.bundle_api import BundleClient, GitHubJournal
+          import publishing_v2.apple_correction as correction
+          original = urllib.request.urlopen
+          def observed(req, *args, **kwargs):
+              try:
+                  return original(req, *args, **kwargs)
+              except urllib.error.HTTPError as exc:
+                  raw = exc.read(65536).decode('utf-8', 'replace').lower()
+                  print(json.dumps({'http_failure': exc.code, 'method': req.get_method(),
+                    'path': urllib.parse.urlsplit(req.full_url).path,
+                    'response_kind': 'json' if raw.lstrip().startswith('{') else 'other',
+                    'markers': [s for s in ['cloudflare','1010','permission','forbidden','subscription','quota','limit','unauthorized','team','plan'] if s in raw]}), flush=True)
+                  raise
+          urllib.request.urlopen = observed
+          client = BundleClient()
+          client.check()
+          previous = '356d2118d7a908137474de401838f67183911696fc31d6cef4723c06bcbc283d'
+          journal = GitHubJournal(previous)
+          state = journal.read()
+          rows = [v for k,v in state.items() if k.isdigit()]
+          if len(rows) != 1 or rows[0].get('post_id'):
+              raise SystemExit('Unexpected predecessor state; manual reconciliation required')
+          uid = rows[0].get('upload_id')
+          if uid != '43d1ee07-bff0-4964-90e3-ee53b5c7b7b2':
+              raise SystemExit('Predecessor upload changed')
+          query = urllib.parse.urlencode({'teamId':client.team,'ids':uid,'includePosts':'true','limit':100})
+          uploads = client.call('/upload/?' + query)
+          if not isinstance(uploads,list):
+              raise SystemExit('Unexpected upload list shape')
+          matches = [u for u in uploads if u.get('id') == uid]
+          if len(matches) != 1 or matches[0].get('teamId') != client.team:
+              raise SystemExit('Exact predecessor upload not found')
+          upload = matches[0]
+          if upload.get('posts') != []:
+              print(json.dumps({'reconciliation':'LINKED_POSTS_FOUND','links':[
+                {k:p.get(k) for k in ('postId','uploadId','deletedAt')} for p in upload.get('posts',[])]}))
+              raise SystemExit('Stop: reconcile linked post before publishing')
+          evidence = 'https://github.com/' + os.environ['GITHUB_REPOSITORY'] + '/actions/runs/' + os.environ['GITHUB_RUN_ID']
+          state['reconciliation'] = {'status':'NOT_CREATED','checked_at':datetime.now(timezone.utc).isoformat(),
+              'evidence_url':evidence,'method':'provider_exact_upload_posts_empty','upload_id':uid}
+          journal.save(state)
+          print(json.dumps({'reconciliation':'NOT_CREATED','upload_id':uid,'linked_posts':0}),flush=True)
+          sys.argv = ['apple_correction','--mode','publish','--output','approved/apple-local-ai-20260925-corrected']
+          correction.main()
+          PY
