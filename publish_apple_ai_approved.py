@@ -13,13 +13,13 @@ from publishing_v2.publication import image_publication_eligible
 TITLE="ليش أبل تبي الذكاء الاصطناعي يشتغل عندك؟"
 CARDS=[
 {"kind":"info","title":"ليش أبل تفكر كذا؟","body":"تعودنا إن الذكاء الاصطناعي يشتغل من السحابة: ترسل طلبك لسيرفرات بعيدة وترجع لك النتيجة.","punch":"أبل تقول: ليش ما يشتغل جزء كبير منه عندك؟","claim_ids":["a1"],"image_query":"Mac Studio computer"},
-{"kind":"story","title":"وش الفايدة؟","body":"كل ما اعتمدت على السحابة أكثر، زادت حاجتك للإنترنت وزادت التكلفة مع الاستخدام. وإذا اشتغل محليًا، يصير أسرع في بعض المهام وخصوصيتك أعلى.","punch":"جزء من الـAI يرجع لجهازك بدل السحابة.","claim_ids":["a2"],"image_query":"desktop computer workstation"},
+{"kind":"story","title":"وش الفايدة؟","body":"كل ما اعتمدت على السحابة أكثر، زادت حاجتك للإنترنت وزادت التكلفة مع الاستخدام. وإذا اشتغل محليًا، يصير أسرع في بعض المهام وخصوصيتك أعلى.","punch":"جزء من الـAI يرجع لجهازك بدل السحابة.","claim_ids":["a2"],"image_query":"computer desk monitor"},
 {"kind":"story","title":"وهنا يجي Mac Studio","body":"أبل رفعت Mac Studio الجديد للـAI المحلي: ذاكرة ضخمة وأداء أعلى وتشغيل نماذج كبيرة على الجهاز نفسه.","punch":"يعني جهاز على المكتب.. لكنه أقرب لمحطة AI صغيرة.","claim_ids":["a3"],"image_query":"Mac Studio desktop"},
 {"kind":"story","title":"حتى أكثر من جهاز","body":"أبل تقول إنك تقدر تربط أكثر من Mac Studio مع بعض. وربط 4 أجهزة يرفع سرعة تشغيل نماذج AI مقارنة بجهاز واحد.","punch":"الفكرة مو جهاز أقوى وبس.. بل AI أقل اعتمادًا على السحابة.","claim_ids":["a4"],"image_query":"computer cluster servers"},
 ]
 FALLBACK={
 "Mac Studio computer":["Apple desktop computer","small desktop computer","computer workstation"],
-"desktop computer workstation":["computer workstation desk","desktop workstation","developer workstation"],
+"computer desk monitor":["computer desk","desktop computer desk","office computer monitor"],
 "Mac Studio desktop":["compact desktop computer","Apple computer desktop","desktop computer"],
 "computer cluster servers":["computer cluster","server cluster","multiple computers"],
 }
