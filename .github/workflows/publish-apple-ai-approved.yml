@@ -1,0 +1,38 @@
+name: Publish approved Apple AI package
+on:
+  push:
+    branches: [main]
+    paths: ['apple-package-trigger.txt']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Publish package
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
+          AUTOPILOT_IMAGE_CHECK_MODEL: 'claude-sonnet-5'
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python publish_apple_ai_approved.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: package-${{ github.run_id }}
+          path: apple-package-output/
+          retention-days: 14
