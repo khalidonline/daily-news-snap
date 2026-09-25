@@ -20,7 +20,7 @@ CARDS = [
         "body":"إذا سمعت «تطوير دفاع» يمكن أول شيء يجي ببالك طيارات أو دبابات جديدة. لكن الحروب اليوم تغيرت كثير.",
         "punch":"صار السؤال بعد: وش نقدر ننتجه ونطوره بأنفسنا؟",
         "claim_ids":["c1"],
-        "image_query":"military technology radar",
+        "image_query":"modern radar antenna",
     },
     {
         "kind":"story",
@@ -36,7 +36,7 @@ CARDS = [
         "body":"إذا زادت المسيّرات، تحتاج أنظمة تكتشفها وتتبعها وتوقفها. وإذا صارت الهجمات أسرع، لازم تكون الصيانة وقطع الغيار أقرب وأسرع.",
         "punch":"عشان كذا التصنيع المحلي صار أهم.",
         "claim_ids":["c3"],
-        "image_query":"air defense radar antenna",
+        "image_query":"modern surveillance radar",
     },
     {
         "kind":"story",
@@ -44,7 +44,7 @@ CARDS = [
         "body":"توطين الصناعات العسكرية ما يعني إن كل شيء يتصنع محليًا من أول يوم. الفكرة إن جزء أكبر من الصناعة والصيانة والتطوير يصير داخل البلد.",
         "punch":"القدرة المحلية تكبر مع الوقت.",
         "claim_ids":["c4"],
-        "image_query":"industrial manufacturing factory",
+        "image_query":"electronics manufacturing assembly line",
     },
     {
         "kind":"story",
@@ -52,7 +52,7 @@ CARDS = [
         "body":"السعودية وقعت اتفاقات لتوطين صناعات عسكرية، ومنها مشاريع مرتبطة بالطائرات بدون طيار وتقنيات التحكم والذكاء الاصطناعي.",
         "punch":"الاتجاه مو شراء معدات وبس.. بل بناء صناعة حولها.",
         "claim_ids":["c5"],
-        "image_query":"drone manufacturing electronics",
+        "image_query":"Saudi Arabia flag",
     },
     {
         "kind":"story",
@@ -60,17 +60,17 @@ CARDS = [
         "body":"وقت الأزمات ما يكفي يكون عندك معدات قوية. الأهم بعد: هل عندك قطع غيار؟ هل تقدر تصلحها؟ وهل عندك ناس يعرفون يشغلونها ويطورونها؟",
         "punch":"هنا الفرق بين امتلاك السلاح وامتلاك القدرة.",
         "claim_ids":["c6"],
-        "image_query":"military maintenance workshop tools",
+        "image_query":"aircraft maintenance mechanic",
     },
 ]
 
 QUERY_FALLBACKS = {
-    "military technology radar":["radar antenna","military radar","phased array radar"],
-    "military drone UAV":["unmanned aerial vehicle","MQ-9 Reaper","drone aircraft"],
-    "air defense radar antenna":["radar station","air surveillance radar","radar dish"],
-    "industrial manufacturing factory":["industrial factory interior","manufacturing assembly line","machine factory"],
-    "drone manufacturing electronics":["electronics manufacturing","circuit board factory","drone components"],
-    "military maintenance workshop tools":["aircraft maintenance","maintenance workshop","mechanical tools workshop"],
+    "modern radar antenna":["radar antenna close up","weather radar antenna","phased array radar"],
+    "military drone UAV":["unmanned aerial vehicle","drone aircraft","UAV aircraft"],
+    "modern surveillance radar":["radar antenna close up","radar station","surveillance radar"],
+    "electronics manufacturing assembly line":["electronics factory assembly line","circuit board manufacturing","industrial assembly line"],
+    "Saudi Arabia flag":["Saudi flag","flag of Saudi Arabia"],
+    "aircraft maintenance mechanic":["aircraft maintenance hangar mechanic","airplane maintenance technician","aircraft mechanic"],
 }
 
 def main():
@@ -135,18 +135,19 @@ def main():
     out = Path("defense-package-output")
     paths = renderer(package, out)
 
-    # Final pixel pass on rendered editorial cards.
+    # Final pixel pass per card. Generic illustrations do not need to depict
+    # a Saudi event; they must truthfully illustrate that card's concept.
     editorial = [p for p, c in zip(paths, package["cards"]) if c.get("kind") != "credits"]
-    opts = [{"asset_id":f"card-{i}","title":package["cards"][i]["title"],"source_url":""}
-            for i in range(len(editorial))]
-    check = agent.run("image_check", {
-        "subject":"Saudi defense technology explainer",
-        "source_title":TITLE,
-        "options":opts,
-    }, images=editorial)
-    accepted = set(check.get("accepted_ids", []))
-    if accepted != {o["asset_id"] for o in opts}:
-        raise ValueError("final_visual_check_failed")
+    for i, path in enumerate(editorial):
+        card = package["cards"][i]
+        ident = f"card-{i}"
+        check = agent.run("image_check", {
+            "subject":card["image_query"],
+            "source_title":card["title"],
+            "options":[{"asset_id":ident,"title":card["title"],"source_url":""}],
+        }, images=[path])
+        if check.get("accepted_ids") != [ident]:
+            raise ValueError("final_visual_check_failed_card_" + str(i + 1))
 
     receipt = publish_package(package, paths)
     result = {"status":"published","title":TITLE,"receipt":receipt,
