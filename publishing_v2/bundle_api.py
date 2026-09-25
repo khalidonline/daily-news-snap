@@ -64,6 +64,33 @@ class BundleClient:
         query = urllib.parse.urlencode({'type':'SNAPCHAT','teamId':self.team})
         verify_account(self.call('/social-account/by-type?' + query), self.team)
 
+    def ensure_capacity(self, count, *, now=None):
+        if type(count) is not int or count < 0:
+            raise BundleError('invalid_required_capacity')
+        if not count: return
+        now = now or datetime.now(timezone.utc)
+        if now.tzinfo is None: raise BundleError('quota_requires_timezone')
+        day = now.astimezone(timezone.utc).date()
+        account = self.call('/social-account/by-type?' + urllib.parse.urlencode(
+            {'type':'SNAPCHAT','teamId':self.team}))
+        verify_account(account, self.team)
+        usage = self.call('/organization/usage/daily-limits?' + urllib.parse.urlencode(
+            {'socialAccountId':account['id'], 'date':day.isoformat()}))
+        try:
+            stamp = datetime.fromisoformat(usage['date'].replace('Z','+00:00'))
+            posts = usage['posts']
+            used, limit, remaining = (posts[k] for k in ('used','limit','remaining'))
+            valid = (usage['socialAccountId'] == account['id'] and usage['type'] == 'SNAPCHAT'
+                and stamp.tzinfo is not None and stamp.astimezone(timezone.utc).date() == day
+                and all(type(v) is int and v >= 0 for v in (used,limit,remaining))
+                and remaining == max(0,limit-used))
+        except (KeyError, TypeError, ValueError, AttributeError):
+            valid = False
+        if not valid: raise BundleError('invalid_daily_quota_response')
+        if remaining < count:
+            raise BundleError(f'daily_quota_insufficient: need {count}, remaining {remaining}, UTC {day}')
+        return usage
+
     def upload(self, media):
         path, content = media
         boundary = 'snap' + uuid.uuid4().hex
@@ -142,6 +169,12 @@ class GitHubJournal:
 
 def publish(client, journal, title, media):
     state = journal.read()
+    # Reconcile every uncertain intent before any new upload in this batch.
+    rows = [state.get(str(i+1)) for i in range(len(media))]
+    if any(row is not None and not row.get('post_id') for row in rows):
+        raise BundleError('Uncertain previous create; reconcile in Bundle before continuing')
+    required = sum(row is None for row in rows)
+    if required: client.ensure_capacity(required)
     for index, item in enumerate(media):
         key = str(index + 1)
         row = state.get(key)

@@ -78,11 +78,17 @@ def main():
         raise ValueError("configured_repository_required")
     if os.environ.get("GITHUB_REF") != "refs/heads/main":
         raise ValueError("main_branch_required")
+    from publishing_v2.saved_owner_package import preparation_requested, save_reviewed
+    if not preparation_requested(TITLE): return
+    from publishing_v2.bundle_api import BundleClient
+    BundleClient().ensure_capacity(len(CARDS))
+    os.environ["PACKAGE_ID"] = "owner:" + Path(__file__).stem
+
 
     now = datetime.now(timezone.utc)
     token = os.environ.get("DAILY_BUDGET_GITHUB_TOKEN") or os.environ["GITHUB_TOKEN"]
     ledger = Ledger(GitHubStore(os.environ["GITHUB_REPOSITORY"], token),
-                    limit_micro_usd=autopilot_daily_limit(now, os.environ.get("AUTOPILOT_DAILY_LIMIT_MICRO_USD","8000000")))
+                    limit_micro_usd=autopilot_daily_limit(now, os.environ.get("AUTOPILOT_DAILY_LIMIT_MICRO_USD","3000000")))
     agent = Agents(env=os.environ, ledger=ledger)
     sources = Sources(recovery=True, publication_only=True,
                       image_memory=ImageMemory(GitHubJournal("autopilot-image-memory")))
@@ -149,11 +155,9 @@ def main():
         if check.get("accepted_ids") != [ident]:
             raise ValueError("final_visual_check_failed_card_" + str(i + 1))
 
-    receipt = publish_package(package, paths)
-    result = {"status":"published","title":TITLE,"receipt":receipt,
-              "cards":[{"title":c["title"],"image":c.get("image",{}).get("asset_id")} for c in package["cards"]]}
-    (out/"result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2))
-    print(json.dumps(result, ensure_ascii=False))
+    frozen = save_reviewed(package, paths, out)
+    print(json.dumps({"status":"prepared_not_published","manifest":str(frozen)},ensure_ascii=False))
 
 if __name__ == "__main__":
     main()
+

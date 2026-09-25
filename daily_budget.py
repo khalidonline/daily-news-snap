@@ -153,6 +153,9 @@ class Ledger:
         if type(amount) is not int or not 0 < amount <= self.limit_micro_usd:
             raise BudgetBlocked(f'request cannot fit within the ${self.limit_micro_usd / 1e6:g} daily ceiling', code='request_exceeds_ceiling', limit=self.limit_micro_usd, requested=amount)
         day, ident = day_key(self.now()), uuid.uuid4().hex
+        context = {k:v for k,v in getattr(self,'context',{}).items()
+                   if k in {'package_id','stage','request_attempt'}
+                   and type(v) in (str,int) and len(str(v)) <= 200}
         def update(row):
             total = sum(e['charged_micro_usd'] for e in row['entries'].values())
             if total + amount > self.limit_micro_usd:
@@ -163,6 +166,7 @@ class Ledger:
                 'reserved_at': self.now().isoformat(),
                 'reserved_micro_usd': amount, 'charged_micro_usd': amount,
                 'status': 'reserved',
+                **context,
             }
         self.change(day, update)
         return day, ident

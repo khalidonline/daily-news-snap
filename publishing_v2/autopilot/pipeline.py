@@ -93,6 +93,7 @@ class Pipeline:
                 for key in ('why_saudi', 'angle', 'why_now', 'share_reason', 'research_query'):
                     policy.text(choice.get(key), 500)
                 candidate = dict(ids[choice['id']], editorial=choice)
+                self.agent.package_id = candidate['id']
                 self.save(state, 'candidate_considered', candidate=candidate,
                           candidate_id=candidate['id'], visual_preflight=None)
                 try:
@@ -247,8 +248,7 @@ class Pipeline:
         try:
             paths = [Path(p) for p in state['paths']]
             if not all(p.is_file() for p in paths):
-                # Rehydrate only the sealed package, never select/write a new one.
-                paths = self.render(package, self.output / 'resume')
+                raise ValueError('saved_media_missing_restore_approved_artifact')
             policy.validate_review(state['review'], len(paths))
             policy.verify_seal(package, paths, state['approval'], self.now())
             self.save(state, 'publishing', status='publishing')

@@ -287,6 +287,7 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
     journal = journal_factory(identity)
     expires = datetime.fromisoformat(package['expires_at'])
     class TimedClient:
+        def ensure_capacity(self, count): return client.ensure_capacity(count)
         def upload(self, item): return client.upload(item)
         def create(self, title, upload):
             if datetime.now(timezone.utc) >= expires:

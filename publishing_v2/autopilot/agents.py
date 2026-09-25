@@ -480,8 +480,18 @@ class Agents:
     def __init__(self, *, env, ledger, transport=None):
         self.env, self.ledger, self.transport = env, ledger, transport
         self.receipts = []
+        self.package_id = env.get('PACKAGE_ID', 'selection:' + env.get('AUTOPILOT_LANE','unspecified'))
 
     def run(self, role, data, images=()):
+        if role == 'image_check' and self.env.get('GITHUB_REPOSITORY') == 'khalidonline/daily-news-snap':
+            from publishing_v2.image_review_cache import ImageReviewCache
+            from publishing_v2.bundle_api import GitHubJournal
+            model = self.env.get('AUTOPILOT_IMAGE_CHECK_MODEL','claude-sonnet-5')
+            cache = ImageReviewCache(GitHubJournal, STYLE + PROMPTS[role] + model)
+            return cache.run(data, images, lambda d,p: self._run_uncached(role,d,p))
+        return self._run_uncached(role,data,images)
+
+    def _run_uncached(self, role, data, images=()):
         for attempt in range(2):
             try:
                 return self._run_once(role, data, images, format_retry=bool(attempt))
@@ -555,6 +565,8 @@ class Agents:
             text_payload['messages'][0]['content'] = [content[-1]]
             _, text_maximum = prepare(text_payload)
             maximum = text_maximum + len(images) * 8192 * PRICES[model][0]
+        self.ledger.context = {'package_id':self.package_id,'stage':role,
+                              'request_attempt':len(self.receipts)+1}
         token = self.ledger.reserve(maximum, 'autopilot:' + role)
         transport = self.transport or partial(providers._default_transport, timeout_seconds=180)
         status, body = providers._request(transport, 'POST', 'https://api.anthropic.com/v1/messages',
@@ -567,6 +579,7 @@ class Agents:
         if cost > maximum:
             raise RuntimeError('agent_price_bound_exceeded')
         receipt = {'role': role, 'model': model, 'response_id': body.get('id'),
+                   **self.ledger.context,
                    'usage': body.get('usage'), 'cost_micro_usd': cost,
                    'stop_reason': body.get('stop_reason'),
                    'content_types': [part.get('type') for part in body.get('content', []) if isinstance(part, dict)]}

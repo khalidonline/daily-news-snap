@@ -12,6 +12,7 @@ class Journal:
         self.state = copy.deepcopy(state)
 
 class Client:
+    def ensure_capacity(self, count): pass
     def __init__(self): self.sent=[]; self.status='POSTED'; self.fail=False
     def upload(self, media): return 'upload'
     def create(self, title, upload):

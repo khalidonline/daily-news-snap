@@ -14,6 +14,7 @@ class RecoveryTests(unittest.TestCase):
     def test_create_403_is_recorded_without_allowing_another_create(self):
         class Client:
             calls = 0
+            def ensure_capacity(self, count): pass
             def upload(self, item): return 'upload-1'
             def create(self, title, upload):
                 self.calls += 1
