@@ -1,0 +1,45 @@
+name: Replace weak local package
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'local-replacement-trigger.txt'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  replace:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install renderer dependencies
+        run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Replace Local only
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
+          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '8000000'
+          AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
+          AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
+          AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
+          AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python replace_local_package.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: local-replacement-${{ github.run_id }}
+          path: replacement-output/
+          retention-days: 14
