@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   recover:
-    if: github.event.head_commit.message == 'Run authorized Apple recovery 20260925-1942'
+    if: github.event.head_commit.message == 'Run authorized Apple recovery exact upload'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -54,8 +54,7 @@ jobs:
           uid = rows[0].get('upload_id')
           if uid != '43d1ee07-bff0-4964-90e3-ee53b5c7b7b2':
               raise SystemExit('Predecessor upload changed')
-          query = urllib.parse.urlencode({'teamId':client.team,'ids':uid,'includePosts':'true','limit':100})
-          uploads = client.call('/upload/?' + query)
+          uploads = [client.call('/upload/' + urllib.parse.quote(uid, safe=''))]
           if not isinstance(uploads,list):
               raise SystemExit('Unexpected upload list shape')
           matches = [u for u in uploads if u.get('id') == uid]
