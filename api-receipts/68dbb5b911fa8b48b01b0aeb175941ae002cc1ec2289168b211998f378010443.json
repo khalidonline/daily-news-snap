@@ -1,1 +1,1 @@
-{"1": {"status": "SENDING", "upload_id": "84585995-d42c-408a-86fa-9d392b4b28b7"}}
+{"1": {"status": "SENDING", "upload_id": "84585995-d42c-408a-86fa-9d392b4b28b7", "error": {"operation": "create", "http_status": 403, "at": "2026-09-25T19:43:23.760356+00:00"}}}
