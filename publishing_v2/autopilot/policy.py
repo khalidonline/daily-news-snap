@@ -13,6 +13,7 @@ RIYADH = ZoneInfo('Asia/Riyadh')
 REVIEW_CHECKS = ('factual', 'timely', 'saudi_language', 'broad_appeal',
                  'current_attention', 'feedback_respected',
                  'story_coherent', 'documented_story', 'distinct_value',
+                 'snapchat_pull', 'owner_quality',
                  'visual_variety', 'story_numbering', 'visual_identity', 'safe_routine')
 
 
