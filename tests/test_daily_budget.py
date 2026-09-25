@@ -313,7 +313,38 @@ class WorkflowBudgetTests(unittest.TestCase):
             text = path.read_text()
             if 'secrets.ANTHROPIC_API_KEY' not in text:
                 continue
-            self.assertIn('Install shared $3 daily budget guard', text, str(path))
+            if path.name == 'publishing-v2-autopilot.yml':
+                # These two audited entry points use Agents + Ledger directly.
+                # Any new credential-bearing step must be reviewed explicitly.
+                import yaml
+                workflow = yaml.safe_load(text)
+                allowed = {
+                    'python recover_held_local.py',
+                    'python -m publishing_v2.autopilot.runtime --mode "$AUTOPILOT_MODE" --lane "$AUTOPILOT_LANE"',
+                }
+                for job in workflow['jobs'].values():
+                    self.assertNotIn('ANTHROPIC_API_KEY', job.get('env', {}))
+                    for step in job['steps']:
+                        env = step.get('env', {})
+                        if 'ANTHROPIC_API_KEY' in env:
+                            self.assertIn(step.get('run','').strip(), allowed)
+                            self.assertEqual(str(env.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD')), '3000000')
+                            self.assertIn('DAILY_BUDGET_GITHUB_TOKEN',env)
+            else:
+                self.assertIn('Install shared $3 daily budget guard', text, str(path))
             for line in text.splitlines():
                 if 'PYTHONPATH=' in line or 'PYTHONPATH:' in line:
                     self.assertIn('daily-budget', line, f'{path}: {line}')
+
+
+class NativeAgentBudgetTests(unittest.TestCase):
+    def test_exhausted_shared_ledger_prevents_provider_connection(self):
+        from publishing_v2.autopilot.agents import Agents
+        ledger=budget.Ledger(MemoryStore(), limit_micro_usd=3000000)
+        ledger.reserve(3000000,'already-used')
+        def forbidden_transport(*args,**kwargs):
+            raise AssertionError('provider contacted despite exhausted budget')
+        agent=Agents(env={'ANTHROPIC_API_KEY':'offline-test'},ledger=ledger,transport=forbidden_transport)
+        with self.assertRaises(budget.BudgetBlocked):
+            agent.run('text_review',{'cards':[]})
+        self.assertEqual(agent.receipts,[])
