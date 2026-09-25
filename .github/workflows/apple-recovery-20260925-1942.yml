@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   recover:
-    if: github.event.head_commit.message == 'Run authorized Apple recovery with dependencies'
+    if: github.event.head_commit.message == 'Read Apple daily quota and reconcile refusal'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -45,32 +45,24 @@ jobs:
                   raise
           urllib.request.urlopen = observed
           client = BundleClient()
-          client.check()
-          previous = '356d2118d7a908137474de401838f67183911696fc31d6cef4723c06bcbc283d'
-          journal = GitHubJournal(previous)
+          account = client.call('/social-account/by-type?' + urllib.parse.urlencode({'type':'SNAPCHAT','teamId':client.team}))
+          from publishing_v2.bundle_api import verify_account
+          verify_account(account,client.team)
+          usage = client.call('/organization/usage/daily-limits?' + urllib.parse.urlencode({'socialAccountId':account['id']}))
+          print(json.dumps({'daily_quota':{k:usage.get(k) for k in ('date','type','posts')}}),flush=True)
+          identity = '68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443'
+          journal = GitHubJournal(identity)
           state = journal.read()
-          rows = [v for k,v in state.items() if k.isdigit()]
-          if len(rows) != 1 or rows[0].get('post_id'):
-              raise SystemExit('Unexpected predecessor state; manual reconciliation required')
-          uid = rows[0].get('upload_id')
-          if uid != '43d1ee07-bff0-4964-90e3-ee53b5c7b7b2':
-              raise SystemExit('Predecessor upload changed')
-          uploads = [client.call('/upload/' + urllib.parse.quote(uid, safe=''))]
-          if not isinstance(uploads,list):
-              raise SystemExit('Unexpected upload list shape')
-          matches = [u for u in uploads if u.get('id') == uid]
-          if len(matches) != 1 or matches[0].get('teamId') != client.team:
-              raise SystemExit('Exact predecessor upload not found')
-          upload = matches[0]
-          if upload.get('posts') != []:
-              print(json.dumps({'reconciliation':'LINKED_POSTS_FOUND','links':[
-                {k:p.get(k) for k in ('postId','uploadId','deletedAt')} for p in upload.get('posts',[])]}))
-              raise SystemExit('Stop: reconcile linked post before publishing')
-          evidence = 'https://github.com/' + os.environ['GITHUB_REPOSITORY'] + '/actions/runs/' + os.environ['GITHUB_RUN_ID']
-          state['reconciliation'] = {'status':'NOT_CREATED','checked_at':datetime.now(timezone.utc).isoformat(),
-              'evidence_url':evidence,'method':'provider_exact_upload_posts_empty','upload_id':uid}
+          row = state.get('1',{})
+          if row.get('status') != 'SENDING' or row.get('post_id') or not row.get('upload_id'):
+              raise SystemExit('Unexpected state; do not change journal')
+          upload = client.call('/upload/' + urllib.parse.quote(row['upload_id'],safe=''))
+          if upload.get('id') != row['upload_id'] or upload.get('teamId') != client.team or upload.get('posts') != []:
+              raise SystemExit('Upload absence not confirmed; preserve uncertain state')
+          proof={'status':'NOT_CREATED','checked_at':datetime.now(timezone.utc).isoformat(),
+             'method':'provider_exact_upload_posts_empty','upload_id':row['upload_id'],
+             'evidence_url':'https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']}
+          state['reconciliation']=proof
           journal.save(state)
-          print(json.dumps({'reconciliation':'NOT_CREATED','upload_id':uid,'linked_posts':0}),flush=True)
-          sys.argv = ['apple_correction','--mode','publish','--output','approved/apple-local-ai-20260925-corrected']
-          correction.main()
+          print(json.dumps({'current_attempt':'NOT_CREATED','linked_posts':0,'daily_quota':usage.get('posts')}),flush=True)
           PY
