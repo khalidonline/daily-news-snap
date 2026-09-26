@@ -1,1 +1,93 @@
-{"version": 1, "publications": {"f7975e9c15b9032db726ca4ce89ff09326c4a116dd6ea0f1ad8ddec3ee341a3d": {"urls": ["https://www.alyaum.com/articles/6684206/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D9%8A%D9%88%D9%85/%D8%A7%D9%84%D8%A8%D8%A7%D8%AD%D8%A9-%D8%A3%D9%85%D8%B7%D8%A7%D8%B1-%D9%88%D8%B5%D9%88%D8%A7%D8%B9%D9%82-%D8%B1%D8%B9%D8%AF%D9%8A%D8%A9-%D9%88%D8%B1%D9%8A%D8%A7%D8%AD-%D8%B4%D8%AF%D9%8A%D8%AF%D8%A9-%D8%AD%D8%AA%D9%89-8-%D9%85%D8%B3%D8%A7%D8%A1"], "aliases": ["Al-Baha Province"], "at": 1790326688.832993}, "1a7abd85d02d7cd3085be05cb6f0b80b2813597a4b8c2fe29b575951a32d26bb": {"urls": ["https://www.alyaum.com/articles/6684169/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D9%85%D9%86%D9%88%D8%B9%D8%A7%D8%AA/%D8%A7%D9%84%D8%AF%D8%B1%D8%B9%D9%8A%D8%A9-%D8%B0%D8%A7%D9%83%D8%B1%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86-%D8%AA%D8%AA%D8%AC%D8%AF%D8%AF-%D9%83%D9%84-%D8%B9%D8%A7%D9%85-%D9%85%D8%B9-%D8%A7%D8%AD%D8%AA%D9%81%D8%A7%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A"], "aliases": ["Diriyah"], "at": 1790326584.290145}, "78f027ab209acf462680da28cbdc8249558204157ef42b787838f4dfd02242ae": {"urls": ["https://aawsat.com/node/5322019"], "aliases": ["Saudi Aramco"], "at": 1790248841.36092}, "72ec353cb80d643ee93f8fc46e686eafd135bd51e38bbca265e571ac3d47007f": {"urls": ["https://www.bbc.co.uk/sport/formula1/articles/cmde0j53zz90o", "https://en.wikipedia.org/"], "aliases": ["\u0647\u0627\u062f\u062c\u0627\u0631", "\u0647\u062f\u062c\u0627\u0631", "Isack Hadjar", "Hadjar"], "at": 1790204142.259993}, "d07f4aaea76f77a89df8b088dfd8683597a906c727a3127bbfd99b671667edd3": {"urls": ["https://saudipedia.com/\u0627\u0644\u064a\u0648\u0645-\u0627\u0644\u0648\u0637\u0646\u064a-\u0627\u0644\u0633\u0639\u0648\u062f\u064a", "https://saudipedia.com/\u0645\u062a\u0649-\u0623\u0639\u0644\u0646-\u062a\u0648\u062d\u064a\u062f-\u0627\u0644\u0645\u0645\u0644\u0643\u0629-\u0627\u0644\u0639\u0631\u0628\u064a\u0629-\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629-\u0631\u0633\u0645\u064a\u0627\u061f", "https://saudipedia.com/\u062a\u0648\u062d\u064a\u062f-\u0627\u0644\u0645\u0645\u0644\u0643\u0629-\u0627\u0644\u0639\u0631\u0628\u064a\u0629-\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629"], "aliases": ["\u0627\u0644\u064a\u0648\u0645 \u0627\u0644\u0648\u0637\u0646\u064a", "\u0627\u0644\u064a\u0648\u0645 \u0627\u0644\u0648\u0637\u0646\u064a \u0627\u0644\u0633\u0639\u0648\u062f\u064a", "Saudi National Day"], "at": 1790176149.259445}, "964912d2996b332abbc6d8eb93e02e4a0841696dd262dd7e22fd940a343bb340": {"urls": [], "aliases": ["\u0645\u0628\u0627\u0628\u064a", "\u0627\u0645\u0628\u0627\u0628\u064a", "Mbappe", "Mbapp\u00e9"], "at": 1790156519.820059}, "7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c": {"urls": ["https://ceermotors.com/our-story/", "https://ceermotors.com/news/exobot-bold-extraordinary-saudi/", "https://aawsat.com/node/5320797"], "aliases": ["\u0634\u0631\u0643\u0629 \u0633\u064a\u0631", "\u0633\u064a\u0627\u0631\u0627\u062a \u0633\u064a\u0631", "\u0625\u0643\u0632\u0648\u0628\u0648\u062a", "\u0627\u0643\u0632\u0648\u0628\u0648\u062a", "Ceer", "Exobot"], "at": 1790156518.239497}}}
+{
+  "version": 1,
+  "publications": {
+    "f7975e9c15b9032db726ca4ce89ff09326c4a116dd6ea0f1ad8ddec3ee341a3d": {
+      "urls": [
+        "https://www.alyaum.com/articles/6684206/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D9%8A%D9%88%D9%85/%D8%A7%D9%84%D8%A8%D8%A7%D8%AD%D8%A9-%D8%A3%D9%85%D8%B7%D8%A7%D8%B1-%D9%88%D8%B5%D9%88%D8%A7%D8%B9%D9%82-%D8%B1%D8%B9%D8%AF%D9%8A%D8%A9-%D9%88%D8%B1%D9%8A%D8%A7%D8%AD-%D8%B4%D8%AF%D9%8A%D8%AF%D8%A9-%D8%AD%D8%AA%D9%89-8-%D9%85%D8%B3%D8%A7%D8%A1"
+      ],
+      "aliases": [
+        "Al-Baha Province"
+      ],
+      "at": 1790326688.832993
+    },
+    "1a7abd85d02d7cd3085be05cb6f0b80b2813597a4b8c2fe29b575951a32d26bb": {
+      "urls": [
+        "https://www.alyaum.com/articles/6684169/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D9%85%D9%86%D9%88%D8%B9%D8%A7%D8%AA/%D8%A7%D9%84%D8%AF%D8%B1%D8%B9%D9%8A%D8%A9-%D8%B0%D8%A7%D9%83%D8%B1%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86-%D8%AA%D8%AA%D8%AC%D8%AF%D8%AF-%D9%83%D9%84-%D8%B9%D8%A7%D9%85-%D9%85%D8%B9-%D8%A7%D8%AD%D8%AA%D9%81%D8%A7%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A"
+      ],
+      "aliases": [
+        "Diriyah"
+      ],
+      "at": 1790326584.290145
+    },
+    "78f027ab209acf462680da28cbdc8249558204157ef42b787838f4dfd02242ae": {
+      "urls": [
+        "https://aawsat.com/node/5322019"
+      ],
+      "aliases": [
+        "Saudi Aramco"
+      ],
+      "at": 1790248841.36092
+    },
+    "72ec353cb80d643ee93f8fc46e686eafd135bd51e38bbca265e571ac3d47007f": {
+      "urls": [
+        "https://www.bbc.co.uk/sport/formula1/articles/cmde0j53zz90o",
+        "https://en.wikipedia.org/"
+      ],
+      "aliases": [
+        "هادجار",
+        "هدجار",
+        "Isack Hadjar",
+        "Hadjar"
+      ],
+      "at": 1790204142.259993
+    },
+    "d07f4aaea76f77a89df8b088dfd8683597a906c727a3127bbfd99b671667edd3": {
+      "urls": [
+        "https://saudipedia.com/اليوم-الوطني-السعودي",
+        "https://saudipedia.com/متى-أعلن-توحيد-المملكة-العربية-السعودية-رسميا؟",
+        "https://saudipedia.com/توحيد-المملكة-العربية-السعودية"
+      ],
+      "aliases": [
+        "اليوم الوطني",
+        "اليوم الوطني السعودي",
+        "Saudi National Day"
+      ],
+      "at": 1790176149.259445
+    },
+    "964912d2996b332abbc6d8eb93e02e4a0841696dd262dd7e22fd940a343bb340": {
+      "urls": [],
+      "aliases": [
+        "مبابي",
+        "امبابي",
+        "Mbappe",
+        "Mbappé"
+      ],
+      "at": 1790156519.820059
+    },
+    "7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c": {
+      "urls": [
+        "https://ceermotors.com/our-story/",
+        "https://ceermotors.com/news/exobot-bold-extraordinary-saudi/",
+        "https://aawsat.com/node/5320797"
+      ],
+      "aliases": [
+        "شركة سير",
+        "سيارات سير",
+        "إكزوبوت",
+        "اكزوبوت",
+        "Ceer",
+        "Exobot"
+      ],
+      "at": 1790156518.239497
+    },
+    "b8618f7be230eaba707b26888a69f7d673bd11825adfcdd94773f89acbad9fb4": {
+      "urls": [
+        "https://www.bbc.co.uk/news/articles/ckvgyzjpy2eno"
+      ],
+      "aliases": [
+        "Silent Hill"
+      ],
+      "at": 1790412686.516
+    }
+  }
+}
