@@ -258,6 +258,10 @@ def validate_draft(data, research):
                          'model codes; replace nonessential codes with plain roles, '
                          'not transliterations; retain the supported story and claims')
 
+    # Almarai has no arrow glyphs: the owner's arrow-aside style drew as boxes.
+    if re.search('[\u2190-\u21ff\u27f0-\u27ff\u2b00-\u2b0f]', visible):
+        raise ValueError('unsupported_arrow_symbol: write the side note as a plain short sentence')
+
     formal = ('لاحقاً', 'لاحقا', 'معروفاً', 'معروفا', 'قدراً', 'قدرا')
     if any(word in visible for word in formal):
         raise ValueError('owner_style_violation: use casual Saudi wording, not formal Arabic')

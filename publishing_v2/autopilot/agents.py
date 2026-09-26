@@ -544,6 +544,122 @@ PROMPTS['writer'] += OWNER_REVIEW_LESSONS
 PROMPTS['text_review'] += OWNER_REVIEW_LESSONS
 PROMPTS['reviewer'] += OWNER_REVIEW_LESSONS
 
+# Owner, 2026-09-26: correct packages that nobody forwards are the failure now.
+# Every title had become «X: من ... إلى ...» (Aramco 1944 -> largest producer,
+# Diriyah mud houses -> heritage site): an encyclopedia arc whose ending the
+# viewer already knows from the title. The owner supplied the examples below as
+# the writing he wants; they are STYLE references, never evidence.
+SHAREABILITY = """
+SHAREABILITY (owner standard, overrides any softer wording above on style only;
+every factual, evidence and safety rule above still applies unchanged).
+The goal is a package a Saudi viewer forwards to a friend or a family group with
+one sentence: «تدري إن ...؟». If that sentence is something everyone already
+knows, the package has failed however correct it is.
+What makes a fact forwardable (owner-supplied examples, style only, never facts):
+- A concrete detail with a number or object, then a contrast. ✓ «الملياردير عبدالله
+  فؤاد مع سيارته الرولز رويس في الدمام بالثمانينات. قيمتها ذاك الوقت 409 آلاف ريال.
+  أول مشاريعه: مغسلة لسيارات أرامكو عام 1947.» A price, a year, a humble start
+  against a big present. No adjectives doing the work; the numbers do it.
+- A turn the viewer did not see coming. ✓ «وفي نفس العام تعرض لخسارة قدرت بنحو
+  800 مليون ريال، وطالبته البنوك بتسديدها.» The story is the setback and what the
+  person did next, not the list of achievements.
+- A compressed verdict from someone who knows. ✓ «بعد 4 رحلات للبحر الأحمر، هذا
+  تقييمي باختصار: أفضل منتجع للعوائل: SLS. أفضل منتجع للشباب: EDITION.» The opening
+  promises a payoff and the body delivers it point by point.
+- A main point plus a short practical side note that changes a decision. ✓ «SLS
+  للعوائل. في جزيرة شورى، وتوصلها بالسيارة.» «جزيرة أهدأ؟ تحتاج قارب 40 دقيقة،
+  وما عندك إلا الفندق نفسه.» Use this aside technique inside body text; write it
+  as a plain short sentence. Never type arrow symbols (← →): the font has no glyph
+  for them and they render as empty boxes.
+- The meaning of the term everyone is hearing today. ✓ «ما المقصود بـ ...؟» then
+  two short plain definitions. Only for routine eligible topics.
+- An everyday problem the viewer has had. ✓ «قبل العيد حطيت تيشيرت بنفسجي مع الملابس
+  البيضاء وصارت كلها وردية!» then the fix. Relatable beats impressive.
+✗ «أرامكو: من اسم صار في 1944 إلى أكبر منتج نفط في العالم» and ✗ «الدرعية: من بيوت
+طين على وادي حنيفة إلى موقع تراث عالمي»: a biography whose ending is in the title
+and is already known. NEVER use the «X: من ... إلى ...» pattern in any title.
+Structure for the cards (keeps the existing Info + story kinds and claim rules):
+1. Info card = the hook. Its title and first sentence state the single most
+   surprising supported fact of the whole package (a number, a contrast, an
+   unexpected link to Saudi daily life). Not the subject's definition, not the
+   ending. The viewer must want the next card after the first line.
+2. Story cards = how that happened, in order, one development each. Each story
+   card ends (in body or punch) with a supported open question or turn that makes
+   the next tap necessary: «بس اللي صار بعدها ما توقعه أحد» is allowed ONLY when
+   the next card delivers that supported turn.
+3. The last card pays off: the outcome, or the twist that makes the first card
+   read differently. The final punch is the line people quote when they forward.
+Writing: short sentences, one idea each. Concrete nouns and supported numbers
+over adjectives. No «يعتبر»، «يُعد»، «يمثل»، «يلعب دوراً». Titles are a claim or a
+question the body answers, never a label. When a chosen_hook is supplied, build
+the package around it: use its title (you may tighten it), open Info with its
+opening line, and make the package deliver its share_line. The hook is only as
+strong as its claims: every assertion still maps to supplied claim IDs.
+"""
+PROMPTS['writer'] += SHAREABILITY
+
+PROMPTS['editor'] += """
+share_reason is the most important field. Write it as the exact sentence a Saudi
+viewer would say while forwarding the post: «تدري إن ...؟» with a concrete surprising
+detail (a number, a contrast, a decision, an unexpected link to daily life). If the
+best share sentence you can write for a candidate is common knowledge or a generic
+truth, rank it last or omit it. Rank candidates primarily by how strongly the
+share sentence would make someone forward it, then by evidence and illustration.
+Never invent the detail: it must be a plausible angle for the research to verify.
+Style references for a forwardable detail (never evidence): a billionaire's first
+project was a car wash for Aramco cars in 1947; after 4 trips, a one-line verdict
+on which Red Sea resort suits families; the plain meaning of a term everyone is
+hearing today; an everyday laundry disaster and its fix.
+"""
+
+PROMPTS['researcher'] += """
+SURPRISE HUNT: read the WHOLE supplied text, including the later sections (legacy,
+reception, trivia, business, later life). The encyclopedia lead is the least
+surprising part. Among your claims include the single most surprising documented
+detail you can find: a concrete number or price, a humble or odd beginning, a
+setback and what followed, an unexpected link to Saudi Arabia or everyday life,
+or a decision that could have changed everything. Prefer specific numbers,
+objects and years to general statements. Surprise never relaxes evidence: the
+detail must be supported by its cited passage exactly like every other claim.
+"""
+
+PROMPTS['hooks'] = """You design the opening of a Snapchat package from verified
+research. Propose THREE genuinely different angles on the same subject, each built
+on a different supported claim or contrast. For each give: title (<=85 characters,
+a claim or a question, never a label, never «X: من ... إلى ...»), opening (the first
+sentence of the Info card, <=200 characters, stating the surprising fact), share_line
+(<=200 characters: the exact «تدري إن ...؟» sentence a viewer says when forwarding),
+and claim_ids (the supplied research claim IDs that support title, opening and
+share_line). Use ONLY supplied claims; never add a fact, number or motive they do
+not contain. Return {"options":[{"title":"...","opening":"...","share_line":"...",
+"claim_ids":["c1"]}, ...]} with exactly three options.
+""" + SHAREABILITY
+
+PROMPTS['hook_judge'] = """You are a 22-year-old Saudi scrolling Snapchat stories
+between other things. You see three possible openings for the same post. Pick the
+one that would make you stop, tap through every card, and send it to a friend or
+your family group. Judge only by that: surprise, concreteness, relevance to your
+life in Saudi Arabia, and whether you would repeat the share_line out loud. A
+label, a definition, a list of achievements or a known fact loses to a concrete
+contrast or an unexpected detail. Do not judge factual accuracy (it was checked
+before you). Return {"choice":0|1|2,"reason":"one short Arabic sentence on why"}.
+"""
+
+# The approval gates must reward, not reject, the owner's structure: a hook-first
+# Info card is the distinctive fact they already require, not a spoiler.
+SHAREABILITY_REVIEW = """
+SHAREABILITY (owner standard): Info may open with the package's most surprising
+supported fact; that is the distinctive Info fact, not a preview of the story's
+arc, provided the story cards still show how it happened. An open question or
+turn at a card's end is correct when the next card delivers it. Set owner_quality
+false for any title in the «X: من ... إلى ...» pattern, for label titles, and for
+a package whose best share sentence («تدري إن ...؟») is common knowledge. State that
+share sentence in reason. Arrow symbols (← →) render as empty boxes: set readable
+or saudi_language false if present.
+"""
+PROMPTS['text_review'] += SHAREABILITY_REVIEW
+PROMPTS['reviewer'] += SHAREABILITY_REVIEW
+
 PROMPTS['card_repair'] = PROMPTS['writer'] + """
 REPAIR MODE overrides the output format above. The existing draft is the only
 working version. Change ONLY cards listed in repair_indices, addressing feedback.
@@ -608,7 +724,7 @@ class Agents:
         # Keep selected image metadata and original sources for independent review.
         if isinstance(data.get('candidate'), dict):
             candidate = {k: v for k, v in data['candidate'].items() if k != 'visual_discovery'}
-            if role in {'writer', 'card_repair'}:
+            if role in {'writer', 'card_repair', 'hooks'}:
                 # Editor rationale can contain unsupported locations or claims.
                 # The writer gets verified research and source-bound identity only.
                 candidate.pop('editorial', None)
@@ -619,7 +735,9 @@ class Agents:
             data = dict(data, sources=[{k: v for k, v in source.items() if k not in {'text', 'reference_urls'}}
                                        for source in data['sources']], passages=evidence_rows)
         encoded = json.dumps(data, ensure_ascii=False, allow_nan=False)
-        if len(encoded.encode()) > 90000 or len(images) > 8:
+        # The researcher now reads longer encyclopedia text (the surprising detail
+        # sits past the lead); its bound grows with it, every other role keeps 90 KB.
+        if len(encoded.encode()) > (160000 if role == 'researcher' else 90000) or len(images) > 8:
             raise ValueError('agent_input_too_large')
         content = []
         if images and role not in {'reviewer', 'image_check'}:

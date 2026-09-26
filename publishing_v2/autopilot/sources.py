@@ -128,6 +128,11 @@ def wiki_json(url):
         time.sleep(1)
 
 
+# Owner 2026-09-26: the first 10,000 characters are the lead and early history,
+# the least surprising part of an article; legacy, business and trivia sit later.
+WIKI_TEXT_LIMIT = 24000
+
+
 def wiki(query, *, language="en", exact_only=False):
     # Query text cannot select arbitrary URLs or redirect retrieval elsewhere.
     query = str(query)[:180]
@@ -146,7 +151,7 @@ def wiki(query, *, language="en", exact_only=False):
                 and 'disambiguation' not in page.get('pageprops', {})):
             return [{'id': prefix + str(page['pageid']),
                 'url': site + '?curid=' + str(page['pageid']),
-                'text': str(page['extract'])[:10000], 'title': page['title'],
+                'text': str(page['extract'])[:WIKI_TEXT_LIMIT], 'title': page['title'],
                 'reference_urls': [link.get('*', '') for link in page.get('extlinks', [])],
                 'verified_aliases': [query], 'website_entity': page.get('pageprops', {}).get('wikibase_item'), 'source_type': 'encyclopedia'}]
     if exact_only:
@@ -165,7 +170,7 @@ def wiki(query, *, language="en", exact_only=False):
         'pageids': '|'.join(ids), 'prop': 'extracts|pageprops|extlinks', 'ellimit': 50, 'explaintext': 1,
         'exintro': 1, 'exlimit': len(ids)}))
     return [{'id': prefix + str(page['pageid']), 'url': site + '?curid=' + str(page['pageid']),
-             'text': str(page.get('extract', ''))[:10000], 'title': page.get('title'),
+             'text': str(page.get('extract', ''))[:WIKI_TEXT_LIMIT], 'title': page.get('title'),
              'reference_urls': [link.get('*', '') for link in page.get('extlinks', [])],
              'source_type': 'encyclopedia', 'website_entity': page.get('pageprops', {}).get('wikibase_item')}
             for page in result.get('query', {}).get('pages', {}).values() if page.get('extract') and 'disambiguation' not in page.get('pageprops', {})]
