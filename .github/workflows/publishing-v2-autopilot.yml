@@ -127,6 +127,14 @@ jobs:
           DRY_RUN: ${{ steps.route.outputs.mode == 'live' && '0' || '1' }}
         run: |
           python -m publishing_v2.autopilot.runtime --mode "$AUTOPILOT_MODE" --lane "$AUTOPILOT_LANE"
+      - name: Save owner review sheet
+        # Owner reviews the first packages in chat before publication; set repository
+        # variable AUTOPILOT_OWNER_REVIEW=0 to end the review phase.
+        if: always() && steps.route.outputs.mode == 'shadow'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AUTOPILOT_OWNER_REVIEW: ${{ vars.AUTOPILOT_OWNER_REVIEW || '1' }}
+        run: python -m publishing_v2.autopilot.review_sheet
       - name: Send publication outcome
         if: always()
         env:

@@ -1,5 +1,13 @@
 name: Auto-publish reviewed Snap packages
 on:
+  # Owner approval button: publishes only today's reviewed, sealed shadow package.
+  workflow_dispatch:
+    inputs:
+      lane:
+        description: Which reviewed package to publish
+        type: choice
+        options: [both, daily, local]
+        default: both
   push:
     branches: [main]
     paths:
@@ -32,7 +40,7 @@ jobs:
           AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
         run: python auto_publish_gate.py
       - name: Publish Daily reviewed package
-        if: steps.gate.outputs.daily == 'true'
+        if: steps.gate.outputs.daily == 'true' && inputs.lane != 'local'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
@@ -46,7 +54,7 @@ jobs:
           AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
         run: python -m publishing_v2.autopilot.runtime --mode live --lane daily
       - name: Publish Local reviewed package
-        if: steps.gate.outputs.local == 'true'
+        if: steps.gate.outputs.local == 'true' && inputs.lane != 'daily'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
