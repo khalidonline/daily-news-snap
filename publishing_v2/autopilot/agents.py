@@ -488,6 +488,42 @@ Missing evidence means false. No approval by majority. On approval repair_indice
 must be empty. Verify chronology, why each change happened if known, the outcome,
 and that Info and story deliver different value. News is the reason to choose,
 not the entire story. No need to explicitly repeat the news in the public text."""
+
+# Owner review 2026-09-26: apply before production, not after successful delivery.
+EDITORIAL_RELEASE_STANDARD = """
+Before approval, state in reason the concrete takeaway an ordinary Saudi viewer
+could retell to a friend, and the sourced beginning -> meaningful change -> outcome.
+A technically correct package can still fail editorial quality. Technical pass,
+owner urgency, successful rendering and prior approval are not editorial evidence.
+Reject a specification tour (privacy, RAM, ports) presented as a story, or a list
+of studios/owners and dates with no evidenced consequence for the subject/users.
+Set story_coherent and owner_quality false for these failures; set distinct_value
+false when Info and the first story beat repeat, or punch merely repeats the body.
+Set broad_appeal false for unexplained specialist numbers, model codes or interfaces
+that supply the main payoff. Do not invent benefits or motives to repair weak evidence.
+Necessary qualifications stay accurate in the sentence they qualify; do not fill
+every red closing with a generic warning. Each closing should add useful meaning.
+Check tense against the verified event date: an already released product cannot
+be described as upcoming elsewhere in the same package.
+The current trigger is mandatory for selection, but mentioning it in public copy
+is OPTIONAL; this overrides any earlier requirement to open Info with the trigger.
+On failure name only affected repair_indices and a concrete evidence-bound repair.
+"""
+PROMPTS['writer'] += EDITORIAL_RELEASE_STANDARD
+PROMPTS['text_review'] += EDITORIAL_RELEASE_STANDARD
+PROMPTS['reviewer'] += EDITORIAL_RELEASE_STANDARD + """
+Inspect semantic image relevance, not only uniqueness or entity-name matches.
+A modern US corporate office cannot illustrate the Japanese team's historical
+origin without explicit context; a city hall is not a game studio; a screenshot
+from a new installment must not silently depict the first installment's plot.
+For every image compare actual subject, location, period and installment with the
+card's main claim. Request a matching image or an honest caption ONLY if it still
+helps explain the card. Reject decorative related buildings as a substitute for
+the story. Two different screenshots can still be visually repetitive.
+Explain these mismatches in reason and fail the relevant existing image checks.
+Do not approve weak content merely because all files and photos are present.
+"""
+
 PROMPTS['card_repair'] = PROMPTS['writer'] + """
 REPAIR MODE overrides the output format above. The existing draft is the only
 working version. Change ONLY cards listed in repair_indices, addressing feedback.
