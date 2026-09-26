@@ -17,8 +17,11 @@ class PersistenceError(Exception):
 
 
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False):
         self.agent, self.sources, self.render = agent, sources, render
+        # Owner 2026-09-26: three competing openings and a viewer-persona judge
+        # before the writer. Off by default so fixture agents keep their scripts.
+        self.hooks = hooks
         self.store, self.publish = store, publish
         self.output, self.now = Path(output), now
         self.engine = engine
@@ -135,16 +138,18 @@ class Pipeline:
                     package = None
                     affected = []
                     accepted_images = {}
+                    hook = self.choose_hook(state, candidate, research) if self.hooks else None
+                    hook_input = {'chosen_hook': hook} if hook else {}
                     for attempt in range(4):
                         review = None
                         try:
                             if draft is None:
                                 draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
-                                    'visual_options': visual_options, 'feedback': feedback})
+                                    'visual_options': visual_options, 'feedback': feedback, **hook_input})
                             elif affected:
                                 patches = self.agent.run('card_repair', {'candidate': candidate,
                                     'research': research, 'draft': draft, 'repair_indices': affected,
-                                    'visual_options': visual_options, 'feedback': feedback})
+                                    'visual_options': visual_options, 'feedback': feedback, **hook_input})
                                 draft = apply_card_patches(draft, patches, affected)
                             else:
                                 raise ValueError('repair_scope_missing_or_invalid')
@@ -241,6 +246,45 @@ class Pipeline:
                 self.candidate_memory.record(candidate, reason, self.engine)
             except Exception:
                 raise PersistenceError('candidate_memory_write_unconfirmed') from None
+
+    def choose_hook(self, state, candidate, research):
+        """Three evidence-bound openings; a viewer-persona judge picks one.
+
+        A hook is advice to the writer, never evidence: every option must cite
+        existing research claims, and the text gates still check the draft.
+        Any fault here returns None so the writer proceeds unguided rather than
+        losing the candidate after research has been paid for.
+        """
+        known = {claim['id'] for claim in research['claims']}
+        try:
+            options = self.agent.run('hooks', {'candidate': candidate, 'research': research}).get('options')
+            if not isinstance(options, list) or len(options) != 3:
+                raise ValueError('invalid_hook_options')
+            for option in options:
+                if not isinstance(option, dict) or set(option) != {'title', 'opening', 'share_line', 'claim_ids'}:
+                    raise ValueError('invalid_hook_fields')
+                policy.text(option['title'], 85)
+                policy.text(option['opening'], 200)
+                policy.text(option['share_line'], 200)
+                ids = option['claim_ids']
+                if not isinstance(ids, list) or not ids or any(i not in known for i in ids):
+                    raise ValueError('unsupported_hook_claim')
+            verdict = self.agent.run('hook_judge', {'options': [
+                {k: o[k] for k in ('title', 'opening', 'share_line')} for o in options]})
+            choice = verdict.get('choice')
+            if type(choice) is not int or not 0 <= choice < 3:
+                raise ValueError('invalid_hook_choice')
+            policy.text(verdict.get('reason'), 500)
+        except BudgetBlocked:
+            raise
+        except (ValueError, RuntimeError, OSError, AttributeError, TypeError) as error:
+            self.save(state, 'hook_skipped', reason=str(error)[:250] if isinstance(error, ValueError)
+                      else type(error).__name__, candidate_id=candidate['id'])
+            return None
+        chosen = dict(options[choice])
+        self.save(state, 'hook_chosen', candidate_id=candidate['id'],
+                  hook={'options': options, 'choice': choice, 'reason': verdict['reason']})
+        return chosen
 
     def editor_choices(self, state, lane, candidates):
         """Try at most three shortlists, never researching a candidate twice."""

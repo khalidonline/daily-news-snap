@@ -437,7 +437,7 @@ def main():
         pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
             store=store, publish=publish_package, output=output / lane, now=now, engine=engine,
             candidate_memory=candidate_memory, published_memory=published_memory,
-            excluded_candidate_ids=sibling_candidate_ids)
+            excluded_candidate_ids=sibling_candidate_ids, hooks=True)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
         if result.get('status') in {'shadow_passed', 'approved', 'published'}:
             candidate_id = result.get('package', {}).get('candidate', {}).get('id')
