@@ -124,3 +124,114 @@ class ShareabilityPolicyTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class CheapRejectionTests(unittest.TestCase):
+    """2026-09-26 test run: camels died over one formal word and SAR over photos,
+    both after research and writing were paid for."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+
+    def pipeline(self, agent, render):
+        return Pipeline(agent=agent, sources=FakeSources(), render=render, store=MemoryStore(),
+                        publish=lambda p, paths: None, output=Path(self.temp.name), now=lambda: NOW)
+
+    @staticmethod
+    def paths(package, output):
+        output.mkdir(parents=True, exist_ok=True)
+        result = []
+        for i, _ in enumerate(package['cards']):
+            path = output / f'{i}.jpg'
+            path.write_bytes(f'pixels {i}'.encode())
+            result.append(path)
+        return result
+
+    def test_formal_word_is_patched_not_fatal(self):
+        class Formal(FakeAgent):
+            def run(self, role, data, images=()):
+                if role == 'writer':
+                    self.calls.append(role)
+                    bad = draft()
+                    bad['cards'][2]['body'] = 'وصار معروفاً بين الناس'
+                    return bad
+                if role == 'card_repair':
+                    self.calls.append(role)
+                    self.repair = data['repair_indices']
+                    fixed = copy.deepcopy(data['draft']['cards'][2])
+                    fixed['body'] = 'وصار مشهور بين الناس'
+                    return {'patches': [{'index': 2, 'card': fixed}]}
+                return super().run(role, data, images)
+        agent = Formal()
+        result = self.pipeline(agent, self.paths).run('daily', 'shadow')
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertEqual(agent.repair, [2])
+        self.assertEqual(agent.calls.count('writer'), 1)
+
+    def test_structural_draft_fault_still_rejects(self):
+        package = draft()
+        package['cards'][0]['claim_ids'] = ['c9']
+        self.assertEqual(policy.style_repair_indices(package), [])
+
+    def test_visual_screen_rejects_before_paid_research(self):
+        agent = FakeAgent()
+        render = self.paths
+        class Render:
+            def __call__(self, package, output): return render(package, output)
+            def screen_visuals(self, candidate): return False
+        result = self.pipeline(agent, Render()).run('daily', 'shadow')
+        self.assertEqual(result['status'], 'held')
+        self.assertNotIn('researcher', agent.calls)
+        reasons = [e.get('reason') for e in result['audit'] if e['event'] == 'candidate_rejected']
+        self.assertTrue(reasons and all(r == 'insufficient_subject_visuals_before_research' for r in reasons))
+
+    def test_screen_uses_plan_visuals_filters_without_model_calls(self):
+        from publishing_v2.autopilot.runtime import Renderer
+        class Sources:
+            def prime_images(self, candidate, subject): self.primed = subject
+            def subject_images(self, subject, query):
+                return [{'asset_id': 'a', 'title': 'Saudi Railway train', 'license': 'CC0'},
+                        {'asset_id': 'b', 'title': 'Saudi Railway station', 'license': 'CC BY-SA 4.0'}]
+        class NoAgent:
+            def run(self, *a, **k): raise AssertionError('screen must not call a model')
+        renderer = Renderer(NoAgent(), Sources())
+        candidate = {'resolved_subjects': [{'name': 'Saudi Railway'}]}
+        self.assertFalse(renderer.screen_visuals(candidate))   # the BY-SA row is not publishable
+        renderer.sources.subject_images = lambda s, q: [
+            {'asset_id': x, 'title': 'Saudi Railway train ' + x, 'license': 'CC0'} for x in 'ab']
+        self.assertTrue(renderer.screen_visuals(candidate))
+
+
+class PublisherImageTests(unittest.TestCase):
+    ITEM = '''<item xmlns:media="http://search.yahoo.com/mrss/">
+      <enclosure url="https://www.alyaum.com/uploads/sar.jpg" type="image/jpeg"/>
+      <enclosure url="https://www.alyaum.com/audio.mp3" type="audio/mpeg"/>
+      <media:content url="https://www.alyaum.com/uploads/sar2.jpg" medium="image"/>
+      <description>&lt;img src="https://www.alyaum.com/uploads/sar3.jpg"&gt; نص</description>
+    </item>'''
+
+    def test_feed_item_photos_are_extracted(self):
+        from xml.etree import ElementTree
+        from publishing_v2.autopilot.sources import feed_images
+        self.assertEqual(feed_images(ElementTree.fromstring(self.ITEM)), [
+            'https://www.alyaum.com/uploads/sar.jpg', 'https://www.alyaum.com/uploads/sar2.jpg',
+            'https://www.alyaum.com/uploads/sar3.jpg'])
+
+    def test_blocked_article_page_falls_back_to_browser_then_feed_photo(self):
+        from urllib.error import HTTPError
+        from publishing_v2.autopilot import sources
+        url = 'https://www.alyaum.com/articles/1/sar'
+        candidate = {'id': 'x', 'url': url, 'published_at': '2026-09-26T09:00:00+00:00'}
+        store = sources.Sources(recovery=True, publication_only=True)
+        store.feed_images[('x', url, candidate['published_at'])] = ['https://www.alyaum.com/uploads/sar.jpg']
+        agents_seen = []
+        def blocked(u, user_agent='DailyNewsSnap/2.0 (editorial research)'):
+            agents_seen.append(user_agent)
+            raise HTTPError(u, 403, 'Forbidden', {}, None)
+        with patch.object(sources, 'fetch', side_effect=blocked):
+            store.attention(candidate)
+        self.assertEqual(agents_seen[-1], sources.BROWSER_UA)
+        rows = sources.page_images(store.article_html[url], url, 'Saudi Railway', kind='article')
+        self.assertEqual([r['original_url'] for r in rows], ['https://www.alyaum.com/uploads/sar.jpg'])
+        self.assertTrue(all(sources.owner_primary_use(r) for r in rows))

@@ -222,6 +222,19 @@ def evidence_snapshot(data, sources):
     return rows
 
 
+FORMAL_WORDS = ('لاحقاً', 'لاحقا', 'معروفاً', 'معروفا', 'قدراً', 'قدرا')
+ARROWS = re.compile('[\u2190-\u21ff\u27f0-\u27ff\u2b00-\u2b0f]')
+
+
+def style_repair_indices(data):
+    """Cards a patch can fix: one formal word or arrow is a wording fault in
+    that card, not a reason to discard a researched candidate (the camels
+    story died over one word on 2026-09-26 after research was paid for)."""
+    return [i for i, card in enumerate(data.get('cards', [])) if isinstance(card, dict) and (
+        lambda text: ARROWS.search(text) or any(word in text for word in FORMAL_WORDS))(
+        ' '.join(str(card.get(k, '')) for k in ('title', 'body', 'punch', 'image_caption')))]
+
+
 def validate_draft(data, research):
     if set(data) != {'title', 'cards'}:
         raise ValueError('unexpected_draft_fields')
@@ -259,10 +272,10 @@ def validate_draft(data, research):
                          'not transliterations; retain the supported story and claims')
 
     # Almarai has no arrow glyphs: the owner's arrow-aside style drew as boxes.
-    if re.search('[\u2190-\u21ff\u27f0-\u27ff\u2b00-\u2b0f]', visible):
+    if ARROWS.search(visible):
         raise ValueError('unsupported_arrow_symbol: write the side note as a plain short sentence')
 
-    formal = ('لاحقاً', 'لاحقا', 'معروفاً', 'معروفا', 'قدراً', 'قدرا')
+    formal = FORMAL_WORDS
     if any(word in visible for word in formal):
         raise ValueError('owner_style_violation: use casual Saudi wording, not formal Arabic')
 

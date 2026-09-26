@@ -587,8 +587,12 @@ Structure for the cards (keeps the existing Info + story kinds and claim rules):
    card ends (in body or punch) with a supported open question or turn that makes
    the next tap necessary: «بس اللي صار بعدها ما توقعه أحد» is allowed ONLY when
    the next card delivers that supported turn.
-3. The last card pays off: the outcome, or the twist that makes the first card
-   read differently. The final punch is the line people quote when they forward.
+3. The last card pays off. Its body MUST state the documented outcome: how the
+   struggle ended, where the subject reached, with its date (the reviewers fail
+   a story without one; George Russell's deck stopped at "37 races without a
+   point" and was rejected). Only then may the punch add the twist that makes the
+   first card read differently; an ironic aside never replaces the outcome. The
+   final punch is the line people quote when they forward.
 Writing: short sentences, one idea each. Concrete nouns and supported numbers
 over adjectives. No «يعتبر»، «يُعد»، «يمثل»، «يلعب دوراً». Titles are a claim or a
 question the body answers, never a label. When a chosen_hook is supplied, build
