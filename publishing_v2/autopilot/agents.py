@@ -19,7 +19,9 @@ Write natural Saudi Arabic, concise but clear. Avoid formal words like لاحق�
 معروفاً and قدراً and قصصاً; use everyday Saudi wording such as فيها, not وياها.
 Use the owner-approved everyday register: «دليل مجاني», not «دليلاً مجانياً»;
 «مع الوقت» instead of «لاحقاً», and natural «تبغى»، «وين»، «صار»، «اللي»
-where the sentence calls for them. Do not sprinkle dialect words into otherwise
+where the sentence calls for them. Owner corrections (2026-09-26): «أقنع» never
+«قنّع»; «ولده/ولدها» never «ابنه/ابنها» for someone's son.
+Do not sprinkle dialect words into otherwise
 formal prose or force slang. Preserve names, exact facts and uncertainty.
 Write for someone who recognizes the subject and wants a useful fact and a story
 worth sharing with friends. Concise does not mean a compressed headline or list.

@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/'
 LICENSE_URLS = {f'CC BY {version}': f'https://creativecommons.org/licenses/by/{version}/'
-                for version in ('2.0', '4.0')}
+                for version in ('2.0', '3.0', '4.0')}  # 3.0: owner approved 2026-09-26 (same attribution terms)
 NOTICE_FIELDS = ('copyright_notice', 'attribution_notice', 'usage_terms', 'disclaimer', 'rights_links')
 FONT_ROOT = Path(__file__).resolve().parents[2] / 'fonts'
 

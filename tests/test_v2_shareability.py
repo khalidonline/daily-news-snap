@@ -235,3 +235,27 @@ class PublisherImageTests(unittest.TestCase):
         rows = sources.page_images(store.article_html[url], url, 'Saudi Railway', kind='article')
         self.assertEqual([r['original_url'] for r in rows], ['https://www.alyaum.com/uploads/sar.jpg'])
         self.assertTrue(all(sources.owner_primary_use(r) for r in rows))
+
+
+class OwnerWordingTests(unittest.TestCase):
+    """Owner review of the George Russell draft, 2026-09-26."""
+
+    def test_wrong_words_are_sent_to_repair(self):
+        package = draft()
+        package['cards'][0]['title'] = 'جورج راسل قنّع مرسيدس'
+        package['cards'][2]['body'] = 'باع تجارته عشان ابنه'
+        with self.assertRaisesRegex(ValueError, 'owner_style_violation'):
+            policy.validate_draft(package, research())
+        self.assertEqual(policy.style_repair_indices(package), [0, 2])
+
+    def test_look_alikes_pass(self):
+        package = draft()
+        package['cards'][1]['body'] = 'أقنع ولده بعرض مقنع، مثل الملك عبدالعزيز ابن سعود'
+        policy.validate_draft(package, research())
+
+    def test_cc_by_three_is_publishable_with_credit(self):
+        from publishing_v2.autopilot.credits import attribution_eligible
+        from test_v2_autopilot_credits import asset
+        row = asset(license='CC BY 3.0', license_url='https://creativecommons.org/licenses/by/3.0/')
+        self.assertTrue(attribution_eligible(row))
+        self.assertFalse(attribution_eligible(dict(row, license='CC BY-SA 3.0')))
