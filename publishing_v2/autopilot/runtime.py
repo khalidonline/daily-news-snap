@@ -345,9 +345,11 @@ def shadow_record(result, engine, slot):
             'engine': result['engine'], 'slot': slot, 'approval': result['approval']}
 
 
-def rollout_ready(state, engine, now):
+def rollout_ready(state, engine, now, *, lane='both'):
+    if lane not in {'daily', 'local', 'both'}:
+        return False
     try:
-        for lane in ('daily', 'local'):
+        for lane in (('daily', 'local') if lane == 'both' else (lane,)):
             row = state[lane]
             at = datetime.fromisoformat(row['at'])
             if (row['status'] not in {'shadow_passed', 'published'} or row['engine'] != engine or at.tzinfo is None
@@ -383,6 +385,8 @@ def main():
     parser.add_argument('--lane', choices=['daily', 'local', 'both'], default='both')
     parser.add_argument('--output', default='autopilot-output')
     args = parser.parse_args()
+    if args.mode == 'live' and args.lane == 'both':
+        raise ValueError('publish_one_lane_per_run')
     if os.environ.get('GITHUB_REPOSITORY') != 'khalidonline/daily-news-snap':
         raise ValueError('configured_repository_required')
     if os.environ.get('GITHUB_REF') != 'refs/heads/main':
@@ -395,11 +399,9 @@ def main():
                     limit_micro_usd=autopilot_daily_limit(now(), os.environ.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD', '8000000')))
     readiness = GitHubJournal('autopilot-readiness')
     engine = engine_id()
-    verified = rollout_ready(readiness.read(), engine, now())
+    verified = rollout_ready(readiness.read(), engine, now(), lane=args.lane)
     if args.mode == 'live' and not verified:
-        print('Live validation unavailable: running shadow to establish readiness')
-        args.mode = 'shadow'
-        args.lane = 'both'
+        raise ValueError('selected_lane_not_ready_no_generation_fallback')
     from .published_memory import PublishedMemory
     published_memory = PublishedMemory(GitHubJournal('autopilot-published-memory'), now)
     published_memory.import_manual(Path('approved'), GitHubJournal)
