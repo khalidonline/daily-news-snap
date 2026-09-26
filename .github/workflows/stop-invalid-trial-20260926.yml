@@ -1,0 +1,16 @@
+name: Hold invalid trial
+on:
+  push:
+    paths: ['.github/workflows/stop-invalid-trial-20260926.yml']
+permissions:
+  actions: write
+  contents: read
+jobs:
+  stop:
+    if: github.event.head_commit.message == 'Stop trial 36228879449 for verified factual contradiction'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel fixed trial only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST repos/khalidonline/daily-news-snap/actions/runs/36228879449/cancel
