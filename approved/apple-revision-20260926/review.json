@@ -1,0 +1,22 @@
+{
+  "reviewer": "assistant_manual_editorial_and_pixel_review",
+  "reviewed_at": "2026-09-26T09:51:59.993327+00:00",
+  "user_authorization": "2026-09-26 12:43 Asia/Riyadh: continue replacing the two packages after approved before/after examples",
+  "manifest_sha256": "92ae6d434a8cd7fd8ba710fdc8a26fb4d6647876d1f918146e3dfa4222432b73",
+  "spec_sha256": "38c142070c6d015ffc3d5de01b768512cdfa2218054d221cedba69b0b7d5a5e2",
+  "identity": "784b107b251ac5d2d101e08dde6d288fa931c343cb60115c9e6f6b4def729138",
+  "checks": {
+    "readable": true,
+    "brand_preserved": true,
+    "distinct_images": true,
+    "image_period_matches": true,
+    "sources_internal_only": true,
+    "saudi_language": true,
+    "facts_checked": true,
+    "current_trigger": true,
+    "arabic_story_numbering": true
+  },
+  "publication_status": "READY_AWAITING_CONFIRMED_SNAPCHAT_DELETION",
+  "additional_model_api_cost_usd": 0,
+  "deletion_requirement": "Bundle DELETE /post removes Bundle record only, not published Snapchat story. Keep predecessor journals POSTED until Snapchat deletion verified."
+}

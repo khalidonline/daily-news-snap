@@ -1,0 +1,65 @@
+{
+  "title": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد",
+  "cards": [
+    {
+      "kind": "info",
+      "title": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد",
+      "body": "Mac Studio كمبيوتر مكتبي صغير من أبل، يقدر يشغّل نماذج ذكاء اصطناعي على الجهاز نفسه. إذا البرنامج والنموذج يشتغلون بالكامل عندك، يقدر يعالج طلبك بدون إرساله لسيرفر خارجي.",
+      "punch": "الفرق مو بس وش يقدر يسوي… وين يصير الشغل؟",
+      "source": "approved/apple-revision-20260926/source-00.jpg",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "asset_id": "primary:5f42b4cbbd1558fe81965a56",
+        "sha256": "4a753142b8d380adbc2b001754102ca580be32750938c6a370cd3cbef0e76a8d",
+        "credit": "Apple",
+        "title": "Mac Studio",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "image_caption": null
+    },
+    {
+      "kind": "info",
+      "title": "الجهاز الصغير يحتاج ذاكرة تستوعب الشغل",
+      "body": "تشغيل نموذج كبير على الكمبيوتر يحتاج ذاكرة تكفيه. عشان كذا، أبل أعلنت نسخة من Mac Studio بذاكرة توصل إلى ٥١٢ غيغابايت، وموعدها أواخر أكتوبر.",
+      "punch": "حجمه على المكتب صغير، لكن يقدر يستوعب نماذج كبيرة.",
+      "source": "approved/apple-revision-20260926/source-01.jpg",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "asset_id": "primary:2862f68492759f18939469ce",
+        "sha256": "70df8578b78c244280c3d97ec36c00928cfe5927a16da76f2d8a0e26b7dad950",
+        "credit": "Apple",
+        "title": "Mac Studio تشغيل نموذج صور",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "image_caption": null
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/"
+    }
+  ],
+  "change_reason": "Owner approved editorial rewrite and replacement on 2026-09-26; all editorial cards changed; existing suitable photos reused."
+}

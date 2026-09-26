@@ -1,0 +1,102 @@
+{
+  "format": "curated-approved-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "سايلنت هيل… الرعب فيها مو بس وحوش",
+  "expires_at": "2026-09-27T00:00:00+03:00",
+  "media": [
+    {
+      "path": "approved/silent-hill-revision-20260926/card-00.jpg",
+      "kind": "info",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:c51bf77d57a7d315197b7278",
+        "original_url": "https://ichef.bbci.co.uk/ace/standard/1200/cpsprodpb/b6d3/live/68c365e0-b6e8-11f1-ba77-95f834c0074c.jpg",
+        "download_url": "https://ichef.bbci.co.uk/ace/standard/1200/cpsprodpb/b6d3/live/68c365e0-b6e8-11f1-ba77-95f834c0074c.jpg",
+        "source_url": "https://www.bbc.co.uk/news/articles/ckvgyzjpy2eno?at_medium=RSS&at_campaign=rss",
+        "source_kind": "article",
+        "title": "An in-game screenshot showing a faceless monster in a first-person view, with the player holding a plank of wood. They are in the middle of a foggy street with a newsagents on the side.",
+        "description": "An in-game screenshot showing a faceless monster in a first-person view, with the player holding a plank of wood. They are in the middle of a foggy street with a newsagents on the side.",
+        "collection_subject": "Silent Hill",
+        "credit": "www.bbc.co.uk",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1200,
+        "height": 675,
+        "sha256": "65c3c264289b76c86afb35d5c75e9f0603ecd17c02a4fc1e142364054d79ac5a",
+        "origin_key": "primary:c51bf77d57a7d315197b7278"
+      },
+      "sha256": "6009a01e22ff529511d8c599ea5b05de8037af6e1d22fff2d6ee6d7e6288d40e"
+    },
+    {
+      "path": "approved/silent-hill-revision-20260926/card-01.jpg",
+      "kind": "story",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "asset_id": "primary:122cc2c7bf7d945903fa5da4",
+        "original_url": "https://www.silenthillmemories.net/sh1/screens/pics/sh1_screen_01.jpg",
+        "download_url": "https://www.silenthillmemories.net/sh1/screens/pics/sh1_screen_01.jpg",
+        "source_url": "https://www.silenthillmemories.net/sh1/screens_en.htm",
+        "title": "Silent Hill 1999 screenshot",
+        "sha256": "43c97456592c164fe31e613f773d526195e458d5a7ce90ed62dd7142b1842f2b",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      },
+      "sha256": "9c273bfbe2a077e62e45be6f2fa2d979df1a5dd06aa933a5dd521b5de1bdc62a"
+    },
+    {
+      "path": "approved/silent-hill-revision-20260926/card-02.jpg",
+      "kind": "story",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "asset_id": "primary:384b996a432b008c120dce8b",
+        "original_url": "https://www.silenthillmemories.net/silent_hills/screens/pics/silent_hills_pt_screen_20140814_02.jpg",
+        "download_url": "https://www.silenthillmemories.net/silent_hills/screens/pics/silent_hills_pt_screen_20140814_02.jpg",
+        "source_url": "https://www.silenthillmemories.net/silent_hills/screens_en.htm",
+        "title": "P.T. 2014 official Gamescom screenshot",
+        "sha256": "7d139140b86285a5e57f770b89ea7ad0868ecfef65a3ed4a3909ceb8bc749144",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      },
+      "sha256": "8a838440176e4dcf0bf27d14db655ad17739e9a855f43fad685cd29a11684720"
+    },
+    {
+      "path": "approved/silent-hill-revision-20260926/card-03.jpg",
+      "kind": "story",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:607db68f366d64c71a3901e4",
+        "original_url": "https://ichef.bbci.co.uk/ace/standard/1376/cpsprodpb/2415/live/7ca30e30-b5a8-11f1-abe6-535e7b14de4c.png",
+        "download_url": "https://ichef.bbci.co.uk/ace/standard/1376/cpsprodpb/2415/live/7ca30e30-b5a8-11f1-abe6-535e7b14de4c.png",
+        "source_url": "https://www.bbc.co.uk/news/articles/ckvgyzjpy2eno?at_medium=RSS&at_campaign=rss",
+        "source_kind": "article",
+        "title": "An in-game screenshot showing Simon the protagonist, with a black beard and glasses. He is wearing a blue beanie and a checked blue shirt and a red gilet. He is standing in the fog looking off camera.",
+        "description": "An in-game screenshot showing Simon the protagonist, with a black beard and glasses. He is wearing a blue beanie and a checked blue shirt and a red gilet. He is standing in the fog looking off camera.",
+        "collection_subject": "Silent Hill",
+        "credit": "www.bbc.co.uk",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "source-page illustration, not proof of the depicted person/building identity; review pixels and card context",
+        "width": 1376,
+        "height": 774,
+        "sha256": "c0c889bab7b31b05e26cc2d2b48b9504e0488c3bb67b3c7293d68172f9aed0ba",
+        "origin_key": "primary:607db68f366d64c71a3901e4"
+      },
+      "sha256": "d5de9a3c7bfd45235dcd4070a7f8da60cd20e21aa2a463e542d14527a33e0706"
+    }
+  ],
+  "predecessors": [
+    "b8618f7be230eaba707b26888a69f7d673bd11825adfcdd94773f89acbad9fb4"
+  ]
+}

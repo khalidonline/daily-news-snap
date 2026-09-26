@@ -1,0 +1,60 @@
+{
+  "format": "curated-approved-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد",
+  "expires_at": "2026-09-27T00:00:00+03:00",
+  "media": [
+    {
+      "path": "approved/apple-revision-20260926/card-00.jpg",
+      "kind": "info",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "asset_id": "primary:5f42b4cbbd1558fe81965a56",
+        "sha256": "4a753142b8d380adbc2b001754102ca580be32750938c6a370cd3cbef0e76a8d",
+        "credit": "Apple",
+        "title": "Mac Studio",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "sha256": "b7044f38f4f4da267dbf4eed218ffd09ccfedd5a8a7fc7178eda17fbf48684ef"
+    },
+    {
+      "path": "approved/apple-revision-20260926/card-01.jpg",
+      "kind": "info",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "asset_id": "primary:2862f68492759f18939469ce",
+        "sha256": "70df8578b78c244280c3d97ec36c00928cfe5927a16da76f2d8a0e26b7dad950",
+        "credit": "Apple",
+        "title": "Mac Studio تشغيل نموذج صور",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      },
+      "sha256": "ef566ac8f979a06144c41165d856a4457aadfc31b60cb78bbec834643ef1e123"
+    }
+  ],
+  "predecessors": [
+    "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443"
+  ]
+}

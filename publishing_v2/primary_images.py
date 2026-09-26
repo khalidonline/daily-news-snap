@@ -12,6 +12,16 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 OWNER_DECISION = 'owner-source-editorial-use-2026-09-22'
 PUBLISHERS = {'aawsat.com','www.aawsat.com','www.alyaum.com','bbc.com','www.bbc.com','www.bbc.co.uk','bbc.co.uk'}
 
+# Exact archival screenshots manually checked for the owner's 2026-09-26
+# replacement request. This is editorial-use authorization, not a license grant
+# or approval of arbitrary assets from this fan archive.
+REVIEWED_ARCHIVE_ASSETS = frozenset({
+    ('https://www.silenthillmemories.net/sh1/screens_en.htm',
+     'https://www.silenthillmemories.net/sh1/screens/pics/sh1_screen_01.jpg'),
+    ('https://www.silenthillmemories.net/silent_hills/screens_en.htm',
+     'https://www.silenthillmemories.net/silent_hills/screens/pics/silent_hills_pt_screen_20140814_02.jpg'),
+})
+
 
 def public_url(url):
     p=urlsplit(url)
@@ -123,7 +133,8 @@ def owner_primary_use(row):
     try:
         source=urlsplit(row['source_url']);image=urlsplit(row['original_url'])
         if any(p.scheme!='https' or not p.hostname or p.username or p.password or p.port not in (None,443) or p.fragment for p in (source,image)):return False
-        bound=(row.get('source_kind')=='article' and source.hostname in PUBLISHERS)
+        bound=(row.get('source_kind')=='article' and (source.hostname in PUBLISHERS
+            or (row['source_url'],row['original_url']) in REVIEWED_ARCHIVE_ASSETS))
         if row.get('source_kind')=='official':
             bound=bool(re.fullmatch(r'Q[1-9][0-9]*',row.get('website_entity','')) and urlsplit(row.get('official_site','')).netloc==source.netloc)
         return bool(bound and row.get('provider')=='primary_media' and row.get('download_url')==row['original_url']
@@ -167,3 +178,4 @@ class ImageMemory:
     def save(self):
         self.rows=dict(sorted(self.rows.items(),key=lambda item:item[1]['at'],reverse=True)[:300])
         if self.store:self.store.save({'version':1,'images':self.rows})
+
