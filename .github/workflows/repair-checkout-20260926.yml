@@ -1,0 +1,21 @@
+name: Repair checkout 20260926
+on:
+  push:
+    paths: ['.github/workflows/repair-checkout-20260926.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    if: github.event.head_commit.message == 'Prepare isolated full checkout for authorized repair 20260926'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f3a04f6a645ba1db33b5fed22f884f3e9f614109
+          persist-credentials: false
+      - run: tar --exclude=.git -czf /tmp/checkout.tar.gz .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repair-checkout
+          path: /tmp/checkout.tar.gz
+          retention-days: 1
