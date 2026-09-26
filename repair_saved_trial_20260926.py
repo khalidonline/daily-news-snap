@@ -15,8 +15,8 @@ from recover_held_reviewer import restore_sources, attach_saved_timing_evidence
 SLOT='autopilot-2026-09-26-daily-shadow-5771c0d01ff16a95'
 ROOT=Path('repair-output'); ROOT.mkdir(exist_ok=True)
 journal=GitHubJournal(SLOT); state=journal.read()
-if state.get('status')!='held' or state.get('reason')!='verified_factual_contradiction': raise ValueError('unexpected_saved_state')
-if any(x.get('event')=='bounded_repair_started' for x in state['audit']): raise ValueError('repair_already_attempted')
+if state.get('status')!='held' or state.get('reason') not in {'verified_factual_contradiction','saved_image_metadata_not_recovered:0'}: raise ValueError('unexpected_saved_state')
+if sum(x.get('event')=='bounded_repair_started' for x in state['audit'])>=2: raise ValueError('repair_already_attempted')
 now=datetime.now(timezone.utc)
 if datetime.fromisoformat(state['expires_at'])<=now: raise ValueError('saved_package_expired')
 BundleClient().ensure_capacity(4)
@@ -58,10 +58,15 @@ try:
     policy.validate_research(research,sources,'daily',now);policy.validate_draft(draft,research)
     package=dict(copy.deepcopy(draft),sources=sources,research=research,lane='daily',candidate=state['candidate'],verified_timing=timing,expires_at=state['expires_at'],as_of=state['started_at'])
     approve_text(package,agent,sources)
+    state['repair_package']=copy.deepcopy(package);journal.save(state)
     # Recover metadata by matching exact saved image bytes. Never repeat visual selection.
     source=Sources(recovery=True,publication_only=True)
+    from publishing_v2.autopilot.sources import fetch
+    url=state['candidate']['url']
+    source.article_html[url]=fetch(url).decode()
     source.prime_images(state['candidate'],'Silent Hill')
     rows=source.subject_images('Silent Hill','Silent Hill')
+    rows+=source.subject_images('Konami headquarters','Konami')
     saved=Path('saved/package/daily/9ac357b6ba7af3e5/current')
     for i,card in enumerate(package['cards']):
         raw=(saved/f'source-{i:02d}.jpg').read_bytes();sha=hashlib.sha256(raw).hexdigest()
