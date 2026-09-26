@@ -16,7 +16,7 @@ SLOT='autopilot-2026-09-26-daily-shadow-5771c0d01ff16a95'
 ROOT=Path('repair-output'); ROOT.mkdir(exist_ok=True)
 journal=GitHubJournal(SLOT); state=journal.read()
 if state.get('status')!='held' or state.get('reason') not in {'verified_factual_contradiction','saved_image_metadata_not_recovered:0','saved_image_metadata_not_recovered:2'}: raise ValueError('unexpected_saved_state')
-if sum(x.get('event')=='bounded_repair_started' for x in state['audit'])>=3: raise ValueError('repair_already_attempted')
+if sum(x.get('event')=='bounded_repair_started' for x in state['audit'])>=4: raise ValueError('repair_already_attempted')
 now=datetime.now(timezone.utc)
 if datetime.fromisoformat(state['expires_at'])<=now: raise ValueError('saved_package_expired')
 BundleClient().ensure_capacity(4)
@@ -35,13 +35,7 @@ try:
     url=state['candidate']['url']
     source.article_html[url]=fetch(url).decode()
     source.prime_images(state['candidate'],'Silent Hill')
-    rows=source.subject_images('Silent Hill','Silent Hill')
-    rows+=source.subject_images('Konami headquarters','Konami')
-    from publishing_v2.public_images import download_image
-    for row in source.primary_pools.get('Silent Hill',[]):
-        try:
-            raw=download_image(row); row['sha256']=hashlib.sha256(raw).hexdigest();rows.append(row)
-        except Exception:pass
+    rows=Renderer(None,source).image_catalog(package)
     saved=Path('saved/package/daily/9ac357b6ba7af3e5/current')
     for i,card in enumerate(package['cards']):
         raw=(saved/f'source-{i:02d}.jpg').read_bytes();sha=hashlib.sha256(raw).hexdigest()
