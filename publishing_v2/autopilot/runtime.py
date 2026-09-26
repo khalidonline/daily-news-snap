@@ -241,13 +241,14 @@ class Renderer:
             atomic_write(source, raw)
             atomic_write(stored_source, raw)
             target = output / f'card-{i:02d}.jpg'
+            text = western_digits(card)  # drawn text only; card keeps its attribution state
             if card['kind'] == 'info':
-                render_card({'title_lines': [card['title']], 'body_lines': [card['body']],
-                             'closing_lines': [card['punch']], 'brand': 'ملخص تنفيذي - معلومة'}, source, target)
+                render_card({'title_lines': [text['title']], 'body_lines': [text['body']],
+                             'closing_lines': [text['punch']], 'brand': 'ملخص تنفيذي - معلومة'}, source, target)
             else:
                 story_bot.render_frame(target.with_suffix('.png'), 'ملخص تنفيذي - قصة',
-                    story_counter(i, len(cards)-1), card['title'], 64, sub=card['body'],
-                    photo=source, punch=card['punch'], photo_caption=card.get('image_caption'),
+                    story_counter(i, len(cards)-1), text['title'], 64, sub=text['body'],
+                    photo=source, punch=text['punch'], photo_caption=text.get('image_caption'),
                     footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names and not needs_credits else None)
                 with Image.open(target.with_suffix('.png')) as image:
                     image.convert('RGB').save(target, 'JPEG', quality=95)
@@ -326,6 +327,16 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
         raise ValueError('incomplete_delivery_receipts')
     return {'status': 'POSTED', 'identity': identity, 'post_ids': [r['post_id'] for r in rows],
             'card_count': len(indices), 'review_card_count': len(paths), 'media_count': len(media)}
+
+
+# Owner decision 2026-09-26: numbers inside card text use Western digits (1999),
+# whatever the writer produced. Display-only: facts and seals keep the source text.
+_WESTERN = str.maketrans('٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹', '0123456789' * 2)
+
+
+def western_digits(card):
+    fields = ('title', 'body', 'punch', 'image_caption')
+    return {**card, **{k: card[k].translate(_WESTERN) for k in fields if isinstance(card.get(k), str)}}
 
 
 def engine_id():
@@ -448,6 +459,8 @@ def main():
                         'reason': result.get('reason'), 'budget_diagnostic': result.get('budget_diagnostic'),
                         'receipt': result.get('receipt'),
                         'title': result.get('package', {}).get('title'),
+                        'candidate_id': result.get('package', {}).get('candidate', {}).get('id'),
+                        'media_sha256': result.get('approval', {}).get('media_sha256'),
                         'delivery_kind': result.get('package', {}).get('delivery', {}).get('kind')})
     summary = {'mode': args.mode, 'engine': engine, 'results': results,
                'note': 'Costs here cover this attempt; shared ledger includes retained reservations and other runs.'}

@@ -524,6 +524,26 @@ Explain these mismatches in reason and fail the relevant existing image checks.
 Do not approve weak content merely because all files and photos are present.
 """
 
+# Owner review of Silent Hill / Apple, 2026-09-26: errors that passed every gate.
+OWNER_REVIEW_LESSONS = """
+PLACE AND ENTITY TYPE: copy the kind of place or body exactly as the source states
+it (town, coastal village, island, city, region, studio, publisher). Never upgrade
+or guess a type for atmosphere: St. Amelia is a coastal town, and calling it an
+island (جزيرة) was a factual error. If the source does not state the type, use the
+name alone. Reviewer: compare each place/entity noun with the cited passage and fail
+facts_supported on a type mismatch, even when the rest of the sentence is true.
+NAMED ACTORS: the first mention of any team, company or agency in a card names it
+(فريق كونامي، Team Silent). A bare الفريق/الشركة/الجهة with no named antecedent in
+the same card is unclear to a viewer who taps into one frame; name it or rephrase.
+EXACT TITLES: product, game and project names keep their exact source spelling and
+punctuation (P.T. not P.T, Mac Studio not ماك ستوديو).
+DIGITS: write every number in card text with Western digits (1999, 512, 24 سبتمبر),
+never Arabic-Indic (١٩٩٩). Story counters are rendered separately; ignore them.
+"""
+PROMPTS['writer'] += OWNER_REVIEW_LESSONS
+PROMPTS['text_review'] += OWNER_REVIEW_LESSONS
+PROMPTS['reviewer'] += OWNER_REVIEW_LESSONS
+
 PROMPTS['card_repair'] = PROMPTS['writer'] + """
 REPAIR MODE overrides the output format above. The existing draft is the only
 working version. Change ONLY cards listed in repair_indices, addressing feedback.
