@@ -224,6 +224,11 @@ def evidence_snapshot(data, sources):
 
 FORMAL_WORDS = ('لاحقاً', 'لاحقا', 'معروفاً', 'معروفا', 'قدراً', 'قدرا')
 ARROWS = re.compile('[\u2190-\u21ff\u27f0-\u27ff\u2b00-\u2b0f]')
+# Owner review of the George Russell draft (2026-09-26): «قنّع» is wrong, the
+# word is «أقنع»; a son is «ولده», not «ابنه». Whole-word matches only: «مقنع»
+# and names like «ابن سعود» must not trip it.
+_AR = '\u0600-\u06ff'
+OWNER_WORDING = re.compile('(?<![%s])(?:[وفب]?قنّع[%s]*|[وفل]?ابن(?:ه|ها))(?![%s])' % (_AR, _AR, _AR))
 
 
 def style_repair_indices(data):
@@ -231,7 +236,8 @@ def style_repair_indices(data):
     that card, not a reason to discard a researched candidate (the camels
     story died over one word on 2026-09-26 after research was paid for)."""
     return [i for i, card in enumerate(data.get('cards', [])) if isinstance(card, dict) and (
-        lambda text: ARROWS.search(text) or any(word in text for word in FORMAL_WORDS))(
+        lambda text: ARROWS.search(text) or OWNER_WORDING.search(text)
+        or any(word in text for word in FORMAL_WORDS))(
         ' '.join(str(card.get(k, '')) for k in ('title', 'body', 'punch', 'image_caption')))]
 
 
@@ -275,6 +281,8 @@ def validate_draft(data, research):
     if ARROWS.search(visible):
         raise ValueError('unsupported_arrow_symbol: write the side note as a plain short sentence')
 
+    if OWNER_WORDING.search(visible):
+        raise ValueError('owner_style_violation: use «أقنع» not «قنّع», and «ولده» not «ابنه»')
     formal = FORMAL_WORDS
     if any(word in visible for word in formal):
         raise ValueError('owner_style_violation: use casual Saudi wording, not formal Arabic')
