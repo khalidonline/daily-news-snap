@@ -13,7 +13,8 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
 
-from publishing_v2.public_images import search_commons, search_commons_category, search_nasa, download_image, ImageSourceError
+from publishing_v2.public_images import (search_commons, search_commons_category, search_nasa, download_image,
+                                        ImageSourceError, commons_files, commons_subcategories)
 from publishing_v2.flickr_images import search_flickr
 from publishing_v2.met_images import search_met, OBJECTS
 from .credits import attribution_eligible
@@ -67,6 +68,67 @@ def feed_images(item):
     for field in ('description', '{http://purl.org/rss/1.0/modules/content/}encoded'):
         urls += re.findall(r'<img[^>]+src=["\']([^"\']+)', item.findtext(field, '') or '')
     return [u for u in dict.fromkeys(urls) if u.startswith('https://')][:4]
+
+
+# Owner 2026-09-26: "be smart, widen the search with several keywords" (SAR had
+# trains, stations and a logo on Commons, but a search for its English name
+# found almost nothing usable). Widening keys off the Wikidata entity the
+# research already resolved, so every extra query still names THIS subject:
+# its other names, its Arabic label, its recorded photo and logo, its Commons
+# category, and "name + thing" queries from what kind of entity it is.
+TYPE_NOUNS = (
+    (r'rail|train', ('train', 'station', 'locomotive')),
+    (r'airline|airport|aircraft', ('aircraft', 'airport')),
+    (r'football|sports club|team', ('stadium', 'team')),
+    (r'bank|compan|enterprise|business|corporation|conglomerate', ('headquarters', 'building')),
+    (r'city|town|village|capital|region|province', ('skyline', 'street')),
+    (r'museum|palace|mosque|building|tower|stadium', ('building', 'interior')),
+    (r'university|school|college', ('campus', 'building')),
+    (r'port|harbou?r', ('port', 'ship')),
+    (r'car|automobile|vehicle', ('car',)),
+)
+
+
+def entity_profile(entity):
+    """Names, files and categories a Wikidata entity records for itself."""
+    empty = {'names': [], 'files': [], 'categories': [], 'queries': []}
+    if not isinstance(entity, str) or not re.fullmatch(r'Q[1-9][0-9]*', entity):
+        return empty
+    data = wiki_json('https://www.wikidata.org/w/api.php?' + urlencode({
+        'action': 'wbgetentities', 'format': 'json', 'ids': entity,
+        'props': 'claims|labels|aliases', 'languages': 'en|ar'}))
+    item = data.get('entities', {}).get(entity, {})
+    claims = item.get('claims', {})
+    def values(prop):
+        out = []
+        for claim in claims.get(prop, []):
+            value = claim.get('mainsnak', {}).get('datavalue', {}).get('value')
+            if claim.get('rank') != 'deprecated' and value is not None:
+                out.append(value)
+        return out
+    names = [item.get('labels', {}).get(lang, {}).get('value', '') for lang in ('en', 'ar')]
+    names += [a.get('value', '') for lang, n in (('en', 4), ('ar', 2))
+              for a in item.get('aliases', {}).get(lang, [])[:n]]
+    # A bare acronym (SAR, STC) names half the world: Hong Kong SAR, search and rescue.
+    names = [n.strip() for n in dict.fromkeys(names) if isinstance(n, str)
+             and 4 <= len(n.strip()) <= 80 and not re.fullmatch(r'[A-Z0-9&.\- ]{2,6}', n.strip())]
+    kinds = [v.get('id') for v in values('P31') if isinstance(v, dict)][:3]
+    kind_words = ''
+    if kinds:
+        try:
+            labels = wiki_json('https://www.wikidata.org/w/api.php?' + urlencode({
+                'action': 'wbgetentities', 'format': 'json', 'ids': '|'.join(kinds),
+                'props': 'labels', 'languages': 'en'}))
+            kind_words = ' '.join(e.get('labels', {}).get('en', {}).get('value', '')
+                                  for e in labels.get('entities', {}).values()).casefold()
+        except (ValueError, OSError):
+            pass
+    nouns = next((n for pattern, n in TYPE_NOUNS if re.search(pattern, kind_words)), ())
+    english = next((n for n in names if re.search(r'[A-Za-z]', n)), None)
+    return {'names': names[:6],
+            'files': [v for v in values('P18')[:2] + values('P154')[:1] if isinstance(v, str)],
+            'categories': [v for v in values('P373')[:1] if isinstance(v, str)],
+            'queries': [english + ' ' + noun for noun in nouns] if english else []}
 
 
 def safe_url(url):
@@ -307,6 +369,7 @@ class Sources:
         self.image_bytes = {}
         self.publisher_articles = {}
         self.feed_images = {}
+        self.entity_profiles = {}
         self.attention_cache = {}
         self.official_image_cache = {}
         self.image_cache = {}
@@ -516,6 +579,15 @@ class Sources:
                            rights_status='owner_accepted_editorial_use', collection_subject=subject)
         return varied_official_images(rows)
 
+    def entity_profile(self, subject):
+        entity = self.subject_entities.get(subject)
+        if entity not in self.entity_profiles:
+            try:
+                self.entity_profiles[entity] = entity_profile(entity)
+            except (ValueError, OSError, AttributeError, TypeError):
+                self.entity_profiles[entity] = entity_profile(None)
+        return self.entity_profiles[entity]
+
     def subject_images(self, query, subject):
         return self.recover_images(query, subject) if self.recovery else self.images(query, subject=subject)
 
@@ -529,9 +601,26 @@ class Sources:
         deadline = time.monotonic() + 90
         found, identities, hashes, origins = [], set(), set(), set()
         attempts = 0
+        profile = self.entity_profile(subject)
+        names = [n for n in profile['names'] if n.casefold() != subject.casefold()]
+        def entity_rows(rows):
+            # Bound to the subject by the entity's own claim or category, not by
+            # caption words; the paid pixel check still judges every photo.
+            for row in rows:
+                row['collection_subject'] = subject
+            return rows
+        def category_rows(category):
+            rows = search_commons_category(category, limit=5)
+            for sub in (commons_subcategories(category) if len(rows) < 2 else []):
+                rows += search_commons_category(sub, limit=5)
+            return entity_rows(rows)
         stages = [('primary_media', lambda: self.primary_pools.get(subject, [])),
                   ('official_media', lambda: self.official_images(subject)),
+                  *[('entity_media', lambda: entity_rows(commons_files(profile['files'])))][:bool(profile['files'])],
+                  *[('entity_category', lambda c=c: category_rows(c)) for c in profile['categories']],
                   ('commons', lambda: search_commons(query, limit=5)),
+                  *[('commons_alias', lambda n=n: search_commons(n, limit=5)) for n in names[:4]],
+                  *[('commons_typed', lambda q=q: search_commons(q, limit=5)) for q in profile['queries']],
                   ('commons_collection', lambda: search_commons_category(subject, limit=5)),
                   ('flickr_cc0' if self.publication_only else 'flickr',
                    lambda: search_flickr(subject, limit=5, deadline=deadline,
@@ -544,15 +633,17 @@ class Sources:
                   ('met_open_access', lambda: search_met(subject, limit=3, deadline=deadline)),
                   ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
                   ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
-        # Route specialized subjects before general stock catalogs. Learned
-        # successes rank only fallback providers; primary sources always lead.
+        # Route specialized subjects before general stock catalogs. Primary and
+        # entity-bound stages always lead; learned successes rank only the open
+        # catalogs behind them.
+        head = sum(1 for name, _ in stages if name in {'primary_media', 'official_media', 'entity_media', 'entity_category'})
         if re.search(r'equinox|solstice|space|planet|astronom|اعتدال|فلك', subject, re.I):
-            stages.insert(2, ('nasa', lambda: search_nasa(query, limit=5)))
+            stages.insert(head, ('nasa', lambda: search_nasa(query, limit=5)))
         if OBJECTS.search(subject):
             met = next(pair for pair in stages if pair[0]=='met_open_access')
-            stages.remove(met); stages.insert(2, met)
+            stages.remove(met); stages.insert(head, met)
         preferred = self.image_memory.preferred(subject)
-        stages = stages[:2] + sorted(stages[2:], key=lambda pair: pair[0].split('_')[0] not in preferred)
+        stages = stages[:head] + sorted(stages[head:], key=lambda pair: pair[0].split('_')[0] not in preferred)
         for provider, search in stages:
             if provider not in {'primary_media','official_media'} and len(found) >= 2:
                 break
@@ -584,7 +675,11 @@ class Sources:
                     if self.publication_only and not image_publication_eligible(row):
                         reject('public_attribution_required'); continue
                     if not subject_metadata_matches(subject, row):
-                        reject('subject'); continue
+                        if not any(subject_metadata_matches(name, row) for name in names):
+                            reject('subject'); continue
+                        # Another name of the same entity: keep the row findable
+                        # by the subject filters downstream (screen, plan_visuals).
+                        row['collection_subject'] = subject
                     dimensions = (row.get('original_width'), row.get('original_height'))
                     if all(type(v) is int and v > 0 for v in dimensions) and (min(dimensions) < 600 or max(dimensions) < 1000):
                         reject('original_too_small'); continue

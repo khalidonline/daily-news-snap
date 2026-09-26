@@ -162,6 +162,35 @@ def search_commons_category(subject, limit=5):
     return rows
 
 
+def commons_files(names, limit=5):
+    """Exact Commons files by name: the image/logo a Wikidata entity records.
+
+    Identity comes from the entity's own claim (P18 image, P154 logo), not
+    from caption words, so these files need no title match.
+    """
+    names = [n.strip() for n in names if isinstance(n, str) and n.strip() and len(n) <= 240][:limit]
+    if not names:
+        return []
+    params = {'action': 'query', 'format': 'json', 'formatversion': 2,
+              'titles': '|'.join('File:' + name.removeprefix('File:') for name in names),
+              'prop': 'imageinfo', 'iiprop': 'url|mime|size|extmetadata', 'iiurlwidth': 1600}
+    return _commons_results(get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params)), limit)
+
+
+def commons_subcategories(category, limit=3):
+    """First-level subcategories: an entity's Commons category often keeps its
+    trains, stations and buildings one level down, not as direct files."""
+    query_params(category, limit)
+    params = {'action': 'query', 'format': 'json', 'formatversion': 2, 'list': 'categorymembers',
+              'cmtitle': 'Category:' + category, 'cmtype': 'subcat', 'cmlimit': limit}
+    response = get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params))
+    if not isinstance(response, dict) or 'error' in response:
+        raise ImageSourceError('malformed_response')
+    members = response.get('query', {}).get('categorymembers', [])
+    return [str(m.get('title', '')).removeprefix('Category:') for m in members[:limit]
+            if isinstance(m, dict) and str(m.get('title', '')).startswith('Category:')]
+
+
 def download_image(row, *, fetch=None):
     """Recover a rendition of the same source asset; bytes live only in memory."""
     from .primary_images import owner_primary_use, primary_bytes
