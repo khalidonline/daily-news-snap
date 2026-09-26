@@ -64,7 +64,7 @@ class OfficialPipelineTests(unittest.TestCase):
     render = fixtures.PipelineTests.render
     publish = fixtures.PipelineTests.publish
 
-    def test_missing_clearance_is_recorded_before_paid_research(self):
+    def test_missing_clearance_blocks_render_after_text_approval(self):
         pipeline = self.pipeline()
         def render(*args): self.fail('must not render uncleared images')
         def plan(candidate):
@@ -74,6 +74,6 @@ class OfficialPipelineTests(unittest.TestCase):
         pipeline.render = render
         result = pipeline.run('daily', 'shadow')
         self.assertEqual(result['status'], 'held')
-        self.assertNotIn('researcher', self.agent.calls)
+        self.assertIn('text_review', self.agent.calls)
         self.assertTrue(any(e.get('reason') == 'images_found_usage_clearance_required' for e in result['audit']))
         self.assertEqual(result['official_image_candidates'][0]['asset_id'], 'official:1')

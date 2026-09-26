@@ -86,17 +86,17 @@ class VisualPlanningTests(unittest.TestCase):
     publish = fixtures.PipelineTests.publish
     pipeline = fixtures.PipelineTests.pipeline
 
-    def test_unillustratable_candidate_is_replaced_before_paid_research(self):
+    def test_unillustratable_candidate_is_held_after_text_before_render(self):
         pipeline = self.pipeline()
         def render(package, output): return self.render(package, output)
         render.plan_visuals = lambda candidate: []
         pipeline.render = render
         result = pipeline.run('local', 'shadow')
         self.assertEqual(result['status'], 'held')
-        self.assertNotIn('researcher', self.agent.calls)
-        self.assertNotIn('writer', self.agent.calls)
+        self.assertIn('text_review', self.agent.calls)
+        self.assertLess(self.agent.calls.index('writer'),self.agent.calls.index('text_review'))
 
-    def test_writer_receives_available_subject_images(self):
+    def test_writer_finishes_text_before_visual_options(self):
         pipeline = self.pipeline(); options = [{'asset_id': str(i)} for i in range(3)]
         def render(package, output): return self.render(package, output)
         render.plan_visuals = lambda candidate: options
@@ -108,7 +108,7 @@ class VisualPlanningTests(unittest.TestCase):
             return original(role, data, images)
         self.agent.run = run
         self.assertEqual(pipeline.run('local', 'shadow')['status'], 'shadow_passed')
-        self.assertEqual(seen, [options])
+        self.assertEqual(seen, [[]])
 
     def test_renderer_plans_without_paid_visual_call(self):
         class Source:

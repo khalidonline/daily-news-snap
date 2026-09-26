@@ -1,3 +1,5 @@
+from publishing_v2.editorial_production import approve_text, TEXT_CHECKS
+from unittest.mock import Mock
 import io
 import json
 import unittest
@@ -61,8 +63,10 @@ class MultiSourceTests(unittest.TestCase):
         def fail(package,output,source_root):
             used.append(source_root);(source_root/'source-00.jpg').write_bytes(b'temporary')
             raise ValueError('render_failed')
+        approved={'cards':[]}
+        approve_text(approved,Mock(run=Mock(return_value={'checks':dict.fromkeys(TEXT_CHECKS,True),'repair_indices':[],'reason':'fixture'})))
         with tempfile.TemporaryDirectory() as tmp, patch.object(Renderer,'_render',side_effect=fail):
-            with self.assertRaisesRegex(ValueError,'render_failed'):Renderer(None,None)({},Path(tmp))
+            with self.assertRaisesRegex(ValueError,'render_failed'):Renderer(None,None)(approved,Path(tmp))
         self.assertFalse(used[0].exists())
 
     def test_flickr_license_is_verified_on_actual_photo_page(self):

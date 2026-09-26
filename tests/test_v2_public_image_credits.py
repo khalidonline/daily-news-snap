@@ -1,3 +1,5 @@
+from publishing_v2.editorial_production import approve_text, TEXT_CHECKS
+from unittest.mock import Mock
 import copy
 import hashlib
 import tempfile
@@ -57,6 +59,7 @@ class PublicCreditsTests(unittest.TestCase):
                     'body':'معلومة لاختبار وضوح النص وحقوق الصورة.','punch':'',
                     'image':asset(asset_id=str(i),download_url='https://upload.wikimedia.org/test.jpg')})
             package={'title':'Review only','expires_at':'2999-01-01T00:00:00+00:00','cards':cards,'sources':[]}
+            approve_text(package,Mock(run=Mock(return_value={'checks':dict.fromkeys(TEXT_CHECKS,True),'repair_indices':[],'reason':'fixture'})))
             with patch('publishing_v2.autopilot.runtime.get_bytes',side_effect=raws),patch.dict('os.environ',{'THEME':'light','FONT_FAMILY':'Almarai'}):
                 paths=Renderer(None,None)(package,root)
             client=Client()

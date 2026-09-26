@@ -11,6 +11,7 @@ from publishing_v2.autopilot.runtime import publish_package
 class Client:
     def __init__(self): self.uploaded=[]
     def check(self): pass
+    def ensure_capacity(self, count): self.required_capacity=count
     def upload(self, item): self.uploaded.append(item[1]); return str(len(self.uploaded))
     def create(self, title, upload): return 'post-'+upload
     def wait(self, post): pass
@@ -35,6 +36,7 @@ class PublicationSelectionTests(unittest.TestCase):
             receipt=publish_package(package,paths,client=client,journal_factory=lambda _:journal)
             self.assertEqual(client.uploaded,[b'card 0',b'card 1',b'card 2'])
             self.assertEqual(receipt['card_count'],3)
+            self.assertEqual(client.required_capacity,3)
             self.assertEqual(package,original)
 
     def test_video_with_credit_frame_never_uploads(self):

@@ -30,7 +30,7 @@ class VisualSelectionTests(unittest.TestCase):
     render = fixtures.PipelineTests.render
     publish = fixtures.PipelineTests.publish
 
-    def test_only_image_qualified_candidate_is_selected_and_paid_researched(self):
+    def test_text_approved_candidates_still_require_qualified_images(self):
         pipeline = self.pipeline()
         options = [{'asset_id':str(i)} for i in range(3)]
         def render(package, output): return self.render(package, output)
@@ -43,9 +43,9 @@ class VisualSelectionTests(unittest.TestCase):
         self.agent.run = run
         result = pipeline.run('daily', 'shadow')
         self.assertEqual(result['status'], 'shadow_passed')
-        self.assertEqual(researched, ['b'])
+        self.assertEqual(researched, ['a','b'])
         selected = [row for row in result['audit'] if row['event'] == 'selected']
-        self.assertEqual([row.get('candidate_id') for row in selected], ['b'])
+        self.assertEqual([row.get('candidate_id') for row in selected], ['a','b'])
         self.assertEqual(result['visual_preflight'], {'candidate_id':'b',
                          'asset_ids':['0','1','2'], 'distinct_count':3})
 
