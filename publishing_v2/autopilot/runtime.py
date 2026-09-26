@@ -79,6 +79,32 @@ class Renderer:
                     'image_role': row.get('image_role', 'subject illustration; event date requires review')}
         return list(found.values())
 
+    def screen_visuals(self, candidate):
+        """Free feasibility screen before any paid research.
+
+        The same searches and metadata filters plan_visuals applies before its
+        paid pixel check; no model call. Fewer than two usable photos here means
+        plan_visuals would fail too, after research, hooks, writer and text
+        review were paid for (SAR, 2026-09-26: $0.33 spent, zero photos).
+        Results stay in the sources' caches, so plan_visuals does not refetch.
+        """
+        subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
+        if not subjects:
+            subjects = [candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']]
+        prime = getattr(self.sources, 'prime_images', None)
+        subject_search = getattr(self.sources, 'subject_images', None)
+        if not subject_search:
+            return True
+        for subject in subjects:
+            if prime:
+                prime(candidate, subject)
+            rows = subject_search(subject, subject)
+            usable = {row['asset_id'] for row in rows
+                      if image_publication_eligible(row) and subject_metadata_matches(subject, row)}
+            if len(usable) < 2:
+                return False
+        return True
+
     def check_source_images(self, candidate, subject, rows):
         rows = rows[:5]
         with tempfile.TemporaryDirectory(prefix='snap-image-preflight-') as temporary:

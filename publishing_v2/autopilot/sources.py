@@ -7,7 +7,7 @@ import time
 from datetime import timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
-from html import unescape
+from html import escape, unescape
 from urllib.parse import urlsplit, urlencode
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
@@ -54,6 +54,21 @@ def attention_source(source, candidate):
             and isinstance(body, str) and len(body) >= 500 and len(body.split()) >= 80)
 
 
+def feed_images(item):
+    """Photo URLs an RSS item carries itself: enclosure, Media RSS, inline img."""
+    media = '{http://search.yahoo.com/mrss/}'
+    urls = []
+    for tag in ('enclosure', media + 'content', media + 'thumbnail'):
+        for node in item.iter(tag):
+            kind = node.get('type', '') or node.get('medium', '')
+            if tag == 'enclosure' and kind and not kind.startswith('image'):
+                continue
+            urls.append(node.get('url', ''))
+    for field in ('description', '{http://purl.org/rss/1.0/modules/content/}encoded'):
+        urls += re.findall(r'<img[^>]+src=["\']([^"\']+)', item.findtext(field, '') or '')
+    return [u for u in dict.fromkeys(urls) if u.startswith('https://')][:4]
+
+
 def safe_url(url):
     try:
         part = urlsplit(url)
@@ -79,8 +94,16 @@ class SourceRedirect(HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def fetch(url):
-    request = Request(safe_url(url), headers={'User-Agent': 'DailyNewsSnap/2.0 (editorial research)'})
+# Alyaum served its RSS feed but answered 403 to the article page itself on
+# 2026-09-26 (camels and SAR), so the article photo never reached the photo
+# search and SAR died for want of two images. Article pages retry once as a
+# browser, the way news_bot has always fetched publishers.
+BROWSER_UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+              '(KHTML, like Gecko) Chrome/124.0 Safari/537.36')
+
+
+def fetch(url, user_agent='DailyNewsSnap/2.0 (editorial research)'):
+    request = Request(safe_url(url), headers={'User-Agent': user_agent})
     with build_opener(SourceRedirect()).open(request, timeout=15) as response:
         raw = response.read(2_000_001)
     if len(raw) > 2_000_000:
@@ -283,6 +306,7 @@ class Sources:
         self.subject_entities = {}
         self.image_bytes = {}
         self.publisher_articles = {}
+        self.feed_images = {}
         self.attention_cache = {}
         self.official_image_cache = {}
         self.image_cache = {}
@@ -326,6 +350,9 @@ class Sources:
                                  'published_at': published.isoformat()}
                     if attention_source(publisher, candidate):
                         self.publisher_articles[(candidate['id'], link, candidate['published_at'])] = publisher
+                    images = feed_images(item)
+                    if images:
+                        self.feed_images[(candidate['id'], link, candidate['published_at'])] = images
                     results.append(candidate)
                     accepted += 1
                     # Reserve room for later Saudi feeds in the bounded pool.
@@ -343,7 +370,13 @@ class Sources:
         rows = []
         if candidate.get('url'):
             try:
-                html = fetch(candidate['url']).decode('utf-8', errors='replace')
+                try:
+                    raw = fetch(candidate['url'])
+                except HTTPError as error:
+                    if error.code != 403:
+                        raise
+                    raw = fetch(candidate['url'], user_agent=BROWSER_UA)
+                html = raw.decode('utf-8', errors='replace')
                 self.article_html[candidate['url']] = html
                 body = plain(html)
                 if len(body) > 200:
@@ -352,6 +385,14 @@ class Sources:
             except Exception as error:
                 print(json.dumps({'stage': 'article_retrieval_failed', 'url': candidate['url'],
                                   'error': type(error).__name__, 'http_status': getattr(error, 'code', None)}), flush=True)
+        if candidate.get('url') not in self.article_html:
+            # The feed item's own photo is the article's photo: hand it to the
+            # same article-image path (publisher allowlist, owner editorial use).
+            images = self.feed_images.get((candidate.get('id'), candidate.get('url'),
+                                           candidate.get('published_at')), [])
+            if images:
+                self.article_html[candidate['url']] = ''.join(
+                    '<meta property="og:image" content="%s">' % escape(url, quote=True) for url in images)
         if not rows:
             publisher = self.publisher_articles.get((candidate.get('id'), candidate.get('url'),
                                                      candidate.get('published_at')))

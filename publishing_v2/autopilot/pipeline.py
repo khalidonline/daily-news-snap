@@ -116,6 +116,9 @@ class Pipeline:
                     sources = self.sources.research(candidate)
                     if not any(attention_source(s, candidate) for s in sources):
                         raise ValueError('attention_article_not_retrieved')
+                    screen = getattr(self.render, 'screen_visuals', None)
+                    if screen and not screen(candidate):
+                        raise ValueError('insufficient_subject_visuals_before_research')
                     visual_options = []
                     self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
@@ -153,7 +156,13 @@ class Pipeline:
                                 draft = apply_card_patches(draft, patches, affected)
                             else:
                                 raise ValueError('repair_scope_missing_or_invalid')
-                            policy.validate_draft(draft, research)
+                            try:
+                                policy.validate_draft(draft, research)
+                            except ValueError as error:
+                                fixable = policy.style_repair_indices(draft)
+                                if not fixable or not str(error).startswith(('owner_style_violation', 'unsupported_arrow_symbol')):
+                                    raise
+                                raise TextRejected({'repair_indices': fixable, 'reason': str(error)})
                             self.save(state, 'drafted', draft=draft)
                             package = dict(copy.deepcopy(draft), sources=sources, research=research, lane=lane,
                                            verified_timing=timing,
