@@ -79,6 +79,10 @@ class Pipeline:
         self.save(state, 'started')
         try:
             candidates = self.sources.discover(lane, self.now())
+            # Owner asked why a stronger trigger (the Oman match) was not used;
+            # without the pool on record nobody could tell if it was offered.
+            self.save(state, 'pool', pool=[{'id': c.get('id'), 'title': str(c.get('title', ''))[:160],
+                                            'published_at': c.get('published_at')} for c in candidates])
             excluded = list(getattr(self.sources, 'discovery_rejections', []))
             eligible = []
             for candidate in candidates:

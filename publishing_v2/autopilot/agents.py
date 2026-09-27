@@ -49,7 +49,10 @@ The selected passage must substantiate the dated development, not just mention t
 Read neighboring passages for context. Select its ID; never transcribe, shorten or
 combine quotations. The program copies the original passage exactly.
 If uncertain return eligible:false and event_date:null. Never infer freshness from
-publication metadata alone.''',
+publication metadata alone. When the article is a reaction, quote or statement
+about an event (a player's comments after a match), select the passage reporting
+the underlying event and its result if the article contains it, and name that
+event in reason; the reaction is context, not the development.''',
     'editor': '''Select up to FOUR ranked candidates by ID from supplied candidates.
 Rank candidates for documented context, broad appeal, and feasible truthful
 illustration. Favor concise subject/company search terms over repeating a headline.
@@ -595,6 +598,10 @@ Structure for the cards (keeps the existing Info + story kinds and claim rules):
    point" and was rejected). Only then may the punch add the twist that makes the
    first card read differently; an ironic aside never replaces the outcome. The
    final punch is the line people quote when they forward.
+When the verified trigger is a concrete result or achievement from the last day
+(two goals yesterday, a record, a launch), open the Info card with it: it is the
+reason the viewer cares today, then turn to the surprising fact. A weak trigger (a
+statement, a meeting) may stay unmentioned.
 Writing: short sentences, one idea each. Concrete nouns and supported numbers
 over adjectives. No «يعتبر»، «يُعد»، «يمثل»، «يلعب دوراً». Titles are a claim or a
 question the body answers, never a label. When a chosen_hook is supplied, build
@@ -605,6 +612,15 @@ strong as its claims: every assertion still maps to supplied claim IDs.
 PROMPTS['writer'] += SHAREABILITY
 
 PROMPTS['editor'] += """
+TRIGGER STRENGTH (owner, 2026-09-27): a quote, press conference, reaction, interview
+or statement ABOUT an event is the weakest trigger. The trigger is the underlying
+event itself when it falls in the window: the match and its result, the record,
+the launch, the decision. ✗ «البريكان: نحترم الانتقادات» as why_now; ✓ «سجّل البريكان
+هدفين أمس ضد عمان في كأس الخليج». When several candidates concern the same subject,
+choose the one whose article reports the concrete event, and name that event, with
+its day and result, in why_now. Rank a candidate whose only news is a statement
+below candidates with a concrete event.
+
 share_reason is the most important field. Write it as the exact sentence a Saudi
 viewer would say while forwarding the post: «تدري إن ...؟» with a concrete surprising
 detail (a number, a contrast, a decision, an unexpected link to daily life). If the

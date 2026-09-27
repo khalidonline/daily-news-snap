@@ -274,3 +274,22 @@ class OwnerWordingTests(unittest.TestCase):
         row = asset(license='CC BY 3.0', license_url='https://creativecommons.org/licenses/by/3.0/')
         self.assertTrue(attribution_eligible(row))
         self.assertFalse(attribution_eligible(dict(row, license='CC BY-SA 3.0')))
+
+
+class TriggerStrengthTests(unittest.TestCase):
+    """Owner, 2026-09-27: the Oman match was the trigger, not the post-match quote."""
+
+    def test_prompts_prefer_the_event_over_the_reaction(self):
+        self.assertIn('TRIGGER STRENGTH', agents.PROMPTS['editor'])
+        self.assertIn('ضد عمان في كأس الخليج', agents.PROMPTS['editor'])
+        self.assertIn('reaction, quote or statement', agents.PROMPTS['timing'])
+        for role in ('writer', 'card_repair'):
+            self.assertIn('open the Info card with it', agents.PROMPTS[role])
+
+    def test_candidate_pool_is_recorded(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as root:
+            result = Pipeline(agent=FakeAgent(), sources=FakeSources(), render=CheapRejectionTests.paths,
+                              store=MemoryStore(), publish=lambda p, paths: None, output=Path(root),
+                              now=lambda: NOW).run('daily', 'shadow')
+        self.assertEqual([row['id'] for row in result['pool']], ['a', 'b'])
