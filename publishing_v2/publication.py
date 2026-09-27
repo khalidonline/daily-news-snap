@@ -18,6 +18,13 @@ def validate_public_attribution(card, raw=None):
     import hashlib
     from .autopilot.credits import attribution_identity, public_attribution_eligible
     image = card.get('image')
+    # A typographic card (text and a figure set large, no third-party photo)
+    # has no picture to credit. It may not also carry an image: a photo card
+    # cannot escape attribution by declaring itself typographic.
+    if card.get('typographic') is True:
+        if image is not None:
+            raise ValueError('typographic_card_cannot_carry_image')
+        return
     if image_without_public_credit(image):
         return
     receipt = card.get('public_attribution', {})

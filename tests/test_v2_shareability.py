@@ -341,3 +341,21 @@ class PitchAndFormatTests(unittest.TestCase):
         for role in ('text_review', 'reviewer'):
             self.assertIn('FORMAT-AWARE REVIEW', agents.PROMPTS[role])
         self.assertIn('Politics, condolences', agents.PROMPTS['pitch_judge'])
+
+
+class TypographicCardTests(unittest.TestCase):
+    """A number-only card has no third-party photo to credit (7 Dogs, 27 Sep)."""
+
+    def test_typographic_card_needs_no_attribution(self):
+        from publishing_v2.publication import validate_public_attribution
+        validate_public_attribution({'kind': 'story', 'typographic': True})
+
+    def test_typographic_card_cannot_hide_a_photo(self):
+        from publishing_v2.publication import validate_public_attribution
+        with self.assertRaisesRegex(ValueError, 'typographic_card_cannot_carry_image'):
+            validate_public_attribution({'kind': 'story', 'typographic': True, 'image': {'license': 'CC BY 4.0'}})
+
+    def test_photo_less_card_without_the_flag_is_still_refused(self):
+        from publishing_v2.publication import validate_public_attribution
+        with self.assertRaisesRegex(ValueError, 'public_attribution_required'):
+            validate_public_attribution({'kind': 'story'})
