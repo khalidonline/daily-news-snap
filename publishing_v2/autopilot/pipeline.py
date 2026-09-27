@@ -130,6 +130,8 @@ class Pipeline:
                     sources = self.sources.research(candidate)
                     if not any(attention_source(s, candidate) for s in sources):
                         raise ValueError('attention_article_not_retrieved')
+                    if free:
+                        candidate['card_image_plan'] = copy.deepcopy(self.free_selection.get('image_plan', []))
                     screen = getattr(self.render, 'screen_visuals', None)
                     if screen and not screen(candidate):
                         raise ValueError('insufficient_subject_visuals_before_research')
@@ -137,7 +139,14 @@ class Pipeline:
                         from .free_selection import validate_story, validate_images
                         validate_story(self.free_selection, sources)
                         validate_images(self.free_selection, candidate)
-                        self.save(state, 'free_preflight_passed', free_selection=copy.deepcopy(self.free_selection))
+                        self.save(state, 'free_preflight_passed', free_selection=copy.deepcopy(self.free_selection),
+                                  selection_assessment={'status':'evidence_passed', 'cost_micro_usd':0,
+                                      'candidate_id':candidate['id'], 'timing':timing,
+                                      'saudi_relevance':choice['why_saudi'],
+                                      'discovery':choice['angle'], 'share_reason':choice['share_reason'],
+                                      'documented_story_beats':len(self.free_selection['story']),
+                                      'planned_images':len(self.free_selection['image_plan']),
+                                      'note':'Evidence feasibility, not a predicted audience score.'})
                     visual_options = []
                     self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,

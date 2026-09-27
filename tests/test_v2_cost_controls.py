@@ -123,6 +123,19 @@ class FreeSelectionTests(unittest.TestCase):
         self.assertNotIn('hooks', self.agent.calls)
         self.assertEqual(self.agent.calls.count('researcher'), 1)
 
+    def test_free_assessment_and_card_plan_reach_actual_writer(self):
+        pipeline = self.make_pipeline()
+        original = self.agent.run
+        payloads = []
+        def run(role, data, images=()):
+            if role == 'writer': payloads.append(copy.deepcopy(data))
+            return original(role, data, images)
+        self.agent.run = run
+        result = pipeline.run('daily', 'shadow')
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertEqual(result['selection_assessment']['status'], 'evidence_passed')
+        self.assertEqual(payloads[0]['candidate']['card_image_plan'], pipeline.free_selection['image_plan'])
+
     def test_missing_images_stops_before_first_paid_request(self):
         pipeline = self.make_pipeline()
         pipeline.render.screen_visuals = lambda c: False

@@ -156,11 +156,21 @@ class Renderer:
         recovery = getattr(self.sources, 'recovery', False) is True
         if recovery:
             queries = list(dict.fromkeys((subjects or ([subject] if subject else []))[:2] + [card['image_query']]))
+        # Only bind by position while the approved plan and public card count
+        # still match; shortened stories must use their own image_query.
+        specific = []
+        plans = candidate.get('card_image_plan', [])
+        public_cards = [c for c in package.get('cards', []) if c.get('kind') != 'credits']
+        if len(plans) == len(public_cards) and card in public_cards:
+            plan = plans[public_cards.index(card)]
+            specific = [q for q in plan.get('queries', []) if isinstance(q, str) and q.strip()][:2]
+            queries = list(dict.fromkeys(specific + queries))
         rows, seen = [], set()
         for query in queries:
             try:
                 subject_search = getattr(self.sources, 'subject_images', None)
-                options = subject_search(query, query) if subject_search and (recovery or query in subjects) else self.sources.images(query)
+                options = (subject_search(query, subject if query in specific and subject else query)
+                           if subject_search and (recovery or query in subjects) else self.sources.images(query))
                 for row in options:
                     if not image_publication_eligible(row):
                         continue
@@ -549,6 +559,22 @@ def main():
             state[lane] = {'status': 'published', 'at': result['started_at'],
                            'engine': result['engine'], 'slot': slot, 'approval': result['approval']}
             readiness.save(state)
+        from .package_insights import package_report
+        metrics_path = Path('editorial/metrics') / f'{slot}.json'
+        metrics = json.loads(metrics_path.read_text()) if metrics_path.is_file() else None
+        try:
+            detail = package_report(result, slot, now(), metrics)
+        except (ValueError, KeyError, TypeError) as error:
+            detail = package_report(result, slot, now())
+            detail['performance'] = {'status':'rejected', 'reason':str(error)}
+        atomic_write(output / f'{lane}-quality-cost.json', json.dumps(detail, ensure_ascii=False).encode())
+        # This index points to the original sealed state; it cannot publish,
+        # extend expiry, regenerate media, or resolve an ambiguous delivery.
+        GitHubJournal('package-report-' + slot).save(detail)
+        inventory = GitHubJournal('autopilot-ready-inventory')
+        entries = inventory.read()
+        entries[slot] = detail['inventory']
+        inventory.save(entries)
         results.append({'lane': lane, 'status': result['status'], 'slot': slot,
                         'cost_micro_usd': sum(r['cost_micro_usd'] for r in agent.receipts),
                         'reason': result.get('reason'), 'budget_diagnostic': result.get('budget_diagnostic'),
