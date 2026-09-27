@@ -122,6 +122,8 @@ class Pipeline:
                                                        'lane': lane, 'now': self.now().isoformat()})
                     self.save(state, 'timing_checked', candidate_id=candidate['id'], timing=timing)
                     policy.validate_timing(timing, attention, self.now())
+                    if self.hooks:
+                        self.judge_pitch(state, candidate)
                     sources = self.sources.research(candidate)
                     if not any(attention_source(s, candidate) for s in sources):
                         raise ValueError('attention_article_not_retrieved')
@@ -152,6 +154,9 @@ class Pipeline:
                     accepted_images = {}
                     hook = self.choose_hook(state, candidate, research) if self.hooks else None
                     hook_input = {'chosen_hook': hook} if hook else {}
+                    fmt = candidate.get('editorial', {}).get('format')
+                    if fmt:
+                        hook_input['format'] = fmt
                     shortened = False
                     for attempt in range(4):
                         review = None
@@ -279,6 +284,35 @@ class Pipeline:
                 self.candidate_memory.record(candidate, reason, self.engine)
             except Exception:
                 raise PersistenceError('candidate_memory_write_unconfirmed') from None
+
+    def judge_pitch(self, state, candidate):
+        """Score the editor's pitch before any research is paid for.
+
+        27 Sep: the research, hooks, writer and reviews were bought for Harry
+        Kane, US golf and a Gulf Cup statistic the hook judge then scored 6.
+        The same viewer judge now scores the pitch itself (a few cents) and a
+        weak one never reaches the researcher. Faults pass the pitch through:
+        the later hook gate still stands.
+        """
+        editorial = candidate.get('editorial', {})
+        try:
+            verdict = self.agent.run('pitch_judge', {
+                'format': editorial.get('format', 'story'), 'title': candidate.get('title'),
+                'why_now': editorial.get('why_now'), 'angle': editorial.get('angle'),
+                'share_reason': editorial.get('share_reason')})
+            score = verdict.get('score')
+            if type(score) is not int or not 1 <= score <= 10:
+                raise ValueError('invalid_pitch_score')
+            reason = policy.text(verdict.get('reason'), 500)
+        except BudgetBlocked:
+            raise
+        except (ValueError, RuntimeError, OSError, AttributeError, TypeError) as error:
+            self.save(state, 'pitch_unscored', candidate_id=candidate['id'],
+                      reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__)
+            return
+        self.save(state, 'pitch_scored', candidate_id=candidate['id'], pitch={'score': score, 'reason': reason})
+        if score < MIN_HOOK_SCORE:
+            raise ValueError('weak_pitch: scored %d/10: %s' % (score, reason[:200]))
 
     def choose_hook(self, state, candidate, research):
         """Three evidence-bound openings; a viewer-persona judge picks one.

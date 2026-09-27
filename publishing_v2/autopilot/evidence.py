@@ -2,11 +2,21 @@
 import re
 
 
+# Owner, 2026-09-27: one "info + story" shape turned every subject into an
+# encyclopedia biography; his examples were an explainer, a verdict, a money
+# story and an everyday fix. The editor picks the shape that fits the topic.
+FORMATS = ('explainer', 'verdict', 'money_story', 'everyday_fix', 'story')
+
+
 def hydrate_editor(choice, candidate):
     """Resolve selected source fields without model-authored titles or quotes."""
     from .policy import validate_editor_binding
     fields = {'id', 'evidence_format', 'why_saudi', 'why_now', 'angle',
               'share_reason', 'research_query', 'subject_evidence'}
+    if isinstance(choice, dict) and 'format' in choice:
+        if choice['format'] not in FORMATS:
+            raise ValueError('invalid_package_format')
+        fields = fields | {'format'}
     if (not isinstance(choice, dict) or set(choice) != fields
             or choice['evidence_format'] != 'source-fields-v1'
             or choice['id'] != candidate['id']):
