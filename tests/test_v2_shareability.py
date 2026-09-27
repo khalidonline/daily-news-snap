@@ -16,13 +16,16 @@ def option(n, claims=('c1',)):
 
 
 class HookAgent(FakeAgent):
-    def __init__(self, options=None, choice=2, score=8):
+    def __init__(self, options=None, choice=2, score=8, pitch=8):
         super().__init__()
         self.options = options if options is not None else [option(0), option(1), option(2)]
-        self.choice, self.score, self.inputs = choice, score, {}
+        self.choice, self.score, self.pitch, self.inputs = choice, score, pitch, {}
 
     def run(self, role, data, images=()):
         self.inputs.setdefault(role, []).append(copy.deepcopy(data))
+        if role == 'pitch_judge':
+            self.calls.append(role)
+            return {'score': self.pitch, 'reason': 'تفصيل يشد'}
         if role == 'hooks':
             self.calls.append(role)
             return {'options': copy.deepcopy(self.options)}
@@ -293,3 +296,48 @@ class TriggerStrengthTests(unittest.TestCase):
                               store=MemoryStore(), publish=lambda p, paths: None, output=Path(root),
                               now=lambda: NOW).run('daily', 'shadow')
         self.assertEqual([row['id'] for row in result['pool']], ['a', 'b'])
+
+
+class PitchAndFormatTests(unittest.TestCase):
+    """Owner, 2026-09-27: judge the pitch before paying for research; formats."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+
+    def run_pipeline(self, agent):
+        return Pipeline(agent=agent, sources=FakeSources(), render=CheapRejectionTests.paths, store=MemoryStore(),
+                        publish=lambda p, paths: None, output=Path(self.temp.name), now=lambda: NOW,
+                        hooks=True).run('daily', 'shadow')
+
+    def test_weak_pitch_never_reaches_the_researcher(self):
+        agent = HookAgent(pitch=4)
+        result = self.run_pipeline(agent)
+        self.assertEqual(result['status'], 'held')
+        self.assertNotIn('researcher', agent.calls)
+        reasons = [e.get('reason', '') for e in result['audit'] if e['event'] == 'candidate_rejected']
+        self.assertTrue(reasons and all(r.startswith('weak_pitch: scored 4/10') for r in reasons))
+
+    def test_pitch_judge_sees_only_the_pitch(self):
+        agent = HookAgent()
+        self.run_pipeline(agent)
+        self.assertEqual(set(agent.inputs['pitch_judge'][0]), {'format', 'title', 'why_now', 'angle', 'share_reason'})
+        self.assertLess(agent.calls.index('pitch_judge'), agent.calls.index('researcher'))
+
+    def test_editor_format_is_validated(self):
+        from publishing_v2.autopilot.evidence import hydrate_editor, FORMATS
+        self.assertEqual(FORMATS, ('explainer', 'verdict', 'money_story', 'everyday_fix', 'story'))
+        choice = {'id': 'a', 'evidence_format': 'source-fields-v1', 'why_saudi': 'x', 'why_now': 'x',
+                  'angle': 'x', 'share_reason': 'x', 'research_query': 'Jeddah', 'format': 'podcast',
+                  'subject_evidence': [{'subject': 'Jeddah', 'mention': 'جدة', 'source_field': 'title'}]}
+        with self.assertRaisesRegex(ValueError, 'invalid_package_format'):
+            hydrate_editor(choice, {'id': 'a', 'title': 'مهرجان جدة', 'summary': ''})
+
+    def test_scope_and_formats_reach_every_gate(self):
+        self.assertIn('ACCOUNT SCOPE', agents.PROMPTS['editor'])
+        self.assertIn('PACKAGE FORMATS', agents.PROMPTS['editor'])
+        for role in ('writer', 'card_repair'):
+            self.assertIn('PACKAGE FORMATS', agents.PROMPTS[role])
+        for role in ('text_review', 'reviewer'):
+            self.assertIn('FORMAT-AWARE REVIEW', agents.PROMPTS[role])
+        self.assertIn('Politics, condolences', agents.PROMPTS['pitch_judge'])

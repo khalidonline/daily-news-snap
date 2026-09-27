@@ -673,6 +673,64 @@ loss, 18 goals in a season, the winning goal in a final) as not good: that is a 
 Return {"choice":0|1|2,"score":1-10,"reason":"one short Arabic sentence on why"}.
 """
 
+# Owner, 2026-09-27, after two days without a package: the pool is mostly
+# politics and foreign sport, the editor picked US golf and Harry Kane, and one
+# card shape made every subject a biography. Scope, formats and a pitch gate.
+ACCOUNT_SCOPE = """
+ACCOUNT SCOPE (owner, 2026-09-27; overrides broader wording above). The account is
+«ملخص تنفيذي»: economy, companies and brands, money and prices, technology, consumer
+products and services, travel, and everyday Saudi life. EXCLUDE entirely: politics,
+diplomacy, conflicts, condolences and royal/official protocol, crime, and foreign
+domestic sport (US golf, English football, the Laver Cup). Saudi sport only for a
+national-level event (the national team, a Saudi club winning a continental title,
+a record), never a player's quote. When nothing in the pool fits, return an empty list.
+"""
+FORMAT_GUIDE = """
+PACKAGE FORMATS. The editor sets "format" to the one that fits the topic; the writer
+builds the cards to it (the first card is always kind "info", the rest "story").
+- explainer «ما المقصود بـ ...؟»: a term, rule or index everyone is hearing today.
+  Info = the question and a one-line plain answer; then 2-3 cards: what it means
+  in practice, who it affects, one concrete number or example.
+- verdict (compressed advice from evidence): a launch, prices, a ranking, services.
+  Info = the verdict promised in one line; then one card per option or point, each
+  with a short practical side note that changes a decision.
+- money_story: a company, brand or fortune. Info = the price/number and the contrast;
+  then the humble start, the setback or turn, the outcome with its number and date.
+- everyday_fix: a problem ordinary people have (bills, apps, services, a product).
+  Info = the problem in the viewer's words; then the cause, the fix, what to watch.
+- story: only when the sources hold a real turning point; beginning, turn, outcome.
+Every format keeps every claim, evidence and safety rule above. Formats change the
+shape, never the standard of proof.
+"""
+FORMAT_REVIEW = """
+FORMAT-AWARE REVIEW: read candidate.editorial.format (default "story"). For explainer,
+verdict and everyday_fix, documented_story means every card's point is documented
+and the cards together answer the Info card's promise; do not demand a beginning,
+turning point and outcome that the format does not have. money_story and story keep
+the beginning -> change -> outcome requirement.
+"""
+PROMPTS['editor'] += ACCOUNT_SCOPE + FORMAT_GUIDE + """
+Return "format" in each candidate object: one of explainer, verdict, money_story,
+everyday_fix, story. Choose the shape that makes the share sentence strongest.
+"""
+PROMPTS['writer'] += FORMAT_GUIDE + """
+The input "format" names the shape to build. Follow it.
+"""
+PROMPTS['text_review'] += FORMAT_REVIEW
+PROMPTS['reviewer'] += FORMAT_REVIEW
+PROMPTS['pitch_judge'] = """You are a 22-year-old Saudi scrolling Snapchat stories. An editor
+pitches a post before anyone researches or writes it. You see its format, the reason
+it is news today, the angle and the sentence a viewer would say when forwarding it.
+Score from 1 to 10 how likely you are to stop, tap through and send it to a friend or
+your family group: 10 = right now; 7 = would tap through and maybe share; 5 = would
+read the first card and scroll on; 3 = would scroll past. Politics, condolences,
+foreign domestic sport and a player's quote are 3 or lower. A sports statistic or
+career summary is 5 or lower. Money, prices, a surprising number, a practical
+verdict or an everyday problem you have had score higher. Do not judge accuracy.
+Return {"score":1-10,"reason":"one short Arabic sentence"}.
+"""
+
+
 # The approval gates must reward, not reject, the owner's structure: a hook-first
 # Info card is the distinctive fact they already require, not a spoiler.
 SHAREABILITY_REVIEW = """

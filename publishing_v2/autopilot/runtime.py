@@ -274,11 +274,15 @@ class Renderer:
             atomic_write(stored_source, raw)
             target = output / f'card-{i:02d}.jpg'
             text = western_digits(card)  # drawn text only; card keeps its attribution state
+            # Only a story is labelled «قصة»; explainers, verdicts, money stories
+            # and fixes carry the information label on every card.
+            fmt = package.get('candidate', {}).get('editorial', {}).get('format', 'story')
+            kicker = 'ملخص تنفيذي - قصة' if fmt == 'story' else 'ملخص تنفيذي - معلومة'
             if card['kind'] == 'info':
                 render_card({'title_lines': [text['title']], 'body_lines': [text['body']],
                              'closing_lines': [text['punch']], 'brand': 'ملخص تنفيذي - معلومة'}, source, target)
             else:
-                story_bot.render_frame(target.with_suffix('.png'), 'ملخص تنفيذي - قصة',
+                story_bot.render_frame(target.with_suffix('.png'), kicker,
                     story_counter(i, len(cards)-1), text['title'], 64, sub=text['body'],
                     photo=source, punch=text['punch'], photo_caption=text.get('image_caption'),
                     footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names and not needs_credits else None)
