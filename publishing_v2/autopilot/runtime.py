@@ -18,7 +18,7 @@ from publishing_v2.public_images import get_bytes, inspect_image, atomic_write, 
 from .agents import Agents
 from publishing_v2.primary_images import ImageMemory
 from .pipeline import Pipeline
-from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
+from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety, VisualShortfall
 from .sources import Sources, reusable_image, subject_metadata_matches
 from .credits import LICENSE_URLS, attribution_eligible, render_credits, render_public_attribution
 from .video import compile_story
@@ -210,12 +210,18 @@ class Renderer:
                 raise ValueError('incomplete_visual_selection')
             self._selected = list(dict.fromkeys(ident for ident in ids
                 if isinstance(ident, str) and ident in self._catalog))
-            for card, rows, ident in zip([cards[i] for i in missing], choices, ids):
+            unmatched = []
+            for index, rows, ident in zip(missing, choices, ids):
                 matches = [r for r in rows if r['asset_id'] == ident]
                 if len(matches) != 1:
-                    raise ValueError('unknown_visual_selection: ' + card['image_query'] + ': '
-                                     + str(selected.get('reason', ''))[:800])
-                card['image'] = dict(matches[0])
+                    unmatched.append(index)
+                    continue
+                cards[index]['image'] = dict(matches[0])
+            if unmatched:
+                # Al-Buraikan (2026-09-27): two photos, three story cards; the
+                # Al-Fateh card had none and the whole approved package died.
+                # The pipeline drops photo-less story cards and re-approves.
+                raise VisualShortfall(unmatched, selected.get('reason', ''))
         validate_image_variety(cards)
         needs_credits = True  # Every review includes sources; public selection excludes this card.
         existing_credits = [card for card in package['cards'] if card.get('kind') == 'credits']
@@ -365,6 +371,45 @@ def western_digits(card):
     return {**card, **{k: card[k].translate(_WESTERN) for k in fields if isinstance(card.get(k), str)}}
 
 
+# 2026-09-26 test: the daily lane alone spent $1.12 of the $3 day. Run first,
+# it could leave the local lane nothing. When both lanes run, daily may use at
+# most this share; local always has the shared ledger's remainder.
+DAILY_LANE_SHARE = 0.6
+
+
+class LaneLedger:
+    """A per-lane cap in front of the shared daily ledger (which still binds)."""
+    def __init__(self, ledger, cap):
+        self.__dict__.update(_ledger=ledger, cap=int(cap), used=0, _open={})
+
+    @property
+    def limit_micro_usd(self):
+        return self._ledger.limit_micro_usd
+
+    def __setattr__(self, name, value):
+        setattr(self._ledger, name, value)   # e.g. request context for receipts
+
+    def __getattr__(self, name):
+        return getattr(self._ledger, name)
+
+    def reserve(self, amount, bot):
+        from daily_budget import BudgetBlocked
+        if self.used + amount > self.cap:
+            raise BudgetBlocked('lane share of the daily budget is used; the other lane keeps the rest',
+                                code='lane_share_exhausted', limit=self.cap, requested=amount, charged=self.used)
+        token = self._ledger.reserve(amount, bot)
+        self._open[token] = amount
+        self.__dict__['used'] = self.used + amount
+        return token
+
+    def settle(self, token, actual):
+        result = self._ledger.settle(token, actual)
+        reserved = self._open.pop(token, None)
+        if reserved is not None and type(actual) is int:
+            self.__dict__['used'] = self.used - reserved + actual
+        return result
+
+
 def engine_id():
     root = Path(__file__).resolve().parents[2]
     paths = sorted(Path(__file__).parent.glob('*.py')) + sorted((root / 'publishing_v2').glob('*.py')) + [
@@ -445,7 +490,9 @@ def main():
     results = []
     sibling_candidate_ids = set()
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
-        agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True, publication_only=True,
+        lane_ledger = (LaneLedger(ledger, ledger.limit_micro_usd * DAILY_LANE_SHARE)
+                       if args.lane == 'both' and lane == 'daily' else ledger)
+        agent, sources = Agents(env=os.environ, ledger=lane_ledger), Sources(recovery=True, publication_only=True,
             image_memory=ImageMemory(GitHubJournal('autopilot-image-memory')))
         slot = f'autopilot-{day_key(now())}-{lane}-{args.mode}'
         if args.mode == 'shadow':

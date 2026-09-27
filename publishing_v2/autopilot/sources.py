@@ -24,22 +24,46 @@ from publishing_v2.publication import image_publication_eligible
 from .feedback import rejected_trigger
 from .eligibility import routine_trigger_rejection
 
+# Saudi feeds added 2026-09-27: the local lane found one candidate from two
+# Saudi sources and died. Each was probed from the Actions runner that day
+# (fresh items, photos in the feed, article pages 200 with og:image). Probed
+# and NOT usable then: Sabq (malformed XML), Al Arabiya and Arab News (403),
+# SPA (empty), Al Riyadh (TLS failure).
 FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://feeds.bbci.co.uk/news/technology/rss.xml',
          'https://feeds.bbci.co.uk/sport/rss.xml',
-         'https://www.alyaum.com/rssFeed/1005', 'https://aawsat.com/feed')
+         'https://www.alyaum.com/rssFeed/1005', 'https://aawsat.com/feed',
+         'https://www.okaz.com.sa/rssFeed/0',
+         'https://www.argaam.com/ar/rss/ho-main-news?sectionid=1523',
+         'https://www.arriyadiyah.com/rss',
+         'https://www.almowaten.net/feed/')
+SAUDI_PUBLISHERS = {'okaz.com.sa': {'www.okaz.com.sa', 'okaz.com.sa'},
+                    'argaam.com': {'www.argaam.com', 'argaam.com'},
+                    'arriyadiyah.com': {'www.arriyadiyah.com', 'arriyadiyah.com'},
+                    'almowaten.net': {'www.almowaten.net', 'almowaten.net'}}
 HOSTS = {'feeds.bbci.co.uk', 'www.bbc.com', 'www.bbc.co.uk', 'bbc.com', 'bbc.co.uk',
          'www.alyaum.com', 'aawsat.com', 'www.aawsat.com', 'en.wikipedia.org', 'ar.wikipedia.org', 'www.wikidata.org'}
+HOSTS |= {host for hosts in SAUDI_PUBLISHERS.values() for host in hosts}
 OFFICIAL_HOSTS = {'www.spa.gov.sa', 'spa.gov.sa', 'saudipedia.com', 'www.mofa.gov.sa'}
 HOSTS |= OFFICIAL_HOSTS
 LOCAL_TOPICS = ('Abha', 'Asir', 'Khamis Mushait', 'Saudi coffee', 'Jeddah', 'Taif rose', 'Bisht', 'Al-Qatt Al-Asiri',
                 'Al-Ahsa Oasis', 'Saudi Arabian cuisine', 'Diriyah', 'Date palm', 'Souq')
+# Every feed gets an equal slice of the bounded pool; 12 per feed filled the
+# 60 slots before the later (Saudi) feeds were read.
+FEED_POOL = 60
 
 
-FEED_PUBLISHERS = {feed: ({'www.alyaum.com'} if 'alyaum.com' in feed else
-                         {'aawsat.com', 'www.aawsat.com'} if 'aawsat.com' in feed else
-                         {'bbc.com', 'www.bbc.com', 'bbc.co.uk', 'www.bbc.co.uk'})
-                   for feed in FEEDS}
+def _feed_publishers(feed):
+    host = urlsplit(feed).hostname or ''
+    for domain, hosts in SAUDI_PUBLISHERS.items():
+        if host.endswith(domain):
+            return hosts
+    return ({'www.alyaum.com'} if 'alyaum.com' in feed else
+            {'aawsat.com', 'www.aawsat.com'} if 'aawsat.com' in feed else
+            {'bbc.com', 'www.bbc.com', 'bbc.co.uk', 'www.bbc.co.uk'})
+
+
+FEED_PUBLISHERS = {feed: _feed_publishers(feed) for feed in FEEDS}
 
 
 def attention_source(source, candidate):
@@ -419,11 +443,11 @@ class Sources:
                     results.append(candidate)
                     accepted += 1
                     # Reserve room for later Saudi feeds in the bounded pool.
-                    if accepted >= 12:
+                    if accepted >= max(5, FEED_POOL // len(FEEDS)):
                         break
             except Exception:
                 continue
-        return results[:60]
+        return results[:FEED_POOL]
 
     def attention(self, candidate):
         """Retrieve the trigger once, before encyclopedia or image searches."""

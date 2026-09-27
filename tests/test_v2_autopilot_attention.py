@@ -43,7 +43,7 @@ class AttentionTests(unittest.TestCase):
         with patch('publishing_v2.autopilot.sources.fetch', side_effect=replies):
             rows = Sources().discover('daily', NOW)
         self.assertLessEqual(len(rows), 60)
-        self.assertTrue(any('/4-' in r['url'] for r in rows))
+        self.assertTrue(any(f'/{len(FEEDS) - 1}-' in r['url'] for r in rows))  # the last feed still fits
 
     def test_missing_and_old_local_attention_dates_are_rejected(self):
         for date in [None, '2026-09-01']:

@@ -222,6 +222,13 @@ def evidence_snapshot(data, sources):
     return rows
 
 
+class VisualShortfall(ValueError):
+    """Some story cards have no honest distinct photo: drop them, keep the story."""
+    def __init__(self, indices, reason=''):
+        super().__init__('visual_shortfall: cards ' + ','.join(map(str, indices)) + ': ' + str(reason)[:500])
+        self.indices = list(indices)
+
+
 FORMAL_WORDS = ('لاحقاً', 'لاحقا', 'معروفاً', 'معروفا', 'قدراً', 'قدرا')
 ARROWS = re.compile('[\u2190-\u21ff\u27f0-\u27ff\u2b00-\u2b0f]')
 # Owner review of the George Russell draft (2026-09-26): «قنّع» is wrong, the
