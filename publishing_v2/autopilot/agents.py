@@ -731,6 +731,26 @@ Return {"score":1-10,"reason":"one short Arabic sentence"}.
 """
 
 
+# Owner, 27 Sep, on the published 7 Dogs package: «باقتك ضعيفة» (see policy.SNAP_BODY_MAX).
+SNAP_READING = """
+SNAPCHAT READING (owner, 2026-09-27; overrides any longer limits above). A card is
+read in two seconds. Body: one or two short sentences, at most 120 characters.
+One figure per card: the number that matters; never stack prices, counts and
+percentages on one card. Every card continues the hook's own story: after
+«تذكرة وحدة جابت لصاحبها مليون ريال» the next cards follow that ticket, its buyer
+and the prize, not cinema-market statistics. Market context, if supported, is at
+most one line in the last card. ✗ the published 7 Dogs cards (200-250 characters,
+six figures, drifting to screens and cinemas); ✓ the owner's examples: two lines.
+"""
+PROMPTS['writer'] += SNAP_READING
+PROMPTS['hooks'] += SNAP_READING
+PROMPTS['text_review'] += SNAP_READING + """
+Set owner_quality false for a card body over 120 characters, more than one figure
+on a card, or a card that leaves the hook's story for general statistics.
+"""
+PROMPTS['reviewer'] += SNAP_READING
+
+
 # The approval gates must reward, not reject, the owner's structure: a hook-first
 # Info card is the distinctive fact they already require, not a spoiler.
 SHAREABILITY_REVIEW = """

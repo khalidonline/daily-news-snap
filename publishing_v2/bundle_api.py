@@ -246,6 +246,10 @@ def load_package(manifest):
         return validate_owner_design(data, root)
     frames = data.get('media', [])
     if not 1 <= len(frames) <= 10: raise BundleError('Expected 1–10 approved media files')
+    # Owner, 27 Sep: the 7 Dogs package had one photo and three number cards and
+    # read as an infographic, not a story. One typographic card per package.
+    if sum(frame.get('typographic') is True for frame in frames) > 1:
+        raise BundleError('At most one typographic card per package; the rest need photos')
     try:
         from .autopilot.policy import validate_image_variety
         validate_image_variety(frames)

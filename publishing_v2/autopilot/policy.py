@@ -238,14 +238,36 @@ _AR = '\u0600-\u06ff'
 OWNER_WORDING = re.compile('(?<![%s])(?:[وفب]?قنّع[%s]*|[وفل]?ابن(?:ه|ها))(?![%s])' % (_AR, _AR, _AR))
 
 
+# Owner, 27 Sep, reading the 7 Dogs package on Snapchat: «باقتك ضعيفة». Cards of
+# 200-250 characters are read for two seconds; six figures across four cards
+# buried the one that mattered. A body carries one or two short sentences and a
+# card carries one figure (a second number, such as a year, is tolerated).
+SNAP_BODY_MAX = 130
+SNAP_NUMBERS_MAX = 2
+# Model codes (F-35, M5, UH-60) are names, not figures.
+_NUMBER = re.compile(r'(?<![A-Za-z0-9\u0660-\u0669\u06f0-\u06f9.,-])[0-9\u0660-\u0669\u06f0-\u06f9]+'
+                     r'(?:[.,][0-9\u0660-\u0669\u06f0-\u06f9]+)?(?![A-Za-z])')
+
+
+def snap_fault(card):
+    body = str(card.get('body', ''))
+    if len(body) > SNAP_BODY_MAX:
+        return 'body_too_long_for_snapchat: %d characters, keep it under %d' % (len(body), SNAP_BODY_MAX)
+    if len(_NUMBER.findall(body + ' ' + str(card.get('punch', '')))) > SNAP_NUMBERS_MAX:
+        return 'too_many_numbers_on_one_card: keep the one figure that matters'
+    return None
+
+
 def style_repair_indices(data):
     """Cards a patch can fix: one formal word or arrow is a wording fault in
     that card, not a reason to discard a researched candidate (the camels
-    story died over one word on 2026-09-26 after research was paid for)."""
-    return [i for i, card in enumerate(data.get('cards', [])) if isinstance(card, dict) and (
+    story died over one word on 2026-09-26 after research was paid for).
+    Snapchat length and number faults are the same kind of card-level fault."""
+    return [i for i, card in enumerate(data.get('cards', [])) if isinstance(card, dict) and ((
         lambda text: ARROWS.search(text) or OWNER_WORDING.search(text)
         or any(word in text for word in FORMAL_WORDS))(
-        ' '.join(str(card.get(k, '')) for k in ('title', 'body', 'punch', 'image_caption')))]
+        ' '.join(str(card.get(k, '')) for k in ('title', 'body', 'punch', 'image_caption')))
+        or snap_fault(card))]
 
 
 def validate_draft(data, research):
@@ -288,6 +310,9 @@ def validate_draft(data, research):
     if ARROWS.search(visible):
         raise ValueError('unsupported_arrow_symbol: write the side note as a plain short sentence')
 
+    faults = [snap_fault(card) for card in cards]
+    if any(faults):
+        raise ValueError('owner_style_violation: ' + next(f for f in faults if f))
     if OWNER_WORDING.search(visible):
         raise ValueError('owner_style_violation: use «أقنع» not «قنّع», and «ولده» not «ابنه»')
     formal = FORMAL_WORDS

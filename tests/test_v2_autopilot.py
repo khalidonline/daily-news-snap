@@ -342,7 +342,8 @@ class PipelineTests(unittest.TestCase):
 class PolicyTests(unittest.TestCase):
     def test_story_context_fits_bounded_expanded_body(self):
         data = draft()
-        data['cards'][1]['body'] = 'ب' * 320
+        # Owner, 27 Sep: Snapchat bodies stop at policy.SNAP_BODY_MAX (was 320).
+        data['cards'][1]['body'] = 'ب' * policy.SNAP_BODY_MAX
         policy.validate_draft(data, research())
         data['cards'][1]['body'] += 'ب'
         with self.assertRaises(ValueError):
