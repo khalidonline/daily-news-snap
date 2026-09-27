@@ -16,6 +16,11 @@ class PersistenceError(Exception):
     """An uncertain journal must stop work, never trigger generation repair."""
 
 
+# The viewer-persona judge's score, 1-10, below which a researched candidate is
+# dropped before writing. 7 = "would tap through and maybe share".
+MIN_HOOK_SCORE = 7
+
+
 class Pipeline:
     def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False):
         self.agent, self.sources, self.render = agent, sources, render
@@ -143,10 +148,13 @@ class Pipeline:
                     accepted_images = {}
                     hook = self.choose_hook(state, candidate, research) if self.hooks else None
                     hook_input = {'chosen_hook': hook} if hook else {}
+                    shortened = False
                     for attempt in range(4):
                         review = None
                         try:
-                            if draft is None:
+                            if shortened:
+                                shortened = False  # already cut to the photographed cards; re-approve as is
+                            elif draft is None:
                                 draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
                                     'visual_options': visual_options, 'feedback': feedback, **hook_input})
                             elif affected:
@@ -215,6 +223,18 @@ class Pipeline:
                             return state
                         except BudgetBlocked:
                             raise
+                        except policy.VisualShortfall as error:
+                            drop = set(error.indices)
+                            kept = [c for i, c in enumerate(draft['cards']) if i not in drop]
+                            # Info carries the hook and at least two story beats must
+                            # remain; otherwise the story is not tellable honestly.
+                            if 0 in drop or len(kept) < 3:
+                                raise ValueError('insufficient_distinct_story_photos: ' + str(error)[:300])
+                            draft = dict(draft, cards=kept)
+                            shortened, affected, accepted_images = True, [], {}
+                            feedback = str(error)
+                            self.save(state, 'visual_shortened', candidate_id=candidate['id'],
+                                      dropped_cards=sorted(drop), working_draft=copy.deepcopy(draft))
                         except (ValueError, RuntimeError, OSError) as error:
                             if str(error) == 'agent_input_too_large':
                                 raise  # Rewriting prose cannot repair a structural input error.
@@ -284,16 +304,24 @@ class Pipeline:
             if type(choice) is not int or not 0 <= choice < 3:
                 raise ValueError('invalid_hook_choice')
             policy.text(verdict.get('reason'), 500)
+            score = verdict.get('score')
+            if type(score) is not int or not 1 <= score <= 10:
+                raise ValueError('invalid_hook_score')
         except BudgetBlocked:
             raise
         except (ValueError, RuntimeError, OSError, AttributeError, TypeError) as error:
             self.save(state, 'hook_skipped', reason=str(error)[:250] if isinstance(error, ValueError)
                       else type(error).__name__, candidate_id=candidate['id'])
             return None
-        chosen = dict(options[choice])
-        self.save(state, 'hook_chosen', candidate_id=candidate['id'],
-                  hook={'options': options, 'choice': choice, 'reason': verdict['reason']})
-        return chosen
+        hook = {'options': options, 'choice': choice, 'score': score, 'reason': verdict['reason']}
+        if score < MIN_HOOK_SCORE:
+            # Owner, 2026-09-27: a correct but unremarkable package is a failure.
+            # Stop before the writer and the reviews are paid for; the next
+            # candidate gets the slot.
+            self.save(state, 'hook_too_weak', candidate_id=candidate['id'], hook=hook)
+            raise ValueError('weak_hook: best opening scored %d/10: %s' % (score, verdict['reason'][:200]))
+        self.save(state, 'hook_chosen', candidate_id=candidate['id'], hook=hook)
+        return dict(options[choice])
 
     def editor_choices(self, state, lane, candidates):
         """Try at most three shortlists, never researching a candidate twice."""

@@ -11,6 +11,10 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 OWNER_DECISION = 'owner-source-editorial-use-2026-09-22'
 PUBLISHERS = {'aawsat.com','www.aawsat.com','www.alyaum.com','bbc.com','www.bbc.com','www.bbc.co.uk','bbc.co.uk'}
+# Saudi publishers added to the candidate feeds 2026-09-27: their article's own
+# photo gets the same owner editorial-use treatment as the publishers above.
+PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
+               'www.arriyadiyah.com','arriyadiyah.com','www.almowaten.net','almowaten.net'}
 
 # Exact archival screenshots manually checked for the owner's 2026-09-26
 # replacement request. This is editorial-use authorization, not a license grant

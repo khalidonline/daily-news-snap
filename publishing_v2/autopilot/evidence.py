@@ -92,8 +92,17 @@ def hydrate(data, rows):
 
 def hydrate_timing(data, rows):
     """Select exact original timing evidence; never accept model-authored evidence."""
+    if not isinstance(data, dict) or 'eligible' not in data:
+        raise ValueError('unexpected_timing_fields')
+    if data.get('eligible') is not True:
+        # A refusal needs no basis to be a refusal: the moon and Heathrow
+        # candidates (2026-09-27) were logged as format faults, not as
+        # ineligible, because the model omitted timing_basis when saying no.
+        data = dict(data)
+        data.setdefault('timing_basis', None)
+        data.setdefault('reason', '')
     required = {'eligible', 'timing_basis', 'reason'}
-    if not isinstance(data, dict) or not required.issubset(data):
+    if not required.issubset(data):
         raise ValueError('unexpected_timing_fields')
     # Models may omit null-valued fields. Normalize those omissions only when
     # the decision is ineligible; eligible timing still requires a concrete

@@ -16,10 +16,10 @@ def option(n, claims=('c1',)):
 
 
 class HookAgent(FakeAgent):
-    def __init__(self, options=None, choice=2):
+    def __init__(self, options=None, choice=2, score=8):
         super().__init__()
         self.options = options if options is not None else [option(0), option(1), option(2)]
-        self.choice, self.inputs = choice, {}
+        self.choice, self.score, self.inputs = choice, score, {}
 
     def run(self, role, data, images=()):
         self.inputs.setdefault(role, []).append(copy.deepcopy(data))
@@ -28,7 +28,7 @@ class HookAgent(FakeAgent):
             return {'options': copy.deepcopy(self.options)}
         if role == 'hook_judge':
             self.calls.append(role)
-            return {'choice': self.choice, 'reason': 'أقوى مفارقة'}
+            return {'choice': self.choice, 'score': self.score, 'reason': 'أقوى مفارقة'}
         return super().run(role, data, images)
 
 
@@ -75,6 +75,21 @@ class HookPipelineTests(unittest.TestCase):
 
     def test_invalid_judge_choice_is_dropped(self):
         agent = HookAgent(choice=3)
+        result = self.run_pipeline(agent)
+        self.assertEqual(result['status'], 'shadow_passed')
+        self.assertNotIn('chosen_hook', agent.inputs['writer'][0])
+
+    def test_weak_best_opening_drops_candidate_before_writer(self):
+        agent = HookAgent(score=5)
+        result = self.run_pipeline(agent)
+        self.assertEqual(result['status'], 'held')
+        self.assertNotIn('writer', agent.calls)
+        reasons = [e.get('reason', '') for e in result['audit'] if e['event'] == 'candidate_rejected']
+        self.assertTrue(reasons and all(r.startswith('weak_hook: best opening scored 5/10') for r in reasons))
+        self.assertIn('hook_too_weak', [e['event'] for e in result['audit']])
+
+    def test_missing_score_falls_back_to_unguided_writer(self):
+        agent = HookAgent(score=None)
         result = self.run_pipeline(agent)
         self.assertEqual(result['status'], 'shadow_passed')
         self.assertNotIn('chosen_hook', agent.inputs['writer'][0])

@@ -648,7 +648,13 @@ your family group. Judge only by that: surprise, concreteness, relevance to your
 life in Saudi Arabia, and whether you would repeat the share_line out loud. A
 label, a definition, a list of achievements or a known fact loses to a concrete
 contrast or an unexpected detail. Do not judge factual accuracy (it was checked
-before you). Return {"choice":0|1|2,"reason":"one short Arabic sentence on why"}.
+before you). Then score your pick honestly from 1 to 10: 10 = you would send it
+to your family group right now; 7 = you would tap through and maybe share; 5 = you
+would read the first card and scroll on; 3 = you would scroll past. A sports
+statistic, a career summary or a fact any fan already knows is 5 or lower however
+well it is written. The owner rejected an Al-Buraikan package (first goal in a
+loss, 18 goals in a season, the winning goal in a final) as not good: that is a 5.
+Return {"choice":0|1|2,"score":1-10,"reason":"one short Arabic sentence on why"}.
 """
 
 # The approval gates must reward, not reject, the owner's structure: a hook-first
@@ -810,7 +816,14 @@ class Agents:
                 receipt['format_error_position'] = error.pos
             raise InvalidAgentResponse('agent_json_invalid') from error
         if role == 'timing':
-            return hydrate_timing(decision, evidence_rows)
+            try:
+                return hydrate_timing(decision, evidence_rows)
+            except ValueError as error:
+                # An eligible verdict missing its date or passage is a format
+                # fault: one format retry, like unreadable JSON, not a lost topic.
+                if str(error) == 'unexpected_timing_fields':
+                    raise InvalidAgentResponse('agent_timing_fields_incomplete') from error
+                raise
         if role == 'researcher':
             receipt['research_shape'] = {
                 'event_date': decision.get('event_date') if isinstance(decision.get('event_date'), str) else None,
