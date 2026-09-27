@@ -102,13 +102,13 @@ class HookPipelineTests(unittest.TestCase):
         self.run_pipeline(agent, hooks=False)
         self.assertNotIn('hooks', agent.calls)
 
-    def test_hooks_never_see_editor_rationale(self):
+    def test_writer_never_sees_editor_rationale(self):
         # The editor's angle is unverified; hooks get research-bound input only.
         # Stop at encoding, before any budget reservation or paid request.
         runner = agents.Agents(env={'ANTHROPIC_API_KEY': 'x'}, ledger=None)
         with patch.object(agents.json, 'dumps', side_effect=RuntimeError('stop')) as dumps:
             with self.assertRaises(RuntimeError):
-                runner._run_once('hooks', {'candidate': {'id': 'a', 'editorial': {'angle': 'x'}},
+                runner._run_once('writer', {'candidate': {'id': 'a', 'editorial': {'angle': 'x'}},
                                            'research': research()})
         self.assertNotIn('editorial', dumps.call_args.args[0]['candidate'])
 
@@ -135,9 +135,7 @@ class ShareabilityPolicyTests(unittest.TestCase):
         self.assertIn('share_reason is the most important field', agents.PROMPTS['editor'])
         self.assertIn('22-year-old Saudi', agents.PROMPTS['hook_judge'])
 
-    def test_production_runtime_enables_hooks(self):
-        source = Path(__file__).resolve().parents[1].joinpath('publishing_v2/autopilot/runtime.py').read_text()
-        self.assertIn('hooks=True', source)
+
 
 
 if __name__ == '__main__':
@@ -207,6 +205,7 @@ class CheapRejectionTests(unittest.TestCase):
     def test_screen_uses_plan_visuals_filters_without_model_calls(self):
         from publishing_v2.autopilot.runtime import Renderer
         class Sources:
+            image_bytes = {'a': b'downloaded-a', 'b': b'downloaded-b'}
             def prime_images(self, candidate, subject): self.primed = subject
             def subject_images(self, subject, query):
                 return [{'asset_id': 'a', 'title': 'Saudi Railway train', 'license': 'CC0'},

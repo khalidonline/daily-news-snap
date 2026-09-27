@@ -22,7 +22,7 @@ MIN_HOOK_SCORE = 7
 
 
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None):
         self.agent, self.sources, self.render = agent, sources, render
         # Owner 2026-09-26: three competing openings and a viewer-persona judge
         # before the writer. Off by default so fixture agents keep their scripts.
@@ -33,6 +33,7 @@ class Pipeline:
         self.candidate_memory = candidate_memory
         self.published_memory = published_memory
         self.excluded_candidate_ids = set(excluded_candidate_ids or ())
+        self.free_selection = free_selection
 
     def save(self, state, event, **values):
         state.update(values)
@@ -118,11 +119,13 @@ class Pipeline:
                                  if attention_source(s, candidate)]
                     if not attention:
                         raise ValueError('attention_article_not_retrieved')
-                    timing = self.agent.run('timing', {'candidate': candidate, 'sources': attention,
-                                                       'lane': lane, 'now': self.now().isoformat()})
+                    free = getattr(self.agent, 'requires_free_selection', False)
+                    timing = (copy.deepcopy(self.free_selection.get('timing', {})) if free else
+                              self.agent.run('timing', {'candidate': candidate, 'sources': attention,
+                                                       'lane': lane, 'now': self.now().isoformat()}))
                     self.save(state, 'timing_checked', candidate_id=candidate['id'], timing=timing)
                     policy.validate_timing(timing, attention, self.now())
-                    if self.hooks:
+                    if self.hooks and not free:
                         self.judge_pitch(state, candidate)
                     sources = self.sources.research(candidate)
                     if not any(attention_source(s, candidate) for s in sources):
@@ -130,10 +133,17 @@ class Pipeline:
                     screen = getattr(self.render, 'screen_visuals', None)
                     if screen and not screen(candidate):
                         raise ValueError('insufficient_subject_visuals_before_research')
+                    if free:
+                        from .free_selection import validate_story, validate_images
+                        validate_story(self.free_selection, sources)
+                        validate_images(self.free_selection, candidate)
+                        self.save(state, 'free_preflight_passed', free_selection=copy.deepcopy(self.free_selection))
                     visual_options = []
                     self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
-                                                            'verified_timing': timing, 'lane': lane, 'now': self.now().isoformat()})
+                                                            'verified_timing': timing,
+                                                            'story_plan': self.free_selection.get('story') if free else None,
+                                                            'lane': lane, 'now': self.now().isoformat()})
                     research, pruned_claim_ids = policy.prune_unsupported_number_claims(research, sources)
                     if pruned_claim_ids:
                         self.save(state, 'research_claims_pruned', candidate_id=candidate['id'],
@@ -152,7 +162,7 @@ class Pipeline:
                     package = None
                     affected = []
                     accepted_images = {}
-                    hook = self.choose_hook(state, candidate, research) if self.hooks else None
+                    hook = self.choose_hook(state, candidate, research) if self.hooks and not free else None
                     hook_input = {'chosen_hook': hook} if hook else {}
                     fmt = candidate.get('editorial', {}).get('format')
                     if fmt:
@@ -275,7 +285,7 @@ class Pipeline:
             raise
         except Exception as error:
             details = {'budget_diagnostic': error.diagnostic} if isinstance(error, BudgetBlocked) else {}
-            self.save(state, 'stopped', status='held', reason=type(error).__name__, **details)
+            self.save(state, 'stopped', status='held', reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__, **details)
         return state
 
     def remember_rejection(self, candidate, reason):
@@ -363,6 +373,11 @@ class Pipeline:
 
     def editor_choices(self, state, lane, candidates):
         """Try at most three shortlists, never researching a candidate twice."""
+        if getattr(self.agent, 'requires_free_selection', False):
+            from .free_selection import select
+            # Exactly one free handoff. No second paid candidate on rejection.
+            yield select(self.free_selection, lane, candidates)
+            return
         used = set()
         for round_number in range(1, 4):
             remaining = [candidate for candidate in candidates if candidate['id'] not in used]

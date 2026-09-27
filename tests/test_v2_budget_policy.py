@@ -19,24 +19,20 @@ class Store:
 
 
 class BudgetPolicyTests(unittest.TestCase):
-    def test_opus_visual_review_fits_cap_with_conservative_reservation(self):
+    def test_large_opus_review_is_held_before_provider_under_new_stage_cap(self):
         store = Store()
-        ledger = Ledger(store, now=lambda: datetime(2026, 9, 20, tzinfo=timezone.utc))
-        def transport(method, url, headers, payload):
-            reserved = sum(e['charged_micro_usd'] for e in store.row['entries'].values())
-            self.assertGreater(reserved, 8 * 4784 * 5 + 16384 * 25)
-            self.assertLess(reserved, 3_000_000)
-            self.assertEqual(len(payload['messages'][0]['content']), 9)
-            self.assertEqual(payload['output_config']['effort'], 'high')
-            return {'status_code': 200, 'body': {'id': 'r', 'stop_reason': 'end_turn',
-                'usage': {'input_tokens': 45000, 'output_tokens': 1000},
-                'content': [{'type': 'text', 'text': '{}'}]}}
+        ledger = Ledger(store, now=lambda: datetime(2026, 9, 27, tzinfo=timezone.utc))
+        def transport(*args):
+            self.fail('oversized review must not contact provider')
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / 'frame.jpg'
             Image.new('RGB', (1080, 1920)).save(path)
-            agent = Agents(env={'ANTHROPIC_API_KEY': 'test', 'AUTOPILOT_REVIEWER_MODEL': 'claude-opus-5'}, ledger=ledger, transport=transport)
-            agent.run('reviewer', {'evidence': 'x' * 80000}, images=[path] * 8)
-        self.assertTrue(all(e['status'] == 'settled' for e in store.row['entries'].values()))
+            agent = Agents(env={'ANTHROPIC_API_KEY': 'test', 'PACKAGE_ID': 'review-package',
+                                'AUTOPILOT_REVIEWER_MODEL': 'claude-opus-5'}, ledger=ledger, transport=transport)
+            with self.assertRaises(BudgetBlocked) as error:
+                agent.run('reviewer', {'evidence': 'x' * 80000}, images=[path] * 8)
+            self.assertEqual(error.exception.diagnostic['code'], 'package_stage_limit')
+        self.assertIsNone(store.row)
 
     def test_review_still_blocked_by_previous_spend_and_unknown_reservations(self):
         store = Store()
@@ -45,7 +41,7 @@ class BudgetPolicyTests(unittest.TestCase):
         def forbidden(*args): self.fail('Paid call escaped daily cap')
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / 'frame.jpg'; Image.new('RGB', (1080, 1920)).save(path)
-            agent = Agents(env={'ANTHROPIC_API_KEY': 'test', 'AUTOPILOT_REVIEWER_MODEL': 'claude-opus-5'}, ledger=ledger, transport=forbidden)
+            agent = Agents(env={'ANTHROPIC_API_KEY': 'test', 'PACKAGE_ID': 'review-package', 'AUTOPILOT_REVIEWER_MODEL': 'claude-opus-5'}, ledger=ledger, transport=forbidden)
             with self.assertRaises(BudgetBlocked): agent.run('reviewer', {}, images=[path])
         self.assertEqual(len(store.row['entries']), 1)
 

@@ -28,7 +28,7 @@ class FormatRecoveryTests(unittest.TestCase):
 
     def test_malformed_completed_answer_gets_one_budgeted_fresh_attempt(self):
         agent, ledger, calls = self.agent(['{"candidates": [}', '{"candidates": []}'])
-        self.assertEqual(agent.run('editor', {'candidates': []}), {'candidates': []})
+        self.assertEqual(agent.run('writer', {'candidates': []}), {'candidates': []})
         self.assertEqual(len(calls), 2)
         self.assertEqual(len(ledger.reserved), 2)
         self.assertEqual(len(ledger.settled), 2)
@@ -37,7 +37,7 @@ class FormatRecoveryTests(unittest.TestCase):
 
     def test_repeated_bad_json_stops_after_two_calls(self):
         agent, ledger, calls = self.agent(['{broken'])
-        with self.assertRaises(ValueError): agent.run('editor', {})
+        with self.assertRaises(ValueError): agent.run('writer', {})
         self.assertEqual(len(calls), 2)
 
     def test_second_attempt_cannot_bypass_budget(self):
@@ -47,7 +47,7 @@ class FormatRecoveryTests(unittest.TestCase):
             if ledger.reserved: raise BudgetBlocked('exhausted')
             return original(maximum, role)
         ledger.reserve = reserve
-        with self.assertRaises(BudgetBlocked): agent.run('editor', {})
+        with self.assertRaises(BudgetBlocked): agent.run('writer', {})
         self.assertEqual(len(calls), 1)
 
     def test_valid_rejection_does_not_get_resampled(self):

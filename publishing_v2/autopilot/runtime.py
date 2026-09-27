@@ -94,15 +94,28 @@ class Renderer:
         prime = getattr(self.sources, 'prime_images', None)
         subject_search = getattr(self.sources, 'subject_images', None)
         if not subject_search:
-            return True
+            return False
+        candidate.pop('visual_feasibility', None)
+        found, hashes, origins = {}, set(), set()
         for subject in subjects:
             if prime:
                 prime(candidate, subject)
             rows = subject_search(subject, subject)
             usable = {row['asset_id'] for row in rows
-                      if image_publication_eligible(row) and subject_metadata_matches(subject, row)}
+                      if image_publication_eligible(row) and subject_metadata_matches(subject, row)
+                      and getattr(self.sources, 'image_bytes', {}).get(row['asset_id'])}
             if len(usable) < 2:
                 return False
+            for row in rows:
+                if row['asset_id'] not in usable:
+                    continue
+                sha, origin = row.get('sha256'), row.get('origin_key')
+                if row['asset_id'] in found or (sha and sha in hashes) or (origin and origin in origins):
+                    continue
+                if sha: hashes.add(sha)
+                if origin: origins.add(origin)
+                found[row['asset_id']] = {k: row[k] for k in ('asset_id', 'source_url', 'sha256', 'title') if k in row}
+        candidate['visual_feasibility'] = list(found.values())
         return True
 
     def check_source_images(self, candidate, subject, rows):
@@ -468,11 +481,16 @@ def promotable_shadow(state, engine, lane, now, source_slot):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=['shadow', 'live'], default='shadow')
-    parser.add_argument('--lane', choices=['daily', 'local', 'both'], default='both')
+    parser.add_argument('--lane', choices=['daily', 'local', 'both'], default='daily')
+    parser.add_argument('--selection', default=os.environ.get('AUTOPILOT_SELECTION_PATH'),
+                        help='Free, source-bound editorial brief; required for new production')
     parser.add_argument('--output', default='autopilot-output')
     args = parser.parse_args()
-    if args.mode == 'live' and args.lane == 'both':
-        raise ValueError('publish_one_lane_per_run')
+    if args.lane == 'both':
+        raise ValueError('produce_one_lane_per_run')
+    from .free_selection import load_brief
+    selection_path = args.selection or f'editorial/selected/{day_key()}-{args.lane}.json'
+    free_selection = load_brief(selection_path) if args.selection or Path(selection_path).is_file() else None
     if os.environ.get('GITHUB_REPOSITORY') != 'khalidonline/daily-news-snap':
         raise ValueError('configured_repository_required')
     if os.environ.get('GITHUB_REF') != 'refs/heads/main':
@@ -514,7 +532,7 @@ def main():
         pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
             store=store, publish=publish_package, output=output / lane, now=now, engine=engine,
             candidate_memory=candidate_memory, published_memory=published_memory,
-            excluded_candidate_ids=sibling_candidate_ids, hooks=True)
+            excluded_candidate_ids=sibling_candidate_ids, hooks=False, free_selection=free_selection)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
         if result.get('status') in {'shadow_passed', 'approved', 'published'}:
             candidate_id = result.get('package', {}).get('candidate', {}).get('id')

@@ -32,6 +32,16 @@ MAX_LIMIT_MICRO_USD = 20_000_000
 KSA = timezone(timedelta(hours=3))
 LEDGER_BRANCH = 'cost-ledger'
 
+# Owner-approved production policy, 2026-09-27. Limits include repairs and
+# ambiguous reservations. Selection/timing must use retrieved evidence for free.
+PACKAGE_STAGE_GROUPS = {
+    'researcher': 'writing', 'writer': 'writing', 'card_repair': 'writing',
+    'text_review': 'review', 'image_check': 'review',
+    'visual': 'review', 'reviewer': 'review',
+}
+PACKAGE_GROUP_LIMITS = {'writing': 750_000, 'review': 500_000}
+FREE_SELECTION_ROLES = frozenset({'editor', 'timing', 'pitch_judge', 'hooks', 'hook_judge'})
+
 def autopilot_daily_limit(now, requested=8_000_000):
     """Owner approved $8 on Sep 22-23 only; $3 thereafter (Saudi dates)."""
     if now.tzinfo is None:
@@ -156,10 +166,32 @@ class Ledger:
         context = {k:v for k,v in getattr(self,'context',{}).items()
                    if k in {'package_id','stage','request_attempt'}
                    and type(v) in (str,int) and len(str(v)) <= 200}
+        group = None
+        if bot.startswith('autopilot:'):
+            stage = bot.removeprefix('autopilot:')
+            group = PACKAGE_STAGE_GROUPS.get(stage)
+            package_id = context.get('package_id')
+            if (not group or context.get('stage') != stage
+                    or not isinstance(package_id, str) or not package_id.strip()
+                    or package_id.startswith('selection:')):
+                raise BudgetBlocked('free selection and a stable package identity are required',
+                                    code='package_stage_not_authorized')
         def update(row):
             total = sum(e['charged_micro_usd'] for e in row['entries'].values())
             if total + amount > self.limit_micro_usd:
                 raise BudgetBlocked(f'${self.limit_micro_usd / 1e6:g} daily budget: ${total / 1e6:.4f} spent/reserved; request held', code='insufficient_remaining', limit=self.limit_micro_usd, requested=amount, charged=total)
+            if group:
+                # Same atomic CAS as the daily reservation: competing jobs and
+                # retries cannot each see a fresh package allowance. Count old
+                # entries by role too; no migration or reset of today's history.
+                spent = sum(e['charged_micro_usd'] for e in row['entries'].values()
+                            if e.get('package_id') == context['package_id']
+                            and PACKAGE_STAGE_GROUPS.get(e.get('stage')) == group)
+                limit = PACKAGE_GROUP_LIMITS[group]
+                if spent + amount > limit:
+                    raise BudgetBlocked('package ' + group + ' allowance exhausted',
+                                        code='package_stage_limit', limit=limit,
+                                        requested=amount, charged=spent)
             row['entries'][ident] = {
                 'bot': bot, 'run_id': os.getenv('GITHUB_RUN_ID'),
                 'run_attempt': os.getenv('GITHUB_RUN_ATTEMPT'),

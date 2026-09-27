@@ -14,8 +14,12 @@ on:
       lane:
         description: Package selection
         type: choice
-        options: [both, daily, local]
-        default: both
+        options: [daily, local]
+        default: daily
+      selection:
+        description: Repository path to the free evidence brief (no paid selection fallback)
+        type: string
+        required: false
 permissions:
   contents: read
 concurrency:
@@ -46,6 +50,8 @@ jobs:
           FONT_FAMILY: Almarai
           THEME: light
         run: python -m unittest discover -s tests -p 'test_v2_*.py' -q
+      - name: Verify shared budget guard
+        run: python -m unittest tests.test_daily_budget.DailyBudgetTests tests.test_daily_budget.NativeAgentBudgetTests tests.test_daily_budget.GitHubStoreTests -q
       - name: Resolve shadow or live promotion
         id: route
         env:
@@ -55,57 +61,18 @@ jobs:
           INPUT_LANE: ${{ inputs.lane }}
         run: |
           python - <<'PY'
-          import base64, json, os, urllib.request
-          event = os.environ.get("GITHUB_EVENT_NAME", "")
-          message = os.environ.get("HEAD_COMMIT_MESSAGE", "")
-          mode = (os.environ.get("INPUT_MODE") or "shadow") if event != "push" else "shadow"
-          lane = (os.environ.get("INPUT_LANE") or "both") if event != "push" else "both"
-          duplicate = False
-          if event == "push" and message.startswith("automation: promote daily autopilot live"):
-              mode = "live"
-              repo = os.environ["GITHUB_REPOSITORY"]
-              token = os.environ["GITHUB_TOKEN"]
-              def load(name):
-                  url = f"https://api.github.com/repos/{repo}/contents/api-receipts/{name}.json?ref=snapchat-api-state"
-                  req = urllib.request.Request(url, headers={
-                      "Authorization": "Bearer " + token,
-                      "Accept": "application/vnd.github+json",
-                      "User-Agent": "daily-news-snap-live-route",
-                  })
-                  with urllib.request.urlopen(req, timeout=30) as response:
-                      row = json.load(response)
-                  return json.loads(base64.b64decode(row["content"]))
-              try:
-                  readiness = load("autopilot-readiness")
-                  daily = load(readiness["daily"]["slot"])
-                  local = load(readiness["local"]["slot"])
-                  daily_id = daily.get("package", {}).get("candidate", {}).get("id")
-                  local_id = local.get("package", {}).get("candidate", {}).get("id")
-                  if daily_id and daily_id == local_id:
-                      lane = "daily"
-                      duplicate = True
-              except Exception:
-                  # Runtime itself remains fail-closed if readiness cannot be verified.
-                  lane = "both"
-          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
-              out.write(f"mode={mode}\n")
-              out.write(f"lane={lane}\n")
-              out.write(f"duplicate={str(duplicate).lower()}\n")
-          print(json.dumps({"mode": mode, "lane": lane, "duplicate_lane_subject": duplicate}))
+          import json, os
+          event = os.environ.get('GITHUB_EVENT_NAME', '')
+          mode = (os.environ.get('INPUT_MODE') or 'shadow') if event != 'push' else 'shadow'
+          lane = (os.environ.get('INPUT_LANE') or 'daily') if event != 'push' else 'daily'
+          if event == 'push' and os.environ.get('HEAD_COMMIT_MESSAGE', '').startswith('automation: promote daily autopilot live'):
+              mode = 'live'
+          if lane not in {'daily', 'local'} or mode not in {'shadow', 'live'}:
+              raise ValueError('single_lane_required')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f'mode={mode}\nlane={lane}\n')
+          print(json.dumps({'mode': mode, 'lane': lane}))
           PY
-      - name: Recover held Local before live promotion
-        if: steps.route.outputs.mode == 'live'
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ github.token }}
-          DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
-          AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'
-          AUTOPILOT_EDITOR_MODEL: 'claude-sonnet-5'
-          AUTOPILOT_RESEARCHER_MODEL: 'claude-opus-5'
-          AUTOPILOT_WRITER_MODEL: 'claude-opus-5'
-          AUTOPILOT_VISUAL_MODEL: 'claude-sonnet-5'
-          AUTOPILOT_REVIEWER_MODEL: 'claude-sonnet-5'
-        run: python recover_held_local.py
       - name: Run coordinated editorial agents
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -113,6 +80,7 @@ jobs:
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
+          AUTOPILOT_SELECTION_PATH: ${{ inputs.selection }}
           AUTOPILOT_MODE: ${{ steps.route.outputs.mode }}
           # Temporary requested cap; runtime clamps to $3 from 2026-09-24 Saudi time.
           AUTOPILOT_DAILY_LIMIT_MICRO_USD: '3000000'

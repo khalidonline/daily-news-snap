@@ -1,26 +1,43 @@
+"""Execute the free workflow router, including malformed dispatch input."""
+import json
+import os
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
+
+import yaml
 
 
 class LivePromotionWorkflowTests(unittest.TestCase):
     def setUp(self):
-        self.text = Path('.github/workflows/publishing-v2-autopilot.yml').read_text(encoding='utf-8')
+        self.workflow = yaml.safe_load(Path('.github/workflows/publishing-v2-autopilot.yml').read_text())
+        step = next(s for s in self.workflow['jobs']['packages']['steps'] if s.get('id') == 'route')
+        self.script = step['run'].split("python - <<'PY'\n", 1)[1].rsplit('\nPY', 1)[0]
 
-    def test_push_defaults_to_shadow_and_requires_explicit_promotion_message_for_live(self):
-        self.assertIn('message.startswith("automation: promote daily autopilot live")', self.text)
-        self.assertIn('mode = "live"', self.text)
-        self.assertIn('mode = (os.environ.get("INPUT_MODE") or "shadow")', self.text)
+    def route(self, **env):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'route'
+            result = subprocess.run(['python', '-c', self.script],
+                env={**os.environ, 'GITHUB_OUTPUT': str(output), 'INPUT_MODE': '',
+                     'INPUT_LANE': '', 'HEAD_COMMIT_MESSAGE': '', **env},
+                capture_output=True, text=True)
+            return result, output.read_text() if output.exists() else ''
 
-    def test_duplicate_lane_candidate_promotes_daily_only(self):
-        self.assertIn('if daily_id and daily_id == local_id:', self.text)
-        self.assertIn('lane = "daily"', self.text)
+    def test_push_defaults_to_single_shadow_even_if_dispatch_inputs_are_present(self):
+        result, output = self.route(GITHUB_EVENT_NAME='push', INPUT_MODE='live', INPUT_LANE='local')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(output, 'mode=shadow\nlane=daily\n')
 
-    def test_runtime_uses_resolved_mode_and_lane(self):
-        self.assertIn("AUTOPILOT_MODE: ${{ steps.route.outputs.mode }}", self.text)
-        self.assertIn("AUTOPILOT_LANE: ${{ steps.route.outputs.lane }}", self.text)
-        self.assertIn("POST_TO_SNAPCHAT: ${{ steps.route.outputs.mode == 'live' && '1' || '0' }}", self.text)
-        self.assertIn("DRY_RUN: ${{ steps.route.outputs.mode == 'live' && '0' || '1' }}", self.text)
+    def test_explicit_promotion_message_publishes_only_daily(self):
+        result, output = self.route(GITHUB_EVENT_NAME='push', HEAD_COMMIT_MESSAGE='automation: promote daily autopilot live')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(output, 'mode=live\nlane=daily\n')
 
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_dispatch_can_choose_local_but_cannot_choose_both(self):
+        result, output = self.route(GITHUB_EVENT_NAME='workflow_dispatch', INPUT_MODE='shadow', INPUT_LANE='local')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(output, 'mode=shadow\nlane=local\n')
+        result, output = self.route(GITHUB_EVENT_NAME='workflow_dispatch', INPUT_MODE='shadow', INPUT_LANE='both')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(output, '')

@@ -36,6 +36,7 @@ def replay(saved, *, agent, render, output, now, restore=restore_text, save=lamb
     if expires.tzinfo is None or stamp >= expires:
         raise ValueError('saved_package_expired')
     policy.validate_attention(saved['candidate'], stamp)
+    agent.package_id = saved['candidate']['id']
     sources = []
     for row in saved['sources']:
         body = restore(row)

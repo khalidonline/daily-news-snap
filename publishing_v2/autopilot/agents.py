@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 from PIL import Image
 
-from daily_budget import PRICES, prepare, actual_cost, BudgetBlocked
+from daily_budget import PRICES, prepare, actual_cost, BudgetBlocked, FREE_SELECTION_ROLES
 from publishing_v2 import providers
 from .policy import REVIEW_CHECKS
 from .evidence import passages, hydrate, hydrate_timing
@@ -787,6 +787,7 @@ class InvalidAgentResponse(ValueError):
 
 
 class Agents:
+    requires_free_selection = True
     def __init__(self, *, env, ledger, transport=None):
         self.env, self.ledger, self.transport = env, ledger, transport
         self.receipts = []
@@ -818,6 +819,9 @@ class Agents:
     def _run_once(self, role, data, images=(), *, format_retry=False):
         if role not in PROMPTS:
             raise ValueError('unknown_agent_role')
+        if role in FREE_SELECTION_ROLES:
+            raise BudgetBlocked('selection and timing require a free evidence brief',
+                                code='paid_selection_disabled')
         fallback_role = {'card_repair':'WRITER','text_review':'REVIEWER'}.get(role, role.upper())
         model = self.env.get('AUTOPILOT_' + role.upper() + '_MODEL',
                              self.env.get('AUTOPILOT_' + fallback_role + '_MODEL','claude-sonnet-5'))
