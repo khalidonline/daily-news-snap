@@ -359,3 +359,45 @@ class TypographicCardTests(unittest.TestCase):
         from publishing_v2.publication import validate_public_attribution
         with self.assertRaisesRegex(ValueError, 'public_attribution_required'):
             validate_public_attribution({'kind': 'story'})
+
+
+class SnapReadingTests(unittest.TestCase):
+    """Owner, 27 Sep, on the published 7 Dogs package: «باقتك ضعيفة»."""
+
+    def test_long_body_is_a_repairable_card_fault(self):
+        package = draft()
+        package['cards'][2]['body'] = 'كلام ' * 40
+        with self.assertRaisesRegex(ValueError, 'owner_style_violation: body_too_long_for_snapchat'):
+            policy.validate_draft(package, research())
+        self.assertEqual(policy.style_repair_indices(package), [2])
+
+    def test_number_soup_is_a_repairable_card_fault(self):
+        package = draft()
+        package['cards'][1]['body'] = 'باع 995 ألف تذكرة بميزانية 40 مليون وإيرادات 17.9 مليون'
+        with self.assertRaisesRegex(ValueError, 'too_many_numbers_on_one_card'):
+            policy.validate_draft(package, research())
+        self.assertEqual(policy.style_repair_indices(package), [1])
+
+    def test_one_figure_and_a_year_pass(self):
+        package = draft()
+        package['cards'][1]['body'] = 'في 2026 باع الفيلم مليون تذكرة.'
+        package['cards'][1]['punch'] = 'والتذكرة رقم مليون جابت مليون ريال.'
+        policy.validate_draft(package, research())
+
+    def test_publisher_allows_one_typographic_card_only(self):
+        import json, os, tempfile as tf
+        from publishing_v2.bundle_api import load_package, BundleError
+        root = Path.cwd()
+        with tf.TemporaryDirectory(dir=root) as folder:
+            rel = Path(folder).relative_to(root)
+            manifest = {'approved': True, 'account': 'executivesaudi', 'title': 't',
+                        'expires_at': '2099-01-01T00:00:00+03:00',
+                        'media': [{'path': str(rel / f'{i}.jpg'), 'kind': 'story', 'typographic': True,
+                                   'sha256': 'x'} for i in range(2)]}
+            (Path(folder) / 'manifest.json').write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(BundleError, 'At most one typographic card'):
+                load_package(str(rel / 'manifest.json'))
+
+    def test_prompts_carry_the_snapchat_rule(self):
+        for role in ('writer', 'card_repair', 'hooks', 'text_review', 'reviewer'):
+            self.assertIn('SNAPCHAT READING', agents.PROMPTS[role])
