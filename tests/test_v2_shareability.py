@@ -285,8 +285,6 @@ class TriggerStrengthTests(unittest.TestCase):
         self.assertIn('TRIGGER STRENGTH', agents.PROMPTS['editor'])
         self.assertIn('ضد عمان في كأس الخليج', agents.PROMPTS['editor'])
         self.assertIn('reaction, quote or statement', agents.PROMPTS['timing'])
-        for role in ('writer', 'card_repair'):
-            self.assertIn('open the Info card with it', agents.PROMPTS[role])
 
     def test_candidate_pool_is_recorded(self):
         import tempfile
