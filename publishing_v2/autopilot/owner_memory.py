@@ -4,7 +4,7 @@ Migrated existing approved prompt bundles without treating examples as factual
 sources. Source labels distinguish existing-code history from reconciled user
 instructions; this is NOT an assertion that every past message was imported.
 """
-MEMORY_VERSION = '2026-09-27.1'
+MEMORY_VERSION = '2026-09-28.1'
 
 STYLE = '''You work for ملخص تنفيذي, a Saudi Snapchat account. News is a trigger,
 not the post. Choose broad everyday interest and distinctive facts worth sharing.
@@ -240,6 +240,9 @@ CURRENT_RULES = (
     {'id': 'card-image-evidence', 'text': 'Every public card needs a relevant real photo matching its subject and historical stage. A different image is not necessarily a relevant image. Do not substitute typography for a missing photo.'},
     {'id': 'internal-sources', 'text': 'Keep full evidence and the sources card internal. Do not publish that card. Preserve any required concise image attribution separately.'},
     {'id': 'numbering-and-identity', 'text': 'Keep the established brand, colors and logo; story counters use ١ من ٣. Body digits follow the existing separately approved display rule. Let distinct value determine card count.'},
+    {"id":"place-time-story","source":"Owner Heathrow/Armani revisions and voice notes, 2026-09-28","text":"Ground a company story in its starting city/country and a concrete verified detail (e.g. two-room office in Milan), then link each transition geographically and chronologically. Use the start and meaningful turning-point dates, not a date list. A film is sufficient; never invent scenes or make an exact film still a production dependency."},
+    {"id":"clear-info-useful-ending","source":"Owner Armani revisions, 2026-09-28","text":"Info identifies what the company does in familiar everyday terms and adds a memorable supported discovery. Avoid technical garment explanations, vague fame claims, unexplained independence, and low-value status filler such as sale not finalized; omit nonessential pending-sale discussion rather than imply a sale happened. A sourced death year and concrete will instruction can close a biography. Never append an explanation that merely restates the fact."},
+    {"id":"approved-copy-visual-continuity","source":"Owner approved Armani text and requested logo, 2026-09-28","text":"Preserve the latest owner-edited copy; change only affected cards. For brand stories, make the authentic relevant brand logo recognizable on the final card alongside a real photo, keeping Executive Summary identity. Readability and distinct narrative value determine length/card count; do not truncate an approved connected story to satisfy an older universal 120-character cap. A concrete supported from/to title is allowed; reject vague transformation slogans, not the syntax itself."},
 )
 
 # Operational audit catalog; do not send this whole history with every request.

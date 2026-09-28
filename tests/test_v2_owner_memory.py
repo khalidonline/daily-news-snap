@@ -19,7 +19,8 @@ class OwnerMemoryTests(unittest.TestCase):
         for role in ('writer', 'text_review', 'reviewer'):
             agent.run(role, {})
             prompt = payloads[-1]['system']
-            for rule in ('trigger-public-optional', 'single-paid-candidate', 'quiet-optional-ending'):
+            for rule in ('trigger-public-optional', 'single-paid-candidate', 'quiet-optional-ending',
+                         'place-time-story', 'clear-info-useful-ending', 'approved-copy-visual-continuity'):
                 self.assertIn('[' + rule + ']', prompt)
             self.assertNotIn('If the angle itself remains weak, replace the candidate', prompt)
             self.assertTrue(agent.receipts[-1].get('owner_memory_version'))
@@ -37,4 +38,3 @@ class OwnerMemoryTests(unittest.TestCase):
         self.assertTrue(archived)
         self.assertTrue(all(r['replaced_by'] for r in archived))
         self.assertNotIn('replace the candidate', str(feedback.EDITORIAL_FEEDBACK))
-
