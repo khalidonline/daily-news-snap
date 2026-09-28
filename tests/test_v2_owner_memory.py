@@ -21,7 +21,8 @@ class OwnerMemoryTests(unittest.TestCase):
             prompt = payloads[-1]['system']
             for rule in ('trigger-public-optional', 'single-paid-candidate', 'quiet-optional-ending',
                          'place-time-story', 'clear-info-useful-ending', 'approved-copy-visual-continuity',
-                         'info-not-story-summary', 'photo-text-balance'):
+                         'info-not-story-summary', 'photo-text-balance',
+                         'ordinary-reader-payoff', 'specific-outcome-current-photo'):
                 self.assertIn('[' + rule + ']', prompt)
             self.assertNotIn('If the angle itself remains weak, replace the candidate', prompt)
             self.assertTrue(agent.receipts[-1].get('owner_memory_version'))

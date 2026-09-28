@@ -4,7 +4,7 @@ Migrated existing approved prompt bundles without treating examples as factual
 sources. Source labels distinguish existing-code history from reconciled user
 instructions; this is NOT an assertion that every past message was imported.
 """
-MEMORY_VERSION = '2026-09-28.2'
+MEMORY_VERSION = '2026-09-28.3'
 
 STYLE = '''You work for ملخص تنفيذي, a Saudi Snapchat account. News is a trigger,
 not the post. Choose broad everyday interest and distinctive facts worth sharing.
@@ -245,6 +245,9 @@ CURRENT_RULES = (
     {"id":"approved-copy-visual-continuity","source":"Owner approved Armani text and requested logo, 2026-09-28","text":"Preserve the latest owner-edited copy; change only affected cards. For brand stories, make the authentic relevant brand logo recognizable on the final card alongside a real photo, keeping Executive Summary identity. Readability and distinct narrative value determine length/card count; do not truncate an approved connected story to satisfy an older universal 120-character cap. A concrete supported from/to title is allowed; reject vague transformation slogans, not the syntax itself."},
     {"id":"info-not-story-summary","source":"Owner approved Armani post-publication improvements, 2026-09-28","text":"Info briefly identifies the subject and one intriguing supported discovery; do not summarize the film, expansion and ending before the story starts. Story cards develop the discovery instead of repeating the Info paragraph. Remove generic filler such as repeated famous/known adjectives before owner approval; preserve explicit owner edits until separately authorized."},
     {"id":"photo-text-balance","source":"Owner approved Armani visual improvements, 2026-09-28","text":"Before design approval, inspect actual mobile-size cards together: avoid shrinking one card's body below its peers to fit dense text; edit only the affected card or add a card when justified. Prefer a clearly recognizable subject and meaningful photo area, avoiding large empty side margins. Preserve important people and clothing when cropping. For a hotel or brand outcome prefer a recognizable facade/sign over a generic aerial when suitable real assets exist; do not invent or mislabel imagery."},
+    {"id":"ordinary-reader-payoff","source":"Owner Heathrow feedback, 2026-09-28","text":"Info delivers one memorable discovery with enough context to understand why it matters. A bare two-runway count or unexplained 99% capacity is not a payoff. Use a fair sourced named comparison with a stated period, or a concrete everyday consequence; do not infer efficiency or causality from counts. Remove vague supporters/opponents filler. Brevity alone is not quality."},
+    {"id":"specific-outcome-current-photo","source":"Owner Heathrow feedback, 2026-09-28","text":"Close a chronological story with a specific documented outcome, not generic grew/became famous/millions filler. State the year and measure for a ranking; last year's first place does not imply current leadership. A present-day outcome needs a real modern photo matching that phase, not an unlabeled historical image. Verify image content and provenance, never trust a filename such as modern.jpg."},
+
 )
 
 # Operational audit catalog; do not send this whole history with every request.
