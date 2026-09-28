@@ -11,7 +11,7 @@ on:
       - 'deploy/publishing-v2/**'
       - '.github/workflows/publishing-v2-*.yml'
   push:
-    branches: ['build/event-publishing-v2']
+    branches: ['main', 'build/event-publishing-v2']
     paths:
       - 'publishing_v2/**'
       - 'story_bot.py'

@@ -3,3 +3,4 @@ arabic-reshaper>=3.0
 python-bidi>=0.4
 fonttools>=4.50
 hijri-converter>=2.3
+PyYAML>=6.0,<7
