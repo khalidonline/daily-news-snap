@@ -1,0 +1,87 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "هيثرو.. من الخيام إلى صالات السفر",
+  "not_before": "2026-09-28T06:35:33Z",
+  "expires_at": "2026-09-28T20:59:59Z",
+  "approval": "Owner: جميل. انشر — 2026-09-28 09:35 Asia/Riyadh",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/heathrow-20260928/card-1.jpg",
+      "sha256": "2387c45ce6a19e4dad156f1be53faacd5a8d900da9de27a08b7571082d63ef86",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q8691",
+        "official_site": "https://mediacentre.heathrow.com",
+        "source_url": "https://mediacentre.heathrow.com/image/details/22952",
+        "original_url": "https://mediacentre.heathrow.com/contents/archives/175/81/images/thumb1200x630_width/heathrow_17581988126223_thumb.jpg",
+        "download_url": "https://mediacentre.heathrow.com/contents/archives/175/81/images/thumb1200x630_width/heathrow_17581988126223_thumb.jpg",
+        "asset_id": "primary:a7fa6a4dff703e51ec769e34",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "e65ef0a87dc3c4f390796f3ea396f6e8fd23e441ee9ceb98eb0c87b0fbae01c2"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/heathrow-20260928/card-2.jpg",
+      "sha256": "bcf5f1a50a8cc9ddee10aa0311abb3e76dc30e08f07413f46e56fc481fc7ae5d",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q8691",
+        "official_site": "https://mediacentre.heathrow.com",
+        "source_url": "https://mediacentre.heathrow.com/pressrelease/detail/25020",
+        "original_url": "https://mediacentre.heathrow.com/contents/archives/175/81/images/thumb1280x1683_width/swns_heathrow_03_c59b3_thumb.jpg",
+        "download_url": "https://mediacentre.heathrow.com/contents/archives/175/81/images/thumb1280x1683_width/swns_heathrow_03_c59b3_thumb.jpg",
+        "asset_id": "primary:2a284b57c74d01586744c8aa",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "99a83655254bd3444c592394d9909d7083c2c3dd25cf431fb55f5749a22d2573"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/heathrow-20260928/card-3.jpg",
+      "sha256": "c0671630263e564d8d443b1e645a0e34053960743928808cb760b4b3bb7a1925",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q8691",
+        "official_site": "https://www.heathrow.com",
+        "source_url": "https://www.heathrow.com/company/about-heathrow/our-history",
+        "original_url": "https://www.heathrow.com/content/dam/heathrow/web/common/images/aspect-ratio-16-9/image/heathrow-75-annivesary/heathrow75-tents-XHHE00002.jpg/jcr:content/renditions/cq5dam.web.1680.945.jpeg",
+        "download_url": "https://www.heathrow.com/content/dam/heathrow/web/common/images/aspect-ratio-16-9/image/heathrow-75-annivesary/heathrow75-tents-XHHE00002.jpg/jcr:content/renditions/cq5dam.web.1680.945.jpeg",
+        "asset_id": "primary:23ba0527477809c592749552",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "554fbfe931564a46962c18b35aac9926f277c97737807ddb1152e891f4c37721"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/heathrow-20260928/card-4.jpg",
+      "sha256": "f1860f9c08225d6306d1b7e173ffcd02aa4c4261281a62d10ac502200f250c99",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q8691",
+        "official_site": "https://www.heathrow.com",
+        "source_url": "https://www.heathrow.com/company/about-heathrow/our-history",
+        "original_url": "https://www.heathrow.com/content/dam/heathrow/web/common/images/aspect-ratio-16-9/image/heathrow-75-annivesary/heathrow75-runway-view-XHHE00048.jpg/jcr:content/renditions/cq5dam.web.1680.945.jpeg",
+        "download_url": "https://www.heathrow.com/content/dam/heathrow/web/common/images/aspect-ratio-16-9/image/heathrow-75-annivesary/heathrow75-runway-view-XHHE00048.jpg/jcr:content/renditions/cq5dam.web.1680.945.jpeg",
+        "asset_id": "primary:548b9204c9c374b6078227b3",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "c6477773e37deb5ca95c02ca041f03f87181559e2175d4fa577356129f57623b"
+      }
+    }
+  ],
+  "predecessors": []
+}
