@@ -1,0 +1,44 @@
+name: Publish approved City penalties 20260930
+on:
+  push:
+    paths: ['.github/workflows/publish-city-penalties-20260930.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Publish approved City penalties 20260930-0925'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 1b9f8e4f81d3e0a09b0297954f4f326d0b66d5cf
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Restore unchanged approved bytes and check time
+        run: |
+          python - <<'PY'
+          import base64,json
+          from pathlib import Path
+          from datetime import datetime,timezone
+          p=Path('approved/city-penalties-20260930')
+          m=json.loads((p/'manifest.json').read_text())
+          now=datetime.now(timezone.utc)
+          assert datetime.fromisoformat(m['not_before'].replace('Z','+00:00')) <= now < datetime.fromisoformat(m['expires_at'].replace('Z','+00:00'))
+          for f in p.glob('*.jpg.b64'):
+              f.with_suffix('').write_bytes(base64.b64decode(f.read_text()))
+          PY
+      - name: Validate approved cards
+        run: python -m publishing_v2.bundle_api validate --manifest approved/city-penalties-20260930/manifest.json
+      - name: Publish saved package with quota and duplicate checks
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python -m publishing_v2.bundle_api publish --manifest approved/city-penalties-20260930/manifest.json
