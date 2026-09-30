@@ -65,9 +65,11 @@
       "predecessors": [],
       "identity": "9a279cce3c4be63b8d209a8adef3a7643be7e25180b52c5278785b06e21ff08b",
       "receipt_path": "api-receipts/9a279cce3c4be63b8d209a8adef3a7643be7e25180b52c5278785b06e21ff08b.json",
-      "status": "PENDING_FINAL_VERSION_AND_READABILITY_REVIEW",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 4
+      "card_count": 4,
+      "saved_post_id": "14a023c7-9f09-4685-80c4-84300de3bed7",
+      "saved_story_id": "49ef9eba-1747-471a-870f-4bf7186edc71"
     },
     {
       "path": "approved/ceer-20260922/manifest.json",
@@ -90,7 +92,8 @@
       "status": "POSTED",
       "reconciliation": null,
       "card_count": 4,
-      "saved_post_id": "c862cb68-c91b-4d7e-81de-16e96eb03770"
+      "saved_post_id": "c862cb68-c91b-4d7e-81de-16e96eb03770",
+      "saved_story_id": "04ca9933-b9fa-4849-8279-01ff701b136b"
     },
     {
       "path": "approved/coupons-20260916-v2/manifest.json",
@@ -165,9 +168,11 @@
       "predecessors": [],
       "identity": "80253d4b55acbac47e7dfd314353abb822048aef3a1f84b266a1349579536040",
       "receipt_path": "api-receipts/80253d4b55acbac47e7dfd314353abb822048aef3a1f84b266a1349579536040.json",
-      "status": "PENDING_FINAL_VERSION_AND_READABILITY_REVIEW",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 4
+      "card_count": 4,
+      "saved_post_id": "8083f295-d22a-4077-af5e-d9a58b9ad93c",
+      "saved_story_id": "15c4ca48-136e-4225-907b-f307c84a34b3"
     },
     {
       "path": "approved/mbappe-20260922/manifest.json",
@@ -187,9 +192,11 @@
       "predecessors": [],
       "identity": "1752670294534fcbd9c51654788aa4a0cf88c63d71471c97a2b7a6afd9a618b8",
       "receipt_path": "api-receipts/1752670294534fcbd9c51654788aa4a0cf88c63d71471c97a2b7a6afd9a618b8.json",
-      "status": "PENDING_FINAL_VERSION_AND_READABILITY_REVIEW",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 4
+      "card_count": 4,
+      "saved_post_id": "0fcdea81-5286-443b-ae17-771375742477",
+      "saved_story_id": "7ccb646f-8b1c-4727-a85e-2640b0a0a737"
     },
     {
       "path": "approved/michelin-20260920/manifest.json",
@@ -302,5 +309,6 @@
       "receipt_path": "api-receipts/f7975e9c15b9032db726ca4ce89ff09326c4a116dd6ea0f1ad8ddec3ee341a3d.json",
       "status": "HOLD_UNMAPPED_FINAL_MANIFEST"
     }
-  ]
+  ],
+  "updated_at": "2026-10-01T00:16:00+03:00"
 }
