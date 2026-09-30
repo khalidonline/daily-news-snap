@@ -1,0 +1,81 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "السيتي والعقوبات — نقاط وبطولات وهبوط",
+  "not_before": "2026-09-30T06:25:34Z",
+  "expires_at": "2026-09-30T20:59:59Z",
+  "approval": "Khalid approved copy and requested design and publish 2026-09-30 09:25 Asia/Riyadh; assistant visually reviewed final four cards; sources excluded",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/city-penalties-20260930/card-00.jpg",
+      "sha256": "a89fd4e15a97ef157128fb17e18d7d2d45d109a560bbf6fbb62c724557ea10b9",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q50602",
+        "official_site": "https://www.mancity.com",
+        "source_url": "https://www.mancity.com/club",
+        "original_url": "https://www.mancity.com/meta/media/ub2lcghm/stadium.jpg?height=576&mode=crop&width=1024",
+        "download_url": "https://www.mancity.com/meta/media/ub2lcghm/stadium.jpg?height=576&mode=crop&width=1024",
+        "asset_id": "primary:077c6a3c81c137122644d3c7",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "dadd0997b804717c9aa3e5d4971fb996a9f6d491789f01c14292fc6f6218136e"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/city-penalties-20260930/card-01.jpg",
+      "sha256": "a6622928050e2d28fc64a28bf22739593cb10b5e06127ee3d4958383ddfc1df1",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q9448",
+        "official_site": "https://www.premierleague.com",
+        "source_url": "https://www.premierleague.com/en/news/4311866",
+        "original_url": "https://resources.premierleague.pulselive.com/photo-resources/premierleague/photo/2025/05/18/87ba5680-fe2a-48ac-af10-a73659d58ff9/2215686763.jpg?height=800&width=1400",
+        "download_url": "https://resources.premierleague.pulselive.com/photo-resources/premierleague/photo/2025/05/18/87ba5680-fe2a-48ac-af10-a73659d58ff9/2215686763.jpg?height=800&width=1400",
+        "asset_id": "primary:a21a81ed49f00f4d273bd59d",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "41257933a16141f0dc11cbac82941646fa3c9779d603c34195ee8c49e027ade7"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/city-penalties-20260930/card-02.jpg",
+      "sha256": "6cfdeb19ba56fc58824b9def77d0575313a10cef41b5b27329e73b9067132631",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q1422",
+        "official_site": "https://www.juventus.com",
+        "source_url": "https://www.juventus.com/en/news/articles/press-release-closure-of-the-uefa-club-financial-control-body-proceedings",
+        "original_url": "https://www.juventus.com/images/image/private/t_editorial_landscape_12_desktop/f_auto/dev/vdyavxa3ee7sd3vmjbq2.jpg",
+        "download_url": "https://www.juventus.com/images/image/private/t_editorial_landscape_12_desktop/f_auto/dev/vdyavxa3ee7sd3vmjbq2.jpg",
+        "asset_id": "primary:05bcb5c6808a12bd95454127",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "30abb050c978d0c603f7ece8e82284b9cf92a968e6cd061197b70655059ad7fc"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/city-penalties-20260930/card-03.jpg",
+      "sha256": "c5dc38c1006781f512e97136667a2c3cfd673f15a5a7c58ecf97671765d9cc75",
+      "image": {
+        "provider": "commons",
+        "license": "Public domain",
+        "attribution_required": false,
+        "source_url": "https://commons.wikimedia.org/wiki/File:Rimini-juve3.jpg",
+        "asset_id": "Rimini-juve3.jpg",
+        "sha256": "7ca55d736cd2d5311400241a428f3a5e9a5ab863d7c1137c49fac92343c1908a"
+      }
+    }
+  ],
+  "predecessors": []
+}
