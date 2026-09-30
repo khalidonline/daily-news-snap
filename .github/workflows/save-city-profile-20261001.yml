@@ -1,0 +1,49 @@
+name: Save approved City to Public Profile
+on:
+  push:
+    paths:
+      - .github/workflows/save-city-profile-20261001.yml
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  save:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.event.head_commit.message == 'Save City profile story request 20261001'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e3fcbe52d8c706e0b5b54b22465013d38879f228
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline Saved Story safety tests
+        run: python -m unittest discover -s tests -p test_v2_saved_story_api.py
+      - name: Read current cost ledger without production calls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os,json,urllib.request,urllib.error,base64
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          day=datetime.now(ZoneInfo('Asia/Riyadh')).date().isoformat()
+          u='https://api.github.com/repos/khalidonline/daily-news-snap/contents/daily/'+day+'.json?ref=cost-ledger'
+          try:
+              r=json.load(urllib.request.urlopen(urllib.request.Request(u,headers={'Authorization':'Bearer '+os.environ['GITHUB_TOKEN'],'Accept':'application/vnd.github+json'})))
+              obj=json.loads(base64.b64decode(r['content']))
+              print('COST_LEDGER_DAY',day)
+              print(json.dumps(obj))
+          except urllib.error.HTTPError as e:
+              if e.code!=404: raise
+              print('COST_LEDGER_MISSING',day,'; total unknown; this archive run has zero paid model or production calls')
+          PY
+      - name: Verify source receipts quota and save once
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m publishing_v2.saved_story_api --approval approved/saved-stories/city-20261001.json
