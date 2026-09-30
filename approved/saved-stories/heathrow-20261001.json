@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "80253d4b55acbac47e7dfd314353abb822048aef3a1f84b266a1349579536040",
+  "manifest": "approved/heathrow-20260928/manifest.json",
+  "manifest_sha256": "6073f893ed88ca9b205243d27bcc47a53359c37ff80d42a6efab44594afd1a3a",
+  "expires_at": "2026-10-02T20:59:59Z",
+  "empty_profile_confirmation": "Owner confirmed profile empty 2026-10-01 00:01 Riyadh; all later saves journaled and checked against provider inventory.",
+  "approval": "Owner authorized previous final packages; original four cards visually checked, no later replacement identified. Verify live source receipts before save."
+}
