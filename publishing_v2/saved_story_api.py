@@ -89,7 +89,17 @@ def validate_archive(approval, source):
     manifest=json.loads(raw)
     if manifest.get('approved') is not True or manifest.get('account')!='executivesaudi': raise BundleError('Original package not approved')
     frames=manifest['media']
-    if not 1<=len(frames)<=10 or any(f.get('kind') not in ('info','story','topic') for f in frames): raise BundleError('Non-public archive media')
+    if not 1<=len(frames)<=10: raise BundleError('Invalid archive count')
+    selected=approval.get('public_indices',list(range(1,len(frames)+1)))
+    if not selected or selected!=sorted(set(selected)) or any(type(i) is not int or not 1<=i<=len(frames) for i in selected):
+        raise BundleError('Invalid public card selection')
+    reviewed=approval.get('reviewed_public_sha256',[])
+    for i,f in enumerate(frames,1):
+        if i in selected:
+            if f.get('kind') not in ('info','story','topic') and not (f.get('kind') is None and f['sha256'] in reviewed):
+                raise BundleError('Non-public archive media')
+        elif f.get('kind')!='credits':
+            raise BundleError('Cannot omit story content')
     hashes=[]
     for f in frames:
         p=Path(f['path'])
@@ -103,7 +113,7 @@ def validate_archive(approval, source):
     if source.get('reconciliation') or set(k for k in source if k.isdigit())!={str(i+1) for i in range(len(frames))}: raise BundleError('Source receipt not final')
     rows=[source[str(i+1)] for i in range(len(frames))]
     if any(r.get('status')!='POSTED' or not r.get('post_id') or not r.get('upload_id') for r in rows): raise BundleError('Incomplete original publication')
-    return identity,manifest['title'],rows
+    return identity,approval.get('title') or manifest['title'],[rows[i-1] for i in selected]
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--approval',required=True);a=p.parse_args()
