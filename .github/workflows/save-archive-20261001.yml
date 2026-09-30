@@ -1,0 +1,31 @@
+name: Save reviewed Armani and Heathrow
+on:
+  push:
+    paths:
+      - .github/workflows/save-archive-20261001.yml
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  save:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.event.head_commit.message == 'Save reviewed archive request 20261001'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 29ce06d805c81d0f0cd9bd2a316be94c763f282e
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p test_v2_saved_story_api.py
+      - name: Save separate approved stories with per-story quota and reconciliation
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python -m publishing_v2.saved_story_api --approval approved/saved-stories/armani-20261001.json
+          python -m publishing_v2.saved_story_api --approval approved/saved-stories/heathrow-20261001.json
