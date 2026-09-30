@@ -107,7 +107,10 @@ class BundleClient:
         payload = {'teamId':self.team, 'title':title[:100],
                    'postDate':datetime.now(timezone.utc).isoformat(), 'status':'SCHEDULED',
                    'socialAccountTypes':['SNAPCHAT'],
-                   'data':{'SNAPCHAT':{'type':'STORY','uploadIds':[upload]}}}
+                   # Owner requested one-week visibility, 30 Sep 2026.
+                   # This is Snap lifetime, not manifest approval expiry.
+                   'data':{'SNAPCHAT':{'type':'STORY','uploadIds':[upload],
+                                       'storyDuration':'ONE_WEEK'}}}
         result = self.call('/post', 'POST', json.dumps(payload).encode())
         if not result.get('id'): raise BundleError('Create returned no ID; manual reconciliation required')
         return result['id']
