@@ -1383,16 +1383,14 @@ def _render_frame(path, kicker, counter, big, big_size, sub,
 
     if sub:
         y += 46
-        # longer frames are allowed now, so shrink until the text fits the space
+        # Body readability is a requirement, not leftover space. If it does
+        # not fit at 44px, render_frame retries with a smaller photo. Never
+        # silently compress the actual story into a tiny caption.
         available = bottom - y - punch_block
-        sub_size, line_gap = 42, 60
-        while True:
-            f_sub = load_font(sub_size, bold=sub_colour == ACCENT)
-            lines = _wrap(draw, sub, f_sub, max_w, kw)
-            line_gap = int(sub_size * 1.42)
-            if len(lines) * line_gap <= available or sub_size == 28:
-                break
-            sub_size -= 2
+        sub_size = 44
+        f_sub = load_font(sub_size, bold=sub_colour == ACCENT)
+        lines = _wrap(draw, sub, f_sub, max_w, kw)
+        line_gap = int(sub_size * 1.42)
         if len(lines) * line_gap > available:
             raise StoryLayoutError('story_body_exceeds_footer_clearance')
         for line in lines:
@@ -2511,3 +2509,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
