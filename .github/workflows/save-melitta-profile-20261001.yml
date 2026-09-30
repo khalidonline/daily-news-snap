@@ -1,0 +1,29 @@
+name: Save approved Melitta to Public Profile
+on:
+  push:
+    paths:
+      - .github/workflows/save-melitta-profile-20261001.yml
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  save:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.event.head_commit.message == 'Save Melitta profile story request 20261001'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e63e531fddc2388d68dbe5e2b19729ca155694d2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p test_v2_saved_story_api.py
+      - name: Save exact uploaded Melitta media once
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m publishing_v2.saved_story_api --approval approved/saved-stories/melitta-20261001.json
