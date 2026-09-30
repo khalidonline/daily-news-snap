@@ -1,0 +1,148 @@
+[
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "identity": "43d48833255b3cef53353ba45b01aa3078135ee457cf43b17869362cbef888de",
+    "manifest": "approved/hadjar-20260923-revised/manifest.json",
+    "manifest_sha256": "d2f83ecc195aa2e46f329c0540907c3e94ee1ec4684519368be02cef9e5a59a7",
+    "title": "إيزاك هادجار.. من الكارتينج إلى منصة التتويج",
+    "expires_at": "2026-10-02T20:59:59Z",
+    "empty_profile_confirmation": "Owner confirmed empty Public Profile 2026-10-01T00:01:23+03:00; subsequent saves tracked by saved-story-receipts and live provider inventory.",
+    "authorization": "Owner explicitly authorized all seven nominated previous packages: احفظ المرشحه كلها. Archive only, exact original media, no daily repost.",
+    "public_indices": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "reviewed_public_sha256": []
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "identity": "964912d2996b332abbc6d8eb93e02e4a0841696dd262dd7e22fd940a343bb340",
+    "manifest": "approved/mbappe-20260922/manifest.json",
+    "manifest_sha256": "bc637031239b664ca9e7e424dcff39370c0d33c3859b16334188119477f1a40b",
+    "title": "ملخص تنفيذي — قصة مبابي",
+    "expires_at": "2026-10-02T20:59:59Z",
+    "empty_profile_confirmation": "Owner confirmed empty Public Profile 2026-10-01T00:01:23+03:00; subsequent saves tracked by saved-story-receipts and live provider inventory.",
+    "authorization": "Owner explicitly authorized all seven nominated previous packages: احفظ المرشحه كلها. Archive only, exact original media, no daily repost.",
+    "public_indices": [
+      1,
+      2,
+      3
+    ],
+    "reviewed_public_sha256": []
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "identity": "7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c",
+    "manifest": "approved/ceer-20260922/manifest.json",
+    "manifest_sha256": "bb80ff19c1b2b72b1eb06d05f817073e70e3c28e6d50b99526bc6380f1a2c72c",
+    "title": "سير.. من التأسيس إلى أول سياراتها",
+    "expires_at": "2026-10-02T20:59:59Z",
+    "empty_profile_confirmation": "Owner confirmed empty Public Profile 2026-10-01T00:01:23+03:00; subsequent saves tracked by saved-story-receipts and live provider inventory.",
+    "authorization": "Owner explicitly authorized all seven nominated previous packages: احفظ المرشحه كلها. Archive only, exact original media, no daily repost.",
+    "public_indices": [
+      1,
+      2,
+      3
+    ],
+    "reviewed_public_sha256": []
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "identity": "1c47e0dc46f8ed828b1a6546262f7120d61bff46bb7442d963da5f7e475299be",
+    "manifest": "approved/taif-roses-20260917/manifest.json",
+    "manifest_sha256": "c6478dbde10db96eb2904464e62e95873c15da657907c5af401b56ad6d6a3d17",
+    "title": "ملخص تنفيذي — الورد الطائفي",
+    "expires_at": "2026-10-02T20:59:59Z",
+    "empty_profile_confirmation": "Owner confirmed empty Public Profile 2026-10-01T00:01:23+03:00; subsequent saves tracked by saved-story-receipts and live provider inventory.",
+    "authorization": "Owner explicitly authorized all seven nominated previous packages: احفظ المرشحه كلها. Archive only, exact original media, no daily repost.",
+    "public_indices": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "reviewed_public_sha256": [
+      "9845672115f4af3683929f1674cc6b683c28035a6fe73fbf80bf22aacfd05ca7",
+      "7f3d7cd7513d4ae141822e14fe3001db8c9ef23a3204f6a20f213e80f3edcd5a",
+      "a3526b9a67a07e60fe2beef049773a65b0de5a2a007fc9f03cc03c717684ff0e",
+      "6145a9d2dc5e7b022da4626a7c63175589d0b17a0c99168d1c06c5c01ec4f032"
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "identity": "67212aad660cd4d651d199507c4062828b8ccb9d16eead64b17f28937ccc556f",
+    "manifest": "approved/coupons-20260916-v2/manifest.json",
+    "manifest_sha256": "5e60e0e5b8ba627ad186dcce090b9551004bbaf16de674aca75a1ab903bfdc3c",
+    "title": "ملخص تنفيذي — قصة الكوبونات — 16 سبتمبر 2026",
+    "expires_at": "2026-10-02T20:59:59Z",
+    "empty_profile_confirmation": "Owner confirmed empty Public Profile 2026-10-01T00:01:23+03:00; subsequent saves tracked by saved-story-receipts and live provider inventory.",
+    "authorization": "Owner explicitly authorized all seven nominated previous packages: احفظ المرشحه كلها. Archive only, exact original media, no daily repost.",
+    "public_indices": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "reviewed_public_sha256": [
+      "f45edad0d17780df1a230e7bb5130e9ea76a6509fd21a6e2f0d7ad7c1c25ca02",
+      "facd1f4209c269d033acf99f56ae2afcd36e870356a6bba5ea9848365b90f2b0",
+      "0283e6bd63e9f05c390a386bea3f81d40197999af8cf929affe913065bff347c",
+      "1f0a0406626e227c251e529ebb376019c7593a07ee3ce96fbcf8a3b5544ae676"
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "identity": "3589df13858971844cb90f9ed5f9d78b441db3e66909676182ab98f71a45c96b",
+    "manifest": "approved/premium-economy-20260915/manifest.json",
+    "manifest_sha256": "98952447b5ace371d76b5e4da14f352b373b76a033ec7a789f07a4702fb13897",
+    "title": "السياحية الممتازة — ملخص تنفيذي",
+    "expires_at": "2026-10-02T20:59:59Z",
+    "empty_profile_confirmation": "Owner confirmed empty Public Profile 2026-10-01T00:01:23+03:00; subsequent saves tracked by saved-story-receipts and live provider inventory.",
+    "authorization": "Owner explicitly authorized all seven nominated previous packages: احفظ المرشحه كلها. Archive only, exact original media, no daily repost.",
+    "public_indices": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "reviewed_public_sha256": [
+      "ba3a1e0dea4579ed172e21e2995528b100d3b305ac017d2dc2b7f3b19207d80d",
+      "79cdc4746443fbe2d5d348df20d52df2ee90bc838c438d398b2d9c0dc673e008",
+      "3254a394ce05381637807db1a8db5ac8decc0ce2425b444c2ee560eabcefd9ec",
+      "081d6752bf37fb1ce75f6c136020ffe82d85b3d095bcb24e4208eb61549d4728"
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "identity": "3a712aa4d308d9de2564be77efb788f4e3cce0c873ea982daef8d49c47ee887a",
+    "manifest": "approved/foldable-20260914-revised/manifest.json",
+    "manifest_sha256": "6290dc37df9d2ddacc6ac28a2be4071e2d09aabab717bd660616acf69daf201e",
+    "title": "الشاشات القابلة للطي",
+    "expires_at": "2026-10-02T20:59:59Z",
+    "empty_profile_confirmation": "Owner confirmed empty Public Profile 2026-10-01T00:01:23+03:00; subsequent saves tracked by saved-story-receipts and live provider inventory.",
+    "authorization": "Owner explicitly authorized all seven nominated previous packages: احفظ المرشحه كلها. Archive only, exact original media, no daily repost.",
+    "public_indices": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "reviewed_public_sha256": [
+      "eec17e2f535c85108cfea43cd9a645322483f7eaea5239bf21630c6bd36b4841",
+      "7d9fcdf5e14a86664c7d92a5539639c6172b761c749525df834670c57f05b7a9",
+      "5a16c7ea2f70fb96347ca7357317a4666409d195934c0b6cfee4f221c1752ac6",
+      "8963b64f0e9dfa1bcbf3b91feb8f0ff0b32d4788c5cbeda01babeca3f3122017",
+      "9841b82119da2139b1f63bba2329d405940270a77c55ac940dbefe5b4a3c1383"
+    ]
+  }
+]
