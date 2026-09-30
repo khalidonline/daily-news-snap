@@ -78,12 +78,16 @@
       "predecessors": [],
       "identity": "7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c",
       "receipt_path": "api-receipts/7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c.json",
-      "status": "ARCHIVE_APPROVED_PENDING_PROVIDER",
+      "status": "POSTED",
       "reconciliation": null,
       "card_count": 3,
       "archive_approval": "approved/archive-seven-20261001.json",
       "archive_card_count": 3,
-      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104"
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104",
+      "saved_post_id": "62a38d5a-f9f9-4153-a28e-0d1d62718316",
+      "saved_story_id": "f86f4196-cb1c-408e-a81f-6622f2344c3b",
+      "saved_card_count": 3,
+      "confirmed_at": "2026-09-30T21:28:32.983713+00:00"
     },
     {
       "path": "approved/city-penalties-20260930/manifest.json",
@@ -105,12 +109,16 @@
       "predecessors": [],
       "identity": "67212aad660cd4d651d199507c4062828b8ccb9d16eead64b17f28937ccc556f",
       "receipt_path": "api-receipts/67212aad660cd4d651d199507c4062828b8ccb9d16eead64b17f28937ccc556f.json",
-      "status": "ARCHIVE_APPROVED_PENDING_PROVIDER",
+      "status": "POSTED",
       "reconciliation": null,
       "card_count": 4,
       "archive_approval": "approved/archive-seven-20261001.json",
       "archive_card_count": 4,
-      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104"
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104",
+      "saved_post_id": "d4908016-cb8c-433d-ae41-a1293291ed44",
+      "saved_story_id": "f75bf9b4-6632-4081-b059-8b2ef46cd2f2",
+      "saved_card_count": 4,
+      "confirmed_at": "2026-09-30T21:30:05.223487+00:00"
     },
     {
       "path": "approved/disney-oswald-20260930/manifest.json",
@@ -141,12 +149,16 @@
       "predecessors": [],
       "identity": "3a712aa4d308d9de2564be77efb788f4e3cce0c873ea982daef8d49c47ee887a",
       "receipt_path": "api-receipts/3a712aa4d308d9de2564be77efb788f4e3cce0c873ea982daef8d49c47ee887a.json",
-      "status": "ARCHIVE_APPROVED_PENDING_PROVIDER",
+      "status": "POSTED",
       "reconciliation": null,
       "card_count": 5,
       "archive_approval": "approved/archive-seven-20261001.json",
       "archive_card_count": 5,
-      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104"
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104",
+      "saved_post_id": "0b972575-d015-424c-a933-ab5e49c88cb7",
+      "saved_story_id": "4597e0b1-76db-4295-b6f0-ee7f9de95223",
+      "saved_card_count": 5,
+      "confirmed_at": "2026-09-30T21:32:00.767492+00:00"
     },
     {
       "path": "approved/hadjar-20260923-revised/manifest.json",
@@ -155,12 +167,16 @@
       "predecessors": [],
       "identity": "43d48833255b3cef53353ba45b01aa3078135ee457cf43b17869362cbef888de",
       "receipt_path": "api-receipts/43d48833255b3cef53353ba45b01aa3078135ee457cf43b17869362cbef888de.json",
-      "status": "ARCHIVE_APPROVED_PENDING_PROVIDER",
+      "status": "POSTED",
       "reconciliation": null,
       "card_count": 4,
       "archive_approval": "approved/archive-seven-20261001.json",
       "archive_card_count": 4,
-      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104"
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104",
+      "saved_post_id": "b13274da-7450-44c1-83e3-fa48b49c3a35",
+      "saved_story_id": "ddfc6257-6e2a-4466-af99-7b1ec5e1f11f",
+      "saved_card_count": 4,
+      "confirmed_at": "2026-09-30T21:26:58.496120+00:00"
     },
     {
       "path": "approved/hadjar-20260923/manifest.json",
@@ -193,12 +209,16 @@
       "predecessors": [],
       "identity": "964912d2996b332abbc6d8eb93e02e4a0841696dd262dd7e22fd940a343bb340",
       "receipt_path": "api-receipts/964912d2996b332abbc6d8eb93e02e4a0841696dd262dd7e22fd940a343bb340.json",
-      "status": "ARCHIVE_APPROVED_PENDING_PROVIDER",
+      "status": "POSTED",
       "reconciliation": null,
       "card_count": 4,
       "archive_approval": "approved/archive-seven-20261001.json",
       "archive_card_count": 3,
-      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104"
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104",
+      "saved_post_id": "6d7d4b11-74bf-4b9b-98e5-93b3d99fb374",
+      "saved_story_id": "2581643b-90ad-4b9f-83b8-ae3d65611b8a",
+      "saved_card_count": 3,
+      "confirmed_at": "2026-09-30T21:27:41.426151+00:00"
     },
     {
       "path": "approved/melitta-20260929/manifest.json",
@@ -253,12 +273,16 @@
       "predecessors": [],
       "identity": "3589df13858971844cb90f9ed5f9d78b441db3e66909676182ab98f71a45c96b",
       "receipt_path": "api-receipts/3589df13858971844cb90f9ed5f9d78b441db3e66909676182ab98f71a45c96b.json",
-      "status": "ARCHIVE_APPROVED_PENDING_PROVIDER",
+      "status": "POSTED",
       "reconciliation": null,
       "card_count": 4,
       "archive_approval": "approved/archive-seven-20261001.json",
       "archive_card_count": 4,
-      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104"
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104",
+      "saved_post_id": "f64ca10e-551b-466e-b6bb-3034f6b1aa90",
+      "saved_story_id": "8803e943-a573-4c15-8a83-32c6c7fada61",
+      "saved_card_count": 4,
+      "confirmed_at": "2026-09-30T21:31:01.511255+00:00"
     },
     {
       "path": "approved/silent-hill-revision-20260926/manifest.json",
@@ -277,12 +301,16 @@
       "predecessors": [],
       "identity": "1c47e0dc46f8ed828b1a6546262f7120d61bff46bb7442d963da5f7e475299be",
       "receipt_path": "api-receipts/1c47e0dc46f8ed828b1a6546262f7120d61bff46bb7442d963da5f7e475299be.json",
-      "status": "ARCHIVE_APPROVED_PENDING_PROVIDER",
+      "status": "POSTED",
       "reconciliation": null,
       "card_count": 4,
       "archive_approval": "approved/archive-seven-20261001.json",
       "archive_card_count": 4,
-      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104"
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36779367104",
+      "saved_post_id": "30287425-2726-43d8-8509-2964cd83a6ad",
+      "saved_story_id": "7fd04819-97fd-4e6d-884f-e90bcc0a48ff",
+      "saved_card_count": 4,
+      "confirmed_at": "2026-09-30T21:29:20.018942+00:00"
     }
   ],
   "unmapped_receipts": [
@@ -331,5 +359,5 @@
       "status": "HOLD_UNMAPPED_FINAL_MANIFEST"
     }
   ],
-  "updated_at": "2026-09-30T21:26:08.473Z"
+  "updated_at": "2026-09-30T21:32:40.201Z"
 }
