@@ -45,3 +45,30 @@ class Tests(unittest.TestCase):
         c,j=Client(),Journal();j.state={'identity':'identity','upload_ids':['different']}
         with self.assertRaises(BundleError):save_story(c,j,'identity','title',['a'])
 if __name__=='__main__':unittest.main()
+
+class ArchiveTests(unittest.TestCase):
+    def test_reviewed_legacy_and_credit_selection(self):
+        import tempfile, os, json, hashlib
+        from pathlib import Path
+        from publishing_v2.saved_story_api import validate_archive
+        cwd=os.getcwd()
+        with tempfile.TemporaryDirectory() as d:
+            try:
+                os.chdir(d)
+                frames=[]
+                for i,kind in enumerate([None,'story','credits']):
+                    data=str(i).encode();Path(f'{i}.jpg').write_bytes(data)
+                    f={'path':f'{i}.jpg','sha256':hashlib.sha256(data).hexdigest()}
+                    if kind:f['kind']=kind
+                    frames.append(f)
+                raw=json.dumps({'approved':True,'account':'executivesaudi','title':'t','media':frames}).encode()
+                Path('manifest.json').write_bytes(raw)
+                identity=hashlib.sha256(('executivesaudi:'+':'.join(f['sha256'] for f in frames)).encode()).hexdigest()
+                a={'approved':True,'account':'executivesaudi','empty_profile_confirmation':'owner baseline',
+                   'expires_at':'2099-01-01T00:00:00Z','manifest':'manifest.json','manifest_sha256':hashlib.sha256(raw).hexdigest(),
+                   'identity':identity,'public_indices':[1,2],'reviewed_public_sha256':[frames[0]['sha256']]}
+                source={str(i):{'status':'POSTED','post_id':str(i),'upload_id':str(i)} for i in range(1,4)}
+                self.assertEqual([r['upload_id'] for r in validate_archive(a,source)[2]],['1','2'])
+                for changes in [{'public_indices':[1,2,3]},{'public_indices':[1]},{'public_indices':[2,1]},{'reviewed_public_sha256':[]}]:
+                    with self.assertRaises(BundleError):validate_archive(dict(a,**changes),source)
+            finally:os.chdir(cwd)
