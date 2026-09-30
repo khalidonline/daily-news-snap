@@ -1,0 +1,81 @@
+name: Publish approved Disney one week
+on:
+  push:
+    paths: ['.github/workflows/disney-approved-20260930.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Publish approved Disney ONE_WEEK 20260930'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: d730234084b8ea51d08cb4ba3281c632e96036b0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Verify one-week boundary and publisher protections
+        run: python -m unittest tests.test_v2_story_duration tests.test_v2_bundle
+      - name: Decode and validate approved files
+        run: |
+          python - <<'PY'
+          import base64,json
+          from pathlib import Path
+          from datetime import datetime,timezone
+          p=Path('approved/disney-oswald-20260930')
+          for f in p.glob('*.jpg.b64'):
+              f.with_suffix('').write_bytes(base64.b64decode(f.read_text(),validate=True))
+          m=json.loads((p/'manifest.json').read_text())
+          now=datetime.now(timezone.utc)
+          assert datetime.fromisoformat(m['not_before'].replace('Z','+00:00')) <= now < datetime.fromisoformat(m['expires_at'].replace('Z','+00:00'))
+          assert m['story_duration']=='ONE_WEEK'
+          PY
+          python -m publishing_v2.bundle_api validate --manifest approved/disney-oswald-20260930/manifest.json
+      - name: Publish with guarded duration and confirm provider settings
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,check_predecessors,publish
+          class WeekClient(BundleClient):
+              def call(self,path,method='GET',data=None,content_type='application/json'):
+                  if path=='/post' and method=='POST':
+                      p=json.loads(data)
+                      assert p['data']['SNAPCHAT']['storyDuration']=='ONE_WEEK'
+                      print('PRE-SEND verified storyDuration=ONE_WEEK')
+                  return super().call(path,method,data,content_type)
+          path='approved/disney-oswald-20260930/manifest.json'
+          m=json.loads(Path(path).read_text())
+          now=datetime.now(timezone.utc)
+          assert datetime.fromisoformat(m['not_before'].replace('Z','+00:00')) <= now < datetime.fromisoformat(m['expires_at'].replace('Z','+00:00'))
+          ident,title,media=load_package(path)
+          check_predecessors(m.get('predecessors',[]))
+          client=WeekClient();client.check()
+          journal=GitHubJournal(ident)
+          print('Existing journal entries:',len(journal.read()))
+          publish(client,journal,title,media)
+          state=journal.read()
+          report=[]
+          for key,row in state.items():
+              if not key.isdigit():continue
+              receipt=client.call('/post/'+row['post_id'])
+              duration=(receipt.get('data') or {}).get('SNAPCHAT',{}).get('storyDuration')
+              report.append(dict(card=key,id=row['post_id'],status=receipt.get('status'),storyDuration=duration))
+          print(json.dumps(report))
+          assert len(report)==4 and all(r['status']=='POSTED' for r in report)
+          assert len({r['id'] for r in report})==4
+          if not all(r['storyDuration']=='ONE_WEEK' for r in report):
+              raise RuntimeError('POSTED confirmed but provider duration echo unconfirmed: do not repost')
+          state['duration_verification']={'storyDuration':'ONE_WEEK','checked_at':datetime.now(timezone.utc).isoformat(),'posts':report}
+          journal.save(state)
+          PY
