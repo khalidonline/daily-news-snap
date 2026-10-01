@@ -1,0 +1,45 @@
+name: Save finalized archives 20261001
+on:
+  push:
+    paths: ['.github/workflows/save-final-archives-20261001.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  save:
+    if: github.event.head_commit.message == 'Save nine final archives 20261001 owner authorized'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 251293cc9ec96600b1f9c45a6389c2568c70bed1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify archive guards in complete checkout
+        env:
+          PYTHONPATH: .:review/archive-final-20261001
+        run: |
+          python -m unittest discover -s review/archive-final-20261001 -p test_archive.py
+          python -m unittest discover -s tests -p test_v2_saved_story_api.py
+      - name: Verify current Saved Story schema
+        run: |
+          python - <<'PY'
+          import urllib.request,json
+          req=urllib.request.Request('https://api.bundle.social/swagger-json',headers={'User-Agent':'ExecutiveSaudiPublisher/1.0'})
+          doc=json.load(urllib.request.urlopen(req,timeout=45))
+          schemas=doc['components']['schemas']
+          matches=[k for k,v in schemas.items() if 'SAVED_STORY' in json.dumps(v) and 'uploadIds' in json.dumps(v) and 'title' in json.dumps(v)]
+          assert matches, 'Saved Story schema could not be verified'
+          print('Saved Story schema verified:',matches)
+          PY
+      - name: Save nine independent archive editions
+        env:
+          PYTHONPATH: .
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -u review/archive-final-20261001/archive_batch.py review/archive-final-20261001/approval.json
