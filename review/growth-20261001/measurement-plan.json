@@ -1,0 +1,237 @@
+{
+  "date": "2026-10-01",
+  "account": "executivesaudi",
+  "status": "DESIGN_AND_READ_ONLY_PROBE_COMPLETE_NOT_AUTOMATED",
+  "goal": "Grow organic viewers and followers with stronger stories while preserving $3/day project cap.",
+  "evidence": {
+    "run": "https://github.com/khalidonline/daily-news-snap/actions/runs/36856794629",
+    "read_only": true,
+    "paid_model_requests": 0,
+    "metrics": [
+      {
+        "entity": "profile",
+        "observed_at": "2026-10-01T11:40:21.457157+00:00",
+        "items": [
+          {
+            "views": 1399,
+            "viewsUnique": 273,
+            "impressions": 1399,
+            "impressionsUnique": 273,
+            "likes": 0,
+            "comments": 2,
+            "followers": 6,
+            "createdAt": "2026-09-02T13:16:13.359Z",
+            "updatedAt": "2026-09-02T13:16:13.359Z"
+          },
+          {
+            "views": 1394,
+            "viewsUnique": 271,
+            "impressions": 1394,
+            "impressionsUnique": 271,
+            "likes": 0,
+            "comments": 2,
+            "followers": 6,
+            "createdAt": "2026-09-01T13:11:11.612Z",
+            "updatedAt": "2026-09-01T13:11:11.612Z"
+          },
+          {
+            "views": 1389,
+            "viewsUnique": 266,
+            "impressions": 1389,
+            "impressionsUnique": 266,
+            "likes": 0,
+            "comments": 2,
+            "followers": 6,
+            "createdAt": "2026-08-31T13:06:11.253Z",
+            "updatedAt": "2026-08-31T13:06:11.253Z"
+          }
+        ],
+        "row_count": 31,
+        "raw_available": false
+      },
+      {
+        "entity": "e11a2530-329c-4a45-90ab-4311be804f8a",
+        "observed_at": "2026-10-01T11:40:22.727494+00:00",
+        "items": [
+          {
+            "views": 0,
+            "viewsUnique": 0,
+            "impressions": 0,
+            "impressionsUnique": 0,
+            "shares": 0,
+            "saves": 0,
+            "likes": 0,
+            "comments": 0,
+            "createdAt": "2026-10-01T07:07:18.976Z",
+            "updatedAt": "2026-10-01T07:07:18.976Z"
+          }
+        ],
+        "row_count": 1,
+        "raw_available": false
+      },
+      {
+        "entity": "31b4b52d-8c8d-42f2-8ca2-9d8200869425",
+        "observed_at": "2026-10-01T11:40:23.328659+00:00",
+        "items": [
+          {
+            "views": 0,
+            "viewsUnique": 0,
+            "impressions": 0,
+            "impressionsUnique": 0,
+            "shares": 0,
+            "saves": 0,
+            "likes": 0,
+            "comments": 0,
+            "createdAt": "2026-10-01T07:07:52.701Z",
+            "updatedAt": "2026-10-01T07:07:52.701Z"
+          }
+        ],
+        "row_count": 1,
+        "raw_available": false
+      },
+      {
+        "entity": "1632421a-0e0a-4e4c-8859-6f038c1865f0",
+        "observed_at": "2026-10-01T11:40:26.322689+00:00",
+        "items": [
+          {
+            "views": 0,
+            "viewsUnique": 0,
+            "impressions": 0,
+            "impressionsUnique": 0,
+            "shares": 0,
+            "saves": 0,
+            "likes": 0,
+            "comments": 0,
+            "createdAt": "2026-10-01T07:08:25.861Z",
+            "updatedAt": "2026-10-01T07:08:25.861Z"
+          }
+        ],
+        "row_count": 1,
+        "raw_available": false
+      },
+      {
+        "entity": "1295c3d3-b37a-45fd-9e22-00d10e8919ea",
+        "observed_at": "2026-10-01T11:40:26.693058+00:00",
+        "items": [
+          {
+            "views": 0,
+            "viewsUnique": 0,
+            "impressions": 0,
+            "impressionsUnique": 0,
+            "shares": 0,
+            "saves": 0,
+            "likes": 0,
+            "comments": 0,
+            "createdAt": "2026-10-01T07:08:58.811Z",
+            "updatedAt": "2026-10-01T07:08:58.811Z"
+          }
+        ],
+        "row_count": 1,
+        "raw_available": false
+      },
+      {
+        "entity": "2a74b2bd-1439-4730-a9d7-1da91f1765b5",
+        "observed_at": "2026-10-01T11:40:27.810018+00:00",
+        "items": [
+          {
+            "views": 0,
+            "viewsUnique": 0,
+            "impressions": 0,
+            "impressionsUnique": 0,
+            "shares": 0,
+            "saves": 0,
+            "likes": 0,
+            "comments": 0,
+            "createdAt": "2026-10-01T09:09:50.864Z",
+            "updatedAt": "2026-10-01T09:09:50.864Z"
+          }
+        ],
+        "row_count": 1,
+        "raw_available": false
+      },
+      {
+        "entity": "0ab440cb-8f95-4be3-9049-f02b688fa675",
+        "observed_at": "2026-10-01T11:40:28.527390+00:00",
+        "items": [
+          {
+            "views": 0,
+            "viewsUnique": 0,
+            "impressions": 0,
+            "impressionsUnique": 0,
+            "shares": 0,
+            "saves": 0,
+            "likes": 0,
+            "comments": 0,
+            "createdAt": "2026-10-01T09:10:46.206Z",
+            "updatedAt": "2026-10-01T09:10:46.206Z"
+          }
+        ],
+        "row_count": 1,
+        "raw_available": false
+      }
+    ],
+    "caveats": [
+      "Post metrics were zero with timestamps identical to record creation; do not interpret as verified zero audience.",
+      "Profile response returned 31 items, only last three sampled; these are older rows, not current follower count.",
+      "Generic provider zeros may mean unsupported/unrefreshed metric. Preserve availability separately from value.",
+      "Daily STORY and SAVED_STORY are distinct placements; do not sum unique audience across placements.",
+      "Nespresso manual replacement must be mapped to its own post ID before calculating full daily-package progression."
+    ]
+  },
+  "proposed_measurement": {
+    "windows_hours": [
+      24,
+      168
+    ],
+    "dimensions": [
+      "package identity",
+      "edition",
+      "post ID",
+      "card order",
+      "placement",
+      "actual posted_at",
+      "provider updated_at",
+      "observation time"
+    ],
+    "metrics": [
+      "unique viewers when supported",
+      "views",
+      "card progression proxy",
+      "shares when supported",
+      "new follows when attributable",
+      "average view time when supported"
+    ],
+    "rules": [
+      "Last-card / first-card count is a descriptive progression proxy, not a proven same-person completion rate.",
+      "Never replace unavailable with zero.",
+      "Compare matched exposure ages, similar length/topic; separate paid/organic.",
+      "No claimed follower attribution without a supported metric.",
+      "Treat small samples as inconclusive."
+    ]
+  },
+  "next_experiment": {
+    "change": "One clear discovery in the opening; shorten copy rather than shrink font.",
+    "hold_constant": [
+      "card count where appropriate",
+      "photo quality",
+      "publication slot"
+    ],
+    "readout": "Compare first-to-second-card progression and last-to-first-card proxy at 24h across several comparable packages; validate availability first."
+  },
+  "proposed_features": [
+    "Trial a short Spotlight adaptation of a strong existing story after editorial approval; reuse real assets without paid generation.",
+    "Keep Saved Stories independent with readable covers and descriptive titles.",
+    "Optional sharing request separated visually from the story ending; do not repeat it in every package.",
+    "Test publication time in a separate later experiment, not alongside opening redesign."
+  ],
+  "sources": [
+    "https://help.snapchat.com/hc/en-us/articles/24892451593108-Viewing-and-Understanding-Analytics",
+    "https://developers.snap.com/marketing-api/Public-Profile-API/Metrics"
+  ],
+  "not_done": [
+    "No ongoing analytics collector enabled.",
+    "No new Spotlight published.",
+    "No new paid promotion or model request.",
+    "No claim of measured growth."
+  ]
+}
