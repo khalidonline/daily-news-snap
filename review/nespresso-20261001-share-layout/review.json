@@ -1,0 +1,9 @@
+{
+  "package": "nespresso-20261001",
+  "card_index": 3,
+  "sha256": "5ba6ada5f9fd7ebd0f1bd43fcb84826c4ee5b55a82ef349a9373173faacc06ca",
+  "reason": "Owner requested standalone navy regular share line separated from red closing",
+  "public_action": "manual replacement by owner; not published by assistant",
+  "source_manifest": "approved/nespresso-20261001/manifest.json",
+  "paid_model_requests": 0
+}
