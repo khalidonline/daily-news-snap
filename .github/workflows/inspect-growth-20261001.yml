@@ -6,19 +6,32 @@ permissions:
   contents: read
 jobs:
   inspect:
-    if: github.event.head_commit.message == 'Inspect Snapchat analytics capabilities 20261001'
+    if: github.event.head_commit.message == 'Read Snapchat analytics baseline 20261001'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: d476b0a7082777c7b9457f6ddebf6d33dfe669d0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Inspect documented read-only metrics routes
+      - name: Read aggregate baseline without refresh or mutations
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
         run: |
           python - <<'PY'
-          import json,urllib.request
-          req=urllib.request.Request('https://api.bundle.social/swagger-json',headers={'User-Agent':'ExecutiveSaudiPublisher/1.0'})
-          doc=json.load(urllib.request.urlopen(req,timeout=45))
-          for path,ops in doc.get('paths',{}).items():
-            if any(x in path.lower() for x in ('analytic','insight','statistic','metric')):
-              print('ROUTE',json.dumps({'path':path,'get':ops.get('get')},ensure_ascii=False))
+          import json,urllib.parse
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,HTTPFailure
+          c=BundleClient();c.check()
+          jobs=[('profile','/analytics/social-account?'+urllib.parse.urlencode({'teamId':c.team,'platformType':'SNAPCHAT'}))]
+          ids=['e11a2530-329c-4a45-90ab-4311be804f8a','31b4b52d-8c8d-42f2-8ca2-9d8200869425','1632421a-0e0a-4e4c-8859-6f038c1865f0','1295c3d3-b37a-45fd-9e22-00d10e8919ea','2a74b2bd-1439-4730-a9d7-1da91f1765b5','0ab440cb-8f95-4be3-9049-f02b688fa675']
+          for pid in ids:jobs.append((pid,'/analytics/post?'+urllib.parse.urlencode({'postId':pid,'platformType':'SNAPCHAT'})))
+          for label,path in jobs:
+            try:
+              d=c.call(path);rows=d.get('items',[])
+              keep=('views','viewsUnique','impressions','impressionsUnique','shares','saves','likes','comments','followers','createdAt','updatedAt')
+              print('MEASUREMENT',json.dumps({'entity':label,'observed_at':datetime.now(timezone.utc).isoformat(),'items':[{k:r[k] for k in keep if k in r} for r in rows[-3:]],'row_count':len(rows),'raw_available':any(r.get('raw') is not None for r in rows)},ensure_ascii=False))
+            except HTTPFailure as e:print('MEASUREMENT',json.dumps({'entity':label,'http_status':e.code,'status':'unavailable'}))
           PY
