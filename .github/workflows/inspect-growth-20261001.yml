@@ -1,0 +1,24 @@
+name: Inspect Snapchat analytics capabilities
+on:
+  push:
+    paths: ['.github/workflows/inspect-growth-20261001.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    if: github.event.head_commit.message == 'Inspect Snapchat analytics capabilities 20261001'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect documented read-only metrics routes
+        run: |
+          python - <<'PY'
+          import json,urllib.request
+          req=urllib.request.Request('https://api.bundle.social/swagger-json',headers={'User-Agent':'ExecutiveSaudiPublisher/1.0'})
+          doc=json.load(urllib.request.urlopen(req,timeout=45))
+          for path,ops in doc.get('paths',{}).items():
+            if any(x in path.lower() for x in ('analytic','insight','statistic','metric')):
+              print('ROUTE',json.dumps({'path':path,'get':ops.get('get')},ensure_ascii=False))
+          PY
