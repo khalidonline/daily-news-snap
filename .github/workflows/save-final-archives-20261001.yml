@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   save:
-    if: github.event.head_commit.message == 'Save nine final archives 20261001 owner authorized'
+    if: github.event.head_commit.message == 'Save nine final archives 20261001 verified schema'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -31,8 +31,13 @@ jobs:
           import urllib.request,json
           req=urllib.request.Request('https://api.bundle.social/swagger-json',headers={'User-Agent':'ExecutiveSaudiPublisher/1.0'})
           doc=json.load(urllib.request.urlopen(req,timeout=45))
-          schemas=doc['components']['schemas']
-          matches=[k for k,v in schemas.items() if 'SAVED_STORY' in json.dumps(v) and 'uploadIds' in json.dumps(v) and 'title' in json.dumps(v)]
+          def nodes(value):
+            if isinstance(value,dict):
+              yield value
+              for child in value.values(): yield from nodes(child)
+            elif isinstance(value,list):
+              for child in value: yield from nodes(child)
+          matches=[v for v in nodes(doc) if 'SAVED_STORY' in json.dumps(v.get('properties',{}).get('type',{})) and {'uploadIds','title'} <= set(v.get('properties',{}))]
           assert matches, 'Saved Story schema could not be verified'
           print('Saved Story schema verified:',matches)
           PY
