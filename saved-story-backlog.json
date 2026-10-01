@@ -14,9 +14,18 @@
       "predecessors": [],
       "identity": "d18a2e626624c4ce118f1fb574fb24dd188e05626a2807f474bdb1fe4a8ef89b",
       "receipt_path": "api-receipts/d18a2e626624c4ce118f1fb574fb24dd188e05626a2807f474bdb1fe4a8ef89b.json",
-      "status": "HOLD_EDITORIAL_OR_REPLACEMENT_RECONCILIATION",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 4
+      "card_count": 4,
+      "saved_story_id": "21f4bb30-367a-421e-b18c-b06ba8be1418",
+      "saved_post_id": "4e3f4eac-c3aa-42ea-b078-9fd80ee1f111",
+      "saved_receipt_path": "saved-story-receipts/d18a2e626624c4ce118f1fb574fb24dd188e05626a2807f474bdb1fe4a8ef89b.json",
+      "saved_edition_identity": "df08139bd0bbd9aafae9ac4b391ad7ad1240b01fe3ea030a6cdea69839d68cbb",
+      "saved_card_count": 2,
+      "saved_confirmed_at": "2026-10-01T09:13:32.823200+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/american-express-20260929/manifest.json",
@@ -25,9 +34,18 @@
       "predecessors": [],
       "identity": "b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f",
       "receipt_path": "api-receipts/b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f.json",
-      "status": "HOLD_RECENT_COPY_EDITS_RECONCILE_APPROVED_VERSION",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 4
+      "card_count": 4,
+      "saved_story_id": "a6c38b72-fc00-454d-abae-ef8abb05e036",
+      "saved_post_id": "f63d275c-0781-4c4e-9950-ad4a04d8e993",
+      "saved_receipt_path": "saved-story-receipts/b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f.json",
+      "saved_edition_identity": "b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-01T09:11:36.225531+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/apple-local-ai-20260925-corrected/manifest.json",
@@ -38,7 +56,7 @@
       ],
       "identity": "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443",
       "receipt_path": "api-receipts/68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443.json",
-      "status": "HOLD_EDITORIAL_OR_REPLACEMENT_RECONCILIATION",
+      "status": "POSTED",
       "reconciliation": {
         "status": "NOT_CREATED",
         "checked_at": "2026-09-26T09:01:42.755465+00:00",
@@ -46,7 +64,16 @@
         "upload_id": "84585995-d42c-408a-86fa-9d392b4b28b7",
         "evidence_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/36231516044"
       },
-      "card_count": 4
+      "card_count": 4,
+      "saved_story_id": "26c3002e-5e15-447c-91ee-424c1dc86b0f",
+      "saved_post_id": "9d86afd4-9872-46f9-95f1-e67291a0ea28",
+      "saved_receipt_path": "saved-story-receipts/68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443.json",
+      "saved_edition_identity": "4bb2f2b4744630357cc31ad62f7c7ed9f2f08d55e6fb4bc1e427b695d73f4032",
+      "saved_card_count": 2,
+      "saved_confirmed_at": "2026-10-01T09:14:17.688808+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/apple-revision-20260926/manifest.json",
@@ -56,7 +83,16 @@
         "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443"
       ],
       "identity": "784b107b251ac5d2d101e08dde6d288fa931c343cb60115c9e6f6b4def729138",
-      "status": "HOLD_NO_MATCHING_RECEIPT"
+      "status": "POSTED",
+      "saved_story_id": "26c3002e-5e15-447c-91ee-424c1dc86b0f",
+      "saved_post_id": "9d86afd4-9872-46f9-95f1-e67291a0ea28",
+      "saved_receipt_path": "saved-story-receipts/68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443.json",
+      "saved_edition_identity": "4bb2f2b4744630357cc31ad62f7c7ed9f2f08d55e6fb4bc1e427b695d73f4032",
+      "saved_card_count": 2,
+      "saved_confirmed_at": "2026-10-01T09:14:17.688808+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/armani-20260928/manifest.json",
@@ -127,9 +163,18 @@
       "predecessors": [],
       "identity": "0830b6a400ae8b2113c2a6e4762c487e94d5f8a9c34b2f427dc34d228350e82e",
       "receipt_path": "api-receipts/0830b6a400ae8b2113c2a6e4762c487e94d5f8a9c34b2f427dc34d228350e82e.json",
-      "status": "HOLD_SMALL_TEXT_PENDING_APPROVED_READABLE_VERSION",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 4
+      "card_count": 4,
+      "saved_story_id": "fe876390-06b2-49dd-8ea6-e452e98767ea",
+      "saved_post_id": "bfa40a5b-9151-4339-9c0b-14f439dbb5d4",
+      "saved_receipt_path": "saved-story-receipts/0830b6a400ae8b2113c2a6e4762c487e94d5f8a9c34b2f427dc34d228350e82e.json",
+      "saved_edition_identity": "90c30f79d391e9cb1001c3f40061c8e84788874797eb180d9191edfabeacc73d",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-01T09:12:45.610819+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/f35-20260920/manifest.json",
@@ -138,9 +183,18 @@
       "predecessors": [],
       "identity": "6d033e0af9280c17da9b416cea4603a2bbc886669b6882d3d76d42a8fd63d9e2",
       "receipt_path": "api-receipts/6d033e0af9280c17da9b416cea4603a2bbc886669b6882d3d76d42a8fd63d9e2.json",
-      "status": "HOLD_EDITORIAL_OR_REPLACEMENT_RECONCILIATION",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 5
+      "card_count": 5,
+      "saved_story_id": "59d5b7aa-11af-4555-939b-9eddc0031f0e",
+      "saved_post_id": "714c61f7-7535-4bc0-abf2-c91dea7c3b31",
+      "saved_receipt_path": "saved-story-receipts/6d033e0af9280c17da9b416cea4603a2bbc886669b6882d3d76d42a8fd63d9e2.json",
+      "saved_edition_identity": "7c64592c5f3d87ab8d45baebd3f3f3f2074ee491ba3e4afba461f8c1aa04c66c",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-01T09:16:25.106311+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/foldable-20260914-revised/manifest.json",
@@ -240,9 +294,18 @@
       "predecessors": [],
       "identity": "cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229",
       "receipt_path": "api-receipts/cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229.json",
-      "status": "HOLD_EDITORIAL_OR_REPLACEMENT_RECONCILIATION",
+      "status": "POSTED",
       "reconciliation": null,
-      "card_count": 3
+      "card_count": 3,
+      "saved_story_id": "53f3710c-48d8-4597-aff7-752b1a122588",
+      "saved_post_id": "dbad3478-38f4-4701-b7df-b8e274975c16",
+      "saved_receipt_path": "saved-story-receipts/cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229.json",
+      "saved_edition_identity": "1e3a2bbcf256b314add5e21a55ef746b14b0500508c15f8c4ba2929b4107b4e3",
+      "saved_card_count": 3,
+      "saved_confirmed_at": "2026-10-01T09:17:28.834419+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/national-day-20260923/manifest.json",
@@ -296,7 +359,16 @@
         "b8618f7be230eaba707b26888a69f7d673bd11825adfcdd94773f89acbad9fb4"
       ],
       "identity": "169e3ba0f092c60431050bf253788afee351cc4f815517a09ca9c84e3b849693",
-      "status": "HOLD_NO_MATCHING_RECEIPT"
+      "status": "POSTED",
+      "saved_story_id": "4fd4430a-b91b-4a55-88f0-513d98fb272e",
+      "saved_post_id": "4bc4a0ea-ba88-4309-9f68-79f508a680e0",
+      "saved_receipt_path": "saved-story-receipts/b8618f7be230eaba707b26888a69f7d673bd11825adfcdd94773f89acbad9fb4.json",
+      "saved_edition_identity": "849f9cfa67f59706d7f0943f69bf5883c4a409942d2a05a883d4c5888cdd323f",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-01T09:15:19.757180+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     },
     {
       "path": "approved/taif-roses-20260917/manifest.json",
@@ -315,6 +387,38 @@
       "saved_story_id": "7fd04819-97fd-4e6d-884f-e90bcc0a48ff",
       "saved_card_count": 4,
       "confirmed_at": "2026-09-30T21:29:20.018942+00:00"
+    },
+    {
+      "path": "approved/air-rage-20261001/manifest.json",
+      "title": "مشاجرات الجو — من قمرة القيادة إلى منع السفر",
+      "identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+      "approved": true,
+      "status": "POSTED",
+      "saved_story_id": "f2ed09fe-d4b5-4d11-be6a-d05ff4aa3495",
+      "saved_post_id": "2a74b2bd-1439-4730-a9d7-1da91f1765b5",
+      "saved_receipt_path": "saved-story-receipts/8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b.json",
+      "saved_edition_identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-01T09:09:51.946780+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
+    },
+    {
+      "path": "approved/nespresso-20261001/manifest.json",
+      "title": "نسبرسو — المشروع اللي كاد يتوقف",
+      "identity": "e923d47ab452b5b9c86e4df964494c92b3bee3b75a925d9fe4834e5fee514986",
+      "approved": true,
+      "status": "POSTED",
+      "saved_story_id": "afb853ba-a65e-4031-ab8f-39f151e55fc2",
+      "saved_post_id": "0ab440cb-8f95-4be3-9049-f02b688fa675",
+      "saved_receipt_path": "saved-story-receipts/e923d47ab452b5b9c86e4df964494c92b3bee3b75a925d9fe4834e5fee514986.json",
+      "saved_edition_identity": "1b07d3cc3db01285bdb75d3d6247460d4b36726fef8592c896ef9cc39c013c01",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-01T09:10:48.486478+00:00",
+      "archive_approval": "review/archive-final-20261001/approval.json",
+      "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
+      "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved."
     }
   ],
   "unmapped_receipts": [
@@ -356,12 +460,14 @@
     },
     {
       "receipt_path": "api-receipts/b8618f7be230eaba707b26888a69f7d673bd11825adfcdd94773f89acbad9fb4.json",
-      "status": "HOLD_UNMAPPED_FINAL_MANIFEST"
+      "status": "MAPPED_TO_SAVED_EDITION",
+      "saved_receipt_path": "saved-story-receipts/b8618f7be230eaba707b26888a69f7d673bd11825adfcdd94773f89acbad9fb4.json",
+      "saved_story_id": "4fd4430a-b91b-4a55-88f0-513d98fb272e"
     },
     {
       "receipt_path": "api-receipts/f7975e9c15b9032db726ca4ce89ff09326c4a116dd6ea0f1ad8ddec3ee341a3d.json",
       "status": "HOLD_UNMAPPED_FINAL_MANIFEST"
     }
   ],
-  "updated_at": "2026-09-30T21:32:40.201Z"
+  "updated_at": "2026-10-01T09:18:57.028Z"
 }
