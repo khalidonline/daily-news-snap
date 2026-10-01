@@ -1,0 +1,15 @@
+{
+  "reviewed": true,
+  "body_font_px": 44,
+  "final_closing_font_px": 46,
+  "numbering": "١ من ٣",
+  "model_requests": 0,
+  "paid_generation_usd": 0,
+  "correction_rounds": 1,
+  "corrected_cards": [
+    2,
+    3
+  ],
+  "review": "Approved words preserved plus requested share sentence. Card 2 machine shown whole. Card 3 closing fixed 46px, photo space reduced, no clipping. All 4 cards reviewed in phone-size contact sheet; final card full-size checked. No internal sources or PDFs published. Official source identities resolved through Wikidata P856.",
+  "publish_duration": "ONE_WEEK"
+}
