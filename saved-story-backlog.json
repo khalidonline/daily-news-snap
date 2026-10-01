@@ -251,9 +251,11 @@
       "predecessors": [],
       "identity": "d07f4aaea76f77a89df8b088dfd8683597a906c727a3127bbfd99b671667edd3",
       "receipt_path": "api-receipts/d07f4aaea76f77a89df8b088dfd8683597a906c727a3127bbfd99b671667edd3.json",
-      "status": "HOLD_EDITORIAL_OR_REPLACEMENT_RECONCILIATION",
+      "status": "EXCLUDED_BY_OWNER",
       "reconciliation": null,
-      "card_count": 3
+      "card_count": 3,
+      "archive_excluded": true,
+      "exclusion_reason": "Owner 2026-10-01: باقتين اليوم الوطني مايحتاج نحفظهم"
     },
     {
       "path": "approved/national-day-96-20260923/manifest.json",
@@ -262,9 +264,11 @@
       "predecessors": [],
       "identity": "6193902afd24b488dcceedd9310c3bef6c10ee361bbe591bfc96ea3387d51b7f",
       "receipt_path": "api-receipts/6193902afd24b488dcceedd9310c3bef6c10ee361bbe591bfc96ea3387d51b7f.json",
-      "status": "PENDING_FINAL_VERSION_AND_READABILITY_REVIEW",
+      "status": "EXCLUDED_BY_OWNER",
       "reconciliation": null,
-      "card_count": 1
+      "card_count": 1,
+      "archive_excluded": true,
+      "exclusion_reason": "Owner 2026-10-01: باقتين اليوم الوطني مايحتاج نحفظهم"
     },
     {
       "path": "approved/premium-economy-20260915/manifest.json",
