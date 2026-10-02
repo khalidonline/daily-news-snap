@@ -1,0 +1,46 @@
+name: Inspect delivery inventory 20261002
+on:
+  push:
+    paths: ['.github/workflows/inspect-three-20261002.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Inspect delivery inventory 20261002 final'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f92cd366b4662d5cb4350ed5762ded4bd4bd5b09
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Check publisher protection tests
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle.py'
+          python -m unittest discover -s tests -p 'test_v2_publication_selection.py'
+      - name: Validate and publish approved files sequentially
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python -u - <<'PY'
+          import json,time
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,publish,check_predecessors,HTTPFailure
+          import urllib.parse
+          c=BundleClient();c.check()
+          for endpoint in ['/post/4f1d42bf-568d-4c74-a33c-75258b696a7c','/post/?'+urllib.parse.urlencode({'teamId':c.team,'offset':0,'limit':20})]:
+              result=c.call(endpoint)
+              rows=result.get('items') if 'items' in result else [result]
+              print('TOTAL',result.get('total'))
+              for r in rows:
+                  print(json.dumps({k:r.get(k) for k in ['id','title','status','postDate','data','uploads','externalData']},ensure_ascii=False))
+          PY
