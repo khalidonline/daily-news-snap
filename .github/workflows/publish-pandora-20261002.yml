@@ -1,0 +1,71 @@
+name: Publish approved Pandora 20261002
+on:
+  push:
+    paths: ['.github/workflows/publish-pandora-20261002.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Publish approved Pandora 20261002 final'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f92cd366b4662d5cb4350ed5762ded4bd4bd5b09
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Check publisher protection tests
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle.py'
+          python -m unittest discover -s tests -p 'test_v2_publication_selection.py'
+      - name: Validate and publish approved files sequentially
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python -u - <<'PY'
+          import json,time
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,publish,check_predecessors,HTTPFailure
+          names=['pandora']
+          packages=[]
+          for name in names:
+              path=Path('approved')/(name+'-20261002')/'manifest.json'
+              doc=json.loads(path.read_text())
+              now=datetime.now(timezone.utc)
+              assert datetime.fromisoformat(doc['not_before'].replace('Z','+00:00')) <= now < datetime.fromisoformat(doc['expires_at'].replace('Z','+00:00')), 'outside_approval_window'
+              identity,title,media=load_package(path)
+              journal=GitHubJournal(identity)
+              state=journal.read()
+              assert not any(v.get('status')!='POSTED' and not v.get('post_id') for v in state.values()), 'ambiguous_prior_send'
+              packages.append((path,doc,identity,title,media,journal))
+          journal=packages[0][-1]
+          try:
+              ledger=journal.call('/contents/daily/2026-10-02.json?ref=cost-ledger')
+              import base64
+              print('COST_LEDGER',base64.b64decode(ledger['content']).decode())
+          except HTTPFailure as e:
+              if e.code!=404: raise
+              print('COST_LEDGER_MISSING: daily total unknown; this delivery uses no paid model or image calls.')
+          client=BundleClient();client.check()
+          missing=sum(sum(str(i+1) not in p[-1].read() for i in range(len(p[4]))) for p in packages)
+          if missing: print('QUOTA',json.dumps(client.ensure_capacity(missing)['posts']))
+          for index,(path,doc,identity,title,media,journal) in enumerate(packages):
+              now=datetime.now(timezone.utc)
+              assert datetime.fromisoformat(doc['not_before'].replace('Z','+00:00')) <= now < datetime.fromisoformat(doc['expires_at'].replace('Z','+00:00')), 'outside_approval_window'
+              check_predecessors(doc.get('predecessors',[]))
+              publish(client,journal,title,media)
+              final=journal.read()
+              assert len(final)==4 and all(v.get('status')=='POSTED' and v.get('post_id') for v in final.values())
+              assert len({v['post_id'] for v in final.values()})==4
+              print('CONFIRMED',json.dumps({'identity':identity,'title':title,'receipts':final},ensure_ascii=False))
+              if index<len(packages)-1: time.sleep(60)
+          PY
