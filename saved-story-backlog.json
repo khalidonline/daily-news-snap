@@ -8,6 +8,63 @@
   "note": "Inventory candidates are not automatically archive-approved. Review final version and phone readability; reconcile replaced/deleted records before independent archive approval. Reuse exact media; newest first; no paid production.",
   "packages": [
     {
+      "path": "approved/son-20261002/manifest.json",
+      "title": "سون — من خسارة هائلة إلى رهان ChatGPT",
+      "approved": true,
+      "predecessors": [],
+      "identity": "5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190",
+      "receipt_path": "api-receipts/5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190.json",
+      "status": "POSTED",
+      "reconciliation": null,
+      "card_count": 4,
+      "saved_story_id": "a79ae989-2674-4b74-89bf-ca746185d59b",
+      "saved_post_id": "45726761-023f-40d9-92a0-877fc4e8ddfc",
+      "saved_receipt_path": "saved-story-receipts/5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190.json",
+      "saved_edition_identity": "5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-02T21:00:41.957614+00:00",
+      "archive_approval": "approved/saved-stories/son-20261002.json",
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37064062603"
+    },
+    {
+      "path": "approved/oil-20261002/manifest.json",
+      "title": "نفط الطوارئ — مخزون داخل كهوف الملح",
+      "approved": true,
+      "predecessors": [],
+      "identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+      "receipt_path": "api-receipts/9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850.json",
+      "status": "POSTED",
+      "reconciliation": null,
+      "card_count": 4,
+      "saved_story_id": "1c00e18a-69fa-4cdb-a781-8788c1cb7ba0",
+      "saved_post_id": "d5af025f-8e18-4a72-a643-009b896196be",
+      "saved_receipt_path": "saved-story-receipts/9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850.json",
+      "saved_edition_identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-02T21:01:37.190489+00:00",
+      "archive_approval": "approved/saved-stories/oil-20261002.json",
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37064062603"
+    },
+    {
+      "path": "approved/pandora-20261002/manifest.json",
+      "title": "باندورا — من محل صغير إلى العالم",
+      "approved": true,
+      "predecessors": [],
+      "identity": "163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc",
+      "receipt_path": "api-receipts/163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc.json",
+      "status": "POSTED",
+      "reconciliation": null,
+      "card_count": 4,
+      "saved_story_id": "ffe20d31-0192-4645-8eb9-5ec890edd251",
+      "saved_post_id": "88cfddf6-9e7c-4ce8-a913-8b8a3816c1e1",
+      "saved_receipt_path": "saved-story-receipts/163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc.json",
+      "saved_edition_identity": "163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc",
+      "saved_card_count": 4,
+      "saved_confirmed_at": "2026-10-02T21:02:35.896696+00:00",
+      "archive_approval": "approved/saved-stories/pandora-20261002.json",
+      "archive_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37064062603"
+    },
+    {
       "path": "approved/7dogs-20260927/manifest.json",
       "title": "«7 دوجز» أول فيلم عربي يبيع مليون تذكرة في السينما السعودية",
       "approved": true,
@@ -469,5 +526,5 @@
       "status": "HOLD_UNMAPPED_FINAL_MANIFEST"
     }
   ],
-  "updated_at": "2026-10-01T09:18:57.028Z"
+  "updated_at": "2026-10-02T21:02:40Z"
 }
