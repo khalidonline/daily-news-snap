@@ -1,0 +1,54 @@
+{
+  "internal_only": true,
+  "facts": [
+    "https://www.energy.gov/articles/history-strategic-petroleum-reserve",
+    "https://www.energy.gov/hgeo/opr/spr-origins",
+    "https://www.reuters.com/business/eu-commission-uk-france-italy-ireland-call-diesel-stock-releases-eu-official-2026-10-01/"
+  ],
+  "images": [
+    {
+      "source_url": "https://www.energy.gov/hgeo/opr/spr-storage-sites",
+      "original_url": "https://www.energy.gov/sites/default/files/2025-03/Bryan%20Mound.png",
+      "download_url": "https://www.energy.gov/sites/default/files/2025-03/Bryan%20Mound.png",
+      "sha256": "6bf2b0e4a2e486d267c779a9a8ccc91f39811d2d53842721616df7dededcd9b7",
+      "image_role": "موقع برايان ماوند — المنشآت فوق الأرض",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "government",
+      "license": "Public domain",
+      "attribution_required": false
+    },
+    {
+      "source_url": "https://www.energy.gov/lm/timeline-events-1971-1980",
+      "original_url": "https://www.energy.gov/sites/default/files/HD.11B.197.jpg",
+      "download_url": "https://www.energy.gov/sites/default/files/HD.11B.197.jpg",
+      "sha256": "2c1b0250fcc58a3599a679e670fd75ebceb3a889a872bbf906fabe43dd150d7a",
+      "image_role": "طوابير البنزين وقت أزمة ١٩٧٣",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "government",
+      "license": "Public domain",
+      "attribution_required": false
+    },
+    {
+      "source_url": "https://www.energy.gov/hgeo/opr/spr-storage-sites",
+      "original_url": "https://www.energy.gov/sites/default/files/2025-03/Big%20Hill.png",
+      "download_url": "https://www.energy.gov/sites/default/files/2025-03/Big%20Hill.png",
+      "sha256": "0a4b1edc209203ac8e1b2d4a0bac42bec184cc34e386d006a8406d657da97dd9",
+      "image_role": "موقع بيغ هيل — صورة أرشيفية",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "government",
+      "license": "Public domain",
+      "attribution_required": false
+    },
+    {
+      "source_url": "https://www.energy.gov/hgeo/opr/strategic-petroleum-reserve",
+      "original_url": "https://www.energy.gov/sites/default/files/2020/08/f77/Crude%20Oil%20for%20SPR4.jpg",
+      "download_url": "https://www.energy.gov/sites/default/files/2020/08/f77/Crude%20Oil%20for%20SPR4.jpg",
+      "sha256": "7373615260402f1724f9f79c473703047902de0d892eeeb3c58e2d702dfa00c0",
+      "image_role": "أنابيب النفط في الاحتياطي — صورة أرشيفية",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "government",
+      "license": "Public domain",
+      "attribution_required": false
+    }
+  ]
+}

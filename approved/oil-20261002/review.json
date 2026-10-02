@@ -1,0 +1,15 @@
+{
+  "identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+  "approved_copy_hash": "01d16aedc05fd79b8beda28865ecf978759818fb5d8ce3c522b0b9a9a5a89b3e",
+  "card_count": 4,
+  "visual_review": "All 4 cards reviewed: readable 44px body, distinct real photos, chronological sequence, Arabic story numbering, original identity. Info font no auto-shrink.",
+  "paid_model_calls": 0,
+  "paid_image_calls": 0,
+  "daily_total_cost": "unknown: no current ledger entry; not assumed zero",
+  "media_sha256": [
+    "c395438072f2b1bed3e0af2b82af9e78d9ca6a989d6af9616953332cc77fdc63",
+    "8f891d85527eb7476763c0a0f0c73505c818b877ee17eb788a6b60f1997a00dc",
+    "c372f66ad24320fdf84c4d5ab4911455b33d49f32e094155189831f75261b48b",
+    "81049c43c144c70fa08117718f37247f5475c791a8710c972cd672f006384378"
+  ]
+}
