@@ -1,0 +1,26 @@
+{
+  "identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+  "status": "PARTIAL_UNRESOLVED",
+  "confirmed_cards": [
+    1,
+    2,
+    3
+  ],
+  "unresolved_card": 4,
+  "upload_id": "cd8775b6-9dc3-4176-88e4-1f5c885cc9a5",
+  "operation": "create",
+  "http_status": 520,
+  "error_at": "2026-10-02T12:17:59.869322+00:00",
+  "checks": [
+    {
+      "run": 37005951560,
+      "result": "Complete provider inventory returned no exact upload match; no create retried"
+    },
+    {
+      "run": 37006057456,
+      "result": "Read-only inventory detail verified data contains upload IDs; first three oil cards POSTED and external PUBLISHED; fourth absent"
+    }
+  ],
+  "next_step": "Reconcile ambiguous upload with provider before any create. Do not change package identity, reupload, delete intent, or archive incomplete package.",
+  "paid_model_calls": 0
+}
