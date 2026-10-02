@@ -1,0 +1,11 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc",
+  "manifest": "approved/pandora-20261002/manifest.json",
+  "manifest_sha256": "6d70f285a8985c84b03898e9f53f2a9431ce2da16eff238e7b47cec8231d417f",
+  "title": "باندورا — من محل صغير إلى العالم",
+  "expires_at": "2026-10-03T20:59:59Z",
+  "empty_profile_confirmation": "Owner confirmed profile empty 2026-10-01 00:01 Riyadh; all later saves journaled and checked against provider inventory.",
+  "approval": "Owner authorized daily archival of final published packages. Original four cards reviewed at mobile scale and confirmed final; save exact published upload IDs in original order."
+}
