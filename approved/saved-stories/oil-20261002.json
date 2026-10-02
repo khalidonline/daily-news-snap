@@ -1,0 +1,11 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+  "manifest": "approved/oil-20261002/manifest.json",
+  "manifest_sha256": "8c5a2bd91048396c54e1f94df702497581e64db3f8d7a8028725d3f75a4badf9",
+  "title": "نفط الطوارئ — مخزون داخل كهوف الملح",
+  "expires_at": "2026-10-03T20:59:59Z",
+  "empty_profile_confirmation": "Owner confirmed profile empty 2026-10-01 00:01 Riyadh; all later saves journaled and checked against provider inventory.",
+  "approval": "Owner authorized daily archival of final published packages. Original four cards reviewed at mobile scale and confirmed final; save exact published upload IDs in original order."
+}
