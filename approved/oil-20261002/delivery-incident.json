@@ -1,12 +1,13 @@
 {
   "identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
-  "status": "PARTIAL_UNRESOLVED",
+  "status": "RESOLVED_POSTED",
   "confirmed_cards": [
     1,
     2,
-    3
+    3,
+    4
   ],
-  "unresolved_card": 4,
+  "unresolved_card": null,
   "upload_id": "cd8775b6-9dc3-4176-88e4-1f5c885cc9a5",
   "operation": "create",
   "http_status": 520,
@@ -21,6 +22,12 @@
       "result": "Read-only inventory detail verified data contains upload IDs; first three oil cards POSTED and external PUBLISHED; fourth absent"
     }
   ],
-  "next_step": "Reconcile ambiguous upload with provider before any create. Do not change package identity, reupload, delete intent, or archive incomplete package.",
-  "paid_model_calls": 0
+  "next_step": "Complete; do not resend. Archive all four original upload IDs in manifest order.",
+  "paid_model_calls": 0,
+  "resolution": {
+    "run": 37007376378,
+    "post_id": "f32a9373-1e7e-40f8-8827-29b2f67e2b1f",
+    "confirmed_at": "2026-10-02T12:34:37.176884+00:00",
+    "method": "Two complete inventories and actual quota matching 11 confirmed posts established absent create; owner-authorized single retry reused original upload; verified POSTED and ONE_WEEK."
+  }
 }
