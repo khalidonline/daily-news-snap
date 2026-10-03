@@ -1,0 +1,74 @@
+{
+  "verified_at": "2026-10-03T11:42:05Z",
+  "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/37119868951",
+  "quota": {
+    "used": 18,
+    "limit": 20,
+    "remaining": 2
+  },
+  "paid_generation_requests": 0,
+  "day_cost_ledger_present": false,
+  "stories": [
+    {
+      "title": "هيثرو كان خيام وألواح خشب!",
+      "id": "a92c27e8-e43a-47de-94e2-a43013c22bc9",
+      "status": "POSTED",
+      "post_id": "4e33c9e4-365e-4c2c-bafb-b5e50507cbd6"
+    },
+    {
+      "title": "باعوا سيارة… وبدأت أرماني",
+      "id": "9d2a9e3f-fe85-49c3-9847-3f2dc81b1ffb",
+      "status": "POSTED",
+      "post_id": "14872888-5cbd-4035-9ce6-c25ea3ff08e3"
+    },
+    {
+      "title": "فلتر القهوة بدأ بورقة من دفتر",
+      "id": "45b9ee15-c883-4138-8856-51f4fa711d03",
+      "status": "POSTED",
+      "post_id": "04a4049a-7d57-4c47-8781-5058b058bd5e"
+    },
+    {
+      "title": "أمريكان إكسبرس كانت شركة شحن!",
+      "id": "aef86067-b2f9-45e4-b3c9-6c19cb7d0cb7",
+      "status": "POSTED",
+      "post_id": "6b4d9a3c-7b51-45d5-b4d7-815d90490e78"
+    },
+    {
+      "title": "باندورا… السوار اللي غيّر كل شيء",
+      "id": "2659daa5-0001-4875-a771-6b9f09034158",
+      "status": "POSTED",
+      "post_id": "021763a9-749d-481a-9ea2-57445aa57b0c"
+    },
+    {
+      "title": "خسر ٧٠ مليار… واستثماره قلب القصة",
+      "id": "503ae4d8-611b-4595-9e53-383f7ef8693f",
+      "status": "POSTED",
+      "post_id": "3ff9135e-b60a-408a-89f7-95928726ba14"
+    },
+    {
+      "title": "نفط الطوارئ… داخل كهوف ملح!",
+      "id": "d346d360-cf07-4059-aa1f-4b2023828368",
+      "status": "POSTED",
+      "post_id": "bcee9f47-0028-41f2-bd1a-b636a00e48d3"
+    },
+    {
+      "title": "خوذة F-35… شاشة قدّام عين الطيار",
+      "id": "55e64b16-863e-4da9-9cd4-18a55d555627",
+      "status": "POSTED",
+      "post_id": "69475635-762c-468d-825a-eecd9ddbe7b3"
+    },
+    {
+      "title": "وش دخل شركة الكفرات بالمطاعم؟",
+      "id": "1f19ade6-203c-4fa2-9182-48c1e1c4ac73",
+      "status": "POSTED",
+      "post_id": "0c8df33f-2b10-47b1-8cd1-d69c08cd5151"
+    },
+    {
+      "title": "نسبرسو كادت تتوقف بسبب نسكافيه!",
+      "id": "8a5de4d3-6873-43ed-8070-c4776ccda7d0",
+      "status": "POSTED",
+      "post_id": "d1a02229-9c56-4ef3-9201-0e96d5724c84"
+    }
+  ],
+  "old_deletion_status": "PENDING_SNAPCHAT_APP"
+}
