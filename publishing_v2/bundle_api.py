@@ -115,6 +115,35 @@ class BundleClient:
         if not result.get('id'): raise BundleError('Create returned no ID; manual reconciliation required')
         return result['id']
 
+    def create_group(self, title, uploads, reference_key):
+        payload = {'teamId': self.team, 'title': title[:100],
+                   'referenceKey': reference_key,
+                   'postDate': datetime.now(timezone.utc).isoformat(),
+                   'status': 'SCHEDULED', 'socialAccountTypes': ['SNAPCHAT'],
+                   'data': {'SNAPCHAT': {'type': 'STORY', 'uploadIds': uploads,
+                                        'storyDuration': 'ONE_WEEK'}}}
+        result = self.call('/post', 'POST', json.dumps(payload).encode())
+        if not result.get('id'):
+            raise BundleError('Group create ambiguous; reconcile before retry')
+        return result['id']
+
+    def confirm_group(self, post_id, uploads):
+        self.wait(post_id)
+        row = self.call('/post/' + urllib.parse.quote(post_id, safe=''))
+        snap = (row.get('data') or {}).get('SNAPCHAT') or {}
+        external = (row.get('externalData') or {}).get('SNAPCHAT') or {}
+        ids = external.get('mediaIds') or []
+        if (row.get('teamId') != self.team or row.get('id') != post_id
+                or row.get('status') != 'POSTED' or row.get('deletedAt')
+                or snap.get('type') != 'STORY' or snap.get('uploadIds') != uploads
+                or snap.get('storyDuration') != 'ONE_WEEK'
+                or external.get('sourceUploadIds') != uploads
+                or external.get('status') != 'PUBLISHED'
+                or len(ids) != len(uploads) or len(set(ids)) != len(ids)
+                or not all(isinstance(i, str) and i for i in ids)):
+            raise BundleError('Group delivery/order incomplete; reconcile saved post ID')
+        return ids
+
     def wait(self, post_id):
         for _ in range(36):
             result = self.call('/post/' + urllib.parse.quote(post_id, safe=''))
@@ -172,6 +201,8 @@ class GitHubJournal:
 
 def publish(client, journal, title, media):
     state = journal.read()
+    if state.get('_group'):
+        raise BundleError('Grouped receipt must resume through grouped publishing')
     # Reconcile every uncertain intent before any new upload in this batch.
     rows = [state.get(str(i+1)) for i in range(len(media))]
     if any(row is not None and not row.get('post_id') for row in rows):
@@ -204,6 +235,51 @@ def publish(client, journal, title, media):
         state[key]['status'] = 'POSTED'
         journal.save(state)
         print(f'Card {key}/{len(media)}: POSTED ({state[key]["post_id"]})')
+
+
+def publish_group(client, journal, title, media, identity):
+    """Two-card trial; never falls back to separate creates after an attempt."""
+    if len(media) != 2:
+        raise BundleError('Grouped publishing requires exactly two cards')
+    state = journal.read()
+    group = state.get('_group')
+    if state and not group:
+        raise BundleError('Existing per-card receipts cannot convert to grouped publishing')
+    if group and (group.get('identity') != identity or len(group.get('uploads', [])) != 2):
+        raise BundleError('Group receipt mismatch')
+    if group and group.get('status') == 'POSTED':
+        return
+    if group and not group.get('post_id'):
+        raise BundleError('Ambiguous group intent; reconcile reference key before continuing')
+    if not group:
+        before = client.ensure_capacity(1)
+        uploads = [client.upload(item) for item in media]
+        if len(set(uploads)) != 2:
+            raise BundleError('Duplicate group upload IDs')
+        group = {'identity': identity, 'uploads': uploads, 'status': 'SENDING',
+                 'reference_key': 'story-' + identity, 'quota_before': before,
+                 'intent_at': datetime.now(timezone.utc).isoformat()}
+        state['_group'] = group
+        # Persist both card intents too: legacy paths cannot recreate the package.
+        for i, upload in enumerate(uploads, 1):
+            state[str(i)] = {'status': 'SENDING', 'upload_id': upload,
+                             'group_upload_ids': uploads}
+        journal.save(state)
+        group['post_id'] = client.create_group(title, uploads, group['reference_key'])
+        for i in range(1, 3): state[str(i)]['post_id'] = group['post_id']
+        journal.save(state)
+    ids = client.confirm_group(group['post_id'], group['uploads'])
+    for i, media_id in enumerate(ids, 1):
+        state[str(i)].update(status='POSTED', media_id=media_id)
+    group['status'] = 'POSTED'
+    journal.save(state)
+    # Quota telemetry failure must never invalidate delivery or trigger recreation.
+    try:
+        group['quota_after'] = client.ensure_capacity(1)
+    except BundleError:
+        group['quota_measurement'] = 'UNAVAILABLE; delivery confirmed'
+    journal.save(state)
+    print('Grouped package: 2 cards POSTED; quota savings require before/after comparison')
 
 
 def check_predecessors(identities, journal_factory=GitHubJournal):
@@ -301,7 +377,12 @@ def main():
         if args.mode == 'publish':
             identity, title, media = load_package(args.manifest)
             check_predecessors(json.loads(Path(args.manifest).read_text()).get('predecessors', []))
-            publish(client, GitHubJournal(identity), title, media)
+            journal = GitHubJournal(identity)
+            existing = journal.read()
+            if existing.get('_group') or (not existing and len(media) == 2):
+                publish_group(client, journal, title, media, identity)
+            else:
+                publish(client, journal, title, media)
     except (BundleError, KeyError, ValueError, OSError) as exc:
         print(str(exc) if isinstance(exc, BundleError) else 'Invalid package or state; no automatic retry')
         raise SystemExit(1) from None
