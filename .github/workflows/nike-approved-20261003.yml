@@ -1,0 +1,47 @@
+name: Publish approved Nike 20261003
+on:
+  push:
+    paths: ['.github/workflows/nike-approved-20261003.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Publish Nike approved request 20261003-123120'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 9f941f181c7dbb9b775f5b989b1d3380a8204da9
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pytest -r requirements.txt -r requirements-v2-images.txt
+      - name: Decode exact approved media and enforce time
+        run: |
+          python - <<'PY'
+          import base64,json
+          from pathlib import Path
+          from datetime import datetime,timezone
+          p=Path('approved/nike-20261003')
+          m=json.loads((p/'manifest.json').read_text())
+          now=datetime.now(timezone.utc)
+          assert datetime.fromisoformat(m['not_before'].replace('Z','+00:00')) <= now < datetime.fromisoformat(m['expires_at'].replace('Z','+00:00'))
+          for row in m['media']:
+              f=Path(row['path'])
+              f.write_bytes(base64.b64decode(Path(str(f)+'.b64').read_text(),validate=True))
+          PY
+      - name: Validate guards and duration
+        run: |
+          python -m pytest -q tests/test_v2_story_duration.py
+          python -m publishing_v2.bundle_api validate --manifest approved/nike-20261003/manifest.json
+      - name: Quota and publish saved cards only
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python -m publishing_v2.bundle_api publish --manifest approved/nike-20261003/manifest.json
