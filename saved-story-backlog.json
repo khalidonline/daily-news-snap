@@ -172,10 +172,25 @@
       "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
       "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved.",
       "renewal": {
-        "status": "SELECTED_PENDING_COMPACT_REVIEW_AND_QUOTA",
+        "status": "HOLD_FINAL_RECEIPT_RECONCILIATION",
         "priority": 4,
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
-        "max_cards": 2
+        "max_cards": 2,
+        "prepared_identity": "72196ac688a26312a1067ef4b19db216a15958733514bb0a8ea91b517312572c",
+        "approval_path": "approved/saved-stories/compact-five-20261003/apple-revision-20260926/approval.json",
+        "prepared_commit": "f132ad49842fd676d0d9637cea590fe8d339d5d5",
+        "card_count": 2,
+        "body_font_px": 52,
+        "readiness": "FINAL_LIVE_RECHECK_REQUIRED",
+        "quota_hold": {
+          "used": 18,
+          "limit": 20,
+          "remaining": 2,
+          "reserve": 2,
+          "checked_at": "2026-10-03T20:58:21.540016+00:00"
+        },
+        "prepared_paid_model_requests": 0,
+        "hold_reason": "Final two-card manifest has no identity-matching daily receipt; older four-card journal cannot substitute. Existing final Saved Story is POSTED; reconcile lineage before renewal."
       }
     },
     {
@@ -217,10 +232,24 @@
       "saved_card_count": 3,
       "confirmed_at": "2026-09-30T21:28:32.983713+00:00",
       "renewal": {
-        "status": "SELECTED_PENDING_COMPACT_REVIEW_AND_QUOTA",
+        "status": "REVIEWED_WAITING_QUOTA",
         "priority": 3,
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
-        "max_cards": 2
+        "max_cards": 2,
+        "prepared_identity": "f90db037c2c33532e0e7a268b81461f6070ec24a464bb382eb38bcf20cb7ef5e",
+        "approval_path": "approved/saved-stories/compact-five-20261003/ceer-20260922/approval.json",
+        "prepared_commit": "f132ad49842fd676d0d9637cea590fe8d339d5d5",
+        "card_count": 2,
+        "body_font_px": 52,
+        "readiness": "FINAL_LIVE_RECHECK_REQUIRED",
+        "quota_hold": {
+          "used": 18,
+          "limit": 20,
+          "remaining": 2,
+          "reserve": 2,
+          "checked_at": "2026-10-03T20:58:21.540016+00:00"
+        },
+        "prepared_paid_model_requests": 0
       }
     },
     {
@@ -236,10 +265,24 @@
       "saved_post_id": "c862cb68-c91b-4d7e-81de-16e96eb03770",
       "saved_story_id": "04ca9933-b9fa-4849-8279-01ff701b136b",
       "renewal": {
-        "status": "SELECTED_PENDING_COMPACT_REVIEW_AND_QUOTA",
+        "status": "REVIEWED_WAITING_QUOTA",
         "priority": 1,
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
-        "max_cards": 2
+        "max_cards": 2,
+        "prepared_identity": "e2dbc771c6be9b2ca2645b2172188fb0105e74b1c07bfd0285da02fc4319f1e4",
+        "approval_path": "approved/saved-stories/compact-five-20261003/city-penalties-20260930/approval.json",
+        "prepared_commit": "f132ad49842fd676d0d9637cea590fe8d339d5d5",
+        "card_count": 2,
+        "body_font_px": 52,
+        "readiness": "FINAL_LIVE_RECHECK_REQUIRED",
+        "quota_hold": {
+          "used": 18,
+          "limit": 20,
+          "remaining": 2,
+          "reserve": 2,
+          "checked_at": "2026-10-03T20:58:21.540016+00:00"
+        },
+        "prepared_paid_model_requests": 0
       }
     },
     {
@@ -287,10 +330,24 @@
       "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
       "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved.",
       "renewal": {
-        "status": "SELECTED_PENDING_COMPACT_REVIEW_AND_QUOTA",
+        "status": "REVIEWED_WAITING_QUOTA",
         "priority": 2,
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
-        "max_cards": 2
+        "max_cards": 2,
+        "prepared_identity": "18f24feb4f94eb4271b0aa98942df1baa8ee914157ffd8fed36a44ac2e3bddf6",
+        "approval_path": "approved/saved-stories/compact-five-20261003/disney-oswald-20260930/approval.json",
+        "prepared_commit": "f132ad49842fd676d0d9637cea590fe8d339d5d5",
+        "card_count": 2,
+        "body_font_px": 52,
+        "readiness": "FINAL_LIVE_RECHECK_REQUIRED",
+        "quota_hold": {
+          "used": 18,
+          "limit": 20,
+          "remaining": 2,
+          "reserve": 2,
+          "checked_at": "2026-10-03T20:58:21.540016+00:00"
+        },
+        "prepared_paid_model_requests": 0
       }
     },
     {
@@ -581,10 +638,24 @@
       "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
       "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved.",
       "renewal": {
-        "status": "SELECTED_PENDING_COMPACT_REVIEW_AND_QUOTA",
+        "status": "REVIEWED_WAITING_QUOTA",
         "priority": 5,
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
-        "max_cards": 2
+        "max_cards": 2,
+        "prepared_identity": "a8edf2ce4745bd7a32deb5d764fecc7644632cad0e69bc09e73f634c8be78722",
+        "approval_path": "approved/saved-stories/compact-five-20261003/air-rage-20261001/approval.json",
+        "prepared_commit": "f132ad49842fd676d0d9637cea590fe8d339d5d5",
+        "card_count": 2,
+        "body_font_px": 52,
+        "readiness": "FINAL_LIVE_RECHECK_REQUIRED",
+        "quota_hold": {
+          "used": 18,
+          "limit": 20,
+          "remaining": 2,
+          "reserve": 2,
+          "checked_at": "2026-10-03T20:58:21.540016+00:00"
+        },
+        "prepared_paid_model_requests": 0
       }
     },
     {
@@ -606,6 +677,36 @@
       "previous_saved_post_id": "0ab440cb-8f95-4be3-9049-f02b688fa675",
       "saved_title": "نسبرسو كادت تتوقف بسبب نسكافيه!",
       "old_deletion_status": "PENDING_SNAPCHAT_APP"
+    },
+    {
+      "path": "approved/berlin-unity-20261003/manifest.json",
+      "title": "جدار برلين — ألمانيا تكمل ٣٦ سنة على وحدتها",
+      "approved": true,
+      "identity": "35ff179764bc25427e4545a3e9c151c070dabdf58cb7a6e448392f5e8e700094",
+      "receipt_path": "api-receipts/35ff179764bc25427e4545a3e9c151c070dabdf58cb7a6e448392f5e8e700094.json",
+      "status": "POSTED",
+      "card_count": 2,
+      "archive_status": "WAITING_QUOTA_AND_LIVE_FINAL_CHECK",
+      "archive_approval_required": true,
+      "saved_story_id": null,
+      "source_receipt_checked_at": "2026-10-03T20:58:21.540016+00:00",
+      "provider_inventory_no_saved_match_at": "2026-10-03T20:58:21.540016+00:00",
+      "note": "Use exact approved two-card publication."
+    },
+    {
+      "path": "approved/nike-20261003/manifest.json",
+      "title": "نايكي — الحذاء نجح بس تكراره ما يكفي",
+      "approved": true,
+      "identity": "3b5cd8e89bfd1ca71d02ccfcaf9e814f2a689ac77ea59614f29cd4c003fc8227",
+      "receipt_path": "api-receipts/3b5cd8e89bfd1ca71d02ccfcaf9e814f2a689ac77ea59614f29cd4c003fc8227.json",
+      "status": "POSTED",
+      "card_count": 2,
+      "archive_status": "WAITING_QUOTA_AND_LIVE_FINAL_CHECK",
+      "archive_approval_required": true,
+      "saved_story_id": null,
+      "source_receipt_checked_at": "2026-10-03T20:58:21.540016+00:00",
+      "provider_inventory_no_saved_match_at": "2026-10-03T20:58:21.540016+00:00",
+      "note": "Keep exact published media. Archive title must date-anchor relative أمس (event 2026-10-02); no redesign authorized."
     }
   ],
   "unmapped_receipts": [
@@ -656,7 +757,7 @@
       "status": "HOLD_UNMAPPED_FINAL_MANIFEST"
     }
   ],
-  "updated_at": "2026-10-03T11:41:57.991923+00:00",
+  "updated_at": "2026-10-03T21:18:00Z",
   "renewal_policy": {
     "remaining_selected": [
       "city-penalties-20260930",
@@ -674,5 +775,29 @@
     "reserve_quota": 2,
     "scope": "Remaining archive renewals only; do not delete existing archives or repeat confirmed new editions",
     "updated_at": "2026-10-03T15:04:20+03:00"
-  }
+  },
+  "last_save_attempt": {
+    "status": "HELD_RESERVE_NOT_SENT",
+    "audit_path": "saved-story-audits/20261003-2352.json",
+    "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062",
+    "quota": {
+      "used": 18,
+      "limit": 20,
+      "remaining": 2
+    },
+    "reserve": 2,
+    "new_saved_stories": 0,
+    "paid_model_requests": 0,
+    "ledger_present": false,
+    "spend_not_inferred_from_missing_ledger": true
+  },
+  "pending_delivery_order": [
+    "berlin-unity-20261003",
+    "nike-20261003",
+    "city-penalties-20260930",
+    "disney-oswald-20260930",
+    "ceer-20260922",
+    "apple-revision-20260926",
+    "air-rage-20261001"
+  ]
 }
