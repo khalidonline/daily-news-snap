@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.event.head_commit.message == 'Publish Berlin approved request 20261003-121011'
+    if: github.event.head_commit.message == 'Publish Berlin approved request 20261003-121011-deps'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -r requirements.txt -r requirements-v2-images.txt
+      - run: pip install pytest -r requirements.txt -r requirements-v2-images.txt
       - name: Decode exact approved media and enforce time
         run: |
           python - <<'PY'
