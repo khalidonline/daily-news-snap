@@ -122,10 +122,13 @@ def main():
     identity,title,rows=validate_archive(approval,source)
     c=SavedClient();c.check()
     for r in rows:
+        if r.get('group_upload_ids'):
+            c.confirm_group(r['post_id'], r['group_upload_ids'])
         live=c.call('/post/'+urllib.parse.quote(r['post_id'],safe=''))
         snap=(live.get('data') or {}).get('SNAPCHAT') or {}
         if (live.get('id')!=r['post_id'] or live.get('teamId')!=c.team or live.get('status')!='POSTED'
-            or live.get('deletedAt') or snap.get('type','STORY')!='STORY' or snap.get('uploadIds')!=[r['upload_id']]):
+            or live.get('deletedAt') or snap.get('type','STORY')!='STORY' or snap.get('uploadIds')!=r.get('group_upload_ids',[r['upload_id']])
+            or r['upload_id'] not in snap.get('uploadIds',[])):
             raise BundleError('Original publication no longer matches approved receipt')
     result=save_story(c,SavedJournal(identity),identity,title,[r['upload_id'] for r in rows])
     print(json.dumps(result,ensure_ascii=False))
