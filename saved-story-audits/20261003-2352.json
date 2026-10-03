@@ -1,0 +1,477 @@
+{
+  "checked_at": "2026-10-03T20:58:21.540016+00:00",
+  "read_only": true,
+  "paid_model_requests": 0,
+  "reserve_operations": 2,
+  "quota": {
+    "date": "2026-10-03T00:00:00.000Z",
+    "socialAccountId": "e2b8c159-fc3b-4220-bb57-e2d9aa2cb779",
+    "type": "SNAPCHAT",
+    "posts": {
+      "used": 18,
+      "limit": 20,
+      "remaining": 2
+    },
+    "comments": {
+      "used": 0,
+      "limit": 24,
+      "remaining": 24
+    }
+  },
+  "budget": {
+    "day": "2026-10-03",
+    "ledger_present": false,
+    "charged_micro_usd": null
+  },
+  "saved_stories": [
+    {
+      "id": "d1a02229-9c56-4ef3-9201-0e96d5724c84",
+      "title": "نسبرسو كادت تتوقف بسبب نسكافيه!",
+      "status": "POSTED",
+      "referenceKey": "saved-834f3d1e9e2ef30e0d5c458da186023a0d7508961b239d54dd3a9b78a67a56dc",
+      "uploadIds": [
+        "1394acd6-211c-471b-8401-eb5ff9d0330e",
+        "8029966f-3348-4bba-87bb-9d12cb02a65e"
+      ],
+      "snapTitle": "نسبرسو كادت تتوقف بسبب نسكافيه!"
+    },
+    {
+      "id": "0c8df33f-2b10-47b1-8cd1-d69c08cd5151",
+      "title": "وش دخل شركة الكفرات بالمطاعم؟",
+      "status": "POSTED",
+      "referenceKey": "saved-4f37522371462716bec2f9d8219d008b9971138e1226ab2039b1144b691bcdff",
+      "uploadIds": [
+        "b580835d-3894-40ca-947f-17ecb58ed7ec",
+        "51ae4301-bbbd-4b6c-a446-26801126186b"
+      ],
+      "snapTitle": "وش دخل شركة الكفرات بالمطاعم؟"
+    },
+    {
+      "id": "69475635-762c-468d-825a-eecd9ddbe7b3",
+      "title": "خوذة F-35… شاشة قدّام عين الطيار",
+      "status": "POSTED",
+      "referenceKey": "saved-8c04ee21ec35d871e36b50bc230b52015416ea00ee3d226be071a04c58c71b5d",
+      "uploadIds": [
+        "2bc5af18-10e9-439a-945a-cecb559e4f97",
+        "435d33e8-069f-4b33-80e4-59d5e031dff4"
+      ],
+      "snapTitle": "خوذة F-35… شاشة قدّام عين الطيار"
+    },
+    {
+      "id": "bcee9f47-0028-41f2-bd1a-b636a00e48d3",
+      "title": "نفط الطوارئ… داخل كهوف ملح!",
+      "status": "POSTED",
+      "referenceKey": "saved-332b7e576fcdf26b03b413e07fddb3ce7dc0ce98b1320b6cfc8b457cc2f5f7c0",
+      "uploadIds": [
+        "28281ef0-9409-4c82-a1f7-67b81c3b5de6",
+        "de3abb0a-4fd9-451a-a15d-6aa5312b98d4"
+      ],
+      "snapTitle": "نفط الطوارئ… داخل كهوف ملح!"
+    },
+    {
+      "id": "3ff9135e-b60a-408a-89f7-95928726ba14",
+      "title": "خسر ٧٠ مليار… واستثماره قلب القصة",
+      "status": "POSTED",
+      "referenceKey": "saved-c9decb8b4010e393abb721106f16dd278219b2793e03f67b8c6c1c827ec2be72",
+      "uploadIds": [
+        "1029459e-accc-412d-bdcc-30c6200b24f3",
+        "0b6d1bbd-68d7-4157-b25b-74830252e3bb"
+      ],
+      "snapTitle": "خسر ٧٠ مليار… واستثماره قلب القصة"
+    },
+    {
+      "id": "021763a9-749d-481a-9ea2-57445aa57b0c",
+      "title": "باندورا… السوار اللي غيّر كل شيء",
+      "status": "POSTED",
+      "referenceKey": "saved-1b8373a0e1599fb999828056c8f45428f9536a3876c946940e55d5c695c3e9ce",
+      "uploadIds": [
+        "452a24ab-cab2-4621-b540-5f25a7bac490",
+        "8efd57bd-f9ad-4a39-95d2-9204c17c75e9"
+      ],
+      "snapTitle": "باندورا… السوار اللي غيّر كل شيء"
+    },
+    {
+      "id": "6b4d9a3c-7b51-45d5-b4d7-815d90490e78",
+      "title": "أمريكان إكسبرس كانت شركة شحن!",
+      "status": "POSTED",
+      "referenceKey": "saved-4c63e3ff5421b209562dd5c7e953cadbb89a6503de33a4df4a90f5cd224ab185",
+      "uploadIds": [
+        "23899dda-0ee3-4bc7-94ac-b89338a7c08b",
+        "4f11effa-fe93-470c-bdf0-913a4be89235"
+      ],
+      "snapTitle": "أمريكان إكسبرس كانت شركة شحن!"
+    },
+    {
+      "id": "04a4049a-7d57-4c47-8781-5058b058bd5e",
+      "title": "فلتر القهوة بدأ بورقة من دفتر",
+      "status": "POSTED",
+      "referenceKey": "saved-3ae10c24a48ac17dd482a16832be8364c255455ef73e1cfecbd0361a5ab28451",
+      "uploadIds": [
+        "4cb3b66b-8c54-47b1-8df5-b6dfed503738",
+        "b525090d-24e9-4dc7-9fe5-3bc08f2bcb7f"
+      ],
+      "snapTitle": "فلتر القهوة بدأ بورقة من دفتر"
+    },
+    {
+      "id": "14872888-5cbd-4035-9ce6-c25ea3ff08e3",
+      "title": "باعوا سيارة… وبدأت أرماني",
+      "status": "POSTED",
+      "referenceKey": "saved-4e90222adfa2eda6646c18fb1c325b44ee1852e4214e8f1e4ec08b25a38766cc",
+      "uploadIds": [
+        "d899e5ac-0681-4014-b5e6-0e146adfd5d8",
+        "64a5397d-3e6d-4518-b5ba-036be1296ae8"
+      ],
+      "snapTitle": "باعوا سيارة… وبدأت أرماني"
+    },
+    {
+      "id": "4e33c9e4-365e-4c2c-bafb-b5e50507cbd6",
+      "title": "هيثرو كان خيام وألواح خشب!",
+      "status": "POSTED",
+      "referenceKey": "saved-1ecea661754fbdb209e29fad98ef79fc9882a9bbc85854cbadcb06a1bdcdad5d",
+      "uploadIds": [
+        "2e2ea5f7-7f4d-46d0-872d-778cec2708d9",
+        "213ccf54-2497-4454-b751-c01677e3f5ab"
+      ],
+      "snapTitle": "هيثرو كان خيام وألواح خشب!"
+    },
+    {
+      "id": "02568d91-7ee4-485b-b4c7-66600a0f25a5",
+      "title": "الورد الطائفي… وهدية حاج",
+      "status": "POSTED",
+      "referenceKey": "saved-cbc7921cca9709d9419b6ae509aa17bddbcb06133c0939a2fcc34fecba137979",
+      "uploadIds": [
+        "e7f2f0ce-fc7a-4ad5-a70b-7d83e9e0ba65",
+        "9e3482da-2c6f-4a8a-a0e5-927242734b60"
+      ],
+      "snapTitle": "الورد الطائفي… وهدية حاج"
+    },
+    {
+      "id": "1057b2cb-1d32-4211-8f92-d59f1d46218d",
+      "title": "كوكاكولا كانت تبيع ٩ أكواب!",
+      "status": "POSTED",
+      "referenceKey": "saved-f9da44ffe8167a10feeeddc42eb3d87382f346749318e3ff4358834b9478414a",
+      "uploadIds": [
+        "91025df0-f961-4844-9b10-a740ba3c9942",
+        "9e5bab70-31be-4761-a98a-247e7a9844a8"
+      ],
+      "snapTitle": "كوكاكولا كانت تبيع ٩ أكواب!"
+    },
+    {
+      "id": "58afdb99-7d24-4bb6-a4a3-49b31591ea20",
+      "title": "راحة أكثر… بدون سعر البزنس",
+      "status": "POSTED",
+      "referenceKey": "saved-2e483854dedaa82e567f1cada500f89b0c4177544c63835c9fcdc049351b3584",
+      "uploadIds": [
+        "855e8f34-7832-4e4a-be1e-203418e26298",
+        "440796b1-303e-4476-ac6f-0e7ef12182d6"
+      ],
+      "snapTitle": "راحة أكثر… بدون سعر البزنس"
+    },
+    {
+      "id": "e0bf8e50-674f-4643-82c3-4b9bfd0aaedc",
+      "title": "زجاج ينثني بدون ما ينكسر؟",
+      "status": "POSTED",
+      "referenceKey": "saved-a307e6438745dcf640db2e6f9ca9b306defbe28eac90248b034f6da821d7116a",
+      "uploadIds": [
+        "77568c93-6236-4242-9671-7e4e804f1d1a",
+        "f68e871f-ea1b-499a-a455-9c6a8c1a8931"
+      ],
+      "snapTitle": "زجاج ينثني بدون ما ينكسر؟"
+    },
+    {
+      "id": "88cfddf6-9e7c-4ce8-a913-8b8a3816c1e1",
+      "title": "باندورا — من محل صغير إلى العالم",
+      "status": "POSTED",
+      "referenceKey": "saved-163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc",
+      "uploadIds": [
+        "90716b25-4b5d-41d9-876f-e72f91cd548c",
+        "daf69402-2251-4fb9-94f8-5b9c6ffe67a6",
+        "bb9340ff-3f01-49d9-a9fb-b82026672f7d",
+        "7d1b25a6-6f5e-4bad-be40-b225e318e82c"
+      ],
+      "snapTitle": "باندورا — من محل صغير إلى العالم"
+    },
+    {
+      "id": "d5af025f-8e18-4a72-a643-009b896196be",
+      "title": "نفط الطوارئ — مخزون داخل كهوف الملح",
+      "status": "POSTED",
+      "referenceKey": "saved-9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+      "uploadIds": [
+        "fe9233b3-e211-46ba-a519-234e8efb1298",
+        "6b47816f-0dcd-4211-8122-d7d536da421a",
+        "e987453c-3628-4764-b5bb-7a9e12d18797",
+        "cd8775b6-9dc3-4176-88e4-1f5c885cc9a5"
+      ],
+      "snapTitle": "نفط الطوارئ — مخزون داخل كهوف الملح"
+    },
+    {
+      "id": "45726761-023f-40d9-92a0-877fc4e8ddfc",
+      "title": "سون — من خسارة هائلة إلى رهان ChatGPT",
+      "status": "POSTED",
+      "referenceKey": "saved-5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190",
+      "uploadIds": [
+        "f4d5b007-e497-4220-866e-9c7440cdfc8c",
+        "0b49bcb4-3676-48a3-805b-600f7292268d",
+        "411690d0-214d-4129-9f8d-08288326d84e",
+        "b6558789-a15b-420d-8033-8251b02ca28a"
+      ],
+      "snapTitle": "سون — من خسارة هائلة إلى رهان ChatGPT"
+    },
+    {
+      "id": "dbad3478-38f4-4701-b7df-b8e274975c16",
+      "title": "ميشلان — من الكفرات إلى المطاعم",
+      "status": "POSTED",
+      "referenceKey": "saved-1e3a2bbcf256b314add5e21a55ef746b14b0500508c15f8c4ba2929b4107b4e3",
+      "uploadIds": [
+        "4b32b657-a543-4576-a89b-a35e4dea1e51",
+        "fcd3dbfa-c233-46a7-98e7-be760e0f505d",
+        "b82cd0e0-0e2d-4936-84b7-772ef2747852"
+      ],
+      "snapTitle": "ميشلان — من الكفرات إلى المطاعم"
+    },
+    {
+      "id": "714c61f7-7535-4bc0-abf2-c91dea7c3b31",
+      "title": "F-35 — قصة المنافسة",
+      "status": "POSTED",
+      "referenceKey": "saved-7c64592c5f3d87ab8d45baebd3f3f3f2074ee491ba3e4afba461f8c1aa04c66c",
+      "uploadIds": [
+        "97701c23-c2f9-41af-8d01-a851cc21b2a9",
+        "dd096c71-a5f3-4e76-806a-846271faeeb5",
+        "67dc8e60-584d-4376-ba8d-3f4a503ed23b",
+        "d2b7ccc5-d054-486e-ab97-604980ccc65e"
+      ],
+      "snapTitle": "F-35 — قصة المنافسة"
+    },
+    {
+      "id": "4bc4a0ea-ba88-4309-9f68-79f508a680e0",
+      "title": "سايلنت هيل… الرعب فيها مو بس وحوش",
+      "status": "POSTED",
+      "referenceKey": "saved-849f9cfa67f59706d7f0943f69bf5883c4a409942d2a05a883d4c5888cdd323f",
+      "uploadIds": [
+        "87d14d62-0f04-43ee-bb5d-4624ace6a164",
+        "96a2de51-4e9f-44e5-a719-79d90ea5760c",
+        "78411dc7-20be-4bda-875f-ec94b9ed6534",
+        "3cf4b101-0acd-48c3-a192-f51882918605"
+      ],
+      "snapTitle": "سايلنت هيل… الرعب فيها مو بس وحوش"
+    },
+    {
+      "id": "9d86afd4-9872-46f9-95f1-e67291a0ea28",
+      "title": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد",
+      "status": "POSTED",
+      "referenceKey": "saved-4bb2f2b4744630357cc31ad62f7c7ed9f2f08d55e6fb4bc1e427b695d73f4032",
+      "uploadIds": [
+        "dbf99ae4-060e-420b-80de-177accf78e06",
+        "394d9340-41b1-4277-b870-049eb1b06dd6"
+      ],
+      "snapTitle": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد"
+    },
+    {
+      "id": "4e3f4eac-c3aa-42ea-b078-9fd80ee1f111",
+      "title": "٧ دوجز — مليون تذكرة",
+      "status": "POSTED",
+      "referenceKey": "saved-df08139bd0bbd9aafae9ac4b391ad7ad1240b01fe3ea030a6cdea69839d68cbb",
+      "uploadIds": [
+        "6fb9c24c-d2b4-4fe5-8024-cecec0925102",
+        "32918aea-48f1-4a7f-b95a-130e7e8cec18"
+      ],
+      "snapTitle": "٧ دوجز — مليون تذكرة"
+    },
+    {
+      "id": "bfa40a5b-9151-4339-9c0b-14f439dbb5d4",
+      "title": "ديزني — من أوزوالد إلى ميكي",
+      "status": "POSTED",
+      "referenceKey": "saved-90c30f79d391e9cb1001c3f40061c8e84788874797eb180d9191edfabeacc73d",
+      "uploadIds": [
+        "6055d5e2-e3fc-483b-87d0-1d3e5a4b50e5",
+        "620d198f-1aae-440c-b8bf-872d2825c6b7",
+        "eed93d80-e736-4c9f-a05e-7130aefde27f",
+        "d097f5fc-4e6d-496c-b6f2-189f12b6c5be"
+      ],
+      "snapTitle": "ديزني — من أوزوالد إلى ميكي"
+    },
+    {
+      "id": "f63d275c-0781-4c4e-9950-ad4a04d8e993",
+      "title": "أمريكان إكسبرس — من الطرود إلى البطاقات",
+      "status": "POSTED",
+      "referenceKey": "saved-b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f",
+      "uploadIds": [
+        "2fd19ccb-87a6-480f-b081-2ccd8b972f79",
+        "b64f809c-4d50-4c7d-a662-cc5c372d5c20",
+        "d4d9fae4-ec63-49fb-b434-06a6e26f2b6c",
+        "9b58365f-dc76-43d1-8cde-70cf59b9cb73"
+      ],
+      "snapTitle": "أمريكان إكسبرس — من الطرود إلى البطاقات"
+    },
+    {
+      "id": "0ab440cb-8f95-4be3-9049-f02b688fa675",
+      "title": "نسبرسو — المشروع اللي كاد يتوقف",
+      "status": "POSTED",
+      "referenceKey": "saved-1b07d3cc3db01285bdb75d3d6247460d4b36726fef8592c896ef9cc39c013c01",
+      "uploadIds": [
+        "476323dc-926f-4f60-8bcc-7b87109443f4",
+        "6f8529c3-5700-4b28-9d97-7a97046bbb42",
+        "a4775aac-4dcf-413b-a2a9-bb34a7ef3303",
+        "a476c803-57d8-460a-ab12-7076fddc9994"
+      ],
+      "snapTitle": "نسبرسو — المشروع اللي كاد يتوقف"
+    },
+    {
+      "id": "2a74b2bd-1439-4730-a9d7-1da91f1765b5",
+      "title": "مشاجرات الجو — من قمرة القيادة إلى منع السفر",
+      "status": "POSTED",
+      "referenceKey": "saved-8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+      "uploadIds": [
+        "824aa6e9-7e3e-42db-a0f8-711d63567efd",
+        "074c838f-4010-49ef-8cce-98df0aae959b",
+        "056d5e9f-c4fd-49af-afb3-54acded29f6e",
+        "01172a88-1e6b-44a7-bf8c-fec0d8a53e3d"
+      ],
+      "snapTitle": "مشاجرات الجو — من قمرة القيادة إلى منع السفر"
+    },
+    {
+      "id": "0b972575-d015-424c-a933-ab5e49c88cb7",
+      "title": "الشاشات القابلة للطي",
+      "status": "POSTED",
+      "referenceKey": "saved-3a712aa4d308d9de2564be77efb788f4e3cce0c873ea982daef8d49c47ee887a",
+      "uploadIds": [
+        "a5e8c9b6-edb8-4e7d-9040-f9aff2c25b35",
+        "8928d160-56f7-4d57-ba05-d2fe22d4b9b4",
+        "12cb734c-1679-4eca-9251-68e5a3c59c3a",
+        "6cfa5ba3-4227-41f6-9617-f447c094006c",
+        "4ab2e21e-a4b1-4896-ab08-ff19cbf9eff6"
+      ],
+      "snapTitle": "الشاشات القابلة للطي"
+    },
+    {
+      "id": "f64ca10e-551b-466e-b6bb-3034f6b1aa90",
+      "title": "السياحية الممتازة — ملخص تنفيذي",
+      "status": "POSTED",
+      "referenceKey": "saved-3589df13858971844cb90f9ed5f9d78b441db3e66909676182ab98f71a45c96b",
+      "uploadIds": [
+        "62ccc3c2-60fd-4562-a851-fd4af7335bfa",
+        "f736ada4-8e10-4c45-ae9a-19e6f39f9415",
+        "2a290396-f591-41e2-aeb0-712754c9b9c3",
+        "09370ce0-18a8-46d6-ba44-ea488b868d64"
+      ],
+      "snapTitle": "السياحية الممتازة — ملخص تنفيذي"
+    },
+    {
+      "id": "d4908016-cb8c-433d-ae41-a1293291ed44",
+      "title": "ملخص تنفيذي — قصة الكوبونات — 16 سبتمبر 2026",
+      "status": "POSTED",
+      "referenceKey": "saved-67212aad660cd4d651d199507c4062828b8ccb9d16eead64b17f28937ccc556f",
+      "uploadIds": [
+        "73b7e192-94c9-4977-a182-da5d2cc44551",
+        "96c56ee0-1bbf-40bc-8edf-9d6c15d256ad",
+        "a7a4f691-ad4e-4df6-a2e1-c7acd5b489e3",
+        "036fcc60-aecf-46b8-b489-8a65bec6d096"
+      ],
+      "snapTitle": "ملخص تنفيذي — قصة الكوبونات — 16 سبتمبر 2026"
+    },
+    {
+      "id": "30287425-2726-43d8-8509-2964cd83a6ad",
+      "title": "ملخص تنفيذي — الورد الطائفي",
+      "status": "POSTED",
+      "referenceKey": "saved-1c47e0dc46f8ed828b1a6546262f7120d61bff46bb7442d963da5f7e475299be",
+      "uploadIds": [
+        "a6b0ef08-2f05-485e-bcca-4ed49e7c32e0",
+        "aa62d3fd-49cd-49b5-a78f-9b9d9e838e6b",
+        "b6e034b6-40e4-4d8a-974b-fb832c372048",
+        "9204427e-1df5-467b-8850-6fd216ec7413"
+      ],
+      "snapTitle": "ملخص تنفيذي — الورد الطائفي"
+    },
+    {
+      "id": "62a38d5a-f9f9-4153-a28e-0d1d62718316",
+      "title": "سير.. من التأسيس إلى أول سياراتها",
+      "status": "POSTED",
+      "referenceKey": "saved-7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c",
+      "uploadIds": [
+        "f6c64fb6-2401-40f4-9821-41b277936368",
+        "f77efa18-fa3b-4cb2-a322-29fd783e80be",
+        "441d7981-9887-4f46-9d29-22e1ea199c1a"
+      ],
+      "snapTitle": "سير.. من التأسيس إلى أول سياراتها"
+    },
+    {
+      "id": "6d7d4b11-74bf-4b9b-98e5-93b3d99fb374",
+      "title": "ملخص تنفيذي — قصة مبابي",
+      "status": "POSTED",
+      "referenceKey": "saved-964912d2996b332abbc6d8eb93e02e4a0841696dd262dd7e22fd940a343bb340",
+      "uploadIds": [
+        "ba06f90d-632a-4df5-afc2-657a2a2f7427",
+        "e36e6097-ed0b-4d46-b472-abfb431bcd6c",
+        "4b5948e3-d3c0-451e-b09a-eb4ee179693c"
+      ],
+      "snapTitle": "ملخص تنفيذي — قصة مبابي"
+    },
+    {
+      "id": "b13274da-7450-44c1-83e3-fa48b49c3a35",
+      "title": "إيزاك هادجار.. من الكارتينج إلى منصة التتويج",
+      "status": "POSTED",
+      "referenceKey": "saved-43d48833255b3cef53353ba45b01aa3078135ee457cf43b17869362cbef888de",
+      "uploadIds": [
+        "fa8ae370-bafd-4401-a600-174428b2b9cc",
+        "9488d4fc-bf40-4111-bc21-888965ddeef9",
+        "50b278fe-e19e-41e2-9137-9ec63f63f679",
+        "cfe43214-4c24-4fc3-90ca-15161878b74b"
+      ],
+      "snapTitle": "إيزاك هادجار.. من الكارتينج إلى منصة التتويج"
+    },
+    {
+      "id": "8083f295-d22a-4077-af5e-d9a58b9ad93c",
+      "title": "هيثرو.. من الخيام إلى صالات السفر",
+      "status": "POSTED",
+      "referenceKey": "saved-80253d4b55acbac47e7dfd314353abb822048aef3a1f84b266a1349579536040",
+      "uploadIds": [
+        "46906e0f-42c5-47c1-aaee-834612462b56",
+        "6ba93e71-7676-4ab8-94a1-82fa005c465a",
+        "de65065e-4aea-4ea5-9bfa-714e9cb88be3",
+        "98277511-b125-482d-9d1b-dfb25bb4dca4"
+      ],
+      "snapTitle": "هيثرو.. من الخيام إلى صالات السفر"
+    },
+    {
+      "id": "14a023c7-9f09-4685-80c4-84300de3bed7",
+      "title": "أرماني.. بدأت ببيع سيارة",
+      "status": "POSTED",
+      "referenceKey": "saved-9a279cce3c4be63b8d209a8adef3a7643be7e25180b52c5278785b06e21ff08b",
+      "uploadIds": [
+        "0ff8fbac-7ef6-47c2-addd-34818f0eaadb",
+        "76624415-5bba-4251-b61e-5518ab47f1bc",
+        "d4031a15-9cb2-4dbe-86b3-bd30dd76d60d",
+        "78b65b39-da52-44b3-a1d2-036f0ea7fbe4"
+      ],
+      "snapTitle": "أرماني.. بدأت ببيع سيارة"
+    },
+    {
+      "id": "0fcdea81-5286-443b-ae17-771375742477",
+      "title": "فلتر القهوة — قصة ميليتا",
+      "status": "POSTED",
+      "referenceKey": "saved-1752670294534fcbd9c51654788aa4a0cf88c63d71471c97a2b7a6afd9a618b8",
+      "uploadIds": [
+        "8304e6fd-085d-4c0c-81da-12004412a6c8",
+        "ba452391-ecc3-4678-a8af-9c7c1eae38b6",
+        "cdbc5dbd-4476-4331-9ffb-d61f262aa895",
+        "72c26f8c-7c61-458d-9a29-ddb066693927"
+      ],
+      "snapTitle": "فلتر القهوة — قصة ميليتا"
+    },
+    {
+      "id": "c862cb68-c91b-4d7e-81de-16e96eb03770",
+      "title": "السيتي والعقوبات — نقاط وبطولات وهبوط",
+      "status": "POSTED",
+      "referenceKey": "saved-cb63e68059815933eac67b69e3f83951bfc323840a503868e02a41630ac0403d",
+      "uploadIds": [
+        "627c0e80-e13a-4d02-a5a6-3ad30f137870",
+        "59368c38-1acc-45a8-a1e6-3a4349f9d4a3",
+        "d512ec1f-a3f4-4dba-be83-b7b220c921d0",
+        "d8ab289a-c339-4c7f-a50d-b262421c25fb"
+      ],
+      "snapTitle": "السيتي والعقوبات — نقاط وبطولات وهبوط"
+    }
+  ],
+  "available_after_reserve": 0,
+  "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062"
+}
