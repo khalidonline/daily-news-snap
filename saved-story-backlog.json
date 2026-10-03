@@ -96,7 +96,7 @@
       "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
       "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved.",
       "renewal": {
-        "status": "EXCLUDED_BY_OWNER",
+        "status": "EXCLUDED_BY_OWNER_20261004",
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
         "reason": "Owner selected only City, Disney, Ceer, Apple, Air Rage for remaining renewals. Preserve existing archive."
       }
@@ -417,7 +417,7 @@
       "saved_card_count": 4,
       "confirmed_at": "2026-09-30T21:26:58.496120+00:00",
       "renewal": {
-        "status": "EXCLUDED_BY_OWNER",
+        "status": "EXCLUDED_BY_OWNER_20261004",
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
         "reason": "Owner selected only City, Disney, Ceer, Apple, Air Rage for remaining renewals. Preserve existing archive."
       }
@@ -431,7 +431,9 @@
       "receipt_path": "api-receipts/72ec353cb80d643ee93f8fc46e686eafd135bd51e38bbca265e571ac3d47007f.json",
       "status": "HOLD_EDITORIAL_OR_REPLACEMENT_RECONCILIATION",
       "reconciliation": null,
-      "card_count": 4
+      "card_count": 4,
+      "archive_status": "EXCLUDED_BY_OWNER_20261004",
+      "archive_exclusion_reason": "احفظ السيتي وديزني وسير وابل ومشاجرات الجو. الباقي مايحتاج"
     },
     {
       "path": "approved/heathrow-20260928/manifest.json",
@@ -472,7 +474,7 @@
       "saved_card_count": 3,
       "confirmed_at": "2026-09-30T21:27:41.426151+00:00",
       "renewal": {
-        "status": "EXCLUDED_BY_OWNER",
+        "status": "EXCLUDED_BY_OWNER_20261004",
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
         "reason": "Owner selected only City, Disney, Ceer, Apple, Air Rage for remaining renewals. Preserve existing archive."
       }
@@ -533,7 +535,9 @@
       "reconciliation": null,
       "card_count": 3,
       "archive_excluded": true,
-      "exclusion_reason": "Owner 2026-10-01: باقتين اليوم الوطني مايحتاج نحفظهم"
+      "exclusion_reason": "Owner 2026-10-01: باقتين اليوم الوطني مايحتاج نحفظهم",
+      "archive_status": "EXCLUDED_BY_OWNER_20261004",
+      "archive_exclusion_reason": "احفظ السيتي وديزني وسير وابل ومشاجرات الجو. الباقي مايحتاج"
     },
     {
       "path": "approved/national-day-96-20260923/manifest.json",
@@ -546,7 +550,9 @@
       "reconciliation": null,
       "card_count": 1,
       "archive_excluded": true,
-      "exclusion_reason": "Owner 2026-10-01: باقتين اليوم الوطني مايحتاج نحفظهم"
+      "exclusion_reason": "Owner 2026-10-01: باقتين اليوم الوطني مايحتاج نحفظهم",
+      "archive_status": "EXCLUDED_BY_OWNER_20261004",
+      "archive_exclusion_reason": "احفظ السيتي وديزني وسير وابل ومشاجرات الجو. الباقي مايحتاج"
     },
     {
       "path": "approved/premium-economy-20260915/manifest.json",
@@ -592,7 +598,7 @@
       "archive_commit": "251293cc9ec96600b1f9c45a6389c2568c70bed1",
       "archive_note": "Final archive edition independently approved by owner; original daily receipt preserved.",
       "renewal": {
-        "status": "EXCLUDED_BY_OWNER",
+        "status": "EXCLUDED_BY_OWNER_20261004",
         "owner_authorized_at": "2026-10-03T15:04:20+03:00",
         "reason": "Owner selected only City, Disney, Ceer, Apple, Air Rage for remaining renewals. Preserve existing archive."
       }
@@ -686,12 +692,13 @@
       "receipt_path": "api-receipts/35ff179764bc25427e4545a3e9c151c070dabdf58cb7a6e448392f5e8e700094.json",
       "status": "POSTED",
       "card_count": 2,
-      "archive_status": "WAITING_QUOTA_AND_LIVE_FINAL_CHECK",
+      "archive_status": "EXCLUDED_BY_OWNER_20261004",
       "archive_approval_required": true,
       "saved_story_id": null,
       "source_receipt_checked_at": "2026-10-03T20:58:21.540016+00:00",
       "provider_inventory_no_saved_match_at": "2026-10-03T20:58:21.540016+00:00",
-      "note": "Use exact approved two-card publication."
+      "note": "Use exact approved two-card publication.",
+      "archive_exclusion_reason": "احفظ السيتي وديزني وسير وابل ومشاجرات الجو. الباقي مايحتاج"
     },
     {
       "path": "approved/nike-20261003/manifest.json",
@@ -701,12 +708,13 @@
       "receipt_path": "api-receipts/3b5cd8e89bfd1ca71d02ccfcaf9e814f2a689ac77ea59614f29cd4c003fc8227.json",
       "status": "POSTED",
       "card_count": 2,
-      "archive_status": "WAITING_QUOTA_AND_LIVE_FINAL_CHECK",
+      "archive_status": "EXCLUDED_BY_OWNER_20261004",
       "archive_approval_required": true,
       "saved_story_id": null,
       "source_receipt_checked_at": "2026-10-03T20:58:21.540016+00:00",
       "provider_inventory_no_saved_match_at": "2026-10-03T20:58:21.540016+00:00",
-      "note": "Keep exact published media. Archive title must date-anchor relative أمس (event 2026-10-02); no redesign authorized."
+      "note": "Keep exact published media. Archive title must date-anchor relative أمس (event 2026-10-02); no redesign authorized.",
+      "archive_exclusion_reason": "احفظ السيتي وديزني وسير وابل ومشاجرات الجو. الباقي مايحتاج"
     }
   ],
   "unmapped_receipts": [
@@ -792,12 +800,23 @@
     "spend_not_inferred_from_missing_ledger": true
   },
   "pending_delivery_order": [
-    "berlin-unity-20261003",
-    "nike-20261003",
     "city-penalties-20260930",
     "disney-oswald-20260930",
     "ceer-20260922",
     "apple-revision-20260926",
     "air-rage-20261001"
-  ]
+  ],
+  "current_queue_policy": {
+    "updated_at": "2026-10-04T00:24:12+03:00",
+    "owner_instruction": "احفظ السيتي وديزني وسير وابل ومشاجرات الجو. الباقي مايحتاج",
+    "allowlist": [
+      "city-penalties-20260930",
+      "disney-oswald-20260930",
+      "ceer-20260922",
+      "apple-revision-20260926",
+      "air-rage-20261001"
+    ],
+    "scope": "Current archive/renewal backlog only; do not delete previously saved stories",
+    "reserve_quota": 2
+  }
 }
