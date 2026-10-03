@@ -1,0 +1,104 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "package": "ceer-20260922-compact-20261003",
+  "identity": "f90db037c2c33532e0e7a268b81461f6070ec24a464bb382eb38bcf20cb7ef5e",
+  "title": "سير… الشاهين في أبوابها و١٩٣٢ في أنوارها",
+  "authorization": "Khalid 2026-10-03 15:04 Asia/Riyadh: renew ONLY City, Disney, Ceer, Apple final, Air Rage using original photos/template, max two cards; keep two operations reserve. Current scheduled request explicitly permits preparation and independent archive approval.",
+  "not_before": "2026-10-03T20:52:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "source_identity": "7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c",
+  "source_rows": [
+    {
+      "status": "POSTED",
+      "post_id": "9348647b-ba10-49b7-81f6-8ee9d1115539",
+      "upload_id": "f6c64fb6-2401-40f4-9821-41b277936368"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "26342ede-e53f-4210-8f5f-7a2aa0922222",
+      "upload_id": "f77efa18-fa3b-4cb2-a322-29fd783e80be"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "5c243a9c-d8cb-4748-9989-d4744d69403d",
+      "upload_id": "441d7981-9887-4f46-9d29-22e1ea199c1a"
+    }
+  ],
+  "source_manifest": "approved/ceer-20260922/manifest.json",
+  "source_manifest_sha256": "bb80ff19c1b2b72b1eb06d05f817073e70e3c28e6d50b99526bc6380f1a2c72c",
+  "source_manifest_identity": "7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c",
+  "source_commit": "f2094a14df7696a09c4e5596682edff8f85e03ec",
+  "previous_saved": {
+    "identity": "7894a2162885f9e7d95a1ebb59a9cde49947ce1390e25aa8b3fc1c920af3b60c",
+    "title": "سير.. من التأسيس إلى أول سياراتها",
+    "upload_ids": [
+      "f6c64fb6-2401-40f4-9821-41b277936368",
+      "f77efa18-fa3b-4cb2-a322-29fd783e80be",
+      "441d7981-9887-4f46-9d29-22e1ea199c1a"
+    ],
+    "status": "POSTED",
+    "intent_at": "2026-09-30T21:27:46.962731+00:00",
+    "post_id": "62a38d5a-f9f9-4153-a28e-0d1d62718316",
+    "confirmed_at": "2026-09-30T21:28:32.983713+00:00",
+    "provider_result": {
+      "id": "62a38d5a-f9f9-4153-a28e-0d1d62718316",
+      "status": "POSTED",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "f86f4196-cb1c-408e-a81f-6622f2344c3b",
+          "mediaId": "d7750fb6-4852-4b48-a655-a171021a3026",
+          "mediaIds": [
+            "d7750fb6-4852-4b48-a655-a171021a3026",
+            "2119be10-e9de-4786-8b4d-aa53d2f35e16",
+            "2e9e2809-c68d-4f24-b4aa-3da7def5fb2d"
+          ],
+          "type": "SAVED_STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "f6c64fb6-2401-40f4-9821-41b277936368",
+          "sourceUploadIds": [
+            "f6c64fb6-2401-40f4-9821-41b277936368",
+            "f77efa18-fa3b-4cb2-a322-29fd783e80be",
+            "441d7981-9887-4f46-9d29-22e1ea199c1a"
+          ],
+          "mediaUploadedAt": "2026-09-30T21:27:57.545Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      }
+    }
+  },
+  "media": [
+    {
+      "path": "approved/saved-stories/compact-five-20261003/ceer-20260922/card-01.jpg",
+      "kind": "info",
+      "sha256": "7531dd882de720c0765bc219a2739ff1e5ea2ac3957943937ea4debba02aa144"
+    },
+    {
+      "path": "approved/saved-stories/compact-five-20261003/ceer-20260922/card-02.jpg",
+      "kind": "story",
+      "sha256": "e7a50962ce627b90e2cab604956a292ba280bebbf09270023711b23c37462620"
+    }
+  ],
+  "reserve_quota": 2,
+  "quota_check_required_before_send": true,
+  "live_source_and_provider_inventory_recheck_required": true,
+  "status": "REVIEWED_WAITING_QUOTA",
+  "sources_internal_only": [
+    "https://ceermotors.com/news/exobot-bold-extraordinary-saudi/",
+    "https://ceermotors.com/our-story/",
+    "https://aawsat.com/node/5320797"
+  ],
+  "old_deletion_status": "PENDING_SNAPCHAT_APP_NO_DELETION_CLAIM",
+  "snapshot_audit_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062",
+  "review": {
+    "cards": 2,
+    "font_family": "Almarai",
+    "body_px": 52,
+    "phone_preview_reviewed": true,
+    "share_panel_separate": true,
+    "sources_excluded_from_media": true,
+    "paid_model_requests": 0
+  }
+}

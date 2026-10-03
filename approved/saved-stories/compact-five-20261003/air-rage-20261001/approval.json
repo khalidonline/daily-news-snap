@@ -1,0 +1,122 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "package": "air-rage-20261001-compact-20261003",
+  "identity": "a8edf2ce4745bd7a32deb5d764fecc7644632cad0e69bc09e73f634c8be78722",
+  "title": "اضطرابات الجو… هبوط ومنع سفر",
+  "authorization": "Khalid 2026-10-03 15:04 Asia/Riyadh: renew ONLY City, Disney, Ceer, Apple final, Air Rage using original photos/template, max two cards; keep two operations reserve. Current scheduled request explicitly permits preparation and independent archive approval.",
+  "not_before": "2026-10-03T20:52:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "source_identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+  "source_rows": [
+    {
+      "status": "POSTED",
+      "post_id": "e11a2530-329c-4a45-90ab-4311be804f8a",
+      "upload_id": "824aa6e9-7e3e-42db-a0f8-711d63567efd"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "31b4b52d-8c8d-42f2-8ca2-9d8200869425",
+      "upload_id": "074c838f-4010-49ef-8cce-98df0aae959b"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "1632421a-0e0a-4e4c-8859-6f038c1865f0",
+      "upload_id": "056d5e9f-c4fd-49af-afb3-54acded29f6e"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "1295c3d3-b37a-45fd-9e22-00d10e8919ea",
+      "upload_id": "01172a88-1e6b-44a7-bf8c-fec0d8a53e3d"
+    }
+  ],
+  "source_manifest": "approved/air-rage-20261001/manifest.json",
+  "source_manifest_sha256": "b396bd690eb2237be61cb2af8fc2ab1a199e3033e2b70dee5a3ee325a8774ad0",
+  "source_manifest_identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+  "source_commit": "f2094a14df7696a09c4e5596682edff8f85e03ec",
+  "previous_saved": {
+    "identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+    "title": "مشاجرات الجو — من قمرة القيادة إلى منع السفر",
+    "upload_ids": [
+      "824aa6e9-7e3e-42db-a0f8-711d63567efd",
+      "074c838f-4010-49ef-8cce-98df0aae959b",
+      "056d5e9f-c4fd-49af-afb3-54acded29f6e",
+      "01172a88-1e6b-44a7-bf8c-fec0d8a53e3d"
+    ],
+    "status": "POSTED",
+    "intent_at": "2026-10-01T09:09:15.689551+00:00",
+    "post_id": "2a74b2bd-1439-4730-a9d7-1da91f1765b5",
+    "confirmed_at": "2026-10-01T09:09:51.946780+00:00",
+    "provider_result": {
+      "id": "2a74b2bd-1439-4730-a9d7-1da91f1765b5",
+      "status": "POSTED",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "f2ed09fe-d4b5-4d11-be6a-d05ff4aa3495",
+          "mediaId": "cce15f64-bbc0-4b0e-a300-9af164cf9b39",
+          "mediaIds": [
+            "cce15f64-bbc0-4b0e-a300-9af164cf9b39",
+            "c40443e3-4e70-4568-b062-fca997e46e5d",
+            "9f101171-2a33-4b75-88c6-b7c0b5fc6440",
+            "13a82955-643a-4762-a98a-1474d5ef2ff6"
+          ],
+          "type": "SAVED_STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "824aa6e9-7e3e-42db-a0f8-711d63567efd",
+          "sourceUploadIds": [
+            "824aa6e9-7e3e-42db-a0f8-711d63567efd",
+            "074c838f-4010-49ef-8cce-98df0aae959b",
+            "056d5e9f-c4fd-49af-afb3-54acded29f6e",
+            "01172a88-1e6b-44a7-bf8c-fec0d8a53e3d"
+          ],
+          "mediaUploadedAt": "2026-10-01T09:09:18.834Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      }
+    },
+    "source_identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+    "package": "air-rage-20261001",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "scope": "SAVED_STORY_ONLY",
+    "media_sha256": [
+      "8c63b24db51e51efae2cf816f4b0f74bc68f6007698b4f58015f86f92654828d",
+      "af082ed4748e5eca511200e25fe374527af4ba308293b9200c24dddfd132e421",
+      "27858880091aec0b5b44ef84dcb849d25004cfba5985c25ed878f7ddeeba9376",
+      "81ad23f0203e38baa66fd187e5010c3c41b25a7dbbd9f79ea0f7a00a4a303204"
+    ]
+  },
+  "media": [
+    {
+      "path": "approved/saved-stories/compact-five-20261003/air-rage-20261001/card-01.jpg",
+      "kind": "info",
+      "sha256": "b6e5e2d8892d92353731afbe47d232f052a37b2ecaebe93f8e24c4ebb4659dd8"
+    },
+    {
+      "path": "approved/saved-stories/compact-five-20261003/air-rage-20261001/card-02.jpg",
+      "kind": "story",
+      "sha256": "a972d24540e4fe14c0643d1422d503df22069a4fa9a0bb7f9b6d5d55866d36fc"
+    }
+  ],
+  "reserve_quota": 2,
+  "quota_check_required_before_send": true,
+  "live_source_and_provider_inventory_recheck_required": true,
+  "status": "REVIEWED_WAITING_QUOTA",
+  "sources_internal_only": [
+    "https://www.reuters.com/business/aerospace-defense/flydubai-co-pilot-attacked-pilot-with-axe-attempted-terrorist-attack-uae-says-2026-10-03/",
+    "https://www.brusselstimes.com/1981474/jet2-flight-diverted-to-brussels-after-mass-brawl-breaks-out-among-holidaymakers"
+  ],
+  "old_deletion_status": "PENDING_SNAPCHAT_APP_NO_DELETION_CLAIM",
+  "snapshot_audit_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062",
+  "review": {
+    "cards": 2,
+    "font_family": "Almarai",
+    "body_px": 52,
+    "phone_preview_reviewed": true,
+    "share_panel_separate": true,
+    "sources_excluded_from_media": true,
+    "paid_model_requests": 0,
+    "material_update": "Oct3 UAE prosecutor statement replaces obsolete simple-brawl description of Flydubai. Jet2 kept explicitly a different incident."
+  }
+}

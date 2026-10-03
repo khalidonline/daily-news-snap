@@ -1,0 +1,63 @@
+{
+  "status": "NOT_SENT_QUOTA_RESERVE",
+  "paid_model_requests": 0,
+  "quota": {
+    "date": "2026-10-03T00:00:00.000Z",
+    "socialAccountId": "e2b8c159-fc3b-4220-bb57-e2d9aa2cb779",
+    "type": "SNAPCHAT",
+    "posts": {
+      "used": 18,
+      "limit": 20,
+      "remaining": 2
+    },
+    "comments": {
+      "used": 0,
+      "limit": 24,
+      "remaining": 24
+    }
+  },
+  "reserve": 2,
+  "budget": {
+    "day": "2026-10-03",
+    "ledger_present": false,
+    "charged_micro_usd": null
+  },
+  "audit_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062",
+  "approvals": [
+    {
+      "package": "city-penalties-20260930-compact-20261003",
+      "identity": "e2dbc771c6be9b2ca2645b2172188fb0105e74b1c07bfd0285da02fc4319f1e4",
+      "approved": true,
+      "status": "REVIEWED_WAITING_QUOTA",
+      "path": "approved/saved-stories/compact-five-20261003/city-penalties-20260930/approval.json"
+    },
+    {
+      "package": "disney-oswald-20260930-compact-20261003",
+      "identity": "18f24feb4f94eb4271b0aa98942df1baa8ee914157ffd8fed36a44ac2e3bddf6",
+      "approved": true,
+      "status": "REVIEWED_WAITING_QUOTA",
+      "path": "approved/saved-stories/compact-five-20261003/disney-oswald-20260930/approval.json"
+    },
+    {
+      "package": "ceer-20260922-compact-20261003",
+      "identity": "f90db037c2c33532e0e7a268b81461f6070ec24a464bb382eb38bcf20cb7ef5e",
+      "approved": true,
+      "status": "REVIEWED_WAITING_QUOTA",
+      "path": "approved/saved-stories/compact-five-20261003/ceer-20260922/approval.json"
+    },
+    {
+      "package": "apple-revision-20260926-compact-20261003",
+      "identity": "72196ac688a26312a1067ef4b19db216a15958733514bb0a8ea91b517312572c",
+      "approved": false,
+      "status": "HOLD_FINAL_RECEIPT_RECONCILIATION",
+      "path": "approved/saved-stories/compact-five-20261003/apple-revision-20260926/approval.json"
+    },
+    {
+      "package": "air-rage-20261001-compact-20261003",
+      "identity": "a8edf2ce4745bd7a32deb5d764fecc7644632cad0e69bc09e73f634c8be78722",
+      "approved": true,
+      "status": "REVIEWED_WAITING_QUOTA",
+      "path": "approved/saved-stories/compact-five-20261003/air-rage-20261001/approval.json"
+    }
+  ]
+}

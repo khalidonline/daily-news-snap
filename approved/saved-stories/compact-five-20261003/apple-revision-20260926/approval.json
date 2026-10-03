@@ -1,0 +1,113 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "package": "apple-revision-20260926-compact-20261003",
+  "identity": "72196ac688a26312a1067ef4b19db216a15958733514bb0a8ea91b517312572c",
+  "title": "ذكاء اصطناعي… وملفاتك تبقى عندك",
+  "authorization": "Khalid 2026-10-03 15:04 Asia/Riyadh: renew ONLY City, Disney, Ceer, Apple final, Air Rage using original photos/template, max two cards; keep two operations reserve. Current scheduled request explicitly permits preparation and independent archive approval.",
+  "not_before": "2026-10-03T20:52:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "source_identity": "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443",
+  "source_rows": [
+    {
+      "status": "POSTED",
+      "post_id": "dbde26ec-5ce8-4945-ba77-8116f44d3878",
+      "upload_id": "6d26c814-d30e-4e68-9a38-7c2bdd891f85"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "80bddbc6-2e7d-4882-ab39-69e48d55117a",
+      "upload_id": "ad92a07d-a97c-47c6-8669-2a4645ec1bd5"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "812fb960-7898-4e9d-ab10-62b6a218fe67",
+      "upload_id": "64865634-101f-4daa-86ee-387c2647458a"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "eb394ed5-e912-48da-975e-dfc64753bfe2",
+      "upload_id": "227951de-42a2-4cae-b908-0ad25ef9aa10"
+    }
+  ],
+  "source_manifest": "approved/apple-revision-20260926/manifest.json",
+  "source_manifest_sha256": "92ae6d434a8cd7fd8ba710fdc8a26fb4d6647876d1f918146e3dfa4222432b73",
+  "source_manifest_identity": "784b107b251ac5d2d101e08dde6d288fa931c343cb60115c9e6f6b4def729138",
+  "source_commit": "f2094a14df7696a09c4e5596682edff8f85e03ec",
+  "previous_saved": {
+    "identity": "4bb2f2b4744630357cc31ad62f7c7ed9f2f08d55e6fb4bc1e427b695d73f4032",
+    "title": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد",
+    "upload_ids": [
+      "dbf99ae4-060e-420b-80de-177accf78e06",
+      "394d9340-41b1-4277-b870-049eb1b06dd6"
+    ],
+    "status": "POSTED",
+    "intent_at": "2026-10-01T09:13:47.759075+00:00",
+    "post_id": "9d86afd4-9872-46f9-95f1-e67291a0ea28",
+    "confirmed_at": "2026-10-01T09:14:17.688808+00:00",
+    "provider_result": {
+      "id": "9d86afd4-9872-46f9-95f1-e67291a0ea28",
+      "status": "POSTED",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "26c3002e-5e15-447c-91ee-424c1dc86b0f",
+          "mediaId": "43023794-422d-4cee-acd4-ec3127439fb2",
+          "mediaIds": [
+            "43023794-422d-4cee-acd4-ec3127439fb2",
+            "6a505e54-70e9-4d0c-950e-fbcac2bd7699"
+          ],
+          "type": "SAVED_STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "dbf99ae4-060e-420b-80de-177accf78e06",
+          "sourceUploadIds": [
+            "dbf99ae4-060e-420b-80de-177accf78e06",
+            "394d9340-41b1-4277-b870-049eb1b06dd6"
+          ],
+          "mediaUploadedAt": "2026-10-01T09:13:52.276Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      }
+    },
+    "source_identity": "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443",
+    "package": "apple-revision-20260926",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "scope": "SAVED_STORY_ONLY",
+    "media_sha256": [
+      "38bf0c79631791f0726c934fc98bd72c90dd6b36f0616902e17565ccd806ff1a",
+      "dfd5fcb760772ba1b04f097515d124f35d906514455af7d0f8ce12cfccfa10cf"
+    ]
+  },
+  "media": [
+    {
+      "path": "approved/saved-stories/compact-five-20261003/apple-revision-20260926/card-01.jpg",
+      "kind": "info",
+      "sha256": "fc53848e3d04baf4a3098f8da264e914d6acbbae3ecedc4511d96cf78f230f15"
+    },
+    {
+      "path": "approved/saved-stories/compact-five-20261003/apple-revision-20260926/card-02.jpg",
+      "kind": "story",
+      "sha256": "69aeb2116af98b4da1c2eb87dba5216ccddd3e8d25988e840fbf1c6ff6a07fc6"
+    }
+  ],
+  "reserve_quota": 2,
+  "quota_check_required_before_send": true,
+  "live_source_and_provider_inventory_recheck_required": true,
+  "status": "HOLD_FINAL_RECEIPT_RECONCILIATION",
+  "sources_internal_only": [
+    "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/"
+  ],
+  "old_deletion_status": "PENDING_SNAPCHAT_APP_NO_DELETION_CLAIM",
+  "snapshot_audit_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062",
+  "review": {
+    "cards": 2,
+    "font_family": "Almarai",
+    "body_px": 52,
+    "phone_preview_reviewed": true,
+    "share_panel_separate": true,
+    "sources_excluded_from_media": true,
+    "paid_model_requests": 0
+  },
+  "hold_reason": "Final approved daily identity 784b107b251ac5d2d101e08dde6d288fa931c343cb60115c9e6f6b4def729138 has no api-receipts file. Older 68db receipt has four cards; final manifest has two. Do not treat old rows as final publication proof. Existing final archive confirmed POSTED but lineage must be reconciled before renewing."
+}

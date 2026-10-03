@@ -1,0 +1,98 @@
+[
+  {
+    "package": "city-penalties-20260930",
+    "card": 1,
+    "body_px": 52,
+    "line_counts": [
+      2,
+      2,
+      2
+    ],
+    "text_bottom": 1606,
+    "sha256": "f53d083427a37870fbc89c4dab88ffaf7aa962f288a8a2d128c06549721085ce"
+  },
+  {
+    "package": "city-penalties-20260930",
+    "card": 2,
+    "body_px": 52,
+    "line_counts": [
+      2,
+      2,
+      2
+    ],
+    "text_bottom": 1606,
+    "sha256": "4f3df60276c5f7c3deff48d036942875c268211695743e169967739d001ee2c6"
+  },
+  {
+    "package": "ceer-20260922",
+    "card": 1,
+    "body_px": 52,
+    "line_counts": [
+      2,
+      2,
+      2
+    ],
+    "text_bottom": 1606,
+    "sha256": "7531dd882de720c0765bc219a2739ff1e5ea2ac3957943937ea4debba02aa144"
+  },
+  {
+    "package": "ceer-20260922",
+    "card": 2,
+    "body_px": 52,
+    "line_counts": [
+      2,
+      2,
+      2
+    ],
+    "text_bottom": 1606,
+    "sha256": "e7a50962ce627b90e2cab604956a292ba280bebbf09270023711b23c37462620"
+  },
+  {
+    "package": "apple-revision-20260926",
+    "card": 1,
+    "body_px": 52,
+    "line_counts": [
+      2,
+      2,
+      2
+    ],
+    "text_bottom": 1606,
+    "sha256": "fc53848e3d04baf4a3098f8da264e914d6acbbae3ecedc4511d96cf78f230f15"
+  },
+  {
+    "package": "apple-revision-20260926",
+    "card": 2,
+    "body_px": 52,
+    "line_counts": [
+      1,
+      2,
+      2
+    ],
+    "text_bottom": 1534,
+    "sha256": "69aeb2116af98b4da1c2eb87dba5216ccddd3e8d25988e840fbf1c6ff6a07fc6"
+  },
+  {
+    "package": "air-rage-20261001",
+    "card": 1,
+    "body_px": 52,
+    "line_counts": [
+      2,
+      2,
+      2
+    ],
+    "text_bottom": 1606,
+    "sha256": "b6e5e2d8892d92353731afbe47d232f052a37b2ecaebe93f8e24c4ebb4659dd8"
+  },
+  {
+    "package": "air-rage-20261001",
+    "card": 2,
+    "body_px": 52,
+    "line_counts": [
+      2,
+      2,
+      2
+    ],
+    "text_bottom": 1606,
+    "sha256": "a972d24540e4fe14c0643d1422d503df22069a4fa9a0bb7f9b6d5d55866d36fc"
+  }
+]
