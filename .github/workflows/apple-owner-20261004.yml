@@ -1,0 +1,81 @@
+name: Publish and save owner approved compact Apple
+on:
+  push:
+    paths: ['.github/workflows/apple-owner-20261004.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Publish and save approved Apple 20261004 owner request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a3f02642ce18d3223f9af842b86a11485d470617
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - run: python -m pytest -q tests/test_v2_bundle.py tests/test_v2_saved_story_api.py tests/test_saved_owner_package.py tests/test_v2_saved_replay.py
+      - name: Publish original approved files then save with same uploads
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,publish
+          from publishing_v2.saved_story_api import SavedClient,SavedJournal,validate_archive,save_story,now
+          from daily_budget import GitHubStore,day_key
+          p='approved/apple-compact-owner-20261004/manifest.json'
+          a=json.loads(Path('approved/apple-compact-owner-20261004/save-approval.json').read_text())
+          assert datetime.fromisoformat(a['not_before'].replace('Z','+00:00'))<=datetime.now(timezone.utc)<datetime.fromisoformat(a['expires_at'].replace('Z','+00:00'))
+          identity,title,media=load_package(p)
+          assert identity==a['identity']
+          c=SavedClient();c.check()
+          old=a['previous_saved'];oldj=SavedJournal(a['original_source_identity']);oldstate=oldj.read()
+          assert all(oldstate.get(k)==old.get(k) for k in ['identity','post_id','upload_ids','status'])
+          c.confirm(old['post_id'],old['title'],old['upload_ids'])
+          _,ledger=GitHubStore(os.environ['GITHUB_REPOSITORY'],os.environ['GITHUB_TOKEN']).read(day_key())
+          if ledger is not None:
+           assert sum(e.get('charged_micro_usd',0)+(e.get('reserved_micro_usd',0) if e.get('status')!='settled' else 0) for e in ledger.get('entries',{}).values())<=3000000
+          print('BUDGET',json.dumps({'day':day_key(),'ledger_present':ledger is not None,'paid_requests':0}),flush=True)
+          j=GitHubJournal(identity);state=j.read()
+          pending=sum(str(i+1) not in state for i in range(2))+(SavedJournal(identity).read().get('status')!='POSTED')
+          print('QUOTA',json.dumps(c.ensure_capacity(pending+2)),flush=True)
+          publish(c,j,title,media)
+          state=j.read()
+          identity,title,rows=validate_archive(a,state)
+          for r in rows:
+           live=c.call('/post/'+r['post_id']);snap=live['data']['SNAPCHAT']
+           assert live['status']=='POSTED' and live['teamId']==c.team and not live.get('deletedAt')
+           assert snap['type']=='STORY' and snap['uploadIds']==[r['upload_id']] and snap['storyDuration']=='ONE_WEEK'
+           ext=live['externalData']['SNAPCHAT'];assert ext.get('id') or ext.get('mediaId')
+           print('DAILY_CONFIRMED',json.dumps({'post_id':r['post_id'],'snapchat':ext},ensure_ascii=False),flush=True)
+          assert len({r['post_id'] for r in rows})==2
+          c.ensure_capacity(3)
+          sj=SavedJournal(identity)
+          result=save_story(c,sj,identity,title,[r['upload_id'] for r in rows])
+          verified=c.confirm(result['post_id'],title,result['upload_ids'])
+          ext=verified['externalData']['SNAPCHAT'];assert ext['type']=='SAVED_STORY' and ext['status']=='PUBLISHED' and len(set(ext['mediaIds']))==2
+          result.update(authorization=a['authorization'],package='apple-compact-owner-20261004',source_identity=identity,original_source_identity=a['original_source_identity'],replaces_saved_post_id=old['post_id'],old_deletion_status='OWNER_WILL_DELETE_NOT_CONFIRMED')
+          sj.save(result)
+          oldstate.update(replacement_identity=identity,replacement_post_id=result['post_id'],replacement_confirmed_at=result['confirmed_at'],old_deletion_status='OWNER_WILL_DELETE_NOT_CONFIRMED');oldj.save(oldstate)
+          bj=GitHubJournal(identity);bj.path='/contents/saved-story-backlog.json';backlog=bj.read()
+          for row in backlog['packages']:
+           if row.get('identity')==a['original_source_identity']:
+            row.update(saved_post_id=result['post_id'],saved_story_id=ext['id'],saved_title=title,saved_edition_identity=identity,saved_card_count=2,saved_receipt_path='saved-story-receipts/'+identity+'.json',saved_confirmed_at=now(),old_deletion_status='OWNER_WILL_DELETE_NOT_CONFIRMED')
+            row.setdefault('renewal',{}).update(status='POSTED',identity=identity,saved_story_id=ext['id'],post_id=result['post_id'],confirmed_at=now(),run_url='https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID'])
+          backlog['updated_at']=now();bj.save(backlog)
+          print('SAVED_CONFIRMED',json.dumps({'saved_story_id':ext['id'],'post_id':result['post_id'],'cards':2,'title':title},ensure_ascii=False),flush=True)
+          print('FINAL_QUOTA',json.dumps(c.ensure_capacity(2)),flush=True)
+          
+          PY
