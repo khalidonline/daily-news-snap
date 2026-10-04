@@ -1,0 +1,59 @@
+name: Reconcile dates request 20261004
+on:
+  push:
+    paths: ['.github/workflows/reconcile-dates-20261004.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Reconcile dates request 20261004'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6a479d8edf0decc6ea49df5d6c56bc057b53b62b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - name: Offline publisher checks
+        run: |
+          python -m pytest -q tests/test_v2_bundle.py tests/test_v2_bundle_group.py
+          python -m publishing_v2.bundle_api validate --manifest approved/dates-20261004/manifest.json
+      - name: Reconcile rejected request without creating any post
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,urllib.parse,urllib.request
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal
+          identity='d2ec1f199c92e70c4d5652675d5b39c6daac2f74f0412fd03d0d57024be0b355'
+          c=BundleClient();c.check();j=GitHubJournal(identity);s=j.read();g=s['_group']
+          matches=[];offset=0
+          while True:
+              r=c.call('/post/?'+urllib.parse.urlencode({'teamId':c.team,'offset':offset,'limit':100}))
+              assert isinstance(r.get('items'),list) and type(r.get('total')) is int
+              for row in r['items']:
+                  assert row.get('teamId')==c.team
+                  snap=(row.get('data') or {}).get('SNAPCHAT') or {}
+                  if row.get('referenceKey')==g['reference_key'] or set(snap.get('uploadIds') or []) & set(g['uploads']):
+                      matches.append({k:row.get(k) for k in ['id','status','referenceKey','data','externalData','deletedAt']})
+              offset+=len(r['items'])
+              if offset>=r['total']: break
+              assert r['items'] and offset<10000
+          proof={'checked_at':datetime.now(timezone.utc).isoformat(),'inventory_total':offset,'matches':matches,'http_error':400,'evidence_url':'https://github.com/khalidonline/daily-news-snap/actions/runs/'+__import__('os').environ['GITHUB_RUN_ID']}
+          s['_group']['reconciliation']=proof;j.save(s)
+          print('RECONCILIATION',json.dumps(proof))
+          print('QUOTA',json.dumps(c.ensure_capacity(1)))
+          req=urllib.request.Request('https://api.bundle.social/swagger-json',headers={'User-Agent':'ExecutiveSaudiPublisher/1.0'})
+          schema=json.load(urllib.request.urlopen(req))
+          for key,value in schema.get('components',{}).get('schemas',{}).items():
+              if 'snapchat' in key.lower(): print('SCHEMA',key,json.dumps(value))
+          PY
