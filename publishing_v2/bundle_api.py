@@ -379,7 +379,9 @@ def main():
             check_predecessors(json.loads(Path(args.manifest).read_text()).get('predecessors', []))
             journal = GitHubJournal(identity)
             existing = journal.read()
-            if existing.get('_group') or (not existing and len(media) == 2):
+            # Bundle live validation (4 Oct 2026): STORY accepts one upload only.
+            # Preserve existing grouped intents for reconciliation, never silently split.
+            if existing.get('_group'):
                 publish_group(client, journal, title, media, identity)
             else:
                 publish(client, journal, title, media)
