@@ -1,0 +1,31 @@
+name: Publish approved Almarai compact package
+on:
+  push:
+    paths: ['.github/workflows/publish-almarai-20261004.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  deliver:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Publish Khalid approved Almarai 20261004 single attempt'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 84348e4118397bb86a963a107f0963ea770f4636
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - run: python -m pytest -q tests/test_v2_bundle.py tests/test_v2_bundle_group.py tests/test_v2_group_recovery.py
+      - run: python -m publishing_v2.bundle_api validate --manifest approved/almarai-20261004/manifest.json
+      - name: Verify quota and costs, deliver saved files, verify independent Snapchat media
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONPATH: .
+        run: python approved/almarai-20261004/delivery.py
