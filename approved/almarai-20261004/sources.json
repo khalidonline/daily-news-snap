@@ -1,0 +1,18 @@
+{
+  "internal_only": true,
+  "verified_at": "2026-10-04",
+  "sources": [
+    "https://aawsat.com/الاقتصاد/5325648-مبيعات-المراعي-تقفز-إلى-165-مليار-دولار-في-الربع-الثالث",
+    "https://www.almarai.com/en/brands/almarai/",
+    "https://www.almarai.com/ar/corporate/about-almarai",
+    "https://www.almarai.com/en/corporate/about-almarai/quality-food-safety",
+    "https://annualreport.almarai.com/ar/overview/our-journey/"
+  ],
+  "claims": {
+    "300_cows_1977": "https://www.almarai.com/en/brands/almarai/",
+    "670_products_20_brands": "https://www.almarai.com/ar/corporate/about-almarai",
+    "first_annual_billion_after_two_decades_and_geography": "https://www.almarai.com/en/corporate/about-almarai/quality-food-safety",
+    "bakery_and_hadco_acquisitions": "https://annualreport.almarai.com/ar/overview/our-journey/",
+    "q3_2026_revenue_6_19_billion_sar": "https://aawsat.com/الاقتصاد/5325648-مبيعات-المراعي-تقفز-إلى-165-مليار-دولار-في-الربع-الثالث"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "المراعي — من ٣٠٠ بقرة إلى ٦٧٠ منتج",
+  "not_before": "2026-10-04T11:13:01Z",
+  "expires_at": "2026-10-04T20:59:59Z",
+  "approval": "Khalid approved comparative copy and requested حلو انشر on 2026-10-04. Two compact cards reviewed at mobile size. Annual vs quarterly revenue explicitly distinguished.",
+  "story_duration": "ONE_WEEK",
+  "predecessors": [],
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/almarai-20261004/card-00.jpg",
+      "sha256": "602f7ede7c631e171d1d5ad778293251ce1422e64d3044d761cd8c9b362fb724",
+      "image": {
+        "source_url": "https://aawsat.com/الاقتصاد/5325648-مبيعات-المراعي-تقفز-إلى-165-مليار-دولار-في-الربع-الثالث",
+        "original_url": "https://static.srpcdigital.com/styles/1037xauto/public/2026-10/1809079.png.webp?VersionId=z9kxWERka4GuqQGRjKXQom2E.LTj9yqp",
+        "provider": "primary_media",
+        "source_kind": "article",
+        "download_url": "https://static.srpcdigital.com/styles/1037xauto/public/2026-10/1809079.png.webp?VersionId=z9kxWERka4GuqQGRjKXQom2E.LTj9yqp",
+        "asset_id": "primary:c16cb53fb78389244cc7fb55",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "f8e0405fb5a70ef636325a25be8a784aaedf94c5e3362201c5cac511d986ed57"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/almarai-20261004/card-01.jpg",
+      "sha256": "3a4532d19248065fcad5fdb858dd0f06c00d044a0ec86acc01fce4e358b403a2",
+      "image": {
+        "source_url": "https://aawsat.com/الاقتصاد/5230928-المراعي-ترفع-أرباحها-الفصلية-8-إلى-124-مليون-دولار-بدعم-نمو-الإيرادات",
+        "original_url": "https://static.srpcdigital.com/styles/1037xauto/public/2026-01/1344725.jpeg.webp",
+        "provider": "primary_media",
+        "source_kind": "article",
+        "download_url": "https://static.srpcdigital.com/styles/1037xauto/public/2026-01/1344725.jpeg.webp",
+        "asset_id": "primary:b82f7e42759e7cd82491c264",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "ccd10110a08a6792e7daa1edb6885446fc12f3e8a1c37751184575f35e122d0a"
+      }
+    }
+  ]
+}
