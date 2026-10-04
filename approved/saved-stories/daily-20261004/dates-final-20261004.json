@@ -1,0 +1,23 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "b9f2a0e1043098bec50c0cede189909e2f79f71d2ddc434c02a33220ba2f8da2",
+  "title": "مين ينتج التمور… ومين يصدّرها؟",
+  "manifest": "approved/dates-final-20261004/manifest.json",
+  "manifest_sha256": "eaed0ff0cb2f3360df66ebbbf8af57a2dfbfd4e6f494ea3f04baa3a85f36efc1",
+  "not_before": "2026-10-04T20:54:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid authorized end-of-day saving of future final published packages on 30 September 2026; reaffirmed by this 4 October archive request. October 4 00:24 allowlist restricts prior inventory only, explicitly preserving future daily packages. Dates uses owner-approved final replacement after owner-confirmed deletion; Almarai uses exact approved published edition. No new daily posting or media changes.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. Profile no longer empty; current provider inventory mandatory.",
+  "public_indices": [
+    1,
+    2
+  ],
+  "media_sha256": [
+    "9ef0852057fb36355839f89db06ddeee343f615750881387524a0fa8d6c54a78",
+    "f682b99271d971da515027b6fdb96c8e3825d1e2c6a03500fb454a4f6c080c23"
+  ],
+  "visual_review": "Exact published two-card JPEGs reviewed at 360px mobile width on 2026-10-04; body text readable; no source card. Almarai retains approved multiline headlines; no redesign in save-only scope.",
+  "package": "dates-final-20261004"
+}
