@@ -1,0 +1,76 @@
+name: Publish final owner approved dates cards
+on:
+  push:
+    paths: ['.github/workflows/dates-final-20261004.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Publish final dates after owner deletion 20261004'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: d64de0c4e372f43cd63dcbcf5c716b5b210ef49e
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - run: python -m pytest -q tests/test_v2_bundle.py
+      - name: Publish approved JPGs and verify distinct Snapchat IDs
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,check_predecessors,publish
+          from daily_budget import GitHubStore,day_key
+          p='approved/dates-final-20261004/manifest.json'
+          m=json.loads(Path(p).read_text())
+          assert datetime.fromisoformat(m['not_before'].replace('Z','+00:00'))<=datetime.now(timezone.utc)<datetime.fromisoformat(m['expires_at'].replace('Z','+00:00'))
+          identity,title,media=load_package(p)
+          c=BundleClient();c.check()
+          j=GitHubJournal(identity);prior=j.read()
+          assert not prior.get('_group')
+          pending=sum(str(i+1) not in prior for i in range(2))
+          print('QUOTA',json.dumps(c.ensure_capacity(pending+2)),flush=True)
+          _,ledger=GitHubStore(os.environ['GITHUB_REPOSITORY'],os.environ['GITHUB_TOKEN']).read(day_key())
+          if ledger is not None:
+           assert sum(e.get('charged_micro_usd',0)+(e.get('reserved_micro_usd',0) if e.get('status')!='settled' else 0) for e in ledger.get('entries',{}).values())<=3000000
+          print('BUDGET',json.dumps({'day':day_key(),'ledger_present':ledger is not None,'paid_requests':0}),flush=True)
+          oldid=m['predecessors'][0];oldj=GitHubJournal(oldid);old=oldj.read()
+          assert old['1']['post_id']=='e1e6d53b-1cce-483a-b92b-49dbad4dfdca' and old['2']['post_id']=='1161144c-edf8-4242-afd9-898a3883332e'
+          assert all(old[str(i)]['status']=='POSTED' for i in [1,2])
+          proof=json.loads(Path('approved/dates-final-20261004/owner-deletion.json').read_text())
+          assert proof['old_identity']==oldid and proof['status']=='DELETED' and proof['evidence_type']=='OWNER_CONFIRMATION'
+          old['reconciliation']={'status':'DELETED','checked_at':proof['confirmed_at'],'evidence_type':'OWNER_CONFIRMATION','evidence_url':'https://github.com/khalidonline/daily-news-snap/blob/d64de0c4e372f43cd63dcbcf5c716b5b210ef49e/approved/dates-final-20261004/owner-deletion.json','statement':proof['statement'],'provider_deletion_verified':False}
+          old['superseded_by']=identity;old['archive_eligible']=False;oldj.save(old)
+          check_predecessors(m['predecessors'])
+          bj=GitHubJournal(identity);bj.path='/contents/saved-story-backlog.json';backlog=bj.read()
+          for row in backlog.get('packages',[]):
+           if row.get('identity')==oldid:row.update(status='SUPERSEDED',archive_eligible=False,superseded_by=identity,owner_deleted_daily_at=proof['confirmed_at'])
+          bj.save(backlog)
+          publish(c,j,title,media)
+          state=j.read();ids=[]
+          for k in ['1','2']:
+           r=state[k];live=c.call('/post/'+r['post_id']);snap=live['data']['SNAPCHAT'];ext=live['externalData']['SNAPCHAT']
+           assert r['status']=='POSTED' and live['status']=='POSTED' and live['teamId']==c.team
+           assert snap['type']=='STORY' and snap['uploadIds']==[r['upload_id']] and snap['storyDuration']=='ONE_WEEK' and ext['status']=='PUBLISHED'
+           ids.append(ext['id']);print('CONFIRMED',json.dumps({'card':k,'post_id':r['post_id'],'snapchat_id':ext['id'],'duration':snap['storyDuration']}),flush=True)
+          assert len(set(ids))==2
+          backlog=bj.read()
+          if not any(row.get('identity')==identity for row in backlog.get('packages',[])):
+           backlog.setdefault('packages',[]).insert(0,{'identity':identity,'package':'dates-final-20261004','title':title,'manifest':p,'source_commit':'d64de0c4e372f43cd63dcbcf5c716b5b210ef49e','card_count':2,'status':'PENDING_SAVE_APPROVAL','publication_status':'POSTED','replaces_identity':oldid,'note':'Only this final edition is eligible for end-of-day save after independent archive approval.'})
+          bj.save(backlog)
+          print('FINAL_QUOTA',json.dumps(c.ensure_capacity(2)),flush=True)
+          
+          PY
