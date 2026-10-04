@@ -1,0 +1,50 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "تمور السعودية — الإنتاج والتصدير",
+  "not_before": "2026-10-04T15:59:41Z",
+  "expires_at": "2026-10-04T20:59:59Z",
+  "approval": "Khalid 2026-10-04 18:59 Riyadh: أنا حذفت باقة التمور .. ابيك تنشر الباقه الجديده. Approved production-only card; clear one-line title and intro; export total on one line; old daily edition owner-confirmed deleted.",
+  "story_duration": "ONE_WEEK",
+  "predecessors": [
+    "d2ec1f199c92e70c4d5652675d5b39c6daac2f74f0412fd03d0d57024be0b355"
+  ],
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/dates-final-20261004/card-00.jpg",
+      "sha256": "9ef0852057fb36355839f89db06ddeee343f615750881387524a0fa8d6c54a78",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://aawsat.com/الاقتصاد/5055174-200-مليون-دولار-قيمة-صادرات-السعودية-من-التمور-في-النصف-الأول",
+        "original_url": "https://static.srpcdigital.com/2024-08/764640.jpeg",
+        "download_url": "https://static.srpcdigital.com/2024-08/764640.jpeg",
+        "asset_id": "primary:8b7b1f9ea2689eb605a25456",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "685bdea112b1517422640287627d50d733681e1abcd54f75489209445bbe9ae5"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/dates-final-20261004/card-01.jpg",
+      "sha256": "f682b99271d971da515027b6fdb96c8e3825d1e2c6a03500fb454a4f6c080c23",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://aawsat.com/الاقتصاد/5055174-200-مليون-دولار-قيمة-صادرات-السعودية-من-التمور-في-النصف-الأول",
+        "original_url": "https://static.srpcdigital.com/2024-08/764613.jpeg",
+        "download_url": "https://static.srpcdigital.com/2024-08/764613.jpeg",
+        "asset_id": "primary:295d0dc1cdcf6bfb036cd7ef",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "b08398059e361d6bb280cd5ea4c69ba9de8a4409d66300823eeccf3f74ff0296"
+      }
+    }
+  ]
+}
