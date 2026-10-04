@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "تمور السعودية — كم ننتج وكم نصدّر؟",
+  "not_before": "2026-10-04T07:16:39Z",
+  "expires_at": "2026-10-04T20:59:59Z",
+  "approval": "Khalid: تمام انشر, 2026-10-04; approved country comparisons and Saudi export/production ratio. Final two cards visually reviewed at mobile size. No surprise wording.",
+  "story_duration": "ONE_WEEK",
+  "predecessors": [],
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/dates-20261004/card-00.jpg",
+      "sha256": "841012feecb79477f09d462e52a71f46172c2f41f4f9cee906c37fb886340b82",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://aawsat.com/الاقتصاد/5055174-200-مليون-دولار-قيمة-صادرات-السعودية-من-التمور-في-النصف-الأول",
+        "original_url": "https://static.srpcdigital.com/2024-08/764640.jpeg",
+        "download_url": "https://static.srpcdigital.com/2024-08/764640.jpeg",
+        "asset_id": "primary:8b7b1f9ea2689eb605a25456",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "685bdea112b1517422640287627d50d733681e1abcd54f75489209445bbe9ae5"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/dates-20261004/card-01.jpg",
+      "sha256": "7deb4473c0a68b1dafc942cb45e86f122abc26be8c4d15409bb0105b32cb21f8",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://aawsat.com/الاقتصاد/5055174-200-مليون-دولار-قيمة-صادرات-السعودية-من-التمور-في-النصف-الأول",
+        "original_url": "https://static.srpcdigital.com/2024-08/764613.jpeg",
+        "download_url": "https://static.srpcdigital.com/2024-08/764613.jpeg",
+        "asset_id": "primary:295d0dc1cdcf6bfb036cd7ef",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "b08398059e361d6bb280cd5ea4c69ba9de8a4409d66300823eeccf3f74ff0296"
+      }
+    }
+  ]
+}
