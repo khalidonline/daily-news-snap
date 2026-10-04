@@ -1,0 +1,61 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ذكاء اصطناعي… وملفاتك تبقى عندك",
+  "not_before": "2026-10-04T15:21:49Z",
+  "expires_at": "2026-10-04T20:59:59Z",
+  "approval": "Khalid explicitly approved displayed compact Apple cards on 2026-10-04 18:21 Riyadh: احفظها وانشرها بعد. أنا ابحذف القديمه من الملف العام. Intentional new daily publication and Saved Story renewal; owner will delete old archive. No assertion old daily manifest was published.",
+  "story_duration": "ONE_WEEK",
+  "predecessors": [],
+  "previous_edition_for_context": "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443",
+  "media": [
+    {
+      "path": "approved/saved-stories/compact-five-20261003/apple-revision-20260926/card-01.jpg",
+      "kind": "info",
+      "sha256": "fc53848e3d04baf4a3098f8da264e914d6acbbae3ecedc4511d96cf78f230f15",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-hero-260825_big.jpg.large.jpg",
+        "asset_id": "primary:5f42b4cbbd1558fe81965a56",
+        "sha256": "4a753142b8d380adbc2b001754102ca580be32750938c6a370cd3cbef0e76a8d",
+        "credit": "Apple",
+        "title": "Mac Studio",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      }
+    },
+    {
+      "path": "approved/saved-stories/compact-five-20261003/apple-revision-20260926/card-02.jpg",
+      "kind": "story",
+      "sha256": "69aeb2116af98b4da1c2eb87dba5216ccddd3e8d25988e840fbf1c6ff6a07fc6",
+      "image": {
+        "subject": "Mac Studio",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q312",
+        "official_site": "https://www.apple.com/",
+        "source_url": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/",
+        "original_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "download_url": "https://www.apple.com/newsroom/images/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/article/Apple-Mac-Studio-Draw-Things-260825_big.jpg.large.jpg",
+        "asset_id": "primary:2862f68492759f18939469ce",
+        "sha256": "70df8578b78c244280c3d97ec36c00928cfe5927a16da76f2d8a0e26b7dad950",
+        "credit": "Apple",
+        "title": "Mac Studio تشغيل نموذج صور",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "rights_status": "owner_accepted_editorial_use",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "image_role": "Official product illustration, not a photograph of a four-system cluster"
+      }
+    }
+  ]
+}
