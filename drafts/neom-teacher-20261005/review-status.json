@@ -1,0 +1,27 @@
+{
+  "status": "AWAITING_OWNER_REVIEW",
+  "publication_approved": false,
+  "finals": {
+    "neom": "neom.jpg",
+    "teacher": "teacher-final.jpg.b64"
+  },
+  "superseded": [
+    "teacher.jpg",
+    "teacher-preview.jpg"
+  ],
+  "local_checks": {
+    "teacher.jpg": {
+      "bytes": 418846,
+      "sha256": "994d70a72995044085290874a567a5e62bf8b810fb06b7747296b57aabdf29dd"
+    },
+    "neom.jpg": {
+      "bytes": 573281,
+      "sha256": "ea9f582eac00966654fef7f88b4c586d49f0fa90b2f71007946f6817777eb706"
+    }
+  },
+  "notes": [
+    "One card each; single-line red title; Almarai font; separate share CTA",
+    "Teacher image crop corrected after visual review",
+    "No Snapchat publishing or paid model/image generation performed"
+  ]
+}
