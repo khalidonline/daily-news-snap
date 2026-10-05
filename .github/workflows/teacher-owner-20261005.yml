@@ -1,0 +1,31 @@
+name: Publish approved teacher card
+on:
+  push:
+    paths: ['.github/workflows/teacher-owner-20261005.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Publish owner-approved teacher card 20261005'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 26369d3132f43e9ad41cf45141b74d26c32dc619
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - run: python -m pytest -q tests/test_v2_bundle.py
+      - name: Publish fixed JPG and verify live receipt
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: 26369d3132f43e9ad41cf45141b74d26c32dc619
+          PYTHONPATH: .
+        run: python approved/teacher-20261005/publish-approved.py
