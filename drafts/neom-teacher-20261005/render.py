@@ -14,7 +14,7 @@ for c in cards:
   b=Image.open('images/brand/badge.png').convert('RGB').resize((n,n));m=Image.new('L',(n,n));ImageDraw.Draw(m).ellipse((0,0,n-1,n-1),fill=255);im.paste(b,(x,y),m)
  badge(82,155,94);d.rectangle((876,169,990,179),fill=GREEN);text(200,'ملخص تنفيذي · قصة',30,True,GREEN);text(249,'١ من ١',28,color='#827e77')
  text(314,c['title'],55,True,RED)
- photo=ImageOps.fit(Image.open(P/(c['slug']+'-photo.jpg')).convert('RGB'),(916,370));mask=Image.new('L',photo.size);ImageDraw.Draw(mask).rounded_rectangle((0,0,915,369),28,fill=255);im.paste(photo,(82,408),mask);text(798,c['caption'],25,color='#817d75')
+ photo=ImageOps.fit(Image.open(P/(c['slug']+'-photo.jpg')).convert('RGB'),(916,370),centering=(0.5,0.22) if c['slug']=='teacher' else (0.5,0.5));mask=Image.new('L',photo.size);ImageDraw.Draw(mask).rounded_rectangle((0,0,915,369),28,fill=255);im.paste(photo,(82,408),mask);text(798,c['caption'],25,color='#817d75')
  y=867
  for p in c['bullets']:
   lines=[];line=''
