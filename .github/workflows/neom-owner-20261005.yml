@@ -9,13 +9,13 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Publish final owner-approved NEOM card 20261005'
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Deliver approved NEOM after exact source validation 20261005'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 5992a5829f937137ddf1ea4d57af76f3478d9174
+          ref: 594cb799955463960761e9630e855ea3090ed59c
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -26,6 +26,6 @@ jobs:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPROVED_COMMIT: 5992a5829f937137ddf1ea4d57af76f3478d9174
+          APPROVED_COMMIT: 594cb799955463960761e9630e855ea3090ed59c
           PYTHONPATH: .
         run: python approved/neom-20261005/publish-approved.py
