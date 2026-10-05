@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ملعب نيوم… وطوكيو غيّرت خطتها",
+  "not_before": "2026-10-05T05:53:30Z",
+  "expires_at": "2026-10-05T20:59:59Z",
+  "approval": "Khalid 2026-10-05: احذف كلمة: قصه. وغير عبارة المشاركة إلى: شاركها مع صديقك اللي تعجبه هذي المعلومة. انشر. Includes accepted voice changes: no 1 of 1, single line general closing, dynamic spacing.",
+  "story_duration": "ONE_WEEK",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/neom-20261005/card-00.jpg",
+      "sha256": "3731d7c7896c781ed850b7b21fe63a9b30650ea4fce813459a014f475fe60103",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://www.metalocus.es/en/news/japanese-tradition-climate-and-technology-new-tokyo-national-stadium-kengo-kuma",
+        "original_url": "https://www.metalocus.es/sites/default/files/styles/mopis_news_carousel_item_desktop/public/metalocus_kengo-kuma_estadio-nacional_47.jpg?itok=Iz0fc6oL",
+        "asset_id": "primary:tokyo-national-stadium-2019",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "a0724ffdbf700ee5aa54bf9be8018fe95db568c762b3b3186ad41003b789d7bd"
+      }
+    }
+  ]
+}
