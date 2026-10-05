@@ -20,6 +20,9 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact Tokyo photo reviewed and owner approved 2026-10-05; not a site-wide grant.
+    ("https://www.metalocus.es/en/news/japanese-tradition-climate-and-technology-new-tokyo-national-stadium-kengo-kuma",
+     "https://www.metalocus.es/sites/default/files/styles/mopis_news_carousel_item_desktop/public/metalocus_kengo-kuma_estadio-nacional_47.jpg?itok=Iz0fc6oL"),
     ('https://www.silenthillmemories.net/sh1/screens_en.htm',
      'https://www.silenthillmemories.net/sh1/screens/pics/sh1_screen_01.jpg'),
     ('https://www.silenthillmemories.net/silent_hills/screens_en.htm',
