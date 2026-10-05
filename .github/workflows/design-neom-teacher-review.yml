@@ -1,0 +1,34 @@
+name: NEOM teacher design review only
+on:
+  push:
+    paths: ['.github/workflows/design-neom-teacher-review.yml']
+permissions:
+  contents: write
+jobs:
+  render:
+    if: github.event.head_commit.message == 'Run isolated NEOM teacher design preview 20261005'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            drafts/neom-teacher-20261005
+            images/brand
+            fonts
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow
+      - name: Download two editorial source photographs
+        run: |
+          curl -fL --retry 2 --max-time 60 'https://pbs.twimg.com/media/GjvdlUQWcAARHZp.jpg' -o drafts/neom-teacher-20261005/teacher-photo.jpg
+          curl -fL --retry 2 --max-time 60 'https://www.metalocus.es/sites/default/files/styles/mopis_news_carousel_item_desktop/public/metalocus_kengo-kuma_estadio-nacional_47.jpg?itok=Iz0fc6oL' -o drafts/neom-teacher-20261005/neom-photo.jpg
+      - run: python drafts/neom-teacher-20261005/render.py
+      - name: Preserve review files only
+        run: |
+          git config user.name 'design-review'
+          git config user.email 'design-review@users.noreply.github.com'
+          git add drafts/neom-teacher-20261005/
+          git commit -m 'Save NEOM and teacher review previews; not approved for publishing'
+          git pull --rebase origin main
+          git push origin HEAD:main
