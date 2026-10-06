@@ -88,3 +88,9 @@ Apply to future packages:
   what will a general Saudi viewer discover, understand, and see in five seconds?
   A reviewer must flag a weak hook even when all technical checks pass.
 - Revision 2 of these two cards still requires Khalid's publication approval.
+
+### 2026-10-06 20:17 — oil revision
+Khalid judged remote operation an unimportant detail. Prefer a meaningful
+founding/completion milestone or expansion with a result. Never repeat a bullet
+as the closing: use a distinct supported payoff or a short general takeaway.
+Oil revision 3 replaces its third bullet and closing. Google revision 3 clarifies the headline to name the nuclear-electricity contract and its 20-year duration, as requested by Khalid; the rest of its card is unchanged.

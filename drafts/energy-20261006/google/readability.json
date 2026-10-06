@@ -2,13 +2,13 @@
   "version": 1,
   "visual_review": {
     "approved": true,
-    "reference": "Assistant inspected revision 2 at 390px after owner rejection of revision 1 on 2026-10-06 20:07 Riyadh; owner publication approval still pending"
+    "reference": "Assistant checked measured headline and 390px preview, owner requested clearer title 2026-10-06 20:18; publication pending"
   },
   "cards": [
     {
-      "sha256": "213d8d22f3fd936cd235a3401f78d355e8cbed8a65d912238273d91d8b1bc5d8",
+      "sha256": "4cb010a0699b76532b4be699f1eaad76b711875c4ecd851166bf66941f1b1321",
       "headline": {
-        "text": "قوقل اليوم… تحجز كهرباء لـ٢٠ سنة",
+        "text": "قوقل اليوم… عقد كهرباء نووية لـ٢٠ سنة",
         "size": 54,
         "box": [
           82,

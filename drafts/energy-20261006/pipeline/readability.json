@@ -2,11 +2,11 @@
   "version": 1,
   "visual_review": {
     "approved": true,
-    "reference": "Assistant inspected revision 2 at 390px after owner rejection of revision 1 on 2026-10-06 20:07 Riyadh; owner publication approval still pending"
+    "reference": "Assistant mobile preview review, oil revision 3 after Khalid 2026-10-06 20:17 feedback; publication approval pending"
   },
   "cards": [
     {
-      "sha256": "63b9513fb1aed6dfb9cfb5017607104eb9e66696c4e7ab53de695c3c5fc4ee51",
+      "sha256": "b71b9d2c541ed066f76d12368a265dd8fef46d4e0702b0d60f4c9c89efe408a9",
       "headline": {
         "text": "رجع ضخ النفط… عبر خط عمره ٤٥ سنة",
         "size": 54,
@@ -39,7 +39,7 @@
           ]
         },
         {
-          "text": "حتى في توسعته عام ١٩٨٦، كان تشغيله ومراقبته عن بُعد من ينبع.",
+          "text": "اكتمل عام ١٩٨١، وتوسعته في ١٩٨٦ رفعت قدرته لقرابة الضعف.",
           "size": 50,
           "box": [
             98,
@@ -62,7 +62,7 @@
     }
   ],
   "closing_measurement": {
-    "text": "كذا يطلع النفط للعالم بدون عبور هرمز.",
+    "text": "التجهيز للأزمات يبدأ قبلها بسنين.",
     "size": 48,
     "box": [
       82,

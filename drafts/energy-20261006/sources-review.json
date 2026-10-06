@@ -13,14 +13,16 @@
       "photo_extraction": "Original embedded jpeg xref 303, no recoloring. Layout crops lower part to retain workers and pipe.",
       "rights_status": "owner_accepted_editorial_use",
       "licensing_verified": false,
-      "final_sha256": "63b9513fb1aed6dfb9cfb5017607104eb9e66696c4e7ab53de695c3c5fc4ee51",
+      "final_sha256": "b71b9d2c541ed066f76d12368a265dd8fef46d4e0702b0d60f4c9c89efe408a9",
       "capacity_conversion": {
         "formula": "5800000 barrels/day * 158.987294928 litres/barrel / 86400 seconds/day",
         "litres_per_second": 10672.758224333335,
         "copy": "more than 10000 litres per second",
         "type": "derived capacity equivalent, not measured second-by-second flow"
       },
-      "remote_control_source": "https://archive.aramcoworld.com/issue/198604/the.long.leap.forward.htm; paragraph beginning The operation of the new loop"
+      "remote_control_source": "https://archive.aramcoworld.com/issue/198604/the.long.leap.forward.htm; paragraph beginning The operation of the new loop",
+      "revision": 3,
+      "revision_note": "Owner rejected remote operation as unimportant and repeated closing. Replaced with completion in 1981 and 1986 expansion nearly doubling capacity, documented in Aramco Energy to the World vol2 p64. Closing is a general editorial takeaway, not another route fact."
     },
     "google": {
       "event": "https://www.googlecloudpresscorner.com/2026-10-06-Google-and-Constellation-Announce-Landmark-Agreement-to-Bring-890-MW-of-New-Nuclear-Capacity-to-PJM-Grid-as-Part-of-Long-Term-Power-Deal",
@@ -29,8 +31,10 @@
       "photo_caption": "Google Storey County, Nevada: two data centers and gCUB generator yard; archival aerial scene, not nuclear plant.",
       "rights_status": "owner_accepted_editorial_use",
       "licensing_verified": false,
-      "final_sha256": "213d8d22f3fd936cd235a3401f78d355e8cbed8a65d912238273d91d8b1bc5d8",
-      "explanation_source": "https://blog.google/company-news/outreach-and-initiatives/sustainability/internet-24x7-carbon-free-energy-should-be-too/"
+      "final_sha256": "4cb010a0699b76532b4be699f1eaad76b711875c4ecd851166bf66941f1b1321",
+      "explanation_source": "https://blog.google/company-news/outreach-and-initiatives/sustainability/internet-24x7-carbon-free-energy-should-be-too/",
+      "revision": 3,
+      "revision_note": "Headline now explicitly names a 20-year nuclear electricity agreement; all other content unchanged."
     }
   },
   "checks": [
