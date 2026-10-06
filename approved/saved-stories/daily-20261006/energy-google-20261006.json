@@ -1,0 +1,21 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "not_before": "2026-10-06T20:59:00Z",
+  "expires_at": "2026-10-10T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid authorized daily end-of-day saving of final published packages on 30 September 2026; the standing automation request explicitly includes future daily packages. Save exact final POSTED bytes only, without reposting or redesign.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. Profile no longer assumed empty; current provider inventory is mandatory.",
+  "public_indices": [
+    1
+  ],
+  "identity": "d9436a1174c88fab74080cb6fe25b12f2cb166ad0712511ec8145c685d585bd9",
+  "title": "قوقل اليوم… عقد كهرباء نووية لـ٢٠ سنة",
+  "manifest": "approved/energy-google-20261006/manifest.json",
+  "manifest_sha256": "1fb6d1955d3676e72693b248f17b480e4639206a7943632e2cf208f367f1a3ed",
+  "media_sha256": [
+    "4cb010a0699b76532b4be699f1eaad76b711875c4ecd851166bf66941f1b1321"
+  ],
+  "visual_review": "Exact final revision 3 card reviewed at mobile width after title clarification; photo and text are readable; no source card or PDF.",
+  "package": "energy-google-20261006"
+}

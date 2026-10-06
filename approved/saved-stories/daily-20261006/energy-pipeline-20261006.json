@@ -1,0 +1,21 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "not_before": "2026-10-06T20:59:00Z",
+  "expires_at": "2026-10-10T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid authorized daily end-of-day saving of final published packages on 30 September 2026; the standing automation request explicitly includes future daily packages. Save exact final POSTED bytes only, without reposting or redesign.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. Profile no longer assumed empty; current provider inventory is mandatory.",
+  "public_indices": [
+    1
+  ],
+  "identity": "566f4ecf6ee43d68c950da336a9a941301c012b1712c8690269aef2d7d41074b",
+  "title": "رجع ضخ النفط… عبر خط عمره ٤٥ سنة",
+  "manifest": "approved/energy-pipeline-20261006/manifest.json",
+  "manifest_sha256": "339efe2a9f0d9eb35f7e75082c2bfcc1820572a4232038ac31dc7d75af6ce625",
+  "media_sha256": [
+    "b71b9d2c541ed066f76d12368a265dd8fef46d4e0702b0d60f4c9c89efe408a9"
+  ],
+  "visual_review": "Exact final revision 3 card reviewed at mobile width after owner feedback; headline, milestones and closing are readable; no source card or PDF.",
+  "package": "energy-pipeline-20261006"
+}
