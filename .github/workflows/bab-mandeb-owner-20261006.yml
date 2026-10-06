@@ -1,0 +1,43 @@
+name: Publish approved Bab el-Mandeb card
+on:
+  push:
+    paths: ['.github/workflows/bab-mandeb-owner-20261006.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Publish owner-approved Bab el-Mandeb 20261006 once'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a9ec0093903bdb833d15a44e8331798eb0f0afbe
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - name: Offline publisher protections
+        run: python -m pytest tests/test_v2_bundle.py tests/test_v2_bundle_group.py -q
+      - name: Decode exact approved JPG and validate
+        run: |
+          python - <<'PY'
+          import base64
+          from pathlib import Path
+          p=Path('approved/bab-mandeb-20261006/card-00.jpg')
+          p.write_bytes(base64.b64decode(Path(str(p)+'.b64').read_text(),validate=True))
+          PY
+          python -m publishing_v2.bundle_api validate --manifest approved/bab-mandeb-20261006/manifest.json
+      - name: Check quota budget time and receipts then publish once
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          APPROVED_COMMIT: a9ec0093903bdb833d15a44e8331798eb0f0afbe
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+          PYTHONPATH: .
+        run: python approved/bab-mandeb-20261006/publish-approved.py
