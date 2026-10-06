@@ -13,25 +13,36 @@
       "photo_extraction": "Original embedded jpeg xref 303, no recoloring. Layout crops lower part to retain workers and pipe.",
       "rights_status": "owner_accepted_editorial_use",
       "licensing_verified": false,
-      "final_sha256": "865f2e58cf99da172a587ee06aec8a75a5f601d223e7adc12758b50036732264"
+      "final_sha256": "63b9513fb1aed6dfb9cfb5017607104eb9e66696c4e7ab53de695c3c5fc4ee51",
+      "capacity_conversion": {
+        "formula": "5800000 barrels/day * 158.987294928 litres/barrel / 86400 seconds/day",
+        "litres_per_second": 10672.758224333335,
+        "copy": "more than 10000 litres per second",
+        "type": "derived capacity equivalent, not measured second-by-second flow"
+      },
+      "remote_control_source": "https://archive.aramcoworld.com/issue/198604/the.long.leap.forward.htm; paragraph beginning The operation of the new loop"
     },
     "google": {
       "event": "https://www.googlecloudpresscorner.com/2026-10-06-Google-and-Constellation-Announce-Landmark-Agreement-to-Bring-890-MW-of-New-Nuclear-Capacity-to-PJM-Grid-as-Part-of-Long-Term-Power-Deal",
       "photo_page": "https://datacenters.google/discover-more/photo-gallery/",
-      "photo": "https://www.gstatic.com/marketing-cms/assets/images/e9/30/7fea86f94445b3a5c0fb7eb76239/eemshaven-servers.jpg",
-      "photo_caption": "Servers at Google Eemshaven data center, Netherlands; archival illustration, not the future nuclear upgrade.",
+      "photo": "https://www.gstatic.com/marketing-cms/assets/images/69/90/5dab9888423e85788b21a7b6ade8/usa-sparks-davidson-2024-0344.JPG",
+      "photo_caption": "Google Storey County, Nevada: two data centers and gCUB generator yard; archival aerial scene, not nuclear plant.",
       "rights_status": "owner_accepted_editorial_use",
       "licensing_verified": false,
-      "final_sha256": "4437742d8ae62a1bee29b8272799e8ed22d4916f03479dacd1e342e047b0acd4"
+      "final_sha256": "213d8d22f3fd936cd235a3401f78d355e8cbed8a65d912238273d91d8b1bc5d8",
+      "explanation_source": "https://blog.google/company-news/outreach-and-initiatives/sustainability/internet-24x7-carbon-free-energy-should-be-too/"
     }
   },
   "checks": [
-    "3 bullets per card, maximum 2 measured lines each",
-    "Almarai body 50 px, CTA 38 px, headline 54 px on 1080x1920",
-    "Headline one line, inspected at 390px wide",
-    "No source card, no publication request, no live API call",
-    "Readability validator passed for both JPGs",
-    "Oil figure describes daily capacity; historical line length rounded",
-    "Google agreement upgrades 11 existing units; first uprate expected by 2028, not already operating"
-  ]
+    "Revision 1 rejected; no publication approval",
+    "All body lines measured at 50px; 3 bullets, at most 2 lines each",
+    "Actual aerial photograph replaces Google server closeup",
+    "Google technical units and upgrade count removed",
+    "Oil capacity converted to familiar litres/second with formula",
+    "Visual inspection at 390px and readability gate passed",
+    "No paid generation or publication"
+  ],
+  "revision": 2,
+  "previous_revision_status": "REJECTED_BY_OWNER",
+  "owner_feedback": "Oil: no compelling discovery. Google: ambiguous specialist measurements; unexpressive server closeup."
 }

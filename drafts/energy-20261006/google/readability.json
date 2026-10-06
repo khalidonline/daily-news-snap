@@ -2,13 +2,13 @@
   "version": 1,
   "visual_review": {
     "approved": true,
-    "reference": "Assistant visual inspection of 390px mobile preview on 2026-10-06; owner publication approval pending"
+    "reference": "Assistant inspected revision 2 at 390px after owner rejection of revision 1 on 2026-10-06 20:07 Riyadh; owner publication approval still pending"
   },
   "cards": [
     {
-      "sha256": "4437742d8ae62a1bee29b8272799e8ed22d4916f03479dacd1e342e047b0acd4",
+      "sha256": "213d8d22f3fd936cd235a3401f78d355e8cbed8a65d912238273d91d8b1bc5d8",
       "headline": {
-        "text": "قوقل اليوم… كهرباء لـ٢٠ سنة",
+        "text": "قوقل اليوم… تحجز كهرباء لـ٢٠ سنة",
         "size": 54,
         "box": [
           82,
@@ -19,7 +19,7 @@
       },
       "bullets": [
         {
-          "text": "كل طلب ذكاء اصطناعي وراه أجهزة بمراكز بيانات، تحتاج كهرباء وتبريد.",
+          "text": "بحثك بقوقل وطلبات الذكاء الاصطناعي تشتغل على أجهزة في مباني ضخمة.",
           "size": 50,
           "box": [
             98,
@@ -29,7 +29,7 @@
           ]
         },
         {
-          "text": "الاتفاق يضيف ٨٩٠ ميغاواط للشبكة، بقدرة تعادل مفاعل نووي.",
+          "text": "هالأجهزة تحتاج كهرباء وتبريد طول الوقت؛ والتوسع يزيد حاجتها للطاقة.",
           "size": 50,
           "box": [
             98,
@@ -39,7 +39,7 @@
           ]
         },
         {
-          "text": "بترفع إنتاج ١١ وحدة نووية موجودة، وأول زيادة متوقعة في ٢٠٢٨.",
+          "text": "اتفاق قوقل اليوم بيساعد محطات نووية موجودة تنتج كهرباء أكثر لدعم توسعها.",
           "size": 50,
           "box": [
             98,
@@ -62,7 +62,7 @@
     }
   ],
   "closing_measurement": {
-    "text": "التوسع الرقمي يحتاج كهرباء على الأرض.",
+    "text": "خدمات الجوال تكبر… إذا توفرت لها الطاقة.",
     "size": 48,
     "box": [
       82,

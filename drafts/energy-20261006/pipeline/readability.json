@@ -2,13 +2,13 @@
   "version": 1,
   "visual_review": {
     "approved": true,
-    "reference": "Assistant visual inspection of 390px mobile preview on 2026-10-06; owner publication approval pending"
+    "reference": "Assistant inspected revision 2 at 390px after owner rejection of revision 1 on 2026-10-06 20:07 Riyadh; owner publication approval still pending"
   },
   "cards": [
     {
-      "sha256": "865f2e58cf99da172a587ee06aec8a75a5f601d223e7adc12758b50036732264",
+      "sha256": "63b9513fb1aed6dfb9cfb5017607104eb9e66696c4e7ab53de695c3c5fc4ee51",
       "headline": {
-        "text": "اليوم… ٥٫٨ مليون برميل عبر البر",
+        "text": "رجع ضخ النفط… عبر خط عمره ٤٥ سنة",
         "size": 54,
         "box": [
           82,
@@ -19,7 +19,7 @@
       },
       "bullets": [
         {
-          "text": "رجعت قدرة ضخ «شرق–غرب» لهالمستوى يوميًا، حسب إعلان وزير الطاقة اليوم.",
+          "text": "قدرته المعلنة اليوم تعادل أكثر من ١٠ آلاف لتر نفط كل ثانية.",
           "size": 50,
           "box": [
             98,
@@ -29,7 +29,7 @@
           ]
         },
         {
-          "text": "الخط اكتمل عام ١٩٨١، ويمتد نحو ١٢٠٠ كم من الشرقية إلى ينبع.",
+          "text": "ينقل النفط من الشرقية لينبع، عشان تحمله السفن من البحر الأحمر بدل الخليج.",
           "size": 50,
           "box": [
             98,
@@ -39,7 +39,7 @@
           ]
         },
         {
-          "text": "النفط يوصل للبحر الأحمر عبر الأنابيب، وينشحن من هناك بدون عبور هرمز.",
+          "text": "حتى في توسعته عام ١٩٨٦، كان تشغيله ومراقبته عن بُعد من ينبع.",
           "size": 50,
           "box": [
             98,
@@ -62,7 +62,7 @@
     }
   ],
   "closing_measurement": {
-    "text": "السعودية تصدّر من ساحلين، مو منفذ واحد.",
+    "text": "كذا يطلع النفط للعالم بدون عبور هرمز.",
     "size": 48,
     "box": [
       82,

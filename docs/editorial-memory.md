@@ -66,3 +66,25 @@
 - Next three packages: count requested typography revisions after first preview;
   target zero. Compare share rate after 24 hours only when verified views and
   shares exist, at equal observation age; do not substitute ad benchmarks.
+
+## 2026-10-06 20:07 Riyadh — Khalid rejected both energy drafts
+
+Owner feedback (binding): the oil card had no compelling discovery; the Google
+card was ambiguous, full of measurements for specialists, and its close-up
+server photo was very weak and unexpressive. Both revision-1 designs are rejected,
+not approved for publication or archiving.
+
+Apply to future packages:
+- A correct news summary is not enough. Name the one concrete discovery worth
+  sharing before design. Infrastructure length/date/capacity alone do not pass.
+- Explain cause and result with a familiar everyday example. Technical units
+  need a useful everyday interpretation; omit numbers that require specialist
+  knowledge or distract from the idea. Fewer words must not mean vaguer meaning.
+- A photo must explain the main idea at phone size. Relevance to the industry
+  alone is insufficient. Reject tight equipment shots whose meaning a general
+  viewer cannot recognize. Prefer a verified wide scene showing scale, people,
+  use or the actual consequence, with a precise caption.
+- Pixel-size tests only establish typography. Before presenting a draft, answer:
+  what will a general Saudi viewer discover, understand, and see in five seconds?
+  A reviewer must flag a weak hook even when all technical checks pass.
+- Revision 2 of these two cards still requires Khalid's publication approval.
