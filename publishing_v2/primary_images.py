@@ -20,6 +20,9 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact 2010 Instagram screens reviewed for owner-authorized 2026-10-06 card.
+    ("https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010", "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg"),
+    ("https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010", "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-02.jpg"),
     # Exact award photograph reviewed and owner approved 2026-10-05.
     ("https://x.com/WorldGovSummit/status/1890349552151990778", "https://pbs.twimg.com/media/GjvdlUQWcAARHZp.jpg"),
     # Exact Tokyo photo reviewed and owner approved 2026-10-05; not a site-wide grant.

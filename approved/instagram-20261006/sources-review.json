@@ -1,0 +1,49 @@
+{
+  "review": "PASS",
+  "identity": "fd063efb445c6d527c14a1f8e6d2aa206e16282f8abe4a9b634d94356020ea08",
+  "facts": [
+    "https://techcrunch.com/2010/10/06/instagram-launch/",
+    "https://www.wired.com/2014/10/why-instagram-worked/",
+    "https://about.fb.com/news/2012/04/facebook-to-acquire-instagram/"
+  ],
+  "assets": [
+    {
+      "provider": "primary_media",
+      "source_kind": "article",
+      "source_url": "https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010",
+      "original_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg",
+      "download_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg",
+      "asset_id": "primary:afe234635cdee0de80f7ad54",
+      "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+      "rights_status": "owner_accepted_editorial_use",
+      "license": "All rights reserved",
+      "licensing_verified": false,
+      "sha256": "f1b6246391b3a334531bd37430674dc49376ad1b2e331e800faf20bc82d509c4"
+    },
+    {
+      "provider": "primary_media",
+      "source_kind": "article",
+      "source_url": "https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010",
+      "original_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-02.jpg",
+      "download_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-02.jpg",
+      "asset_id": "primary:c72e41c0595c3fe86a53c04e",
+      "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+      "rights_status": "owner_accepted_editorial_use",
+      "license": "All rights reserved",
+      "licensing_verified": false,
+      "sha256": "e086e90c1c22a2dcc5b4f9471423c7ec04e62c2884d30fe0c5ecda8d6d4a566d"
+    }
+  ],
+  "date": "October 6, 2010 launch; October 6, 2026 sixteenth anniversary",
+  "transaction": "April 9, 2012 agreement announced at approximately one billion dollars in cash and shares, not final closing valuation",
+  "reviewed": {
+    "phone_preview": true,
+    "single_line_headline": true,
+    "body_font": 45,
+    "image_relevance": true,
+    "no_source_card": true,
+    "original_assets_not_generated": true,
+    "sources_internal": true
+  },
+  "paid_model_requests": 0
+}

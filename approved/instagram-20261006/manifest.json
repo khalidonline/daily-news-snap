@@ -1,0 +1,57 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "إنستغرام يكمل ١٦ سنة… وبدأ بفكرة ثانية",
+  "not_before": "2026-10-06T14:18:58Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicitly authorized نشر on 2026-10-06 17:18:58 Riyadh after reviewing the one-card Instagram text and proposed old logo/interface visuals. Uses the established compact template, exact approved text, one-week duration, internal sources only. Two original archival screenshots checked against dated source.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/instagram-20261006/card-00.jpg",
+      "sha256": "541ff0b10571644bf73ea1f8c204e90f703b246c8c2f61500a89878653a6e88b",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010",
+        "original_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg",
+        "download_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg",
+        "asset_id": "primary:afe234635cdee0de80f7ad54",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "f1b6246391b3a334531bd37430674dc49376ad1b2e331e800faf20bc82d509c4"
+      },
+      "source_assets": [
+        {
+          "provider": "primary_media",
+          "source_kind": "article",
+          "source_url": "https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010",
+          "original_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg",
+          "download_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg",
+          "asset_id": "primary:afe234635cdee0de80f7ad54",
+          "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+          "rights_status": "owner_accepted_editorial_use",
+          "license": "All rights reserved",
+          "licensing_verified": false,
+          "sha256": "f1b6246391b3a334531bd37430674dc49376ad1b2e331e800faf20bc82d509c4"
+        },
+        {
+          "provider": "primary_media",
+          "source_kind": "article",
+          "source_url": "https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010",
+          "original_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-02.jpg",
+          "download_url": "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-02.jpg",
+          "asset_id": "primary:c72e41c0595c3fe86a53c04e",
+          "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+          "rights_status": "owner_accepted_editorial_use",
+          "license": "All rights reserved",
+          "licensing_verified": false,
+          "sha256": "e086e90c1c22a2dcc5b4f9471423c7ec04e62c2884d30fe0c5ecda8d6d4a566d"
+        }
+      ]
+    }
+  ]
+}
