@@ -1,0 +1,65 @@
+name: Reconcile and save approved Bab el-Mandeb
+on:
+  push:
+    paths: ['.github/workflows/save-bab-20261007.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  save:
+    if: github.event.head_commit.message == 'Save Bab el-Mandeb owner request 20261007-0014'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c9a074ba6987fe691e8829c290e9c94e947ef6ad
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt
+      - run: python -m unittest discover -s tests -p test_v2_saved_story_api.py -v
+      - name: Reconcile existing source without reposting, then save exact card
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import json, hashlib, base64, importlib.util
+          from pathlib import Path
+          from publishing_v2.bundle_api import GitHubJournal, BundleError
+          from publishing_v2.saved_story_api import SavedClient, now, validate_archive
+          identity='487cd9bf6efcc2f335787afcae61f14d32bf783fa131aecdd910b741f770772c'
+          c=SavedClient(); c.check()
+          j=GitHubJournal(identity); state=j.read()
+          assert set(k for k in state if k.isdigit())=={'1'} and not state.get('reconciliation')
+          r=state['1']
+          assert r['post_id']=='77962dd9-789e-42af-9259-1b2bdf57ded4'
+          assert r['upload_id']=='5d3cb105-3fc2-4a15-956f-2431431f2b6b'
+          live=c.call('/post/'+r['post_id'])
+          snap=(live.get('data') or {}).get('SNAPCHAT') or {}
+          ext=(live.get('externalData') or {}).get('SNAPCHAT') or {}
+          assert live.get('id')==r['post_id'] and live.get('teamId')==c.team
+          assert live.get('status')=='POSTED' and not live.get('deletedAt')
+          assert snap.get('type')=='STORY' and snap.get('uploadIds')==[r['upload_id']]
+          assert ext.get('id') and ext.get('status')=='PUBLISHED'
+          assert ext.get('sourceUploadId')==r['upload_id'] or ext.get('sourceUploadIds')==[r['upload_id']]
+          a=json.loads(Path('approved/saved-stories/daily-20261006/bab-mandeb-20261006.json').read_text())
+          trial=json.loads(json.dumps(state)); trial['1']['status']='POSTED'
+          validate_archive(a,trial)
+          if r.get('status')!='POSTED':
+              r.update(status='POSTED',snapchat_id=ext['id'],confirmed_at=now(),confirmation_method='read_existing_provider_id_and_exact_upload',evidence_run='https://github.com/khalidonline/daily-news-snap/actions/runs/'+__import__('os').environ['GITHUB_RUN_ID'])
+              j.save(state)
+          print('SOURCE_CONFIRMED',r['post_id'],flush=True)
+          spec=importlib.util.spec_from_file_location('archive_batch','approved/saved-stories/daily-20261006/save_batch.py')
+          mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+          mod.ORDER=['bab-mandeb-20261006']
+          mod.main()
+          audit=mod.StateFile('saved-story-audits/daily-20261006.json')
+          report=audit.read()
+          if report.get('held',{}).get('package')=='bab-mandeb-20261006':
+              report.pop('held'); audit.save(report)
+          PY
