@@ -1,0 +1,46 @@
+name: Publish approved Instagram anniversary card
+on:
+  push:
+    paths: ['.github/workflows/instagram-owner-20261006.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event.head_commit.message == 'Publish owner-approved Instagram 20261006 once'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 104cbdaa8ef82aa6b385e7cf9f6adbbb838c62d0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Offline publisher and image checks
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle*.py' -q
+          python -m unittest discover -s tests -p 'test_v2_primary_images.py' -q
+          python -m unittest discover -s tests -p 'test_v2_publication_selection.py' -q
+      - name: Decode exact approved JPG and validate
+        run: |
+          python - <<'PY'
+          import base64
+          from pathlib import Path
+          p=Path('approved/instagram-20261006/card-00.jpg')
+          p.write_bytes(base64.b64decode(Path(str(p)+'.b64').read_text(),validate=True))
+          PY
+          python -m publishing_v2.bundle_api validate --manifest approved/instagram-20261006/manifest.json
+      - name: Check quota budget and receipts then publish once
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          APPROVED_COMMIT: 104cbdaa8ef82aa6b385e7cf9f6adbbb838c62d0
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+          PYTHONPATH: .
+        run: python approved/instagram-20261006/publish-approved.py
