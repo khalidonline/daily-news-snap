@@ -1,0 +1,25 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أخبار اليمن… ليه باب المندب مهم؟",
+  "not_before": "2026-10-06T06:00:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "approval": "Khalid explicitly approved publication of one-card Bab el-Mandeb package: انشر, 2026-10-06 09:03 Riyadh. Approved text with schematic route comparison, established template, internal sources only. Military claim attributed to Reuters sources; 30% is historical Red Sea container traffic, not present strait vessel count.",
+  "story_duration": "ONE_WEEK",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/bab-mandeb-20261006/card-00.jpg",
+      "sha256": "27ae1f8122095b575338f91acac42c29ad45d5c9fe7cdbf6943dc93734e6d8b7",
+      "image": {
+        "provider": "Natural Earth + original geographic diagram",
+        "license": "Public domain",
+        "attribution_required": false,
+        "source_url": "https://www.naturalearthdata.com/about/terms-of-use/",
+        "original_url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson",
+        "sha256": "9e0729ee253ca7d7a5c4ae9395fb1902264c5377c52e224d13dd85010e2835d9",
+        "asset_id": "natural-earth-bab-two-routes-20261006"
+      }
+    }
+  ]
+}

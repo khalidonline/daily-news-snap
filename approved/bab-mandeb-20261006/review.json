@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-10-06",
+  "cards": 1,
+  "body_font_px": 43,
+  "single_line_headline": true,
+  "mobile_preview_reviewed": true,
+  "layout_bottom_px": 1781,
+  "diagram": "Geographic land geometry from Natural Earth; both routes schematic, labeled not live tracking",
+  "historical_baseline": "30% Red Sea container traffic pre late-2023 disruptions, not live Bab vessel count",
+  "news": "2026-10-05 advance attributed to Reuters military/government sources; no claim entire strait secured",
+  "tests": "13 publisher tests passed",
+  "paid_model_requests": 0,
+  "identity": "487cd9bf6efcc2f335787afcae61f14d32bf783fa131aecdd910b741f770772c"
+}

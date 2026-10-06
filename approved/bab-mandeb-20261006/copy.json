@@ -1,0 +1,17 @@
+{
+  "title": "أخبار اليمن… ليه باب المندب مهم؟",
+  "bullets": [
+    "أمس ٥ أكتوبر، نقلت رويترز عن مصادر تقدم قوات الحكومة اليمنية قرب باب المندب.",
+    "عرضه بأضيق نقطة نحو ٢٩ كم؛ ويربط البحر الأحمر بخليج عدن والطريق إلى قناة السويس.",
+    "قبل اضطرابات أواخر ٢٠٢٣، مر بمسار البحر الأحمر نحو ٣٠٪ من حركة الحاويات العالمية.",
+    "إذا تعطّل المرور، تضطر سفن تلف حول أفريقيا؛ فتطول الرحلة وتزيد تكلفة الشحن."
+  ],
+  "approved_by": "Khalid: انشر, 2026-10-06; text/layout based on approved one-card draft",
+  "visual": "Natural Earth public-domain geographic schematic; approximate routes, not live tracking",
+  "sources": [
+    "https://www.reuters.com/world/yemeni-government-forces-seize-district-by-bab-el-mandeb-military-sources-say-2026-10-05/",
+    "https://blogs.worldbank.org/en/developmenttalk/navigating-troubled-waters--the-red-sea-shipping-crisis-and-its-",
+    "https://www.eia.gov/todayinEnergy/detail.php?id=41073",
+    "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson"
+  ]
+}
