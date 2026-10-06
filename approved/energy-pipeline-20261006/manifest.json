@@ -1,0 +1,30 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "رجع ضخ النفط… عبر خط عمره ٤٥ سنة",
+  "not_before": "2026-10-06T17:31:16Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "approval": "Khalid 2026-10-06 20:31 Riyadh: انشر; approves both displayed revision 3 cards. Publish exact sealed JPGs only.",
+  "story_duration": "ONE_WEEK",
+  "media": [
+    {
+      "kind": "info",
+      "path": "drafts/energy-20261006/pipeline/card-00.jpg",
+      "sha256": "b71b9d2c541ed066f76d12368a265dd8fef46d4e0702b0d60f4c9c89efe408a9",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "source_url": "https://www.aramco.com/-/media/publications/books/energy-to-the-world/saudi-aramco-energy-to-the-world---vol2.pdf",
+        "original_url": "https://www.aramco.com/-/media/publications/books/energy-to-the-world/saudi-aramco-energy-to-the-world---vol2.pdf",
+        "download_url": "https://www.aramco.com/-/media/publications/books/energy-to-the-world/saudi-aramco-energy-to-the-world---vol2.pdf",
+        "website_entity": "Q679322",
+        "official_site": "https://www.aramco.com/",
+        "asset_id": "primary:422974b6ab10c07637c257f4",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      }
+    }
+  ]
+}
