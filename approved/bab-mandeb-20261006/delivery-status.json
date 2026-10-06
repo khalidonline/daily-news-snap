@@ -1,0 +1,19 @@
+{
+  "status": "PENDING_PROVIDER_CONFIRMATION",
+  "identity": "487cd9bf6efcc2f335787afcae61f14d32bf783fa131aecdd910b741f770772c",
+  "post_id": "77962dd9-789e-42af-9259-1b2bdf57ded4",
+  "upload_id": "5d3cb105-3fc2-4a15-956f-2431431f2b6b",
+  "run_url": "https://github.com/khalidonline/daily-news-snap/actions/runs/37422054490",
+  "checked_at": "2026-10-06T06:15:20Z",
+  "new_posts_created": 1,
+  "confirmation_attempts": 2,
+  "confirmed_cards": 0,
+  "quota_last_checked": {
+    "used": 1,
+    "remaining": 19,
+    "limit": 20
+  },
+  "paid_model_requests": 0,
+  "cost_ledger_present": false,
+  "instruction": "Reconcile this exact post ID only. Do not create another post, change package identity, or mark POSTED without live confirmation. Same saved publisher resumes polling the existing ID."
+}
