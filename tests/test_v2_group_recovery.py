@@ -84,6 +84,8 @@ def test_normal_two_card_publish_sends_one_upload_per_request(monkeypatch):
     monkeypatch.setattr(b,'BundleClient',lambda:c)
     monkeypatch.setattr(b,'GitHubJournal',lambda identity:j)
     monkeypatch.setattr(b,'load_package',lambda path:('identity','title',['u1','u2']))
+    # This test covers request grouping; readability failures have separate CLI tests.
+    monkeypatch.setattr('publishing_v2.readability.require_for_new_delivery', lambda *args: None)
     monkeypatch.setattr(b.Path,'read_text',lambda self:'{}')
     monkeypatch.setattr('sys.argv',['publisher','publish','--manifest','test.json'])
     b.main()

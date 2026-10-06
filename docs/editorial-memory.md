@@ -53,3 +53,16 @@
 - المثال التعليمي: خبر اليمن وباب المندب أقوى كخبر رئيسي؛ ذكرى إنستغرام مناسبة ثانية مع تحول الفكرة والتركيز على الصور. الأمثلة ليست دعوة لتكرار الباقات.
 - الطاري يظهر في البداية؛ بطاقة أو بطاقتان بنقاط، عنوان بسطر واحد وخط واضح.
 - طُبّقت هذه التعليمات في طلب مهمة «طواري ملخص تنفيذي للاختيار» يوم ٦ أكتوبر؛ لا تغيير لموعدها أو موافقات النشر أو سقف ٣ دولارات.
+
+## 2026-10-06 — compact readability enforcement
+
+- New manual API deliveries must pass the image-bound `readability.json` check
+  in `publishing_v2.bundle_api`; see `docs/compact-readability.md` for the exact
+  report contract and its limits. Max two cards, three bullets per card, body
+  48 px and CTA 38 px minimum at 1080×1920; headline one measured line.
+- Keep a real mobile visual review. Metadata cannot prove how pixels were drawn.
+- Preserve prior operation IDs for reconciliation. A new readability rule is
+  never a reason to recreate an uncertain Snapchat post or regenerate paid work.
+- Next three packages: count requested typography revisions after first preview;
+  target zero. Compare share rate after 24 hours only when verified views and
+  shares exist, at equal observation age; do not substitute ad benchmarks.

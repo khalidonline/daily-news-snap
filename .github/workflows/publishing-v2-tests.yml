@@ -39,12 +39,12 @@ jobs:
             sudo apt-get install -y ffmpeg
           fi
       - name: Install image validation dependency
-        run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+        run: python -m pip install -r requirements.txt -r requirements-v2-images.txt pytest
       - name: Check agents and actual story layout
         env:
           FONT_FAMILY: Almarai
           THEME: light
-        run: python -m unittest discover -s tests -p 'test_v2_*.py' -v
+        run: python -m pytest tests/test_v2_*.py -q
       - run: python -m publishing_v2.evaluate --mode offline --output evaluation-output
       - name: Build and run isolated container
         run: |

@@ -368,6 +368,8 @@ def main():
     try:
         if args.mode == 'validate':
             identity, title, media = load_package(args.manifest)
+            from .readability import validate_readability
+            validate_readability(Path(args.manifest).resolve().parent / 'readability.json', media)
             print(json.dumps({'status': 'validated_not_published', 'identity': identity,
                               'card_count': len(media)}, sort_keys=True))
             return
@@ -379,6 +381,8 @@ def main():
             check_predecessors(json.loads(Path(args.manifest).read_text()).get('predecessors', []))
             journal = GitHubJournal(identity)
             existing = journal.read()
+            from .readability import require_for_new_delivery
+            require_for_new_delivery(args.manifest, media, existing)
             # Bundle live validation (4 Oct 2026): STORY accepts one upload only.
             # Preserve existing grouped intents for reconciliation, never silently split.
             if existing.get('_group'):
@@ -386,7 +390,8 @@ def main():
             else:
                 publish(client, journal, title, media)
     except (BundleError, KeyError, ValueError, OSError) as exc:
-        print(str(exc) if isinstance(exc, BundleError) else 'Invalid package or state; no automatic retry')
+        from .readability import ReadabilityError
+        print(str(exc) if isinstance(exc, (BundleError, ReadabilityError)) else 'Invalid package or state; no automatic retry')
         raise SystemExit(1) from None
 
 if __name__ == '__main__': main()
