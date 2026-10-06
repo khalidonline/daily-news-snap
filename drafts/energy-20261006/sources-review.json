@@ -1,0 +1,37 @@
+{
+  "status": "DESIGNED_AWAITING_OWNER_PUBLICATION_APPROVAL",
+  "event_date": "2026-10-06",
+  "model_requests": 0,
+  "source_notes": {
+    "pipeline": {
+      "event": "https://saudigazette.com.sa/article/665162",
+      "history": "https://archive.aramcoworld.com/issue/198604/the.long.leap.forward.htm",
+      "photo": "https://www.aramco.com/-/media/publications/books/energy-to-the-world/saudi-aramco-energy-to-the-world---vol2.pdf",
+      "photo_pdf_page_index": 73,
+      "photo_print_page": 64,
+      "photo_caption": "East-West crude oil pipeline expansion, 1986",
+      "photo_extraction": "Original embedded jpeg xref 303, no recoloring. Layout crops lower part to retain workers and pipe.",
+      "rights_status": "owner_accepted_editorial_use",
+      "licensing_verified": false,
+      "final_sha256": "865f2e58cf99da172a587ee06aec8a75a5f601d223e7adc12758b50036732264"
+    },
+    "google": {
+      "event": "https://www.googlecloudpresscorner.com/2026-10-06-Google-and-Constellation-Announce-Landmark-Agreement-to-Bring-890-MW-of-New-Nuclear-Capacity-to-PJM-Grid-as-Part-of-Long-Term-Power-Deal",
+      "photo_page": "https://datacenters.google/discover-more/photo-gallery/",
+      "photo": "https://www.gstatic.com/marketing-cms/assets/images/e9/30/7fea86f94445b3a5c0fb7eb76239/eemshaven-servers.jpg",
+      "photo_caption": "Servers at Google Eemshaven data center, Netherlands; archival illustration, not the future nuclear upgrade.",
+      "rights_status": "owner_accepted_editorial_use",
+      "licensing_verified": false,
+      "final_sha256": "4437742d8ae62a1bee29b8272799e8ed22d4916f03479dacd1e342e047b0acd4"
+    }
+  },
+  "checks": [
+    "3 bullets per card, maximum 2 measured lines each",
+    "Almarai body 50 px, CTA 38 px, headline 54 px on 1080x1920",
+    "Headline one line, inspected at 390px wide",
+    "No source card, no publication request, no live API call",
+    "Readability validator passed for both JPGs",
+    "Oil figure describes daily capacity; historical line length rounded",
+    "Google agreement upgrades 11 existing units; first uprate expected by 2028, not already operating"
+  ]
+}
