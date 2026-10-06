@@ -1,1 +1,1 @@
-{"1": {"status": "SENDING", "upload_id": "5d3cb105-3fc2-4a15-956f-2431431f2b6b", "post_id": "77962dd9-789e-42af-9259-1b2bdf57ded4"}}
+{"1": {"status": "POSTED", "upload_id": "5d3cb105-3fc2-4a15-956f-2431431f2b6b", "post_id": "77962dd9-789e-42af-9259-1b2bdf57ded4", "snapchat_id": "de56bd8c-93a0-4cfa-ab19-3d87029f94ba", "confirmed_at": "2026-10-06T21:16:00.747885+00:00", "confirmation_method": "read_existing_provider_id_and_exact_upload", "evidence_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37532597571"}}
