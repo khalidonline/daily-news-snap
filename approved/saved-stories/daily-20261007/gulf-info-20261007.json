@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-07T20:55:00Z",
+  "expires_at": "2026-10-11T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. Current 7 October request authorizes independent saving approval after receipt and visual reconciliation. No daily repost or deletion authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "package": "gulf-info-20261007",
+  "title": "الأخضر… كأس بدون هدف في شباكه",
+  "identity": "c881699c35fef7ca86d011276d4c5ecac134a47e668cfe499f85f6cd382f94af",
+  "media_sha256": [
+    "06c983fb108eb17e9a42d6bf6da1000b7a50db5d5940cdea7241e89e09ed2907"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/gulf-info-20261007/manifest.json",
+      "manifest_sha256": "c7d37d060942a5f8890064d1a33590e7a6f2f4d7373b8ef7d67c364b72729abf",
+      "identity": "c881699c35fef7ca86d011276d4c5ecac134a47e668cfe499f85f6cd382f94af",
+      "receipt_key": "c881699c35fef7ca86d011276d4c5ecac134a47e668cfe499f85f6cd382f94af",
+      "media_sha256": [
+        "06c983fb108eb17e9a42d6bf6da1000b7a50db5d5940cdea7241e89e09ed2907"
+      ]
+    }
+  ],
+  "visual_review": "Exact repository JPG bytes visually inspected 7 October: readable large Arabic text, ordered cards, no sources/PDF. NVIDIA selects only final SEGA-logo first card and corrected RIVA second card.",
+  "source_backlog_identity": "c881699c35fef7ca86d011276d4c5ecac134a47e668cfe499f85f6cd382f94af"
+}

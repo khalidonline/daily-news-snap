@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-07T20:55:00Z",
+  "expires_at": "2026-10-11T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. Current 7 October request authorizes independent saving approval after receipt and visual reconciliation. No daily repost or deletion authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "package": "gulf-challenge-icon-20261007",
+  "title": "تحدّي الأخضر… وين الشعار المختلف؟",
+  "identity": "f25daf41d987c122151bf11c8f72d2b0a734a36b1bfa55f1b8c07eb80c76173c",
+  "media_sha256": [
+    "c1e15a31f85c403ff7e3e76f5578646b4a03591b07555dfd72e81b7fbed5ecac"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/gulf-challenge-icon-20261007/manifest.json",
+      "manifest_sha256": "f90e9ae12688aaa1cad06518d93ef4e629e93828380b1403de965d5184171d90",
+      "identity": "f25daf41d987c122151bf11c8f72d2b0a734a36b1bfa55f1b8c07eb80c76173c",
+      "receipt_key": "f25daf41d987c122151bf11c8f72d2b0a734a36b1bfa55f1b8c07eb80c76173c",
+      "media_sha256": [
+        "c1e15a31f85c403ff7e3e76f5578646b4a03591b07555dfd72e81b7fbed5ecac"
+      ]
+    }
+  ],
+  "visual_review": "Exact repository JPG bytes visually inspected 7 October: readable large Arabic text, ordered cards, no sources/PDF. NVIDIA selects only final SEGA-logo first card and corrected RIVA second card.",
+  "source_backlog_identity": "f25daf41d987c122151bf11c8f72d2b0a734a36b1bfa55f1b8c07eb80c76173c"
+}
