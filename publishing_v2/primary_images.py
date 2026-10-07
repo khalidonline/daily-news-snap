@@ -20,6 +20,11 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact Saudi team archival photograph and crest visually reviewed for Khalid's
+    # authorized information + visual challenge, 7 October 2026. No site-wide grant.
+    ('https://ajel.sa/sports/tyyrjrp56', 'https://cdn.ajel.sa/articles/2026-10/Capture-crop-bOIx_dWv.png'),
+    ('https://en.wikipedia.org/wiki/File:Saudi_Arabia_national_football_team_logo.svg',
+     'https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png'),
     # Exact 2010 Instagram screens reviewed for owner-authorized 2026-10-06 card.
     ("https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010", "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg"),
     ("https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010", "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-02.jpg"),
@@ -190,4 +195,3 @@ class ImageMemory:
     def save(self):
         self.rows=dict(sorted(self.rows.items(),key=lambda item:item[1]['at'],reverse=True)[:300])
         if self.store:self.store.save({'version':1,'images':self.rows})
-

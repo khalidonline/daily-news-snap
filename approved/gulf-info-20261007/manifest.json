@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أمس أخذنا الخليج… وكررنا إنجاز قبل ٥٢ سنة",
+  "not_before": "2026-10-07T06:39:09Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid 2026-10-07 09:39:09 Riyadh explicitly requested changing the closing to return to titles and publishing with the previously proposed team-logo challenge. Uses existing compact identity, reviewed originals and one card each. No sources/answer published. Closing uses the last-title year 2004 to avoid inconsistent elapsed-year claims.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/gulf-info-20261007/card-00.jpg",
+      "sha256": "06c983fb108eb17e9a42d6bf6da1000b7a50db5d5940cdea7241e89e09ed2907",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://ajel.sa/sports/tyyrjrp56",
+        "original_url": "https://cdn.ajel.sa/articles/2026-10/Capture-crop-bOIx_dWv.png",
+        "download_url": "https://cdn.ajel.sa/articles/2026-10/Capture-crop-bOIx_dWv.png",
+        "asset_id": "primary:fe46049df28b9fe101467914",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "9991c3e00832cef0bf70dd5849170d39db94af3dab991e9ba159775c3ef979d7"
+      }
+    }
+  ]
+}

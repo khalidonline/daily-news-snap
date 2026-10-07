@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أمس الكأس للأخضر… واليوم التحدّي لك",
+  "not_before": "2026-10-07T06:39:09Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid 2026-10-07 09:39:09 Riyadh explicitly requested changing the closing to return to titles and publishing with the previously proposed team-logo challenge. Uses existing compact identity, reviewed originals and one card each. No sources/answer published. Closing uses the last-title year 2004 to avoid inconsistent elapsed-year claims.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/gulf-challenge-20261007/card-00.jpg",
+      "sha256": "0de18cb68e1d07910a3132d1af03de424cad8a4ec85478bde7fade6a9e911893",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://en.wikipedia.org/wiki/File:Saudi_Arabia_national_football_team_logo.svg",
+        "original_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+        "download_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+        "asset_id": "primary:b03b2bf7e16e537bde955cb0",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "d2066b50e3e4e666c56e2b38224b706391d34b7f8db47fd2f72fa5b03af9de17"
+      }
+    }
+  ]
+}
