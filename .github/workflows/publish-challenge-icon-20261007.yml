@@ -1,0 +1,33 @@
+name: Publish approved solid-icon challenge
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-challenge-icon-20261007.yml'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Run approved solid-icon challenge 20261007-101624'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 3334b2f0372560b6d9ebefac03ad129a529585fb
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - name: Offline guard tests
+        run: python -m pytest -q tests/test_v2_bundle.py tests/test_v2_bundle_group.py tests/test_v2_readability.py tests/test_v2_primary_images.py tests/test_v2_publication_selection.py
+      - name: Publish approved card and reconcile
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: 3334b2f0372560b6d9ebefac03ad129a529585fb
+          PYTHONPATH: .
+        run: python approved/gulf-challenge-icon-20261007/publish-approved.py
