@@ -12,6 +12,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/'
 LICENSE_URLS = {f'CC BY {version}': f'https://creativecommons.org/licenses/by/{version}/'
                 for version in ('2.0', '3.0', '4.0')}  # 3.0: owner approved 2026-09-26 (same attribution terms)
+LICENSE_URLS['CC BY-SA 4.0'] = 'https://creativecommons.org/licenses/by-sa/4.0/'
 NOTICE_FIELDS = ('copyright_notice', 'attribution_notice', 'usage_terms', 'disclaimer', 'rights_links')
 FONT_ROOT = Path(__file__).resolve().parents[2] / 'fonts'
 
@@ -20,6 +21,10 @@ def attribution_eligible(row):
     if not isinstance(row, dict):
         return False
     if row.get('license') not in LICENSE_URLS or row.get('restrictions'):
+        return False
+    if row['license'] == 'CC BY-SA 4.0' and (
+            row.get('sharealike_presentation') != 'unmodified_photo_collection'
+            or row.get('modifications') != 'Resized only'):
         return False
     license_url = LICENSE_URLS[row['license']]
     if row.get('license_url') not in {license_url, license_url.rstrip('/'), license_url.replace('https:', 'http:'),
@@ -193,6 +198,15 @@ def public_attribution_layout(image):
     """Two-word maximum display label; complete notices stay in package metadata."""
     if not attribution_eligible(image):
         raise ValueError('incomplete_image_attribution')
+    if image['license'] == 'CC BY-SA 4.0':
+        rows = [image['credit'] + ' · Photo: CC BY-SA 4.0',
+                'commons.wikimedia.org/?curid=' + str(image['asset_id']),
+                'creativecommons.org/licenses/by-sa/4.0/',
+                'Resized only · Photo remains CC BY-SA 4.0']
+        draw = ImageDraw.Draw(Image.new('RGB', (1080, 1920)))
+        if any(draw.textlength(row, font=_font(24)) > 952 for row in rows):
+            raise ValueError('public_attribution_layout_overflow')
+        return rows, 112
     label = image['credit'].strip()
     if len(label.split()) > 2:
         # Name the actual source provider instead of truncating a person's name.
@@ -227,7 +241,9 @@ def render_public_attribution(card, path):
             raise ValueError('wrong_frame_dimensions')
         canvas = original.convert('RGB')
     draw = ImageDraw.Draw(canvas)
-    draw.text((540, 1850), rows[0], font=_font(24), fill='#79736b', anchor='mt')
+    start = 1770 if len(rows) > 1 else 1850
+    for index, row in enumerate(rows):
+        draw.text((540, start + index * 28), row, font=_font(24), fill='#79736b', anchor='mt')
     canvas.save(path, 'JPEG', quality=95, subsampling=0)
     card['public_attribution'] = {
         'version': 3, 'display_label': rows[0],
