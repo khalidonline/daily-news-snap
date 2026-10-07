@@ -1,0 +1,47 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "إنفيديا وسيجا — البطاقة الأولى المعدلة",
+  "not_before": "2026-10-07T10:26:10Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicitly requested republishing card 1 with SEGA logo beside Jensen Huang, 2026-10-07 13:26:10 Riyadh. Exact text, font and card 2 preserved; assistant inspected new composite at mobile scale. No claim that old Snapchat card was deleted.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/nvidia-card1-sega-20261007/card-00.jpg",
+      "sha256": "0fbea32a54307ea47a8dda9171ea57ec45b6ea70e8f3689c0beaa195c7501d9d",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:2fea494deff1dac417e1584f",
+        "source_kind": "official",
+        "website_entity": "Q182477",
+        "official_site": "https://nvidianews.nvidia.com",
+        "source_url": "https://nvidianews.nvidia.com/bios/jensen-huang",
+        "original_url": "https://nvidianews.nvidia.com/_gallery/get_file/?file_id=69e6b9293d633260eec67804",
+        "download_url": "https://nvidianews.nvidia.com/_gallery/get_file/?file_id=69e6b9293d633260eec67804",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "credit": "NVIDIA",
+        "title": "Jensen Huang official headshot",
+        "additional_assets": [
+          {
+            "title": "SEGA wordmark",
+            "source_url": "https://commons.wikimedia.org/wiki/File:SEGA_logo.svg",
+            "original_url": "https://upload.wikimedia.org/wikipedia/commons/1/13/SEGA_logo.svg",
+            "license": "Public domain (PD-textlogo)",
+            "trademark_owner": "SEGA",
+            "usage": "Owner-requested editorial identification. No endorsement implied."
+          }
+        ]
+      }
+    }
+  ],
+  "replaces": {
+    "identity": "5e63a9e4f8edc7d3e71de8575429d6e46380cc2efc5a42ca992c74614010d6bc",
+    "card": 1,
+    "old_post_id": "50eff36f-abb1-43ff-b4ac-b292017f1a86",
+    "deletion_status": "NOT_CONFIRMED"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "visual_review": {
+    "approved": true,
+    "reference": "Assistant inspected exact 540x960 preview. SEGA logo on white panel to right of Jensen face, no face/text overlap. All headline/body/closing/CTA unchanged, same fonts and placements."
+  },
+  "cards": [
+    {
+      "headline": {
+        "text": "إنفيديا قربت ٦ تريليونات… وسيجا أنقذتها",
+        "size": 53,
+        "box": [
+          82,
+          320,
+          998,
+          396
+        ]
+      },
+      "bullets": [
+        {
+          "text": "أمس سهمها سجّل قمة، وقيمتها قربت\n٦ تريليونات دولار.",
+          "size": 48,
+          "box": [
+            82,
+            1010,
+            965,
+            1140
+          ]
+        },
+        {
+          "text": "بالتسعينات، اعترف مؤسسها لسيجا إن تقنية\nكرت الشاشة اللي اختاروها ما راح تنجح.",
+          "size": 48,
+          "box": [
+            82,
+            1176,
+            965,
+            1306
+          ]
+        },
+        {
+          "text": "طلعوا من المشروع، وسيجا دعمتهم بنحو\n٥ ملايين دولار وقت كانوا مهددين بالانهيار.",
+          "size": 48,
+          "box": [
+            82,
+            1342,
+            965,
+            1472
+          ]
+        }
+      ],
+      "cta": {
+        "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة",
+        "size": 38,
+        "box": [
+          82,
+          1654,
+          865,
+          1760
+        ]
+      },
+      "sha256": "0fbea32a54307ea47a8dda9171ea57ec45b6ea70e8f3689c0beaa195c7501d9d"
+    }
+  ]
+}
