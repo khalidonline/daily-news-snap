@@ -1,0 +1,103 @@
+# NVIDIA package verification — 7 October 2026
+
+Two final 1080×1920 JPEGs inspected at 540×960. Headline single line, 48px body, 53px headline, current Almarai identity, solid sharing arrow. Quantity and currency units kept together. Original RIVA photograph resized proportionally only; visible complete author/source/license notice.
+
+Publication identity: `5e63a9e4f8edc7d3e71de8575429d6e46380cc2efc5a42ca992c74614010d6bc`.
+
+Scoped offline safety checks: 38 passed and 26 subtests. Public image-credit tests run separately: 5 passed. Actual package load and readability verification passed. Actions repeats all 43 scoped tests in a complete pinned checkout before any delivery.
+
+The broad local suite was NOT green: 1000 passed, 85 failed, 21 errors, 213 subtests passed. Missing retired workflow files caused collection/setup and policy failures (for example `.github/workflows/daily.yml`). `test_real_render_to_auto_and_manual_publication` failed in the combined run but passed on isolated rerun with all five public-credit tests. Other broad-suite failures were not repaired or claimed resolved. Current cached failure names follow; these are outside this specific publish validation and are retained transparently rather than hidden.
+
+- `tests/test_breaking_manual_reproduction.py::ManualBreakingReproductionTests::test_breaking_workflow_is_review_only`
+- `tests/test_breaking_manual_reproduction.py::ManualBreakingReproductionTests::test_workflow_defaults_manual_runs_to_visual_repair`
+- `tests/test_breaking_visual_relevance.py::BreakingEditorialCacheTests::test_event_time_is_forced_into_cached_story_summary`
+- `tests/test_breaking_visual_relevance.py::BreakingEditorialCacheTests::test_existing_event_time_is_not_duplicated`
+- `tests/test_breaking_visual_relevance.py::BreakingEditorialCacheTests::test_regenerate_editorial_refreshes_cached_result_once`
+- `tests/test_breaking_visual_relevance.py::BreakingEditorialCacheTests::test_visual_repair_reuses_editorial_without_calling_model`
+- `tests/test_breaking_visual_relevance.py::BreakingEditorialCacheTests::test_visual_repair_without_cache_fails_before_model_call`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_breaking_no_photo_aborts_with_dedicated_exit_code`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_breaking_visual_requires_explicit_yes`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_centcom_seal_uses_retained_official_source_when_event_says_us_military`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_curated_commons_centcom_seal_is_registered`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_curated_commons_kharg_terminal_is_registered`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_curated_commons_saudi_map_is_registered`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_exact_centcom_seal_is_allowed_only_for_centcom_event`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_exact_named_location_can_pass_without_depicting_event_moment`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_generic_riyadh_library_photo_cannot_qualify_for_breaking`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_local_asset_marker_carries_curated_provenance`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_recoverable_visual_no_card_notice_stays_internal`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_rejected_local_candidate_is_removed_from_breaking_pipeline`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_review_mode_no_photo_also_aborts_instead_of_false_success`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_strict_vision_gate_fails_closed_when_api_is_unavailable`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_verified_asset_provenance_reaches_visual_gate`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_verified_commons_context_reaches_visual_gate`
+- `tests/test_breaking_visual_relevance.py::BreakingVisualRelevanceTests::test_visual_verdict_cache_avoids_second_paid_call`
+- `tests/test_breaking_watch.py::BreakingWatchWindowTests::test_workflow_accepts_explicit_external_recovery_dispatch`
+- `tests/test_breaking_watch.py::BreakingWatchWindowTests::test_workflow_persists_review_delivery_memory`
+- `tests/test_breaking_watch.py::BreakingWatchWindowTests::test_workflow_schedules_through_2230_ksa`
+- `tests/test_breaking_watch_seen_memory.py::BreakingWatchPersistentHeadlineMemoryTests::test_successful_review_marks_daily_cap`
+- `tests/test_daily_budget.py::WorkflowBudgetTests::test_paid_workflows_cannot_override_guard_python_path`
+- `tests/test_daily_cost_leak_policy.py::DailyCostLeakPolicyTests::test_explicit_story_recovery_can_bootstrap_visual_validation`
+- `tests/test_daily_cost_leak_policy.py::DailyCostLeakPolicyTests::test_news_bounds_vision_spend_and_requires_a_photo`
+- `tests/test_daily_cost_leak_policy.py::DailyCostLeakPolicyTests::test_scheduled_story_is_identified_as_cost_safe_automatic_work`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_exact_recovery_uses_completed_schedule_slot_gate`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_financial_news_explains_what_the_news_means`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_heartbeat_never_cancels_live_delivery`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_importing_news_runner_does_not_mutate_theme_environment`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_keeps_github_heartbeat_only_as_temporary_fallback`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_manual_post_remains_explicit_opt_in`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_news_ci_runs_visual_recovery_regressions`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_news_runner_defaults_to_standard_light_card_without_workflow_theme`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_news_runner_respects_explicit_theme_override`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_no_photo_notification_calls_news_items_not_stories`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_photo_only_recovery_loads_exact_story_from_explicit_input`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_runtime_budget_covers_strict_image_search`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_scheduled_review_mode_keeps_telegram_and_dedupe`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_scheduled_runs_never_post_to_snapchat`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_shared_gate_controls_paid_work`
+- `tests/test_daily_review_workflow.py::DailyReviewWorkflowTests::test_successful_slot_marks_durable_state`
+- `tests/test_external_autopilot_trigger.py::ExternalAutopilotTriggerTests::test_autopilot_uses_external_push_trigger_not_github_schedule`
+- `tests/test_external_autopilot_trigger.py::ExternalAutopilotTriggerTests::test_reviewer_recovery_is_bounded_and_cannot_publish`
+- `tests/test_model_role_experiment.py::ModelRoleExperimentTests::test_selected_frozen_cases_fit_under_hard_reservation_cap`
+- `tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_batch_review_has_a_three_story_hard_maximum`
+- `tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_final_arabic_editorial_defaults_to_sonnet`
+- `tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_news_limits_full_copy_and_requires_a_visual`
+- `tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_news_visual_budget_is_bounded_while_visuals_remain_required`
+- `tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_routine_selection_and_breaking_classification_use_haiku`
+- `tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_story_workflow_prices_editorial_usage_and_reports_it`
+- `tests/test_news_event_timing.py::EventTimingTests::test_shared_renderer_rechecks_after_photo_work_before_rendering`
+- `tests/test_news_visual_recovery.py::NewsVisualRecoveryTests::test_acronym_logo_uses_domain_verified_wikidata_fallback`
+- `tests/test_news_visual_recovery.py::NewsVisualRecoveryTests::test_federal_reserve_logo_uses_verified_official_domain`
+- `tests/test_news_visual_recovery.py::NewsVisualRecoveryTests::test_kaust_logo_uses_verified_official_domain`
+- `tests/test_news_visual_recovery.py::NewsVisualRecoveryTests::test_missing_registered_logo_is_fetched_with_verified_domain`
+- `tests/test_news_visual_recovery.py::NewsVisualRecoveryTests::test_sabic_agri_nutrients_logo_uses_verified_official_domain`
+- `tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_breaking_recovery_is_not_dispatched`
+- `tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_external_clock_forwards_exact_slots_to_scheduled_bots`
+- `tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_external_clock_receiver_dispatches_each_bot_without_model_calls`
+- `tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_external_clock_receiver_is_path_scoped`
+- `tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_news_clock_accepts_timestamp_prefixed_recovery_payload`
+- `tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_news_clock_can_forward_an_exact_recovery_story`
+- `tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_news_recovery_is_an_explicit_input_not_a_commit_side_effect`
+- `tests/test_publish_cards.py::PublishMediaTests`
+- `tests/test_publish_cards.py::StorySelectorTests`
+- `tests/test_shared_schedule_gate.py::SharedScheduleGateTests::test_story_workflow_accepts_external_slot_and_preserves_repair_branch`
+- `tests/test_shared_schedule_gate.py::SharedScheduleGateTests::test_topic_workflow_accepts_external_slot_and_marks_it`
+- `tests/test_story_approval_artifact_binding.py::test_approval_requires_run_artifact_and_deck_hash`
+- `tests/test_story_approval_artifact_binding.py::test_delivery_downloads_exact_artifact_id_not_name_only`
+- `tests/test_story_approval_artifact_binding.py::test_delivery_uses_manifest_path_preserved_by_artifact_upload`
+- `tests/test_story_approval_artifact_binding.py::test_delivery_verifies_artifact_belongs_to_review_run_and_deck_hash`
+- `tests/test_story_approval_artifact_binding.py::test_explicit_approval_promotes_review_manifest_only_after_identity_check`
+- `tests/test_story_approval_artifact_binding.py::test_legacy_numeric_pointer_fails_closed`
+- `tests/test_story_delivery_recovery.py::StoryDeliveryRecoveryTests::test_explicit_story_recovery_reuses_locked_brief`
+- `tests/test_story_delivery_recovery.py::StoryDeliveryRecoveryTests::test_story_workflow_does_not_send_routine_failure_warnings`
+- `tests/test_three_story_cost_pilot_safety.py::ThreeStoryCostPilotSafetyTests::test_cost_report_is_scoped_to_this_run`
+- `tests/test_three_story_cost_pilot_safety.py::ThreeStoryCostPilotSafetyTests::test_is_manual_visual_only_and_cannot_publish`
+- `tests/test_three_story_cost_pilot_safety.py::ThreeStoryCostPilotSafetyTests::test_repairs_only_riyadh_and_sama`
+- `tests/test_three_story_cost_pilot_safety.py::ThreeStoryCostPilotSafetyTests::test_story_failures_make_the_job_fail_after_artifact_upload`
+- `tests/test_three_story_cost_pilot_safety.py::ThreeStoryCostPilotSafetyTests::test_uses_current_repair_branch_and_can_persist_guarded_state`
+- `tests/test_topic_recovery_handoff.py::TopicRecoveryHandoffTests::test_exact_recovery_bypasses_schedule_only_after_delivery_dedupe`
+- `tests/test_topic_recovery_handoff.py::TopicRecoveryHandoffTests::test_workflow_bounds_topic_research_for_the_shared_daily_cap`
+- `tests/test_topic_recovery_handoff.py::TopicRecoveryHandoffTests::test_workflow_cancels_stale_overlap_and_reads_current_main_state`
+- `tests/test_topic_recovery_handoff.py::TopicRecoveryHandoffTests::test_workflow_requires_actual_telegram_confirmation`
+- `tests/test_topic_snapchat.py::TopicSnapchatRuntimeTests::test_topic_workflow_has_no_image_source_choice_and_forces_auto`
+- `tests/test_topic_workflow_image_policy.py::TopicWorkflowImagePolicyTests::test_topic_brief_prioritizes_relevant_curated_artifacts_over_reuse_rest`
