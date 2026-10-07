@@ -1,0 +1,11 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "content_identity": "8b1b68757f92e05c919afeac533214ec3dce70e7b2e2dcb36796a3ff6a59f972",
+  "delivery_key": "owner-reorder-20261007-133300-8b1b68757f92e05c919afeac533214ec3dce70e7b2e2dcb36796a3ff6a59f972",
+  "not_before": "2026-10-07T10:33:00Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "reason": "Explicit owner approval to repeat identical card2 after new card1 to repair story order, not a retry of an ambiguous delivery.",
+  "owner_authorization": "Assistant offered republishing exact corrected second card after new first card, with owner deleting earlier copies; Khalid replied تمام at 13:33 Riyadh 7 Oct 2026.",
+  "delete_old": false
+}
