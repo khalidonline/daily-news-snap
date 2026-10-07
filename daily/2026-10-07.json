@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "day": "2026-10-07",
+  "limit_micro_usd": 3000000,
+  "entries": {
+    "reconciliation-actions-20261007": {
+      "status": "settled",
+      "bot": "audit:approved-file-delivery",
+      "charged_micro_usd": 0,
+      "reserved_micro_usd": 0,
+      "paid_model_requests": 0,
+      "paid_image_generation_requests": 0,
+      "evidence_run_ids": [
+        37639930207,
+        37639667146,
+        37639620270,
+        37608399638,
+        37607802558,
+        37607108456,
+        37598441586,
+        37598390902,
+        37593668992,
+        37586567768,
+        37585247442,
+        37585218694,
+        37584003845,
+        37583970415,
+        37532597571,
+        37531028543
+      ]
+    }
+  },
+  "reconciliation": {
+    "method": "Reviewed complete Riyadh-day Actions inventory, workflow definitions, delivered-file publishing/archive scripts and execution logs; no paid-model/image credentials or production steps in audited runs.",
+    "scope": "daily-news-snap variable paid model and image API requests. Excludes subscription fees and ChatGPT account billing; not a provider-wide invoice statement.",
+    "start_utc": "2026-10-06T21:00:00Z",
+    "reviewed_main": "3875ba51703fb6ea12aaf0f8490f344d0d126a69",
+    "audited_run_count": 16,
+    "all_audited_runs_completed": true,
+    "run_evidence": [
+      {
+        "id": 37639930207,
+        "sha": "6bcc3799387cb9a4360a56d6294d5a5fd9541283",
+        "path": ".github/workflows/messi-approved-once.yml",
+        "conclusion": "failure"
+      },
+      {
+        "id": 37639667146,
+        "sha": "7b1f014a495c7d00b217c3f715ea2ff3b2909da2",
+        "path": ".github/workflows/messi-approved-once.yml",
+        "conclusion": "failure"
+      },
+      {
+        "id": 37639620270,
+        "sha": "9be5f741851487e3f1849636e2330ef02d50b519",
+        "path": ".github/workflows/publishing-v2-tests.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37608399638,
+        "sha": "a8a6eb6b9e232b3ab5ed84ee3896b13b8d653622",
+        "path": ".github/workflows/nvidia-order-repair-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37607802558,
+        "sha": "fed98e079483615e6129b09de02f2d93af63d209",
+        "path": ".github/workflows/publish-nvidia-card1-sega-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37607108456,
+        "sha": "7ecead7a4de8342a6a4623b52e475d84f8cfbb1c",
+        "path": ".github/workflows/publish-nvidia-card2-correction-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37598441586,
+        "sha": "ff5c9ab22fe741ceeee1a7d40fdd0d7a0bda95b7",
+        "path": ".github/workflows/publish-nvidia-approved-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37598390902,
+        "sha": "3471057f662aaa024d91d9af42bf2b739e5c38c2",
+        "path": ".github/workflows/publishing-v2-tests.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37593668992,
+        "sha": "508f4607bd56aec15bbe9ac71b7643908a7d7eed",
+        "path": ".github/workflows/publish-radar-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37586567768,
+        "sha": "07789b4519fb12746e68a3ed33aeffbe9917dd05",
+        "path": ".github/workflows/publish-challenge-icon-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37585247442,
+        "sha": "731962d53779bfa9f0f2fea7cb45e5e55deba2b5",
+        "path": ".github/workflows/publish-challenge-clean-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37585218694,
+        "sha": "4778407d46f7ae50c3bb6fde894476b9e4e342f5",
+        "path": ".github/workflows/publishing-v2-tests.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37584003845,
+        "sha": "4c78bcca150548ec101e8f706c2f8230ae45a7cf",
+        "path": ".github/workflows/publish-gulf-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37583970415,
+        "sha": "c9fb7a722abc32ef5b840b4092e6ad3c400498c8",
+        "path": ".github/workflows/publishing-v2-tests.yml",
+        "conclusion": "cancelled"
+      },
+      {
+        "id": 37532597571,
+        "sha": "bc39fc9036bd8680ed4e37985d3e953121465b09",
+        "path": ".github/workflows/save-bab-20261007.yml",
+        "conclusion": "success"
+      },
+      {
+        "id": 37531028543,
+        "sha": "d74b55e7bc7728564e7555ee7d33041300626609",
+        "path": ".github/workflows/archive-daily-20261006.yml",
+        "conclusion": "success"
+      }
+    ],
+    "reason_missing": "Ledger normally initialized by first paid request; audited workflows were publishing, archiving and offline checks only.",
+    "authorization": "Khalid requested completing cost reconciliation and approved Messi publication; continuation 2026-10-07 20:24 Riyadh.",
+    "must_preserve_existing_entries": true
+  }
+}
