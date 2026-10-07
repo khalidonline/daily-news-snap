@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.event.head_commit.message == 'Run Messi owner approval 20261007-174228'
+    if: github.event.head_commit.message == 'Run Messi owner approval 20261007-174228-checked'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -22,7 +22,7 @@ jobs:
       - run: pip install -r requirements.txt -r requirements-v2-images.txt
       - name: Offline publisher and readability checks
         run: |
-          python -m unittest discover -s tests -p 'test_bundle_api.py' -q
+          python -m unittest discover -s tests -p 'test_v2_bundle.py' -q
           python -m unittest discover -s tests -p 'test_v2_readability.py' -q
           python -m unittest discover -s tests -p 'test_v2_primary_images.py' -q
       - name: Validate quota ledger and publish exact approved files
