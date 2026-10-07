@@ -1,0 +1,32 @@
+name: Publish Gulf Cup information and challenge
+on:
+  push:
+    paths: ['.github/workflows/publish-gulf-20261007.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Run Khalid approved Gulf info challenge 20261007-0939'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c9fb7a722abc32ef5b840b4092e6ad3c400498c8
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt -r requirements-v2-images.txt pytest
+      - name: Offline protection tests
+        run: python -m pytest -q tests/test_v2_bundle.py tests/test_v2_bundle_group.py tests/test_v2_readability.py tests/test_v2_primary_images.py tests/test_v2_publication_selection.py
+      - name: Validate quota and publish sealed cards
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: c9fb7a722abc32ef5b840b4092e6ad3c400498c8
+          PYTHONPATH: .
+        run: python approved/gulf-info-20261007/publish-approved.py
