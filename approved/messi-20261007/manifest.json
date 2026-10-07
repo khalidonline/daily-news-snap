@@ -1,0 +1,45 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ميسي… من الطرد إلى كأس العالم",
+  "not_before": "2026-10-07T14:42:28Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicitly authorized publication after seeing these exact two JPGs: انشر, 2026-10-07 17:42:28 Riyadh. No re-rendering. First photo explicitly captioned archival; second Qatar 2022. Existing owner editorial photo-use authorization applies only to the two reviewed source/image pairs.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/messi-20261007/card-00.jpg",
+      "sha256": "ce6b33d5e9621e35af73111eabbf8e702e895bc6202b801a38db677df9aa9358",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://www.ligaolahraga.com/bola/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi",
+        "original_url": "https://img.ligaolahraga.com/public/images/news/2026/09/16/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi.webp",
+        "download_url": "https://img.ligaolahraga.com/public/images/news/2026/09/16/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi.webp",
+        "asset_id": "primary:65e11dd0e3c59441d51ecaab",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      }
+    },
+    {
+      "kind": "info",
+      "path": "approved/messi-20261007/card-01.jpg",
+      "sha256": "6f7d2d8ad4771e8ec31b3c0ed566a05d2cd3398fca11a0260da07ebd1c9392ac",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://www.gzeromedia.com/what-were-watching-argentine-soccer-ecstasy-chinese-covid-cover-up-brits-on-strike",
+        "original_url": "https://www.gzeromedia.com/media-library/less-than-p-greater-than-argentinas-leo-messi-lifts-the-world-cup-trophy-alongside-teammates-in-qatar-less-than-p-greater-than.jpg?id=32361360",
+        "download_url": "https://www.gzeromedia.com/media-library/less-than-p-greater-than-argentinas-leo-messi-lifts-the-world-cup-trophy-alongside-teammates-in-qatar-less-than-p-greater-than.jpg?id=32361360",
+        "asset_id": "primary:52407872a60ad5ac07d11bf4",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      }
+    }
+  ]
+}

@@ -20,6 +20,10 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Two exact photos visually reviewed and approved by Khalid, 7 October 2026.
+    ('https://www.ligaolahraga.com/bola/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi', 'https://img.ligaolahraga.com/public/images/news/2026/09/16/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi.webp'),
+    ('https://www.gzeromedia.com/what-were-watching-argentine-soccer-ecstasy-chinese-covid-cover-up-brits-on-strike', 'https://www.gzeromedia.com/media-library/less-than-p-greater-than-argentinas-leo-messi-lifts-the-world-cup-trophy-alongside-teammates-in-qatar-less-than-p-greater-than.jpg?id=32361360'),
+
     # Exact Saudi team archival photograph and crest visually reviewed for Khalid's
     # authorized information + visual challenge, 7 October 2026. No site-wide grant.
     ('https://ajel.sa/sports/tyyrjrp56', 'https://cdn.ajel.sa/articles/2026-10/Capture-crop-bOIx_dWv.png'),
