@@ -1,0 +1,12 @@
+{
+  "status": "DRAFT_NOT_PUBLISHED",
+  "style": "Precise schematic diagrams, not real-event photographs or operational schematics",
+  "scope": "General radar and missile-warning principles; no Riyadh event reference",
+  "sources": [
+    "https://www.weather.gov/bmx/radar_aboutnwsradar_howdoesitwork",
+    "https://www.weather.gov/media/epz/mesonet/CWOP-WMO8.pdf",
+    "https://www.spaceforce.mil/about-us/fact-sheets/article/2197746/space-based-infrared-system/",
+    "https://www.mda.mil/system/thaad.html"
+  ],
+  "paid_model_requests": 0
+}
