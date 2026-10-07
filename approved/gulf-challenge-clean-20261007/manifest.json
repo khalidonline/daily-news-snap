@@ -1,0 +1,30 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أمس الكأس للأخضر… واليوم التحدّي لك",
+  "not_before": "2026-10-07T06:59:00Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicitly approved removing the sharing strip and republishing the corrected challenge on 2026-10-07. Owner will delete the prior card himself; deletion is not confirmed.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/gulf-challenge-clean-20261007/card-00.jpg",
+      "sha256": "86a6263f183ac38208dedb05d6ef50feb9443cd948095e84e73fb872acbf85c9",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://en.wikipedia.org/wiki/File:Saudi_Arabia_national_football_team_logo.svg",
+        "original_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+        "download_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+        "asset_id": "primary:b03b2bf7e16e537bde955cb0",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "d2066b50e3e4e666c56e2b38224b706391d34b7f8db47fd2f72fa5b03af9de17"
+      }
+    }
+  ],
+  "replaces_identity": "8d5dc76c64a0bc7d37553c8f9ebfb03893749ce5d380445bd08d31efc74f8c51"
+}

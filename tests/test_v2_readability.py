@@ -24,6 +24,20 @@ class ReadabilityTests(unittest.TestCase):
         path.write_text(json.dumps(self.report))
         validate_readability(path, self.media)
     def test_valid_card(self): self.check()
+    def test_challenge_uses_one_closing_without_information_cta(self):
+        card = self.report['cards'][0]
+        card['layout'] = 'visual_challenge'
+        del card['cta']
+        card['closing'] = {'text': 'لقيته؟ خلّ خويك يجرّب', 'size': 43, 'box': [82, 1510, 992, 1570]}
+        self.check()
+    def test_information_still_requires_cta(self):
+        del self.report['cards'][0]['cta']
+        with self.assertRaises(ReadabilityError): self.check()
+    def test_challenge_rejects_duplicate_cta(self):
+        card = self.report['cards'][0]
+        card['layout'] = 'visual_challenge'
+        card['closing'] = {'text': 'لقيته؟ خلّ خويك يجرّب', 'size': 43, 'box': [82, 1510, 992, 1570]}
+        with self.assertRaises(ReadabilityError): self.check()
     def test_reject_small_body_and_cta(self):
         for section, size in [('bullets', 45), ('cta', 32)]:
             with self.subTest(section=section):

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "visual_review": {
+    "approved": true,
+    "reference": "Actual corrected 540x960 preview inspected 2026-10-07: original grid and type retained, pink sharing strip absent, single closing unobstructed."
+  },
+  "cards": [
+    {
+      "sha256": "86a6263f183ac38208dedb05d6ef50feb9443cd948095e84e73fb872acbf85c9",
+      "headline": {
+        "text": "أمس الكأس للأخضر… واليوم التحدّي لك",
+        "size": 52,
+        "box": [
+          82,
+          305,
+          992,
+          378
+        ]
+      },
+      "bullets": [
+        {
+          "text": "شعار واحد مختلف… وينه؟",
+          "size": 51,
+          "box": [
+            82,
+            406,
+            992,
+            478
+          ]
+        }
+      ],
+      "layout": "visual_challenge",
+      "closing": {
+        "text": "لقيته؟ خلّ خويك يجرّب",
+        "size": 43,
+        "box": [
+          82,
+          1510,
+          992,
+          1570
+        ]
+      }
+    }
+  ]
+}

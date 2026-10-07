@@ -72,8 +72,15 @@ def validate_readability(report_path, media):
         if not isinstance(bullets, list) or not 1 <= len(bullets) <= 3: fail('expected one to three bullets')
         boxes = [measure(card.get('headline'), minimum=48, maximum_lines=1, bold=True)]
         boxes += [measure(b, minimum=48, maximum_lines=2, bold=False) for b in bullets]
-        if not isinstance(card.get('cta'), dict) or card['cta'].get('text') != CTA: fail('use approved sharing text')
-        boxes.append(measure(card.get('cta'), minimum=38, maximum_lines=2, bold=True))
+        layout = card.get('layout', 'information')
+        if layout == 'visual_challenge':
+            if 'cta' in card: fail('challenge must not duplicate its closing with an information CTA')
+            boxes.append(measure(card.get('closing'), minimum=38, maximum_lines=2, bold=True))
+        elif layout == 'information':
+            if not isinstance(card.get('cta'), dict) or card['cta'].get('text') != CTA: fail('use approved sharing text')
+            boxes.append(measure(card.get('cta'), minimum=38, maximum_lines=2, bold=True))
+        else:
+            fail('unsupported card layout')
         for i, a in enumerate(boxes):
             for b in boxes[i + 1:]:
                 if max(a[0], b[0]) < min(a[2], b[2]) and max(a[1], b[1]) < min(a[3], b[3]):

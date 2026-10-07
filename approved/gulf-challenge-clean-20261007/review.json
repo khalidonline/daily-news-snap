@@ -1,0 +1,11 @@
+{
+  "request": "Remove sharing strip; republish challenge only. Owner deletes current card.",
+  "previous_identity": "8d5dc76c64a0bc7d37553c8f9ebfb03893749ce5d380445bd08d31efc74f8c51",
+  "identity": "92c126a1a4cbbf0416c860d0a0b5a49e21be8795e2c440acb19b5bf4feb24d2b",
+  "paid_model_requests": 0,
+  "visual_review": {
+    "approved": true,
+    "reference": "Actual corrected 540x960 preview inspected 2026-10-07: original grid and type retained, pink sharing strip absent, single closing unobstructed."
+  },
+  "tests": "43 passed, 6 subtests passed"
+}
