@@ -1,0 +1,33 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "إنفيديا — البطاقة الثانية المعدلة",
+  "not_before": "2026-10-07T10:21:36Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid reviewed this exact revised card and on 2026-10-07 13:21:36 Riyadh authorized: تمام انشرها وانا ابحذف القديمه. Publish only revised card 2. Owner handles deletion of previous card; no deletion is claimed or required before this explicit replacement.",
+  "replaces": {
+    "identity": "5e63a9e4f8edc7d3e71de8575429d6e46380cc2efc5a42ca992c74614010d6bc",
+    "card": 2,
+    "old_post_id": "c66668bc-56d5-44c5-97cf-99b56d6a7b5c",
+    "deletion_status": "OWNER_WILL_DELETE_NOT_CONFIRMED"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/nvidia-card2-corrected-20261007/card-01.jpg",
+      "sha256": "f5cddd97177e51411676e0d51cddad989b46763d89600983d1b132a50b9209fc",
+      "image": {
+        "source_url": "https://commons.wikimedia.org/wiki/File:RIVA_128_GPU.jpg",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/8/85/RIVA_128_GPU.jpg",
+        "author": "Hyins",
+        "license": "Public domain",
+        "attribution_required": false,
+        "description": "Actual RIVA 128 chip; photographer released worldwide with no conditions. Photo cropped/resized.",
+        "provider": "commons",
+        "asset_id": "RIVA_128_GPU",
+        "restrictions": ""
+      }
+    }
+  ]
+}

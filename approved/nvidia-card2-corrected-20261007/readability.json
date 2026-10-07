@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "visual_review": {
+    "approved": true,
+    "reference": "Owner reviewed exact revised image. Same 53px headline, 48px body and 38px CTA; only public-domain RIVA photo, caption and footer badge changed. Image inspected at 540x960 and body regions verified unchanged."
+  },
+  "cards": [
+    {
+      "headline": {
+        "text": "من كروت الشاشة للذكاء الاصطناعي",
+        "size": 53,
+        "box": [
+          82,
+          320,
+          998,
+          396
+        ]
+      },
+      "bullets": [
+        {
+          "text": "غيّروا خطتهم لكروت شاشة تسرّع ألعاب\nالكمبيوتر ثلاثية الأبعاد.",
+          "size": 48,
+          "box": [
+            82,
+            1010,
+            965,
+            1140
+          ]
+        },
+        {
+          "text": "في ١٩٩٧ أطلقوا RIVA 128؛ شحنوا أكثر من\nمليون وحدة خلال أول ٤ شهور.",
+          "size": 48,
+          "box": [
+            82,
+            1176,
+            965,
+            1306
+          ]
+        },
+        {
+          "text": "في ٢٠٠٦ فتحوا قوة كروتهم للأبحاث؛ ومنها\nوصلوا لتدريب الذكاء الاصطناعي.",
+          "size": 48,
+          "box": [
+            82,
+            1342,
+            965,
+            1472
+          ]
+        }
+      ],
+      "cta": {
+        "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة",
+        "size": 38,
+        "box": [
+          82,
+          1654,
+          865,
+          1760
+        ]
+      },
+      "sha256": "f5cddd97177e51411676e0d51cddad989b46763d89600983d1b132a50b9209fc"
+    }
+  ]
+}
