@@ -1,0 +1,41 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ليش يرفعون الفائدة إذا غلت الأسعار؟",
+  "not_before": "2026-10-08T08:36:04Z",
+  "expires_at": "2026-10-08T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicitly approved the clarified car-loan explanation and instructed publication on 2026-10-08 at 11:36:04 Riyadh. Two-card layout preserves approved example, causal explanation, 1980/1983 comparison and economic tradeoff at readable 48px type. Postal package not included.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/interest-20261008/card-00.jpg",
+      "sha256": "08c39381a44d8a3d26110d688087db893ab38b04e3690c6b34cb58596efa69a4",
+      "image": {
+        "provider": "commons",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Eccles_Building_(26088200676).jpg",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Eccles_Building_%2826088200676%29.jpg",
+        "asset_id": "https://commons.wikimedia.org/wiki/File:Eccles_Building_(26088200676).jpg",
+        "sha256": "9daa459a37b2edae6159f9f4d98b7a2b91ef3d5e0cbd25b9fe85fb556f174a62",
+        "license": "Public domain",
+        "attribution_required": false,
+        "licensing_verified": true
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/interest-20261008/card-01.jpg",
+      "sha256": "95f8580a947da3ff396970dd0f139923560ec92c3e93a81d492fc90dc6476a5d",
+      "image": {
+        "provider": "commons",
+        "source_url": "https://commons.wikimedia.org/wiki/File:President_Ronald_Reagan_and_Paul_Volcker.jpg",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/e/e2/President_Ronald_Reagan_Paul_Volcker_Meeting_to_Discuss_Monetary_Policy_with_Paul_Volker_in_Oval_Office_-_DPLA_-_e04117f4897610a724c267cdf855ce73.jpg",
+        "asset_id": "https://commons.wikimedia.org/wiki/File:President_Ronald_Reagan_and_Paul_Volcker.jpg",
+        "sha256": "924d8abefc689d505d9e2dba5b1a7a8cb538250cfcc51dbf639b1d41938d981c",
+        "license": "Public domain",
+        "attribution_required": false,
+        "licensing_verified": true
+      }
+    }
+  ]
+}
