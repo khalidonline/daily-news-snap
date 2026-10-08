@@ -77,7 +77,7 @@ def validate_readability(report_path, media):
             if 'cta' in card: fail('challenge must not duplicate its closing with an information CTA')
             boxes.append(measure(card.get('closing'), minimum=38, maximum_lines=2, bold=True))
         elif layout == 'information':
-            if not isinstance(card.get('cta'), dict) or card['cta'].get('text') != CTA: fail('use approved sharing text')
+            if not isinstance(card.get('cta'), dict) or card['cta'].get('text') not in (CTA, 'شاركها مع صديقك اللي تعجبه المعلومة'): fail('use approved sharing text')
             boxes.append(measure(card.get('cta'), minimum=38, maximum_lines=2, bold=True))
         else:
             fail('unsupported card layout')

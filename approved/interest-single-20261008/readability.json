@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "visual_review": {
+    "approved": true,
+    "reference": "Actual 540x960 preview inspected: 48px body, single-line 53px headline and 38px CTA, two explained points, no overlap. 2026-10-08."
+  },
+  "cards": [
+    {
+      "sha256": "0b2b340fbb8f17d1f718ec18474e6a59c2e637563d80fd2faf45aec365bdc21a",
+      "headline": {
+        "text": "ليش يرفعون الفائدة إذا غلت الأسعار؟",
+        "size": 53,
+        "box": [
+          82,
+          320,
+          998,
+          396
+        ]
+      },
+      "bullets": [
+        {
+          "text": "لو ناوي تشتري سيارة بالتقسيط، التمويل\nالأغلى قد يخليك تأجل الشراء.",
+          "size": 48,
+          "box": [
+            82,
+            1100,
+            998,
+            1290
+          ]
+        },
+        {
+          "text": "وإذا أجّل ناس وشركات كثيرة مشترياتهم،\nيخف الطلب ويصير رفع الأسعار أصعب.",
+          "size": 48,
+          "box": [
+            82,
+            1345,
+            998,
+            1535
+          ]
+        }
+      ],
+      "cta": {
+        "text": "شاركها مع صديقك اللي تعجبه المعلومة",
+        "size": 38,
+        "box": [
+          82,
+          1736,
+          887,
+          1810
+        ]
+      }
+    }
+  ]
+}
