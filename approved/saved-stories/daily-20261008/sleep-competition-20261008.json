@@ -16,7 +16,7 @@
   "sources": [
     {
       "manifest": "approved/sleep-competition-20261008/manifest.json",
-      "manifest_sha256": "624d994215efc5845c4f2d62c02981fc1cb128c7efe957ffdeb2f42ef0d92e13",
+      "manifest_sha256": "a6b8a59f75565207c5834a08a56ae387a94a1170b7d32d135323ccf86cfd7e7f",
       "identity": "34b9492f71fa6074e34edfd2c08a0d81838edbdf496153b7256964d0430a9cd7",
       "receipt_key": "34b9492f71fa6074e34edfd2c08a0d81838edbdf496153b7256964d0430a9cd7",
       "media_sha256": [
