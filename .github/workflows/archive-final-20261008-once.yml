@@ -10,13 +10,13 @@ concurrency:
   cancel-in-progress: false
 jobs:
   archive:
-    if: github.event.head_commit.message == 'Run authorized final archive batch 20261008 only'
+    if: github.event.head_commit.message == 'Retry authorized archive with exact manifest hashes 20261008'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 2456a52914368c541227b62181ac3a54637b9c58
+          ref: 66f2b00ea00e9b5bfed6de13495b4e2bf81eb591
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
