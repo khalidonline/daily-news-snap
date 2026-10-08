@@ -20,6 +20,8 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact photo in owner-approved v4, 8 October 2026; no site-wide license grant.
+    ('https://www.afp.com/en/ready-set-snooze-sleep-deprived-japanese-compete-best-rested', 'https://www.afp.com/sites/default/files/afp-stories/7ae793b177f9f3aac1268680f48f1fbd-0-hi.jpg'),
     # Two exact photos visually reviewed and approved by Khalid, 7 October 2026.
     ('https://www.ligaolahraga.com/bola/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi', 'https://img.ligaolahraga.com/public/images/news/2026/09/16/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi.webp'),
     ('https://www.gzeromedia.com/what-were-watching-argentine-soccer-ecstasy-chinese-covid-cover-up-brits-on-strike', 'https://www.gzeromedia.com/media-library/less-than-p-greater-than-argentinas-leo-messi-lifts-the-world-cup-trophy-alongside-teammates-in-qatar-less-than-p-greater-than.jpg?id=32361360'),

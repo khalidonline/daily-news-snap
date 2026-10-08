@@ -62,6 +62,9 @@ def validate_readability(report_path, media):
         fail('mobile visual review required')
     cards = report.get('cards')
     if not isinstance(cards, list) or len(cards) != len(media): fail('card count mismatch')
+    profile = report.get('typography_profile', 'legacy')
+    if profile not in ('legacy', 'owner-bold40-20261008'): fail('unsupported typography profile')
+    bold40 = profile == 'owner-bold40-20261008'
     for card, (_, content) in zip(cards, media):
         if not isinstance(card, dict) or card.get('sha256') != hashlib.sha256(content).hexdigest():
             fail('image changed after readability review')
@@ -69,16 +72,19 @@ def validate_readability(report_path, media):
             if image.size != (1080, 1920): fail('measurements require 1080x1920 images')
             image.verify()
         bullets = card.get('bullets')
-        if not isinstance(bullets, list) or not 1 <= len(bullets) <= 3: fail('expected one to three bullets')
-        boxes = [measure(card.get('headline'), minimum=48, maximum_lines=1, bold=True)]
-        boxes += [measure(b, minimum=48, maximum_lines=2, bold=False) for b in bullets]
+        if not isinstance(bullets, list) or not 1 <= len(bullets) <= (4 if bold40 else 3): fail('expected one to three bullets')
+        boxes = [measure(card.get('headline'), minimum=40 if bold40 else 48, maximum_lines=1, bold=True)]
+        boxes += [measure(b, minimum=40 if bold40 else 48, maximum_lines=2, bold=bold40) for b in bullets]
+        if bold40:
+            boxes.append(measure(card.get('intro'), minimum=40, maximum_lines=2, bold=True))
+            boxes.append(measure(card.get('closing'), minimum=40, maximum_lines=2, bold=True))
         layout = card.get('layout', 'information')
         if layout == 'visual_challenge':
             if 'cta' in card: fail('challenge must not duplicate its closing with an information CTA')
             boxes.append(measure(card.get('closing'), minimum=38, maximum_lines=2, bold=True))
         elif layout == 'information':
             if not isinstance(card.get('cta'), dict) or card['cta'].get('text') not in (CTA, 'شاركها مع صديقك اللي تعجبه المعلومة'): fail('use approved sharing text')
-            boxes.append(measure(card.get('cta'), minimum=38, maximum_lines=2, bold=True))
+            boxes.append(measure(card.get('cta'), minimum=40 if bold40 else 38, maximum_lines=1 if bold40 else 2, bold=True))
         else:
             fail('unsupported card layout')
         for i, a in enumerate(boxes):
