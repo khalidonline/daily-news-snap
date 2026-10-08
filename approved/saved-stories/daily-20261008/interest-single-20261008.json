@@ -16,7 +16,7 @@
   "sources": [
     {
       "manifest": "approved/interest-single-20261008/manifest.json",
-      "manifest_sha256": "bc5e7ce4f8a8dacca40c4d238db61f862db92bbfb6495ba6ca83ae629c21bc15",
+      "manifest_sha256": "82205e907a0bdf3bf72fdb0559705753df0af8f0f3921c5e635b6c22abf3c015",
       "identity": "7c8ddd190cb6c7844e19f4cfd575d6ca104946fdcfc3a673022d6ae8d0ca72e1",
       "receipt_key": "7c8ddd190cb6c7844e19f4cfd575d6ca104946fdcfc3a673022d6ae8d0ca72e1",
       "media_sha256": [
