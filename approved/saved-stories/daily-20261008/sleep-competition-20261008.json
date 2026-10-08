@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-08T20:50:00Z",
+  "expires_at": "2026-10-12T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. The 8 October daily archive request grants independent saving approval after receipt and visual reconciliation. No daily repost or deletion authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "visual_review": "Exact repository JPG bytes visually inspected 8 October: one readable public card, correct package title and identity, no sources or PDF.",
+  "package": "sleep-competition-20261008",
+  "title": "خويّك اللي ينام بأي مكان… فاتته البطولة!",
+  "identity": "34b9492f71fa6074e34edfd2c08a0d81838edbdf496153b7256964d0430a9cd7",
+  "media_sha256": [
+    "b374f0d9a58fe80c0afbc7b8997c2614c01ca80bb6c7a440f88626df1d9b1bde"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/sleep-competition-20261008/manifest.json",
+      "manifest_sha256": "624d994215efc5845c4f2d62c02981fc1cb128c7efe957ffdeb2f42ef0d92e13",
+      "identity": "34b9492f71fa6074e34edfd2c08a0d81838edbdf496153b7256964d0430a9cd7",
+      "receipt_key": "34b9492f71fa6074e34edfd2c08a0d81838edbdf496153b7256964d0430a9cd7",
+      "media_sha256": [
+        "b374f0d9a58fe80c0afbc7b8997c2614c01ca80bb6c7a440f88626df1d9b1bde"
+      ]
+    }
+  ],
+  "source_backlog_identity": "34b9492f71fa6074e34edfd2c08a0d81838edbdf496153b7256964d0430a9cd7"
+}
