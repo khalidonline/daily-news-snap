@@ -1,0 +1,35 @@
+name: Publish approved interest explanation
+on:
+  push:
+    paths:
+      - '.github/workflows/interest-approved-once-20261008.yml'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Run authorized interest package 20261008 only'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 7bbbb86392726794a5a7dc0114704747d4446ba4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow
+      - name: Test existing publication safeguards
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle.py'
+          python -m unittest discover -s tests -p 'test_v2_readability.py'
+      - name: Verify quota and deliver approved immutable cards
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: 7bbbb86392726794a5a7dc0114704747d4446ba4
+          PYTHONPATH: .
+        run: python approved/interest-20261008/publish-approved.py
