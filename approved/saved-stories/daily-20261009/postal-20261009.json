@@ -16,7 +16,7 @@
   "sources": [
     {
       "manifest": "approved/postal-20261009/manifest.json",
-      "manifest_sha256": "2c8d9c61ab0a4f60ed48de72f8e39194cba048cd78f1f65d6a706caa96e8ef43",
+      "manifest_sha256": "ddec08c2e659e1748061011f69116b13d4d65d83f2a8ac131a2d71819401cb00",
       "identity": "80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447",
       "receipt_key": "80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447",
       "media_sha256": [
