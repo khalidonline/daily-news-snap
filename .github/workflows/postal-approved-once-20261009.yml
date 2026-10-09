@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.event.head_commit.message == 'Retry documented postal post 20261009 once'
+    if: github.event.head_commit.message == 'Reconcile postal final result 20261009'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -35,25 +35,15 @@ jobs:
           PYTHONPATH: .
         run: |
           python - <<'PY'
-          import json,time,urllib.request,runpy
+          import json,runpy
           from datetime import datetime,timezone
           from publishing_v2.bundle_api import BundleClient,GitHubJournal
-          # POST /post/{id}/retry with {} verified in official current Python guide:
-          # https://bundle.social/blog/social-media-api-python-guide
-          c=BundleClient();c.check();print('QUOTA',json.dumps(c.ensure_capacity(3)))
+          c=BundleClient();c.check()
           j=GitHubJournal('80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447')
-          state=j.read();row=state['1'];assert row['post_id']=='89ab59ea-79cc-452f-9c73-d32f62e34ed9'
-          r=c.call('/post/'+row['post_id']);assert r['teamId']==c.team
-          if r['status']!='POSTED':
-           assert r['status']=='ERROR' and not r.get('externalData')
-           assert r.get('errors',{}).get('SNAPCHAT')=='Could not upload Snapchat media'
-           assert r['data']['SNAPCHAT']=={'type':'STORY','uploadIds':[row['upload_id']],'storyDuration':'ONE_WEEK'}
-           assert not row.get('retry_intent'), 'Reconcile prior retry without retrying again'
-           assert datetime.now(timezone.utc)<datetime.fromisoformat('2026-10-09T20:59:59+00:00')
-           row['provider_error']=r['errors'];row['retry_intent']={'at':datetime.now(timezone.utc).isoformat(),'operation':'retry_existing_post','previous_status':'ERROR','externalData':{}}
-           j.save(state)
-           result=c.call('/post/'+row['post_id']+'/retry','POST',b'{}')
-           row['retry_accepted']=True;j.save(state)
-           print('EXISTING_POST_RETRY_ACCEPTED',row['post_id']);time.sleep(10)
-          runpy.run_path('approved/postal-20261009/publish-approved.py',run_name='__main__')
+          s=j.read();r=c.call('/post/'+s['1']['post_id'])
+          assert r['teamId']==c.team
+          print('FINAL_PROVIDER',json.dumps({k:r.get(k) for k in ['id','status','errors','externalData','data','deletedAt']}))
+          s['1']['last_reconciliation']={'at':datetime.now(timezone.utc).isoformat(),'status':r['status'],'errors':r.get('errors'),'externalData':r.get('externalData')}
+          j.save(s)
+          if r['status']=='POSTED': runpy.run_path('approved/postal-20261009/publish-approved.py',run_name='__main__')
           PY
