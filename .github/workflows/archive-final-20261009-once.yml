@@ -10,13 +10,13 @@ concurrency:
   cancel-in-progress: false
 jobs:
   archive:
-    if: github.event.head_commit.message == 'Run authorized final archive batch 20261009 only'
+    if: github.event.head_commit.message == 'Diagnose guarded final archive batch 20261009 only'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 5b7d4778253ff7f8b52975ee89894727de4bc193
+          ref: 95cd30e7bb10e30cf73ef7570d4e893f40903d21
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -33,3 +33,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHONPATH: .
         run: python approved/saved-stories/daily-20261009/save_batch.py
+
