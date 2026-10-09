@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-09T20:50:00Z",
+  "expires_at": "2026-10-13T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. The 9 October daily archive run grants independent saving approval after receipt, live-state, inventory, and visual reconciliation. No daily repost, deletion, redesign, upload, or duration change authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "visual_review": "Exact repository JPG bytes visually inspected 9 October at 1080x1920: readable one-card public package with correct title and identity, no sources or PDF.",
+  "package": "shopping-cart-20261009",
+  "title": "عربة المقاضي… بدايتها زباين بالتمثيل!",
+  "identity": "af6184aaed72a740f12eb24639c111a07524683f50afb96e1c3c229d71d88fcd",
+  "media_sha256": [
+    "bb415f5980ba0548c9c131d2eb2265f0d862be5e3e64e9e0a33fdd7dcb122240"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/shopping-cart-20261009/manifest.json",
+      "manifest_sha256": "4f5ecad4e8d67c7a784538e2530e236ec7a9f9dd34481d766a0a086567cc80c4",
+      "identity": "af6184aaed72a740f12eb24639c111a07524683f50afb96e1c3c229d71d88fcd",
+      "receipt_key": "af6184aaed72a740f12eb24639c111a07524683f50afb96e1c3c229d71d88fcd",
+      "media_sha256": [
+        "bb415f5980ba0548c9c131d2eb2265f0d862be5e3e64e9e0a33fdd7dcb122240"
+      ]
+    }
+  ],
+  "source_backlog_identity": "af6184aaed72a740f12eb24639c111a07524683f50afb96e1c3c229d71d88fcd"
+}
+
