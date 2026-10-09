@@ -1,0 +1,51 @@
+name: Publish approved shopping cart
+on:
+  push:
+    paths:
+      - '.github/workflows/shopping-cart-approved-once-20261009.yml'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Publish approved shopping cart 20261009'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bd4e215bcf8222b5ceed1152360cd21fc7379420
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow
+      - name: Test publication safeguards
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle.py'
+          python -m unittest discover -s tests -p 'test_v2_readability.py'
+          python -m unittest discover -s tests -p 'test_v2_primary_images.py'
+      - name: Publish verified approved card
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: bd4e215bcf8222b5ceed1152360cd21fc7379420
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import runpy,json
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal
+          try:
+           runpy.run_path('approved/shopping-cart-20261009/publish-approved.py',run_name='__main__')
+          finally:
+           j=GitHubJournal('af6184aaed72a740f12eb24639c111a07524683f50afb96e1c3c229d71d88fcd')
+           state=j.read();row=state.get('1',{})
+           if row.get('post_id'):
+            c=BundleClient();live=c.call('/post/'+row['post_id'])
+            report={k:live.get(k) for k in ['id','status','errors','externalData','data']}
+            state['1']['last_reconciliation']={'at':datetime.now(timezone.utc).isoformat(),**report};j.save(state)
+            print('FINAL_PROVIDER',json.dumps(report))
+          PY
