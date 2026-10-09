@@ -1,0 +1,78 @@
+name: Retry approved postal after cart success
+on:
+  push:
+    paths:
+      - '.github/workflows/postal-owner-retry-1712.yml'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Retry approved postal owner request 20261009 1712'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bdae45dd1401d6106dbcf19ceb3bccb8962d9e7b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow
+      - name: Test safeguards
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle.py'
+          python -m unittest discover -s tests -p 'test_v2_readability.py'
+      - name: Reconcile and retry existing approved postal post once
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: bdae45dd1401d6106dbcf19ceb3bccb8962d9e7b
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import json,base64,os,runpy
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package
+          from publishing_v2.readability import validate_readability
+          from daily_budget import GitHubStore,day_key
+          p=Path('approved/postal-20261009/manifest.json');m=json.loads(p.read_text())
+          assert datetime.fromisoformat(m['not_before'])<=datetime.now(timezone.utc)<datetime.fromisoformat(m['expires_at'])
+          for f in m['media']:
+           path=Path(f['path']);path.write_bytes(base64.b64decode(Path(str(path)+'.b64').read_text(),validate=True))
+          identity,title,media=load_package(str(p))
+          assert identity=='80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447'
+          validate_readability(p.parent/'readability.json',media)
+          c=BundleClient();c.check();print('QUOTA',json.dumps(c.ensure_capacity(3)))
+          _,ledger=GitHubStore(os.environ['GITHUB_REPOSITORY'],os.environ['GITHUB_TOKEN']).read(day_key())
+          total=None
+          if ledger is not None:
+           total=sum(e.get('charged_micro_usd',0)+(e.get('reserved_micro_usd',0) if e.get('status')!='settled' else 0) for e in ledger.get('entries',{}).values());assert total<=3000000
+          print('BUDGET',json.dumps({'ledger_present':ledger is not None,'total_micro_usd':total,'new_paid_generation':False}))
+          j=GitHubJournal(identity);state=j.read();row=state['1']
+          assert row['post_id']=='89ab59ea-79cc-452f-9c73-d32f62e34ed9'
+          try:
+           live=c.call('/post/'+row['post_id']);assert live['id']==row['post_id'] and live['teamId']==c.team and not live.get('deletedAt')
+           assert live['data']['SNAPCHAT']=={'type':'STORY','uploadIds':[row['upload_id']],'storyDuration':'ONE_WEEK'}
+           if live['status']=='ERROR':
+            assert not live.get('externalData')
+            assert live.get('errors',{}).get('SNAPCHAT')=='Could not upload Snapchat media'
+            assert not row.get('owner_retry_1712'),'Reconcile existing retry, never repeat'
+            row['owner_retry_1712']={'authorization':'Khalid 2026-10-09T17:12:49+03:00 المفروض اللحين تقدر تنشر البريد','at':datetime.now(timezone.utc).isoformat(),'operation':'retry_existing_post','previous_reconciliation':row.get('last_reconciliation'),'status':'SENDING'}
+            j.save(state)
+            c.call('/post/'+row['post_id']+'/retry','POST',b'{}')
+            row['owner_retry_1712']['accepted']=True;j.save(state)
+            print('EXISTING_POST_RETRY_ACCEPTED',row['post_id'])
+           else:
+            assert live['status'] in ['POSTED','SCHEDULED','PUBLISHING','PROCESSING','PENDING']
+           runpy.run_path('approved/postal-20261009/publish-approved.py',run_name='__main__')
+          finally:
+           live=c.call('/post/'+row['post_id']);state=j.read()
+           report={k:live.get(k) for k in ['id','status','errors','externalData','data']}
+           state['1']['last_reconciliation']={'at':datetime.now(timezone.utc).isoformat(),**report};j.save(state)
+           print('FINAL_PROVIDER',json.dumps(report))
+          PY
