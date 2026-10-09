@@ -1,0 +1,36 @@
+name: Publish approved World Post Day
+on:
+  push:
+    paths:
+      - '.github/workflows/postal-approved-once-20261009.yml'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Run approved postal today 20261009 only'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 13c9cd49e56a8e2a8120db82f8c521318e6d5607
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow
+      - name: Test publication safeguards
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle.py'
+          python -m unittest discover -s tests -p 'test_v2_readability.py'
+          python -m unittest discover -s tests -p 'test_v2_primary_images.py'
+      - name: Verify quota and publish reviewed bytes
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: 13c9cd49e56a8e2a8120db82f8c521318e6d5607
+          PYTHONPATH: .
+        run: python approved/postal-20261009/publish-approved.py
