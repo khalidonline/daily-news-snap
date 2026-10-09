@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-09T20:50:00Z",
+  "expires_at": "2026-10-13T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. The 9 October daily archive run grants independent saving approval after receipt, live-state, inventory, and visual reconciliation. No daily repost, deletion, redesign, upload, or duration change authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "visual_review": "Exact repository JPG bytes visually inspected 9 October at 1080x1920: readable one-card public package with correct title and identity, no sources or PDF.",
+  "package": "ikea-20261009",
+  "title": "راحوا يتقضّون من إيكيا… وناموا عندهم!",
+  "identity": "a150c315e6a5dbe533be0d76941ff0f11b618a7594d31db6302c019fa2860971",
+  "media_sha256": [
+    "8b8e2f260f6b76196a2794d6eacec6ebc0339200369170e2ee98aa19bf2ded44"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/ikea-20261009/manifest.json",
+      "manifest_sha256": "372608673f5fcdfa373a3a583d605636cae35cce020350820cfc303ff18dc00d",
+      "identity": "a150c315e6a5dbe533be0d76941ff0f11b618a7594d31db6302c019fa2860971",
+      "receipt_key": "a150c315e6a5dbe533be0d76941ff0f11b618a7594d31db6302c019fa2860971",
+      "media_sha256": [
+        "8b8e2f260f6b76196a2794d6eacec6ebc0339200369170e2ee98aa19bf2ded44"
+      ]
+    }
+  ],
+  "source_backlog_identity": "a150c315e6a5dbe533be0d76941ff0f11b618a7594d31db6302c019fa2860971"
+}
+
