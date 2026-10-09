@@ -10,13 +10,13 @@ concurrency:
   cancel-in-progress: false
 jobs:
   archive:
-    if: github.event.head_commit.message == 'Diagnose guarded final archive batch 20261009 only'
+    if: github.event.head_commit.message == 'Run corrected final archive batch 20261009 only'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 95cd30e7bb10e30cf73ef7570d4e893f40903d21
+          ref: 6c4f81d6ab693786fff16b1448cac15eb093f0dd
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
