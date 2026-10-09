@@ -16,7 +16,7 @@
   "sources": [
     {
       "manifest": "approved/shopping-cart-20261009/manifest.json",
-      "manifest_sha256": "4f5ecad4e8d67c7a784538e2530e236ec7a9f9dd34481d766a0a086567cc80c4",
+      "manifest_sha256": "78fdf12198a64f2df0910e76764a499f764072086f2db2908e8e732919755ef8",
       "identity": "af6184aaed72a740f12eb24639c111a07524683f50afb96e1c3c229d71d88fcd",
       "receipt_key": "af6184aaed72a740f12eb24639c111a07524683f50afb96e1c3c229d71d88fcd",
       "media_sha256": [
