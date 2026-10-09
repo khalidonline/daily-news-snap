@@ -11,7 +11,7 @@ concurrency:
 jobs:
   probe:
     if: >-
-      github.event.head_commit.message == 'experiment: approved Haiku ten-card probe 20261009' && github.run_attempt == 1
+      github.event.head_commit.message == 'experiment: Haiku ten-card probe low effort 20261009' && github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -60,7 +60,7 @@ jobs:
               prompts=[prompt(c) for c in cases]
               bounds=[maximum(p) for p in prompts]
               assert sum(bounds)<=CAP
-              result={'model':MODEL,'source_commit':os.environ['SOURCE_COMMIT'],'scope':'archived-copy fidelity and Saudi editing; not live fact verification','price_usd_per_million':{'input':.1,'output':.5},'cap_usd':CAP/1e6,'rows':[]}
+              result={'model':MODEL,'source_commit':os.environ['SOURCE_COMMIT'],'settings':{'thinking':'disabled','effort':'low'},'scope':'archived-copy fidelity and Saudi editing; not live fact verification','price_usd_per_million':{'input':.1,'output':.5},'cap_usd':CAP/1e6,'rows':[]}
               key=os.environ.get('ANTHROPIC_API_KEY','').strip()
               if not key:
                   result['status']='missing_anthropic_credentials'
@@ -71,7 +71,7 @@ jobs:
                   charged=0
                   for case,p,bound in zip(cases,prompts,bounds):
                       row={'id':case['id'],'reference':case['reference'],'draft':case['draft'],'expected_duplicate':case['expected_duplicate'],'attempts':1}
-                      payload={'model':MODEL,'max_tokens':MAX_OUTPUT,'messages':[{'role':'user','content':p}]}
+                      payload={'model':MODEL,'max_tokens':MAX_OUTPUT,'thinking':{'type':'disabled'},'output_config':{'effort':'low'},'messages':[{'role':'user','content':p}]}
                       req=urllib.request.Request('https://api.anthropic.com/v1/messages',data=json.dumps(payload).encode(),headers={'x-api-key':key,'anthropic-version':'2023-06-01','Content-Type':'application/json'})
                       started=time.monotonic()
                       known=False
