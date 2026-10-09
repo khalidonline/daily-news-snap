@@ -20,6 +20,8 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact archival photograph reviewed for Khalid's authorized shopping-cart package, 9 Oct 2026.
+    ('https://www.afstores.com/the-intriguing-story-of-how-the-shopping-cart-was-born/', 'https://www.afstores.com/wp-content/uploads/2023/08/Sylvan-Goldman.png'),
     # Exact photo in owner-approved v4, 8 October 2026; no site-wide license grant.
     ('https://www.afp.com/en/ready-set-snooze-sleep-deprived-japanese-compete-best-rested', 'https://www.afp.com/sites/default/files/afp-stories/7ae793b177f9f3aac1268680f48f1fbd-0-hi.jpg'),
     # Two exact photos visually reviewed and approved by Khalid, 7 October 2026.
@@ -201,3 +203,4 @@ class ImageMemory:
     def save(self):
         self.rows=dict(sorted(self.rows.items(),key=lambda item:item[1]['at'],reverse=True)[:300])
         if self.store:self.store.save({'version':1,'images':self.rows})
+
