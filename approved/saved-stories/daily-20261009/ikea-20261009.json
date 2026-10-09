@@ -16,7 +16,7 @@
   "sources": [
     {
       "manifest": "approved/ikea-20261009/manifest.json",
-      "manifest_sha256": "372608673f5fcdfa373a3a583d605636cae35cce020350820cfc303ff18dc00d",
+      "manifest_sha256": "2de0b4641cf9861a13dc5a3a7795014c876f6dbac96d172ba63220b2549e5f22",
       "identity": "a150c315e6a5dbe533be0d76941ff0f11b618a7594d31db6302c019fa2860971",
       "receipt_key": "a150c315e6a5dbe533be0d76941ff0f11b618a7594d31db6302c019fa2860971",
       "media_sha256": [
