@@ -1,1 +1,1 @@
-{"1": {"status": "SENDING", "upload_id": "5d7df33e-f9a3-45e0-aabc-f0452f3e39f0", "post_id": "89ab59ea-79cc-452f-9c73-d32f62e34ed9"}}
+{"1": {"status": "SENDING", "upload_id": "5d7df33e-f9a3-45e0-aabc-f0452f3e39f0", "post_id": "89ab59ea-79cc-452f-9c73-d32f62e34ed9", "provider_error": {"SNAPCHAT": "Could not upload Snapchat media"}, "retry_intent": {"at": "2026-10-09T08:51:33.679042+00:00", "operation": "retry_existing_post", "previous_status": "ERROR", "externalData": {}}}}
