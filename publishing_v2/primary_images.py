@@ -20,6 +20,8 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact IKEA Denmark photograph reviewed and owner-approved, 9 October 2026.
+    ('https://www.foxbusiness.com/lifestyle/ikea-denmark-showroom-snow-storm', 'https://static.foxbusiness.com/foxbusiness.com/content/uploads/2021/12/ikea-1.jpg'),
     # Exact archival photograph reviewed for Khalid's authorized shopping-cart package, 9 Oct 2026.
     ('https://www.afstores.com/the-intriguing-story-of-how-the-shopping-cart-was-born/', 'https://www.afstores.com/wp-content/uploads/2023/08/Sylvan-Goldman.png'),
     # Exact photo in owner-approved v4, 8 October 2026; no site-wide license grant.

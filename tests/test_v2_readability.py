@@ -65,6 +65,24 @@ class ReadabilityTests(unittest.TestCase):
         self.report['visual_review']['approved'] = False
         with self.assertRaises(ReadabilityError): self.check()
 
+class OptionalIntroTests(unittest.TestCase):
+    check = ReadabilityTests.check
+    def setUp(self):
+        ReadabilityTests.setUp(self)
+        self.report['typography_profile'] = 'owner-bold40-20261008'
+        c = self.report['cards'][0]
+        c['cta']['size'] = 40
+        c['cta']['text'] = 'شاركها مع صديقك اللي تعجبه المعلومة'
+        c['closing'] = {'text': 'خاتمة واضحة', 'size': 40, 'box': [82, 1450, 998, 1520]}
+    def test_optional_intro_can_be_absent(self):
+        self.check()
+    def test_present_intro_still_rejects_small_font(self):
+        self.report['cards'][0]['intro'] = {'text': 'مقدمة', 'size': 26, 'box': [82, 600, 998, 660]}
+        with self.assertRaises(ReadabilityError): self.check()
+    def test_present_intro_still_rejects_overlap(self):
+        self.report['cards'][0]['intro'] = {'text': 'مقدمة', 'size': 40, 'box': [82, 950, 998, 1090]}
+        with self.assertRaises(ReadabilityError): self.check()
+
 class DeliveryGateTests(unittest.TestCase):
     def test_empty_receipt_does_not_bypass_gate(self):
         from publishing_v2.readability import require_for_new_delivery

@@ -83,8 +83,10 @@ def validate_readability(report_path, media):
                 '33695a2a82474493d698c80e47006ecee28df16744ac5a3e8ffb7cef75c44bfc'
                 and card.get('intro', {}).get('text') ==
                 'مظروف بريدي وورقة تجريبية لطوابع «بيني بلاك» — ١٨٤٠م')
-            boxes.append(measure(card.get('intro'), minimum=26 if postal_caption else 40,
-                                 maximum_lines=1 if postal_caption else 2, bold=True))
+            # Owner 9 Oct: omit a redundant introduction; validate it when present.
+            if 'intro' in card:
+                boxes.append(measure(card.get('intro'), minimum=26 if postal_caption else 40,
+                                     maximum_lines=1 if postal_caption else 2, bold=True))
             boxes.append(measure(card.get('closing'), minimum=40, maximum_lines=2, bold=True))
         layout = card.get('layout', 'information')
         if layout == 'visual_challenge':
