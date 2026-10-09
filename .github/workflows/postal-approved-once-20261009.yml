@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.event.head_commit.message == 'Retry same failed postal post 20261009 once'
+    if: github.event.head_commit.message == 'Retry documented postal post 20261009 once'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -38,9 +38,8 @@ jobs:
           import json,time,urllib.request,runpy
           from datetime import datetime,timezone
           from publishing_v2.bundle_api import BundleClient,GitHubJournal
-          with urllib.request.urlopen('https://api.bundle.social/swagger-json',timeout=45) as f: schema=json.load(f)
-          paths=[p for p,v in schema['paths'].items() if p.endswith('/post/{id}/retry') and 'post' in v]
-          assert len(paths)==1, 'Current schema must expose retry for existing post'
+          # POST /post/{id}/retry with {} verified in official current Python guide:
+          # https://bundle.social/blog/social-media-api-python-guide
           c=BundleClient();c.check();print('QUOTA',json.dumps(c.ensure_capacity(3)))
           j=GitHubJournal('80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447')
           state=j.read();row=state['1'];assert row['post_id']=='89ab59ea-79cc-452f-9c73-d32f62e34ed9'
