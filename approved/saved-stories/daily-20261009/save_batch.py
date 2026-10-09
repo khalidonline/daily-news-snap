@@ -36,6 +36,10 @@ def prepare(approval, receipts, backlog):
         raise ValueError('source_identity_changed')
     rows=[];hashes=[]
     for s in a['sources']:
+        manifest_raw=Path(s['manifest']).read_bytes()
+        actual_manifest_sha=hashlib.sha256(manifest_raw).hexdigest()
+        if actual_manifest_sha!=s['manifest_sha256']:
+            raise ValueError('source_manifest_binding_changed: actual='+actual_manifest_sha+' expected='+s['manifest_sha256'])
         receipt=receipts[s['receipt_key']]
         if s['receipt_key']!=s['identity']:
             auth=receipt.get('authorization',{})
@@ -50,7 +54,7 @@ def prepare(approval, receipts, backlog):
             _,_,part=validate_archive(child,receipt)
         except (BundleError,KeyError,OSError) as e:
             raise ValueError('source_validation_failed: '+str(e)) from None
-        manifest=json.loads(Path(s['manifest']).read_bytes())
+        manifest=json.loads(manifest_raw)
         actual=[m['sha256'] for m in manifest['media']]
         if actual!=s['media_sha256']: raise ValueError('source_media_binding_changed')
         hashes+=actual;rows+=part
