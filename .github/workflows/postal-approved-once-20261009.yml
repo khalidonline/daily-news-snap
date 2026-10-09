@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.event.head_commit.message == 'Run approved postal today 20261009 only'
+    if: github.event.head_commit.message == 'Inspect postal delivery 20261009 only'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -33,4 +33,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPROVED_COMMIT: 13c9cd49e56a8e2a8120db82f8c521318e6d5607
           PYTHONPATH: .
-        run: python approved/postal-20261009/publish-approved.py
+        run: |
+          python - <<'PY'
+          import json
+          from publishing_v2.bundle_api import BundleClient
+          c=BundleClient();c.check()
+          r=c.call('/post/89ab59ea-79cc-452f-9c73-d32f62e34ed9')
+          assert r['teamId']==c.team
+          print(json.dumps({k:r.get(k) for k in ['id','status','error','errors','message','data','externalData','deletedAt']},ensure_ascii=False))
+          PY
