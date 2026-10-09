@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "اليوم يوم البريد… وكانت الرسالة على حسابك!",
+  "not_before": "2026-10-09T05:00:00Z",
+  "expires_at": "2026-10-09T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved on 2026-10-08 14:58 Riyadh and explicitly renewed publication now on 2026-10-09 11:41:49 Riyadh: انشرها وعدل العنوان من بكره إلى اليوم. Exact previously approved today-title bytes recovered locally and SHA256 verified against original Library v2. No new design.",
+  "library_file_id": "libfile_1709c6371e34819191f1062d9632d125",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/postal-20261009/card-00.jpg",
+      "sha256": "33695a2a82474493d698c80e47006ecee28df16744ac5a3e8ffb7cef75c44bfc",
+      "image": {
+        "provider": "postal_museum",
+        "license": "Public domain",
+        "source_url": "https://www.postalmuseum.org/collections/highlights/the-first-ever-stamp-the-penny-black/",
+        "original_urls": [
+          "https://www.postalmuseum.org/wp-content/uploads/2018/04/penny-black-proof.jpg",
+          "https://www.postalmuseum.org/wp-content/uploads/2018/04/2d-mulready-envelope.jpg"
+        ],
+        "rights_basis": "Faithful reproductions of 1840 postal works; no modern creative additions to the source images.",
+        "attribution_required": false
+      }
+    }
+  ]
+}

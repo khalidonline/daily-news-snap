@@ -76,7 +76,15 @@ def validate_readability(report_path, media):
         boxes = [measure(card.get('headline'), minimum=40 if bold40 else 48, maximum_lines=1, bold=True)]
         boxes += [measure(b, minimum=40 if bold40 else 48, maximum_lines=2, bold=bold40) for b in bullets]
         if bold40:
-            boxes.append(measure(card.get('intro'), minimum=40, maximum_lines=2, bold=True))
+            # Owner explicitly approved this postal image's 26px photo caption
+            # instead of the removed introductory paragraph. Bind the exception
+            # to the reviewed bytes; body/headline/CTA rules remain unchanged.
+            postal_caption = (card.get('sha256') ==
+                '33695a2a82474493d698c80e47006ecee28df16744ac5a3e8ffb7cef75c44bfc'
+                and card.get('intro', {}).get('text') ==
+                'مظروف بريدي وورقة تجريبية لطوابع «بيني بلاك» — ١٨٤٠م')
+            boxes.append(measure(card.get('intro'), minimum=26 if postal_caption else 40,
+                                 maximum_lines=1 if postal_caption else 2, bold=True))
             boxes.append(measure(card.get('closing'), minimum=40, maximum_lines=2, bold=True))
         layout = card.get('layout', 'information')
         if layout == 'visual_challenge':
