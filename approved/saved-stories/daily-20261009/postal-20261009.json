@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-09T20:50:00Z",
+  "expires_at": "2026-10-13T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. The 9 October daily archive run grants independent saving approval after receipt, live-state, inventory, and visual reconciliation. No daily repost, deletion, redesign, upload, or duration change authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "visual_review": "Exact repository JPG bytes visually inspected 9 October at 1080x1920: readable one-card public package with correct title and identity, no sources or PDF.",
+  "package": "postal-20261009",
+  "title": "اليوم يوم البريد… وكانت الرسالة على حسابك!",
+  "identity": "80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447",
+  "media_sha256": [
+    "33695a2a82474493d698c80e47006ecee28df16744ac5a3e8ffb7cef75c44bfc"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/postal-20261009/manifest.json",
+      "manifest_sha256": "2c8d9c61ab0a4f60ed48de72f8e39194cba048cd78f1f65d6a706caa96e8ef43",
+      "identity": "80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447",
+      "receipt_key": "80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447",
+      "media_sha256": [
+        "33695a2a82474493d698c80e47006ecee28df16744ac5a3e8ffb7cef75c44bfc"
+      ]
+    }
+  ],
+  "source_backlog_identity": "80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447"
+}
+
