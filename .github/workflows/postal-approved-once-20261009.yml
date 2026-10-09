@@ -1,0 +1,66 @@
+name: Publish approved World Post Day
+on:
+  push:
+    paths:
+      - '.github/workflows/postal-approved-once-20261009.yml'
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message == 'Retry postal owner request 20261009 1540'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 13c9cd49e56a8e2a8120db82f8c521318e6d5607
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow
+      - name: Test publication safeguards
+        run: |
+          python -m unittest discover -s tests -p 'test_v2_bundle.py'
+          python -m unittest discover -s tests -p 'test_v2_readability.py'
+          python -m unittest discover -s tests -p 'test_v2_primary_images.py'
+      - name: Verify quota and publish reviewed bytes
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: 13c9cd49e56a8e2a8120db82f8c521318e6d5607
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import json,time,urllib.request,runpy
+          from datetime import datetime,timezone
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal
+          # POST /post/{id}/retry with {} verified in official current Python guide:
+          # https://bundle.social/blog/social-media-api-python-guide
+          c=BundleClient();c.check();print('QUOTA',json.dumps(c.ensure_capacity(3)))
+          j=GitHubJournal('80b8e9f4b9dfd1f3fe332d8c13a6c8a71b06ab356beead2757d297336c000447')
+          state=j.read();row=state['1'];assert row['post_id']=='89ab59ea-79cc-452f-9c73-d32f62e34ed9'
+          r=c.call('/post/'+row['post_id']);assert r['teamId']==c.team
+          if r['status']!='POSTED':
+           assert r['status']=='ERROR' and not r.get('externalData')
+           assert r.get('errors',{}).get('SNAPCHAT')=='Could not upload Snapchat media'
+           assert r['data']['SNAPCHAT']=={'type':'STORY','uploadIds':[row['upload_id']],'storyDuration':'ONE_WEEK'}
+           assert not row.get('owner_retry_1540'), 'Reconcile this authorized retry without repetition'
+           row['owner_retry_1540']={'authorization':'Khalid 2026-10-09T15:40:13+03:00 حاول مجددا','previous_reconciliation':row.get('last_reconciliation')}
+           assert datetime.now(timezone.utc)<datetime.fromisoformat('2026-10-09T20:59:59+00:00')
+           row['provider_error']=r['errors'];row['retry_intent']={'at':datetime.now(timezone.utc).isoformat(),'operation':'retry_existing_post','previous_status':'ERROR','externalData':{}}
+           j.save(state)
+           result=c.call('/post/'+row['post_id']+'/retry','POST',b'{}')
+           row['retry_accepted']=True;j.save(state)
+           print('EXISTING_POST_RETRY_ACCEPTED',row['post_id']);time.sleep(10)
+          try:
+           runpy.run_path('approved/postal-20261009/publish-approved.py',run_name='__main__')
+          finally:
+           live=c.call('/post/'+row['post_id']);state=j.read()
+           report={k:live.get(k) for k in ['id','status','errors','externalData','data']}
+           state['1']['last_reconciliation']={'at':datetime.now(timezone.utc).isoformat(),**report};j.save(state)
+           print('FINAL_PROVIDER',json.dumps(report))
+          PY
