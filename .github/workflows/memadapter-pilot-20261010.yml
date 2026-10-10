@@ -11,13 +11,13 @@ concurrency:
 jobs:
   pilot:
     if: >-
-      github.run_attempt == 1 && github.event.head_commit.message == 'experiment: run isolated MemAdapter pilot 20261010'
+      github.run_attempt == 1 && github.event.head_commit.message == 'experiment: diagnose MemAdapter provider 429 once'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: da902bcdcafade1dc3a09429e72ab166cc0073ce
+          ref: 772ec99ab16bec3db6f0ca9198963f40e92ef373
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -26,7 +26,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          bundle=json.loads(Path('docs/experiments/memadapter-20261010-inputs.json').read_text())
+          bundle=json.loads(Path('docs/experiments/memadapter-20261010-diagnostic-inputs.json').read_text())
           root=Path('memadapter-pilot')
           for name,content in bundle['files'].items():
               path=root/name
