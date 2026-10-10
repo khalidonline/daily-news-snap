@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   archive:
-    if: github.run_attempt == 1 && github.event.head_commit.message == 'run approved daily archive 20261010 once'
+    if: github.run_attempt == 1 && github.event.head_commit.message == 'reconcile ambiguous daily archive 20261010 only'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
