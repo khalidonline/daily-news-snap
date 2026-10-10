@@ -11,13 +11,13 @@ concurrency:
 jobs:
   pilot:
     if: >-
-      github.run_attempt == 1 && github.event.head_commit.message == 'experiment: run Sonnet MemAdapter pilot within original cap'
+      github.run_attempt == 1 && github.event.head_commit.message == 'experiment: finish untouched MemAdapter cases 8 to 10'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 936766192e820622198d795db394d5c483f115b2
+          ref: 50235a44cf1f8e708a4ceef51711ecf536798b34
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -26,7 +26,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          bundle=json.loads(Path('docs/experiments/memadapter-20261010-sonnet-inputs.json').read_text())
+          bundle=json.loads(Path('docs/experiments/memadapter-20261010-resume-inputs.json').read_text())
           root=Path('memadapter-pilot')
           for name,content in bundle['files'].items():
               path=root/name
