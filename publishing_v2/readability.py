@@ -19,7 +19,7 @@ class ReadabilityError(ValueError):
 def fail(message):
     raise ReadabilityError('Readability: ' + message)
 
-def measure(block, *, minimum, maximum_lines, bold):
+def measure(block, *, minimum, maximum_lines, bold, minimum_y=260):
     if not isinstance(block, dict): fail('missing text measurements')
     text, size, box = block.get('text'), block.get('size'), block.get('box')
     if not isinstance(text, str) or not text.strip(): fail('empty text')
@@ -29,7 +29,7 @@ def measure(block, *, minimum, maximum_lines, bold):
             or any(type(v) not in (int, float) or not math.isfinite(v) for v in box)):
         fail('invalid text box')
     x0, y0, x1, y1 = box
-    if not (60 <= x0 < x1 <= 1020 and 260 <= y0 < y1 <= 1810):
+    if not (60 <= x0 < x1 <= 1020 and minimum_y <= y0 < y1 <= 1810):
         fail('text outside content safe area')
     font = ImageFont.truetype(str(FONT_ROOT / ('Almarai-Bold.ttf' if bold else 'Almarai-Regular.ttf')), int(size))
     draw = ImageDraw.Draw(Image.new('RGB', (1, 1)))
@@ -73,7 +73,12 @@ def validate_readability(report_path, media):
             image.verify()
         bullets = card.get('bullets')
         if not isinstance(bullets, list) or not 1 <= len(bullets) <= (4 if bold40 else 3): fail('expected one to three bullets')
-        boxes = [measure(card.get('headline'), minimum=40 if bold40 else 48, maximum_lines=1, bold=True)]
+        # Owner approved these exact previews with headline at y=250.
+        headline_y = 250 if bold40 and card['sha256'] in {
+            '51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0',
+            '8b9a5e9b90fe1ffbd1e5b598fbd5ebe7771647ec9aecbd9a3c3baa8b830d65bb',
+        } else 260
+        boxes = [measure(card.get('headline'), minimum=40 if bold40 else 48, maximum_lines=1, bold=True, minimum_y=headline_y)]
         boxes += [measure(b, minimum=40 if bold40 else 48, maximum_lines=2, bold=bold40) for b in bullets]
         if bold40:
             # Owner explicitly approved this postal image's 26px photo caption

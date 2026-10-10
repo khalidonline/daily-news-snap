@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "typography_profile": "owner-bold40-20261008",
+  "visual_review": {
+    "approved": true,
+    "reference": "Exact mobile preview owner-approved 10 Oct 11:39:13 Riyadh; original brand template, no overlap; photo caption 26px as displayed; headline at y250 explicitly preserved."
+  },
+  "cards": [
+    {
+      "sha256": "8b9a5e9b90fe1ffbd1e5b598fbd5ebe7771647ec9aecbd9a3c3baa8b830d65bb",
+      "headline": {
+        "text": "البيض البني ليه أغلى؟",
+        "size": 40,
+        "box": [
+          82,
+          250,
+          998,
+          312
+        ]
+      },
+      "bullets": [
+        {
+          "text": "تشوف البني أغلى وتقول: أكيد أحسن. بس اللون من سلالة الدجاجة، مو فائدة زيادة.",
+          "size": 40,
+          "box": [
+            82,
+            858,
+            998,
+            982
+          ]
+        },
+        {
+          "text": "اللي يفرق هو أكلها. مثل البيض المدعّم بأوميغا ٣؛ الزيادة من تغذيتها، مو لون القشرة.",
+          "size": 40,
+          "box": [
+            82,
+            1010,
+            998,
+            1134
+          ]
+        },
+        {
+          "text": "والبني غالبًا أغلى لأن دجاجه أكبر ويأكل أكثر، فتزيد تكلفة تربيته.",
+          "size": 40,
+          "box": [
+            82,
+            1162,
+            998,
+            1286
+          ]
+        }
+      ],
+      "closing": {
+        "text": "تحسبك تدفع زيادة عشان أكلك… وأثرها عشان أكل الدجاجة!",
+        "size": 40,
+        "box": [
+          82,
+          1320,
+          998,
+          1444
+        ]
+      },
+      "cta": {
+        "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة",
+        "size": 40,
+        "box": [
+          89,
+          1503,
+          894,
+          1565
+        ]
+      }
+    }
+  ]
+}

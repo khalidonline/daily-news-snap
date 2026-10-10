@@ -1,0 +1,30 @@
+{
+  "format": "owner-generated-design-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "اليوم يوم الصحة النفسية… ودّك دوامك يصير ٤ أيام؟",
+  "not_before": "2026-10-10T08:39:13+00:00",
+  "expires_at": "2026-10-10T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid approved these exact shortened previews: اوكي انشر, 10 Oct 2026 11:39:13 Riyadh. Original Sleep/Postal template, generated illustrative photos captioned صورة توضيحية.",
+    "reviewed_at": "2026-10-10T08:39:13+00:00",
+    "approved_media_sha256": [
+      "51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/mental-health-20261010/card-00.jpg",
+      "sha256": "51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0",
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "illustration",
+        "third_party_assets": false,
+        "library_file_id": "libfile_98b86dd10be48191ad0088bbdd1debb1",
+        "note": "Generated illustrative photo in owner brand template; Almarai and Twemoji typography assets."
+      }
+    }
+  ]
+}
