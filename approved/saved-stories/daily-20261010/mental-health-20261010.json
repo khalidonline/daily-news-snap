@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-10T20:45:00Z",
+  "expires_at": "2026-10-14T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. The 10 October daily archive run grants independent saving approval after receipt, live-state, inventory, quota, budget, and visual reconciliation. No daily repost, deletion, redesign, upload, or duration change authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "visual_review": "Exact final 1080x1920 repository JPG approved by owner and reviewed on a mobile preview: one readable card, aligned Arabic text, no overlap, no source slide or PDF.",
+  "package": "mental-health-20261010",
+  "title": "اليوم يوم الصحة النفسية… ودّك دوامك يصير ٤ أيام؟",
+  "identity": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574",
+  "media_sha256": [
+    "51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/mental-health-20261010/manifest.json",
+      "manifest_sha256": "fcaf7eff4014b87c05f7e56afade7acd266dd40908d60f431998ef4a530da90e",
+      "identity": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574",
+      "receipt_key": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574",
+      "media_sha256": [
+        "51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0"
+      ]
+    }
+  ],
+  "source_backlog_identity": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574"
+}
