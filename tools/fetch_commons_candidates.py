@@ -5,11 +5,10 @@ import news_bot
 
 OUT = Path('reference/candidates')
 QUERIES = {
-    'rijal': ['Rijal Almaa village', 'Rijal Alma Asir'],
-    'wahbah': ['Al Wahbah crater', 'Maqla Tamiya crater'],
-    'elephant': ['Elephant Rock AlUla', 'Jabal AlFil'],
-    'farasan': ['Farasan Islands'],
-    'fifa': ['Al Soudah Abha', 'Habala village'],
+    'lawz': ['Jabal al-Lawz snow', 'snow Tabuk Saudi Arabia', 'Jabal Al Lawz'],
+    'umluj': ['Umluj island', 'Umluj beach', 'Al Wajh islands'],
+    'soudah': ['Al Soudah fog', 'Asir mountains green Abha', 'Abha cable car'],
+    'disah': ['Wadi Disah', 'Wadi Al Disah Tabuk'],
 }
 
 
@@ -52,7 +51,7 @@ def main():
                               'size': [info.get('width'), info.get('height')],
                               'page': info.get('descriptionurl')}
                 print(name, json.dumps(meta[name], ensure_ascii=False))
-                if n >= 5:
+                if n >= 8:
                     break
     (OUT / 'meta.json').write_text(json.dumps(meta, ensure_ascii=False, indent=1))
     return 0
