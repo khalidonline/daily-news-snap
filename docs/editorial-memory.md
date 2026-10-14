@@ -102,5 +102,7 @@ origins. Wording correction: «مثل الماء» not «مثل الماي». Al
 Saudi dialect, using the forms Khalid approves.
 Keep the account's approved Spotlight design exactly (header, photo card,
 question line, two pills, 5-second countdown, share strip, badge); no extra
-subtitle lines or shrunken text. For «أطول/أكثر أو أقل», compare a Saudi
+subtitle lines or shrunken text. Every challenge reveals by turning the
+correct pill green with a tick and greying the other (the Pepsi reveal),
+never the big-word reveal. For «أطول/أكثر أو أقل», compare a Saudi
 subject with a famous rival it beats, so Saudi viewers enjoy the answer.

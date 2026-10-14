@@ -53,7 +53,7 @@ CHALLENGES = {
         kicker='أطول أو أقصر', photo='haramain.jpg',
         credit='الصورة: محطة المدينة · Virtual trip · CC BY 4.0',
         question='قطار الحرمين أطول أو أقصر من باريس–ليون؟', sub=None,
-        right='أطول', left='أقصر', answer='right', big='أطول!',
+        right='أطول', left='أقصر', answer='right',
         lines=('قطار الحرمين 453 كم', 'وباريس–ليون 409 كم')),
     'riyadh-dubai': dict(
         kicker='أعلى أو أقل', photo='riyadh.jpg', credit=None,
