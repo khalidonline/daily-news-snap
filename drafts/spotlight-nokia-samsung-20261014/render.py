@@ -127,7 +127,9 @@ def main():
     mp4 = OUT / 'nokia-samsung.mp4'
     subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), '-y', '-loglevel', 'error',
                     '-f', 'concat', '-safe', '0', '-i', str(listing),
-                    '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=mono', '-t', '12',
+                    # The approved Puma/Adidas track: a tick at 3,4,5,6,7 s and a chime at 8 s,
+                    # which is exactly this timeline.
+                    '-i', str(ASSETS / 'countdown-sound.m4a'), '-t', '12',
                     '-vf', f'fps={FPS},format=yuv420p', '-c:v', 'libx264', '-c:a', 'aac',
                     '-movflags', '+faststart', str(mp4)], check=True)
     for p in OUT.glob('scene-*.png'):
