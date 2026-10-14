@@ -1,0 +1,67 @@
+{
+  "checked_date_riyadh": "2026-10-14",
+  "account": "executivesaudi",
+  "status": "BLOCKED_NO_SEND",
+  "source_state_commit": "110cd27355fafb5abcc2e96cdece8893f1515ed1",
+  "candidates": [
+    {
+      "title": "توقّع المكان — وادي الديسة — القصة العامة 20261014",
+      "source_post_id": "8301ca38-3c41-4cbf-8e53-3b35e85b7101",
+      "source_reported_status": "POSTED",
+      "source_receipt": "drafts/spotlight-photo-20261014/receipt-disah.json",
+      "source_branch": "claude/amazing-carson-t36zee",
+      "archive_status": "HOLD_RECONCILIATION_AND_BUDGET",
+      "saved_story_id": null
+    },
+    {
+      "title": "أطول أو أقصر — قطار الحرمين — القصة العامة 20261014",
+      "source_post_id": "1315feaf-b298-4dd9-90d8-1fcfc2bd832f",
+      "source_reported_status": "POSTED",
+      "source_receipt": "drafts/spotlight-photo-20261014/receipt-haramain.json",
+      "source_branch": "claude/amazing-carson-t36zee",
+      "archive_status": "HOLD_RECONCILIATION_AND_BUDGET",
+      "saved_story_id": null
+    },
+    {
+      "title": "نزل بالسوق — بيبسي الشفاف — القصة العامة 20261014",
+      "source_post_id": "3e45bbe5-133a-47da-953d-5d728408b71a",
+      "source_reported_status": "POSTED",
+      "source_receipt": "drafts/spotlight-photo-20261014/receipt.json",
+      "source_branch": "claude/amazing-carson-t36zee",
+      "archive_status": "HOLD_RECONCILIATION_AND_BUDGET",
+      "saved_story_id": null
+    },
+    {
+      "title": "توقّع السعر — أول آيفون — القصة العامة 20261014",
+      "source_post_id": "f9bf3810-eca4-4815-b48a-75c7808d9a02",
+      "source_reported_status": "POSTED",
+      "source_receipt": "drafts/spotlight-photo-20261014/receipt.json",
+      "source_branch": "claude/amazing-carson-t36zee",
+      "archive_status": "HOLD_RECONCILIATION_AND_BUDGET",
+      "saved_story_id": null
+    },
+    {
+      "title": "من بدأ أول — نوكيا وسامسونج — القصة العامة 20261014",
+      "source_post_id": "390aa3d2-4647-467c-95e8-e14d9e568654",
+      "source_reported_status": "POSTED",
+      "source_receipt": "drafts/spotlight-nokia-samsung-20261014/receipt.json",
+      "source_branch": "claude/amazing-carson-t36zee",
+      "archive_status": "HOLD_RECONCILIATION_AND_BUDGET",
+      "saved_story_id": null
+    }
+  ],
+  "blockers": [
+    "No daily/2026-10-14.json in cost-ledger branch; spending is unknown, not zero.",
+    "New source receipts omit uploadIds and Snapchat IDs; live Bundle reconciliation, inventory deduplication, original-file hashes and independent archive approvals remain required."
+  ],
+  "quota": {
+    "checked_live": false,
+    "reserve_required": 2
+  },
+  "actions": {
+    "created_saved_stories": 0,
+    "paid_model_requests": 0,
+    "paid_image_requests": 0
+  },
+  "note": "Source POSTED values are receipt claims, not live Saved Story confirmation. No new sends were attempted. Existing completed renewals and previous Saved Story receipts preserved."
+}
