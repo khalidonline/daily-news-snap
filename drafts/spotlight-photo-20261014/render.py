@@ -46,6 +46,13 @@ CHALLENGES = {
         question='كم كان سعر أول آيفون؟', sub='iPhone الأول من 2007، مع عقد سنتين',
         right='999 دولار', left='499 دولار', answer='left',
         lines=('سعره عند الإطلاق 499 دولار', 'لنسخة 4 جيجا، و599 لنسخة 8 جيجا')),
+    # Haramain High Speed Railway: 453 km Makkah-Madinah, operating speed 300 km/h.
+    'haramain-train': dict(
+        kicker='أكثر أو أقل', photo='haramain.jpg',
+        credit='الصورة: محطة المدينة · Virtual trip · CC BY 4.0',
+        question='طول خط قطار الحرمين أكثر أو أقل من 400 كم؟', sub=None,
+        right='أكثر', left='أقل', answer='right', big='أكثر!',
+        lines=('453 كم بين مكة والمدينة', 'ويمشي بسرعة توصل 300 كم/ساعة')),
     'riyadh-dubai': dict(
         kicker='أعلى أو أقل', photo='riyadh.jpg', credit=None,
         question='سكان الرياض أكثر أو أقل من ضعف سكان دبي؟', sub=None,
