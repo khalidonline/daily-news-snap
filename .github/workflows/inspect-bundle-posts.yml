@@ -1,0 +1,23 @@
+name: Inspect Spotlight payloads (read-only)
+on:
+  push:
+    branches: [claude/amazing-carson-t36zee]
+    paths: ['.github/workflows/inspect-bundle-posts.yml', 'tools/inspect_bundle_posts.py']
+permissions:
+  contents: read
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download media of the Puma/Adidas Spotlight posts (GET only)
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          POST_IDS: 65096cfc-b95f-40fd-8b5b-9bef188bd7fb 285c5ffe-4e8b-4990-bf61-6b1ff06953b8
+          PYTHONPATH: .
+        run: python -u tools/inspect_bundle_posts.py
