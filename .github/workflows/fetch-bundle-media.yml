@@ -1,0 +1,27 @@
+name: Fetch Spotlight reference media (read-only on bundle.social)
+on:
+  push:
+    branches: [claude/amazing-carson-t36zee]
+    paths: ['.github/workflows/fetch-bundle-media.yml', 'tools/fetch_bundle_media.py']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download media of the Puma/Adidas Spotlight posts (GET only)
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          POST_IDS: fa243ef6-383c-4898-9f24-85a1d2c47a5d 65096cfc-b95f-40fd-8b5b-9bef188bd7fb
+          PYTHONPATH: .
+        run: python -u tools/fetch_bundle_media.py
+      - name: Commit the reference files to this branch
+        run: |
+          git config user.name github-actions && git config user.email github-actions@users.noreply.github.com
+          git add reference/spotlight && git commit -m "Spotlight reference media (Puma/Adidas)" && git push || echo nothing to commit
