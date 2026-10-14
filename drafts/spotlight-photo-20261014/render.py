@@ -46,13 +46,14 @@ CHALLENGES = {
         question='كم كان سعر أول آيفون؟', sub='iPhone الأول من 2007، مع عقد سنتين',
         right='999 دولار', left='499 دولار', answer='left',
         lines=('سعره عند الإطلاق 499 دولار', 'لنسخة 4 جيجا، و599 لنسخة 8 جيجا')),
-    # Haramain High Speed Railway: 453 km Makkah-Madinah, operating speed 300 km/h.
+    # Haramain High Speed Railway 453 km (Makkah-Madinah) vs the Tokaido
+    # Shinkansen, the original Japanese bullet train, 515 km (Tokyo-Shin-Osaka).
     'haramain-train': dict(
-        kicker='أكثر أو أقل', photo='haramain.jpg',
+        kicker='أطول أو أقصر', photo='haramain.jpg',
         credit='الصورة: محطة المدينة · Virtual trip · CC BY 4.0',
-        question='طول خط قطار الحرمين أكثر أو أقل من 400 كم؟', sub=None,
-        right='أكثر', left='أقل', answer='right', big='أكثر!',
-        lines=('453 كم بين مكة والمدينة', 'ويمشي بسرعة توصل 300 كم/ساعة')),
+        question='قطار الحرمين أطول أو أقصر من قطار طوكيو–أوساكا؟', sub='القطار الطلقة الياباني',
+        right='أطول', left='أقصر', answer='left', big='أقصر!',
+        lines=('قطار الحرمين 453 كم', 'وطوكيو–أوساكا 515 كم')),
     'riyadh-dubai': dict(
         kicker='أعلى أو أقل', photo='riyadh.jpg', credit=None,
         question='سكان الرياض أكثر أو أقل من ضعف سكان دبي؟', sub=None,
@@ -108,7 +109,7 @@ def frame(c, countdown=None, reveal=False):
     if c['credit']:
         text(d, (990, 998), c['credit'], 22, GREY, bold=False, anchor='rm')
 
-    text(d, (540, 1062), c['question'], 44 if len(c['question']) > 30 else 46, EMERALD)
+    text(d, (540, 1062), c['question'], 40 if len(c['question']) > 42 else 44 if len(c['question']) > 30 else 46, EMERALD)
     if c['sub']:
         text(d, (540, 1115), c['sub'], 30, NAVY, bold=False)
 
