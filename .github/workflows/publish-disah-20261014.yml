@@ -1,0 +1,31 @@
+name: Publish approved Wadi Disah challenge (Story + Spotlight) once
+on:
+  push:
+    branches: [claude/amazing-carson-t36zee]
+    paths: ['.github/workflows/publish-disah-20261014.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.run_attempt == 1 && github.event.head_commit.message == 'publish approved Wadi Disah challenge 20261014 once'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Post Story and Spotlight (no automatic retry)
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          PYTHONPATH: .
+        run: python -u drafts/spotlight-photo-20261014/publish-approved.py
+      - name: Save receipt
+        if: always()
+        run: |
+          git config user.name github-actions && git config user.email github-actions@users.noreply.github.com
+          git add drafts/spotlight-photo-20261014/receipt-disah.json 2>/dev/null && git commit -m "Receipt: Wadi Disah challenge Story + Spotlight 20261014" && git pull -q --rebase origin claude/amazing-carson-t36zee && git push || echo no receipt

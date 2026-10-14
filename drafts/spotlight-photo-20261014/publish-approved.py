@@ -1,7 +1,7 @@
 """One-shot: post the owner-approved Crystal Pepsi and first-iPhone challenges.
 
-Owner approvals, 14 Oct 2026: «انشر البيبسي والآيفون», then «تمام انشر»
-for the Haramain train (Story + Spotlight, as for Nokia/Samsung). Payloads mirror the owner's 10 Oct posts. A create is
+Owner approvals, 14 Oct 2026: Pepsi/iPhone, Haramain, then «انشر» for Wadi
+Disah (Story + Spotlight, as for Nokia/Samsung). Payloads mirror the owner's 10 Oct posts. A create is
 never retried, so a rerun cannot double-post; the media hash must match.
 """
 from datetime import datetime, timezone
@@ -15,10 +15,10 @@ from publishing_v2.bundle_api import BundleClient
 
 HERE = Path(__file__).parent
 STAMP = '20261014'
-RECEIPT = 'receipt-haramain.json'
+RECEIPT = 'receipt-disah.json'
 ITEMS = [
-    ('haramain-train-approved.mp4', '8049d2a523e369dbb410b3b2181f8b54c980de2b4d596016e7dd7c02fb6ccaf7', 'أطول أو أقصر — قطار الحرمين',
-     'أطول أو أقصر: قطار الحرمين ولا قطار باريس–ليون؟ اختَر قبل نهاية العد وأرسلها لخويك! #تحدي — الصورة: محطة المدينة، Virtual trip، CC BY 4.0'),
+    ('disah-approved.mp4', 'd7dab15e3bf1011c50b790d6e78a511fdc4203e1c08d9dac4f6ec3c1e61cb29a', 'توقّع المكان — وادي الديسة',
+     'توقّع المكان: أريزونا ولا تبوك؟ اختَر قبل نهاية العد وأرسلها لخويك! #تحدي'),
 ]
 
 
