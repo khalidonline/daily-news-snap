@@ -100,3 +100,7 @@ Khalid rejected «أعلى أو أقل: سكان الرياض ودبي» as unex
 ratio is not a thumb-stopper. Prefer surprising products, prices and brand
 origins. Wording correction: «مثل الماء» not «مثل الماي». Always write in
 Saudi dialect, using the forms Khalid approves.
+Keep the account's approved Spotlight design exactly (header, photo card,
+question line, two pills, 5-second countdown, share strip, badge); no extra
+subtitle lines or shrunken text. For «أطول/أكثر أو أقل», compare a Saudi
+subject with a famous rival it beats, so Saudi viewers enjoy the answer.

@@ -52,7 +52,7 @@ CHALLENGES = {
     'haramain-train': dict(
         kicker='أطول أو أقصر', photo='haramain.jpg',
         credit='الصورة: محطة المدينة · Virtual trip · CC BY 4.0',
-        question='قطار الحرمين أطول أو أقصر من قطار باريس–ليون؟', sub='أول قطار سريع في فرنسا',
+        question='قطار الحرمين أطول أو أقصر من باريس–ليون؟', sub=None,
         right='أطول', left='أقصر', answer='right', big='أطول!',
         lines=('قطار الحرمين 453 كم', 'وباريس–ليون 409 كم')),
     'riyadh-dubai': dict(
