@@ -1,0 +1,24 @@
+name: Fetch wordmark candidates from Commons (read-only)
+on:
+  push:
+    branches: [claude/amazing-carson-t36zee]
+    paths: ['.github/workflows/fetch-logos.yml', 'tools/fetch_logos.py']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -q -r requirements.txt
+      - run: python -u tools/fetch_logos.py
+        env:
+          PYTHONPATH: .
+      - run: |
+          git config user.name github-actions && git config user.email github-actions@users.noreply.github.com
+          git pull -q --rebase origin claude/amazing-carson-t36zee
+          git add reference/logos && git commit -m "Wordmark candidates from Commons" && git push || echo nothing to commit
