@@ -55,6 +55,14 @@ CHALLENGES = {
         question='قطار الحرمين أطول أو أقصر من باريس–ليون؟', sub=None,
         right='أطول', left='أقصر', answer='right',
         lines=('قطار الحرمين 453 كم', 'وباريس–ليون 409 كم')),
+    # Commons «Empty Coast in Farasan Island» — a Saudi Red Sea beach most
+    # viewers will take for the Maldives.
+    'farasan': dict(
+        kicker='توقّع المكان', photo='farasan.jpg',
+        credit='الصورة: Abdalrahman Mohrat · CC BY 2.0',
+        question='وين هالمكان؟', sub=None,
+        right='المالديف', left='جزر فرسان', answer='left',
+        lines=('هذا شاطئ في جزر فرسان', 'بالبحر الأحمر قبالة جازان')),
     'riyadh-dubai': dict(
         kicker='أعلى أو أقل', photo='riyadh.jpg', credit=None,
         question='سكان الرياض أكثر أو أقل من ضعف سكان دبي؟', sub=None,
