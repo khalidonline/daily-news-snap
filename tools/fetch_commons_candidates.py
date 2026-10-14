@@ -5,7 +5,7 @@ import news_bot
 
 OUT = Path('reference/candidates')
 QUERIES = {
-    'haramain': ['Haramain High Speed Railway train', 'Haramain high-speed rail Talgo 350 SRO', 'Haramain railway station Madinah'],
+    'edge': ['Edge of the World Riyadh', 'Jebel Fihrayn', 'Tuwaiq escarpment Edge of the World'],
 }
 
 
