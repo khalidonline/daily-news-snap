@@ -14,11 +14,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Download media of the Puma/Adidas Spotlight posts (GET only)
+      - name: Download media of the other approved Spotlight posts (GET only)
         env:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-          POST_IDS: fa243ef6-383c-4898-9f24-85a1d2c47a5d 65096cfc-b95f-40fd-8b5b-9bef188bd7fb
+          POST_IDS: a41d0b3d-496f-4b45-b95c-dd2b7dad9286 838f1d62-1ada-4b17-9c15-82161605635a 20d1c374-423e-42f0-a447-2386a6493670 47bae7df-9104-423f-9856-73e9f3d91b97
           PYTHONPATH: .
         run: python -u tools/fetch_bundle_media.py
       - name: Commit the reference files to this branch
