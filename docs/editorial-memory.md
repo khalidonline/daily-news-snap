@@ -106,3 +106,6 @@ subtitle lines or shrunken text. Every challenge reveals by turning the
 correct pill green with a tick and greying the other (the Pepsi reveal),
 never the big-word reveal. For «أطول/أكثر أو أقل», compare a Saudi
 subject with a famous rival it beats, so Saudi viewers enjoy the answer.
+Prices in challenges are always in riyals (ريال), never dollars — convert
+at the peg (1 USD = 3.75 SAR) and round sensibly, e.g. the first iPhone's
+$499 is «حوالي 1,870 ريال».
