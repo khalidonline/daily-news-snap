@@ -63,6 +63,13 @@ CHALLENGES = {
         question='وين هالمكان؟', sub=None,
         right='المالديف', left='جزر فرسان', answer='left',
         lines=('هذا شاطئ في جزر فرسان', 'بالبحر الأحمر قبالة جازان')),
+    # Pexels photo (alt: «Wadi Disah in Saudi Arabia's Tabuk region», by
+    # Abdulhalim Mudag; Pexels licence, no credit required) — reads as Arizona.
+    'disah': dict(
+        kicker='توقّع المكان', photo='disah.jpg', credit=None,
+        question='وين هالمكان؟', sub=None,
+        right='أريزونا', left='تبوك', answer='left',
+        lines=('هذا وادي الديسة في منطقة تبوك', 'صخور رملية ونخيل بين الجبال')),
     'riyadh-dubai': dict(
         kicker='أعلى أو أقل', photo='riyadh.jpg', credit=None,
         question='سكان الرياض أكثر أو أقل من ضعف سكان دبي؟', sub=None,
