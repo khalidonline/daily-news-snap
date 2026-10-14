@@ -1,0 +1,49 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نايكي — الحذاء نجح بس تكراره ما يكفي",
+  "not_before": "2026-10-03T09:31:20Z",
+  "expires_at": "2026-10-03T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved final copy and publication with انشر 2026-10-03 12:31:20 Asia/Riyadh. Two compact Almarai cards visually reviewed. No paid generation.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/nike-20261003/card-00.jpg",
+      "sha256": "d54366dfebc640e316be899155966b28ffe2bb7ad4984987b5980745dec1db87",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q483915",
+        "official_site": "https://www.nike.com/",
+        "source_url": "https://www.nike.com/ch/launch/t/air-jordan-1-low-og-chicago-1-emea",
+        "original_url": "https://static.nike.com/a/images/t_prod_ls/w_1920,c_limit/882c8d1f-2ff0-41ca-9d33-04438ab90473/air-jordan%C2%A01-low-og-chicago-hq6998-600-%C2%A0%E2%80%93-erscheinungsdatum.jpg",
+        "download_url": "https://static.nike.com/a/images/t_prod_ls/w_1920,c_limit/882c8d1f-2ff0-41ca-9d33-04438ab90473/air-jordan%C2%A01-low-og-chicago-hq6998-600-%C2%A0%E2%80%93-erscheinungsdatum.jpg",
+        "asset_id": "primary:d3b1914bb67a13a04fdd9ea0",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/nike-20261003/card-01.jpg",
+      "sha256": "509847d120a484817b5df1f1af403e2d9fb47eb42ec81b19610f0286e6e8cc0b",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q483915",
+        "official_site": "https://about.nike.com/",
+        "source_url": "https://about.nike.com/en/newsroom/releases/nike-inc-reports-fiscal-2027-first-quarter-results",
+        "original_url": "https://nmp.about.nike.com/about/prod/22a5690f-d477-471e-9531-77b9014dae88/nike-inc-fy27-q1-earnings-3000x2000.jpg",
+        "download_url": "https://nmp.about.nike.com/about/prod/22a5690f-d477-471e-9531-77b9014dae88/nike-inc-fy27-q1-earnings-3000x2000.jpg",
+        "asset_id": "primary:1e0abbe6a408afc6f81f466c",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      }
+    }
+  ]
+}

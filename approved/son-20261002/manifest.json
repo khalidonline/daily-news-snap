@@ -1,0 +1,97 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "سون — من خسارة هائلة إلى رهان ChatGPT",
+  "not_before": "2026-10-02T11:43:14Z",
+  "expires_at": "2026-10-02T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid: publish all three; review before design; final revised copy approved with تمام كمل at 2026-10-02 14:43:14 Asia/Riyadh. Final cards visually checked at mobile scale.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/son-20261002/card-00.jpg",
+      "image": {
+        "source_url": "https://group.softbank/en/about/officer/son",
+        "original_url": "https://group.softbank/media/Project/sbg/sbg/images/about/officer/son/pic_01.jpg",
+        "download_url": "https://group.softbank/media/Project/sbg/sbg/images/about/officer/son/pic_01.jpg",
+        "sha256": "d8ed943d0bf2c22a69acccb3b4a174f061255b3f957d01c78781c94b2cdc460c",
+        "image_role": "Current subject illustration; not a historical event",
+        "modifications": "Resized/cropped to established card template",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "asset_id": "primary:a10c154d3843eea76126cf1c",
+        "website_entity": "Q201653",
+        "official_site": "https://group.softbank/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      },
+      "sha256": "97d40653695424b6e9a6ed898c1e057e55c46d8f71a687cef569fa65910036b1"
+    },
+    {
+      "kind": "story",
+      "path": "approved/son-20261002/card-01.jpg",
+      "image": {
+        "source_url": "https://group.softbank/en/ir/financials/annual_reports/2026/message/son",
+        "original_url": "https://group.softbank/media/Project/sbg/sbg/images/ir/financials/annual_reports/2026/message/son/son_pic01_sp.jpg",
+        "download_url": "https://group.softbank/media/Project/sbg/sbg/images/ir/financials/annual_reports/2026/message/son/son_pic01_sp.jpg",
+        "sha256": "3dee247e513ce9b919bb6ffdefdcf36ae64c92b3b96f60124bdf6c92c6e5837e",
+        "image_role": "سون — صورة حديثة من تقرير الشركة",
+        "modifications": "Resized/cropped to established card template",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "asset_id": "primary:e12d2e49cd4171afb78248e8",
+        "website_entity": "Q201653",
+        "official_site": "https://group.softbank/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      },
+      "sha256": "013d0d8f8bb6bc25bb71e145f8eee33dcd376ee1f7aec79d5b59117c6f97a1cb"
+    },
+    {
+      "kind": "story",
+      "path": "approved/son-20261002/card-02.jpg",
+      "image": {
+        "source_url": "https://commons.wikimedia.org/wiki/File:Davos_2017_-_An_Insight,_An_Idea_with_Jack_Ma.webm",
+        "original_url": "https://commons.wikimedia.org/wiki/File:Davos_2017_-_An_Insight,_An_Idea_with_Jack_Ma.webm",
+        "download_url": "https://commons.wikimedia.org/wiki/File:Davos_2017_-_An_Insight,_An_Idea_with_Jack_Ma.webm",
+        "sha256": "98ff63aeb644a4745e51e4fd3894cad0625d694f49a12f2553a42f036b20f1f4",
+        "image_role": "جاك ما، مؤسس علي بابا — دافوس ٢٠١٧",
+        "modifications": "Video thumbnail still, cropped and resized",
+        "provider": "commons",
+        "asset_id": "55435592",
+        "license": "CC BY 3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0/",
+        "credit": "World Economic Forum",
+        "title": "Davos 2017 - An Insight, An Idea with Jack Ma"
+      },
+      "public_attribution": {
+        "version": 3,
+        "display_label": "Wikimedia Commons",
+        "image_sha256": "96c759d8857e50091e5f45ca1e4f39626ed272743a696bb53b256d1c0e55bf95",
+        "media_sha256": "8c3fd55271b14c8deea34550781cf61c059be722ffa5f0d928e171469192dafc"
+      },
+      "sha256": "8c3fd55271b14c8deea34550781cf61c059be722ffa5f0d928e171469192dafc"
+    },
+    {
+      "kind": "story",
+      "path": "approved/son-20261002/card-03.jpg",
+      "image": {
+        "source_url": "https://www.whitehouse.gov/gallery/president-donald-trump-delivers-remarks-on-investing-in-america/",
+        "original_url": "https://www.whitehouse.gov/wp-content/uploads/2025/07/p20250430mr-3077_54489491376_o.jpg?w=1200",
+        "download_url": "https://www.whitehouse.gov/wp-content/uploads/2025/07/p20250430mr-3077_54489491376_o.jpg?w=1200",
+        "sha256": "e9ccc1c1fb7edbed98caf91f91ac6c7f30804109919adc2542035d87c37fdff8",
+        "image_role": "سون في حدث استثماري — أبريل ٢٠٢٥",
+        "modifications": "Resized/cropped to established card template",
+        "provider": "government",
+        "license": "Public domain",
+        "attribution_required": false
+      },
+      "sha256": "b24256c18846ed4323ad63671663d0eca8eabd2c38411b4ca70dae9c3d4e1bad"
+    }
+  ],
+  "predecessors": []
+}

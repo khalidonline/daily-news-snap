@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "visual_review": {
+    "approved": true,
+    "reference": "Owner approved displayed icon preview 2026-10-07 10:16:24 Riyadh. Raster lettering visually checked at phone size; reported typography sizes are approximate template-equivalent measurements for raster preview, not source font metadata."
+  },
+  "cards": [
+    {
+      "sha256": "c1e15a31f85c403ff7e3e76f5578646b4a03591b07555dfd72e81b7fbed5ecac",
+      "headline": {
+        "text": "أمس الكأس للأخضر… واليوم التحدّي لك",
+        "size": 52,
+        "box": [
+          82,
+          305,
+          992,
+          378
+        ]
+      },
+      "bullets": [
+        {
+          "text": "شعار واحد مختلف… وينه؟",
+          "size": 51,
+          "box": [
+            82,
+            406,
+            992,
+            478
+          ]
+        }
+      ],
+      "layout": "visual_challenge",
+      "closing": {
+        "text": "لقيته؟ خلّ خويك يجرّب",
+        "size": 43,
+        "box": [
+          82,
+          1510,
+          878,
+          1580
+        ]
+      }
+    }
+  ]
+}

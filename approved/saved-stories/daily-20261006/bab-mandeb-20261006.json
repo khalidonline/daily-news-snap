@@ -1,0 +1,20 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "487cd9bf6efcc2f335787afcae61f14d32bf783fa131aecdd910b741f770772c",
+  "title": "باب المندب… ليه العالم يحتاجه؟",
+  "manifest": "approved/bab-mandeb-20261006/manifest.json",
+  "manifest_sha256": "3df4349c51493247a25f03f9a0d9245d2c1d62baea93f3107bc2320ee935b5d4",
+  "not_before": "2026-10-06T21:14:27Z",
+  "expires_at": "2026-10-09T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid explicitly requested احفظها طيب at 2026-10-07 00:14:27 Riyadh, after confirming original publication. Reconcile original provider ID read-only and update source receipt only on verified matching POSTED evidence. Never recreate daily story. Then archive exact original card.",
+  "empty_profile_confirmation": "Historical baseline only: 2026-10-01 00:01 Riyadh. Current provider inventory mandatory; profile not assumed empty.",
+  "public_indices": [
+    1
+  ],
+  "media_sha256": [
+    "27ae1f8122095b575338f91acac42c29ad45d5c9fe7cdbf6943dc93734e6d8b7"
+  ],
+  "package": "bab-mandeb-20261006"
+}

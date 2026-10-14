@@ -1,0 +1,35 @@
+{
+  "internal_only": true,
+  "facts": [
+    "https://www.nestleusa.com/media/nespresso-history-eric-favre-coffee-vacation",
+    "https://www.wipo.int/en/web/wipo-magazine/articles/anyone-for-coffee-the-story-behind-the-coffee-capsule-37455",
+    "https://www.nestle.com/media/pressreleases/allpressreleases/full-year-results-2025",
+    "https://www.un.org/en/observances/coffee-day"
+  ],
+  "photos": [
+    {
+      "page": "https://www.nestle.com/brands/coffee/nespresso",
+      "url": "https://www.nestle.com/sites/default/files/2026-09/coffee-machine-and-frother.jpg",
+      "role": "Current Nespresso product illustration"
+    },
+    {
+      "page": "https://caffesanteustachio.com/?lang=en",
+      "url": "https://caffesanteustachio.com/wp-content/uploads/2026/06/santeustachio_ilcaffe1.jpg",
+      "role": "Archive exterior of the actual cafe; date unspecified"
+    },
+    {
+      "page": "https://www.nestle.com/brands/coffee/nespresso",
+      "url": "https://www.nestle.com/sites/default/files/nespresso-machine-1986.jpg",
+      "role": "C100 machine from official 1986 timeline; not the experimental prototype"
+    },
+    {
+      "page": "https://www.nestle.com/brands/coffee/nespresso",
+      "url": "https://www.nestle.com/sites/default/files/nespresso-first-boutique-2000.jpg",
+      "role": "Archive boutique photo from brand timeline; not a 2025 sales event"
+    }
+  ],
+  "entity_evidence": [
+    "https://www.wikidata.org/wiki/Q160746",
+    "https://www.wikidata.org/wiki/Q2932918"
+  ]
+}

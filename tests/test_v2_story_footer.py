@@ -7,7 +7,7 @@ import story_bot as story
 
 
 class StoryFooterTests(unittest.TestCase):
-    def test_crowded_card_keeps_all_text_above_closing_seal(self):
+    def test_readable_card_keeps_all_text_above_closing_seal(self):
         original_text = ImageDraw.ImageDraw.text
         text_bottoms = []
         def record(draw, xy, text, *args, **kwargs):
@@ -33,9 +33,20 @@ class StoryFooterTests(unittest.TestCase):
                 with self.subTest(footer=footer), patch.object(story, 'closing_seal', side_effect=inspect), patch.object(ImageDraw.ImageDraw, 'text', record):
                     story.render_frame(Path(tmp) / 'card.png', 'ملخص تنفيذي', '1 من 3',
                         'حكاية مكان صار جزء من يوم الناس', 64,
-                        sub='بدأ المكان بفكرة بسيطة، ومع الوقت صار الناس يجتمعون فيه ويتناقلون قصته. ' * 7,
+                        sub='بدأ المكان بفكرة بسيطة، ومع الوقت صار الناس يجتمعون فيه ويتناقلون قصته. ' * 2,
                         photo=photo, punch='كل تغيير صغير يترك أثره في قصة المكان والناس', footer=footer)
         self.assertEqual(len(inspected), 2)
+
+    def test_dense_copy_is_rejected_instead_of_shrinking_below_readable_size(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            photo=Path(tmp)/'photo.png';target=Path(tmp)/'card.png'
+            Image.new('RGB',(1080,800),(110,150,180)).save(photo)
+            with self.assertRaises(story.StoryLayoutError):
+                story.render_frame(target, 'ملخص تنفيذي', '١ من ٣',
+                    'حكاية مكان صار جزء من يوم الناس',64,
+                    sub='بدأ المكان بفكرة بسيطة، ومع الوقت صار الناس يجتمعون فيه ويتناقلون قصته. ' * 7,
+                    photo=photo,punch='كل تغيير صغير يترك أثره في قصة المكان والناس')
+            self.assertFalse(target.exists())
 
     def test_unrenderable_text_does_not_save_an_overlapped_card(self):
         with tempfile.TemporaryDirectory() as tmp:

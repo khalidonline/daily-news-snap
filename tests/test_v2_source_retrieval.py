@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlsplit
-from publishing_v2.autopilot.sources import wiki, Sources
+from publishing_v2.autopilot.sources import wiki, Sources, WIKI_TEXT_LIMIT
 
 
 def response(text='Verified history'):
@@ -26,13 +26,13 @@ class SourceRetrievalTests(unittest.TestCase):
         self.assertEqual([r['title'] for r in rows],['Subject 1','Subject 2'])
 
     def test_full_history_is_retrieved_then_bounded_locally(self):
-        full = 'Introduction. ' * 100 + 'Documented turning point. ' * 600
+        full = 'Introduction. ' * 100 + 'Documented turning point. ' * 1200
         def api(url):
             params=parse_qs(urlsplit(url).query)
             return response(full[:1200] if 'exchars' in params else full)
         with patch('publishing_v2.autopilot.sources.fetch',side_effect=api):
             rows=wiki('Cole Palmer')
-        self.assertEqual(rows[0]['text'],full[:10000])
+        self.assertEqual(rows[0]['text'],full[:WIKI_TEXT_LIMIT])
         self.assertIn('Documented turning point.', rows[0]['text'])
 
     def test_temporary_transport_failure_is_retried_once(self):

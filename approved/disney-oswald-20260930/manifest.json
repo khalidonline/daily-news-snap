@@ -1,0 +1,88 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ديزني — من أوزوالد إلى ميكي",
+  "not_before": "2026-09-30T15:46:18Z",
+  "expires_at": "2026-09-30T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved edited information and first story card; requested publication with one week duration 2026-09-30 18:46 Asia/Riyadh",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/disney-oswald-20260930/card-00.jpg",
+      "sha256": "28ed5ff2d65438aed083700ec472bcc79b703d8bb55edfff4ab8bef5d9d2b5bf",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q7414",
+        "official_site": "https://thewaltdisneycompany.com",
+        "source_url": "https://thewaltdisneycompany.com/news/oswald-the-lucky-rabbit-anniversary-disney/",
+        "original_url": "https://thewaltdisneycompany.com/app/uploads/2023/09/02_Oswald_Theater_RGB_V010117-1024x540.jpg",
+        "download_url": "https://thewaltdisneycompany.com/app/uploads/2023/09/02_Oswald_Theater_RGB_V010117-1024x540.jpg",
+        "asset_id": "primary:a0592878baf595cf3261d49d",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "0c1d257ae1ad45404d11a09ad8e7be8bea0de7f01a1c815e1125cbb67d4f1514"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/disney-oswald-20260930/card-01.jpg",
+      "sha256": "d6f4ca176c381849bbd1b9a1ed818f776d99bc435a006b219f3b9a593c4678d8",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q7414",
+        "official_site": "https://thewaltdisneycompany.com",
+        "source_url": "https://thewaltdisneycompany.com/news/happy-85th-anniversary-oswald-the-lucky-rabbit/",
+        "original_url": "https://thewaltdisneycompany.com/app/uploads/2012/09/Oswald_1.jpg",
+        "download_url": "https://thewaltdisneycompany.com/app/uploads/2012/09/Oswald_1.jpg",
+        "asset_id": "primary:a0b6ad0c139f6822b12871a0",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "7de9c2bac33c4a98314071bc93c46ab1e9c041654f372dbe23a62951fe940bc7"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/disney-oswald-20260930/card-02.jpg",
+      "sha256": "3d4e94d4b8f586df682d5e3fd14f2e994cc2601a501b48d112dff3ebf333d8f1",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q7414",
+        "official_site": "https://thewaltdisneycompany.com",
+        "source_url": "https://thewaltdisneycompany.com/news/mickey-mouse-95-anniversary-steamboat-willie-script/",
+        "original_url": "https://thewaltdisneycompany.com/app/uploads/2023/11/1920_51-107_720.jpg",
+        "download_url": "https://thewaltdisneycompany.com/app/uploads/2023/11/1920_51-107_720.jpg",
+        "asset_id": "primary:b74b1011d1f2996c4c2b3c76",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "69ac28cb44bcf041b5d103706c80cad6b6207ced313c7d768f7875d448ea07e5"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/disney-oswald-20260930/card-03.jpg",
+      "sha256": "4d79f73267a6962428231ede811d10ec9d882085527a30385f0f5dd4c437862e",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q7414",
+        "official_site": "https://thewaltdisneycompany.com",
+        "source_url": "https://thewaltdisneycompany.com/news/oswald-the-lucky-rabbit-stars-in-a-new-walt-disney-animation-studios-short-for-disney-100-years-of-wonder/",
+        "original_url": "https://thewaltdisneycompany.com/app/uploads/2022/11/1920_Oswald_stage_RGB_V010786-1024x540.jpg",
+        "download_url": "https://thewaltdisneycompany.com/app/uploads/2022/11/1920_Oswald_stage_RGB_V010786-1024x540.jpg",
+        "asset_id": "primary:36f7d32a6fe717d934fdec61",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "d41b11198929d41f0b8603a2c634403ca9422a3bcfecfc1ff5ff3abb5e822b5c"
+      }
+    }
+  ],
+  "predecessors": []
+}

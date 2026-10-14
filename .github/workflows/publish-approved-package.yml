@@ -1,0 +1,45 @@
+name: Publish an owner-approved package
+# Owner's explicit same-day «انشر» only. Posts the saved, hash-sealed cards of
+# approved/<package>/ exactly as reviewed; no generation, no re-rendering.
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Folder name under approved/ (e.g. 7dogs-20260927)
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Resolve the package folder
+        id: pkg
+        env:
+          PACKAGE: ${{ inputs.package }}
+        run: |
+          if ! printf '%s' "$PACKAGE" | grep -Eq '^[a-z0-9][a-z0-9-]{2,80}$'; then
+            echo "Invalid package name"; exit 1
+          fi
+          test -f "approved/$PACKAGE/manifest.json"
+          echo "manifest=approved/$PACKAGE/manifest.json" >> "$GITHUB_OUTPUT"
+      - name: Validate without publishing
+        run: python -m publishing_v2.bundle_api validate --manifest "${{ steps.pkg.outputs.manifest }}"
+      - name: Publish the sealed cards
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python -m publishing_v2.bundle_api publish --manifest "${{ steps.pkg.outputs.manifest }}"

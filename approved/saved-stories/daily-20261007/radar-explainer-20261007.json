@@ -1,0 +1,30 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-07T20:55:00Z",
+  "expires_at": "2026-10-11T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. Current 7 October request authorizes independent saving approval after receipt and visual reconciliation. No daily repost or deletion authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "package": "radar-explainer-20261007",
+  "title": "كيف ينكشف الصاروخ وينعترض؟",
+  "identity": "c0f0a6906ba7f1cc7d22f9aa02b6ba64634cbbd2d398ca4526d4feab6be36e06",
+  "media_sha256": [
+    "d1b27542c5837529412d5d76ba8c3ee16f1034af194a19e8c27dcd52e06cfc40",
+    "dd32ad920cc07e502860a1fdf8868b86b4339eafd8b98a9a71d67357cbc23fc6"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/radar-explainer-20261007/manifest.json",
+      "manifest_sha256": "ca2f6a960f14740fe99d46cc3ae355264ffcb13b57afc1054c8c256b4b41d7a2",
+      "identity": "c0f0a6906ba7f1cc7d22f9aa02b6ba64634cbbd2d398ca4526d4feab6be36e06",
+      "receipt_key": "c0f0a6906ba7f1cc7d22f9aa02b6ba64634cbbd2d398ca4526d4feab6be36e06",
+      "media_sha256": [
+        "d1b27542c5837529412d5d76ba8c3ee16f1034af194a19e8c27dcd52e06cfc40",
+        "dd32ad920cc07e502860a1fdf8868b86b4339eafd8b98a9a71d67357cbc23fc6"
+      ]
+    }
+  ],
+  "visual_review": "Exact repository JPG bytes visually inspected 7 October: readable large Arabic text, ordered cards, no sources/PDF. NVIDIA selects only final SEGA-logo first card and corrected RIVA second card.",
+  "source_backlog_identity": "c0f0a6906ba7f1cc7d22f9aa02b6ba64634cbbd2d398ca4526d4feab6be36e06"
+}

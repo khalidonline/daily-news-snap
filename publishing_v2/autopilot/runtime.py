@@ -18,7 +18,7 @@ from publishing_v2.public_images import get_bytes, inspect_image, atomic_write, 
 from .agents import Agents
 from publishing_v2.primary_images import ImageMemory
 from .pipeline import Pipeline
-from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety
+from .policy import RIYADH, digest, validate_review, story_counter, validate_image_variety, VisualShortfall
 from .sources import Sources, reusable_image, subject_metadata_matches
 from .credits import LICENSE_URLS, attribution_eligible, render_credits, render_public_attribution
 from .video import compile_story
@@ -79,6 +79,45 @@ class Renderer:
                     'image_role': row.get('image_role', 'subject illustration; event date requires review')}
         return list(found.values())
 
+    def screen_visuals(self, candidate):
+        """Free feasibility screen before any paid research.
+
+        The same searches and metadata filters plan_visuals applies before its
+        paid pixel check; no model call. Fewer than two usable photos here means
+        plan_visuals would fail too, after research, hooks, writer and text
+        review were paid for (SAR, 2026-09-26: $0.33 spent, zero photos).
+        Results stay in the sources' caches, so plan_visuals does not refetch.
+        """
+        subjects = [row['name'] for row in candidate.get('resolved_subjects', [])]
+        if not subjects:
+            subjects = [candidate.get('resolved_subject', {}).get('name') or candidate['editorial']['research_query']]
+        prime = getattr(self.sources, 'prime_images', None)
+        subject_search = getattr(self.sources, 'subject_images', None)
+        if not subject_search:
+            return False
+        candidate.pop('visual_feasibility', None)
+        found, hashes, origins = {}, set(), set()
+        for subject in subjects:
+            if prime:
+                prime(candidate, subject)
+            rows = subject_search(subject, subject)
+            usable = {row['asset_id'] for row in rows
+                      if image_publication_eligible(row) and subject_metadata_matches(subject, row)
+                      and getattr(self.sources, 'image_bytes', {}).get(row['asset_id'])}
+            if len(usable) < 2:
+                return False
+            for row in rows:
+                if row['asset_id'] not in usable:
+                    continue
+                sha, origin = row.get('sha256'), row.get('origin_key')
+                if row['asset_id'] in found or (sha and sha in hashes) or (origin and origin in origins):
+                    continue
+                if sha: hashes.add(sha)
+                if origin: origins.add(origin)
+                found[row['asset_id']] = {k: row[k] for k in ('asset_id', 'source_url', 'sha256', 'title') if k in row}
+        candidate['visual_feasibility'] = list(found.values())
+        return True
+
     def check_source_images(self, candidate, subject, rows):
         rows = rows[:5]
         with tempfile.TemporaryDirectory(prefix='snap-image-preflight-') as temporary:
@@ -117,11 +156,21 @@ class Renderer:
         recovery = getattr(self.sources, 'recovery', False) is True
         if recovery:
             queries = list(dict.fromkeys((subjects or ([subject] if subject else []))[:2] + [card['image_query']]))
+        # Only bind by position while the approved plan and public card count
+        # still match; shortened stories must use their own image_query.
+        specific = []
+        plans = candidate.get('card_image_plan', [])
+        public_cards = [c for c in package.get('cards', []) if c.get('kind') != 'credits']
+        if len(plans) == len(public_cards) and card in public_cards:
+            plan = plans[public_cards.index(card)]
+            specific = [q for q in plan.get('queries', []) if isinstance(q, str) and q.strip()][:2]
+            queries = list(dict.fromkeys(specific + queries))
         rows, seen = [], set()
         for query in queries:
             try:
                 subject_search = getattr(self.sources, 'subject_images', None)
-                options = subject_search(query, query) if subject_search and (recovery or query in subjects) else self.sources.images(query)
+                options = (subject_search(query, subject if query in specific and subject else query)
+                           if subject_search and (recovery or query in subjects) else self.sources.images(query))
                 for row in options:
                     if not image_publication_eligible(row):
                         continue
@@ -184,12 +233,18 @@ class Renderer:
                 raise ValueError('incomplete_visual_selection')
             self._selected = list(dict.fromkeys(ident for ident in ids
                 if isinstance(ident, str) and ident in self._catalog))
-            for card, rows, ident in zip([cards[i] for i in missing], choices, ids):
+            unmatched = []
+            for index, rows, ident in zip(missing, choices, ids):
                 matches = [r for r in rows if r['asset_id'] == ident]
                 if len(matches) != 1:
-                    raise ValueError('unknown_visual_selection: ' + card['image_query'] + ': '
-                                     + str(selected.get('reason', ''))[:800])
-                card['image'] = dict(matches[0])
+                    unmatched.append(index)
+                    continue
+                cards[index]['image'] = dict(matches[0])
+            if unmatched:
+                # Al-Buraikan (2026-09-27): two photos, three story cards; the
+                # Al-Fateh card had none and the whole approved package died.
+                # The pipeline drops photo-less story cards and re-approves.
+                raise VisualShortfall(unmatched, selected.get('reason', ''))
         validate_image_variety(cards)
         needs_credits = True  # Every review includes sources; public selection excludes this card.
         existing_credits = [card for card in package['cards'] if card.get('kind') == 'credits']
@@ -241,13 +296,18 @@ class Renderer:
             atomic_write(source, raw)
             atomic_write(stored_source, raw)
             target = output / f'card-{i:02d}.jpg'
+            text = western_digits(card)  # drawn text only; card keeps its attribution state
+            # Only a story is labelled «قصة»; explainers, verdicts, money stories
+            # and fixes carry the information label on every card.
+            fmt = package.get('candidate', {}).get('editorial', {}).get('format', 'story')
+            kicker = 'ملخص تنفيذي - قصة' if fmt == 'story' else 'ملخص تنفيذي - معلومة'
             if card['kind'] == 'info':
-                render_card({'title_lines': [card['title']], 'body_lines': [card['body']],
-                             'closing_lines': [card['punch']], 'brand': 'ملخص تنفيذي - معلومة'}, source, target)
+                render_card({'title_lines': [text['title']], 'body_lines': [text['body']],
+                             'closing_lines': [text['punch']], 'brand': 'ملخص تنفيذي - معلومة'}, source, target)
             else:
-                story_bot.render_frame(target.with_suffix('.png'), 'ملخص تنفيذي - قصة',
-                    story_counter(i, len(cards)-1), card['title'], 64, sub=card['body'],
-                    photo=source, punch=card['punch'], photo_caption=card.get('image_caption'),
+                story_bot.render_frame(target.with_suffix('.png'), kicker,
+                    story_counter(i, len(cards)-1), text['title'], 64, sub=text['body'],
+                    photo=source, punch=text['punch'], photo_caption=text.get('image_caption'),
                     footer=('المصادر: ' + source_names) if i == len(cards)-1 and source_names and not needs_credits else None)
                 with Image.open(target.with_suffix('.png')) as image:
                     image.convert('RGB').save(target, 'JPEG', quality=95)
@@ -328,6 +388,55 @@ def publish_package(package, paths, *, client=None, journal_factory=GitHubJourna
             'card_count': len(indices), 'review_card_count': len(paths), 'media_count': len(media)}
 
 
+# Owner decision 2026-09-26: numbers inside card text use Western digits (1999),
+# whatever the writer produced. Display-only: facts and seals keep the source text.
+_WESTERN = str.maketrans('٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹', '0123456789' * 2)
+
+
+def western_digits(card):
+    fields = ('title', 'body', 'punch', 'image_caption')
+    return {**card, **{k: card[k].translate(_WESTERN) for k in fields if isinstance(card.get(k), str)}}
+
+
+# 2026-09-26 test: the daily lane alone spent $1.12 of the $3 day. Run first,
+# it could leave the local lane nothing. When both lanes run, daily may use at
+# most this share; local always has the shared ledger's remainder.
+DAILY_LANE_SHARE = 0.6
+
+
+class LaneLedger:
+    """A per-lane cap in front of the shared daily ledger (which still binds)."""
+    def __init__(self, ledger, cap):
+        self.__dict__.update(_ledger=ledger, cap=int(cap), used=0, _open={})
+
+    @property
+    def limit_micro_usd(self):
+        return self._ledger.limit_micro_usd
+
+    def __setattr__(self, name, value):
+        setattr(self._ledger, name, value)   # e.g. request context for receipts
+
+    def __getattr__(self, name):
+        return getattr(self._ledger, name)
+
+    def reserve(self, amount, bot):
+        from daily_budget import BudgetBlocked
+        if self.used + amount > self.cap:
+            raise BudgetBlocked('lane share of the daily budget is used; the other lane keeps the rest',
+                                code='lane_share_exhausted', limit=self.cap, requested=amount, charged=self.used)
+        token = self._ledger.reserve(amount, bot)
+        self._open[token] = amount
+        self.__dict__['used'] = self.used + amount
+        return token
+
+    def settle(self, token, actual):
+        result = self._ledger.settle(token, actual)
+        reserved = self._open.pop(token, None)
+        if reserved is not None and type(actual) is int:
+            self.__dict__['used'] = self.used - reserved + actual
+        return result
+
+
 def engine_id():
     root = Path(__file__).resolve().parents[2]
     paths = sorted(Path(__file__).parent.glob('*.py')) + sorted((root / 'publishing_v2').glob('*.py')) + [
@@ -382,11 +491,16 @@ def promotable_shadow(state, engine, lane, now, source_slot):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=['shadow', 'live'], default='shadow')
-    parser.add_argument('--lane', choices=['daily', 'local', 'both'], default='both')
+    parser.add_argument('--lane', choices=['daily', 'local', 'both'], default='daily')
+    parser.add_argument('--selection', default=os.environ.get('AUTOPILOT_SELECTION_PATH'),
+                        help='Free, source-bound editorial brief; required for new production')
     parser.add_argument('--output', default='autopilot-output')
     args = parser.parse_args()
-    if args.mode == 'live' and args.lane == 'both':
-        raise ValueError('publish_one_lane_per_run')
+    if args.lane == 'both':
+        raise ValueError('produce_one_lane_per_run')
+    from .free_selection import load_brief
+    selection_path = args.selection or f'editorial/selected/{day_key()}-{args.lane}.json'
+    free_selection = load_brief(selection_path) if args.selection or Path(selection_path).is_file() else None
     if os.environ.get('GITHUB_REPOSITORY') != 'khalidonline/daily-news-snap':
         raise ValueError('configured_repository_required')
     if os.environ.get('GITHUB_REF') != 'refs/heads/main':
@@ -408,7 +522,9 @@ def main():
     results = []
     sibling_candidate_ids = set()
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
-        agent, sources = Agents(env=os.environ, ledger=ledger), Sources(recovery=True, publication_only=True,
+        lane_ledger = (LaneLedger(ledger, ledger.limit_micro_usd * DAILY_LANE_SHARE)
+                       if args.lane == 'both' and lane == 'daily' else ledger)
+        agent, sources = Agents(env=os.environ, ledger=lane_ledger), Sources(recovery=True, publication_only=True,
             image_memory=ImageMemory(GitHubJournal('autopilot-image-memory')))
         slot = f'autopilot-{day_key(now())}-{lane}-{args.mode}'
         if args.mode == 'shadow':
@@ -426,7 +542,7 @@ def main():
         pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
             store=store, publish=publish_package, output=output / lane, now=now, engine=engine,
             candidate_memory=candidate_memory, published_memory=published_memory,
-            excluded_candidate_ids=sibling_candidate_ids)
+            excluded_candidate_ids=sibling_candidate_ids, hooks=False, free_selection=free_selection)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
         if result.get('status') in {'shadow_passed', 'approved', 'published'}:
             candidate_id = result.get('package', {}).get('candidate', {}).get('id')
@@ -443,11 +559,29 @@ def main():
             state[lane] = {'status': 'published', 'at': result['started_at'],
                            'engine': result['engine'], 'slot': slot, 'approval': result['approval']}
             readiness.save(state)
+        from .package_insights import package_report
+        metrics_path = Path('editorial/metrics') / f'{slot}.json'
+        metrics = json.loads(metrics_path.read_text()) if metrics_path.is_file() else None
+        try:
+            detail = package_report(result, slot, now(), metrics)
+        except (ValueError, KeyError, TypeError) as error:
+            detail = package_report(result, slot, now())
+            detail['performance'] = {'status':'rejected', 'reason':str(error)}
+        atomic_write(output / f'{lane}-quality-cost.json', json.dumps(detail, ensure_ascii=False).encode())
+        # This index points to the original sealed state; it cannot publish,
+        # extend expiry, regenerate media, or resolve an ambiguous delivery.
+        GitHubJournal('package-report-' + slot).save(detail)
+        inventory = GitHubJournal('autopilot-ready-inventory')
+        entries = inventory.read()
+        entries[slot] = detail['inventory']
+        inventory.save(entries)
         results.append({'lane': lane, 'status': result['status'], 'slot': slot,
                         'cost_micro_usd': sum(r['cost_micro_usd'] for r in agent.receipts),
                         'reason': result.get('reason'), 'budget_diagnostic': result.get('budget_diagnostic'),
                         'receipt': result.get('receipt'),
                         'title': result.get('package', {}).get('title'),
+                        'candidate_id': result.get('package', {}).get('candidate', {}).get('id'),
+                        'media_sha256': result.get('approval', {}).get('media_sha256'),
                         'delivery_kind': result.get('package', {}).get('delivery', {}).get('kind')})
     summary = {'mode': args.mode, 'engine': engine, 'results': results,
                'note': 'Costs here cover this attempt; shared ledger includes retained reservations and other runs.'}

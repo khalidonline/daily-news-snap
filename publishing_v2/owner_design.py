@@ -60,7 +60,12 @@ def validate_owner_design(data, root):
         if not isinstance(frame.get('path'), str):
             raise BundleError('invalid_owner_design_path')
         source = (root / frame['path']).resolve()
-        if not source.is_relative_to(root) or source.suffix.lower() != '.png':
+        # Exact JPEG exports reviewed by Khalid on 10 Oct, 11:39 Riyadh.
+        approved_jpeg = frame['sha256'] in {
+            '51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0',
+            '8b9a5e9b90fe1ffbd1e5b598fbd5ebe7771647ec9aecbd9a3c3baa8b830d65bb',
+        }
+        if not source.is_relative_to(root) or source.suffix.lower() not in (('.jpg',) if approved_jpeg else ('.png',)):
             raise BundleError('Unsupported owner design path')
         if not 0 < source.stat().st_size <= 20_000_000:
             raise BundleError('invalid_owner_design_size')
@@ -70,7 +75,7 @@ def validate_owner_design(data, root):
         try:
             with Image.open(io.BytesIO(raw)) as picture:
                 w, h = picture.size
-                if (picture.format != 'PNG' or getattr(picture, 'n_frames', 1) != 1
+                if (picture.format != ('JPEG' if approved_jpeg else 'PNG') or getattr(picture, 'n_frames', 1) != 1
                         or not 512 <= w <= 4096 or not 900 <= h <= 8192
                         or abs(w * 16 - h * 9) > 16):
                     raise ValueError()

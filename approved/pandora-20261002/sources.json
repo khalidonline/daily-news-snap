@@ -1,0 +1,77 @@
+{
+  "internal_only": true,
+  "facts": [
+    "https://www.pandoragroup.com/about-us/history",
+    "https://www.pandoragroup.com/media/press-releases/Pandora-opens-worlds-largest-fine-jewellery-crafting-facility"
+  ],
+  "images": [
+    {
+      "source_url": "https://www.pandoragroup.com/about-us/history",
+      "original_url": "https://cdn.media.amplience.net/i/pandora/GB10053683-street?w=1600&fmt=jpg",
+      "download_url": "https://cdn.media.amplience.net/i/pandora/GB10053683-street?w=1600&fmt=jpg",
+      "sha256": "375b87df1159014c17eead02a9a9986a4108237cb2a9235b3f9bfc0a4561a3f8",
+      "image_role": "Current subject illustration; not a historical event",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "primary_media",
+      "source_kind": "official",
+      "asset_id": "primary:8696d494106d0f85033761ed",
+      "website_entity": "Q2241604",
+      "official_site": "https://www.pandoragroup.com/",
+      "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+      "rights_status": "owner_accepted_editorial_use",
+      "license": "All rights reserved",
+      "licensing_verified": false
+    },
+    {
+      "source_url": "https://www.pandoragroup.com/about-us/history",
+      "original_url": "https://cdn.media.amplience.net/i/pandora/Pandora-History-Various_012?w=1600&fmt=jpg",
+      "download_url": "https://cdn.media.amplience.net/i/pandora/Pandora-History-Various_012?w=1600&fmt=jpg",
+      "sha256": "48562a8505b053d7969e8e7a3044e7eed3986bfe3dd3ca32e9de6221245a9f10",
+      "image_role": "المحل الأول — من أرشيف باندورا",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "primary_media",
+      "source_kind": "official",
+      "asset_id": "primary:f95f229987ac2040a524c05e",
+      "website_entity": "Q2241604",
+      "official_site": "https://www.pandoragroup.com/",
+      "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+      "rights_status": "owner_accepted_editorial_use",
+      "license": "All rights reserved",
+      "licensing_verified": false
+    },
+    {
+      "source_url": "https://www.pandoragroup.com/about-us/history",
+      "original_url": "https://cdn.media.amplience.net/i/pandora/MO_Bracelet_gold_Xmas_NM_retouch-taller-10161?w=1600&fmt=jpg",
+      "download_url": "https://cdn.media.amplience.net/i/pandora/MO_Bracelet_gold_Xmas_NM_retouch-taller-10161?w=1600&fmt=jpg",
+      "sha256": "68158b68107e3913dc49362ebdb6cca71927acb84c5be8ba9b7f79dfd4e0b955",
+      "image_role": "سوار من منتجات باندورا — صورة توضيحية",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "primary_media",
+      "source_kind": "official",
+      "asset_id": "primary:b2f1ad940bc30e01be1df6e0",
+      "website_entity": "Q2241604",
+      "official_site": "https://www.pandoragroup.com/",
+      "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+      "rights_status": "owner_accepted_editorial_use",
+      "license": "All rights reserved",
+      "licensing_verified": false
+    },
+    {
+      "source_url": "https://www.pandoragroup.com/media/press-releases/Pandora-opens-worlds-largest-fine-jewellery-crafting-facility",
+      "original_url": "https://cdn.media.amplience.net/i/pandora/Pandora-Vietnam-Crafting-Facility-Frontview?w=1600&fmt=jpg",
+      "download_url": "https://cdn.media.amplience.net/i/pandora/Pandora-Vietnam-Crafting-Facility-Frontview?w=1600&fmt=jpg",
+      "sha256": "6e716357b6d511fc03774f0df4f7e906bd5fa4f63ec89734d5233c8e9f9f89ee",
+      "image_role": "مصنع باندورا الجديد في فيتنام",
+      "modifications": "Resized/cropped to established card template",
+      "provider": "primary_media",
+      "source_kind": "official",
+      "asset_id": "primary:61fb2a36a45ac7c8bcbf64ac",
+      "website_entity": "Q2241604",
+      "official_site": "https://www.pandoragroup.com/",
+      "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+      "rights_status": "owner_accepted_editorial_use",
+      "license": "All rights reserved",
+      "licensing_verified": false
+    }
+  ]
+}

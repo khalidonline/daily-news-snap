@@ -786,9 +786,25 @@ def _warn_about_missing_glyphs(shaped):
                   f"— will render as a box")
 
 
+# A Latin abbreviation's closing dot is a bidi neutral: next to Arabic it takes
+# the paragraph's RTL direction and jumps to the far side, so the owner's
+# exact-title rule («P.T.») rendered as «.P.T» on the 26 Sep test card. An LRM
+# after the dot binds it to the Latin run. sanitize() strips stray LRMs, so
+# this runs after it; a plain sentence-ending period is left to the RTL flow.
+_LATIN_ABBREV = re.compile(
+    r"(?<![A-Za-z.])((?:[A-Za-z]\.){2,}|(?:Inc|Co|Corp|Ltd|Jr|Sr|St|Dr|Mr|Mrs|Ms|No|vs)\.)")
+
+
+def _bind_latin_abbrev(text):
+    return _LATIN_ABBREV.sub("\\1\u200e", text)
+
+
 def ar(text):
     """Return (text_to_draw, draw_kwargs) for a piece of Arabic text."""
-    shaped = _shape(sanitize(text))
+    shaped = _shape(_bind_latin_abbrev(sanitize(text)))
+    if not HAS_RAQM:
+        # get_display has already used the mark; Almarai has no glyph for it.
+        shaped = shaped.replace("\u200e", "")
     _warn_about_missing_glyphs(shaped)
     if HAS_RAQM:
         return shaped, {"direction": "rtl", "language": "ar"}

@@ -1,0 +1,61 @@
+{
+  "verified_at": "2026-10-07",
+  "sources": [
+    {
+      "url": "https://www.reuters.com/podcasts/reuters-morning-bid/ai-runs-hot-2026-10-06/",
+      "supports": "October 6 record Nvidia share level and approaching six trillion USD valuation."
+    },
+    {
+      "url": "https://www.inc.com/georgia-fearn/jensen-huang-sega-shoichiro-irimajiri-nvidia-technology-failed-5-million/91376429",
+      "supports": "Interview with Sega executive Shoichiro Irimajiri confirming roughly USD5M support, unsuitable architecture and subsequent RIVA pivot; no claim loan/equity/exact support year."
+    },
+    {
+      "url": "https://www.nvidia.com/tr-tr/about-nvidia/corporate-timeline/",
+      "supports": "1997 RIVA 128; more than one million units shipped in first four months."
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/cuda-refresher-getting-started-with-cuda/",
+      "supports": "CUDA first released November 2006, general-purpose parallel GPU computation."
+    },
+    {
+      "url": "https://www.nvidia.com/en-sg/about-nvidia/corporate-timeline/",
+      "supports": "2006 CUDA brought GPU parallel processing to science/research."
+    }
+  ],
+  "photo_rights": [
+    {
+      "provider": "primary_media",
+      "asset_id": "primary:2fea494deff1dac417e1584f",
+      "source_kind": "official",
+      "website_entity": "Q182477",
+      "official_site": "https://nvidianews.nvidia.com",
+      "source_url": "https://nvidianews.nvidia.com/bios/jensen-huang",
+      "original_url": "https://nvidianews.nvidia.com/_gallery/get_file/?file_id=69e6b9293d633260eec67804",
+      "download_url": "https://nvidianews.nvidia.com/_gallery/get_file/?file_id=69e6b9293d633260eec67804",
+      "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+      "rights_status": "owner_accepted_editorial_use",
+      "license": "All rights reserved",
+      "credit": "NVIDIA",
+      "title": "Jensen Huang official headshot"
+    },
+    {
+      "provider": "commons",
+      "asset_id": "38130580",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "credit": "Mathías Tabó",
+      "title": "Diamond Viper V330 / RIVA 128",
+      "source_url": "https://commons.wikimedia.org/?curid=38130580",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Diamond_Viper_V330_AGP_%40_nVIDIA_RIVA_128.jpg",
+      "restrictions": "",
+      "sharealike_presentation": "unmodified_photo_collection",
+      "modifications": "Resized only"
+    }
+  ],
+  "paid_model_requests": 0,
+  "image_generation_requests": 0,
+  "publication_files_only": [
+    "approved/nvidia-sega-20261007/card-00.jpg",
+    "approved/nvidia-sega-20261007/card-01.jpg"
+  ]
+}

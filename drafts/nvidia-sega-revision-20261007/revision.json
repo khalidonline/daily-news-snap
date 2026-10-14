@@ -1,0 +1,28 @@
+{
+  "status": "DRAFT_FOR_OWNER_REVIEW_NOT_PUBLISHED",
+  "replaces_card": 2,
+  "original_identity": "5e63a9e4f8edc7d3e71de8575429d6e46380cc2efc5a42ca992c74614010d6bc",
+  "changed": [
+    "photo",
+    "photo caption",
+    "footer rights links replaced by brand badge"
+  ],
+  "unchanged": [
+    "headline",
+    "body",
+    "closing",
+    "CTA",
+    "font",
+    "card 1"
+  ],
+  "image": {
+    "source_url": "https://commons.wikimedia.org/wiki/File:RIVA_128_GPU.jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/8/85/RIVA_128_GPU.jpg",
+    "author": "Hyins",
+    "license": "Public domain",
+    "attribution_required": false,
+    "description": "Actual RIVA 128 chip; photographer released worldwide with no conditions. Photo cropped/resized."
+  },
+  "sha256": "f5cddd97177e51411676e0d51cddad989b46763d89600983d1b132a50b9209fc",
+  "paid_model_requests": 0
+}

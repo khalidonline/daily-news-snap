@@ -1,0 +1,84 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مشاجرات الجو — من قمرة القيادة إلى منع السفر",
+  "not_before": "2026-10-01T06:53:53Z",
+  "expires_at": "2026-10-01T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "User authorized publication 2026-10-01 09:53:53 Riyadh; exact approved copy; final images visually reviewed; body 44px; no sources card published",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/air-rage-20261001/card-00.jpg",
+      "sha256": "8c63b24db51e51efae2cf816f4b0f74bc68f6007698b4f58015f86f92654828d",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://aawsat.com/العالم-العربي/المشرق-العربي/5324394-حادث-طائرة-فلاي-دبي-الشركة-تحقق-في-الدوافع-وإسرائيل-تعده",
+        "original_url": "https://static.srpcdigital.com/styles/1037xauto/public/2026-09/1802976.jpeg.webp",
+        "download_url": "https://static.srpcdigital.com/styles/1037xauto/public/2026-09/1802976.jpeg.webp",
+        "asset_id": "primary:357f2bb33f9ec057a02caa11",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "197c14968bb927cfa3c1c41567b0447879da778da3f155728e97eddbdfb4e638",
+        "image_role": "Archive airline illustration, not the incident aircraft"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/air-rage-20261001/card-01.jpg",
+      "sha256": "af082ed4748e5eca511200e25fe374527af4ba308293b9200c24dddfd132e421",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://www.bbc.com/news/world-europe-62712278",
+        "original_url": "https://ichef.bbci.co.uk/news/1024/branded_news/19B1/production/_126477560_gettyimages-1410352963.jpg",
+        "download_url": "https://ichef.bbci.co.uk/news/1024/branded_news/19B1/production/_126477560_gettyimages-1410352963.jpg",
+        "asset_id": "primary:1ef7b1e87f9ad9e0e124e13a",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "211abb6fc12d3dc545ff65b61216474d5034fa4c07aeb0d1676b8ac442d60fd5",
+        "image_role": "Archive airline illustration, not the incident aircraft"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/air-rage-20261001/card-02.jpg",
+      "sha256": "27858880091aec0b5b44ef84dcb849d25004cfba5985c25ed878f7ddeeba9376",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://www.bbc.com/news/articles/c1l7vrj6z31o",
+        "original_url": "https://ichef.bbci.co.uk/news/1024/branded_news/7382/live/c188ae20-0b52-11f1-9972-d3f265c101c6.jpg",
+        "download_url": "https://ichef.bbci.co.uk/news/1024/branded_news/7382/live/c188ae20-0b52-11f1-9972-d3f265c101c6.jpg",
+        "asset_id": "primary:5d6d2e4040eb23c90ac64532",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "2f61ef75fda389697119fd3fd9e9d2ad8a111f74f05f7e31d22c1a4d731e38fe",
+        "image_role": "Actual incident police intervention"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/air-rage-20261001/card-03.jpg",
+      "sha256": "81ad23f0203e38baa66fd187e5010c3c41b25a7dbbd9f79ea0f7a00a4a303204",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://www.bbc.com/news/articles/c1l7vrj6z31o",
+        "original_url": "https://ichef.bbci.co.uk/news/1024/cpsprodpb/010a/live/1a30a390-0b15-11f1-b9e4-e3077978e1ee.png.webp",
+        "download_url": "https://ichef.bbci.co.uk/news/1024/cpsprodpb/010a/live/1a30a390-0b15-11f1-b9e4-e3077978e1ee.png.webp",
+        "asset_id": "primary:993f58be9f3ed4a522c49766",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "71be0c8911cf422571f0ed8b23d12b09a513201b0506f70a7aa912aa6b1c81cc",
+        "image_role": "Archive airline illustration, not the incident aircraft"
+      }
+    }
+  ],
+  "predecessors": []
+}

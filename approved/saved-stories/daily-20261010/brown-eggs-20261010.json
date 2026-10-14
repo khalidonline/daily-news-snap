@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-10T20:45:00Z",
+  "expires_at": "2026-10-14T20:59:59Z",
+  "authorization": "Standing owner instruction: archive each final published package as an independent Saved Story; reuse exact published bytes. The 10 October daily archive run grants independent saving approval after receipt, live-state, inventory, quota, budget, and visual reconciliation. No daily repost, deletion, redesign, upload, or duration change authorized.",
+  "empty_profile_confirmation": "Historical empty baseline 2026-10-01 00:01 Riyadh only; live inventory remains mandatory.",
+  "visual_review": "Exact final 1080x1920 repository JPG approved by owner and reviewed on a mobile preview: one readable card, aligned Arabic text, no overlap, no source slide or PDF.",
+  "package": "brown-eggs-20261010",
+  "title": "البيض البني ليه أغلى؟",
+  "identity": "0e17e07c7ca711763df9a8e5c99dc08b8c1113c5ffd746fb2ce03aca4c483e03",
+  "media_sha256": [
+    "8b9a5e9b90fe1ffbd1e5b598fbd5ebe7771647ec9aecbd9a3c3baa8b830d65bb"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/brown-eggs-20261010/manifest.json",
+      "manifest_sha256": "726f9c38c6c1d39e4de90758b5556641a02bf1c84402e2d3ba6a58748471ed71",
+      "identity": "0e17e07c7ca711763df9a8e5c99dc08b8c1113c5ffd746fb2ce03aca4c483e03",
+      "receipt_key": "0e17e07c7ca711763df9a8e5c99dc08b8c1113c5ffd746fb2ce03aca4c483e03",
+      "media_sha256": [
+        "8b9a5e9b90fe1ffbd1e5b598fbd5ebe7771647ec9aecbd9a3c3baa8b830d65bb"
+      ]
+    }
+  ],
+  "source_backlog_identity": "0e17e07c7ca711763df9a8e5c99dc08b8c1113c5ffd746fb2ce03aca4c483e03"
+}

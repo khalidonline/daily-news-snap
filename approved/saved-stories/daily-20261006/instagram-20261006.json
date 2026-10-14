@@ -1,0 +1,21 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "not_before": "2026-10-06T20:59:00Z",
+  "expires_at": "2026-10-10T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid authorized daily end-of-day saving of final published packages on 30 September 2026; the standing automation request explicitly includes future daily packages. Save exact final POSTED bytes only, without reposting or redesign.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. Profile no longer assumed empty; current provider inventory is mandatory.",
+  "public_indices": [
+    1
+  ],
+  "identity": "fd063efb445c6d527c14a1f8e6d2aa206e16282f8abe4a9b634d94356020ea08",
+  "title": "إنستغرام يكمل ١٦ سنة… وبدأ بفكرة ثانية",
+  "manifest": "approved/instagram-20261006/manifest.json",
+  "manifest_sha256": "bd1ff3b3361a7f02065052b8e1aa8bd1a81f6cbe7f5d53012906ced9682b5e09",
+  "media_sha256": [
+    "541ff0b10571644bf73ea1f8c204e90f703b246c8c2f61500a89878653a6e88b"
+  ],
+  "visual_review": "Exact published one-card compact edition reviewed at mobile width; readable text, archival visuals, no source card or PDF.",
+  "package": "instagram-20261006"
+}

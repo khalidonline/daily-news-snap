@@ -1,0 +1,17 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "b46efa84807de1594be1a492a4c14176a5acc7e747de61e94fd7b0f11768093b",
+  "title": "ملعب نيوم… وطوكيو غيّرت خطتها",
+  "manifest": "approved/neom-20261005/manifest.json",
+  "manifest_sha256": "ea56f1d38f7e3ea383cd3d17b0e7f5f217a895056a84a1e313cb988101841f31",
+  "not_before": "2026-10-05T20:50:00Z",
+  "expires_at": "2026-10-08T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid authorized daily end-of-day saving of final published packages on 30 September 2026; the standing automation request explicitly includes future daily packages. This approval archives the exact owner-approved POSTED one-card NEOM edition only, without reposting or media changes.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. Profile no longer assumed empty; current provider inventory is mandatory.",
+  "public_indices": [1],
+  "media_sha256": ["3731d7c7896c781ed850b7b21fe63a9b30650ea4fce813459a014f475fe60103"],
+  "visual_review": "Exact published one-card JPEG reviewed at mobile width on 2026-10-05; title, body and CTA are readable; no source card or PDF.",
+  "package": "neom-20261005"
+}

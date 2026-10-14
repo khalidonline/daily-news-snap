@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "date": "2026-09-28",
+  "status": "drafts_for_review",
+  "selected_by_owner": [
+    "heathrow",
+    "armani"
+  ],
+  "excluded_by_owner": [
+    "alula"
+  ],
+  "sequence": [
+    "heathrow",
+    "armani"
+  ],
+  "simultaneous_publish": false,
+  "next_gate": "verify_card_photos_and_review_text",
+  "note": "This is an editorial plan, not the source-bound free_selection runtime schema.",
+  "production_status": "not_started",
+  "publication_status": "not_prepared"
+}

@@ -1,0 +1,11 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "cb63e68059815933eac67b69e3f83951bfc323840a503868e02a41630ac0403d",
+  "manifest": "approved/city-penalties-20260930/manifest.json",
+  "manifest_sha256": "58d221ecb7806b7f5132163ea45bd2fddb25e4e5c2f1ea13a27bb9a7026dbc0b",
+  "expires_at": "2026-10-02T20:59:59Z",
+  "empty_profile_confirmation": "Khalid confirmed Public Profile Stories empty in conversation 2026-10-01 00:01 Asia/Riyadh and instructed continue. Check Bundle inventory on every send thereafter.",
+  "approval": "Independent Saved Story authorization 2026-09-30 expanded to previous final publications; confirmed continue 2026-10-01. Daily publication expiry unchanged.",
+  "source_commit": "1b9f8e4f81d3e0a09b0297954f4f326d0b66d5cf"
+}

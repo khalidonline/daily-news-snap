@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "package": "nespresso-20261001",
+  "source_manifest": "approved/nespresso-20261001/manifest.json",
+  "evidence": "Owner reported in conversation that revised card was published manually and old card deleted.",
+  "evidence_type": "owner_confirmation",
+  "recorded_date_riyadh": "2026-10-01",
+  "scope": "Saved Story assembly only; do not republish daily story",
+  "card_index": 3,
+  "story_number": "٣ من ٣",
+  "superseded_post_id": "714eac6f-f2b8-4074-b2e7-ee680556b600",
+  "superseded_card": "approved/nespresso-20261001/card-03.jpg",
+  "replacement_base64_path": "review/nespresso-20261001-share-layout/Nespresso-Card-03.jpg.b64",
+  "replacement_commit": "b370742d677c6d264ce0b0c71f882f342a458ff3",
+  "replacement_sha256": "5ba6ada5f9fd7ebd0f1bd43fcb84826c4ee5b55a82ef349a9373173faacc06ca",
+  "replacement_post_id": null,
+  "archive_instructions": [
+    "Use original approved cards 0, 1, 2 in original order, then this replacement as card 3.",
+    "Exclude superseded card 3 even if its historical receipt says POSTED.",
+    "Reconcile provider Saved Stories and manual replacement before creating archive; never infer a new POSTED receipt or post ID from owner report.",
+    "Do not archive original bundle unchanged. Retain original manifest and receipts as historical records."
+  ]
+}

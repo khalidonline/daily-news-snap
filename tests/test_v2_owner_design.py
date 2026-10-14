@@ -99,8 +99,10 @@ class OwnerDesignTests(unittest.TestCase):
         with patch('sys.argv',['bundle_api','validate','--manifest','manifest.json']), \
              patch('publishing_v2.bundle_api.BundleClient',side_effect=AssertionError('network client')), \
              patch('publishing_v2.bundle_api.GitHubJournal',side_effect=AssertionError('journal')), \
+             patch('publishing_v2.readability.validate_readability') as readability, \
              patch('sys.stdout',new_callable=io.StringIO) as output:
             main()
+        readability.assert_called_once()
         result=json.loads(output.getvalue())
         self.assertEqual(result['status'],'validated_not_published')
         self.assertEqual(result['card_count'],3)

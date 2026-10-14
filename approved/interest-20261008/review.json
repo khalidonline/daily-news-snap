@@ -1,0 +1,13 @@
+{
+  "identity": "cca21e4489dcc5a0ae43ec8f78accbea014751d8d2170c4868e04874a7538703",
+  "approved_by_user_at": "2026-10-08T11:36:04+03:00",
+  "sources_internal": [
+    "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+    "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+    "https://www.federalreservehistory.org/essays/anti-inflation-measures",
+    "https://www.bankofengland.co.uk/explainers/how-do-higher-interest-rates-help-to-lower-inflation."
+  ],
+  "review": "Current rate range is central-bank target, not retail loan APR. Historical 20% is federal funds rate peak. Reduced inflation means slower price increases. No claim of immediate effect or sole causality. Image 2 is accurately captioned 1981 archival meeting.",
+  "paid_model_requests": 0,
+  "paid_image_requests": 0
+}

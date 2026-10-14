@@ -1,0 +1,17 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "858b82928fc3d234b375bc6230e37e11c416cbe2d7df0252e8f4fe80356dde4f",
+  "title": "يوم المعلّم… ومشروع الـ٥٠٠ ريال",
+  "manifest": "approved/teacher-20261005/manifest.json",
+  "manifest_sha256": "7008a14a41af41dc7612b32aa1a6431309e8fb543fd045f46647c815f0dbc26f",
+  "not_before": "2026-10-05T20:50:00Z",
+  "expires_at": "2026-10-08T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid authorized daily end-of-day saving of final published packages on 30 September 2026; the standing automation request explicitly includes future daily packages. This approval archives the exact owner-approved POSTED one-card teacher edition only, without reposting or media changes.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. Profile no longer assumed empty; current provider inventory is mandatory.",
+  "public_indices": [1],
+  "media_sha256": ["9c46a5dd2623109f835d8df95e2eb98bfee6e5516f0bd687d53af50c2e8e9c8b"],
+  "visual_review": "Exact published one-card JPEG reviewed at mobile width on 2026-10-05; body is readable though dense; no source card or PDF. Archive scope preserves the published bytes.",
+  "package": "teacher-20261005"
+}

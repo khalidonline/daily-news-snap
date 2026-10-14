@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "typography_profile": "owner-bold40-20261008",
+  "visual_review": {
+    "approved": true,
+    "reference": "Assistant mobile visual review 9 Oct 2026 after owner publication authorization 17:03 Riyadh. Almarai Bold40, single line title/CTA, separate text blocks, full archival photograph and cart detail; owner established caption26px style."
+  },
+  "cards": [
+    {
+      "bullets": [
+        {
+          "text": "لاحظ إن الناس توقف تسوّق إذا ثقلت السلة، فوفّر لهم عربات بعجلات.",
+          "size": 40,
+          "box": [
+            82,
+            1042,
+            998,
+            1166
+          ]
+        },
+        {
+          "text": "لكن كثير رفضوها! فدفع لرجال ونساء يمثلون دور زباين يتسوّقون بالعربات.",
+          "size": 40,
+          "box": [
+            82,
+            1190,
+            998,
+            1314
+          ]
+        },
+        {
+          "text": "الناس شافوهم وبدؤوا يجربونها… وبعدها صارت متاجر ثانية تطلب العربات.",
+          "size": 40,
+          "box": [
+            82,
+            1338,
+            998,
+            1462
+          ]
+        }
+      ],
+      "headline": {
+        "text": "عربة المقاضي… بدايتها زباين بالتمثيل!",
+        "size": 40,
+        "box": [
+          82,
+          264,
+          998,
+          326
+        ]
+      },
+      "intro": {
+        "text": "في أمريكا عام ١٩٣٧م، صاحب متجر جرّب يخلي الزباين يدفعون مقاضيهم بدل ما يشيلونها.",
+        "size": 40,
+        "box": [
+          82,
+          896,
+          998,
+          1020
+        ]
+      },
+      "closing": {
+        "text": "حتى عربة المقاضي… احتاجت أحد يبدأ والباقين يلحقونه.",
+        "size": 40,
+        "box": [
+          82,
+          1490,
+          998,
+          1552
+        ]
+      },
+      "cta": {
+        "text": "شاركها مع صديقك اللي تعجبه المعلومة",
+        "size": 40,
+        "box": [
+          95,
+          1604,
+          885,
+          1666
+        ]
+      },
+      "sha256": "bb415f5980ba0548c9c131d2eb2265f0d862be5e3e64e9e0a33fdd7dcb122240"
+    }
+  ]
+}

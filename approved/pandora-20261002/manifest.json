@@ -1,0 +1,100 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "باندورا — من محل صغير إلى العالم",
+  "not_before": "2026-10-02T11:43:14Z",
+  "expires_at": "2026-10-02T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid: publish all three; review before design; final revised copy approved with تمام كمل at 2026-10-02 14:43:14 Asia/Riyadh. Final cards visually checked at mobile scale.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/pandora-20261002/card-00.jpg",
+      "image": {
+        "source_url": "https://www.pandoragroup.com/about-us/history",
+        "original_url": "https://cdn.media.amplience.net/i/pandora/GB10053683-street?w=1600&fmt=jpg",
+        "download_url": "https://cdn.media.amplience.net/i/pandora/GB10053683-street?w=1600&fmt=jpg",
+        "sha256": "375b87df1159014c17eead02a9a9986a4108237cb2a9235b3f9bfc0a4561a3f8",
+        "image_role": "Current subject illustration; not a historical event",
+        "modifications": "Resized/cropped to established card template",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "asset_id": "primary:8696d494106d0f85033761ed",
+        "website_entity": "Q2241604",
+        "official_site": "https://www.pandoragroup.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      },
+      "sha256": "c466f6c76de6e84cffeab1779ee32c7a286338a608ca9a52a1a84ea9dbc52357"
+    },
+    {
+      "kind": "story",
+      "path": "approved/pandora-20261002/card-01.jpg",
+      "image": {
+        "source_url": "https://www.pandoragroup.com/about-us/history",
+        "original_url": "https://cdn.media.amplience.net/i/pandora/Pandora-History-Various_012?w=1600&fmt=jpg",
+        "download_url": "https://cdn.media.amplience.net/i/pandora/Pandora-History-Various_012?w=1600&fmt=jpg",
+        "sha256": "48562a8505b053d7969e8e7a3044e7eed3986bfe3dd3ca32e9de6221245a9f10",
+        "image_role": "المحل الأول — من أرشيف باندورا",
+        "modifications": "Resized/cropped to established card template",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "asset_id": "primary:f95f229987ac2040a524c05e",
+        "website_entity": "Q2241604",
+        "official_site": "https://www.pandoragroup.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      },
+      "sha256": "991cb31002644e268a91644a1fe12b628ee8ffbd1b829b200cbb87e60fa9c715"
+    },
+    {
+      "kind": "story",
+      "path": "approved/pandora-20261002/card-02.jpg",
+      "image": {
+        "source_url": "https://www.pandoragroup.com/about-us/history",
+        "original_url": "https://cdn.media.amplience.net/i/pandora/MO_Bracelet_gold_Xmas_NM_retouch-taller-10161?w=1600&fmt=jpg",
+        "download_url": "https://cdn.media.amplience.net/i/pandora/MO_Bracelet_gold_Xmas_NM_retouch-taller-10161?w=1600&fmt=jpg",
+        "sha256": "68158b68107e3913dc49362ebdb6cca71927acb84c5be8ba9b7f79dfd4e0b955",
+        "image_role": "سوار من منتجات باندورا — صورة توضيحية",
+        "modifications": "Resized/cropped to established card template",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "asset_id": "primary:b2f1ad940bc30e01be1df6e0",
+        "website_entity": "Q2241604",
+        "official_site": "https://www.pandoragroup.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      },
+      "sha256": "e3cb84214050782777599ffe479d692421dd63b47a20f4b6f4ecbd370f11b6aa"
+    },
+    {
+      "kind": "story",
+      "path": "approved/pandora-20261002/card-03.jpg",
+      "image": {
+        "source_url": "https://www.pandoragroup.com/media/press-releases/Pandora-opens-worlds-largest-fine-jewellery-crafting-facility",
+        "original_url": "https://cdn.media.amplience.net/i/pandora/Pandora-Vietnam-Crafting-Facility-Frontview?w=1600&fmt=jpg",
+        "download_url": "https://cdn.media.amplience.net/i/pandora/Pandora-Vietnam-Crafting-Facility-Frontview?w=1600&fmt=jpg",
+        "sha256": "6e716357b6d511fc03774f0df4f7e906bd5fa4f63ec89734d5233c8e9f9f89ee",
+        "image_role": "مصنع باندورا الجديد في فيتنام",
+        "modifications": "Resized/cropped to established card template",
+        "provider": "primary_media",
+        "source_kind": "official",
+        "asset_id": "primary:61fb2a36a45ac7c8bcbf64ac",
+        "website_entity": "Q2241604",
+        "official_site": "https://www.pandoragroup.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      },
+      "sha256": "385c23927b7e06a0c3212b640cf0749ded7cdca4192e75dc2c5347200e1de239"
+    }
+  ],
+  "predecessors": []
+}

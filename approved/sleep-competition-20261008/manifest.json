@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "خويّك اللي ينام بأي مكان… فاتته البطولة!",
+  "not_before": "2026-10-08T11:23:41Z",
+  "expires_at": "2026-10-08T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved exact displayed v4 card and requested publication 2026-10-08 14:23:41 Riyadh, and Almarai Bold 40 for future packages.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/sleep-competition-20261008/card-00.jpg",
+      "sha256": "b374f0d9a58fe80c0afbc7b8997c2614c01ca80bb6c7a440f88626df1d9b1bde",
+      "image": {
+        "provider": "primary_media",
+        "source_url": "https://www.afp.com/en/ready-set-snooze-sleep-deprived-japanese-compete-best-rested",
+        "original_url": "https://www.afp.com/sites/default/files/afp-stories/7ae793b177f9f3aac1268680f48f1fbd-0-hi.jpg",
+        "asset_id": "primary:338788cbfece805e537a48cf",
+        "sha256": "8cacb8d65f65555836c409012718c3ad620827b359491f23c995182c87b1b989",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "source_kind": "article",
+        "download_url": "https://www.afp.com/sites/default/files/afp-stories/7ae793b177f9f3aac1268680f48f1fbd-0-hi.jpg",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      }
+    }
+  ]
+}

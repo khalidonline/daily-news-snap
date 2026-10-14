@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "visual_review": {
+    "approved": true,
+    "reference": "Assistant actual 540x960 mobile preview inspection 2026-10-07; large type, distinct photo/grid and no overlap; Khalid authorized publication 09:39 Riyadh."
+  },
+  "cards": [
+    {
+      "sha256": "0de18cb68e1d07910a3132d1af03de424cad8a4ec85478bde7fade6a9e911893",
+      "headline": {
+        "text": "أمس الكأس للأخضر… واليوم التحدّي لك",
+        "size": 52,
+        "box": [
+          82,
+          305,
+          992,
+          378
+        ]
+      },
+      "bullets": [
+        {
+          "text": "شعار واحد مختلف… وينه؟",
+          "size": 51,
+          "box": [
+            82,
+            406,
+            992,
+            478
+          ]
+        }
+      ],
+      "cta": {
+        "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة",
+        "size": 38,
+        "box": [
+          82,
+          1613,
+          878,
+          1719
+        ]
+      }
+    }
+  ]
+}

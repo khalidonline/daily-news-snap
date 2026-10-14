@@ -1,0 +1,49 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "جدار برلين — ألمانيا تكمل ٣٦ سنة على وحدتها",
+  "not_before": "2026-10-03T09:10:11Z",
+  "expires_at": "2026-10-03T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicit انشر 2026-10-03 12:10:11 Asia/Riyadh, final Almarai cards with broad Wall photograph",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/berlin-unity-20261003/card-00.jpg",
+      "sha256": "4ed8e33d42df7a7c1537370bef922c3a61484c8f54f5e6ef4a762349170bc35d",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q64",
+        "official_site": "https://www.berlin.de/",
+        "source_url": "https://www.berlin.de/en/history/8482274-8619314-opening-and-fall-of-the-berlin-wall.en.html",
+        "original_url": "https://www.berlin.de/binaries/asset/image_assets/8625662/ratio_4_3/1705503089/800x600/",
+        "download_url": "https://www.berlin.de/binaries/asset/image_assets/8625662/ratio_4_3/1705503089/800x600/",
+        "asset_id": "primary:a8becfd4fe599664e422a4a8",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/berlin-unity-20261003/card-01.jpg",
+      "sha256": "a8d0705de927118cb3d12d0eb9fc9ab48e121493ad7611dce9b3057743f794da",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q64",
+        "official_site": "https://www.berlin.de/",
+        "source_url": "https://www.berlin.de/en/history/8482274-8619314-opening-and-fall-of-the-berlin-wall.en.html",
+        "original_url": "https://www.berlin.de/binaries/asset/image_assets/2800806/ratio_2_1/1702975890/1000x500/",
+        "download_url": "https://www.berlin.de/binaries/asset/image_assets/2800806/ratio_2_1/1702975890/1000x500/",
+        "asset_id": "primary:9254c04462c32aea524896fa",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false
+      }
+    }
+  ]
+}

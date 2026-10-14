@@ -12,7 +12,7 @@ class SavedReplayTests(unittest.TestCase):
     def setUp(self):
         sources=evidence()
         self.saved={'lane':'daily','expires_at':policy.expiry(NOW),
-          'candidate':{'url':sources[0]['url'],'published_at':NOW.isoformat()},
+          'candidate':{'id':'saved-candidate','url':sources[0]['url'],'published_at':NOW.isoformat()},
           'timing':{'eligible':True,'event_date':'2026-09-17','event_source_id':'s1',
                     'event_quote':'17 September 2026','timing_basis':'event','reason':'Current event'},
           'sources':[dict(sources[0],retrieved_text_sha256=hashlib.sha256(sources[0]['text'].encode()).hexdigest())],
@@ -40,6 +40,7 @@ class SavedReplayTests(unittest.TestCase):
     def test_only_writer_and_reviewer_and_no_readiness_approval(self):
         result=self.run_replay()
         self.assertEqual(self.calls,['writer','reviewer'])
+        self.assertEqual(self.agent.package_id, 'saved-candidate')
         self.assertEqual(result['status'],'replay_review_passed')
         self.assertFalse(result['automated_readiness'])
         self.assertNotIn('receipt',result)

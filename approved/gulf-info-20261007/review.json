@@ -1,0 +1,28 @@
+{
+  "reviewed": true,
+  "scope": "one-card information",
+  "mobile_preview": "540x960 inspected; headline single line; large body; no overlap; established brand",
+  "source_asset": {
+    "provider": "primary_media",
+    "source_kind": "article",
+    "source_url": "https://ajel.sa/sports/tyyrjrp56",
+    "original_url": "https://cdn.ajel.sa/articles/2026-10/Capture-crop-bOIx_dWv.png",
+    "download_url": "https://cdn.ajel.sa/articles/2026-10/Capture-crop-bOIx_dWv.png",
+    "asset_id": "primary:fe46049df28b9fe101467914",
+    "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+    "rights_status": "owner_accepted_editorial_use",
+    "license": "All rights reserved",
+    "licensing_verified": false,
+    "sha256": "9991c3e00832cef0bf70dd5849170d39db94af3dab991e9ba159775c3ef979d7"
+  },
+  "internal_sources": [
+    "https://ajel.sa/sports/tyyrjrp56",
+    "https://www.okaz.com.sa/sport/na/2269656",
+    "https://agcff.com/1532/",
+    "https://www.national-football-teams.com/country/139/2009/Oman.html"
+  ],
+  "statistical_wording": "All confrontations won counts advancement on penalties; not an official all-wins regulation-time statistical claim. Kuwait 1974 no conceded goals; Oman 2009 drawn group game excluded.",
+  "answer_internal_only": null,
+  "paid_model_calls": 0,
+  "identity": "c881699c35fef7ca86d011276d4c5ecac134a47e668cfe499f85f6cd382f94af"
+}

@@ -1,0 +1,184 @@
+[
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "foldable-compact-20261003",
+    "identity": "a307e6438745dcf640db2e6f9ca9b306defbe28eac90248b034f6da821d7116a",
+    "title": "زجاج ينثني بدون ما ينكسر؟",
+    "source_identity": "3a712aa4d308d9de2564be77efb788f4e3cce0c873ea982daef8d49c47ee887a",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "23a943c3-9780-4126-8c41-a1a63d024ca7",
+        "upload_id": "a5e8c9b6-edb8-4e7d-9040-f9aff2c25b35"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "3413ed63-9252-4da0-9a36-d11138613f4f",
+        "upload_id": "8928d160-56f7-4d57-ba05-d2fe22d4b9b4"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "7bebf1b1-df6b-4d08-a1eb-0a989666876c",
+        "upload_id": "12cb734c-1679-4eca-9251-68e5a3c59c3a"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "0a97a88f-2101-4927-bcc8-61e6f10c7cd3",
+        "upload_id": "6cfa5ba3-4227-41f6-9617-f447c094006c"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f38edb62-5bf2-416f-bd40-43afaf519c1b",
+        "upload_id": "4ab2e21e-a4b1-4896-ab08-ff19cbf9eff6"
+      }
+    ],
+    "previous_saved": {
+      "identity": "3a712aa4d308d9de2564be77efb788f4e3cce0c873ea982daef8d49c47ee887a",
+      "title": "الشاشات القابلة للطي",
+      "upload_ids": [
+        "a5e8c9b6-edb8-4e7d-9040-f9aff2c25b35",
+        "8928d160-56f7-4d57-ba05-d2fe22d4b9b4",
+        "12cb734c-1679-4eca-9251-68e5a3c59c3a",
+        "6cfa5ba3-4227-41f6-9617-f447c094006c",
+        "4ab2e21e-a4b1-4896-ab08-ff19cbf9eff6"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-09-30T21:31:09.827691+00:00",
+      "post_id": "0b972575-d015-424c-a933-ab5e49c88cb7",
+      "confirmed_at": "2026-09-30T21:32:00.767492+00:00",
+      "provider_result": {
+        "id": "0b972575-d015-424c-a933-ab5e49c88cb7",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "4597e0b1-76db-4295-b6f0-ee7f9de95223",
+            "mediaId": "ecef9003-603c-47a1-b80e-5025597186d1",
+            "mediaIds": [
+              "ecef9003-603c-47a1-b80e-5025597186d1",
+              "6c77d1a8-effb-4ad7-9607-3c346ed8926f",
+              "cf2faabd-4410-49d3-806e-a7b7f0d13240",
+              "6ef77d1d-b480-4111-aa42-0e5970abcad3",
+              "e47932b9-4c05-4d4d-a11e-6f6785d71447"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "a5e8c9b6-edb8-4e7d-9040-f9aff2c25b35",
+            "sourceUploadIds": [
+              "a5e8c9b6-edb8-4e7d-9040-f9aff2c25b35",
+              "8928d160-56f7-4d57-ba05-d2fe22d4b9b4",
+              "12cb734c-1679-4eca-9251-68e5a3c59c3a",
+              "6cfa5ba3-4227-41f6-9617-f447c094006c",
+              "4ab2e21e-a4b1-4896-ab08-ff19cbf9eff6"
+            ],
+            "mediaUploadedAt": "2026-09-30T21:31:22.257Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid approved compact designs then said ثم انشر on 2026-10-03 13:01:59 Asia/Riyadh. Archive replacement only; old deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "59f4ef801ae4c9c0cb0dc06264ef44b201ae930b57b1193fa32627a4219a92cd",
+        "path": "approved/archive-compact-20261003/foldable-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "7c05971f7b2c9af9e3fdd51d87e83fe5ceab604bfb81b8fb1f8f2828b50cb111",
+        "path": "approved/archive-compact-20261003/foldable-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "premium-compact-20261003",
+    "identity": "2e483854dedaa82e567f1cada500f89b0c4177544c63835c9fcdc049351b3584",
+    "title": "راحة أكثر… بدون سعر البزنس",
+    "source_identity": "3589df13858971844cb90f9ed5f9d78b441db3e66909676182ab98f71a45c96b",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "1c013d2d-e556-4035-afb7-461842eaeb70",
+        "upload_id": "62ccc3c2-60fd-4562-a851-fd4af7335bfa"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "1b3eeb8e-0fcf-424b-85be-4854cc14bbc4",
+        "upload_id": "f736ada4-8e10-4c45-ae9a-19e6f39f9415"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "5f1754cd-f92a-42ba-8d22-168e67676909",
+        "upload_id": "2a290396-f591-41e2-aeb0-712754c9b9c3"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "bf25bc9b-99fc-458a-87a2-f6124e5754ad",
+        "upload_id": "09370ce0-18a8-46d6-ba44-ea488b868d64"
+      }
+    ],
+    "previous_saved": {
+      "identity": "3589df13858971844cb90f9ed5f9d78b441db3e66909676182ab98f71a45c96b",
+      "title": "السياحية الممتازة — ملخص تنفيذي",
+      "upload_ids": [
+        "62ccc3c2-60fd-4562-a851-fd4af7335bfa",
+        "f736ada4-8e10-4c45-ae9a-19e6f39f9415",
+        "2a290396-f591-41e2-aeb0-712754c9b9c3",
+        "09370ce0-18a8-46d6-ba44-ea488b868d64"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-09-30T21:30:14.614134+00:00",
+      "post_id": "f64ca10e-551b-466e-b6bb-3034f6b1aa90",
+      "confirmed_at": "2026-09-30T21:31:01.511255+00:00",
+      "provider_result": {
+        "id": "f64ca10e-551b-466e-b6bb-3034f6b1aa90",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "8803e943-a573-4c15-8a83-32c6c7fada61",
+            "mediaId": "193a91ef-00e2-407d-8a2b-fe0ce7b7768e",
+            "mediaIds": [
+              "193a91ef-00e2-407d-8a2b-fe0ce7b7768e",
+              "62c29801-5c8b-4290-b515-11c4ba5f1784",
+              "5ae6e715-cb1c-4299-8b6f-b80ddf7693ca",
+              "cd2609b9-be48-46d3-8df2-c9ba72124516"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "62ccc3c2-60fd-4562-a851-fd4af7335bfa",
+            "sourceUploadIds": [
+              "62ccc3c2-60fd-4562-a851-fd4af7335bfa",
+              "f736ada4-8e10-4c45-ae9a-19e6f39f9415",
+              "2a290396-f591-41e2-aeb0-712754c9b9c3",
+              "09370ce0-18a8-46d6-ba44-ea488b868d64"
+            ],
+            "mediaUploadedAt": "2026-09-30T21:30:25.569Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid approved compact designs then said ثم انشر on 2026-10-03 13:01:59 Asia/Riyadh. Archive replacement only; old deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "b0b73698f778a4e636537a89e1f501ca808612852fa8d03fa90caacb3d5bba0c",
+        "path": "approved/archive-compact-20261003/premium-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "edf7740ebc16b6e33c79584533cf89af1bd2dbcf3564de76a643f3db934e95d0",
+        "path": "approved/archive-compact-20261003/premium-2.jpg"
+      }
+    ]
+  }
+]

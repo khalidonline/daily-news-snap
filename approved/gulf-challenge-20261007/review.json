@@ -1,0 +1,28 @@
+{
+  "reviewed": true,
+  "scope": "exact 4x4 visual challenge",
+  "mobile_preview": "540x960 inspected; headline single line; large body; no overlap; established brand",
+  "source_asset": {
+    "provider": "primary_media",
+    "source_kind": "article",
+    "source_url": "https://en.wikipedia.org/wiki/File:Saudi_Arabia_national_football_team_logo.svg",
+    "original_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+    "download_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+    "asset_id": "primary:b03b2bf7e16e537bde955cb0",
+    "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+    "rights_status": "owner_accepted_editorial_use",
+    "license": "All rights reserved",
+    "licensing_verified": false,
+    "sha256": "d2066b50e3e4e666c56e2b38224b706391d34b7f8db47fd2f72fa5b03af9de17"
+  },
+  "internal_sources": [
+    "https://ajel.sa/sports/tyyrjrp56",
+    "https://www.okaz.com.sa/sport/na/2269656",
+    "https://agcff.com/1532/",
+    "https://www.national-football-teams.com/country/139/2009/Oman.html"
+  ],
+  "statistical_wording": "All confrontations won counts advancement on penalties; not an official all-wins regulation-time statistical claim. Kuwait 1974 no conceded goals; Oman 2009 drawn group game excluded.",
+  "answer_internal_only": "Third row from top, second column from right; crest rotated 12 degrees.",
+  "paid_model_calls": 0,
+  "identity": "8d5dc76c64a0bc7d37553c8f9ebfb03893749ce5d380445bd08d31efc74f8c51"
+}

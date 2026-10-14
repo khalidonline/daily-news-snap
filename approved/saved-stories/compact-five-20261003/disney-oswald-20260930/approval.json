@@ -1,0 +1,122 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "package": "disney-oswald-20260930-compact-20261003",
+  "identity": "18f24feb4f94eb4271b0aa98942df1baa8ee914157ffd8fed36a44ac2e3bddf6",
+  "title": "ديزني خسر أرنب… وكسب ميكي",
+  "authorization": "Khalid 2026-10-03 15:04 Asia/Riyadh: renew ONLY City, Disney, Ceer, Apple final, Air Rage using original photos/template, max two cards; keep two operations reserve. Current scheduled request explicitly permits preparation and independent archive approval.",
+  "not_before": "2026-10-03T20:52:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "source_identity": "0830b6a400ae8b2113c2a6e4762c487e94d5f8a9c34b2f427dc34d228350e82e",
+  "source_rows": [
+    {
+      "status": "POSTED",
+      "post_id": "c7015453-bbfa-460c-a853-835338751f89",
+      "upload_id": "1ac8c597-d05c-4c2f-a585-ddb84ac1434f"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "a618d45f-95ff-4b61-8af1-8001ea62955c",
+      "upload_id": "4c622bdb-62d4-4569-8713-24e33e477502"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "39b74367-04b3-4e61-9f83-c690ccebdd31",
+      "upload_id": "e0e8ae59-39eb-46cd-a7fb-6f2782a4d1da"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "71bb9c97-2a0c-473f-963d-f68a5d16aa04",
+      "upload_id": "c1905a35-737f-47f0-a25e-c9f679dca049"
+    }
+  ],
+  "source_manifest": "approved/disney-oswald-20260930/manifest.json",
+  "source_manifest_sha256": "61fe7cb3f41fac05f40ee1e9c476bad0f63b6cd2d7fa4b0c47f5e527baad2ad4",
+  "source_manifest_identity": "0830b6a400ae8b2113c2a6e4762c487e94d5f8a9c34b2f427dc34d228350e82e",
+  "source_commit": "f2094a14df7696a09c4e5596682edff8f85e03ec",
+  "previous_saved": {
+    "identity": "90c30f79d391e9cb1001c3f40061c8e84788874797eb180d9191edfabeacc73d",
+    "title": "ديزني — من أوزوالد إلى ميكي",
+    "upload_ids": [
+      "6055d5e2-e3fc-483b-87d0-1d3e5a4b50e5",
+      "620d198f-1aae-440c-b8bf-872d2825c6b7",
+      "eed93d80-e736-4c9f-a05e-7130aefde27f",
+      "d097f5fc-4e6d-496c-b6f2-189f12b6c5be"
+    ],
+    "status": "POSTED",
+    "intent_at": "2026-10-01T09:11:59.910065+00:00",
+    "post_id": "bfa40a5b-9151-4339-9c0b-14f439dbb5d4",
+    "confirmed_at": "2026-10-01T09:12:45.610819+00:00",
+    "provider_result": {
+      "id": "bfa40a5b-9151-4339-9c0b-14f439dbb5d4",
+      "status": "POSTED",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "fe876390-06b2-49dd-8ea6-e452e98767ea",
+          "mediaId": "730ef3f3-2211-4c4d-898a-54bec39f7495",
+          "mediaIds": [
+            "730ef3f3-2211-4c4d-898a-54bec39f7495",
+            "2c93ed92-9be9-4076-ba92-6a6d0b96f237",
+            "06620546-e0cb-4a31-9b1e-b9293fde82a4",
+            "680ec950-fccb-4a08-b745-851459c61604"
+          ],
+          "type": "SAVED_STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "6055d5e2-e3fc-483b-87d0-1d3e5a4b50e5",
+          "sourceUploadIds": [
+            "6055d5e2-e3fc-483b-87d0-1d3e5a4b50e5",
+            "620d198f-1aae-440c-b8bf-872d2825c6b7",
+            "eed93d80-e736-4c9f-a05e-7130aefde27f",
+            "d097f5fc-4e6d-496c-b6f2-189f12b6c5be"
+          ],
+          "mediaUploadedAt": "2026-10-01T09:12:10.949Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      }
+    },
+    "source_identity": "0830b6a400ae8b2113c2a6e4762c487e94d5f8a9c34b2f427dc34d228350e82e",
+    "package": "disney-oswald-20260930",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "scope": "SAVED_STORY_ONLY",
+    "media_sha256": [
+      "159a349d477389dfdbf93afb62cf0b3f57502de61b1d2362b965c439a6555a2d",
+      "49ab0b50cd8aadf8a6493ec801f9e4dd95803c79cc7b8c16fb68fd70f62016ff",
+      "9663bd68089fc15d9587f49579c755af4d061ffddd98308622c0e9b1f1f3fc91",
+      "fdbd10087b103b62ae841a031952a777fa9ea259ec93970ec9016caf6abd9ca2"
+    ]
+  },
+  "media": [
+    {
+      "path": "approved/saved-stories/compact-five-20261003/disney-oswald-20260930/card-01.jpg",
+      "kind": "info",
+      "sha256": "a0150827d1e9a805b20a98da53df55c57b33207a4dc9ab4dee52445ec9681a2a"
+    },
+    {
+      "path": "approved/saved-stories/compact-five-20261003/disney-oswald-20260930/card-02.jpg",
+      "kind": "story",
+      "sha256": "57790a6a96e7ed7aa35fd0509fdde47c8fe4dd90f711c7c4dd8c946443c7bab5"
+    }
+  ],
+  "reserve_quota": 2,
+  "quota_check_required_before_send": true,
+  "live_source_and_provider_inventory_recheck_required": true,
+  "status": "REVIEWED_WAITING_QUOTA",
+  "sources_internal_only": [
+    "https://thewaltdisneycompany.com/news/oswald-the-lucky-rabbit-anniversary-disney/",
+    "https://thewaltdisneycompany.com/news/happy-85th-anniversary-oswald-the-lucky-rabbit/"
+  ],
+  "old_deletion_status": "PENDING_SNAPCHAT_APP_NO_DELETION_CLAIM",
+  "snapshot_audit_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062",
+  "review": {
+    "cards": 2,
+    "font_family": "Almarai",
+    "body_px": 52,
+    "phone_preview_reviewed": true,
+    "share_panel_separate": true,
+    "sources_excluded_from_media": true,
+    "paid_model_requests": 0,
+    "reused_exactly": "drafts/disney-short-v4-20261002"
+  }
+}

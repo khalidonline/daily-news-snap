@@ -35,7 +35,7 @@ class AgentTests(unittest.TestCase):
         self.ledger = Ledger(self.store, now=lambda: datetime(2026, 9, 17, tzinfo=timezone.utc))
 
     def agent(self, transport):
-        return Agents(env={'ANTHROPIC_API_KEY': 'credential-sentinel-never-in-prompts'}, ledger=self.ledger, transport=transport)
+        return Agents(env={'ANTHROPIC_API_KEY': 'credential-sentinel-never-in-prompts', 'PACKAGE_ID': 'offline-adapter'}, ledger=self.ledger, transport=transport)
 
     def test_budget_is_reserved_before_request_and_settled(self):
         def transport(method, url, headers, payload):
@@ -46,7 +46,7 @@ class AgentTests(unittest.TestCase):
             return {'status_code': 200, 'body': {'id': 'receipt', 'stop_reason': 'end_turn',
                     'usage': {'input_tokens': 100, 'output_tokens': 10},
                     'content': [{'type': 'text', 'text': '{"candidates": []}'}]}}
-        result = self.agent(transport).run('editor', {'candidates': []})
+        result = self.agent(transport).run('writer', {'candidates': []})
         self.assertEqual(result, {'candidates': []})
         self.assertTrue(all(e['status'] == 'settled' for e in self.store.row['entries'].values()))
 
@@ -57,7 +57,7 @@ class AgentTests(unittest.TestCase):
                 'usage': {'input_tokens': 100, 'output_tokens': 2000},
                 'content': [{'type': 'text', 'text': '{'}]}}
         agent = self.agent(transport)
-        with self.assertRaises(RuntimeError): agent.run('editor', {'candidates': []})
+        with self.assertRaises(RuntimeError): agent.run('writer', {'candidates': []})
         self.assertEqual(agent.receipts[0]['stop_reason'], 'max_tokens')
         self.assertTrue(all(e['status'] == 'settled' for e in self.store.row['entries'].values()))
 
@@ -66,7 +66,7 @@ class AgentTests(unittest.TestCase):
                  'usage': {'input_tokens': 10, 'output_tokens': 10},
                  'content': [{'type': 'text', 'text': '{"candidates": []}'}]}}
         with patch('publishing_v2.providers._default_transport', return_value=reply) as transport:
-            self.agent(None).run('editor', {'candidates': []})
+            self.agent(None).run('writer', {'candidates': []})
         self.assertEqual(transport.call_args.kwargs['timeout_seconds'], 180)
 
     def test_ambiguous_provider_error_keeps_reservation(self):
@@ -77,7 +77,7 @@ class AgentTests(unittest.TestCase):
     def test_no_call_when_budget_exhausted(self):
         self.ledger.reserve(3_000_000, 'another-package')
         def forbidden(*args): self.fail('Paid request escaped the budget')
-        with self.assertRaises(BudgetBlocked): self.agent(forbidden).run('editor', {})
+        with self.assertRaises(BudgetBlocked): self.agent(forbidden).run('writer', {})
 
     def test_unknown_role_cannot_receive_publishing_tools(self):
         with self.assertRaises(ValueError): self.agent(None).run('publisher', {})

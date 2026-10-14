@@ -1,0 +1,525 @@
+[
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "air-rage-20261001",
+    "title": "مشاجرات الجو — من قمرة القيادة إلى منع السفر",
+    "source_identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b",
+    "source_title_aliases": [
+      "مشاجرات الجو — من قمرة القيادة إلى منع السفر"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "e11a2530-329c-4a45-90ab-4311be804f8a",
+        "upload_id": "824aa6e9-7e3e-42db-a0f8-711d63567efd"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "31b4b52d-8c8d-42f2-8ca2-9d8200869425",
+        "upload_id": "074c838f-4010-49ef-8cce-98df0aae959b"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "1632421a-0e0a-4e4c-8859-6f038c1865f0",
+        "upload_id": "056d5e9f-c4fd-49af-afb3-54acded29f6e"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "1295c3d3-b37a-45fd-9e22-00d10e8919ea",
+        "upload_id": "01172a88-1e6b-44a7-bf8c-fec0d8a53e3d"
+      }
+    ],
+    "media": [
+      {
+        "path": "approved/air-rage-20261001/card-00.jpg",
+        "sha256": "8c63b24db51e51efae2cf816f4b0f74bc68f6007698b4f58015f86f92654828d",
+        "kind": "info",
+        "reuse_upload_id": "824aa6e9-7e3e-42db-a0f8-711d63567efd",
+        "original_sha256": "8c63b24db51e51efae2cf816f4b0f74bc68f6007698b4f58015f86f92654828d"
+      },
+      {
+        "path": "approved/air-rage-20261001/card-01.jpg",
+        "sha256": "af082ed4748e5eca511200e25fe374527af4ba308293b9200c24dddfd132e421",
+        "kind": "story",
+        "reuse_upload_id": "074c838f-4010-49ef-8cce-98df0aae959b",
+        "original_sha256": "af082ed4748e5eca511200e25fe374527af4ba308293b9200c24dddfd132e421"
+      },
+      {
+        "path": "approved/air-rage-20261001/card-02.jpg",
+        "sha256": "27858880091aec0b5b44ef84dcb849d25004cfba5985c25ed878f7ddeeba9376",
+        "kind": "story",
+        "reuse_upload_id": "056d5e9f-c4fd-49af-afb3-54acded29f6e",
+        "original_sha256": "27858880091aec0b5b44ef84dcb849d25004cfba5985c25ed878f7ddeeba9376"
+      },
+      {
+        "path": "approved/air-rage-20261001/card-03.jpg",
+        "sha256": "81ad23f0203e38baa66fd187e5010c3c41b25a7dbbd9f79ea0f7a00a4a303204",
+        "kind": "story",
+        "reuse_upload_id": "01172a88-1e6b-44a7-bf8c-fec0d8a53e3d",
+        "original_sha256": "81ad23f0203e38baa66fd187e5010c3c41b25a7dbbd9f79ea0f7a00a4a303204"
+      }
+    ],
+    "identity": "8edde88abfc6f41baa9603b5778a8e73e47061887183a12a2cbb481afce2b67b"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "nespresso-20261001",
+    "title": "نسبرسو — المشروع اللي كاد يتوقف",
+    "source_identity": "e923d47ab452b5b9c86e4df964494c92b3bee3b75a925d9fe4834e5fee514986",
+    "source_title_aliases": [
+      "نسبرسو — المشروع اللي كاد يتوقف"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "f961148b-502b-45dd-8742-aeab09568c1b",
+        "upload_id": "476323dc-926f-4f60-8bcc-7b87109443f4"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "9bf7ba99-0037-4a52-8f06-703981757038",
+        "upload_id": "6f8529c3-5700-4b28-9d97-7a97046bbb42"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "8a2bf129-ef37-4b30-95e7-c33045e558c9",
+        "upload_id": "a4775aac-4dcf-413b-a2a9-bb34a7ef3303"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "714eac6f-f2b8-4074-b2e7-ee680556b600",
+        "upload_id": "72b95b93-5a52-4699-a348-1fdeda2ea16c"
+      }
+    ],
+    "media": [
+      {
+        "path": "approved/nespresso-20261001/card-00.jpg",
+        "sha256": "2a4e27f80f4da62aaa15ec061ada2bff7fa8e3059b332d2009a2fa2a6d6ee692",
+        "kind": "info",
+        "reuse_upload_id": "476323dc-926f-4f60-8bcc-7b87109443f4",
+        "original_sha256": "2a4e27f80f4da62aaa15ec061ada2bff7fa8e3059b332d2009a2fa2a6d6ee692"
+      },
+      {
+        "path": "approved/nespresso-20261001/card-01.jpg",
+        "sha256": "78162f6faf87eecb29ffa51caf511fed3a4d3ffdf9fb0d4bc1344d59124d3329",
+        "kind": "story",
+        "reuse_upload_id": "6f8529c3-5700-4b28-9d97-7a97046bbb42",
+        "original_sha256": "78162f6faf87eecb29ffa51caf511fed3a4d3ffdf9fb0d4bc1344d59124d3329"
+      },
+      {
+        "path": "approved/nespresso-20261001/card-02.jpg",
+        "sha256": "a365efea183279808a8fd7f607c9c4cbc32aa808c2fdb2272915f9c1055a44b4",
+        "kind": "story",
+        "reuse_upload_id": "a4775aac-4dcf-413b-a2a9-bb34a7ef3303",
+        "original_sha256": "a365efea183279808a8fd7f607c9c4cbc32aa808c2fdb2272915f9c1055a44b4"
+      },
+      {
+        "path": "review/archive-final-20261001/nespresso-20261001/card-03.jpg",
+        "sha256": "5ba6ada5f9fd7ebd0f1bd43fcb84826c4ee5b55a82ef349a9373173faacc06ca",
+        "kind": "story"
+      }
+    ],
+    "identity": "1b07d3cc3db01285bdb75d3d6247460d4b36726fef8592c896ef9cc39c013c01",
+    "owner_replaced_post_ids": [
+      "714eac6f-f2b8-4074-b2e7-ee680556b600"
+    ],
+    "replacement_sha256": "5ba6ada5f9fd7ebd0f1bd43fcb84826c4ee5b55a82ef349a9373173faacc06ca"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "american-express-20260929",
+    "title": "أمريكان إكسبرس — من الطرود إلى البطاقات",
+    "source_identity": "b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f",
+    "source_title_aliases": [
+      "أمريكان إكسبرس — من الطرود إلى البطاقات"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "d52d2c81-f9b6-4808-98b0-d101d512f479",
+        "upload_id": "2fd19ccb-87a6-480f-b081-2ccd8b972f79"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "8d5f662b-a83a-49f9-97a6-d906e9ceb599",
+        "upload_id": "b64f809c-4d50-4c7d-a662-cc5c372d5c20"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f7fbb4c0-d85f-486b-a377-87d57a952d3e",
+        "upload_id": "d4d9fae4-ec63-49fb-b434-06a6e26f2b6c"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "1123fef2-88db-47f2-ac53-9a88a00d9a05",
+        "upload_id": "9b58365f-dc76-43d1-8cde-70cf59b9cb73"
+      }
+    ],
+    "media": [
+      {
+        "path": "approved/american-express-20260929/card-00.jpg",
+        "sha256": "01ca55365189d345ffda4528a7044229ca9ca0a64077a888abbaa51e314844da",
+        "kind": "info",
+        "reuse_upload_id": "2fd19ccb-87a6-480f-b081-2ccd8b972f79",
+        "original_sha256": "01ca55365189d345ffda4528a7044229ca9ca0a64077a888abbaa51e314844da"
+      },
+      {
+        "path": "approved/american-express-20260929/card-01.jpg",
+        "sha256": "d37f42e2e2e5d42587738b17b074b339273ad9d86093048cb70d115997668cce",
+        "kind": "story",
+        "reuse_upload_id": "b64f809c-4d50-4c7d-a662-cc5c372d5c20",
+        "original_sha256": "d37f42e2e2e5d42587738b17b074b339273ad9d86093048cb70d115997668cce"
+      },
+      {
+        "path": "approved/american-express-20260929/card-02.jpg",
+        "sha256": "aff830d700a472635d7262d0c48995bb5ee1188e2c0f0b3ba30dde97bfa2b87e",
+        "kind": "story",
+        "reuse_upload_id": "d4d9fae4-ec63-49fb-b434-06a6e26f2b6c",
+        "original_sha256": "aff830d700a472635d7262d0c48995bb5ee1188e2c0f0b3ba30dde97bfa2b87e"
+      },
+      {
+        "path": "approved/american-express-20260929/card-03.jpg",
+        "sha256": "fe5114a3a4cd147e3c1e4419d94cea344c6aa8fc8ba781a055f302936299fd4d",
+        "kind": "story",
+        "reuse_upload_id": "9b58365f-dc76-43d1-8cde-70cf59b9cb73",
+        "original_sha256": "fe5114a3a4cd147e3c1e4419d94cea344c6aa8fc8ba781a055f302936299fd4d"
+      }
+    ],
+    "identity": "b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "disney-oswald-20260930",
+    "title": "ديزني — من أوزوالد إلى ميكي",
+    "source_identity": "0830b6a400ae8b2113c2a6e4762c487e94d5f8a9c34b2f427dc34d228350e82e",
+    "source_title_aliases": [
+      "ديزني — من أوزوالد إلى ميكي"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "c7015453-bbfa-460c-a853-835338751f89",
+        "upload_id": "1ac8c597-d05c-4c2f-a585-ddb84ac1434f"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "a618d45f-95ff-4b61-8af1-8001ea62955c",
+        "upload_id": "4c622bdb-62d4-4569-8713-24e33e477502"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "39b74367-04b3-4e61-9f83-c690ccebdd31",
+        "upload_id": "e0e8ae59-39eb-46cd-a7fb-6f2782a4d1da"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "71bb9c97-2a0c-473f-963d-f68a5d16aa04",
+        "upload_id": "c1905a35-737f-47f0-a25e-c9f679dca049"
+      }
+    ],
+    "media": [
+      {
+        "path": "review/archive-final-20261001/disney-oswald-20260930/card-00.jpg",
+        "sha256": "159a349d477389dfdbf93afb62cf0b3f57502de61b1d2362b965c439a6555a2d",
+        "kind": "info"
+      },
+      {
+        "path": "review/archive-final-20261001/disney-oswald-20260930/card-01.jpg",
+        "sha256": "49ab0b50cd8aadf8a6493ec801f9e4dd95803c79cc7b8c16fb68fd70f62016ff",
+        "kind": "story"
+      },
+      {
+        "path": "review/archive-final-20261001/disney-oswald-20260930/card-02.jpg",
+        "sha256": "9663bd68089fc15d9587f49579c755af4d061ffddd98308622c0e9b1f1f3fc91",
+        "kind": "story"
+      },
+      {
+        "path": "review/archive-final-20261001/disney-oswald-20260930/card-03.jpg",
+        "sha256": "fdbd10087b103b62ae841a031952a777fa9ea259ec93970ec9016caf6abd9ca2",
+        "kind": "story"
+      }
+    ],
+    "identity": "90c30f79d391e9cb1001c3f40061c8e84788874797eb180d9191edfabeacc73d"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "7dogs-20260927",
+    "title": "٧ دوجز — مليون تذكرة",
+    "source_identity": "d18a2e626624c4ce118f1fb574fb24dd188e05626a2807f474bdb1fe4a8ef89b",
+    "source_title_aliases": [
+      "«7 دوجز» أول فيلم عربي يبيع مليون تذكرة في السينما السعودية"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "46170d1d-2b71-4200-a8b0-4206fd40c864",
+        "upload_id": "ff977144-61c8-49bd-8192-5c6c9ef78877"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "0d96bde9-efb8-4348-a952-0b4b89507e22",
+        "upload_id": "afaa48bb-33b1-4e00-b38f-b26fa2b8bb46"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "91726dba-aca8-4ece-8a3b-5cb273d05919",
+        "upload_id": "ccabb82f-a740-42d2-8143-2c6a3a942305"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "d127582e-32bf-4b56-b4b9-92928efdb632",
+        "upload_id": "e72e6e6e-c16c-4ef4-b754-3aac944437b4"
+      }
+    ],
+    "media": [
+      {
+        "path": "review/archive-final-20261001/7dogs-20260927/card-00.jpg",
+        "sha256": "688e77dd5654a0919b5384703813933e421cef20814ba4caed5ba4d9d8f6aa3c",
+        "kind": "info"
+      },
+      {
+        "path": "review/archive-final-20261001/7dogs-20260927/card-01.jpg",
+        "sha256": "ad079bd4a366e0b32a24930ebc23f734cea38a7be1ceee2ef07b842d412338de",
+        "kind": "story"
+      }
+    ],
+    "identity": "df08139bd0bbd9aafae9ac4b391ad7ad1240b01fe3ea030a6cdea69839d68cbb"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "apple-revision-20260926",
+    "title": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد",
+    "source_identity": "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443",
+    "source_title_aliases": [
+      "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "dbde26ec-5ce8-4945-ba77-8116f44d3878",
+        "upload_id": "6d26c814-d30e-4e68-9a38-7c2bdd891f85"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "80bddbc6-2e7d-4882-ab39-69e48d55117a",
+        "upload_id": "ad92a07d-a97c-47c6-8669-2a4645ec1bd5"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "812fb960-7898-4e9d-ab10-62b6a218fe67",
+        "upload_id": "64865634-101f-4daa-86ee-387c2647458a"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "eb394ed5-e912-48da-975e-dfc64753bfe2",
+        "upload_id": "227951de-42a2-4cae-b908-0ad25ef9aa10"
+      }
+    ],
+    "media": [
+      {
+        "path": "review/archive-final-20261001/apple-revision-20260926/card-00.jpg",
+        "sha256": "38bf0c79631791f0726c934fc98bd72c90dd6b36f0616902e17565ccd806ff1a",
+        "kind": "info"
+      },
+      {
+        "path": "review/archive-final-20261001/apple-revision-20260926/card-01.jpg",
+        "sha256": "dfd5fcb760772ba1b04f097515d124f35d906514455af7d0f8ce12cfccfa10cf",
+        "kind": "story"
+      }
+    ],
+    "identity": "4bb2f2b4744630357cc31ad62f7c7ed9f2f08d55e6fb4bc1e427b695d73f4032"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "silent-hill-revision-20260926",
+    "title": "سايلنت هيل… الرعب فيها مو بس وحوش",
+    "source_identity": "b8618f7be230eaba707b26888a69f7d673bd11825adfcdd94773f89acbad9fb4",
+    "source_title_aliases": [
+      "سايلنت هيل… الرعب فيها مو بس وحوش"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "4b320e54-d34b-4764-bc44-b07f80d41543",
+        "upload_id": "6d19a184-9438-4151-bb12-79486106ea45"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "cc6b54ab-02c5-4413-8f46-363548714369",
+        "upload_id": "99c0dc4e-ca91-4ede-9b7d-38ef1a09f0f4"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "6d90396e-21b9-46de-b4a9-9044a062140f",
+        "upload_id": "2cbfa6d9-68e3-4d78-998b-3dbc0c5c1ce0"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "1a63879e-b43c-49b0-9192-c60c63de2897",
+        "upload_id": "88c7563a-84cb-4c19-9d4f-89efc3781aa2"
+      }
+    ],
+    "media": [
+      {
+        "path": "review/archive-final-20261001/silent-hill-revision-20260926/card-00.jpg",
+        "sha256": "5fdfdbfcafa720f5254968fd8cec951103421aa583c8858a75aab75157c529c6",
+        "kind": "info"
+      },
+      {
+        "path": "review/archive-final-20261001/silent-hill-revision-20260926/card-01.jpg",
+        "sha256": "f3405c7c74b94da22d7a5d705cd6fae2bcc5560244200bde1d626a7a331a39ce",
+        "kind": "story"
+      },
+      {
+        "path": "review/archive-final-20261001/silent-hill-revision-20260926/card-02.jpg",
+        "sha256": "31e6a33b64298310ffdeb8c89684da8161960fb3fe20ffcb3cdc9aa7c0bacdd8",
+        "kind": "story"
+      },
+      {
+        "path": "review/archive-final-20261001/silent-hill-revision-20260926/card-03.jpg",
+        "sha256": "083c80ccc631f1052e11f880e3c8e654df9e3dbf78befe3b1ed2e037c63ad8b4",
+        "kind": "story"
+      }
+    ],
+    "identity": "849f9cfa67f59706d7f0943f69bf5883c4a409942d2a05a883d4c5888cdd323f"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "f35-20260920",
+    "title": "F-35 — قصة المنافسة",
+    "source_identity": "6d033e0af9280c17da9b416cea4603a2bbc886669b6882d3d76d42a8fd63d9e2",
+    "source_title_aliases": [
+      "F-35 — معلومة وقصة المنافسة"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "f99c31e2-673e-43f1-8386-861b5a9bf58a",
+        "upload_id": "ed3a258b-025b-49d4-972a-15c57486e739"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "8c4b7120-6333-4d1f-9260-d31645532607",
+        "upload_id": "f32e9398-2c31-4391-87c4-f00381945a96"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "3d55291c-d8a4-494a-a003-e24d6a00aa4b",
+        "upload_id": "8ffcfd5d-ef9a-4e50-b19e-2effd3b4530c"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "c9f9a2f1-1899-4c16-b5a8-0119e13e3e17",
+        "upload_id": "278b4beb-4fd9-459c-957d-4a6a8b4f4962"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "87930fe9-2c29-4e65-b160-e56ad3a0cc63",
+        "upload_id": "f5ec6a73-75ec-477c-93cd-3aa1b08d47fb"
+      }
+    ],
+    "media": [
+      {
+        "path": "review/archive-final-20261001/f35-20260920/card-00.jpg",
+        "sha256": "be603792ae0aee69037a92cc0850abea379d3dae1c0a622be334f785a53f6352",
+        "kind": "info"
+      },
+      {
+        "path": "review/archive-final-20261001/f35-20260920/card-01.jpg",
+        "sha256": "d61eed80d8ab4c362ef7ca4722f4e8b2e2e1cfe9432c7a22b7d3b47193ae3de0",
+        "kind": "story"
+      },
+      {
+        "path": "review/archive-final-20261001/f35-20260920/card-02.jpg",
+        "sha256": "efe68882810e03c97469784829174fc589be4dadec4d2cc49f8b7677711bb943",
+        "kind": "story"
+      },
+      {
+        "path": "review/archive-final-20261001/f35-20260920/card-03.jpg",
+        "sha256": "5f559049e9b2bdefd2ae6a61e7de871172a1b311e07c4d76e596e5f198f51c12",
+        "kind": "story"
+      }
+    ],
+    "identity": "7c64592c5f3d87ab8d45baebd3f3f3f2074ee491ba3e4afba461f8c1aa04c66c"
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "expires_at": "2026-10-03T20:59:59Z",
+    "package": "michelin-20260920",
+    "title": "ميشلان — من الكفرات إلى المطاعم",
+    "source_identity": "cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229",
+    "source_title_aliases": [
+      "ملخص تنفيذي — ميشلان"
+    ],
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "8ff63145-a25b-45d7-ac6a-159108c5087a",
+        "upload_id": "7cd180dc-99d2-4246-8245-7612f9b41c51"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "dcffa1f9-8393-409b-8044-37cadad5bc99",
+        "upload_id": "487e0838-b01b-4db5-b03c-f3300d1b9a95"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f2f93500-ac91-4f8c-9f10-994735950052",
+        "upload_id": "911a255d-531d-4e23-bec5-b1b2cc3b2bb8"
+      }
+    ],
+    "media": [
+      {
+        "path": "review/archive-final-20261001/michelin-20260920/card-00.jpg",
+        "sha256": "3338e996dec52a5277af25cd4a87728db21cfa53751193241d286ed9d21ad666",
+        "kind": "info"
+      },
+      {
+        "path": "review/archive-final-20261001/michelin-20260920/card-01.jpg",
+        "sha256": "3b08996c7806a2ed464c9ebe850e82dda052ae183ba0cceebba16161493a4d15",
+        "kind": "story"
+      },
+      {
+        "path": "review/archive-final-20261001/michelin-20260920/card-02.jpg",
+        "sha256": "ceb0f5f8947c960a4424c0f4d8c811ab6225481c977ac22a37c7274fb992825b",
+        "kind": "story"
+      }
+    ],
+    "identity": "1e3a2bbcf256b314add5e21a55ef746b14b0500508c15f8c4ba2929b4107b4e3"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "إنفيديا… من إنقاذ سيجا إلى الذكاء الاصطناعي",
+  "not_before": "2026-10-07T08:49:52Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid authorized publication after approving final AI closing on 2026-10-07 11:49:52 Riyadh. Two compact cards, real founder and RIVA 128 photographs, same branded typography and solid sharing icon. Assistant reviewed final rendered files at mobile scale before sealing.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/nvidia-sega-20261007/card-00.jpg",
+      "sha256": "e5db5aaeafb92f0f4a68b494c9226c92b8076633cbcf8a1c826b4c2930f4de47",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:2fea494deff1dac417e1584f",
+        "source_kind": "official",
+        "website_entity": "Q182477",
+        "official_site": "https://nvidianews.nvidia.com",
+        "source_url": "https://nvidianews.nvidia.com/bios/jensen-huang",
+        "original_url": "https://nvidianews.nvidia.com/_gallery/get_file/?file_id=69e6b9293d633260eec67804",
+        "download_url": "https://nvidianews.nvidia.com/_gallery/get_file/?file_id=69e6b9293d633260eec67804",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "credit": "NVIDIA",
+        "title": "Jensen Huang official headshot"
+      }
+    },
+    {
+      "kind": "info",
+      "path": "approved/nvidia-sega-20261007/card-01.jpg",
+      "sha256": "a18b8316a2b492e5a3e6d9b6c4affb783df6bb00e39bc975acdcc7b087cf1793",
+      "image": {
+        "provider": "commons",
+        "asset_id": "38130580",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "credit": "Mathías Tabó",
+        "title": "Diamond Viper V330 / RIVA 128",
+        "source_url": "https://commons.wikimedia.org/?curid=38130580",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Diamond_Viper_V330_AGP_%40_nVIDIA_RIVA_128.jpg",
+        "restrictions": "",
+        "sharealike_presentation": "unmodified_photo_collection",
+        "modifications": "Resized only"
+      },
+      "public_attribution": {
+        "version": 3,
+        "display_label": "Mathías Tabó · Photo: CC BY-SA 4.0",
+        "image_sha256": "4c014f548bde5537fefa9b94f709a20a2bf8e4340d8a235f7787eb8949952f34",
+        "media_sha256": "a18b8316a2b492e5a3e6d9b6c4affb783df6bb00e39bc975acdcc7b087cf1793"
+      }
+    }
+  ]
+}

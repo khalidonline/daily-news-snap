@@ -1,0 +1,26 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "ليش يرفعون الفائدة إذا غلت الأسعار؟",
+  "not_before": "2026-10-08T09:04:37Z",
+  "expires_at": "2026-10-08T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved one-card replacement at 2026-10-08 12:04:37 Riyadh. Remove historical content, preserve approved causal explanation, single-line CTA. User will delete older two cards manually.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/interest-single-20261008/card-00.jpg",
+      "sha256": "0b2b340fbb8f17d1f718ec18474e6a59c2e637563d80fd2faf45aec365bdc21a",
+      "image": {
+        "provider": "commons",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Eccles_Building_(26088200676).jpg",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Eccles_Building_%2826088200676%29.jpg",
+        "asset_id": "https://commons.wikimedia.org/wiki/File:Eccles_Building_(26088200676).jpg",
+        "sha256": "9daa459a37b2edae6159f9f4d98b7a2b91ef3d5e0cbd25b9fe85fb556f174a62",
+        "license": "Public domain",
+        "attribution_required": false,
+        "licensing_verified": true
+      }
+    }
+  ]
+}

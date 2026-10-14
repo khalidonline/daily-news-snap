@@ -1,0 +1,23 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "8d2e337c276980974d4570ac95c47d9d350b906783123ba235b07d532cfdd6e3",
+  "title": "المراعي… من ٣٠٠ بقرة إلى ٦٧٠ منتج",
+  "manifest": "approved/almarai-20261004/manifest.json",
+  "manifest_sha256": "92322a0994e92ad0abc7dc9a081b4f9688d8f94be61c3ca1fb16fe1e7c521913",
+  "not_before": "2026-10-04T20:54:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "scope": "SAVED_STORY_ONLY",
+  "authorization": "Khalid authorized end-of-day saving of future final published packages on 30 September 2026; reaffirmed by this 4 October archive request. October 4 00:24 allowlist restricts prior inventory only, explicitly preserving future daily packages. Dates uses owner-approved final replacement after owner-confirmed deletion; Almarai uses exact approved published edition. No new daily posting or media changes.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. Profile no longer empty; current provider inventory mandatory.",
+  "public_indices": [
+    1,
+    2
+  ],
+  "media_sha256": [
+    "602f7ede7c631e171d1d5ad778293251ce1422e64d3044d761cd8c9b362fb724",
+    "3a4532d19248065fcad5fdb858dd0f06c00d044a0ec86acc01fce4e358b403a2"
+  ],
+  "visual_review": "Exact published two-card JPEGs reviewed at 360px mobile width on 2026-10-04; body text readable; no source card. Almarai retains approved multiline headlines; no redesign in save-only scope.",
+  "package": "almarai-20261004"
+}

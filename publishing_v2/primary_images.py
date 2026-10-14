@@ -11,11 +11,38 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 OWNER_DECISION = 'owner-source-editorial-use-2026-09-22'
 PUBLISHERS = {'aawsat.com','www.aawsat.com','www.alyaum.com','bbc.com','www.bbc.com','www.bbc.co.uk','bbc.co.uk'}
+# Saudi publishers added to the candidate feeds 2026-09-27: their article's own
+# photo gets the same owner editorial-use treatment as the publishers above.
+PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
+               'www.arriyadiyah.com','arriyadiyah.com','www.almowaten.net','almowaten.net'}
 
 # Exact archival screenshots manually checked for the owner's 2026-09-26
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact IKEA Denmark photograph reviewed and owner-approved, 9 October 2026.
+    ('https://www.foxbusiness.com/lifestyle/ikea-denmark-showroom-snow-storm', 'https://static.foxbusiness.com/foxbusiness.com/content/uploads/2021/12/ikea-1.jpg'),
+    # Exact archival photograph reviewed for Khalid's authorized shopping-cart package, 9 Oct 2026.
+    ('https://www.afstores.com/the-intriguing-story-of-how-the-shopping-cart-was-born/', 'https://www.afstores.com/wp-content/uploads/2023/08/Sylvan-Goldman.png'),
+    # Exact photo in owner-approved v4, 8 October 2026; no site-wide license grant.
+    ('https://www.afp.com/en/ready-set-snooze-sleep-deprived-japanese-compete-best-rested', 'https://www.afp.com/sites/default/files/afp-stories/7ae793b177f9f3aac1268680f48f1fbd-0-hi.jpg'),
+    # Two exact photos visually reviewed and approved by Khalid, 7 October 2026.
+    ('https://www.ligaolahraga.com/bola/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi', 'https://img.ligaolahraga.com/public/images/news/2026/09/16/hadapi-benin-di-buenos-aires-argentina-siapkan-perpisahan-untuk-lionel-messi.webp'),
+    ('https://www.gzeromedia.com/what-were-watching-argentine-soccer-ecstasy-chinese-covid-cover-up-brits-on-strike', 'https://www.gzeromedia.com/media-library/less-than-p-greater-than-argentinas-leo-messi-lifts-the-world-cup-trophy-alongside-teammates-in-qatar-less-than-p-greater-than.jpg?id=32361360'),
+
+    # Exact Saudi team archival photograph and crest visually reviewed for Khalid's
+    # authorized information + visual challenge, 7 October 2026. No site-wide grant.
+    ('https://ajel.sa/sports/tyyrjrp56', 'https://cdn.ajel.sa/articles/2026-10/Capture-crop-bOIx_dWv.png'),
+    ('https://en.wikipedia.org/wiki/File:Saudi_Arabia_national_football_team_logo.svg',
+     'https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png'),
+    # Exact 2010 Instagram screens reviewed for owner-authorized 2026-10-06 card.
+    ("https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010", "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-01.jpg"),
+    ("https://www.webdesignmuseum.org/iphone/instagram-for-iphone-in-2010", "https://www.webdesignmuseum.org/uploaded/apps-screens/iphone/2010/instagram-2010-02.jpg"),
+    # Exact award photograph reviewed and owner approved 2026-10-05.
+    ("https://x.com/WorldGovSummit/status/1890349552151990778", "https://pbs.twimg.com/media/GjvdlUQWcAARHZp.jpg"),
+    # Exact Tokyo photo reviewed and owner approved 2026-10-05; not a site-wide grant.
+    ("https://www.metalocus.es/en/news/japanese-tradition-climate-and-technology-new-tokyo-national-stadium-kengo-kuma",
+     "https://www.metalocus.es/sites/default/files/styles/mopis_news_carousel_item_desktop/public/metalocus_kengo-kuma_estadio-nacional_47.jpg?itok=Iz0fc6oL"),
     ('https://www.silenthillmemories.net/sh1/screens_en.htm',
      'https://www.silenthillmemories.net/sh1/screens/pics/sh1_screen_01.jpg'),
     ('https://www.silenthillmemories.net/silent_hills/screens_en.htm',

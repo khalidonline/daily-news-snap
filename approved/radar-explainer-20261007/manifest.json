@@ -1,0 +1,37 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "كيف ينرصد الصاروخ وينعترض؟",
+  "not_before": "2026-10-07T08:21:53Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid reviewed both exact cards and explicitly authorized publication 2026-10-07 11:21:53 Riyadh. General explanatory diagrams, no Riyadh incident attribution.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/radar-explainer-20261007/card-00.jpg",
+      "sha256": "d1b27542c5837529412d5d76ba8c3ee16f1034af194a19e8c27dcd52e06cfc40",
+      "image": {
+        "provider": "original_diagram",
+        "asset_id": "original-radar-diagram-0",
+        "license": "CC0",
+        "attribution_required": false,
+        "source_url": "https://github.com/khalidonline/daily-news-snap/blob/main/drafts/radar-explainer-20261007/render.py",
+        "description": "Original programmatically drawn explanatory diagram, no external photographs. Diagram artwork dedicated to CC0; account branding remains owner branding."
+      }
+    },
+    {
+      "kind": "info",
+      "path": "approved/radar-explainer-20261007/card-01.jpg",
+      "sha256": "dd32ad920cc07e502860a1fdf8868b86b4339eafd8b98a9a71d67357cbc23fc6",
+      "image": {
+        "provider": "original_diagram",
+        "asset_id": "original-radar-diagram-1",
+        "license": "CC0",
+        "attribution_required": false,
+        "source_url": "https://github.com/khalidonline/daily-news-snap/blob/main/drafts/radar-explainer-20261007/render.py",
+        "description": "Original programmatically drawn explanatory diagram, no external photographs. Diagram artwork dedicated to CC0; account branding remains owner branding."
+      }
+    }
+  ]
+}

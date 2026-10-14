@@ -7,13 +7,14 @@ import time
 from datetime import timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
-from html import unescape
+from html import escape, unescape
 from urllib.parse import urlsplit, urlencode
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
 
-from publishing_v2.public_images import search_commons, search_commons_category, search_nasa, download_image, ImageSourceError
+from publishing_v2.public_images import (search_commons, search_commons_category, search_nasa, download_image,
+                                        ImageSourceError, commons_files, commons_subcategories)
 from publishing_v2.flickr_images import search_flickr
 from publishing_v2.met_images import search_met, OBJECTS
 from .credits import attribution_eligible
@@ -23,22 +24,46 @@ from publishing_v2.publication import image_publication_eligible
 from .feedback import rejected_trigger
 from .eligibility import routine_trigger_rejection
 
+# Saudi feeds added 2026-09-27: the local lane found one candidate from two
+# Saudi sources and died. Each was probed from the Actions runner that day
+# (fresh items, photos in the feed, article pages 200 with og:image). Probed
+# and NOT usable then: Sabq (malformed XML), Al Arabiya and Arab News (403),
+# SPA (empty), Al Riyadh (TLS failure).
 FEEDS = ('https://feeds.bbci.co.uk/news/rss.xml',
          'https://feeds.bbci.co.uk/news/technology/rss.xml',
          'https://feeds.bbci.co.uk/sport/rss.xml',
-         'https://www.alyaum.com/rssFeed/1005', 'https://aawsat.com/feed')
+         'https://www.alyaum.com/rssFeed/1005', 'https://aawsat.com/feed',
+         'https://www.okaz.com.sa/rssFeed/0',
+         'https://www.argaam.com/ar/rss/ho-main-news?sectionid=1523',
+         'https://www.arriyadiyah.com/rss',
+         'https://www.almowaten.net/feed/')
+SAUDI_PUBLISHERS = {'okaz.com.sa': {'www.okaz.com.sa', 'okaz.com.sa'},
+                    'argaam.com': {'www.argaam.com', 'argaam.com'},
+                    'arriyadiyah.com': {'www.arriyadiyah.com', 'arriyadiyah.com'},
+                    'almowaten.net': {'www.almowaten.net', 'almowaten.net'}}
 HOSTS = {'feeds.bbci.co.uk', 'www.bbc.com', 'www.bbc.co.uk', 'bbc.com', 'bbc.co.uk',
          'www.alyaum.com', 'aawsat.com', 'www.aawsat.com', 'en.wikipedia.org', 'ar.wikipedia.org', 'www.wikidata.org'}
+HOSTS |= {host for hosts in SAUDI_PUBLISHERS.values() for host in hosts}
 OFFICIAL_HOSTS = {'www.spa.gov.sa', 'spa.gov.sa', 'saudipedia.com', 'www.mofa.gov.sa'}
 HOSTS |= OFFICIAL_HOSTS
 LOCAL_TOPICS = ('Abha', 'Asir', 'Khamis Mushait', 'Saudi coffee', 'Jeddah', 'Taif rose', 'Bisht', 'Al-Qatt Al-Asiri',
                 'Al-Ahsa Oasis', 'Saudi Arabian cuisine', 'Diriyah', 'Date palm', 'Souq')
+# Every feed gets an equal slice of the bounded pool; 12 per feed filled the
+# 60 slots before the later (Saudi) feeds were read.
+FEED_POOL = 60
 
 
-FEED_PUBLISHERS = {feed: ({'www.alyaum.com'} if 'alyaum.com' in feed else
-                         {'aawsat.com', 'www.aawsat.com'} if 'aawsat.com' in feed else
-                         {'bbc.com', 'www.bbc.com', 'bbc.co.uk', 'www.bbc.co.uk'})
-                   for feed in FEEDS}
+def _feed_publishers(feed):
+    host = urlsplit(feed).hostname or ''
+    for domain, hosts in SAUDI_PUBLISHERS.items():
+        if host.endswith(domain):
+            return hosts
+    return ({'www.alyaum.com'} if 'alyaum.com' in feed else
+            {'aawsat.com', 'www.aawsat.com'} if 'aawsat.com' in feed else
+            {'bbc.com', 'www.bbc.com', 'bbc.co.uk', 'www.bbc.co.uk'})
+
+
+FEED_PUBLISHERS = {feed: _feed_publishers(feed) for feed in FEEDS}
 
 
 def attention_source(source, candidate):
@@ -52,6 +77,82 @@ def attention_source(source, candidate):
     return (urlsplit(source.get('url', '')).hostname in FEED_PUBLISHERS.get(source.get('feed_url'), set())
             and source.get('published_at') == candidate.get('published_at')
             and isinstance(body, str) and len(body) >= 500 and len(body.split()) >= 80)
+
+
+def feed_images(item):
+    """Photo URLs an RSS item carries itself: enclosure, Media RSS, inline img."""
+    media = '{http://search.yahoo.com/mrss/}'
+    urls = []
+    for tag in ('enclosure', media + 'content', media + 'thumbnail'):
+        for node in item.iter(tag):
+            kind = node.get('type', '') or node.get('medium', '')
+            if tag == 'enclosure' and kind and not kind.startswith('image'):
+                continue
+            urls.append(node.get('url', ''))
+    for field in ('description', '{http://purl.org/rss/1.0/modules/content/}encoded'):
+        urls += re.findall(r'<img[^>]+src=["\']([^"\']+)', item.findtext(field, '') or '')
+    return [u for u in dict.fromkeys(urls) if u.startswith('https://')][:4]
+
+
+# Owner 2026-09-26: "be smart, widen the search with several keywords" (SAR had
+# trains, stations and a logo on Commons, but a search for its English name
+# found almost nothing usable). Widening keys off the Wikidata entity the
+# research already resolved, so every extra query still names THIS subject:
+# its other names, its Arabic label, its recorded photo and logo, its Commons
+# category, and "name + thing" queries from what kind of entity it is.
+TYPE_NOUNS = (
+    (r'rail|train', ('train', 'station', 'locomotive')),
+    (r'airline|airport|aircraft', ('aircraft', 'airport')),
+    (r'football|sports club|team', ('stadium', 'team')),
+    (r'bank|compan|enterprise|business|corporation|conglomerate', ('headquarters', 'building')),
+    (r'city|town|village|capital|region|province', ('skyline', 'street')),
+    (r'museum|palace|mosque|building|tower|stadium', ('building', 'interior')),
+    (r'university|school|college', ('campus', 'building')),
+    (r'port|harbou?r', ('port', 'ship')),
+    (r'car|automobile|vehicle', ('car',)),
+)
+
+
+def entity_profile(entity):
+    """Names, files and categories a Wikidata entity records for itself."""
+    empty = {'names': [], 'files': [], 'categories': [], 'queries': []}
+    if not isinstance(entity, str) or not re.fullmatch(r'Q[1-9][0-9]*', entity):
+        return empty
+    data = wiki_json('https://www.wikidata.org/w/api.php?' + urlencode({
+        'action': 'wbgetentities', 'format': 'json', 'ids': entity,
+        'props': 'claims|labels|aliases', 'languages': 'en|ar'}))
+    item = data.get('entities', {}).get(entity, {})
+    claims = item.get('claims', {})
+    def values(prop):
+        out = []
+        for claim in claims.get(prop, []):
+            value = claim.get('mainsnak', {}).get('datavalue', {}).get('value')
+            if claim.get('rank') != 'deprecated' and value is not None:
+                out.append(value)
+        return out
+    names = [item.get('labels', {}).get(lang, {}).get('value', '') for lang in ('en', 'ar')]
+    names += [a.get('value', '') for lang, n in (('en', 4), ('ar', 2))
+              for a in item.get('aliases', {}).get(lang, [])[:n]]
+    # A bare acronym (SAR, STC) names half the world: Hong Kong SAR, search and rescue.
+    names = [n.strip() for n in dict.fromkeys(names) if isinstance(n, str)
+             and 4 <= len(n.strip()) <= 80 and not re.fullmatch(r'[A-Z0-9&.\- ]{2,6}', n.strip())]
+    kinds = [v.get('id') for v in values('P31') if isinstance(v, dict)][:3]
+    kind_words = ''
+    if kinds:
+        try:
+            labels = wiki_json('https://www.wikidata.org/w/api.php?' + urlencode({
+                'action': 'wbgetentities', 'format': 'json', 'ids': '|'.join(kinds),
+                'props': 'labels', 'languages': 'en'}))
+            kind_words = ' '.join(e.get('labels', {}).get('en', {}).get('value', '')
+                                  for e in labels.get('entities', {}).values()).casefold()
+        except (ValueError, OSError):
+            pass
+    nouns = next((n for pattern, n in TYPE_NOUNS if re.search(pattern, kind_words)), ())
+    english = next((n for n in names if re.search(r'[A-Za-z]', n)), None)
+    return {'names': names[:6],
+            'files': [v for v in values('P18')[:2] + values('P154')[:1] if isinstance(v, str)],
+            'categories': [v for v in values('P373')[:1] if isinstance(v, str)],
+            'queries': [english + ' ' + noun for noun in nouns] if english else []}
 
 
 def safe_url(url):
@@ -79,8 +180,16 @@ class SourceRedirect(HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def fetch(url):
-    request = Request(safe_url(url), headers={'User-Agent': 'DailyNewsSnap/2.0 (editorial research)'})
+# Alyaum served its RSS feed but answered 403 to the article page itself on
+# 2026-09-26 (camels and SAR), so the article photo never reached the photo
+# search and SAR died for want of two images. Article pages retry once as a
+# browser, the way news_bot has always fetched publishers.
+BROWSER_UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+              '(KHTML, like Gecko) Chrome/124.0 Safari/537.36')
+
+
+def fetch(url, user_agent='DailyNewsSnap/2.0 (editorial research)'):
+    request = Request(safe_url(url), headers={'User-Agent': user_agent})
     with build_opener(SourceRedirect()).open(request, timeout=15) as response:
         raw = response.read(2_000_001)
     if len(raw) > 2_000_000:
@@ -128,6 +237,11 @@ def wiki_json(url):
         time.sleep(1)
 
 
+# Owner 2026-09-26: the first 10,000 characters are the lead and early history,
+# the least surprising part of an article; legacy, business and trivia sit later.
+WIKI_TEXT_LIMIT = 24000
+
+
 def wiki(query, *, language="en", exact_only=False):
     # Query text cannot select arbitrary URLs or redirect retrieval elsewhere.
     query = str(query)[:180]
@@ -146,7 +260,7 @@ def wiki(query, *, language="en", exact_only=False):
                 and 'disambiguation' not in page.get('pageprops', {})):
             return [{'id': prefix + str(page['pageid']),
                 'url': site + '?curid=' + str(page['pageid']),
-                'text': str(page['extract'])[:10000], 'title': page['title'],
+                'text': str(page['extract'])[:WIKI_TEXT_LIMIT], 'title': page['title'],
                 'reference_urls': [link.get('*', '') for link in page.get('extlinks', [])],
                 'verified_aliases': [query], 'website_entity': page.get('pageprops', {}).get('wikibase_item'), 'source_type': 'encyclopedia'}]
     if exact_only:
@@ -165,7 +279,7 @@ def wiki(query, *, language="en", exact_only=False):
         'pageids': '|'.join(ids), 'prop': 'extracts|pageprops|extlinks', 'ellimit': 50, 'explaintext': 1,
         'exintro': 1, 'exlimit': len(ids)}))
     return [{'id': prefix + str(page['pageid']), 'url': site + '?curid=' + str(page['pageid']),
-             'text': str(page.get('extract', ''))[:10000], 'title': page.get('title'),
+             'text': str(page.get('extract', ''))[:WIKI_TEXT_LIMIT], 'title': page.get('title'),
              'reference_urls': [link.get('*', '') for link in page.get('extlinks', [])],
              'source_type': 'encyclopedia', 'website_entity': page.get('pageprops', {}).get('wikibase_item')}
             for page in result.get('query', {}).get('pages', {}).values() if page.get('extract') and 'disambiguation' not in page.get('pageprops', {})]
@@ -278,6 +392,8 @@ class Sources:
         self.subject_entities = {}
         self.image_bytes = {}
         self.publisher_articles = {}
+        self.feed_images = {}
+        self.entity_profiles = {}
         self.attention_cache = {}
         self.official_image_cache = {}
         self.image_cache = {}
@@ -321,14 +437,17 @@ class Sources:
                                  'published_at': published.isoformat()}
                     if attention_source(publisher, candidate):
                         self.publisher_articles[(candidate['id'], link, candidate['published_at'])] = publisher
+                    images = feed_images(item)
+                    if images:
+                        self.feed_images[(candidate['id'], link, candidate['published_at'])] = images
                     results.append(candidate)
                     accepted += 1
                     # Reserve room for later Saudi feeds in the bounded pool.
-                    if accepted >= 12:
+                    if accepted >= max(5, FEED_POOL // len(FEEDS)):
                         break
             except Exception:
                 continue
-        return results[:60]
+        return results[:FEED_POOL]
 
     def attention(self, candidate):
         """Retrieve the trigger once, before encyclopedia or image searches."""
@@ -338,7 +457,13 @@ class Sources:
         rows = []
         if candidate.get('url'):
             try:
-                html = fetch(candidate['url']).decode('utf-8', errors='replace')
+                try:
+                    raw = fetch(candidate['url'])
+                except HTTPError as error:
+                    if error.code != 403:
+                        raise
+                    raw = fetch(candidate['url'], user_agent=BROWSER_UA)
+                html = raw.decode('utf-8', errors='replace')
                 self.article_html[candidate['url']] = html
                 body = plain(html)
                 if len(body) > 200:
@@ -347,6 +472,14 @@ class Sources:
             except Exception as error:
                 print(json.dumps({'stage': 'article_retrieval_failed', 'url': candidate['url'],
                                   'error': type(error).__name__, 'http_status': getattr(error, 'code', None)}), flush=True)
+        if candidate.get('url') not in self.article_html:
+            # The feed item's own photo is the article's photo: hand it to the
+            # same article-image path (publisher allowlist, owner editorial use).
+            images = self.feed_images.get((candidate.get('id'), candidate.get('url'),
+                                           candidate.get('published_at')), [])
+            if images:
+                self.article_html[candidate['url']] = ''.join(
+                    '<meta property="og:image" content="%s">' % escape(url, quote=True) for url in images)
         if not rows:
             publisher = self.publisher_articles.get((candidate.get('id'), candidate.get('url'),
                                                      candidate.get('published_at')))
@@ -470,6 +603,15 @@ class Sources:
                            rights_status='owner_accepted_editorial_use', collection_subject=subject)
         return varied_official_images(rows)
 
+    def entity_profile(self, subject):
+        entity = self.subject_entities.get(subject)
+        if entity not in self.entity_profiles:
+            try:
+                self.entity_profiles[entity] = entity_profile(entity)
+            except (ValueError, OSError, AttributeError, TypeError):
+                self.entity_profiles[entity] = entity_profile(None)
+        return self.entity_profiles[entity]
+
     def subject_images(self, query, subject):
         return self.recover_images(query, subject) if self.recovery else self.images(query, subject=subject)
 
@@ -483,9 +625,26 @@ class Sources:
         deadline = time.monotonic() + 90
         found, identities, hashes, origins = [], set(), set(), set()
         attempts = 0
+        profile = self.entity_profile(subject)
+        names = [n for n in profile['names'] if n.casefold() != subject.casefold()]
+        def entity_rows(rows):
+            # Bound to the subject by the entity's own claim or category, not by
+            # caption words; the paid pixel check still judges every photo.
+            for row in rows:
+                row['collection_subject'] = subject
+            return rows
+        def category_rows(category):
+            rows = search_commons_category(category, limit=5)
+            for sub in (commons_subcategories(category) if len(rows) < 2 else []):
+                rows += search_commons_category(sub, limit=5)
+            return entity_rows(rows)
         stages = [('primary_media', lambda: self.primary_pools.get(subject, [])),
                   ('official_media', lambda: self.official_images(subject)),
+                  *[('entity_media', lambda: entity_rows(commons_files(profile['files'])))][:bool(profile['files'])],
+                  *[('entity_category', lambda c=c: category_rows(c)) for c in profile['categories']],
                   ('commons', lambda: search_commons(query, limit=5)),
+                  *[('commons_alias', lambda n=n: search_commons(n, limit=5)) for n in names[:4]],
+                  *[('commons_typed', lambda q=q: search_commons(q, limit=5)) for q in profile['queries']],
                   ('commons_collection', lambda: search_commons_category(subject, limit=5)),
                   ('flickr_cc0' if self.publication_only else 'flickr',
                    lambda: search_flickr(subject, limit=5, deadline=deadline,
@@ -498,15 +657,17 @@ class Sources:
                   ('met_open_access', lambda: search_met(subject, limit=3, deadline=deadline)),
                   ('commons_page_2', lambda: search_commons(query, limit=5, offset=5)),
                   ('commons_page_3', lambda: search_commons(query, limit=5, offset=10))]
-        # Route specialized subjects before general stock catalogs. Learned
-        # successes rank only fallback providers; primary sources always lead.
+        # Route specialized subjects before general stock catalogs. Primary and
+        # entity-bound stages always lead; learned successes rank only the open
+        # catalogs behind them.
+        head = sum(1 for name, _ in stages if name in {'primary_media', 'official_media', 'entity_media', 'entity_category'})
         if re.search(r'equinox|solstice|space|planet|astronom|اعتدال|فلك', subject, re.I):
-            stages.insert(2, ('nasa', lambda: search_nasa(query, limit=5)))
+            stages.insert(head, ('nasa', lambda: search_nasa(query, limit=5)))
         if OBJECTS.search(subject):
             met = next(pair for pair in stages if pair[0]=='met_open_access')
-            stages.remove(met); stages.insert(2, met)
+            stages.remove(met); stages.insert(head, met)
         preferred = self.image_memory.preferred(subject)
-        stages = stages[:2] + sorted(stages[2:], key=lambda pair: pair[0].split('_')[0] not in preferred)
+        stages = stages[:head] + sorted(stages[head:], key=lambda pair: pair[0].split('_')[0] not in preferred)
         for provider, search in stages:
             if provider not in {'primary_media','official_media'} and len(found) >= 2:
                 break
@@ -538,7 +699,11 @@ class Sources:
                     if self.publication_only and not image_publication_eligible(row):
                         reject('public_attribution_required'); continue
                     if not subject_metadata_matches(subject, row):
-                        reject('subject'); continue
+                        if not any(subject_metadata_matches(name, row) for name in names):
+                            reject('subject'); continue
+                        # Another name of the same entity: keep the row findable
+                        # by the subject filters downstream (screen, plan_visuals).
+                        row['collection_subject'] = subject
                     dimensions = (row.get('original_width'), row.get('original_height'))
                     if all(type(v) is int and v > 0 for v in dimensions) and (min(dimensions) < 600 or max(dimensions) < 1000):
                         reject('original_too_small'); continue

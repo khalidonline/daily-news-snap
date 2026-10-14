@@ -1,0 +1,30 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أمس الكأس للأخضر… واليوم التحدّي لك",
+  "not_before": "2026-10-07T07:16:24Z",
+  "expires_at": "2026-10-07T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved the displayed rounded solid sharing icon and pink challenge-closing strip and explicitly requested publication 2026-10-07 10:16:24 Riyadh. Exact approved preview converted to 1080x1920 JPEG only.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/gulf-challenge-icon-20261007/card-00.jpg",
+      "sha256": "c1e15a31f85c403ff7e3e76f5578646b4a03591b07555dfd72e81b7fbed5ecac",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://en.wikipedia.org/wiki/File:Saudi_Arabia_national_football_team_logo.svg",
+        "original_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+        "download_url": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/Saudi_Arabia_national_football_team_logo.svg/500px-Saudi_Arabia_national_football_team_logo.svg.png",
+        "asset_id": "primary:b03b2bf7e16e537bde955cb0",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "d2066b50e3e4e666c56e2b38224b706391d34b7f8db47fd2f72fa5b03af9de17"
+      }
+    }
+  ],
+  "replaces_identity": "92c126a1a4cbbf0416c860d0a0b5a49e21be8795e2c440acb19b5bf4feb24d2b"
+}

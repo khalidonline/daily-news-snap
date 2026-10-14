@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "9a279cce3c4be63b8d209a8adef3a7643be7e25180b52c5278785b06e21ff08b",
+  "manifest": "approved/armani-20260928/manifest.json",
+  "manifest_sha256": "ab080210eeb09076cd1f6ee46d71dd049107dd779ed79619cd4495c2d5d26385",
+  "expires_at": "2026-10-02T20:59:59Z",
+  "empty_profile_confirmation": "Owner confirmed profile empty 2026-10-01 00:01 Riyadh; all later saves journaled and checked against provider inventory.",
+  "approval": "Owner authorized previous final packages; original four cards visually checked, no later replacement identified. Verify live source receipts before save."
+}

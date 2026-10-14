@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "راحوا يتقضّون من إيكيا… وناموا عندهم!",
+  "not_before": "2026-10-09T15:30:50Z",
+  "expires_at": "2026-10-09T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved exact Saudi dialect preview and publication at 2026-10-09T18:30:50+03:00: انشر وأعتمد نفس اللهجه الباقات الجايه. No replacement or deletion authorized.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/ikea-20261009/card-00.jpg",
+      "sha256": "8b8e2f260f6b76196a2794d6eacec6ebc0339200369170e2ee98aa19bf2ded44",
+      "image": {
+        "provider": "primary_media",
+        "source_url": "https://www.foxbusiness.com/lifestyle/ikea-denmark-showroom-snow-storm",
+        "original_url": "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2021/12/ikea-1.jpg",
+        "download_url": "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2021/12/ikea-1.jpg",
+        "asset_id": "primary:df77366974c4ff9da81dc7de",
+        "sha256": "d97b1e93f17536d3883209ce701c2cc4ae06decfff2e5e9dc0d9d9962fc1cb88",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "source_kind": "article",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      }
+    }
+  ]
+}

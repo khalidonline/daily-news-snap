@@ -1,0 +1,96 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نسبرسو — المشروع اللي كاد يتوقف",
+  "not_before": "2026-10-01T07:44:43Z",
+  "expires_at": "2026-10-01T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicitly authorized publishing at 2026-10-01 10:44:43 Asia/Riyadh after approving copy and adding share-with-coffee-friend closing; same approved identity; final four cards visually reviewed",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/nespresso-20261001/card-00.jpg",
+      "sha256": "2a4e27f80f4da62aaa15ec061ada2bff7fa8e3059b332d2009a2fa2a6d6ee692",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "source_url": "https://www.nestle.com/brands/coffee/nespresso",
+        "original_url": "https://www.nestle.com/sites/default/files/2026-09/coffee-machine-and-frother.jpg",
+        "download_url": "https://www.nestle.com/sites/default/files/2026-09/coffee-machine-and-frother.jpg",
+        "asset_id": "primary:e7653fd172333e6e5fe422d8",
+        "website_entity": "Q160746",
+        "official_site": "https://www.nestle.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "7a7b728f2520eed97cdf9551596e55bf49c23a51f0dc2acf755ea2b9b6dd336a",
+        "image_role": "Current Nespresso product illustration"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/nespresso-20261001/card-01.jpg",
+      "sha256": "78162f6faf87eecb29ffa51caf511fed3a4d3ffdf9fb0d4bc1344d59124d3329",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "source_url": "https://caffesanteustachio.com/?lang=en",
+        "original_url": "https://caffesanteustachio.com/wp-content/uploads/2026/06/santeustachio_ilcaffe1.jpg",
+        "download_url": "https://caffesanteustachio.com/wp-content/uploads/2026/06/santeustachio_ilcaffe1.jpg",
+        "asset_id": "primary:d7a046160dbbd2c229da4540",
+        "website_entity": "Q2932918",
+        "official_site": "https://caffesanteustachio.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "94e8f062b680522d1c1776c79f7b341873d2178dd21ebf1436e973f9071e5797",
+        "image_role": "Archive exterior of the actual cafe; date unspecified"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/nespresso-20261001/card-02.jpg",
+      "sha256": "a365efea183279808a8fd7f607c9c4cbc32aa808c2fdb2272915f9c1055a44b4",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "source_url": "https://www.nestle.com/brands/coffee/nespresso",
+        "original_url": "https://www.nestle.com/sites/default/files/nespresso-machine-1986.jpg",
+        "download_url": "https://www.nestle.com/sites/default/files/nespresso-machine-1986.jpg",
+        "asset_id": "primary:0e38d82103332bf6ae2965ef",
+        "website_entity": "Q160746",
+        "official_site": "https://www.nestle.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "71b552c381fe02dafdd60d9a945904eb1d4c0c915a58007c0428b8c87b1591e6",
+        "image_role": "C100 machine from official 1986 timeline; not the experimental prototype"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/nespresso-20261001/card-03.jpg",
+      "sha256": "4d29d7b44f77605f13847305acdde0ddc11ebbc63bb791888e43dc6a28aebb04",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "source_url": "https://www.nestle.com/brands/coffee/nespresso",
+        "original_url": "https://www.nestle.com/sites/default/files/nespresso-first-boutique-2000.jpg",
+        "download_url": "https://www.nestle.com/sites/default/files/nespresso-first-boutique-2000.jpg",
+        "asset_id": "primary:10e7edda5823a38bc98c60ff",
+        "website_entity": "Q160746",
+        "official_site": "https://www.nestle.com/",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "ebe64a2aabde64a2e5b5ab27f58f6fc69d214dae21450d3255b348abc496d83b",
+        "image_role": "Archive boutique photo from brand timeline; not a 2025 sales event"
+      }
+    }
+  ],
+  "predecessors": []
+}

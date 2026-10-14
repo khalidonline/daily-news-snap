@@ -1,0 +1,62 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "72196ac688a26312a1067ef4b19db216a15958733514bb0a8ea91b517312572c",
+  "title": "ذكاء اصطناعي… وملفاتك تبقى عندك",
+  "manifest": "approved/apple-compact-owner-20261004/manifest.json",
+  "manifest_sha256": "b02652334465de95e83cc2ba5bca14567c9fbad4f87464d8a28e08a0c40d2fbc",
+  "not_before": "2026-10-04T15:21:49Z",
+  "expires_at": "2026-10-04T20:59:59Z",
+  "authorization": "Khalid explicitly approved displayed compact Apple cards on 2026-10-04 18:21 Riyadh: احفظها وانشرها بعد. أنا ابحذف القديمه من الملف العام. Intentional new daily publication and Saved Story renewal; owner will delete old archive. No assertion old daily manifest was published.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh; profile is no longer empty; provider inventory required.",
+  "previous_saved": {
+    "identity": "4bb2f2b4744630357cc31ad62f7c7ed9f2f08d55e6fb4bc1e427b695d73f4032",
+    "title": "الذكاء الاصطناعي مو لازم يرسل ملفاتك بعيد",
+    "upload_ids": [
+      "dbf99ae4-060e-420b-80de-177accf78e06",
+      "394d9340-41b1-4277-b870-049eb1b06dd6"
+    ],
+    "status": "POSTED",
+    "intent_at": "2026-10-01T09:13:47.759075+00:00",
+    "post_id": "9d86afd4-9872-46f9-95f1-e67291a0ea28",
+    "confirmed_at": "2026-10-01T09:14:17.688808+00:00",
+    "provider_result": {
+      "id": "9d86afd4-9872-46f9-95f1-e67291a0ea28",
+      "status": "POSTED",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "26c3002e-5e15-447c-91ee-424c1dc86b0f",
+          "mediaId": "43023794-422d-4cee-acd4-ec3127439fb2",
+          "mediaIds": [
+            "43023794-422d-4cee-acd4-ec3127439fb2",
+            "6a505e54-70e9-4d0c-950e-fbcac2bd7699"
+          ],
+          "type": "SAVED_STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "dbf99ae4-060e-420b-80de-177accf78e06",
+          "sourceUploadIds": [
+            "dbf99ae4-060e-420b-80de-177accf78e06",
+            "394d9340-41b1-4277-b870-049eb1b06dd6"
+          ],
+          "mediaUploadedAt": "2026-10-01T09:13:52.276Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      }
+    },
+    "source_identity": "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443",
+    "package": "apple-revision-20260926",
+    "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+    "scope": "SAVED_STORY_ONLY",
+    "media_sha256": [
+      "38bf0c79631791f0726c934fc98bd72c90dd6b36f0616902e17565ccd806ff1a",
+      "dfd5fcb760772ba1b04f097515d124f35d906514455af7d0f8ce12cfccfa10cf"
+    ]
+  },
+  "original_source_identity": "68dbb5b911fa8b48b01b0aeb175941ae002cc1ec2289168b211998f378010443",
+  "public_indices": [
+    1,
+    2
+  ],
+  "old_deletion_status": "OWNER_WILL_DELETE_NOT_CONFIRMED"
+}

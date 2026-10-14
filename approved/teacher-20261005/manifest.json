@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "يوم المعلّم… ومشروع الـ٥٠٠ ريال",
+  "not_before": "2026-10-05T06:45:07Z",
+  "expires_at": "2026-10-05T20:59:59Z",
+  "approval": "Khalid 2026-10-05 09:45 Riyadh: تمام انشر. Exact updated teacher card displayed and approved; single card, no story label or numbering, revised general closing and share CTA.",
+  "story_duration": "ONE_WEEK",
+  "media": [
+    {
+      "kind": "info",
+      "path": "drafts/teacher-compact-updated-20261005/card-00.jpg",
+      "sha256": "9c46a5dd2623109f835d8df95e2eb98bfee6e5516f0bd687d53af50c2e8e9c8b",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "article",
+        "source_url": "https://x.com/WorldGovSummit/status/1890349552151990778",
+        "original_url": "https://pbs.twimg.com/media/GjvdlUQWcAARHZp.jpg",
+        "asset_id": "primary:e099c8bc01fc7c3778058db9",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "sha256": "3f256dd64d6131c7e753f8c7322b22e6d3e8e0ac94f42673b070f99baa567256",
+        "download_url": "https://pbs.twimg.com/media/GjvdlUQWcAARHZp.jpg"
+      }
+    }
+  ]
+}

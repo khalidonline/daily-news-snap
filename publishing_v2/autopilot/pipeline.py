@@ -16,15 +16,24 @@ class PersistenceError(Exception):
     """An uncertain journal must stop work, never trigger generation repair."""
 
 
+# The viewer-persona judge's score, 1-10, below which a researched candidate is
+# dropped before writing. 7 = "would tap through and maybe share".
+MIN_HOOK_SCORE = 7
+
+
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None):
         self.agent, self.sources, self.render = agent, sources, render
+        # Owner 2026-09-26: three competing openings and a viewer-persona judge
+        # before the writer. Off by default so fixture agents keep their scripts.
+        self.hooks = hooks
         self.store, self.publish = store, publish
         self.output, self.now = Path(output), now
         self.engine = engine
         self.candidate_memory = candidate_memory
         self.published_memory = published_memory
         self.excluded_candidate_ids = set(excluded_candidate_ids or ())
+        self.free_selection = free_selection
 
     def save(self, state, event, **values):
         state.update(values)
@@ -71,6 +80,10 @@ class Pipeline:
         self.save(state, 'started')
         try:
             candidates = self.sources.discover(lane, self.now())
+            # Owner asked why a stronger trigger (the Oman match) was not used;
+            # without the pool on record nobody could tell if it was offered.
+            self.save(state, 'pool', pool=[{'id': c.get('id'), 'title': str(c.get('title', ''))[:160],
+                                            'published_at': c.get('published_at')} for c in candidates])
             excluded = list(getattr(self.sources, 'discovery_rejections', []))
             eligible = []
             for candidate in candidates:
@@ -106,17 +119,40 @@ class Pipeline:
                                  if attention_source(s, candidate)]
                     if not attention:
                         raise ValueError('attention_article_not_retrieved')
-                    timing = self.agent.run('timing', {'candidate': candidate, 'sources': attention,
-                                                       'lane': lane, 'now': self.now().isoformat()})
+                    free = getattr(self.agent, 'requires_free_selection', False)
+                    timing = (copy.deepcopy(self.free_selection.get('timing', {})) if free else
+                              self.agent.run('timing', {'candidate': candidate, 'sources': attention,
+                                                       'lane': lane, 'now': self.now().isoformat()}))
                     self.save(state, 'timing_checked', candidate_id=candidate['id'], timing=timing)
                     policy.validate_timing(timing, attention, self.now())
+                    if self.hooks and not free:
+                        self.judge_pitch(state, candidate)
                     sources = self.sources.research(candidate)
                     if not any(attention_source(s, candidate) for s in sources):
                         raise ValueError('attention_article_not_retrieved')
+                    if free:
+                        candidate['card_image_plan'] = copy.deepcopy(self.free_selection.get('image_plan', []))
+                    screen = getattr(self.render, 'screen_visuals', None)
+                    if screen and not screen(candidate):
+                        raise ValueError('insufficient_subject_visuals_before_research')
+                    if free:
+                        from .free_selection import validate_story, validate_images
+                        validate_story(self.free_selection, sources)
+                        validate_images(self.free_selection, candidate)
+                        self.save(state, 'free_preflight_passed', free_selection=copy.deepcopy(self.free_selection),
+                                  selection_assessment={'status':'evidence_passed', 'cost_micro_usd':0,
+                                      'candidate_id':candidate['id'], 'timing':timing,
+                                      'saudi_relevance':choice['why_saudi'],
+                                      'discovery':choice['angle'], 'share_reason':choice['share_reason'],
+                                      'documented_story_beats':len(self.free_selection['story']),
+                                      'planned_images':len(self.free_selection['image_plan']),
+                                      'note':'Evidence feasibility, not a predicted audience score.'})
                     visual_options = []
                     self.save(state, 'selected', candidate_id=candidate['id'])
                     research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
-                                                            'verified_timing': timing, 'lane': lane, 'now': self.now().isoformat()})
+                                                            'verified_timing': timing,
+                                                            'story_plan': self.free_selection.get('story') if free else None,
+                                                            'lane': lane, 'now': self.now().isoformat()})
                     research, pruned_claim_ids = policy.prune_unsupported_number_claims(research, sources)
                     if pruned_claim_ids:
                         self.save(state, 'research_claims_pruned', candidate_id=candidate['id'],
@@ -135,20 +171,34 @@ class Pipeline:
                     package = None
                     affected = []
                     accepted_images = {}
+                    hook = self.choose_hook(state, candidate, research) if self.hooks and not free else None
+                    hook_input = {'chosen_hook': hook} if hook else {}
+                    fmt = candidate.get('editorial', {}).get('format')
+                    if fmt:
+                        hook_input['format'] = fmt
+                    shortened = False
                     for attempt in range(4):
                         review = None
                         try:
-                            if draft is None:
+                            if shortened:
+                                shortened = False  # already cut to the photographed cards; re-approve as is
+                            elif draft is None:
                                 draft = self.agent.run('writer', {'candidate': candidate, 'research': research,
-                                    'visual_options': visual_options, 'feedback': feedback})
+                                    'visual_options': visual_options, 'feedback': feedback, **hook_input})
                             elif affected:
                                 patches = self.agent.run('card_repair', {'candidate': candidate,
                                     'research': research, 'draft': draft, 'repair_indices': affected,
-                                    'visual_options': visual_options, 'feedback': feedback})
+                                    'visual_options': visual_options, 'feedback': feedback, **hook_input})
                                 draft = apply_card_patches(draft, patches, affected)
                             else:
                                 raise ValueError('repair_scope_missing_or_invalid')
-                            policy.validate_draft(draft, research)
+                            try:
+                                policy.validate_draft(draft, research)
+                            except ValueError as error:
+                                fixable = policy.style_repair_indices(draft)
+                                if not fixable or not str(error).startswith(('owner_style_violation', 'unsupported_arrow_symbol')):
+                                    raise
+                                raise TextRejected({'repair_indices': fixable, 'reason': str(error)})
                             self.save(state, 'drafted', draft=draft)
                             package = dict(copy.deepcopy(draft), sources=sources, research=research, lane=lane,
                                            verified_timing=timing,
@@ -201,6 +251,18 @@ class Pipeline:
                             return state
                         except BudgetBlocked:
                             raise
+                        except policy.VisualShortfall as error:
+                            drop = set(error.indices)
+                            kept = [c for i, c in enumerate(draft['cards']) if i not in drop]
+                            # Info carries the hook and at least two story beats must
+                            # remain; otherwise the story is not tellable honestly.
+                            if 0 in drop or len(kept) < 3:
+                                raise ValueError('insufficient_distinct_story_photos: ' + str(error)[:300])
+                            draft = dict(draft, cards=kept)
+                            shortened, affected, accepted_images = True, [], {}
+                            feedback = str(error)
+                            self.save(state, 'visual_shortened', candidate_id=candidate['id'],
+                                      dropped_cards=sorted(drop), working_draft=copy.deepcopy(draft))
                         except (ValueError, RuntimeError, OSError) as error:
                             if str(error) == 'agent_input_too_large':
                                 raise  # Rewriting prose cannot repair a structural input error.
@@ -232,7 +294,7 @@ class Pipeline:
             raise
         except Exception as error:
             details = {'budget_diagnostic': error.diagnostic} if isinstance(error, BudgetBlocked) else {}
-            self.save(state, 'stopped', status='held', reason=type(error).__name__, **details)
+            self.save(state, 'stopped', status='held', reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__, **details)
         return state
 
     def remember_rejection(self, candidate, reason):
@@ -242,8 +304,89 @@ class Pipeline:
             except Exception:
                 raise PersistenceError('candidate_memory_write_unconfirmed') from None
 
+    def judge_pitch(self, state, candidate):
+        """Score the editor's pitch before any research is paid for.
+
+        27 Sep: the research, hooks, writer and reviews were bought for Harry
+        Kane, US golf and a Gulf Cup statistic the hook judge then scored 6.
+        The same viewer judge now scores the pitch itself (a few cents) and a
+        weak one never reaches the researcher. Faults pass the pitch through:
+        the later hook gate still stands.
+        """
+        editorial = candidate.get('editorial', {})
+        try:
+            verdict = self.agent.run('pitch_judge', {
+                'format': editorial.get('format', 'story'), 'title': candidate.get('title'),
+                'why_now': editorial.get('why_now'), 'angle': editorial.get('angle'),
+                'share_reason': editorial.get('share_reason')})
+            score = verdict.get('score')
+            if type(score) is not int or not 1 <= score <= 10:
+                raise ValueError('invalid_pitch_score')
+            reason = policy.text(verdict.get('reason'), 500)
+        except BudgetBlocked:
+            raise
+        except (ValueError, RuntimeError, OSError, AttributeError, TypeError) as error:
+            self.save(state, 'pitch_unscored', candidate_id=candidate['id'],
+                      reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__)
+            return
+        self.save(state, 'pitch_scored', candidate_id=candidate['id'], pitch={'score': score, 'reason': reason})
+        if score < MIN_HOOK_SCORE:
+            raise ValueError('weak_pitch: scored %d/10: %s' % (score, reason[:200]))
+
+    def choose_hook(self, state, candidate, research):
+        """Three evidence-bound openings; a viewer-persona judge picks one.
+
+        A hook is advice to the writer, never evidence: every option must cite
+        existing research claims, and the text gates still check the draft.
+        Any fault here returns None so the writer proceeds unguided rather than
+        losing the candidate after research has been paid for.
+        """
+        known = {claim['id'] for claim in research['claims']}
+        try:
+            options = self.agent.run('hooks', {'candidate': candidate, 'research': research}).get('options')
+            if not isinstance(options, list) or len(options) != 3:
+                raise ValueError('invalid_hook_options')
+            for option in options:
+                if not isinstance(option, dict) or set(option) != {'title', 'opening', 'share_line', 'claim_ids'}:
+                    raise ValueError('invalid_hook_fields')
+                policy.text(option['title'], 85)
+                policy.text(option['opening'], 200)
+                policy.text(option['share_line'], 200)
+                ids = option['claim_ids']
+                if not isinstance(ids, list) or not ids or any(i not in known for i in ids):
+                    raise ValueError('unsupported_hook_claim')
+            verdict = self.agent.run('hook_judge', {'options': [
+                {k: o[k] for k in ('title', 'opening', 'share_line')} for o in options]})
+            choice = verdict.get('choice')
+            if type(choice) is not int or not 0 <= choice < 3:
+                raise ValueError('invalid_hook_choice')
+            policy.text(verdict.get('reason'), 500)
+            score = verdict.get('score')
+            if type(score) is not int or not 1 <= score <= 10:
+                raise ValueError('invalid_hook_score')
+        except BudgetBlocked:
+            raise
+        except (ValueError, RuntimeError, OSError, AttributeError, TypeError) as error:
+            self.save(state, 'hook_skipped', reason=str(error)[:250] if isinstance(error, ValueError)
+                      else type(error).__name__, candidate_id=candidate['id'])
+            return None
+        hook = {'options': options, 'choice': choice, 'score': score, 'reason': verdict['reason']}
+        if score < MIN_HOOK_SCORE:
+            # Owner, 2026-09-27: a correct but unremarkable package is a failure.
+            # Stop before the writer and the reviews are paid for; the next
+            # candidate gets the slot.
+            self.save(state, 'hook_too_weak', candidate_id=candidate['id'], hook=hook)
+            raise ValueError('weak_hook: best opening scored %d/10: %s' % (score, verdict['reason'][:200]))
+        self.save(state, 'hook_chosen', candidate_id=candidate['id'], hook=hook)
+        return dict(options[choice])
+
     def editor_choices(self, state, lane, candidates):
         """Try at most three shortlists, never researching a candidate twice."""
+        if getattr(self.agent, 'requires_free_selection', False):
+            from .free_selection import select
+            # Exactly one free handoff. No second paid candidate on rejection.
+            yield select(self.free_selection, lane, candidates)
+            return
         used = set()
         for round_number in range(1, 4):
             remaining = [candidate for candidate in candidates if candidate['id'] not in used]

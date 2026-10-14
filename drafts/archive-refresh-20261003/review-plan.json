@@ -1,0 +1,28 @@
+{
+  "status": "AWAITING_OWNER_DESIGN_REVIEW",
+  "scope": "All final saved stories; National Day excluded. First two oldest prepared as two cards each. Do not mutate archives before approval.",
+  "packages": [
+    {
+      "name": "foldable",
+      "old_saved_story_id": "4597e0b1-76db-4295-b6f0-ee7f9de95223",
+      "old_cards": 5,
+      "new_cards": 2
+    },
+    {
+      "name": "premium-economy",
+      "old_saved_story_id": "8803e943-a573-4c15-8a83-32c6c7fada61",
+      "old_cards": 4,
+      "new_cards": 2
+    }
+  ],
+  "sources": [
+    "https://news.samsung.com/global/samsung-to-postpone-the-launch-of-the-galaxy-fold",
+    "https://news.samsung.com/global/galaxy-fold-ready-for-launch-starting-from-september",
+    "https://news.samsung.com/us/samsung-utg-glass-foldable-display-easily-bendable-ultra-thin-glass/",
+    "https://www.samsung.com/levant/support/mobile-devices/what-is-the-foldable-display-and-protective-film-on-my-smartphone/",
+    "https://b787.evaair.com/en/",
+    "https://www.emirates.com/media-centre/emirates-launches-full-premium-economy-experience/",
+    "https://www.emirates.com/media-centre/emirates-premium-economy-shines-in-first-year-of-full-service-with-over-160000-customers-trading-up-to-experience-the-cabins-quiet-luxury/"
+  ],
+  "mutations_performed": "None to Snapchat; drafts only; no paid generation."
+}

@@ -1,0 +1,88 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أرماني.. بدأت ببيع سيارة",
+  "not_before": "2026-09-28T08:30:36Z",
+  "expires_at": "2026-09-28T20:59:59Z",
+  "approval": "Khalid: تمام انشر - 2026-09-28 11:30:36 Asia/Riyadh",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/armani-20260928/card-1.jpg",
+      "sha256": "5ba5080ca6e0b345cfa010ebc70e7b381cf90b3f9350e0ce34819595ae7fb638",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q635484",
+        "official_site": "https://armanivalues.com",
+        "source_url": "https://armanivalues.com/overview/our-history/",
+        "original_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2021/12/GA_Milan_DA07IHA.tif_10x15.jpg",
+        "download_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2021/12/GA_Milan_DA07IHA.tif_10x15.jpg",
+        "asset_id": "primary:574901dc1d24ce348ad2f822",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "01e25bb124758e55b05aa95b47ba5a10c57d6b959df55589213a3f175cc215cc"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/armani-20260928/card-2.jpg",
+      "sha256": "15583e86b256315e91d5136f942d40dd3f73fdfb0e3349412cd4a9928655d38b",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q635484",
+        "official_site": "https://armanivalues.com",
+        "source_url": "https://armanivalues.com/overview/our-history/",
+        "original_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2022/02/1975.jpg",
+        "download_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2022/02/1975.jpg",
+        "asset_id": "primary:7a364687d4dc249142863558",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "12cef28d60849ccb9a06dbb964d36ac700372ef91f2791a1a65ac5b9d74c1e14"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/armani-20260928/card-3.jpg",
+      "sha256": "3b3573086d586cb94a4d650cf56c6f9b4d1f2aa0898445cd4f232ca9fcd8d810",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q635484",
+        "official_site": "https://armanivalues.com",
+        "source_url": "https://armanivalues.com/overview/our-history/",
+        "original_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2021/12/American-Gigolo_DA06Y1E.tif_10x15.jpg",
+        "download_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2021/12/American-Gigolo_DA06Y1E.tif_10x15.jpg",
+        "asset_id": "primary:d70a1925cea4118bb8f8ef30",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "e5262c7545a5c30123311d559f37a33365646fa53d1c3290cee4e8f27894df99"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/armani-20260928/card-4.jpg",
+      "sha256": "152d99999e5b8eda7f3c1edb8183b7ee671f5ad64a4bdccab3f65756173679de",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q635484",
+        "official_site": "https://armanivalues.com",
+        "source_url": "https://armanivalues.com/overview/our-history/",
+        "original_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2021/12/AHR_Milan_DA03I0A.tif_10x15.jpg",
+        "download_url": "https://ddf95m9s3iunr.cloudfront.net/wp-content/uploads/2021/12/AHR_Milan_DA03I0A.tif_10x15.jpg",
+        "asset_id": "primary:90fd0e837c2000b442a60aa8",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "df22b54126dedcd1df65f991e3376e17c508eacbf89ca3696ee250c224c5eea3"
+      }
+    }
+  ],
+  "predecessors": [],
+  "review": "Exact owner-approved four cards; sources page excluded; authentic Giorgio Armani wordmark on final card."
+}

@@ -1,0 +1,11 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "1752670294534fcbd9c51654788aa4a0cf88c63d71471c97a2b7a6afd9a618b8",
+  "manifest": "approved/melitta-20260929/manifest.json",
+  "manifest_sha256": "014d0e14e1bc0df5847c1eb976c8ed4cc0664c77c6f238badb3ab0f031971f6c",
+  "expires_at": "2026-10-02T20:59:59Z",
+  "empty_profile_confirmation": "Khalid confirmed empty 2026-10-01 00:01 Asia/Riyadh; City saved subsequently and journaled; provider inventory required.",
+  "approval": "Owner authorized all final previous published packages; Melitta original cards visually checked and no subsequent replacement identified.",
+  "source_commit": "ec04f6c38d4788269a6ba8f1343688541619673a"
+}

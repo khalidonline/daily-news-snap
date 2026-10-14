@@ -1,0 +1,11 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190",
+  "manifest": "approved/son-20261002/manifest.json",
+  "manifest_sha256": "de09c04028d9f565354d70f427f12e493e3d66b187dd377d6d2f82f4466a2821",
+  "title": "سون — من خسارة هائلة إلى رهان ChatGPT",
+  "expires_at": "2026-10-03T20:59:59Z",
+  "empty_profile_confirmation": "Owner confirmed profile empty 2026-10-01 00:01 Riyadh; all later saves journaled and checked against provider inventory.",
+  "approval": "Owner authorized daily archival of final published packages. Original four cards reviewed at mobile scale and confirmed final; save exact published upload IDs in original order."
+}

@@ -1,0 +1,113 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "package": "city-penalties-20260930-compact-20261003",
+  "identity": "e2dbc771c6be9b2ca2645b2172188fb0105e74b1c07bfd0285da02fc4319f1e4",
+  "title": "السيتي… أندية خسرت نقاط وبطولات",
+  "authorization": "Khalid 2026-10-03 15:04 Asia/Riyadh: renew ONLY City, Disney, Ceer, Apple final, Air Rage using original photos/template, max two cards; keep two operations reserve. Current scheduled request explicitly permits preparation and independent archive approval.",
+  "not_before": "2026-10-03T20:52:00Z",
+  "expires_at": "2026-10-06T20:59:59Z",
+  "source_identity": "cb63e68059815933eac67b69e3f83951bfc323840a503868e02a41630ac0403d",
+  "source_rows": [
+    {
+      "status": "POSTED",
+      "post_id": "008205b2-9cfc-48f6-9aa6-aa015eb20ba2",
+      "upload_id": "627c0e80-e13a-4d02-a5a6-3ad30f137870"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "bd1a0570-96c8-4179-8db7-32254fe30e21",
+      "upload_id": "59368c38-1acc-45a8-a1e6-3a4349f9d4a3"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "a378becc-f052-4416-820e-c0ce0d908420",
+      "upload_id": "d512ec1f-a3f4-4dba-be83-b7b220c921d0"
+    },
+    {
+      "status": "POSTED",
+      "post_id": "a0a076ee-9a0c-47cd-ba72-518b12592f2e",
+      "upload_id": "d8ab289a-c339-4c7f-a50d-b262421c25fb"
+    }
+  ],
+  "source_manifest": "approved/city-penalties-20260930/manifest.json",
+  "source_manifest_sha256": "58d221ecb7806b7f5132163ea45bd2fddb25e4e5c2f1ea13a27bb9a7026dbc0b",
+  "source_manifest_identity": "cb63e68059815933eac67b69e3f83951bfc323840a503868e02a41630ac0403d",
+  "source_commit": "f2094a14df7696a09c4e5596682edff8f85e03ec",
+  "previous_saved": {
+    "identity": "cb63e68059815933eac67b69e3f83951bfc323840a503868e02a41630ac0403d",
+    "title": "السيتي والعقوبات — نقاط وبطولات وهبوط",
+    "upload_ids": [
+      "627c0e80-e13a-4d02-a5a6-3ad30f137870",
+      "59368c38-1acc-45a8-a1e6-3a4349f9d4a3",
+      "d512ec1f-a3f4-4dba-be83-b7b220c921d0",
+      "d8ab289a-c339-4c7f-a50d-b262421c25fb"
+    ],
+    "status": "POSTED",
+    "intent_at": "2026-09-30T21:05:38.001503+00:00",
+    "post_id": "c862cb68-c91b-4d7e-81de-16e96eb03770",
+    "confirmed_at": "2026-09-30T21:06:20.959794+00:00",
+    "provider_result": {
+      "id": "c862cb68-c91b-4d7e-81de-16e96eb03770",
+      "status": "POSTED",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "04ca9933-b9fa-4849-8279-01ff701b136b",
+          "mediaId": "47a95fc2-c2f7-4342-b1ae-73143c7167f3",
+          "mediaIds": [
+            "47a95fc2-c2f7-4342-b1ae-73143c7167f3",
+            "f0f92d54-d140-4585-ab5d-54f4119ed809",
+            "56328fad-2754-4292-bc5a-18ffc4a37339",
+            "d5fa5f46-39f5-4845-89b1-28bf9484ad28"
+          ],
+          "type": "SAVED_STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "627c0e80-e13a-4d02-a5a6-3ad30f137870",
+          "sourceUploadIds": [
+            "627c0e80-e13a-4d02-a5a6-3ad30f137870",
+            "59368c38-1acc-45a8-a1e6-3a4349f9d4a3",
+            "d512ec1f-a3f4-4dba-be83-b7b220c921d0",
+            "d8ab289a-c339-4c7f-a50d-b262421c25fb"
+          ],
+          "mediaUploadedAt": "2026-09-30T21:05:48.596Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      }
+    }
+  },
+  "media": [
+    {
+      "path": "approved/saved-stories/compact-five-20261003/city-penalties-20260930/card-01.jpg",
+      "kind": "info",
+      "sha256": "f53d083427a37870fbc89c4dab88ffaf7aa962f288a8a2d128c06549721085ce"
+    },
+    {
+      "path": "approved/saved-stories/compact-five-20261003/city-penalties-20260930/card-02.jpg",
+      "kind": "story",
+      "sha256": "4f3df60276c5f7c3deff48d036942875c268211695743e169967739d001ee2c6"
+    }
+  ],
+  "reserve_quota": 2,
+  "quota_check_required_before_send": true,
+  "live_source_and_provider_inventory_recheck_required": true,
+  "status": "REVIEWED_WAITING_QUOTA",
+  "sources_internal_only": [
+    "https://www.reuters.com/sports/soccer/man-city-found-guilty-all-charges-serious-financial-rule-breaches-premier-league-2026-09-29/",
+    "https://www.skysports.com/football/news/13593377/man-city-premier-league-charges-appeal-process-punishment-hearing-and-what-happens-now-after-guilty-verdict",
+    "https://www.premierleague.com/en/news/4001861",
+    "https://www.uefa.com/news-media/news/01b7-0f8eee36c65e-730a3fda3edf-1000--fiorentina-and-lazio-reprieved/"
+  ],
+  "old_deletion_status": "PENDING_SNAPCHAT_APP_NO_DELETION_CLAIM",
+  "snapshot_audit_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/37153412062",
+  "review": {
+    "cards": 2,
+    "font_family": "Almarai",
+    "body_px": 52,
+    "phone_preview_reviewed": true,
+    "share_panel_separate": true,
+    "sources_excluded_from_media": true,
+    "paid_model_requests": 0
+  }
+}

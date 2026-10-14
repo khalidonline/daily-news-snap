@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "عربة المقاضي… بدايتها زباين بالتمثيل!",
+  "not_before": "2026-10-09T14:03:13Z",
+  "expires_at": "2026-10-09T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid requested انشر then clarified عربة المقاضي at 2026-10-09T17:03:13+03:00, authorizing preparation and publication of selected shopping-cart story using established Bold40 template. No prior cart delivery identified.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/shopping-cart-20261009/card-00.jpg",
+      "sha256": "bb415f5980ba0548c9c131d2eb2265f0d862be5e3e64e9e0a33fdd7dcb122240",
+      "image": {
+        "provider": "primary_media",
+        "source_url": "https://www.afstores.com/the-intriguing-story-of-how-the-shopping-cart-was-born/",
+        "original_url": "https://www.afstores.com/wp-content/uploads/2023/08/Sylvan-Goldman.png",
+        "download_url": "https://www.afstores.com/wp-content/uploads/2023/08/Sylvan-Goldman.png",
+        "asset_id": "primary:b323612ad229094d5db90811",
+        "sha256": "d906b429c146fe95fd9e7842541ceecd8ff3bd83e4e2806905bcbb9c3322f8b5",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "source_kind": "article",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      }
+    }
+  ]
+}

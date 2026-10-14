@@ -1,0 +1,84 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أمريكان إكسبرس — من الطرود إلى البطاقات",
+  "not_before": "2026-09-29T11:00:00Z",
+  "expires_at": "2026-09-29T20:59:59Z",
+  "approval": "Owner approved designs 2026-09-29 09:31 and publication now/afternoon 09:49 Asia/Riyadh",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/american-express-20260929/card-00.jpg",
+      "sha256": "01ca55365189d345ffda4528a7044229ca9ca0a64077a888abbaa51e314844da",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q194360",
+        "official_site": "https://www.americanexpress.com.sa",
+        "source_url": "https://www.americanexpress.com.sa/",
+        "original_url": "https://www.americanexpress.com.sa/sites/default/files/2025-02/platinum-charge-card.webp",
+        "download_url": "https://www.americanexpress.com.sa/sites/default/files/2025-02/platinum-charge-card.webp",
+        "asset_id": "primary:b2a5628710c39c417cb0f239",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "8645c91a2bceadad8c8eb231e98bc7a8bd7b14f790ba88703c7c4494080b718b"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/american-express-20260929/card-01.jpg",
+      "sha256": "d37f42e2e2e5d42587738b17b074b339273ad9d86093048cb70d115997668cce",
+      "image": {
+        "provider": "commons",
+        "license": "Public domain",
+        "attribution_required": false,
+        "source_url": "https://commons.wikimedia.org/wiki/File:American_Express_Co_Wagon,_New_Orleans_1913.jpg",
+        "asset_id": "amex-wagon.jpg",
+        "sha256": "39cf15ad8d02f60947120e8ed06e41e8aff25386abd70d0a3ba62864a2892884"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/american-express-20260929/card-02.jpg",
+      "sha256": "aff830d700a472635d7262d0c48995bb5ee1188e2c0f0b3ba30dde97bfa2b87e",
+      "image": {
+        "provider": "commons",
+        "license": "Public domain",
+        "attribution_required": false,
+        "source_url": "https://commons.wikimedia.org/wiki/File:Book,_instruction._%22Travelers_Code%22_(c0f63fa8-55ea-4891-ac9b-e93de2896874).jpg",
+        "asset_id": "amex-travel.jpg",
+        "sha256": "50b17e233a197f82a5ccd578696cdd00768fb64136eeaef8a7ca06166295806a"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/american-express-20260929/card-03.jpg",
+      "sha256": "fe5114a3a4cd147e3c1e4419d94cea344c6aa8fc8ba781a055f302936299fd4d",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q194360",
+        "official_site": "https://www.americanexpress.com.sa",
+        "source_url": "https://www.americanexpress.com.sa/",
+        "original_url": "https://www.americanexpress.com.sa/sites/default/files/2025-02/business-card.webp",
+        "download_url": "https://www.americanexpress.com.sa/sites/default/files/2025-02/business-card.webp",
+        "asset_id": "primary:b418349f8ec1750b74b9d96a",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "f7efe6b3603644b9ad6bcc6d043c37b65c6cf47b65f15dc41dcd4197613ebd87",
+        "composite_components": [
+          {
+            "source_url": "https://luxuryplastic.com/category/information/history/",
+            "original_url": "https://www.luxuryplastic.com/wp-content/uploads/amex_1958_card.jpg",
+            "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+            "rights_status": "owner_accepted_editorial_use",
+            "license": "All rights reserved"
+          }
+        ]
+      }
+    }
+  ],
+  "predecessors": []
+}

@@ -1,0 +1,39 @@
+{
+  "package": "city-penalties-20260930",
+  "title": "السيتي… أندية خسرت نقاط وبطولات",
+  "cards": [
+    {
+      "title": [
+        "قضية السيتي تفتح السؤال:",
+        "إلى وين توصل العقوبة؟"
+      ],
+      "points": [
+        "في ٢٩ سبتمبر ٢٠٢٦، أُدين السيتي بمخالفات مالية، وأعلن إنه بيستأنف.",
+        "خصم نقاط كبير ممكن يهبّط الفريق؛ والاستبعاد عقوبة مختلفة.",
+        "حتى ٣ أكتوبر ٢٠٢٦، عقوبة السيتي ما تحددت."
+      ],
+      "photo": "approved/city-penalties-20260930/assets/city.jpg",
+      "caption": "مانشستر سيتي — صورة أرشيفية"
+    },
+    {
+      "title": [
+        "نقاط راحت من إيفرتون…",
+        "وبطولتان راحت من يوفنتوس"
+      ],
+      "points": [
+        "إيفرتون أنهى موسم ٢٠٢٣–٢٠٢٤ بخصم ٨ نقاط بسبب مخالفات مالية.",
+        "عام ٢٠٠٦، خسر يوفنتوس لقبين للدوري وهبط للدرجة الثانية.",
+        "قضية يوفنتوس كانت عن التأثير على تعيين الحكام؛ مو نفس سبب السيتي."
+      ],
+      "photo": "approved/city-penalties-20260930/assets/juve2006.jpg",
+      "caption": "ديل بييرو في الدرجة الثانية — سبتمبر ٢٠٠٦",
+      "share": "شاركها مع صديقك اللي يحب الكورة"
+    }
+  ],
+  "sources": [
+    "https://www.reuters.com/sports/soccer/man-city-found-guilty-all-charges-serious-financial-rule-breaches-premier-league-2026-09-29/",
+    "https://www.skysports.com/football/news/13593377/man-city-premier-league-charges-appeal-process-punishment-hearing-and-what-happens-now-after-guilty-verdict",
+    "https://www.premierleague.com/en/news/4001861",
+    "https://www.uefa.com/news-media/news/01b7-0f8eee36c65e-730a3fda3edf-1000--fiorentina-and-lazio-reprieved/"
+  ]
+}

@@ -1,0 +1,908 @@
+[
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "heathrow-20260928-compact",
+    "identity": "1ecea661754fbdb209e29fad98ef79fc9882a9bbc85854cbadcb06a1bdcdad5d",
+    "title": "هيثرو كان خيام وألواح خشب!",
+    "source_identity": "80253d4b55acbac47e7dfd314353abb822048aef3a1f84b266a1349579536040",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "465fbcc7-a74a-4b22-b30f-a9bfaece141a",
+        "upload_id": "46906e0f-42c5-47c1-aaee-834612462b56"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "a4620c92-ae41-4139-adbe-e49f0cca243c",
+        "upload_id": "6ba93e71-7676-4ab8-94a1-82fa005c465a"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f98bf410-a813-4997-a394-951e75ca671f",
+        "upload_id": "de65065e-4aea-4ea5-9bfa-714e9cb88be3"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "32a147b7-53ac-4b22-badb-b87129d2e155",
+        "upload_id": "98277511-b125-482d-9d1b-dfb25bb4dca4"
+      }
+    ],
+    "previous_saved": {
+      "identity": "80253d4b55acbac47e7dfd314353abb822048aef3a1f84b266a1349579536040",
+      "title": "هيثرو.. من الخيام إلى صالات السفر",
+      "upload_ids": [
+        "46906e0f-42c5-47c1-aaee-834612462b56",
+        "6ba93e71-7676-4ab8-94a1-82fa005c465a",
+        "de65065e-4aea-4ea5-9bfa-714e9cb88be3",
+        "98277511-b125-482d-9d1b-dfb25bb4dca4"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-09-30T21:12:33.924602+00:00",
+      "post_id": "8083f295-d22a-4077-af5e-d9a58b9ad93c",
+      "confirmed_at": "2026-09-30T21:13:26.277450+00:00",
+      "provider_result": {
+        "id": "8083f295-d22a-4077-af5e-d9a58b9ad93c",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "15c4ca48-136e-4225-907b-f307c84a34b3",
+            "mediaId": "c0ee9c64-71fe-469f-b17b-07dc5935d3bb",
+            "mediaIds": [
+              "c0ee9c64-71fe-469f-b17b-07dc5935d3bb",
+              "2a18c5ba-d233-4b02-9c27-61791a2d4181",
+              "152535e1-4c82-4158-8519-3fe21be04fef",
+              "5c730b63-0012-45c7-863f-53ef33f8883a"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "46906e0f-42c5-47c1-aaee-834612462b56",
+            "sourceUploadIds": [
+              "46906e0f-42c5-47c1-aaee-834612462b56",
+              "6ba93e71-7676-4ab8-94a1-82fa005c465a",
+              "de65065e-4aea-4ea5-9bfa-714e9cb88be3",
+              "98277511-b125-482d-9d1b-dfb25bb4dca4"
+            ],
+            "mediaUploadedAt": "2026-09-30T21:12:43.572Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "f86baa2951158133168a45533eee213fce46a5b0be335096b960be7a5c3b9d10",
+        "path": "approved/archive-renew-20261003-reserve2/heathrow-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "60646cbd3dc08506d80620c4d5553cb94e0d7275ddda28a5f7efdf0cfd27ff82",
+        "path": "approved/archive-renew-20261003-reserve2/heathrow-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "armani-20260928-compact",
+    "identity": "4e90222adfa2eda6646c18fb1c325b44ee1852e4214e8f1e4ec08b25a38766cc",
+    "title": "باعوا سيارة… وبدأت أرماني",
+    "source_identity": "9a279cce3c4be63b8d209a8adef3a7643be7e25180b52c5278785b06e21ff08b",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "89963fe9-6af4-497a-b003-9190592cff36",
+        "upload_id": "0ff8fbac-7ef6-47c2-addd-34818f0eaadb"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "2be170a8-4bcc-4961-9d32-4f19af5666ed",
+        "upload_id": "76624415-5bba-4251-b61e-5518ab47f1bc"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "20582853-3022-43d6-9d1e-cc9563b61496",
+        "upload_id": "d4031a15-9cb2-4dbe-86b3-bd30dd76d60d"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "77676c28-015b-4c6e-8e64-52467783f93b",
+        "upload_id": "78b65b39-da52-44b3-a1d2-036f0ea7fbe4"
+      }
+    ],
+    "previous_saved": {
+      "identity": "9a279cce3c4be63b8d209a8adef3a7643be7e25180b52c5278785b06e21ff08b",
+      "title": "أرماني.. بدأت ببيع سيارة",
+      "upload_ids": [
+        "0ff8fbac-7ef6-47c2-addd-34818f0eaadb",
+        "76624415-5bba-4251-b61e-5518ab47f1bc",
+        "d4031a15-9cb2-4dbe-86b3-bd30dd76d60d",
+        "78b65b39-da52-44b3-a1d2-036f0ea7fbe4"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-09-30T21:11:37.592494+00:00",
+      "post_id": "14a023c7-9f09-4685-80c4-84300de3bed7",
+      "confirmed_at": "2026-09-30T21:12:26.572044+00:00",
+      "provider_result": {
+        "id": "14a023c7-9f09-4685-80c4-84300de3bed7",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "49ef9eba-1747-471a-870f-4bf7186edc71",
+            "mediaId": "f71b2675-ee5b-439d-9a4b-b2c759d79f67",
+            "mediaIds": [
+              "f71b2675-ee5b-439d-9a4b-b2c759d79f67",
+              "105dc1ae-2447-41af-bf79-27990fc5f556",
+              "c7edc239-b659-409e-8b4a-7a0d5bb1386d",
+              "0f1efd87-2d85-4263-916f-b4ed3986848d"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "0ff8fbac-7ef6-47c2-addd-34818f0eaadb",
+            "sourceUploadIds": [
+              "0ff8fbac-7ef6-47c2-addd-34818f0eaadb",
+              "76624415-5bba-4251-b61e-5518ab47f1bc",
+              "d4031a15-9cb2-4dbe-86b3-bd30dd76d60d",
+              "78b65b39-da52-44b3-a1d2-036f0ea7fbe4"
+            ],
+            "mediaUploadedAt": "2026-09-30T21:11:47.367Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "1416bdf322412749bf72001e1205ff6227bdbc3a781caf7ae1cd118177130219",
+        "path": "approved/archive-renew-20261003-reserve2/armani-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "5c1d9f0c674303c8fd55d571e034c86a38d92d70cf39a3dd97fc5ffb9ca8e4f4",
+        "path": "approved/archive-renew-20261003-reserve2/armani-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "melitta-20260929-compact",
+    "identity": "3ae10c24a48ac17dd482a16832be8364c255455ef73e1cfecbd0361a5ab28451",
+    "title": "فلتر القهوة بدأ بورقة من دفتر",
+    "source_identity": "1752670294534fcbd9c51654788aa4a0cf88c63d71471c97a2b7a6afd9a618b8",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "679b6d32-b8a0-4d4d-ace8-d1239b7bd218",
+        "upload_id": "8304e6fd-085d-4c0c-81da-12004412a6c8"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f7bb0599-3f9c-49c4-83e6-69621853bc75",
+        "upload_id": "ba452391-ecc3-4678-a8af-9c7c1eae38b6"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "0e44e280-a2c8-48df-b9aa-154c5423eac6",
+        "upload_id": "cdbc5dbd-4476-4331-9ffb-d61f262aa895"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "971c3005-ef0a-4a98-a5ec-1fe5c993d72e",
+        "upload_id": "72c26f8c-7c61-458d-9a29-ddb066693927"
+      }
+    ],
+    "previous_saved": {
+      "identity": "1752670294534fcbd9c51654788aa4a0cf88c63d71471c97a2b7a6afd9a618b8",
+      "title": "فلتر القهوة — قصة ميليتا",
+      "upload_ids": [
+        "8304e6fd-085d-4c0c-81da-12004412a6c8",
+        "ba452391-ecc3-4678-a8af-9c7c1eae38b6",
+        "cdbc5dbd-4476-4331-9ffb-d61f262aa895",
+        "72c26f8c-7c61-458d-9a29-ddb066693927"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-09-30T21:09:04.286287+00:00",
+      "post_id": "0fcdea81-5286-443b-ae17-771375742477",
+      "confirmed_at": "2026-09-30T21:09:49.046601+00:00",
+      "provider_result": {
+        "id": "0fcdea81-5286-443b-ae17-771375742477",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "7ccb646f-8b1c-4727-a85e-2640b0a0a737",
+            "mediaId": "0ab698ee-2e93-429d-b248-8bc73ee0f995",
+            "mediaIds": [
+              "0ab698ee-2e93-429d-b248-8bc73ee0f995",
+              "b81ca0fc-875e-4b29-ac5a-4b1e9e729b52",
+              "93bb823b-d59d-483b-8264-f9f9f1121698",
+              "f6da216c-d428-43e9-990e-79e6d7432923"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "8304e6fd-085d-4c0c-81da-12004412a6c8",
+            "sourceUploadIds": [
+              "8304e6fd-085d-4c0c-81da-12004412a6c8",
+              "ba452391-ecc3-4678-a8af-9c7c1eae38b6",
+              "cdbc5dbd-4476-4331-9ffb-d61f262aa895",
+              "72c26f8c-7c61-458d-9a29-ddb066693927"
+            ],
+            "mediaUploadedAt": "2026-09-30T21:09:08.993Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "08748968e81a3adb70732d28f71ea6f0557f2c8d736ceb3f9e30610f2a89db34",
+        "path": "approved/archive-renew-20261003-reserve2/melitta-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "51839fad14ca6b92baad8e902cdb6efe628eedaf414a736ed8211e5f03aace31",
+        "path": "approved/archive-renew-20261003-reserve2/melitta-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "american-express-20260929-compact",
+    "identity": "4c63e3ff5421b209562dd5c7e953cadbb89a6503de33a4df4a90f5cd224ab185",
+    "title": "أمريكان إكسبرس كانت شركة شحن!",
+    "source_identity": "b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "d52d2c81-f9b6-4808-98b0-d101d512f479",
+        "upload_id": "2fd19ccb-87a6-480f-b081-2ccd8b972f79"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "8d5f662b-a83a-49f9-97a6-d906e9ceb599",
+        "upload_id": "b64f809c-4d50-4c7d-a662-cc5c372d5c20"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f7fbb4c0-d85f-486b-a377-87d57a952d3e",
+        "upload_id": "d4d9fae4-ec63-49fb-b434-06a6e26f2b6c"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "1123fef2-88db-47f2-ac53-9a88a00d9a05",
+        "upload_id": "9b58365f-dc76-43d1-8cde-70cf59b9cb73"
+      }
+    ],
+    "previous_saved": {
+      "identity": "b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f",
+      "title": "أمريكان إكسبرس — من الطرود إلى البطاقات",
+      "upload_ids": [
+        "2fd19ccb-87a6-480f-b081-2ccd8b972f79",
+        "b64f809c-4d50-4c7d-a662-cc5c372d5c20",
+        "d4d9fae4-ec63-49fb-b434-06a6e26f2b6c",
+        "9b58365f-dc76-43d1-8cde-70cf59b9cb73"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-10-01T09:10:54.575374+00:00",
+      "post_id": "f63d275c-0781-4c4e-9950-ad4a04d8e993",
+      "confirmed_at": "2026-10-01T09:11:36.225531+00:00",
+      "provider_result": {
+        "id": "f63d275c-0781-4c4e-9950-ad4a04d8e993",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "a6c38b72-fc00-454d-abae-ef8abb05e036",
+            "mediaId": "5bd9853a-3ea6-47b2-b230-0cd9a5819485",
+            "mediaIds": [
+              "5bd9853a-3ea6-47b2-b230-0cd9a5819485",
+              "73f59fb0-2af6-40fa-938f-be241e7535ed",
+              "93c3f911-2f33-4fbd-aa21-6be994d08ebd",
+              "425f8981-e020-4300-8f11-36e64b3f81fe"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "2fd19ccb-87a6-480f-b081-2ccd8b972f79",
+            "sourceUploadIds": [
+              "2fd19ccb-87a6-480f-b081-2ccd8b972f79",
+              "b64f809c-4d50-4c7d-a662-cc5c372d5c20",
+              "d4d9fae4-ec63-49fb-b434-06a6e26f2b6c",
+              "9b58365f-dc76-43d1-8cde-70cf59b9cb73"
+            ],
+            "mediaUploadedAt": "2026-10-01T09:11:01.886Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      },
+      "source_identity": "b91111ba3232374e5491cfd8833ed1391e103f129ee06323d5010b361996e86f",
+      "package": "american-express-20260929",
+      "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+      "scope": "SAVED_STORY_ONLY",
+      "media_sha256": [
+        "01ca55365189d345ffda4528a7044229ca9ca0a64077a888abbaa51e314844da",
+        "d37f42e2e2e5d42587738b17b074b339273ad9d86093048cb70d115997668cce",
+        "aff830d700a472635d7262d0c48995bb5ee1188e2c0f0b3ba30dde97bfa2b87e",
+        "fe5114a3a4cd147e3c1e4419d94cea344c6aa8fc8ba781a055f302936299fd4d"
+      ]
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "0e6dc1be718a73d333dc150f11a577beb4c4806658069456ce78d06b62313955",
+        "path": "approved/archive-renew-20261003-reserve2/amex-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "8210c278a35e89553b3003b66303cbbcafcc56368868e8a8ce48dc11f22915d5",
+        "path": "approved/archive-renew-20261003-reserve2/amex-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "pandora-20261002-compact",
+    "identity": "1b8373a0e1599fb999828056c8f45428f9536a3876c946940e55d5c695c3e9ce",
+    "title": "باندورا… السوار اللي غيّر كل شيء",
+    "source_identity": "163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "92098fc9-86f6-4183-a182-2382316c9a35",
+        "upload_id": "90716b25-4b5d-41d9-876f-e72f91cd548c"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "76021863-ecd4-475d-bba2-a91dc9303214",
+        "upload_id": "daf69402-2251-4fb9-94f8-5b9c6ffe67a6"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "1b74306b-0168-4bd4-9b87-a1f9f1c4b150",
+        "upload_id": "bb9340ff-3f01-49d9-a9fb-b82026672f7d"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "2355d92d-6e23-4c62-acb6-cc4ce8fe16e1",
+        "upload_id": "7d1b25a6-6f5e-4bad-be40-b225e318e82c"
+      }
+    ],
+    "previous_saved": {
+      "identity": "163543c6625a0842189b7d5f81ce3e4f0ba5b80cec1679f2e96789dd0a06afbc",
+      "title": "باندورا — من محل صغير إلى العالم",
+      "upload_ids": [
+        "90716b25-4b5d-41d9-876f-e72f91cd548c",
+        "daf69402-2251-4fb9-94f8-5b9c6ffe67a6",
+        "bb9340ff-3f01-49d9-a9fb-b82026672f7d",
+        "7d1b25a6-6f5e-4bad-be40-b225e318e82c"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-10-02T21:01:47.219922+00:00",
+      "post_id": "88cfddf6-9e7c-4ce8-a913-8b8a3816c1e1",
+      "confirmed_at": "2026-10-02T21:02:35.896696+00:00",
+      "provider_result": {
+        "id": "88cfddf6-9e7c-4ce8-a913-8b8a3816c1e1",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "ffe20d31-0192-4645-8eb9-5ec890edd251",
+            "mediaId": "902d4eca-e552-4e47-ae00-2a695c5badc4",
+            "mediaIds": [
+              "902d4eca-e552-4e47-ae00-2a695c5badc4",
+              "41c5be8b-07e4-409f-a34c-38d68dc74032",
+              "9a3055b3-c47f-4264-b48e-454dbd7f3d76",
+              "10d3af56-dc2c-4191-938a-c5b67c792f79"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "90716b25-4b5d-41d9-876f-e72f91cd548c",
+            "sourceUploadIds": [
+              "90716b25-4b5d-41d9-876f-e72f91cd548c",
+              "daf69402-2251-4fb9-94f8-5b9c6ffe67a6",
+              "bb9340ff-3f01-49d9-a9fb-b82026672f7d",
+              "7d1b25a6-6f5e-4bad-be40-b225e318e82c"
+            ],
+            "mediaUploadedAt": "2026-10-02T21:01:58.087Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "d3bb17d43724cb121165f9c983dbded5ba051ad34e24e4204920151dca871344",
+        "path": "approved/archive-renew-20261003-reserve2/pandora-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "63e3669419090404530c0887292f564af048794f0f7dd6b5f4c2031a5fa57c01",
+        "path": "approved/archive-renew-20261003-reserve2/pandora-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "son-20261002-compact",
+    "identity": "c9decb8b4010e393abb721106f16dd278219b2793e03f67b8c6c1c827ec2be72",
+    "title": "خسر ٧٠ مليار… واستثماره قلب القصة",
+    "source_identity": "5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "530f0b51-4b00-4d5c-b207-9d0f07ae96dd",
+        "upload_id": "f4d5b007-e497-4220-866e-9c7440cdfc8c"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "96014edb-b540-42a1-ac44-9d145039f5ab",
+        "upload_id": "0b49bcb4-3676-48a3-805b-600f7292268d"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "357a81f2-49a5-42aa-9fdb-ece043fa11ff",
+        "upload_id": "411690d0-214d-4129-9f8d-08288326d84e"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "78e3d283-76ba-4e88-8b8e-dd63461e888d",
+        "upload_id": "b6558789-a15b-420d-8033-8251b02ca28a"
+      }
+    ],
+    "previous_saved": {
+      "identity": "5882e2c64ddcbf02ee0ba4de1e6995f66f1fa5bf6c123f1fd1daf3415513f190",
+      "title": "سون — من خسارة هائلة إلى رهان ChatGPT",
+      "upload_ids": [
+        "f4d5b007-e497-4220-866e-9c7440cdfc8c",
+        "0b49bcb4-3676-48a3-805b-600f7292268d",
+        "411690d0-214d-4129-9f8d-08288326d84e",
+        "b6558789-a15b-420d-8033-8251b02ca28a"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-10-02T20:59:51.451991+00:00",
+      "post_id": "45726761-023f-40d9-92a0-877fc4e8ddfc",
+      "confirmed_at": "2026-10-02T21:00:41.957614+00:00",
+      "provider_result": {
+        "id": "45726761-023f-40d9-92a0-877fc4e8ddfc",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "a79ae989-2674-4b74-89bf-ca746185d59b",
+            "mediaId": "11e2fbf5-b2ff-4497-97b5-07d9ba78765e",
+            "mediaIds": [
+              "11e2fbf5-b2ff-4497-97b5-07d9ba78765e",
+              "3af38609-86bd-4781-9c95-da8d4c782e62",
+              "021025f9-1164-4d00-8ce8-e2d0594a3128",
+              "c094f566-8d28-40b0-be60-a2379d5c3323"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "f4d5b007-e497-4220-866e-9c7440cdfc8c",
+            "sourceUploadIds": [
+              "f4d5b007-e497-4220-866e-9c7440cdfc8c",
+              "0b49bcb4-3676-48a3-805b-600f7292268d",
+              "411690d0-214d-4129-9f8d-08288326d84e",
+              "b6558789-a15b-420d-8033-8251b02ca28a"
+            ],
+            "mediaUploadedAt": "2026-10-02T21:00:03.156Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "5ba739ddd368a9faa2533ed51e23ef5e5aa299b91ffc4572ad2b20a981e4d69b",
+        "path": "approved/archive-renew-20261003-reserve2/son-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "3ce61df2d8886bcd07627142ee0232c81634ac19ef4c62f4b5225324ff7cb61c",
+        "path": "approved/archive-renew-20261003-reserve2/son-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "oil-20261002-compact",
+    "identity": "332b7e576fcdf26b03b413e07fddb3ce7dc0ce98b1320b6cfc8b457cc2f5f7c0",
+    "title": "نفط الطوارئ… داخل كهوف ملح!",
+    "source_identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "e1215af7-a364-4114-adce-9605e2e171a1",
+        "upload_id": "fe9233b3-e211-46ba-a519-234e8efb1298"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "c47d1cb5-246d-4be8-adf1-e667f26251e6",
+        "upload_id": "6b47816f-0dcd-4211-8122-d7d536da421a"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "4f1d42bf-568d-4c74-a33c-75258b696a7c",
+        "upload_id": "e987453c-3628-4764-b5bb-7a9e12d18797"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f32a9373-1e7e-40f8-8827-29b2f67e2b1f",
+        "upload_id": "cd8775b6-9dc3-4176-88e4-1f5c885cc9a5"
+      }
+    ],
+    "previous_saved": {
+      "identity": "9c53d9412d9abd0fb339209b170da2336c5a72b07b214c4a57f2f017b13ef850",
+      "title": "نفط الطوارئ — مخزون داخل كهوف الملح",
+      "upload_ids": [
+        "fe9233b3-e211-46ba-a519-234e8efb1298",
+        "6b47816f-0dcd-4211-8122-d7d536da421a",
+        "e987453c-3628-4764-b5bb-7a9e12d18797",
+        "cd8775b6-9dc3-4176-88e4-1f5c885cc9a5"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-10-02T21:00:52.327331+00:00",
+      "post_id": "d5af025f-8e18-4a72-a643-009b896196be",
+      "confirmed_at": "2026-10-02T21:01:37.190489+00:00",
+      "provider_result": {
+        "id": "d5af025f-8e18-4a72-a643-009b896196be",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "1c00e18a-69fa-4cdb-a781-8788c1cb7ba0",
+            "mediaId": "7955aa2d-14c5-4c03-845a-ef1adef73ed6",
+            "mediaIds": [
+              "7955aa2d-14c5-4c03-845a-ef1adef73ed6",
+              "a9efccf1-22f0-44df-82ef-94dfe985169f",
+              "7acfaa84-b771-4070-b10a-e6e256fbb4f4",
+              "8186bca7-dfe8-4c46-93e9-76a8a178cf42"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "fe9233b3-e211-46ba-a519-234e8efb1298",
+            "sourceUploadIds": [
+              "fe9233b3-e211-46ba-a519-234e8efb1298",
+              "6b47816f-0dcd-4211-8122-d7d536da421a",
+              "e987453c-3628-4764-b5bb-7a9e12d18797",
+              "cd8775b6-9dc3-4176-88e4-1f5c885cc9a5"
+            ],
+            "mediaUploadedAt": "2026-10-02T21:01:00.368Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      }
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "2d0e6e95ded2393a8594cdccac8160565e5457037d923e8c3fc001762eb9d184",
+        "path": "approved/archive-renew-20261003-reserve2/oil-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "197291833a8ce0c26c6f39fd80f9213d292341a89aedaa45fcfe71c4f62dc244",
+        "path": "approved/archive-renew-20261003-reserve2/oil-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "f35-20260920-compact",
+    "identity": "8c04ee21ec35d871e36b50bc230b52015416ea00ee3d226be071a04c58c71b5d",
+    "title": "خوذة F-35… شاشة قدّام عين الطيار",
+    "source_identity": "6d033e0af9280c17da9b416cea4603a2bbc886669b6882d3d76d42a8fd63d9e2",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "f99c31e2-673e-43f1-8386-861b5a9bf58a",
+        "upload_id": "ed3a258b-025b-49d4-972a-15c57486e739"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "8c4b7120-6333-4d1f-9260-d31645532607",
+        "upload_id": "f32e9398-2c31-4391-87c4-f00381945a96"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "3d55291c-d8a4-494a-a003-e24d6a00aa4b",
+        "upload_id": "8ffcfd5d-ef9a-4e50-b19e-2effd3b4530c"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "c9f9a2f1-1899-4c16-b5a8-0119e13e3e17",
+        "upload_id": "278b4beb-4fd9-459c-957d-4a6a8b4f4962"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "87930fe9-2c29-4e65-b160-e56ad3a0cc63",
+        "upload_id": "f5ec6a73-75ec-477c-93cd-3aa1b08d47fb"
+      }
+    ],
+    "previous_saved": {
+      "identity": "7c64592c5f3d87ab8d45baebd3f3f3f2074ee491ba3e4afba461f8c1aa04c66c",
+      "title": "F-35 — قصة المنافسة",
+      "upload_ids": [
+        "97701c23-c2f9-41af-8d01-a851cc21b2a9",
+        "dd096c71-a5f3-4e76-806a-846271faeeb5",
+        "67dc8e60-584d-4376-ba8d-3f4a503ed23b",
+        "d2b7ccc5-d054-486e-ab97-604980ccc65e"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-10-01T09:15:39.792813+00:00",
+      "post_id": "714c61f7-7535-4bc0-abf2-c91dea7c3b31",
+      "confirmed_at": "2026-10-01T09:16:25.106311+00:00",
+      "provider_result": {
+        "id": "714c61f7-7535-4bc0-abf2-c91dea7c3b31",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "59d5b7aa-11af-4555-939b-9eddc0031f0e",
+            "mediaId": "0f456c21-5017-4646-a0fd-742c7567a14d",
+            "mediaIds": [
+              "0f456c21-5017-4646-a0fd-742c7567a14d",
+              "ee8442ca-4d8d-4112-a69d-4dc914771901",
+              "d9d69f8f-f4c3-4f2f-b392-44979f6bd5ef",
+              "2b89a368-78f6-4b65-a5df-e2ad056af5ba"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "97701c23-c2f9-41af-8d01-a851cc21b2a9",
+            "sourceUploadIds": [
+              "97701c23-c2f9-41af-8d01-a851cc21b2a9",
+              "dd096c71-a5f3-4e76-806a-846271faeeb5",
+              "67dc8e60-584d-4376-ba8d-3f4a503ed23b",
+              "d2b7ccc5-d054-486e-ab97-604980ccc65e"
+            ],
+            "mediaUploadedAt": "2026-10-01T09:15:50.936Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      },
+      "source_identity": "6d033e0af9280c17da9b416cea4603a2bbc886669b6882d3d76d42a8fd63d9e2",
+      "package": "f35-20260920",
+      "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+      "scope": "SAVED_STORY_ONLY",
+      "media_sha256": [
+        "be603792ae0aee69037a92cc0850abea379d3dae1c0a622be334f785a53f6352",
+        "d61eed80d8ab4c362ef7ca4722f4e8b2e2e1cfe9432c7a22b7d3b47193ae3de0",
+        "efe68882810e03c97469784829174fc589be4dadec4d2cc49f8b7677711bb943",
+        "5f559049e9b2bdefd2ae6a61e7de871172a1b311e07c4d76e596e5f198f51c12"
+      ]
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "4457f2a3dcb5b5b2c927378d0027a4cbcefedbb5f8f76d930f03f6e8d5f23499",
+        "path": "approved/archive-renew-20261003-reserve2/f35-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "5df6634a89d00485e657cff679b773a98777e4244228bd01aae74c0290b50eb1",
+        "path": "approved/archive-renew-20261003-reserve2/f35-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "michelin-20260920-compact",
+    "identity": "4f37522371462716bec2f9d8219d008b9971138e1226ab2039b1144b691bcdff",
+    "title": "وش دخل شركة الكفرات بالمطاعم؟",
+    "source_identity": "cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "8ff63145-a25b-45d7-ac6a-159108c5087a",
+        "upload_id": "7cd180dc-99d2-4246-8245-7612f9b41c51"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "dcffa1f9-8393-409b-8044-37cadad5bc99",
+        "upload_id": "487e0838-b01b-4db5-b03c-f3300d1b9a95"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "f2f93500-ac91-4f8c-9f10-994735950052",
+        "upload_id": "911a255d-531d-4e23-bec5-b1b2cc3b2bb8"
+      }
+    ],
+    "previous_saved": {
+      "identity": "1e3a2bbcf256b314add5e21a55ef746b14b0500508c15f8c4ba2929b4107b4e3",
+      "title": "ميشلان — من الكفرات إلى المطاعم",
+      "upload_ids": [
+        "4b32b657-a543-4576-a89b-a35e4dea1e51",
+        "fcd3dbfa-c233-46a7-98e7-be760e0f505d",
+        "b82cd0e0-0e2d-4936-84b7-772ef2747852"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-10-01T09:16:44.120721+00:00",
+      "post_id": "dbad3478-38f4-4701-b7df-b8e274975c16",
+      "confirmed_at": "2026-10-01T09:17:28.834419+00:00",
+      "provider_result": {
+        "id": "dbad3478-38f4-4701-b7df-b8e274975c16",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "53f3710c-48d8-4597-aff7-752b1a122588",
+            "mediaId": "865e3f2c-600f-4671-a515-483279b3c2a4",
+            "mediaIds": [
+              "865e3f2c-600f-4671-a515-483279b3c2a4",
+              "5f5c2d6e-8cb4-4165-9b7b-4e6d70eb6fe7",
+              "badcb90b-3a31-439e-803a-208ab18cc094"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "4b32b657-a543-4576-a89b-a35e4dea1e51",
+            "sourceUploadIds": [
+              "4b32b657-a543-4576-a89b-a35e4dea1e51",
+              "fcd3dbfa-c233-46a7-98e7-be760e0f505d",
+              "b82cd0e0-0e2d-4936-84b7-772ef2747852"
+            ],
+            "mediaUploadedAt": "2026-10-01T09:16:56.773Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      },
+      "source_identity": "cee93bdd6d139a58e7240433e143b4ba2ca5c313034c850579c67d6da07ca229",
+      "package": "michelin-20260920",
+      "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+      "scope": "SAVED_STORY_ONLY",
+      "media_sha256": [
+        "3338e996dec52a5277af25cd4a87728db21cfa53751193241d286ed9d21ad666",
+        "3b08996c7806a2ed464c9ebe850e82dda052ae183ba0cceebba16161493a4d15",
+        "ceb0f5f8947c960a4424c0f4d8c811ab6225481c977ac22a37c7274fb992825b"
+      ]
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "6fabc03e77d5d93e3b1a362f4eb1c34606cb4986b5510decac09e0397b474ec9",
+        "path": "approved/archive-renew-20261003-reserve2/michelin-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "f83e2dec84fe058a4f9c067707fb393ff1ca79cb9638050e2bb1b93529ba6461",
+        "path": "approved/archive-renew-20261003-reserve2/michelin-2.jpg"
+      }
+    ]
+  },
+  {
+    "approved": true,
+    "account": "executivesaudi",
+    "scope": "SAVED_STORY_ONLY",
+    "package": "nespresso-20261001-compact",
+    "identity": "834f3d1e9e2ef30e0d5c458da186023a0d7508961b239d54dd3a9b78a67a56dc",
+    "title": "نسبرسو كادت تتوقف بسبب نسكافيه!",
+    "source_identity": "e923d47ab452b5b9c86e4df964494c92b3bee3b75a925d9fe4834e5fee514986",
+    "source_rows": [
+      {
+        "status": "POSTED",
+        "post_id": "f961148b-502b-45dd-8742-aeab09568c1b",
+        "upload_id": "476323dc-926f-4f60-8bcc-7b87109443f4"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "9bf7ba99-0037-4a52-8f06-703981757038",
+        "upload_id": "6f8529c3-5700-4b28-9d97-7a97046bbb42"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "8a2bf129-ef37-4b30-95e7-c33045e558c9",
+        "upload_id": "a4775aac-4dcf-413b-a2a9-bb34a7ef3303"
+      },
+      {
+        "status": "POSTED",
+        "post_id": "714eac6f-f2b8-4074-b2e7-ee680556b600",
+        "upload_id": "72b95b93-5a52-4699-a348-1fdeda2ea16c"
+      }
+    ],
+    "previous_saved": {
+      "identity": "1b07d3cc3db01285bdb75d3d6247460d4b36726fef8592c896ef9cc39c013c01",
+      "title": "نسبرسو — المشروع اللي كاد يتوقف",
+      "upload_ids": [
+        "476323dc-926f-4f60-8bcc-7b87109443f4",
+        "6f8529c3-5700-4b28-9d97-7a97046bbb42",
+        "a4775aac-4dcf-413b-a2a9-bb34a7ef3303",
+        "a476c803-57d8-460a-ab12-7076fddc9994"
+      ],
+      "status": "POSTED",
+      "intent_at": "2026-10-01T09:10:01.624512+00:00",
+      "post_id": "0ab440cb-8f95-4be3-9049-f02b688fa675",
+      "confirmed_at": "2026-10-01T09:10:48.486478+00:00",
+      "provider_result": {
+        "id": "0ab440cb-8f95-4be3-9049-f02b688fa675",
+        "status": "POSTED",
+        "externalData": {
+          "SNAPCHAT": {
+            "id": "afb853ba-a65e-4031-ab8f-39f151e55fc2",
+            "mediaId": "61c56933-d5e2-4953-a857-a1f353cb65b8",
+            "mediaIds": [
+              "61c56933-d5e2-4953-a857-a1f353cb65b8",
+              "739f1925-2a93-431a-a395-19ae989a65ee",
+              "f117fafc-84de-4496-8d72-1fbd126b3caa",
+              "04f0d859-0ba1-43cf-ac25-fce822586d6e"
+            ],
+            "type": "SAVED_STORY",
+            "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+            "sourceUploadId": "476323dc-926f-4f60-8bcc-7b87109443f4",
+            "sourceUploadIds": [
+              "476323dc-926f-4f60-8bcc-7b87109443f4",
+              "6f8529c3-5700-4b28-9d97-7a97046bbb42",
+              "a4775aac-4dcf-413b-a2a9-bb34a7ef3303",
+              "a476c803-57d8-460a-ab12-7076fddc9994"
+            ],
+            "mediaUploadedAt": "2026-10-01T09:10:15.658Z",
+            "permalink": "https://www.snapchat.com/@executivesaudi",
+            "status": "PUBLISHED"
+          }
+        }
+      },
+      "source_identity": "e923d47ab452b5b9c86e4df964494c92b3bee3b75a925d9fe4834e5fee514986",
+      "package": "nespresso-20261001",
+      "authorization": "Khalid 2026-10-01: finalize all pending editions then save each independently; exclude both National Day packages. Nespresso last card manually published and old card deleted by owner.",
+      "scope": "SAVED_STORY_ONLY",
+      "media_sha256": [
+        "2a4e27f80f4da62aaa15ec061ada2bff7fa8e3059b332d2009a2fa2a6d6ee692",
+        "78162f6faf87eecb29ffa51caf511fed3a4d3ffdf9fb0d4bc1344d59124d3329",
+        "a365efea183279808a8fd7f607c9c4cbc32aa808c2fdb2272915f9c1055a44b4",
+        "5ba6ada5f9fd7ebd0f1bd43fcb84826c4ee5b55a82ef349a9373173faacc06ca"
+      ]
+    },
+    "expires_at": "2026-10-03T20:59:59Z",
+    "authorization": "Khalid authorized compact archive renewal and publication, then instructed on 2026-10-03 14:18 Asia/Riyadh: كمل حتى يبي لنا بطاقتين رصيد متبقي. Preserve two provider post slots. Approved existing design; no daily story changes; old archive deletion pending Snapchat app.",
+    "media": [
+      {
+        "kind": "info",
+        "sha256": "834f28ad5f51c782260e9dee1d13bc261c86ef0af4447347ff7ad69a9734a909",
+        "path": "approved/archive-renew-20261003-reserve2/nespresso-1.jpg"
+      },
+      {
+        "kind": "story",
+        "sha256": "89e819abc914ab60004b585f090f65ac67cd60f4c7d09145b9d45b783cbaff74",
+        "path": "approved/archive-renew-20261003-reserve2/nespresso-2.jpg"
+      }
+    ]
+  }
+]

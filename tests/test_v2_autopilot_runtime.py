@@ -79,7 +79,8 @@ class RuntimeTests(unittest.TestCase):
             {'image_query': 'dates'}, {'image_query': 'history'}]}
         approve_fixture(first)
         with tempfile.TemporaryDirectory() as root:
-            with self.assertRaisesRegex(ValueError, 'unknown_visual_selection'):
+            # A photo-less card is now a shortfall the pipeline can cut (2026-09-27).
+            with self.assertRaisesRegex(ValueError, 'visual_shortfall: cards 1'):
                 renderer(first, root)
         repaired = {'candidate': {'id': 'palm'}, 'cards': [{'image_query': 'new query'}]}
         self.assertIn('dates', [r['asset_id'] for r in renderer.image_catalog(repaired)])

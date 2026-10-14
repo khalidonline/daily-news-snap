@@ -1,0 +1,52 @@
+{
+  "format": "curated-approved-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "«7 دوجز» أول فيلم عربي يبيع مليون تذكرة في السينما السعودية",
+  "expires_at": "2026-09-28T00:00:00+03:00",
+  "media": [
+    {
+      "path": "approved/7dogs-20260927/card-00.jpg",
+      "kind": "info",
+      "sha256": "b307c24813df3bdf5e8f920476e899051f644641dd2d2ef3c9335bf5020e5def",
+      "image": {
+        "provider": "primary_media",
+        "asset_id": "primary:ab3c6a2f5132d8486410c221",
+        "original_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1796726.png.webp?VersionId=Me6ciPL5.tu2PvuXKd9dN74eKMhAM8TN",
+        "download_url": "https://static.srpcdigital.com/styles/1200x600/public/2026-09/1796726.png.webp?VersionId=Me6ciPL5.tu2PvuXKd9dN74eKMhAM8TN",
+        "source_url": "https://aawsat.com/node/5323117",
+        "source_kind": "article",
+        "title": "7 Dogs (film): source illustration; identity unverified",
+        "description": "7 Dogs (film)",
+        "collection_subject": "7 Dogs (film)",
+        "credit": "aawsat.com",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "image_role": "film still published with the source article (its caption credits IMDb)",
+        "sha256": "ce17d2abfb0317a33cdae3dcfdd3f5843ef012fa1403d4d2f1d45359479db735"
+      }
+    },
+    {
+      "path": "approved/7dogs-20260927/card-01.jpg",
+      "kind": "story",
+      "sha256": "2a332c8fc08b3e86909fe573b1765863190ef4f38bee5eabcb041779a9b70303",
+      "typographic": true
+    },
+    {
+      "path": "approved/7dogs-20260927/card-02.jpg",
+      "kind": "story",
+      "sha256": "68e57b42347170bc0d08c9152b6ce4c0263af206f0ecd4b073b5b6d1e523322c",
+      "typographic": true
+    },
+    {
+      "path": "approved/7dogs-20260927/card-03.jpg",
+      "kind": "story",
+      "sha256": "927dea4f553152f9c0351a9436dbc8baab8598d6aacc527adfc57ef6c1b8dcef",
+      "typographic": true
+    }
+  ],
+  "predecessors": [],
+  "provenance": "Written in chat by Claude from the Asharq Al-Awsat report of 27 Sep 2026 (text.json). Owner: «جهز نشر باقة ٧ دوجز» (27 Sep); publication only on a separate «انشر». No model-budget spend."
+}

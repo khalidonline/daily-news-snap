@@ -1,0 +1,26 @@
+{
+  "status": "DESIGN_REVIEW_ONLY",
+  "publication_approved": false,
+  "as_of": "2026-10-05",
+  "sources": {
+    "neom": [
+      "https://www.reuters.com/sports/soccer/saudi-arabia-quietly-shelving-neom-stadium-one-2034-world-cup-venues-2026-10-04/",
+      "https://www.nippon.com/en/japan-topics/g00795/"
+    ],
+    "teacher": [
+      "https://prod.mediaoffice.ae/en/news/2025/february/13-02/mohammed-bin-rashid-attends-honouring-of-the-best-teacher",
+      "https://www.unesco.org/en/days/teachers"
+    ]
+  },
+  "photo_sources": {
+    "neom": "https://www.metalocus.es/en/news/japanese-tradition-climate-and-technology-new-tokyo-national-stadium-kengo-kuma",
+    "teacher": "https://x.com/WorldGovSummit/status/1890349552151990778"
+  },
+  "notes": [
+    "NEOM report attributed to unnamed Reuters sources; no official suspension confirmation",
+    "Tokyo historical comparison is not a prediction for NEOM",
+    "Teacher student amounts are income not net profit; award in 2025 not today",
+    "No paid model or image generation used",
+    "Photographs cropped only; original files retained"
+  ]
+}

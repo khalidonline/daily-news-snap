@@ -1,0 +1,99 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "فلتر القهوة — قصة ميليتا",
+  "not_before": "2026-09-29T06:49:05Z",
+  "expires_at": "2026-09-29T20:59:59Z",
+  "approval": "Owner approved designs 2026-09-29 09:31 and publication now/afternoon 09:49 Asia/Riyadh",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/melitta-20260929/card-00.jpg",
+      "sha256": "b675edf79e70d3c5e145d7515ec0b8ab32df2c72733b391dff0573fe74c1c8f8",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q314296",
+        "official_site": "https://www.dpma.de",
+        "source_url": "https://www.dpma.de/digitaler_jahresbericht/2023/jb23_en/utility-models.html",
+        "original_url": "https://www.dpma.de/digitaler_jahresbericht/2023/assets23/images/urfilter-1908.jpg",
+        "download_url": "https://www.dpma.de/digitaler_jahresbericht/2023/assets23/images/urfilter-1908.jpg",
+        "asset_id": "primary:0f5b84686f435bc38a10d7ad",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "7aa243154c19eed5440d397a19ea86c18d316ff72569abe6efa0f7993a4c1d9d"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/melitta-20260929/card-01.jpg",
+      "sha256": "e6dddb3b8a1e45101bbda3e0f8c6559524b2d36e4b230335e369bda9e8b42383",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q314296",
+        "official_site": "https://dpma.de",
+        "source_url": "https://dpma.de/english/our_office/publications/ingeniouswomen/110jahrekaffeefilter/index.html",
+        "original_url": "https://dpma.de/images/gemeinfrei_cc/a_portraits_personen/ba_0150_melitta_und_hugo_bentz_gross.jpg",
+        "download_url": "https://dpma.de/images/gemeinfrei_cc/a_portraits_personen/ba_0150_melitta_und_hugo_bentz_gross.jpg",
+        "asset_id": "primary:40f53eeb0e1e672d2208a3ce",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "70055a30d66d5b46ce30c60201695ca6e8ab1071048dff5e6d9f61d5f14dac23"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/melitta-20260929/card-02.jpg",
+      "sha256": "ab5ef91ec80e34a04fb3ca1f653e7d6d9a7ca8d6f97bfdf9cabe8387ea988d3a",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q566807",
+        "official_site": "https://www.melitta-group.com",
+        "source_url": "https://www.melitta-group.com/en/unternehmen/unsere-geschichte/1929",
+        "original_url": "https://s7g10.scene7.com/is/image/melitta/1929_Transport%20nach%20Minden?wid=1600&qlt=90",
+        "download_url": "https://s7g10.scene7.com/is/image/melitta/1929_Transport%20nach%20Minden?wid=1600&qlt=90",
+        "asset_id": "primary:cfd988de79c2cb37ced29bab",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "d5f1964899127c65cd3d5405c13ce6bbf1a9d7efe2f7f1536ce2a5066d295fa9"
+      }
+    },
+    {
+      "kind": "story",
+      "path": "approved/melitta-20260929/card-03.jpg",
+      "sha256": "1f144a70a94914165e89580dee3a4cd423c46224a54f5b1e79f149337c51d0cc",
+      "image": {
+        "provider": "primary_media",
+        "source_kind": "official",
+        "website_entity": "Q566807",
+        "official_site": "https://shoponline.melitta.com",
+        "source_url": "https://shoponline.melitta.com/",
+        "original_url": "https://shoponline.melitta.com/cdn/shop/files/00055437626415_Front_View.png?v=1723577506&width=1066",
+        "download_url": "https://shoponline.melitta.com/cdn/shop/files/00055437626415_Front_View.png?v=1723577506&width=1066",
+        "asset_id": "primary:2415f8a81a77d09f7897684c",
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use",
+        "license": "All rights reserved",
+        "sha256": "51f5945d5485c281b871467a909805c68eebd816a96fbb3edff8ee2569f6de66",
+        "composite_components": [
+          {
+            "source_url": "https://shoponline.melitta.com/",
+            "original_url": "https://shoponline.melitta.com/cdn/shop/files/00055437602600_Front_View.png?v=1723642824&width=1066",
+            "owner_use_decision": "owner-source-editorial-use-2026-09-22"
+          },
+          {
+            "source_url": "https://shoponline.melitta.com/",
+            "original_url": "https://shoponline.melitta.com/cdn/shop/files/Melitta_Crown_Logo_White_Rim_Shadow_5f0d955f-d9c0-4771-a495-45124b3cf102.png?v=1613778799&width=500",
+            "owner_use_decision": "owner-source-editorial-use-2026-09-22"
+          }
+        ]
+      }
+    }
+  ],
+  "predecessors": []
+}
