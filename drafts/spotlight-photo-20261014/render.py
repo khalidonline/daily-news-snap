@@ -46,14 +46,15 @@ CHALLENGES = {
         question='كم كان سعر أول آيفون؟', sub='iPhone الأول من 2007، مع عقد سنتين',
         right='999 دولار', left='499 دولار', answer='left',
         lines=('سعره عند الإطلاق 499 دولار', 'لنسخة 4 جيجا، و599 لنسخة 8 جيجا')),
-    # Haramain High Speed Railway 453 km (Makkah-Madinah) vs the Tokaido
-    # Shinkansen, the original Japanese bullet train, 515 km (Tokyo-Shin-Osaka).
+    # Haramain High Speed Railway 453 km (Makkah-Madinah) vs the LGV Sud-Est,
+    # France's first high-speed line, 409 km (Paris-Lyon, opened 1981). Owner
+    # asked for a shorter rival so Saudi viewers win the comparison.
     'haramain-train': dict(
         kicker='أطول أو أقصر', photo='haramain.jpg',
         credit='الصورة: محطة المدينة · Virtual trip · CC BY 4.0',
-        question='قطار الحرمين أطول أو أقصر من قطار طوكيو–أوساكا؟', sub='القطار الطلقة الياباني',
-        right='أطول', left='أقصر', answer='left', big='أقصر!',
-        lines=('قطار الحرمين 453 كم', 'وطوكيو–أوساكا 515 كم')),
+        question='قطار الحرمين أطول أو أقصر من قطار باريس–ليون؟', sub='أول قطار سريع في فرنسا',
+        right='أطول', left='أقصر', answer='right', big='أطول!',
+        lines=('قطار الحرمين 453 كم', 'وباريس–ليون 409 كم')),
     'riyadh-dubai': dict(
         kicker='أعلى أو أقل', photo='riyadh.jpg', credit=None,
         question='سكان الرياض أكثر أو أقل من ضعف سكان دبي؟', sub=None,
