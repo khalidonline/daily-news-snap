@@ -1,0 +1,23 @@
+name: List recent bundle.social posts (read-only)
+on:
+  push:
+    branches: [claude/amazing-carson-t36zee]
+    paths: ['.github/workflows/list-bundle-posts.yml', 'tools/list_bundle_posts.py']
+permissions:
+  contents: read
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: List posts from the last 7 days (no writes)
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          DAYS: '7'
+          PYTHONPATH: .
+        run: python -u tools/list_bundle_posts.py
