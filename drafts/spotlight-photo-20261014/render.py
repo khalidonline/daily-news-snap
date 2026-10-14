@@ -38,7 +38,7 @@ CHALLENGES = {
     'crystal-pepsi': dict(
         kicker='نزل بالسوق؟', photo='pepsi.jpg',
         credit='الصورة: Mike Mozart · CC BY 2.0',
-        question='بيبسي شفاف مثل الماي؟', sub=None,
+        question='بيبسي شفاف مثل الماء؟', sub=None,
         right='نزل بالسوق', left='مجرد فكرة', answer='right',
         lines=('اسمه Crystal Pepsi ونزل 1992', 'وانسحب من السوق بعد سنة تقريبًا')),
     'first-iphone': dict(

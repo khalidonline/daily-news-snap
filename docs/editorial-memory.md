@@ -94,3 +94,9 @@ Khalid judged remote operation an unimportant detail. Prefer a meaningful
 founding/completion milestone or expansion with a result. Never repeat a bullet
 as the closing: use a distinct supported payoff or a short general takeaway.
 Oil revision 3 replaces its third bullet and closing. Google revision 3 clarifies the headline to name the nuclear-electricity contract and its 20-year duration, as requested by Khalid; the rest of its card is unchanged.
+
+### 2026-10-14 — Spotlight challenges
+Khalid rejected «أعلى أو أقل: سكان الرياض ودبي» as unexciting: a population
+ratio is not a thumb-stopper. Prefer surprising products, prices and brand
+origins. Wording correction: «مثل الماء» not «مثل الماي». Always write in
+Saudi dialect, using the forms Khalid approves.
