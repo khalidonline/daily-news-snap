@@ -1,7 +1,7 @@
 """One-shot: post the owner-approved Crystal Pepsi and first-iPhone challenges.
 
-Owner approval, 14 Oct 2026: «انشر البيبسي والآيفون» (Story + Spotlight, as
-for Nokia/Samsung). Payloads mirror the owner's 10 Oct posts. A create is
+Owner approvals, 14 Oct 2026: «انشر البيبسي والآيفون», then «تمام انشر»
+for the Haramain train (Story + Spotlight, as for Nokia/Samsung). Payloads mirror the owner's 10 Oct posts. A create is
 never retried, so a rerun cannot double-post; the media hash must match.
 """
 from datetime import datetime, timezone
@@ -15,11 +15,10 @@ from publishing_v2.bundle_api import BundleClient
 
 HERE = Path(__file__).parent
 STAMP = '20261014'
+RECEIPT = 'receipt-haramain.json'
 ITEMS = [
-    ('crystal-pepsi-approved.mp4', '60750393a2c43446949e1c3b0b33870cae4fd3857d9110c61acc3604afe5d176', 'نزل بالسوق — بيبسي الشفاف',
-     'نزل بالسوق: بيبسي شفاف مثل الماء؟ اختَر قبل نهاية العد وأرسلها لخويك! #تحدي — الصورة: Mike Mozart، CC BY 2.0'),
-    ('first-iphone-approved.mp4', '543e0b32f6ac30dadda63cbbc96c3237a73d62c3e2a7f45be41f26d6f4abb725', 'توقّع السعر — أول آيفون',
-     'توقّع السعر: كم كان سعر أول آيفون في 2007؟ اختَر قبل نهاية العد وأرسلها لخويك! #تحدي'),
+    ('haramain-train-approved.mp4', '8049d2a523e369dbb410b3b2181f8b54c980de2b4d596016e7dd7c02fb6ccaf7', 'أطول أو أقصر — قطار الحرمين',
+     'أطول أو أقصر: قطار الحرمين ولا قطار باريس–ليون؟ اختَر قبل نهاية العد وأرسلها لخويك! #تحدي — الصورة: محطة المدينة، Virtual trip، CC BY 4.0'),
 ]
 
 
@@ -48,7 +47,7 @@ def main():
             print(kind, label, 'created', post_id, flush=True)
             if not post_id:
                 print('ambiguous create; stop and reconcile in the bundle.social dashboard')
-                (HERE / 'receipt.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
+                (HERE / RECEIPT).write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
                 return 1
             try:
                 c.wait(post_id)
@@ -57,7 +56,7 @@ def main():
                 status = f'unconfirmed: {exc}'
             print(kind, status, flush=True)
             receipt.append({'kind': kind, 'title': label, 'post_id': post_id, 'status': status})
-    (HERE / 'receipt.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
+    (HERE / RECEIPT).write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
     return 0 if all(r['status'] == 'POSTED' for r in receipt) else 1
 
 
