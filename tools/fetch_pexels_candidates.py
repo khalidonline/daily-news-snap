@@ -4,14 +4,14 @@ from pathlib import Path
 
 OUT = Path('reference/pexels')
 QUERIES = {
-    'neom': 'NEOM Saudi Arabia',
-    'asir': 'Asir Saudi Arabia green',
-    'fog': 'Abha fog',
-    'island': 'Saudi Arabia island turquoise',
-    'snowksa': 'snow Saudi Arabia',
-    'balad': 'Al Balad Jeddah',
-    'ahsa': 'Al Ahsa',
-    'tanomah': 'Tanomah',
+    'clock': 'Makkah clock tower',
+    'clock2': 'Abraj Al Bait',
+    'wajh': 'Al Wajh',
+    'haql': 'Haql Saudi',
+    'duba': 'Duba Saudi Arabia',
+    'taif': 'Taif mountains',
+    'jazan': 'Jazan',
+    'maraya': 'Maraya AlUla',
 }
 
 
