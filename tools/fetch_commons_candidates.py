@@ -5,10 +5,9 @@ import news_bot
 
 OUT = Path('reference/candidates')
 QUERIES = {
-    'lawz': ['Jabal al-Lawz snow', 'snow Tabuk Saudi Arabia', 'Jabal Al Lawz'],
-    'umluj': ['Umluj island', 'Umluj beach', 'Al Wajh islands'],
-    'soudah': ['Al Soudah fog', 'Asir mountains green Abha', 'Abha cable car'],
-    'disah': ['Wadi Disah', 'Wadi Al Disah Tabuk'],
+    'vboy': ['Virtual Boy Evan-Amos', 'Nintendo Virtual Boy'],
+    'ps1': ['PlayStation console Evan-Amos', 'PSX Console wController'],
+    'clock': ['Abraj Al Bait clock tower', 'Makkah Royal Clock Tower'],
 }
 
 

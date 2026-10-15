@@ -9,8 +9,10 @@ import news_bot
 
 OUT = Path('reference/logos')
 WANTED = {
-    'nokia': ['Nokia wordmark.svg', 'Nokia 2023.svg', 'Nokia logo.svg'],
-    'samsung': ['Samsung wordmark.svg', 'Samsung Logo.svg', 'Samsung logo blue.svg'],
+    'cocacola': ['Coca-Cola logo.svg', 'Coca-Cola wordmark.svg'],
+    'pepsi': ['Pepsi logo 2023.svg', 'Pepsi 2023.svg', 'Pepsi logo 2014.svg', 'Pepsi logo.svg', 'Pepsi wordmark.svg'],
+    'toyota': ['Toyota carlogo.svg', 'Toyota logo.svg'],
+    'honda': ['Honda.svg', 'Honda logo.svg'],
 }
 
 
