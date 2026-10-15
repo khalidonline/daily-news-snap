@@ -1,589 +1,215 @@
 {
- "neom-01.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "A breathtaking aerial view of Riyadh at night featuring the iconic Kingdom Centre Tower.",
-  "photographer": "abul lais",
-  "url": "https://www.pexels.com/photo/stunning-night-view-of-riyadh-skyline-39470846/",
-  "id": 39470846,
+ "clock-01.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "View of the iconic Abraj Al Bait and Mecca Clock Tower with surrounding architecture.",
+  "photographer": "ِAMR-MANSOUR",
+  "url": "https://www.pexels.com/photo/the-clock-tower-of-the-grand-mosque-in-mecca-27291499/",
+  "id": 27291499,
   "size": [
-   8192,
-   5464
+   3648,
+   2736
   ]
  },
- "neom-02.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "Skyline of Riyadh, Saudi Arabia featuring modern skyscrapers and construction cranes at sunset.",
-  "photographer": "Tayssir Kadamany",
-  "url": "https://www.pexels.com/photo/riyadh-cityscape-with-modern-skyscrapers-at-dusk-38096888/",
-  "id": 38096888,
+ "clock-02.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "Majestic view of Abraj Al Bait Towers in Mecca with a clear blue sky and scattered clouds.",
+  "photographer": "MD.Arman Mia 353",
+  "url": "https://www.pexels.com/photo/abraj-al-bait-towers-against-blue-sky-39076476/",
+  "id": 39076476,
   "size": [
-   8192,
-   4774
+   4096,
+   3072
   ]
  },
- "neom-03.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "Aerial view of contemporary big metropolis illuminated with glowing city lights at night",
-  "photographer": "Hussain Awan",
-  "url": "https://www.pexels.com/photo/night-city-illuminated-with-bright-lights-4321707/",
-  "id": 4321707,
+ "clock-03.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "Illuminated view of Makkah Royal Clock Tower at night in the cityscape.",
+  "photographer": "Yasir Gürbüz",
+  "url": "https://www.pexels.com/photo/makkah-royal-clock-tower-near-city-buildings-during-night-time-12808985/",
+  "id": 12808985,
   "size": [
-   5080,
-   3080
+   7952,
+   5304
   ]
  },
- "neom-04.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "Panoramic view of rocky desert landscape in Medina, Saudi Arabia at sunset, showcasing vibrant sky and mountains.",
-  "photographer": "Raziuddin Farooqi",
-  "url": "https://www.pexels.com/photo/rocky-mountains-on-the-desert-10961006/",
-  "id": 10961006,
+ "clock-04.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "A dramatic view of Abraj Al Bait Towers with intricate architecture against the clear sky in Mecca, Saudi Arabia.",
+  "photographer": "Hakam Magdea",
+  "url": "https://www.pexels.com/photo/view-of-abraj-al-bait-towers-in-mecca-saudi-arabia-31565687/",
+  "id": 31565687,
   "size": [
-   6000,
-   4000
+   5314,
+   3602
   ]
  },
- "neom-05.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "The stunning architecture of Al-Masjid an-Nabawi mosque with its iconic minarets in Medina, Saudi Arabia.",
-  "photographer": "Ravish Maqsood",
-  "url": "https://www.pexels.com/photo/al-masjid-an-nabawi-mosque-in-saudi-arabia-17261869/",
-  "id": 17261869,
+ "clock-05.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "Majestic capture of the Abraj Al Bait Clock Tower in Mekkah against a clear sky.",
+  "photographer": "Dimas Naufal F",
+  "url": "https://www.pexels.com/photo/clock-tower-3911869/",
+  "id": 3911869,
   "size": [
-   2739,
-   1825
-  ]
- },
- "neom-06.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "Beautiful view of Riyadh Water Tower silhouetted against a stunning sunset sky.",
-  "photographer": "Alamin Prodhania",
-  "url": "https://www.pexels.com/photo/riyadh-water-tower-in-saudi-arabia-5625713/",
-  "id": 5625713,
-  "size": [
-   4160,
-   3120
-  ]
- },
- "neom-07.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "Aerial shot of Makkah city showing urban buildings and mountainous landscape.",
-  "photographer": "Musaddek Sayek",
-  "url": "https://www.pexels.com/photo/aerial-view-of-makkah-cityscape-with-mountains-38385734/",
-  "id": 38385734,
-  "size": [
-   2738,
-   1825
-  ]
- },
- "neom-08.jpg": {
-  "query": "NEOM Saudi Arabia",
-  "alt": "Dramatic aerial twilight view of Riyadh city skyline with lit streets.",
-  "photographer": "abul lais",
-  "url": "https://www.pexels.com/photo/stunning-twilight-aerial-view-of-riyadh-cityscape-39470841/",
-  "id": 39470841,
-  "size": [
-   8192,
-   5464
-  ]
- },
- "asir-01.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "Saudi Arabian flag waves against blue sky amid traditional architecture.",
-  "photographer": "abul lais",
-  "url": "https://www.pexels.com/photo/view-of-saudi-flag-through-traditional-architecture-39470815/",
-  "id": 39470815,
-  "size": [
-   8192,
-   5464
-  ]
- },
- "asir-02.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "Aerial view of suburban homes amidst greenery in Taif, Saudi Arabia.",
-  "photographer": "Musaddek Sayek",
-  "url": "https://www.pexels.com/photo/suburban-landscape-in-taif-saudi-arabia-38048232/",
-  "id": 38048232,
-  "size": [
-   2981,
-   1677
-  ]
- },
- "asir-03.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "An empty soccer field in the heart of Jeddah's historic district, surrounded by traditional architecture.",
-  "photographer": "Miguel Cuenca",
-  "url": "https://www.pexels.com/photo/a-soccer-field-in-the-middle-of-an-old-city-27349076/",
-  "id": 27349076,
-  "size": [
-   8256,
-   5504
-  ]
- },
- "asir-04.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "Aerial cityscape view featuring a mosque and mountains in Saudi Arabia.",
-  "photographer": "Fahad Puthawala",
-  "url": "https://www.pexels.com/photo/aerial-view-of-a-saudi-arabian-cityscape-and-mountain-35097391/",
-  "id": 35097391,
-  "size": [
-   4087,
-   2725
-  ]
- },
- "asir-05.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "Explore the stunning landscape and architecture of Tanomah, surrounded by majestic mountains.",
-  "photographer": "Abdulaziz Asiri",
-  "url": "https://www.pexels.com/photo/scenic-view-of-tanomah-aseer-province-saudi-arabia-36772107/",
-  "id": 36772107,
-  "size": [
-   5568,
-   3712
-  ]
- },
- "asir-06.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "Explore the unique architecture of Taif city in Saudi Arabia's Makkah Province.",
-  "photographer": "Musaddek Sayek",
-  "url": "https://www.pexels.com/photo/scenic-view-of-taif-city-architecture-in-makkah-38048226/",
-  "id": 38048226,
-  "size": [
-   2981,
-   1677
-  ]
- },
- "asir-07.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "A stunning aerial shot showcasing a lush coastal mangrove forest with winding waterways.",
-  "photographer": "Asad  Ansari",
-  "url": "https://www.pexels.com/photo/aerial-view-of-coastal-mangrove-forest-30124670/",
-  "id": 30124670,
-  "size": [
-   4000,
-   2250
-  ]
- },
- "asir-08.jpg": {
-  "query": "Asir Saudi Arabia green",
-  "alt": "A woman with an umbrella walks along a path overlooking the Makkah cityscape in Saudi Arabia.",
-  "photographer": "Musaddek Sayek",
-  "url": "https://www.pexels.com/photo/woman-with-umbrella-overlooking-makkah-cityscape-38547809/",
-  "id": 38547809,
-  "size": [
-   3655,
-   2056
-  ]
- },
- "fog-01.jpg": {
-  "query": "Abha fog",
-  "alt": "A scenic view of a mist-covered snowy mountain slope in Damascus, Syria.",
-  "photographer": "Baraa Obied",
-  "url": "https://www.pexels.com/photo/misty-snow-covered-mountain-landscape-in-syria-36540882/",
-  "id": 36540882,
-  "size": [
-   6192,
-   4128
-  ]
- },
- "fog-02.jpg": {
-  "query": "Abha fog",
-  "alt": "A serene pier extending into the calm waters of Attur Forest during sunset, reflecting nature's tranquility.",
-  "photographer": "Abhas Jaiswal",
-  "url": "https://www.pexels.com/photo/brown-wooden-dock-on-body-of-water-under-cloudy-sky-3639960/",
-  "id": 3639960,
-  "size": [
-   5789,
-   3728
-  ]
- },
- "fog-03.jpg": {
-  "query": "Abha fog",
-  "alt": "Serene mountain landscape shrouded in mist and fog, creating a mystical atmosphere.",
-  "photographer": "Nadiye Odabaşı",
-  "url": "https://www.pexels.com/photo/aerial-view-of-mountains-during-10550018/",
-  "id": 10550018,
-  "size": [
-   5701,
-   3801
-  ]
- },
- "fog-04.jpg": {
-  "query": "Abha fog",
-  "alt": "A misty road in Nazaré, Portugal, surrounded by rural landscape and foggy hills.",
-  "photographer": "Artūras Kokorevas",
-  "url": "https://www.pexels.com/photo/fog-over-empty-road-on-hill-14529205/",
-  "id": 14529205,
-  "size": [
-   5863,
-   3298
-  ]
- },
- "fog-05.jpg": {
-  "query": "Abha fog",
-  "alt": "Ethereal view of an illuminated island town surrounded by mist and sea at twilight.",
-  "photographer": "Aydın Kiraz",
-  "url": "https://www.pexels.com/photo/illuminated-coastal-town-and-sea-covered-in-fog-11312226/",
-  "id": 11312226,
-  "size": [
-   3516,
-   2500
-  ]
- },
- "fog-06.jpg": {
-  "query": "Abha fog",
-  "alt": "A misty road winding through a foggy rocky mountain landscape with trees.",
-  "photographer": "ahevr x",
-  "url": "https://www.pexels.com/photo/road-between-trees-and-a-cliff-covered-with-fog-750982/",
-  "id": 750982,
-  "size": [
-   5034,
+   5184,
    3456
   ]
  },
- "island-01.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "Aerial shot of a coastal road surrounded by mangrove forest and turquoise waters.",
-  "photographer": "Asad  Ansari",
-  "url": "https://www.pexels.com/photo/aerial-view-of-coastal-road-and-mangrove-forest-30124717/",
-  "id": 30124717,
-  "size": [
-   4000,
-   2250
-  ]
- },
- "island-02.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "Experience the serene beach vibes and palm-lined shores of Jeddah, perfect for relaxation and exploration.",
-  "photographer": "Faisal Nabrawi",
-  "url": "https://www.pexels.com/photo/scenic-beachfront-view-in-jeddah-saudi-arabia-29901876/",
-  "id": 29901876,
-  "size": [
-   4000,
-   3000
-  ]
- },
- "island-03.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "Aerial view of the mangroves and roads near the Sert Mountains in Saudi Arabia.",
-  "photographer": "Asad  Ansari",
-  "url": "https://www.pexels.com/photo/scenic-arial-view-of-sert-mountains-and-mangroves-30124609/",
-  "id": 30124609,
-  "size": [
-   4000,
-   2250
-  ]
- },
- "island-04.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "A stunning aerial shot showcasing a lush coastal mangrove forest with winding waterways.",
-  "photographer": "Asad  Ansari",
-  "url": "https://www.pexels.com/photo/aerial-view-of-coastal-mangrove-forest-30124670/",
-  "id": 30124670,
-  "size": [
-   4000,
-   2250
-  ]
- },
- "island-05.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "Aerial shot of the picturesque Al Jubail waterfront promenade in Saudi Arabia.",
-  "photographer": "osamah Abdullah",
-  "url": "https://www.pexels.com/photo/aerial-view-of-darien-hills-park-in-jubail-14989817/",
-  "id": 14989817,
-  "size": [
-   7108,
-   5331
-  ]
- },
- "island-06.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "Saudi Arabian flag waves against blue sky amid traditional architecture.",
-  "photographer": "abul lais",
-  "url": "https://www.pexels.com/photo/view-of-saudi-flag-through-traditional-architecture-39470815/",
-  "id": 39470815,
-  "size": [
-   8192,
-   5464
-  ]
- },
- "island-07.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "Aerial view of a yellow SUV crossing a remote desert road with surrounding greenery and water.",
-  "photographer": "Asad  Ansari",
-  "url": "https://www.pexels.com/photo/yellow-suv-on-remote-desert-road-overlooked-by-drone-30124726/",
-  "id": 30124726,
-  "size": [
-   4000,
-   2250
-  ]
- },
- "island-08.jpg": {
-  "query": "Saudi Arabia island turquoise",
-  "alt": "Aerial depiction of Al Wajh Lagoon where arid desert landscapes meet clear water channels.",
-  "photographer": "Asad  Ansari",
-  "url": "https://www.pexels.com/photo/aerial-view-of-al-wajh-lagoon-desert-meeting-ocean-30124612/",
-  "id": 30124612,
-  "size": [
-   4000,
-   2250
-  ]
- },
- "snowksa-01.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "A woman with an umbrella walks along a path overlooking the Makkah cityscape in Saudi Arabia.",
-  "photographer": "Musaddek Sayek",
-  "url": "https://www.pexels.com/photo/woman-with-umbrella-overlooking-makkah-cityscape-38547809/",
-  "id": 38547809,
-  "size": [
-   3655,
-   2056
-  ]
- },
- "snowksa-02.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "Aerial view of Masjid al-Haram and Kaaba in Mecca, with pilgrims gathered for prayer.",
-  "photographer": "Earth Photart",
-  "url": "https://www.pexels.com/photo/aerial-view-of-masjid-al-haram-in-mecca-saudi-arabia-35332385/",
-  "id": 35332385,
-  "size": [
-   5712,
-   4284
-  ]
- },
- "snowksa-03.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "Stunning aerial shot of Masjid al-Haram in Mecca during dusk, highlighting the grandeur and serene atmosphere.",
+ "clock-06.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "Silhouette of the Makkah Royal Clock Tower at dusk, capturing the vibrant Mecca skyline.",
   "photographer": "Rushdi Fatani",
-  "url": "https://www.pexels.com/photo/aerial-view-of-masjid-al-haram-at-dusk-38546869/",
-  "id": 38546869,
+  "url": "https://www.pexels.com/photo/illuminated-clock-tower-and-cityscape-at-dusk-19174886/",
+  "id": 19174886,
   "size": [
-   7473,
-   5605
+   3958,
+   2969
   ]
  },
- "snowksa-04.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "Saudi Arabian flag waves against blue sky amid traditional architecture.",
-  "photographer": "abul lais",
-  "url": "https://www.pexels.com/photo/view-of-saudi-flag-through-traditional-architecture-39470815/",
-  "id": 39470815,
-  "size": [
-   8192,
-   5464
-  ]
- },
- "snowksa-05.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "A breathtaking aerial view of Riyadh at night featuring the iconic Kingdom Centre Tower.",
-  "photographer": "abul lais",
-  "url": "https://www.pexels.com/photo/stunning-night-view-of-riyadh-skyline-39470846/",
-  "id": 39470846,
-  "size": [
-   8192,
-   5464
-  ]
- },
- "snowksa-06.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "Skyline of Riyadh, Saudi Arabia featuring modern skyscrapers and construction cranes at sunset.",
-  "photographer": "Tayssir Kadamany",
-  "url": "https://www.pexels.com/photo/riyadh-cityscape-with-modern-skyscrapers-at-dusk-38096888/",
-  "id": 38096888,
-  "size": [
-   8192,
-   4774
-  ]
- },
- "snowksa-07.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "Dramatic aerial twilight view of Riyadh city skyline with lit streets.",
-  "photographer": "abul lais",
-  "url": "https://www.pexels.com/photo/stunning-twilight-aerial-view-of-riyadh-cityscape-39470841/",
-  "id": 39470841,
-  "size": [
-   8192,
-   5464
-  ]
- },
- "snowksa-08.jpg": {
-  "query": "snow Saudi Arabia",
-  "alt": "A Saudi Arabian Airlines Boeing 777 landing on a runway with mountainous backdrop.",
-  "photographer": "Miguel Cuenca",
-  "url": "https://www.pexels.com/photo/boeing-777-landing-at-saudi-arabian-airport-38305750/",
-  "id": 38305750,
-  "size": [
-   7975,
-   5316
-  ]
- },
- "balad-01.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "Beautiful historical architecture in Jeddah, showcasing traditional Saudi Arabian designs.",
-  "photographer": "abdullah alallah",
-  "url": "https://www.pexels.com/photo/jeddah-historical-architecture-in-sunlight-28558770/",
-  "id": 28558770,
-  "size": [
-   6240,
-   4160
-  ]
- },
- "balad-02.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "Explore the historic architecture and serene street views of Al-Balad in Jeddah.",
-  "photographer": "Miguel Cuenca",
-  "url": "https://www.pexels.com/photo/traditional-street-in-al-balad-jeddah-35890930/",
-  "id": 35890930,
-  "size": [
-   8256,
-   5504
-  ]
- },
- "balad-03.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "A man walks along a historic street in Al-Balad, Old Jeddah, showcasing traditional architecture.",
-  "photographer": "Miguel Cuenca",
-  "url": "https://www.pexels.com/photo/historic-street-scene-in-old-jeddah-saudi-arabia-38008331/",
-  "id": 38008331,
-  "size": [
-   8256,
-   5504
-  ]
- },
- "balad-04.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "Sunlit traditional architecture in Al-Balad, Jeddah, showcasing historic charm and intricate design.",
-  "photographer": "abdullah alallah",
-  "url": "https://www.pexels.com/photo/historic-architecture-in-al-balad-jeddah-28506301/",
-  "id": 28506301,
-  "size": [
-   6240,
-   4160
-  ]
- },
- "balad-05.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "Capture of traditional architecture in Al Balad, Jeddah's historic district.",
-  "photographer": "abdullah alallah",
-  "url": "https://www.pexels.com/photo/historical-architecture-in-al-balad-jeddah-28506251/",
-  "id": 28506251,
-  "size": [
-   6240,
-   4160
-  ]
- },
- "balad-06.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "Lively Middle Eastern market scene with outdoor seating and local shops, capturing vibrant local culture.",
-  "photographer": "Miguel Cuenca",
-  "url": "https://www.pexels.com/photo/bustling-outdoor-market-in-middle-eastern-city-35890932/",
-  "id": 35890932,
-  "size": [
-   8256,
-   5504
-  ]
- },
- "balad-07.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "Bright Moroccan windows with colorful shutters and baskets under a clear blue sky.",
-  "photographer": "Lae Studio",
-  "url": "https://www.pexels.com/photo/colorful-moroccan-architectural-window-display-36884642/",
-  "id": 36884642,
-  "size": [
-   4030,
-   3022
-  ]
- },
- "balad-08.jpg": {
-  "query": "Al Balad Jeddah",
-  "alt": "An elder man washes his hands with a towel in a street in Yidda, Saudi Arabia.",
-  "photographer": "Miguel Cuenca",
-  "url": "https://www.pexels.com/photo/elder-washing-hands-in-yidda-street-scene-37405916/",
-  "id": 37405916,
-  "size": [
-   8256,
-   5504
-  ]
- },
- "ahsa-01.jpg": {
-  "query": "Al Ahsa",
-  "alt": "Breathtaking aerial view of Baghdad cityscape with Tigris River, showcasing urban architecture.",
-  "photographer": "Muhammad Nabeel",
-  "url": "https://www.pexels.com/photo/aerial-view-of-baghdad-cityscape-over-tigris-river-33047484/",
-  "id": 33047484,
-  "size": [
-   6240,
-   3964
-  ]
- },
- "ahsa-02.jpg": {
-  "query": "Al Ahsa",
-  "alt": "Beautiful canal amid residential area with palm trees in Ras Al-Khaimah, United Arab Emirates.",
-  "photographer": "khaing nwe",
-  "url": "https://www.pexels.com/photo/river-and-town-in-the-middle-east-18250400/",
-  "id": 18250400,
+ "clock-07.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "A stunning view of the Clock Tower at Abraj Al Bait, Mecca against a clear blue sky.",
+  "photographer": "Earth Photart",
+  "url": "https://www.pexels.com/photo/clock-tower-at-abraj-al-bait-mecca-saudi-arabia-35299524/",
+  "id": 35299524,
   "size": [
    4032,
    3024
   ]
  },
- "ahsa-03.jpg": {
-  "query": "Al Ahsa",
-  "alt": "White floral pattern window on textured wall with Al-Rihba Square sign in Madinah.",
-  "photographer": "Bayu Prakosa",
-  "url": "https://www.pexels.com/photo/decorative-wall-with-al-rihba-square-sign-33666744/",
-  "id": 33666744,
+ "clock-08.jpg": {
+  "query": "Makkah clock tower",
+  "alt": "Black and white photo of a street in Taif with a view of the clock tower and surrounding mountains.",
+  "photographer": "Abinav Kareethara Sunikuttan",
+  "url": "https://www.pexels.com/photo/clock-tower-and-city-street-view-in-taif-33873718/",
+  "id": 33873718,
   "size": [
-   4080,
-   3060
+   4032,
+   3024
   ]
  },
- "ahsa-04.jpg": {
-  "query": "Al Ahsa",
-  "alt": "Aerial photo showcasing the urban sprawl and coastline of Kuwait under clear blue skies.",
-  "photographer": "nour qaloush",
-  "url": "https://www.pexels.com/photo/aerial-view-of-a-city-9729368/",
-  "id": 9729368,
+ "clock2-01.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "View of the iconic Abraj Al Bait and Mecca Clock Tower with surrounding architecture.",
+  "photographer": "ِAMR-MANSOUR",
+  "url": "https://www.pexels.com/photo/the-clock-tower-of-the-grand-mosque-in-mecca-27291499/",
+  "id": 27291499,
   "size": [
-   5472,
-   3078
+   3648,
+   2736
   ]
  },
- "ahsa-05.jpg": {
-  "query": "Al Ahsa",
-  "alt": "Crumbling ancient ruins with arches in Al-Ahsa Oasis, reflecting historic architecture.",
-  "photographer": "Abrahem",
-  "url": "https://www.pexels.com/photo/ancient-ruins-in-al-ahsa-oasis-saudi-arabia-33368098/",
-  "id": 33368098,
+ "clock2-02.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "Majestic capture of the Abraj Al Bait Clock Tower in Mekkah against a clear sky.",
+  "photographer": "Dimas Naufal F",
+  "url": "https://www.pexels.com/photo/clock-tower-3911869/",
+  "id": 3911869,
   "size": [
-   2896,
-   1944
+   5184,
+   3456
   ]
  },
- "ahsa-06.jpg": {
-  "query": "Al Ahsa",
-  "alt": "Aerial shot of the picturesque Al Jubail waterfront promenade in Saudi Arabia.",
-  "photographer": "osamah Abdullah",
-  "url": "https://www.pexels.com/photo/aerial-view-of-darien-hills-park-in-jubail-14989817/",
-  "id": 14989817,
+ "clock2-03.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "View of Abraj Al Bait Towers in Mecca, Saudi Arabia showcasing stunning architecture.",
+  "photographer": "Abdus Samad Mahkri",
+  "url": "https://www.pexels.com/photo/abraj-al-bait-towers-in-mecca-against-blue-sky-35887748/",
+  "id": 35887748,
   "size": [
-   7108,
-   5331
+   5220,
+   3912
   ]
  },
- "ahsa-07.jpg": {
-  "query": "Al Ahsa",
-  "alt": "Elegant residential villa in Ras Al Khaimah, United Arab Emirates, with a scenic archway and footbridge.",
-  "photographer": "Denys Gromov",
-  "url": "https://www.pexels.com/photo/a-footbridge-leading-to-a-residence-12309388/",
-  "id": 12309388,
+ "clock2-04.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "Silhouette of the Makkah Royal Clock Tower at dusk, capturing the vibrant Mecca skyline.",
+  "photographer": "Rushdi Fatani",
+  "url": "https://www.pexels.com/photo/illuminated-clock-tower-and-cityscape-at-dusk-19174886/",
+  "id": 19174886,
   "size": [
-   7008,
-   4672
+   3958,
+   2969
   ]
  },
- "ahsa-08.jpg": {
-  "query": "Al Ahsa",
+ "clock2-05.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "Majestic view of Abraj Al Bait Towers in Mecca with a clear blue sky and scattered clouds.",
+  "photographer": "MD.Arman Mia 353",
+  "url": "https://www.pexels.com/photo/abraj-al-bait-towers-against-blue-sky-39076476/",
+  "id": 39076476,
+  "size": [
+   4096,
+   3072
+  ]
+ },
+ "clock2-06.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "A dramatic view of Abraj Al Bait Towers with intricate architecture against the clear sky in Mecca, Saudi Arabia.",
+  "photographer": "Hakam Magdea",
+  "url": "https://www.pexels.com/photo/view-of-abraj-al-bait-towers-in-mecca-saudi-arabia-31565687/",
+  "id": 31565687,
+  "size": [
+   5314,
+   3602
+  ]
+ },
+ "clock2-07.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "A stunning view of the Clock Tower at Abraj Al Bait, Mecca against a clear blue sky.",
+  "photographer": "Earth Photart",
+  "url": "https://www.pexels.com/photo/clock-tower-at-abraj-al-bait-mecca-saudi-arabia-35299524/",
+  "id": 35299524,
+  "size": [
+   4032,
+   3024
+  ]
+ },
+ "clock2-08.jpg": {
+  "query": "Abraj Al Bait",
+  "alt": "Stunning view of the iconic Abraj Al Bait Clock Tower against a vibrant blue sky in Mecca, Saudi Arabia.",
+  "photographer": "Ceha Rabbani",
+  "url": "https://www.pexels.com/photo/clock-tower-in-mecca-15511281/",
+  "id": 15511281,
+  "size": [
+   5907,
+   3938
+  ]
+ },
+ "wajh-01.jpg": {
+  "query": "Al Wajh",
+  "alt": "Close-up of an ornate book cover with Arabic script in a library setting.",
+  "photographer": "Defrino Maasy",
+  "url": "https://www.pexels.com/photo/arabic-script-on-ornate-book-cover-in-library-40101572/",
+  "id": 40101572,
+  "size": [
+   4045,
+   3440
+  ]
+ },
+ "wajh-02.jpg": {
+  "query": "Al Wajh",
+  "alt": "From above of underwater with beautiful coral reefs and fishes swimming in transparent clear sea",
+  "photographer": "Francesco Ungaro",
+  "url": "https://www.pexels.com/photo/fishes-and-coral-reefs-in-depth-of-blue-sea-3805131/",
+  "id": 3805131,
+  "size": [
+   4000,
+   3000
+  ]
+ },
+ "wajh-03.jpg": {
+  "query": "Al Wajh",
+  "alt": "Tiny orange fish swimming along reef in blue deep water of ocean with sunbeams",
+  "photographer": "Francesco Ungaro",
+  "url": "https://www.pexels.com/photo/swimming-golden-fish-underwater-in-sea-3808880/",
+  "id": 3808880,
+  "size": [
+   4000,
+   3000
+  ]
+ },
+ "wajh-04.jpg": {
+  "query": "Al Wajh",
   "alt": "Stunning architectural landmark, the Dome of the Rock, set against a vibrant blue sky in Jerusalem.",
   "photographer": "Israel Markle",
   "url": "https://www.pexels.com/photo/majestic-view-of-the-dome-of-the-rock-in-jerusalem-39527881/",
@@ -593,92 +219,488 @@
    4344
   ]
  },
- "tanomah-01.jpg": {
-  "query": "Tanomah",
-  "alt": "Explore the stunning landscape and architecture of Tanomah, surrounded by majestic mountains.",
-  "photographer": "Abdulaziz Asiri",
-  "url": "https://www.pexels.com/photo/scenic-view-of-tanomah-aseer-province-saudi-arabia-36772107/",
-  "id": 36772107,
+ "wajh-05.jpg": {
+  "query": "Al Wajh",
+  "alt": "Detailed view of the Quran with intricate Arabic scripts, magnifying religious text and design.",
+  "photographer": "Muhammad Amaan",
+  "url": "https://www.pexels.com/photo/close-up-shot-of-a-book-page-8440924/",
+  "id": 8440924,
   "size": [
-   5568,
-   3712
+   6000,
+   4000
   ]
  },
- "tanomah-02.jpg": {
-  "query": "Tanomah",
-  "alt": "A variety of Middle Eastern dishes elegantly presented on a wooden table.",
-  "photographer": "Mohamed  Olwy",
-  "url": "https://www.pexels.com/photo/delicious-middle-eastern-mezze-on-wooden-table-36984958/",
-  "id": 36984958,
+ "wajh-06.jpg": {
+  "query": "Al Wajh",
+  "alt": "Close-up of an open Quran showing intricate Arabic script and ornate design elements.",
+  "photographer": "belal obeid",
+  "url": "https://www.pexels.com/photo/arabic-writing-in-a-book-13549648/",
+  "id": 13549648,
   "size": [
-   4240,
-   2832
+   7360,
+   4912
   ]
  },
- "tanomah-03.jpg": {
-  "query": "Tanomah",
-  "alt": "Vibrant Mediterranean dishes on a wooden table, featuring salads and grilled meat.",
-  "photographer": "Mohamed  Olwy",
-  "url": "https://www.pexels.com/photo/colorful-mediterranean-meal-with-vibrant-salads-36934974/",
-  "id": 36934974,
+ "wajh-07.jpg": {
+  "query": "Al Wajh",
+  "alt": "Detailed image of Quran page with prayer beads and an ornate border, representing Islamic faith and tradition.",
+  "photographer": "Carlos Eduardo de Meneses",
+  "url": "https://www.pexels.com/photo/a-red-prayer-beads-with-red-tassel-on-a-paper-with-calligraphy-6859068/",
+  "id": 6859068,
   "size": [
-   4240,
-   2385
+   3456,
+   2304
   ]
  },
- "tanomah-04.jpg": {
-  "query": "Tanomah",
-  "alt": "A delicious spread of Middle Eastern dishes featuring meats and rice on a wooden table.",
-  "photographer": "Mohamed  Olwy",
-  "url": "https://www.pexels.com/photo/middle-eastern-cuisine-variety-on-wooden-table-36984978/",
-  "id": 36984978,
+ "wajh-08.jpg": {
+  "query": "Al Wajh",
+  "alt": "An open Quran showing intricate Arabic calligraphy and decorative designs.",
+  "photographer": "Jahra Tasfia Reza",
+  "url": "https://www.pexels.com/photo/close-up-of-arabic-script-from-an-open-quran-39900280/",
+  "id": 39900280,
   "size": [
-   4240,
-   2832
+   6000,
+   4000
   ]
  },
- "tanomah-05.jpg": {
-  "query": "Tanomah",
-  "alt": "Close-up of a hearty chickpea stew garnished with fresh herbs, served in a rustic brown bowl.",
-  "photographer": "Anthony Rahayel",
-  "url": "https://www.pexels.com/photo/delicious-homemade-chickpea-stew-in-rustic-bowl-30168757/",
-  "id": 30168757,
+ "haql-01.jpg": {
+  "query": "Haql Saudi",
+  "alt": "View of the iconic Abraj Al Bait and Mecca Clock Tower with surrounding architecture.",
+  "photographer": "ِAMR-MANSOUR",
+  "url": "https://www.pexels.com/photo/the-clock-tower-of-the-grand-mosque-in-mecca-27291499/",
+  "id": 27291499,
   "size": [
-   9520,
-   6336
+   3648,
+   2736
   ]
  },
- "tanomah-06.jpg": {
-  "query": "Tanomah",
-  "alt": "A Middle Eastern fava bean dish with fresh vegetables and lemon, perfect for a healthy meal.",
-  "photographer": "Shameel mukkath",
-  "url": "https://www.pexels.com/photo/healthy-baked-beans-5191842/",
-  "id": 5191842,
+ "haql-02.jpg": {
+  "query": "Haql Saudi",
+  "alt": "Beautiful view of Riyadh Water Tower silhouetted against a stunning sunset sky.",
+  "photographer": "Alamin Prodhania",
+  "url": "https://www.pexels.com/photo/riyadh-water-tower-in-saudi-arabia-5625713/",
+  "id": 5625713,
   "size": [
-   2500,
-   2320
+   4160,
+   3120
   ]
  },
- "tanomah-07.jpg": {
-  "query": "Tanomah",
-  "alt": "A smiling woman with traditional tattoos and Ethiopian attire enjoying a sunny day outdoors.",
-  "photographer": "Fasika Get",
-  "url": "https://www.pexels.com/photo/smiling-woman-in-traditional-ethiopian-attire-37730198/",
-  "id": 37730198,
+ "haql-03.jpg": {
+  "query": "Haql Saudi",
+  "alt": "Aerial cityscape view featuring a mosque and mountains in Saudi Arabia.",
+  "photographer": "Fahad Puthawala",
+  "url": "https://www.pexels.com/photo/aerial-view-of-a-saudi-arabian-cityscape-and-mountain-35097391/",
+  "id": 35097391,
+  "size": [
+   4087,
+   2725
+  ]
+ },
+ "haql-04.jpg": {
+  "query": "Haql Saudi",
+  "alt": "Low angle view of a modern hotel in Makkah under a clear blue sky.",
+  "photographer": "Maddy",
+  "url": "https://www.pexels.com/photo/low-angle-shot-of-hilton-suites-makkah-under-blue-sky-5659779/",
+  "id": 5659779,
+  "size": [
+   4032,
+   3024
+  ]
+ },
+ "haql-05.jpg": {
+  "query": "Haql Saudi",
+  "alt": "The stunning architecture of Al-Masjid an-Nabawi mosque with its iconic minarets in Medina, Saudi Arabia.",
+  "photographer": "Ravish Maqsood",
+  "url": "https://www.pexels.com/photo/al-masjid-an-nabawi-mosque-in-saudi-arabia-17261869/",
+  "id": 17261869,
+  "size": [
+   2739,
+   1825
+  ]
+ },
+ "haql-06.jpg": {
+  "query": "Haql Saudi",
+  "alt": "Cityscape of Riyadh with busy streets and modern skyscrapers on a sunny day.",
+  "photographer": "Fahad Puthawala",
+  "url": "https://www.pexels.com/photo/urban-street-view-of-riyadh-cityscape-35068847/",
+  "id": 35068847,
+  "size": [
+   4045,
+   2697
+  ]
+ },
+ "haql-07.jpg": {
+  "query": "Haql Saudi",
+  "alt": "Aerial view of a large gathering at an outdoor marketplace in Mecca.",
+  "photographer": "Fahad Puthawala",
+  "url": "https://www.pexels.com/photo/large-gathering-at-an-outdoor-event-in-mecca-35097400/",
+  "id": 35097400,
+  "size": [
+   4056,
+   2704
+  ]
+ },
+ "haql-08.jpg": {
+  "query": "Haql Saudi",
+  "alt": "Two pigeons perched with a panoramic view of Makkah, Saudi Arabia, cityscape and mountains.",
+  "photographer": "ruveyda yigiter",
+  "url": "https://www.pexels.com/photo/pigeons-overlooking-makkah-cityscape-36774128/",
+  "id": 36774128,
+  "size": [
+   4000,
+   3000
+  ]
+ },
+ "duba-01.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "Skyline of Riyadh, Saudi Arabia featuring modern skyscrapers and construction cranes at sunset.",
+  "photographer": "Tayssir Kadamany",
+  "url": "https://www.pexels.com/photo/riyadh-cityscape-with-modern-skyscrapers-at-dusk-38096888/",
+  "id": 38096888,
+  "size": [
+   8192,
+   4774
+  ]
+ },
+ "duba-02.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "Beautiful view of Riyadh Water Tower silhouetted against a stunning sunset sky.",
+  "photographer": "Alamin Prodhania",
+  "url": "https://www.pexels.com/photo/riyadh-water-tower-in-saudi-arabia-5625713/",
+  "id": 5625713,
+  "size": [
+   4160,
+   3120
+  ]
+ },
+ "duba-03.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "The stunning architecture of Al-Masjid an-Nabawi mosque with its iconic minarets in Medina, Saudi Arabia.",
+  "photographer": "Ravish Maqsood",
+  "url": "https://www.pexels.com/photo/al-masjid-an-nabawi-mosque-in-saudi-arabia-17261869/",
+  "id": 17261869,
+  "size": [
+   2739,
+   1825
+  ]
+ },
+ "duba-04.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "Majestic Saudi Arabian flag illuminated against the night sky, surrounded by cityscape lights in Riyadh.",
+  "photographer": "Jepoy Fabian",
+  "url": "https://www.pexels.com/photo/saudi-flag-in-city-at-night-16136381/",
+  "id": 16136381,
+  "size": [
+   4162,
+   2775
+  ]
+ },
+ "duba-05.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "Aerial cityscape view featuring a mosque and mountains in Saudi Arabia.",
+  "photographer": "Fahad Puthawala",
+  "url": "https://www.pexels.com/photo/aerial-view-of-a-saudi-arabian-cityscape-and-mountain-35097391/",
+  "id": 35097391,
+  "size": [
+   4087,
+   2725
+  ]
+ },
+ "duba-06.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "A breathtaking aerial view of Riyadh at night featuring the iconic Kingdom Centre Tower.",
+  "photographer": "abul lais",
+  "url": "https://www.pexels.com/photo/stunning-night-view-of-riyadh-skyline-39470846/",
+  "id": 39470846,
+  "size": [
+   8192,
+   5464
+  ]
+ },
+ "duba-07.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "Skyline view of Riyadh's modern architecture with distinctive skyscrapers.",
+  "photographer": "Steven Jeffery",
+  "url": "https://www.pexels.com/photo/modern-riyadh-skyline-with-iconic-buildings-31849530/",
+  "id": 31849530,
+  "size": [
+   6960,
+   4640
+  ]
+ },
+ "duba-08.jpg": {
+  "query": "Duba Saudi Arabia",
+  "alt": "Low angle view of a modern hotel in Makkah under a clear blue sky.",
+  "photographer": "Maddy",
+  "url": "https://www.pexels.com/photo/low-angle-shot-of-hilton-suites-makkah-under-blue-sky-5659779/",
+  "id": 5659779,
+  "size": [
+   4032,
+   3024
+  ]
+ },
+ "taif-01.jpg": {
+  "query": "Taif mountains",
+  "alt": "Explore the unique architecture of Taif city in Saudi Arabia's Makkah Province.",
+  "photographer": "Musaddek Sayek",
+  "url": "https://www.pexels.com/photo/scenic-view-of-taif-city-architecture-in-makkah-38048226/",
+  "id": 38048226,
+  "size": [
+   2981,
+   1677
+  ]
+ },
+ "taif-02.jpg": {
+  "query": "Taif mountains",
+  "alt": "Charming houses and landscapes in Taif, Saudi Arabia showcase unique architecture.",
+  "photographer": "Musaddek Sayek",
+  "url": "https://www.pexels.com/photo/scenic-view-of-taif-architecture-in-saudi-arabia-38048353/",
+  "id": 38048353,
+  "size": [
+   2981,
+   1677
+  ]
+ },
+ "taif-03.jpg": {
+  "query": "Taif mountains",
+  "alt": "Historic stone arches and walls in sunny Taif, capturing ancient architectural beauty.",
+  "photographer": "Raziuddin Farooqi",
+  "url": "https://www.pexels.com/photo/a-brown-stone-wall-with-arches-on-sand-10965881/",
+  "id": 10965881,
+  "size": [
+   5184,
+   3888
+  ]
+ },
+ "taif-04.jpg": {
+  "query": "Taif mountains",
+  "alt": "Aerial view of suburban homes amidst greenery in Taif, Saudi Arabia.",
+  "photographer": "Musaddek Sayek",
+  "url": "https://www.pexels.com/photo/suburban-landscape-in-taif-saudi-arabia-38048232/",
+  "id": 38048232,
+  "size": [
+   2981,
+   1677
+  ]
+ },
+ "taif-05.jpg": {
+  "query": "Taif mountains",
+  "alt": "Black and white photo of a street in Taif with a view of the clock tower and surrounding mountains.",
+  "photographer": "Abinav Kareethara Sunikuttan",
+  "url": "https://www.pexels.com/photo/clock-tower-and-city-street-view-in-taif-33873718/",
+  "id": 33873718,
+  "size": [
+   4032,
+   3024
+  ]
+ },
+ "taif-06.jpg": {
+  "query": "Taif mountains",
+  "alt": "Breathtaking aerial view of rugged mountains under a serene sky at dawn.",
+  "photographer": "Ali Mubarak",
+  "url": "https://www.pexels.com/photo/scenic-view-of-mountains-10861737/",
+  "id": 10861737,
+  "size": [
+   6000,
+   3469
+  ]
+ },
+ "taif-07.jpg": {
+  "query": "Taif mountains",
+  "alt": "Panoramic view of winding roads through a vast mountain range, showcasing rugged terrain.",
+  "photographer": "Raziuddin Farooqi",
+  "url": "https://www.pexels.com/photo/mountainous-landscape-with-a-road-passing-through-the-valley-12187157/",
+  "id": 12187157,
+  "size": [
+   6000,
+   4000
+  ]
+ },
+ "taif-08.jpg": {
+  "query": "Taif mountains",
+  "alt": "A winding mountain road carved through rugged rocky peaks offers breathtaking views.",
+  "photographer": "Jepoy Fabian",
+  "url": "https://www.pexels.com/photo/scenic-mountain-road-winding-through-high-peaks-40173535/",
+  "id": 40173535,
+  "size": [
+   6000,
+   4000
+  ]
+ },
+ "jazan-01.jpg": {
+  "query": "Jazan",
+  "alt": "Serene beach scene at dusk with clear skies and scattered clouds, showcasing a tranquil coastal view.",
+  "photographer": "Ahmed Rashed",
+  "url": "https://www.pexels.com/photo/peaceful-beach-landscape-at-dusk-with-blue-sky-30309333/",
+  "id": 30309333,
+  "size": [
+   5330,
+   3878
+  ]
+ },
+ "jazan-02.jpg": {
+  "query": "Jazan",
+  "alt": "Pelican gliding through blue waters near the rocky shores of Farasan Island, Saudi Arabia.",
+  "photographer": "Saad Alaiyadhi",
+  "url": "https://www.pexels.com/photo/white-pelican-on-blue-sea-10141406/",
+  "id": 10141406,
+  "size": [
+   4343,
+   2895
+  ]
+ },
+ "jazan-03.jpg": {
+  "query": "Jazan",
+  "alt": "Colorful coral reef scene capturing vibrant underwater life of Farasan Island, Saudi Arabia.",
+  "photographer": "Francesco Ungaro",
+  "url": "https://www.pexels.com/photo/coral-underwater-13103444/",
+  "id": 13103444,
+  "size": [
+   4000,
+   3000
+  ]
+ },
+ "jazan-04.jpg": {
+  "query": "Jazan",
+  "alt": "Wide view of the industrial port in Dubai with ships docked, highlighting maritime commerce.",
+  "photographer": "Joerg Hartmann",
+  "url": "https://www.pexels.com/photo/industrial-port-landscape-in-dubai-at-daytime-36176845/",
+  "id": 36176845,
+  "size": [
+   6000,
+   3375
+  ]
+ },
+ "jazan-05.jpg": {
+  "query": "Jazan",
+  "alt": "A tranquil view of an industrial port surrounded by calm blue waters, featuring a cargo ship and cranes in the distance.",
+  "photographer": "Tetyana Kovyrina",
+  "url": "https://www.pexels.com/photo/sifto-mining-company-in-canada-8924882/",
+  "id": 8924882,
   "size": [
    5760,
    3840
   ]
  },
- "tanomah-08.jpg": {
-  "query": "Tanomah",
-  "alt": "A top view of assorted Middle Eastern meze platters with various delicious dishes.",
-  "photographer": "Shameel mukkath",
-  "url": "https://www.pexels.com/photo/cooked-foods-on-white-ceramic-plates-5191823/",
-  "id": 5191823,
+ "jazan-06.jpg": {
+  "query": "Jazan",
+  "alt": "A striking view of an industrial factory during sunrise in Saudi Arabia with a colorful sky.",
+  "photographer": "Mumtaz  Niazi",
+  "url": "https://www.pexels.com/photo/industrial-plant-at-sunrise-in-saudi-arabia-31277318/",
+  "id": 31277318,
+  "size": [
+   4032,
+   3024
+  ]
+ },
+ "jazan-07.jpg": {
+  "query": "Jazan",
+  "alt": "A rusted shipwreck partially submerged in coastal waters, perfect for maritime themes.",
+  "photographer": "Irfan Rahat",
+  "url": "https://www.pexels.com/photo/old-abandoned-ship-in-the-sea-water-10880436/",
+  "id": 10880436,
+  "size": [
+   5760,
+   3840
+  ]
+ },
+ "jazan-08.jpg": {
+  "query": "Jazan",
+  "alt": "Excavator and bulldozer on a beach construction site during sunset.",
+  "photographer": "Asad Photo Maldives",
+  "url": "https://www.pexels.com/photo/a-large-orange-construction-vehicle-on-the-beach-at-sunset-24245324/",
+  "id": 24245324,
+  "size": [
+   6000,
+   4000
+  ]
+ },
+ "maraya-01.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "Adobe-style buildings set against dramatic rocky cliffs under a bright blue sky.",
+  "photographer": "LUCKY",
+  "url": "https://www.pexels.com/photo/buildings-on-a-desert-15612135/",
+  "id": 15612135,
+  "size": [
+   4608,
+   3456
+  ]
+ },
+ "maraya-02.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "Experience the magical desert landscape of AlUla at dusk, beautifully lit by lanterns.",
+  "photographer": "Tyrrel Burns",
+  "url": "https://www.pexels.com/photo/lamps-in-desert-17186686/",
+  "id": 17186686,
   "size": [
    2500,
-   2287
+   1667
+  ]
+ },
+ "maraya-03.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "A straw hut in the AlUla desert, featuring minimalistic rural architecture and vast landscapes.",
+  "photographer": "Omer Faruk Dogan",
+  "url": "https://www.pexels.com/photo/a-structure-made-of-dried-grass-on-desert-14964063/",
+  "id": 14964063,
+  "size": [
+   4416,
+   2944
+  ]
+ },
+ "maraya-04.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "White SUV navigating sandstone cliffs in Al-Ula, showcasing rugged desert landscape.",
+  "photographer": "Mahdi Foysal",
+  "url": "https://www.pexels.com/photo/white-suv-on-al-ula-desert-rock-formation-35777752/",
+  "id": 35777752,
+  "size": [
+   2560,
+   1706
+  ]
+ },
+ "maraya-05.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "Silhouetted trees under a starry night sky, capturing the serene beauty of nature in Austria.",
+  "photographer": "Vladislav Kafman",
+  "url": "https://www.pexels.com/photo/silhouette-of-trees-under-blue-sky-during-night-time-4113755/",
+  "id": 4113755,
+  "size": [
+   5208,
+   3476
+  ]
+ },
+ "maraya-06.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "Experience luxury glamping with stunning views of AlUla, Saudi Arabia's iconic rock formations.",
+  "photographer": "Tyrrel Burns",
+  "url": "https://www.pexels.com/photo/tables-and-sofas-for-tourists-on-glamping-camp-17049069/",
+  "id": 17049069,
+  "size": [
+   5568,
+   3712
+  ]
+ },
+ "maraya-07.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "Breathtaking view of a starry night sky over a desert campsite in Tabuk, Saudi Arabia, with dramatic rock formations.",
+  "photographer": "SALEH .",
+  "url": "https://www.pexels.com/photo/starry-night-sky-over-desert-campsite-in-tabuk-34476404/",
+  "id": 34476404,
+  "size": [
+   6240,
+   4160
+  ]
+ },
+ "maraya-08.jpg": {
+  "query": "Maraya AlUla",
+  "alt": "Explore luxury glamping in the stunning desert landscape of AlUla, Saudi Arabia.",
+  "photographer": "Tyrrel Burns",
+  "url": "https://www.pexels.com/photo/glamping-tent-on-a-desert-17049056/",
+  "id": 17049056,
+  "size": [
+   5568,
+   3712
   ]
  }
 }
