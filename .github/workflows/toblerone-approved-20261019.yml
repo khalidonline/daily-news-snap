@@ -1,0 +1,32 @@
+name: Publish owner-approved Toblerone only
+on:
+  push:
+    branches: [codex/toblerone-approved-20261019]
+    paths: [.github/workflows/toblerone-approved-20261019.yml]
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: 167b0ca18d7456cebe2492f5c0a2d37089675a78
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - run: pip install Pillow
+      - name: Offline exact approved media preflight
+        run: python -m publishing_v2.bundle_api validate --manifest approved/toblerone-20261019/manifest.json
+      - name: Publish and verify Snapchat receipt
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: 167b0ca18d7456cebe2492f5c0a2d37089675a78
+          PYTHONPATH: .
+        run: python approved/toblerone-20261019/publish-approved.py
