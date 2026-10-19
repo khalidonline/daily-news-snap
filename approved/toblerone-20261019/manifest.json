@@ -1,0 +1,31 @@
+{
+  "format": "owner-generated-design-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توبليرون… وفّروا بالشوكولاتة وزادوا الهوا!",
+  "not_before": "2026-10-19T16:36:28Z",
+  "expires_at": "2026-10-19T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid reviewed the exact 1080x1920 preview and said تمام انشر at 2026-10-19T19:36:28+03:00, reconfirmed انشر اللحين at 19:41:09. Existing image only; no regeneration. Missing production cost ledger does not block this delivery-only request per owner at 19:37:53.",
+  "owner_review": {
+    "reference": "Khalid: تمام انشر; exact 1080x1920 preview in this conversation, 2026-10-19 19:36:28 Riyadh",
+    "reviewed_at": "2026-10-19T16:36:28Z",
+    "approved_media_sha256": [
+      "e1c6b139403b8ca913b2c99b9f58dbfc07506292c467384e4382b326b49c2e99"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/toblerone-20261019/card.png",
+      "sha256": "e1c6b139403b8ca913b2c99b9f58dbfc07506292c467384e4382b326b49c2e99",
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "illustration",
+        "third_party_assets": false,
+        "library_file_id": "libfile_6b7daebbf8ec819183630a3d9fb9623b",
+        "export": "Lanczos resize only from owner-reviewed 941x1672 original to 1080x1920; no copy edits"
+      }
+    }
+  ]
+}
