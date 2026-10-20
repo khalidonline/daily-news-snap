@@ -1,0 +1,41 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "غسالة الصحون… بدايتها وحدة طفشت من صحونها!",
+  "not_before": "2026-10-20T19:00:00Z",
+  "expires_at": "2026-10-20T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved displayed 1080x1920 dishwasher card with انشر, 20 October 2026; same copy and pictures, resize only.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/dishwasher-20261020/card.png",
+      "sha256": "4ccb203a4622a7b654b4f02d8171fcc73f8876d58f8c4f0fbe2fa3c8714324f9",
+      "image": {
+        "provider": "primary_media",
+        "source_url": "https://www.kitchenaid.jp/en_jp/100year/history.html",
+        "original_url": "https://www.kitchenaid.jp/is/image/content/dam/business-unit/kitchenaid/en-us/digital-assets/pages/landing-pages/KA100/assets/images/1949-dishwasher.png?fmt=png-alpha&hei=1792&resMode=sharp2&wid=1510",
+        "download_url": "https://www.kitchenaid.jp/is/image/content/dam/business-unit/kitchenaid/en-us/digital-assets/pages/landing-pages/KA100/assets/images/1949-dishwasher.png?fmt=png-alpha&hei=1792&resMode=sharp2&wid=1510",
+        "asset_id": "primary:04222a27e10f47731424d607",
+        "source_kind": "article",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      },
+      "reference_assets": [
+        {
+          "source_url": "https://www.uspto.gov/learning-and-resources/journeys-innovation/historical-stories/ill-do-it-myself",
+          "original_url": "https://www.uspto.gov/sites/default/files/2019-09/cochran-portait.jpg"
+        }
+      ],
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "reference-based editorial composite",
+        "third_party_assets": true,
+        "library_file_id": "libfile_151381a96e7c81919571f430c13a8f14",
+        "export": "941x1672 to 1080x1920 Lanczos; no text or layout edits"
+      }
+    }
+  ]
+}
