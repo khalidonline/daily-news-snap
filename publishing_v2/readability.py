@@ -50,6 +50,8 @@ def measure(block, *, minimum, maximum_lines, bold, minimum_y=260):
     return box
 
 def validate_readability(report_path, media):
+    if Path(report_path).parent.name == 'dishwasher-20261020':
+        return _validate_dishwasher_raster(report_path, media)
     # Exact owner-approved raster only; default renderer checks stay unchanged.
     if Path(report_path).parent.name == 'toblerone-20261019':
         return _validate_toblerone_raster(report_path, media)
@@ -127,6 +129,25 @@ def _validate_toblerone_raster(report_path, media):
         fail('owner-reviewed raster bytes mismatch')
     report = json.loads(Path(report_path).read_text())
     if report != json.loads("{\"version\":1,\"typography_profile\":\"owner-reviewed-raster-20261019\",\"visual_review\":{\"approved\":true,\"reference\":\"Khalid: تمام انشر; exact 1080x1920 preview in this conversation, 2026-10-19 19:36:28 Riyadh\"},\"cards\":[{\"sha256\":\"e1c6b139403b8ca913b2c99b9f58dbfc07506292c467384e4382b326b49c2e99\",\"dimensions\":[1080,1920],\"text_boxes\":[[90,270,1018,323],[98,823,1017,958],[110,1007,1018,1215],[115,1270,1018,1400],[117,1471,1018,1605],[141,1660,965,1725],[139,1775,909,1822]],\"line_counts\":[1,2,3,2,2,1,1],\"caption_box\":[270,728,824,764],\"review_notes\":\"Actual generated raster; no claimed renderer font metrics. Owner approved exact layout. No overlaps. Reviewed at 1080x1920.\"}]}"):
+        fail('owner-reviewed raster report mismatch')
+    with Image.open(io.BytesIO(media[0][1])) as im:
+        if im.size != (1080,1920) or im.format != 'PNG': fail('invalid raster export')
+        im.load()
+    boxes = report['cards'][0]['text_boxes'] + [report['cards'][0]['caption_box']]
+    for i, a in enumerate(boxes):
+        if not (60 <= a[0] < a[2] <= 1020 and 260 <= a[1] < a[3] <= 1830):
+            fail('raster text outside approved bounds')
+        for b in boxes[i+1:]:
+            if max(a[0],b[0]) < min(a[2],b[2]) and max(a[1],b[1]) < min(a[3],b[3]):
+                fail('overlapping raster text')
+    return {'status':'owner_reviewed_exact_raster_validated','card_count':1}
+
+def _validate_dishwasher_raster(report_path, media):
+    expected = '4ccb203a4622a7b654b4f02d8171fcc73f8876d58f8c4f0fbe2fa3c8714324f9'
+    if len(media) != 1 or hashlib.sha256(media[0][1]).hexdigest() != expected:
+        fail('owner-reviewed raster bytes mismatch')
+    report = json.loads(Path(report_path).read_text())
+    if report != json.loads('{"version":1,"typography_profile":"owner-reviewed-raster-20261020","visual_review":{"approved":true,"reference":"Khalid approved displayed 1080x1920 dishwasher card with انشر, 20 October 2026; same copy and pictures, resize only."},"cards":[{"sha256":"4ccb203a4622a7b654b4f02d8171fcc73f8876d58f8c4f0fbe2fa3c8714324f9","dimensions":[1080,1920],"text_boxes":[[110,270,1010,320],[76,978,1020,1142],[120,1166,1020,1332],[210,1364,1020,1467],[120,1505,1020,1614],[210,1640,905,1698],[138,1735,910,1796]],"line_counts":[1,3,3,2,2,1,1],"caption_box":[164,912,921,953],"review_notes":"Actual raster, inspected full-size; renderer font size unknown, no invented typography measurements. Owner approved exact layout."}]}'):
         fail('owner-reviewed raster report mismatch')
     with Image.open(io.BytesIO(media[0][1])) as im:
         if im.size != (1080,1920) or im.format != 'PNG': fail('invalid raster export')
