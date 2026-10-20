@@ -20,6 +20,8 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact official historical product reference in owner-approved dishwasher card.
+    ('https://www.kitchenaid.jp/en_jp/100year/history.html', 'https://www.kitchenaid.jp/is/image/content/dam/business-unit/kitchenaid/en-us/digital-assets/pages/landing-pages/KA100/assets/images/1949-dishwasher.png?fmt=png-alpha&hei=1792&resMode=sharp2&wid=1510'),
     # Exact IKEA Denmark photograph reviewed and owner-approved, 9 October 2026.
     ('https://www.foxbusiness.com/lifestyle/ikea-denmark-showroom-snow-storm', 'https://static.foxbusiness.com/foxbusiness.com/content/uploads/2021/12/ikea-1.jpg'),
     # Exact archival photograph reviewed for Khalid's authorized shopping-cart package, 9 Oct 2026.
