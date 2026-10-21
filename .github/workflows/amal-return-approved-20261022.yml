@@ -1,0 +1,34 @@
+name: Publish owner-approved Amal return only
+on:
+  push:
+    branches: [codex/amal-return-20261022]
+    paths: [.github/workflows/amal-return-approved-20261022.yml]
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: 012330c672f3e88143c4cc59ea232cf435845aa1
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - run: pip install Pillow
+      - name: Validate exact card and publisher tests
+        run: |
+          python -m publishing_v2.bundle_api validate --manifest approved/amal-return-20261022/manifest.json
+          python -m unittest discover -s tests -p test_v2_readability.py -q
+      - name: Check quota and cost then publish and verify
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPROVED_COMMIT: 012330c672f3e88143c4cc59ea232cf435845aa1
+          PYTHONPATH: .
+        run: python approved/amal-return-20261022/publish-approved.py
