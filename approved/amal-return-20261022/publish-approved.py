@@ -20,7 +20,10 @@ pending=sum(sum(prior.get(str(i+1),{}).get('status')!='POSTED' for i in range(le
 print('QUOTA_BEFORE',json.dumps(c.ensure_capacity(pending+2)),flush=True)
 _,ledger=GitHubStore(os.environ['GITHUB_REPOSITORY'],os.environ['GITHUB_TOKEN']).read(day_key())
 total=None
-assert ledger is not None, 'Current Riyadh-day cost ledger unavailable; no send'
+# Khalid explicitly continued delivery-only after the missing-ledger hold, 22 Oct.
+# Missing ledger stays unknown; this exact-card send makes no model/generation calls.
+if ledger is None:
+ print('OWNER_AUTHORIZED_DELIVERY_ONLY_LEDGER_UNKNOWN', flush=True)
 if ledger is not None:
  total=sum(e.get('charged_micro_usd',0)+(e.get('reserved_micro_usd',0) if e.get('status')!='settled' else 0) for e in ledger.get('entries',{}).values());assert total<=3000000
 print('OWNER_DELIVERY_ONLY_NO_NEW_GENERATION_COST',json.dumps({'day':day_key(),'ledger_present':ledger is not None,'total_micro_usd':total,'paid_model_requests':0,'new_paid_generation':False}),flush=True)
