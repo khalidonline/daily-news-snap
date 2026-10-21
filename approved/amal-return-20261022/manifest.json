@@ -1,0 +1,35 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "خلصت الإجازة… وبدأ مشوار الرجعة!",
+  "not_before": "2026-10-22T00:00:00Z",
+  "expires_at": "2026-10-22T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid: انشر, 22 October 2026, exact final map card without diacritics at 1080x1920.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/amal-return-20261022/card.png",
+      "sha256": "7a54f7430fda5857b0ef6f77b1048bed345c816ad26c7439daf648e925b4c184",
+      "image": {
+        "provider": "primary_media",
+        "source_url": "https://www.arabnews.com/saudi-arabia/resilient-riyadh-residents-return-from-abroad-amid-airport-closures-3006494",
+        "original_url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/renditions/3793b835-a866-49a6-a286-137a8a6e85d4_img_hero_lg_d0c2d868.webp",
+        "download_url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/renditions/3793b835-a866-49a6-a286-137a8a6e85d4_img_hero_lg_d0c2d868.webp",
+        "asset_id": "primary:86dd888ae9ba3c850e85b76d",
+        "source_kind": "article",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      },
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "reference-based editorial composite",
+        "third_party_assets": true,
+        "library_file_id": "libfile_8777c2b711008191b601174051cb4377",
+        "export": "941x1672 to 1080x1920 Lanczos; no text or layout edits"
+      }
+    }
+  ]
+}

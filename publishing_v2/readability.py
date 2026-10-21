@@ -50,6 +50,8 @@ def measure(block, *, minimum, maximum_lines, bold, minimum_y=260):
     return box
 
 def validate_readability(report_path, media):
+    if Path(report_path).parent.name == 'amal-return-20261022':
+        return _validate_amal_raster(report_path, media)
     if Path(report_path).parent.name == 'dishwasher-20261020':
         return _validate_dishwasher_raster(report_path, media)
     # Exact owner-approved raster only; default renderer checks stay unchanged.
@@ -122,6 +124,25 @@ def require_for_new_delivery(manifest, media, existing):
         return
     path = Path(manifest).resolve()
     validate_readability(path.parent / 'readability.json', media)
+
+def _validate_amal_raster(report_path, media):
+    expected = '7a54f7430fda5857b0ef6f77b1048bed345c816ad26c7439daf648e925b4c184'
+    if len(media) != 1 or hashlib.sha256(media[0][1]).hexdigest() != expected:
+        fail('owner-reviewed raster bytes mismatch')
+    report = json.loads(Path(report_path).read_text())
+    if report != json.loads("{\"version\":1,\"typography_profile\":\"owner-reviewed-raster-20261022\",\"visual_review\":{\"approved\":true,\"reference\":\"Khalid: انشر, 22 October 2026, exact final map card without diacritics at 1080x1920.\"},\"cards\":[{\"sha256\":\"7a54f7430fda5857b0ef6f77b1048bed345c816ad26c7439daf648e925b4c184\",\"dimensions\":[1080,1920],\"text_boxes\":[[100,240,985,305],[145,1100,1020,1220],[130,1255,1020,1370],[200,1390,1020,1505],[150,1535,1000,1590],[180,1610,945,1680],[135,1735,900,1790]],\"line_counts\":[1,2,2,2,1,1,1],\"caption_boxes\":[[160,1020,490,1065],[680,1020,1000,1065]],\"review_notes\":\"Actual raster inspected; no invented renderer font measurements. Owner approved map and copy. Illustrative map is not navigation.\"}]}"):
+        fail('owner-reviewed raster report mismatch')
+    with Image.open(io.BytesIO(media[0][1])) as im:
+        if im.size != (1080,1920) or im.format != 'PNG': fail('invalid raster export')
+        im.load()
+    boxes = report['cards'][0]['text_boxes'] + report['cards'][0]['caption_boxes']
+    for i,a in enumerate(boxes):
+        if not (60 <= a[0] < a[2] <= 1020 and 230 <= a[1] < a[3] <= 1830):
+            fail('raster text outside approved bounds')
+        for b in boxes[i+1:]:
+            if max(a[0],b[0]) < min(a[2],b[2]) and max(a[1],b[1]) < min(a[3],b[3]):
+                fail('overlapping raster text')
+    return {'status':'owner_reviewed_exact_raster_validated','card_count':1}
 
 def _validate_toblerone_raster(report_path, media):
     expected = 'e1c6b139403b8ca913b2c99b9f58dbfc07506292c467384e4382b326b49c2e99'

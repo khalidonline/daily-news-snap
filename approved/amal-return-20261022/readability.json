@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "typography_profile": "owner-reviewed-raster-20261022",
+  "visual_review": {
+    "approved": true,
+    "reference": "Khalid: انشر, 22 October 2026, exact final map card without diacritics at 1080x1920."
+  },
+  "cards": [
+    {
+      "sha256": "7a54f7430fda5857b0ef6f77b1048bed345c816ad26c7439daf648e925b4c184",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "text_boxes": [
+        [
+          100,
+          240,
+          985,
+          305
+        ],
+        [
+          145,
+          1100,
+          1020,
+          1220
+        ],
+        [
+          130,
+          1255,
+          1020,
+          1370
+        ],
+        [
+          200,
+          1390,
+          1020,
+          1505
+        ],
+        [
+          150,
+          1535,
+          1000,
+          1590
+        ],
+        [
+          180,
+          1610,
+          945,
+          1680
+        ],
+        [
+          135,
+          1735,
+          900,
+          1790
+        ]
+      ],
+      "line_counts": [
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1
+      ],
+      "caption_boxes": [
+        [
+          160,
+          1020,
+          490,
+          1065
+        ],
+        [
+          680,
+          1020,
+          1000,
+          1065
+        ]
+      ],
+      "review_notes": "Actual raster inspected; no invented renderer font measurements. Owner approved map and copy. Illustrative map is not navigation."
+    }
+  ]
+}
