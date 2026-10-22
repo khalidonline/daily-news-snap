@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-22T00:00:00Z",
+  "expires_at": "2026-10-23T20:59:59Z",
+  "authorization": "Khalid standing daily archive authorization, reconfirmed 22 October 2026: كمل after explanation of missing saves. Exact original media only, no generation/repost/deletion. Delivery-only continuation; absent cost ledger remains unknown, never zero.",
+  "empty_profile_confirmation": "Historical baseline 2026-10-01 00:01 Riyadh only; live inventory mandatory.",
+  "visual_review": "22 October: inspected exact Library images, matched SHA256 to published manifest, readable 1080x1920 single cards, no source slide.",
+  "package": "mental-health-20261010",
+  "title": "الصحة النفسية ودوام ٤ أيام — 10 أكتوبر 2026",
+  "identity": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574",
+  "media_sha256": [
+    "51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/mental-health-20261010/manifest.json",
+      "manifest_sha256": "fcaf7eff4014b87c05f7e56afade7acd266dd40908d60f431998ef4a530da90e",
+      "identity": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574",
+      "receipt_key": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574",
+      "media_sha256": [
+        "51a6f2f6be948dc33990f193f23fb823d781e162d7558f45955ba54c061002d0"
+      ]
+    }
+  ],
+  "source_backlog_identity": "7d157f69f86d6cbf48382a50e95dbf6057389556e3e44444fe8173e153746574"
+}
