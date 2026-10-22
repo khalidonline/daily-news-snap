@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-22T00:00:00Z",
+  "expires_at": "2026-10-23T20:59:59Z",
+  "authorization": "Khalid standing daily archive authorization, reconfirmed 22 October 2026: كمل after explanation of missing saves. Exact original media only, no generation/repost/deletion. Delivery-only continuation; absent cost ledger remains unknown, never zero.",
+  "empty_profile_confirmation": "Historical baseline 2026-10-01 00:01 Riyadh only; live inventory mandatory.",
+  "visual_review": "22 October: inspected exact Library images, matched SHA256 to published manifest, readable 1080x1920 single cards, no source slide.",
+  "package": "toblerone-20261019",
+  "title": "توبليرون… وفّروا بالشوكولاتة وزادوا الهوا!",
+  "identity": "9b215b2ab7aa5ccf4426ab7d0dd4b715894b081931b67e8b314e24a9dbcf2983",
+  "media_sha256": [
+    "e1c6b139403b8ca913b2c99b9f58dbfc07506292c467384e4382b326b49c2e99"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/toblerone-20261019/manifest.json",
+      "manifest_sha256": "a76ec12b148788253beb84a5648ee832dfc3d4967f29294500e2ad5d5851c3ff",
+      "identity": "9b215b2ab7aa5ccf4426ab7d0dd4b715894b081931b67e8b314e24a9dbcf2983",
+      "receipt_key": "9b215b2ab7aa5ccf4426ab7d0dd4b715894b081931b67e8b314e24a9dbcf2983",
+      "media_sha256": [
+        "e1c6b139403b8ca913b2c99b9f58dbfc07506292c467384e4382b326b49c2e99"
+      ]
+    }
+  ],
+  "source_backlog_identity": "9b215b2ab7aa5ccf4426ab7d0dd4b715894b081931b67e8b314e24a9dbcf2983"
+}
