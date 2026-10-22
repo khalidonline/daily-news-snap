@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-22T00:00:00Z",
+  "expires_at": "2026-10-23T20:59:59Z",
+  "authorization": "Khalid standing daily archive authorization, reconfirmed 22 October 2026: كمل after explanation of missing saves. Exact original media only, no generation/repost/deletion. Delivery-only continuation; absent cost ledger remains unknown, never zero.",
+  "empty_profile_confirmation": "Historical baseline 2026-10-01 00:01 Riyadh only; live inventory mandatory.",
+  "visual_review": "22 October: inspected exact Library images, matched SHA256 to published manifest, readable 1080x1920 single cards, no source slide.",
+  "package": "amal-return-20261022",
+  "title": "خلصت الإجازة… وبدأ مشوار الرجعة!",
+  "identity": "39305cdcc4fddbe3fd951bd26df076146dcdb22650cf9bd45527aef9036824db",
+  "media_sha256": [
+    "7a54f7430fda5857b0ef6f77b1048bed345c816ad26c7439daf648e925b4c184"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/amal-return-20261022/manifest.json",
+      "manifest_sha256": "6e642cf340f118c6c39939638c25d8282ef595393f8bd45567f208fe07eb986d",
+      "identity": "39305cdcc4fddbe3fd951bd26df076146dcdb22650cf9bd45527aef9036824db",
+      "receipt_key": "39305cdcc4fddbe3fd951bd26df076146dcdb22650cf9bd45527aef9036824db",
+      "media_sha256": [
+        "7a54f7430fda5857b0ef6f77b1048bed345c816ad26c7439daf648e925b4c184"
+      ]
+    }
+  ],
+  "source_backlog_identity": "39305cdcc4fddbe3fd951bd26df076146dcdb22650cf9bd45527aef9036824db"
+}
