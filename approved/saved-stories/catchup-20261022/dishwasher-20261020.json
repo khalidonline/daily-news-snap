@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "scope": "SAVED_STORY_ONLY",
+  "not_before": "2026-10-22T00:00:00Z",
+  "expires_at": "2026-10-23T20:59:59Z",
+  "authorization": "Khalid standing daily archive authorization, reconfirmed 22 October 2026: كمل after explanation of missing saves. Exact original media only, no generation/repost/deletion. Delivery-only continuation; absent cost ledger remains unknown, never zero.",
+  "empty_profile_confirmation": "Historical baseline 2026-10-01 00:01 Riyadh only; live inventory mandatory.",
+  "visual_review": "22 October: inspected exact Library images, matched SHA256 to published manifest, readable 1080x1920 single cards, no source slide.",
+  "package": "dishwasher-20261020",
+  "title": "غسالة الصحون… بدايتها وحدة طفشت من صحونها!",
+  "identity": "02f692a8571e1b67a5d210eb1e393bcdeb3437e3edd8e4a36708ba0cf4ac577d",
+  "media_sha256": [
+    "4ccb203a4622a7b654b4f02d8171fcc73f8876d58f8c4f0fbe2fa3c8714324f9"
+  ],
+  "sources": [
+    {
+      "manifest": "approved/dishwasher-20261020/manifest.json",
+      "manifest_sha256": "166221e1f5b77528964e26f614328ee26402ace5a3ef3065679608e893a6413b",
+      "identity": "02f692a8571e1b67a5d210eb1e393bcdeb3437e3edd8e4a36708ba0cf4ac577d",
+      "receipt_key": "02f692a8571e1b67a5d210eb1e393bcdeb3437e3edd8e4a36708ba0cf4ac577d",
+      "media_sha256": [
+        "4ccb203a4622a7b654b4f02d8171fcc73f8876d58f8c4f0fbe2fa3c8714324f9"
+      ]
+    }
+  ],
+  "source_backlog_identity": "02f692a8571e1b67a5d210eb1e393bcdeb3437e3edd8e4a36708ba0cf4ac577d"
+}
