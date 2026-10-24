@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "typography_profile": "owner-reviewed-raster-20261024",
+  "visual_review": {
+    "approved": true,
+    "reference": "Khalid approved the latest dishwasher-color Kandasa preview and explicitly requested publication, 24 October 2026; resize only to 1080x1920."
+  },
+  "cards": [
+    {
+      "sha256": "b043b28129ea73ad97b4e334783081e02050b2d8676c5290b1cc6df0ed753474",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "text_boxes": [
+        [
+          80,
+          235,
+          1010,
+          320
+        ],
+        [
+          80,
+          945,
+          1030,
+          1080
+        ],
+        [
+          70,
+          1130,
+          1035,
+          1350
+        ],
+        [
+          125,
+          1420,
+          1035,
+          1495
+        ],
+        [
+          50,
+          1570,
+          1035,
+          1635
+        ],
+        [
+          135,
+          1690,
+          905,
+          1755
+        ]
+      ],
+      "line_counts": [
+        1,
+        2,
+        3,
+        1,
+        1,
+        1
+      ],
+      "caption_boxes": [
+        [
+          370,
+          835,
+          720,
+          875
+        ]
+      ],
+      "review_notes": "Exact owner-approved raster; measured visible text regions, no claimed font metrics. Original preview 941x1672; Lanczos export only."
+    }
+  ]
+}

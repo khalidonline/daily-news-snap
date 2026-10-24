@@ -1,0 +1,36 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "سفينة غرقت… وآلتها سقت أهل جدة!",
+  "not_before": "2026-10-24T00:00:00Z",
+  "expires_at": "2026-10-25T20:59:59Z",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid approved the latest dishwasher-color Kandasa preview and explicitly requested publication, 24 October 2026; resize only to 1080x1920.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/kandasa-20261024/card.png",
+      "sha256": "b043b28129ea73ad97b4e334783081e02050b2d8676c5290b1cc6df0ed753474",
+      "image": {
+        "provider": "primary_media",
+        "source_url": "https://www.al-madina.com/uploads/images/2021/10/29/1961091.jpg",
+        "original_url": "https://www.al-madina.com/uploads/images/2021/10/29/1961091.jpg",
+        "download_url": "https://www.al-madina.com/uploads/images/2021/10/29/1961091.jpg",
+        "asset_id": "primary:c631caddd96457e420682693d",
+        "source_kind": "article",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      },
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "reference-based editorial composite",
+        "third_party_assets": true,
+        "export": "941x1672 to 1080x1920 Lanczos; no text or layout edits",
+        "approved_preview_sha256": "e3c40372210dab3fd9bfd648c84984fa7b005f13ac9ef7464c2853bfb7be9fb2",
+        "color_reference_library_file_id": "libfile_716a027625a881918c56a39027539922"
+      }
+    }
+  ]
+}

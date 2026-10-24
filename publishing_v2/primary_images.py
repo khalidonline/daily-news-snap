@@ -20,6 +20,8 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    # Exact monument image used in Khalid-approved Kandasa card, 24 October 2026.
+    ("https://www.al-madina.com/uploads/images/2021/10/29/1961091.jpg", "https://www.al-madina.com/uploads/images/2021/10/29/1961091.jpg"),
     # Exact reference portrait in Khalid's approved Amal map card, 22 October.
     ("https://www.arabnews.com/saudi-arabia/resilient-riyadh-residents-return-from-abroad-amid-airport-closures-3006494", "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/renditions/3793b835-a866-49a6-a286-137a8a6e85d4_img_hero_lg_d0c2d868.webp"),
     # Exact official historical product reference in owner-approved dishwasher card.
