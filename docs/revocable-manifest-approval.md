@@ -1,6 +1,6 @@
 # Revocable manifest approval
 
-Scope: `load_package` → `publish` / `publish_group`, including owner-design
+Scope: `load_package` → `publish` / `publish_group` and explicit group recovery, including owner-design
 and correction manifests. This does not add revocation to the separate
 autopilot runtime, Spotlight, saved-story API, or a chat command handler.
 
