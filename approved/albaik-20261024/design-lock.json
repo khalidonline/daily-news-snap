@@ -1,0 +1,73 @@
+{
+  "project": "daily-news-snap",
+  "approved_by": "Khalid",
+  "status": "LOCKED_VISUAL_MASTER",
+  "scope": "Kandasa and all future executivesaudi cards until Khalid explicitly approves a brand change.",
+  "approval_basis": "User approved the latest Kandasa preview and requested the same colors and size for future posts, then explicitly authorized publishing Kandasa. Dishwasher reference supersedes Amal for colors.",
+  "approved_at_riyadh": "2026-10-24",
+  "instruction": "Reuse the approved Kandasa layout with dishwasher reference colors. Do not reuse Amal colors or earlier Kandasa variants.",
+  "reference": {
+    "filename": "487C9A71-0C5E-4613-B574-4D9D427F9BFA.jpeg",
+    "library_file_id": "libfile_716a027625a881918c56a39027539922",
+    "sha256": "f0b995f86682288975fc2b5a772ec608e1435e0789c9c62fbe8147d58522dc4a",
+    "authority": "User supplied dishwasher card is the color reference; latest approved Kandasa is the layout reference."
+  },
+  "canvas": {"width":1080,"height":1920,"aspect_ratio":"9:16","approved_preview_actual_width":941,"approved_preview_actual_height":1672,"export_note":"1080x1920 is the previously requested publishing target, not the measured preview dimensions. Export without redesign and verify before upload."},
+  "palette": {
+    "body_and_bullets":"Match the blue of the pinned visual master.",
+    "headline_closing_cta":"Match the red/pink of the pinned visual master.",
+    "header_green":"Match the green of the pinned visual master.",
+    "cta_background":"Match the pale pink of the pinned visual master.",
+    "background":"Match the ivory of the pinned visual master.",
+    "exact_numeric_tokens": null,
+    "measurement_note":"Previous median-sampled hex values are revoked, not approved brand tokens. Original editable color/font tokens have not been recovered. Do not claim exact matching from approximate sampling or a generation prompt."
+  },
+  "layout": {
+    "maximum_lines_per_bullet": 2,
+    "maximum_closing_lines": 2,
+    "photo_pair": "When two photos are used: equal-height adjacent panels, with founder/start image paired with a relevant actual image.",
+    "header":"Green brand upper right with short green line; circular blue logo upper left.",
+    "title":"Red, preferably one readable line.",
+    "photo":"Actual sourced image, rounded panel, gray caption. No invented historical photo.",
+    "body":"Saudi colloquial Arabic without vowel marks, blue bullets, clear uniform large font matched visually to reference.",
+    "font_note":"Exact font family is not identified from raster. Never claim exact font identity without original font/template.",
+    "closing":"Red directly on ivory, no solid red banner.",
+    "cta":"Pale pink rounded strip, red arrow, text: شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+    "footer":"Small original circular logo centered."
+  },
+  "qa": [
+    "Preserve the master brand elements, logo, color roles and layout; do not regenerate or reinterpret the identity for each story.",
+    "If the reference is unavailable, stop design work rather than substitute a remembered palette.",
+    "Only story text and relevant photos may vary routinely; brand changes require Khalid's explicit approval.",
+    "Read this specification and open reference image before every new card.",
+    "Lock approved wording; edit only the requested elements.",
+    "Inspect actual output pixel dimensions, not prompt claims.",
+    "Compare actual text colors against reference; generated similarity is not exact color enforcement.",
+    "Keep text away from edges; no overlap, excessive gaps, or unreadable reduction.",
+    "No publication without explicit approval and verified posting checks."
+  ],
+  "albaik": {
+    "design_status": "APPROVED_BY_KHALID",
+    "approved_export_sha256": "5408d02d511458a830f559264ae6bc91973f28c82eeb4fe88f30787a8473c50f",
+    "approved_dimensions": [1080,1920],
+    "maximum_lines_per_bullet": 2,
+    "actual_bullet_line_counts": [2,2,2,2],
+    "palette_authority": "The latest approved Albaik raster is retained as the delivery reference. Dishwasher remains the brand reference; no claim of exact numeric matching or identified font tokens.",
+    "publication_status": "PENDING_VERIFICATION"
+  },
+  "kandasa": {
+    "removed_paragraphs":["كانت تشتغل بالفحم…","ولما انقطع الفحم…"],
+    "photo_caption":"مجسم الكنداسة في جدة",
+    "publication_status":"POSTED",
+    "publication_run":"https://github.com/khalidonline/daily-news-snap/actions/runs/40088542542",
+    "snapchat_id":"4979e44c-d7ec-41fd-a663-ca544160c3c3",
+    "published_export_sha256":"b043b28129ea73ad97b4e334783081e02050b2d8676c5290b1cc6df0ed753474",
+    "published_dimensions":[1080,1920],
+    "design_status":"APPROVED_BY_KHALID",
+    "approved_image":"generated_images/exec-3db7a281-c948-408a-995e-27d3ba8f643a.png",
+    "approved_image_sha256":"e3c40372210dab3fd9bfd648c84984fa7b005f13ac9ef7464c2853bfb7be9fb2",
+    "publish_authorized":true,
+    "publication_blocker":null,
+    "note":"Saved guidance only; this does not claim that a repository pipeline automatically enforces these settings."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "البيك… من 7 ملايين ديون إلى 4 دول!",
+  "not_before": "2026-10-24T00:00:00+00:00",
+  "expires_at": "2026-10-25T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "approval": "Khalid explicitly approved latest Albaik design and requested story and public-profile publication on 24 October 2026.",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/albaik-20261024/card.png",
+      "sha256": "5408d02d511458a830f559264ae6bc91973f28c82eeb4fe88f30787a8473c50f",
+      "image": {
+        "provider": "primary_media",
+        "source_url": "https://ithraeyat.ithra.com/ar/editions/almaydt/juwd-albyk-wthqaft-alt-eam",
+        "original_url": "https://api.ithraeyat.ithra.com/uploads/Screenshot_20230621_134217_Chrome_3eafdaeb7f.jpg",
+        "download_url": "https://api.ithraeyat.ithra.com/uploads/Screenshot_20230621_134217_Chrome_3eafdaeb7f.jpg",
+        "asset_id": "primary:8f0a14d2c04c241ead25142b",
+        "source_kind": "article",
+        "license": "All rights reserved",
+        "licensing_verified": false,
+        "owner_use_decision": "owner-source-editorial-use-2026-09-22",
+        "rights_status": "owner_accepted_editorial_use"
+      },
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "User-approved reference-based editorial composite; no new generation in delivery",
+        "third_party_assets": true,
+        "export": "Approved 941x1672 preview resized to1080x1920 without redesign",
+        "second_photo_source": "https://www.thenationalnews.com/lifestyle/food/2022/04/18/al-baik-is-opening-a-second-dubai-branch-in-mall-of-the-emirates/",
+        "second_photo_url": "https://cloudfront-eu-central-1.images.arcpublishing.com/thenational/KRWEUFWPQNDRASVL35WV72G7VQ.jpg"
+      }
+    }
+  ]
+}

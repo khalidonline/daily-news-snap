@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "typography_profile": "owner-reviewed-albaik-raster",
+  "visual_review": {
+    "approved": true,
+    "reference": "Khalid approved latest Albaik preview; exact exported pixels visually reviewed. Font family/size not asserted."
+  },
+  "cards": [
+    {
+      "sha256": "5408d02d511458a830f559264ae6bc91973f28c82eeb4fe88f30787a8473c50f",
+      "width": 1080,
+      "height": 1920,
+      "bullet_line_counts": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "text_boxes": [
+        [
+          40,
+          235,
+          1040,
+          320
+        ],
+        [
+          40,
+          920,
+          1050,
+          1040
+        ],
+        [
+          40,
+          1080,
+          1050,
+          1205
+        ],
+        [
+          40,
+          1250,
+          1050,
+          1370
+        ],
+        [
+          40,
+          1420,
+          1050,
+          1545
+        ],
+        [
+          90,
+          1570,
+          1000,
+          1700
+        ],
+        [
+          130,
+          1730,
+          910,
+          1805
+        ]
+      ],
+      "caption_boxes": [
+        [
+          60,
+          825,
+          470,
+          875
+        ],
+        [
+          640,
+          825,
+          980,
+          875
+        ]
+      ]
+    }
+  ]
+}

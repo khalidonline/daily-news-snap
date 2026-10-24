@@ -1,0 +1,15 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "d333d3465f77474b60818080b398559e347aa570fe45e599201aebe552722167",
+  "title": "البيك… من 7 ملايين ديون إلى 4 دول!",
+  "manifest": "approved/albaik-20261024/manifest.json",
+  "manifest_sha256": "c528270ba0cd448384ac34bd0054544db269e8c7b0221ca7b58418e5b4a49c3a",
+  "not_before": "2026-10-24T00:00:00Z",
+  "expires_at": "2026-10-25T20:59:59Z",
+  "authorization": "Khalid: انشر ولاتنسى تثبت الالوان والمقاسات وعدد الأسطر وايضا انشرها في الملف العام",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. NOT current inventory; live provider inventory and journal required.",
+  "public_indices": [
+    1
+  ]
+}
