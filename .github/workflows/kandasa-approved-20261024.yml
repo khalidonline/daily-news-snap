@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          ref: 7977ad51fefbadbab26d7d13c6b351a8d8d2681f
+          ref: 8834d5860b3f57ac343f476add6a3a6ce79cea40
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
@@ -31,6 +31,6 @@ jobs:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPROVED_COMMIT: 7977ad51fefbadbab26d7d13c6b351a8d8d2681f
+          APPROVED_COMMIT: 8834d5860b3f57ac343f476add6a3a6ce79cea40
           PYTHONPATH: .
         run: python approved/kandasa-20261024/publish-approved.py
