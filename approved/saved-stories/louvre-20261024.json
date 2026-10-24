@@ -1,0 +1,13 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "identity": "06cf2a19083342d259909218d3cfd1246b4a3fd20116d632b133478a28d7eadd",
+  "title": "اللوفر قفل اليوم… وسبق طلع كنوزه وقت الحرب!",
+  "manifest": "approved/louvre-20261024/manifest.json",
+  "manifest_sha256": "0ba7930622d773d635b31ecfc5137e0089f7daf2e672efc7d0c621a10d8bdab7",
+  "not_before": "2026-10-24T17:00:00Z",
+  "expires_at": "2026-10-24T20:59:59Z",
+  "authorization": "Khalid approved final Louvre card: انشر; ongoing instruction to also publish approved packages on the public profile. Explicit five-point validator authorization: ايه اسمح. Exact final bytes only.",
+  "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. NOT current inventory; live provider inventory and journal required.",
+  "public_indices": [1]
+}

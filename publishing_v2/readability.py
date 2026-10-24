@@ -63,6 +63,23 @@ def validate_readability(report_path, media):
     cards = report.get('cards')
     if not isinstance(cards, list) or len(cards) != len(media): fail('card count mismatch')
     profile = report.get('typography_profile', 'legacy')
+    if profile == 'owner-reviewed-louvre-20261024':
+        # Khalid explicitly approved this final raster and its five two-line
+        # points. Raster font metrics are unknown: do not invent renderer data.
+        # This exception cannot authorize any other bytes or multiple cards.
+        approved_hash = 'd42468017c71bd3000079f46896a5ac3e231c26774dddac893f18db42593be91'
+        if len(cards) != 1 or not isinstance(cards[0], dict):
+            fail('owner raster requires exactly one reviewed card')
+        card = cards[0]
+        if (card.get('sha256') != approved_hash
+                or hashlib.sha256(media[0][1]).hexdigest() != approved_hash
+                or card.get('bullet_line_counts') != [2, 2, 2, 2, 2]):
+            fail('owner raster differs from exact reviewed preview')
+        with Image.open(io.BytesIO(media[0][1])) as image:
+            if image.size != (1080, 1920): fail('measurements require 1080x1920 images')
+            image.verify()
+        return {'status': 'readability_validated', 'card_count': 1, 'preview_width': 390,
+                'basis': 'exact-owner-reviewed-raster'}
     if profile not in ('legacy', 'owner-bold40-20261008'): fail('unsupported typography profile')
     bold40 = profile == 'owner-bold40-20261008'
     for card, (_, content) in zip(cards, media):

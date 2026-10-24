@@ -1,0 +1,76 @@
+import base64,json,os,hashlib
+from pathlib import Path
+from datetime import datetime,timezone
+from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,check_predecessors,publish
+from publishing_v2.readability import validate_readability,require_for_new_delivery
+from daily_budget import GitHubStore,day_key
+ORDER=["louvre-20261024"]
+EXPECTED=[hashlib.sha256(('executivesaudi:'+'d42468017c71bd3000079f46896a5ac3e231c26774dddac893f18db42593be91').encode()).hexdigest()]
+c=BundleClient();c.check();packages=[]
+for slug,expected in zip(ORDER,EXPECTED):
+ p=Path('approved')/slug/'manifest.json';m=json.loads(p.read_text())
+ now=datetime.now(timezone.utc)
+ assert datetime.fromisoformat(m['not_before'])<=now<datetime.fromisoformat(m['expires_at'])
+ identity,title,media=load_package(str(p));assert identity==expected and len(media)==1
+ validate_readability(p.parent/'readability.json',media)
+ j=GitHubJournal(identity);prior=j.read();assert not prior.get('_group')
+ require_for_new_delivery(str(p),media,prior)
+ packages.append((p,m,identity,title,media,j,prior))
+pending=sum(sum(prior.get(str(i+1),{}).get('status')!='POSTED' for i in range(len(media))) for p,m,identity,title,media,j,prior in packages)
+print('QUOTA_BEFORE',json.dumps(c.ensure_capacity(pending+3)),flush=True)
+_,ledger=GitHubStore(os.environ['GITHUB_REPOSITORY'],os.environ['GITHUB_TOKEN']).read(day_key())
+total=None
+# Khalid explicitly requested the same successful delivery-only route and publication, 24 Oct.
+# Missing ledger stays unknown; this exact-card send makes no model/generation calls.
+if ledger is None:
+ print('OWNER_AUTHORIZED_DELIVERY_ONLY_LEDGER_UNKNOWN', flush=True)
+if ledger is not None:
+ total=sum(e.get('charged_micro_usd',0)+(e.get('reserved_micro_usd',0) if e.get('status')!='settled' else 0) for e in ledger.get('entries',{}).values());assert total<=3000000
+print('OWNER_DELIVERY_ONLY_NO_NEW_GENERATION_COST',json.dumps({'day':day_key(),'ledger_present':ledger is not None,'total_micro_usd':total,'paid_model_requests':0,'new_paid_generation':False}),flush=True)
+confirmed=[]
+for p,m,identity,title,media,j,prior in packages:
+ check_predecessors(m.get('predecessors',[]))
+ # Existing SENDING/post IDs are handled only by the approved publisher.
+ publish(c,j,title,media)
+ for index in range(1,len(media)+1):
+  state=j.read();r=state[str(index)];live=c.call('/post/'+r['post_id']);snap=live['data']['SNAPCHAT'];ext=live['externalData']['SNAPCHAT']
+  assert r['status']=='POSTED' and live['status']=='POSTED' and live['teamId']==c.team and not live.get('deletedAt')
+  assert snap['type']=='STORY' and snap['uploadIds']==[r['upload_id']] and snap['storyDuration']=='ONE_WEEK'
+  assert ext['status']=='PUBLISHED' and ext['id'] and ext.get('sourceUploadIds')==[r['upload_id']]
+  assert ext['id'] not in confirmed;confirmed.append(ext['id'])
+  state[str(index)]['snapchat_id']=ext['id'];state[str(index)]['verified_duration']='ONE_WEEK';j.save(state)
+  print('CONFIRMED',json.dumps({'package':p.parent.name,'post_id':r['post_id'],'snapchat_id':ext['id'],'duration':'ONE_WEEK','identity':identity}),flush=True)
+ bj=GitHubJournal(identity);bj.path='/contents/saved-story-backlog.json';backlog=bj.read()
+ if not any(row.get('identity')==identity for row in backlog.get('packages',[])):
+  backlog.setdefault('packages',[]).insert(0,{'identity':identity,'package':p.parent.name,'title':title,'manifest':str(p),'source_commit':os.environ['APPROVED_COMMIT'],'card_count':len(media),'status':'PENDING_SAVE_APPROVAL','publication_status':'POSTED','note':'Owner-approved single-card Louvre story. Independent archive reconciliation required.'});bj.save(backlog)
+print('FINAL_QUOTA',json.dumps(c.ensure_capacity(2)),flush=True)
+
+
+
+from publishing_v2.saved_story_api import SavedClient,SavedJournal,save_story,validate_archive
+from publishing_v2.bundle_api import request
+ap=Path('approved/saved-stories/louvre-20261024.json')
+approval=json.loads(ap.read_text())
+# Recheck live independent approval immediately before any Saved Story request.
+remote=request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/contents/'+str(ap)+'?ref=main',{'Authorization':'Bearer '+os.environ['GITHUB_TOKEN'],'Accept':'application/vnd.github+json','Cache-Control':'no-cache','User-Agent':'ExecutiveSaudiPublisher/1.0'})
+assert json.loads(base64.b64decode(remote['content']))==approval
+media.check_approval()
+identity,title,rows=validate_archive(approval,j.read())
+sc=SavedClient();sc.check();sj=SavedJournal(identity)
+uploads=[r['upload_id'] for r in rows]
+# Provider inventory also catches automatically-created archives.
+found=sc.find(identity,title,uploads);assert len(found)<=1
+if not found and sj.read().get('status')!='POSTED': sc.ensure_capacity(3)
+result=save_story(sc,sj,identity,title,uploads)
+live=sc.call('/post/'+result['post_id']);snap=live['data']['SNAPCHAT'];ext=live['externalData']['SNAPCHAT']
+assert live['status']=='POSTED' and live['teamId']==sc.team and not live.get('deletedAt')
+assert snap['type']=='SAVED_STORY' and snap['uploadIds']==uploads and snap['title']==title
+assert ext['status']=='PUBLISHED' and ext['id']
+result['saved_story_id']=ext['id'];sj.save(result)
+bj=GitHubJournal(identity);bj.path='/contents/saved-story-backlog.json';backlog=bj.read()
+for row in backlog.get('packages',[]):
+ if row.get('identity')==identity:
+  row.update(status='POSTED',saved_story_id=ext['id'],saved_post_id=result['post_id'],saved_approval=str(ap))
+bj.save(backlog)
+print('SAVED_CONFIRMED',json.dumps({'identity':identity,'post_id':result['post_id'],'saved_story_id':ext['id']}),flush=True)
+print('FINAL_SAVED_QUOTA',json.dumps(sc.ensure_capacity(2)),flush=True)

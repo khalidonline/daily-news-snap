@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "typography_profile": "owner-reviewed-louvre-20261024",
+  "visual_review": {
+    "approved": true,
+    "reference": "Exact final raster reviewed at 1080x1920; Khalid authorized five two-line points. Unknown generated font metrics are not asserted. Captions match left pyramid/right Mona Lisa; body blocks do not overlap."
+  },
+  "cards": [
+    {
+      "sha256": "d42468017c71bd3000079f46896a5ac3e231c26774dddac893f18db42593be91",
+      "bullet_line_counts": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    }
+  ]
+}
