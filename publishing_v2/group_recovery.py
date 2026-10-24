@@ -46,7 +46,8 @@ def confirm_card(client, post_id, upload, key):
     return ids[0]
 
 
-def recover_rejected_group(client,journal,identity,title,card_count):
+def recover_rejected_group(client,journal,identity,title,card_count, *, approval_check=None):
+    if approval_check: approval_check()
     state=journal.read();group=state.get('_group') or {}
     uploads=group.get('uploads') or []
     rejection=group.get('draft_validation') or {}
@@ -98,10 +99,12 @@ def recover_rejected_group(client,journal,identity,title,card_count):
     for i,u in enumerate(uploads,1):
         row=state[str(i)]
         if not row.get('post_id'):
+            if approval_check: approval_check()
             row.update(status='SENDING',intent_at=datetime.now(timezone.utc).isoformat());journal.save(state)
             payload={'teamId':client.team,'title':f'{title} [{i}/{card_count}]','referenceKey':expected_keys[u],
                 'postDate':datetime.now(timezone.utc).isoformat(),'status':'SCHEDULED','socialAccountTypes':['SNAPCHAT'],
                 'data':{'SNAPCHAT':{'type':'STORY','uploadIds':[u],'storyDuration':'ONE_WEEK'}}}
+            if approval_check: approval_check()
             result=client.call('/post','POST',json.dumps(payload).encode())
             if not result.get('id'): raise BundleError('Ambiguous create; reconcile before retry')
             row['post_id']=result['id'];journal.save(state)
@@ -122,6 +125,7 @@ def main():
     not_before=datetime.fromisoformat(manifest['not_before'].replace('Z','+00:00'))
     if not_before.tzinfo is None or now<not_before: raise BundleError('Not yet approved for delivery')
     check_predecessors(manifest.get('predecessors',[]))
-    recover_rejected_group(BundleClient(),GitHubJournal(identity),identity,title,len(media))
+    recover_rejected_group(BundleClient(),GitHubJournal(identity),identity,title,len(media),
+                           approval_check=media.check_approval)
 
 if __name__=='__main__':main()
