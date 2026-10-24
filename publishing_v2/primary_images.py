@@ -20,6 +20,8 @@ PUBLISHERS |= {'www.okaz.com.sa','okaz.com.sa','www.argaam.com','argaam.com',
 # replacement request. This is editorial-use authorization, not a license grant
 # or approval of arbitrary assets from this fan archive.
 REVIEWED_ARCHIVE_ASSETS = frozenset({
+    ('https://ithraeyat.ithra.com/ar/editions/almaydt/juwd-albyk-wthqaft-alt-eam', 'https://api.ithraeyat.ithra.com/uploads/Screenshot_20230621_134217_Chrome_3eafdaeb7f.jpg'),
+    ('https://www.thenationalnews.com/lifestyle/food/2022/04/18/al-baik-is-opening-a-second-dubai-branch-in-mall-of-the-emirates/', 'https://cloudfront-eu-central-1.images.arcpublishing.com/thenational/KRWEUFWPQNDRASVL35WV72G7VQ.jpg'),
     # Exact IKEA Denmark photograph reviewed and owner-approved, 9 October 2026.
     ('https://www.foxbusiness.com/lifestyle/ikea-denmark-showroom-snow-storm', 'https://static.foxbusiness.com/foxbusiness.com/content/uploads/2021/12/ikea-1.jpg'),
     # Exact archival photograph reviewed for Khalid's authorized shopping-cart package, 9 Oct 2026.

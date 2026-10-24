@@ -63,6 +63,9 @@ def validate_readability(report_path, media):
     cards = report.get('cards')
     if not isinstance(cards, list) or len(cards) != len(media): fail('card count mismatch')
     profile = report.get('typography_profile', 'legacy')
+    if profile == 'owner-reviewed-albaik-raster':
+        from .albaik_raster import validate
+        return validate(report, media, fail)
     if profile not in ('legacy', 'owner-bold40-20261008'): fail('unsupported typography profile')
     bold40 = profile == 'owner-bold40-20261008'
     for card, (_, content) in zip(cards, media):
