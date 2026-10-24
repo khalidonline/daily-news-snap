@@ -39,6 +39,24 @@ def recover(c,j):
     from publishing_v2.group_recovery import recover_rejected_group
     return recover_rejected_group(c,j,'identity','title',2)
 
+def test_revoked_approval_blocks_recovery_create():
+    from publishing_v2.group_recovery import recover_rejected_group
+    c,j=Client(),Journal()
+    def denied(): raise b.BundleError('revoked')
+    with pytest.raises(b.BundleError, match='revoked'):
+        recover_rejected_group(c,j,'identity','title',2, approval_check=denied)
+    assert not c.posts
+
+def test_recovery_rechecks_after_intent_saved():
+    from publishing_v2.group_recovery import recover_rejected_group
+    c,j=Client(),Journal()
+    def check():
+        if j.state.get('1', {}).get('intent_at'):
+            raise b.BundleError('revoked')
+    with pytest.raises(b.BundleError, match='revoked'):
+        recover_rejected_group(c,j,'identity','title',2, approval_check=check)
+    assert not c.posts
+
 def test_recovery_reuses_ordered_uploads_and_is_idempotent():
     c,j=Client(),Journal();recover(c,j);recover(c,j)
     assert [p['data']['SNAPCHAT']['uploadIds'] for p in c.posts]==[['u1'],['u2']]
