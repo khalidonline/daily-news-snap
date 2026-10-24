@@ -29,6 +29,51 @@ class HTTPFailure(BundleError):
         super().__init__(f'API HTTP {code}; inspect provider dashboard if needed')
 
 
+class ApprovedMedia(list):
+    """Keep the revocable approval attached to the bytes loaded for delivery."""
+    def __init__(self, media, path, snapshot):
+        super().__init__(media)
+        self.path = path
+        self.snapshot = snapshot
+        self.relative_path = path.relative_to(Path.cwd().resolve()).as_posix()
+
+    def check_approval(self):
+        try:
+            current = json.loads(self.path.read_text())
+            self._validate(current)
+            # Actions checkouts are snapshots. Revocation must be read from the
+            # live authority, never GITHUB_SHA or the checked-out branch tip.
+            if os.environ.get('GITHUB_ACTIONS') == 'true':
+                token = os.environ.get('GITHUB_TOKEN', '')
+                if not token or os.environ.get('GITHUB_REPOSITORY') != 'khalidonline/daily-news-snap':
+                    raise BundleError('Live approval cannot be verified; publishing stopped')
+                url = ('https://api.github.com/repos/khalidonline/daily-news-snap/contents/'
+                       + urllib.parse.quote(self.relative_path, safe='/')
+                       + '?ref=main&approval_check=' + uuid.uuid4().hex)
+                result = request(url, {'Authorization': 'Bearer ' + token,
+                    'Accept': 'application/vnd.github+json', 'Cache-Control': 'no-cache',
+                    'User-Agent': 'ExecutiveSaudiPublisher/1.0'})
+                if result.get('encoding') != 'base64':
+                    raise BundleError('Live approval response invalid; publishing stopped')
+                self._validate(json.loads(base64.b64decode(result['content'])))
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            raise BundleError('Approval unavailable or invalid; publishing stopped') from None
+
+    def _validate(self, current):
+        if current != self.snapshot or current.get('approved') is not True:
+            raise BundleError('Approval revoked or changed; publishing stopped')
+        expires = datetime.fromisoformat(current['expires_at'].replace('Z', '+00:00'))
+        if expires.tzinfo is None or expires <= datetime.now(timezone.utc):
+            raise BundleError('Approval expired; publishing stopped')
+
+
+def check_delivery_approval(media):
+    # Autopilot has its own approval policy; manifest-based delivery carries
+    # its guard with the media, including the correction entry point.
+    if isinstance(media, ApprovedMedia):
+        media.check_approval()
+
+
 def request(url, headers, method='GET', data=None):
     # Do not log response bodies, credentials, or raw transport exceptions.
     req = urllib.request.Request(url, headers=headers, method=method, data=data)
@@ -201,6 +246,7 @@ class GitHubJournal:
 
 def publish(client, journal, title, media):
     state = journal.read()
+    check_delivery_approval(media)
     if state.get('_group'):
         raise BundleError('Grouped receipt must resume through grouped publishing')
     # Reconcile every uncertain intent before any new upload in this batch.
@@ -216,10 +262,13 @@ def publish(client, journal, title, media):
         if row and not row.get('post_id'):
             raise BundleError('Uncertain previous create; reconcile in Bundle before continuing')
         if not row:
+            check_delivery_approval(media)
             upload = client.upload(item)
+            check_delivery_approval(media)
             # Durable intent first: failure or cancellation after this point blocks recreation.
             state[key] = {'status':'SENDING', 'upload_id':upload}
             journal.save(state)
+            check_delivery_approval(media)
             try:
                 post_id = client.create(f'{title} [{key}/{len(media)}]', upload)
             except HTTPFailure as error:
@@ -252,8 +301,13 @@ def publish_group(client, journal, title, media, identity):
     if group and not group.get('post_id'):
         raise BundleError('Ambiguous group intent; reconcile reference key before continuing')
     if not group:
+        check_delivery_approval(media)
         before = client.ensure_capacity(1)
-        uploads = [client.upload(item) for item in media]
+        uploads = []
+        for item in media:
+            check_delivery_approval(media)
+            uploads.append(client.upload(item))
+        check_delivery_approval(media)
         if len(set(uploads)) != 2:
             raise BundleError('Duplicate group upload IDs')
         group = {'identity': identity, 'uploads': uploads, 'status': 'SENDING',
@@ -265,6 +319,7 @@ def publish_group(client, journal, title, media, identity):
             state[str(i)] = {'status': 'SENDING', 'upload_id': upload,
                              'group_upload_ids': uploads}
         journal.save(state)
+        check_delivery_approval(media)
         group['post_id'] = client.create_group(title, uploads, group['reference_key'])
         for i in range(1, 3): state[str(i)]['post_id'] = group['post_id']
         journal.save(state)
@@ -322,7 +377,8 @@ def load_package(manifest):
         raise BundleError('Approval expired; recheck event timing and content')
     if data.get('format') == 'owner-generated-design-v1':
         from .owner_design import validate_owner_design
-        return validate_owner_design(data, root)
+        identity, title, selected = validate_owner_design(data, root)
+        return identity, title, ApprovedMedia(selected, path, data)
     frames = data.get('media', [])
     if not 1 <= len(frames) <= 10: raise BundleError('Expected 1–10 approved media files')
     # Owner, 27 Sep: the 7 Dogs package had one photo and three number cards and
@@ -357,7 +413,7 @@ def load_package(manifest):
     selected = [media[i] for i in indices]
     if any(path.suffix.lower() == '.mp4' for path, _ in selected):
         raise BundleError('manual_video_requires_editorial_frame_review')
-    return identity, str(data['title']), selected
+    return identity, str(data['title']), ApprovedMedia(selected, path, data)
 
 
 def main():
