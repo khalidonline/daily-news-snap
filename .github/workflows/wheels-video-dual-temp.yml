@@ -1,0 +1,75 @@
+name: Publish approved wheels video to Story and Spotlight
+on:
+  push:
+    branches: ['run/wheels-video-dual-20261025']
+    paths: ['.github/workflows/wheels-video-dual-temp.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 922db49b12046b9c50bf2c0781a95329e6da4541
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - run: python -m pip install -r requirements.txt pytest
+      - name: Verify challenge route and destination safety
+        run: python -m pytest tests/test_v2_reviewed_video.py tests/test_v2_spotlight.py tests/test_v2_challenge_contract.py tests/test_v2_bundle.py tests/test_v2_owner_design.py tests/test_v2_owner_composite.py -q
+      - name: Publish exact approved video with separate durable journals
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import json,hashlib,os
+          from pathlib import Path
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,publish
+          from publishing_v2.readability import require_for_new_delivery
+          from daily_budget import GitHubStore,day_key
+          path='approved/wheels-video-20261025/manifest.json'
+          identity,title,media=load_package(path)
+          assert hashlib.sha256(media[0][1]).hexdigest()=='b010b8d4f46d91230cb6f29553e0cc5b980de6c351302db2b1d825b421cf7158'
+          destinations=[]
+          for placement in ('STORY','SPOTLIGHT'):
+           key=hashlib.sha256((identity+':'+placement).encode()).hexdigest()
+           j=GitHubJournal(key); state=j.read()
+           assert not state.get('_group')
+           if state and any(not row.get('post_id') for k,row in state.items() if k.isdigit()):
+            raise RuntimeError('Uncertain intent: reconcile before creating')
+           require_for_new_delivery(path,media,state)
+           destinations.append((placement,j))
+          c=BundleClient(); c.check()
+          needed=sum(not j.read().get('1') for _,j in destinations)
+          print('QUOTA_BEFORE',json.dumps(c.ensure_capacity(needed+2)),flush=True)
+          _,ledger=GitHubStore(os.environ['GITHUB_REPOSITORY'],os.environ['GITHUB_TOKEN']).read(day_key())
+          if ledger is not None:
+           total=sum(e.get('charged_micro_usd',0)+(e.get('reserved_micro_usd',0) if e.get('status')!='settled' else 0) for e in ledger.get('entries',{}).values())
+           assert total<=3000000
+           print('LEDGER_MICRO_USD',total,flush=True)
+          else: print('OWNER_AUTHORIZED_DELIVERY_ONLY_LEDGER_UNKNOWN',flush=True)
+          for placement,j in destinations:
+           if not j.read().get('1'):c.ensure_capacity(3)
+           media.check_approval()
+           publish(c,j,title,media,placement=placement)
+           r=j.read()['1']; live=c.call('/post/'+r['post_id'])
+           ext=live['externalData']['SNAPCHAT']; snap=live['data']['SNAPCHAT']
+           assert r['status']=='POSTED' and live['status']=='POSTED'
+           assert live['teamId']==c.team and not live.get('deletedAt')
+           assert snap['type']==placement and snap['uploadIds']==[r['upload_id']]
+           if placement=='STORY':assert snap['storyDuration']=='ONE_WEEK'
+           else:assert snap['locale']=='ar_SA' and snap['skipSaveToProfile'] is False
+           assert ext['status']=='PUBLISHED' and ext['id'] and ext['sourceUploadIds']==[r['upload_id']]
+           state=j.read();state['1']['snapchat_id']=ext['id'];j.save(state)
+           print('CONFIRMED',json.dumps({'placement':placement,'post_id':r['post_id'],'snapchat_id':ext['id']}),flush=True)
+          print('FINAL_QUOTA',json.dumps(c.ensure_capacity(2)),flush=True)
+          PY
