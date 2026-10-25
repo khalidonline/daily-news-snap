@@ -254,6 +254,9 @@ def publish(client, journal, title, media):
     if any(row is not None and not row.get('post_id') for row in rows):
         raise BundleError('Uncertain previous create; reconcile in Bundle before continuing')
     required = sum(row is None for row in rows)
+    if required:
+        from .challenge_contract import validate_challenge
+        validate_challenge(title, media)
     if required: client.ensure_capacity(required)
     for index, item in enumerate(media):
         key = str(index + 1)
@@ -301,6 +304,8 @@ def publish_group(client, journal, title, media, identity):
     if group and not group.get('post_id'):
         raise BundleError('Ambiguous group intent; reconcile reference key before continuing')
     if not group:
+        from .challenge_contract import validate_challenge
+        validate_challenge(title, media)
         check_delivery_approval(media)
         before = client.ensure_capacity(1)
         uploads = []
