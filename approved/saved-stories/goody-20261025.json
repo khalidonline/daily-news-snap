@@ -2,12 +2,12 @@
   "approved": true,
   "account": "executivesaudi",
   "identity": "d9da1e285b893ff04f80e79523f19024c586732af749c8f7f3ebdf86298b43c6",
-  "title": "اليوم يوم المكرونة… وقودي اللي بمطبخنا سعودية!",
+  "title": "قودي اللي بمطبخنا… بدايتها سعودية",
   "manifest": "approved/goody-20261025/manifest.json",
   "manifest_sha256": "b7ccef6c346ee27c67d1c5f585754f9a80f272161cb59c1522ca2d4f450dacf8",
   "not_before": "2026-10-25T10:00:00Z",
   "expires_at": "2026-10-25T20:59:59Z",
-  "authorization": "Khalid repeatedly authorized final Goody publication and public profile archiving; authorized mixed-source fix: عدل وكمل; then confirmed delivery-only despite missing ledger: كمل. Exact final approved bytes only.",
+  "authorization": "Khalid repeatedly authorized final Goody publication and public profile archiving; authorized mixed-source fix: عدل وكمل; then confirmed delivery-only despite missing ledger: كمل. Exact final approved bytes only. Archive title shortened only to fit Snapchat 45-character maximum; original card untouched.",
   "empty_profile_confirmation": "Historical baseline only: Khalid 2026-10-01 00:01 Riyadh. NOT current inventory; live provider inventory and journal required.",
   "public_indices": [
     1
