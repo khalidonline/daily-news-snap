@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 157e59bf53ae4f094a9a7a621e19bdc99acb9f4c
+          ref: adf01767f9a456685ace83ed73fdf8ff1974db3b
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -36,7 +36,7 @@ jobs:
           from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,publish
           from daily_budget import GitHubStore,day_key
           slugs=["goody-safe-20261025","wheels-safe-20261025"]
-          hashes=["384d873af12a048285835ee22c3dd9850b5f5a0f03a4e9db76461a933eb64fb7","ac7b6aac2ff208b7917b740014cc40e7140ef3559e13a420d998b30874031b0f"]
+          hashes=["384d873af12a048285835ee22c3dd9850b5f5a0f03a4e9db76461a933eb64fb7","12a430a973c4788b3d6b44059b992dfec0e7d7eca8c43ac9b96775eb13441efd"]
           packages=[]
           for slug,sha in zip(slugs,hashes):
            path=Path("approved")/slug/"manifest.json";m=json.loads(path.read_text())
