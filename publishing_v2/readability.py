@@ -63,6 +63,9 @@ def validate_readability(report_path, media):
     cards = report.get('cards')
     if not isinstance(cards, list) or len(cards) != len(media): fail('card count mismatch')
     profile = report.get('typography_profile', 'legacy')
+    if profile == 'owner-reviewed-composite-raster-v1':
+        from .raster_review import validate_raster
+        return validate_raster(report_path, report, media)
     if profile == 'owner-reviewed-louvre-20261024':
         # Khalid explicitly approved this final raster and its five two-line
         # points. Raster font metrics are unknown: do not invent renderer data.

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "typography_profile": "owner-reviewed-composite-raster-v1",
+  "visual_review": {"approved": true, "reference": "Final Goody export checked against approved text and captions; all four points two lines. Unknown generated font identity is not claimed; actual ink bands measured.", "mobile_width": 390, "captions_match_images": true},
+  "cards": [{"sha256": "f1ad62bad9a7ae174abf940281d8c842e283c4ec56d3de010e8e929fc9f8fced", "blocks": [
+    {"role":"headline","box":[45,260,1035,335],"line_count":1,"color":"#B60E32"},
+    {"role":"caption","box":[80,880,560,930],"line_count":1,"color":"#7A7973"},
+    {"role":"caption","box":[580,880,1015,930],"line_count":1,"color":"#7A7973"},
+    {"role":"bullet","box":[60,940,1030,1065],"line_count":2,"color":"#0B3656"},
+    {"role":"bullet","box":[60,1080,1030,1210],"line_count":2,"color":"#0B3656"},
+    {"role":"bullet","box":[60,1230,1030,1370],"line_count":2,"color":"#0B3656"},
+    {"role":"bullet","box":[60,1400,1030,1530],"line_count":2,"color":"#0B3656"},
+    {"role":"closing","box":[45,1605,1040,1675],"line_count":1,"color":"#B60E32"},
+    {"role":"cta","box":[140,1730,900,1800],"line_count":1,"color":"#B60E32"}
+  ]}]
+}
