@@ -1,0 +1,73 @@
+name: Publish owner-approved safe-area previews
+on:
+  push:
+    branches: ['run/balanced-previews-20261025']
+    paths: ['.github/workflows/balanced-previews-temp.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 14336ee9c94d704063ca43f940a13af82ef45e03
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest
+      - name: Existing approval and publication safeguards
+        run: python -m pytest tests/test_v2_owner_composite.py tests/test_v2_owner_design.py -q
+      - name: Validate exact safe-area rasters and publish sequentially
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import json,hashlib,os
+          from pathlib import Path
+          from PIL import Image
+          from publishing_v2.bundle_api import BundleClient,GitHubJournal,load_package,publish
+          from daily_budget import GitHubStore,day_key
+          slugs=["goody-balanced-20261025","wheels-balanced-20261025"]
+          hashes=["2f36b892eb1b22af89dbd77bf87f1f74882ac33601883f02dbf624789010e742","0a46cba0f8fc355b9cec236073e4b140b0a9cae7267aeb29a64ac83da4ba9f23"]
+          packages=[]
+          for slug,sha in zip(slugs,hashes):
+           path=Path("approved")/slug/"manifest.json";m=json.loads(path.read_text())
+           identity,title,media=load_package(str(path));assert len(media)==1
+           assert hashlib.sha256(media[0][1]).hexdigest()==sha
+           v=m["visual_review"];assert v["approved"] and v["preview_width"]==390 and v["bottom_safe_pixels"]==175 and v["cta_present"]
+           # Approved manual raster review is supplemented by actual decoded-pixel geometry,
+           # not fabricated renderer font measurements. Production validators unchanged.
+           with Image.open(media[0][0]) as im:
+            assert im.size==(1080,1920);im.load();im=im.convert("RGB")
+            assert all(min(pixel)>=150 for pixel in im.crop((0,1745,1080,1920)).getdata())
+           media.check_approval()
+           journal=GitHubJournal(identity);prior=journal.read()
+           assert not prior.get("_group")
+           if prior and any(not r.get("post_id") for k,r in prior.items() if k.isdigit()):raise RuntimeError("Reconcile uncertain intent first")
+           packages.append((slug,identity,title,media,journal))
+          c=BundleClient();c.check()
+          print("QUOTA_BEFORE",json.dumps(c.ensure_capacity(len(packages)+2)),flush=True)
+          _,ledger=GitHubStore(os.environ["GITHUB_REPOSITORY"],os.environ["GITHUB_TOKEN"]).read(day_key())
+          if ledger is not None:
+           total=sum(e.get("charged_micro_usd",0)+(e.get("reserved_micro_usd",0) if e.get("status")!="settled" else 0) for e in ledger.get("entries",{}).values());assert total<=3000000
+          else: print("OWNER_AUTHORIZED_DELIVERY_ONLY_LEDGER_UNKNOWN",flush=True)
+          for slug,identity,title,media,j in packages:
+           c.ensure_capacity(3);media.check_approval()
+           publish(c,j,title,media)
+           r=j.read()["1"];live=c.call("/post/"+r["post_id"]);ext=live["externalData"]["SNAPCHAT"];snap=live["data"]["SNAPCHAT"]
+           assert r["status"]=="POSTED" and live["status"]=="POSTED" and live["teamId"]==c.team and not live.get("deletedAt")
+           assert snap["type"]=="STORY" and snap["uploadIds"]==[r["upload_id"]] and snap["storyDuration"]=="ONE_WEEK"
+           assert ext["status"]=="PUBLISHED" and ext["id"] and ext["sourceUploadIds"]==[r["upload_id"]]
+           state=j.read();state["1"]["snapchat_id"]=ext["id"];j.save(state)
+           print("CONFIRMED",json.dumps({"slug":slug,"identity":identity,"post_id":r["post_id"],"snapchat_id":ext["id"]}),flush=True)
+          print("FINAL_QUOTA",json.dumps(c.ensure_capacity(2)),flush=True)
+          
+          PY
