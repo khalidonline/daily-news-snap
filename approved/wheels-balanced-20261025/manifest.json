@@ -1,0 +1,37 @@
+{
+  "format": "owner-generated-design-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر: كفرات كمبيوتر أبل",
+  "expires_at": "2026-10-25T20:59:59+00:00",
+  "not_before": "2026-10-25T10:00:00+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid reviewed the two revised previews with reduced bottom whitespace and no title diacritics, then explicitly approved publication: انشر. Export fitted without cropping to 1080x1920. No deletion of old posts.",
+    "reviewed_at": "2026-10-25T12:12:00+00:00",
+    "approved_media_sha256": [
+      "0a46cba0f8fc355b9cec236073e4b140b0a9cae7267aeb29a64ac83da4ba9f23"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/wheels-balanced-20261025/card.png",
+      "sha256": "0a46cba0f8fc355b9cec236073e4b140b0a9cae7267aeb29a64ac83da4ba9f23",
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "illustration",
+        "third_party_assets": false,
+        "library_file_id": "libfile_e7e3d9f78a0c8191b077133d6b7ba930"
+      }
+    }
+  ],
+  "visual_review": {
+    "approved": true,
+    "reference": "Khalid reviewed the two revised previews with reduced bottom whitespace and no title diacritics, then explicitly approved publication: انشر. Export fitted without cropping to 1080x1920. No deletion of old posts.",
+    "preview_width": 390,
+    "bottom_safe_pixels": 175,
+    "cta_present": true,
+    "basis": "Human approval of revised preview plus decoded-pixel export checks; no inferred font measurements."
+  }
+}
