@@ -1,0 +1,69 @@
+name: Goody archive title reconciliation
+on:
+  push:
+    branches: ['run/goody-archive-reconcile-20261025']
+    paths: ['.github/workflows/goody-archive-reconcile-temp.yml']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: d4947ef3d7dee3c96d4511501c2294ed4a238c44
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Reconcile failed title then save original posted media only
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          import base64,json,os
+          from pathlib import Path
+          from publishing_v2.bundle_api import GitHubJournal,load_package,request
+          from publishing_v2.saved_story_api import SavedClient,SavedJournal,save_story,validate_archive
+          identity="d9da1e285b893ff04f80e79523f19024c586732af749c8f7f3ebdf86298b43c6"
+          ap=Path("approved/saved-stories/goody-20261025.json")
+          a=json.loads(ap.read_text())
+          remote=request("https://api.github.com/repos/"+os.environ["GITHUB_REPOSITORY"]+"/contents/"+str(ap)+"?ref=main",{"Authorization":"Bearer "+os.environ["GITHUB_TOKEN"],"Accept":"application/vnd.github+json","Cache-Control":"no-cache"})
+          assert json.loads(base64.b64decode(remote["content"]))==a
+          _,_,media=load_package(a["manifest"]);media.check_approval()
+          j=GitHubJournal(identity);source=j.read()
+          ident,title,rows=validate_archive(a,source);assert ident==identity and 0<len(title)<=45
+          sc=SavedClient();sc.check()
+          r=rows[0];live=sc.call("/post/"+r["post_id"])
+          assert live["status"]=="POSTED" and live["externalData"]["SNAPCHAT"]["status"]=="PUBLISHED"
+          assert live["data"]["SNAPCHAT"]["uploadIds"]==[r["upload_id"]] and live["data"]["SNAPCHAT"]["type"]=="STORY" and not live.get("deletedAt")
+          uploads=[r["upload_id"]]
+          sj=SavedJournal(identity);old=sj.read()
+          found=sc.find(identity,old.get("title",title),uploads)
+          print("RECONCILIATION_INVENTORY",json.dumps({"matches":found,"prior_status":old.get("status"),"prior_post_id":old.get("post_id")}),flush=True)
+          if not found and old.get("status")=="SENDING" and not old.get("post_id"):
+           assert old.get("title")=="اليوم يوم المكرونة… وقودي اللي بمطبخنا سعودية!" and len(old["title"])==46 and old["upload_ids"]==uploads
+           audit=SavedJournal(identity);audit.path="/contents/saved-story-receipts/"+identity+"-rejected-title.json"
+           audit.save({"original_intent":old,"http_status":400,"evidence_run":40184445116,"inventory_matches":[],"reason":"46-character title exceeds documented 45-character limit","corrected_title":title})
+           sj.save({})
+          sc.ensure_capacity(3)
+          result=save_story(sc,sj,identity,title,uploads)
+          live=sc.call("/post/"+result["post_id"]);snap=live["data"]["SNAPCHAT"];ext=live["externalData"]["SNAPCHAT"]
+          assert live["status"]=="POSTED" and snap["type"]=="SAVED_STORY" and snap["uploadIds"]==uploads and snap["title"]==title
+          assert ext["status"]=="PUBLISHED" and ext["id"] and not live.get("deletedAt")
+          result["saved_story_id"]=ext["id"];sj.save(result)
+          bj=GitHubJournal(identity);bj.path="/contents/saved-story-backlog.json";backlog=bj.read()
+          for row in backlog.get("packages",[]):
+           if row.get("identity")==identity: row.update(status="POSTED",saved_story_id=ext["id"],saved_post_id=result["post_id"],saved_approval=str(ap),saved_title=title)
+          bj.save(backlog)
+          print("SAVED_CONFIRMED",json.dumps({"post_id":result["post_id"],"saved_story_id":ext["id"]}),flush=True)
+          print("FINAL_QUOTA",json.dumps(sc.ensure_capacity(2)),flush=True)
+          
+          PY
