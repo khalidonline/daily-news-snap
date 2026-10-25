@@ -5,7 +5,10 @@ from publishing_v2.bundle_api import BundleClient, BundleError, publish
 from tests.test_v2_bundle import Client, Journal
 from publishing_v2.bundle_api import load_package
 
-def test_approved_video_uses_spotlight_and_reconciles_without_repeat():
+def test_approved_video_uses_spotlight_and_reconciles_without_repeat(monkeypatch):
+    # This test uses an in-memory client/journal; live revocation belongs to
+    # the real delivery step, whose GITHUB_ACTIONS guard remains enabled.
+    monkeypatch.delenv('GITHUB_ACTIONS', raising=False)
     path = Path('approved/wheels-video-20261025/manifest.json')
     if not path.exists(): pytest.skip('Owner-approved integration fixture missing')
     _, title, media = load_package(str(path))
