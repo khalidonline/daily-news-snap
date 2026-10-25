@@ -380,6 +380,13 @@ def load_package(manifest):
     expires = datetime.fromisoformat(data['expires_at'].replace('Z','+00:00'))
     if expires.tzinfo is None or expires <= datetime.now(timezone.utc):
         raise BundleError('Approval expired; recheck event timing and content')
+    if data.get('format') == 'reviewed-challenge-video-v1':
+        from .reviewed_video import validate_reviewed_video
+        from .challenge_contract import validate_challenge
+        identity, title, selected = validate_reviewed_video(data, root)
+        media = ApprovedMedia(selected, path, data)
+        validate_challenge(title, media)
+        return identity, title, media
     if data.get('format') == 'owner-reviewed-composite-v1':
         from .owner_composite import validate_owner_composite
         identity, title, selected = validate_owner_composite(data, root)
