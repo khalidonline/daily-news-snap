@@ -1,0 +1,37 @@
+{
+  "format": "owner-generated-design-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر: كفرات كمبيوتر أبل",
+  "expires_at": "2026-10-25T20:59:59+00:00",
+  "not_before": "2026-10-25T10:00:00+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid approved corrected layout, restored sharing CTA and 1080x1920 export with empty bottom320px, then requested: ابشرهم ابشوفهم في سناب. Post these corrected previews once; do not delete old stories. Delivery only, no paid generation.",
+    "reviewed_at": "2026-10-25T10:00:00+00:00",
+    "approved_media_sha256": [
+      "ac7b6aac2ff208b7917b740014cc40e7140ef3559e13a420d998b30874031b0f"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/wheels-safe-20261025/card.png",
+      "sha256": "ac7b6aac2ff208b7917b740014cc40e7140ef3559e13a420d998b30874031b0f",
+      "provenance": {
+        "provider": "openai_imagegen",
+        "usage": "illustration",
+        "third_party_assets": false,
+        "library_file_id": "libfile_add20c41a20c81919efb4014ef95495e"
+      }
+    }
+  ],
+  "visual_review": {
+    "approved": true,
+    "reference": "Khalid approved corrected layout, restored sharing CTA and 1080x1920 export with empty bottom320px, then requested: ابشرهم ابشوفهم في سناب. Post these corrected previews once; do not delete old stories. Delivery only, no paid generation.",
+    "preview_width": 390,
+    "bottom_safe_pixels": 320,
+    "cta_present": true,
+    "basis": "Manual review of owner-approved challenge raster, two choices and restored sharing text; no inferred font measurements"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "اليوم يوم المكرونة… وقودي اللي بمطبخنا سعودية!",
+  "not_before": "2026-10-25T10:00:00+00:00",
+  "expires_at": "2026-10-25T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid approved corrected layout, restored sharing CTA and 1080x1920 export with empty bottom320px, then requested: ابشرهم ابشوفهم في سناب. Post these corrected previews once; do not delete old stories. Delivery only, no paid generation.",
+    "reviewed_at": "2026-10-25T10:00:00+00:00",
+    "approved_media_sha256": [
+      "384d873af12a048285835ee22c3dd9850b5f5a0f03a4e9db76461a933eb64fb7"
+    ],
+    "approved_source_sha256": [
+      "791d3144c10ed355b79deeba910eef5dbe7f5ffb8914349ef619c6f3f001f776"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/goody-safe-20261025/card.png",
+      "sha256": "384d873af12a048285835ee22c3dd9850b5f5a0f03a4e9db76461a933eb64fb7",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": true,
+        "note": "Owner supplied founder portrait incorporated in imagegen composite; product still-life is generated illustration, disclosed to owner, not official product photography. Geometry and graphic palette corrected deterministically."
+      },
+      "source_assets": [
+        {
+          "path": "approved/goody-20261025/founder-source.png",
+          "sha256": "791d3144c10ed355b79deeba910eef5dbe7f5ffb8914349ef619c6f3f001f776",
+          "source_url": "https://basamhgroup.com/ar/our-story",
+          "description": "Framed portrait of Ahmed Saeed Basamh from company history page, uploaded by Khalid",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid selected portrait option, uploaded 49F29277-1650-4A64-B859-669076600C3D.png and authorized publication. Owner editorial-use decision, not a copyright license grant.",
+          "library_file_id": "libfile_d026b7ed97908191a0840008773649e9"
+        }
+      ]
+    }
+  ],
+  "visual_review": {
+    "approved": true,
+    "reference": "Khalid approved corrected layout, restored sharing CTA and 1080x1920 export with empty bottom320px, then requested: ابشرهم ابشوفهم في سناب. Post these corrected previews once; do not delete old stories. Delivery only, no paid generation.",
+    "preview_width": 390,
+    "bottom_safe_pixels": 320,
+    "bullet_line_counts": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "cta_present": true,
+    "basis": "Manual review of exact owner-approved raster; no inferred font measurements"
+  }
+}
