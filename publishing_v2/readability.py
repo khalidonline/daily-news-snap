@@ -135,4 +135,13 @@ def require_for_new_delivery(manifest, media, existing):
             for i in range(1, len(media) + 1)):
         return
     path = Path(manifest).resolve()
+    data = json.loads(path.read_text())
+    if data.get('format') == 'reviewed-challenge-video-v1':
+        from .reviewed_video import validate_reviewed_video
+        from .challenge_contract import validate_challenge
+        _, _, checked = validate_reviewed_video(data, Path.cwd().resolve())
+        if [hashlib.sha256(raw).hexdigest() for _, raw in checked] != [hashlib.sha256(raw).hexdigest() for _, raw in media]:
+            fail('video changed after review')
+        validate_challenge(data['title'], media)
+        return
     validate_readability(path.parent / 'readability.json', media)

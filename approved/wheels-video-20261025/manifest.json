@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر: كفرات كمبيوتر أبل",
+  "expires_at": "2026-10-25T20:59:59+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/wheels-video-20261025/challenge.mp4",
+      "sha256": "b010b8d4f46d91230cb6f29553e0cc5b980de6c351302db2b1d825b421cf7158"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "b010b8d4f46d91230cb6f29553e0cc5b980de6c351302db2b1d825b421cf7158",
+      "reference": "Khalid explicitly approved revised video Library libfile_9f78defd4a008191a3b82f7ee9714fea version 1: تمام اعتمد وانشر في القصه العامه و ملف الأضواء. Agent inspected 8 decoded frames and measured final audio peak -6.9 dB; subjective playback approval is owner's, not claimed by agent.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    },
+    "baseline_note": "First repository challenge-video contract. Earlier publication was still-only, not a complete video predecessor. Original timing from approved Library reference; revised louder audio and footer countdown explicitly approved by owner today."
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid explicitly approved revised video Library libfile_9f78defd4a008191a3b82f7ee9714fea version 1: تمام اعتمد وانشر في القصه العامه و ملف الأضواء. Agent inspected 8 decoded frames and measured final audio peak -6.9 dB; subjective playback approval is owner's, not claimed by agent.",
+    "video_sha256": "b010b8d4f46d91230cb6f29553e0cc5b980de6c351302db2b1d825b421cf7158",
+    "source_manifest": {
+      "path": "approved/wheels-video-20261025/source-approval.json",
+      "sha256": "15eef7ba970c0b0edeeaeaf228942e25e25e0ea4c7b7db9d165fef4b3c7fb251"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/wheels-video-20261025/frame-0.5.png",
+        "sha256": "77467dadd5c08eea926969749c65535bd8c47c63a38ffd804a88ccde2bb36a04"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/wheels-video-20261025/frame-3.5.png",
+        "sha256": "827905164352915aa386cee0d9d458149f5ffaf66f0b57b9bd22b596ed9c50bc"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/wheels-video-20261025/frame-4.5.png",
+        "sha256": "512adcc123e125e35c61a0deb1804411f7a100801b4f8e04fbfab0e2cbda73bf"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/wheels-video-20261025/frame-5.5.png",
+        "sha256": "1c7df84b7c3ab561b58a3d5aa2dc76ac837fd5717f664d3e087c054704ac26f5"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/wheels-video-20261025/frame-6.5.png",
+        "sha256": "b365e50d0b35f082febf41f27d62b6b4b679ce670d616820cd107acbc3447df3"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/wheels-video-20261025/frame-7.5.png",
+        "sha256": "2c63aea634939a63260e169e773f72deff5f11fb97e94c36e8bc27d385f45a20"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/wheels-video-20261025/frame-8.5.png",
+        "sha256": "8b8d1c098e4b4a545b7ebb50646b621c1e44e158ca004b8f359312cf4e66dca3"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/wheels-video-20261025/frame-11.5.png",
+        "sha256": "d88584bf396d1f1a51325c7597686e8956fd17ff2a39ff41f38d76b2a21b39cd"
+      }
+    ]
+  }
+}

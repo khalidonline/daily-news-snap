@@ -160,6 +160,17 @@ class BundleClient:
         if not result.get('id'): raise BundleError('Create returned no ID; manual reconciliation required')
         return result['id']
 
+    def create_spotlight(self, title, upload):
+        payload = {'teamId': self.team, 'title': title[:100],
+                   'postDate': datetime.now(timezone.utc).isoformat(),
+                   'status': 'SCHEDULED', 'socialAccountTypes': ['SNAPCHAT'],
+                   'data': {'SNAPCHAT': {'type': 'SPOTLIGHT', 'uploadIds': [upload],
+                       'description': title[:160], 'locale': 'ar_SA',
+                       'skipSaveToProfile': False}}}
+        result = self.call('/post', 'POST', json.dumps(payload).encode())
+        if not result.get('id'): raise BundleError('Create returned no ID; manual reconciliation required')
+        return result['id']
+
     def create_group(self, title, uploads, reference_key):
         payload = {'teamId': self.team, 'title': title[:100],
                    'referenceKey': reference_key,
@@ -244,13 +255,23 @@ class GitHubJournal:
         self.sha = result['content']['sha']
 
 
-def publish(client, journal, title, media):
+def publish(client, journal, title, media, *, placement='STORY'):
+    if placement not in ('STORY', 'SPOTLIGHT'):
+        raise BundleError('Unsupported destination')
+    if placement == 'SPOTLIGHT':
+        snapshot = getattr(media, 'snapshot', {})
+        if (placement not in snapshot.get('approved_destinations', [])
+                or snapshot.get('content_type') != 'challenge'
+                or len(media) != 1 or Path(media[0][0]).suffix.lower() != '.mp4'):
+            raise BundleError('Explicit challenge video destination approval required')
     state = journal.read()
     check_delivery_approval(media)
     if state.get('_group'):
         raise BundleError('Grouped receipt must resume through grouped publishing')
     # Reconcile every uncertain intent before any new upload in this batch.
     rows = [state.get(str(i+1)) for i in range(len(media))]
+    if any(row and row.get('placement', 'STORY') != placement for row in rows):
+        raise BundleError('Receipt destination mismatch; separate journals required')
     if any(row is not None and not row.get('post_id') for row in rows):
         raise BundleError('Uncertain previous create; reconcile in Bundle before continuing')
     required = sum(row is None for row in rows)
@@ -269,11 +290,14 @@ def publish(client, journal, title, media):
             upload = client.upload(item)
             check_delivery_approval(media)
             # Durable intent first: failure or cancellation after this point blocks recreation.
-            state[key] = {'status':'SENDING', 'upload_id':upload}
+            state[key] = {'status':'SENDING', 'upload_id':upload, 'placement':placement}
             journal.save(state)
             check_delivery_approval(media)
             try:
-                post_id = client.create(f'{title} [{key}/{len(media)}]', upload)
+                if placement == 'SPOTLIGHT':
+                    post_id = client.create_spotlight(title, upload)
+                else:
+                    post_id = client.create(f'{title} [{key}/{len(media)}]', upload)
             except HTTPFailure as error:
                 # Keep the durable uncertain intent. A 403 is not permission to
                 # regenerate media or to bypass reconciliation with a new hash.
@@ -380,6 +404,13 @@ def load_package(manifest):
     expires = datetime.fromisoformat(data['expires_at'].replace('Z','+00:00'))
     if expires.tzinfo is None or expires <= datetime.now(timezone.utc):
         raise BundleError('Approval expired; recheck event timing and content')
+    if data.get('format') == 'reviewed-challenge-video-v1':
+        from .reviewed_video import validate_reviewed_video
+        from .challenge_contract import validate_challenge
+        identity, title, selected = validate_reviewed_video(data, root)
+        media = ApprovedMedia(selected, path, data)
+        validate_challenge(title, media)
+        return identity, title, media
     if data.get('format') == 'owner-reviewed-composite-v1':
         from .owner_composite import validate_owner_composite
         identity, title, selected = validate_owner_composite(data, root)
