@@ -375,6 +375,10 @@ def load_package(manifest):
     expires = datetime.fromisoformat(data['expires_at'].replace('Z','+00:00'))
     if expires.tzinfo is None or expires <= datetime.now(timezone.utc):
         raise BundleError('Approval expired; recheck event timing and content')
+    if data.get('format') == 'owner-reviewed-composite-v1':
+        from .owner_composite import validate_owner_composite
+        identity, title, selected = validate_owner_composite(data, root)
+        return identity, title, ApprovedMedia(selected, path, data)
     if data.get('format') == 'owner-generated-design-v1':
         from .owner_design import validate_owner_design
         identity, title, selected = validate_owner_design(data, root)
