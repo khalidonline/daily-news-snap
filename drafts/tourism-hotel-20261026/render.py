@@ -3,7 +3,7 @@ import subprocess
 P=Path(__file__).resolve().parent
 ROOT=P.parents[1]
 def run(args):
-    subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y',*args],check=True)
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-loglevel','error','-y',*args],check=True)
 # Numeric color LUT for graphic layer only. Real photograph composited afterwards.
 lut=P/'brand.cube'
 with lut.open('w') as f:
@@ -37,6 +37,6 @@ filt=("[0:v]fps=30,setsar=1[base];[1:v]crop=1080:380:0:1230[answer];"
 run(['-loop','1','-i',str(P/'question.png'),'-loop','1','-i',str(P/'answer.png'),'-i',str(ref),
      '-filter_complex_threads','1','-filter_complex',filt,'-map','[out]','-map','2:a:0',
      '-t','12','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-c:a','copy',
-     '-movflags','+faststart',str(P/'Hotel-Challenge.mp4')])
+     '-movflags','+faststart',str(P/'Hotel-Challenge-v2.mp4')])
 for t in [0.5,3.5,4.5,5.5,6.5,7.5,8.5,11.5]:
-    run(['-ss',str(t),'-i',str(P/'Hotel-Challenge.mp4'),'-frames:v','1',str(P/f'frame-{t}.png')])
+    run(['-ss',str(t),'-i',str(P/'Hotel-Challenge-v2.mp4'),'-frames:v','1',str(P/f'frame-{t}.png')])
