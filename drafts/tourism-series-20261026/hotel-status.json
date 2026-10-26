@@ -1,0 +1,47 @@
+{
+  "date_riyadh": "2026-10-26",
+  "content_type": "challenge",
+  "editorial_approved": true,
+  "media_approved": false,
+  "status": "BLOCKED_BEFORE_PRODUCTION",
+  "copy": {
+    "question": "أكبر فندق بالعالم بعدد الغرف.. وين تتوقعه؟",
+    "options": [
+      "ماليزيا",
+      "أمريكا"
+    ],
+    "correct": "ماليزيا",
+    "reveal": "فندق فرست وورلد — ٧٬٣٥١ غرفة"
+  },
+  "fact_source": "https://www.guinnessworldrecords.com/world-records/69317-largest-hotel",
+  "fact_checked": "2026-10-26",
+  "fact_note": "Current Guinness public listing still identifies First World Hotel; listed record date 2015-06-20.",
+  "requested_destinations": [
+    "SPOTLIGHT",
+    "STORY"
+  ],
+  "submitted_this_run": false,
+  "live_quota_checked": false,
+  "budget_checked": false,
+  "paid_generation_started": false,
+  "blocker": {
+    "code": "REAL_PHOTO_CHALLENGE_ROUTE_UNSUPPORTED",
+    "evidence": [
+      "publishing_v2/reviewed_video.py requires owner-generated-design-v1 source manifest",
+      "publishing_v2/owner_design.py requires openai_imagegen provenance, illustration usage, third_party_assets false and exact owner review"
+    ],
+    "explanation": "Requested new challenge requires genuine sourced photographs. Existing reviewed video path cannot truthfully encode those assets. Do not fabricate owner review or image provenance, mislabel media, or bypass publisher."
+  },
+  "next_steps": [
+    "Extend reviewed-video source validation to the existing licensed-image route while preserving owner authorization, real provenance and hash-bound audiovisual review.",
+    "Use latest regular-weight typography and verified wheels video audio/countdown placement; reconcile updated reference before rendering.",
+    "Render hotel video, inspect final frames and audio, check live quota/budget/receipts, then publish separately to both destinations."
+  ],
+  "series_pending": [
+    "hotel",
+    "bridges",
+    "cable_car",
+    "blue_flag_beaches",
+    "historic_cafes"
+  ]
+}
