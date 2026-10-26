@@ -1,0 +1,30 @@
+name: Cancel stalled hotel preparation only
+on:
+  push:
+    branches: [main]
+    paths: ['.github/cancel-hotel-preparation.trigger']
+permissions:
+  actions: write
+  contents: read
+jobs:
+  cancel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Verify preparation is stalled before cancelling
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import urllib.request,json,os
+          base='https://api.github.com/repos/khalidonline/daily-news-snap/actions/runs/40397998328'
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          def call(url,method='GET'):
+              with urllib.request.urlopen(urllib.request.Request(url,headers=headers,method=method),timeout=30) as r:
+                  raw=r.read();return json.loads(raw) if raw else {}
+          rows=call(base+'/jobs')['jobs']
+          stalled=any(any(s['number']==5 and s['status']=='in_progress' for s in j['steps']) and all(s['status']=='pending' for s in j['steps'] if s['number']==7) for j in rows)
+          if stalled:
+              call(base+'/cancel','POST');print('Cancelled pre-send dependency installation only.')
+          else:print('No cancellation: preparation no longer stalled. Existing journals protect delivery.')
+          PY

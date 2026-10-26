@@ -1,1 +1,1 @@
-Restore complete original frames archive; xz integrity and local/remote Git blob hash verified 5c83dbaf4093b107ef4ce83623fc1a6dddee9c1e. Earlier two runs failed before Bundle API access; reuse same video and journals.
+Retry same sealed hotel v2 on ubuntu-24.04, bounded dependency setup, same destination journals. No regeneration.
