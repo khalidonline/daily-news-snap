@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-26-master-1",
+    "revision": "2026-10-26-master-2",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -194,6 +194,11 @@
       "font_file": null,
       "font_sha256": null,
       "rule": "Do not silently substitute or claim exact matching. Reuse approved visual reference for review; deterministic text rendering awaits verified original font asset. No daily reapproval of already approved style."
+    },
+    "word_spelling": {
+      "rule": "Write توقع without shadda or any vowel marks; preserve required letter dots. Applies to all challenge titles and occurrences.",
+      "example": "توقع المكان",
+      "owner_instruction": "لاتحط شده في كلمة توقع. احفظ هذا التعديل في الاعدادات"
     }
   },
   "approved_by": "Khalid",
@@ -374,7 +379,7 @@
     "status": "LOCKED_APPROVED_PROPERTIES",
     "instruction": "Start every new challenge from the last user-approved complete video. Change only challenge content and relevant images. Never use most-recent publication as approval if it has known defects.",
     "approved_by": "Khalid",
-    "updated_at_riyadh": "2026-10-25",
+    "updated_at_riyadh": "2026-10-26",
     "reference_video": {
       "library_file_id": "libfile_06d45410425481919982dee37bd0cd22",
       "filename": "guess-the-price.mp4",
@@ -405,9 +410,9 @@
       "inherit": "Current locked palette, approved font appearance/sizes, alignment, option backgrounds, logo positions and spacing",
       "countdown": "Dedicated area below اختر قبل كشف الإجابة, replacing the small lower logo in that area. Visible Arabic digits, not over question/options/CTA.",
       "answer": "Highlight correct choice with coordinated explanation underneath; reveal only after countdown finishes",
-      "photo": "Clear product in use when relevant; match order of images and text",
+      "photo": "Clear product in use when relevant; match order of images and text. Choose a real image that visibly supports the question; for room-count challenges show hotel exterior with many window rows, not a generic lobby.",
       "sources": "Never publish source card or source text",
-      "cta": "Retain approved sharing strip; latest owner instruction overrides old no-CTA rule. Never remove to gain space."
+      "cta": "Retain pale pink rounded sharing strip and red arrow. Exact challenge text: شاركها مع صديقك واختبر معلوماته"
     },
     "changes_allowed_without_rebuilding_template": [
       "Question",
@@ -424,7 +429,8 @@
       "Confirm correct answer starts at second 8, stays 4 seconds",
       "Confirm matching images/text and no source card",
       "Check Snapchat quota and avoid duplicate submission",
-      "Confirm final POSTED separately for Spotlight and public Story"
+      "Confirm final POSTED separately for Spotlight and public Story",
+      "Verify توقع has no shadda and challenge CTA reads exactly شاركها مع صديقك واختبر معلوماته"
     ],
     "known_defects": {
       "oct25_batch": "Silent exports, then sound-only correction still missing visible countdown. These versions are NOT template masters.",
@@ -432,7 +438,9 @@
       "old_posts": "User says they deleted old posts; do not republish them."
     },
     "enforcement_scope": "Saved production specification and mandatory human/agent review gate. This is not a claim that all repository publishing paths enforce it automatically.",
-    "next_work_gate": "Do not start new challenge production until a complete master with countdown and audio is verified against these settings."
+    "next_work_gate": "Do not start new challenge production until a complete master with countdown and audio is verified against these settings.",
+    "cta_exact": "شاركها مع صديقك واختبر معلوماته",
+    "cta_scope": "All challenges; replaces prior challenge CTA. Information-card CTA unchanged."
   },
   "emoji": {
     "approved_character": "😄",
