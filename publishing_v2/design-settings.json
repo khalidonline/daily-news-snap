@@ -1,0 +1,448 @@
+{
+  "project": "daily-news-snap",
+  "canonical_reference": {
+    "role": "Mandatory editorial, design and prepublication reference for every executivesaudi post",
+    "updated_at_riyadh": "2026-10-26",
+    "owner_instruction": "احفظ كل اعدادات التحرير والتصميم وتصير مرجع دائم لكل منشور",
+    "read_before": [
+      "topic selection",
+      "drafting",
+      "design",
+      "revision",
+      "publication"
+    ],
+    "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
+    "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
+    "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
+    "revision": "2026-10-26-master-1",
+    "repository_mirror": "publishing_v2/design-settings.json"
+  },
+  "editorial_master": {
+    "language": "Everyday Saudi Arabic, conversational salfa; no vowel marks or tanween, no heavy formal narration.",
+    "avoid": [
+      "مرورا",
+      "بعد قرابة",
+      "لاحقا",
+      "حسب الرواية as filler",
+      "بس سالفتها ما انتهت هنا as filler",
+      "المفاجأة as a stock hook",
+      "قصة as a card label",
+      "redundant هم before brand names"
+    ],
+    "tone": "Everyday Saudi salfa, light humor when appropriate. At most one emoji. Latest owner-selected appearance 😄 overrides older 🙂-only guidance. Do not invent motives.",
+    "selection": "Both the current trigger AND the associated story must feel close to ordinary people in Saudi Arabia. A familiar trigger alone is insufficient.",
+    "trigger": "Verify event date itself in Riyadh, not article repost date. Distinguish today, upcoming and ended. Put the trigger first when relevant; never invent a current event for an evergreen Saudi selection.",
+    "research": "Scan principal Saudi, Arabic and international headlines then compare a second time. Do not favor easy research or available images over importance. Do not fill quotas with weak stories.",
+    "value": "A specific surprising shareable fact, a clear cause, turning point and meaningful outcome. Avoid obvious facts, repeated information and unsupported company claims.",
+    "story_order": "Open with a relatable situation, explain why the change happened and who did what, then the turning point and where it led. Keep causal links when shortening.",
+    "factual_controls": "Verify names, dates, locations, acquisitions, branch counts and historical photos. Do not infer store location from headquarters. Name coverage sources before calling a story widespread. Separate verified facts from humor and inference.",
+    "scope": "Avoid narrow scientific, environmental, wildlife and celebrity topics without explicit strong public relevance or owner selection.",
+    "repetition": "Check available recent drafts, selections and posted packages; no repeat without a material new development explained.",
+    "workflow": "Finalize trigger, fact and story sequence before design. Lock one approved text version; change only requested elements. No design before selection and no publication before authorization.",
+    "closing": "A strong relevant outcome, preferably where they reached today when verified. Do not force a question; optional questions must be gentle and never pressuring.",
+    "cta_exact": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+    "tables": "If a table is genuinely useful, add one introductory sentence and one closing sentence; label dates and units clearly."
+  },
+  "production_acceptance_gate": {
+    "format": "One card when sufficient; maximum two. Short bullets; no more than two rendered lines per bullet. Prefer one readable title line; maximum two closing lines. Shorten meaningfully instead of shrinking font.",
+    "canvas": "Final publishing bytes MUST measure exactly 1080x1920. A prompt requesting this size, a 9:16 preview, or visual similarity is not proof.",
+    "palette": "Apply palette.exact_numeric_tokens numerically in template/rendering or deterministic postprocessing. A generation prompt alone is never enforcement. Verify flat/interior pixels, allowing only antialiasing blends; preserve photographic colors.",
+    "template": "Start from the approved master, not a newly imagined identity. Retain header, original logos, font appearance, color roles, rounded panels and footer. Do not claim an exact font family without an original font/template.",
+    "images": "Use meaningful sourced images or owner-supplied assets; founder/start paired with recognizable relevant product when suitable. Never invent archival evidence or label an unrelated shop as the original. Disclose generated illustrations; do not represent generated product packaging as official photography.",
+    "captions": "Mandatory small readable gray #7A7973 caption directly under each image. Check left/right mapping visually. State precisely what is shown; no unsupported first-product or founder identity claims.",
+    "spacing": "Uniform readable text, comfortable margins, no overlaps or excessive gaps. Never crop face or distort proportions to force a layout. Inspect final raster at mobile width around 390 pixels.",
+    "public_content": "No sources card, PDF, watermarks from unlicensed stock, or research notes in public output. Preserve legally required attribution when applicable.",
+    "checklist": [
+      "Read publishing_v2/design-settings.json and compare revision to current Library master; no competing defaults",
+      "Read current reference and inspect approved visual master",
+      "Verify event timing, facts, spelling and Saudi phrasing",
+      "Compare final text against approved wording",
+      "Measure actual final pixel dimensions: 1080x1920",
+      "Verify actual palette interior colors against exact tokens",
+      "Count rendered lines in every bullet: maximum two",
+      "Check matching captions under every image and source provenance",
+      "Inspect full exported card at mobile size for readability and overlap",
+      "Bind review and authorization to final file SHA256; any edit invalidates old review",
+      "Only label READY when all required checks pass; otherwise record BLOCKED with exact reason",
+      "Check emoji is independent pinned asset, not redrawn; verify chosen character and visual appearance",
+      "For challenges inspect final MP4, listen to sound, verify countdown and answer; still preview is not delivery",
+      "Check Story and Spotlight overlay previews separately and keep CTA visible"
+    ],
+    "report_fields": [
+      "file_sha256",
+      "measured_dimensions",
+      "palette_check_result",
+      "bullet_line_counts",
+      "caption_mapping",
+      "mobile_review",
+      "facts_checked",
+      "approval_reference",
+      "status",
+      "blockers"
+    ],
+    "exception_policy": "No invented font metrics or false pass records. Never weaken a guard or reuse an old hash-specific exception to publish another card. Any necessary exception needs explicit specific authorization and evidence."
+  },
+  "publication_master": {
+    "separate_from_production": true,
+    "rules": [
+      "Delivery failure must not regenerate media or make paid model requests",
+      "Verify current API account and live capacity; retain two operations; do not assume quota reset",
+      "Check actual Riyadh daily cost ledger against USD3; missing ledger is unknown, not zero",
+      "Preserve existing approved publication safeguards, final-version approval and immutable media hashes",
+      "Use durable intent/operation receipts and provider inventory; reconcile ambiguity, never blind retry",
+      "Keep STORY duration ONE_WEEK; Saved Story is a separate operation and receipt",
+      "Confirm POSTED and actual platform identifiers; accepted or scheduled is not publication success",
+      "Never assume browser login survives another session",
+      "Do not run old production schedules, extract Actions secrets, or publish source cards"
+    ],
+    "account": "executivesaudi",
+    "route": {
+      "repository": "khalidonline/daily-news-snap",
+      "information_workflow": ".github/workflows/publish-approved-package.yml",
+      "package_input": "Only exact new owner-approved package folder",
+      "publisher": "Current publishing_v2.bundle_api with ApprovedMedia wrapper; never direct client.create",
+      "fallback": "Use sufficient authorized connector; if dispatch unsupported use owner-authorized browser workflow after fresh session check. Never extract secrets."
+    },
+    "destinations": {
+      "information": "Public STORY after explicit approval; Saved Story archive separate tracked operation under existing owner scope.",
+      "challenge": "STORY and SPOTLIGHT only as approved, separate receipt per destination.",
+      "success": "POSTED + post identifier bound to final media hash; never claim archive from Story receipt."
+    },
+    "reserve_operations": 2,
+    "daily_budget_usd": 3,
+    "preflight_record": [
+      "settings_revision",
+      "package_editorial_id",
+      "content_type",
+      "final_sha256",
+      "explicit_owner_approval",
+      "fact_sources",
+      "image_sources",
+      "dimensions",
+      "font_asset_or_honest_raster_review",
+      "palette",
+      "line_counts",
+      "overlay_review",
+      "emoji_asset",
+      "challenge_audio_timer_reveal_if_applicable",
+      "live_account",
+      "live_quota_timestamp",
+      "cost_ledger_timestamp",
+      "destinations",
+      "previous_attempts",
+      "operation_ids",
+      "posted_receipts"
+    ],
+    "no_repeat_approval": "Do not re-ask fixed style, dimensions or the same valid publishing approval each day. Ask only for changed scope, real access/permission blocker, unapproved creative change or budget exception."
+  },
+  "goody_20261025_review": {
+    "publication_status": "NOT_SENT_BY_THIS_SESSION",
+    "last_preview": "generated_images/exec-5bc182ee-35bd-4fde-87ed-5c759b24c47b.png",
+    "actual_dimensions": [
+      941,
+      1672
+    ],
+    "actual_bullet_line_counts": [
+      2,
+      2,
+      2,
+      3
+    ],
+    "palette_status": "Requested in prompt only; exact output match not verified",
+    "captions": {
+      "left": "أحمد سعيد باسمح — مؤسس المجموعة",
+      "right": "من منتجات قودي"
+    },
+    "status": "BLOCKED_NOT_READY",
+    "required_corrections": [
+      "Exact 1080x1920 export",
+      "Last bullet maximum two lines",
+      "Deterministic palette enforcement and verification"
+    ],
+    "lesson": "Do not call a generated preview ready before validating actual output."
+  },
+  "typography": {
+    "status": "OWNER_APPROVED_REGULAR_WEIGHT",
+    "approved_at_riyadh": "2026-10-25",
+    "owner_instruction": "اعتمده وثبته. المفروض نفس الخط بس مايكون bold",
+    "scope": "All future posts and challenges; overrides older conflicting heavy/bold typography guidance. No automatic edit or republication of existing posts.",
+    "visual_reference": "Latest owner-supplied dishwasher screenshot for rice (libfile_ddd8929c3d808191a1813b9f09b0bbcd); keep Regular preference from Goody comparison. Never guess font family from raster.",
+    "reference_library_file_id": "libfile_d7e06aaafb588191a520097b928e8fb9",
+    "family_policy": "Keep the same font family from the approved template; do not substitute a different family to obtain lighter weight.",
+    "font_family": null,
+    "font_family_status": "Not identified from screenshot; verify original template/font asset before claiming exact family matching.",
+    "font_weight": 400,
+    "weight_name": "Regular",
+    "synthetic_bold": false,
+    "preserve": "Existing numeric palette, canvas dimensions, safe areas, approved layout, challenge audio and countdown rules.",
+    "pre_export_check": "Use the actual Regular font face; reject Bold/Semibold, synthetic bold and text strokes that thicken glyphs. Compare mobile-size output with the approved توقع المكان reference.",
+    "implementation_status": "Persisted master instruction only; no existing media changed and no claim of automatic renderer enforcement.",
+    "sizes_px": {
+      "headline": 52,
+      "body": 48,
+      "caption": 28,
+      "closing": 44,
+      "cta": 40,
+      "challenge_question": 48,
+      "challenge_options": 44,
+      "countdown": 72
+    },
+    "line_height_multiplier": 1.3,
+    "sizing_basis": "Fixed forward production targets at 1080px width, not measured/recovered font metrics of generated reference. Shorten or use second card instead of auto-shrink. Actual font asset must be identified and hash-pinned before deterministic rendering.",
+    "font_asset_gate": {
+      "status": "UNRESOLVED",
+      "font_file": null,
+      "font_sha256": null,
+      "rule": "Do not silently substitute or claim exact matching. Reuse approved visual reference for review; deterministic text rendering awaits verified original font asset. No daily reapproval of already approved style."
+    }
+  },
+  "approved_by": "Khalid",
+  "status": "LOCKED_NUMERIC_PALETTE",
+  "scope": "All future executivesaudi cards including Louvre; no retroactive publication.",
+  "approval_basis": "User approved the latest Kandasa preview and requested the same colors and size for future posts, then explicitly authorized publishing Kandasa. Dishwasher reference supersedes Amal for colors.",
+  "approved_at_riyadh": "2026-10-24",
+  "instruction": "Reuse the approved Kandasa layout with dishwasher reference colors. Do not reuse Amal colors or earlier Kandasa variants.",
+  "reference": {
+    "filename": "487C9A71-0C5E-4613-B574-4D9D427F9BFA.jpeg",
+    "library_file_id": "libfile_716a027625a881918c56a39027539922",
+    "sha256": "f0b995f86682288975fc2b5a772ec608e1435e0789c9c62fbe8147d58522dc4a",
+    "authority": "User supplied dishwasher card is the color reference; latest approved Kandasa is the layout reference."
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "aspect_ratio": "9:16",
+    "approved_preview_actual_width": 941,
+    "approved_preview_actual_height": 1672,
+    "export_note": "Measure actual final file as exactly 1080x1920; preserve aspect ratio. Preview approval must use final export, not a differently-sized generation."
+  },
+  "palette": {
+    "body_and_bullets": "Match the blue of the pinned visual master.",
+    "headline_closing_cta": "Match the red/pink of the pinned visual master.",
+    "header_green": "Match the green of the pinned visual master.",
+    "cta_background": "Match the pale pink of the pinned visual master.",
+    "background": "Match the ivory of the pinned visual master.",
+    "exact_numeric_tokens": {
+      "body": "#0B3656",
+      "red": "#B60E32",
+      "green": "#0C5F46",
+      "background": "#F7F7EB",
+      "cta_background": "#FDE5EB",
+      "caption": "#7A7973"
+    },
+    "measurement_note": "Stable tokens sampled from interior pixels of the original dishwasher JPEG on 2026-10-24, explicitly requested by Khalid. These are sampled raster colors, not recovered original vector values. Anti-aliased edges blend with their fixed background.",
+    "enforcement": "Use fixed numeric colors in rendering or deterministic post-processing; generation prompt alone is not enforcement. Protect photographic pixels from recoloring."
+  },
+  "layout": {
+    "maximum_lines_per_bullet": 2,
+    "maximum_closing_lines": 2,
+    "photo_pair": "When two photos are used: equal-height adjacent panels, with founder/start image paired with a relevant actual image.",
+    "header": "Green brand upper right with short green line; circular blue logo upper left.",
+    "title": "Red, preferably one readable line.",
+    "photo": "Actual sourced image, rounded panel, gray caption. No invented historical photo.",
+    "body": "Saudi colloquial Arabic without vowel marks, blue bullets, clear uniform large font matched visually to reference.",
+    "font_note": "Exact font family is not identified from raster. Never claim exact font identity without original font/template.",
+    "closing": "Red directly on ivory, no solid red banner.",
+    "cta": "Pale pink rounded strip, red arrow, text: شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+    "footer": "Small original circular logo centered.",
+    "numeric_grid_px": {
+      "units": "pixels at 1080x1920",
+      "side_margin": 60,
+      "content_left": 60,
+      "content_right": 1020,
+      "header": [
+        60,
+        110,
+        1020,
+        230
+      ],
+      "title": [
+        60,
+        260,
+        1020,
+        340
+      ],
+      "images": [
+        60,
+        380,
+        1020,
+        790
+      ],
+      "captions": [
+        60,
+        800,
+        1020,
+        850
+      ],
+      "body": [
+        60,
+        890,
+        1020,
+        1490
+      ],
+      "closing": [
+        60,
+        1510,
+        1020,
+        1600
+      ],
+      "cta": [
+        60,
+        1630,
+        1020,
+        1730
+      ],
+      "footer_logo": [
+        510,
+        1750,
+        570,
+        1810
+      ],
+      "photo_gap": 24,
+      "minimum_block_gap": 20
+    },
+    "safe_area_policy": "Internal working layout, not a universal Snapchat safe-zone claim. Keep important text and CTA inside x60..1020,y260..1730; simulate Story and Spotlight overlays separately at 390px. Spotlight controls need a destination-specific layout; do not reuse Story coordinates blindly. Footer logo is nonessential. No large empty footer and no text clipping.",
+    "maximum_bullets": 4,
+    "overflow_policy": "No automatic font shrinking, cropping, condensed lettering, font substitution or loss of CTA. Shorten approved text only with owner authorization; otherwise use up to two cards and obtain design approval."
+  },
+  "qa": [
+    "Preserve the master brand elements, logo, color roles and layout; do not regenerate or reinterpret the identity for each story.",
+    "If the reference is unavailable, stop design work rather than substitute a remembered palette.",
+    "Only story text and relevant photos may vary routinely; brand changes require Khalid's explicit approval.",
+    "Read this specification and open reference image before every new card.",
+    "Lock approved wording; edit only the requested elements.",
+    "Inspect actual output pixel dimensions, not prompt claims.",
+    "Compare actual text colors against reference; generated similarity is not exact color enforcement.",
+    "Keep text away from edges; no overlap, excessive gaps, or unreadable reduction.",
+    "No publication without explicit approval and verified posting checks.",
+    "Reject cards whose solid text/interior colors differ from exact_numeric_tokens; anti-aliased edges may blend."
+  ],
+  "albaik": {
+    "design_status": "APPROVED_BY_KHALID",
+    "approved_export_sha256": "5408d02d511458a830f559264ae6bc91973f28c82eeb4fe88f30787a8473c50f",
+    "approved_dimensions": [
+      1080,
+      1920
+    ],
+    "maximum_lines_per_bullet": 2,
+    "actual_bullet_line_counts": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "palette_authority": "The latest approved Albaik raster is retained as the delivery reference. Dishwasher remains the brand reference; no claim of exact numeric matching or identified font tokens.",
+    "publication_status": "POSTED",
+    "public_profile_status": "POSTED",
+    "snapchat_id": "552bd3b7-9173-484b-9d1f-964c72fbe06d",
+    "saved_story_id": "853991db-dd97-4424-800d-1083666d4b9f",
+    "publication_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/40096789175",
+    "export_library_file_id": "libfile_56eefc8486808191953d25ea35088e47"
+  },
+  "kandasa": {
+    "removed_paragraphs": [
+      "كانت تشتغل بالفحم…",
+      "ولما انقطع الفحم…"
+    ],
+    "photo_caption": "مجسم الكنداسة في جدة",
+    "publication_status": "POSTED",
+    "publication_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/40088542542",
+    "snapchat_id": "4979e44c-d7ec-41fd-a663-ca544160c3c3",
+    "published_export_sha256": "b043b28129ea73ad97b4e334783081e02050b2d8676c5290b1cc6df0ed753474",
+    "published_dimensions": [
+      1080,
+      1920
+    ],
+    "design_status": "APPROVED_BY_KHALID",
+    "approved_image": "generated_images/exec-3db7a281-c948-408a-995e-27d3ba8f643a.png",
+    "approved_image_sha256": "e3c40372210dab3fd9bfd648c84984fa7b005f13ac9ef7464c2853bfb7be9fb2",
+    "publish_authorized": true,
+    "publication_blocker": null,
+    "note": "Saved guidance only; this does not claim that a repository pipeline automatically enforces these settings."
+  },
+  "louvre": {
+    "color_status": "APPLIED_NUMERIC_PALETTE",
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "publication_status": "NOT_PUBLISHED",
+    "captions": "Pyramid left, Mona Lisa right",
+    "source": "generated_images/exec-e6db1979-c9f1-4c73-923f-63d3128d0bb6.png"
+  },
+  "challenges": {
+    "status": "LOCKED_APPROVED_PROPERTIES",
+    "instruction": "Start every new challenge from the last user-approved complete video. Change only challenge content and relevant images. Never use most-recent publication as approval if it has known defects.",
+    "approved_by": "Khalid",
+    "updated_at_riyadh": "2026-10-25",
+    "reference_video": {
+      "library_file_id": "libfile_06d45410425481919982dee37bd0cd22",
+      "filename": "guess-the-price.mp4",
+      "role": "Previously approved countdown and audio reference; preserve newer explicitly approved image/text corrections."
+    },
+    "timing": {
+      "total_seconds": 12,
+      "intro_seconds": 3,
+      "countdown_start_seconds": 3,
+      "countdown_digits": [
+        "٥",
+        "٤",
+        "٣",
+        "٢",
+        "١"
+      ],
+      "seconds_per_digit": 1,
+      "answer_start_seconds": 8,
+      "answer_seconds": 4
+    },
+    "audio": {
+      "required": true,
+      "source": "Same audio from approved reference video; no new sound or silent placeholder",
+      "synchronize": "Five ticks with visible digits; reveal sound at second 8",
+      "validation": "Require audio stream, verify non-silent samples, listen to final exported video"
+    },
+    "visual": {
+      "inherit": "Current locked palette, approved font appearance/sizes, alignment, option backgrounds, logo positions and spacing",
+      "countdown": "Dedicated area below اختر قبل كشف الإجابة, replacing the small lower logo in that area. Visible Arabic digits, not over question/options/CTA.",
+      "answer": "Highlight correct choice with coordinated explanation underneath; reveal only after countdown finishes",
+      "photo": "Clear product in use when relevant; match order of images and text",
+      "sources": "Never publish source card or source text",
+      "cta": "Retain approved sharing strip; latest owner instruction overrides old no-CTA rule. Never remove to gain space."
+    },
+    "changes_allowed_without_rebuilding_template": [
+      "Question",
+      "Options",
+      "Relevant image",
+      "Correct answer and explanation"
+    ],
+    "prepublish_checklist": [
+      "Open complete approved reference video, not a still image",
+      "Compare font, numeric colors, alignment and option backgrounds",
+      "Watch full exported 12-second video with sound",
+      "Verify visible ٥→٤→٣→٢→١, each for 1 second",
+      "Verify audio ticks and reveal synchronization",
+      "Confirm correct answer starts at second 8, stays 4 seconds",
+      "Confirm matching images/text and no source card",
+      "Check Snapchat quota and avoid duplicate submission",
+      "Confirm final POSTED separately for Spotlight and public Story"
+    ],
+    "known_defects": {
+      "oct25_batch": "Silent exports, then sound-only correction still missing visible countdown. These versions are NOT template masters.",
+      "price_image": "Preserve latest corrected standalone wheels foreground + Mac Pro with installed wheels background.",
+      "old_posts": "User says they deleted old posts; do not republish them."
+    },
+    "enforcement_scope": "Saved production specification and mandatory human/agent review gate. This is not a claim that all repository publishing paths enforce it automatically.",
+    "next_work_gate": "Do not start new challenge production until a complete master with countdown and audio is verified against these settings."
+  },
+  "emoji": {
+    "approved_character": "😄",
+    "unicode": "U+1F604",
+    "maximum_per_information_card": 1,
+    "rendering": "Independent transparent pinned asset composited after layout. Never ask image generation to redraw it; never rely on viewer device font.",
+    "appearance_reference": "Owner-supplied 😄 example in conversation 26 October 2026",
+    "asset_status": "PENDING_EXACT_ASSET",
+    "asset_path": null,
+    "asset_sha256": null,
+    "rule": "Before next emoji-containing design, obtain exact approved-appearance asset with permitted use, inspect and hash-pin it. Do not claim Apple/device look from Unicode alone. Preserve user choice; do not replace with 🙂 or 😂."
+  }
+}
