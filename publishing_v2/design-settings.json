@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-26-master-2",
+    "revision": "2026-10-26-master-3",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -166,8 +166,8 @@
     "approved_at_riyadh": "2026-10-25",
     "owner_instruction": "اعتمده وثبته. المفروض نفس الخط بس مايكون bold",
     "scope": "All future posts and challenges; overrides older conflicting heavy/bold typography guidance. No automatic edit or republication of existing posts.",
-    "visual_reference": "Latest owner-supplied dishwasher screenshot for rice (libfile_ddd8929c3d808191a1813b9f09b0bbcd); keep Regular preference from Goody comparison. Never guess font family from raster.",
-    "reference_library_file_id": "libfile_d7e06aaafb588191a520097b928e8fb9",
+    "visual_reference": "Rice-Final.png, posted 26 October 2026, explicitly selected by Khalid as future visual master. Compare actual image, not memory. Exact original font family remains unidentified; this does not block honest owner-reviewed raster workflow.",
+    "reference_library_file_id": "libfile_e56e931a29b081919e932dc8d878d3f9",
     "family_policy": "Keep the same font family from the approved template; do not substitute a different family to obtain lighter weight.",
     "font_family": null,
     "font_family_status": "Not identified from screenshot; verify original template/font asset before claiming exact family matching.",
@@ -193,7 +193,7 @@
       "status": "UNRESOLVED",
       "font_file": null,
       "font_sha256": null,
-      "rule": "Do not silently substitute or claim exact matching. Reuse approved visual reference for review; deterministic text rendering awaits verified original font asset. No daily reapproval of already approved style."
+      "rule": "Do not invent font name or exact font metrics. Use approved Rice-Final.png visual master and honest final raster review for owner-approved compositions. Deterministic font rendering still requires verified font asset. Do not repeatedly ask owner for an original font while the approved visual master is available."
     },
     "word_spelling": {
       "rule": "Write توقع without shadda or any vowel marks; preserve required letter dots. Applies to all challenge titles and occurrences.",
@@ -452,5 +452,13 @@
     "asset_path": null,
     "asset_sha256": null,
     "rule": "Before next emoji-containing design, obtain exact approved-appearance asset with permitted use, inspect and hash-pin it. Do not claim Apple/device look from Unicode alone. Preserve user choice; do not replace with 🙂 or 😂."
+  },
+  "approved_visual_master": {
+    "filename": "Rice-Final.png",
+    "library_file_id": "libfile_e56e931a29b081919e932dc8d878d3f9",
+    "version": 2,
+    "sha256": "5a65b46f79b77ac672fecab6ef18e8ddd715ed823accbcfe77a22713be51cb21",
+    "instruction": "Preserve visual typography, branding and color roles; change only approved topic text and photos. Two rendered lines maximum per bullet; validate final dimensions/palette/CTA before delivery. Latest Jurong preview approved by owner with instruction ثبت التعليمات وخلها مرجع للمستقبل. انشر.",
+    "scope": "Future information cards; preserve challenge audio/timer and separate delivery rules."
   }
 }
