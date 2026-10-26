@@ -1,0 +1,16 @@
+{
+  "version":1,
+  "typography_profile":"owner-reviewed-composite-raster-v1",
+  "visual_review":{"approved":true,"reference":"Final Rice-Final.png reviewed at 390px mobile width: four two-line bullets, left caravan/right rice labels correctly positioned, CTA retained, no cropped text.","mobile_width":390,"captions_match_images":true},
+  "cards":[{"sha256":"5a65b46f79b77ac672fecab6ef18e8ddd715ed823accbcfe77a22713be51cb21","blocks":[
+    {"role":"headline","box":[40,280,1040,390],"color":"#B60E32","line_count":1},
+    {"role":"caption","box":[40,805,530,880],"color":"#7A7973","line_count":1},
+    {"role":"caption","box":[550,805,1040,880],"color":"#7A7973","line_count":1},
+    {"role":"bullet","box":[40,900,1040,1035],"color":"#0B3656","line_count":2},
+    {"role":"bullet","box":[40,1060,1040,1190],"color":"#0B3656","line_count":2},
+    {"role":"bullet","box":[40,1210,1040,1350],"color":"#0B3656","line_count":2},
+    {"role":"bullet","box":[40,1370,1040,1520],"color":"#0B3656","line_count":2},
+    {"role":"closing","box":[40,1550,1040,1630],"color":"#B60E32","line_count":1},
+    {"role":"cta","box":[50,1640,900,1745],"color":"#B60E32","line_count":1}
+  ]}]
+}
