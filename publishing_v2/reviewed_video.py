@@ -33,9 +33,16 @@ def validate_reviewed_video(data, root):
         source_path, source_bytes = asset(review['source_manifest'], {'.json'})
         source = json.loads(source_bytes)
         require(source.get('approved') is True and source.get('account') == 'executivesaudi', 'source approval required')
-        require(source.get('format') == 'owner-generated-design-v1', 'reviewed original artwork required')
-        from .owner_design import validate_owner_design
-        _, _, source_media = validate_owner_design(source, root)
+        if source.get('format') == 'owner-generated-design-v1':
+            from .owner_design import validate_owner_design
+            _, _, source_media = validate_owner_design(source, root)
+        elif source.get('format') == 'owner-reviewed-composite-v1':
+            # Retain explicit rights decisions and source-byte binding for real
+            # photography; never mislabel it as generated original artwork.
+            from .owner_composite import validate_owner_composite
+            _, _, source_media = validate_owner_composite(source, root)
+        else:
+            require(False, 'reviewed source artwork required')
         require(len(source_media) == 1, 'one approved source card required')
         audio, _ = asset(review['audio_reference'], {'.mp4', '.m4a', '.wav'})
         require(bool(review['audio_reference'].get('authorization')), 'audio authorization required')

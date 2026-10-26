@@ -1,0 +1,102 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان: أكبر فندق بالعالم بعدد الغرف",
+  "expires_at": "2026-10-28T20:59:59+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-26-master-2",
+  "media": [
+    {
+      "path": "approved/tourism-hotel-20261026/challenge.mp4",
+      "sha256": "b8662bdd532f63fe00d2154480fa8c328f1da37755d909b7e76b37128a4de0d1",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "previous": {
+      "path": "approved/tourism-hotel-20261026/previous-export.json",
+      "sha256": "8af63815e417236b642e598c6b817e3d1672fb441c070d9320021fd3907d6e0d"
+    },
+    "final_video_review": {
+      "sha256": "b8662bdd532f63fe00d2154480fa8c328f1da37755d909b7e76b37128a4de0d1",
+      "reference": "Khalid instructed انشر immediately after viewing revised Hotel-Challenge-v2.mp4, Library libfile_65b6685c334c81919643619919795a6b version 1. This is owner approval of the presented final video, not a claim that the agent listened. Agent reviewed decoded frames and verified PCM equality to the previously owner-approved audio.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid instructed انشر immediately after viewing revised Hotel-Challenge-v2.mp4, Library libfile_65b6685c334c81919643619919795a6b version 1. This is owner approval of the presented final video, not a claim that the agent listened. Agent reviewed decoded frames and verified PCM equality to the previously owner-approved audio.",
+    "video_sha256": "b8662bdd532f63fe00d2154480fa8c328f1da37755d909b7e76b37128a4de0d1",
+    "source_manifest": {
+      "path": "approved/tourism-hotel-20261026/source-approval.json",
+      "sha256": "c19291f5cc8271f41b783dc25d9c4635d67217632e8966ac412e8e5ff831d723"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/tourism-hotel-20261026/frame-0.5.png",
+        "sha256": "0009ad2b7d6e45383c00e198f9271405e9c94ac683500e1428831e2555b7dfb3"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/tourism-hotel-20261026/frame-3.5.png",
+        "sha256": "52c35238810b7bfe818d74c3f6da119c3413f3fe956695b515304d014ad9d1da"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/tourism-hotel-20261026/frame-4.5.png",
+        "sha256": "dea0dea2f169ad197a7c94957b061a97775f73a24d4fc168dbf0609c6d68df0d"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/tourism-hotel-20261026/frame-5.5.png",
+        "sha256": "c8d09fcdc7f3633639cf593be12bb2b537254fd19fc7dd6c9f641dd9f8a2b8fd"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/tourism-hotel-20261026/frame-6.5.png",
+        "sha256": "b71ce5a4a67b8e0b4825f75ed3aafd4d320da0760f8ad447c64a3586c2b115f1"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/tourism-hotel-20261026/frame-7.5.png",
+        "sha256": "b02a8f985824dbc7926ec39dd8c93b5ba5d9fa20b957207054b21bfbc9f62d54"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/tourism-hotel-20261026/frame-8.5.png",
+        "sha256": "080d6c392feec142a28db34346fae847d791045fe0aecc0651b4816fd60a6f11"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/tourism-hotel-20261026/frame-11.5.png",
+        "sha256": "70d347ecdb3608d14ec5d86ab8d36ecd2d8211eae7392f9f2e184c37f768dded"
+      }
+    ]
+  }
+}
