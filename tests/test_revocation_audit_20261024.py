@@ -52,7 +52,7 @@ class Provider:
         self.creates = []
 
     def ensure_capacity(self, count):
-        assert count == 1
+        assert count == 3
         self.hook('quota_checked')
 
     def upload(self, item):
@@ -196,7 +196,7 @@ class RevocationAudit(unittest.TestCase):
         path.write_text(json.dumps(data))
         _, title, media = b.load_package(str(path))
         client, journal = Provider(lambda _: None), Journal(lambda _: None)
-        client.ensure_capacity = lambda count: self.assertEqual(count, 2)
+        client.ensure_capacity = lambda count: self.assertEqual(count, 4)
         def stop_after_first(post_id):
             self.assertEqual(post_id, 'fake-post')
             path.write_text(json.dumps(dict(data, approved=False)))

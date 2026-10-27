@@ -135,6 +135,13 @@ def require_for_new_delivery(manifest, media, existing):
             for i in range(1, len(media) + 1)):
         return
     path = Path(manifest).resolve()
+    if (path.parent / 'design-review.json').exists():
+        from .design_contract import DeliveryReview
+        destinations=media.snapshot.get('approved_destinations',['STORY'])
+        if not isinstance(destinations,list) or not destinations:fail('approved destinations required')
+        for placement in destinations:
+            DeliveryReview(media,placement)
+        return
     data = json.loads(path.read_text())
     if data.get('format') == 'reviewed-challenge-video-v1':
         from .reviewed_video import validate_reviewed_video

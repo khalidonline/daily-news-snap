@@ -46,7 +46,7 @@ def confirm_card(client, post_id, upload, key):
     return ids[0]
 
 
-def recover_rejected_group(client,journal,identity,title,card_count, *, approval_check=None):
+def recover_rejected_group(client,journal,identity,title,card_count, *, approval_check=None, media=None):
     if approval_check: approval_check()
     state=journal.read();group=state.get('_group') or {}
     uploads=group.get('uploads') or []
@@ -95,7 +95,9 @@ def recover_rejected_group(client,journal,identity,title,card_count, *, approval
         elif row.get('post_id') or row.get('status')!='PENDING':
             raise BundleError('Ambiguous single-card intent; do not recreate')
         else: missing+=1
-    if missing: client.ensure_capacity(missing+2)
+    if missing:
+        if media is not None: client.authorize_existing(media, uploads, 'STORY')
+        client.ensure_capacity(missing+2)
     for i,u in enumerate(uploads,1):
         row=state[str(i)]
         if not row.get('post_id'):
@@ -126,6 +128,6 @@ def main():
     if not_before.tzinfo is None or now<not_before: raise BundleError('Not yet approved for delivery')
     check_predecessors(manifest.get('predecessors',[]))
     recover_rejected_group(BundleClient(),GitHubJournal(identity),identity,title,len(media),
-                           approval_check=media.check_approval)
+                           approval_check=media.check_approval, media=media)
 
 if __name__=='__main__':main()

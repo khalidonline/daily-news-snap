@@ -101,6 +101,23 @@ class BundleClient:
             raise BundleError('Missing BUNDLE_API_KEY or BUNDLE_TEAM_ID repository secret')
 
     def call(self, path, method='GET', data=None, content_type='application/json'):
+        route=urllib.parse.unquote(path.split('?')[0]).rstrip('/')
+        if method.upper() in {'POST','PUT','PATCH'} and (route == '/upload' or route.startswith('/upload/')):
+            review=getattr(self,'_pending_upload_review',None)
+            if review is None: raise BundleError('Design: raw upload blocked')
+            review.check()
+        if method.upper() in {'POST','PUT','PATCH'} and (route == '/post' or route.startswith('/post/')):
+            try:
+                payload=json.loads(data)
+                if payload.get('teamId')!=self.team or payload.get('socialAccountTypes')!=['SNAPCHAT']:raise ValueError()
+                snap=payload['data']['SNAPCHAT']; uploads=snap['uploadIds']
+                reviews=getattr(self,'_design_uploads',{})
+                if not uploads or len(set(uploads))!=len(uploads): raise ValueError()
+                for upload in uploads:
+                    review=reviews[upload]
+                    review.check(snap['type'])
+            except (ValueError,KeyError,TypeError,AttributeError):
+                raise BundleError('Design: unreviewed provider mutation blocked') from None
         return request('https://api.bundle.social/api/v1' + path,
                        {'x-api-key': self.key, 'Content-Type': content_type,
                         'User-Agent':'ExecutiveSaudiPublisher/1.0', 'Accept':'application/json'}, method, data)
@@ -137,16 +154,51 @@ class BundleClient:
         return usage
 
     def upload(self, media):
+        from .design_contract import review_for_item
+        review=review_for_item(media)
         path, content = media
         boundary = 'snap' + uuid.uuid4().hex
         mime = mimetypes.guess_type(path.name)[0] or 'application/octet-stream'
         body = (f'--{boundary}\r\nContent-Disposition: form-data; name="teamId"\r\n\r\n'
                 f'{self.team}\r\n--{boundary}\r\nContent-Disposition: form-data; name="file"; '
                 f'filename="media{path.suffix.lower()}"\r\nContent-Type: {mime}\r\n\r\n').encode()
-        result = self.call('/upload', 'POST', body + content + f'\r\n--{boundary}--\r\n'.encode(),
-                           f'multipart/form-data; boundary={boundary}')
+        self._pending_upload_review=review
+        try:
+            result = self.call('/upload', 'POST', body + content + f'\r\n--{boundary}--\r\n'.encode(),
+                               f'multipart/form-data; boundary={boundary}')
+        finally:
+            self._pending_upload_review=None
         if not result.get('id'): raise BundleError('Upload returned no ID')
+        if not hasattr(self,'_design_uploads'): self._design_uploads={}
+        self._design_uploads[result['id']]=review
         return result['id']
+
+    def authorize_existing(self, media, uploads, placement='STORY'):
+        from .design_contract import DeliveryReview
+        review=DeliveryReview(media,placement)
+        if len(uploads)!=len(media) or len(set(uploads))!=len(uploads):
+            raise BundleError('Design: existing upload mapping mismatch')
+        hashes=[hashlib.sha256(raw).hexdigest() for _,raw in media]
+        identity=hashlib.sha256(('executivesaudi:'+':'.join(hashes)).encode()).hexdigest()
+        state=GitHubJournal(identity).read()
+        group=state.get('_group',{})
+        recovery=(placement=='STORY' and group.get('identity')==identity
+                  and group.get('uploads')==uploads and not group.get('post_id')
+                  and group.get('draft_validation',{}).get('status')=='REJECTED')
+        for i,upload in enumerate(uploads,1):
+            row=state.get(str(i),{})
+            if row.get('upload_id')!=upload:raise BundleError('Design: upload not bound to media receipt')
+            if recovery:continue  # group_recovery additionally verifies exact rejection and inventory
+            if row.get('status')!='POSTED' or not row.get('post_id'):
+                raise BundleError('Design: confirmed source receipt required')
+            live=self.call('/post/'+urllib.parse.quote(row['post_id'],safe=''))
+            snap=(live.get('data') or {}).get('SNAPCHAT') or {}
+            if (live.get('id')!=row['post_id'] or live.get('teamId')!=self.team
+                    or live.get('status')!='POSTED' or live.get('deletedAt')
+                    or snap.get('type')!='STORY' or upload not in snap.get('uploadIds',[])):
+                raise BundleError('Design: source upload no longer matches provider')
+        if not hasattr(self,'_design_uploads'): self._design_uploads={}
+        self._design_uploads.update({upload:review for upload in uploads})
 
     def create(self, title, upload):
         payload = {'teamId':self.team, 'title':title[:100],
@@ -278,7 +330,7 @@ def publish(client, journal, title, media, *, placement='STORY'):
     if required:
         from .challenge_contract import validate_challenge
         validate_challenge(title, media)
-    if required: client.ensure_capacity(required)
+    if required: client.ensure_capacity(required + 2)
     for index, item in enumerate(media):
         key = str(index + 1)
         row = state.get(key)
@@ -331,7 +383,7 @@ def publish_group(client, journal, title, media, identity):
         from .challenge_contract import validate_challenge
         validate_challenge(title, media)
         check_delivery_approval(media)
-        before = client.ensure_capacity(1)
+        before = client.ensure_capacity(3)
         uploads = []
         for item in media:
             check_delivery_approval(media)
@@ -456,6 +508,31 @@ def load_package(manifest):
     return identity, str(data['title']), ApprovedMedia(selected, path, data)
 
 
+def reconcile_existing(client, manifest):
+    """Read-only recovery of fully identified Story operations, even after expiry."""
+    data = json.loads(Path(manifest).read_text())
+    frames = data.get('media', [])
+    hashes = [frame.get('sha256', '') for frame in frames]
+    if data.get('account') != 'executivesaudi' or not hashes:
+        return False
+    if any(len(h) != 64 or any(c not in '0123456789abcdef' for c in h) for h in hashes):
+        return False
+    identity = hashlib.sha256(('executivesaudi:' + ':'.join(hashes)).encode()).hexdigest()
+    journal = GitHubJournal(identity)
+    state = journal.read()
+    if state.get('_group'):
+        return False
+    rows = [state.get(str(i+1)) for i in range(len(frames))]
+    if not all(row and row.get('post_id') and row.get('placement', 'STORY') == 'STORY' for row in rows):
+        return False
+    for row in rows:
+        client.wait(row['post_id'])
+        row['status'] = 'POSTED'
+    journal.save(state)
+    print(json.dumps({'status': 'reconciled', 'identity': identity}))
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('mode', choices=['check','validate','publish'], default='check', nargs='?')
@@ -464,8 +541,11 @@ def main():
     try:
         if args.mode == 'validate':
             identity, title, media = load_package(args.manifest)
-            from .readability import validate_readability
-            validate_readability(Path(args.manifest).resolve().parent / 'readability.json', media)
+            from .design_contract import DeliveryReview
+            destinations=media.snapshot.get('approved_destinations', ['STORY'])
+            if not isinstance(destinations,list) or not destinations:raise BundleError('Design: approved destinations required')
+            for placement in destinations:
+                DeliveryReview(media, placement)
             print(json.dumps({'status': 'validated_not_published', 'identity': identity,
                               'card_count': len(media)}, sort_keys=True))
             return
@@ -473,6 +553,8 @@ def main():
         client.check()
         print('API verified: Snapchat executivesaudi is connected.')
         if args.mode == 'publish':
+            if reconcile_existing(client, args.manifest):
+                return
             identity, title, media = load_package(args.manifest)
             check_predecessors(json.loads(Path(args.manifest).read_text()).get('predecessors', []))
             journal = GitHubJournal(identity)
@@ -490,4 +572,7 @@ def main():
         print(str(exc) if isinstance(exc, (BundleError, ReadabilityError)) else 'Invalid package or state; no automatic retry')
         raise SystemExit(1) from None
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    # Keep the manifest wrapper class identical to the gate's imported class.
+    from publishing_v2.bundle_api import main as canonical_main
+    canonical_main()

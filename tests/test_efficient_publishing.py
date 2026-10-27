@@ -24,8 +24,8 @@ class QuotaTests(unittest.TestCase):
         with self.assertRaises(BundleError): publish(c,Journal(),'four',[1,2,3,4])
         self.assertEqual(c.uploads,[])
     def test_partial_counts_only_new_posts(self):
-        c,j=Client(1),Journal(); j.state={'1':{'status':'POSTED','post_id':'old'}}
-        publish(c,j,'two',[1,2]); self.assertEqual(c.checked,[1])
+        c,j=Client(3),Journal(); j.state={'1':{'status':'POSTED','post_id':'old'}}
+        publish(c,j,'two',[1,2]); self.assertEqual(c.checked,[3])
         self.assertEqual(c.uploads,[2])
     def test_uncertain_anywhere_blocks_entire_batch(self):
         c,j=Client(9),Journal(); j.state={'2':{'status':'SENDING','upload_id':'u'}}

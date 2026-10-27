@@ -1,0 +1,276 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "destinations": [
+    "STORY"
+  ],
+  "settings_revision": "2026-10-27-master-6",
+  "settings_sha256": "e440053df6bacdf170f62db0d9dd9ce9f47096fae55b16b720789b065a1abc70",
+  "review": {
+    "reference": "Khalid approved the displayed Oxford-Template-Preview.png version 4 and said انشر, then كمل for packaging and delivery; no image bytes changed.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "regular_font": false,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {"STORY":"Agent visually inspected final 390px Story simulation: top header 0..39px and bottom reply/reactions 625..692px; body, captions and full CTA remain visible. Simulation, not live-device proof."}
+  },
+  "cards": [
+    {
+      "sha256": "7184b392653d46162372e9db05e444a65e2a76c4c65b66962e5d99fa2f9eeced",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "أكسفورد للمشاة… مو ليوم واحد!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              204,
+              280,
+              875,
+              351
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            204,
+            280,
+            876,
+            352
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "طيارة بليريو داخل المتجر — ١٩٠٩",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              120,
+              815,
+              467,
+              842
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            120,
+            815,
+            468,
+            843
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "سيلفريدجز في شارع أكسفورد",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              615,
+              815,
+              956,
+              853
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            615,
+            815,
+            957,
+            854
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "من ٢٦ أكتوبر، جزء من أكسفورد صار للمشاة؛ يبون الناس تتمشى وتتسوق براحتها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              160,
+              905,
+              980,
+              960
+            ],
+            [
+              300,
+              971,
+              980,
+              1017
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            160,
+            905,
+            1015,
+            1018
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "العام قفلوه ليوم واحد. هالمرة قفلوه بشكل دائم، وتجهيز الشارع بيكمل على مراحل.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              76,
+              1051,
+              980,
+              1103
+            ],
+            [
+              366,
+              1117,
+              980,
+              1169
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            76,
+            1051,
+            1015,
+            1170
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وفي ١٩٠٩، سيلفريدجز عرض أول طيارة عبرت المانش في ٣٧ دقيقة… وكان إنجاز وقتها!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              174,
+              1197,
+              980,
+              1260
+            ],
+            [
+              223,
+              1263,
+              980,
+              1317
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            174,
+            1197,
+            1015,
+            1318
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "عرض الطيارة جاب ١٥٠ ألف زائر للمتجر خلال أربعة أيام!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              104,
+              1343,
+              980,
+              1398
+            ],
+            [
+              903,
+              1409,
+              980,
+              1470
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            104,
+            1343,
+            1015,
+            1471
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "أول جابوا طيارة علشان الناس تجي… والحين شالوا السيارات علشان تتمشى!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              112,
+              1500,
+              967,
+              1560
+            ],
+            [
+              321,
+              1566,
+              759,
+              1611
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            112,
+            1500,
+            968,
+            1612
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1650,
+              874,
+              1697
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1650,
+            875,
+            1698
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          810,
+          126,
+          990,
+          136
+        ],
+        "cta_background": [
+          70,
+          1660,
+          80,
+          1690
+        ]
+      }
+    }
+  ]
+}

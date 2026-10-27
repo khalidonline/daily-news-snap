@@ -11,7 +11,7 @@ class Journal:
 class Client:
     def __init__(self): self.created=0; self.found=[]; self.timeout=False
     def find(self,*a): return self.found
-    def ensure_capacity(self,n): assert n==1
+    def ensure_capacity(self,n): assert n==3  # one create plus two reserved operations
     def create_saved(self,*a):
         self.created+=1
         if self.timeout: raise BundleError('timeout')

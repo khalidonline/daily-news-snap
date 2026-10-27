@@ -3811,6 +3811,9 @@ def publish_via_github(png_path):
 
 
 def _ayrshare(path_, payload):
+    if str(path_).strip('/').split('/')[0] in {'post','posts'}:
+        from publishing_v2.design_contract import fail
+        fail('legacy Ayrshare delivery disabled; use reviewed package publisher')
     req = urllib.request.Request(
         f"https://api.ayrshare.com/api/{path_}",
         data=json.dumps(payload).encode(),
@@ -3882,6 +3885,8 @@ def _multipart(fields, file_field, filename, data, mime="image/png"):
 
 def bundle_upload(card_path):
     """Upload the card to bundle.social. Returns the upload id."""
+    from publishing_v2.design_contract import fail
+    fail('legacy upload disabled; use reviewed package publisher')
     data = Path(card_path).read_bytes()
     # stories go up as one MP4 now — an MP4 declared image/png gets rejected
     mime = ("video/mp4" if str(card_path).lower().endswith(".mp4")
@@ -3902,6 +3907,8 @@ def bundle_upload(card_path):
 def _bundle_post(caption, card_path):
     """Upload the card(s), then publish as a Snapchat Story.
     card_path may be one path or a list of paths (a multi-frame story)."""
+    from publishing_v2.design_contract import fail
+    fail('legacy Bundle delivery disabled; use reviewed package publisher')
     if not (BUNDLE_API_KEY and BUNDLE_TEAM_ID):
         raise SystemExit("BUNDLE_API_KEY and BUNDLE_TEAM_ID must both be set")
     if not card_path:
@@ -3955,6 +3962,9 @@ def _bundle_post(caption, card_path):
 
 def _zernio(path, payload):
     """Call the Zernio API. Returns the decoded response, or an error dict."""
+    if str(path).strip('/').split('/')[0] in {'post','posts'}:
+        from publishing_v2.design_contract import fail
+        fail('legacy Zernio delivery disabled; use reviewed package publisher')
     if not ZERNIO_API_KEY:
         raise SystemExit("ZERNIO_API_KEY is not set")
     req = urllib.request.Request(
@@ -3980,6 +3990,8 @@ def post_story(caption, media_urls, card_path=None):
 
     bundle.social uploads the file itself; the others take a public URL.
     """
+    from publishing_v2.design_contract import fail
+    fail('legacy Story delivery disabled; use reviewed package publisher')
     if POST_PROVIDER == "bundle":
         print(f"    posting via bundle.social -> {BUNDLE_BASE}")
         return _bundle_post(caption, card_path)

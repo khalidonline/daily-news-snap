@@ -56,7 +56,7 @@ class SavedClient(BundleClient):
             raise BundleError('Saved Story result mismatch')
         return {'id':post_id,'status':'POSTED','externalData':row.get('externalData')}
 
-def save_story(client,journal,identity,title,uploads):
+def save_story(client,journal,identity,title,uploads, *, media=None, media_factory=None):
     state=journal.read()
     if state and (state.get('identity')!=identity or state.get('upload_ids')!=uploads):
         raise BundleError('Saved Story journal identity mismatch')
@@ -69,7 +69,9 @@ def save_story(client,journal,identity,title,uploads):
         journal.save(state)
     if state and not state.get('post_id'): raise BundleError('Ambiguous previous intent; no new request')
     if not state:
-        client.ensure_capacity(1)
+        if media_factory is not None: media=media_factory()
+        if media is not None: client.authorize_existing(media,uploads,'SAVED_STORY')
+        client.ensure_capacity(3)
         state={'identity':identity,'title':title,'upload_ids':uploads,'status':'SENDING','intent_at':now()}
         journal.save(state)
         state['post_id']=client.create_saved(identity,title,uploads)
@@ -130,7 +132,11 @@ def main():
             or live.get('deletedAt') or snap.get('type','STORY')!='STORY' or snap.get('uploadIds')!=r.get('group_upload_ids',[r['upload_id']])
             or r['upload_id'] not in snap.get('uploadIds',[])):
             raise BundleError('Original publication no longer matches approved receipt')
-    result=save_story(c,SavedJournal(identity),identity,title,[r['upload_id'] for r in rows])
+    # A new archive is a new publication: old posting receipts alone are not
+    # current design approval. Expired legacy packages need a fresh manifest.
+    from .bundle_api import load_package
+    result=save_story(c,SavedJournal(identity),identity,title,[r['upload_id'] for r in rows],
+                      media_factory=lambda:load_package(approval['manifest'])[2])
     print(json.dumps(result,ensure_ascii=False))
 
 if __name__=='__main__': main()
