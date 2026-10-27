@@ -2,7 +2,7 @@
   "project": "daily-news-snap",
   "canonical_reference": {
     "role": "Mandatory editorial, design and prepublication reference for every executivesaudi post",
-    "updated_at_riyadh": "2026-10-27",
+    "updated_at_riyadh": "2026-10-28",
     "owner_instruction": "احفظ كل اعدادات التحرير والتصميم وتصير مرجع دائم لكل منشور",
     "read_before": [
       "topic selection",
@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-27-master-7",
+    "revision": "2026-10-28-master-8",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -340,7 +340,26 @@
     },
     "safe_area_policy": "Internal working layout, not a universal Snapchat safe-zone claim. Keep important text and CTA inside x60..1020,y260..1730; simulate Story and Spotlight overlays separately at 390px. Spotlight controls need a destination-specific layout; do not reuse Story coordinates blindly. Footer logo is nonessential. No large empty footer and no text clipping.",
     "maximum_bullets": 4,
-    "overflow_policy": "No automatic font shrinking, cropping, condensed lettering, font substitution or loss of CTA. Shorten approved text only with owner authorization; otherwise use up to two cards and obtain design approval."
+    "overflow_policy": "No automatic font shrinking, cropping, condensed lettering, font substitution or loss of CTA. Shorten approved text only with owner authorization; otherwise use up to two cards and obtain design approval.",
+    "brand_header_override": {
+      "approved_at_riyadh": "2026-10-28",
+      "owner_instruction": "ملخص تنفيذي والخط اللي فوقها ، شكلهم مو حلو والخط عريض. ابيك تستخدم نفس اللي بالمنشور اللي قبل او تقدر تستخدم اللي في منشور اكسفورد",
+      "reference_library_file_id": "libfile_02956642a52881919ce6edced469d180",
+      "reference_version": 4,
+      "reference_file_id": "file_00000000b7dc820babc1457e530f21d6",
+      "reference_sha256": "7184b392653d46162372e9db05e444a65e2a76c4c65b66962e5d99fa2f9eeced",
+      "reference_name": "Oxford-Template-Preview.png",
+      "scope": "Upper-right ملخص تنفيذي wordmark and green horizontal line, including all future challenges.",
+      "rule": "Copy the existing Oxford header artwork, preserving its lighter letter strokes, line thickness/length, relative spacing and proportions. Do not redraw in Bold or extend/thicken the bar to satisfy a sample region. Keep numeric green/background palette. Font family not inferred from raster.",
+      "reference_region_xyxy": [
+        760,
+        110,
+        1020,
+        230
+      ],
+      "qa": "Inspect reference and final decoded export at mobile size. Sample actual green interior pixels within artwork rather than forcing artwork to fit a hardcoded palette sample.",
+      "supersedes": "Bridges 2026-10-27 header appearance only. Preserve all challenge audio, countdown, timing, question/option typography and safe areas. No automatic republication of existing posts."
+    }
   },
   "qa": [
     "Preserve the master brand elements, logo, color roles and layout; do not regenerate or reinterpret the identity for each story.",
@@ -444,7 +463,8 @@
       "answer": "Highlight correct choice with coordinated explanation underneath; reveal only after countdown finishes",
       "photo": "Clear product in use when relevant; match order of images and text. Choose a real image that visibly supports the question; for room-count challenges show hotel exterior with many window rows, not a generic lobby.",
       "sources": "Never publish source card or source text",
-      "cta": "Retain pale pink rounded sharing strip and red arrow. Exact challenge text: شاركها مع صديقك واختبر معلوماته"
+      "cta": "Retain pale pink rounded sharing strip and red arrow. Exact challenge text: شاركها مع صديقك واختبر معلوماته",
+      "header": "Use layout.brand_header_override: exact lighter Oxford wordmark and line, not the thick bridges header."
     },
     "changes_allowed_without_rebuilding_template": [
       "Question",
