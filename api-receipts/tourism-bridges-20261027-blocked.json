@@ -1,0 +1,27 @@
+{
+  "date_riyadh": "2026-10-27",
+  "challenge": "الجسور",
+  "content_type": "challenge",
+  "question": "أي مدينة فيها جسور أكثر؟",
+  "options": [
+    "البندقية",
+    "هامبورغ"
+  ],
+  "answer": "هامبورغ، نحو ٢٥٠٠ جسر",
+  "fact_sources": [
+    "https://www.hamburg-travel.com/see-explore/round-trips-tours/city-tours/brueckentour/",
+    "https://www.italia.it/en/veneto/venice"
+  ],
+  "facts_verified": true,
+  "settings_revision": "2026-10-27-master-6",
+  "library_version": "15",
+  "status": "BLOCKED_BEFORE_PRODUCTION",
+  "STORY": "NOT_SENT",
+  "SPOTLIGHT": "NOT_SENT",
+  "new_paid_model_requests": 0,
+  "quota": "NOT_QUERIED_NO_DELIVERY_ATTEMPT",
+  "blocker": "No available tool supplies actual audiovisual playback perception for the mandatory full-video listening review. PCM identity and non-silence alone do not satisfy the explicit final listening instruction. No video produced or false review evidence created.",
+  "resume_requires": "Working final-video audiovisual review capability, then production and all normal publication gates. Existing explicit production/publication authorization remains valid; no routine new approval needed.",
+  "hotel": "Already published; do not repeat",
+  "catchup": "Do not combine two daily challenges"
+}
