@@ -1,0 +1,102 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "تحدي الجسور: البندقية أو هامبورغ",
+  "expires_at": "2026-10-29T20:59:59+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-27-master-7",
+  "media": [
+    {
+      "path": "approved/tourism-bridges-20261027/challenge.mp4",
+      "sha256": "2de6b18098909c5c9ec30ce2658035e89092a0fc97fc6149b511950908fcc8b0",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "previous": {
+      "path": "approved/tourism-bridges-20261027/previous-export.json",
+      "sha256": "bbaa8a115b094db9b044bb8470737be065ce6f5c48ee9f34ee2728d3ec7d7eae"
+    },
+    "final_video_review": {
+      "sha256": "2de6b18098909c5c9ec30ce2658035e89092a0fc97fc6149b511950908fcc8b0",
+      "reference": "Khalid approved Bridges-Review.mp4 Library libfile_7d76459e1e7c819183ed9aa4543a8abc v1 with انشر, then explicitly authorized color correction and publication: ثبت الاعدادات الصحيحه وانشر. Agent reviewed decoded visual states and verified exact approved PCM, not a claim of agent listening.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved Bridges-Review.mp4 Library libfile_7d76459e1e7c819183ed9aa4543a8abc v1 with انشر, then explicitly authorized color correction and publication: ثبت الاعدادات الصحيحه وانشر. Agent reviewed decoded visual states and verified exact approved PCM, not a claim of agent listening.",
+    "video_sha256": "2de6b18098909c5c9ec30ce2658035e89092a0fc97fc6149b511950908fcc8b0",
+    "source_manifest": {
+      "path": "approved/tourism-bridges-20261027/source-approval.json",
+      "sha256": "7c4e300a9dcd3cc1836fb7ed0c7438771fc9fb0f362dd71f4dd8cc77aaa203ab"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Original previously owner-approved audio copied unchanged; PCM verified equal."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/tourism-bridges-20261027/frame-0.5.png",
+        "sha256": "cc6bbff3183ff32e731b225700f4e666ecc97be501fa2a4e608f039fd6709e7e"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/tourism-bridges-20261027/frame-3.5.png",
+        "sha256": "aef6ca6dca1a76ee3a8b7ed9a60db736a6ee3d037cf484e3a4a08fc9a8c58b70"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/tourism-bridges-20261027/frame-4.5.png",
+        "sha256": "d64b9cef0523179331e02f99d205ca0b106612046f5aad9d02ac92e94e68ce8a"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/tourism-bridges-20261027/frame-5.5.png",
+        "sha256": "541bb2f1cff10cc62a245879979820a019ed7ac9897addf9fa0f9378ca750964"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/tourism-bridges-20261027/frame-6.5.png",
+        "sha256": "8353b3abcf4af6e85147194318c8f3620323b9a1bb4b3c34f245df0c173eb1d9"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/tourism-bridges-20261027/frame-7.5.png",
+        "sha256": "a7c99a1ae3083222af1d67ad951dbf1e1f7fa349bc2af553a7035887ced89418"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/tourism-bridges-20261027/frame-8.5.png",
+        "sha256": "88dd3e36caa82a48568667afff212d89e8606fedbf59f12ee01e78edfe799aa8"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/tourism-bridges-20261027/frame-11.5.png",
+        "sha256": "22b8abf4f89ab5867115b652c0075bf8cec238c8f14e7751317fe0e47c654fd1"
+      }
+    ]
+  }
+}

@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-27-master-6",
+    "revision": "2026-10-27-master-7",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -472,7 +472,12 @@
     "enforcement_scope": "Saved production specification and mandatory human/agent review gate. This is not a claim that all repository publishing paths enforce it automatically.",
     "next_work_gate": "Do not start new challenge production until a complete master with countdown and audio is verified against these settings.",
     "cta_exact": "شاركها مع صديقك واختبر معلوماته",
-    "cta_scope": "All challenges; replaces prior challenge CTA. Information-card CTA unchanged."
+    "cta_scope": "All challenges; replaces prior challenge CTA. Information-card CTA unchanged.",
+    "color_validation": {
+      "rule": "Validate role colors on final decoded MP4 frames before publishing. Preserve photos and exact approved audio when correcting colors. Sample actual interior header ink, not background. Retain original review frames unchanged when transferring.",
+      "owner_instruction": "ثبت الاعدادات الصحيحه وانشر",
+      "approved_at_riyadh": "2026-10-27"
+    }
   },
   "emoji": {
     "approved_character": "😄",

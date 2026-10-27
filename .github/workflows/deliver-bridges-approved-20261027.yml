@@ -1,0 +1,33 @@
+name: Deliver approved bridges challenge only
+on:
+  push:
+    branches: [main]
+    paths: ['.github/bridges-approved-v2.trigger']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  deliver:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install pillow
+      - name: Ensure FFmpeg with bounded installation
+        timeout-minutes: 3
+        run: command -v ffmpeg || (sudo timeout 90 apt-get update -qq && sudo timeout 90 apt-get install -y ffmpeg)
+      - name: Restore sealed video and restore original hash-pinned review frames
+        run: |
+          tar -xJf approved/tourism-bridges-20261027.tar.xz
+      - name: Validate and publish exact approved bytes to both destinations
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python -m approved.tourism-bridges-20261027.deliver
