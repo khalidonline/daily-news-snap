@@ -2,7 +2,7 @@
   "project": "daily-news-snap",
   "canonical_reference": {
     "role": "Mandatory editorial, design and prepublication reference for every executivesaudi post",
-    "updated_at_riyadh": "2026-10-26",
+    "updated_at_riyadh": "2026-10-27",
     "owner_instruction": "احفظ كل اعدادات التحرير والتصميم وتصير مرجع دائم لكل منشور",
     "read_before": [
       "topic selection",
@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-26-master-3",
+    "revision": "2026-10-27-master-4",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -45,7 +45,7 @@
   },
   "production_acceptance_gate": {
     "format": "One card when sufficient; maximum two. Short bullets; no more than two rendered lines per bullet. Prefer one readable title line; maximum two closing lines. Shorten meaningfully instead of shrinking font.",
-    "canvas": "Final publishing bytes MUST measure exactly 1080x1920. A prompt requesting this size, a 9:16 preview, or visual similarity is not proof.",
+    "canvas": "Before ANY user-facing preview or approval, exported bytes MUST measure exactly 1080x1920. Compose on this canvas from the start. Raw generator output is internal only, not an approval preview. If output differs, normalize without distortion or cropping meaningful content and verify dimensions before display; a prompt or 9:16 appearance is not proof.",
     "palette": "Apply palette.exact_numeric_tokens numerically in template/rendering or deterministic postprocessing. A generation prompt alone is never enforcement. Verify flat/interior pixels, allowing only antialiasing blends; preserve photographic colors.",
     "template": "Start from the approved master, not a newly imagined identity. Retain header, original logos, font appearance, color roles, rounded panels and footer. Do not claim an exact font family without an original font/template.",
     "images": "Use meaningful sourced images or owner-supplied assets; founder/start paired with recognizable relevant product when suitable. Never invent archival evidence or label an unrelated shop as the original. Disclose generated illustrations; do not represent generated product packaging as official photography.",
@@ -57,7 +57,7 @@
       "Read current reference and inspect approved visual master",
       "Verify event timing, facts, spelling and Saudi phrasing",
       "Compare final text against approved wording",
-      "Measure actual final pixel dimensions: 1080x1920",
+      "BEFORE DISPLAY: measure actual exported file exactly 1080x1920; show the same verified export that will be approved and published.",
       "Verify actual palette interior colors against exact tokens",
       "Count rendered lines in every bullet: maximum two",
       "Check matching captions under every image and source provenance",
@@ -87,7 +87,7 @@
     "rules": [
       "Delivery failure must not regenerate media or make paid model requests",
       "Verify current API account and live capacity; retain two operations; do not assume quota reset",
-      "Check actual Riyadh daily cost ledger against USD3; missing ledger is unknown, not zero",
+      "Owner removed cost-ledger verification as a publishing prerequisite on 2026-10-27. Missing ledger must not block posting or cause repeated waiver requests. USD3 daily budget remains; do not claim missing costs are zero or authorize new paid work beyond that cap.",
       "Preserve existing approved publication safeguards, final-version approval and immutable media hashes",
       "Use durable intent/operation receipts and provider inventory; reconcile ambiguity, never blind retry",
       "Keep STORY duration ONE_WEEK; Saved Story is a separate operation and receipt",
@@ -127,13 +127,13 @@
       "challenge_audio_timer_reveal_if_applicable",
       "live_account",
       "live_quota_timestamp",
-      "cost_ledger_timestamp",
       "destinations",
       "previous_attempts",
       "operation_ids",
       "posted_receipts"
     ],
-    "no_repeat_approval": "Do not re-ask fixed style, dimensions or the same valid publishing approval each day. Ask only for changed scope, real access/permission blocker, unapproved creative change or budget exception."
+    "no_repeat_approval": "Do not re-ask settled style, dimensions or valid publication authorization. Do not request cost-ledger exceptions: owner removed this check. Ask only for changed scope, actual access/permission blocker, unapproved creative change or spending beyond the remaining USD3 daily cap.",
+    "cost_ledger_verification_required": false
   },
   "goody_20261025_review": {
     "publication_status": "NOT_SENT_BY_THIS_SESSION",
@@ -219,7 +219,7 @@
     "aspect_ratio": "9:16",
     "approved_preview_actual_width": 941,
     "approved_preview_actual_height": 1672,
-    "export_note": "Measure actual final file as exactly 1080x1920; preserve aspect ratio. Preview approval must use final export, not a differently-sized generation."
+    "export_note": "Design on 1080x1920 from the start. Never present an unchecked generator output. Measure before user preview, not only before publication. Preserve aspect ratio and content; inspect layout after normalization."
   },
   "palette": {
     "body_and_bullets": "Match the blue of the pinned visual master.",
