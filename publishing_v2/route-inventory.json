@@ -10,7 +10,7 @@
   ".github/workflows/model-role-experiment.yml": "91db5d5d751e3451ebcfc32dc07b6e3ef2bbe06b3804f70204659e86571787af",
   ".github/workflows/publication-contract.yml": "c2217155d462a99d3c293e061b2fc59582c355e0b4daad813781dd5a966aa903",
   ".github/workflows/publish-apple-ai-approved.yml": "33ea28920896b652d733fdfbc707ec3ca355b16988c69952faf3a99456885bc3",
-  ".github/workflows/publish-approved-package.yml": "5cd9428c5973cce48cc1069245b85fde7dc85674867aa637cca3265d756998a4",
+".github/workflows/publish-approved-package.yml": "82fd724b7aad2c604d70c3481b0cdd676b4ff096cde54b1d2b2857f01144187f",
   ".github/workflows/publish-defense-tech-approved.yml": "75db3829a800ca5fc60d5267a392a476c25c56261c46b1df3f5c6229a2ea266e",
   ".github/workflows/publish-horse-approved.yml": "dd68220cd22ef10d14b9c392c133978c30f1872e993ec1910d92dc8fb9f6acbc",
   ".github/workflows/publishing-v2-autopilot.yml": "a3da07103d7a3cd4ccd3d632af086f8c554d08a01e5acd1b6b8daea17f697752",
