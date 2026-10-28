@@ -1,1 +1,1 @@
-Owner authorized title update and publication on 2026-10-28. Final SHA256 bed4072e9bc8dc373f018869af8e6598863f6e4e3d5521dcf73e6a4fe10d1e62
+Publish approved Global Entry card; exact source-byte settings hash corrected. Prior attempts stopped before media upload.
