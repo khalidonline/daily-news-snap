@@ -57,3 +57,15 @@ the production spending cap is not removed.
 Do not re-ask settled style choices or repeat a valid publication authorization.
 No live posting, deletion, generation or old schedule runs are authorized by
 this settings update alone. Existing publisher guards remain unchanged.
+
+## Original brand logo — owner approved 28 October 2026
+
+Use the same original high-quality ExecutiveSaudi logo asset used by news/طواري
+cards for future challenges: upper left throughout, and in the countdown area
+for seconds 0–3 before digits replace it. Follow `brand_logo` in the current
+master. Never crop the logo from compressed video, screenshots or encoded
+exports; never redraw it. Resolve and record the original news-template asset
+path and SHA before rendering; do not invent an asset identity. Preserve its
+proportions/colors and inspect sharpness in final decoded frames at 390px.
+Keep the Oxford wordmark/line and all approved challenge audio, countdown,
+answer and CTA settings. This instruction does not republish existing posts.
