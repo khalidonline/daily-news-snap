@@ -1,0 +1,35 @@
+{
+  "status": "PHOTO_SELECTED_VIDEO_REVISION_PENDING",
+  "selected_at_riyadh": "2026-10-28",
+  "owner_instruction": "هذي حلوه استخدمها",
+  "photo": {
+    "operation": "create_library_file",
+    "status": "succeeded",
+    "path": "/01-E6BE1C88-9D66-4ACD-B40E-5A7E967D88CA.jpeg",
+    "file_id": "file_00000000d5948243b7c9ff9e0a751203",
+    "library_file_id": "libfile_ed1fe04b26448191b09867434ba31260",
+    "file_name": "01-E6BE1C88-9D66-4ACD-B40E-5A7E967D88CA.jpeg",
+    "current_version_number": 0,
+    "restored_from_version_number": null,
+    "xattrs": [
+      {
+        "name": "user.library-file-version",
+        "value": "0"
+      }
+    ],
+    "directory_id": "libdir_c8a365561dd88191897f23f708789371",
+    "mime_type": "image/jpeg",
+    "library_artifact_type": "other",
+    "file_size_bytes": 238492,
+    "external_connectors_accessed": false
+  },
+  "target": "tourism-hotel-20261026",
+  "instructions": [
+    "Replace photo with owner supplied aerial image.",
+    "Image shows the wider resort; use caption إطلالة على مجمع جنتنغ rather than implying every building belongs to First World Hotel.",
+    "Apply latest Oxford header override from current master.",
+    "Preserve approved question/options/answer, audio, visible countdown and CTA.",
+    "No new publication performed by this selection record; do not repeat hotel via daily series."
+  ],
+  "source": "User supplied selected photograph; no invented license or source attribution."
+}
