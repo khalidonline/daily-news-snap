@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-28-master-9",
+    "revision": "2026-10-28-master-10",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -528,9 +528,9 @@
       "Lower logo at countdown position during intro seconds 0–3"
     ],
     "source_policy": "Use the original high-quality logo asset from the news-card template. Never extract it from compressed video, a screenshot or a previously encoded export; never redraw or generate an approximation. Preserve original proportions and colors; downsample directly from the source once.",
-    "source_asset_path": null,
-    "source_asset_sha256": null,
-    "asset_status": "Owner-approved source selection; exact original file and hash must be resolved from the news template before next rendering. Do not claim source file identified from a raster.",
+    "source_asset_path": "images/brand/badge.png",
+    "source_asset_sha256": "8c143995229de80faf0315d5aaef90602bf0b5112360faae4cab0d8423f9ab2d",
+    "asset_status": "Resolved: original 1000x1000 asset loaded by publishing_v2/fixed_information_template.py for Oxford/news cards. Inspected directly; no screenshot/video extraction.",
     "timing": "Lower logo visible 0<=t<3, replaced by visible ٥٤٣٢١ at seconds3..8. Upper-left logo stays throughout.",
     "qa": "Inspect final decoded video at full resolution and 390px mobile width for crisp readable logo, correct aspect ratio and absence of compression blur. Record actual source path/hash.",
     "preserve": "Oxford wordmark and green header line, approved palette, audio, 12-second timing, answer and CTA.",

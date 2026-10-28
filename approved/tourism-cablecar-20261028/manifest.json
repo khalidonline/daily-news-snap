@@ -1,0 +1,102 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أي رحلة تلفريك مسارها أطول؟",
+  "expires_at": "2026-10-30T16:19:42.244687+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-28-master-10",
+  "media": [
+    {
+      "path": "approved/tourism-cablecar-20261028/challenge.mp4",
+      "sha256": "3ca0637de7f89e8da9df67fe10d9e89ce0ef37445c86d170d8ffea0f83bc6c4b",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "previous": {
+      "path": "approved/tourism-hotel-revised-20261028/manifest.json",
+      "sha256": "40756c43f33658f832426da8c3e6352c4c4f968a95a937fd5a1497a8480a3dcd"
+    },
+    "final_video_review": {
+      "sha256": "3ca0637de7f89e8da9df67fe10d9e89ce0ef37445c86d170d8ffea0f83bc6c4b",
+      "reference": "Khalid expressly approved this cable-car comparison and delegated production/publication; latest instruction كمل وانشر وحل المشكله علشان ينشر بكره على نفس الوقت. Agent inspected all eight decoded states and separate modeled Story/Spotlight overlays at390px; exact decoded PCM equals approved audio without shift. No claim that owner watched this new export or that agent subjectively listened.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid expressly approved this cable-car comparison and delegated production/publication; latest instruction كمل وانشر وحل المشكله علشان ينشر بكره على نفس الوقت. Agent inspected all eight decoded states and separate modeled Story/Spotlight overlays at390px; exact decoded PCM equals approved audio without shift. No claim that owner watched this new export or that agent subjectively listened.",
+    "video_sha256": "3ca0637de7f89e8da9df67fe10d9e89ce0ef37445c86d170d8ffea0f83bc6c4b",
+    "source_manifest": {
+      "path": "approved/tourism-cablecar-20261028/source-approval.json",
+      "sha256": "bdc7a22a0fbfa428df0ff2320cc50e95576374a7b0cc1e6d31b10919ce70ecf2"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/tourism-cablecar-20261028/frame-0.5.png",
+        "sha256": "31cd255bb94d973e9a7f49a46de539d33923300d5d5ed57300e8aea21204f92c"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/tourism-cablecar-20261028/frame-3.5.png",
+        "sha256": "ba72f9e301df86882bde521a74c1f8c098bb817a2ffb7a6024c4d74f50cdc270"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/tourism-cablecar-20261028/frame-4.5.png",
+        "sha256": "abaf5a6753afca8fb257259b1e64fb3c59387fce11f420a7bdad9c019d365b21"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/tourism-cablecar-20261028/frame-5.5.png",
+        "sha256": "231dfe1debae80c4ffd690bf2f4167adf97ced6df0ede4bfe8ec6b9375fb9273"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/tourism-cablecar-20261028/frame-6.5.png",
+        "sha256": "0c96d4ca6a0a1bf5ee3a38b0c6d0df28d8410f19f9723cc315e58736b2c00405"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/tourism-cablecar-20261028/frame-7.5.png",
+        "sha256": "28787c404f9cdf28faaf2c659faa420ce4df0c01ee7df4e89642d1afe83ddd6d"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/tourism-cablecar-20261028/frame-8.5.png",
+        "sha256": "ae7bf66bf5174a8705fb95dd98dc006aafec611ada25d35881f0528fb4600a09"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/tourism-cablecar-20261028/frame-11.5.png",
+        "sha256": "51be75afb187d70d5f54c58c900cfa34dea8bf2ddd3c00bc5775b31b3845207e"
+      }
+    ]
+  }
+}
