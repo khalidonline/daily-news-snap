@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-28-master-8",
+    "revision": "2026-10-28-master-9",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -464,7 +464,8 @@
       "photo": "Clear product in use when relevant; match order of images and text. Choose a real image that visibly supports the question; for room-count challenges show hotel exterior with many window rows, not a generic lobby.",
       "sources": "Never publish source card or source text",
       "cta": "Retain pale pink rounded sharing strip and red arrow. Exact challenge text: شاركها مع صديقك واختبر معلوماته",
-      "header": "Use layout.brand_header_override: exact lighter Oxford wordmark and line, not the thick bridges header."
+      "header": "Use layout.brand_header_override: exact lighter Oxford wordmark and line, not the thick bridges header.",
+      "logo": "Follow brand_logo: original news-card logo asset, never video-frame crop; lower logo at countdown position during intro0–3s."
     },
     "changes_allowed_without_rebuilding_template": [
       "Question",
@@ -517,5 +518,22 @@
     "sha256": "5a65b46f79b77ac672fecab6ef18e8ddd715ed823accbcfe77a22713be51cb21",
     "instruction": "Preserve visual typography, branding and color roles; change only approved topic text and photos. Two rendered lines maximum per bullet; validate final dimensions/palette/CTA before delivery. Latest Jurong preview approved by owner with instruction ثبت التعليمات وخلها مرجع للمستقبل. انشر.",
     "scope": "Future information cards; preserve challenge audio/timer and separate delivery rules."
+  },
+  "brand_logo": {
+    "approved_at_riyadh": "2026-10-28",
+    "owner_instruction": "اعتمده وحطه في الاعدادات والتعليمات الاساسيه",
+    "selection": "Use exactly the same original ExecutiveSaudi logo asset used for news/طواري snaps.",
+    "scope": [
+      "Upper-left logo in all future challenges",
+      "Lower logo at countdown position during intro seconds 0–3"
+    ],
+    "source_policy": "Use the original high-quality logo asset from the news-card template. Never extract it from compressed video, a screenshot or a previously encoded export; never redraw or generate an approximation. Preserve original proportions and colors; downsample directly from the source once.",
+    "source_asset_path": null,
+    "source_asset_sha256": null,
+    "asset_status": "Owner-approved source selection; exact original file and hash must be resolved from the news template before next rendering. Do not claim source file identified from a raster.",
+    "timing": "Lower logo visible 0<=t<3, replaced by visible ٥٤٣٢١ at seconds3..8. Upper-left logo stays throughout.",
+    "qa": "Inspect final decoded video at full resolution and 390px mobile width for crisp readable logo, correct aspect ratio and absence of compression blur. Record actual source path/hash.",
+    "preserve": "Oxford wordmark and green header line, approved palette, audio, 12-second timing, answer and CTA.",
+    "retroactive_publication": false
   }
 }
