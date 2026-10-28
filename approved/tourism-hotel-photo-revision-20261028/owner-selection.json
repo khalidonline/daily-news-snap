@@ -1,5 +1,5 @@
 {
-  "status": "PHOTO_SELECTED_VIDEO_REVISION_PENDING",
+  "status": "REVISED_VIDEO_VALIDATED_DELIVERY_IN_PROGRESS",
   "selected_at_riyadh": "2026-10-28",
   "owner_instruction": "هذي حلوه استخدمها",
   "photo": {
@@ -26,10 +26,16 @@
   "target": "tourism-hotel-20261026",
   "instructions": [
     "Replace photo with owner supplied aerial image.",
-    "Image shows the wider resort; use caption إطلالة على مجمع جنتنغ rather than implying every building belongs to First World Hotel.",
     "Apply latest Oxford header override from current master.",
     "Preserve approved question/options/answer, audio, visible countdown and CTA.",
-    "No new publication performed by this selection record; do not repeat hotel via daily series."
+    "Latest owner instruction: no place caption or resort name before reveal.",
+    "Show original lower logo in countdown position during seconds 0–3, then digits 5–1 during seconds 3–8.",
+    "Owner explicitly requested تمام يالله انشر on 2026-10-28. This authorizes this separate revised hotel publication; daily tourism schedule is unchanged."
   ],
-  "source": "User supplied selected photograph; no invented license or source attribution."
+  "source": "User supplied selected photograph; no invented license or source attribution.",
+  "delivery": {
+    "manifest": "approved/tourism-hotel-revised-20261028/manifest.json",
+    "sha256": "daa66a111156e26d088ac44ef7abf0e9c1c47fe1839edd622fcb4baa344fed42",
+    "run": 40644672996
+  }
 }
