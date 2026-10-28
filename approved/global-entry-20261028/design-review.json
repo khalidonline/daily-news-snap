@@ -1,0 +1,224 @@
+{
+  "version": 1,
+  "settings_revision": "2026-10-28-master-9",
+  "settings_sha256": "eefcdcece815b4c33f3e7473f04cd21760af22965f65c907db40f8455e1b2575",
+  "content_type": "information",
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Owner approved displayed version 3, then explicitly requested title سالفة المسافر الموثوق في امريكا باختصار and said ثم كمل النشر. Title and photo lowered 15/20px to keep title inside existing enforced safe area; no font/text changes otherwise. Narration is fictional first person, previously disclosed in conversation; user requested removing subtitle. Agent visually inspected final card at 390px; overlay simulation checked, not a live Snapchat-device preview.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "approved_typography": true,
+    "overlay_destinations": {
+      "STORY": "Simulated 1080x1920 Story overlays: top0..240 and bottom1810..1920, CTA ends1721. Reviewed 390px simulation; no live-device claim."
+    }
+  },
+  "cards": [
+    {
+      "sha256": "bed4072e9bc8dc373f018869af8e6598863f6e4e3d5521dcf73e6a4fe10d1e62",
+      "palette_samples": {
+        "background": [
+          10,
+          400,
+          30,
+          420
+        ],
+        "green": [
+          810,
+          126,
+          990,
+          136
+        ],
+        "cta_background": [
+          75,
+          1640,
+          95,
+          1650
+        ]
+      },
+      "blocks": [
+        {
+          "role": "headline",
+          "box": [
+            145,
+            260,
+            1020,
+            321
+          ],
+          "line_boxes": [
+            [
+              145,
+              260,
+              1020,
+              321
+            ]
+          ],
+          "line_count": 1,
+          "font_size": 52,
+          "color": "#B60E32"
+        },
+        {
+          "role": "caption",
+          "box": [
+            218,
+            765,
+            863,
+            796
+          ],
+          "line_boxes": [
+            [
+              218,
+              765,
+              863,
+              796
+            ]
+          ],
+          "line_count": 1,
+          "font_size": 28,
+          "color": "#7A7973"
+        },
+        {
+          "role": "bullet",
+          "box": [
+            79,
+            815,
+            980,
+            935
+          ],
+          "line_boxes": [
+            [
+              79,
+              815,
+              980,
+              861
+            ],
+            [
+              403,
+              881,
+              980,
+              935
+            ]
+          ],
+          "line_count": 2,
+          "font_size": 44,
+          "color": "#0B3656"
+        },
+        {
+          "role": "bullet",
+          "box": [
+            167,
+            992,
+            980,
+            1113
+          ],
+          "line_boxes": [
+            [
+              167,
+              992,
+              980,
+              1049
+            ],
+            [
+              193,
+              1058,
+              980,
+              1113
+            ]
+          ],
+          "line_count": 2,
+          "font_size": 44,
+          "color": "#0B3656"
+        },
+        {
+          "role": "bullet",
+          "box": [
+            134,
+            1169,
+            980,
+            1298
+          ],
+          "line_boxes": [
+            [
+              198,
+              1169,
+              980,
+              1224
+            ],
+            [
+              134,
+              1235,
+              980,
+              1298
+            ]
+          ],
+          "line_count": 2,
+          "font_size": 44,
+          "color": "#0B3656"
+        },
+        {
+          "role": "bullet",
+          "box": [
+            163,
+            1346,
+            980,
+            1475
+          ],
+          "line_boxes": [
+            [
+              163,
+              1346,
+              980,
+              1407
+            ],
+            [
+              248,
+              1412,
+              980,
+              1475
+            ]
+          ],
+          "line_count": 2,
+          "font_size": 44,
+          "color": "#0B3656"
+        },
+        {
+          "role": "closing",
+          "box": [
+            135,
+            1530,
+            944,
+            1590
+          ],
+          "line_boxes": [
+            [
+              135,
+              1530,
+              944,
+              1590
+            ]
+          ],
+          "line_count": 1,
+          "font_size": 44,
+          "color": "#B60E32"
+        },
+        {
+          "role": "cta",
+          "box": [
+            80,
+            1640,
+            1005,
+            1711
+          ],
+          "line_count": 1,
+          "color": "#B60E32"
+        }
+      ]
+    }
+  ]
+}

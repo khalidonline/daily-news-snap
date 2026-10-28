@@ -1,0 +1,62 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "سالفة المسافر الموثوق في امريكا باختصار",
+  "expires_at": "2026-10-28T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Owner approved displayed version 3, then explicitly requested title سالفة المسافر الموثوق في امريكا باختصار and said ثم كمل النشر. Title and photo lowered 15/20px to keep title inside existing enforced safe area; no font/text changes otherwise. Narration is fictional first person, previously disclosed in conversation; user requested removing subtitle.",
+    "reviewed_at": "2026-10-28T07:17:02.586073+00:00",
+    "approved_media_sha256": [
+      "bed4072e9bc8dc373f018869af8e6598863f6e4e3d5521dcf73e6a4fe10d1e62"
+    ],
+    "approved_source_sha256": [
+      "d9cc54696e16b5be6207a4cdcb6efc5efcb63728664a4c66b82397c77c8a7c03"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/global-entry-20261028/card.png",
+      "sha256": "bed4072e9bc8dc373f018869af8e6598863f6e4e3d5521dcf73e6a4fe10d1e62",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false,
+        "note": "Deterministic template with owner-supplied photograph. Hypothetical first-person narrative, not actual testimonial."
+      },
+      "source_assets": [
+        {
+          "path": "approved/global-entry-20261028/source.jpeg",
+          "sha256": "d9cc54696e16b5be6207a4cdcb6efc5efcb63728664a4c66b82397c77c8a7c03",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_66bc485e56a481919e7d062616ff82e4&account_id=personal",
+          "description": "Owner uploaded and selected Global Entry directional-sign photograph",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Owner selected this supplied photograph and authorized publication; no independent copyright-license claim."
+        }
+      ]
+    }
+  ],
+  "fact_sources": [
+    {
+      "url": "https://www.pubt.io/view/3CF9FC313583BF26347D260CB24709216E6A6982",
+      "checked_at": "2026-10-28",
+      "claims": [
+        "Saudi eligibility announced 27 October 2026",
+        "screening and interview required",
+        "five-year membership"
+      ]
+    },
+    {
+      "url": "https://rahhal.wego.com/blog/جلوبال-إنتري-للسعوديين/",
+      "checked_at": "2026-10-28",
+      "claims": [
+        "Membership does not replace visa"
+      ]
+    }
+  ]
+}
