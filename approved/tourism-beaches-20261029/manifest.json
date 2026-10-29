@@ -1,0 +1,102 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مين عندها شواطئ أكثر حاصلة على العلم الأزرق؟",
+  "expires_at": "2026-10-31T16:04:30.543884+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-29-master-12",
+  "media": [
+    {
+      "path": "approved/tourism-beaches-20261029/challenge.mp4",
+      "sha256": "218cfa9d5746e1b1fc872cd776a8021419e2e4f4889f44c0e663b8e21b4594a9",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "previous": {
+      "path": "approved/tourism-cablecar-20261028/manifest.json",
+      "sha256": "9c4b691796dcc1bfa1aef13ad86afe6b2c752281b0e82b568ec1025f8bb38989"
+    },
+    "final_video_review": {
+      "sha256": "218cfa9d5746e1b1fc872cd776a8021419e2e4f4889f44c0e663b8e21b4594a9",
+      "reference": "Khalid expressly approved the beach challenge and delegated production and publication. Reviewed all eight decoded states and separate modeled Story/Spotlight overlays at390px. Decoded PCM matches approved audio without shift. No subjective listening or owner viewing of this new export claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid expressly approved the beach challenge and delegated production and publication. Reviewed all eight decoded states and separate modeled Story/Spotlight overlays at390px. Decoded PCM matches approved audio without shift. No subjective listening or owner viewing of this new export claimed.",
+    "video_sha256": "218cfa9d5746e1b1fc872cd776a8021419e2e4f4889f44c0e663b8e21b4594a9",
+    "source_manifest": {
+      "path": "approved/tourism-beaches-20261029/source-approval.json",
+      "sha256": "dfbe34bb09584ec5ae0a04a502433b8d9b0e89b76ff4ba09e8304bf7df4e8619"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/tourism-beaches-20261029/frame-0.5.png",
+        "sha256": "c81794cb284ecb5bdcc7d9e54b11bad83384580d27a6ca7bcc95de1d1d0b13ac"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/tourism-beaches-20261029/frame-3.5.png",
+        "sha256": "2dd842f358f674a3b3a8d75af1aa007bda45770fa9ae8431500e58aefe866d86"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/tourism-beaches-20261029/frame-4.5.png",
+        "sha256": "686998523a536b3226a135c9e19221d46c452dfadfab8fc2e38c9677c4c52e23"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/tourism-beaches-20261029/frame-5.5.png",
+        "sha256": "86261fccbe5046eb3c9e53b6b9d2af3b048c3eadb6c8ef9f48519baa0adbd619"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/tourism-beaches-20261029/frame-6.5.png",
+        "sha256": "1bb569e219a8f443ebf58c7a576ccbff6b99208c230ce7d05e8c884654c5480a"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/tourism-beaches-20261029/frame-7.5.png",
+        "sha256": "41dcd41280cb169cfd25dbc883d9f1bffc76e4e4c6502d0d5352cf95ba8cfb8b"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/tourism-beaches-20261029/frame-8.5.png",
+        "sha256": "365898cf6b4686a8d97647ecf26cea2fc943711c39478b697eb8b536c04a1f66"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/tourism-beaches-20261029/frame-11.5.png",
+        "sha256": "ef59865db715b2f7f13a3fbac2a08beee9842e4e11af141c09409d811730043d"
+      }
+    ]
+  }
+}
