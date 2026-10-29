@@ -72,8 +72,8 @@ def fixture_card():
     draw.rectangle((800,130,1000,145),fill='#0C5F46')
     draw.rectangle((60,1635,1020,1710),fill='#FDE5EB')
     blocks=[]
-    for role, y, color in [('headline',280,'#B60E32'),('caption',800,'#7A7973'),
-                           ('bullet',900,'#0B3656'),('closing',1500,'#B60E32'),('cta',1650,'#B60E32')]:
+    for role, y, color in [('headline',280,'#B60E32'),('caption',790,'#7A7973'),
+                           ('bullet',900,'#0B3656'),('closing',1541,'#B60E32'),('cta',1650,'#B60E32')]:
         draw.rectangle((100,y,500,y+29),fill=color)
         blocks.append({'role':role,'box':[60,y-1,1020,y+35],'line_count':1,'color':color})
     stream=io.BytesIO(); image.save(stream,format='PNG'); raw=stream.getvalue()

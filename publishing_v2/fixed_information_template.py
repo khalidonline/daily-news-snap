@@ -1,7 +1,6 @@
-"""Deterministic candidate information-card template. Never authorizes delivery.
+"""Owner-authorized information template; all geometry comes from the master.
 
-Almarai Regular is an explicit candidate asset, NOT an identified historical
-reference font. Owner visual approval is required before this new template is live.
+Rendering never authorizes delivery. Final content/mobile review is required.
 """
 from pathlib import Path
 import json
@@ -14,8 +13,14 @@ ROOT = Path(__file__).resolve().parents[1]
 def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, share_icon=None):
     settings=json.loads((ROOT/'publishing_v2/design-settings.json').read_text())
     colors=settings['palette']['exact_numeric_tokens']
-    if not 1 <= len(bullets) <= 4 or len(photos)!=2 or len(captions)!=2:
-        raise ValueError('Expected 1–4 bullets and two captioned photos')
+    layout=settings['information_template']
+    sizes=settings['typography']['sizes_px']
+    if not 1 <= len(bullets) <= 4 or len(photos) not in (1,2) or len(captions)!=len(photos):
+        raise ValueError('Expected 1–4 bullets and one or two captioned photos')
+    artwork=ROOT/layout['base_artwork_path']
+    if hashlib.sha256(artwork.read_bytes()).hexdigest()!=layout['base_artwork_sha256']:
+        raise ValueError('Approved artwork changed; review required')
+    reference=Image.open(artwork).convert('RGB')
     image=Image.new('RGB',(1080,1920),colors['background'])
     draw=ImageDraw.Draw(image); blocks=[]
     font_path=ROOT/'fonts/Almarai-Regular.ttf'
@@ -48,9 +53,9 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
         bounds=[]
         for i,line in enumerate(lines):
             # Keep real Arabic ascenders/descenders in distinct line boxes.
-            x=right if role=='bullet' else (left+right)/2
-            anchor='rt' if role=='bullet' else 'mt'
-            y=top+i*round(size*1.5)
+            x=right if role in {'bullet','headline'} else (left+right)/2
+            anchor='rt' if role in {'bullet','headline'} else 'mt'
+            y=top+i*(layout['line_step'] if role=='bullet' else round(size*1.5))
             b=draw.textbbox((x,y),line,font=font,anchor=anchor,direction='rtl',language='ar')
             if b[0]<left or b[2]>right or b[3]>1730:raise ValueError(f'{role} overflow: {line} {b}')
             draw.text((x,y),line,font=font,fill=color,anchor=anchor,direction='rtl',language='ar')
@@ -58,7 +63,7 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
         blocks.append({'role':role,'text':text,'color':color,'font_size':size,'font_weight':weight,
                        'line_boxes':[[int(v) for v in b] for b in bounds],
                        'line_count':len(lines),'box':[int(min(b[0] for b in bounds)),int(top),
-                       int(max(b[2] for b in bounds))+1,int(max(b[3] for b in bounds))+1]})
+                       int(max(b[2] for b in bounds)),int(max(b[3] for b in bounds))+1]})
 
     def logo(x,y,size):
         badge=Image.open(ROOT/'images/brand/badge.png').convert('RGB')
@@ -67,24 +72,27 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
         image.paste(badge,(x,y),mask)
 
     logo(70,115,95)
-    draw.rectangle((800,125,1000,137),fill=colors['green'])
-    brand=ImageFont.truetype(str(font_path),36)
-    draw.text((1000,175),'ملخص تنفيذي',font=brand,fill=colors['green'],anchor='rt',direction='rtl')
-    block(headline,'headline',280,52,colors['red'],limit=1)
+    region=layout['header_region']
+    image.paste(reference.crop(region),tuple(region[:2]))
+    block(headline,'headline',layout['title_top'],sizes['headline'],colors['red'],limit=1)
+    width=960 if len(photos)==1 else 468
     for photo,caption,left in zip(photos,captions,[60,552]):
-        panel=ImageOps.fit(photo.convert('RGB'),(468,410),method=Image.Resampling.LANCZOS)
-        mask=Image.new('L',panel.size);ImageDraw.Draw(mask).rounded_rectangle((0,0,467,409),radius=24,fill=255)
-        image.paste(panel,(left,380),mask)
-        block(caption,'caption',815,28,colors['caption'],left=left,right=left+468,limit=1)
+        height=layout['photo_height']
+        panel=ImageOps.fit(photo.convert('RGB'),(width,height),method=Image.Resampling.LANCZOS)
+        mask=Image.new('L',panel.size);ImageDraw.Draw(mask).rounded_rectangle((0,0,width-1,height-1),radius=24,fill=255)
+        image.paste(panel,(left,layout['photo_top']),mask)
+        block(caption,'caption',layout['caption_top'],sizes['caption'],colors['caption'],left=left,right=left+width,limit=1)
     for n,text in enumerate(bullets):
-        y=905+n*146
+        y=layout['body_top']+round(n*(layout['last_bullet_top']-layout['body_top'])/max(1,len(bullets)-1))
         size,weight=bullet_styles[n]
         block(text,'bullet',y,size,colors['body'],left=70,right=980,weight=weight)
         draw.ellipse((1000,y+15,1013,y+28),fill=colors['body'])
         blocks[-1]['box'][2]=1015
-    block(closing,'closing',1500,44,colors['red'])
+    block(closing,'closing',layout['closing_top'],sizes['closing'],colors['red'],limit=layout['closing_max_lines'])
     draw.rounded_rectangle((60,1630,1020,1720),radius=24,fill=colors['cta_background'])
-    block(settings['editorial_master']['cta_exact'],'cta',1650,40,colors['red'],left=80,right=920,limit=1)
+    block(settings['editorial_master']['cta_exact'],'cta',1650,sizes['cta'],colors['red'],left=80,right=920,limit=1)
+    if share_icon is None:
+        share_icon=reference.crop(layout['share_icon_region'])
     if share_icon is not None:
         if share_icon.size!=(100,87):raise ValueError('Pinned sharing icon must be 100x87')
         image.paste(share_icon,(910,1630))
@@ -100,4 +108,6 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
         points.extend([(960,1646),(964,1644),(991,1669),(993,1673),(991,1677),(966,1699),(960,1697),(960,1685)])
         curve((946,1685),(935,1690),(927,1706));draw.polygon(points,fill=colors['red'])
     logo(510,1750,60)
+    from .design_contract import _information_geometry
+    _information_geometry(blocks,settings)
     return image,blocks

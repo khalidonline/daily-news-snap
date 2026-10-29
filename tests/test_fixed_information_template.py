@@ -3,6 +3,55 @@ import pytest
 from PIL import Image
 
 
+def test_information_layout_uses_expanded_body_and_pinned_branding():
+    from publishing_v2.fixed_information_template import render
+    copy = 'من ٢٦ أكتوبر، جزء من أكسفورد صار للمشاة؛ يبون الناس تتمشى وتتسوق براحتها.'
+    image, blocks = render('عنوان', [copy]*4, 'النهاية',
+        [Image.new('RGB',(500,500),'gray')]*2, ['صورة','صورة'])
+    headline = next(b for b in blocks if b['role']=='headline')
+    assert headline['box'][1] == 260
+    assert abs(headline['line_boxes'][0][2]-1020) <= 1
+    bullets = [b for b in blocks if b['role']=='bullet']
+    assert bullets[0]['box'][1] == 855
+    assert all(b['line_count']==2 for b in bullets)
+    assert all(b['box'][1]-a['box'][3]>=20 for a,b in zip(bullets,bullets[1:]))
+    closing = next(b for b in blocks if b['role']=='closing')
+    assert closing['box'][1] == 1540
+    assert closing['box'][3] <= 1605
+    assert image.getpixel((300,355)) == (128,128,128)
+    reference = Image.open('approved/oxford-20261027/card.png').convert('RGB')
+    assert image.crop((760,110,1020,230)).tobytes() == reference.crop((760,110,1020,230)).tobytes()
+    assert image.crop((910,1630,1010,1717)).tobytes() == reference.crop((910,1630,1010,1717)).tobytes()
+
+
+def test_single_photo_supported_without_a_different_template():
+    from publishing_v2.fixed_information_template import render
+    image, blocks=render('عنوان',['نقطة'],'النهاية',
+        [Image.new('RGB',(1000,500),'gray')],['الصورة'])
+    assert image.getpixel((540,500)) == (128,128,128)
+    assert len([b for b in blocks if b['role']=='caption'])==1
+
+
+def test_information_gate_rejects_closing_outside_role_region():
+    import json
+    from publishing_v2.design_contract import _information_geometry
+    from publishing_v2.bundle_api import BundleError
+    settings=json.loads(Path('publishing_v2/design-settings.json').read_text())
+    with pytest.raises(BundleError, match='region'):
+        _information_geometry([{'role':'closing','box':[60,1500,1000,1550],'line_count':1}],settings)
+
+
+def test_information_gate_rejects_insufficient_actual_gap():
+    import json
+    from publishing_v2.design_contract import _information_geometry
+    from publishing_v2.bundle_api import BundleError
+    settings=json.loads(Path('publishing_v2/design-settings.json').read_text())
+    with pytest.raises(BundleError, match='gap'):
+        _information_geometry([
+            {'role':'bullet','box':[60,855,980,988],'line_count':2},
+            {'role':'bullet','box':[60,1005,980,1125],'line_count':2}],settings)
+
+
 def test_owner_four_style_comparison_uses_requested_faces_and_sizes():
     from publishing_v2.fixed_information_template import render
     _,blocks=render('عنوان',['نقطة قصيرة']*4,'النهاية',

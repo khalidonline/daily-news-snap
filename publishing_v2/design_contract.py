@@ -90,6 +90,8 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
     else:
         valid=(all(names.count(r)==1 for r in ('headline','closing','cta')) and 1<=names.count('bullet')<=4 and 1<=names.count('caption')<=2)
     if any(r not in roles for r in names) or not valid:fail('text roles missing')
+    if not challenge:
+        _information_geometry(blocks,settings)
     used=[]
     for block in blocks:
         role=block['role'];box=block.get('box');color=palette[roles[role]]
@@ -134,6 +136,25 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
             continue
         if not 1<=len(bands)<=maximum or block.get('line_count')!=len(bands):fail('ink/line count mismatch')
         if any(b[-1]-b[0]+1<(16 if role=='caption' else 24) for b in bands):fail('ink too small')
+
+
+def _information_geometry(blocks, settings):
+    """Shared information-only region/gap gate; never changes challenge layout."""
+    grid=settings['layout']['numeric_grid_px']
+    regions={'headline':'title','caption':'captions','bullet':'body','closing':'closing','cta':'cta'}
+    for block in blocks:
+        box=block.get('box'); region=grid[regions[block['role']]]
+        if (not isinstance(box,list) or len(box)!=4 or any(type(v) is not int for v in box)
+                or not region[0]<=box[0]<box[2]<=region[2]
+                or not region[1]<=box[1]<box[3]<=region[3]):
+            fail('information text outside role region: '+block['role'])
+        if block['role'] in {'headline','closing'} and block.get('line_count')!=1:
+            fail('information title and closing require one line')
+    ordered=sorted(blocks,key=lambda b:b['box'][1])
+    for a,b in zip(ordered,ordered[1:]):
+        if a['role']==b['role']=='caption':continue  # side-by-side labels
+        if b['box'][1]-a['box'][3]<grid['minimum_block_gap']:
+            fail('information actual block gap below minimum')
 
 
 def _video_design(card,data,settings):

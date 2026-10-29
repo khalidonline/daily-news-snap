@@ -3,7 +3,7 @@
   "canonical_reference": {
     "role": "Mandatory editorial, design and prepublication reference for every executivesaudi post",
     "updated_at_riyadh": "2026-10-29",
-    "owner_instruction": "احفظ كل اعدادات التحرير والتصميم وتصير مرجع دائم لكل منشور",
+    "owner_instruction": "عدل الملاحظات + نزل القفله شوي وارفع العنوان والصوره وتعليقها؛ مرجع تنفيذي واحد للطاري والسوالف.",
     "read_before": [
       "topic selection",
       "drafting",
@@ -13,8 +13,8 @@
     ],
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
-    "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-29-master-11",
+    "enforcement_status": "Information renderer and shared delivery geometry gate consume this file. Editorial truth, image meaning and destination overlays still require actual review. Challenge rules unchanged.",
+    "revision": "2026-10-29-master-12",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -68,7 +68,7 @@
       "rule": "Never infer palette success from command exit status, prompt, or pre-resize samples. Preserve photo pixels. Use fixed template colors from inception, not generated colors.",
       "enforcement": "Mandatory agent review, not universal automated pipeline enforcement."
     },
-    "format": "One card when sufficient; maximum two. Short bullets; no more than two rendered lines per bullet. Prefer one readable title line; maximum two closing lines. Shorten meaningfully instead of shrinking font.",
+    "format": "One card when sufficient; maximum two. Maximum four bullets and two lines per bullet; one title line and one closing line. Never shrink font to fit.",
     "canvas": "Before ANY user-facing preview or approval, exported bytes MUST measure exactly 1080x1920. Compose on this canvas from the start. Raw generator output is internal only, not an approval preview. If output differs, normalize without distortion or cropping meaningful content and verify dimensions before display; a prompt or 9:16 appearance is not proof.",
     "palette": "Apply palette.exact_numeric_tokens numerically in template/rendering or deterministic postprocessing. A generation prompt alone is never enforcement. Verify flat/interior pixels, allowing only antialiasing blends; preserve photographic colors.",
     "template": "Start from the approved master, not a newly imagined identity. Retain header, original logos, font appearance, color roles, rounded panels and footer. Do not claim an exact font family without an original font/template.",
@@ -187,20 +187,20 @@
   },
   "typography": {
     "status": "OWNER_APPROVED_INFORMATION_BULLETS_44_BOLD",
-    "approved_at_riyadh": "2026-10-25",
-    "owner_instruction": "اعتمده وثبته. المفروض نفس الخط بس مايكون bold",
+    "approved_at_riyadh": "2026-10-29",
+    "owner_instruction": "Information bullets 44 Bold, 66px line step; other text roles Almarai Regular. Preserve challenge settings.",
     "scope": "Information bullets use the latest information_bullets override (44px Bold, right aligned). Existing Regular rules remain for other roles and challenges unless explicitly changed. No automatic republication.",
-    "visual_reference": "Rice-Final.png, posted 26 October 2026, explicitly selected by Khalid as future visual master. Compare actual image, not memory. Exact original font family remains unidentified; this does not block honest owner-reviewed raster workflow.",
-    "reference_library_file_id": "libfile_e56e931a29b081919e932dc8d878d3f9",
+    "visual_reference": "Current information_template plus Oxford header/share artwork; historical cards are not layout authorities.",
+    "reference_library_file_id": "libfile_02956642a52881919ce6edced469d180",
     "family_policy": "Keep the same font family from the approved template; do not substitute a different family to obtain lighter weight.",
-    "font_family": null,
-    "font_family_status": "Not identified from screenshot; verify original template/font asset before claiming exact family matching.",
+    "font_family": "Almarai",
+    "font_family_status": "Pinned repository assets for current information renderer; not a claim about historical raster font identity.",
     "font_weight": 400,
     "weight_name": "Regular",
     "synthetic_bold": false,
     "preserve": "Existing numeric palette, canvas dimensions, safe areas, approved layout, challenge audio and countdown rules.",
     "pre_export_check": "Information bullets: use pinned Almarai-Bold.ttf at 44px, no synthetic bold, right-align every line, maximum two lines. Other roles preserve their existing Regular face. Do not substitute font families.",
-    "implementation_status": "Master and local fixed template updated; no image rendered or live deployment claimed by this text-only update.",
+    "implementation_status": "Executable information renderer consumes current settings; shared delivery gate checks role regions and minimum actual gaps.",
     "sizes_px": {
       "headline": 52,
       "body": 44,
@@ -214,10 +214,10 @@
     "line_height_multiplier": 1.3,
     "sizing_basis": "Fixed forward production targets at 1080px width, not measured/recovered font metrics of generated reference. Shorten or use second card instead of auto-shrink. Actual font asset must be identified and hash-pinned before deterministic rendering.",
     "font_asset_gate": {
-      "status": "UNRESOLVED",
-      "font_file": null,
-      "font_sha256": null,
-      "rule": "Do not invent font name or exact font metrics. Use approved Rice-Final.png visual master and honest final raster review for owner-approved compositions. Deterministic font rendering still requires verified font asset. Do not repeatedly ask owner for an original font while the approved visual master is available."
+      "status": "RESOLVED_INFORMATION_TEMPLATE",
+      "font_file": "fonts/Almarai-Regular.ttf",
+      "font_sha256": "94cc03a8a668a8657735a39947fc4ab26a45f60dfde20e892f5d4bae968563c0",
+      "rule": "Use information_bullets for Bold body; Regular for other information roles. Preserve challenge-specific settings."
     },
     "word_spelling": {
       "rule": "Write توقع without shadda or any vowel marks; preserve required letter dots. Applies to all challenge titles and occurrences.",
@@ -240,20 +240,20 @@
       "owner_instruction": "ابعتمد ٤٤ عريض. اعتمدها في القالب الرئيسي.",
       "scope": "Information-card bullet paragraphs only. Other roles and challenge properties unchanged.",
       "reference_library_file_id": "libfile_02956642a52881919ce6edced469d180",
-      "reference_version": 3
+      "reference_version": 4
     }
   },
   "approved_by": "Khalid",
   "status": "LOCKED_NUMERIC_PALETTE",
   "scope": "All future executivesaudi cards including Louvre; no retroactive publication.",
-  "approval_basis": "User approved the latest Kandasa preview and requested the same colors and size for future posts, then explicitly authorized publishing Kandasa. Dishwasher reference supersedes Amal for colors.",
+  "approval_basis": "Latest owner authorization 2026-10-29: raised title/photos/captions, lowered closing and unified executive reference; retain numeric palette and 44 Bold body.",
   "approved_at_riyadh": "2026-10-24",
-  "instruction": "Reuse the approved Kandasa layout with dishwasher reference colors. Do not reuse Amal colors or earlier Kandasa variants.",
+  "instruction": "For all information cards use information_template and numeric_grid_px; prior Kandasa/Rice layouts are historical only. Challenge properties unchanged.",
   "reference": {
     "filename": "487C9A71-0C5E-4613-B574-4D9D427F9BFA.jpeg",
     "library_file_id": "libfile_716a027625a881918c56a39027539922",
     "sha256": "f0b995f86682288975fc2b5a772ec608e1435e0789c9c62fbe8147d58522dc4a",
-    "authority": "User supplied dishwasher card is the color reference; latest approved Kandasa is the layout reference."
+    "authority": "Dishwasher is palette provenance only, not a current layout or font authority."
   },
   "canvas": {
     "width": 1080,
@@ -282,13 +282,13 @@
   },
   "layout": {
     "maximum_lines_per_bullet": 2,
-    "maximum_closing_lines": 2,
+    "maximum_closing_lines": 1,
     "photo_pair": "When two photos are used: equal-height adjacent panels, with founder/start image paired with a relevant actual image.",
     "header": "Green brand upper right with short green line; circular blue logo upper left.",
-    "title": "Red, preferably one readable line.",
+    "title": "Red, one line, right aligned.",
     "photo": "Actual sourced image, rounded panel, gray caption. No invented historical photo.",
     "body": "Saudi colloquial Arabic without vowel marks; blue bullet paragraphs in pinned Almarai Bold 44px. All lines right-aligned, including continuation lines. Maximum two rendered lines.",
-    "font_note": "Exact font family is not identified from raster. Never claim exact font identity without original font/template.",
+    "font_note": "Pinned Almarai assets for current information renderer; historical raster identity not inferred.",
     "closing": "Red directly on ivory, no solid red banner.",
     "cta": "Pale pink rounded strip, red arrow, text: شاركها مع صديقك اللي تعجبه هذي المعلومة.",
     "footer": "Small original circular logo centered.",
@@ -307,31 +307,31 @@
         60,
         260,
         1020,
-        340
+        330
       ],
       "images": [
         60,
-        380,
+        350,
         1020,
-        790
+        760
       ],
       "captions": [
         60,
-        800,
+        780,
         1020,
-        850
+        830
       ],
       "body": [
         60,
-        890,
+        850,
         1020,
-        1490
+        1510
       ],
       "closing": [
         60,
-        1510,
+        1540,
         1020,
-        1600
+        1605
       ],
       "cta": [
         60,
@@ -522,12 +522,12 @@
     "rule": "Before next emoji-containing design, obtain exact approved-appearance asset with permitted use, inspect and hash-pin it. Do not claim Apple/device look from Unicode alone. Preserve user choice; do not replace with 🙂 or 😂."
   },
   "approved_visual_master": {
-    "filename": "Rice-Final.png",
-    "library_file_id": "libfile_e56e931a29b081919e932dc8d878d3f9",
-    "version": 2,
-    "sha256": "5a65b46f79b77ac672fecab6ef18e8ddd715ed823accbcfe77a22713be51cb21",
-    "instruction": "Preserve visual typography, branding and color roles; change only approved topic text and photos. Two rendered lines maximum per bullet; validate final dimensions/palette/CTA before delivery. Latest Jurong preview approved by owner with instruction ثبت التعليمات وخلها مرجع للمستقبل. انشر.",
-    "scope": "Future information cards; preserve challenge audio/timer and separate delivery rules."
+    "filename": "Oxford-Template-Preview.png",
+    "library_file_id": "libfile_02956642a52881919ce6edced469d180",
+    "version": 4,
+    "sha256": "7184b392653d46162372e9db05e444a65e2a76c4c65b66962e5d99fa2f9eeced",
+    "instruction": "Oxford supplies pinned header/share artwork only. Current geometry and role typography come exclusively from information_template and numeric_grid_px.",
+    "scope": "Information cards; challenges keep separate approved configuration."
   },
   "brand_logo": {
     "approved_at_riyadh": "2026-10-28",
@@ -545,5 +545,46 @@
     "qa": "Inspect final decoded video at full resolution and 390px mobile width for crisp readable logo, correct aspect ratio and absence of compression blur. Record actual source path/hash.",
     "preserve": "Oxford wordmark and green header line, approved palette, audio, 12-second timing, answer and CTA.",
     "retroactive_publication": false
+  },
+  "information_template": {
+    "status": "OWNER_AUTHORIZED_EXECUTABLE",
+    "scope": [
+      "morning news",
+      "evening news",
+      "Saudi selections",
+      "stories",
+      "future information routes"
+    ],
+    "renderer": "publishing_v2/fixed_information_template.py:render",
+    "base_artwork_path": "approved/oxford-20261027/card.png",
+    "base_artwork_sha256": "7184b392653d46162372e9db05e444a65e2a76c4c65b66962e5d99fa2f9eeced",
+    "rule": "Use this renderer for previews and publication. This file is the sole current settings authority. Older Rice/Kandasa/Dishwasher cards are history or palette provenance, not competing layout defaults.",
+    "title_top": 260,
+    "photo_top": 350,
+    "photo_height": 410,
+    "caption_top": 785,
+    "body_top": 855,
+    "last_bullet_top": 1365,
+    "line_step": 66,
+    "closing_top": 1540,
+    "closing_max_lines": 1,
+    "headline_alignment": "right",
+    "caption_alignment": "center",
+    "closing_alignment": "center",
+    "minimum_actual_block_gap": 20,
+    "header_region": [
+      760,
+      110,
+      1020,
+      230
+    ],
+    "share_icon_region": [
+      910,
+      1630,
+      1010,
+      1717
+    ],
+    "scope_exclusion": "Do not apply information geometry to challenges or alter sound/countdown/reveal.",
+    "review_rule": "No live publication in a template update. Final raster/mobile review remains required; any revision invalidates earlier byte-bound approval."
   }
 }

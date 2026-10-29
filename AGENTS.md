@@ -24,10 +24,17 @@ Before drafting, designing, revising or publishing ExecutiveSaudi content, read
 Latest explicit owner corrections supersede older guidance. Keep the two copies
 synchronized; never establish competing masters or rely on conversation memory.
 
-Use its fixed canvas, numeric palette, layout bounds, Regular weight and size
-targets, two-line bullet limit, CTA and publishing checklist. Unknown original
-font and exact emoji assets remain explicitly unresolved: never fabricate their
-identity or declare all fields automatically enforced. Emoji must be a separate
+For every information/story/news preview and publication, start with
+`publishing_v2.fixed_information_template.render` and the current
+`information_template` / `numeric_grid_px` in that same master. Do not fork a
+one-off renderer or inherit Rice/Kandasa layout defaults. Body is pinned Almarai
+44 Bold, right-aligned, two lines maximum with 66px line steps. Other information
+text roles are pinned Almarai Regular. Title is one right-aligned line; closing
+is one centered line. Caption/image mapping and final mobile review remain
+mandatory. The shared delivery gate rejects out-of-region information text and
+actual block gaps below 20px. This is not proof of factual or visual semantics.
+Challenge geometry, audio and timing are unchanged. Exact emoji assets remain
+unresolved; never fabricate their identity. Emoji must be a separate
 pinned asset, not redrawn by an image generator. Preserve approved challenge
 sound/countdown/reveal and sharing CTA. Record final-hash-bound checks, actual
 quota evidence and separate receipts for every approved destination. The owner
