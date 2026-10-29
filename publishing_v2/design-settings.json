@@ -2,7 +2,7 @@
   "project": "daily-news-snap",
   "canonical_reference": {
     "role": "Mandatory editorial, design and prepublication reference for every executivesaudi post",
-    "updated_at_riyadh": "2026-10-28",
+    "updated_at_riyadh": "2026-10-29",
     "owner_instruction": "احفظ كل اعدادات التحرير والتصميم وتصير مرجع دائم لكل منشور",
     "read_before": [
       "topic selection",
@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Mandatory agent preflight linked from repository AGENTS.md. Existing publisher retains its gates. This JSON is not yet a universal executable renderer/validator; do not claim automated enforcement for every field.",
-    "revision": "2026-10-28-master-10",
+    "revision": "2026-10-29-master-11",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -44,6 +44,16 @@
     "tables": "If a table is genuinely useful, add one introductory sentence and one closing sentence; label dates and units clearly."
   },
   "production_acceptance_gate": {
+    "template_first_required": {
+      "approved_at_riyadh": "2026-10-29",
+      "owner_instruction": "المرات الجايه ابيك تطبق التصميم على القالب مباشره. القالب خله اساسي دايما سواءا للنشر او للمراجعه",
+      "scope": "Every review preview and publication in morning news, evening news, Saudi selections, stories, challenges and future routes.",
+      "rule": "Start directly from the current approved template for that content type. No free-form draft design followed by later template conversion. Only approved content and photos change; retain fixed palette, font assets and sizes, geometry, alignment, safe areas, original branding and sharing CTA. Preserve approved challenge sound, countdown and reveal.",
+      "review_delivery_identity": "Review and publication use the same verified export bytes. Any requested revision returns to the template and invalidates the old export approval.",
+      "failure_behavior": "If the approved template or an essential asset is unavailable, stop and state the missing asset; never invent a replacement identity.",
+      "design_change_authority": "Explicit Khalid approval required for changes to the template itself.",
+      "enforcement_status": "Persistent mandatory instruction; not a claim of universal automated enforcement."
+    },
     "finalization_order": [
       "Compose fixed-color template at 1080x1920",
       "Finish all geometry before palette normalization",
