@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "settings_revision": "2026-10-29-master-11",
+  "settings_sha256": "664291bd984d4a4f8658264d97ca93b05e9917f61003bd3def2ba1a7cff5049c",
+  "content_type": "information",
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Khalid reviewed final template revision and said انشر, then authorized browser dispatch. Final 390px layout visually inspected; approval binds unchanged PNG bytes.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "approved_typography": true,
+    "overlay_destinations": {
+      "STORY": "Simulated 1080px top0..240 bottom1810..1920 overlay: all essential copy within260..1730; not a live-device preview."
+    }
+  },
+  "cards": [
+    {
+      "sha256": "d791c1d50c73bdbd3fd73e309f4729afa9f62508197584d19d0a43309ce3b170",
+      "palette_samples": {
+        "background": [
+          10,
+          400,
+          30,
+          420
+        ],
+        "green": [
+          810,
+          126,
+          990,
+          136
+        ],
+        "cta_background": [
+          75,
+          1640,
+          95,
+          1650
+        ]
+      },
+      "blocks": [
+        {
+          "role": "headline",
+          "box": [
+            138,
+            280,
+            1020,
+            340
+          ],
+          "line_boxes": [
+            [
+              138,
+              280,
+              1020,
+              340
+            ]
+          ],
+          "line_count": 1,
+          "font_size": 52,
+          "color": "#B60E32"
+        },
+        {
+          "role": "caption",
+          "box": [
+            365,
+            815,
+            715,
+            848
+          ],
+          "line_boxes": [
+            [
+              365,
+              815,
+              715,
+              848
+            ]
+          ],
+          "line_count": 1,
+          "font_size": 28,
+          "color": "#7A7973"
+        },
+        {
+          "role": "bullet",
+          "box": [
+            125,
+            905,
+            980,
+            1014
+          ],
+          "line_boxes": [
+            [
+              125,
+              905,
+              980,
+              968
+            ],
+            [
+              362,
+              971,
+              980,
+              1014
+            ]
+          ],
+          "line_count": 2,
+          "font_size": 44,
+          "color": "#0B3656"
+        },
+        {
+          "role": "bullet",
+          "box": [
+            94,
+            1105,
+            980,
+            1222
+          ],
+          "line_boxes": [
+            [
+              94,
+              1105,
+              980,
+              1166
+            ],
+            [
+              264,
+              1171,
+              980,
+              1222
+            ]
+          ],
+          "line_count": 2,
+          "font_size": 44,
+          "color": "#0B3656"
+        },
+        {
+          "role": "bullet",
+          "box": [
+            86,
+            1305,
+            980,
+            1422
+          ],
+          "line_boxes": [
+            [
+              86,
+              1305,
+              980,
+              1366
+            ],
+            [
+              363,
+              1371,
+              980,
+              1422
+            ]
+          ],
+          "line_count": 2,
+          "font_size": 44,
+          "color": "#0B3656"
+        },
+        {
+          "role": "closing",
+          "box": [
+            64,
+            1500,
+            1015,
+            1551
+          ],
+          "line_boxes": [
+            [
+              64,
+              1500,
+              1015,
+              1551
+            ]
+          ],
+          "line_count": 1,
+          "font_size": 44,
+          "color": "#B60E32"
+        },
+        {
+          "role": "cta",
+          "box": [
+            80,
+            1640,
+            1005,
+            1711
+          ],
+          "line_count": 1,
+          "color": "#B60E32"
+        }
+      ]
+    }
+  ]
+}
