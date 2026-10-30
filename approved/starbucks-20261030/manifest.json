@@ -1,0 +1,45 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "ستاربكس… شالوا الكراسي ورجعوا لها!",
+  "not_before": "2026-10-30T18:57:08.238945+00:00",
+  "expires_at": "2026-10-30T20:57:08.238945+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid supplied this final raster after explicit authorization to upload files/scripts/AGENTS.md to main and publish Starbucks. Latest instruction: مو لازم تتحقق. انشر. No media edits.",
+    "reviewed_at": "2026-10-30T18:57:08.238945+00:00",
+    "approved_media_sha256": [
+      "dd95b1c2885609be077e772c91404c505e7fc3953f56f71bc543da5799d08233"
+    ],
+    "approved_source_sha256": [
+      "dd95b1c2885609be077e772c91404c505e7fc3953f56f71bc543da5799d08233"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/starbucks-20261030/card.png",
+      "sha256": "dd95b1c2885609be077e772c91404c505e7fc3953f56f71bc543da5799d08233",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false,
+        "note": "Owner-supplied approved template raster; not regenerated."
+      },
+      "source_assets": [
+        {
+          "path": "approved/starbucks-20261030/card.png",
+          "sha256": "dd95b1c2885609be077e772c91404c505e7fc3953f56f71bc543da5799d08233",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_cc9de10c3694819199863538f3bb992c&account_id=personal",
+          "description": "Exact owner-supplied final Starbucks card",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid supplied this final raster after explicit authorization to upload files/scripts/AGENTS.md to main and publish Starbucks. Latest instruction: مو لازم تتحقق. انشر. No media edits."
+        }
+      ]
+    }
+  ]
+}

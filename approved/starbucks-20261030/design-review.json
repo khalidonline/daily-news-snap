@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "destinations": [
+    "STORY"
+  ],
+  "settings_revision": "2026-10-31-master-13",
+  "settings_sha256": "4ab2e3dc0f7d564c2f447d5cb5bdbe37389c33f31107b3f7df05d47fad581e0c",
+  "review": {
+    "reference": "Khalid supplied this final raster after explicit authorization to upload files/scripts/AGENTS.md to main and publish Starbucks. Latest instruction: مو لازم تتحقق. انشر. No media edits.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Final 390px raster simulation with top 0..39 and bottom 625..692 overlays visually reviewed; CTA remains above bottom controls. Simulation, not live device proof."
+    }
+  },
+  "cards": [
+    {
+      "sha256": "dd95b1c2885609be077e772c91404c505e7fc3953f56f71bc543da5799d08233",
+      "blocks": [
+        {
+          "role": "headline",
+          "color": "#B60E32",
+          "box": [
+            225,
+            261,
+            1016,
+            320
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "caption",
+          "color": "#7A7973",
+          "box": [
+            271,
+            787,
+            809,
+            822
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "bullet",
+          "color": "#0B3656",
+          "box": [
+            162,
+            856,
+            1014,
+            969
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "bullet",
+          "color": "#0B3656",
+          "box": [
+            81,
+            1026,
+            1014,
+            1153
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "bullet",
+          "color": "#0B3656",
+          "box": [
+            83,
+            1196,
+            1014,
+            1314
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "bullet",
+          "color": "#0B3656",
+          "box": [
+            170,
+            1365,
+            1014,
+            1491
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "closing",
+          "color": "#B60E32",
+          "box": [
+            129,
+            1541,
+            951,
+            1589
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "cta",
+          "color": "#B60E32",
+          "box": [
+            130,
+            1651,
+            870,
+            1696
+          ],
+          "line_count": 1
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          810,
+          126,
+          990,
+          136
+        ],
+        "cta_background": [
+          70,
+          1660,
+          80,
+          1690
+        ]
+      }
+    }
+  ],
+  "factual_review": {
+    "status": "NOT_REVERIFIED",
+    "reason": "Web research unavailable. Owner explicitly instructed publication without renewed verification. No claim of source verification."
+  }
+}

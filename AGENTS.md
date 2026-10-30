@@ -1,5 +1,13 @@
 # Mandatory publication preflight
 
+## Text drafts must fit before owner review
+
+For information cards, measure drafts using the current shared template before
+showing the text for approval. Keep each bullet to two rendered lines, with the
+approved font and spacing; never shrink the font to fit. Word count alone is
+not evidence of fit. Preserve approved wording and the exact final export for
+delivery. A delivery failure must not trigger redesign or paid regeneration.
+
 For all ExecutiveSaudi publication or design-revision tasks, read
 `publishing_v2/AGENTS.md` before making a delivery manifest or workflow.
 
