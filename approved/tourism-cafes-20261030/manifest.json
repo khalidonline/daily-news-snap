@@ -1,0 +1,102 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "أي مقهى فتح أول؟",
+  "expires_at": "2026-11-01T16:10:03.644483+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-29-master-12",
+  "media": [
+    {
+      "path": "approved/tourism-cafes-20261030/challenge.mp4",
+      "sha256": "83bc4df6b0170de13c9b2782ca2c1d6261d48871b97475d56717ddc28656a26b",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "previous": {
+      "path": "approved/tourism-beaches-20261029/manifest.json",
+      "sha256": "cf87929c9377bb637ae44ea13ade2722ebee63f7fa502253567495251632a09b"
+    },
+    "final_video_review": {
+      "sha256": "83bc4df6b0170de13c9b2782ca2c1d6261d48871b97475d56717ddc28656a26b",
+      "reference": "Khalid expressly approved the cafe challenge and delegated production and publication. Reviewed all eight decoded states and separate modeled Story/Spotlight overlays at390px. Decoded PCM matches approved audio without shift. No subjective listening or owner viewing of this new export claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid expressly approved the cafe challenge and delegated production and publication. Reviewed all eight decoded states and separate modeled Story/Spotlight overlays at390px. Decoded PCM matches approved audio without shift. No subjective listening or owner viewing of this new export claimed.",
+    "video_sha256": "83bc4df6b0170de13c9b2782ca2c1d6261d48871b97475d56717ddc28656a26b",
+    "source_manifest": {
+      "path": "approved/tourism-cafes-20261030/source-approval.json",
+      "sha256": "88a1d7d156c4af0d0031d0ee38d35ff3fd512daf995963cc9d917b525a12f81c"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/tourism-cafes-20261030/frame-0.5.png",
+        "sha256": "908e5993e9438131268a4c3aa9bbf65f33d832f31bf7e2bbb9a5a4f4b8f58de2"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/tourism-cafes-20261030/frame-3.5.png",
+        "sha256": "ad896cebc4b2595fd5e20f4afcbd03936daeeb0e7cc192f5079dfadc102dd638"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/tourism-cafes-20261030/frame-4.5.png",
+        "sha256": "14edc0ae1e70959e6d8f8047511127b66696278b9e4d99f23165c54f46c2969d"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/tourism-cafes-20261030/frame-5.5.png",
+        "sha256": "311d6a82cf476ae0c42a0c2e1967a6f3f5d824195781746289622938bda9d988"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/tourism-cafes-20261030/frame-6.5.png",
+        "sha256": "f5d835bf36999ab38483e7de7ede96ab4171ab97c7964fd516ab6c8379378d9d"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/tourism-cafes-20261030/frame-7.5.png",
+        "sha256": "21d75be39465160f2893a2efdc12f5ec009473e90618dd15741f405fa87d68bd"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/tourism-cafes-20261030/frame-8.5.png",
+        "sha256": "174a2acec70463b0cc5d4dabbfd6550cc0862bed11a887cd14f6ca4d51819fa1"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/tourism-cafes-20261030/frame-11.5.png",
+        "sha256": "46ffa573fa8131cf3bf09b7405c79f70cc113dece4c3b99893cb1abf543e862f"
+      }
+    ]
+  }
+}
