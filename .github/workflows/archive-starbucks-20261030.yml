@@ -1,0 +1,27 @@
+name: Save Starbucks to public profile only
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  archive:
+    if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt -r requirements-v2-images.txt
+      - name: Save exact posted card with current guards
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python -m publishing_v2.saved_story_api --approval approved/archive-starbucks-20261030/approval.json
