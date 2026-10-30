@@ -2,8 +2,8 @@
   "project": "daily-news-snap",
   "canonical_reference": {
     "role": "Mandatory editorial, design and prepublication reference for every executivesaudi post",
-    "updated_at_riyadh": "2026-10-29",
-    "owner_instruction": "عدل الملاحظات + نزل القفله شوي وارفع العنوان والصوره وتعليقها؛ مرجع تنفيذي واحد للطاري والسوالف.",
+    "updated_at_riyadh": "2026-10-31",
+    "owner_instruction": "اعتمد هذا القالب للتحديات القادمه؛ خط عريض وأرقام إنجليزية مع الحفاظ على اسم من بدأ أول؟",
     "read_before": [
       "topic selection",
       "drafting",
@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Information renderer and shared delivery geometry gate consume this file. Editorial truth, image meaning and destination overlays still require actual review. Challenge rules unchanged.",
-    "revision": "2026-10-29-master-12",
+    "revision": "2026-10-31-master-13",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -189,7 +189,7 @@
     "status": "OWNER_APPROVED_INFORMATION_BULLETS_44_BOLD",
     "approved_at_riyadh": "2026-10-29",
     "owner_instruction": "Information bullets 44 Bold, 66px line step; other text roles Almarai Regular. Preserve challenge settings.",
-    "scope": "Information bullets use the latest information_bullets override (44px Bold, right aligned). Existing Regular rules remain for other roles and challenges unless explicitly changed. No automatic republication.",
+    "scope": "Information bullets use the latest information_bullets override (44px Bold, right aligned). Existing Regular rules remain for other roles and challenges unless explicitly changed. No automatic republication. Latest challenge override: challenges.approved_template_v2 supersedes previous Regular and size targets for challenge text only; Oxford header and CTA artwork remain unchanged.",
     "visual_reference": "Current information_template plus Oxford header/share artwork; historical cards are not layout authorities.",
     "reference_library_file_id": "libfile_02956642a52881919ce6edced469d180",
     "family_policy": "Keep the same font family from the approved template; do not substitute a different family to obtain lighter weight.",
@@ -440,7 +440,7 @@
     "status": "LOCKED_APPROVED_PROPERTIES",
     "instruction": "Start every new challenge from the last user-approved complete video. Change only challenge content and relevant images. Never use most-recent publication as approval if it has known defects.",
     "approved_by": "Khalid",
-    "updated_at_riyadh": "2026-10-26",
+    "updated_at_riyadh": "2026-10-31",
     "reference_video": {
       "library_file_id": "libfile_06d45410425481919982dee37bd0cd22",
       "filename": "guess-the-price.mp4",
@@ -451,11 +451,11 @@
       "intro_seconds": 3,
       "countdown_start_seconds": 3,
       "countdown_digits": [
-        "٥",
-        "٤",
-        "٣",
-        "٢",
-        "١"
+        "5",
+        "4",
+        "3",
+        "2",
+        "1"
       ],
       "seconds_per_digit": 1,
       "answer_start_seconds": 8,
@@ -468,8 +468,8 @@
       "validation": "Require audio stream, verify non-silent samples, listen to final exported video"
     },
     "visual": {
-      "inherit": "Current locked palette, approved font appearance/sizes, alignment, option backgrounds, logo positions and spacing",
-      "countdown": "Dedicated area below اختر قبل كشف الإجابة, replacing the small lower logo in that area. Visible Arabic digits, not over question/options/CTA.",
+      "inherit": "Use approved_template_v2 below for challenge geometry and Bold typography. Preserve exact palette, Oxford header, original logos, CTA artwork and approved audio.",
+      "countdown": "Dedicated area below اختر قبل كشف الإجابة; English digits 5,4,3,2,1 with brief size pulse, replacing original logo at second3.",
       "answer": "Highlight correct choice with coordinated explanation underneath; reveal only after countdown finishes",
       "photo": "Clear product in use when relevant; match order of images and text. Choose a real image that visibly supports the question; for room-count challenges show hotel exterior with many window rows, not a generic lobby.",
       "sources": "Never publish source card or source text",
@@ -487,7 +487,7 @@
       "Open complete approved reference video, not a still image",
       "Compare font, numeric colors, alignment and option backgrounds",
       "Watch full exported 12-second video with sound",
-      "Verify visible ٥→٤→٣→٢→١, each for 1 second",
+      "Verify visible 5→4→3→2→1, each for 1 second",
       "Verify audio ticks and reveal synchronization",
       "Confirm correct answer starts at second 8, stays 4 seconds",
       "Confirm matching images/text and no source card",
@@ -508,6 +508,111 @@
       "rule": "Validate role colors on final decoded MP4 frames before publishing. Preserve photos and exact approved audio when correcting colors. Sample actual interior header ink, not background. Retain original review frames unchanged when transferring.",
       "owner_instruction": "ثبت الاعدادات الصحيحه وانشر",
       "approved_at_riyadh": "2026-10-27"
+    },
+    "approved_template_v2": {
+      "status": "OWNER_APPROVED",
+      "owner_instruction": "اعتمد هذا القالب للتحديات القادمه",
+      "scope": "All future challenges; information cards unchanged; no republication authorized.",
+      "reference_video_library_id": "libfile_3a77794c971081918f20aac97ac0ad62",
+      "reference_renderer_library_id": "libfile_cab91bd568008191aa544ebca00466bc",
+      "reference_correction": "Retain series label من بدأ أول؟ for chronological comparisons; replace preview label تحدي المقاهي. Specific question أي مقهى فتح قبل الثاني؟ compares ONLY the two shown, not first in world.",
+      "series_label_policy": "Keep each approved series name; do not label unrelated challenges من بدأ أول؟.",
+      "font_file": "fonts/Almarai-Bold.ttf",
+      "font_weight": 700,
+      "digits": "0123456789 for countdown, dates, counts, prices and answers",
+      "sizes_px": {
+        "series_label": 34,
+        "question": 64,
+        "caption": 32,
+        "option": 54,
+        "instruction": 38,
+        "countdown": 88,
+        "countdown_pulse_max": 100,
+        "answer": 54,
+        "answer_details": 42
+      },
+      "geometry": {
+        "series_label_center": [
+          540,
+          285
+        ],
+        "question_center": [
+          540,
+          390
+        ],
+        "left_photo": [
+          72,
+          505,
+          528,
+          915
+        ],
+        "right_photo": [
+          552,
+          505,
+          1008,
+          915
+        ],
+        "caption_centers": [
+          [
+            300,
+            958
+          ],
+          [
+            780,
+            958
+          ]
+        ],
+        "option_boxes": [
+          [
+            90,
+            1040,
+            510,
+            1170
+          ],
+          [
+            570,
+            1040,
+            990,
+            1170
+          ]
+        ],
+        "instruction_center": [
+          540,
+          1280
+        ],
+        "lower_logo": [
+          490,
+          1360,
+          590,
+          1460
+        ],
+        "countdown_center": [
+          540,
+          1410
+        ],
+        "answer_center": [
+          540,
+          1280
+        ],
+        "answer_detail_centers": [
+          [
+            300,
+            1390
+          ],
+          [
+            780,
+            1390
+          ]
+        ],
+        "cta": "Retain approved original artwork at y1630..1730"
+      },
+      "motion": {
+        "photo_zoom": "1.000 to1.025 over12seconds",
+        "counter_pulse": "100px down to88px over0.18seconds each tick",
+        "reveal": "Correct option filled #0C5F46; text #F7F7EB at8seconds; short green underline grows over0.25seconds"
+      },
+      "preserve": "1080x1920,30fps,12seconds; original audio unchanged; intro0..3,countdown3..8,answer8..12. Original logos and Oxford header and CTA artwork unchanged.",
+      "acceptance": "Review each export at390px for both destinations; prevent text overflow and photo/text mismatch; keep current publisher gates; do not infer automatic gate compatibility from this settings adoption."
     }
   },
   "emoji": {
@@ -541,7 +646,7 @@
     "source_asset_path": "images/brand/badge.png",
     "source_asset_sha256": "8c143995229de80faf0315d5aaef90602bf0b5112360faae4cab0d8423f9ab2d",
     "asset_status": "Resolved: original 1000x1000 asset loaded by publishing_v2/fixed_information_template.py for Oxford/news cards. Inspected directly; no screenshot/video extraction.",
-    "timing": "Lower logo visible 0<=t<3, replaced by visible ٥٤٣٢١ at seconds3..8. Upper-left logo stays throughout.",
+    "timing": "Lower logo visible0<=t<3; English digits5,4,3,2,1 atseconds3..8 replace it. Upper-left logo stays.",
     "qa": "Inspect final decoded video at full resolution and 390px mobile width for crisp readable logo, correct aspect ratio and absence of compression blur. Record actual source path/hash.",
     "preserve": "Oxford wordmark and green header line, approved palette, audio, 12-second timing, answer and CTA.",
     "retroactive_publication": false

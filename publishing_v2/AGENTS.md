@@ -76,3 +76,8 @@ path and SHA before rendering; do not invent an asset identity. Preserve its
 proportions/colors and inspect sharpness in final decoded frames at 390px.
 Keep the Oxford wordmark/line and all approved challenge audio, countdown,
 answer and CTA settings. This instruction does not republish existing posts.
+
+
+## Approved challenge template — latest owner adoption
+
+For future challenges, `design-settings.json` challenges.approved_template_v2 supersedes earlier challenge Regular typography and geometry. Use Bold, English digits 0123456789, question above images, larger options, subtle image zoom and countdown pulse, and filled correct answer at second 8. Retain each series label: chronological comparisons use من بدأ أول؟ with a specific question (أي مقهى فتح قبل الثاني؟); never imply first in the world. Preserve Oxford header, original logos, CTA, original audio, 12-second timing and current delivery gates. Information cards unchanged. This adoption does not authorize republication or restart completed schedules. Review the export and gate compatibility before a future send; do not bypass checks.
