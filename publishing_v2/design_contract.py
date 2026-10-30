@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 from PIL import Image
 
@@ -26,6 +27,8 @@ def validate_design(media, report, placement):
             or placement not in report.get('destinations',[])
             or placement not in {'STORY','SPOTLIGHT','SAVED_STORY'}):
         fail('missing/current settings and destination review required')
+    if report.get('archive_exception') is not None:
+        return _six_legacy_archives(media, report, placement)
     review=report.get('review',{})
     checks=('saudi_editorial','approved_wording','photos_and_captions','cta_visible','overlay_checked')
     if (not isinstance(review,dict) or not review.get('reference') or review.get('mobile_width')!=390
@@ -63,6 +66,49 @@ def validate_design(media, report, placement):
         _flat_palette(image,card.get('palette_samples'),settings)
         _pixels(image,card.get('blocks'),settings)
     return {'status':'validated','sha256':[hashlib.sha256(raw).hexdigest() for _,raw in media]}
+
+
+def _six_legacy_archives(media, report, placement):
+    """Khalid's explicit 30-Oct approval: archive these six unchanged originals.
+
+    This is NOT a design pass. The normal publisher still checks revocable
+    approval, source POSTED receipts/provider uploads, quota and idempotency.
+    No new uploads, Story/Spotlight sends, other files or later use authorized.
+    """
+    from .bundle_api import ApprovedMedia
+    allowed = {
+        '5a65b46f79b77ac672fecab6ef18e8ddd715ed823accbcfe77a22713be51cb21': 'approved/rice-20261026/Rice-Final.png',
+        '7184b392653d46162372e9db05e444a65e2a76c4c65b66962e5d99fa2f9eeced': 'approved/oxford-20261027/card.png',
+        'bed4072e9bc8dc373f018869af8e6598863f6e4e3d5521dcf73e6a4fe10d1e62': 'approved/global-entry-20261028/card.png',
+        'e121b2af27b343e6d1eaf6d08c7009c8ff9508c9302bd33f1d2d0ba0638a01d2': 'approved/youtube-shopping-20261028/card.png',
+        'd791c1d50c73bdbd3fd73e309f4729afa9f62508197584d19d0a43309ce3b170': 'approved/shubaily-20261029/card.png',
+        '422748afae9bbf1e578102b24697748598b7ce1bd33dba6bfcc0c939425667ba': 'approved/twins-20261029/card.png',
+    }
+    tag='khalid-six-archives-20261030'
+    data=getattr(media,'snapshot',{})
+    if (not isinstance(media,ApprovedMedia) or len(media)!=1
+            or placement!='SAVED_STORY' or report.get('archive_exception')!=tag
+            or report.get('waived_checks')!=['current_template_design_review']
+            or data.get('archive_exception')!=tag or data.get('approved') is not True
+            or data.get('account')!='executivesaudi' or data.get('content_type')!='information'
+            or data.get('approved_destinations')!=['SAVED_STORY']):
+        fail('archive exception outside owner-approved scope')
+    try:
+        expiry=datetime.fromisoformat(data['expires_at'].replace('Z','+00:00'))
+        deadline=datetime.fromisoformat('2026-10-31T00:00:00+00:00')
+        if expiry.tzinfo is None or not datetime.now(timezone.utc)<expiry<=deadline:
+            fail('archive exception expired or extended')
+    except (KeyError,ValueError,TypeError):
+        fail('archive exception expiry invalid')
+    path,raw=media[0];digest=hashlib.sha256(raw).hexdigest()
+    if digest not in allowed or Path(path).resolve()!=(Path.cwd()/allowed[digest]).resolve():
+        fail('archive exception does not cover these bytes')
+    frames=data.get('media',[])
+    if (len(frames)!=1 or frames[0].get('sha256')!=digest
+            or frames[0].get('kind') not in {'info','story','topic'}):
+        fail('archive exception media declaration mismatch')
+    return {'status':'owner_authorized_archive_exception','sha256':[digest],
+            'waived_checks':['current_template_design_review']}
 
 
 def _flat_palette(image,samples,settings,tolerance=0):

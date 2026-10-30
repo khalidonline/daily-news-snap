@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Nonempty profile inventoried 2026-10-30, latest before task Goody; no matching Saved Story found. Starbucks separately saved. Recheck inventory before create.",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "manifest": "approved/archive-six-20261030/oxford-20261027/manifest.json",
+  "manifest_sha256": "d48f91356e6bd67a060cae65f7feb6155227f8496a6bfa21b46511d88bc31afc",
+  "identity": "a54ac8e694986d06b238f4c5a03c080a95afded5192e2de6e868376865374028",
+  "title": "أكسفورد للمشاة"
+}

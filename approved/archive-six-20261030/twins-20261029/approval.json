@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Nonempty profile inventoried 2026-10-30, latest before task Goody; no matching Saved Story found. Starbucks separately saved. Recheck inventory before create.",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "manifest": "approved/archive-six-20261030/twins-20261029/manifest.json",
+  "manifest_sha256": "bfac84c3377023500cb3279fa54afefcb752f74af3f3e85aff606919c1059c20",
+  "identity": "87d57deb3a83632cd7881598a7d7cdc0e646cd21844e65dc45d5bee0f45c0c4c",
+  "title": "التوأم بعد ٢١ سنة"
+}

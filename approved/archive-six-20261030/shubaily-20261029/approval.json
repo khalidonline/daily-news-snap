@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Nonempty profile inventoried 2026-10-30, latest before task Goody; no matching Saved Story found. Starbucks separately saved. Recheck inventory before create.",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "manifest": "approved/archive-six-20261030/shubaily-20261029/manifest.json",
+  "manifest_sha256": "9b803aa3bba0ec2f7382545b0ae7a36e4de8e5c0ee9e6ac4f36ec7d1d1420906",
+  "identity": "db9ee05ab19aa56639f88404c264e4e494f916f93b507340a1c49ac3ad254364",
+  "title": "الشبيلي بعد الانتظار"
+}

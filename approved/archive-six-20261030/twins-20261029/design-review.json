@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "destinations": [
+    "SAVED_STORY"
+  ],
+  "settings_revision": "2026-10-31-master-13",
+  "settings_sha256": "4ab2e3dc0f7d564c2f447d5cb5bdbe37389c33f31107b3f7df05d47fad581e0c",
+  "archive_exception": "khalid-six-archives-20261030",
+  "waived_checks": [
+    "current_template_design_review"
+  ],
+  "note": "Explicit owner exception, not current-template compliance. Exact original bytes only."
+}

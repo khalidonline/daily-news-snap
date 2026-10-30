@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Nonempty profile inventoried 2026-10-30, latest before task Goody; no matching Saved Story found. Starbucks separately saved. Recheck inventory before create.",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "manifest": "approved/archive-six-20261030/youtube-shopping-20261028/manifest.json",
+  "manifest_sha256": "05301c1dfc2e1832832d1272aa57f835c19549138e0b485b40d3b9e07f3ac786",
+  "identity": "8d1621c77e76976617dfad284ab1c84801108e4b08c90d1dc5a07d05ade27f60",
+  "title": "يوتيوب والتسوق"
+}

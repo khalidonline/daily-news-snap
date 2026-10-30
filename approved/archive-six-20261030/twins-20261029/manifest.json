@@ -1,0 +1,64 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "SAVED_STORY"
+  ],
+  "title": "جوا الرياض ملتصقين… ورجعوا بعد ٢١ سنة!",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid reviewed final template revision and said انشر, then authorized browser dispatch. Final 390px layout visually inspected; approval binds unchanged PNG bytes.; Khalid explicitly approved archiving these six unchanged published originals with legacy-design exception on 2026-10-30: اسمح. No redesign or STORY repost.",
+    "reviewed_at": "2026-10-29T12:43:56.333084+00:00",
+    "approved_media_sha256": [
+      "422748afae9bbf1e578102b24697748598b7ce1bd33dba6bfcc0c939425667ba"
+    ],
+    "approved_source_sha256": [
+      "2bcd7fb68f4f68bc55adec7783a63f22fbcd035f8256f893d7a11b133c30369e",
+      "7f3072e6a4829c648e3d27f1994ef355539d0c3ef92f109a1d7f73160df1c207"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/twins-20261029/card.png",
+      "sha256": "422748afae9bbf1e578102b24697748598b7ce1bd33dba6bfcc0c939425667ba",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false,
+        "note": "Approved deterministic template; owner-selected source photographs/rendering, with accurate captions"
+      },
+      "source_assets": [
+        {
+          "path": "approved/twins-20261029/source-0.jpeg",
+          "sha256": "2bcd7fb68f4f68bc55adec7783a63f22fbcd035f8256f893d7a11b133c30369e",
+          "source_url": "https://chatgpt.com/",
+          "description": "Owner-supplied Olga and Daria historical programme page; selected baby photo crop",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid explicitly selected these source images and approved final preview for publication; no independent license claim."
+        },
+        {
+          "path": "approved/twins-20261029/source-1.jpg",
+          "sha256": "7f3072e6a4829c648e3d27f1994ef355539d0c3ef92f109a1d7f73160df1c207",
+          "source_url": "https://s3-aws.ksrelief.org/mainportal/News/202623114025330.JPG",
+          "description": "Official KSrelief February 2026 reunion photograph",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid explicitly selected these source images and approved final preview for publication; no independent license claim."
+        }
+      ]
+    }
+  ],
+  "fact_sources": [
+    {
+      "url": "https://www.spa.gov.sa/N2713134",
+      "checked_at": "2026-10-29"
+    },
+    {
+      "url": "https://www.ksrelief.org/ar/Pages/NewsDetails/bbbc42ec-72b2-4d33-bb79-d4acab898ea6",
+      "checked_at": "2026-10-29"
+    }
+  ],
+  "archive_exception": "khalid-six-archives-20261030"
+}

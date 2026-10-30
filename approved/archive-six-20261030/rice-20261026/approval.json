@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Nonempty profile inventoried 2026-10-30, latest before task Goody; no matching Saved Story found. Starbucks separately saved. Recheck inventory before create.",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "manifest": "approved/archive-six-20261030/rice-20261026/manifest.json",
+  "manifest_sha256": "a2ed59c7101cead6b8e48b2f875ff9cfd0999c8347db0c7bc8634458fd7dd4f6",
+  "identity": "3db275dbcc8d86f0d34df5ae2ce29e70d26ff78212bb82029bdef139a83359f3",
+  "title": "الرز على سفرتنا"
+}

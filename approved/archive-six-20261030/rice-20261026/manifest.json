@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "content_type": "information",
+  "account": "executivesaudi",
+  "title": "الرز.. جانا مع التجارة وصار راعي السفرة",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "owner_review": {
+    "reference": "Khalid approved the rice card and instructed: احذف عبارة صوره توضيحية وانشر. Only the right caption was localized; dimensions and fixed palette preserved.; Khalid explicitly approved archiving these six unchanged published originals with legacy-design exception on 2026-10-30: اسمح. No redesign or STORY repost.",
+    "reviewed_at": "2026-10-26T16:20:00+00:00",
+    "approved_media_sha256": [
+      "5a65b46f79b77ac672fecab6ef18e8ddd715ed823accbcfe77a22713be51cb21"
+    ],
+    "approved_source_sha256": [
+      "2712d156841af1fb252ed6bc2cec86d4a409be0f6ecac0b7680e9709607da72a"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/rice-20261026/Rice-Final.png",
+      "sha256": "5a65b46f79b77ac672fecab6ef18e8ddd715ed823accbcfe77a22713be51cb21",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": true
+      },
+      "source_assets": [
+        {
+          "path": "approved/rice-20261026/Rice-Corrected-1080x1920.png",
+          "sha256": "2712d156841af1fb252ed6bc2cec86d4a409be0f6ecac0b7680e9709607da72a",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_e56e931a29b081919e932dc8d878d3f9&account_id=personal",
+          "rights_status": "owner_accepted_editorial_use",
+          "description": "Approved rice composite, Library version 1: owner brand, generated caravan and rice illustrations, sourced editorial text. Final caption edit uses the same art.",
+          "owner_reference": "Khalid requested the rice design and authorized publishing with the right illustration qualifier removed. Left caravan remains labeled رسم توضيحي."
+        }
+      ]
+    }
+  ],
+  "approved_destinations": [
+    "SAVED_STORY"
+  ],
+  "archive_exception": "khalid-six-archives-20261030"
+}
