@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Live complete inventory 2026-10-30T19:49:59Z: latest Saved Story Goody 6150cdeb-3c89-42b0-b690-109f32a62d6c. Profile NOT empty. No Starbucks archive found.",
+  "expires_at": "2026-10-30T23:59:00+00:00",
+  "manifest": "approved/archive-starbucks-20261030/manifest.json",
+  "manifest_sha256": "572b117418bb65c705603c2c65d1e34a784ead116a740e543dbae994654c06f9",
+  "identity": "4428ad060f2f32b28822a516188f10784d9b2b58941ac458dc365329d9c724cc",
+  "title": "ستاربكس… رجعوا للجلسات"
+}
