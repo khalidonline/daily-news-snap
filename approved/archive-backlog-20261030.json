@@ -1,0 +1,114 @@
+{
+  "checked_at": "2026-10-30T19:49:59Z",
+  "source_run": 41118394338,
+  "baseline": {
+    "id": "6150cdeb-3c89-42b0-b690-109f32a62d6c",
+    "type": "SAVED_STORY",
+    "title": "قودي اللي بمطبخنا… بدايتها سعودية",
+    "saved_title": "قودي اللي بمطبخنا… بدايتها سعودية",
+    "date": "2026-10-25T10:25:16.746Z",
+    "status": "POSTED",
+    "deleted": false,
+    "uploads": [
+      "befb814e-7555-4006-a456-74223d633c71"
+    ]
+  },
+  "scope": "Archive information only; no challenge SAVED_STORY; no STORY repost; no deletion",
+  "backlog": [
+    {
+      "id": "94829f04-c010-4716-bc61-4529bbebfba1",
+      "type": "STORY",
+      "title": "الرز.. جانا مع التجارة وصار راعي السفرة [1/1]",
+      "saved_title": null,
+      "date": "2026-10-26T16:25:48.577Z",
+      "status": "POSTED",
+      "deleted": false,
+      "uploads": [
+        "bec56112-6b93-4b34-893e-d548acfdf899"
+      ]
+    },
+    {
+      "id": "606da539-a566-46e7-a409-c39550312a49",
+      "type": "STORY",
+      "title": "أكسفورد للمشاة… مو ليوم واحد! [1/1]",
+      "saved_title": null,
+      "date": "2026-10-27T12:14:03.172Z",
+      "status": "POSTED",
+      "deleted": false,
+      "uploads": [
+        "7358d3c6-3ebd-458c-9d6d-237659f5f619"
+      ]
+    },
+    {
+      "id": "c798e809-2f93-4260-b22b-b306683be39e",
+      "type": "STORY",
+      "title": "سالفة المسافر الموثوق في امريكا باختصار [1/1]",
+      "saved_title": null,
+      "date": "2026-10-28T07:27:01.460Z",
+      "status": "POSTED",
+      "deleted": false,
+      "uploads": [
+        "05baa87f-7b86-4b71-8f45-81de979d2f97"
+      ]
+    },
+    {
+      "id": "9d5a7a07-5f01-4ab1-a814-6884b2936e4d",
+      "type": "STORY",
+      "title": "يوتيوب دخل التسوق… واللي ينصحك صار له نصيب! [1/1]",
+      "saved_title": null,
+      "date": "2026-10-28T16:37:47.368Z",
+      "status": "POSTED",
+      "deleted": false,
+      "uploads": [
+        "7bdf7c3a-dcd7-45e9-9b66-873fec6fbe60"
+      ]
+    },
+    {
+      "id": "b63f87b5-0a4f-4bdb-8a98-b1379bdbd598",
+      "type": "STORY",
+      "title": "مول انتظروه عشرين سنة… واليوم موعده! [1/1]",
+      "saved_title": null,
+      "date": "2026-10-29T12:54:52.864Z",
+      "status": "POSTED",
+      "deleted": false,
+      "uploads": [
+        "0eeea11b-6bb6-4586-89f1-edc279495716"
+      ]
+    },
+    {
+      "id": "9f37d4b1-5964-41fc-ab6f-ec3f71f48a3b",
+      "type": "STORY",
+      "title": "جوا الرياض ملتصقين… ورجعوا بعد ٢١ سنة! [1/1]",
+      "saved_title": null,
+      "date": "2026-10-29T12:59:53.561Z",
+      "status": "POSTED",
+      "deleted": false,
+      "uploads": [
+        "7d3c8bd2-e347-407c-bc90-9251b5ad417e"
+      ]
+    },
+    {
+      "id": "52a8b8f7-0fcf-4a20-a981-3c4eb5800239",
+      "type": "STORY",
+      "title": "ستاربكس… شالوا الكراسي ورجعوا لها! [1/1]",
+      "saved_title": null,
+      "date": "2026-10-30T19:01:52.334Z",
+      "status": "POSTED",
+      "deleted": false,
+      "uploads": [
+        "c1d1f6f9-9548-46fb-975b-8efbf733a284"
+      ]
+    }
+  ],
+  "blocked": {
+    "rice-20261026": "No design-review.json for current gate",
+    "oxford-20261027": "Recorded headline outside current role region",
+    "global-entry-20261028": "Recorded caption outside current role region",
+    "youtube-shopping-20261028": "Recorded caption outside current role region",
+    "shubaily-20261029": "Recorded headline outside current role region",
+    "twins-20261029": "Recorded caption outside current role region"
+  },
+  "goody_revisions": "Two later Goody layout revisions exist; original already archived. Do not duplicate or replace without reconciliation.",
+  "unconfirmed": "No later AlUla or underground oil storage post found in complete provider inventory.",
+  "starbucks": "Archive operation dispatched separately; final result belongs in saved-story-receipts/4428ad060f2f32b28822a516188f10784d9b2b58941ac458dc365329d9c724cc.json; not yet claimed here."
+}
