@@ -251,3 +251,15 @@ do not revive a paid legacy recovery route within cleanup. Preserve guards.
 This diagnostic does not claim a repair, fewer failed tests or faster publishing.
 Next: continue active-route expectation audit, leaving this fail-closed route
 unchanged until its recovery scope/identity is independently established.
+
+## Batch12 — active route resolver test
+
+Base:bcc4c71f518eb9161500821e83e2110f39590ca5. No prior batch writing;
+existing out/ retained. Updated only stale direct-mode input expectations to
+exercise actual route resolution offline and validate runner output bindings.
+Ruling: preserve current workflow behavior, not restore old expressions.
+Cost if wrong: route fixture could miss an authorization behavior; this test
+explicitly does not certify live authorization. Existing runtime guards intact.
+Targeted1passed5subtests; reviewer-recovery failure unchanged. Final full suite
+5failed1220passed242subtests,no new failures. Fresh review no blockers;
+report binding coverage retained after review. Protected1775unchanged.

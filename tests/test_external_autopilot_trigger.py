@@ -1,5 +1,10 @@
 import unittest
+import json
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
+import yaml
 
 
 class ExternalAutopilotTriggerTests(unittest.TestCase):
@@ -8,8 +13,40 @@ class ExternalAutopilotTriggerTests(unittest.TestCase):
         self.assertIn("push:\n    branches: [main]\n    paths:\n      - 'autopilot-trigger.txt'", text)
         self.assertNotIn('\n  schedule:\n', text)
         self.assertIn('workflow_dispatch:', text)
-        self.assertIn("AUTOPILOT_MODE: ${{ inputs.mode || 'shadow' }}", text)
-        self.assertIn("AUTOPILOT_REQUESTED_MODE: ${{ inputs.mode || 'shadow' }}", text)
+        steps = yaml.safe_load(text)['jobs']['packages']['steps']
+        route = next(step for step in steps if step.get('id') == 'route')
+        runner = next(step for step in steps if step.get('name') == 'Run coordinated editorial agents')
+        report = next(step for step in steps if step.get('name') == 'Send publication outcome')
+        self.assertEqual(report['env']['AUTOPILOT_REQUESTED_MODE'], '${{ steps.route.outputs.mode }}')
+        self.assertEqual(runner['env']['AUTOPILOT_MODE'], '${{ steps.route.outputs.mode }}')
+        self.assertEqual(runner['env']['AUTOPILOT_LANE'], '${{ steps.route.outputs.lane }}')
+        lines = route['run'].strip().splitlines()
+        self.assertEqual(lines[0], "python - <<'PY'")
+        self.assertEqual(lines[-1], 'PY')
+        script = '\n'.join(lines[1:-1])
+        cases = [
+            ({'GITHUB_EVENT_NAME': 'push', 'INPUT_MODE': 'live', 'INPUT_LANE': 'local'},
+             {'mode': 'shadow', 'lane': 'daily'}),
+            ({'GITHUB_EVENT_NAME': 'workflow_dispatch'}, {'mode': 'shadow', 'lane': 'daily'}),
+            ({'GITHUB_EVENT_NAME': 'workflow_dispatch', 'INPUT_MODE': 'shadow', 'INPUT_LANE': 'local'},
+             {'mode': 'shadow', 'lane': 'local'}),
+            ({'GITHUB_EVENT_NAME': 'workflow_dispatch', 'INPUT_MODE': 'invalid'}, None),
+            ({'GITHUB_EVENT_NAME': 'workflow_dispatch', 'INPUT_LANE': 'both'}, None),
+        ]
+        for env, expected in cases:
+            with self.subTest(env=env), tempfile.TemporaryDirectory() as tmp:
+                output = Path(tmp) / 'outputs'
+                result = subprocess.run([sys.executable, '-c', script],
+                    env={**env, 'GITHUB_OUTPUT': str(output)}, capture_output=True, text=True)
+                if expected is None:
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn('single_lane_required', result.stderr)
+                    self.assertFalse(output.exists())
+                else:
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(json.loads(result.stdout), expected)
+                    self.assertEqual(output.read_text(),
+                        f"mode={expected['mode']}\nlane={expected['lane']}\n")
 
     def test_reviewer_recovery_is_bounded_and_cannot_publish(self):
         script = Path('recover_held_reviewer.py').read_text(encoding='utf-8')
