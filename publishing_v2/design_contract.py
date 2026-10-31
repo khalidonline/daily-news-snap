@@ -141,6 +141,13 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
     used=[]
     for block in blocks:
         role=block['role'];box=block.get('box');color=palette[roles[role]]
+        v2 = challenge and bool(settings.get('challenges',{}).get('approved_template_v2'))
+        filled = block.get('filled_correct_option') is True
+        if filled:
+            if not v2 or role != 'option':fail('filled option outside approved challenge template')
+            color=palette['background']
+        if v2 and role=='answer' and block.get('answer_reveal') is True:
+            color=palette['green']
         if (not isinstance(box,list) or len(box)!=4 or any(type(v) is not int for v in box)
                 or not (60<=box[0]<box[2]<=1020 and 260<=box[1]<box[3]<=1730)):
             fail('text outside safe area')
@@ -149,7 +156,8 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
         if block.get('color')!=color:fail('wrong palette token')
         crop=image.crop(box);pixels=crop.load();rgb=tuple(bytes.fromhex(color[1:]));bands=[]
         # Exact-color presence alone is not enough: reject dominant wrong ink.
-        bg=tuple(bytes.fromhex(palette['cta_background' if role=='cta' else 'background'][1:]))
+        bghex=palette['green'] if filled else ('#DBEFE6' if challenge and role=='option' else palette['cta_background' if role=='cta' else 'background'])
+        bg=tuple(bytes.fromhex(bghex[1:]))
         vector=[bg[i]-rgb[i] for i in range(3)];denominator=sum(v*v for v in vector)
         core=bad=0
         for pixel in crop.get_flattened_data():
@@ -209,6 +217,10 @@ def _video_design(card,data,settings):
     if not frames or not isinstance(designs,list) or len(designs)!=len(frames):fail('all decoded frame designs required')
     for frame,design in zip(frames,designs):
         if design.get('at')!=frame['at'] or design.get('sha256')!=frame['sha256']:fail('decoded design evidence mismatch')
+        filled=[b for b in design.get('blocks',[]) if b.get('filled_correct_option') is True]
+        reveals=[b for b in design.get('blocks',[]) if b.get('answer_reveal') is True]
+        if (filled or reveals) and (frame['at']<8 or len(filled)!=1 or len(reveals)!=1):
+            fail('filled answer must occur only at approved reveal time')
         image=Image.open(Path(frame['path'])).convert('RGB')
         # reviewed_video already binds these decoded bytes to the final MP4.
         _pixels(image,design.get('blocks'),settings,challenge=True,tolerance=12)

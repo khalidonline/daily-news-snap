@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ دانكن أو ستاربكس",
+  "expires_at": "2026-11-02T10:01:43.700150+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/dunkin-starbucks-20261031/challenge.mp4",
+      "sha256": "5db24c56dc052147c93b82e1fe87d60b265d2089bdf55c067f69b64cfb4633d0",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "5db24c56dc052147c93b82e1fe87d60b265d2089bdf55c067f69b64cfb4633d0",
+      "reference": "Khalid approved A1 and delegated production/publication on31Oct. Agent inspected final decoded countdown/reveal and modeled390px overlays; original PCM compared, no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved A1 and delegated production/publication on31Oct. Agent inspected final decoded countdown/reveal and modeled390px overlays; original PCM compared, no subjective listening or owner viewing claimed.",
+    "video_sha256": "5db24c56dc052147c93b82e1fe87d60b265d2089bdf55c067f69b64cfb4633d0",
+    "source_manifest": {
+      "path": "approved/dunkin-starbucks-20261031/source-approval.json",
+      "sha256": "ba84b200c4ae76dcc41a1fd10757c3179e542eadf7dc81bb52bfa0252b0d9918"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-0.5.png",
+        "sha256": "430c97cc2bf86d3c94524096aaa0844bbe9a3b83ec914942518fb6559f1cf035"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-3.5.png",
+        "sha256": "4e8aa7158a8c47f06bd553dc0e98032fb4419a873263b7dd370c54f37d6fdb29"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-4.5.png",
+        "sha256": "b83cf4a7f5d1fe83f335738202b7c24e548a33e7f3ee1b0526fa7aca363c82e5"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-5.5.png",
+        "sha256": "89d9a2deeb76f48493e8e9dd44060661c5fa661cb3dea131e370452fd3551d9d"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-6.5.png",
+        "sha256": "95309469ea4d115b0932226dcc4a8699bd2988e1246584576dda19076f10712f"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-7.5.png",
+        "sha256": "77b3ecb90d29c3fea26b9a67a875e40d76b65c07ab2e65446dfd640421b38b92"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-8.5.png",
+        "sha256": "f1e41054a552fdf2961fb333506c4f2f2f8f798f1c5aa424809de3cb9165e4d3"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/dunkin-starbucks-20261031/frame-11.5.png",
+        "sha256": "dae885e4c101f770e77966d0ba09fd34ccd39bdce4a63452665a1486bccd19ac"
+      }
+    ]
+  }
+}

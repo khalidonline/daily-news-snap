@@ -14,7 +14,7 @@
     "precedence": "Latest explicit Khalid correction overrides older conflicting guidance; challenge-specific rules override general information-card rules only within challenges.",
     "persistence": "Update this same file identity; do not create competing masters. Preserve approved challenge rules and historical receipts.",
     "enforcement_status": "Information renderer and shared delivery geometry gate consume this file. Editorial truth, image meaning and destination overlays still require actual review. Challenge rules unchanged.",
-    "revision": "2026-10-31-master-13",
+    "revision": "2026-10-31-master-14",
     "repository_mirror": "publishing_v2/design-settings.json"
   },
   "editorial_master": {
@@ -652,7 +652,47 @@
     "retroactive_publication": false
   },
   "information_template": {
-    "status": "OWNER_AUTHORIZED_EXECUTABLE",
+    "status": "OWNER_APPROVED_LAYOUT_PENDING_RENDERER_MIGRATION",
+    "approved_layout_override": {
+      "approved_at_riyadh": "2026-10-31",
+      "owner_instruction": "اعتمد القالب",
+      "approval_basis": "Owner approved the template-balanced-spacing preview after requesting identical visible line gaps and equal spacing from the end of the photo-caption region to the start of the closing region.",
+      "scope": "All future information/news/story previews and publishing. Challenges unchanged. No automatic republication.",
+      "precedence": "This owner-approved layout supersedes older information geometry and fixed 66px line steps below. Legacy fields remain solely until renderer migration. Do not use legacy geometry for a new preview or publication.",
+      "canvas": [1080, 1920],
+      "regions_xyxy": {
+        "upper_left_logo": [70, 115, 165, 210],
+        "account_name": [925, 115, 1020, 210],
+        "title": [60, 215, 1020, 300],
+        "images": [60, 320, 1020, 670],
+        "captions": [60, 690, 1020, 735],
+        "body": [60, 760, 1020, 1545],
+        "closing": [60, 1575, 1020, 1640],
+        "cta": [60, 1665, 1020, 1730],
+        "footer_logo": [510, 1750, 570, 1810]
+      },
+      "typography": "Preserve pinned Almarai Bold 44px body, right-aligned on both lines, at most four bullets and two lines each. Preserve other approved role fonts and palette. Never shorten approved wording or shrink the body to fit.",
+      "line_spacing": {
+        "measurement": "Actual rendered glyph ink bounds, including dots and ascenders/descenders; not baseline or nominal font boxes.",
+        "visible_gap_px": 24,
+        "fixed_baseline_step": false
+      },
+      "paragraph_distribution": {
+        "top_boundary": 735,
+        "bottom_boundary": 1575,
+        "rule": "Measure each paragraph as the sum of its ink-line heights plus 24px per internal line gap. Divide remaining height between boundaries into N+1 equal gaps: before first paragraph, between paragraphs, after last paragraph. Use cumulative rounding with at most 1px difference. Reject overflow; no text or font changes without approval.",
+        "approved_example": {
+          "paragraph_ink_heights_px": [130, 122, 128, 139],
+          "ideal_gap_px": 64.2,
+          "rounded_gaps_px": [64, 64, 65, 64, 64],
+          "words": 53,
+          "word_limit_note": "53 words describes this sample, not a universal maximum. Measure actual text."
+        }
+      },
+      "artwork": "Preserve original logo and header artwork, fit proportionally within approved boxes; never redraw or stretch. CTA and arrow must fit the 65px-high region without clipping. Keep sharing text.",
+      "implementation_status": "Approval persisted. Shared renderer, shared design gate and final real-artwork export still require migration and verification; do not claim deployed or publish against old geometry.",
+      "publication_status": "No publication performed by this template adoption."
+    },
     "scope": [
       "morning news",
       "evening news",
