@@ -5,8 +5,12 @@
 Before showing a new information-card preview, stage its exact export, sources,
 design-review and draft manifest/archive approval under approved/<package>.
 Keep both approvals false until the owner's publication authorization. Run
-`python -m publishing_v2.prepared_information prepare --package <package>`.
+`python -m publishing_v2.prepared_information prepare-preview --package <package>`.
 This seals integrity only, not visual or owner approval. Complete actual review.
+Before this command, finish the real mobile overlay reviews for BOTH Story and
+Saved Story, palette samples, draft archive fields/profile baseline, and exact
+media/source review hashes. Never mark a review passed without inspecting it.
+These are pre-preview tasks, not work deferred until the owner says «انشر».
 After «انشر», record explicit authorization without changing export/content,
 then use the existing publish-approved-package workflow with that package input.
 No new per-card workflows; no paid regeneration on delivery failure. Preserve
@@ -19,6 +23,11 @@ showing the text for approval. Keep each bullet to two rendered lines, with the
 approved font and spacing; never shrink the font to fit. Word count alone is
 not evidence of fit. Preserve approved wording and the exact final export for
 delivery. A delivery failure must not trigger redesign or paid regeneration.
+Draft the textual card to the usable width/height of that template from the
+start: aim for balanced two-line points, without filler or oversized unused
+paragraph space. Preserve the master geometry and equal paragraph gaps; do not
+change font size, line spacing, or the template to compensate for an unmeasured
+draft. Flag required wording changes before asking for text approval.
 
 For all ExecutiveSaudi publication or design-revision tasks, read
 `publishing_v2/AGENTS.md` before making a delivery manifest or workflow.

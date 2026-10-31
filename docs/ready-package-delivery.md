@@ -10,13 +10,26 @@ false until explicit publication authorization. Never invent review evidence.
 Run from repository root:
 
 ```sh
-python -m publishing_v2.prepared_information prepare --package example-20261031
+python -m publishing_v2.prepared_information prepare-preview --package example-20261031
 ```
 
 `prepared.json` seals content, settings, assets and review; it cannot authorize
 publishing and does not prove that text, photos or layout are semantically right.
 Prepare expiry dates and destination fields before sealing. A changed export,
 source, caption, setting, review or content requires review and preparation again.
+
+The pre-preview command rejects incomplete destination overlay reviews and draft
+archive fields, and runs the existing pixel/geometry gate for BOTH destinations.
+Prepopulate exact media/source hashes in owner_review, but keep both approvals
+false and do not claim the owner has reviewed an unseen export. Inspect and record
+the real final 390px overlay review before this step, not after «انشر».
+Existing `prepare` remains an integrity utility, not evidence of preview readiness.
+
+Textual cards must already be measured with the shared renderer: one headline
+line, up to four balanced two-line bullets and one closing line. Fit the wording
+to the master text region without shrinking fonts, changing fixed geometry or
+adding filler. Show only copy which fits; obtain approval before shortening
+already-approved copy. This update does not redesign or republish existing cards.
 
 ## After owner approval
 

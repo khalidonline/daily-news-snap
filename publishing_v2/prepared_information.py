@@ -102,6 +102,42 @@ def prepare(package_dir):
     return record
 
 
+def prepare_preview(package_dir):
+    """Finish offline layout/archive preparation BEFORE owner review.
+
+    This does not grant approval or replace live account/quota/reconciliation.
+    Existing prepared packages keep their integrity-only verification semantics.
+    """
+    from .design_contract import validate_design
+    from .bundle_api import BundleError
+    p = package_path(package_dir)
+    snapshot(p)  # Paths and all asset hashes before reading media.
+    data = read_json(p/'manifest.json')
+    archive = read_json(p/'archive-approval.json')
+    if data.get('approved') is not False or archive.get('approved') is not False:
+        raise ValueError('Preview preparation requires both approvals false')
+    if (archive.get('account') != data['account']
+            or archive.get('manifest') != (p/'manifest.json').relative_to(Path.cwd()).as_posix()
+            or not archive.get('empty_profile_confirmation')
+            or archive.get('expires_at') != data.get('expires_at')
+            or not archive.get('identity')
+            or archive.get('public_indices') != list(range(1,len(data['media'])+1))):
+        raise ValueError('Complete draft archive fields before preview')
+    frames = data['media']
+    review = data.get('owner_review', {})
+    if (review.get('approved_media_sha256') != [f['sha256'] for f in frames]
+            or review.get('approved_source_sha256') != [s['sha256'] for f in frames for s in f.get('source_assets',[])]):
+        raise ValueError('Precompute exact review hashes before preview; approval stays false')
+    media = [(f['path'],safe_path(f['path']).read_bytes()) for f in frames]
+    report = read_json(p/'design-review.json')
+    for placement in data['approved_destinations']:
+        try:
+            validate_design(media,report,placement)
+        except BundleError as exc:
+            raise ValueError(str(exc)) from exc
+    return prepare(p)
+
+
 def verify_prepared(package_dir):
     record = read_json(package_path(package_dir)/'prepared.json')
     expected = dict(record)
@@ -113,10 +149,10 @@ def verify_prepared(package_dir):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'verify'])
+    parser.add_argument('mode', choices=['prepare', 'prepare-preview', 'verify'])
     parser.add_argument('--package', required=True)
     args = parser.parse_args()
-    result = (prepare if args.mode == 'prepare' else verify_prepared)(Path('approved')/args.package)
+    result = {'prepare':prepare,'prepare-preview':prepare_preview,'verify':verify_prepared}[args.mode](Path('approved')/args.package)
     print(json.dumps(result, ensure_ascii=False))
 
 
