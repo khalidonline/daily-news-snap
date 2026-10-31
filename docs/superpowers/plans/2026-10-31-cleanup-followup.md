@@ -63,3 +63,9 @@ Remaining sequence:
    consumers stay in place. No archival solely because a script is old.
 5. Full isolated verification and content index comparison; report retained
    pre-existing blockers explicitly. Do not claim green by suppressing tests.
+
+Batch11 completed root-level script enumeration: see49-file SHA inventory and
+cleanup-script-audit-20261031.md. No safe additional archive established; retain
+the17no-direct-reference candidates under the ambiguity rule. Do not repeat
+enumeration without a source change. Continue native-ledger behavioral audit
+and active-route expectations; dated recovery retirement remains unresolved.

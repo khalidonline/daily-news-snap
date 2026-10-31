@@ -1,0 +1,421 @@
+{
+  "base": "809711a6f865ee4bd585f062205288793883393f",
+  "scope": "All tracked root-level Python files. Conservative textual inbound references from non-test runtime Python and active workflows, not proof of reachability or absence of dynamic/external consumers.",
+  "files": [
+    {
+      "path": "ask_card.py",
+      "sha256": "390734dd4adff2f1ed3131ac267f8425aed81606f4a3904945db5411206ba2cd",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "auto_publish_gate.py",
+      "sha256": "e5b86dcc6c8b92ff7fbfe1e4930f65ab01415fcf53d95c9c4751b162eacc9dff",
+      "direct_candidate_consumers": [
+        ".github/workflows/autopublish-ready.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "batch_review.py",
+      "sha256": "4f95663fca03938fe944c4cb3688bd73839b1cdab5eb580324d619adfdf62a45",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "breaking_freshness.py",
+      "sha256": "618b02465ac9f3bca31bcf40874d52106cdcf533a1fbed5e1fb03be9e692ddf7",
+      "direct_candidate_consumers": [
+        "breaking_watch_entry.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "breaking_news_runner.py",
+      "sha256": "26459e71e0bd85429d595f2a5e4c357ea427b9bb5926c0d7e63694ee09404655",
+      "direct_candidate_consumers": [
+        "breaking_resilient_runner.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "breaking_resilient_runner.py",
+      "sha256": "011c5850c4bc33322bea7d770247ff8858141fea4158ffac999e3f66f1585901",
+      "direct_candidate_consumers": [
+        "breaking_watch_entry.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "breaking_watch.py",
+      "sha256": "8849b08263399273f4f6267e79b6796d735096428a600a59816b2d57bf52aa46",
+      "direct_candidate_consumers": [
+        "breaking_news_runner.py",
+        "breaking_watch_entry.py",
+        "news_bot.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "breaking_watch_entry.py",
+      "sha256": "700794599f00b465a8cccb789896b64ff89457e55e6c403fd34c1390cf1510d9",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "daily_budget.py",
+      "sha256": "4c8af4e057d52f95d92d98fe4c6213d0f475cb4950bf224589c14d0e77bb6323",
+      "direct_candidate_consumers": [
+        ".github/workflows/publishing-v2-candidate-probe.yml",
+        "finish_caption_20260926.py",
+        "model_role_experiment.py",
+        "publish_defense_tech_approved.py",
+        "publish_horse_approved.py",
+        "publishing_v2/autopilot/agents.py",
+        "publishing_v2/autopilot/pipeline.py",
+        "publishing_v2/autopilot/replay.py",
+        "publishing_v2/autopilot/runtime.py",
+        "recover_held_local.py",
+        "recover_held_reviewer.py",
+        "repair_saved_trial_20260926.py",
+        "replace_local_package.py",
+        "resume_budget_blocked_review.py",
+        "reviewer_visual_experiment.py",
+        "validate_saved_local_20260926.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "daily_news_fresh_runner.py",
+      "sha256": "6bbe1c803f4162d5fe2dfca2591cfe77217d318b19b0c079eeff7b8f6b0a8dde",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "daily_news_runner.py",
+      "sha256": "71085fb31080d5ece139470e094ad4972fc92803c4c3c27aa094a0d996458717",
+      "direct_candidate_consumers": [
+        "daily_news_fresh_runner.py",
+        "topic_snapchat.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "daily_slot_scheduler.py",
+      "sha256": "22a19c87442fe970874e53d03255d79850846cf83620087d394123840e5d53a1",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "finish_caption_20260926.py",
+      "sha256": "e6dce52ac9847e5a1c10d4ea98900f5e59943737c39e694c29b9e92bfe21aeda",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "image_precheck.py",
+      "sha256": "9ffaf78bf2fd5e71edfe347c4f4291e09c117059a88c82a74d15f05420cbe2f4",
+      "direct_candidate_consumers": [
+        "logo_fetch.py",
+        "preflight_stories.py",
+        "story_bot.py",
+        "story_runtime.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "logo_fetch.py",
+      "sha256": "a0fa4da21ccdef23ee91f62e75acb243950b1538f1a7dcb4eac84b72856d9867",
+      "direct_candidate_consumers": [
+        "news_visual_recovery.py",
+        "preflight_stories.py",
+        "story_bot.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "model_quality_benchmark.py",
+      "sha256": "61de13bbe8220c94a9212a5a58f843be5588d1e086df6a86be5175d4ff528ba8",
+      "direct_candidate_consumers": [
+        ".github/workflows/model-benchmark-offline.yml",
+        ".github/workflows/model-quality-benchmark.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "model_role_experiment.py",
+      "sha256": "e5c407f0163e03d99eff60a09e7a3694d733ffb2ef8fe288a56171296eb24868",
+      "direct_candidate_consumers": [
+        ".github/workflows/model-benchmark-offline.yml",
+        ".github/workflows/model-role-experiment.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "model_usage.py",
+      "sha256": "e87a783e2af4338a531b2d0c9bda224647ed0eec94e0aa7a1e6aa3e0d58ae322",
+      "direct_candidate_consumers": [
+        "breaking_news_runner.py",
+        "breaking_watch.py",
+        "news_bot.py",
+        "story_bot.py",
+        "topic_bot.py",
+        "topic_snapchat.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "news_bot.py",
+      "sha256": "5cbf8a64de4fe821bbc02f3c146233ce49874834976147b894f4389ca8b45017",
+      "direct_candidate_consumers": [
+        "ask_card.py",
+        "breaking_news_runner.py",
+        "breaking_resilient_runner.py",
+        "breaking_watch.py",
+        "daily_news_fresh_runner.py",
+        "daily_news_runner.py",
+        "logo_fetch.py",
+        "preflight_stories.py",
+        "publish_cards.py",
+        "publishing_v2/approved_copy.py",
+        "publishing_v2/autopilot/runtime.py",
+        "publishing_v2/preview.py",
+        "publishing_v2/preview_package.py",
+        "story_bot.py",
+        "story_runtime.py",
+        "topic_bot.py",
+        "topic_snapchat.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "news_editorial.py",
+      "sha256": "3d3b1a99f2461493103d36151af88b6835f3a497c595abfb18763500c74de6a3",
+      "direct_candidate_consumers": [
+        "daily_news_runner.py",
+        "topic_snapchat.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "news_event_timing.py",
+      "sha256": "95cc9a2db72d49c5e8ea5886c099a6c85c7b779d6454849129b0e6964999f5da",
+      "direct_candidate_consumers": [
+        "daily_news_runner.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "news_visual_recovery.py",
+      "sha256": "8122e6f3fe865c0213fb5668bb54711d3eb0c54a46ac2e75890e042e751e4c01",
+      "direct_candidate_consumers": [
+        "daily_news_runner.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "preflight_stories.py",
+      "sha256": "e13b4bd14106e178e2d510f8a2baf403ab688293d566478f23f80ffff0a53b77",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "publish_apple_ai_approved.py",
+      "sha256": "9c7f4f6773eb01c3b8460c914e61b4d3550d56e91140de85b4a7dc66c9c78518",
+      "direct_candidate_consumers": [
+        ".github/workflows/publish-apple-ai-approved.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "publish_cards.py",
+      "sha256": "ec603a0371cc2e716eea8a03eebef83a1aa89212b0c5615c77e67845ab4fb3b8",
+      "direct_candidate_consumers": [
+        "safe_publish_cards.py",
+        "story_bot.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "publish_defense_tech_approved.py",
+      "sha256": "c7cb86b2179bc3db8913b5a718af4f3ee9451317ec4dbe16a28ba67f2690d10a",
+      "direct_candidate_consumers": [
+        ".github/workflows/publish-defense-tech-approved.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "publish_horse_approved.py",
+      "sha256": "76f187e0d0f7ff5d6a1b2d4f47e22e48fe1cb05bc84a38689c2931976f0e8d71",
+      "direct_candidate_consumers": [
+        ".github/workflows/publish-horse-approved.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "recover_held_local.py",
+      "sha256": "82b108cfe2328113b1fb415a301c9a39ba88d4391982b903fb5b772f3bdb8f93",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "recover_held_reviewer.py",
+      "sha256": "ad28a76c946dd24f3fa143ebf11b82f126bed5ab7c784f664cc68cf889cdd30e",
+      "direct_candidate_consumers": [
+        ".github/workflows/recover-held-reviewer.yml",
+        "repair_saved_trial_20260926.py",
+        "validate_saved_local_20260926.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "repair_saved_trial_20260926.py",
+      "sha256": "cd886572be8f235a9c91242a98270685e92d70840f39e602426b4d7bdeac35ad",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "replace_local_package.py",
+      "sha256": "8525f5ab28dc7fb4518921239bd4f3a6a1b896965d201f3495f2f78a0e2e7680",
+      "direct_candidate_consumers": [
+        ".github/workflows/replace-local-package.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "resume_budget_blocked_review.py",
+      "sha256": "99229b81c55fcf4e4e0f66e1535386e638186dfa534877a0c9d4a0b24f516ba8",
+      "direct_candidate_consumers": [
+        ".github/workflows/resume-budget-blocked-local-review.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "review_package.py",
+      "sha256": "c298be74837e10ce24411a328cb983a1d35a4535704155ebe11be4bd244a3bfe",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "review_visual_gate.py",
+      "sha256": "e6c6801c676b24dbd340ea59b873bb1070657be693c6b224b26846528c6accd9",
+      "direct_candidate_consumers": [
+        "safe_publish_cards.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "reviewer_visual_experiment.py",
+      "sha256": "7dcbae8effe9a688789f8bff8eba89bffe6c127926a1907ec81a0d15f41ae647",
+      "direct_candidate_consumers": [
+        ".github/workflows/model-benchmark-offline.yml",
+        ".github/workflows/reviewer-visual-experiment.yml"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "runtime_relevance.py",
+      "sha256": "5651e5f67d7e64255ab705958bca03581257ac20776932ce54db994500768381",
+      "direct_candidate_consumers": [
+        "story_runtime.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "safe_publish_cards.py",
+      "sha256": "9cae4245ab94caf56ee507b01d34da0468cf5f47d0e239f05b90a669495a43b7",
+      "direct_candidate_consumers": [
+        "batch_review.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "scheduled_story_selection.py",
+      "sha256": "d00dd2b6af3ada62b0ad5132b7a4398e7c36b9fa7cce75a4cc6de1c8f720e166",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "seal_starbucks.py",
+      "sha256": "b3896bb3733668627477bd3287b77cf58460696b33f3432848b935c152df3854",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "season_aliases.py",
+      "sha256": "96d59c8f2c6316cf677c06011917ee5272b8a3a4edea42cd9417746b6b3fab41",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "shared_schedule_gate.py",
+      "sha256": "2ee23a757fb44ea88e512a4bfe38a2d5d7434410f040d4f94b27d570d3ca8cfa",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "story_bot.py",
+      "sha256": "906f8f3a17b2a1eec4734cd4f6084bec0c4aff9a1f8e7088100228fa13c1e9ee",
+      "direct_candidate_consumers": [
+        ".github/workflows/publishing-v2-tests.yml",
+        "preflight_stories.py",
+        "publishing_v2/apple_correction.py",
+        "publishing_v2/approved_copy.py",
+        "publishing_v2/autopilot/runtime.py",
+        "publishing_v2/preview_package.py",
+        "story_runtime.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "story_delivery_recovery.py",
+      "sha256": "c573ba99c0ec40cdc455d98747ebbae99760427827d59ea46d8eb0cea42a5cfd",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "story_runtime.py",
+      "sha256": "f6ea088c92333ffbf92d6b82ee8d1602278ddfc96d763c5e650bb6566295f3cb",
+      "direct_candidate_consumers": [
+        "safe_publish_cards.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "topic_bot.py",
+      "sha256": "e6a9450625f7de08bf7e6c985640e892176bcc89f865256685f4b6f6f927052e",
+      "direct_candidate_consumers": [
+        "topic_snapchat.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "topic_delivery_guard.py",
+      "sha256": "2bdd02b3227fe7a641f051f90cd6d0f8c0c1a9b67c66429a21e62195c4e23836",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    },
+    {
+      "path": "topic_editorial.py",
+      "sha256": "e72c3a892ba1db04201ad1b59486ce714070cfcf2906dca1ebdcec160bde151b",
+      "direct_candidate_consumers": [
+        "topic_snapchat.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "topic_snapchat.py",
+      "sha256": "cab8fc89b76764eaa386f862fffa0eba6ef49b36919f9606245f87aaa9e58323",
+      "direct_candidate_consumers": [
+        "topic_bot.py"
+      ],
+      "decision": "retain-consumer"
+    },
+    {
+      "path": "validate_saved_local_20260926.py",
+      "sha256": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51",
+      "direct_candidate_consumers": [],
+      "decision": "retain-unresolved"
+    }
+  ]
+}

@@ -219,3 +219,23 @@ Minor deferred: helper/report wording about mocking refers to frozen cases;
 boundary tests also control reservation estimates, not actual-cost arithmetic.
 Current-path654passed208subtests,1775protectedfiles unchanged. Original
 comparison preflight remains unchanged. No paid requests or live posting.
+
+## Follow-up batch 11 — root script inventory and retention rulings
+
+Base:809711a6f865ee4bd585f062205288793883393f. Fresh main matched checkpoint;
+only existing untracked out/ remained, untouched. No prior batch still writing.
+Inventoried all49root Python scripts with SHA256 and candidate references:
+32with textual runtime/workflow references,17without. Second-pass historical,
+manual and test references assessed in docs/cleanup-script-audit-20261031.md.
+Ruling: no additional move until retirement/recovery status is established;
+absence of direct callers is not proof. Cost: retaining unused files for now,
+not losing content or breaking recovery. No change to the six failed checks.
+Native reviewer uses shared Ledger before transport; behavioral equivalence to
+injected-guard test remains pending, so no test exemption was added.
+Full baseline6failed1219passed237subtests,no new failure IDs;49inventory hashes
+verified and1775protectedfiles unchanged. Fresh read-only reviewer verified all
+49base/current hashes and32/17classification; no blockers. Scan rule and
+inventory-reference limitations clarified. Reviewer did not judge runtime
+equivalence/retirement/receipt state; those remain explicitly unresolved.
+Root inventory is complete; uncertainty
+for dated recovery routes remains explicitly retained, not silently archived.
