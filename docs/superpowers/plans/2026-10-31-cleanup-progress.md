@@ -263,3 +263,23 @@ explicitly does not certify live authorization. Existing runtime guards intact.
 Targeted1passed5subtests; reviewer-recovery failure unchanged. Final full suite
 5failed1220passed242subtests,no new failures. Fresh review no blockers;
 report binding coverage retained after review. Protected1775unchanged.
+
+## Historical-approval diagnostic checkpoint
+
+Base1f43bdd9ba0be19bc426feb6c2205e75f1a22c99. All five October7approval
+fixtures have window2026-10-07T20:55Z..2026-10-11T20:59:59Z. Their prepare
+function and saved_story_api.validate_archive_authorization each read a clock.
+Offline runpy/unittest diagnostic with BOTH module-local datetime bindings
+patched in memory to2026-10-08T12:00Z:11tests passed, including explicit
+expired-approval rejection and lineage/media safeguards. Patching only the
+outer clock leaves2errors (inner validator still rejects expiry), confirming
+the independent second boundary. After contexts exit, real-clock NVIDIA
+prepare again rejects archive_approval_outside_window. No main(), client,
+publication or remote receipt read was invoked. Stored approvals and runtime
+files were not edited; only local fixture receipts were read.
+Protected1775files unchanged. Ruling: classify the two current-clock failures
+as historical fixture timing, not authorization defects; retain current expiry
+guards and protected test files. No failure suppression or green-suite claim.
+Remaining operational concerns: generic budget expectation/native recovery,
+reviewer token-bound expectation, and full-comparison experiment cap. Root
+inventory uncertainty retained per user instruction; no reactivation implied.
