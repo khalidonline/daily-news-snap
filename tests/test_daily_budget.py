@@ -307,12 +307,53 @@ class GitHubStoreTests(unittest.TestCase):
         self.assertIn('unpriced paid provider blocked', result.stderr)
 
 class WorkflowBudgetTests(unittest.TestCase):
+    HOLD = "echo 'Paid legacy route held: shared budget review required before reactivation.'\nexit 78\n"
+
+    def assert_held_before_credentials(self, job):
+        # Default success() skips later credential steps after this hard failure.
+        # Reject conditional/soft holds and any credential step that overrides it.
+        self.assertFalse(job.get('env'))
+        self.assertFalse(job.get('continue-on-error'))
+        steps = job['steps']
+        hold = steps[0]
+        self.assertEqual(hold.get('run'), self.HOLD)
+        self.assertEqual(hold.get('shell'), 'bash')
+        self.assertFalse(hold.get('if'))
+        self.assertFalse(hold.get('continue-on-error'))
+        self.assertFalse(hold.get('env'))
+        for step in steps[1:]:
+            if any(key in json.dumps(step) for key in ('secrets.ANTHROPIC_API_KEY', 'secrets.OPENAI_API_KEY', 'secrets.GETTY_API_KEY')):
+                self.assertNotIn('if', step)
+
+    def test_hold_exits_before_following_commands(self):
+        import subprocess
+        result = subprocess.run(['bash', '-e', '-c', self.HOLD + 'echo SHOULD_NOT_RUN'],
+                                env={'PATH': '/usr/bin:/bin'}, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 78)
+        self.assertNotIn('SHOULD_NOT_RUN', result.stdout)
+
+    def test_conditional_soft_or_late_holds_are_rejected(self):
+        valid = {'steps': [{'run': self.HOLD, 'shell': 'bash'}, {'run': 'python legacy.py',
+                  'env': {'ANTHROPIC_API_KEY': '${{ secrets.ANTHROPIC_API_KEY }}'}}]}
+        self.assert_held_before_credentials(valid)
+        for mutation in ('conditional', 'soft', 'late', 'always'):
+            broken = copy.deepcopy(valid)
+            if mutation == 'conditional': broken['steps'][0]['if'] = 'false'
+            if mutation == 'soft': broken['steps'][0]['continue-on-error'] = True
+            if mutation == 'late': broken['steps'].reverse()
+            if mutation == 'always': broken['steps'][1]['if'] = 'always()'
+            with self.subTest(mutation=mutation), self.assertRaises(AssertionError):
+                self.assert_held_before_credentials(broken)
+
     def test_paid_workflows_cannot_override_guard_python_path(self):
         from pathlib import Path
+        import yaml
         for path in Path('.github/workflows').glob('*.yml'):
             text = path.read_text()
-            if 'secrets.ANTHROPIC_API_KEY' not in text:
+            if not any(key in text for key in ('secrets.ANTHROPIC_API_KEY', 'secrets.OPENAI_API_KEY', 'secrets.GETTY_API_KEY')):
                 continue
+            workflow = yaml.safe_load(text)
+            self.assertFalse(workflow.get('env'), str(path))
             if path.name == 'publishing-v2-autopilot.yml':
                 # These two audited entry points use Agents + Ledger directly.
                 # Any new credential-bearing step must be reviewed explicitly.
@@ -326,15 +367,41 @@ class WorkflowBudgetTests(unittest.TestCase):
                     self.assertNotIn('ANTHROPIC_API_KEY', job.get('env', {}))
                     for step in job['steps']:
                         env = step.get('env', {})
+                        if any(k in json.dumps(step) for k in ('secrets.ANTHROPIC_API_KEY', 'secrets.OPENAI_API_KEY', 'secrets.GETTY_API_KEY')):
+                            self.assertIn('ANTHROPIC_API_KEY', env)
                         if 'ANTHROPIC_API_KEY' in env:
                             self.assertIn(step.get('run','').strip(), allowed)
                             self.assertEqual(str(env.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD')), '3000000')
                             self.assertIn('DAILY_BUDGET_GITHUB_TOKEN',env)
+            elif path.name == 'publishing-v2-cloud-permissions.yml':
+                # This job reports presence, not values, and never exposes these
+                # keys to the subsequent cloud audit. Bind the exact reviewed
+                # shell program; a new credential-bearing command needs review.
+                expected = ('for name in OPENAI_API_KEY ANTHROPIC_API_KEY GETTY_API_KEY; do\n'
+                    '  if [ -n "${!name:-}" ]; then status=configured; else status=missing; fi\n'
+                    '  echo "$name: $status" | tee -a "$GITHUB_STEP_SUMMARY"\n'
+                    'done\n')
+                for job in workflow['jobs'].values():
+                    self.assertFalse(job.get('env'))
+                    credential_steps = [s for s in job['steps'] if any(k in json.dumps(s)
+                        for k in ('secrets.ANTHROPIC_API_KEY', 'secrets.OPENAI_API_KEY', 'secrets.GETTY_API_KEY'))]
+                    self.assertEqual(len(credential_steps), 1)
+                    self.assertEqual(credential_steps[0].get('run'), expected)
+                    import subprocess, tempfile
+                    with tempfile.TemporaryDirectory() as tmp:
+                        summary = Path(tmp) / 'summary'
+                        outcome = subprocess.run(['bash', '-e', '-c', credential_steps[0]['run']],
+                            env={'PATH': '/usr/bin:/bin', 'GITHUB_STEP_SUMMARY': str(summary),
+                                 'ANTHROPIC_API_KEY': 'fake-secret-not-for-output'},
+                            capture_output=True, text=True)
+                        self.assertEqual(outcome.returncode, 0, outcome.stderr)
+                        self.assertEqual(outcome.stdout, 'OPENAI_API_KEY: missing\nANTHROPIC_API_KEY: configured\nGETTY_API_KEY: missing\n')
+                        self.assertEqual(summary.read_text(), outcome.stdout)
             else:
-                self.assertIn('Install shared $3 daily budget guard', text, str(path))
-            for line in text.splitlines():
-                if 'PYTHONPATH=' in line or 'PYTHONPATH:' in line:
-                    self.assertIn('daily-budget', line, f'{path}: {line}')
+                for job in workflow['jobs'].values():
+                    if any(k in json.dumps(job) for k in ('secrets.ANTHROPIC_API_KEY', 'secrets.OPENAI_API_KEY', 'secrets.GETTY_API_KEY')):
+                        with self.subTest(workflow=path.name):
+                            self.assert_held_before_credentials(job)
 
 
 class NativeAgentBudgetTests(unittest.TestCase):

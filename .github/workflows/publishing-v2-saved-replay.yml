@@ -23,6 +23,11 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Hold legacy paid route pending shared-budget review
+        shell: bash
+        run: |
+          echo 'Paid legacy route held: shared budget review required before reactivation.'
+          exit 78
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
