@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر — ليغو تايتانيك",
+  "expires_at": "2026-11-02T16:05:32.481911+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/lego-titanic-20261031/challenge.mp4",
+      "sha256": "6e403e4955a091d125bae836105efc441e110a58e38a6fc8ec185e7ae59b09fa",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "6e403e4955a091d125bae836105efc441e110a58e38a6fc8ec185e7ae59b09fa",
+      "reference": "Khalid approved B1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "6e403e4955a091d125bae836105efc441e110a58e38a6fc8ec185e7ae59b09fa",
+    "source_manifest": {
+      "path": "approved/lego-titanic-20261031/source-approval.json",
+      "sha256": "bd92fe118ea8a25dad61aadf54c967d7644c9d2dcc7a38308852773ed363f376"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/lego-titanic-20261031/frame-0.5.png",
+        "sha256": "389215fdf043adc47baa8f3fe93f7f34b779974a0b864ea591182396dc343b80"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/lego-titanic-20261031/frame-3.5.png",
+        "sha256": "94769c059ae6e910133f1e9227c0142e8ed70c4a586f2f65f027f9ca5aead1f0"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/lego-titanic-20261031/frame-4.5.png",
+        "sha256": "a058ec5f8dc5d4f9a8128e8d04861e9b9a78e2f61ed48a37f22eff22155f5743"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/lego-titanic-20261031/frame-5.5.png",
+        "sha256": "b4acc9da24e8c536795d0db7bc5690856c5f1f00da39f17d3aba51e8dd6ffeed"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/lego-titanic-20261031/frame-6.5.png",
+        "sha256": "46677d027a6f25024e3185b86a49b38707620c35483ddb468d706997137e85fb"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/lego-titanic-20261031/frame-7.5.png",
+        "sha256": "16e3d0c26b393c72ecd20b8389f73c088edaacbd6a08bf1572f0216dfc153ed9"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/lego-titanic-20261031/frame-8.5.png",
+        "sha256": "221d59381dfbadfa2fa19dc8a82dc1663c781d4c730a8a81a27a7e20c662f98f"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/lego-titanic-20261031/frame-11.5.png",
+        "sha256": "96b11fa444e575b8df6c34259e017b2e782772d295aa768d6d7ddc529cd018b1"
+      }
+    ]
+  }
+}
