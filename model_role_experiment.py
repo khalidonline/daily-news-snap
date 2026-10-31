@@ -27,7 +27,9 @@ CANDIDATES = (
      "input_price": 4.0, "output_price": 20.0, "credential": "OPENAI_API_KEY"},
 )
 LABELS = ("A", "B", "C")
-MAX_CASES = 2
+# One complete three-model comparison per invocation fits the $0.75 reserve.
+# Remaining frozen cases stay in the source dataset for a separately approved run.
+MAX_CASES = 1
 MAX_OUTPUT_TOKENS = 4096
 MAX_EXPERIMENT_COST_USD = 0.75
 TIMEOUT_SECONDS = 180

@@ -1,10 +1,22 @@
 import copy, importlib.util, json, pathlib, unittest
+from datetime import datetime, timezone
+from unittest.mock import patch
+from publishing_v2 import saved_story_api
+
+class HistoricalClock(datetime):
+    @classmethod
+    def now(cls, tz=None):
+        return datetime(2026, 10, 8, 12, tzinfo=timezone.utc).astimezone(tz)
 BASE=pathlib.Path(__file__).parent
 spec=importlib.util.spec_from_file_location('archive_batch',BASE/'save_batch.py')
 batch=importlib.util.module_from_spec(spec);spec.loader.exec_module(batch)
 fixture=json.loads((BASE/'review-fixture.json').read_text())
 class ArchiveBatchTests(unittest.TestCase):
     def setUp(self):
+        # Exercise historical bytes at their original valid time; do not renew
+        # approvals. Both independent authorization boundaries keep real logic.
+        self.enterContext(patch.object(batch, 'datetime', HistoricalClock))
+        self.enterContext(patch.object(saved_story_api, 'datetime', HistoricalClock))
         self.a=json.loads((BASE/'nvidia-sega-20261007.json').read_text())
         self.r=copy.deepcopy(fixture['receipts']);self.b=copy.deepcopy(fixture['backlog'])
     def test_final_nvidia_order_and_media(self):
@@ -33,7 +45,18 @@ class ArchiveBatchTests(unittest.TestCase):
         with self.assertRaises(ValueError): batch.prepare(self.a,self.r,self.b)
     def test_expired_approval_rejected(self):
         self.a['expires_at']='2020-01-01T00:00:00Z'
-        with self.assertRaises(ValueError): batch.prepare(self.a,self.r,self.b)
+        with self.assertRaisesRegex(ValueError, 'archive_approval_outside_window'): batch.prepare(self.a,self.r,self.b)
+    def test_original_approval_rejected_after_expiry(self):
+        class ExpiredClock(HistoricalClock):
+            @classmethod
+            def now(cls, tz=None):
+                return datetime(2026, 10, 12, tzinfo=timezone.utc).astimezone(tz)
+        with patch.object(batch, 'datetime', ExpiredClock):
+            with self.assertRaisesRegex(ValueError, 'archive_approval_outside_window'):
+                batch.prepare(self.a,self.r,self.b)
+        with patch.object(saved_story_api, 'datetime', ExpiredClock):
+            with self.assertRaisesRegex(ValueError, 'Archive approval expired'):
+                batch.prepare(self.a,self.r,self.b)
     def test_unapproved_rejected(self):
         self.a['approved']=False
         with self.assertRaises(ValueError): batch.prepare(self.a,self.r,self.b)

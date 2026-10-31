@@ -17,7 +17,7 @@ class ModelRoleExperimentTests(unittest.TestCase):
             ["claude-opus-5", "claude-sonnet-5", "gpt-5.6-sol"],
         )
         self.assertLessEqual(experiment.MAX_EXPERIMENT_COST_USD, 0.75)
-        self.assertEqual(experiment.MAX_CASES, 2)
+        self.assertEqual(experiment.MAX_CASES, 1)
 
     def test_selected_frozen_cases_fit_under_hard_reservation_cap(self):
         payload = json.loads(Path("evaluation/event_packages.json").read_text(encoding="utf-8"))

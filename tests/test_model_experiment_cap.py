@@ -46,7 +46,9 @@ class ModelExperimentCapTests(unittest.TestCase):
         return result, requests
 
     def test_frozen_cases_skip_last_request_before_transport(self):
-        result, requests = self.run_offline()
+        # Stress the unchanged cap with a hypothetical oversized two-case batch.
+        with patch.object(experiment, "MAX_CASES", 2):
+            result, requests = self.run_offline()
         self.assertEqual(requests, ["claude-opus-5", "claude-sonnet-5", "gpt-5.6-sol",
                                     "claude-opus-5", "claude-sonnet-5"])
         self.assertEqual(result["cases"][1]["outputs"][2],
@@ -55,7 +57,7 @@ class ModelExperimentCapTests(unittest.TestCase):
 
     def test_exact_cap_allows_last_request(self):
         # Six requests at $0.125 exactly fill the existing $0.75 cap.
-        with patch.object(experiment, "maximum_call_cost", return_value=0.125):
+        with patch.object(experiment, "MAX_CASES", 2), patch.object(experiment, "maximum_call_cost", return_value=0.125):
             result, requests = self.run_offline()
         self.assertEqual(len(requests), 6)
         self.assertEqual(result["reserved_maximum_usd"], 0.75)
@@ -63,9 +65,15 @@ class ModelExperimentCapTests(unittest.TestCase):
                             for c in result["cases"] for o in c["outputs"]))
 
     def test_over_cap_skips_last_request(self):
-        with patch.object(experiment, "maximum_call_cost", return_value=0.125001):
+        with patch.object(experiment, "MAX_CASES", 2), patch.object(experiment, "maximum_call_cost", return_value=0.125001):
             result, requests = self.run_offline()
         self.assertEqual(len(requests), 5)
         self.assertEqual(result["cases"][1]["outputs"][2],
                          {"label": "C", "status": "cost_cap_reached"})
         self.assertAlmostEqual(result["reserved_maximum_usd"], 0.625005)
+
+    def test_default_batch_compares_all_models_on_one_case(self):
+        result, requests = self.run_offline()
+        self.assertEqual(len(result['cases']), 1)
+        self.assertEqual(requests, ['claude-opus-5', 'claude-sonnet-5', 'gpt-5.6-sol'])
+        self.assertTrue(all(o['status'] == 'completed' for o in result['cases'][0]['outputs']))

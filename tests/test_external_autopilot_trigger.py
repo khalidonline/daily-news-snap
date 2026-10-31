@@ -51,7 +51,38 @@ class ExternalAutopilotTriggerTests(unittest.TestCase):
     def test_reviewer_recovery_is_bounded_and_cannot_publish(self):
         script = Path('recover_held_reviewer.py').read_text(encoding='utf-8')
         workflow = Path('.github/workflows/recover-held-reviewer.yml').read_text(encoding='utf-8')
-        self.assertIn('REVIEWER_MAX_TOKENS = 4096', script)
+        # Verify the actual provider payload and shared reservation, not an
+        # obsolete source-code literal. HTTP is the only replaced boundary.
+        from unittest.mock import patch
+        import recover_held_reviewer as recovery
+        from daily_budget import Ledger, BudgetBlocked
+        from tests.test_daily_budget import MemoryStore
+        store = MemoryStore()
+        ledger = Ledger(store)
+        ledger.context = {'package_id': 'offline-review', 'stage': 'reviewer'}
+        calls = []
+        def response(transport, method, url, headers, payload):
+            calls.append(payload)
+            entries = [e for _, row in store.rows.values() for e in row['entries'].values()]
+            self.assertEqual(len(entries), 1)
+            self.assertEqual(entries[0]['status'], 'reserved')
+            self.assertGreaterEqual(entries[0]['charged_micro_usd'], 48000)
+            self.assertEqual(payload['max_tokens'], 4800)
+            return 200, {'id': 'offline', 'stop_reason': 'end_turn',
+                         'usage': {'input_tokens': 1, 'output_tokens': 1},
+                         'content': [{'type': 'text', 'text': '{}'}]}
+        with patch.object(recovery.providers, '_request', side_effect=response):
+            result, receipt = recovery.review_once({}, [], env={'ANTHROPIC_API_KEY': 'offline'}, ledger=ledger)
+        self.assertEqual(result, {})
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(receipt['recovery_max_tokens'], 4800)
+        # An exhausted real ledger must stop before the transport boundary.
+        blocked = Ledger(MemoryStore())
+        blocked.reserve(3000000, 'offline-used')
+        blocked.context = ledger.context
+        with patch.object(recovery.providers, '_request', side_effect=AssertionError('provider contacted')):
+            with self.assertRaises(BudgetBlocked):
+                recovery.review_once({}, [], env={'ANTHROPIC_API_KEY': 'offline'}, ledger=blocked)
         self.assertIn('slot_not_unstarted_budget_blocked_review', script)
         self.assertIn('review-recovery-trigger.txt', workflow)
         self.assertNotIn('BUNDLE_API_KEY', workflow)
