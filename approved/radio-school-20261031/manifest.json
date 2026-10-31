@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -11,7 +11,17 @@
   "not_before": "2026-10-31T00:00:00+00:00",
   "expires_at": "2026-11-02T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
-  "owner_review": {},
+  "owner_review": {
+    "reference": "Khalid explicitly requested انشر after viewing this exact radio-school card and its two archival images. Approval covers this editorial composite only; image licensing is not independently verified.",
+    "reviewed_at": "2026-10-31T20:31:45+00:00",
+    "approved_media_sha256": [
+      "c64a861d99f81132573fb932504488c574698d3c6fd4bd7175d9471f96597047"
+    ],
+    "approved_source_sha256": [
+      "fd1dd769cca0ef51ab9bc33decaa67d6a832aae1762c36822e6fec4874aab502",
+      "43cd0fc31ad0e0084f225f1c3d7b36910a497e783ca9faa6f663b9c30fd36951"
+    ]
+  },
   "media": [
     {
       "kind": "info",
@@ -27,14 +37,16 @@
           "sha256": "fd1dd769cca0ef51ab9bc33decaa67d6a832aae1762c36822e6fec4874aab502",
           "source_url": "https://www.wbez.org/curious-city/2021/05/13/how-a-polio-epidemic-led-to-the-creation-of-wbez",
           "description": "Historical newspaper clipping",
-          "rights_status": "unverified"
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid explicitly requested انشر after viewing this exact radio-school card and its two archival images. Approval covers this editorial composite only; image licensing is not independently verified."
         },
         {
           "path": "approved/radio-school-20261031/students.jpg",
           "sha256": "43cd0fc31ad0e0084f225f1c3d7b36910a497e783ca9faa6f663b9c30fd36951",
           "source_url": "https://www.northernpublicradio.org/wnij-news/2021-09-13/this-week-in-illinois-history-remote-learning-by-radio-september-13-1937",
           "description": "Chicago children studying by radio, as captioned by Northern Public Radio",
-          "rights_status": "unverified"
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid explicitly requested انشر after viewing this exact radio-school card and its two archival images. Approval covers this editorial composite only; image licensing is not independently verified."
         }
       ]
     }

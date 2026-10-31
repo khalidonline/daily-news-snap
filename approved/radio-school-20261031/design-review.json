@@ -230,7 +230,27 @@
             1722
           ]
         }
-      ]
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
     }
   ],
   "destinations": [
@@ -245,7 +265,11 @@
     "approved_typography": true,
     "photos_and_captions": true,
     "cta_visible": true,
-    "overlay_checked": false
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 Story-player simulation with top0..39 and bottom625..692 covered; title, body and CTA remain visible. Simulation only, not live device proof.",
+      "SAVED_STORY": "Inspected 390x693 Story-player simulation with top0..39 and bottom625..692 covered; title, body and CTA remain visible. Simulation only, not live device proof."
+    }
   },
   "palette_exact_pixel_counts": {
     "body": 54247,

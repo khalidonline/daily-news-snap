@@ -1,13 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/radio-school-20261031/manifest.json",
-  "manifest_sha256": "dc47d3a4c385ecd7a0e85a71ffe7f81d0e9a770f8f9b031fdf02b615def30897",
+  "manifest_sha256": "7de71f9de01693067582fed352b6138ed43b942ab41e69785141207708c51412",
   "identity": "9a4749545b720c2acf5eb931be7b7ec7955a2d31bab37d91e712c01d4412db6f",
   "public_indices": [
     1
   ],
   "title": "قبل المنصات… كانوا يداومون عند الرادو!",
   "expires_at": "2026-11-02T20:59:59+00:00",
-  "owner_authorization": "Pending current export approval"
+  "owner_authorization": "Khalid explicitly requested انشر after viewing this exact radio-school card and its two archival images. Approval covers this editorial composite only; image licensing is not independently verified. Public Story and Saved Story under standing information-card destination approval.",
+  "empty_profile_confirmation": "Existing public profile contains previous saved stories; do not treat it as empty. Provider inventory and overlap must be checked by SavedClient.find before creating this new item."
 }

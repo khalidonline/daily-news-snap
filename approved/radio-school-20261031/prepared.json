@@ -2,10 +2,10 @@
   "version": 1,
   "status": "PREPARED_NOT_AUTHORIZED",
   "package": "approved/radio-school-20261031",
-  "manifest_content_sha256": "cb52021b73a42d29011e910ffb853cce031f59921643d44d373275b928f4848b",
-  "archive_content_sha256": "6ac8f9970d5de52dcc322eda2e8fc38cde75d01c00bdc34b4d9e0ec66d6d53fe",
+  "manifest_content_sha256": "324836fc4fdb6421799d48ac0fe136154d58e64506ffd335145789e91f112b81",
+  "archive_content_sha256": "f8bb4f74289d042c21928a9a8855fdae12fa7314032f61c97feca17a0ad41b1a",
   "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
-  "review_sha256": "78c142ba1a5898b27cba22c8b0c91ed2da0d6d1e9d104a8f906ff3e4a8960172",
+  "review_sha256": "f43020a7192e765ad02d6c6e1c1bd43c0725d1a80dd1a6b40a9e1bf56f769bbe",
   "assets": {
     "approved/radio-school-20261031/card.png": "c64a861d99f81132573fb932504488c574698d3c6fd4bd7175d9471f96597047",
     "approved/radio-school-20261031/newspaper.jpg": "fd1dd769cca0ef51ab9bc33decaa67d6a832aae1762c36822e6fec4874aab502",
