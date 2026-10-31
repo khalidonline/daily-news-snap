@@ -283,3 +283,15 @@ guards and protected test files. No failure suppression or green-suite claim.
 Remaining operational concerns: generic budget expectation/native recovery,
 reviewer token-bound expectation, and full-comparison experiment cap. Root
 inventory uncertainty retained per user instruction; no reactivation implied.
+
+## Final conservative-scope disposition
+
+Supersedes earlier open-ended "remaining" notes. Fresh independent scope review
+confirms42activeworkflow entries already enumerated/hashed in route-inventory,
+49root scripts inventoried, uncertain recovery paths intentionally retained.
+Ruling: conclude approved content-safe cleanup with five named retained failures,
+not repair/revive legacy execution or delete ambiguous files. Cost: potential
+unused files remain; no loss of content/recovery and no weakened guards.
+All15archived copies verified against manifest SHA256 and original Git blobs;
+1775protectedfiles unchanged. Final fresh suite totals in
+docs/cleanup-closeout-20261031.md. Stop only cleanup task after integration.

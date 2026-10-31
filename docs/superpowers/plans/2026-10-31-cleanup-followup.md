@@ -1,5 +1,10 @@
 # Cleanup follow-up: mixed Topic test batch
 
+FINAL DISPOSITION: superseded by docs/cleanup-closeout-20261031.md. The historical
+remaining sequence below is now closed through completed work or explicit
+retention under the owner's ambiguity rule. It is not a queue for automatic
+legacy revival. No all-tests-green claim. See closeout for five retained failures.
+
 Authorization: owner requested scheduled autonomous continuation, small verified
 batches and main integration, preserving all content and current safeguards.
 Base: 0f69fbb2f6d60072c3e11cd29fca00b249c00675.
