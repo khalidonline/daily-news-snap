@@ -36,7 +36,9 @@ For every information/story/news preview and publication, start with
 `publishing_v2.fixed_information_template.render` and the current
 `information_template` / `numeric_grid_px` in that same master. Do not fork a
 one-off renderer or inherit Rice/Kandasa layout defaults. Body is pinned Almarai
-44 Bold, right-aligned, two lines maximum with 66px line steps. Other information
+44 Bold, right-aligned, two lines maximum. The approved 31-Oct information layout
+uses 24px visible ink gaps and equal N+1 paragraph gaps; consume
+information_template.approved_layout_override. Challenges unchanged. Other information
 text roles are pinned Almarai Regular. Title is one right-aligned line; closing
 is one centered line. Caption/image mapping and final mobile review remain
 mandatory. The shared delivery gate rejects out-of-region information text and

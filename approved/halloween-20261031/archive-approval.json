@@ -1,0 +1,14 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Existing public profile contains prior saved stories; owner requested saving subsequent information cards there, excluding challenges. Existing inventory and overlap are rechecked by SavedClient.find before any create.",
+  "expires_at": "2026-10-31T20:59:59+00:00",
+  "manifest": "approved/halloween-20261031/manifest.json",
+  "manifest_sha256": "084a5c6c6e9311b1bbde5ddc0fa6e4c4bb3a564736a8793fa8c9ff9150644676",
+  "identity": "fa59c2b6bf1b5d44e9f3db3118ef5c4c5d64e95dfc831cca334965c99e1dac75",
+  "public_indices": [
+    1
+  ],
+  "title": "الهالوين… سالفة القرع بدأت بلفتة!",
+  "owner_authorization": "Explicit publish and continue after final caption revision; standing request to save information posts in public profile, never challenges."
+}

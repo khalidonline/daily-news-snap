@@ -134,7 +134,7 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
     if challenge:
         valid=(all(names.count(r)==1 for r in ('headline','question','cta')) and 2<=names.count('option')<=4)
     else:
-        valid=(all(names.count(r)==1 for r in ('headline','closing','cta')) and 1<=names.count('bullet')<=4 and 1<=names.count('caption')<=2)
+        valid=(all(names.count(r)==1 for r in ('headline','closing','cta')) and 1<=names.count('bullet')<=4 and 1<=names.count('caption')<=3)
     if any(r not in roles for r in names) or not valid:fail('text roles missing')
     if not challenge:
         _information_geometry(blocks,settings)
@@ -149,7 +149,7 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
         if v2 and role=='answer' and block.get('answer_reveal') is True:
             color=palette['green']
         if (not isinstance(box,list) or len(box)!=4 or any(type(v) is not int for v in box)
-                or not (60<=box[0]<box[2]<=1020 and 260<=box[1]<box[3]<=1730)):
+                or not (60<=box[0]<box[2]<=1020 and (215 if not challenge and settings['information_template'].get('approved_layout_override') else 260)<=box[1]<box[3]<=1730)):
             fail('text outside safe area')
         if any(max(box[0],b[0])<min(box[2],b[2]) and max(box[1],b[1])<min(box[3],b[3]) for b in used):fail('overlapping text boxes')
         used.append(box)
@@ -195,6 +195,9 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
 def _information_geometry(blocks, settings):
     """Shared information-only region/gap gate; never changes challenge layout."""
     grid=settings['layout']['numeric_grid_px']
+    balanced=settings['information_template'].get('approved_layout_override')
+    if balanced:
+        grid={**grid,**balanced['regions_xyxy']}
     regions={'headline':'title','caption':'captions','bullet':'body','closing':'closing','cta':'cta'}
     for block in blocks:
         box=block.get('box'); region=grid[regions[block['role']]]
@@ -205,6 +208,18 @@ def _information_geometry(blocks, settings):
         if block['role'] in {'headline','closing'} and block.get('line_count')!=1:
             fail('information title and closing require one line')
     ordered=sorted(blocks,key=lambda b:b['box'][1])
+    if balanced:
+        bullets=[b for b in ordered if b['role']=='bullet']
+        if not 1<=len(bullets)<=4:fail('information bullet count')
+        for b in bullets:
+            lines=b.get('line_boxes',[])
+            if not 1<=len(lines)<=2:fail('balanced information needs ink bounds')
+            if b.get('font_size')!=44 or b.get('font_weight')!='Bold':fail('balanced information font changed')
+            if b['box'][1]!=lines[0][1] or b['box'][3]!=lines[-1][3]:fail('paragraph bounds differ from ink')
+            if any(z[1]-a[3]!=balanced['line_spacing']['visible_gap_px'] for a,z in zip(lines,lines[1:])):fail('unequal visible line gaps')
+        edges=balanced['paragraph_distribution']
+        gaps=[bullets[0]['box'][1]-edges['top_boundary']]+[b['box'][1]-a['box'][3] for a,b in zip(bullets,bullets[1:])]+[edges['bottom_boundary']-bullets[-1]['box'][3]]
+        if min(gaps)<grid['minimum_block_gap'] or max(gaps)-min(gaps)>1:fail('unequal paragraph distribution')
     for a,b in zip(ordered,ordered[1:]):
         if a['role']==b['role']=='caption':continue  # side-by-side labels
         if b['box'][1]-a['box'][3]<grid['minimum_block_gap']:

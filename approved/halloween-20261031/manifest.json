@@ -1,0 +1,46 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "الهالوين… سالفة القرع بدأت بلفتة!",
+  "not_before": "2026-10-31T10:00:00+00:00",
+  "expires_at": "2026-10-31T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid approved the final Halloween card and individually matched captions, then explicitly requested publication and continuation. Preserve exact version4 bytes.",
+    "reviewed_at": "2026-10-31T10:00:00+00:00",
+    "approved_media_sha256": [
+      "13a309585bc1ba90c1d1825e2bfcbce637b2eb6fa19398ea461f01645cb53af3"
+    ],
+    "approved_source_sha256": [
+      "13a309585bc1ba90c1d1825e2bfcbce637b2eb6fa19398ea461f01645cb53af3"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/halloween-20261031/card.png",
+      "sha256": "13a309585bc1ba90c1d1825e2bfcbce637b2eb6fa19398ea461f01645cb53af3",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": true,
+        "note": "Approved original generated vegetable illustrations composed in the deterministic brand template. Not archival photography. Exact Library version4, no regeneration."
+      },
+      "source_assets": [
+        {
+          "path": "approved/halloween-20261031/card.png",
+          "sha256": "13a309585bc1ba90c1d1825e2bfcbce637b2eb6fa19398ea461f01645cb53af3",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_a31c743d391c8191810a359f980763fb&account_id=personal",
+          "description": "Exact approved Halloween composite, with AI generated vegetable illustrations and original approved branding",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid approved the final Halloween card and individually matched captions, then explicitly requested publication and continuation. Preserve exact version4 bytes."
+        }
+      ]
+    }
+  ]
+}

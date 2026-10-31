@@ -70,12 +70,14 @@ def fixture_card():
     settings=json.loads(Path('publishing_v2/design-settings.json').read_text())
     image=Image.new('RGB',(1080,1920),'#F7F7EB'); draw=ImageDraw.Draw(image)
     draw.rectangle((800,130,1000,145),fill='#0C5F46')
-    draw.rectangle((60,1635,1020,1710),fill='#FDE5EB')
+    draw.rectangle((60,1665,1020,1730),fill='#FDE5EB')
     blocks=[]
-    for role, y, color in [('headline',280,'#B60E32'),('caption',790,'#7A7973'),
-                           ('bullet',900,'#0B3656'),('closing',1541,'#B60E32'),('cta',1650,'#B60E32')]:
+    for role, y, color in [('headline',235,'#B60E32'),('caption',700,'#7A7973'),
+                           ('bullet',1140,'#0B3656'),('closing',1580,'#B60E32'),('cta',1680,'#B60E32')]:
         draw.rectangle((100,y,500,y+29),fill=color)
-        blocks.append({'role':role,'box':[60,y-1,1020,y+35],'line_count':1,'color':color})
+        blocks.append({'role':role,'box':[100,y,501,y+30],'line_count':1,'color':color,
+                       'line_boxes':[[100,y,501,y+30]],'font_size':44,
+                       'font_weight':'Bold' if role=='bullet' else 'Regular'})
     stream=io.BytesIO(); image.save(stream,format='PNG'); raw=stream.getvalue()
     report={'version':1,'settings_sha256':hashlib.sha256(Path('publishing_v2/design-settings.json').read_bytes()).hexdigest(),
             'settings_revision':settings['canonical_reference']['revision'],'destinations':['STORY'],
@@ -84,7 +86,7 @@ def fixture_card():
             'cta_visible':True,'overlay_checked':True,'overlay_destinations':{'STORY':'offline Story overlay'},'mobile_width':390},
             'cards':[{'sha256':hashlib.sha256(raw).hexdigest(),'blocks':blocks,
                       'palette_samples':{'green':[810,131,990,144],'background':[100,50,200,70],
-                                         'cta_background':[700,1640,800,1650]}}]}
+                                         'cta_background':[700,1670,800,1680]}}]}
     return raw, report
 
 
@@ -109,7 +111,7 @@ def test_valid_raster_contract_and_regressions():
 def test_zero_exact_core_color_rejected_even_with_claimed_pass():
     from publishing_v2.design_contract import validate_design
     raw, report=fixture_card(); im=Image.open(io.BytesIO(raw));d=ImageDraw.Draw(im)
-    d.rectangle((100,900,500,929),fill='#003770');buf=io.BytesIO();im.save(buf,format='PNG');raw=buf.getvalue()
+    d.rectangle((100,1140,500,1169),fill='#003770');buf=io.BytesIO();im.save(buf,format='PNG');raw=buf.getvalue()
     report['cards'][0]['sha256']=hashlib.sha256(raw).hexdigest()
     with pytest.raises(BundleError,match='ink'):validate_design([(Path('card.png'),raw)],report,'STORY')
 
@@ -209,7 +211,7 @@ def test_pending_receipt_can_reconcile_without_current_design_report():
 
 def test_wrong_flat_brand_colors_fail_even_when_text_is_correct():
     from publishing_v2.design_contract import validate_design
-    for color,box in [('black',(800,130,1000,145)),('white',(60,1635,1020,1649))]:
+    for color,box in [('black',(800,130,1000,145)),('white',(60,1665,1020,1679))]:
         raw,report=fixture_card();im=Image.open(io.BytesIO(raw));ImageDraw.Draw(im).rectangle(box,fill=color)
         buf=io.BytesIO();im.save(buf,format='PNG');raw=buf.getvalue()
         report['cards'][0]['sha256']=hashlib.sha256(raw).hexdigest()
@@ -219,7 +221,7 @@ def test_wrong_flat_brand_colors_fail_even_when_text_is_correct():
 def test_wrong_dominant_ink_cannot_hide_behind_four_correct_pixels():
     from publishing_v2.design_contract import validate_design
     raw,report=fixture_card();im=Image.open(io.BytesIO(raw));d=ImageDraw.Draw(im)
-    d.rectangle((104,900,500,929),fill='#003770');buf=io.BytesIO();im.save(buf,format='PNG');raw=buf.getvalue()
+    d.rectangle((104,1140,500,1169),fill='#003770');buf=io.BytesIO();im.save(buf,format='PNG');raw=buf.getvalue()
     report['cards'][0]['sha256']=hashlib.sha256(raw).hexdigest()
     with pytest.raises(BundleError):validate_design([(Path('card.png'),raw)],report,'STORY')
 

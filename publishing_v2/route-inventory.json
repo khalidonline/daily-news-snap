@@ -1,4 +1,5 @@
 {
+  ".github/workflows/deliver-halloween-20261031.yml": "8518053bb26bff768d8724e3365fe76b9a6c0bf5ff5d8aa59a6eb0d676b6b8f1",
   ".github/workflows/archive-audit-20261030.yml": "97bf3b8382bdcef42be1d8a1fe3b43afae276635214b9c0a71ee7909c30784dc",
   ".github/workflows/archive-six-20261030.yml": "bbf0892020706651ac5d88af91c5867517bfb705dfb898b588acc4a8e0cd58c8",
   ".github/workflows/archive-starbucks-20261030.yml": "48ba843d5125d87afec678f9b3bc1a6535461ac560cebd379ced28733eeed4a7",
@@ -171,10 +172,10 @@
   "publishing_v2/cloud_permissions.py": "8670290feb60c8202e1031e9ea9f270e92636c3d7b6b907cf090302546f90a0d",
   "publishing_v2/cloud_smoke.py": "855fd0587fbaa1a3d9e760736edf6ba75f641b5274d5c12b167585cbc76cd8f0",
   "publishing_v2/delivery.py": "5444b4c5cf6a8e7f2536695851d90f17ddd3fe4ca432e631fd6f76213b1d5a9b",
-  "publishing_v2/design_contract.py": "bf82d24210d4595a417c7d3b55441cfbdcaef87221068cdf9fe9395702f85c6e",
+  "publishing_v2/design_contract.py": "ce88d9c8fbf9f635c402ab6efe06c9bb5b80ddd2bf5a1b457474eb1ea61cb1cf",
   "publishing_v2/editorial_production.py": "dca48038fbd9c285c036b3db4d883c795134d1bd93dc1b19550b8f55a7f0f1e4",
   "publishing_v2/evaluate.py": "88fe64080e782fd9227f4f1f226695df553231a72324428d901d421316e2d33e",
-  "publishing_v2/fixed_information_template.py": "2ea4a6f856ae509322edbeeb37bd2c612df1a46d3b4e8113779ee3c20f589dd8",
+  "publishing_v2/fixed_information_template.py": "a70679d37bad81ff5342d52af6a55385d390175055bfddb1a59333f85a631098",
   "publishing_v2/flickr_images.py": "5b1ae0bca852bc6e60860441feac7156b98652ca6f9db68dc7bf4fbbb6d3e3fe",
   "publishing_v2/group_recovery.py": "0cafe9edd97e46ab7c1aa1621aa76424d2cfa497a4bb94a036cb3bb16b5b6ca3",
   "publishing_v2/image_probe.py": "75bb4a98dbbaf3d4d68e5bcbec6edc7a8a22b44cbb5e2be45dbdf435552ae218",

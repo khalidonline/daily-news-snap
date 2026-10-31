@@ -1,0 +1,285 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review": {
+    "reference": "Final unchanged Library version4 visually inspected at full resolution and390px with modeled top39px/bottom68px Story controls. Captions individually matched. Original generated vegetable illustrations, not historic photos. Owner expressly approved publication.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "390x693 simulation: top0..39/bottom625..692 covered. CTA ends at622px and remains visible. Not live device proof.",
+      "SAVED_STORY": "Same390px full-screen Story-player simulation checked for Saved Story viewing; title/body/CTA above modeled controls. Not live device proof."
+    }
+  },
+  "cards": [
+    {
+      "sha256": "13a309585bc1ba90c1d1825e2bfcbce637b2eb6fa19398ea461f01645cb53af3",
+      "blocks": [
+        {
+          "role": "headline",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "color": "#B60E32",
+          "box": [
+            310,
+            215,
+            1020,
+            287
+          ],
+          "line_boxes": [
+            [
+              310,
+              215,
+              1020,
+              286
+            ]
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "caption",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "color": "#7A7973",
+          "box": [
+            138,
+            695,
+            286,
+            727
+          ],
+          "line_boxes": [
+            [
+              138,
+              695,
+              286,
+              726
+            ]
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "caption",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "color": "#7A7973",
+          "box": [
+            511,
+            695,
+            569,
+            727
+          ],
+          "line_boxes": [
+            [
+              511,
+              695,
+              569,
+              726
+            ]
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "caption",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "color": "#7A7973",
+          "box": [
+            834,
+            695,
+            901,
+            717
+          ],
+          "line_boxes": [
+            [
+              834,
+              695,
+              901,
+              716
+            ]
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "bullet",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "color": "#0B3656",
+          "box": [
+            105,
+            799,
+            1015,
+            929
+          ],
+          "line_boxes": [
+            [
+              105,
+              799,
+              980,
+              862
+            ],
+            [
+              298,
+              886,
+              980,
+              929
+            ]
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "bullet",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "color": "#0B3656",
+          "box": [
+            81,
+            993,
+            1015,
+            1115
+          ],
+          "line_boxes": [
+            [
+              81,
+              993,
+              980,
+              1045
+            ],
+            [
+              432,
+              1069,
+              980,
+              1115
+            ]
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "bullet",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "color": "#0B3656",
+          "box": [
+            198,
+            1180,
+            1015,
+            1308
+          ],
+          "line_boxes": [
+            [
+              198,
+              1180,
+              980,
+              1241
+            ],
+            [
+              267,
+              1265,
+              980,
+              1308
+            ]
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "bullet",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "color": "#0B3656",
+          "box": [
+            83,
+            1372,
+            1015,
+            1511
+          ],
+          "line_boxes": [
+            [
+              83,
+              1372,
+              980,
+              1424
+            ],
+            [
+              90,
+              1448,
+              980,
+              1511
+            ]
+          ],
+          "line_count": 2
+        },
+        {
+          "role": "closing",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "color": "#B60E32",
+          "box": [
+            193,
+            1575,
+            887,
+            1627
+          ],
+          "line_boxes": [
+            [
+              193,
+              1575,
+              887,
+              1626
+            ]
+          ],
+          "line_count": 1
+        },
+        {
+          "role": "cta",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "color": "#B60E32",
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ],
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ]
+}
