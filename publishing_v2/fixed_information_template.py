@@ -14,6 +14,12 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
     settings=json.loads((ROOT/'publishing_v2/design-settings.json').read_text())
     colors=settings['palette']['exact_numeric_tokens']
     layout=settings['information_template']
+    balanced=layout.get('approved_layout_override')
+    if balanced:
+        grid=balanced['regions_xyxy']
+        layout={**layout,'title_top':grid['title'][1], 'photo_top':grid['images'][1],
+                'photo_height':grid['images'][3]-grid['images'][1],
+                'caption_top':grid['captions'][1]+5,'closing_top':grid['closing'][1]}
     sizes=settings['typography']['sizes_px']
     if not 1 <= len(bullets) <= 4 or len(photos) not in (1,2) or len(captions)!=len(photos):
         raise ValueError('Expected 1–4 bullets and one or two captioned photos')
@@ -33,7 +39,7 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
     if len(bullet_styles)!=len(bullets) or any(s not in range(40,49) or w not in {'Regular','Bold'} for s,w in bullet_styles):
         raise ValueError('Invalid owner comparison styles')
 
-    def block(text,role,top,size,color,left=60,right=1020,limit=2,weight='Regular'):
+    def block(text,role,top,size,color,left=60,right=1020,limit=2,weight='Regular',measure=False):
         selected=ROOT/f'fonts/Almarai-{weight}.ttf'
         if weight=='Bold' and hashlib.sha256(selected.read_bytes()).hexdigest()!='353c525f8afc461ca6213ee210e77b865f2969ad1222a2cfc634680f1f4621d9':
             raise ValueError('Bold font asset changed')
@@ -50,6 +56,24 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
             else:line=trial
         if line:lines.append(line)
         if not lines or len(lines)>limit:raise ValueError(role+' overflow: shorten copy, never shrink')
+        if balanced and role=='bullet':
+            masks=[]
+            for line in lines:
+                mask=Image.new('L',(1100,150))
+                ImageDraw.Draw(mask).text((1080,0),line,font=font,anchor='rt',direction='rtl',language='ar',fill=255)
+                masks.append(mask.crop(mask.getbbox()))
+            gap=balanced['line_spacing']['visible_gap_px']
+            if measure:return sum(m.height for m in masks)+gap*(len(masks)-1)
+            bounds=[]; y=top
+            for mask in masks:
+                b=[right-mask.width,y,right,y+mask.height]
+                if b[0]<left or b[3]>grid['body'][3]:raise ValueError('bullet overflow: shorten copy, never shrink')
+                image.paste(color,(b[0],b[1]),mask)
+                bounds.append(b);y=b[3]+gap
+            blocks.append({'role':role,'text':text,'color':color,'font_size':size,'font_weight':weight,
+                           'line_boxes':bounds,'line_count':len(lines),
+                           'box':[min(b[0] for b in bounds),top,right,bounds[-1][3]]})
+            return
         bounds=[]
         for i,line in enumerate(lines):
             # Keep real Arabic ascenders/descenders in distinct line boxes.
@@ -73,7 +97,11 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
 
     logo(70,115,95)
     region=layout['header_region']
-    image.paste(reference.crop(region),tuple(region[:2]))
+    if balanced:
+        header=ImageOps.contain(reference.crop(region),(95,95),method=Image.Resampling.LANCZOS)
+        target=grid['account_name']
+        image.paste(header,(target[2]-header.width,target[1]+(95-header.height)//2))
+    else:image.paste(reference.crop(region),tuple(region[:2]))
     block(headline,'headline',layout['title_top'],sizes['headline'],colors['red'],limit=1)
     width=960 if len(photos)==1 else 468
     for photo,caption,left in zip(photos,captions,[60,552]):
@@ -82,20 +110,31 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
         mask=Image.new('L',panel.size);ImageDraw.Draw(mask).rounded_rectangle((0,0,width-1,height-1),radius=24,fill=255)
         image.paste(panel,(left,layout['photo_top']),mask)
         block(caption,'caption',layout['caption_top'],sizes['caption'],colors['caption'],left=left,right=left+width,limit=1)
+    if balanced:
+        heights=[block(t,'bullet',0,s,colors['body'],left=70,right=980,weight=w,measure=True)
+                 for t,(s,w) in zip(bullets,bullet_styles)]
+        top=balanced['paragraph_distribution']['top_boundary']
+        bottom=balanced['paragraph_distribution']['bottom_boundary']
+        gap=(bottom-top-sum(heights))/(len(bullets)+1)
+        if gap<layout['minimum_actual_block_gap']:raise ValueError('bullet overflow: insufficient paragraph gaps')
     for n,text in enumerate(bullets):
-        y=layout['body_top']+round(n*(layout['last_bullet_top']-layout['body_top'])/max(1,len(bullets)-1))
+        y=(top+round(gap*(n+1))+sum(heights[:n])) if balanced else layout['body_top']+round(n*(layout['last_bullet_top']-layout['body_top'])/max(1,len(bullets)-1))
         size,weight=bullet_styles[n]
         block(text,'bullet',y,size,colors['body'],left=70,right=980,weight=weight)
         draw.ellipse((1000,y+15,1013,y+28),fill=colors['body'])
         blocks[-1]['box'][2]=1015
     block(closing,'closing',layout['closing_top'],sizes['closing'],colors['red'],limit=layout['closing_max_lines'])
-    draw.rounded_rectangle((60,1630,1020,1720),radius=24,fill=colors['cta_background'])
-    block(settings['editorial_master']['cta_exact'],'cta',1650,sizes['cta'],colors['red'],left=80,right=920,limit=1)
+    cta_box=grid['cta'] if balanced else (60,1630,1020,1720)
+    draw.rounded_rectangle(cta_box,radius=24,fill=colors['cta_background'])
+    block(settings['editorial_master']['cta_exact'],'cta',cta_box[1]+9 if balanced else 1650,sizes['cta'],colors['red'],left=80,right=920,limit=1)
     if share_icon is None:
         share_icon=reference.crop(layout['share_icon_region'])
     if share_icon is not None:
         if share_icon.size!=(100,87):raise ValueError('Pinned sharing icon must be 100x87')
-        image.paste(share_icon,(910,1630))
+        if balanced:
+            share_icon=ImageOps.contain(share_icon,(75,65),method=Image.Resampling.LANCZOS)
+            image.paste(share_icon,(1020-share_icon.width,cta_box[1]))
+        else:image.paste(share_icon,(910,1630))
     else:
         # Curved sharing arrow retained from the existing approved renderer.
         points=[(924,1705)]
