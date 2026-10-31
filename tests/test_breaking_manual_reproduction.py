@@ -57,15 +57,8 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         env = call.call_args.kwargs["env"]
         self.assertEqual(env["POST_TO_SNAPCHAT"], "0")
 
-    def test_breaking_workflow_is_review_only(self):
-        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
-        self.assertIn('DRY_RUN: "1"', workflow)
-        self.assertIn('POST_TO_SNAPCHAT: "0"', workflow)
-        self.assertIn("github.event.client_payload.confirmed_event", workflow)
-        self.assertIn("types: [breaking-recovery]", workflow)
-        self.assertIn("Refresh latest Breaking delivery state", workflow)
-        self.assertIn("git checkout origin/main -- state/breaking.json", workflow)
-
+    def test_retired_breaking_workflow_is_review_only(self):
+        self.assertFalse(Path(".github/workflows/breaking.yml").exists())
     @mock.patch.dict(os.environ, {"CONFIRMED_BREAKING_EVENT": ""}, clear=False)
     @mock.patch.object(entry.breaking_watch, "watch")
     @mock.patch.object(entry.subprocess, "call")
@@ -134,11 +127,6 @@ class ManualBreakingReproductionTests(unittest.TestCase):
         self.assertEqual(saved["event_fp"], entry.breaking_watch.event_fp(EVENT))
         self.assertEqual(saved["stamps"], ["delivery-stamp"])
         self.assertEqual(saved["lock_at"], "")
-
-    def test_workflow_defaults_manual_runs_to_visual_repair(self):
-        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
-        for mode in ("repair_visual", "regenerate_editorial", "new_event"):
-            self.assertIn(mode, workflow)
 
 
 if __name__ == "__main__":

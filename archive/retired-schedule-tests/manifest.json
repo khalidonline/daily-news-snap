@@ -1,0 +1,18 @@
+{
+  "base_commit": "a939ac3006542d7c1580c9a2c7e665f9060df112",
+  "files": [
+    {
+      "original_path": "tests/test_breaking_manual_reproduction.py",
+      "archive_path": "archive/retired-schedule-tests/test_breaking_manual_reproduction.py.txt",
+      "sha256": "2374a151be031669140fc2e3759e3258ac7b93fa9b30c6ef7b6dbe950f34e786",
+      "unchanged_runtime_methods": 7
+    },
+    {
+      "original_path": "tests/test_shared_schedule_gate.py",
+      "archive_path": "archive/retired-schedule-tests/test_shared_schedule_gate.py.txt",
+      "sha256": "32a509f9e2216b13debf19436312972213318d2f9f73c853c34e27fe09730615",
+      "unchanged_runtime_methods": 11
+    }
+  ],
+  "restore": "Verify SHA256 then review differences before restoring individual test methods. Do not reactivate workflows or overwrite later runtime tests."
+}

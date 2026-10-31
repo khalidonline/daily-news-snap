@@ -74,3 +74,23 @@ Reviewer did not judge unrelated failures; all remain explicitly reported.
 Next: split the two Breaking and two SharedSchedule static tests, preserving
 runtime methods and originals; then separate DailyReview setup. Do not repeat
 this Topic batch. Broader cleanup remains incomplete.
+
+## Follow-up batch 3 — retired Breaking and shared-schedule assertions
+
+Base:a939ac3006542d7c1580c9a2c7e665f9060df112. Owner requested continuation.
+Plan:2026-10-31-cleanup-followup.md, mixed-test split step.
+Four obsolete assertions reproduced failing;18 runtime methods passed before
+changes. Full originals preserved byte-exact in archive/retired-schedule-tests
+with SHA256 and restore instructions before editing. All18 method ASTs unchanged.
+Replaced four obsolete assertions by three guards against restoring the retired
+Breaking, Topic and Story active entrypoints. Targeted21 tests pass.
+Ruling: consolidate the two obsolete Breaking workflow-content checks into one
+absence guard because the workflow is retired, not a supported entrypoint.
+Risk: does not detect a renamed equivalent; no general retirement claim made.
+Fresh read-only review found no blocking issues. Minor deferred: guard names
+retain historical behavior wording and extra blank lines; no runtime impact.
+Reviewer declined full-suite/preservation/remote evidence; root owns those checks
+and records results in docs/cleanup-schedule-verification-20261031.md.
+No workflow, production, master, receipt or remote content changes authorized.
+Next unfinished step: separate DailyReview setup before assessing its runner
+tests, then current-template expectations and remaining script dependencies.

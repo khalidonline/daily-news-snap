@@ -162,37 +162,10 @@ class SharedScheduleGateTests(unittest.TestCase):
                 "RUN_SCHEDULED_BOT=1\nSCHEDULE_SLOT_ID=2026-09-02T07:10+03:00\n",
             )
 
-    def test_topic_workflow_accepts_external_slot_and_marks_it(self):
-        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-        self.assertIn("types: [topic-schedule, topic-recovery]", workflow)
-        self.assertIn("topic-recovery", workflow)
-        self.assertIn("TOPIC_RECOVERY_BRIEF_B64", workflow)
-        self.assertIn("--bot topic", workflow)
-        self.assertIn("state/topic_schedule_slots.json", workflow)
-        self.assertIn("python3 shared_schedule_gate.py mark", workflow)
-        self.assertIn("POST_TO_SNAPCHAT: \"0\"", workflow)
-        self.assertNotIn("notify-failure:", workflow)
-        self.assertNotIn("Topic bot failed. No Topic was delivered", workflow)
-        self.assertIn("out/topic_recovery_brief.json", workflow)
-        self.assertIn('ALLOW_GENERATED: "0"', workflow)
-        self.assertIn("Verify Topic card was produced", workflow)
-
-    def test_story_workflow_accepts_external_slot_and_preserves_repair_branch(self):
-        workflow = Path(".github/workflows/story.yml").read_text(encoding="utf-8")
-        self.assertIn("types: [story-schedule, story-recovery]", workflow)
-        self.assertIn("--bot story", workflow)
-        self.assertIn("state/story_schedule_slots.json", workflow)
-        self.assertIn("ref: repair/all-story-visuals-2026-08-29", workflow)
-        self.assertIn("git stash push --include-untracked", workflow)
-        self.assertLess(
-            workflow.index("git stash push --include-untracked"),
-            workflow.index("git checkout main"),
-        )
-        self.assertIn("git checkout main", workflow)
-        self.assertIn("github.event_name != 'workflow_dispatch'", workflow)
-        self.assertIn("TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}", workflow)
-        self.assertIn("TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}", workflow)
-
+    def test_retired_topic_workflow_accepts_external_slot_and_marks_it(self):
+        self.assertFalse(Path(".github/workflows/topic.yml").exists())
+    def test_retired_story_workflow_accepts_external_slot_and_preserves_repair_branch(self):
+        self.assertFalse(Path(".github/workflows/story.yml").exists())
 
 if __name__ == "__main__":
     unittest.main()
