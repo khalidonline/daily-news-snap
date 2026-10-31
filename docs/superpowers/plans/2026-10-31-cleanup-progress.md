@@ -164,3 +164,20 @@ No runtime,workflow,content,master or receipt changes. Final verification and
 independent review recorded in docs/cleanup-mixed-verification-20261031.md.
 Remaining: paid workflow/model usage legacy assertions, existing active route
 expectations, historical approval fixtures and script dependency audit.
+
+## Follow-up batch 8 — retired model-usage/paid-workflow expectations
+
+Base:1566839a9ca5ef5a3674bb3796487e29db2839c5. Owner requested continuation.
+Inspected complete ModelUsageWorkflowTests and PaidWorkflowPolicyTests. Removed
+only expectations of already absent daily/topic/story/breaking/batch-review and
+external-clock-receiver definitions. Preserved full originals byte-exact with
+SHA/base/restore manifest in archive/retired-policy-tests. Existing two Breaking
+retirement methods remain AST-identical; replacement entrypoint guards8pass.
+Before25failed6passed including subtest accounting. No runtime model usage,
+shared budget tests, cost guards, experimental limits or active workflow changes.
+Ruling: obsolete assertions requiring scheduled entrypoints must not resurrect
+those entrypoints. Absence guards enforce retirement; old content stays archived.
+Untracked out/ was present at start and preserved, excluded from integration.
+Final results and independent review: docs/cleanup-policy-verification-20261031.md.
+Next: diagnose remaining actual/historical fixture failures (do not archive by
+failure alone) and finish script dependency inventory. Cleanup still incomplete.

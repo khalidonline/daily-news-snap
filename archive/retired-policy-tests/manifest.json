@@ -1,0 +1,16 @@
+{
+  "base_commit": "1566839a9ca5ef5a3674bb3796487e29db2839c5",
+  "files": [
+    {
+      "original_path": "tests/test_model_usage_workflows.py",
+      "archive_path": "archive/retired-policy-tests/test_model_usage_workflows.py.txt",
+      "sha256": "8cfba1aef58b13636491a6277c821c741d8a9ffba184347010a92bd27e10e2f4"
+    },
+    {
+      "original_path": "tests/test_paid_workflow_policy.py",
+      "archive_path": "archive/retired-policy-tests/test_paid_workflow_policy.py.txt",
+      "sha256": "68fe5476a98dbf091d32e1e985dd906fb0a1227a5bb21820672c39637a75d565"
+    }
+  ],
+  "restore": "Verify hashes then compare current tests before selective restoration; never reactivate retired schedules implicitly."
+}
