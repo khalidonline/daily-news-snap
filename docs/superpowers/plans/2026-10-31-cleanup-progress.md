@@ -112,3 +112,21 @@ comparison in docs/cleanup-daily-verification-20261031.md before integration.
 Next: remaining mixed static workflow assertions, current-template expectations,
 and script dependency audit; do not repeat completed Topic/Breaking/Shared/Daily
 test separation. Overall cleanup remains incomplete.
+
+## Follow-up batch 5 — current information-template tests
+
+Base:504b6711da07c0d1251fd9b58537bca7e9ca6d0f. Owner requested continuation.
+Reproduced4failures/5passes in current template tests. Updated obsolete geometry
+expectations to approved_layout_override (title215,closing1575,24px visible ink
+gap,equal N+1 paragraph gaps between735/1575); preserved artwork comparisons with
+the approved proportional fitting, and sample green within actual header region.
+Replaced superseded font comparison acceptance with rejection tests for46Regular,
+45Regular,45Bold; existing44Bold/right-aligned continuation test retained.
+Gap test starts from valid rendered geometry before injecting a1px line-gap defect,
+so rejection is due to the gap, not a missing ink-bounds field.
+No renderer, settings, design gate, workflow or content changes.11targeted pass.
+Ruling: adapt tests to latest explicit approved master, not production to old
+tests. Risk: later owner layout changes require reviewing these explicit values.
+Full comparison and final review recorded in docs/cleanup-template-verification-20261031.md.
+Broader cleanup remains incomplete: residual retired-workflow assertions and
+script/experiment dependency audit. Do not repeat current template test repair.

@@ -1,6 +1,6 @@
 from pathlib import Path
 import pytest
-from PIL import Image
+from PIL import Image, ImageOps, ImageChops
 
 
 def test_information_layout_uses_expanded_body_and_pinned_branding():
@@ -9,19 +9,29 @@ def test_information_layout_uses_expanded_body_and_pinned_branding():
     image, blocks = render('عنوان', [copy]*4, 'النهاية',
         [Image.new('RGB',(500,500),'gray')]*2, ['صورة','صورة'])
     headline = next(b for b in blocks if b['role']=='headline')
-    assert headline['box'][1] == 260
+    assert headline['box'][1] == 215
     assert abs(headline['line_boxes'][0][2]-1020) <= 1
     bullets = [b for b in blocks if b['role']=='bullet']
-    assert bullets[0]['box'][1] == 855
+    gaps = ([bullets[0]['box'][1]-735] +
+            [b['box'][1]-a['box'][3] for a,b in zip(bullets,bullets[1:])] +
+            [1575-bullets[-1]['box'][3]])
+    assert min(gaps) >= 20
+    assert max(gaps)-min(gaps) <= 1
+    assert all(b['line_boxes'][1][1]-b['line_boxes'][0][3] == 24 for b in bullets)
     assert all(b['line_count']==2 for b in bullets)
     assert all(b['box'][1]-a['box'][3]>=20 for a,b in zip(bullets,bullets[1:]))
     closing = next(b for b in blocks if b['role']=='closing')
-    assert closing['box'][1] == 1540
-    assert closing['box'][3] <= 1605
+    assert closing['box'][1] == 1575
+    assert closing['box'][3] <= 1640
     assert image.getpixel((300,355)) == (128,128,128)
     reference = Image.open('approved/oxford-20261027/card.png').convert('RGB')
-    assert image.crop((760,110,1020,230)).tobytes() == reference.crop((760,110,1020,230)).tobytes()
-    assert image.crop((910,1630,1010,1717)).tobytes() == reference.crop((910,1630,1010,1717)).tobytes()
+    header = reference.crop((760,110,1020,230))
+    ink = ImageChops.difference(header, Image.new('RGB',header.size,(247,247,235))).getbbox()
+    header = ImageOps.contain(header.crop(ink),(95,95),method=Image.Resampling.LANCZOS)
+    x,y = 1020-header.width,115+(95-header.height)//2
+    assert image.crop((x,y,x+header.width,y+header.height)).tobytes() == header.tobytes()
+    arrow = ImageOps.contain(reference.crop((910,1630,1010,1717)),(75,65),method=Image.Resampling.LANCZOS)
+    assert image.crop((1020-arrow.width,1665,1020,1665+arrow.height)).tobytes() == arrow.tobytes()
 
 
 def test_single_photo_supported_without_a_different_template():
@@ -46,20 +56,26 @@ def test_information_gate_rejects_insufficient_actual_gap():
     from publishing_v2.design_contract import _information_geometry
     from publishing_v2.bundle_api import BundleError
     settings=json.loads(Path('publishing_v2/design-settings.json').read_text())
-    with pytest.raises(BundleError, match='gap'):
-        _information_geometry([
-            {'role':'bullet','box':[60,855,980,988],'line_count':2},
-            {'role':'bullet','box':[60,1005,980,1125],'line_count':2}],settings)
-
-
-def test_owner_four_style_comparison_uses_requested_faces_and_sizes():
     from publishing_v2.fixed_information_template import render
-    _,blocks=render('عنوان',['نقطة قصيرة']*4,'النهاية',
-        [Image.new('RGB',(500,500),'gray')]*2,['صورة','صورة'],
-        bullet_styles=[(46,'Regular'),(45,'Regular'),(45,'Bold'),(44,'Bold')])
-    bullets=[b for b in blocks if b['role']=='bullet']
-    assert [(b['font_size'],b['font_weight']) for b in bullets]==[(46,'Regular'),(45,'Regular'),(45,'Bold'),(44,'Bold')]
-    assert all(abs(b['line_boxes'][0][2]-980)<=1 for b in bullets)
+    _, blocks = render('عنوان',
+        ['من ٢٦ أكتوبر، جزء من أكسفورد صار للمشاة؛ يبون الناس تتمشى وتتسوق براحتها.'],
+        'النهاية', [Image.new('RGB',(500,500),'gray')], ['صورة'])
+    _information_geometry(blocks, settings)
+    bullet = next(b for b in blocks if b['role']=='bullet')
+    bullet['line_boxes'][1][1] -= 1
+    bullet['line_boxes'][1][3] -= 1
+    bullet['box'][3] -= 1
+    with pytest.raises(BundleError, match='unequal visible line gaps'):
+        _information_geometry(blocks,settings)
+
+
+@pytest.mark.parametrize('style', [(46,'Regular'), (45,'Regular'), (45,'Bold')])
+def test_retired_comparison_styles_cannot_override_approved_body(style):
+    from publishing_v2.fixed_information_template import render
+    from publishing_v2.bundle_api import BundleError
+    with pytest.raises(BundleError, match='font changed'):
+        render('عنوان',['نقطة قصيرة'],'النهاية',
+            [Image.new('RGB',(500,500),'gray')],['صورة'], bullet_styles=[style])
 
 
 def test_bullet_continuation_aligns_right_at_approved_44_bold():
@@ -81,7 +97,7 @@ def test_fixed_canvas_palette_and_no_overflow(tmp_path):
                              ['الصورة الأولى','الصورة الثانية'])
     assert image.size == (1080,1920)
     assert image.getpixel((0,0)) == (247,247,235)
-    assert image.getpixel((800,130)) == (12,95,70)
+    assert (12,95,70) in set(image.crop((925,115,1020,210)).getdata())
     assert all(b['box'][2] <= 1020 and b['box'][3] <= 1730 for b in geometry)
     assert all(b['line_count'] <= 2 for b in geometry)
     assert any(b['role']=='cta' for b in geometry)
