@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "base_commit": "9171af09a10b9faf2051c50bdeace19aaa360054",
+  "reason": "Retired Story-to-Telegram workflow already absent from active workflows; static tests refer only to the retired path.",
+  "restore_instructions": "After explicit approval, verify each archived SHA256, then copy exact bytes to its original path. Restoring into workflows-disabled does not enable a schedule. Never restore into .github/workflows without a separate review.",
+  "files": [
+    {
+      "original": ".github/workflows-disabled/story-approved-to-telegram.yml",
+      "archived": "archive/retired-story-telegram/story-approved-to-telegram.yml.txt",
+      "sha256": "dd35777cd4dd0421d81ccbdfd809afa08400a6982881e98e33511a5bd489a579"
+    },
+    {
+      "original": ".github/workflows-disabled/story-approval-binding-ci.yml",
+      "archived": "archive/retired-story-telegram/story-approval-binding-ci.yml.txt",
+      "sha256": "1bbc487839b8fa6ebb99452cf9dad59bc27b49f28c176599de84db70080add02"
+    },
+    {
+      "original": "tests/test_story_approval_artifact_binding.py",
+      "archived": "archive/retired-story-telegram/test_story_approval_artifact_binding.py.txt",
+      "sha256": "29e676475e7a881a55f58307dc9cd38f5ef354e956b3d640581827be488aba6c"
+    }
+  ]
+}

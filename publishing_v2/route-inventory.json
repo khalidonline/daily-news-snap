@@ -226,6 +226,7 @@
   "story_delivery_recovery.py": "c573ba99c0ec40cdc455d98747ebbae99760427827d59ea46d8eb0cea42a5cfd",
   "story_runtime.py": "f6ea088c92333ffbf92d6b82ee8d1602278ddfc96d763c5e650bb6566295f3cb",
   "tools/archive_audit_20261030.py": "66386df0dfee5ea67643e9a0fbf42c97a6738d536dc428c1c70742913667f6e7",
+  "tools/verify_content_preservation.py": "fd50e85fd9058339355404568de5d824c9d59141d9c38e552c206ac5d4a284fc",
   "topic_bot.py": "e6a9450625f7de08bf7e6c985640e892176bcc89f865256685f4b6f6f927052e",
   "topic_delivery_guard.py": "2bdd02b3227fe7a641f051f90cd6d0f8c0c1a9b67c66429a21e62195c4e23836",
   "topic_editorial.py": "e72c3a892ba1db04201ad1b59486ce714070cfcf2906dca1ebdcec160bde151b",
