@@ -148,3 +148,19 @@ No production,workflow,master,source,receipt or content changes.
 Final evidence: docs/cleanup-cost-verification-20261031.md.
 Remaining scope includes mixed static workflow tests and current live-route
 expectation failures, plus script dependency audit; whole cleanup not complete.
+
+## Follow-up batch 7 — remaining isolated assertions in four mixed tests
+
+Base:5bf03b3a0ab766c382a74c68a76f634547ee1e13. Owner requested continuation.
+Reproduced10failed/47passed across StoryDeliveryRecovery,TopicRecoveryHandoff,
+BreakingWatch and TopicSnapchat test files. Each removed method only reads an
+absent retired workflow file; no runtime behavior was deleted.
+Archived all4full originals byte-exact with SHA256 and restore instructions in
+archive/retired-mixed-workflow-tests. All47retained method ASTs unchanged;
+47targeted pass. Existing retirement guards in other test files remain active.
+Ruling: do not duplicate absence guards in every mixed file; use existing
+Breaking/Topic/Story guards. Risk: no broad renamed-workflow detection claimed.
+No runtime,workflow,content,master or receipt changes. Final verification and
+independent review recorded in docs/cleanup-mixed-verification-20261031.md.
+Remaining: paid workflow/model usage legacy assertions, existing active route
+expectations, historical approval fixtures and script dependency audit.

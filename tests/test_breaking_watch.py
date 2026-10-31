@@ -339,20 +339,6 @@ class BreakingWatchWindowTests(unittest.TestCase):
         self.assertNotIn("احتياطي", message)
         self.assertNotIn("fallback", message.lower())
 
-    def test_workflow_schedules_through_2230_ksa(self):
-        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
-        self.assertIn('cron: "*/30 5-19 * * *"', workflow)
-
-    def test_workflow_persists_review_delivery_memory(self):
-        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
-        self.assertIn('PERSIST_BREAKING_REVIEW_STATE: "1"', workflow)
-
-    def test_workflow_accepts_explicit_external_recovery_dispatch(self):
-        workflow = Path(".github/workflows/breaking.yml").read_text(encoding="utf-8")
-        self.assertIn("repository_dispatch:", workflow)
-        self.assertIn("types: [breaking-recovery]", workflow)
-        self.assertNotIn("scheduler/triggers/breaking.txt", workflow)
-
 
 if __name__ == "__main__":
     unittest.main()

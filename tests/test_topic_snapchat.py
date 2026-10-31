@@ -375,12 +375,6 @@ class TopicSnapchatRuntimeTests(unittest.TestCase):
         bot.render_topic({}, Path("card.png"), Path("hero.jpg"), "SPA")
         self.assertEqual(rendered_credits, [None, None])
 
-    def test_topic_workflow_has_no_image_source_choice_and_forces_auto(self):
-        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-        self.assertNotIn("image_source:", workflow)
-        self.assertNotIn("inputs.image_source", workflow)
-        self.assertIn('IMAGE_SOURCE: "auto"', workflow)
-
 
 if __name__ == "__main__":
     unittest.main()

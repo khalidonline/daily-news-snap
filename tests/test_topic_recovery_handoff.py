@@ -39,43 +39,6 @@ class TopicRecoveryHandoffTests(unittest.TestCase):
         self.assertEqual(actual, brief)
         self.assertEqual(photo, "hero.jpg")
 
-    def test_exact_recovery_bypasses_schedule_only_after_delivery_dedupe(self):
-        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-
-        self.assertIn("Check exact Topic recovery duplicate", workflow)
-        self.assertIn("topic_delivery_guard.py check", workflow)
-        self.assertIn("state/topic_telegram_deliveries.json", workflow)
-        self.assertIn("Authorize exact Topic recovery", workflow)
-        self.assertIn("github.event.action == 'topic-recovery'", workflow)
-        self.assertIn("github.event.client_payload.brief_b64 != ''", workflow)
-        self.assertIn("env.RECOVERY_ALREADY_DELIVERED != '1'", workflow)
-        self.assertIn('echo "RUN_SCHEDULED_BOT=1" >> "$GITHUB_ENV"', workflow)
-        self.assertIn('echo "SCHEDULE_SLOT_ID=" >> "$GITHUB_ENV"', workflow)
-        self.assertIn("schedule gate bypassed after delivery dedupe", workflow)
-        self.assertIn(
-            "- name: Resolve Topic schedule slot\n"
-            "        if: ${{ env.RUN_SCHEDULED_BOT == '' }}",
-            workflow,
-        )
-
-    def test_workflow_bounds_topic_research_for_the_shared_daily_cap(self):
-        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-        self.assertIn('CLAUDE_MODEL: "claude-haiku-4-5-20251001"', workflow)
-        self.assertIn('TOPIC_MODEL: "claude-haiku-4-5-20251001"', workflow)
-        self.assertIn('MAX_TOKENS: "8000"', workflow)
-
-    def test_workflow_requires_actual_telegram_confirmation(self):
-        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-        self.assertIn('grep -Fq "telegram: sent" out/topic_run.log', workflow)
-        self.assertIn("Topic card was not confirmed delivered to Telegram", workflow)
-        self.assertIn("Record confirmed Topic Telegram delivery", workflow)
-        self.assertIn("topic_delivery_guard.py record", workflow)
-
-    def test_workflow_cancels_stale_overlap_and_reads_current_main_state(self):
-        workflow = Path(".github/workflows/topic.yml").read_text(encoding="utf-8")
-        self.assertIn("cancel-in-progress: true", workflow)
-        self.assertGreaterEqual(workflow.count("ref: main"), 2)
-
     def test_selected_topic_brief_is_saved_before_visual_search(self):
         brief = {
             "title": "عنوان محفوظ",

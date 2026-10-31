@@ -1,0 +1,34 @@
+{
+  "base_commit": "5bf03b3a0ab766c382a74c68a76f634547ee1e13",
+  "files": [
+    {
+      "original_path": "tests/test_story_delivery_recovery.py",
+      "archive_path": "archive/retired-mixed-workflow-tests/test_story_delivery_recovery.py.txt",
+      "sha256": "2d4432721e5ef48bc3113cbd50657be713e7a6539fa515075c04c26b7ae0c09f",
+      "preserved_methods": 3,
+      "archived_static_methods": 2
+    },
+    {
+      "original_path": "tests/test_topic_recovery_handoff.py",
+      "archive_path": "archive/retired-mixed-workflow-tests/test_topic_recovery_handoff.py.txt",
+      "sha256": "b8851e69731a2a7f6ac6a380851934abdd7fdf11292d54ef643283d7f1483b1a",
+      "preserved_methods": 4,
+      "archived_static_methods": 4
+    },
+    {
+      "original_path": "tests/test_breaking_watch.py",
+      "archive_path": "archive/retired-mixed-workflow-tests/test_breaking_watch.py.txt",
+      "sha256": "4f46d046228459e159bcc6e0fe7e7535916e1acd5ad46391eb3d559e6c1672b0",
+      "preserved_methods": 23,
+      "archived_static_methods": 3
+    },
+    {
+      "original_path": "tests/test_topic_snapchat.py",
+      "archive_path": "archive/retired-mixed-workflow-tests/test_topic_snapchat.py.txt",
+      "sha256": "6754175be1a7d7e7c613c555d9e094d17d461c5c2819513fa305bdfc547a4901",
+      "preserved_methods": 17,
+      "archived_static_methods": 1
+    }
+  ],
+  "restore": "Verify hashes and compare current tests before selective restoration; do not overwrite later tests or reactivate workflows."
+}

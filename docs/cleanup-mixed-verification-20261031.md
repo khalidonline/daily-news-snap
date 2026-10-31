@@ -1,0 +1,39 @@
+# Four mixed test-file cleanup verification
+
+Base:5bf03b3a0ab766c382a74c68a76f634547ee1e13.
+Full originals archived byte-exact with SHA/base/restore instructions. All47
+remaining runtime test-method ASTs unchanged. Before10failed47pass; after47pass.
+Current v2/preservation:654passed,208subtests,71.80s.
+Full isolated export:32failed,1213passed,0errors,1warning,237subtests,85.86s.
+Baseline42failed1213passed; exactly10retired static assertions archived and no
+new failure IDs. Prior Pillow getdata warning remains test-only.
+Independent reviewer verified all4archives against base and all47unchanged
+methods, with no findings. Reviewer declined pending suites; root compared logs.
+1775 protected files unchanged. No runtime/workflow/master/content/receipt writes.
+Only offline publication-contract matches push paths. No publication/generation.
+Cleanup not complete: remaining failure classes and script dependencies below.
+
+```text
+No new failure IDs; exactly10obsolete static assertions archived.
+FAILED approved/saved-stories/daily-20261007/test_batch.py::ArchiveBatchTests::test_all_five_current_approvals
+FAILED approved/saved-stories/daily-20261007/test_batch.py::ArchiveBatchTests::test_final_nvidia_order_and_media
+FAILED tests/test_breaking_watch_seen_memory.py::BreakingWatchPersistentHeadlineMemoryTests::test_successful_review_marks_daily_cap
+FAILED tests/test_daily_budget.py::WorkflowBudgetTests::test_paid_workflows_cannot_override_guard_python_path
+FAILED tests/test_external_autopilot_trigger.py::ExternalAutopilotTriggerTests::test_autopilot_uses_external_push_trigger_not_github_schedule
+FAILED tests/test_external_autopilot_trigger.py::ExternalAutopilotTriggerTests::test_reviewer_recovery_is_bounded_and_cannot_publish
+FAILED tests/test_model_role_experiment.py::ModelRoleExperimentTests::test_selected_frozen_cases_fit_under_hard_reservation_cap
+FAILED tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_batch_review_has_a_three_story_hard_maximum
+FAILED tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_final_arabic_editorial_defaults_to_sonnet
+FAILED tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_news_limits_full_copy_and_requires_a_visual
+FAILED tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_news_visual_budget_is_bounded_while_visuals_remain_required
+FAILED tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_routine_selection_and_breaking_classification_use_haiku
+FAILED tests/test_model_usage_workflows.py::ModelUsageWorkflowTests::test_story_workflow_prices_editorial_usage_and_reports_it
+FAILED tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_breaking_recovery_is_not_dispatched
+FAILED tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_external_clock_forwards_exact_slots_to_scheduled_bots
+FAILED tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_external_clock_receiver_dispatches_each_bot_without_model_calls
+FAILED tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_external_clock_receiver_is_path_scoped
+FAILED tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_news_clock_accepts_timestamp_prefixed_recovery_payload
+FAILED tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_news_clock_can_forward_an_exact_recovery_story
+FAILED tests/test_paid_workflow_policy.py::PaidWorkflowPolicyTests::test_news_recovery_is_an_explicit_input_not_a_commit_side_effect
+Protected files unchanged: 1775
+```
