@@ -6,9 +6,8 @@ import topic_snapchat
 
 
 class TopicWorkflowImagePolicyTests(unittest.TestCase):
-    def test_topic_brief_prioritizes_relevant_curated_artifacts_over_reuse_rest(self):
-        workflow = Path('.github/workflows/topic.yml').read_text(encoding='utf-8')
-        self.assertIn('LIBRARY_REUSE_DAYS: "0"', workflow)
+    def test_retired_topic_workflow_is_not_an_active_dispatch_entry(self):
+        self.assertFalse(Path('.github/workflows/topic.yml').exists())
 
     def test_sama_provenance_survives_finance_copy_that_omits_sama_name(self):
         wrapped = topic_snapchat._direct_relevance_only(lambda photo, context: 'neutral')

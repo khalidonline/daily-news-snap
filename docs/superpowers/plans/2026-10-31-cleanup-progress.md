@@ -47,3 +47,30 @@ against live paths; risk: future restore requires separate approval and review.
 Final: Ruling: approved bounded integration uses active publishing tests plus
 full-suite baseline comparison; do not resurrect retired schedules to satisfy
 their remaining tests. Risk: unrelated legacy technical debt remains visible.
+
+## Follow-up batch 2 — 31 October 2026
+
+Plan: docs/superpowers/plans/2026-10-31-cleanup-followup.md.
+Base main:0f69fbb2f6d60072c3e11cd29fca00b249c00675; local HEAD has identical tree.
+No earlier cleanup process was running. Existing isolated worktree was clean.
+Ruling: keep already disabled workflow files in place for now; archiving them
+again gives no runtime benefit. Keep shared modules and active experiment
+consumers. Risk: more old files remain until individually assessed.
+Ruling: replace only one obsolete Topic workflow test with an absent-entry guard,
+preserving the complete original as inactive text and all seven image safety
+methods unchanged. No production code changes; existing failing test reproduced
+(1 failed/7 passed), new retirement guard tested against simulated presence.
+Archive original bytes match base SHA256. Targeted tests:20 passed.
+Current v2/preservation suite:654 passed,208 subtests. Full baseline reproduced:
+54 failed,1193 passed,21 errors,237 subtests; after:53 failed,1194 passed,
+21 errors,237 subtests. Only the replaced obsolete test disappears from failures;
+no new failures. Details: docs/cleanup-topic-verification-20261031.md.
+1775 protected files unchanged. No current design, workflow, publisher, remote
+content or receipt-branch change. Test-generated hero files were moved out of
+the worktree into scratch, not deleted or committed.
+Fresh read-only review approved the four-file implementation without blocking
+findings. Reviewer declined pending suite parity; root verified it afterward.
+Reviewer did not judge unrelated failures; all remain explicitly reported.
+Next: split the two Breaking and two SharedSchedule static tests, preserving
+runtime methods and originals; then separate DailyReview setup. Do not repeat
+this Topic batch. Broader cleanup remains incomplete.

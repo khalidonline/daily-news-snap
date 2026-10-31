@@ -1,0 +1,8 @@
+{
+  "base_commit": "0f69fbb2f6d60072c3e11cd29fca00b249c00675",
+  "original_path": "tests/test_topic_workflow_image_policy.py",
+  "archive_path": "archive/retired-topic-workflow/test_topic_workflow_image_policy.py.txt",
+  "sha256": "3e37ff811ca1288c23edf1eebf41f4f97f650011197c895820ebce7d099f324e",
+  "reason": "Full original preserved before replacing one obsolete active workflow assertion. All seven image safety test methods remain unchanged in the active test file.",
+  "restore": "Verify SHA256, then compare the archived original with the current test file. Restore only with explicit review; do not overwrite later runtime test improvements or reactivate any workflow."
+}
