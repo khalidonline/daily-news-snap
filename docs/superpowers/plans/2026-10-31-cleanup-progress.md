@@ -130,3 +130,21 @@ tests. Risk: later owner layout changes require reviewing these explicit values.
 Full comparison and final review recorded in docs/cleanup-template-verification-20261031.md.
 Broader cleanup remains incomplete: residual retired-workflow assertions and
 script/experiment dependency audit. Do not repeat current template test repair.
+
+## Follow-up batch 6 — retired cost-pilot workflow checks
+
+Base:ed9a6bc922076f990d69f94572069283754f8098. Owner requested continuation.
+Reproduced3failed+5setup errors in tests/test_daily_cost_leak_policy.py and
+tests/test_three_story_cost_pilot_safety.py. Inspected every method: exclusively
+static assertions against absent retired workflows; no executable runtime tests.
+Archived both originals byte-exact with SHA256/base/restore manifest under
+archive/retired-cost-workflow-tests. Replaced with4 guards against active daily,
+story,external-clock-receiver,three-story-cost-pilot entrypoints.4targeted pass.
+Ruling: retain inactive workflow definitions in workflows-disabled; they are
+already archival and protected by dated content index. No cost limits relaxed.
+Current ExternalAutopilotTrigger tests reference existing workflows and script;
+keep them rather than treating their failures as retirement evidence.
+No production,workflow,master,source,receipt or content changes.
+Final evidence: docs/cleanup-cost-verification-20261031.md.
+Remaining scope includes mixed static workflow tests and current live-route
+expectation failures, plus script dependency audit; whole cleanup not complete.

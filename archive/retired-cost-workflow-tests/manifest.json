@@ -1,0 +1,16 @@
+{
+  "base_commit": "ed9a6bc922076f990d69f94572069283754f8098",
+  "files": [
+    {
+      "original_path": "tests/test_three_story_cost_pilot_safety.py",
+      "archive_path": "archive/retired-cost-workflow-tests/test_three_story_cost_pilot_safety.py.txt",
+      "sha256": "1b96d6381c9d90dd2e02dfa0afb8b6f024eb6ed7ae76e2825f53638e9cdad5b6"
+    },
+    {
+      "original_path": "tests/test_daily_cost_leak_policy.py",
+      "archive_path": "archive/retired-cost-workflow-tests/test_daily_cost_leak_policy.py.txt",
+      "sha256": "9b4352ecd633e69fc800c83221b155f7b71054e5d312c1970b1e5626baa798d8"
+    }
+  ],
+  "restore": "Verify hashes and compare current tests before selective restoration. Do not reactivate workflows or overwrite later tests."
+}
