@@ -1,0 +1,13 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/radio-school-20261031/manifest.json",
+  "manifest_sha256": "dc47d3a4c385ecd7a0e85a71ffe7f81d0e9a770f8f9b031fdf02b615def30897",
+  "identity": "9a4749545b720c2acf5eb931be7b7ec7955a2d31bab37d91e712c01d4412db6f",
+  "public_indices": [
+    1
+  ],
+  "title": "قبل المنصات… كانوا يداومون عند الرادو!",
+  "expires_at": "2026-11-02T20:59:59+00:00",
+  "owner_authorization": "Pending current export approval"
+}

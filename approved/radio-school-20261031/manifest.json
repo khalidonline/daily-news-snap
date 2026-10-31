@@ -1,0 +1,42 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "قبل المنصات… كانوا يداومون عند الرادو!",
+  "not_before": "2026-10-31T00:00:00+00:00",
+  "expires_at": "2026-11-02T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {},
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/radio-school-20261031/card.png",
+      "sha256": "c64a861d99f81132573fb932504488c574698d3c6fd4bd7175d9471f96597047",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/radio-school-20261031/newspaper.jpg",
+          "sha256": "fd1dd769cca0ef51ab9bc33decaa67d6a832aae1762c36822e6fec4874aab502",
+          "source_url": "https://www.wbez.org/curious-city/2021/05/13/how-a-polio-epidemic-led-to-the-creation-of-wbez",
+          "description": "Historical newspaper clipping",
+          "rights_status": "unverified"
+        },
+        {
+          "path": "approved/radio-school-20261031/students.jpg",
+          "sha256": "43cd0fc31ad0e0084f225f1c3d7b36910a497e783ca9faa6f663b9c30fd36951",
+          "source_url": "https://www.northernpublicradio.org/wnij-news/2021-09-13/this-week-in-illinois-history-remote-learning-by-radio-september-13-1937",
+          "description": "Chicago children studying by radio, as captioned by Northern Public Radio",
+          "rights_status": "unverified"
+        }
+      ]
+    }
+  ]
+}
