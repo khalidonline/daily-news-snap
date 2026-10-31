@@ -1,0 +1,43 @@
+{
+  "status": "VIDEO_EXPORTED_NOT_PUBLISHED",
+  "video_library_file_id": "libfile_65b6685c334c81919643619919795a6b",
+  "video_sha256": "6008b2bf4bf6945da5c9ac1bc4b309f3c9e061253cc6dc6fdf45a5d8c27ad216",
+  "dimensions": [
+    1080,
+    1920
+  ],
+  "duration_seconds": 12,
+  "audio": {
+    "decoded_pcm_equal_to": "approved/wheels-video-20261025/challenge.mp4",
+    "mean_volume_db": -26.4,
+    "peak_db": -6.9,
+    "subjective_listening_completed": false
+  },
+  "visual_review": {
+    "frames": [
+      0.5,
+      3.5,
+      4.5,
+      5.5,
+      6.5,
+      7.5,
+      8.5,
+      11.5
+    ],
+    "digits": "٥٤٣٢١",
+    "answer": "ماليزيا — فندق فرست وورلد — ٧٬٣٥١ غرفة",
+    "font": "Generated typography visually guided by approved screenshot. Exact family not identified; no claim of exact font asset match.",
+    "full_video_playback_completed": false
+  },
+  "photo_source": "https://www.rwgenting.com/content/dam/approved/rw-genting/web/hotels/hotel-landing-banners/new-hotel-banners/Genting_Library_FirstW_2049_fn1_master.jpg",
+  "fact_source": "https://www.guinnessworldrecords.com/world-records/69317-largest-hotel",
+  "production": "Built-in ChatGPT image generation and local FFmpeg only; no repository paid-provider API requests in this turn. Missing external cost ledger must not be reported as zero.",
+  "publication": {
+    "STORY": "NOT_SUBMITTED",
+    "SPOTLIGHT": "NOT_SUBMITTED"
+  },
+  "remaining": [
+    "Required full audiovisual playback review was not possible with current tools; do not fabricate listening evidence.",
+    "Live account/quota and daily spend verification pending before publication."
+  ]
+}
