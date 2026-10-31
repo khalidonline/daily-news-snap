@@ -1,0 +1,14 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "manifest": "approved/north-jubbah-20261101/manifest.json",
+  "manifest_sha256": "9acf32092a1f5f1615ff2dcb57ea75a44898bb0ec5117723b3e4d25eb412f842",
+  "identity": "78bd2e80cbced9da02ac79e3ff55faf94c6bb13e02fd4c6182dc1aae7658fafc",
+  "public_indices": [
+    1
+  ],
+  "title": "مسار الشمال… وصخور وراها سالفة!",
+  "expires_at": "2026-11-03T20:59:59+00:00",
+  "owner_authorization": "Khalid explicitly requested انشر after viewing this exact Jubbah card. Approval covers this editorial composite; image licensing is not independently verified. Public Story and Saved Story under standing information-card authorization.",
+  "empty_profile_confirmation": "Existing profile has previous stories; check provider inventory and overlap before creating."
+}

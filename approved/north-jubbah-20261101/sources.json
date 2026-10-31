@@ -1,0 +1,25 @@
+{
+  "event": "https://www.spa.gov.sa/N2714818",
+  "event_date": "2026-10-31",
+  "history_and_location": "https://whc.unesco.org/en/list/1472/",
+  "image_assets": [
+    {
+      "path": "approved/north-jubbah-20261101/detail.jpg",
+      "sha256": "6e9807fe2fc6fe5155e238e486d33c7b80efbe5a3c941ffcac4c266d6969a12a",
+      "source_url": "https://english.ajel.sa/news/rock-art-in-hail-region-an-album-of-the-saudi-history",
+      "description": "Jebel Umm Sanman rock art, source caption",
+      "rights_status": "pending_editorial_review",
+      "credit": "Ajel; permission not independently established"
+    },
+    {
+      "path": "approved/north-jubbah-20261101/rock.png",
+      "sha256": "77c5cbfe152d0a334b61afc9685e1b891680c7ec472958f3e8ced8f38978ad3a",
+      "source_url": "https://whc.unesco.org/en/documents/136192",
+      "description": "Camel and oryx at Jabal Umm Sinman; lossless PNG conversion of source WebP",
+      "rights_status": "pending_editorial_review",
+      "credit": "Saudi Commission for Tourism and Antiquities / Dr Majeed Khan"
+    }
+  ],
+  "status": "Preview only; no publication authorization",
+  "copy_note": "First bullet shortened only around location to retain 90 km northwest Hail in two lines."
+}

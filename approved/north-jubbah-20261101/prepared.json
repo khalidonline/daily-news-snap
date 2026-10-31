@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/north-jubbah-20261101",
+  "manifest_content_sha256": "523cc78b02cefd0c5a0988eba33e74473007d812a3fd06371567846bd03c3c1f",
+  "archive_content_sha256": "230eca2147259cdd8c60bf1021835e4a6f746d06de986f073fd53c5340caeed2",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "a44fd11081b702c1946386e8a9d488e02a8481a27e6901a4d3b32782bf902265",
+  "assets": {
+    "approved/north-jubbah-20261101/card.png": "859c27fc9663e8cdb2c1010a56b100ec09da0017f04819fe95342eaf87246f76",
+    "approved/north-jubbah-20261101/detail.jpg": "6e9807fe2fc6fe5155e238e486d33c7b80efbe5a3c941ffcac4c266d6969a12a",
+    "approved/north-jubbah-20261101/rock.png": "77c5cbfe152d0a334b61afc9685e1b891680c7ec472958f3e8ced8f38978ad3a"
+  },
+  "preparation_seconds": 0.005
+}

@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "859c27fc9663e8cdb2c1010a56b100ec09da0017f04819fe95342eaf87246f76",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "مسار الشمال… وصخور وراها سالفة!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              266,
+              215,
+              1020,
+              268
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            266,
+            215,
+            1020,
+            269
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "رسومات بقيت على الصخور",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              140,
+              695,
+              447,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            140,
+            695,
+            447,
+            723
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "جبل أم سنمان في جبة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              662,
+              695,
+              911,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            662,
+            695,
+            911,
+            734
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "أمس دشنوا هوية «مسار الشمال»، من الرياض لجبة، على بُعد حوالي ٩٠ كم شمال غرب حائل.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              102,
+              798,
+              980,
+              853
+            ],
+            [
+              182,
+              877,
+              980,
+              931
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            102,
+            798,
+            1015,
+            931
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "توصل جبل أم سنمان بجبة وتشوف رمل وصخور… بس تخيل: المكان كان يطل على بحيرة موية عذبة!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              81,
+              994,
+              980,
+              1055
+            ],
+            [
+              85,
+              1079,
+              980,
+              1123
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            81,
+            994,
+            1015,
+            1123
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الناس عاشوا حول الموية، وتركوا رسوماتهم على الصخور؛ سجل لحياتهم قبل آلاف السنين.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              89,
+              1185,
+              980,
+              1237
+            ],
+            [
+              227,
+              1261,
+              980,
+              1317
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            89,
+            1185,
+            1015,
+            1317
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "البحيرة اختفت، لكن النقوش بقت؛ وفي ٢٠١٥ دخل الموقع، مع الشويمس، قائمة التراث العالمي.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              100,
+              1380,
+              980,
+              1434
+            ],
+            [
+              156,
+              1458,
+              980,
+              1512
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            100,
+            1380,
+            1015,
+            1512
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "طلعة للشمال… وكل صخرة عندها سالفة!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              176,
+              1575,
+              904,
+              1620
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            176,
+            1575,
+            904,
+            1621
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected actual rendered 540px preview and 390px mobile overlay. Four two-line bullets, matching source captions, title and closing one line. Geographic phrase compacted without changing its meaning. No live publication or device claim.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 Story-player simulation with top0..39 and bottom625..692 covered; title, body and CTA remain visible. Simulation only, not live device proof.",
+      "SAVED_STORY": "Inspected 390x693 Story-player simulation with top0..39 and bottom625..692 covered; title, body and CTA remain visible. Simulation only, not live device proof."
+    }
+  }
+}

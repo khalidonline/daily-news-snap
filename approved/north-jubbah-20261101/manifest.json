@@ -1,0 +1,56 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "مسار الشمال… وصخور وراها سالفة!",
+  "not_before": "2026-11-01T00:00:00+00:00",
+  "expires_at": "2026-11-03T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid explicitly requested انشر after viewing this exact Jubbah card. Approval covers this editorial composite; image licensing is not independently verified.",
+    "approved_media_sha256": [
+      "859c27fc9663e8cdb2c1010a56b100ec09da0017f04819fe95342eaf87246f76"
+    ],
+    "approved_source_sha256": [
+      "6e9807fe2fc6fe5155e238e486d33c7b80efbe5a3c941ffcac4c266d6969a12a",
+      "77c5cbfe152d0a334b61afc9685e1b891680c7ec472958f3e8ced8f38978ad3a"
+    ],
+    "reviewed_at": "2026-10-31T21:45:28.658837+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/north-jubbah-20261101/card.png",
+      "sha256": "859c27fc9663e8cdb2c1010a56b100ec09da0017f04819fe95342eaf87246f76",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/north-jubbah-20261101/detail.jpg",
+          "sha256": "6e9807fe2fc6fe5155e238e486d33c7b80efbe5a3c941ffcac4c266d6969a12a",
+          "source_url": "https://english.ajel.sa/news/rock-art-in-hail-region-an-album-of-the-saudi-history",
+          "description": "Jebel Umm Sanman rock art, source caption",
+          "rights_status": "owner_accepted_editorial_use",
+          "credit": "Ajel; permission not independently established",
+          "owner_reference": "Khalid explicitly requested انشر after viewing this exact Jubbah card. Approval covers this editorial composite; image licensing is not independently verified."
+        },
+        {
+          "path": "approved/north-jubbah-20261101/rock.png",
+          "sha256": "77c5cbfe152d0a334b61afc9685e1b891680c7ec472958f3e8ced8f38978ad3a",
+          "source_url": "https://whc.unesco.org/en/documents/136192",
+          "description": "Camel and oryx at Jabal Umm Sinman; lossless PNG conversion of source WebP",
+          "rights_status": "owner_accepted_editorial_use",
+          "credit": "Saudi Commission for Tourism and Antiquities / Dr Majeed Khan",
+          "owner_reference": "Khalid explicitly requested انشر after viewing this exact Jubbah card. Approval covers this editorial composite; image licensing is not independently verified."
+        }
+      ]
+    }
+  ]
+}
