@@ -43,3 +43,23 @@ All mapping-style push triggers were inspected on this base: they are path-scope
 and do not match this batch's tests, docs or text archive. The list-style
 publication-contract workflow runs offline on push and retains read-only access.
 Recheck latest main and triggers immediately before integration.
+
+## Checkpoint after batch 10
+
+Completed batch details are in cleanup-progress.md; do not rerun their edits.
+The model experiment's full-comparison reservation check is intentionally kept:
+it blocks an incomplete manual paid comparison. Separate offline tests now
+cover cost-cap skip/exact-boundary behavior without increasing any limit.
+Keep active experiments and shared news_bot based on recorded consumers.
+
+Remaining sequence:
+1. Audit native-ledger recovery routes against the generic injected-guard test;
+   prove behavioral equivalence before revising expectations. No blind exceptions.
+2. Replace obsolete active-route string expectations only with stronger offline
+   behavior coverage, preserving shadow/live authorization and bounded review.
+3. Keep protected historical approval fixtures untouched unless a separate
+   test-only clock strategy preserves both historical validity and expiry tests.
+4. Finish script/dated-route dependency inventory; uncertain live/recovery
+   consumers stay in place. No archival solely because a script is old.
+5. Full isolated verification and content index comparison; report retained
+   pre-existing blockers explicitly. Do not claim green by suppressing tests.

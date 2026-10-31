@@ -200,3 +200,22 @@ protected1775unchanged. Bounded integration authorized despite documented
 pre-existing failures; not whole-branch completion. Keep checkpoint/worktree.
 Next: behavioral coverage for active-route/cost-cap expectations, historical
 fixture treatment without modifying approvals, and remaining script inventory.
+
+## Follow-up batch 10 — experiment cap behavior and retained preflight
+
+Base:4ca6707ab3036f0d5e3dcc14c329484b50a9af01. Owner requested continuation.
+Pre-flight: new offline tests consume the existing model experiment runner;
+no production interface changes. Ruling: keep the all-cases-fit check failing
+because it gates the manual paid workflow; replacing it with a passing skip
+check would enable an incomplete comparison. Cost of wrong ruling: experiment
+stays unavailable, not extra spend. Add separate behavioral coverage instead.
+Three new tests pass; mutation of the cap condition in isolated export fails
+two over-cap tests, and > to >= fails exact-boundary test. Restored3pass.
+No cap/model/prompt/workflow/content change. Shared and active experiment paths
+retained based on consumer evidence. Verification/report:
+docs/cleanup-experiment-cap-verification-20261031.md.
+Full run6failed1219passed, no new failure IDs. Fresh review3passed/no blockers.
+Minor deferred: helper/report wording about mocking refers to frozen cases;
+boundary tests also control reservation estimates, not actual-cost arithmetic.
+Current-path654passed208subtests,1775protectedfiles unchanged. Original
+comparison preflight remains unchanged. No paid requests or live posting.
