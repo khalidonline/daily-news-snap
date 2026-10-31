@@ -1,5 +1,21 @@
 # Mandatory publication preflight
 
+## Uploaded preview gate — owner required 1 November 2026
+
+Do not display or link a new information-card preview from a local-only file.
+First run `prepare-local-preview`, upload the entire draft package to main with
+both approvals false, then run `prepare-preview`. Only the latter's
+`UPLOADED_PREVIEW_READY_NOT_AUTHORIZED` result permits showing its preview_paths.
+It fetches actual main bytes and compares all media/sources, manifests, review,
+settings and preparation. Network failure, missing files or different bytes STOP
+preview display. A successful upload tool response is not integrity evidence.
+Never substitute `prepare` or a manual boolean for this gate. Preserve the
+verified commit and output in the work record. After owner approval change only
+authorization metadata, not media. Rights/provenance must already be complete
+before preview; don't postpone source metadata work until publication.
+This is the mandatory agent/CLI entry point; it cannot intercept arbitrary chat
+attachments. No paid regeneration, live publication or schedule changes here.
+
 ## Fixed information delivery — owner approved 31 October 2026
 
 Before showing a new information-card preview, stage its exact export, sources,

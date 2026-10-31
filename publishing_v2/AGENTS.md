@@ -1,5 +1,10 @@
 # ExecutiveSaudi delivery rules — owner approved 25 October 2026
 
+Information previews MUST pass the uploaded preview gate in root AGENTS.md.
+Local rendering/preparation alone does not permit display. Use prepare-local-preview,
+upload to main with approvals false, then prepare-preview. Show only paths from
+UPLOADED_PREVIEW_READY_NOT_AUTHORIZED; do not bypass failure by attaching locally.
+
 For new information cards follow the fixed preparation/delivery convention in
 root AGENTS.md and docs/ready-package-delivery.md. Preparation is not authority
 to send. Use one existing workflow for Story plus public-profile archive;

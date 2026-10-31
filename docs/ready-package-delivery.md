@@ -7,11 +7,30 @@ source images, real hash-bound design-review, manifest and archive-approval in
 `approved/<package>/` on main before presenting the preview. Keep both approvals
 false until explicit publication authorization. Never invent review evidence.
 
-Run from repository root:
+Run from repository root before uploading (this does NOT permit display):
+
+```sh
+python -m publishing_v2.prepared_information prepare-local-preview --package example-20261031
+```
+
+Upload the complete draft package to main, approvals false, and compare returned
+Git blob SHAs with local `git hash-object` values. For large binary transfers,
+never use a possibly truncated command-output string as the payload; use bounded
+chunks and verify the full blob identity. Then run the mandatory display gate:
 
 ```sh
 python -m publishing_v2.prepared_information prepare-preview --package example-20261031
 ```
+
+This command freshly fetches main into a temporary bare repository and reads
+actual bytes at its immutable commit. It compares every media/source asset,
+both manifests, sources.json, design review, settings and prepared content.
+Only `UPLOADED_PREVIEW_READY_NOT_AUTHORIZED` plus preview_paths permits display.
+Missing, changed, incomplete or inaccessible uploads fail closed. The command
+does not authorize or publish anything. Local preparation remains available for
+staging, never as a substitute for the display gate. Arbitrary chat attachments
+are outside code interception; AGENTS.md requires this entry point for all
+information previews. Challenges retain their separate contracts.
 
 `prepared.json` seals content, settings, assets and review; it cannot authorize
 publishing and does not prove that text, photos or layout are semantically right.

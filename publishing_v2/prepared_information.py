@@ -9,6 +9,8 @@ import json
 from pathlib import Path
 import re
 import time
+import subprocess
+import tempfile
 
 
 def digest(raw):
@@ -102,7 +104,7 @@ def prepare(package_dir):
     return record
 
 
-def prepare_preview(package_dir):
+def prepare_local_preview(package_dir):
     """Finish offline layout/archive preparation BEFORE owner review.
 
     This does not grant approval or replace live account/quota/reconciliation.
@@ -147,12 +149,82 @@ def verify_prepared(package_dir):
     return record
 
 
+def compare_uploaded_preview(package_dir, repository, commit):
+    """Compare actual fetched Git bytes, not a claimed upload receipt.
+
+    No publication or approval writes. An immutable fetched main commit is
+    checked against the local review package; no raw-base64 transport involved.
+    """
+    p = package_path(package_dir)
+    record = verify_prepared(p)
+    if not re.fullmatch(r'[0-9a-f]{40}', commit):
+        raise ValueError('Uploaded commit must be immutable')
+    for name in ('manifest.json', 'archive-approval.json'):
+        if read_json(p/name).get('approved') is not False:
+            raise ValueError('Preview requires both approvals false')
+    paths = list(record['assets']) + [
+        (p/name).relative_to(Path.cwd()).as_posix()
+        for name in ('manifest.json', 'archive-approval.json', 'design-review.json', 'sources.json')
+    ] + ['publishing_v2/design-settings.json']
+    def remote(path):
+        try:
+            return subprocess.check_output(
+                ['git', '-C', str(repository), 'show', commit+':'+path],
+                stderr=subprocess.PIPE, timeout=30)
+        except (subprocess.SubprocessError, OSError) as exc:
+            raise ValueError('Uploaded file unavailable: '+path) from exc
+    for path in paths:
+        if digest(remote(path)) != digest(safe_path(path).read_bytes()):
+            raise ValueError('Uploaded file differs: '+path)
+    prepared_path=(p/'prepared.json').relative_to(Path.cwd()).as_posix()
+    try:
+        uploaded=json.loads(remote(prepared_path))
+    except (ValueError, TypeError) as exc:
+        raise ValueError('Uploaded preparation invalid') from exc
+    expected=dict(record)
+    uploaded.pop('preparation_seconds',None)
+    expected.pop('preparation_seconds',None)
+    if uploaded != expected:
+        raise ValueError('Uploaded preparation differs')
+    return {'status':'UPLOADED_PREVIEW_READY_NOT_AUTHORIZED',
+            'repository':'khalidonline/daily-news-snap', 'branch':'main',
+            'commit':commit, 'assets':record['assets'],
+            'preview_paths':[f['path'] for f in read_json(p/'manifest.json')['media']]}
+
+
+def verify_uploaded_preview(package_dir):
+    """Fresh read-only fetch of approved repository main; fail closed offline."""
+    with tempfile.TemporaryDirectory(prefix='snap-preview-remote-') as directory:
+        try:
+            subprocess.run(['git','init','--bare','-q',directory],check=True,
+                           capture_output=True,timeout=30)
+            subprocess.run(['git','-C',directory,'fetch','--depth=1',
+                            'https://github.com/khalidonline/daily-news-snap.git',
+                            'refs/heads/main'],check=True,capture_output=True,timeout=120)
+            commit=subprocess.check_output(['git','-C',directory,'rev-parse','FETCH_HEAD'],
+                                           text=True,timeout=30).strip()
+        except (subprocess.SubprocessError,OSError) as exc:
+            raise ValueError('Uploaded preview cannot be verified; do not display') from exc
+        return compare_uploaded_preview(package_dir,directory,commit)
+
+
+def prepare_preview(package_dir):
+    """The sole display-ready entry point: local review plus uploaded bytes."""
+    prepare_local_preview(package_dir)
+    return verify_uploaded_preview(package_dir)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'prepare-preview', 'verify'])
+    parser.add_argument('mode', choices=['prepare', 'prepare-local-preview', 'prepare-preview', 'verify'])
     parser.add_argument('--package', required=True)
     args = parser.parse_args()
-    result = {'prepare':prepare,'prepare-preview':prepare_preview,'verify':verify_prepared}[args.mode](Path('approved')/args.package)
+    package=Path('approved')/args.package
+    if args.mode=='prepare-preview':
+        result=prepare_preview(package)
+    else:
+        result={'prepare':prepare,'prepare-local-preview':prepare_local_preview,
+                'verify':verify_prepared}[args.mode](package)
     print(json.dumps(result, ensure_ascii=False))
 
 

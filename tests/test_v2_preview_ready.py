@@ -29,7 +29,7 @@ def test_incomplete_overlay_cannot_seal_preview(draft):
     r['review']['overlay_checked']=False
     (draft/'design-review.json').write_text(json.dumps(r))
     with pytest.raises(ValueError,match='mobile/editorial'):
-        prep.prepare_preview(draft)
+        prep.prepare_local_preview(draft)
     assert not (draft/'prepared.json').exists()
 
 def test_missing_archive_baseline_cannot_seal_preview(draft):
@@ -37,12 +37,12 @@ def test_missing_archive_baseline_cannot_seal_preview(draft):
     a.pop('empty_profile_confirmation',None)
     (draft/'archive-approval.json').write_text(json.dumps(a))
     with pytest.raises(ValueError,match='archive'):
-        prep.prepare_preview(draft)
+        prep.prepare_local_preview(draft)
     assert not (draft/'prepared.json').exists()
 
 def test_complete_draft_seals_without_granting_approval(draft):
     before=(draft/'manifest.json').read_bytes()
-    result=prep.prepare_preview(draft)
+    result=prep.prepare_local_preview(draft)
     assert result['status']=='PREPARED_NOT_AUTHORIZED'
     assert (draft/'manifest.json').read_bytes()==before
     assert json.loads((draft/'archive-approval.json').read_text())['approved'] is False
