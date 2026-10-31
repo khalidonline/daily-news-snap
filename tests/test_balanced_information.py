@@ -56,3 +56,14 @@ def test_header_uses_box_width_without_scaling_empty_source_margins():
             if image.getpixel((x,y))==(12,95,70)]
     assert points
     assert max(x for x,y in points)-min(x for x,y in points)+1>=90
+
+def test_three_photos_have_separate_centered_captions():
+    image,blocks=render('عنوان',TEXTS,'القفلة',
+                       [Image.new('RGB',(304,350),'gray')]*3,
+                       ['فانوس القرع','القرع','اللفت'])
+    captions=[b for b in blocks if b['role']=='caption']
+    assert len(captions)==3
+    assert [b['text'] for b in captions]==['فانوس القرع','القرع','اللفت']
+    for b,center in zip(captions,[212,540,868]):
+        assert abs((b['box'][0]+b['box'][2])/2-center)<=1
+    _pixels(image,blocks,json.loads(Path('publishing_v2/design-settings.json').read_text()))

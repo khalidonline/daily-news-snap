@@ -21,8 +21,8 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
                 'photo_height':grid['images'][3]-grid['images'][1],
                 'caption_top':grid['captions'][1]+5,'closing_top':grid['closing'][1]}
     sizes=settings['typography']['sizes_px']
-    if not 1 <= len(bullets) <= 4 or len(photos) not in (1,2) or len(captions)!=len(photos):
-        raise ValueError('Expected 1–4 bullets and one or two captioned photos')
+    if not 1 <= len(bullets) <= 4 or len(photos) not in (1,2,3) or len(captions)!=len(photos):
+        raise ValueError('Expected 1–4 bullets and one to three captioned photos')
     artwork=ROOT/layout['base_artwork_path']
     if hashlib.sha256(artwork.read_bytes()).hexdigest()!=layout['base_artwork_sha256']:
         raise ValueError('Approved artwork changed; review required')
@@ -106,8 +106,9 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
         image.paste(header,(target[2]-header.width,target[1]+(95-header.height)//2))
     else:image.paste(reference.crop(region),tuple(region[:2]))
     block(headline,'headline',layout['title_top'],sizes['headline'],colors['red'],limit=1)
-    width=960 if len(photos)==1 else 468
-    for photo,caption,left in zip(photos,captions,[60,552]):
+    photo_gap=settings['layout']['numeric_grid_px']['photo_gap']
+    width=(960-photo_gap*(len(photos)-1))//len(photos)
+    for photo,caption,left in zip(photos,captions,[60+i*(width+photo_gap) for i in range(len(photos))]):
         height=layout['photo_height']
         panel=ImageOps.fit(photo.convert('RGB'),(width,height),method=Image.Resampling.LANCZOS)
         mask=Image.new('L',panel.size);ImageDraw.Draw(mask).rounded_rectangle((0,0,width-1,height-1),radius=24,fill=255)

@@ -134,7 +134,7 @@ def _pixels(image, blocks, settings, challenge=False, tolerance=0):
     if challenge:
         valid=(all(names.count(r)==1 for r in ('headline','question','cta')) and 2<=names.count('option')<=4)
     else:
-        valid=(all(names.count(r)==1 for r in ('headline','closing','cta')) and 1<=names.count('bullet')<=4 and 1<=names.count('caption')<=2)
+        valid=(all(names.count(r)==1 for r in ('headline','closing','cta')) and 1<=names.count('bullet')<=4 and 1<=names.count('caption')<=3)
     if any(r not in roles for r in names) or not valid:fail('text roles missing')
     if not challenge:
         _information_geometry(blocks,settings)
