@@ -49,3 +49,10 @@ def test_gate_rejects_unequal_paragraph_distribution():
 def test_overlong_copy_is_rejected_not_shrunk():
     with pytest.raises(ValueError,match='overflow'):
         render('عنوان', ['كلمة طويلة '*100], 'القفلة', [Image.new('RGB',(960,350))], ['صورة'])
+
+def test_header_uses_box_width_without_scaling_empty_source_margins():
+    image,_=sample()
+    points=[(x,y) for y in range(115,210) for x in range(925,1020)
+            if image.getpixel((x,y))==(12,95,70)]
+    assert points
+    assert max(x for x,y in points)-min(x for x,y in points)+1>=90

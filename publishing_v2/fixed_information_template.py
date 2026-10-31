@@ -5,7 +5,7 @@ Rendering never authorizes delivery. Final content/mobile review is required.
 from pathlib import Path
 import json
 import hashlib
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageChops
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -98,7 +98,10 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
     logo(70,115,95)
     region=layout['header_region']
     if balanced:
-        header=ImageOps.contain(reference.crop(region),(95,95),method=Image.Resampling.LANCZOS)
+        header=reference.crop(region)
+        ink=ImageChops.difference(header,Image.new('RGB',header.size,colors['background'])).getbbox()
+        if ink is None:raise ValueError('Approved header artwork is empty')
+        header=ImageOps.contain(header.crop(ink),(95,95),method=Image.Resampling.LANCZOS)
         target=grid['account_name']
         image.paste(header,(target[2]-header.width,target[1]+(95-header.height)//2))
     else:image.paste(reference.crop(region),tuple(region[:2]))
