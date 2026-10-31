@@ -1,4 +1,5 @@
 {
+  ".github/workflows/deliver-ramses-20261031.yml": "e96080c2e9151c3b7e2fa6fae7386047b467b89c2ed3b8a03332569253522c36",
   ".github/workflows/archive-audit-20261030.yml": "97bf3b8382bdcef42be1d8a1fe3b43afae276635214b9c0a71ee7909c30784dc",
   ".github/workflows/archive-six-20261030.yml": "bbf0892020706651ac5d88af91c5867517bfb705dfb898b588acc4a8e0cd58c8",
   ".github/workflows/archive-starbucks-20261030.yml": "48ba843d5125d87afec678f9b3bc1a6535461ac560cebd379ced28733eeed4a7",
