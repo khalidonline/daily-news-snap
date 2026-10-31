@@ -1,0 +1,8 @@
+{
+  "base_commit": "a017d3324ccee81c050112bcf8c2f8820695b6ed",
+  "original_path": "tests/test_daily_review_workflow.py",
+  "archive_path": "archive/retired-daily-tests/test_daily_review_workflow.py.txt",
+  "sha256": "2106d95d15c839ed6d4cc458c6f367e1dd15528c662d6913cbab45c04957a58e",
+  "unchanged_runner_methods": 5,
+  "restore": "Verify hash; compare with current tests before selectively restoring. Do not reactivate retired workflows or overwrite later improvements."
+}

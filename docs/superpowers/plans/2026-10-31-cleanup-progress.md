@@ -94,3 +94,21 @@ and records results in docs/cleanup-schedule-verification-20261031.md.
 No workflow, production, master, receipt or remote content changes authorized.
 Next unfinished step: separate DailyReview setup before assessing its runner
 tests, then current-template expectations and remaining script dependencies.
+
+## Follow-up batch 4 — unblock Daily runner coverage
+
+Base:a017d3324ccee81c050112bcf8c2f8820695b6ed. Owner requested continuation.
+Archived the complete original tests/test_daily_review_workflow.py byte-exact
+with SHA256/restore instructions in archive/retired-daily-tests before editing.
+Removed only11 obsolete workflow-content assertions (10 daily.yml and1
+news-editorial-tests.yml). Removed missing daily.yml read from setUpClass.
+Five runner tests are byte/AST unchanged and now execute instead of setup error;
+all5 pass, plus one retirement guard (6 targeted pass).
+Ruling: retired workflow assertions belong in recoverable archive, not an active
+fixture that blocks independent runner tests. No runtime or workflow changes.
+Independent reviewer verified archive/hash and unchanged methods and reran6pass.
+Reviewer declined full-suite health while pending; root records complete failure
+comparison in docs/cleanup-daily-verification-20261031.md before integration.
+Next: remaining mixed static workflow assertions, current-template expectations,
+and script dependency audit; do not repeat completed Topic/Breaking/Shared/Daily
+test separation. Overall cleanup remains incomplete.
