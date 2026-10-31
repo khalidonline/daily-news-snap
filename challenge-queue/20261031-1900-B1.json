@@ -1,0 +1,71 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-10-31",
+  "slot": "19:00",
+  "item": "B1",
+  "topic": "توقع السعر — ليغو تايتانيك",
+  "status": "POSTED_BOTH",
+  "next_item": "C1",
+  "next_topic": "نزل بالسوق؟ — LG StanbyME Go",
+  "next_slot": "2026-11-01T13:00:00+03:00",
+  "daily_limit_challenges": 2,
+  "completed_today": 2,
+  "remaining_topics": 23,
+  "video_sha256": "6e403e4955a091d125bae836105efc441e110a58e38a6fc8ec185e7ae59b09fa",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "fcde3f82-9e11-4b4e-843c-96e9935941c3",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "8bb5a0ac-ebaf-4927-ba19-0c4102afb60a",
+          "mediaId": "8bb5a0ac-ebaf-4927-ba19-0c4102afb60a",
+          "mediaIds": [
+            "8bb5a0ac-ebaf-4927-ba19-0c4102afb60a"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "66b6ec87-c65b-4346-bd47-021b197d00ba",
+          "sourceUploadIds": [
+            "66b6ec87-c65b-4346-bd47-021b197d00ba"
+          ],
+          "mediaUploadedAt": "2026-10-31T16:09:58.775Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "6e403e4955a091d125bae836105efc441e110a58e38a6fc8ec185e7ae59b09fa"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "87b3349e-5d67-4d33-bd3b-242aace3040a",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYenZ3cGZsZHhwAaGSu26kAaGSu25uAAAAAA",
+          "mediaId": "1180e2c9-2f0e-45cd-ae97-406c36c8bdc7",
+          "mediaIds": [
+            "1180e2c9-2f0e-45cd-ae97-406c36c8bdc7"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "3d35f139-e7cc-4c50-886d-324e8b533b74",
+          "sourceUploadIds": [
+            "3d35f139-e7cc-4c50-886d-324e8b533b74"
+          ],
+          "mediaUploadedAt": "2026-10-31T16:11:39.735Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "6e403e4955a091d125bae836105efc441e110a58e38a6fc8ec185e7ae59b09fa"
+    }
+  },
+  "receipt_path": "api-receipts/lego-titanic-20261031-preflight.json",
+  "archive_sha256": "6b166be842949c832ec3b358b6f14fa155812a87af007cd721070371881e7a46",
+  "archive_parts": [
+    "approved/lego-titanic-20261031.tar.xz.part-aa",
+    "approved/lego-titanic-20261031.tar.xz.part-ab"
+  ],
+  "new_paid_model_requests": 0,
+  "no_repeat": true
+}
