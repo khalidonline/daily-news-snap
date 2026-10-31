@@ -81,7 +81,8 @@ def save_story(client,journal,identity,title,uploads, *, media=None, media_facto
     journal.save(state)
     return state
 
-def validate_archive(approval, source):
+def validate_archive_authorization(approval):
+    """Read-only authorization/media preflight, independent of delivery receipts."""
     if approval.get('approved') is not True or approval.get('account')!='executivesaudi' or not approval.get('empty_profile_confirmation'):
         raise BundleError('Independent archive approval and profile baseline required')
     expiry=datetime.fromisoformat(approval['expires_at'].replace('Z','+00:00'))
@@ -112,10 +113,14 @@ def validate_archive(approval, source):
         hashes.append(digest)
     identity=hashlib.sha256(('executivesaudi:'+':'.join(hashes)).encode()).hexdigest()
     if identity!=approval['identity'] or len(set(hashes))!=len(hashes): raise BundleError('Archive identity mismatch')
-    if source.get('reconciliation') or set(k for k in source if k.isdigit())!={str(i+1) for i in range(len(frames))}: raise BundleError('Source receipt not final')
-    rows=[source[str(i+1)] for i in range(len(frames))]
+    return identity,approval.get('title') or manifest['title'],selected,len(frames)
+
+def validate_archive(approval, source):
+    identity,title,selected,count=validate_archive_authorization(approval)
+    if source.get('reconciliation') or set(k for k in source if k.isdigit())!={str(i+1) for i in range(count)}: raise BundleError('Source receipt not final')
+    rows=[source[str(i+1)] for i in range(count)]
     if any(r.get('status')!='POSTED' or not r.get('post_id') or not r.get('upload_id') for r in rows): raise BundleError('Incomplete original publication')
-    return identity,approval.get('title') or manifest['title'],[rows[i-1] for i in selected]
+    return identity,title,[rows[i-1] for i in selected]
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--approval',required=True);a=p.parse_args()

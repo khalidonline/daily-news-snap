@@ -142,7 +142,12 @@ def require_for_new_delivery(manifest, media, existing):
         for placement in destinations:
             DeliveryReview(media,placement)
         return
-    data = json.loads(path.read_text())
+    try:
+        data = json.loads(path.read_text())
+    except (OSError, ValueError):
+        fail('manifest unavailable or invalid')
+    if not isinstance(data, dict):
+        fail('manifest must be an object')
     if data.get('format') == 'reviewed-challenge-video-v1':
         from .reviewed_video import validate_reviewed_video
         from .challenge_contract import validate_challenge

@@ -3,10 +3,16 @@ import sys
 import tempfile
 import types
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 
 class BreakingMapFallbackTests(unittest.TestCase):
+    def setUp(self):
+        modules = patch.dict(sys.modules)
+        modules.start()
+        self.addCleanup(modules.stop)
+
     def _load(self, event):
         fake_news = types.ModuleType("news_bot")
         fake_news.PINNED_EVENT = event
@@ -81,8 +87,10 @@ class BreakingMapFallbackTests(unittest.TestCase):
         base._cleanup_rejected = lambda photo: Path(photo).unlink(missing_ok=True)
         bot.fetch_commons_photo = commons
         mod.install_resilient_visual_fallback(bot)
-        photo, credit = bot.fetch_commons_photo(["US Navy warship Persian Gulf"], "out.png")
-        self.assertEqual("out.png", photo)
+        with tempfile.TemporaryDirectory() as td:
+            output = str(Path(td) / "out.png")
+            photo, credit = bot.fetch_commons_photo(["US Navy warship Persian Gulf"], output)
+            self.assertEqual(output, photo)
         self.assertEqual("شعار رسمي / Wikimedia Commons", credit)
         self.assertEqual(2, len(calls))
         self.assertEqual(["United States Central Command official seal"], calls[1][0])

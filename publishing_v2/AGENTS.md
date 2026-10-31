@@ -1,5 +1,11 @@
 # ExecutiveSaudi delivery rules — owner approved 25 October 2026
 
+For new information cards follow the fixed preparation/delivery convention in
+root AGENTS.md and docs/ready-package-delivery.md. Preparation is not authority
+to send. Use one existing workflow for Story plus public-profile archive;
+never create another per-card workflow or regenerate already-approved media.
+Challenges keep their distinct Story/Spotlight workflow and all audio gates.
+
 Before ANY new publication, classify the package explicitly. For a challenge,
 set `content_type: challenge`; never relabel it as information to pass a gate.
 The final deliverable is a video, not the still used to review its layout.

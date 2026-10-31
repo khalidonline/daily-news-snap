@@ -242,6 +242,8 @@ class ModelUsageIntegrationTests(unittest.TestCase):
             with patch.dict(
                 os.environ, {"MODEL_USAGE_PATH": str(usage_path)}
             ), patch.object(
+                breaking_news_runner, "CACHE_FILE", Path(td) / "cache.json"
+            ), patch.object(
                 news_bot, "ANTHROPIC_API_KEY", "key"
             ), patch.object(
                 breaking_news_runner.urllib.request,

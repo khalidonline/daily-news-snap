@@ -8,6 +8,14 @@ on:
         description: Folder name under approved/ (e.g. 7dogs-20260927)
         required: true
         type: string
+      mode:
+        description: Prepared information publishes Story then approved public archive
+        required: true
+        default: prepared-information
+        type: choice
+        options:
+          - prepared-information
+          - legacy-story
 permissions:
   contents: write
 concurrency:
@@ -34,10 +42,12 @@ jobs:
           test -f "approved/$PACKAGE/manifest.json"
           echo "manifest=approved/$PACKAGE/manifest.json" >> "$GITHUB_OUTPUT"
       - name: Validate without publishing
+        if: inputs.mode == 'legacy-story'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python -m publishing_v2.bundle_api validate --manifest "${{ steps.pkg.outputs.manifest }}"
       - name: Publish the sealed cards
+        if: inputs.mode == 'legacy-story'
         env:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
@@ -45,3 +55,13 @@ jobs:
           POST_TO_SNAPCHAT: '1'
           DRY_RUN: '0'
         run: python -m publishing_v2.bundle_api publish --manifest "${{ steps.pkg.outputs.manifest }}"
+      - name: Deliver prepared information and public archive
+        if: inputs.mode == 'prepared-information'
+        env:
+          PACKAGE: ${{ inputs.package }}
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python -m publishing_v2.deliver_information --package "$PACKAGE"

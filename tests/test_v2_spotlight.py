@@ -9,6 +9,15 @@ def test_approved_video_uses_spotlight_and_reconciles_without_repeat(monkeypatch
     # This test uses an in-memory client/journal; live revocation belongs to
     # the real delivery step, whose GITHUB_ACTIONS guard remains enabled.
     monkeypatch.delenv('GITHUB_ACTIONS', raising=False)
+    # This historical fixture is intentionally expired in production. Freeze
+    # only the test clock to its approval day; never renew the real manifest.
+    from datetime import datetime, timezone
+    from publishing_v2 import bundle_api
+    class ApprovalDay(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return datetime(2026, 10, 25, 12, tzinfo=timezone.utc).astimezone(tz)
+    monkeypatch.setattr(bundle_api, 'datetime', ApprovalDay)
     path = Path('approved/wheels-video-20261025/manifest.json')
     if not path.exists(): pytest.skip('Owner-approved integration fixture missing')
     _, title, media = load_package(str(path))

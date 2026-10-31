@@ -1,5 +1,17 @@
 # Mandatory publication preflight
 
+## Fixed information delivery — owner approved 31 October 2026
+
+Before showing a new information-card preview, stage its exact export, sources,
+design-review and draft manifest/archive approval under approved/<package>.
+Keep both approvals false until the owner's publication authorization. Run
+`python -m publishing_v2.prepared_information prepare --package <package>`.
+This seals integrity only, not visual or owner approval. Complete actual review.
+After «انشر», record explicit authorization without changing export/content,
+then use the existing publish-approved-package workflow with that package input.
+No new per-card workflows; no paid regeneration on delivery failure. Preserve
+the same identity and receipts for recovery. See docs/ready-package-delivery.md.
+
 ## Text drafts must fit before owner review
 
 For information cards, measure drafts using the current shared template before
