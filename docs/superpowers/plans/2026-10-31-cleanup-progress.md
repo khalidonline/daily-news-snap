@@ -181,3 +181,22 @@ Untracked out/ was present at start and preserved, excluded from integration.
 Final results and independent review: docs/cleanup-policy-verification-20261031.md.
 Next: diagnose remaining actual/historical fixture failures (do not archive by
 failure alone) and finish script dependency inventory. Cleanup still incomplete.
+
+## Follow-up batch 9 — isolate the review-cap test clock
+
+Base:7306bc65ab3b72522d30a1d6a1ea981ee40cc52a. Owner requested continuation.
+Pre-flight: no shared production interfaces changed; only one fixture dependency.
+Ruling: patch ksa_stamp at its consumer in the failing test, not news_bot or
+breaking_watch production code. The fixture previously depended on import order;
+the cost if wrong is masking timestamp formatting, which this daily-cap test
+does not claim to cover. Reviewed/stamp/lock assertions remain unchanged.
+RED: real-news_bot-first collection1failed8passed; GREEN: same order9passed,
+normal isolated collection9passed. No approved content, workflow or cap changes.
+Remaining failures are diagnosed, not suppressed; see
+docs/cleanup-memory-verification-20261031.md. Full baseline7failed1215passed;
+after6failed1216passed, no new failure IDs. Fresh reviewer independently9pass
+in both collection orders, no findings. Current-path654passed208subtests;
+protected1775unchanged. Bounded integration authorized despite documented
+pre-existing failures; not whole-branch completion. Keep checkpoint/worktree.
+Next: behavioral coverage for active-route/cost-cap expectations, historical
+fixture treatment without modifying approvals, and remaining script inventory.

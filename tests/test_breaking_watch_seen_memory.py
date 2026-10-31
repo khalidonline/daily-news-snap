@@ -170,6 +170,7 @@ class BreakingWatchPersistentHeadlineMemoryTests(unittest.TestCase):
         }
         saved = []
         with patch.object(breaking_watch, "ksa_now", return_value=self.now), \
+                patch.object(breaking_watch, "ksa_stamp", return_value="test-stamp"), \
                 patch.object(breaking_watch, "load_state", return_value={}), \
                 patch.object(
                     breaking_watch, "feed_fresh_items",
