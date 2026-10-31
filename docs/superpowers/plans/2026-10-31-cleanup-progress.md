@@ -239,3 +239,15 @@ inventory-reference limitations clarified. Reviewer did not judge runtime
 equivalence/retirement/receipt state; those remain explicitly unresolved.
 Root inventory is complete; uncertainty
 for dated recovery routes remains explicitly retained, not silently archived.
+
+## Native-budget diagnostic checkpoint after batch 11
+
+Base0495d5df438b21534395df0c67094ee77860ea77, no production/test changes.
+Actual offline invocation of resume_budget_blocked_review.review_once with
+real Ledger and in-memory store rejects missing package/stage context before
+transport (0provider attempts). main does not populate the required context.
+See cleanup-script-audit-20261031.md. Ruling: no native-guard test exemption;
+do not revive a paid legacy recovery route within cleanup. Preserve guards.
+This diagnostic does not claim a repair, fewer failed tests or faster publishing.
+Next: continue active-route expectation audit, leaving this fail-closed route
+unchanged until its recovery scope/identity is independently established.

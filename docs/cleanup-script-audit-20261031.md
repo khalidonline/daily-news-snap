@@ -75,3 +75,25 @@ tests/test_model_role_experiment.py::ModelRoleExperimentTests::test_selected_fro
 ```
 No paid calls, schedules, live publication, receipt access or external content
 mutation. Only offline publication-contract workflow matches these doc paths.
+
+## Follow-up: native recovery is fail-closed, not equivalent
+
+On base0495d5df438b21534395df0c67094ee77860ea77, invoked
+resume_budget_blocked_review.review_once({}, [], [], Ledger(MemoryStore(),
+limit_micro_usd=3000000)) with providers._request replaced by a forbidden
+transport. Actual result: BudgetBlocked, "free selection and a stable package
+identity are required"; provider attempts0. MemoryStore is the existing test
+utility; no credentials/network/real ledger used.
+
+daily_budget.Ledger.reserve requires context package_id and stage for
+autopilot:reviewer. resume_budget_blocked_review.main builds the Ledger without
+that context and review_once does not add it. Hence the route cannot currently
+reach a reviewer request even with an empty daily ledger. This is not evidence
+of successful budget integration. recover_held_reviewer also constructs its
+Ledger without context by inspection; that second route was not executed here.
+
+Decision: keep the failing workflow guard test; no blanket native-ledger
+exemption. Do not restore paid legacy execution, synthesize approval/context,
+raise caps or weaken package authorization as part of cleanup. A separate
+recovery decision must establish the saved package identity and current scope
+before any functional repair. Other cleanup work is not blocked by this.
