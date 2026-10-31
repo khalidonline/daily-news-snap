@@ -1,0 +1,46 @@
+{
+  "title": "سجل داخلي لمصادر صور رمسيس وحالة حقوقها",
+  "recorded_date_riyadh": "2026-10-31",
+  "scope": "توثيق داخلي فقط؛ لا يظهر على البطاقة",
+  "card": {
+    "library_file_id": "libfile_db18d0a62a5081919d3b08841ec844f8",
+    "version": 1,
+    "sha256": "ced87cd515558a0ccac0fa059b50bcaba18f6a335f035a700b7dc3d1b2efe4ba"
+  },
+  "owner_instruction": "احفظ الحقوق في ملف داخلي. نرجع إذا احتاجنا",
+  "rights_status": "UNVERIFIED",
+  "note": "حفظ المصدر لا يثبت الترخيص. لا يوجد إذن صاحب حق أو ترخيص إعادة استخدام موثق في الأدلة المتاحة. روابط المواقع أدناه هي صفحات مصدر محفوظة في سجل إعداد البطاقة وليست إثبات ملكية حقوق الصورة.",
+  "images": [
+    {
+      "asset": "before.jpg",
+      "placement": "يمين البطاقة",
+      "caption": "بميدان رمسيس قبل النقل",
+      "source_page": "https://manassa.news/stories/11517",
+      "sha256": "d07c209695b97b1ada0c80469129f0293fc86357797062480cc994b80764cd84",
+      "photographer": null,
+      "copyright_holder": null,
+      "license": null,
+      "permission_evidence": null,
+      "exact_photo_date": null
+    },
+    {
+      "asset": "after.jpg",
+      "placement": "يسار البطاقة",
+      "caption": "داخل المتحف المصري الكبير",
+      "source_page": "https://staybook.in/activities/grand-egyptian-museum-guided-fast-track-rt",
+      "sha256": "17e3d41517c1ff6f456736afbbc9b99b3cc7779a50e52bfce115744f0e5d8a91",
+      "photographer": null,
+      "copyright_holder": null,
+      "license": null,
+      "permission_evidence": null,
+      "exact_photo_date": null
+    }
+  ],
+  "visual_integrity": "لم تعدل ألوان الصور لزيادة الفرق. اختلاف الإضاءة واللون ليس وحده إثباتا للتلوث أو التنظيف.",
+  "publication": "لم تنفذ عملية نشر أثناء إنشاء هذا السجل.",
+  "owner_editorial_acceptance": {
+    "reference": "Khalid approved this exact Ramses export, repeatedly requested publication, then explicitly said الغ الشرط وانشر and كمل after being informed that image licenses were unverified. This is specific owner editorial-use acceptance, not a verified license or blanket policy change.",
+    "scope": "Only this Ramses export and its two source images",
+    "license_status": "UNVERIFIED"
+  }
+}

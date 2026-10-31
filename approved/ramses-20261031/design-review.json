@@ -1,0 +1,273 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review": {
+    "reference": "Exact approved Ramses export inspected at full resolution and390px. Unaltered source photos and matching captions; no claim that visual contrast proves soot removal. Story-player overlay simulation inspected separately from any live-device claim.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "390x693 simulation: top0..39/bottom625..692 covered. CTA ends at622px and remains visible. Not live device proof.",
+      "SAVED_STORY": "Same390px full-screen Story-player simulation checked for Saved Story viewing; title/body/CTA above modeled controls. Not live device proof."
+    }
+  },
+  "cards": [
+    {
+      "sha256": "ced87cd515558a0ccac0fa059b50bcaba18f6a335f035a700b7dc3d1b2efe4ba",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "رمسيس.. من تلوث السيارات إلى المتحف",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              175,
+              215,
+              1020,
+              269
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            175,
+            215,
+            1020,
+            270
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "داخل المتحف المصري الكبير",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              140,
+              695,
+              447,
+              727
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            140,
+            695,
+            447,
+            728
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "بميدان رمسيس قبل النقل",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              634,
+              695,
+              938,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            634,
+            695,
+            938,
+            723
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بكرة ذكرى افتتاح المتحف المصري الكبير. ورمسيس اللي يستقبلك، كان بزحمة القاهرة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              254,
+              801,
+              980,
+              853
+            ],
+            [
+              150,
+              877,
+              980,
+              929
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            150,
+            801,
+            1015,
+            929
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "شوف الفرق… بالميدان تحسه تعبان نفسيا، وبالمتحف كاشخ ويستقبل الناس بنفسية حلوة!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              188,
+              995,
+              980,
+              1041
+            ],
+            [
+              105,
+              1065,
+              980,
+              1117
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            105,
+            995,
+            1015,
+            1117
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "التلوث كان يهدد التمثال، فنقلوه عام ٢٠٠٦ لموقع مؤقت بالجيزة علشان يحمونه.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              105,
+              1183,
+              980,
+              1235
+            ],
+            [
+              434,
+              1259,
+              980,
+              1305
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            105,
+            1183,
+            1015,
+            1305
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وفي ٢٠١٨ نقلوه لبهو المتحف. تخيل وزنه ٨٣ طن… يعني تقريبا وزن ألف رجال!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              86,
+              1371,
+              980,
+              1422
+            ],
+            [
+              508,
+              1446,
+              980,
+              1509
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            86,
+            1371,
+            1015,
+            1509
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "نفس رمسيس… بس واضح إن المكان يفرق!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              155,
+              1575,
+              924,
+              1625
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            155,
+            1575,
+            924,
+            1626
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ]
+}

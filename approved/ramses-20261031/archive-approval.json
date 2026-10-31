@@ -1,0 +1,14 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "empty_profile_confirmation": "Existing public profile contains prior saved stories; owner requested saving subsequent information cards there, excluding challenges. Existing inventory and overlap are rechecked by SavedClient.find before any create.",
+  "expires_at": "2026-10-31T20:59:59+00:00",
+  "manifest": "approved/ramses-20261031/manifest.json",
+  "manifest_sha256": "b277ea240044c00cdcd3994a4e4a3c0cd9ce1265815e78241daa4a2cc2cb40c2",
+  "identity": "560faa32d90b735214f8e950fb4b96d0302afed2dc8cef44f83ad3c97dcef5ff",
+  "public_indices": [
+    1
+  ],
+  "title": "رمسيس.. من تلوث السيارات إلى المتحف",
+  "owner_authorization": "Khalid approved this exact Ramses export, repeatedly requested publication, then explicitly said الغ الشرط وانشر and كمل after being informed that image licenses were unverified. This is specific owner editorial-use acceptance, not a verified license or blanket policy change. Standing request to archive information cards in the public profile; no Spotlight."
+}

@@ -1,0 +1,55 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "رمسيس.. من تلوث السيارات إلى المتحف",
+  "not_before": "2026-10-31T17:30:00+00:00",
+  "expires_at": "2026-10-31T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid approved this exact Ramses export, repeatedly requested publication, then explicitly said الغ الشرط وانشر and كمل after being informed that image licenses were unverified. This is specific owner editorial-use acceptance, not a verified license or blanket policy change.",
+    "reviewed_at": "2026-10-31T17:30:00+00:00",
+    "approved_media_sha256": [
+      "ced87cd515558a0ccac0fa059b50bcaba18f6a335f035a700b7dc3d1b2efe4ba"
+    ],
+    "approved_source_sha256": [
+      "d07c209695b97b1ada0c80469129f0293fc86357797062480cc994b80764cd84",
+      "17e3d41517c1ff6f456736afbbc9b99b3cc7779a50e52bfce115744f0e5d8a91"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/ramses-20261031/card.png",
+      "sha256": "ced87cd515558a0ccac0fa059b50bcaba18f6a335f035a700b7dc3d1b2efe4ba",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false,
+        "note": "Original sourced photos without color edits, composed in approved deterministic template. Licenses remain unverified; owner accepted this specific editorial use."
+      },
+      "source_assets": [
+        {
+          "path": "approved/ramses-20261031/before.jpg",
+          "sha256": "d07c209695b97b1ada0c80469129f0293fc86357797062480cc994b80764cd84",
+          "source_url": "https://manassa.news/stories/11517",
+          "description": "Ramses statue in the old square",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid approved this exact Ramses export, repeatedly requested publication, then explicitly said الغ الشرط وانشر and كمل after being informed that image licenses were unverified. This is specific owner editorial-use acceptance, not a verified license or blanket policy change."
+        },
+        {
+          "path": "approved/ramses-20261031/after.jpg",
+          "sha256": "17e3d41517c1ff6f456736afbbc9b99b3cc7779a50e52bfce115744f0e5d8a91",
+          "source_url": "https://staybook.in/activities/grand-egyptian-museum-guided-fast-track-rt",
+          "description": "Ramses statue inside the Grand Egyptian Museum",
+          "rights_status": "owner_accepted_editorial_use",
+          "owner_reference": "Khalid approved this exact Ramses export, repeatedly requested publication, then explicitly said الغ الشرط وانشر and كمل after being informed that image licenses were unverified. This is specific owner editorial-use acceptance, not a verified license or blanket policy change."
+        }
+      ]
+    }
+  ]
+}
