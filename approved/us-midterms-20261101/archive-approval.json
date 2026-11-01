@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/us-midterms-20261101/manifest.json",
-  "manifest_sha256": "b9041978fd10e3b02d8ad208353a00ff2caddfa638616f7459d399530563e790",
-  "identity": "58616fc2a27158d23b71ed0f367a25ecceb7b730bc0ec03e94ca927af136c2da",
+  "manifest_sha256": "3d9de584ae60b879ef3fda9cce4c0b31c2a7a64e676732282f2b72b8197716cc",
+  "identity": "b305886ecbb4640c330633099b8b8da49fece174ef894c1817d260520acb2f6d",
   "public_indices": [
     1
   ],
   "title": "انتخابات أمريكا… والرئيس مو بالتصويت!",
   "expires_at": "2026-11-03T20:59:59+00:00",
-  "owner_authorization": "Not authorized; preview only.",
+  "owner_authorization": "Khalid explicitly authorized publication by انشر after the exact preview, with standing Story and Saved Story destinations.",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
 }

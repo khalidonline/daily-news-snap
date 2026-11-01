@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -12,13 +12,14 @@
   "expires_at": "2026-11-03T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Draft only. Khalid authorized shortening to fit and completing design, not publication or review of final export.",
+    "reference": "Khalid explicitly said انشر after viewing the exact export on 1 November 2026; Story and Saved Story authorized.",
     "approved_media_sha256": [
       "58616fc2a27158d23b71ed0f367a25ecceb7b730bc0ec03e94ca927af136c2da"
     ],
     "approved_source_sha256": [
       "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d"
-    ]
+    ],
+    "reviewed_at": "2026-11-01T08:10:51Z"
   },
   "media": [
     {
@@ -35,9 +36,10 @@
           "sha256": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
           "source_url": "https://commons.wikimedia.org/wiki/File:Flickr_-_USCapitol_-_East_Front_of_the_U.S._Capitol.jpg",
           "description": "East front of US Capitol at dusk, 8 December 2011; not election-day photography",
-          "rights_status": "public_domain",
+          "rights_status": "owner_accepted_editorial_use",
           "credit": "Architect of the Capitol",
-          "rights_basis": "US federal government work, Commons PD-USGov-AOC; requested credit included in visible caption."
+          "rights_basis": "US federal government work, Commons PD-USGov-AOC; requested credit included in visible caption.",
+          "owner_reference": "Khalid authorized publication of the exact visible composite with this credited public-domain image by انشر on 1 November 2026."
         }
       ]
     }
