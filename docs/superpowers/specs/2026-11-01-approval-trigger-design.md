@@ -19,4 +19,4 @@ Alternative: retain browser dispatch and only streamline metadata. Rejected beca
 Information cards only: Story plus Saved Story, ONE_WEEK. Challenges, schedules, design master and budget unchanged. No live posting, paid generation, secrets extraction or old-package replay during implementation. Preserve concurrent edits and use expected-SHA updates without force. Test with synthetic fixtures and mocked network. Demonstrate invalid/missing/expired/changed approvals cause zero publisher calls; repeated requests reconcile without duplicate creates. Measure actual time improvement only on a future independently approved post.
 
 ## Status
-Approach selected; detailed plan ready for owner review. No executable changes or live request installed.
+Owner-approved implementation complete and offline verified; see the implementation progress ledger for baseline, review and merged-tree results. Released by the main commit containing this status. No live request installed or post replayed; actual connector trigger and timing require the next separately authorized publication.

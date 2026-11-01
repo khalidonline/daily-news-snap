@@ -1,5 +1,11 @@
 # ExecutiveSaudi delivery rules — owner approved 25 October 2026
 
+Information publication now supports the explicit hash-bound approval request
+documented in root AGENTS.md and docs/ready-package-delivery.md. Only a new
+owner-authorized request commit may trigger it; no request during development.
+Keep the same guarded publisher, original identity and per-destination receipts.
+Challenges are excluded. Never infer approval from a successful preview seal.
+
 Information previews MUST pass the uploaded preview gate in root AGENTS.md.
 Local rendering/preparation alone does not permit display. Use prepare-local-preview,
 upload to main with approvals false, then prepare-preview. Show only paths from

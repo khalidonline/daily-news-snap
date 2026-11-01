@@ -52,12 +52,45 @@ already-approved copy. This update does not redesign or republish existing cards
 
 ## After owner approval
 
+### Browser-free request (information only)
+
+The uploaded preview command now saves `preview-receipt.json` locally only after
+comparing the real Git draft. Include this receipt in the authorization commit.
+It contains the immutable draft commit and all compared content hashes, and is
+not itself owner approval. Missing/old receipts require a newly verified draft;
+never manufacture a receipt for a published package or reseal changed content.
+
+After the owner's exact-preview «انشر», run from the repository root:
+
+```sh
+python -m publishing_v2.information_request authorize --package example-20261101 --owner-reference 'Exact owner authorization reference' --output /tmp/new-approval-stage
+```
+
+Use a fresh output directory. This offline command leaves the draft untouched
+and stages ONLY the authorized manifest, archive approval and
+`.github/information-publish-request.json`. Upload these three files AND the
+verified package's `preview-receipt.json` together to main using expected SHA.
+Preserve `prepared.json` and all media bytes. Pre-preview source editorial-use
+decisions/provenance must already be complete; the helper refuses to change them.
+
+**That commit is the live-send action.** Do not create/update the request for a
+test, design revision, maintenance operation or general workflow approval.
+The existing workflow triggers only on this request path, checks exact event
+commit bytes and the whole push range, and uses the existing guarded publisher.
+No browser dispatch is needed. No request file is installed with the code.
+
+If the expected-SHA update is rejected, re-read main and check for a prior
+accepted request/run before retrying. Never blindly submit or choose a different
+identity. Record run ID, Story receipt and Saved Story receipt separately.
+Manual dispatch remains recovery for the same unchanged approved package.
+Do not claim time saved until a future approved live send is measured.
+
 Record approval in manifest and archive-approval without changing the export.
 Update archive `manifest_sha256` to the exact authorized manifest bytes. Only
 approval booleans, owner-review reference/time, and archive authorization/hash
 are excluded from the content seal. Existing owner/design validators still apply.
 
-Dispatch **Publish an owner-approved package**, input `package`, default mode
+For explicit manual recovery only, dispatch **Publish an owner-approved package**, input `package`, default mode
 `prepared-information`. It validates both authorizations, invokes the existing
 Story publisher, then the existing Saved Story publisher. No new workflow,
 render, model call, media regeneration or alternate direct API route is needed.

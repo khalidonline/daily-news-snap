@@ -1,5 +1,17 @@
 # Mandatory publication preflight
 
+## Browser-free explicit information approval — 1 November 2026
+
+After uploaded-preview verification and exact owner publication approval, use
+`publishing_v2.information_request authorize` to stage a hash-bound request.
+Upload its three staged files plus preview-receipt.json in one expected-SHA
+commit. Updating .github/information-publish-request.json IS the live-send action.
+Never create it during development, for old posts, or on design approval alone.
+Use current docs/ready-package-delivery.md. Existing checks, journals, original
+identity, separate receipts and manual recovery remain. No browser dispatch is
+needed for this path; no paid regeneration. Source decisions must be complete
+before preview; missing evidence means stop, not edit/reseal content on approval.
+
 ## Uploaded preview gate — owner required 1 November 2026
 
 Do not display or link a new information-card preview from a local-only file.

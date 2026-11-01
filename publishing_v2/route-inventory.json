@@ -22,7 +22,7 @@
   ".github/workflows/model-role-experiment.yml": "d6e2300e6ca1976ba7e85cb476ad4bc1979fd003297bbd4f2278f195e419365b",
   ".github/workflows/publication-contract.yml": "1ccf0ce0d5aa8f3be0185f742e8f45e9f0f89f5e0b1e21c5650988967533dd99",
   ".github/workflows/publish-apple-ai-approved.yml": "33ea28920896b652d733fdfbc707ec3ca355b16988c69952faf3a99456885bc3",
-  ".github/workflows/publish-approved-package.yml": "6320bd81d22e2bde05512f81d8e1dad8a3936441fdb2e47c9dd9693b74f86d01",
+  ".github/workflows/publish-approved-package.yml": "72eff73efb7fc506c818595adf5a90ab9f60932bcd5b2a764416b701557e7dc7",
   ".github/workflows/publish-defense-tech-approved.yml": "75db3829a800ca5fc60d5267a392a476c25c56261c46b1df3f5c6229a2ea266e",
   ".github/workflows/publish-horse-approved.yml": "dd68220cd22ef10d14b9c392c133978c30f1872e993ec1910d92dc8fb9f6acbc",
   ".github/workflows/publishing-v2-autopilot.yml": "a3da07103d7a3cd4ccd3d632af086f8c554d08a01e5acd1b6b8daea17f697752",
@@ -195,7 +195,7 @@
   "publishing_v2/official_images.py": "0101aaaaf6aabdc0e17c4db63ddc1aacec4042c26dcfb1c0c8465185a04ed763",
   "publishing_v2/owner_composite.py": "19634ad153a8054c729a8aed7559b04097a6db3fe37a8d9691df99008b0d3c4a",
   "publishing_v2/owner_design.py": "aa92e8319df44c6435c3581acec32323d3898d29020de6a16d69d8597e206ca4",
-  "publishing_v2/prepared_information.py": "57afd4fc91ec48a7a5c23c242baf92f0d5686b18ddf00fd583f0f1914afc4b46",
+  "publishing_v2/prepared_information.py": "946be55bb4e4c2320ec5511b95979b75868a0bfa899330e2e304c6442b2c774b",
   "publishing_v2/preview.py": "27c51d19b4f68af7e17ff223bc56127f3ed21561b969b956995122b467b0165e",
   "publishing_v2/preview_package.py": "1827eb567c4a76d706e9b21b3ac0f92559738716781a8130f2634ec93f433539",
   "publishing_v2/primary_images.py": "9103120445bca7bf2124b00e3e9d657d1cf6f3602cc278fdaf89d78816f14b67",
@@ -235,5 +235,6 @@
   "topic_delivery_guard.py": "2bdd02b3227fe7a641f051f90cd6d0f8c0c1a9b67c66429a21e62195c4e23836",
   "topic_editorial.py": "e72c3a892ba1db04201ad1b59486ce714070cfcf2906dca1ebdcec160bde151b",
   "topic_snapchat.py": "cab8fc89b76764eaa386f862fffa0eba6ef49b36919f9606245f87aaa9e58323",
-  "validate_saved_local_20260926.py": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51"
+  "validate_saved_local_20260926.py": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51",
+  "publishing_v2/information_request.py": "473c49b1106577eb44694e252a6bf9b03cdc3e896a25dc4c48778274c2e9f014"
 }

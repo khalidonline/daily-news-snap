@@ -115,6 +115,8 @@ def prepare_local_preview(package_dir):
     p = package_path(package_dir)
     snapshot(p)  # Paths and all asset hashes before reading media.
     data = read_json(p/'manifest.json')
+    from .information_request import provenance
+    provenance(data)
     archive = read_json(p/'archive-approval.json')
     if data.get('approved') is not False or archive.get('approved') is not False:
         raise ValueError('Preview preparation requires both approvals false')
@@ -186,10 +188,16 @@ def compare_uploaded_preview(package_dir, repository, commit):
     expected.pop('preparation_seconds',None)
     if uploaded != expected:
         raise ValueError('Uploaded preparation differs')
-    return {'status':'UPLOADED_PREVIEW_READY_NOT_AUTHORIZED',
+    result = {'status':'UPLOADED_PREVIEW_READY_NOT_AUTHORIZED',
             'repository':'khalidonline/daily-news-snap', 'branch':'main',
             'commit':commit, 'assets':record['assets'],
             'preview_paths':[f['path'] for f in read_json(p/'manifest.json')['media']]}
+    receipt = dict(result, version=1,
+                   files={path:digest(safe_path(path).read_bytes()) for path in paths})
+    # Preparation timing is observational, not content or authority.
+    receipt['prepared_content'] = expected
+    (p/'preview-receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n')
+    return result
 
 
 def verify_uploaded_preview(package_dir):
