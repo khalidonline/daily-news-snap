@@ -1,0 +1,19 @@
+{
+  "facts": [
+    "https://www.usa.gov/midterm-elections",
+    "https://www.fec.gov/introduction-campaign-finance/election-results-and-voting-information/"
+  ],
+  "image_assets": [
+    {
+      "path": "approved/us-midterms-20261101/capitol.jpg",
+      "sha256": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Flickr_-_USCapitol_-_East_Front_of_the_U.S._Capitol.jpg",
+      "description": "East front of US Capitol at dusk, 8 December 2011; not election-day photography",
+      "rights_status": "public_domain",
+      "credit": "Architect of the Capitol",
+      "rights_basis": "US federal government work, Commons PD-USGov-AOC; requested credit included in visible caption."
+    }
+  ],
+  "status": "Draft not authorized",
+  "copy_authorization": "Khalid: ايه, authorizing shortening and completing design after reported three-line overflow."
+}

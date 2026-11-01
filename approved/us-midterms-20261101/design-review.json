@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "58616fc2a27158d23b71ed0f367a25ecceb7b730bc0ec03e94ca927af136c2da",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "انتخابات أمريكا… والرئيس مو بالتصويت!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              224,
+              215,
+              1020,
+              279
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            224,
+            215,
+            1020,
+            280
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "مبنى الكونغرس الأمريكي — Architect of the Capitol",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              248,
+              695,
+              831,
+              730
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            248,
+            695,
+            831,
+            731
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الثلاثاء ٣ نوفمبر، أمريكا تنتخب الكونغرس، مو الرئيس. يسمونها «النصفية» لأنها بنص فترته.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              154,
+              802,
+              980,
+              857
+            ],
+            [
+              135,
+              881,
+              980,
+              930
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            135,
+            802,
+            1015,
+            930
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الكونغرس مجلسين: النواب والشيوخ. يقرون القوانين ويوافقون على الصرف؛ الرئيس مو لحاله.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              152,
+              997,
+              980,
+              1049
+            ],
+            [
+              88,
+              1073,
+              980,
+              1118
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            88,
+            997,
+            1015,
+            1118
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "إذا حزب الرئيس أخذ أغلبية بالمجلسين، يسهل عليه تمرير خططه، بس الموافقة مو مضمونة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              145,
+              1184,
+              980,
+              1241
+            ],
+            [
+              145,
+              1265,
+              980,
+              1308
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            145,
+            1184,
+            1015,
+            1308
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وإذا المعارضة أخذت مجلس واحد، تقدر توقف قوانينه؛ ويحتاج يتفاوض علشان يمشيها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              162,
+              1375,
+              980,
+              1432
+            ],
+            [
+              233,
+              1456,
+              980,
+              1508
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            162,
+            1375,
+            1015,
+            1508
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "الرئيس باقي… بس اللي يوافقون له ممكن يتغيرون!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              96,
+              1575,
+              984,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            96,
+            1575,
+            984,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected full exported card and two 390px destination overlay simulations in this session. Four two-line paragraphs; one-line title/closing; caption identifies Capitol with requested credit. Photo crop shows facade and lower dome, not full dome. No device/live publication claim.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 simulation: top 0..39 and bottom 625..692 masked; all key text and CTA visible.",
+      "SAVED_STORY": "Inspected separate 390x693 simulation with same story player masks; key text and CTA visible."
+    }
+  }
+}

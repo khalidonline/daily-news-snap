@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/us-midterms-20261101/manifest.json",
+  "manifest_sha256": "b9041978fd10e3b02d8ad208353a00ff2caddfa638616f7459d399530563e790",
+  "identity": "58616fc2a27158d23b71ed0f367a25ecceb7b730bc0ec03e94ca927af136c2da",
+  "public_indices": [
+    1
+  ],
+  "title": "انتخابات أمريكا… والرئيس مو بالتصويت!",
+  "expires_at": "2026-11-03T20:59:59+00:00",
+  "owner_authorization": "Not authorized; preview only.",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+}
