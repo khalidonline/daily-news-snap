@@ -1,0 +1,66 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-01",
+  "slot": "13:00",
+  "item": "C1",
+  "topic": "نزل بالسوق؟ — LG StanbyME Go",
+  "status": "POSTED_BOTH",
+  "next_item": "D1",
+  "next_topic": "توقع المكان — سيدي بوسعيد",
+  "next_slot": "2026-11-01T19:00:00+03:00",
+  "completed_today": 1,
+  "remaining_topics": 22,
+  "video_sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "ea3a7598-7a2c-455f-a085-e8206c8ff298",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "8ad9611f-daf9-4bfa-8648-80e33df00a26",
+          "mediaId": "8ad9611f-daf9-4bfa-8648-80e33df00a26",
+          "mediaIds": [
+            "8ad9611f-daf9-4bfa-8648-80e33df00a26"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "5362cf93-cc27-49b4-96f6-6e46532c87ab",
+          "sourceUploadIds": [
+            "5362cf93-cc27-49b4-96f6-6e46532c87ab"
+          ],
+          "mediaUploadedAt": "2026-11-01T10:11:16.859Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "2bfeafaf-1fd3-4cb4-b60f-80c1051f9836",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYZWRqbmV1b3BoAaGWmWQFAaGWmWPZAAAAAA",
+          "mediaId": "07501b4f-d388-44c2-bdf0-dbe65b242a76",
+          "mediaIds": [
+            "07501b4f-d388-44c2-bdf0-dbe65b242a76"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "1bb24ffa-2180-422c-9b23-339437b3d761",
+          "sourceUploadIds": [
+            "1bb24ffa-2180-422c-9b23-339437b3d761"
+          ],
+          "mediaUploadedAt": "2026-11-01T10:12:57.746Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030"
+    }
+  },
+  "receipt_path": "api-receipts/stanbyme-go-20261101-preflight.json",
+  "archive_sha256": "e042c1370d6c3b129534d6fddff9f7da5cad95a869ed858a58cfa0becdb1402a",
+  "new_paid_model_requests": 0,
+  "no_repeat": true
+}
