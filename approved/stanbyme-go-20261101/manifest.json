@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — شاشة الشنطة",
+  "expires_at": "2026-11-03T10:07:33.664156+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/stanbyme-go-20261101/challenge.mp4",
+      "sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030",
+      "reference": "Khalid approved C1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved C1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030",
+    "source_manifest": {
+      "path": "approved/stanbyme-go-20261101/source-approval.json",
+      "sha256": "a57b850ba8a05ea6b5d53041b733dcd5507bde5046631152bb1e6cf2e177cf38"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/stanbyme-go-20261101/frame-0.5.png",
+        "sha256": "653387bdbdcafd7328a577c73f190a73abb95e4e755eccafa5dd6774847b6b47"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/stanbyme-go-20261101/frame-3.5.png",
+        "sha256": "90c0a71b67ce802ad8d0bb846dc6ea383235975a5cd486f3d9211129ca3ecb2d"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/stanbyme-go-20261101/frame-4.5.png",
+        "sha256": "0771e982c5b209bd99ab5c2ac96bfc81211867e0a8b0ec9b56e04dd15c3c1374"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/stanbyme-go-20261101/frame-5.5.png",
+        "sha256": "a73046d4d12e1d6ddfea93228228f64622bf93a70f3c312555d451194d9e4e5f"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/stanbyme-go-20261101/frame-6.5.png",
+        "sha256": "e4ce237a39b60237bd84868e6f8b4a2d64b37108ea25ec0c43fd472e7da9a788"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/stanbyme-go-20261101/frame-7.5.png",
+        "sha256": "4308bc60b6f2dc0144229de43217279ee61d322f4eedb0c2acc7a69712eac4e5"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/stanbyme-go-20261101/frame-8.5.png",
+        "sha256": "53c1abf15f905b34485f49a373498a547180250b67a8a0abb1e473c2c6399b61"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/stanbyme-go-20261101/frame-11.5.png",
+        "sha256": "ea2c6ee3b42b8651ade7ac3fe3bae3801d91bce4457c0b8f1dc2a8f30c354299"
+      }
+    ]
+  }
+}
