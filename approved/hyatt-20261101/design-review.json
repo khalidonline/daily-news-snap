@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "ffb6ef1ee1833213c069f91a2930e523f536294e3b27eee4b3e78c62588e8bd8",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "جراند حياة افتتح بشورى… والبداية منديل!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              201,
+              215,
+              1020,
+              275
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            201,
+            215,
+            1020,
+            276
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "حياة هاوس — الفندق الأول",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              138,
+              695,
+              449,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            138,
+            695,
+            449,
+            727
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "جراند حياة — جزيرة شورى",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              644,
+              695,
+              927,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            644,
+            695,
+            927,
+            725
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "«حياة» اسم مالك الفندق الأول، حياة فون دين، مو كلمة عربية. وفندقه كان اسمه «حياة هاوس».",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              134,
+              799,
+              980,
+              854
+            ],
+            [
+              80,
+              878,
+              980,
+              922
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            80,
+            799,
+            1015,
+            922
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "عام ١٩٥٧، جلس (جاي بريتزكر) بمقهى الفندق جنب مطار لوس أنجلوس؛ المقهى زحمة والغرف فل.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              90,
+              985,
+              980,
+              1037
+            ],
+            [
+              110,
+              1061,
+              980,
+              1116
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            90,
+            985,
+            1015,
+            1116
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "كتب على منديل عرض بـ٢٫٢ مليون دولار، وبنفس العصر اشترى الفندق والمقهى مع بعض!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              98,
+              1180,
+              980,
+              1224
+            ],
+            [
+              233,
+              1248,
+              980,
+              1300
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            98,
+            1180,
+            1015,
+            1300
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "احتفظ بالاسم؛ واليوم سلسلة حياة تضم أكثر من ١٤٥٠ فندق ومنتجع في أكثر من ٨٠ دولة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              99,
+              1363,
+              980,
+              1424
+            ],
+            [
+              286,
+              1448,
+              980,
+              1511
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            99,
+            1363,
+            1015,
+            1511
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "من عرض على منديل… إلى منتجع بجزيرة عندنا!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              146,
+              1575,
+              933,
+              1624
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            146,
+            1575,
+            933,
+            1625
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected exact full export and separate 390px Story and Saved Story overlay simulations. Four two-line bullets; one-line title and closing; image captions match left historic Hyatt House and right modern resort. Historic image is visibly low resolution (280x160). No live-device claim.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 simulation: top 0..39 and bottom 625..692 masked; all key text and CTA visible.",
+      "SAVED_STORY": "Inspected separate 390x693 simulation with same story player masks; key text and CTA visible."
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "facts": [
+    "https://www.redseaglobal.com/en/media-center/news/grand-hyatt-the-red-sea-opening/",
+    "https://www.spa.gov.sa/en/N2714569",
+    "https://world.hyatt.com/content/hyatt-about/en/hyatthistory.html",
+    "https://www.vanityfair.com/news/2003/05/andrews200305"
+  ],
+  "image_assets": [
+    {
+      "path": "approved/hyatt-20261101/old.jpg",
+      "sha256": "539c760c2a0a57d1d75e4d1fab397ab0e823e45ec9b1a634b43c42d06ac93b6e",
+      "source_url": "https://world.hyatt.com/content/dam/HGP/HyattFinalImages/About/Hyatt-House-1957-Archive-Image-abouttimeline.jpg",
+      "credit": "Hyatt corporate history archive",
+      "description": "Hyatt House historic photograph; original 280x160, visibly low resolution.",
+      "rights_status": "editorial_source_permission_not_confirmed",
+      "rights_basis": "Publicly accessible editorial image; no open license established. Provenance retained internally; no public-domain claim."
+    },
+    {
+      "path": "approved/hyatt-20261101/new.jpg",
+      "sha256": "3d52ef6cce07de99ded873d8fff4ff3f065259f3ecc7153c5e01089720c51afd",
+      "source_url": "https://whatsonsaudiarabia.com/wp-content/uploads/2026/11/Grand-Hyatt-The-Red-Sea-main.jpg",
+      "credit": "What’s On Saudi Arabia / hotel opening coverage",
+      "description": "Grand Hyatt The Red Sea aerial image on Shura Island",
+      "rights_status": "editorial_source_permission_not_confirmed",
+      "rights_basis": "Publicly accessible editorial image; no open license established. Provenance retained internally; no public-domain claim."
+    }
+  ],
+  "image_article": "https://whatsonsaudiarabia.com/2026/11/grand-hyatt-the-red-sea-is-now-open-on-shura-island/",
+  "status": "Draft not authorized",
+  "research_note": "Official opening announcement dated October 31 2026; booking start on hotel page differs, so copy does not assert immediate booking availability."
+}

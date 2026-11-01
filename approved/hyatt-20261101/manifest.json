@@ -1,0 +1,55 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "جراند حياة افتتح بشورى… والبداية منديل!",
+  "not_before": "2026-11-01T00:00:00+00:00",
+  "expires_at": "2026-11-04T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Design requested; exact export awaits owner review and publication authorization.",
+    "approved_media_sha256": [
+      "ffb6ef1ee1833213c069f91a2930e523f536294e3b27eee4b3e78c62588e8bd8"
+    ],
+    "approved_source_sha256": [
+      "539c760c2a0a57d1d75e4d1fab397ab0e823e45ec9b1a634b43c42d06ac93b6e",
+      "3d52ef6cce07de99ded873d8fff4ff3f065259f3ecc7153c5e01089720c51afd"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/hyatt-20261101/card.png",
+      "sha256": "ffb6ef1ee1833213c069f91a2930e523f536294e3b27eee4b3e78c62588e8bd8",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/hyatt-20261101/old.jpg",
+          "sha256": "539c760c2a0a57d1d75e4d1fab397ab0e823e45ec9b1a634b43c42d06ac93b6e",
+          "source_url": "https://world.hyatt.com/content/dam/HGP/HyattFinalImages/About/Hyatt-House-1957-Archive-Image-abouttimeline.jpg",
+          "credit": "Hyatt corporate history archive",
+          "description": "Hyatt House historic photograph; original 280x160, visibly low resolution.",
+          "rights_status": "editorial_source_permission_not_confirmed",
+          "rights_basis": "Publicly accessible editorial image; no open license established. Provenance retained internally; no public-domain claim."
+        },
+        {
+          "path": "approved/hyatt-20261101/new.jpg",
+          "sha256": "3d52ef6cce07de99ded873d8fff4ff3f065259f3ecc7153c5e01089720c51afd",
+          "source_url": "https://whatsonsaudiarabia.com/wp-content/uploads/2026/11/Grand-Hyatt-The-Red-Sea-main.jpg",
+          "credit": "What’s On Saudi Arabia / hotel opening coverage",
+          "description": "Grand Hyatt The Red Sea aerial image on Shura Island",
+          "rights_status": "editorial_source_permission_not_confirmed",
+          "rights_basis": "Publicly accessible editorial image; no open license established. Provenance retained internally; no public-domain claim."
+        }
+      ]
+    }
+  ]
+}
