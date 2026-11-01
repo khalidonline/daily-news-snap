@@ -2,7 +2,7 @@
   "version": 1,
   "status": "PREPARED_NOT_AUTHORIZED",
   "package": "approved/hyatt-20261101",
-  "manifest_content_sha256": "74be0149c3d4afce9c4594647530d5544ac3515bb89bd5c73995a93ae67fd97f",
+  "manifest_content_sha256": "ae1e818d304f2b18487bdaedd9f711aafce0c110bfc62d006a1124914d0e3470",
   "archive_content_sha256": "701f392a3088eafa997ce6d7c6c48d68fcc8e33efbca88e97cd2ddc7c3b57406",
   "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
   "review_sha256": "abc22e6a64ba3c97857260c5c28074a84831ec664aed4d7e8c3d70209412b199",
@@ -11,5 +11,5 @@
     "approved/hyatt-20261101/old.jpg": "539c760c2a0a57d1d75e4d1fab397ab0e823e45ec9b1a634b43c42d06ac93b6e",
     "approved/hyatt-20261101/new.jpg": "3d52ef6cce07de99ded873d8fff4ff3f065259f3ecc7153c5e01089720c51afd"
   },
-  "preparation_seconds": 0.007
+  "preparation_seconds": 0.003
 }

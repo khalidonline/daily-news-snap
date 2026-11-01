@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/hyatt-20261101/manifest.json",
-  "manifest_sha256": "b0318d780e8fd70e27800868eb248c304140420d15e277a382bfb3ac2749a069",
+  "manifest_sha256": "f3adbf8888698b41663a5a1f33c60eb9a1b781ab49e25edf345df2ed278e5ccf",
   "identity": "2dc5bb92df4426ddd1f45ae753abcf785dc1c936f8248bf547cbeec48d7685d8",
   "public_indices": [
     1
   ],
   "title": "جراند حياة افتتح بشورى… والبداية منديل!",
   "expires_at": "2026-11-04T20:59:59+00:00",
-  "owner_authorization": "Pending exact preview approval.",
+  "owner_authorization": "Khalid: انشر after exact Hyatt preview; standing public Story plus Saved Story destination instruction.",
   "empty_profile_confirmation": "Existing profile contains previous stories; verify live inventory and overlap before creation. Not an empty-profile assertion."
 }
