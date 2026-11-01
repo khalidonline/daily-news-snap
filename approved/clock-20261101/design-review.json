@@ -6,7 +6,7 @@
   "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
   "cards": [
     {
-      "sha256": "94d11ac6d225b1748e54e8a846ce3ecc557899c8b80d22f19a13ab1fe8c64b1a",
+      "sha256": "536a8e83a319d954a5bce57a408fc041914e66e1fcc48871ce1f54a2e83cba38",
       "blocks": [
         {
           "role": "headline",
@@ -32,24 +32,24 @@
         },
         {
           "role": "caption",
-          "text": "تغيير الساعة بين التوقيت الصيفي والشتوي",
+          "text": "ولدين يحتجون على التوقيت الصيفي عام ١٩٣٩",
           "color": "#7A7973",
           "font_size": 28,
           "font_weight": "Regular",
           "line_boxes": [
             [
-              300,
+              289,
               695,
-              779,
-              728
+              791,
+              726
             ]
           ],
           "line_count": 1,
           "box": [
-            300,
+            289,
             695,
-            779,
-            729
+            791,
+            727
           ]
         },
         {
@@ -236,7 +236,7 @@
     "SAVED_STORY"
   ],
   "review": {
-    "reference": "Agent inspected exact full PNG and both 390px Story and Saved Story overlay simulations. Four two-line bullets; one-line title/closing. Clock montage caption is illustrative, not 1974 archive. Owner requested نور applied. Original fixed master unchanged. No live-device or owner final-preview approval claimed.",
+    "reference": "Inspected revised full PNG and separate Story and Saved Story 390px overlay simulations. Both boys faces and placards visible; caption dates source to1939, not1974. Four two-line bullets, single-line title and closing, original master palette/geometry/CTA. No live-device or owner final approval claimed.",
     "mobile_width": 390,
     "saudi_editorial": true,
     "approved_wording": true,

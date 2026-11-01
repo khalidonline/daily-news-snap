@@ -12,33 +12,33 @@
   "expires_at": "2026-11-01T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Draft only: owner approved text with نور; exact final image not yet reviewed by owner. No publication authorization.",
+    "reference": "Owner selected boys photograph and approved existing text with نور. This revised export is a draft for review, not approved for publication.",
     "approved_media_sha256": [
-      "94d11ac6d225b1748e54e8a846ce3ecc557899c8b80d22f19a13ab1fe8c64b1a"
+      "536a8e83a319d954a5bce57a408fc041914e66e1fcc48871ce1f54a2e83cba38"
     ],
     "approved_source_sha256": [
-      "b5ba8560a347c4426ce500284f382929a135c8695337bcca39aacbc8b7dc2cd0"
+      "c1343b7ecb731ec95cc4caf07e5b3be1360cb9e8c016807dbb9352d08451cabb"
     ]
   },
   "media": [
     {
       "kind": "info",
       "path": "approved/clock-20261101/card.png",
-      "sha256": "94d11ac6d225b1748e54e8a846ce3ecc557899c8b80d22f19a13ab1fe8c64b1a",
+      "sha256": "536a8e83a319d954a5bce57a408fc041914e66e1fcc48871ce1f54a2e83cba38",
       "provenance": {
         "usage": "mixed_editorial_composite",
         "generated_components": false
       },
       "source_assets": [
         {
-          "path": "approved/clock-20261101/clocks.jpg",
-          "sha256": "b5ba8560a347c4426ce500284f382929a135c8695337bcca39aacbc8b7dc2cd0",
-          "source_url": "https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/65/e4/65e4929e-2d1b-46d6-85a6-cda4649621e7/clocks.jpg",
-          "credit": "Illustration by Meilan Solly / Photos via Unsplash, Vecteezy and Freepik; Smithsonian Magazine",
-          "description": "Clock montage illustrating daylight saving, not an archival photograph of 1974.",
+          "path": "approved/clock-20261101/boys-1939.jpg",
+          "sha256": "c1343b7ecb731ec95cc4caf07e5b3be1360cb9e8c016807dbb9352d08451cabb",
+          "source_url": "https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/93/fb/93fb2078-d9d4-42bd-8998-a18150555140/gettyimages-97306574.jpg",
+          "credit": "Walter Kelleher / NY Daily News Archive via Getty Images; reproduced in Smithsonian Magazine",
+          "description": "Two boys wearing signs protesting daylight saving time in 1939. Not a photograph of the 1974 trial. Editorial crop retains both faces and placards.",
           "rights_status": "owner_accepted_editorial_use",
-          "rights_basis": "Standing owner instruction to retain image rights internally for editorial cards. No open-license or permission-from-publisher claim.",
-          "owner_reference": "Khalid standing instruction: retain image rights in internal file; current صمم and نور بدال ضوء وكمل delegate this draft design. Not final publication approval."
+          "rights_basis": "Owner-selected editorial source under standing instruction to retain rights internally. No assertion of open licence or permission from Getty or Smithsonian.",
+          "owner_reference": "صمم الساعه بصورة الولدين — design only, no publication authorization."
         }
       ]
     }
