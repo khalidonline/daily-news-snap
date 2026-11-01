@@ -15,6 +15,7 @@
   ".github/workflows/deliver-hotel-revised-approved-20261028.yml": "f7d519976671cde2ae713b05f817e9309cf4f7c129f3c9612188fee1bfcbc6a4",
   ".github/workflows/deliver-lego-titanic-approved.yml": "76bda891964d032e4d6b7905a05375691816c04a446abed97c9d7b84ad2bdf38",
   ".github/workflows/deliver-ramses-20261031.yml": "e96080c2e9151c3b7e2fa6fae7386047b467b89c2ed3b8a03332569253522c36",
+  ".github/workflows/deliver-sidi-bou-said-approved.yml": "7f6052deffd9c9426df048460866d622ada4137bfd0c13ee715edcdcff6411c1",
   ".github/workflows/deliver-stanbyme-go-approved.yml": "54b5fe6bd8de9ec533e45b746017a76a76174b88f831382b145a5dac03327e46",
   ".github/workflows/deliver-youtube-shopping-20261028.yml": "bb179f7115154ea6e015d0a718aae699a3a95fff9e48513ecc0898a03e796d26",
   ".github/workflows/model-benchmark-offline.yml": "dd32f552cb0af74ef93651a7e6711925c54662f45e108f0c5a47a0b003dd3add",
@@ -96,6 +97,9 @@
   "approved/saved-stories/daily-20261010/save_batch.py": "e35959550ebd55fd53fac2e8c5b54b494c2f486ff2e166b71cc93de5bcdaea21",
   "approved/shopping-cart-20261009/publish-approved.py": "22c1cf5fc35cc76fcd3df5ec76e459fbdec07124a6ec86bc2184f83dfbeedff5",
   "approved/shopping-cart-20261009/render.py": "77dba0acb9757f268c72bb2226f8dcb055093caba575e83158547b8b1512001a",
+  "approved/sidi-bou-said-20261101/deliver.py": "5c4cfe67301c5f2abf8fa37bd60387aa0720e034db53740b9ff995a381220018",
+  "approved/sidi-bou-said-20261101/render.py": "b9205f63676b85848d432759b1bcc8f523ed14049b417b2843a4646ac8e112c1",
+  "approved/sidi-bou-said-20261101/seal.py": "f6973eb9c77985f9c1091ed01801097388f3e905a92a4439558d7fb756213f68",
   "approved/sleep-competition-20261008/publish-approved.py": "ed2cb4e0f09501f8ae5d0da1ba18471aa3d5de1c1da82de25287ab6fd7668927",
   "approved/sleep-competition-20261008/render.py": "80f9d87998ae65cd3a46be3c6bd3356d53c2119cbb9ed3e5d3fda553299bae5f",
   "approved/stanbyme-go-20261101/deliver.py": "233b7f6f124e1b50d22f8b4bcf7e0d12fd5d169aea43a38188b50f689ceb04e3",
@@ -190,6 +194,7 @@
   "publishing_v2/group_recovery.py": "0cafe9edd97e46ab7c1aa1621aa76424d2cfa497a4bb94a036cb3bb16b5b6ca3",
   "publishing_v2/image_probe.py": "75bb4a98dbbaf3d4d68e5bcbec6edc7a8a22b44cbb5e2be45dbdf435552ae218",
   "publishing_v2/image_review_cache.py": "a739ea3a19d016b1f74ef94702b51dfc50a583228f84c6b71f2a3d9a9b00e952",
+  "publishing_v2/information_request.py": "473c49b1106577eb44694e252a6bf9b03cdc3e896a25dc4c48778274c2e9f014",
   "publishing_v2/met_images.py": "9fa59bb6450297e42c1f92e725e1e63eb9698cdc6711cd0d58c5ab0f0869d6d0",
   "publishing_v2/metrics_quality.py": "5849fb9e775a3dd5f4e8a25bed57b8a1f2b2c00b82440a0b640ef94a7bee14e6",
   "publishing_v2/official_images.py": "0101aaaaf6aabdc0e17c4db63ddc1aacec4042c26dcfb1c0c8465185a04ed763",
@@ -235,6 +240,5 @@
   "topic_delivery_guard.py": "2bdd02b3227fe7a641f051f90cd6d0f8c0c1a9b67c66429a21e62195c4e23836",
   "topic_editorial.py": "e72c3a892ba1db04201ad1b59486ce714070cfcf2906dca1ebdcec160bde151b",
   "topic_snapchat.py": "cab8fc89b76764eaa386f862fffa0eba6ef49b36919f9606245f87aaa9e58323",
-  "validate_saved_local_20260926.py": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51",
-  "publishing_v2/information_request.py": "473c49b1106577eb44694e252a6bf9b03cdc3e896a25dc4c48778274c2e9f014"
+  "validate_saved_local_20260926.py": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51"
 }

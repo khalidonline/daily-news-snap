@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان — وين هالمكان؟",
+  "expires_at": "2026-11-03T15:59:52.908396+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/sidi-bou-said-20261101/challenge.mp4",
+      "sha256": "4dbdf421fe6f4219e4d26ed5887913fb2b0d0167a675b5a39732ed22fab72ca1",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "4dbdf421fe6f4219e4d26ed5887913fb2b0d0167a675b5a39732ed22fab72ca1",
+      "reference": "Khalid approved D1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved D1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "4dbdf421fe6f4219e4d26ed5887913fb2b0d0167a675b5a39732ed22fab72ca1",
+    "source_manifest": {
+      "path": "approved/sidi-bou-said-20261101/source-approval.json",
+      "sha256": "2075ef8330e62743de5faba4c39f1d378e42331e55ebdcf1e8c4066a0d6dd70a"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/sidi-bou-said-20261101/frame-0.5.png",
+        "sha256": "466382dcf202b8a5d6b6a117950b819655dc1a2dd50a68000a73016d1e533f03"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/sidi-bou-said-20261101/frame-3.5.png",
+        "sha256": "463769ec7ea8b701b7f947462908f029097cb5d3f0ed28d2f8649245db05028c"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/sidi-bou-said-20261101/frame-4.5.png",
+        "sha256": "4d8f5e441ebf8b67b1f8518a2b455b015f6ed8eb747ab06ad204fb5631ca191f"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/sidi-bou-said-20261101/frame-5.5.png",
+        "sha256": "e806217a6348ae854e1d31495ca972a94ff261b10faf53fca2d9a32124d87e01"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/sidi-bou-said-20261101/frame-6.5.png",
+        "sha256": "43984d33f8157b03737b030375906fac247317aa3b1129fc24eb65cf4cff9889"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/sidi-bou-said-20261101/frame-7.5.png",
+        "sha256": "595ba18f4e8d4f054e9082009fb16ac4a688ee0af4d1f2be1d91a1fbbd969fd9"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/sidi-bou-said-20261101/frame-8.5.png",
+        "sha256": "b89ab1097c4b192f89f36fa8f5d6b0b89a96015f94edb49fd9cf7601ca8fe28e"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/sidi-bou-said-20261101/frame-11.5.png",
+        "sha256": "bb29bd2068359299bc09d0496f178f742af4f5f31adb02ecedb9c2b5d98b3ab8"
+      }
+    ]
+  }
+}
