@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "5417170838925c8ecab3f1f46933af205e566fee",
+  "assets": {
+    "approved/clock-20261101/card.png": "536a8e83a319d954a5bce57a408fc041914e66e1fcc48871ce1f54a2e83cba38",
+    "approved/clock-20261101/boys-1939.jpg": "c1343b7ecb731ec95cc4caf07e5b3be1360cb9e8c016807dbb9352d08451cabb"
+  },
+  "preview_paths": [
+    "approved/clock-20261101/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/clock-20261101/card.png": "536a8e83a319d954a5bce57a408fc041914e66e1fcc48871ce1f54a2e83cba38",
+    "approved/clock-20261101/boys-1939.jpg": "c1343b7ecb731ec95cc4caf07e5b3be1360cb9e8c016807dbb9352d08451cabb",
+    "approved/clock-20261101/manifest.json": "4cc22db9e42e20e30b44f6d1b877eb4e39f2361ce431ae8c541e1c8a6584795c",
+    "approved/clock-20261101/archive-approval.json": "90d71485616081b993e2932719f1b4126d8e7213f5e1767c9fc02760a384f7bd",
+    "approved/clock-20261101/design-review.json": "8b0e0119fb443e22df7a23d2c4f0141871589d13672cba6e4be9a0ca08cc1968",
+    "approved/clock-20261101/sources.json": "7107e0f311978a957729df261eb80c8bbad9b3c25415ac700f16fc5b1f7d74f6",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/clock-20261101",
+    "manifest_content_sha256": "59af241f9af7785a1c2199bf95a765e0dcc9e9a3b2a13c0ced4fd58c53180540",
+    "archive_content_sha256": "9e704e9ac05fe8226effd0293ed347f9b0f4eeb1c297cd7a0c30df7acc50a0e0",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "8b0e0119fb443e22df7a23d2c4f0141871589d13672cba6e4be9a0ca08cc1968",
+    "assets": {
+      "approved/clock-20261101/card.png": "536a8e83a319d954a5bce57a408fc041914e66e1fcc48871ce1f54a2e83cba38",
+      "approved/clock-20261101/boys-1939.jpg": "c1343b7ecb731ec95cc4caf07e5b3be1360cb9e8c016807dbb9352d08451cabb"
+    }
+  }
+}

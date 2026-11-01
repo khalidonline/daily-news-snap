@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -12,13 +12,14 @@
   "expires_at": "2026-11-01T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Owner selected boys photograph and approved existing text with نور. This revised export is a draft for review, not approved for publication.",
+    "reference": "Khalid: انشر — explicit approval of boys1939 clock preview shown in this conversation on2026-11-01; Story and Saved Story.",
     "approved_media_sha256": [
       "536a8e83a319d954a5bce57a408fc041914e66e1fcc48871ce1f54a2e83cba38"
     ],
     "approved_source_sha256": [
       "c1343b7ecb731ec95cc4caf07e5b3be1360cb9e8c016807dbb9352d08451cabb"
-    ]
+    ],
+    "reviewed_at": "2026-11-01T14:48:30.236683+00:00"
   },
   "media": [
     {

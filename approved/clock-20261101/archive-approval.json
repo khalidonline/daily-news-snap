@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/clock-20261101/manifest.json",
-  "manifest_sha256": "4cc22db9e42e20e30b44f6d1b877eb4e39f2361ce431ae8c541e1c8a6584795c",
+  "manifest_sha256": "13738e4abab35ee78e230d6a38b5b9f239c4eb84d5dbe610634be71df550fbb7",
   "identity": "549a9f3c363c1c85d750b4b6ed09f5ac8bd73a2dbf3e30687e560afecb2c0bf5",
   "public_indices": [
     1
   ],
   "title": "أمريكا رجعت الساعة… جربوا يثبتونها وندموا!",
   "expires_at": "2026-11-01T20:59:59+00:00",
-  "owner_authorization": "NOT AUTHORIZED: revised design for review only",
+  "owner_authorization": "Khalid: انشر — explicit approval of boys1939 clock preview shown in this conversation on2026-11-01; Story and Saved Story.",
   "empty_profile_confirmation": "Existing nonempty profile known from prior publications. Live inventory and overlap must be checked before creation; not an empty-profile assertion."
 }
