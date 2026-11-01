@@ -1,0 +1,21 @@
+{
+  "checked_date": "2026-11-01",
+  "event": "US DST ends 1 November 2026 in participating regions",
+  "fact_sources": [
+    "https://www.timeanddate.com/time/change/usa",
+    "https://www.smithsonianmag.com/smart-news/what-happened-the-last-time-the-us-tried-to-make-daylight-saving-time-permanent-180979742/"
+  ],
+  "image_sources": [
+    {
+      "path": "approved/clock-20261101/clocks.jpg",
+      "sha256": "b5ba8560a347c4426ce500284f382929a135c8695337bcca39aacbc8b7dc2cd0",
+      "source_url": "https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/65/e4/65e4929e-2d1b-46d6-85a6-cda4649621e7/clocks.jpg",
+      "credit": "Illustration by Meilan Solly / Photos via Unsplash, Vecteezy and Freepik; Smithsonian Magazine",
+      "description": "Clock montage illustrating daylight saving, not an archival photograph of 1974.",
+      "rights_status": "owner_accepted_editorial_use",
+      "rights_basis": "Standing owner instruction to retain image rights internally for editorial cards. No open-license or permission-from-publisher claim.",
+      "owner_reference": "Khalid standing instruction: retain image rights in internal file; current صمم and نور بدال ضوء وكمل delegate this draft design. Not final publication approval."
+    }
+  ],
+  "review": "1974 year-round trial for energy conservation; dark school mornings; return to standard time October 1974. Shortened title and second point approved by owner, with نور replacing ضوء. Today wording expires at Riyadh midnight."
+}

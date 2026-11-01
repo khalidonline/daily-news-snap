@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "94d11ac6d225b1748e54e8a846ce3ecc557899c8b80d22f19a13ab1fe8c64b1a",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "أمريكا رجعت الساعة… جربوا يثبتونها وندموا!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              215,
+              1020,
+              279
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            215,
+            1020,
+            280
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "تغيير الساعة بين التوقيت الصيفي والشتوي",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              300,
+              695,
+              779,
+              728
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            300,
+            695,
+            779,
+            729
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "اليوم ١ نوفمبر، أغلب أمريكا رجعوا الساعة ساعة لورا؛ انتهى عندهم التوقيت الصيفي.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              120,
+              798,
+              980,
+              859
+            ],
+            [
+              339,
+              883,
+              980,
+              934
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            120,
+            798,
+            1015,
+            934
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "عام ١٩٧٤، جربوا يثبتون التوقيت الصيفي؛ يوفرون الطاقة ويكسبون نور أكثر آخر النهار.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              113,
+              997,
+              980,
+              1051
+            ],
+            [
+              326,
+              1075,
+              980,
+              1130
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            113,
+            997,
+            1015,
+            1130
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بس جت المشكلة بالصباح: الشمس تتأخر، والطلاب يطلعون للمدارس والدنيا للحين ظلام!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              211,
+              1194,
+              980,
+              1255
+            ],
+            [
+              118,
+              1279,
+              980,
+              1328
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            118,
+            1194,
+            1015,
+            1328
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الناس تضايقوا، وبنفس السنة عدلوا القرار ورجعوا للتوقيت العادي بالشتاء.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              206,
+              1391,
+              980,
+              1434
+            ],
+            [
+              398,
+              1458,
+              980,
+              1512
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            206,
+            1391,
+            1015,
+            1512
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "كسبوا نور آخر اليوم… وفقدوه وقت قومة الصباح!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              115,
+              1575,
+              966,
+              1631
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            115,
+            1575,
+            966,
+            1632
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Agent inspected exact full PNG and both 390px Story and Saved Story overlay simulations. Four two-line bullets; one-line title/closing. Clock montage caption is illustrative, not 1974 archive. Owner requested نور applied. Original fixed master unchanged. No live-device or owner final-preview approval claimed.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 simulation: top 0..39 and bottom 625..692 masked; all key text and CTA visible.",
+      "SAVED_STORY": "Inspected separate 390x693 simulation with same story player masks; key text and CTA visible."
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/clock-20261101",
+  "manifest_content_sha256": "40d94c7eb1cdbff067a85bf9281f5830b63f06766771916ce0fd42f4ed2ef12a",
+  "archive_content_sha256": "d6e38a48ac4185b26ad931ba0b90c4f06e2937bc24624960942a7112b29f9b50",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "c19b3b24881e568392167d32b442a370734171e3070dce3cb58aa2c858d935a0",
+  "assets": {
+    "approved/clock-20261101/card.png": "94d11ac6d225b1748e54e8a846ce3ecc557899c8b80d22f19a13ab1fe8c64b1a",
+    "approved/clock-20261101/clocks.jpg": "b5ba8560a347c4426ce500284f382929a135c8695337bcca39aacbc8b7dc2cd0"
+  },
+  "preparation_seconds": 0.002
+}

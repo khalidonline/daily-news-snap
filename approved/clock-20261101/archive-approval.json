@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/clock-20261101/manifest.json",
+  "manifest_sha256": "d894f61dd9946ce956d808e7343460401441ee8caca8bed8b8683949cf87687f",
+  "identity": "75125fc95be1f52fa55c3abd061b5bd5d0446fb5b97838d4531e448cd6eb8722",
+  "public_indices": [
+    1
+  ],
+  "title": "أمريكا رجعت الساعة… جربوا يثبتونها وندموا!",
+  "expires_at": "2026-11-01T20:59:59+00:00",
+  "owner_authorization": "NOT AUTHORIZED: draft for review only",
+  "empty_profile_confirmation": "Existing nonempty profile known from prior publications. Live inventory and overlap must be checked before creation; not an empty-profile assertion."
+}
