@@ -1,0 +1,32 @@
+{
+  "checked_date": "2026-11-02",
+  "year": 2025,
+  "fact": "Tokyo170 starred restaurants versus Paris123. Number of restaurants, not sum of stars. Same2025 guide editions.",
+  "counts": {
+    "Tokyo": {
+      "three": 12,
+      "two": 26,
+      "one": 132,
+      "total": 170
+    },
+    "Paris": {
+      "three": 10,
+      "two": 17,
+      "one": 96,
+      "total": 123
+    }
+  },
+  "method": "Paris complete official city list counted123 entries (10+17+96); Tokyo2025 press release states170 (12+26+132). Excludes BibGourmand and green-only. Not a current2026 count.",
+  "urls": [
+    "https://www.michelin.com/en/publications/products-and-services/michelin-guide-tokyo-sezanne-awarded-three-michelin-stars",
+    "https://guide.michelin.com/en/article/travel/michelin-star-restaurants-paris-2025"
+  ],
+  "photos": [
+    "https://www.fourseasons.com/alt/img-opt/~70.1530.0,0000-199,8737-2000,0000-1125,0000/publish/content/dam/fourseasons/images/web/MAR/MAR_3247_original.jpg",
+    "https://www.fourseasons.com/alt/img-opt/~70.1530.0,0000-189,1814-3000,0000-1687,5000/publish/content/dam/fourseasons/images/web/PAR/PAR_1694_original.jpg"
+  ],
+  "photo_pages": [
+    "https://www.fourseasons.com/tokyo/dining/restaurants/sezanne/",
+    "https://www.fourseasons.com/paris/dining/restaurants/le_cinq/"
+  ]
+}

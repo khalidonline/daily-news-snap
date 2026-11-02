@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية — مطاعم نجوم ميشلان 2025",
+  "expires_at": "2026-11-04T10:10:26.463710+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/michelin-cities-20261102/challenge.mp4",
+      "sha256": "70f17fac1cf22f0aa489d86f2bf0a66bea93daccf62f2055dcf7b78e86d3dd3d",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "70f17fac1cf22f0aa489d86f2bf0a66bea93daccf62f2055dcf7b78e86d3dd3d",
+      "reference": "Khalid approved E1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved E1 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "70f17fac1cf22f0aa489d86f2bf0a66bea93daccf62f2055dcf7b78e86d3dd3d",
+    "source_manifest": {
+      "path": "approved/michelin-cities-20261102/source-approval.json",
+      "sha256": "3fc129ab4891726de0ac8f12f014444ac6502f537cc1906764edf459328468d2"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/michelin-cities-20261102/frame-0.5.png",
+        "sha256": "7d36ee4b0057246794c38befa5fb025d2ca463c375d1a2550d3f9cbf824b6ac9"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/michelin-cities-20261102/frame-3.5.png",
+        "sha256": "bd7c65cc2f735c00cd59c9425fb44a41ef207d1ca0e24e8242697e1996f95413"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/michelin-cities-20261102/frame-4.5.png",
+        "sha256": "6cd6e137d95e8e7eba6ef900f419d255efb8e82e28bd56593113d7aac6f1faf6"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/michelin-cities-20261102/frame-5.5.png",
+        "sha256": "89f6ddd81802c8e13b586c47abcd5d6b25cc41558b61401b7271b9a7afbf6974"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/michelin-cities-20261102/frame-6.5.png",
+        "sha256": "db6302726fde8ce897a78f0aac2727dd76ce6abdff05a1ca14de8db65e787c15"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/michelin-cities-20261102/frame-7.5.png",
+        "sha256": "9034d3cb8067ed6564ac996c2640755182e86da66b55e06152081f5728ad8fba"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/michelin-cities-20261102/frame-8.5.png",
+        "sha256": "d4a437588731bd06bc068bde18da4ffecdbafcaad1fed9ef3ec2c3ecbeac3f27"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/michelin-cities-20261102/frame-11.5.png",
+        "sha256": "3ce92b9d81d96f428d2b6d39278266620ad66c8c82741a4bb63990cab3963037"
+      }
+    ]
+  }
+}
