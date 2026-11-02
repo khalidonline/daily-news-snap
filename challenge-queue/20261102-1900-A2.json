@@ -1,0 +1,67 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-02",
+  "slot": "19:00",
+  "item": "A2",
+  "topic": "من بدأ أول؟ كارفور ووولمارت",
+  "status": "POSTED_BOTH",
+  "next_item": "B2",
+  "next_topic": "توقع السعر — كوب Ember",
+  "next_slot": "2026-11-03T13:00:00+03:00",
+  "completed_today": 2,
+  "completed_total": 6,
+  "remaining_topics": 19,
+  "video_sha256": "b960ba0ba9b187a64d79eae82c7944374cc284613a08427afc1b07fee41d43c7",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "d295ec48-8582-4cc2-85e4-d32dfebd41c7",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "77106bad-b0fa-4f63-af4a-a8b29b22bd61",
+          "mediaId": "77106bad-b0fa-4f63-af4a-a8b29b22bd61",
+          "mediaIds": [
+            "77106bad-b0fa-4f63-af4a-a8b29b22bd61"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "0962789f-9bd8-4b5d-a185-129c38580ce3",
+          "sourceUploadIds": [
+            "0962789f-9bd8-4b5d-a185-129c38580ce3"
+          ],
+          "mediaUploadedAt": "2026-11-02T16:07:06.234Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "b960ba0ba9b187a64d79eae82c7944374cc284613a08427afc1b07fee41d43c7"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "4bc78779-6ae1-493e-ae2b-3dd132009fc8",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYbGxncG5ibWJvAaGdBVD9AaGdBVDeAAAAAA",
+          "mediaId": "1dea0d2d-1855-41f8-ad21-01f22222f74c",
+          "mediaIds": [
+            "1dea0d2d-1855-41f8-ad21-01f22222f74c"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "edec0eef-b4f9-42d7-9296-e3f4a3acfef7",
+          "sourceUploadIds": [
+            "edec0eef-b4f9-42d7-9296-e3f4a3acfef7"
+          ],
+          "mediaUploadedAt": "2026-11-02T16:08:34.507Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "b960ba0ba9b187a64d79eae82c7944374cc284613a08427afc1b07fee41d43c7"
+    }
+  },
+  "receipt_path": "api-receipts/carrefour-walmart-20261102-preflight.json",
+  "archive_sha256": "56eeb7183ad9e285312ee6ca497ff09d87efd9902c040c8534c0aa60808aff24",
+  "new_paid_model_requests": 0,
+  "no_repeat": true
+}
