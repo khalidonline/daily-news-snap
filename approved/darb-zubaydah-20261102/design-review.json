@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "7c8566e5721592c3bd37c5be78e15589e40cabecd708a7aa6fff1126510383c3",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "شتاء درب زبيدة… وش سالفة هالبرك؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              231,
+              215,
+              1020,
+              268
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            231,
+            215,
+            1020,
+            269
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "إحدى برك درب زبيدة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              181,
+              695,
+              407,
+              725
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            181,
+            695,
+            407,
+            726
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "درج داخل إحدى برك الدرب",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              642,
+              695,
+              930,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            642,
+            695,
+            930,
+            727
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "أمس بدأ شتاء درب زبيدة؛ طريق كانوا يمشون معه الحجاج من الكوفة لمكة قبل السيارات.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              140,
+              802,
+              980,
+              857
+            ],
+            [
+              191,
+              881,
+              980,
+              931
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            140,
+            802,
+            1015,
+            931
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بس وين يلقون ماء وسط الصحراء؟ بنوا برك تجمع السيول، ومحطات يرتاحون فيها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              179,
+              998,
+              980,
+              1041
+            ],
+            [
+              278,
+              1065,
+              980,
+              1114
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            179,
+            998,
+            1015,
+            1114
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وحتى الدرج داخل البرك مو بس شكل؛ كل ما قل الماء، نزلوا مع الدرج لين يوصلون له.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              109,
+              1182,
+              980,
+              1234
+            ],
+            [
+              333,
+              1258,
+              980,
+              1307
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            109,
+            1182,
+            1015,
+            1307
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "واليوم تقدر تتعرف على الدرب من خلال الموسم، وفيه قافلة توريك كيف كانت رحلات الحجاج أول.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              106,
+              1374,
+              980,
+              1423
+            ],
+            [
+              118,
+              1447,
+              980,
+              1508
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            106,
+            1374,
+            1015,
+            1508
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "أول يشربون منها… واليوم يتفرجون عليها!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              176,
+              1575,
+              904,
+              1635
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            176,
+            1575,
+            904,
+            1636
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected exact full PNG and separate390px Story and Saved Story overlay simulations. Owner-selected wide photo left, sourced stairs photo right; each caption correctly under its image. Four two-line bullets, single-line headline/closing; fixed44Bold body and original master. Simulation only, no live-device or owner final approval claimed.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 simulation: top 0..39 and bottom 625..692 masked; all key text and CTA visible.",
+      "SAVED_STORY": "Inspected separate 390x693 simulation with same story player masks; key text and CTA visible."
+    }
+  }
+}

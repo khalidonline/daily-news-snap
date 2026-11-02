@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/darb-zubaydah-20261102/manifest.json",
+  "manifest_sha256": "8ad265cffc3b14084def39b91ef9b5d18c673eb1e717523f884b178ab1ad8350",
+  "identity": "925774bce0e16252ccbeb1af9386cc733951f8b57feeb6e389f4ecb637a4bb47",
+  "public_indices": [
+    1
+  ],
+  "title": "شتاء درب زبيدة… وش سالفة هالبرك؟",
+  "expires_at": "2026-11-02T20:59:59+00:00",
+  "owner_authorization": "NOT_AUTHORIZED: awaiting owner approval of exact export.",
+  "empty_profile_confirmation": "Existing nonempty profile known from previous published package records; live inventory and overlap required before creation. Not an empty-profile assertion."
+}

@@ -1,0 +1,32 @@
+{
+  "checked_date": "2026-11-02",
+  "event": "Winter Darb Zubaydah season launched 1 November 2026",
+  "fact_sources": [
+    "https://spa.gov.sa/N2715750",
+    "https://spa.gov.sa/N2621375",
+    "https://www.spa.gov.sa/2319431"
+  ],
+  "image_sources": [
+    {
+      "path": "approved/darb-zubaydah-20261102/wide.jpeg",
+      "sha256": "538a1df7ec5faafadd294390a7446c2b8211aac6075044e469ef4a5cf6a3cf90",
+      "source_url": "owner-attachment:01-71A409C0-E8F5-483A-944F-275B1B761E94.jpeg",
+      "credit": "Owner-supplied selection; original creator not established",
+      "description": "Aerial view of a reservoir selected by Khalid; specific site not asserted.",
+      "rights_status": "owner_accepted_editorial_use",
+      "rights_basis": "Standing owner editorial-use instruction with internal source records; no claim of open licence or acquired copyright.",
+      "owner_reference": "هذي حلوه مع ثانيه عن قرب."
+    },
+    {
+      "path": "approved/darb-zubaydah-20261102/steps.jpg",
+      "sha256": "227c7846a424d72d4120782f22a8e6e0f6e57f8e90f2e0a5c90edfaaa3da0bb6",
+      "source_url": "https://portalcdn.spa.gov.sa/backend/original/202505/cIp22AZL3n73eofsccpxj29LtTPpTSuD6miSL9gX.jpg",
+      "credit": "Saudi Press Agency (SPA)",
+      "description": "Ground view of steps in a Darb Zubaydah reservoir. Source article https://www.spa.gov.sa/w2324127. Not asserted to be the same reservoir as the aerial.",
+      "rights_status": "owner_accepted_editorial_use",
+      "rights_basis": "Standing owner editorial-use instruction with internal source records; no claim of open licence or acquired copyright.",
+      "owner_reference": "Owner requested a close view alongside selected wide image; standing editorial-use instruction."
+    }
+  ],
+  "review": "Season/caravan, Kufa-Mecca route, rainwater reservoirs and steps for access at varying levels. أمس is date-bound to2November Riyadh. Closing is light editorial contrast, not assertion all reservoirs are unused. No assertion images depict the same site."
+}

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/darb-zubaydah-20261102",
+  "manifest_content_sha256": "0202f1265a14060f4a9110019c68d1a97d53d45ec706ee3debd1b9c836e03f6b",
+  "archive_content_sha256": "e840c97bce786bb072f604aa06322f7fb53e8580554512c73b334e31537f281f",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "2f26d79580b2c84752fa58dfbe386db8327ade504383e36591a92e41503b5863",
+  "assets": {
+    "approved/darb-zubaydah-20261102/card.png": "7c8566e5721592c3bd37c5be78e15589e40cabecd708a7aa6fff1126510383c3",
+    "approved/darb-zubaydah-20261102/wide.jpeg": "538a1df7ec5faafadd294390a7446c2b8211aac6075044e469ef4a5cf6a3cf90",
+    "approved/darb-zubaydah-20261102/steps.jpg": "227c7846a424d72d4120782f22a8e6e0f6e57f8e90f2e0a5c90edfaaa3da0bb6"
+  },
+  "preparation_seconds": 0.002
+}

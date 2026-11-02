@@ -1,0 +1,57 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "شتاء درب زبيدة… وش سالفة هالبرك؟",
+  "not_before": "2026-11-01T21:00:00+00:00",
+  "expires_at": "2026-11-02T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Draft awaiting exact-export owner review and publication approval.",
+    "approved_media_sha256": [
+      "7c8566e5721592c3bd37c5be78e15589e40cabecd708a7aa6fff1126510383c3"
+    ],
+    "approved_source_sha256": [
+      "538a1df7ec5faafadd294390a7446c2b8211aac6075044e469ef4a5cf6a3cf90",
+      "227c7846a424d72d4120782f22a8e6e0f6e57f8e90f2e0a5c90edfaaa3da0bb6"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/darb-zubaydah-20261102/card.png",
+      "sha256": "7c8566e5721592c3bd37c5be78e15589e40cabecd708a7aa6fff1126510383c3",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/darb-zubaydah-20261102/wide.jpeg",
+          "sha256": "538a1df7ec5faafadd294390a7446c2b8211aac6075044e469ef4a5cf6a3cf90",
+          "source_url": "owner-attachment:01-71A409C0-E8F5-483A-944F-275B1B761E94.jpeg",
+          "credit": "Owner-supplied selection; original creator not established",
+          "description": "Aerial view of a reservoir selected by Khalid; specific site not asserted.",
+          "rights_status": "owner_accepted_editorial_use",
+          "rights_basis": "Standing owner editorial-use instruction with internal source records; no claim of open licence or acquired copyright.",
+          "owner_reference": "هذي حلوه مع ثانيه عن قرب."
+        },
+        {
+          "path": "approved/darb-zubaydah-20261102/steps.jpg",
+          "sha256": "227c7846a424d72d4120782f22a8e6e0f6e57f8e90f2e0a5c90edfaaa3da0bb6",
+          "source_url": "https://portalcdn.spa.gov.sa/backend/original/202505/cIp22AZL3n73eofsccpxj29LtTPpTSuD6miSL9gX.jpg",
+          "credit": "Saudi Press Agency (SPA)",
+          "description": "Ground view of steps in a Darb Zubaydah reservoir. Source article https://www.spa.gov.sa/w2324127. Not asserted to be the same reservoir as the aerial.",
+          "rights_status": "owner_accepted_editorial_use",
+          "rights_basis": "Standing owner editorial-use instruction with internal source records; no claim of open licence or acquired copyright.",
+          "owner_reference": "Owner requested a close view alongside selected wide image; standing editorial-use instruction."
+        }
+      ]
+    }
+  ]
+}
