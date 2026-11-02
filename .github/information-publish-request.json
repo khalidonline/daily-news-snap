@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "clock-20261101",
-  "identity": "549a9f3c363c1c85d750b4b6ed09f5ac8bd73a2dbf3e30687e560afecb2c0bf5",
+  "package": "darb-zubaydah-20261102",
+  "identity": "925774bce0e16252ccbeb1af9386cc733951f8b57feeb6e389f4ecb637a4bb47",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid: انشر — explicit approval of boys1939 clock preview shown in this conversation on2026-11-01; Story and Saved Story.",
-  "approved_at": "2026-11-01T14:48:30.236683+00:00",
-  "expires_at": "2026-11-01T20:59:59+00:00",
-  "manifest_sha256": "13738e4abab35ee78e230d6a38b5b9f239c4eb84d5dbe610634be71df550fbb7",
-  "archive_sha256": "8b2dedff3f21e3a8798ecee5c6699fa2cdb54f6598adde7a3e2836c1ed602d43",
-  "prepared_sha256": "e91eb59d3147242406622b75626dcd84fd2c10493c72b482e697ab345f51486f",
-  "preview_receipt_sha256": "46aa269eda896895bc93ed3fb0c9c1b47b5a7c1df14962f39254ba8c3cd39038"
+  "owner_reference": "Khalid explicit انشر after exact uploaded preview in this conversation on 2026-11-02; Story and Saved Story.",
+  "approved_at": "2026-11-02T07:56:01.583617+00:00",
+  "expires_at": "2026-11-02T20:59:59+00:00",
+  "manifest_sha256": "24eeb1f74e6b0770a58dd5ab233bbad03f56e8e5ced584e80bb1164ea714897f",
+  "archive_sha256": "d8784268d64e9ca233d8cb5714be3f80285872e02a20ffaeb815b1d619345ecd",
+  "prepared_sha256": "2fe19930ad4cfbbaeab3a0a9375ad1149d181aab9755c27fb11f932403eadf24",
+  "preview_receipt_sha256": "52a695f1216c3f359bb3e1fc6b1e86b61cf3c882785a50dcad758151ea3156b3"
 }
