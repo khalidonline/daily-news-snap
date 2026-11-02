@@ -7,7 +7,6 @@ import hashlib
 import io
 import re
 from datetime import datetime, timezone
-from urllib.parse import urlsplit
 from PIL import Image
 
 
@@ -67,15 +66,8 @@ def validate_owner_composite(data, root):
         require(isinstance(sources,list) and 1<=len(sources)<=10, 'source assets required')
         for source in sources:
             asset(source)
-            try:
-                url=urlsplit(source.get('source_url',''))
-                valid=url.scheme=='https' and bool(url.hostname) and not url.username and not url.password
-            except ValueError:
-                valid=False
-            require(valid, 'source URL required')
-            require(source.get('rights_status')=='owner_accepted_editorial_use', 'owner editorial decision required')
-            for key in ('description','owner_reference'):
-                require(isinstance(source.get(key),str) and len(source[key].strip())>=8, key+' required')
+            # Owner decision 2026-11-02: references live in sources.json for
+            # later lookup, not as a delivery prerequisite. Keep byte binding.
             source_hashes.append(source['sha256'])
         selected.append(asset(frame,final=True))
     require(review.get('approved_source_sha256')==source_hashes, 'source review mismatch')

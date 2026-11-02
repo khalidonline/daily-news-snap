@@ -40,7 +40,7 @@ def test_verified_preview_records_exact_draft_hashes(draft,remote):
     assert r['commit']==remote[1]
     assert r['files'][str(draft.relative_to(remote[0])/'card.png')]==prep.digest((draft/'card.png').read_bytes())
 
-@pytest.mark.parametrize('fault',['rights_status','owner_reference','source_url','description','no_sources'])
+@pytest.mark.parametrize('fault',['no_sources'])
 def test_incomplete_provenance_blocks_before_preview_seal(draft,fault):
     d=read(draft/'manifest.json')
     if fault=='no_sources':d['media'][0]['source_assets']=[];d['owner_review']['approved_source_sha256']=[]
@@ -50,6 +50,15 @@ def test_incomplete_provenance_blocks_before_preview_seal(draft,fault):
         prep.prepare_local_preview(draft)
     assert not (draft/'prepared.json').exists()
     assert not (draft/'preview-receipt.json').exists()
+
+def test_archival_reference_fields_do_not_block_preparation(draft):
+    d=read(draft/'manifest.json')
+    for source in d['media'][0]['source_assets']:
+        for key in ('rights_status','owner_reference','source_url','description'):
+            source.pop(key,None)
+    (draft/'manifest.json').write_text(json.dumps(d))
+    result=prep.prepare_local_preview(draft)
+    assert result['status']=='PREPARED_NOT_AUTHORIZED'
 
 def test_authorization_stages_transaction_without_mutating_draft(preview,tmp_path):
     m=module(); before={p:p.read_bytes() for p in preview.iterdir() if p.is_file()}

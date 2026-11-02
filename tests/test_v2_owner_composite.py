@@ -51,7 +51,7 @@ class OwnerCompositeTests(unittest.TestCase):
 
     def test_sources_are_required_reviewed_and_bound_to_bytes(self):
         original = copy.deepcopy(self.data)
-        for defect in ['missing','hash','approval','url','rights','reference','escape','empty_review']:
+        for defect in ['missing','hash','approval','escape','empty_review']:
             with self.subTest(defect=defect):
                 self.data=copy.deepcopy(original)
                 source=self.data['media'][0]['source_assets'][0]
@@ -64,6 +64,16 @@ class OwnerCompositeTests(unittest.TestCase):
                 if defect=='escape': source['path']='../source.png'
                 if defect=='empty_review': self.data['owner_review']['reference']=''
                 with self.assertRaises(BundleError): self.load()
+
+    def test_reference_metadata_is_archival_not_a_delivery_gate(self):
+        source=self.data['media'][0]['source_assets'][0]
+        for key in ('source_url','rights_status','owner_reference','description'):
+            source.pop(key)
+        _, _, media=self.load()
+        self.assertEqual(media[0][1],self.raw)
+        source['source_url']='owner-attachment:photo.jpg'
+        _, _, media=self.load()
+        self.assertEqual(media[0][1],self.raw)
 
     def test_wrong_dimensions_and_media_tampering_rejected(self):
         Image.new('RGB',(941,1672),'ivory').save(self.root/'card.png')

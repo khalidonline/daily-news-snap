@@ -12,7 +12,7 @@
   "expires_at": "2026-11-02T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Khalid explicit انشر after exact uploaded preview in this conversation on 2026-11-02; Story and Saved Story.",
+    "reference": "Khalid 2026-11-02: archive references independently; publish exact approved preview without reference-metadata checks. Same identity retry after pre-send validation failure.",
     "approved_media_sha256": [
       "7c8566e5721592c3bd37c5be78e15589e40cabecd708a7aa6fff1126510383c3"
     ],
@@ -20,7 +20,7 @@
       "538a1df7ec5faafadd294390a7446c2b8211aac6075044e469ef4a5cf6a3cf90",
       "227c7846a424d72d4120782f22a8e6e0f6e57f8e90f2e0a5c90edfaaa3da0bb6"
     ],
-    "reviewed_at": "2026-11-02T07:56:01.583617+00:00"
+    "reviewed_at": "2026-11-02T08:02:30.282809+00:00"
   },
   "media": [
     {

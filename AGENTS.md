@@ -1,5 +1,15 @@
 # Mandatory publication preflight
 
+## Reference archive — owner decision 2 November 2026
+
+For owner-reviewed information cards, keep factual/image references, credits,
+rights notes and attachment provenance in approved/<package>/sources.json for
+later lookup. Missing URLs or reference metadata must not block delivery.
+Do not invent references or rights. Existing historical metadata stays intact.
+This supersedes older source-metadata prerequisite wording below and in delivery
+docs. Keep final owner approval, selected-source and media hashes, preparation,
+design, safe paths, account/quota and duplicate-prevention checks unchanged.
+
 ## Browser-free explicit information approval — 1 November 2026
 
 After uploaded-preview verification and exact owner publication approval, use

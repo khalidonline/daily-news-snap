@@ -2,13 +2,13 @@
   "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/darb-zubaydah-20261102/manifest.json",
-  "manifest_sha256": "24eeb1f74e6b0770a58dd5ab233bbad03f56e8e5ced584e80bb1164ea714897f",
+  "manifest_sha256": "be665d43fc52e52bd1fe24ad2d416afab5e436b7b0f2ea18ff09a2c05bec0c68",
   "identity": "925774bce0e16252ccbeb1af9386cc733951f8b57feeb6e389f4ecb637a4bb47",
   "public_indices": [
     1
   ],
   "title": "شتاء درب زبيدة… وش سالفة هالبرك؟",
   "expires_at": "2026-11-02T20:59:59+00:00",
-  "owner_authorization": "Khalid explicit انشر after exact uploaded preview in this conversation on 2026-11-02; Story and Saved Story.",
+  "owner_authorization": "Khalid 2026-11-02: archive references independently; publish exact approved preview without reference-metadata checks. Same identity retry after pre-send validation failure.",
   "empty_profile_confirmation": "Existing nonempty profile known from previous published package records; live inventory and overlap required before creation. Not an empty-profile assertion."
 }

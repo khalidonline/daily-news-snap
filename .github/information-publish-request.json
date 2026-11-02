@@ -6,11 +6,11 @@
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid explicit انشر after exact uploaded preview in this conversation on 2026-11-02; Story and Saved Story.",
-  "approved_at": "2026-11-02T07:56:01.583617+00:00",
+  "owner_reference": "Khalid 2026-11-02: archive references independently; publish exact approved preview without reference-metadata checks. Same identity retry after pre-send validation failure.",
+  "approved_at": "2026-11-02T08:02:30.282809+00:00",
   "expires_at": "2026-11-02T20:59:59+00:00",
-  "manifest_sha256": "24eeb1f74e6b0770a58dd5ab233bbad03f56e8e5ced584e80bb1164ea714897f",
-  "archive_sha256": "d8784268d64e9ca233d8cb5714be3f80285872e02a20ffaeb815b1d619345ecd",
+  "manifest_sha256": "be665d43fc52e52bd1fe24ad2d416afab5e436b7b0f2ea18ff09a2c05bec0c68",
+  "archive_sha256": "3e7cda400aa5da72e917962e0d9379ff6aad8548d04fcfa2c5fc221a259eae98",
   "prepared_sha256": "2fe19930ad4cfbbaeab3a0a9375ad1149d181aab9755c27fb11f932403eadf24",
   "preview_receipt_sha256": "52a695f1216c3f359bb3e1fc6b1e86b61cf3c882785a50dcad758151ea3156b3"
 }
