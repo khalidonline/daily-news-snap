@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ كارفور ووولمارت",
+  "expires_at": "2026-11-04T16:03:14.751676+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/carrefour-walmart-20261102/challenge.mp4",
+      "sha256": "b960ba0ba9b187a64d79eae82c7944374cc284613a08427afc1b07fee41d43c7",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "b960ba0ba9b187a64d79eae82c7944374cc284613a08427afc1b07fee41d43c7",
+      "reference": "Khalid approved A2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved A2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "b960ba0ba9b187a64d79eae82c7944374cc284613a08427afc1b07fee41d43c7",
+    "source_manifest": {
+      "path": "approved/carrefour-walmart-20261102/source-approval.json",
+      "sha256": "8fe79ba58968ad4e8cc5fbfc941fb446ed669cdc8b3e76645a03e2310c7d8706"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/carrefour-walmart-20261102/frame-0.5.png",
+        "sha256": "87ac4ff701d7bd6285a0db054f9bbd89b42ff8f94f7b5a75570206cb1972316f"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/carrefour-walmart-20261102/frame-3.5.png",
+        "sha256": "8b8997131752f360d72fa745d46dd348d5eeef4d5c3a26aca5ce37d559fceefd"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/carrefour-walmart-20261102/frame-4.5.png",
+        "sha256": "a5f94171e5de2e165d8d6cb6cfc58180d7a18c5670062eadbc6048bd449dc115"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/carrefour-walmart-20261102/frame-5.5.png",
+        "sha256": "5494e326ffe51c7e3f823305d157dd706d2b1b9ab61216ab3d6322fdddb74956"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/carrefour-walmart-20261102/frame-6.5.png",
+        "sha256": "b923c05d2f25703fd786d219613932a13b685232161ca8298ae0957cc1473dcf"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/carrefour-walmart-20261102/frame-7.5.png",
+        "sha256": "43c1db56410bc595a3dc31ace1e4f6cf7f31d22dad7a2f92b955e07531978fc9"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/carrefour-walmart-20261102/frame-8.5.png",
+        "sha256": "e847364c01ed36b080c195f761db986ded645688d1b07425b5c1be207847dd54"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/carrefour-walmart-20261102/frame-11.5.png",
+        "sha256": "b68ec603dab614300c08e7f7a062e4ef4bc0fd74b44d7f90e786000765b0e1d2"
+      }
+    ]
+  }
+}
