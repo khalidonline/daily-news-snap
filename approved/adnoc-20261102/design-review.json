@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "bffe0afebd5dbb2ca9741a285dc72ea62ce8aaf84180c007ac8640f001c7d6f7",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "النفط موجود… بس توصيله صار سالفة!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              208,
+              215,
+              1020,
+              265
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            208,
+            215,
+            1020,
+            266
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "ناقلة النفط أرزنة من أسطول أدنوك",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              337,
+              695,
+              744,
+              729
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            337,
+            695,
+            744,
+            730
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "اليوم أدنوك، شركة بترول أبوظبي الوطنية، تكلمت عن غلاء توصيل النفط للأسواق.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              204,
+              799,
+              980,
+              862
+            ],
+            [
+              261,
+              886,
+              980,
+              935
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            204,
+            799,
+            1015,
+            935
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الشحن والتأمين وخدمات النقل كانت أقل من ٥٪ من تكلفة البرميل. الحين تعدت ٣٠٪!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              93,
+              998,
+              980,
+              1053
+            ],
+            [
+              328,
+              1077,
+              980,
+              1121
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            93,
+            998,
+            1015,
+            1121
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "طيب إذا تعطلت طرق النقل؟ الأسواق تغطي احتياجها من مخزونها لين تجي الشحنات.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              155,
+              1185,
+              980,
+              1242
+            ],
+            [
+              252,
+              1266,
+              980,
+              1320
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            155,
+            1185,
+            1015,
+            1320
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ومع السحب، مخزون الديزل ببعض الأسواق صار الأقل لهالوقت من السنة من ٣٥ سنة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              95,
+              1383,
+              980,
+              1438
+            ],
+            [
+              264,
+              1462,
+              980,
+              1511
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            95,
+            1383,
+            1015,
+            1511
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "يعني السالفة مو وين تلقى نفط… بكم يوصلك؟",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              135,
+              1575,
+              944,
+              1625
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            135,
+            1575,
+            944,
+            1626
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected original tanker photo, Oxford artwork, final full PNG and separate 390px Story and Saved Story overlays. Entire ship and caption visible. Four two-line bullets, one-line title/closing, original CTA retained. Simulation only; no live-device or owner final approval claimed.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 simulation top0..39 bottom625..692 masked; all key content and CTA visible.",
+      "SAVED_STORY": "Inspected separate 390x693 simulation same player masks; all key content and CTA visible."
+    }
+  }
+}

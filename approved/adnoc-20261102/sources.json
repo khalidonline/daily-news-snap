@@ -1,0 +1,21 @@
+{
+  "event_date_riyadh": "2026-11-02",
+  "factual_sources": [
+    "https://www.adnoc.ae/media-center/news/2026/11/Global-Energy-Security-Must-Be-Rebuilt-for-a-New-Era-Dr-Sultan-Al-Jaber",
+    "https://www.thenationalnews.com/business/energy/2026/11/02/dr-sultan-al-jaber-urges-energy-security-overhaul-as-nearly-billion-barrels-drawn-from-oil-markets/"
+  ],
+  "image_page": "https://www.adnocls.ae/en/news-and-media/press-releases/2023/adnoc_ls-takes-delivery-of-third-very-large-crude",
+  "images": [
+    {
+      "path": "approved/adnoc-20261102/tanker.jpg",
+      "sha256": "7270068e41671546bfef1f4c271d7d9be7875908bea63863c3764d666424a3ac",
+      "source_url": "https://www.adnocls.ae/-/media/ls/press-release/dji_0258_lr.ashx",
+      "credit": "ADNOC Logistics & Services",
+      "description": "Arzanah tanker, official 2023 press photo. Reframed to remove empty sky; not a photo of the current disruption.",
+      "rights_status": "owner_accepted_editorial_use",
+      "rights_basis": "Standing owner editorial-use instruction; internal credit retained. No claim of open licence or acquired copyright.",
+      "owner_reference": "Khalid requested design; standing editorial photo selection and internal source archive instructions."
+    }
+  ],
+  "editorial_note": "Approved shortened copy. Inventory sentence refers to markets, not ADNOC; third point is explanatory conditional. No live publication."
+}

@@ -1,0 +1,47 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "النفط موجود… بس توصيله صار سالفة!",
+  "not_before": "2026-11-01T21:00:00+00:00",
+  "expires_at": "2026-11-02T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid approved shortened text then requested design. Export awaiting owner review; no publication authorization.",
+    "approved_media_sha256": [
+      "bffe0afebd5dbb2ca9741a285dc72ea62ce8aaf84180c007ac8640f001c7d6f7"
+    ],
+    "approved_source_sha256": [
+      "7270068e41671546bfef1f4c271d7d9be7875908bea63863c3764d666424a3ac"
+    ],
+    "reviewed_at": "2026-11-02T20:45:19.511082+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/adnoc-20261102/card.png",
+      "sha256": "bffe0afebd5dbb2ca9741a285dc72ea62ce8aaf84180c007ac8640f001c7d6f7",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/adnoc-20261102/tanker.jpg",
+          "sha256": "7270068e41671546bfef1f4c271d7d9be7875908bea63863c3764d666424a3ac",
+          "source_url": "https://www.adnocls.ae/-/media/ls/press-release/dji_0258_lr.ashx",
+          "credit": "ADNOC Logistics & Services",
+          "description": "Arzanah tanker, official 2023 press photo. Reframed to remove empty sky; not a photo of the current disruption.",
+          "rights_status": "owner_accepted_editorial_use",
+          "rights_basis": "Standing owner editorial-use instruction; internal credit retained. No claim of open licence or acquired copyright.",
+          "owner_reference": "Khalid requested design; standing editorial photo selection and internal source archive instructions."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/adnoc-20261102/manifest.json",
+  "manifest_sha256": "eabb1b005af9cf36e75d2053eed680f44e0bc7eac2db1b2b82a424104d8fb638",
+  "identity": "06471b3492a355b1d5c16512fe87ee749e14b0b59a1acf4d3f6a2270a59eee8a",
+  "public_indices": [
+    1
+  ],
+  "title": "النفط موجود… بس توصيله صار سالفة!",
+  "expires_at": "2026-11-02T20:59:59+00:00",
+  "owner_authorization": "NOT AUTHORIZED: design preview only",
+  "empty_profile_confirmation": "Existing nonempty profile known from previous published package records; live inventory and overlap required before creation. Not an empty-profile assertion."
+}
