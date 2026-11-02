@@ -124,3 +124,23 @@ path and SHA before rendering; do not invent an asset identity. Preserve its
 proportions/colors and inspect sharpness in final decoded frames at 390px.
 Keep the Oxford wordmark/line and all approved challenge audio, countdown,
 answer and CTA settings. This instruction does not republish existing posts.
+
+## Saudi salfa voice — owner approved 2 November 2026
+
+Khalid approved the edited ADNOC text (writing block 90642) as the ongoing
+voice reference for all future information/news/story drafts. This clarifies
+the editorial_master language rule; it does not change design or delivery.
+- Write as someone telling a clear Saudi majlis salfa, not reading news.
+- Prefer everyday expressions such as تكلمت عن مشكلة، مو بس، الحين، طيب، عشان.
+  Avoid newsroom phrasing like حذرت، إيصاله، and repeated بحسب فلان in the card.
+- Introduce unfamiliar companies briefly on first mention (أدنوك، شركة بترول
+  أبوظبي الوطنية). Explain the actor before using an ambiguous plural verb;
+  never imply the speaker is the party drawing inventories without evidence.
+- Each point advances cause, change or consequence. Keep numbers and their
+  meaning accurate; store references internally. Preserve attribution or
+  uncertainty whenever removing it would misrepresent a claim as proven fact.
+- Approved closing reference: يعني السالفة مو وين تلقى نفط… بكم يوصلك؟
+  Keep the owner's actual edited wording, not a superseded assistant draft.
+- Measure every draft in the pinned template BEFORE presenting it. Two lines
+  per bullet; if an already approved text exceeds this, request a specific
+  shortening approval or agree a two-card split. Never silently shrink fonts.
