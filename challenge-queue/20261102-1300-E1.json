@@ -1,0 +1,67 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-02",
+  "slot": "13:00",
+  "item": "E1",
+  "topic": "مقارنات سياحية — مطاعم نجوم ميشلان 2025",
+  "status": "POSTED_BOTH",
+  "next_item": "A2",
+  "next_topic": "من بدأ أول؟ كارفور ووولمارت",
+  "next_slot": "2026-11-02T19:00:00+03:00",
+  "completed_today": 1,
+  "completed_total": 5,
+  "remaining_topics": 20,
+  "video_sha256": "70f17fac1cf22f0aa489d86f2bf0a66bea93daccf62f2055dcf7b78e86d3dd3d",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "397bd81f-ac0f-4366-b846-5801cab716d3",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "37e7f624-3608-420d-83a3-089c9a5bb4c5",
+          "mediaId": "37e7f624-3608-420d-83a3-089c9a5bb4c5",
+          "mediaIds": [
+            "37e7f624-3608-420d-83a3-089c9a5bb4c5"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "6d577a63-4db4-4c74-9b6c-be3d65516c13",
+          "sourceUploadIds": [
+            "6d577a63-4db4-4c74-9b6c-be3d65516c13"
+          ],
+          "mediaUploadedAt": "2026-11-02T10:14:33.871Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "70f17fac1cf22f0aa489d86f2bf0a66bea93daccf62f2055dcf7b78e86d3dd3d"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "060cbae3-0c46-46b9-8b87-5204af8caf38",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYdWxydnNyb2lwAaGbwpcsAaGbwpbSAAAAAA",
+          "mediaId": "38e7f26b-d361-4257-8ce0-21fe4a3de9ca",
+          "mediaIds": [
+            "38e7f26b-d361-4257-8ce0-21fe4a3de9ca"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "2ebba337-8429-4d36-9724-cd86dd3d46ad",
+          "sourceUploadIds": [
+            "2ebba337-8429-4d36-9724-cd86dd3d46ad"
+          ],
+          "mediaUploadedAt": "2026-11-02T10:16:03.674Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "70f17fac1cf22f0aa489d86f2bf0a66bea93daccf62f2055dcf7b78e86d3dd3d"
+    }
+  },
+  "receipt_path": "api-receipts/michelin-cities-20261102-preflight.json",
+  "archive_sha256": "362d36656d1c3bca6d33353df78234b866372c8fa1c9875a694f30f1e4de727c",
+  "new_paid_model_requests": 0,
+  "no_repeat": true
+}
