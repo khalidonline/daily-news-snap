@@ -49,3 +49,24 @@ No main update yet; implementation remains under verification.
   failures unresolved. Cost: mandatory workflow is not deployed yet.
 - Ryanair fixture fit:true: headline35 chars/1line, bullets75/68/76/78chars,
   each2lines, closing39chars/1line. Counts include spaces and punctuation.
+
+## Owner-authorized integration checkpoint
+
+Khalid approved continuation to main after comparison with inherited failures.
+This supersedes the earlier decision to hold the branch for all baseline failures.
+- Fresh full run of exact feature bytes: 3 failed,1291 passed,250 subtests passed,
+  1 existing Pillow warning;167.17s. Baseline3 failed,1273 passed:18 added passes,
+  no additional failed test names or new inventory differences.
+- The three failures listed above retain their original causes. Inventory now
+  differs ONLY at the two historical us-midterms files, exactly as baseline.
+- Fresh focused run:29 passed. All8 changed local files were byte-compared with
+  feature commit861a90e6853dff41b1512e601e9b5e7853160cce: identical.
+- Main observed at91bc2155a97500cf919715ba12cd3224f872fc28; update requires that
+  exact expected SHA, fast-forward only. This checkpoint changes documentation only.
+- No publisher request, trigger, settings, approved media, challenge or schedule
+  modifications. Push-triggered checks are offline. No live publication performed.
+- Decision: integrate the verified feature under explicit owner authorization,
+  retaining all3 inherited failures as open issues rather than hiding or deleting
+  protection tests. Risk retained: repository-wide checks remain red until those
+  independent issues are resolved. Text gate is mandatory agent/CLI workflow,
+  not an interceptor of arbitrary chat prose.
