@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "428b7b426926a7e16b8c010c4ab44d6d3a14ad85",
+  "assets": {
+    "approved/ryanair-20261103/card.png": "73f1768492b9001165ee5eaeda483774a8ee7dc67049f76941d290b85435e30e",
+    "approved/ryanair-20261103/cabin.jpg": "e69bbc3a56f47eff83bae7bc280306b462fec2ea8a9f754c28477375004594eb"
+  },
+  "preview_paths": [
+    "approved/ryanair-20261103/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/ryanair-20261103/card.png": "73f1768492b9001165ee5eaeda483774a8ee7dc67049f76941d290b85435e30e",
+    "approved/ryanair-20261103/cabin.jpg": "e69bbc3a56f47eff83bae7bc280306b462fec2ea8a9f754c28477375004594eb",
+    "approved/ryanair-20261103/manifest.json": "3f7060ef1bc2a99bd2cc944117860c39156e3eca47845572c96ffb623d864df9",
+    "approved/ryanair-20261103/archive-approval.json": "7c529119473497b8c0d899ccc9c8b202cd53f9cebcb310d9006d0e02c208cf77",
+    "approved/ryanair-20261103/design-review.json": "5d7c903c7583e6f3c4e5cc1b09cf19c0d05e9220dce431b539f698c70698f636",
+    "approved/ryanair-20261103/sources.json": "fbe4b32c681076a1231b595f1105e72e69e8b4af4ad5d4e38f6c3d0f3789fdb2",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/ryanair-20261103",
+    "manifest_content_sha256": "621c8b477e9b5de7c1343b1353a616cf934f393cb033ee5668b8f3103d3c95d4",
+    "archive_content_sha256": "825c98c9f12366cc03ae535d83a13790cbda4057c0f93c253778e7c5b70af6a2",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "5d7c903c7583e6f3c4e5cc1b09cf19c0d05e9220dce431b539f698c70698f636",
+    "assets": {
+      "approved/ryanair-20261103/card.png": "73f1768492b9001165ee5eaeda483774a8ee7dc67049f76941d290b85435e30e",
+      "approved/ryanair-20261103/cabin.jpg": "e69bbc3a56f47eff83bae7bc280306b462fec2ea8a9f754c28477375004594eb"
+    }
+  }
+}

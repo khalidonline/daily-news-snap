@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -12,13 +12,14 @@
   "expires_at": "2026-11-06T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Draft design requested; not yet owner reviewed or authorized for publication.",
+    "reference": "Khalid: انشر after exact Ryanair preview on 2026-11-03; public Story and Saved Story under standing destination instruction.",
     "approved_media_sha256": [
       "73f1768492b9001165ee5eaeda483774a8ee7dc67049f76941d290b85435e30e"
     ],
     "approved_source_sha256": [
       "e69bbc3a56f47eff83bae7bc280306b462fec2ea8a9f754c28477375004594eb"
-    ]
+    ],
+    "reviewed_at": "2026-11-03T08:56:07.574640+00:00"
   },
   "media": [
     {

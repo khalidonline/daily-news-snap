@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "adnoc-20261102",
-  "identity": "06471b3492a355b1d5c16512fe87ee749e14b0b59a1acf4d3f6a2270a59eee8a",
+  "package": "ryanair-20261103",
+  "identity": "bdc139cc7fe226184ac9abff95fca7ef2670506a2e8360d0000343f9f99014c7",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid explicitly requested: منشور مسائي انشر أدنوك, and confirmed انشر after being told repository approval metadata must be updated, 3 November 2026. Publish exact approved card to STORY and SAVED_STORY.",
-  "approved_at": "2026-11-03T05:55:14.452548+00:00",
-  "expires_at": "2026-11-03T20:59:59+00:00",
-  "manifest_sha256": "3a2ed8bc86442478415356ccc38ffa1f59821410127714662e1613e3d3731960",
-  "archive_sha256": "1e6395d1b223da1e679105201fd59bfd4cbb4a461e2d7d96e7a16a77154efdf1",
-  "prepared_sha256": "6f92c6a22d21d2cfd1156ba5b89582b256afdcb4274c5143d2eef038095864da",
-  "preview_receipt_sha256": "1d9a298d96c43cf4ea8d1ff1dfd52df6663ead45e8f4ebfcf694434c8c16c62d"
+  "owner_reference": "Khalid: انشر after exact Ryanair preview on 2026-11-03; public Story and Saved Story under standing destination instruction.",
+  "approved_at": "2026-11-03T08:56:07.574640+00:00",
+  "expires_at": "2026-11-06T20:59:59+00:00",
+  "manifest_sha256": "26b34538694550501ba00141772feab138f5364ad970a13a705a33bc760f89d6",
+  "archive_sha256": "13f8e78dea7012b119964f3a96957a85618c16542f94c742ee72208911df235a",
+  "prepared_sha256": "6f66a432a351229fde9346712c500d0d3e0832166d930783e507f297dd31b019",
+  "preview_receipt_sha256": "a77d533c048a9d24fde86cdb75cd2952e09f45aad8780b40ce5a14ae3b6f131b"
 }
