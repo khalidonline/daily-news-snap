@@ -1,0 +1,67 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-03",
+  "slot": "13:00",
+  "item": "B2",
+  "topic": "توقع السعر — كوب Ember Mug 2 سعة10 أونصات",
+  "status": "POSTED_BOTH",
+  "next_item": "C2",
+  "next_topic": "نزل بالسوق؟ — LG AeroFurniture",
+  "next_slot": "2026-11-03T19:00:00+03:00",
+  "completed_today": 1,
+  "completed_total": 7,
+  "remaining_topics": 18,
+  "video_sha256": "6c1682ff606409569efe9d34e4da09b52b8bf28ef5e9bb33c5c4af51c7c397cb",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "8174815d-29f6-4dd5-8fd2-41bf20b0669f",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "fc06a208-4c0f-40b9-89cf-7d44d8a9ec77",
+          "mediaId": "fc06a208-4c0f-40b9-89cf-7d44d8a9ec77",
+          "mediaIds": [
+            "fc06a208-4c0f-40b9-89cf-7d44d8a9ec77"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "821bbf28-60ef-4644-9666-9f7d6e8e8ce1",
+          "sourceUploadIds": [
+            "821bbf28-60ef-4644-9666-9f7d6e8e8ce1"
+          ],
+          "mediaUploadedAt": "2026-11-03T10:09:23.979Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "6c1682ff606409569efe9d34e4da09b52b8bf28ef5e9bb33c5c4af51c7c397cb"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "e624007e-a60e-4db0-aa65-32b3a02affa7",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYdXB1ZnVxbG5wAaGg5DzOAaGg5DyOAAAAAA",
+          "mediaId": "4cc3ea87-75f0-409e-8d9b-7daf7257d0a9",
+          "mediaIds": [
+            "4cc3ea87-75f0-409e-8d9b-7daf7257d0a9"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "782ffdd1-61f5-4fce-b3c2-ac1c2493f359",
+          "sourceUploadIds": [
+            "782ffdd1-61f5-4fce-b3c2-ac1c2493f359"
+          ],
+          "mediaUploadedAt": "2026-11-03T10:10:54.892Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "6c1682ff606409569efe9d34e4da09b52b8bf28ef5e9bb33c5c4af51c7c397cb"
+    }
+  },
+  "receipt_path": "api-receipts/ember-mug-20261103-preflight.json",
+  "archive_sha256": "ccc46bb0bf26fa3cc3b9e268ac255ce97352859291e02727f522a02e717801fa",
+  "new_paid_model_requests": 0,
+  "no_repeat": true
+}
