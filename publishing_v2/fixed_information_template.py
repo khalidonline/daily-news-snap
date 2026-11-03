@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 import hashlib
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageChops
+from .information_text_fit import wrap_text
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -44,17 +45,7 @@ def render(headline, bullets, closing, photos, captions, *, bullet_styles=None, 
         if weight=='Bold' and hashlib.sha256(selected.read_bytes()).hexdigest()!='353c525f8afc461ca6213ee210e77b865f2969ad1222a2cfc634680f1f4621d9':
             raise ValueError('Bold font asset changed')
         font=ImageFont.truetype(str(selected),size)
-        lines=[]; line=''
-        for word in text.split():
-            trial=(line+' '+word).strip()
-            measured=draw.textbbox((0,0),trial,font=font,direction='rtl')
-            if measured[2]-measured[0]>right-left-2:
-                if not line:raise ValueError(role+' overflow: unbreakable word')
-                lines.append(line);line=word
-                if draw.textlength(word,font=font,direction='rtl')>right-left:
-                    raise ValueError(role+' overflow: unbreakable word')
-            else:line=trial
-        if line:lines.append(line)
+        lines=wrap_text(text,font,draw,left,right)
         if not lines or len(lines)>limit:raise ValueError(role+' overflow: shorten copy, never shrink')
         if balanced and role=='bullet':
             masks=[]

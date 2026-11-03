@@ -56,6 +56,15 @@ the same identity and receipts for recovery. See docs/ready-package-delivery.md.
 
 ## Text drafts must fit before owner review
 
+Mandatory entry point for morning/evening/Saudi/story information copy:
+run `python -m publishing_v2.information_text_fit draft.json` BEFORE showing
+the textual card. Revise unapproved copy privately until exit 0 / fit:true;
+show its exact display_text. Re-run after every wording edit. Character counts
+are diagnostics, not a universal maximum: actual pinned-font wrapping and ink
+geometry decide. Never shrink or automatically slice words to pass. See
+docs/information-text-drafts.md. This is not publication/design approval and
+cannot intercept arbitrary chat responses. Challenge paths remain unchanged.
+
 For information cards, measure drafts using the current shared template before
 showing the text for approval. Keep each bullet to two rendered lines, with the
 approved font and spacing; never shrink the font to fit. Word count alone is
