@@ -2,13 +2,13 @@
   "version": 1,
   "status": "PREPARED_NOT_AUTHORIZED",
   "package": "approved/adnoc-20261102",
-  "manifest_content_sha256": "f712f094f2b0332722614845ca5b2d6cff54509baf0af1e85045bb90c6fc9eff",
-  "archive_content_sha256": "dc0b050763cd83d3bd3cbd103f3dde1a2710e1cc8a033c952da682228b984643",
+  "manifest_content_sha256": "dbf2c15e239bf09676ea965506e73b75c2729ae9bfb207311aee738315f558ad",
+  "archive_content_sha256": "c29404c0158cdd41580f503f40c728af95c4c050a9dfb152614b565d153ec324",
   "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
   "review_sha256": "5b39ec3c22aaae4811e2c6a25bd7f3e306e29055add90ce92b327b73e7b2d4ce",
   "assets": {
     "approved/adnoc-20261102/card.png": "bffe0afebd5dbb2ca9741a285dc72ea62ce8aaf84180c007ac8640f001c7d6f7",
     "approved/adnoc-20261102/tanker.jpg": "7270068e41671546bfef1f4c271d7d9be7875908bea63863c3764d666424a3ac"
   },
-  "preparation_seconds": 0.006
+  "preparation_seconds": 0.005
 }
