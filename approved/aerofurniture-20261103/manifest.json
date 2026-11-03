@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — طاولة LG",
+  "expires_at": "2026-11-05T16:01:25.504494+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/aerofurniture-20261103/challenge.mp4",
+      "sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c",
+      "reference": "Khalid approved C2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved C2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c",
+    "source_manifest": {
+      "path": "approved/aerofurniture-20261103/source-approval.json",
+      "sha256": "558aee26113fa520938261d2d495a938c7757ea362b7eecbb36036d5a81b3b55"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/aerofurniture-20261103/frame-0.5.png",
+        "sha256": "45ca47f6d1b075f8c8df22165d51448e6d69abcade564ed580a3a16268680853"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/aerofurniture-20261103/frame-3.5.png",
+        "sha256": "d05c6cf2c7fcb55ad5a5d024ecdcdc79818c526fb0adf6c21fbf709b31dd8397"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/aerofurniture-20261103/frame-4.5.png",
+        "sha256": "31734fcb75c7a530cbc5b8176ab93d098295382d6e974b6197a862437edf6f11"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/aerofurniture-20261103/frame-5.5.png",
+        "sha256": "a09bbdaab5e8694035065d4a6ddf0483aff6f24528774332cce122a4414ae00e"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/aerofurniture-20261103/frame-6.5.png",
+        "sha256": "e65eb66a8b54b4a2b4642698bbc4ad82289d36a37593e1803d08efb29e9650d9"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/aerofurniture-20261103/frame-7.5.png",
+        "sha256": "df7480236915c7eb198aaddb896a97bce087596f6a42b748185431eae4b01c64"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/aerofurniture-20261103/frame-8.5.png",
+        "sha256": "c1afb0ba81a3a3283ae5ff984334283a2249ed0ccc6b71ff61a2422b9e2e453f"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/aerofurniture-20261103/frame-11.5.png",
+        "sha256": "69742f0a69cf59be6abbcd620abe2382af20d52780920290c5dcef0e0184acb5"
+      }
+    ]
+  }
+}
