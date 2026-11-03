@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر — كوب Ember",
+  "expires_at": "2026-11-05T10:05:48.979154+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/ember-mug-20261103/challenge.mp4",
+      "sha256": "6c1682ff606409569efe9d34e4da09b52b8bf28ef5e9bb33c5c4af51c7c397cb",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "6c1682ff606409569efe9d34e4da09b52b8bf28ef5e9bb33c5c4af51c7c397cb",
+      "reference": "Khalid approved B2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "6c1682ff606409569efe9d34e4da09b52b8bf28ef5e9bb33c5c4af51c7c397cb",
+    "source_manifest": {
+      "path": "approved/ember-mug-20261103/source-approval.json",
+      "sha256": "012f658c3d6b444c3d874742d9aab330736e8e19e93b113ef71d92ab98b02e15"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/ember-mug-20261103/frame-0.5.png",
+        "sha256": "56fad52a7920d5a9dbcfb02e85252743ccf7b5232d2acbad29eed0b7b5fd6e8b"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/ember-mug-20261103/frame-3.5.png",
+        "sha256": "9c0a2965e7c7b4fa37137bba913e66b6250992dfa13b26dcf7fcd5fad5cccbcd"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/ember-mug-20261103/frame-4.5.png",
+        "sha256": "adb620c3fa78657e0fab73b45dc122ee8c8e85b51ad1c788b11273807522adea"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/ember-mug-20261103/frame-5.5.png",
+        "sha256": "d984d721cb15b5df20b4e91dc676f93a781d8a0900169a6f0f5008ec2cf15c55"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/ember-mug-20261103/frame-6.5.png",
+        "sha256": "941a27c340a21e25c77b91a20b2d31331cbd65976dc8594b8119fd935bfd652b"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/ember-mug-20261103/frame-7.5.png",
+        "sha256": "ce1a84bad495eef6ff8b1e7e9d675663f8080081353a59e8a71872cf6d82fd79"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/ember-mug-20261103/frame-8.5.png",
+        "sha256": "3c1e4279f07a697a5227130b7f385e54032904bec0523c86764579d9be5f10b4"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/ember-mug-20261103/frame-11.5.png",
+        "sha256": "a3ae74c9e7306efbe0218fa83261208353964ec94efae0b38375884f255b9663"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "checked_date": "2026-11-03",
+  "model": "Ember Mug 2 Black 10 oz / 295ml / CM191000US",
+  "fact": "Official ember.com product JSON Black/10oz compare_at_price12995 cents, sale8999; wholesale official product JSON Black/10oz12995 cents. Video explicitly asks price before discount and says US reference price, not current Saudi retail.129.95USD times3.75=487.3125SAR rounded490. Maintains selected hot-drink temperature controlled via app.",
+  "urls": [
+    "https://ember.com/products/ember-mug-2.js",
+    "https://wholesale.ember.com/products/ember-mug-2.js",
+    "https://ember.com/products/ember-mug-2?variant=30843977826389"
+  ],
+  "photos": [
+    "https://cdn.shopify.com/s/files/1/1080/6594/files/ember_CM1910_00-black.jpg?v=1762439501",
+    "https://cdn.shopify.com/s/files/1/1080/6594/files/CM191000US_Carousel_Retailer_1_App.jpg?v=1750875547"
+  ],
+  "transform": "app.jpg crop(0,550,950,1404); product original; no generated imagery"
+}
