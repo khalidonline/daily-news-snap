@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/ryanair-20261103/manifest.json",
+  "manifest_sha256": "3f7060ef1bc2a99bd2cc944117860c39156e3eca47845572c96ffb623d864df9",
+  "identity": "bdc139cc7fe226184ac9abff95fca7ef2670506a2e8360d0000343f9f99014c7",
+  "public_indices": [
+    1
+  ],
+  "title": "رايان إير… التوفير وصل لجيب الكرسي!",
+  "expires_at": "2026-11-06T20:59:59+00:00",
+  "owner_authorization": "Not authorized; design preview only.",
+  "empty_profile_confirmation": "Existing profile; live overlap must be checked before any future creation, not an empty-profile assertion."
+}

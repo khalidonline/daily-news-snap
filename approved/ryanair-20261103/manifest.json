@@ -1,0 +1,40 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "رايان إير… التوفير وصل لجيب الكرسي!",
+  "not_before": "2026-11-03T00:00:00+00:00",
+  "expires_at": "2026-11-06T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Draft design requested; not yet owner reviewed or authorized for publication.",
+    "approved_media_sha256": [
+      "73f1768492b9001165ee5eaeda483774a8ee7dc67049f76941d290b85435e30e"
+    ],
+    "approved_source_sha256": [
+      "e69bbc3a56f47eff83bae7bc280306b462fec2ea8a9f754c28477375004594eb"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/ryanair-20261103/card.png",
+      "sha256": "73f1768492b9001165ee5eaeda483774a8ee7dc67049f76941d290b85435e30e",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/ryanair-20261103/cabin.jpg",
+          "sha256": "e69bbc3a56f47eff83bae7bc280306b462fec2ea8a9f754c28477375004594eb"
+        }
+      ]
+    }
+  ]
+}
