@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "darb-zubaydah-20261102",
-  "identity": "925774bce0e16252ccbeb1af9386cc733951f8b57feeb6e389f4ecb637a4bb47",
+  "package": "adnoc-20261102",
+  "identity": "06471b3492a355b1d5c16512fe87ee749e14b0b59a1acf4d3f6a2270a59eee8a",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid 2026-11-02: archive references independently; publish exact approved preview without reference-metadata checks. Same identity retry after pre-send validation failure.",
-  "approved_at": "2026-11-02T08:02:30.282809+00:00",
-  "expires_at": "2026-11-02T20:59:59+00:00",
-  "manifest_sha256": "be665d43fc52e52bd1fe24ad2d416afab5e436b7b0f2ea18ff09a2c05bec0c68",
-  "archive_sha256": "3e7cda400aa5da72e917962e0d9379ff6aad8548d04fcfa2c5fc221a259eae98",
-  "prepared_sha256": "2fe19930ad4cfbbaeab3a0a9375ad1149d181aab9755c27fb11f932403eadf24",
-  "preview_receipt_sha256": "52a695f1216c3f359bb3e1fc6b1e86b61cf3c882785a50dcad758151ea3156b3"
+  "owner_reference": "Khalid explicitly requested: منشور مسائي انشر أدنوك, and confirmed انشر after being told repository approval metadata must be updated, 3 November 2026. Publish exact approved card to STORY and SAVED_STORY.",
+  "approved_at": "2026-11-03T05:55:14.452548+00:00",
+  "expires_at": "2026-11-03T20:59:59+00:00",
+  "manifest_sha256": "3a2ed8bc86442478415356ccc38ffa1f59821410127714662e1613e3d3731960",
+  "archive_sha256": "1e6395d1b223da1e679105201fd59bfd4cbb4a461e2d7d96e7a16a77154efdf1",
+  "prepared_sha256": "2ea60b84c28f903c152271ba4a710e98025dc7b4f5c6733d3b768bde4021daed",
+  "preview_receipt_sha256": "1d9a298d96c43cf4ea8d1ff1dfd52df6663ead45e8f4ebfcf694434c8c16c62d"
 }

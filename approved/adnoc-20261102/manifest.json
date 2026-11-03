@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -12,14 +12,14 @@
   "expires_at": "2026-11-03T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Khalid approved shortened text then requested design. Export awaiting owner review; no publication authorization.",
+    "reference": "Khalid explicitly requested: منشور مسائي انشر أدنوك, and confirmed انشر after being told repository approval metadata must be updated, 3 November 2026. Publish exact approved card to STORY and SAVED_STORY.",
     "approved_media_sha256": [
       "bffe0afebd5dbb2ca9741a285dc72ea62ce8aaf84180c007ac8640f001c7d6f7"
     ],
     "approved_source_sha256": [
       "7270068e41671546bfef1f4c271d7d9be7875908bea63863c3764d666424a3ac"
     ],
-    "reviewed_at": "2026-11-02T20:45:19.511082+00:00"
+    "reviewed_at": "2026-11-03T05:55:14.452548+00:00"
   },
   "media": [
     {

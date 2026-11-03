@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/adnoc-20261102/manifest.json",
-  "manifest_sha256": "66e671c77a988813b4845b298e8d864013985272986e82ff537844eb5abb236b",
+  "manifest_sha256": "3a2ed8bc86442478415356ccc38ffa1f59821410127714662e1613e3d3731960",
   "identity": "06471b3492a355b1d5c16512fe87ee749e14b0b59a1acf4d3f6a2270a59eee8a",
   "public_indices": [
     1
   ],
   "title": "النفط موجود… بس توصيله صار سالفة!",
   "expires_at": "2026-11-03T20:59:59+00:00",
-  "owner_authorization": "NOT AUTHORIZED: design preview only",
+  "owner_authorization": "Khalid explicitly requested: منشور مسائي انشر أدنوك, and confirmed انشر after being told repository approval metadata must be updated, 3 November 2026. Publish exact approved card to STORY and SAVED_STORY.",
   "empty_profile_confirmation": "Existing nonempty profile known from previous published package records; live inventory and overlap required before creation. Not an empty-profile assertion."
 }
