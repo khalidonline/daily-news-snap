@@ -1,0 +1,67 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-03",
+  "slot": "19:00",
+  "item": "C2",
+  "topic": "نزل بالسوق؟ — LG AeroFurniture",
+  "status": "POSTED_BOTH",
+  "next_item": "D2",
+  "next_topic": "توقع المكان — كولمار",
+  "next_slot": "2026-11-04T13:00:00+03:00",
+  "completed_today": 2,
+  "completed_total": 8,
+  "remaining_topics": 17,
+  "video_sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "e40d3c25-f017-4a48-8615-39664ed07626",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "4fe437bf-f40f-49cc-9e2f-40bf70a89a9c",
+          "mediaId": "4fe437bf-f40f-49cc-9e2f-40bf70a89a9c",
+          "mediaIds": [
+            "4fe437bf-f40f-49cc-9e2f-40bf70a89a9c"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "fa25a129-85af-43b2-91dc-f61645f0c4d5",
+          "sourceUploadIds": [
+            "fa25a129-85af-43b2-91dc-f61645f0c4d5"
+          ],
+          "mediaUploadedAt": "2026-11-03T16:06:51.964Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "11adda76-2e8e-489f-8fd5-a489554c546f",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYY2NxY2tnZ2ZuAaGiK1B4AaGiK1AzAAAAAA",
+          "mediaId": "6b1fe8cb-7fb3-47b3-b546-64e8d481be1d",
+          "mediaIds": [
+            "6b1fe8cb-7fb3-47b3-b546-64e8d481be1d"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "6ef0aec6-152a-42fb-902b-d99bc509b499",
+          "sourceUploadIds": [
+            "6ef0aec6-152a-42fb-902b-d99bc509b499"
+          ],
+          "mediaUploadedAt": "2026-11-03T16:08:10.108Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c"
+    }
+  },
+  "receipt_path": "api-receipts/aerofurniture-20261103-preflight.json",
+  "archive_sha256": "538b7eeec3a7ae33a19355288de0cae01c40efd1dcb887d27ce177e635f2430f",
+  "new_paid_model_requests": 0,
+  "no_repeat": true
+}
