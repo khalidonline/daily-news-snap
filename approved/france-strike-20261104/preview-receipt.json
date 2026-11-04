@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "5d45e75cbbfbabf4c1d24c036815f8017ed77c28",
+  "assets": {
+    "approved/france-strike-20261104/card.png": "925d4f3e48c3a7176f04ac8c72de4390453714d7a579657a38d279e3395de59e",
+    "approved/france-strike-20261104/strike1.jpg": "86d1d6bd087c7b3b3c84d2aea828bca8e00a37f10dc7b84c6392570c21802358",
+    "approved/france-strike-20261104/strike2.jpg": "407f6e6e47e5920dd0e0d35eaa06c183fb82817a63f29ac89a71526b8912bdec"
+  },
+  "preview_paths": [
+    "approved/france-strike-20261104/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/france-strike-20261104/card.png": "925d4f3e48c3a7176f04ac8c72de4390453714d7a579657a38d279e3395de59e",
+    "approved/france-strike-20261104/strike1.jpg": "86d1d6bd087c7b3b3c84d2aea828bca8e00a37f10dc7b84c6392570c21802358",
+    "approved/france-strike-20261104/strike2.jpg": "407f6e6e47e5920dd0e0d35eaa06c183fb82817a63f29ac89a71526b8912bdec",
+    "approved/france-strike-20261104/manifest.json": "99ab2add13fe742fa93da1a0987c88392cc509e847505a52fbe3df293013138b",
+    "approved/france-strike-20261104/archive-approval.json": "99e156b1615a059bb02c210339ff2a918b9c025c25181133a7609420b0affb8c",
+    "approved/france-strike-20261104/design-review.json": "d4f65e9279eaf8f2fce9700eab445194e210b0ce25a2e2536e5a65c4cc25b1d4",
+    "approved/france-strike-20261104/sources.json": "c8388088a0e11a6208df3b614d2fdd0990a2b618bdb2414a95ad35d5e583b784",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/france-strike-20261104",
+    "manifest_content_sha256": "41da28b5d2cf32c70313b78b7a661abffd925e791d006fdcfd6e207738feb8d5",
+    "archive_content_sha256": "dcff67a71db558e37b245611f46dd18af34af2ef8ceb0e5d2878d32262085299",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "d4f65e9279eaf8f2fce9700eab445194e210b0ce25a2e2536e5a65c4cc25b1d4",
+    "assets": {
+      "approved/france-strike-20261104/card.png": "925d4f3e48c3a7176f04ac8c72de4390453714d7a579657a38d279e3395de59e",
+      "approved/france-strike-20261104/strike1.jpg": "86d1d6bd087c7b3b3c84d2aea828bca8e00a37f10dc7b84c6392570c21802358",
+      "approved/france-strike-20261104/strike2.jpg": "407f6e6e47e5920dd0e0d35eaa06c183fb82817a63f29ac89a71526b8912bdec"
+    }
+  }
+}

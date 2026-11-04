@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "us-results-20261104",
-  "identity": "b06d1d6da96fdd06a51754cd0215713d8e46c33e5bc39f4ff88fd4d9b932c005",
+  "package": "france-strike-20261104",
+  "identity": "8ce8c6b420e1608abcc7c25dd9521b8b4ba97d565cdf3066df274aebe7626bba",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid explicitly requested: حط صورة ترامب جنب الصوره هذي وانشر. Authorization covers this portrait addition with unchanged measured wording and Story plus Saved Story.",
-  "approved_at": "2026-11-04T07:04:39.826041+00:00",
+  "owner_reference": "Khalid explicitly requested on 2026-11-04: كمل نشر الإضراب. Continue publishing the final prepared labor strike card unchanged to Story and Saved Story.",
+  "approved_at": "2026-11-04T17:39:34.626743+00:00",
   "expires_at": "2026-11-05T20:59:59+00:00",
-  "manifest_sha256": "bcfe0fa04aba63d4b679923f02ff656c92dfde3c790f5563cacc63b308d9fdef",
-  "archive_sha256": "e42162d11c2645e25337cb0982b0fa4cf4648065388827b6d57691c9692dafe0",
-  "prepared_sha256": "996e0a7e1f39b403918be37a91e39b5603e4d77038db7814f964c747a5bdf397",
-  "preview_receipt_sha256": "51f36089c831dbadc4d8c47b4b8586b5869a61db25d5b610362fb9928f1740cf"
+  "manifest_sha256": "976e5068548caec29bbf43b79680d5873385c04bc27191030947b4e0c61a3b4c",
+  "archive_sha256": "8749f3a6cd6199232ab3690c7d34e8249d2dc18e85ebd86d872dac43c2e3f39d",
+  "prepared_sha256": "1868e475d828d54bcdad3a2b3ba5afbebcc53acb567e5f010e98ac1015f8cc18",
+  "preview_receipt_sha256": "c464eeeadfb973c539a9fa8b8e77020e87ed6254fd3d82b15d85c529e39183f4"
 }

@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -12,14 +12,15 @@
   "expires_at": "2026-11-05T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Awaiting exact final preview review; design requested, publication not authorized.",
+    "reference": "Khalid explicitly requested on 2026-11-04: كمل نشر الإضراب. Continue publishing the final prepared labor strike card unchanged to Story and Saved Story.",
     "approved_media_sha256": [
       "925d4f3e48c3a7176f04ac8c72de4390453714d7a579657a38d279e3395de59e"
     ],
     "approved_source_sha256": [
       "86d1d6bd087c7b3b3c84d2aea828bca8e00a37f10dc7b84c6392570c21802358",
       "407f6e6e47e5920dd0e0d35eaa06c183fb82817a63f29ac89a71526b8912bdec"
-    ]
+    ],
+    "reviewed_at": "2026-11-04T17:39:34.626743+00:00"
   },
   "media": [
     {
