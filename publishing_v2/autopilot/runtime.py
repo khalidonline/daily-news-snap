@@ -500,7 +500,7 @@ def promotable_shadow(state, engine, lane, now, source_slot):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=['shadow', 'live'], default='shadow')
+    parser.add_argument('--mode', choices=['shadow', 'live', 'fixed-preview'], default='shadow')
     parser.add_argument('--lane', choices=['daily', 'local', 'both'], default='daily')
     parser.add_argument('--selection', default=os.environ.get('AUTOPILOT_SELECTION_PATH'),
                         help='Free, source-bound editorial brief; required for new production')
@@ -550,16 +550,30 @@ def main():
                     store.save(promoted)
         from .candidate_memory import CandidateMemory
         candidate_memory = CandidateMemory(GitHubJournal('autopilot-candidate-memory'), now)
-        pipeline = Pipeline(agent=agent, sources=sources, render=Renderer(agent, sources),
+        renderer = Renderer(agent, sources)
+        fixed_prepare = None
+        if args.mode == 'fixed-preview':
+            from .fixed_preparation import FixedInformationPreparer
+            fixed_prepare = FixedInformationPreparer(agent, renderer)
+        pipeline = Pipeline(agent=agent, sources=sources, render=renderer,
             store=store, publish=publish_package, output=output / lane, now=now, engine=engine,
             candidate_memory=candidate_memory, published_memory=published_memory,
-            excluded_candidate_ids=sibling_candidate_ids, hooks=False, free_selection=free_selection)
+            excluded_candidate_ids=sibling_candidate_ids, hooks=False, free_selection=free_selection,
+            fixed_prepare=fixed_prepare)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
         if result.get('status') in {'shadow_passed', 'approved', 'published'}:
             candidate_id = result.get('package', {}).get('candidate', {}).get('id')
             if candidate_id:
                 sibling_candidate_ids.add(candidate_id)
         atomic_write(output / f'{lane}.json', json.dumps(result, ensure_ascii=False).encode())
+        if args.mode == 'fixed-preview':
+            # A local draft is never a promotable shadow, display-ready preview,
+            # delivery receipt, or ready-inventory entry. No notification/image send.
+            results.append({'lane':lane,'status':result['status'],'slot':slot,
+                            'cost_micro_usd':sum(r['cost_micro_usd'] for r in agent.receipts),
+                            'reason':result.get('reason'),
+                            'information_package':result.get('information_package')})
+            continue
         if result['status'] == 'shadow_passed':
             state = readiness.read()
             state[lane] = shadow_record(result, engine, slot)
@@ -603,7 +617,7 @@ def main():
         with open(summary_path, 'a') as stream:
             stream.write('\n## Agentic autopilot\n\n' + '\n'.join(
                 f"- {r['lane']}: **{r['status']}**; this attempt ${r['cost_micro_usd']/1e6:.4f}" for r in results) + '\n')
-    return 0 if all(r['status'] in {'shadow_passed', 'published'} for r in results) else 1
+    return 0 if all(r['status'] in {'shadow_passed', 'published', 'awaiting_information_review'} for r in results) else 1
 
 
 if __name__ == '__main__':

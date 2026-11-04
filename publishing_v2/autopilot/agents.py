@@ -628,6 +628,11 @@ class InvalidAgentResponse(ValueError):
     """Completed and accounted response whose JSON could not be read."""
 
 
+from .fixed_information import WRITER_PROMPT, TEXT_REVIEW_PROMPT
+PROMPTS['fixed_information_writer'] = WRITER_PROMPT
+PROMPTS['fixed_information_text_review'] = TEXT_REVIEW_PROMPT
+
+
 class Agents:
     requires_free_selection = True
     def __init__(self, *, env, ledger, transport=None):
@@ -664,7 +669,8 @@ class Agents:
         if role in FREE_SELECTION_ROLES:
             raise BudgetBlocked('selection and timing require a free evidence brief',
                                 code='paid_selection_disabled')
-        fallback_role = {'card_repair':'WRITER','text_review':'REVIEWER'}.get(role, role.upper())
+        fallback_role = {'card_repair':'WRITER','text_review':'REVIEWER',
+                         'fixed_information_writer':'WRITER','fixed_information_text_review':'REVIEWER'}.get(role, role.upper())
         model = self.env.get('AUTOPILOT_' + role.upper() + '_MODEL',
                              self.env.get('AUTOPILOT_' + fallback_role + '_MODEL','claude-sonnet-5'))
         if model not in PRICES:
@@ -676,7 +682,7 @@ class Agents:
         # Keep selected image metadata and original sources for independent review.
         if isinstance(data.get('candidate'), dict):
             candidate = {k: v for k, v in data['candidate'].items() if k != 'visual_discovery'}
-            if role in {'writer', 'card_repair', 'hooks'}:
+            if role in {'writer', 'card_repair', 'hooks', 'fixed_information_writer'}:
                 # Editor rationale can contain unsupported locations or claims.
                 # The writer gets verified research and source-bound identity only.
                 candidate.pop('editorial', None)
