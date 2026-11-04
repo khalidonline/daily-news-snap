@@ -373,6 +373,21 @@ class WorkflowBudgetTests(unittest.TestCase):
                             self.assertIn(step.get('run','').strip(), allowed)
                             self.assertEqual(str(env.get('AUTOPILOT_DAILY_LIMIT_MICRO_USD')), '3000000')
                             self.assertIn('DAILY_BUDGET_GITHUB_TOKEN',env)
+            elif path.name == 'publishing-v2-fixed-preview.yml':
+                # Audited one-shot Agents + Ledger entry point; not a live route.
+                allowed = 'python -m publishing_v2.autopilot.runtime --mode fixed-preview --lane "$AUTOPILOT_LANE"'
+                for job in workflow['jobs'].values():
+                    self.assertNotIn('ANTHROPIC_API_KEY', job.get('env', {}))
+                    for step in job['steps']:
+                        env = step.get('env', {})
+                        if any(k in json.dumps(step) for k in ('secrets.ANTHROPIC_API_KEY', 'secrets.OPENAI_API_KEY', 'secrets.GETTY_API_KEY')):
+                            self.assertIn('ANTHROPIC_API_KEY', env)
+                            self.assertEqual(step.get('run', '').strip(), allowed)
+                            self.assertIn('DAILY_BUDGET_GITHUB_TOKEN', env)
+                            self.assertEqual(env.get('AUTOPILOT_MODE'), 'fixed-preview')
+                            self.assertEqual(str(env.get('DRY_RUN')), '1')
+                            self.assertEqual(str(env.get('POST_TO_SNAPCHAT')), '0')
+                            self.assertNotIn('PYTHONPATH', env)
             elif path.name == 'publishing-v2-cloud-permissions.yml':
                 # This job reports presence, not values, and never exposes these
                 # keys to the subsequent cloud audit. Bind the exact reviewed

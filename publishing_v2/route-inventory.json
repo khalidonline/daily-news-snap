@@ -39,6 +39,7 @@
   ".github/workflows/publishing-v2-complete-preview.yml": "8efa126a392b3926a3b7fbe98b08d8a9f0e76e2465329b68f24fd0307e683819",
   ".github/workflows/publishing-v2-evaluation.yml": "1a069cc63f3363b44f0e9aaedaf30fa19997afafc5a6d2ec2083e4b4636089af",
   ".github/workflows/publishing-v2-first-preview.yml": "716211bdc910355517cbfe5adbe7053d6931790ae7770dd3fe678635c60c6ddc",
+  ".github/workflows/publishing-v2-fixed-preview.yml": "f110db5b94b9f57ab133d7c0b8265f93999fb436edeeef691c37dccc5810ccda",
   ".github/workflows/publishing-v2-public-images.yml": "90a28a6678561af4884d27c70a397bb27df53d9bbfdd76d41339b75f86ed4001",
   ".github/workflows/publishing-v2-saved-replay.yml": "56733ecc14bf158f7ebe000b76ef589cbc024ee6ff5f1d34bdee42b8de54d997",
   ".github/workflows/publishing-v2-snapchat.yml": "b1f5185c5d3536ffcb5d57989c82be8404e5507c02d01237ae5fb2790f588367",
