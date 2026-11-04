@@ -1,5 +1,25 @@
 # Mandatory publication preflight
 
+## FIRST: text-card requests — owner correction 4 November 2026
+
+When Khalid asks for a text card (including «عطني البطاقة»), the fit gate
+runs BEFORE the first user-facing draft, not after «صمم». This includes
+writing blocks and revisions in chat, not only repository-generated cards.
+1. Read the current master and compose the candidate privately.
+2. Run information_text_fit on that exact candidate.
+3. On failure, revise unapproved wording privately and re-run. Do not expose
+   a failed draft or ask the owner to approve fixing an unseen draft.
+4. Present only the successful result's exact display_text. Keep the approved
+   sharing CTA. Re-run after every wording change; a previous receipt is not
+   evidence for new text.
+5. If the gate cannot run, report that blocker; never call the draft measured.
+For already approved wording that fails, get specific shortening/split consent.
+This is an agent execution requirement, not a claim that repository code
+can intercept arbitrary chat. Do not add a second renderer or change fonts.
+Incident evidence: the unmeasured election draft had a two-line headline and
+four three-line bullets; the shortened candidate passed the existing gate.
+The root failure was skipping the pre-review tool, not faulty template metrics.
+
 ## Reference archive — owner decision 2 November 2026
 
 For owner-reviewed information cards, keep factual/image references, credits,
