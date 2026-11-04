@@ -1,0 +1,11 @@
+{
+  "item": "E2",
+  "status": "BLOCKED_COMPARABILITY",
+  "checked_at": "2026-11-04",
+  "reason": "Could not establish matched accommodation categories and geographic coverage. Dubai total154016 includes hotel apartments; LVCVA150612 available room inventory lacks equivalent classification in inspected2024 summary. Do not publish proposed Dubai answer without harmonized definition.",
+  "sources": [
+    "https://www.dubaidet.gov.ae/en/research-and-insights/-/media/files/faqs/annual-visitor-report-2024/det-annual-visitor-report-2024.pdf",
+    "https://epubs.nsla.nv.gov/statepubs/epubs/651944-2024.pdf"
+  ],
+  "next_item": "A3"
+}
