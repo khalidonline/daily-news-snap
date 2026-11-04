@@ -442,6 +442,16 @@ def engine_id():
     paths = sorted(Path(__file__).parent.glob('*.py')) + sorted((root / 'publishing_v2').glob('*.py')) + [
              root / 'daily_budget.py', root / 'news_bot.py', root / 'story_bot.py',
              root / 'requirements.txt', root / 'requirements-v2-images.txt']
+    # Readiness is evidence for exact design inputs as well as code. A changed
+    # master/font/artwork must never reuse an older shadow's engine identity.
+    # This binding does not certify legacy rendering or authorize publication.
+    master = root / 'publishing_v2/design-settings.json'
+    settings = json.loads(master.read_text())
+    artwork = (root / settings['information_template']['base_artwork_path']).resolve()
+    if not artwork.is_relative_to(root):
+        raise ValueError('design_asset_outside_repository')
+    paths += [master, root / 'fonts/Almarai-Regular.ttf', root / 'fonts/Almarai-Bold.ttf',
+              root / 'images/brand/badge.png', artwork]
     return digest({'files': {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths},
                    'models': {key: value for key, value in os.environ.items()
                               if key.startswith('AUTOPILOT_') and key.endswith('_MODEL')}})
