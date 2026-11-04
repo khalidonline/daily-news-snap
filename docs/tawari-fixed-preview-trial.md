@@ -199,3 +199,35 @@ characters. This avoids navigation categories falsely triggering rejection while
 preserving the original literal subject quote when it appears in the publisher's
 lead. No quote is copied from the brief into source evidence, and genuine rejected
 terms in any included article metadata still reach the normal rejection checks.
+
+## Review continuation from the retained writer draft
+
+Run 41856897221 passed source/image preflight, reused research and received a
+writer response. Attempt 4 settled USD 0.070640. The fixed template rejected two
+three-line bullets and a two-line closing on the first card; the second card
+also exceeded its bullet limits. The raw parsed response, original writer
+context binding and normalized response survived in the verified artifact.
+There was no independent text review, visual selection or staged card yet.
+The prior USD 0.329825 reservation remains unresolved and must not be cleared.
+
+The explicit `saved_draft` recovery accepts only this audited fit-failure phase,
+unchanged research/selection, exact settled receipts and ledger history. It
+retains the original raw/context/normalized bytes and uses a separate digest-bound
+editorial edit, restricted to bullets, closing and captions. The original writer
+context is not reconstructed or falsely rebound to freshly retrieved sources.
+The edited copy is measured before consuming recovery. No font, geometry or
+master settings are changed. Visible illustrative-photo disclaimers are removed
+under the owner's instruction; internal source provenance remains intact.
+
+Fresh source, timing, rejection, image and claim checks still precede the same
+journal compare-and-swap. Source drift is compared to the original research
+baseline and requires the independent reviewer to resolve it against current
+full source text. The continuation can call only text review and visual selection,
+once each, starting after recorded attempt 4. It cannot call writer/researcher,
+reuse the writing-limit grant, or clear old reservations. Existing package review
+budget, image rights/bytes, fixed rendering and approval gates remain unchanged.
+
+Original artifacts and the editorial patch/audit are distinct output files.
+A successful continuation only stages an unapproved package; actual visual review,
+complete upload and uploaded-preview verification are still required before
+showing the card. Neither this request nor a staged card authorizes publication.

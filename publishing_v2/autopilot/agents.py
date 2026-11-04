@@ -674,6 +674,14 @@ class Agents:
         self.package_id = env.get('PACKAGE_ID', 'selection:' + env.get('AUTOPILOT_LANE','unspecified'))
 
     def run(self, role, data, images=()):
+        if getattr(self, 'saved_draft_recovery_only', False):
+            if role not in {'fixed_information_text_review', 'visual'}:
+                raise ValueError('saved_draft_review_roles_only')
+            attempted = getattr(self, '_saved_draft_review_attempts', set())
+            if role in attempted:
+                raise ValueError('saved_draft_review_already_attempted')
+            # Consume before transport, including uncertain or unreadable replies.
+            self._saved_draft_review_attempts = attempted | {role}
         if role == 'image_check' and self.env.get('GITHUB_REPOSITORY') == 'khalidonline/daily-news-snap':
             from publishing_v2.image_review_cache import ImageReviewCache
             from publishing_v2.bundle_api import GitHubJournal
@@ -700,7 +708,10 @@ class Agents:
         raise ValueError('writer_cost_estimate_missing')
 
     def _run_uncached(self, role, data, images=()):
-        attempts = 1 if role == 'fixed_information_writer' and getattr(self, 'fixed_writer_recovery_once', False) else 2
+        one_attempt = (getattr(self, 'saved_draft_recovery_only', False)
+                       or (role == 'fixed_information_writer'
+                           and getattr(self, 'fixed_writer_recovery_once', False)))
+        attempts = 1 if one_attempt else 2
         for attempt in range(attempts):
             try:
                 return self._run_once(role, data, images, format_retry=bool(attempt))
