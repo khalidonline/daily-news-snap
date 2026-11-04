@@ -211,7 +211,7 @@
   "publishing_v2/image_probe.py": "75bb4a98dbbaf3d4d68e5bcbec6edc7a8a22b44cbb5e2be45dbdf435552ae218",
   "publishing_v2/image_review_cache.py": "a739ea3a19d016b1f74ef94702b51dfc50a583228f84c6b71f2a3d9a9b00e952",
   "publishing_v2/information_request.py": "b169169a2a98789ae640bc403a98a76ba9a1e8ba0818090ca47a334b77bbd9a7",
-  "publishing_v2/information_text_fit.py": "036704222574cbe8d798db2bc5c75198b98fcd4f3579c20caa663eef6ddc4fd4",
+  "publishing_v2/information_text_fit.py": "391ebfb6771137be529e5ccf753e8adb90adc4bb46069532cc32be6f3ef43d33",
   "publishing_v2/met_images.py": "9fa59bb6450297e42c1f92e725e1e63eb9698cdc6711cd0d58c5ab0f0869d6d0",
   "publishing_v2/metrics_quality.py": "5849fb9e775a3dd5f4e8a25bed57b8a1f2b2c00b82440a0b640ef94a7bee14e6",
   "publishing_v2/official_images.py": "0101aaaaf6aabdc0e17c4db63ddc1aacec4042c26dcfb1c0c8465185a04ed763",
