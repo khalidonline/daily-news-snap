@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from html import escape, unescape
-from urllib.parse import urlsplit, urlencode
+from urllib.parse import urlsplit, urlencode, unquote
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
@@ -169,11 +169,14 @@ def safe_url(url):
 
 class SourceRedirect(HTTPRedirectHandler):
     """Article canonicalization may redirect, but every hop stays allowlisted."""
-    def __init__(self):
+    def __init__(self, pinned_url=None):
         self.hops = 0
+        self.pinned_url = pinned_url
 
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         safe_url(newurl)
+        if self.pinned_url and _article_url(newurl) != _article_url(self.pinned_url):
+            raise ValueError("selected_source_redirect_mismatch")
         self.hops += 1
         if self.hops > 3:
             raise ValueError('source_redirect_limit')
@@ -188,13 +191,122 @@ BROWSER_UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
               '(KHTML, like Gecko) Chrome/124.0 Safari/537.36')
 
 
-def fetch(url, user_agent='DailyNewsSnap/2.0 (editorial research)'):
+def fetch(url, user_agent='DailyNewsSnap/2.0 (editorial research)', *, pinned_url=None):
     request = Request(safe_url(url), headers={'User-Agent': user_agent})
-    with build_opener(SourceRedirect()).open(request, timeout=15) as response:
+    with build_opener(SourceRedirect(pinned_url)).open(request, timeout=15) as response:
+        if pinned_url and _article_url(response.geturl()) != _article_url(pinned_url):
+            raise ValueError("selected_source_redirect_mismatch")
         raw = response.read(2_000_001)
     if len(raw) > 2_000_000:
         raise ValueError('source_too_large')
     return raw
+
+
+def _article_url(url):
+    """Only Unicode percent encoding may differ, never host/path delimiters."""
+    safe_url(url)
+    if re.search(r'%(?:[0-7][0-9a-f])', url, re.I) or re.search(r'%(?![0-9a-f]{2})', url, re.I):
+        raise ValueError('selected_source_url_encoding')
+    return unquote(url, errors='strict')
+
+
+class SelectedArticleMetadata(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.canonical = []
+        self.meta = {}
+        self.blocks = []
+        self.script = None
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == 'link' and 'canonical' in attrs.get('rel', '').lower().split():
+            self.canonical.append(attrs.get('href', ''))
+        if tag == 'meta':
+            key = attrs.get('property', attrs.get('name', ''))
+            self.meta.setdefault(key, []).append(attrs.get('content', ''))
+        if tag == 'script' and attrs.get('type', '').lower() == 'application/ld+json':
+            self.script = []
+
+    def handle_data(self, data):
+        if self.script is not None:
+            self.script.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == 'script' and self.script is not None:
+            self.blocks.append(''.join(self.script))
+            self.script = None
+
+
+def _verified_selected_article(html, source, now):
+    parser = SelectedArticleMetadata()
+    parser.feed(html)
+    parser.close()
+    expected = _article_url(source['url'])
+    if (parser.script is not None or len(parser.canonical) != 1
+            or len(parser.meta.get('og:url', [])) != 1
+            or _article_url(parser.canonical[0]) != expected
+            or _article_url(parser.meta['og:url'][0]) != expected
+            or parser.meta.get('og:title') != [source['title']]):
+        raise ValueError('article_identity_mismatch')
+    articles = []
+    def visit(value, depth=0):
+        if depth > 20:
+            raise ValueError('article_metadata_depth')
+        if isinstance(value, list):
+            for child in value:
+                visit(child, depth + 1)
+        elif isinstance(value, dict):
+            kind = value.get('@type')
+            if kind == 'NewsArticle' or isinstance(kind, list) and 'NewsArticle' in kind:
+                articles.append(value)
+            if '@graph' in value:
+                visit(value['@graph'], depth + 1)
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('duplicate_article_metadata_key')
+            result[key] = value
+        return result
+    for block in parser.blocks:
+        visit(json.loads(block, object_pairs_hook=unique_object))
+    if len(articles) != 1:
+        raise ValueError('article_metadata_ambiguous')
+    article = articles[0]
+    published = datetime.fromisoformat(article.get('datePublished', ''))
+    if (article.get('headline') != source['title'] or published.tzinfo is None
+            or published != datetime.fromisoformat(source['published_at'])
+            or not now - timedelta(days=1) <= published <= now):
+        raise ValueError('article_metadata_mismatch')
+    bound_id = re.match(r'^/articles/(\d+)(?:/|$)', urlsplit(source['url']).path)
+    entity = article.get('mainEntityOfPage')
+    entity = entity.get('@id') if isinstance(entity, dict) else entity
+    if bound_id and entity not in (bound_id[1], source['url'], expected):
+        raise ValueError('article_id_mismatch')
+    for key in ('url', '@id'):
+        if key in article and _article_url(article[key]) != expected:
+            raise ValueError('article_identity_mismatch')
+    # Timezone-less publisher metadata can corroborate the local timestamp,
+    # but never supplies timezone or freshness on its own.
+    for key in ('datePublished', 'article:published_time'):
+        for value in parser.meta.get(key, []):
+            other = datetime.fromisoformat(value)
+            if other != (published if other.tzinfo else published.replace(tzinfo=None)):
+                raise ValueError('article_dates_conflict')
+    descriptions = parser.meta.get('og:description', [])
+    if len(descriptions) > 1:
+        raise ValueError('article_description_ambiguous')
+    summary_parts = []
+    for value in (article.get('articleBody'), article.get('description'),
+                  descriptions[0] if descriptions else None):
+        if value is not None and not isinstance(value, str):
+            raise ValueError('article_description_invalid')
+        if value:
+            text = plain(value)
+            if text and text not in summary_parts:
+                summary_parts.append(text)
+    return published, ' '.join(summary_parts)[:1000]
 
 
 class ArticleText(HTMLParser):
@@ -403,8 +515,8 @@ class Sources:
     def resolve_selection(self, brief, lane, now):
         """Resolve an explicit original source without relying on discovery rank.
 
-        Only a configured publisher feed may confirm the source. The brief's
-        date/title are bindings, never fresh evidence. Absence or drift holds
+        A configured feed, or the exact original article after feed absence,
+        confirms the source. Brief dates/titles are bindings, never evidence. Drift holds
         the selection instead of substituting a different article. Existing
         editorial, timing, evidence and image gates still apply downstream.
         """
@@ -440,7 +552,7 @@ class Sources:
             # timeout and allowlisted redirect limits. No search/model URLs.
             for index, item in enumerate(root.iter('item')):
                 if index >= 250:
-                    break
+                    raise ValueError('selected_source_feed_scan_limit')
                 if item.findtext('link', '') != url:
                     continue
                 title = plain(item.findtext('title', ''))[:250]
@@ -466,7 +578,23 @@ class Sources:
                 return candidate
         except (OSError, ValueError, TypeError, ElementTree.ParseError) as error:
             raise ValueError('selected_source_unverified') from error
-        raise ValueError('selected_source_not_in_publisher_feed')
+        try:
+            raw = fetch(url, user_agent=BROWSER_UA, pinned_url=url)
+            html = raw.decode('utf-8', errors='strict')
+            published, summary = _verified_selected_article(html, source, now)
+            body = plain(html)
+            if len(body) <= 200:
+                raise ValueError('selected_article_body_missing')
+            candidate = {'id': ident, 'url': url, 'title': source['title'],
+                         'summary': summary, 'published_at': source['published_at']}
+            key = (ident, url, candidate['published_at'])
+            self.article_html[url] = html
+            self.attention_cache[key] = [{'id': 'article', 'url': url, 'text': body,
+                                         'source_type': 'news_article',
+                                         'published_at': published.isoformat()}]
+            return candidate
+        except (OSError, ValueError, TypeError, RecursionError) as error:
+            raise ValueError('selected_source_article_metadata_unverified') from error
 
     def discover(self, lane, now):
         if lane not in {'daily', 'local'}:

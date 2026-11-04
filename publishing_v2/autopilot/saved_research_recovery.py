@@ -67,7 +67,8 @@ def write_preflight_failure(output, lane, error):
     import json
     from pathlib import Path
     from publishing_v2.public_images import atomic_write
-    safe = {'selected_source_unverified','planned_image_not_retrieved',
+    safe = {'selected_source_unverified','selected_source_not_in_publisher_feed',
+            'selected_source_article_metadata_unverified','planned_image_not_retrieved',
             'insufficient_subject_visuals_before_recovery','saved_research_evidence_changed',
             'saved_research_candidate_no_longer_eligible','saved_research_timing_changed',
             'attention_article_not_retrieved','saved_research_source_drift_requires_opt_in'}

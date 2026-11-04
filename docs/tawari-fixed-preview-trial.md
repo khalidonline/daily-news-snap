@@ -172,3 +172,30 @@ packages, roles and attempts cannot use it. The writer keeps its usual 8192-toke
 ceiling rather than risking a truncated response. Identical payload pricing is
 estimated without any reservation/transport before consuming recovery; the live
 atomic ledger still enforces the final bound including all prior charges.
+
+## Original article after rolling-feed expiry
+
+Run 41851257253 stopped before changing the journal or reserving attempt 4:
+the original article had aged out of the publisher's rolling RSS list. This was
+not another provider call. The exact original article still returned HTTP 200,
+matching canonical/OG URL, headline, article identity and timezone-aware
+NewsArticle publication date within 24 hours.
+
+Only after a configured feed is successfully read and its fully bounded contents
+lack the selected URL may resolution fetch that exact original URL once. Reaching
+the 250-item scan bound, a feed error or conflicting feed item still fails closed.
+Redirects must preserve the exact URL apart from Unicode percent encoding. The
+article must independently confirm canonical and OG URL, exact headline and OG
+title, one unambiguous NewsArticle, matching article identity and timezone-aware
+publication timestamp. Missing, malformed, duplicate/conflicting or stale/future
+metadata stops the run; dateModified cannot establish freshness. Fresh article
+text is cached as news_article, never mislabelled as publisher-feed evidence.
+No selection, date, research, allowance or approval is substituted or extended.
+All downstream eligibility, timing, claim, image and independent review gates
+remain. Specific source failures now appear in the safe diagnostic allowlist.
+Candidate summaries use only distinct article-specific metadata (articleBody,
+NewsArticle description and unique OpenGraph description), bounded to 1000
+characters. This avoids navigation categories falsely triggering rejection while
+preserving the original literal subject quote when it appears in the publisher's
+lead. No quote is copied from the brief into source evidence, and genuine rejected
+terms in any included article metadata still reach the normal rejection checks.
