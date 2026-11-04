@@ -6,7 +6,7 @@ from pathlib import Path
 from daily_budget import BudgetBlocked
 from . import policy
 from publishing_v2.editorial_production import approve_text, TextRejected, repair_indices, apply_card_patches
-from .feedback import EDITORIAL_FEEDBACK
+from .feedback import EDITORIAL_FEEDBACK, rejected_trigger
 from .evidence import hydrate_editor
 from .eligibility import routine_trigger_rejection
 from .sources import attention_source
@@ -22,7 +22,7 @@ MIN_HOOK_SCORE = 7
 
 
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None, fixed_prepare=None):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None, fixed_prepare=None, zero_call_recovery=None):
         self.agent, self.sources, self.render = agent, sources, render
         # Owner 2026-09-26: three competing openings and a viewer-persona judge
         # before the writer. Off by default so fixture agents keep their scripts.
@@ -35,6 +35,7 @@ class Pipeline:
         self.excluded_candidate_ids = set(excluded_candidate_ids or ())
         self.free_selection = free_selection
         self.fixed_prepare = fixed_prepare
+        self.zero_call_recovery = zero_call_recovery
 
     def save(self, state, event, **values):
         state.update(values)
@@ -66,7 +67,25 @@ class Pipeline:
         if mode == 'live' and not rollout_verified:
             raise ValueError('live_rollout_not_verified')
         state = self.store.read()
-        if state:
+        recovered = False
+        resolved_selection = None
+        if self.zero_call_recovery is not None:
+            if mode != 'fixed-preview':
+                raise ValueError('recovery_requires_fixed_preview')
+            from .zero_call_recovery import prepare_recovery
+            request, original = self.zero_call_recovery
+            state = prepare_recovery(state, request, self.free_selection, original,
+                                     now=self.now(), engine=self.engine)
+            # A missing/drifting source must not consume an otherwise safe recovery.
+            resolved_selection = self.sources.resolve_selection(self.free_selection, lane, self.now())
+            if resolved_selection is None:
+                raise ValueError('selected_source_unverified')
+            try:
+                self.store.save(state)  # Existing journal SHA CAS; no reset/new identity.
+            except Exception:
+                raise PersistenceError('journal_write_unconfirmed') from None
+            recovered = True
+        if state and not recovered:
             if state.get('engine') != self.engine:
                 raise ValueError('slot_engine_changed')
             if state.get('lane') != lane or state.get('mode') != mode:
@@ -78,11 +97,20 @@ class Pipeline:
             # A crashed generation attempt cannot start an unlimited new paid run.
             self.save(state, 'interrupted_generation', status='held', reason='generation_interrupted')
             return state
-        state = {'version': 1, 'engine': self.engine, 'lane': lane, 'mode': mode, 'status': 'working',
-                 'started_at': self.now().isoformat(), 'expires_at': policy.expiry(self.now()), 'audit': []}
-        self.save(state, 'started')
+        if not recovered:
+            state = {'version': 1, 'engine': self.engine, 'lane': lane, 'mode': mode, 'status': 'working',
+                     'started_at': self.now().isoformat(), 'expires_at': policy.expiry(self.now()), 'audit': []}
+            self.save(state, 'started')
         try:
-            candidates = self.sources.discover(lane, self.now())
+            if (mode == 'fixed-preview' and isinstance(self.free_selection, dict)
+                    and 'source' in self.free_selection):
+                candidate = (resolved_selection if recovered else
+                             self.sources.resolve_selection(self.free_selection, lane, self.now()))
+                if candidate is None:
+                    raise ValueError('selected_source_unverified')
+                candidates = [candidate]
+            else:
+                candidates = self.sources.discover(lane, self.now())
             # Owner asked why a stronger trigger (the Oman match) was not used;
             # without the pool on record nobody could tell if it was offered.
             self.save(state, 'pool', pool=[{'id': c.get('id'), 'title': str(c.get('title', ''))[:160],
@@ -93,6 +121,9 @@ class Pipeline:
                 reason = ('selected_in_sibling_lane' if candidate.get('id') in self.excluded_candidate_ids else None)
                 reason = reason or (self.published_memory.reason(candidate) if self.published_memory else None)
                 reason = reason or routine_trigger_rejection(candidate)
+                if (not reason and mode == 'fixed-preview' and isinstance(self.free_selection, dict)
+                        and 'source' in self.free_selection and rejected_trigger(candidate)):
+                    reason = 'owner_rejected_trigger'
                 if not reason and self.candidate_memory:
                     reason = self.candidate_memory.reason(candidate, self.engine)
                 if reason:

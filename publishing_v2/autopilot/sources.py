@@ -4,7 +4,7 @@ import json
 import re
 import unicodedata
 import time
-from datetime import timedelta
+from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from html import escape, unescape
@@ -399,6 +399,74 @@ class Sources:
         self.image_cache = {}
         self.image_search_cache = {}
         self.discovery_rejections = []
+
+    def resolve_selection(self, brief, lane, now):
+        """Resolve an explicit original source without relying on discovery rank.
+
+        Only a configured publisher feed may confirm the source. The brief's
+        date/title are bindings, never fresh evidence. Absence or drift holds
+        the selection instead of substituting a different article. Existing
+        editorial, timing, evidence and image gates still apply downstream.
+        """
+        if (lane not in {'daily', 'local'} or not isinstance(brief, dict)
+                or brief.get('version') != 1 or brief.get('lane') != lane):
+            raise ValueError('free_selection_brief_required')
+        if 'source' not in brief:
+            return None  # Older briefs can still select from ordinary discovery.
+        source, choice = brief.get('source'), brief.get('choice')
+        if (not isinstance(source, dict) or not isinstance(choice, dict)
+                or any(not isinstance(source.get(k), str) or not source[k]
+                       for k in ('url', 'title', 'published_at', 'feed_url'))):
+            raise ValueError('invalid_selected_source')
+        url = safe_url(source['url'])
+        feed_url = source['feed_url']
+        if (feed_url not in FEED_PUBLISHERS
+                or urlsplit(url).hostname not in FEED_PUBLISHERS[feed_url]):
+            raise ValueError('selected_source_publisher_mismatch')
+        ident = hashlib.sha256(url.encode()).hexdigest()[:16]
+        if (brief.get('candidate_id') != ident or choice.get('id') != ident
+                or choice.get('source_title') != source['title']):
+            raise ValueError('selected_source_identity_mismatch')
+        try:
+            original_date = datetime.fromisoformat(source['published_at'])
+            if (original_date.tzinfo is None or now.tzinfo is None
+                    or not now - timedelta(days=1) <= original_date <= now):
+                raise ValueError('selected_source_not_fresh')
+        except (TypeError, ValueError) as error:
+            raise ValueError('selected_source_not_fresh') from error
+        try:
+            root = ElementTree.fromstring(fetch(feed_url))
+            # One known feed, at most 250 items and fetch's existing byte,
+            # timeout and allowlisted redirect limits. No search/model URLs.
+            for index, item in enumerate(root.iter('item')):
+                if index >= 250:
+                    break
+                if item.findtext('link', '') != url:
+                    continue
+                title = plain(item.findtext('title', ''))[:250]
+                published = parsedate_to_datetime(item.findtext('pubDate', ''))
+                if (title != source['title'] or published.tzinfo is None
+                        or published != original_date
+                        or not now - timedelta(days=1) <= published <= now):
+                    raise ValueError('selected_source_metadata_mismatch')
+                candidate = {'id': ident, 'url': url, 'title': title,
+                             'summary': plain(item.findtext('description', ''))[:1000],
+                             'published_at': published.isoformat()}
+                body = plain(item.findtext('{http://purl.org/rss/1.0/modules/content/}encoded', '')
+                             or item.findtext('description', ''))
+                publisher = {'id': 'article', 'url': url, 'text': body,
+                             'source_type': 'publisher_feed', 'feed_url': feed_url,
+                             'published_at': published.isoformat()}
+                key = (ident, url, candidate['published_at'])
+                if attention_source(publisher, candidate):
+                    self.publisher_articles[key] = publisher
+                images = feed_images(item)
+                if images:
+                    self.feed_images[key] = images
+                return candidate
+        except (OSError, ValueError, TypeError, ElementTree.ParseError) as error:
+            raise ValueError('selected_source_unverified') from error
+        raise ValueError('selected_source_not_in_publisher_feed')
 
     def discover(self, lane, now):
         if lane not in {'daily', 'local'}:

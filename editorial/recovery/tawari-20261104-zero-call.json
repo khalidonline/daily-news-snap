@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "expected_state_sha256": "0f0d9ceededf3e876d4c9614f8d840ef110745ccf9daf8ceadb290626bcf6a6b",
+  "original_engine": "e7c5cde7fa2490e3d00f6f4c97d28d854b3d0906afb8f22d81cf45c85761eeda",
+  "original_run_id": 41827775151,
+  "original_head_sha": "712402f4a227c6e9787e88d4b6142a7cb4e5222f",
+  "original_selection_path": "editorial/selected/2026-11-04-daily.json",
+  "original_selection_sha256": "255deb6687dc961d8d3bcfed8fd52222514ece962f091a2ff9f8f06bae98036e",
+  "selection_sha256": "556b8bb3e11cbcbcb1823fd943e2bbb058c9b20466d6b8fdbf7884e28c1e605f",
+  "candidate_id": "720d879aae237bd3",
+  "lane": "daily"
+}

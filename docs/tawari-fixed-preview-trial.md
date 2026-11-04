@@ -33,3 +33,35 @@ illustrations internally, not the actual birds/event. The owner requests a stron
 relevant falcon image without a visible illustrative-image disclaimer. Do not
 claim it depicts the sold bird. Recheck current source-pool membership
 and timing at execution; never bypass expiry or substitute a paid selection.
+
+## Selected-source repair and explicit recovery
+
+A source-bound brief may now pin its original URL, title, publication timestamp
+and configured publisher feed. Fixed-preview resolves that exact article among
+at most 250 feed items, independently of discovery's first-six ranking. It does
+not trust the brief as evidence: the publisher must still return matching
+metadata within 24 hours. Missing/changed evidence stops the run. All original
+eligibility, source, timing, story, image, budget, review and duplicate checks
+still execute. This does not broaden the live/shadow route.
+
+The first real run, 41827775151, stopped before model calls because its falcon
+article was absent from Actions' newest-six Al Yaum subset. A local feed snapshot
+was over ten hours old, explaining the false confidence from local discovery.
+Its diagnostic artifact contains no generated cards, and reports zero cost.
+
+Recovery is not automatic. The optional manual `recovery` input selects a
+reviewed request under `editorial/recovery/`. It binds the exact prior journal,
+original failed fixed-preview run and immutable selection revision, the current
+selection and the same candidate/lane. Only adding the original source pin may
+change the brief. Only the narrow pre-selection missing-pool hold with no agent
+receipts and no later audit events is accepted. Paid, ambiguous, expired,
+changed, already recovered or completed states are rejected. The previous full
+state and audit are retained in the same journal; compare-and-swap must confirm
+before any further generation. The pinned source is revalidated before consuming
+the recovery, so an unavailable source leaves the old held state intact.
+Repeating a used request fails closed.
+
+`editorial/recovery/tawari-20261104-zero-call.json` describes the exact first
+failed attempt. Its presence does not execute or authorize a retry. A separately
+authorized manual run supplies it together with the selected evidence brief.
+Do not delete the held journal, alter historical receipts, or rerun automatically.
