@@ -110,6 +110,9 @@ def test_handoff_has_complete_authorization_window(candidate):
 
 def test_offline_review_preview_authorization_and_dual_delivery(candidate, monkeypatch):
     """Synthetic approvals in temp Git only, not actual review or send evidence."""
+    # This temporary repository is not the live approval authority. Match the
+    # existing offline contract fixtures; production CI revocation checks stay on.
+    monkeypatch.delenv('GITHUB_ACTIONS', raising=False)
     import subprocess
     from datetime import datetime, timezone
     from publishing_v2 import prepared_information as prep, information_request as req
