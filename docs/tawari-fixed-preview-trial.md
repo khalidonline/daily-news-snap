@@ -104,3 +104,36 @@ hold. It is not permission to execute. A separate authorized manual dispatch is
 required. This route does not erase receipts, automatically rerun, publish, send
 messages or relax owner approval. Offline fixture rendering is not the real
 falcon card and does not make that trial complete.
+
+## Deterministic pinned preflight and full-source drift review
+
+Run 41837850989 stopped in free revalidation before changing the held journal or
+making another model call. Actions successfully downloaded two primary article
+photos, causing generic discovery to stop before the brief's three Commons pins.
+Local primary downloads failed instead, hiding this environment difference.
+Explicit asset-ID plans now resolve bounded Commons page IDs directly and retain
+that exact pool through preflight and the visual catalog. Existing rights,
+subject, size, download, duplicate and image checks still apply; missing pins stop
+the run. Query-only plans retain the ordinary discovery route.
+
+A separate read-only check found identical supporting excerpts, source IDs and
+URLs but a changed full publisher-text hash. That is not proof of a cosmetic
+change: a surviving quote can coexist with a correction elsewhere on the page.
+Saved-research recovery therefore requires explicit request opt-in
+`allow_source_text_drift_review`. Only the full-text hash may differ. Every other
+snapshot field and ordering remains exact; fresh research/timing validation runs.
+Both old and current hashes are retained in the audit and bound into the new
+text-review input. The reviewer receives full current sources, must explicitly
+resolve possible corrections, retractions or contradictory context, and must
+return `source_drift_resolved: true` before rendering. A missing/failed check
+stops preparation. Current source hashes are checked before requesting review.
+This exception is confined to the explicitly opted-in saved-research recovery;
+normal source snapshots, approvals and replay checks are not weakened.
+
+Recovery preflight failures now write a small allowlisted diagnostic artifact
+without changing the held journal or granting preview/publication authority.
+No dispatch is automatic. The revised request requires separately authorized
+merge and one recovery attempt after review and CI.
+The diagnostic filename is not proof of zero calls or unchanged state: unexpected
+later persistence errors also reach this handler. Always inspect the journal,
+settled receipts and execution phase before making a cost or retry decision.

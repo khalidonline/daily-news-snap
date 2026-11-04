@@ -10,5 +10,6 @@
   "original_selection_sha256": "556b8bb3e11cbcbcb1823fd943e2bbb058c9b20466d6b8fdbf7884e28c1e605f",
   "selection_sha256": "556b8bb3e11cbcbcb1823fd943e2bbb058c9b20466d6b8fdbf7884e28c1e605f",
   "candidate_id": "720d879aae237bd3",
-  "lane": "daily"
+  "lane": "daily",
+  "allow_source_text_drift_review": true
 }

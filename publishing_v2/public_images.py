@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import tempfile
 import warnings
 from html.parser import HTMLParser
@@ -175,6 +176,20 @@ def commons_files(names, limit=5):
               'titles': '|'.join('File:' + name.removeprefix('File:') for name in names),
               'prop': 'imageinfo', 'iiprop': 'url|mime|size|extmetadata', 'iiurlwidth': 1600}
     return _commons_results(get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params)), limit)
+
+
+def commons_ids(ids):
+    """Retrieve only bounded, exact Commons page IDs, with normal source metadata."""
+    if (not isinstance(ids, list) or not 1 <= len(ids) <= 8
+            or any(not isinstance(i, str) or not re.fullmatch(r'[1-9][0-9]{0,11}', i) for i in ids)):
+        raise ValueError('invalid_selected_commons_ids')
+    ids = list(dict.fromkeys(ids))
+    params = {'action': 'query', 'format': 'json', 'formatversion': 2,
+              'pageids': '|'.join(ids), 'prop': 'imageinfo',
+              'iiprop': 'url|mime|size|extmetadata', 'iiurlwidth': 1600}
+    rows = _commons_results(get_json('https://commons.wikimedia.org/w/api.php?' + urlencode(params)), len(ids))
+    by_id = {row['asset_id']: row for row in rows if row['asset_id'] in ids}
+    return [by_id[i] for i in ids if i in by_id]
 
 
 def commons_subcategories(category, limit=3):

@@ -50,3 +50,38 @@ def prepare_recovery(state,request,selection,original_selection,*,now,engine):
     recovered['audit'].append({'event':'saved_research_recovery_authorized','at':now.isoformat(),
                                'previous_state_sha256':digest(state),'request_sha256':digest(request)})
     return recovered
+
+
+def write_preflight_failure(output, lane, error):
+    """Expose bounded diagnostics without changing the held journal or authority."""
+    import json
+    from pathlib import Path
+    from publishing_v2.public_images import atomic_write
+    safe = {'selected_source_unverified','planned_image_not_retrieved',
+            'insufficient_subject_visuals_before_recovery','saved_research_evidence_changed',
+            'saved_research_candidate_no_longer_eligible','saved_research_timing_changed',
+            'attention_article_not_retrieved','saved_research_source_drift_requires_opt_in'}
+    reason = str(error) if type(error) is ValueError and str(error) in safe else 'preflight_failed'
+    row = {'schema_version':1,'status':'blocked','lane':lane,'reason':reason,
+           'error_type':type(error).__name__,'preview_allowed':False,'publish_authorized':False}
+    output=Path(output);output.mkdir(parents=True,exist_ok=True)
+    atomic_write(output/'recovery-preflight.json',json.dumps(row,sort_keys=True).encode())
+    return row
+
+
+def verify_evidence(previous,current,request):
+    """Compare exact supporting evidence; full-page drift requires fresh review."""
+    import re
+    old,new=copy.deepcopy(previous),copy.deepcopy(current)
+    if not isinstance(old,list) or not isinstance(new,list) or len(old)!=len(new):
+        raise ValueError('saved_research_evidence_changed')
+    drift=[]
+    for a,b in zip(old,new):
+        before,after=a.pop('retrieved_text_sha256',None),b.pop('retrieved_text_sha256',None)
+        if a!=b or not all(isinstance(h,str) and re.fullmatch('[0-9a-f]{64}',h) for h in (before,after)):
+            raise ValueError('saved_research_evidence_changed')
+        if before!=after:
+            drift.append({'source_id':a['id'],'previous_sha256':before,'current_sha256':after})
+    if drift and request.get('allow_source_text_drift_review') is not True:
+        raise ValueError('saved_research_source_drift_requires_opt_in')
+    return drift

@@ -37,6 +37,7 @@ class Pipeline:
         self.fixed_prepare = fixed_prepare
         self.zero_call_recovery = zero_call_recovery
         self.saved_research_recovery = saved_research_recovery
+        self.source_drift = []
 
     def save(self, state, event, **values):
         state.update(values)
@@ -90,6 +91,10 @@ class Pipeline:
             if self.saved_research_recovery is not None:
                 resolved_selection = self.revalidate_saved_research(
                     resolved_selection, state['recovery']['previous_state'])
+                if self.source_drift:
+                    state['source_drift'] = copy.deepcopy(self.source_drift)
+                    state['audit'].append({'event':'saved_research_source_drift_requires_review',
+                        'at':self.now().isoformat(),'sources':copy.deepcopy(self.source_drift)})
             try:
                 self.store.save(state)  # Existing journal SHA CAS; no reset/new identity.
             except Exception:
@@ -200,7 +205,10 @@ class Pipeline:
                         previous = state['recovery']['previous_state']
                         research = copy.deepcopy(previous['research'])
                         policy.validate_research(research, sources, lane, self.now())
-                        if policy.digest(policy.evidence_snapshot(research,sources)) != policy.digest(previous['sources']):
+                        from .saved_research_recovery import verify_evidence
+                        drift = verify_evidence(previous['sources'],policy.evidence_snapshot(research,sources),
+                                                self.saved_research_recovery[0])
+                        if drift != self.source_drift:
                             raise ValueError('saved_research_evidence_changed')
                         self.save(state,'saved_research_reused',candidate_id=candidate['id'],
                                   saved_research_sha256=policy.digest(research))
@@ -225,6 +233,8 @@ class Pipeline:
                         context = dict(sources=sources, original_sources=original_sources,
                                        research=research, lane=lane, verified_timing=timing,
                                        candidate=candidate, expires_at=expires, as_of=state['started_at'])
+                        if self.source_drift:
+                            context['source_drift'] = copy.deepcopy(self.source_drift)
                         handoff = self.fixed_prepare(context, self.output / choice['id'] / 'fixed')
                         self.save(state, 'fixed_information_staged', status='awaiting_information_review',
                                   information_package=handoff)
@@ -390,8 +400,9 @@ class Pipeline:
         validate_story(self.free_selection,sources)
         validate_images(self.free_selection,candidate)
         policy.validate_research(previous['research'],sources,previous['lane'],self.now())
-        if policy.digest(policy.evidence_snapshot(previous['research'],sources)) != policy.digest(previous['sources']):
-            raise ValueError('saved_research_evidence_changed')
+        from .saved_research_recovery import verify_evidence
+        self.source_drift = verify_evidence(previous['sources'],
+            policy.evidence_snapshot(previous['research'],sources),self.saved_research_recovery[0])
         return candidate
 
     def remember_rejection(self, candidate, reason):
