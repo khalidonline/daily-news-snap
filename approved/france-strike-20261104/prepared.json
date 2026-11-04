@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/france-strike-20261104",
+  "manifest_content_sha256": "41da28b5d2cf32c70313b78b7a661abffd925e791d006fdcfd6e207738feb8d5",
+  "archive_content_sha256": "ed5c2adf5b12b1ab0c34d8c8136a1a7570e7a7d22e0d35ca0cadfc424be208a5",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "d4f65e9279eaf8f2fce9700eab445194e210b0ce25a2e2536e5a65c4cc25b1d4",
+  "assets": {
+    "approved/france-strike-20261104/card.png": "925d4f3e48c3a7176f04ac8c72de4390453714d7a579657a38d279e3395de59e",
+    "approved/france-strike-20261104/strike1.jpg": "86d1d6bd087c7b3b3c84d2aea828bca8e00a37f10dc7b84c6392570c21802358",
+    "approved/france-strike-20261104/strike2.jpg": "407f6e6e47e5920dd0e0d35eaa06c183fb82817a63f29ac89a71526b8912bdec"
+  },
+  "preparation_seconds": 0.007
+}

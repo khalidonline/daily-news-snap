@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/france-strike-20261104/manifest.json",
+  "manifest_sha256": "99ab2add13fe742fa93da1a0987c88392cc509e847505a52fbe3df293013138b",
+  "identity": "925d4f3e48c3a7176f04ac8c72de4390453714d7a579657a38d279e3395de59e",
+  "public_indices": [
+    1
+  ],
+  "title": "وش سالفة إضرابات الطيران؟",
+  "expires_at": "2026-11-05T20:59:59+00:00",
+  "owner_authorization": "Not authorized",
+  "empty_profile_confirmation": "Existing profile; live overlap must be checked before any future creation, not an empty-profile assertion."
+}

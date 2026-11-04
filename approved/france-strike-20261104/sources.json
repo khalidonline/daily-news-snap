@@ -1,0 +1,26 @@
+{
+  "facts": [
+    {
+      "url": "https://unsa.aero/unsa-utcac/journee-de-greve-inflation-le-jeudi-5-novembre-2026/",
+      "note": "Union call for 5 November 2026; wage compensation for inflation; no confirmed cancellation claim."
+    }
+  ],
+  "images": [
+    {
+      "path": "approved/france-strike-20261104/strike1.jpg",
+      "url": "https://www.independent.co.uk/news/french-ap-charles-de-gaulle-airport-paris-airlines-b2113709.html",
+      "image_url": "https://static.independent.co.uk/2022/07/01/11/France_Airport_Strike_68995.jpg",
+      "credit": "AP via The Independent",
+      "year": 2022
+    },
+    {
+      "path": "approved/france-strike-20261104/strike2.jpg",
+      "url": "https://www.reuters.com/business/aerospace-defense/europes-summer-discontent-reveals-travel-sector-labour-crisis-2022-06-19/",
+      "image_url": "https://cloudfront-us-east-2.images.arcpublishing.com/reuters/MQV4WGQ3E5NLBM32KTJ2R6NZ6M.jpg",
+      "credit": "Reuters",
+      "year": 2022
+    }
+  ],
+  "rights_note": "No licence acquisition asserted. References retained internally per owner instruction.",
+  "owner_image_request": "Actual labour strike photos; omit phrase صورة توضيحية."
+}
