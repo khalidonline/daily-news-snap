@@ -1,1 +1,1 @@
-{"1": {"status": "SENDING", "upload_id": "7a64cbcd-7f64-4e77-bc4a-d9062ee1da73", "placement": "STORY"}}
+{"1": {"status": "POSTED", "upload_id": "7a64cbcd-7f64-4e77-bc4a-d9062ee1da73", "placement": "STORY", "post_id": "a414c58f-8434-4f2f-a9c7-65d8c782e1eb"}, "recovery": {"at": "2026-11-04T10:11:48.099064+00:00", "reason": "GitHub HTTP500 saving created post ID", "inventory_count": 446, "matched_upload_id": "7a64cbcd-7f64-4e77-bc4a-d9062ee1da73", "post_id": "a414c58f-8434-4f2f-a9c7-65d8c782e1eb", "snapchat_status": "PUBLISHED", "provider_mutations": 0}}
