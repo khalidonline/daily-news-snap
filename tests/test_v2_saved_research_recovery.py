@@ -161,3 +161,68 @@ def test_saved_research_to_preserved_normalized_fitted_reviewed_fixed_card(tmp_p
         with pytest.raises(ValueError):p.run('daily','fixed-preview')
         assert len(case.agent.calls)==3
     finally:case.doCleanups()
+
+
+def test_preflight_diagnostic_is_safe_and_not_an_authorization(tmp_path):
+    from publishing_v2.autopilot.saved_research_recovery import write_preflight_failure
+    import json
+    write_preflight_failure(tmp_path,'daily',ValueError('planned_image_not_retrieved'))
+    row=json.loads((tmp_path/'recovery-preflight.json').read_text())
+    assert row['reason']=='planned_image_not_retrieved'
+    assert row['preview_allowed'] is False and row['publish_authorized'] is False
+    write_preflight_failure(tmp_path,'daily',ValueError('untrusted private text'))
+    assert 'untrusted private text' not in (tmp_path/'recovery-preflight.json').read_text()
+    assert json.loads((tmp_path/'recovery-preflight.json').read_text())['reason']=='preflight_failed'
+
+
+def test_source_body_drift_requires_opt_in_and_exact_support():
+    from publishing_v2.autopilot.saved_research_recovery import verify_evidence
+    old=[{'id':'a','url':'https://example.org/a','text':'Exact quote','retrieved_text_sha256':'a'*64}]
+    new=copy.deepcopy(old);new[0]['retrieved_text_sha256']='b'*64
+    with pytest.raises(ValueError,match='opt_in'):verify_evidence(old,new,{})
+    drift=verify_evidence(old,new,{'allow_source_text_drift_review':True})
+    assert drift==[{'source_id':'a','previous_sha256':'a'*64,'current_sha256':'b'*64}]
+    for key in ('id','url','text'):
+        changed=copy.deepcopy(new);changed[0][key]+=' changed'
+        with pytest.raises(ValueError,match='evidence_changed'):
+            verify_evidence(old,changed,{'allow_source_text_drift_review':True})
+
+
+def test_source_drift_requires_explicit_independent_review_check():
+    from publishing_v2.autopilot import fixed_information as fixed
+    from publishing_v2.editorial_production import TEXT_CHECKS,TextRejected
+    import hashlib
+    package={'title':'خبر','cards':[{'kind':'info','title':'خبر','bullets':['خبر واضح'],'punch':'خلاصة',
+        'claim_ids':['c1'],'image_query':'falcon','image_caption':'صقر'}],
+        'research':{'claims':[{'id':'c1'}]},'sources':[{'id':'a','retrieved_text_sha256':hashlib.sha256(b'fresh').hexdigest()}],
+        'source_drift':[{'source_id':'a','previous_sha256':'a'*64,'current_sha256':hashlib.sha256(b'fresh').hexdigest()}]}
+    class Agent:
+        def run(self,role,data):
+            assert data['source_drift']==package['source_drift']
+            return {'checks':dict.fromkeys(TEXT_CHECKS,True),'repair_indices':[],'reason':'fresh review'}
+    with pytest.raises(TextRejected):fixed.approve_text(package,Agent(),[{'id':'a','text':'fresh'}])
+    class Reviewed(Agent):
+        def run(self,role,data):
+            r=super().run(role,data);r['checks']['source_drift_resolved']=True;return r
+    fixed.approve_text(package,Reviewed(),[{'id':'a','text':'fresh'}]);fixed.require_text_approval(package)
+    package['source_drift'][0]['current_sha256']='c'*64
+    with pytest.raises(ValueError):fixed.require_text_approval(package)
+
+
+def test_pipeline_records_full_source_drift_and_passes_current_text_to_review():
+    case,p,old,seen=pipeline_fixture()
+    try:
+        original=p.sources.research
+        def changed(*args):
+            rows=copy.deepcopy(original(*args))
+            rows[0]['text']+=' Additional unrelated page text.'
+            return rows
+        p.sources.research=changed
+        p.saved_research_recovery[0]['allow_source_text_drift_review']=True
+        result=p.run('daily','fixed-preview')
+        assert result['status']=='awaiting_information_review',result
+        assert result['source_drift'] and seen[0]['source_drift']==result['source_drift']
+        assert 'Additional unrelated' in seen[0]['original_sources'][0]['text']
+        assert result['recovery']['previous_state']==old
+        assert case.agent.calls==[]
+    finally:case.doCleanups()

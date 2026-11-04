@@ -95,12 +95,18 @@ class Renderer:
         subject_search = getattr(self.sources, 'subject_images', None)
         if not subject_search:
             return False
+        plan = candidate.get('card_image_plan')
+        if isinstance(plan, list) and not any(isinstance(row, dict) and 'asset_id' in row for row in plan):
+            plan = None
+        selected_search = getattr(self.sources, 'selected_images', None)
+        if plan and not callable(selected_search):
+            return False
         candidate.pop('visual_feasibility', None)
         found, hashes, origins = {}, set(), set()
         for subject in subjects:
-            if prime:
+            if prime and not plan:
                 prime(candidate, subject)
-            rows = subject_search(subject, subject)
+            rows = selected_search(plan, subject) if plan else subject_search(subject, subject)
             usable = {row['asset_id'] for row in rows
                       if image_publication_eligible(row) and subject_metadata_matches(subject, row)
                       and getattr(self.sources, 'image_bytes', {}).get(row['asset_id'])}
@@ -115,6 +121,8 @@ class Renderer:
                 if sha: hashes.add(sha)
                 if origin: origins.add(origin)
                 found[row['asset_id']] = {k: row[k] for k in ('asset_id', 'source_url', 'sha256', 'title') if k in row}
+        if plan and not {row['asset_id'] for row in plan}.issubset(found):
+            return False
         candidate['visual_feasibility'] = list(found.values())
         return True
 
@@ -165,6 +173,14 @@ class Renderer:
             plan = plans[public_cards.index(card)]
             specific = [q for q in plan.get('queries', []) if isinstance(q, str) and q.strip()][:2]
             queries = list(dict.fromkeys(specific + queries))
+        selected_search = getattr(self.sources, 'selected_images', None)
+        if any(isinstance(row, dict) and 'asset_id' in row for row in plans):
+            # Keep the exact preflight pool through rendering; a successful
+            # unrelated primary pool must not replace the editorial pins.
+            if not callable(selected_search):
+                return []
+            return [row for row in selected_search(plans, subject)
+                    if image_publication_eligible(row) and subject_metadata_matches(subject, row)]
         rows, seen = [], set()
         for query in queries:
             try:
@@ -571,7 +587,14 @@ def main():
             fixed_prepare=fixed_prepare,
             zero_call_recovery=recovery if recovery and recovery[0].get('kind') != 'saved_research' else None,
             saved_research_recovery=recovery if recovery and recovery[0].get('kind') == 'saved_research' else None)
-        result = pipeline.run(lane, args.mode, rollout_verified=verified)
+        try:
+            result = pipeline.run(lane, args.mode, rollout_verified=verified)
+        except Exception as error:
+            if args.mode == 'fixed-preview' and recovery:
+                from .saved_research_recovery import write_preflight_failure
+                diagnostic = write_preflight_failure(output, lane, error)
+                print(json.dumps(diagnostic))
+            raise
         if result.get('status') in {'shadow_passed', 'approved', 'published'}:
             candidate_id = result.get('package', {}).get('candidate', {}).get('id')
             if candidate_id:

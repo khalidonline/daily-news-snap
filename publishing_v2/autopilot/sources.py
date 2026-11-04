@@ -14,7 +14,7 @@ from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
 
 from publishing_v2.public_images import (search_commons, search_commons_category, search_nasa, download_image,
-                                        ImageSourceError, commons_files, commons_subcategories)
+                                        ImageSourceError, commons_files, commons_subcategories, commons_ids)
 from publishing_v2.flickr_images import search_flickr
 from publishing_v2.met_images import search_met, OBJECTS
 from .credits import attribution_eligible
@@ -683,9 +683,23 @@ class Sources:
     def subject_images(self, query, subject):
         return self.recover_images(query, subject) if self.recovery else self.images(query, subject=subject)
 
-    def recover_images(self, query, subject):
+    def selected_images(self, plan, subject):
+        """Resolve pinned Commons identities, never substitute a discovery result.
+
+        Legacy plans used unqualified numeric Commons page IDs. An explicit
+        provider may name Commons only; no URL or unsupported provider routing.
+        """
+        if (not isinstance(plan, list) or not 1 <= len(plan) <= 8
+                or any(not isinstance(row, dict) or row.get('provider', 'commons') != 'commons'
+                       or not isinstance(row.get('asset_id'), str)
+                       or not re.fullmatch(r'[1-9][0-9]{0,11}', row['asset_id']) for row in plan)):
+            raise ValueError('invalid_selected_image_plan')
+        ids = tuple(dict.fromkeys(row['asset_id'] for row in plan))
+        return self.recover_images(subject, subject, _selected_ids=ids)
+
+    def recover_images(self, query, subject, *, _selected_ids=None):
         """Fresh source queries; bounded time/requests; cache metadata, never photos."""
-        key = (query, subject)
+        key = (query, subject, 'selected_commons', _selected_ids) if _selected_ids else (query, subject)
         if key in self.recovery_cache:
             return self.recovery_cache[key]
         if not isinstance(query, str) or not query.strip() or not isinstance(subject, str) or not subject.strip():
@@ -693,7 +707,8 @@ class Sources:
         deadline = time.monotonic() + 90
         found, identities, hashes, origins = [], set(), set(), set()
         attempts = 0
-        profile = self.entity_profile(subject)
+        profile = entity_profile(None) if _selected_ids else self.entity_profile(subject)
+        pool_limit = len(_selected_ids) if _selected_ids else 5
         names = [n for n in profile['names'] if n.casefold() != subject.casefold()]
         def entity_rows(rows):
             # Bound to the subject by the entity's own claim or category, not by
@@ -736,10 +751,12 @@ class Sources:
             stages.remove(met); stages.insert(head, met)
         preferred = self.image_memory.preferred(subject)
         stages = stages[:head] + sorted(stages[head:], key=lambda pair: pair[0].split('_')[0] not in preferred)
+        if _selected_ids:
+            stages = [('selected_commons', lambda: commons_ids(list(_selected_ids)))]
         for provider, search in stages:
             if provider not in {'primary_media','official_media'} and len(found) >= 2:
                 break
-            if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
+            if len(found) >= pool_limit or attempts >= 10 or time.monotonic() >= deadline:
                 break
             event = {'stage':'image_recovery', 'query':query, 'subject':subject, 'provider':provider,
                      'returned':0, 'accepted':0, 'rejections':{}}
@@ -749,7 +766,7 @@ class Sources:
                 rows = search()
                 event['returned'] = len(rows)
                 for original in rows:
-                    if len(found) >= 5 or attempts >= 10 or time.monotonic() >= deadline:
+                    if len(found) >= pool_limit or attempts >= 10 or time.monotonic() >= deadline:
                         break
                     row = dict(original)
                     if provider == 'nasa':
