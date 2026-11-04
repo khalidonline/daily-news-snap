@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "kind": "uncertain_writer",
+  "allow_replacement_writer": true,
+  "allow_new_writer_with_retained_reservation": true,
+  "allow_source_text_drift_review": true,
+  "expected_state_sha256": "6f795ced6c89ab522a207cfaf8a87cff6774f923fd7767e1df3e1c999d9d37a3",
+  "original_engine": "33d66d2c15a5699b72d4157f76154f92da5570589037ec98e2a4a20aa21b767e",
+  "original_run_id": 41843181897,
+  "original_head_sha": "19c76d8ac9bf59b1fc49740bbaf77bb36034876c",
+  "original_selection_path": "editorial/selected/2026-11-04-daily.json",
+  "original_selection_sha256": "556b8bb3e11cbcbcb1823fd943e2bbb058c9b20466d6b8fdbf7884e28c1e605f",
+  "selection_sha256": "556b8bb3e11cbcbcb1823fd943e2bbb058c9b20466d6b8fdbf7884e28c1e605f",
+  "candidate_id": "720d879aae237bd3",
+  "lane": "daily",
+  "retained_reservation": {
+    "id": "d1537077d8c14609a12c49bd790152c5",
+    "day": "2026-11-04",
+    "entry": {
+      "bot": "autopilot:fixed_information_writer",
+      "charged_micro_usd": 329825,
+      "package_id": "720d879aae237bd3",
+      "request_attempt": 3,
+      "reserved_at": "2026-11-04T14:00:35.431139+00:00",
+      "reserved_micro_usd": 329825,
+      "run_attempt": "1",
+      "run_id": "41843181897",
+      "stage": "fixed_information_writer",
+      "status": "reserved"
+    }
+  },
+  "writing_limit_micro_usd": 1100000
+}

@@ -95,13 +95,38 @@ class Pipeline:
                     state['source_drift'] = copy.deepcopy(self.source_drift)
                     state['audit'].append({'event':'saved_research_source_drift_requires_review',
                         'at':self.now().isoformat(),'sources':copy.deepcopy(self.source_drift)})
+            attempt_offset = len(state['agent_receipts'])
+            if request.get('kind') == 'uncertain_writer':
+                from .saved_research_recovery import verify_retained_reservation
+                _, ledger_row = self.agent.ledger.store.read(request['retained_reservation']['day'])
+                attempt_offset = verify_retained_reservation(state['recovery']['previous_state'],
+                                                            request,ledger_row or {},self.now())
+                from daily_budget import PACKAGE_STAGE_GROUPS,PACKAGE_GROUP_LIMITS
+                maximum = self.agent.estimate_fixed_writer({'candidate':resolved_selection,
+                    'research':state['research'],'verified_timing':state['timing']})
+                charged = sum(row['charged_micro_usd'] for row in ledger_row['entries'].values()
+                    if row.get('package_id')==state['candidate_id']
+                    and PACKAGE_STAGE_GROUPS.get(row.get('stage'))=='writing')
+                limit = request.get('writing_limit_micro_usd',PACKAGE_GROUP_LIMITS['writing'])
+                if limit != 1_100_000:
+                    raise ValueError('explicit_one_trial_writing_limit_required')
+                if maximum + charged > limit:
+                    raise BudgetBlocked('retained reservation leaves insufficient writer allowance',
+                        code='package_stage_limit',limit=limit,requested=maximum,charged=charged)
+                self.agent.ledger.package_writing_authorization={
+                    'package_id':state['candidate_id'],'day':request['retained_reservation']['day'],
+                    'limit_micro_usd':limit,'request_sha256':policy.digest(request),
+                    'retained_entry_id':request['retained_reservation']['id'],
+                    'retained_entry':copy.deepcopy(request['retained_reservation']['entry'])}
+                state['recovery']['writer_budget_preflight']={'maximum_micro_usd':maximum,
+                    'retained_charged_micro_usd':charged,'limit_micro_usd':limit}
             try:
                 self.store.save(state)  # Existing journal SHA CAS; no reset/new identity.
             except Exception:
                 raise PersistenceError('journal_write_unconfirmed') from None
             recovered = True
             if self.saved_research_recovery is not None:
-                self.agent.request_attempt_offset = len(state['agent_receipts'])
+                self.agent.request_attempt_offset = attempt_offset
                 self.agent.fixed_writer_recovery_once = True
         if state and not recovered:
             if state.get('engine') != self.engine:
@@ -205,8 +230,8 @@ class Pipeline:
                         previous = state['recovery']['previous_state']
                         research = copy.deepcopy(previous['research'])
                         policy.validate_research(research, sources, lane, self.now())
-                        from .saved_research_recovery import verify_evidence
-                        drift = verify_evidence(previous['sources'],policy.evidence_snapshot(research,sources),
+                        from .saved_research_recovery import verify_evidence, research_source_baseline
+                        drift = verify_evidence(research_source_baseline(previous,self.saved_research_recovery[0]),policy.evidence_snapshot(research,sources),
                                                 self.saved_research_recovery[0])
                         if drift != self.source_drift:
                             raise ValueError('saved_research_evidence_changed')
@@ -359,10 +384,12 @@ class Pipeline:
                 except BudgetBlocked:
                     raise
                 except (ValueError, RuntimeError, OSError) as error:
-                    reason = str(error)[:250] if isinstance(error, ValueError) else type(error).__name__
+                    from .agents import ProviderHTTPError
+                    details = {'provider_failure':copy.deepcopy(error.diagnostic)} if isinstance(error,ProviderHTTPError) else {}
+                    reason = str(error)[:250] if isinstance(error,(ValueError,ProviderHTTPError)) else type(error).__name__
                     self.remember_rejection(candidate, reason)
                     self.save(state, 'candidate_rejected', reason=reason,
-                              candidate_id=candidate['id'], source_title=candidate['title'])
+                              candidate_id=candidate['id'], source_title=candidate['title'], **details)
             self.save(state, 'exhausted_candidates', status='held', reason='no_package_passed_review')
         except PersistenceError:
             raise
@@ -400,8 +427,8 @@ class Pipeline:
         validate_story(self.free_selection,sources)
         validate_images(self.free_selection,candidate)
         policy.validate_research(previous['research'],sources,previous['lane'],self.now())
-        from .saved_research_recovery import verify_evidence
-        self.source_drift = verify_evidence(previous['sources'],
+        from .saved_research_recovery import verify_evidence, research_source_baseline
+        self.source_drift = verify_evidence(research_source_baseline(previous,self.saved_research_recovery[0]),
             policy.evidence_snapshot(previous['research'],sources),self.saved_research_recovery[0])
         return candidate
 

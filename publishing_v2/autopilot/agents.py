@@ -624,6 +624,39 @@ This is required for targeted corrections; never ask to regenerate the package.
 """
 
 
+class ProviderHTTPError(RuntimeError):
+    """Non-success HTTP response; full reservation remains unresolved.
+
+    Only this allowlisted diagnostic may be persisted. Never retain the raw
+    response, provider message, prompt or credentials on the exception.
+    """
+    _ERROR_TYPES = frozenset({
+        'invalid_request_error', 'authentication_error', 'permission_error',
+        'not_found_error', 'request_too_large', 'rate_limit_error',
+        'api_error', 'overloaded_error',
+    })
+
+    def __init__(self, status, role, model, body=None):
+        self.diagnostic = {}
+        if type(status) is int and 100 <= status <= 599:
+            self.diagnostic['status'] = status
+        if isinstance(role, str) and role in PROMPTS:
+            self.diagnostic['role'] = role
+        if isinstance(model, str) and model in PRICES:
+            self.diagnostic['model'] = model
+        if isinstance(body, dict):
+            error = body.get('error')
+            error_type = error.get('type') if isinstance(error, dict) else None
+            if isinstance(error_type, str) and error_type in self._ERROR_TYPES:
+                self.diagnostic['error_type'] = error_type
+            request_id = body.get('request_id')
+            # Anthropic opaque request IDs only; reject arbitrary text/URLs,
+            # control characters and oversized values, rather than cleaning them.
+            if isinstance(request_id, str) and re.fullmatch(r'req_[A-Za-z0-9]{8,128}', request_id):
+                self.diagnostic['request_id'] = request_id
+        super().__init__('agent_http_' + str(self.diagnostic.get('status', 'unknown')))
+
+
 class InvalidAgentResponse(ValueError):
     """Completed and accounted response whose JSON could not be read."""
 
@@ -648,6 +681,23 @@ class Agents:
             cache = ImageReviewCache(GitHubJournal, STYLE + PROMPTS[role] + active_policy(role) + model)
             return cache.run(data, images, lambda d,p: self._run_uncached(role,d,p))
         return self._run_uncached(role,data,images)
+
+    def estimate_fixed_writer(self, data):
+        """Use identical payload/pricing without reserving money or transport."""
+        class Estimated(Exception):
+            def __init__(self, amount): self.amount=amount
+        class EstimateLedger:
+            def reserve(self, amount, bot): raise Estimated(amount)
+        clone=object.__new__(type(self))
+        clone.__dict__=dict(self.__dict__,ledger=EstimateLedger(),receipts=[])
+        def no_transport(*args, **kwargs):
+            raise AssertionError('estimator_must_never_call_provider')
+        clone.transport=no_transport
+        try:
+            clone._run_once('fixed_information_writer',data)
+        except Estimated as result:
+            return result.amount
+        raise ValueError('writer_cost_estimate_missing')
 
     def _run_uncached(self, role, data, images=()):
         attempts = 1 if role == 'fixed_information_writer' and getattr(self, 'fixed_writer_recovery_once', False) else 2
@@ -738,7 +788,7 @@ class Agents:
         status, body = providers._request(transport, 'POST', 'https://api.anthropic.com/v1/messages',
             {'x-api-key': credential, 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}, payload)
         if status != 200:
-            raise RuntimeError('agent_http_' + str(status))
+            raise ProviderHTTPError(status, role, model, body)
         # Usage is accounted even when the answer is incomplete or invalid JSON.
         cost = actual_cost(model, body)
         self.ledger.settle(token, cost)

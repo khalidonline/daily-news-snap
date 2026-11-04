@@ -198,6 +198,27 @@ class Ledger:
                             if e.get('package_id') == context['package_id']
                             and PACKAGE_STAGE_GROUPS.get(e.get('stage')) == group)
                 limit = PACKAGE_GROUP_LIMITS[group]
+                authorization=getattr(self,'package_writing_authorization',None)
+                if group=='writing' and authorization is not None:
+                    # One explicit owner-authorized attempt only; default caps
+                    # and the unresolved prior reservation remain unchanged.
+                    request_sha=authorization.get('request_sha256','')
+                    if (stage!='fixed_information_writer' or context.get('request_attempt')!=4
+                            or authorization.get('package_id')!=package_id
+                            or authorization.get('day')!=day
+                            or authorization.get('limit_micro_usd')!=1_100_000
+                            or not isinstance(request_sha,str) or len(request_sha)!=64
+                            or any(c not in '0123456789abcdef' for c in request_sha)
+                            or row['entries'].get(authorization.get('retained_entry_id'))!=authorization.get('retained_entry')
+                            or authorization.get('retained_entry',{}).get('status')!='reserved'):
+                        raise BudgetBlocked('invalid one-attempt writing authorization',code='package_stage_not_authorized')
+                    if any((entry.get('package_id')==package_id and entry.get('request_attempt')==4)
+                           or (isinstance(entry.get('writing_authorization'),dict)
+                               and entry['writing_authorization'].get('request_sha256')==request_sha)
+                           for entry in row['entries'].values()):
+                        raise BudgetBlocked('one-attempt writing authorization already consumed',
+                                            code='package_stage_not_authorized')
+                    limit=authorization['limit_micro_usd']
                 if spent + amount > limit:
                     raise BudgetBlocked('package ' + group + ' allowance exhausted',
                                         code='package_stage_limit', limit=limit,
@@ -210,6 +231,11 @@ class Ledger:
                 'status': 'reserved',
                 **context,
             }
+            if group=='writing' and getattr(self,'package_writing_authorization',None) is not None:
+                row['entries'][ident]['writing_authorization']={
+                    'request_sha256':self.package_writing_authorization['request_sha256'],
+                    'limit_micro_usd':limit}
+
         self.change(day, update)
         return day, ident
 
