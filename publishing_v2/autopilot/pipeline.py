@@ -22,7 +22,7 @@ MIN_HOOK_SCORE = 7
 
 
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None, fixed_prepare=None):
         self.agent, self.sources, self.render = agent, sources, render
         # Owner 2026-09-26: three competing openings and a viewer-persona judge
         # before the writer. Off by default so fixture agents keep their scripts.
@@ -34,6 +34,7 @@ class Pipeline:
         self.published_memory = published_memory
         self.excluded_candidate_ids = set(excluded_candidate_ids or ())
         self.free_selection = free_selection
+        self.fixed_prepare = fixed_prepare
 
     def save(self, state, event, **values):
         state.update(values)
@@ -58,7 +59,9 @@ class Pipeline:
         return state
 
     def prepare(self, lane, mode, *, rollout_verified=False):
-        if lane not in {'daily', 'local'} or mode not in {'shadow', 'live'}:
+        if mode == 'fixed-preview' and self.fixed_prepare is None:
+            raise ValueError('fixed_preparation_callback_required')
+        if lane not in {'daily', 'local'} or mode not in {'shadow', 'live', 'fixed-preview'}:
             raise ValueError('invalid_lane_or_mode')
         if mode == 'live' and not rollout_verified:
             raise ValueError('live_rollout_not_verified')
@@ -68,7 +71,7 @@ class Pipeline:
                 raise ValueError('slot_engine_changed')
             if state.get('lane') != lane or state.get('mode') != mode:
                 raise ValueError('slot_identity_changed')
-            if state['status'] in {'shadow_passed', 'published', 'held'}:
+            if state['status'] in {'shadow_passed', 'published', 'held', 'awaiting_information_review'}:
                 return state
             if state['status'] in {'approved', 'publishing', 'delivery_pending'}:
                 return state
@@ -165,6 +168,14 @@ class Pipeline:
                         activation = datetime.fromisoformat(research['event_date']).replace(tzinfo=policy.RIYADH)
                         expires = min(expires, policy.expiry(activation))
                     self.save(state, 'researched', sources=sources, research=research)
+                    if mode == 'fixed-preview':
+                        context = dict(sources=sources, original_sources=original_sources,
+                                       research=research, lane=lane, verified_timing=timing,
+                                       candidate=candidate, expires_at=expires, as_of=state['started_at'])
+                        handoff = self.fixed_prepare(context, self.output / choice['id'] / 'fixed')
+                        self.save(state, 'fixed_information_staged', status='awaiting_information_review',
+                                  information_package=handoff)
+                        return state
                     feedback = ''
                     excluded_images = set()
                     draft = None

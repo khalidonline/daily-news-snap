@@ -38,6 +38,7 @@ PACKAGE_STAGE_GROUPS = {
     'researcher': 'writing', 'writer': 'writing', 'card_repair': 'writing',
     'text_review': 'review', 'image_check': 'review',
     'visual': 'review', 'reviewer': 'review',
+    'fixed_information_writer': 'writing', 'fixed_information_text_review': 'review',
 }
 PACKAGE_GROUP_LIMITS = {'writing': 750_000, 'review': 500_000}
 FREE_SELECTION_ROLES = frozenset({'editor', 'timing', 'pitch_judge', 'hooks', 'hook_judge'})
