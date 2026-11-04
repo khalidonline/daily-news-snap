@@ -137,3 +137,38 @@ merge and one recovery attempt after review and CI.
 The diagnostic filename is not proof of zero calls or unchanged state: unexpected
 later persistence errors also reach this handler. Always inspect the journal,
 settled receipts and execution phase before making a cost or retry decision.
+
+## Explicit new attempt with an unresolved old reservation
+
+Run 41843181897 passed pinned-image/current-source preflight and reused research,
+then stopped with a provider RuntimeError before saving a response. Its artifact
+contains only the writer-started intent, journal and summary. The ledger retains
+USD 0.329825 for attempt 3, in addition to USD 0.237805 previously settled. The
+reservation is not evidence of an actual provider charge; the old HTTP code was
+not retained. Never clear or settle it from this diagnostic alone.
+
+The owner separately authorized one new writer attempt while retaining this
+uncertainty. `tawari-20261104-retained-writer.json` binds the exact failed journal,
+failed workflow/head/selection and exact prior reserved ledger entry. Recovery
+reads the ledger without changing it and requires exactly the original two
+settled package attempts and this one unresolved reservation. Changed settlement,
+extra attempts, identity drift or used recovery fail closed. The same package
+budget counts the unresolved amount; the new writer continues at attempt 4 with
+one transport call and no format retry. Research is not regenerated. Any pending
+source-context drift is still measured against the original research snapshot,
+not a newer unreviewed fetch, and still requires the independent review check.
+
+Provider HTTP failures now preserve safe status/role/model diagnostics and only
+allowlisted error types and validated provider-supplied request IDs. No raw error
+body, prompt or credentials are logged. Unknown request IDs are not invented.
+The reservation remains intact, and HTTP failures do not trigger format retries.
+This new manifest is not an automatic rerun or a reconciliation of attempt 3.
+
+The owner then explicitly approved a USD 1.10 writing allowance for this trial
+only, retaining the prior reservation. The default package writing cap stays
+USD 0.75. This scoped allowance requires the exact retained entry, request digest,
+package, current day and writer attempt 4 at atomic reservation time. Other
+packages, roles and attempts cannot use it. The writer keeps its usual 8192-token
+ceiling rather than risking a truncated response. Identical payload pricing is
+estimated without any reservation/transport before consuming recovery; the live
+atomic ledger still enforces the final bound including all prior charges.

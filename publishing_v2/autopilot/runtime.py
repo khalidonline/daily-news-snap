@@ -585,8 +585,8 @@ def main():
             candidate_memory=candidate_memory, published_memory=published_memory,
             excluded_candidate_ids=sibling_candidate_ids, hooks=False, free_selection=free_selection,
             fixed_prepare=fixed_prepare,
-            zero_call_recovery=recovery if recovery and recovery[0].get('kind') != 'saved_research' else None,
-            saved_research_recovery=recovery if recovery and recovery[0].get('kind') == 'saved_research' else None)
+            zero_call_recovery=recovery if recovery and recovery[0].get('kind') not in {'saved_research','uncertain_writer'} else None,
+            saved_research_recovery=recovery if recovery and recovery[0].get('kind') in {'saved_research','uncertain_writer'} else None)
         try:
             result = pipeline.run(lane, args.mode, rollout_verified=verified)
         except Exception as error:
