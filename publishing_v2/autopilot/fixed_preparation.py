@@ -85,6 +85,47 @@ def _persisted_writer_draft(agent, context, output):
     return normalized
 
 
+def validate_saved_draft(request, research):
+    from .saved_draft_recovery import validate_artifacts
+    return validate_artifacts(request, research)
+
+
+def _persisted_editorial_draft(request, context, output):
+    """Keep immutable provider artifacts separate from a reviewed editorial patch.
+
+    The original writer context is NOT rebound to current source text. A separate
+    audit binds the exact patch to fresh context; independent review still follows.
+    """
+    data = validate_saved_draft(request, context['research'])
+    output = safe_path(output)
+    output.mkdir(parents=True, exist_ok=True)
+    payloads = {f'fixed-writer-{key}.json': row['text'].encode('utf-8')
+                for key, row in data['artifacts'].items()}
+    payloads['fixed-editorial-draft.json'] = _json_bytes(data['edited_draft'])
+    payloads['fixed-editorial-repair.json'] = _json_bytes({
+        'schema_version': 1, 'status': 'requires_independent_review',
+        'request_sha256': digest(request), 'fresh_context_sha256': digest(context),
+        'artifact_sha256': {key: row['sha256'] for key, row in data['artifacts'].items()},
+        'edited_sha256': hashlib.sha256(payloads['fixed-editorial-draft.json']).hexdigest(),
+        'changes': data['changes'], 'approved': False,
+        'publish_authorized': False, 'preview_allowed': False})
+    # Check every existing file before writing any; never replace retained bytes.
+    for name, raw in payloads.items():
+        path = output / name
+        if path.is_symlink() or (path.exists() and path.read_bytes() != raw):
+            raise ValueError('saved_draft_artifact_changed')
+        safe_path(path)
+    for name, raw in payloads.items():
+        path = output / name
+        if not path.exists():
+            with path.open('xb') as stream:
+                stream.write(raw)
+                stream.flush()
+                import os
+                os.fsync(stream.fileno())
+    return copy.deepcopy(data['edited_draft'])
+
+
 class FixedInformationPreparer:
     def __init__(self, agent, renderer):
         self.agent, self.renderer = agent, renderer
@@ -95,7 +136,9 @@ class FixedInformationPreparer:
         # No model call or regeneration if a prior attempt already installed it.
         if (Path('approved')/name).exists():
             raise ValueError('Fixed package already exists; inspect original handoff, never regenerate')
-        draft = _persisted_writer_draft(self.agent, context, output)
+        request = getattr(self, 'saved_draft_recovery', None)
+        draft = (_persisted_editorial_draft(request, context, output) if request is not None
+                 else _persisted_writer_draft(self.agent, context, output))
         for card in draft['cards']:
             fit = prepare_text(fixed.card_draft(card))
             if not fit['fit']:

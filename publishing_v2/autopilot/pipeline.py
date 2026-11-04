@@ -77,11 +77,14 @@ class Pipeline:
         if recovery_request is not None:
             if mode != 'fixed-preview':
                 raise ValueError('recovery_requires_fixed_preview')
+            request, original = recovery_request
             if self.saved_research_recovery is not None:
-                from .saved_research_recovery import prepare_recovery
+                if request.get('kind') == 'saved_draft':
+                    from .saved_draft_recovery import prepare_recovery
+                else:
+                    from .saved_research_recovery import prepare_recovery
             else:
                 from .zero_call_recovery import prepare_recovery
-            request, original = recovery_request
             state = prepare_recovery(state, request, self.free_selection, original,
                                      now=self.now(), engine=self.engine)
             # A missing/drifting source must not consume an otherwise safe recovery.
@@ -96,6 +99,13 @@ class Pipeline:
                     state['audit'].append({'event':'saved_research_source_drift_requires_review',
                         'at':self.now().isoformat(),'sources':copy.deepcopy(self.source_drift)})
             attempt_offset = len(state['agent_receipts'])
+            if request.get('kind') == 'saved_draft':
+                from .saved_draft_recovery import verify_ledger
+                _, ledger_row = self.agent.ledger.store.read(request['retained_reservation']['day'])
+                attempt_offset = verify_ledger(state['recovery']['previous_state'],
+                    request, ledger_row or {}, self.now())
+                self.agent.saved_draft_recovery_only = True
+                self.fixed_prepare.saved_draft_recovery = copy.deepcopy(request)
             if request.get('kind') == 'uncertain_writer':
                 from .saved_research_recovery import verify_retained_reservation
                 _, ledger_row = self.agent.ledger.store.read(request['retained_reservation']['day'])
@@ -127,7 +137,8 @@ class Pipeline:
             recovered = True
             if self.saved_research_recovery is not None:
                 self.agent.request_attempt_offset = attempt_offset
-                self.agent.fixed_writer_recovery_once = True
+                if request.get('kind') != 'saved_draft':
+                    self.agent.fixed_writer_recovery_once = True
         if state and not recovered:
             if state.get('engine') != self.engine:
                 raise ValueError('slot_engine_changed')
@@ -230,8 +241,8 @@ class Pipeline:
                         previous = state['recovery']['previous_state']
                         research = copy.deepcopy(previous['research'])
                         policy.validate_research(research, sources, lane, self.now())
-                        from .saved_research_recovery import verify_evidence, research_source_baseline
-                        drift = verify_evidence(research_source_baseline(previous,self.saved_research_recovery[0]),policy.evidence_snapshot(research,sources),
+                        from .saved_research_recovery import verify_evidence
+                        drift = verify_evidence(self.research_source_baseline(previous),policy.evidence_snapshot(research,sources),
                                                 self.saved_research_recovery[0])
                         if drift != self.source_drift:
                             raise ValueError('saved_research_evidence_changed')
@@ -427,10 +438,18 @@ class Pipeline:
         validate_story(self.free_selection,sources)
         validate_images(self.free_selection,candidate)
         policy.validate_research(previous['research'],sources,previous['lane'],self.now())
-        from .saved_research_recovery import verify_evidence, research_source_baseline
-        self.source_drift = verify_evidence(research_source_baseline(previous,self.saved_research_recovery[0]),
+        from .saved_research_recovery import verify_evidence
+        self.source_drift = verify_evidence(self.research_source_baseline(previous),
             policy.evidence_snapshot(previous['research'],sources),self.saved_research_recovery[0])
         return candidate
+
+    def research_source_baseline(self, previous):
+        request = self.saved_research_recovery[0]
+        if request.get('kind') == 'saved_draft':
+            from .saved_draft_recovery import research_source_baseline
+        else:
+            from .saved_research_recovery import research_source_baseline
+        return research_source_baseline(previous, request)
 
     def remember_rejection(self, candidate, reason):
         if self.candidate_memory:
