@@ -6,8 +6,11 @@ acquisition require an independently authorized run; tests inject fixtures.
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
+import tempfile
 
+from publishing_v2.editorial_production import TextRejected
 from publishing_v2.information_text_fit import prepare_text
 from publishing_v2.prepared_information import safe_path
 from publishing_v2.public_images import download_image, get_bytes, atomic_write
@@ -126,9 +129,133 @@ def _persisted_editorial_draft(request, context, output):
     return copy.deepcopy(data['edited_draft'])
 
 
+def _new_review_paths(output):
+    paths = {key: output / name for key, name in {
+        'context': 'fixed-text-review-context.json',
+        'response': 'fixed-text-review-response.json',
+        'package': 'fixed-text-reviewed.json',
+    }.items()}
+    # An existing result, rejection or uncertain call needs explicit recovery.
+    # Never turn a missing/corrupt artifact into permission for another paid call.
+    for path in paths.values():
+        if path.is_symlink() or path.exists():
+            raise ValueError('fixed_text_review_already_started_no_automatic_retry')
+        safe_path(path)
+    return paths
+
+
+def _sync_directory(path):
+    descriptor = os.open(path, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def _write_review_artifact(path, raw, *, new=False):
+    """Install complete durable bytes; exclusive artifacts are never replaced."""
+    if path.is_symlink():
+        raise ValueError('fixed_text_review_unsafe_artifact')
+    safe_path(path)
+    if new:
+        descriptor, temporary = tempfile.mkstemp(dir=path.parent, prefix='.pending-fixed-text-')
+        try:
+            with os.fdopen(descriptor, 'wb') as stream:
+                stream.write(raw)
+                stream.flush()
+                os.fsync(stream.fileno())
+            # Unlike replace, link atomically refuses concurrent review intent.
+            try:
+                os.link(temporary, path)
+            except FileExistsError:
+                raise ValueError('fixed_text_review_already_started_no_automatic_retry') from None
+        finally:
+            os.unlink(temporary)
+    else:
+        atomic_write(path, raw)
+    _sync_directory(path.parent)
+
+
+def _persisted_text_review(package, agent, context, output):
+    """Save the actual independent response and approved text before visuals.
+
+    No saved approval is replayed here. Interrupted, rejected and completed
+    attempts all stop on re-entry, retaining their original evidence unchanged.
+    """
+    paths = _new_review_paths(output)
+    output.mkdir(parents=True, exist_ok=True)
+    _sync_directory(output.parent)
+    data = fixed.text_input(package)
+    original_sources = context['original_sources']
+    request = dict(data, original_sources=original_sources) if original_sources else data
+    binding = {
+        'schema_version': 1, 'status': 'review_started',
+        'context_sha256': digest(context), 'input_sha256': digest(data),
+        'review_request_sha256': digest(request),
+        'unreviewed_package_sha256': digest(package),
+        'approved': False, 'publish_authorized': False, 'preview_allowed': False,
+    }
+    _write_review_artifact(paths['context'], _json_bytes(binding), new=True)
+
+    class RecordingReviewer:
+        def run(self, role, actual_request):
+            if (role != 'fixed_information_text_review'
+                    or digest(actual_request) != binding['review_request_sha256']):
+                raise ValueError('fixed_text_review_request_changed')
+            review = agent.run(role, actual_request)
+            raw = _json_bytes(review)
+            _write_review_artifact(paths['response'], raw, new=True)
+            binding.update(status='review_response_saved',
+                           review_response_sha256=hashlib.sha256(raw).hexdigest())
+            _write_review_artifact(paths['context'], _json_bytes(binding))
+            return review
+
+    try:
+        fixed.approve_text(package, RecordingReviewer(), original_sources)
+    except TextRejected:
+        binding['status'] = 'text_review_rejected'
+        _write_review_artifact(paths['context'], _json_bytes(binding))
+        raise
+    fixed.require_text_approval(package)
+    raw = _json_bytes(package)
+    _write_review_artifact(paths['package'], raw, new=True)
+    binding.update(status='text_review_approved',
+                   reviewed_package_sha256=hashlib.sha256(raw).hexdigest())
+    _write_review_artifact(paths['context'], _json_bytes(binding))
+
+
 class FixedInformationPreparer:
     def __init__(self, agent, renderer):
         self.agent, self.renderer = agent, renderer
+        self._preflight_plan = None
+
+    def preflight(self, context, draft):
+        """Measure and resolve the exact free catalog before review admission.
+
+        The returned payloads can be cost-estimated before recovery journal CAS.
+        A private deep copy pins that same catalog and context for preparation.
+        This grants no text, design, preview or publication approval.
+        """
+        fixed.validate_draft(draft, context['research'])
+        for card in draft['cards']:
+            fit = prepare_text(fixed.card_draft(card))
+            if not fit['fit']:
+                raise ValueError('fixed_information_text_does_not_fit: ' + '; '.join(fit['violations']))
+        package = dict(copy.deepcopy(draft), **{k: copy.deepcopy(v) for k, v in context.items()
+                                              if k != 'original_sources'}, information_schema_version=1)
+        catalog = [row for row in self.renderer.image_catalog(package) if image_without_public_credit(row)]
+        if not catalog:
+            raise ValueError('fixed_information_caption_rights_compatible_source_unavailable')
+        data = fixed.text_input(package)
+        sources = context['original_sources']
+        plan = {'package': package, 'catalog': catalog,
+                'review_payload': dict(data, original_sources=copy.deepcopy(sources)) if sources else data,
+                'visual_payload': {'cards': package['cards'], 'options': catalog,
+                                   'fixed_images': [], 'repair': {}}}
+        self._preflight_plan = copy.deepcopy(plan)
+        self._preflight_context_sha256 = digest(context)
+        self._preflight_draft_sha256 = digest(draft)
+        return copy.deepcopy(plan)
 
     def __call__(self, context, output):
         output = safe_path(output)
@@ -136,21 +263,22 @@ class FixedInformationPreparer:
         # No model call or regeneration if a prior attempt already installed it.
         if (Path('approved')/name).exists():
             raise ValueError('Fixed package already exists; inspect original handoff, never regenerate')
+        _new_review_paths(output)
+        if (self._preflight_plan is not None
+                and self._preflight_context_sha256 != digest(context)):
+            raise ValueError('fixed_preflight_binding_mismatch')
         request = getattr(self, 'saved_draft_recovery', None)
         draft = (_persisted_editorial_draft(request, context, output) if request is not None
                  else _persisted_writer_draft(self.agent, context, output))
-        for card in draft['cards']:
-            fit = prepare_text(fixed.card_draft(card))
-            if not fit['fit']:
-                raise ValueError('fixed_information_text_does_not_fit: ' + '; '.join(fit['violations']))
-        package = dict(copy.deepcopy(draft), **{k:copy.deepcopy(v) for k,v in context.items()
-                                              if k != 'original_sources'}, information_schema_version=1)
-        fixed.approve_text(package, self.agent, context['original_sources'])
-        catalog = [row for row in self.renderer.image_catalog(package) if image_without_public_credit(row)]
-        if not catalog:
-            raise ValueError('fixed_information_caption_rights_compatible_source_unavailable')
-        choices = self.agent.run('visual', {'cards':package['cards'], 'options':catalog,
-                                            'fixed_images':[], 'repair':{}})
+        if self._preflight_plan is None:
+            plan = self.preflight(context, draft)
+        else:
+            if self._preflight_draft_sha256 != digest(draft):
+                raise ValueError('fixed_preflight_binding_mismatch')
+            plan = copy.deepcopy(self._preflight_plan)
+        package, catalog = plan['package'], plan['catalog']
+        _persisted_text_review(package, self.agent, context, output)
+        choices = self.agent.run('visual', plan['visual_payload'])
         ids = choices.get('image_ids', [])
         if not isinstance(ids,list) or len(ids) != len(package['cards']):
             raise ValueError('incomplete_fixed_visual_selection')

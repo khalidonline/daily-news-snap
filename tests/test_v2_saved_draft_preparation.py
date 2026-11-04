@@ -70,7 +70,7 @@ def test_saved_route_requires_fresh_independent_review_before_visual(tmp_path,mo
     monkeypatch.setattr(preparation.fixed,'approve_text',review)
     class Forbidden:
         def run(self,*a,**k): pytest.fail('unexpected writer')
-        def image_catalog(self,*a,**k): pytest.fail('visual before independent review')
+        def image_catalog(self,*a,**k): return [{'asset_id':'fixture','license':'CC0'}]
     prep=preparation.FixedInformationPreparer(Forbidden(),Forbidden())
     prep.saved_draft_recovery={'kind':'saved_draft'}
     with pytest.raises(ValueError,match='independent_source_review_rejected'): prep(context(),'out')

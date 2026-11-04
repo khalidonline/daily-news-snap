@@ -231,3 +231,34 @@ Original artifacts and the editorial patch/audit are distinct output files.
 A successful continuation only stages an unapproved package; actual visual review,
 complete upload and uploaded-preview verification are still required before
 showing the card. Neither this request nor a staged card authorizes publication.
+
+## Compatible images and retained review evidence
+
+Run 41862055233 passed independent text/source-drift review (attempt 5 settled
+USD 0.061478), then stopped because all three selected Commons photographs were
+CC BY 2.0 and needed public credit. General visual feasibility was not proof of
+compatibility with this fixed caption-only layout. Its passed review object was
+not persisted before the later failure; the settled receipt cannot reconstruct
+or authorize reuse of that missing response.
+
+The compatible-image continuation keeps the exact edited text and original
+writer artifacts, changing only the three source-bound image-plan IDs. One
+public-domain and two CC0 peregrine photographs were downloaded and inspected;
+their factual source/author/license records are archived separately in
+`tawari-20261104-image-provenance.json`. They are suitable species photographs,
+not claims about the actual sold birds. No license is relabelled, no attribution
+requirement is removed, and no public disclaimer is added to the card.
+
+The new `saved_draft_images` request binds the exact post-review image hold,
+all four settled receipts, unresolved attempt 3, old and new selection digests,
+and unchanged reviewed copy. It permits only one fresh independent review and
+visual selection beginning at attempt 6; no research or writing call. The missing
+old approval is never synthesized. Existing review spend counts against the same
+USD 0.50 package review cap; exact current payload maxima are checked before CAS.
+
+The fixed-template-compatible catalog now runs before review spending (and before
+recovery CAS). Actual independent review response, approved text package and
+separate context/input/response/package hashes are persisted before visual work.
+An exclusive durable intent blocks automatic retry after interruption or uncertain
+outcome. Rejections and partial results remain diagnostic artifacts, not approval.
+All publication and uploaded-preview gates remain unchanged.

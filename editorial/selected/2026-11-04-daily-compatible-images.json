@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "lane": "daily",
+  "candidate_id": "720d879aae237bd3",
+  "choice": {
+    "id": "720d879aae237bd3",
+    "source_title": "بـ388 ألف ريال.. بيع صقرين في الليلة 17 من المزاد الوطني",
+    "subjects": [
+      "Peregrine falcon"
+    ],
+    "subject_evidence": [
+      {
+        "subject": "Peregrine falcon",
+        "mention": "شاهين",
+        "quote": "بيع صقرين من نوع شاهين فرخ"
+      }
+    ],
+    "why_saudi": "A Saudi auction with an unexpected human detail: 18 trappers shared the capture of one bird, which sold for SAR300,000. Explain catching versus bidding clearly.",
+    "why_now": "Al Yaum reported the seventeenth auction night on November 4; the primary SPA report dates the auction to November 3, 2026.",
+    "angle": "Follow the Sharurah bird from a shared capture to bidding that opened at SAR80,000 and ended at SAR300,000, then explain the auction's narrow eligibility rather than imply every falcon is accepted. Use a strong relevant falcon photo without a visible illustrative-image disclaimer; this is conversational storytelling, not a news bulletin. Preserve source provenance internally and never claim the pictured bird is the auction bird.",
+    "share_reason": "An ordinary reader can retell how one bird involved 18 trappers and fetched SAR300,000; do not invent an equal division of the proceeds.",
+    "research_query": "Peregrine falcon Saudi falconry auction"
+  },
+  "timing": {
+    "eligible": true,
+    "event_date": "2026-11-04",
+    "timing_basis": "report",
+    "event_source_id": "article",
+    "event_quote": "2026/11/04 03:33",
+    "reason": "Fresh Al Yaum reporting of the seventeenth auction night. Primary SPA dates the underlying auction November 3, 2026; do not claim the sale occurred today."
+  },
+  "story": [
+    {
+      "point": "The Sharurah bird involved 18 trappers; do not imply 18 bidders or invent individual proceeds.",
+      "source_id": "article",
+      "quote": "واشترك في طرحه (18) طاروحًا"
+    },
+    {
+      "point": "Bidding opened at SAR80,000, then reached a SAR300,000 sale.",
+      "source_id": "article",
+      "quote": "قبل أن يُباع بمبلغ 300 ألف ريال"
+    },
+    {
+      "point": "Explain why auction entry is limited to young migratory peregrines caught within Saudi Arabia; older peregrines and saker falcons are excluded.",
+      "source_id": "article",
+      "quote": "ولا يشمل الشاهين القرناس والصقر الحر"
+    }
+  ],
+  "image_plan": [
+    {
+      "asset_id": "151773",
+      "purpose": "Illustrative peregrine species image for information card, never identify it as the auction bird."
+    },
+    {
+      "asset_id": "57055582",
+      "purpose": "Distinct illustrative peregrine for story of shared capture; not an image of the actual capture or Saudi event."
+    },
+    {
+      "asset_id": "148383820",
+      "purpose": "Distinct illustrative peregrine for auction eligibility explanation; do not infer age or nationality from pixels."
+    }
+  ],
+  "source": {
+    "url": "https://www.alyaum.com/articles/6689569/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D9%8A%D9%88%D9%85/%D8%A8388-%D8%A3%D9%84%D9%81-%D8%B1%D9%8A%D8%A7%D9%84-%D8%A8%D9%8A%D8%B9-%D8%B5%D9%82%D8%B1%D9%8A%D9%86-%D9%81%D9%8A-%D8%A7%D9%84%D9%84%D9%8A%D9%84%D8%A9-17-%D9%85%D9%86-%D8%A7%D9%84%D9%85%D8%B2%D8%A7%D8%AF-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A",
+    "title": "بـ388 ألف ريال.. بيع صقرين في الليلة 17 من المزاد الوطني",
+    "published_at": "2026-11-04T03:33:00+03:00",
+    "feed_url": "https://www.alyaum.com/rssFeed/1005"
+  }
+}

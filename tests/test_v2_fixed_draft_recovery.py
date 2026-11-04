@@ -121,9 +121,11 @@ def test_normalized_copy_still_requires_real_fit_and_independent_review(tmp_path
                 return {'checks': {}, 'reason': 'unsupported fact'}
             return super().run(role, data)
     agent = RejectingReviewer(raw)
-    # Actual pinned-font prepare_text and approve_text run; no visual work follows rejection.
+    # Catalog compatibility is free preflight; paid visual work still follows review.
+    from types import SimpleNamespace
+    renderer = SimpleNamespace(image_catalog=lambda package: [{'asset_id':'fixture','license':'CC0'}])
     with pytest.raises(TextRejected):
-        preparation.FixedInformationPreparer(agent, object())(context(), 'out')
+        preparation.FixedInformationPreparer(agent, renderer)(context(), 'out')
     assert agent.calls == ['fixed_information_writer', 'fixed_information_text_review']
     assert not (tmp_path/'approved').exists()
 
