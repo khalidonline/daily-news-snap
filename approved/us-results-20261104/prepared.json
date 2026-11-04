@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/us-results-20261104",
+  "manifest_content_sha256": "9735bcb48108f4d85d4395f60c188c0a37e50362cbc4b77a7d40e8e06bca48fa",
+  "archive_content_sha256": "f3e480d7449e682a2d30ff62929c95c6f0af05c38a7fc327180a77d9b81c6459",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "7bc1d2121e64a7aa43c2f0b1f76cb632943b12df6bee128e6653148b39fd921b",
+  "assets": {
+    "approved/us-results-20261104/card.png": "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388",
+    "approved/us-midterms-20261101/capitol.jpg": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d"
+  },
+  "preparation_seconds": 0.003
+}

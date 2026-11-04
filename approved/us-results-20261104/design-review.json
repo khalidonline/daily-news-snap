@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "ترامب باقي… بس حزبه خسر الأغلبية!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              274,
+              215,
+              1020,
+              280
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            274,
+            215,
+            1020,
+            281
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "مبنى الكونغرس الأمريكي — Architect of the Capitol",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              248,
+              695,
+              831,
+              730
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            248,
+            695,
+            831,
+            731
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ترامب جمهوري، وحزبه كان ماسك الكونغرس: مجلس النواب ومجلس الشيوخ.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              133,
+              797,
+              980,
+              849
+            ],
+            [
+              392,
+              873,
+              980,
+              925
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            133,
+            797,
+            1015,
+            925
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تقديرات ٤ نوفمبر تعطي الأغلبية للديمقراطيين بالمجلسين؛ والفرز باقي.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              133,
+              987,
+              980,
+              1044
+            ],
+            [
+              536,
+              1068,
+              980,
+              1119
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            133,
+            987,
+            1015,
+            1119
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "طيب ترامب يطلع؟ لا، هذي مو انتخابات رئاسة. هو باقي رئيس أمريكا.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              138,
+              1181,
+              980,
+              1234
+            ],
+            [
+              585,
+              1258,
+              980,
+              1321
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            138,
+            1181,
+            1015,
+            1321
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بس تمرير قوانينه بيحتاج تفاوض أكثر، والرقابة على إدارته بتزيد.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              149,
+              1383,
+              980,
+              1444
+            ],
+            [
+              696,
+              1468,
+              980,
+              1513
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            149,
+            1383,
+            1015,
+            1513
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "الكرسي باقي لترامب… بس مو كل اللي يبيه بيمشي!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              102,
+              1575,
+              979,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            102,
+            1575,
+            979,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both final 390x693 Story and Saved Story simulations after upper crop correction. Full dome visible. Four two-line bullets, title/closing one line, CTA visible above lower simulated overlay. Actual device appearance not claimed. Exact measured shortened text retained.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390x693 simulation: top 0..39 and bottom 625..692 masked; all key text and CTA visible.",
+      "SAVED_STORY": "Inspected separate 390x693 simulation with same story player masks; key text and CTA visible."
+    }
+  }
+}

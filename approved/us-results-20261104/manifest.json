@@ -1,0 +1,45 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "ترامب باقي… بس حزبه خسر الأغلبية!",
+  "not_before": "2026-11-04T00:00:00+00:00",
+  "expires_at": "2026-11-05T20:59:59+00:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Design requested after measured shortened draft. Final export not yet approved for publication.",
+    "approved_media_sha256": [
+      "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388"
+    ],
+    "approved_source_sha256": [
+      "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/us-results-20261104/card.png",
+      "sha256": "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/us-midterms-20261101/capitol.jpg",
+          "sha256": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Flickr_-_USCapitol_-_East_Front_of_the_U.S._Capitol.jpg",
+          "description": "East front of US Capitol at dusk, 8 December 2011; not election-day photography",
+          "rights_status": "public_domain",
+          "credit": "Architect of the Capitol",
+          "rights_basis": "US federal government work, Commons PD-USGov-AOC; requested credit included in visible caption."
+        }
+      ]
+    }
+  ]
+}

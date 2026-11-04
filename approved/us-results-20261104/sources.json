@@ -1,0 +1,20 @@
+{
+  "facts": [
+    "https://www.axios.com/2026/11/03/election-day-midterm-trump-democrats-republicans",
+    "https://www.abc.net.au/news/2026-11-04/democrats-claim-victory-over-republicans-2026-midterm-elections/107338138"
+  ],
+  "as_of_riyadh": "2026-11-04T09:35:39+03:00",
+  "image_assets": [
+    {
+      "path": "approved/us-midterms-20261101/capitol.jpg",
+      "sha256": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Flickr_-_USCapitol_-_East_Front_of_the_U.S._Capitol.jpg",
+      "description": "East front of US Capitol at dusk, 8 December 2011; not election-day photography",
+      "rights_status": "public_domain",
+      "credit": "Architect of the Capitol",
+      "rights_basis": "US federal government work, Commons PD-USGov-AOC; requested credit included in visible caption."
+    }
+  ],
+  "image_treatment": "Upper panorama crop retaining full Capitol dome; archival 2011 photo, not election-day photo.",
+  "status": "Draft; no publication authorization"
+}
