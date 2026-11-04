@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "ryanair-20261103",
-  "identity": "bdc139cc7fe226184ac9abff95fca7ef2670506a2e8360d0000343f9f99014c7",
+  "package": "us-results-20261104",
+  "identity": "b06d1d6da96fdd06a51754cd0215713d8e46c33e5bc39f4ff88fd4d9b932c005",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid: انشر after exact Ryanair preview on 2026-11-03; public Story and Saved Story under standing destination instruction.",
-  "approved_at": "2026-11-03T08:56:07.574640+00:00",
-  "expires_at": "2026-11-06T20:59:59+00:00",
-  "manifest_sha256": "26b34538694550501ba00141772feab138f5364ad970a13a705a33bc760f89d6",
-  "archive_sha256": "13f8e78dea7012b119964f3a96957a85618c16542f94c742ee72208911df235a",
-  "prepared_sha256": "6f66a432a351229fde9346712c500d0d3e0832166d930783e507f297dd31b019",
-  "preview_receipt_sha256": "a77d533c048a9d24fde86cdb75cd2952e09f45aad8780b40ce5a14ae3b6f131b"
+  "owner_reference": "Khalid explicitly requested: حط صورة ترامب جنب الصوره هذي وانشر. Authorization covers this portrait addition with unchanged measured wording and Story plus Saved Story.",
+  "approved_at": "2026-11-04T07:04:39.826041+00:00",
+  "expires_at": "2026-11-05T20:59:59+00:00",
+  "manifest_sha256": "bcfe0fa04aba63d4b679923f02ff656c92dfde3c790f5563cacc63b308d9fdef",
+  "archive_sha256": "e42162d11c2645e25337cb0982b0fa4cf4648065388827b6d57691c9692dafe0",
+  "prepared_sha256": "e84045a47a229a7faf0ce6998840778ecdfaf6449607d09a781af2febe06185b",
+  "preview_receipt_sha256": "51f36089c831dbadc4d8c47b4b8586b5869a61db25d5b610362fb9928f1740cf"
 }

@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/us-results-20261104/manifest.json",
-  "manifest_sha256": "d79142781bfd3d87a559e89195a8b316fe97898c149684ca36464b32ca586ceb",
+  "manifest_sha256": "bcfe0fa04aba63d4b679923f02ff656c92dfde3c790f5563cacc63b308d9fdef",
   "identity": "b06d1d6da96fdd06a51754cd0215713d8e46c33e5bc39f4ff88fd4d9b932c005",
   "public_indices": [
     1
   ],
   "title": "ترامب باقي… بس حزبه خسر الأغلبية!",
   "expires_at": "2026-11-05T20:59:59+00:00",
-  "owner_authorization": "Awaiting hash-bound authorization staging for requested revision.",
+  "owner_authorization": "Khalid explicitly requested: حط صورة ترامب جنب الصوره هذي وانشر. Authorization covers this portrait addition with unchanged measured wording and Story plus Saved Story.",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
 }

@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -12,14 +12,15 @@
   "expires_at": "2026-11-05T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Khalid requested adding Trump beside Capitol and publishing. Revised export undergoing preparation.",
+    "reference": "Khalid explicitly requested: حط صورة ترامب جنب الصوره هذي وانشر. Authorization covers this portrait addition with unchanged measured wording and Story plus Saved Story.",
     "approved_media_sha256": [
       "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3"
     ],
     "approved_source_sha256": [
       "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
       "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c"
-    ]
+    ],
+    "reviewed_at": "2026-11-04T07:04:39.826041+00:00"
   },
   "media": [
     {

@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "3033177ef1071e94f5f39a3865df6bb2974db2c5",
+  "assets": {
+    "approved/us-results-20261104/card.png": "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3",
+    "approved/us-midterms-20261101/capitol.jpg": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+    "approved/us-results-20261104/trump.jpg": "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c"
+  },
+  "preview_paths": [
+    "approved/us-results-20261104/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/us-results-20261104/card.png": "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3",
+    "approved/us-midterms-20261101/capitol.jpg": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+    "approved/us-results-20261104/trump.jpg": "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c",
+    "approved/us-results-20261104/manifest.json": "d79142781bfd3d87a559e89195a8b316fe97898c149684ca36464b32ca586ceb",
+    "approved/us-results-20261104/archive-approval.json": "cc4ce94dcad7d22f5551acb83786b79852870b072ee656d1940dee62726e6196",
+    "approved/us-results-20261104/design-review.json": "3dc01a4f0c6120703f5cf2bbfbf50e76985156dc8b639cc6479422291a507835",
+    "approved/us-results-20261104/sources.json": "a101fcc43732fa2b2d37385e1f2e49a4a0aafac12baaa6a691d5bb4c95cc4a5e",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/us-results-20261104",
+    "manifest_content_sha256": "c3ef5918f2a36413db0985e4de113fe96a4ce200a973a6117482b441e3c52084",
+    "archive_content_sha256": "7e307da7bdebb699c0aca8c17db3b63a05f7f1202fbb0ed524b14fafda81aaa0",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "3dc01a4f0c6120703f5cf2bbfbf50e76985156dc8b639cc6479422291a507835",
+    "assets": {
+      "approved/us-results-20261104/card.png": "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3",
+      "approved/us-midterms-20261101/capitol.jpg": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+      "approved/us-results-20261104/trump.jpg": "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c"
+    }
+  }
+}
