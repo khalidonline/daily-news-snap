@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان — وين هالمدينة؟",
+  "expires_at": "2026-11-06T10:01:37.134432+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/colmar-20261104/challenge.mp4",
+      "sha256": "29fc597c5a54900ea2576708f812b39da3f38d99d07cea76f6030ee0b710ed1c",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "29fc597c5a54900ea2576708f812b39da3f38d99d07cea76f6030ee0b710ed1c",
+      "reference": "Khalid approved D2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved D2 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "29fc597c5a54900ea2576708f812b39da3f38d99d07cea76f6030ee0b710ed1c",
+    "source_manifest": {
+      "path": "approved/colmar-20261104/source-approval.json",
+      "sha256": "c1a8152512546713150f49235e8c07badbc69a272b7382906f1d47c1b3cb1c5a"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/colmar-20261104/frame-0.5.png",
+        "sha256": "c53936d7684ef24a442133b6967ac9d1ae698356e9ce04ee5298d3c482036de0"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/colmar-20261104/frame-3.5.png",
+        "sha256": "dab12a9d87feb58e19d106f02c6038c4173542a3ed56ec7de07f43de82ed53c7"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/colmar-20261104/frame-4.5.png",
+        "sha256": "815f530fa5396664d604b7af4e6b9c4759c623d1d8e83c1d63e5dcaf2901dd80"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/colmar-20261104/frame-5.5.png",
+        "sha256": "193e073ea4b6ca7badb248825d4df39c9ac7dc1483fc470aba654c38ab00bcd6"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/colmar-20261104/frame-6.5.png",
+        "sha256": "b82907f0beafad6140b6a0c6ab6e0cf68b665139310bbc5f215ffa3a0657cebe"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/colmar-20261104/frame-7.5.png",
+        "sha256": "fe3ee6fbdc7c605750735b264941d64589ae0a6fe67959124e75b80f819cc2b2"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/colmar-20261104/frame-8.5.png",
+        "sha256": "7769c055a15f8e1618baf2672bd74e564ff973808fc8700fbb6d11aba2a08bd9"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/colmar-20261104/frame-11.5.png",
+        "sha256": "565c356fe917e00ff2fdfba4f32dc5d5a24ac209cfaa6ecbbd68b84f2d3021db"
+      }
+    ]
+  }
+}
