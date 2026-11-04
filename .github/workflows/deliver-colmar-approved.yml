@@ -30,4 +30,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           POST_TO_SNAPCHAT: '1'
           DRY_RUN: '0'
-        run: python -m approved.colmar-20261104.deliver
+        run: |
+          python -m approved.colmar-20261104.reconcile
+          python -m approved.colmar-20261104.deliver
