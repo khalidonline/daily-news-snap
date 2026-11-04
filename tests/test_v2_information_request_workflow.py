@@ -18,7 +18,20 @@ def test_workflow_registration_is_explicit_and_preserves_recovery():
     checkout=w['jobs']['publish']['steps'][0]
     assert checkout['with']['ref']=='${{ github.sha }}'
     assert checkout['with']['fetch-depth']==0
-    assert not (ROOT/'.github/information-publish-request.json').exists()
+    # A previous approved request is retained for recovery. Its presence alone
+    # must never cause a later ordinary push to publish it again.
+    assert set(events)=={'push','workflow_dispatch'}
+    job=w['jobs']['publish']
+    assert job['if']=="github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'"
+    steps=job['steps']
+    resolver=next(step for step in steps if step.get('id')=='request')
+    assert resolver['if']=="github.event_name == 'push'"
+    assert resolver['run']=='python -m publishing_v2.information_request resolve-push --event "$GITHUB_EVENT_PATH" >> "$GITHUB_OUTPUT"'
+    assert not resolver.get('continue-on-error',False)
+    delivery=next(step for step in steps if 'publishing_v2.deliver_information' in step.get('run',''))
+    assert steps.index(resolver)<steps.index(delivery)
+    assert delivery['env']['PACKAGE']=="${{ github.event_name == 'push' && steps.request.outputs.package || inputs.package }}"
+    assert delivery['if']=="github.event_name == 'push' || inputs.mode == 'prepared-information'"
 
 def event(root,before):
     return {'ref':'refs/heads/main','before':before,'after':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),
@@ -38,6 +51,19 @@ def test_cli_executes_resolver_in_real_process(authorized):
                           cwd=root,env={**os.environ,'PYTHONPATH':str(ROOT)},capture_output=True,text=True)
     assert result.returncode==0,result.stderr
     assert result.stdout.strip()=='package=radio-school-20261031'
+
+@pytest.mark.parametrize('followup_commits',[1,2])
+def test_retained_request_cannot_authorize_unrelated_push(authorized,followup_commits):
+    root,_=authorized;m=module()
+    request=root/m.REQUEST_PATH
+    original=request.read_bytes()
+    before=event(root,'unused')['after']
+    for number in range(followup_commits):
+        (root/'readme.txt').write_text(f'unrelated followup {number}')
+        commit(root)
+    assert request.read_bytes()==original
+    with pytest.raises(ValueError,match='No explicit request in push'):
+        m.resolve_push(root,event(root,before),NOW)
 
 @pytest.mark.parametrize('fault',['ordinary','wrong_head','wrong_branch','forced','zero_before','deleted','modified_worktree'])
 def test_invalid_push_never_resolves_publication(authorized,fault):
