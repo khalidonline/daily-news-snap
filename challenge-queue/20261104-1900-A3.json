@@ -4,7 +4,7 @@
   "slot": "19:00",
   "item": "A3",
   "topic": "من بدأ أول؟ — HP وديل",
-  "status": "DISPATCHED_NOT_CONFIRMED",
+  "status": "POSTED_BOTH",
   "workflow_run_id": 41864338415,
   "workflow_job_id": 126694519166,
   "commit": "c367cd7bed0cf082801f5f88721691bc3f961377",
@@ -12,14 +12,96 @@
   "identity": "e496fbf76631b1f8fd6e646f3eebd0d2be67f12bede4fa52920ab330b9db6812",
   "archive_sha256": "a8a6d99fdba6703416f8fe4e0aabbe2078759fcc274b260ac2058f659f8e8024",
   "receipt_path": "api-receipts/hp-dell-20261104-preflight.json",
-  "next_item": "A3_RECONCILE_FIRST",
+  "next_item": "B3",
   "after_confirmed_next_item": "B3",
-  "completed_total": 9,
-  "completed_today_confirmed": 1,
+  "completed_total": 10,
+  "completed_today_confirmed": 2,
   "blocked_items": [
     "E2"
   ],
-  "remaining_unconfirmed_topics": 15,
+  "remaining_unconfirmed_topics": 14,
   "new_paid_model_requests": 0,
-  "reason": "GitHub runner queued; no job steps started as of19:14 Riyadh. Do not submit duplicate. Inspect existing run and both receipts before another topic. If confirmed later count A3 as second challenge Nov4, advance B3."
+  "reason": "Both destinations independently confirmed POSTED and Snapchat PUBLISHED. Second challenge for Nov4; no further challenge this day. B3 is next under the unchanged schedule; do not repeat A3.",
+  "completed_today": 2,
+  "no_repeat": true,
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "9fce9f38-74c1-4cff-b387-ea05747949b0",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "aeaa4e5b-8d63-4807-b3e9-d0306cd18c45",
+          "mediaId": "aeaa4e5b-8d63-4807-b3e9-d0306cd18c45",
+          "mediaIds": [
+            "aeaa4e5b-8d63-4807-b3e9-d0306cd18c45"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "c086ddf3-7b93-46ed-9efa-5d90275bc9b4",
+          "sourceUploadIds": [
+            "c086ddf3-7b93-46ed-9efa-5d90275bc9b4"
+          ],
+          "mediaUploadedAt": "2026-11-04T16:09:44.380Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "900f2a0646ce5fd5d9fb49ecafede8e72f405f2c135c8990756a1ea167de9448"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "deb7ff8a-8f59-4878-b0e8-4a0a64f65e77",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYZWZ6bmNxampyAaGnVEdiAaGnVEc3AAAAAA",
+          "mediaId": "a2e4222f-2997-4ff0-85e2-90d4397fdede",
+          "mediaIds": [
+            "a2e4222f-2997-4ff0-85e2-90d4397fdede"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "18362146-e16a-4f63-93fa-3c2c23aa00eb",
+          "sourceUploadIds": [
+            "18362146-e16a-4f63-93fa-3c2c23aa00eb"
+          ],
+          "mediaUploadedAt": "2026-11-04T16:11:01.408Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "900f2a0646ce5fd5d9fb49ecafede8e72f405f2c135c8990756a1ea167de9448"
+    }
+  },
+  "reconciliation": {
+    "checked_at": "2026-11-04T17:15:00Z",
+    "provider_mutations": 0,
+    "workflow_conclusion": "success",
+    "workflow_updated_at": "2026-11-04T16:21:53Z",
+    "evidence_url": "https://github.com/khalidonline/daily-news-snap/blob/snapchat-api-state/api-receipts/hp-dell-20261104-preflight.json",
+    "previous_record": {
+      "batch": "approved-25-20261030",
+      "date_riyadh": "2026-11-04",
+      "slot": "19:00",
+      "item": "A3",
+      "topic": "من بدأ أول؟ — HP وديل",
+      "status": "DISPATCHED_NOT_CONFIRMED",
+      "workflow_run_id": 41864338415,
+      "workflow_job_id": 126694519166,
+      "commit": "c367cd7bed0cf082801f5f88721691bc3f961377",
+      "video_sha256": "900f2a0646ce5fd5d9fb49ecafede8e72f405f2c135c8990756a1ea167de9448",
+      "identity": "e496fbf76631b1f8fd6e646f3eebd0d2be67f12bede4fa52920ab330b9db6812",
+      "archive_sha256": "a8a6d99fdba6703416f8fe4e0aabbe2078759fcc274b260ac2058f659f8e8024",
+      "receipt_path": "api-receipts/hp-dell-20261104-preflight.json",
+      "next_item": "A3_RECONCILE_FIRST",
+      "after_confirmed_next_item": "B3",
+      "completed_total": 9,
+      "completed_today_confirmed": 1,
+      "blocked_items": [
+        "E2"
+      ],
+      "remaining_unconfirmed_topics": 15,
+      "new_paid_model_requests": 0,
+      "reason": "GitHub runner queued; no job steps started as of19:14 Riyadh. Do not submit duplicate. Inspect existing run and both receipts before another topic. If confirmed later count A3 as second challenge Nov4, advance B3."
+    }
+  }
 }
