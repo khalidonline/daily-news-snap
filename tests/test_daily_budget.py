@@ -97,7 +97,7 @@ class DailyBudgetTests(unittest.TestCase):
         commissioning.reserve(7_000_000, 'commissioning')
 
     def test_configured_ceiling_requires_integer_between_three_and_twenty_dollars(self):
-        for limit in [None, True, False, 3_000_000.0, '10000000', -1, 0,
+        for limit in [True, False, 3_000_000.0, '10000000', -1, 0,
                       2_999_999, 20_000_001]:
             with self.subTest(limit=limit), self.assertRaises(budget.BudgetBlocked):
                 budget.Ledger(self.store, limit_micro_usd=limit)

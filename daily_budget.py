@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Shared paid API ceiling, default $3/day, independent of bot or retry.
+"""Shared paid API accounting and request guards.
 
-Explicit commissioning callers can raise the shared ceiling up to $20/day.
-Each caller still enforces its own ceiling against all shared charges.
+Production has no aggregate daily ceiling (owner decision, 2026-11-04).
+Explicit bounded callers retain their own ceiling against all shared charges.
 
 Prices: https://platform.claude.com/docs/en/about-claude/pricing (2026-09-10).
 Reservations use conservative request bounds, never average historic costs.
@@ -43,10 +43,15 @@ PACKAGE_GROUP_LIMITS = {'writing': 750_000, 'review': 500_000}
 FREE_SELECTION_ROLES = frozenset({'editor', 'timing', 'pitch_judge', 'hooks', 'hook_judge'})
 
 def autopilot_daily_limit(now, requested=8_000_000):
-    """Owner approved $8 on Sep 22-23 only; $3 thereafter (Saudi dates)."""
+    """Historical limits; no aggregate cap from Nov 4 (Saudi dates).
+
+    Legacy workflow requested values no longer reinstate the removed daily cap.
+    """
     if now.tzinfo is None:
         raise ValueError('timezone_required')
     day = now.astimezone(KSA).date().isoformat()
+    if day >= '2026-11-04':
+        return None
     ceiling = 8_000_000 if '2026-09-22' <= day <= '2026-09-23' else LIMIT_MICRO_USD
     return min(int(requested), ceiling)
 
@@ -77,7 +82,7 @@ def day_key(now=None):
 class GitHubStore:
     def __init__(self, repository, token):
         if not repository or not token:
-            raise BudgetBlocked('shared $3 daily budget credentials are missing')
+            raise BudgetBlocked('shared API accounting credentials are missing')
         self.repository = repository
         self.token = token
 
@@ -127,9 +132,9 @@ class GitHubStore:
 
 class Ledger:
     def __init__(self, store, now=None, limit_micro_usd=LIMIT_MICRO_USD):
-        if (type(limit_micro_usd) is not int
+        if limit_micro_usd is not None and (type(limit_micro_usd) is not int
                 or not LIMIT_MICRO_USD <= limit_micro_usd <= MAX_LIMIT_MICRO_USD):
-            raise BudgetBlocked('daily ceiling must be integer micro-USD between $3 and $20')
+            raise BudgetBlocked('daily ceiling must be None or integer micro-USD between $3 and $20')
         self.store = store
         self.now = now or (lambda: datetime.now(timezone.utc))
         self.limit_micro_usd = limit_micro_usd
@@ -142,8 +147,9 @@ class Ledger:
                        'entries': {}}
             try:
                 assert row['version'] == 1 and row['day'] == day
-                assert type(row['limit_micro_usd']) is int
-                assert LIMIT_MICRO_USD <= row['limit_micro_usd'] <= MAX_LIMIT_MICRO_USD
+                assert row['limit_micro_usd'] is None or (
+                    type(row['limit_micro_usd']) is int and
+                    LIMIT_MICRO_USD <= row['limit_micro_usd'] <= MAX_LIMIT_MICRO_USD)
                 assert isinstance(row['entries'], dict)
                 for entry in row['entries'].values():
                     assert type(entry['charged_micro_usd']) is int
@@ -152,7 +158,9 @@ class Ledger:
                 raise BudgetBlocked('daily budget ledger is invalid')
             # Upgrade only validated state, within the same CAS as the charge.
             # A lower-ceiling caller never downgrades or resets shared history.
-            row['limit_micro_usd'] = max(row['limit_micro_usd'], self.limit_micro_usd)
+            row['limit_micro_usd'] = (None if row['limit_micro_usd'] is None
+                                     or self.limit_micro_usd is None else
+                                     max(row['limit_micro_usd'], self.limit_micro_usd))
             change(row)
             if self.store.write(day, version, row):
                 return
@@ -160,8 +168,9 @@ class Ledger:
         raise BudgetBlocked('daily budget is busy; no paid request authorized', code='ledger_contention', limit=self.limit_micro_usd)
 
     def reserve(self, amount, bot):
-        if type(amount) is not int or not 0 < amount <= self.limit_micro_usd:
-            raise BudgetBlocked(f'request cannot fit within the ${self.limit_micro_usd / 1e6:g} daily ceiling', code='request_exceeds_ceiling', limit=self.limit_micro_usd, requested=amount)
+        if type(amount) is not int or amount <= 0 or (
+                self.limit_micro_usd is not None and amount > self.limit_micro_usd):
+            raise BudgetBlocked('request must be positive integer micro-USD and fit any configured daily ceiling', code='request_exceeds_ceiling', limit=self.limit_micro_usd, requested=amount)
         day, ident = day_key(self.now()), uuid.uuid4().hex
         context = {k:v for k,v in getattr(self,'context',{}).items()
                    if k in {'package_id','stage','request_attempt'}
@@ -178,7 +187,7 @@ class Ledger:
                                     code='package_stage_not_authorized')
         def update(row):
             total = sum(e['charged_micro_usd'] for e in row['entries'].values())
-            if total + amount > self.limit_micro_usd:
+            if self.limit_micro_usd is not None and total + amount > self.limit_micro_usd:
                 raise BudgetBlocked(f'${self.limit_micro_usd / 1e6:g} daily budget: ${total / 1e6:.4f} spent/reserved; request held', code='insufficient_remaining', limit=self.limit_micro_usd, requested=amount, charged=total)
             if group:
                 # Same atomic CAS as the daily reservation: competing jobs and
@@ -220,7 +229,7 @@ class Ledger:
 
 def shared_ledger():
     return Ledger(GitHubStore(os.getenv('GITHUB_REPOSITORY'),
-                             os.getenv('DAILY_BUDGET_GITHUB_TOKEN')))
+                             os.getenv('DAILY_BUDGET_GITHUB_TOKEN')), limit_micro_usd=None)
 
 
 def _contains(value, key):
@@ -235,11 +244,11 @@ def prepare(original):
     payload = copy.deepcopy(original)
     model = payload.get('model')
     if model not in PRICES:
-        raise BudgetBlocked(f'unpriced model blocked by $3 daily budget: {model}')
+        raise BudgetBlocked(f'unpriced model blocked by API accounting guard: {model}')
     if payload.get('stream') or payload.get('speed') or payload.get('inference_geo', 'global') != 'global':
         raise BudgetBlocked('unpriced API mode blocked by daily budget')
-    # Server-side search can accumulate hidden input across turns. At most one
-    # search per request fits a conservative Sonnet context reservation in $3.
+    # Server-side search can accumulate hidden input across turns. Retain the
+    # reviewed one-search request bound independently of the daily ceiling.
     searches = 0
     for tool in payload.get('tools', []):
         if tool.get('type') not in {'web_search_20250305', 'web_search_20260209', 'web_search_20260318'} or tool.get('name') != 'web_search':
@@ -309,7 +318,7 @@ def urlopen(url, data=None, *args, **kwargs):
         if body is not None and (host == 'fal.run' or host.endswith('.fal.run')
                 or 'bytepluses.com' in host or 'volces.com' in host
                 or host == 'api.openai.com'):
-            raise BudgetBlocked('unpriced paid provider blocked by $3 daily budget')
+            raise BudgetBlocked('unpriced paid provider blocked by API accounting guard')
         return _transport(url, data, *args, **kwargs)
     if urllib.parse.urlsplit(address).path != '/v1/messages':
         raise BudgetBlocked('unpriced Anthropic endpoint blocked')
@@ -329,10 +338,10 @@ def urlopen(url, data=None, *args, **kwargs):
     try:
         actual = actual_cost(payload['model'], json.loads(raw))
         ledger.settle(token, actual)
-        print(f'  daily $3 budget: request ${actual / 1e6:.4f} accounted')
+        print(f'  API accounting: request ${actual / 1e6:.4f} accounted')
     except Exception as exc:
         # Preserve a completed useful response. Unsettled money remains locked.
-        print(f'  daily $3 budget: reservation retained ({type(exc).__name__})')
+        print(f'  API accounting: reservation retained ({type(exc).__name__})')
     return io.BytesIO(raw)
 
 
