@@ -1,8 +1,12 @@
 """One operational Telegram report per run, with durable ambiguous-send handling."""
+import argparse
 import json
+import sys
+from datetime import datetime, timezone
 import os
 from pathlib import Path
 from publishing_v2.bundle_api import GitHubJournal, request
+from .operational_snapshot import operational_report, render_operational
 
 
 def user_message(summary, env):
@@ -44,7 +48,18 @@ def user_message(summary, env):
     return '\n\n'.join(lines)
 
 
-def main():
+def main(argv=None):
+    # Explicit opt-in: offline reporting never reaches the legacy sender below.
+    if argv:
+        parser = argparse.ArgumentParser(description='Read-only operational snapshot report')
+        parser.add_argument('--read-only', type=Path, required=True)
+        parser.add_argument('--now', help='Timezone-aware report time for reproducible snapshots')
+        parser.add_argument('--format', choices=['text', 'json'], default='text')
+        args = parser.parse_args(argv)
+        now = datetime.fromisoformat(args.now.replace('Z', '+00:00')) if args.now else datetime.now(timezone.utc)
+        result = operational_report(json.loads(args.read_only.read_text()), now)
+        print(json.dumps(result, ensure_ascii=False, indent=2) if args.format == 'json' else render_operational(result))
+        return 0
     path = Path('autopilot-output/summary.json')
     summary = json.loads(path.read_text()) if path.exists() else {}
     message = user_message(summary, os.environ)
@@ -74,7 +89,7 @@ def main():
 
 if __name__ == '__main__':
     try:
-        raise SystemExit(main())
+        raise SystemExit(main(sys.argv[1:]))
     except Exception as error:
         print('Report delivery unresolved: ' + type(error).__name__)
         raise SystemExit(1) from None
