@@ -170,6 +170,8 @@ def test_preflight_diagnostic_is_safe_and_not_an_authorization(tmp_path):
     row=json.loads((tmp_path/'recovery-preflight.json').read_text())
     assert row['reason']=='planned_image_not_retrieved'
     assert row['preview_allowed'] is False and row['publish_authorized'] is False
+    write_preflight_failure(tmp_path,'daily',ValueError('selected_source_not_in_publisher_feed'))
+    assert json.loads((tmp_path/'recovery-preflight.json').read_text())['reason']=='selected_source_not_in_publisher_feed'
     write_preflight_failure(tmp_path,'daily',ValueError('untrusted private text'))
     assert 'untrusted private text' not in (tmp_path/'recovery-preflight.json').read_text()
     assert json.loads((tmp_path/'recovery-preflight.json').read_text())['reason']=='preflight_failed'
