@@ -1,4 +1,5 @@
 """Pre-review information copy gate. No publication or automatic truncation."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -120,12 +121,29 @@ def receipt_matches(draft, receipt):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('draft', nargs='?', help='Draft JSON file; omit for stdin')
+    parser.add_argument('--display', action='store_true',
+                        help='Emit checked text plus the master CTA only on success; JSON to stderr')
+    args = parser.parse_args()
     try:
-        draft = json.loads(Path(sys.argv[1]).read_text() if len(sys.argv)>1 else sys.stdin.read())
+        draft = json.loads(Path(args.draft).read_text(encoding='utf-8')
+                           if args.draft else sys.stdin.read())
         result = prepare_text(draft)
+        if args.display and result['fit']:
+            settings = json.loads((ROOT/'publishing_v2/design-settings.json').read_text())
+            cta = settings['editorial_master']['cta_exact']
+            if not isinstance(cta, str) or not cta.strip():
+                raise ValueError('Missing approved sharing CTA')
+            # The fixed CTA belongs to the template; do not rewrite candidate copy.
+            result['fixed_cta'] = cta
+            result['display_text'] += '\n\n' + cta
     except (OSError, ValueError, KeyError) as exc:
         result = dict(fit=False, violations=[str(exc)])
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print(json.dumps(result, ensure_ascii=False, indent=2),
+          file=sys.stderr if args.display else sys.stdout)
+    if args.display and result['fit']:
+        print(result['display_text'])
     return 0 if result['fit'] else 1
 
 

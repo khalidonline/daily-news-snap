@@ -6,10 +6,11 @@ When Khalid asks for a text card (including «عطني البطاقة»), the fi
 runs BEFORE the first user-facing draft, not after «صمم». This includes
 writing blocks and revisions in chat, not only repository-generated cards.
 1. Read the current master and compose the candidate privately.
-2. Run information_text_fit on that exact candidate.
+2. Run `python -m publishing_v2.information_text_fit --display draft.json` on
+   that exact candidate; capture stdout and stderr separately.
 3. On failure, revise unapproved wording privately and re-run. Do not expose
    a failed draft or ask the owner to approve fixing an unseen draft.
-4. Present only the successful result's exact display_text. Keep the approved
+4. Require exit 0, then present only stdout (the successful exact display_text). Keep the approved
    sharing CTA. Re-run after every wording change; a previous receipt is not
    evidence for new text.
 5. If the gate cannot run, report that blocker; never call the draft measured.
@@ -77,7 +78,7 @@ the same identity and receipts for recovery. See docs/ready-package-delivery.md.
 ## Text drafts must fit before owner review
 
 Mandatory entry point for morning/evening/Saudi/story information copy:
-run `python -m publishing_v2.information_text_fit draft.json` BEFORE showing
+run `python -m publishing_v2.information_text_fit --display draft.json` BEFORE showing
 the textual card. Revise unapproved copy privately until exit 0 / fit:true;
 show its exact display_text. Re-run after every wording edit. Character counts
 are diagnostics, not a universal maximum: actual pinned-font wrapping and ink
