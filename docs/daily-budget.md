@@ -1,4 +1,42 @@
-# Daily paid API budget
+# Daily paid API accounting
+
+## Current policy: 4 November 2026
+
+The owner removed the aggregate $3/day production ceiling after explicit warning
+that this permits spending above $3 without a daily cap. `shared_ledger()` and
+`autopilot_daily_limit()` now select an unbounded aggregate ledger (Python `None`,
+JSON `null`). The autopilot policy retains historical limits before 4 November
+(Saudi date); legacy workflow environment values cannot restore the obsolete cap
+on current runs. The daily lane's percentage allocation applies only to bounded
+ledgers: a share of an unlimited daily allowance is not a separate dollar limit.
+
+This does **not** remove package writing/review limits, finite token/search bounds,
+known-provider/model checks, credential requirements, CAS ledger integrity,
+unknown-outcome reservations, workflow holds, quota checks, publishing approvals,
+duplicate protection or schedules. It does not authorize a paid call or publication.
+Accounting continues internally; no cost-reporting feature is introduced.
+
+Explicit bounded Ledger callers, historical one-off scripts and experimental
+budgets remain bounded. The Ledger constructor retains its legacy $3 default for
+those callers; production factories explicitly request no aggregate ceiling.
+Existing entries are preserved when a current runner records a null ceiling.
+Updated bounded callers can settle those rows and enforce their own limits;
+old code revisions cannot read null ceilings and fail closed, rather than being
+silently upgraded or enabling held routes. Do not run old recovery scripts to
+bypass a hold. No ledger branch is changed merely by merging this patch.
+
+Provider/account billing limits, quotas, credit balances, service rate limits and
+platform charges remain outside this repository. Their current settings were not
+queried or changed. Thus this supports **no application-wide daily dollar cap**,
+not unlimited provider access or removal of every per-request/package safeguard.
+
+The sealed design master retains historical USD3 wording to avoid silently
+changing hashes of approved media/preparation. The newer owner decision and
+AGENTS.md override that spending-policy wording only. No content needs resealing
+for this code-only change. Production remains unchanged until this draft is
+approved and merged/deployed through the normal process.
+
+## Historical policy (superseded only for the aggregate production ceiling)
 
 Owner instruction, 10 September 2026: **$3 USD total per Saudi calendar day**,
 shared by News, Topic, Story, Breaking, manual pilots, and paid repairs/retries.

@@ -1,3 +1,15 @@
+## Daily spending ceiling — owner decision 4 November 2026
+
+The owner explicitly removed the aggregate $3/day ceiling after being warned
+that spending could exceed it without a daily cap. Current production accounting
+and autopilot factories use no aggregate daily ceiling. This supersedes older
+USD3 spending-ceiling text, including historical design-master wording. Preserve
+package/stage limits, known-provider and finite-request controls, ledger integrity,
+held routes, publication approval, quotas and schedules. Removing the ceiling
+is not permission to generate, publish, deploy or run a held workflow.
+The sealed design master and historical approved packages are not rewritten by
+this code change. See docs/daily-budget.md for scope and rollout compatibility.
+
 # Mandatory publication preflight
 
 ## FIRST: text-card requests — owner correction 4 November 2026

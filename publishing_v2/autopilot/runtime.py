@@ -523,7 +523,8 @@ def main():
     sibling_candidate_ids = set()
     for lane in (['daily', 'local'] if args.lane == 'both' else [args.lane]):
         lane_ledger = (LaneLedger(ledger, ledger.limit_micro_usd * DAILY_LANE_SHARE)
-                       if args.lane == 'both' and lane == 'daily' else ledger)
+                       if args.lane == 'both' and lane == 'daily'
+                       and ledger.limit_micro_usd is not None else ledger)
         agent, sources = Agents(env=os.environ, ledger=lane_ledger), Sources(recovery=True, publication_only=True,
             image_memory=ImageMemory(GitHubJournal('autopilot-image-memory')))
         slot = f'autopilot-{day_key(now())}-{lane}-{args.mode}'
