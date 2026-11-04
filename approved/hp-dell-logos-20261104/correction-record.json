@@ -1,1 +1,19 @@
-{"reason":"Owner rejected laptop imagery because comparison concerns companies. Explicitly authorized company logos, corrected founding question and republication.","old_story":"9fce9f38-74c1-4cff-b387-ea05747949b0","old_spotlight":"deb7ff8a-8f59-4878-b0e8-4a0a64f65e77","old_native_deletion":"NOT_PERFORMED_REQUIRES_OWNER","new_publication":"AUTHORIZED_NOT_YET_SENT","queue":"A3 correction only; do not advance queue or republish original."}
+{
+  "reason": "Owner rejected laptop imagery because comparison concerns companies. Explicitly authorized company logos, corrected founding question and republication.",
+  "old_story": "9fce9f38-74c1-4cff-b387-ea05747949b0",
+  "old_spotlight": "deb7ff8a-8f59-4878-b0e8-4a0a64f65e77",
+  "old_native_deletion": "NOT_PERFORMED_REQUIRES_OWNER",
+  "new_publication": "POSTED_BOTH",
+  "queue": "A3 correction only; do not advance queue or republish original.",
+  "deletion_evidence": {
+    "source": "https://api.bundle.social/swagger-json",
+    "operation": "DELETE /api/v1/post/{id}",
+    "meaning": "Deletes Bundle record only, not already-published Snapchat content; no native Snapchat delete endpoint in current spec.",
+    "checked_utc": "2026-11-04"
+  },
+  "archive_sha256": "70b483a5f1a7ff4779fa6063d630e9253a83a7aa0336a7e13a307eea8442541a",
+  "video_sha256": "8755c525d2f34daecb5fa18b9214f8221c5f5bbb7163c762927ced4a9ab7dbfb",
+  "workflow_run_id": 41901826444,
+  "story_post_id": "44fbf1a4-c321-4d35-a4dc-db0997246544",
+  "spotlight_post_id": "a93dd7f5-26b8-434b-8628-f1cf745f164c"
+}
