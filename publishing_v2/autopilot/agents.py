@@ -691,6 +691,9 @@ class Agents:
         return self._run_uncached(role,data,images)
 
     def estimate_fixed_writer(self, data):
+        return self.estimate_stage('fixed_information_writer', data)
+
+    def estimate_stage(self, role, data, images=()):
         """Use identical payload/pricing without reserving money or transport."""
         class Estimated(Exception):
             def __init__(self, amount): self.amount=amount
@@ -702,10 +705,10 @@ class Agents:
             raise AssertionError('estimator_must_never_call_provider')
         clone.transport=no_transport
         try:
-            clone._run_once('fixed_information_writer',data)
+            clone._run_once(role, data, images)
         except Estimated as result:
             return result.amount
-        raise ValueError('writer_cost_estimate_missing')
+        raise ValueError('agent_cost_estimate_missing')
 
     def _run_uncached(self, role, data, images=()):
         one_attempt = (getattr(self, 'saved_draft_recovery_only', False)

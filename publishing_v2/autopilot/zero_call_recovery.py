@@ -68,7 +68,7 @@ def load_recovery(path, journal, *, mode, lane):
             or not source.is_file() or source.stat().st_size > 64000):
         raise ValueError('repository_recovery_request_required')
     request=json.loads(source.read_text())
-    if request.get('kind') not in (None,'zero_call','saved_research','uncertain_writer','saved_draft'):
+    if request.get('kind') not in (None,'zero_call','saved_research','uncertain_writer','saved_draft','saved_draft_images'):
         raise ValueError('unknown_held_recovery_kind')
     run_id=request.get('original_run_id'); head=request.get('original_head_sha','')
     original_path=request.get('original_selection_path','')

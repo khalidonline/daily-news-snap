@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "note": "Source and rights reference archive only; not publication authority. Generic peregrine photographs, not evidence identifying the sold birds.",
+  "images": [
+    {
+      "rights_compatible": true,
+      "reusable": true,
+      "subject_match": true,
+      "original_sha256": "9dae35bf7347b3f7d5c0f0d012e2d8ef084457adde33c6e02da89279494335d7",
+      "original_bytes": 2766977,
+      "actual_dimensions": [
+        2560,
+        1920
+      ],
+      "metadata": {
+        "provider": "commons",
+        "asset_id": "151773",
+        "title": "File:Peregrine Falcon.jpg",
+        "original_width": 2560,
+        "original_height": 1920,
+        "description": "Photo of Peregrine Falcon taken at the zoo in Olomouc , Czech Republic . The zoo takes care of birds of prey, which have been found injured and thus incapable to survive in the wild.",
+        "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Peregrine_Falcon.jpg/1920px-Peregrine_Falcon.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/4/49/Peregrine_Falcon.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Peregrine_Falcon.jpg",
+        "credit": "Jan Kameníček",
+        "credit_line": "Own work",
+        "rights_links": "",
+        "copyright_notice": "",
+        "attribution_notice": "",
+        "usage_terms": "Public domain",
+        "disclaimer": "",
+        "license": "Public domain",
+        "license_url": "",
+        "attribution_required": "false",
+        "restrictions": "",
+        "date_created": "2005-10-29",
+        "width": 1600,
+        "height": 1200,
+        "licensing_verified": false
+      },
+      "pipeline_sha256": "2fff8050b67d0a34106d2804eedbfe9eec95d9b049c55ee5974bbacc5c0c6938",
+      "pipeline_bytes": 826758
+    },
+    {
+      "rights_compatible": true,
+      "reusable": true,
+      "subject_match": true,
+      "original_sha256": "a9525912446331a9268141ae72d73f3715923b18dd8cf58b837ddebfd5771e52",
+      "original_bytes": 1730766,
+      "actual_dimensions": [
+        1272,
+        1196
+      ],
+      "metadata": {
+        "provider": "commons",
+        "asset_id": "57055582",
+        "title": "File:FALCON, PEREGRINE (11-04-06) morro bay, slo co, ca (543184589).jpg",
+        "original_width": 1272,
+        "original_height": 1196,
+        "description": "CALIFORNIA - BIRDS of San Luis Obispo Co",
+        "download_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/FALCON%2C_PEREGRINE_%2811-04-06%29_morro_bay%2C_slo_co%2C_ca_%28543184589%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/FALCON%2C_PEREGRINE_%2811-04-06%29_morro_bay%2C_slo_co%2C_ca_%28543184589%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "source_url": "https://commons.wikimedia.org/wiki/File:FALCON,_PEREGRINE_(11-04-06)_morro_bay,_slo_co,_ca_(543184589).jpg",
+        "credit": "ALAN SCHMIERER",
+        "credit_line": "https://www.flickr.com/photos/sloalan/543184589/",
+        "rights_links": "https://www.flickr.com/photos/sloalan/543184589/",
+        "copyright_notice": "",
+        "attribution_notice": "",
+        "usage_terms": "Creative Commons Zero, Public Domain Dedication",
+        "disclaimer": "",
+        "license": "CC0",
+        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution_required": "false",
+        "restrictions": "",
+        "date_created": "2006-11-04 08:25:35",
+        "width": 1272,
+        "height": 1196,
+        "licensing_verified": false
+      },
+      "pipeline_sha256": "a9525912446331a9268141ae72d73f3715923b18dd8cf58b837ddebfd5771e52",
+      "pipeline_bytes": 1730766
+    },
+    {
+      "rights_compatible": true,
+      "reusable": true,
+      "subject_match": true,
+      "original_sha256": "07b09d8d436f1b20013ce392643cf6f9f0a157a5472c99398305d768f53acbee",
+      "original_bytes": 1235245,
+      "actual_dimensions": [
+        1024,
+        873
+      ],
+      "metadata": {
+        "provider": "commons",
+        "asset_id": "148383820",
+        "title": "File:Peregrine falcon malar stripes.png",
+        "original_width": 1024,
+        "original_height": 873,
+        "description": "A Peregrine falcon sitting in a tree, watching for prey.",
+        "download_url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Peregrine_falcon_malar_stripes.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+        "original_url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Peregrine_falcon_malar_stripes.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Peregrine_falcon_malar_stripes.png",
+        "credit": "malibuskiboats",
+        "credit_line": "Peregrine Falcon",
+        "rights_links": "https://www.flickr.com/photos/aerocanard/27036807258/",
+        "copyright_notice": "",
+        "attribution_notice": "",
+        "usage_terms": "Creative Commons Zero, Public Domain Dedication",
+        "disclaimer": "",
+        "license": "CC0",
+        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution_required": "false",
+        "restrictions": "",
+        "date_created": "2018-03-17",
+        "width": 1024,
+        "height": 873,
+        "licensing_verified": false
+      },
+      "pipeline_sha256": "07b09d8d436f1b20013ce392643cf6f9f0a157a5472c99398305d768f53acbee",
+      "pipeline_bytes": 1235245
+    }
+  ]
+}

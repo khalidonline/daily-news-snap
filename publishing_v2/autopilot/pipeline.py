@@ -79,7 +79,7 @@ class Pipeline:
                 raise ValueError('recovery_requires_fixed_preview')
             request, original = recovery_request
             if self.saved_research_recovery is not None:
-                if request.get('kind') == 'saved_draft':
+                if request.get('kind') in {'saved_draft', 'saved_draft_images'}:
                     from .saved_draft_recovery import prepare_recovery
                 else:
                     from .saved_research_recovery import prepare_recovery
@@ -99,11 +99,13 @@ class Pipeline:
                     state['audit'].append({'event':'saved_research_source_drift_requires_review',
                         'at':self.now().isoformat(),'sources':copy.deepcopy(self.source_drift)})
             attempt_offset = len(state['agent_receipts'])
-            if request.get('kind') == 'saved_draft':
+            if request.get('kind') in {'saved_draft', 'saved_draft_images'}:
                 from .saved_draft_recovery import verify_ledger
                 _, ledger_row = self.agent.ledger.store.read(request['retained_reservation']['day'])
                 attempt_offset = verify_ledger(state['recovery']['previous_state'],
                     request, ledger_row or {}, self.now())
+                if request.get('kind') == 'saved_draft_images':
+                    self.preflight_fixed_review(state, resolved_selection, request, ledger_row)
                 self.agent.saved_draft_recovery_only = True
                 self.fixed_prepare.saved_draft_recovery = copy.deepcopy(request)
             if request.get('kind') == 'uncertain_writer':
@@ -137,7 +139,7 @@ class Pipeline:
             recovered = True
             if self.saved_research_recovery is not None:
                 self.agent.request_attempt_offset = attempt_offset
-                if request.get('kind') != 'saved_draft':
+                if request.get('kind') not in {'saved_draft', 'saved_draft_images'}:
                     self.agent.fixed_writer_recovery_once = True
         if state and not recovered:
             if state.get('engine') != self.engine:
@@ -441,11 +443,43 @@ class Pipeline:
         from .saved_research_recovery import verify_evidence
         self.source_drift = verify_evidence(self.research_source_baseline(previous),
             policy.evidence_snapshot(previous['research'],sources),self.saved_research_recovery[0])
+        self.recovery_preflight_sources = copy.deepcopy(sources)
         return candidate
+
+    def preflight_fixed_review(self, state, candidate, request, ledger_row):
+        """Prove actual compatible catalog and both bounded review calls before CAS."""
+        from daily_budget import PACKAGE_STAGE_GROUPS, PACKAGE_GROUP_LIMITS
+        research = state['research']
+        original_sources = self.recovery_preflight_sources
+        sources = policy.evidence_snapshot(research, original_sources)
+        activation = datetime.fromisoformat(research['event_date']).replace(tzinfo=policy.RIYADH)
+        context = dict(sources=sources, original_sources=copy.deepcopy(original_sources),
+            research=copy.deepcopy(research), lane=state['lane'],
+            verified_timing=copy.deepcopy(state['timing']), candidate=copy.deepcopy(candidate),
+            expires_at=min(state['expires_at'], policy.expiry(activation)), as_of=state['started_at'])
+        if self.source_drift:
+            context['source_drift'] = copy.deepcopy(self.source_drift)
+        plan = self.fixed_prepare.preflight(context, request['edited_draft'])
+        payloads = {'fixed_information_text_review': plan['review_payload'],
+                    'visual': plan['visual_payload']}
+        maxima = {role: self.agent.estimate_stage(role, data) for role, data in payloads.items()}
+        maximum = sum(maxima.values())
+        charged = sum(row['charged_micro_usd'] for row in ledger_row['entries'].values()
+            if row.get('package_id') == state['candidate_id']
+            and PACKAGE_STAGE_GROUPS.get(row.get('stage')) == 'review')
+        limit = PACKAGE_GROUP_LIMITS['review']
+        if maximum + charged > limit:
+            raise BudgetBlocked('remaining review allowance cannot cover text and visual review',
+                code='package_stage_limit', limit=limit, requested=maximum, charged=charged)
+        state['recovery']['review_budget_preflight'] = {
+            'maximum_micro_usd': maximum, 'charged_micro_usd': charged,
+            'limit_micro_usd': limit, 'role_maximum_micro_usd': maxima,
+            'payload_sha256': {role: policy.digest(data) for role, data in payloads.items()},
+            'catalog_sha256': policy.digest(plan['catalog'])}
 
     def research_source_baseline(self, previous):
         request = self.saved_research_recovery[0]
-        if request.get('kind') == 'saved_draft':
+        if request.get('kind') in {'saved_draft', 'saved_draft_images'}:
             from .saved_draft_recovery import research_source_baseline
         else:
             from .saved_research_recovery import research_source_baseline
