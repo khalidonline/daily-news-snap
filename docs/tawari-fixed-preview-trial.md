@@ -65,3 +65,42 @@ Repeating a used request fails closed.
 failed attempt. Its presence does not execute or authorize a retry. A separately
 authorized manual run supplies it together with the selected evidence brief.
 Do not delete the held journal, alter historical receipts, or rerun automatically.
+
+## Lost writer response and saved-research recovery
+
+The authorized recovery run 41832636354 resolved the original source and passed
+live evidence/image checks. It paid for researcher and fixed writer responses,
+then stopped at `invalid_fixed_information_text` before staging any card. The
+settled receipts total USD 0.237805. The old implementation retained receipt
+metadata and research but not the writer decision, so the exact rejected field
+or character cannot be established. Ordinary Anthropic Messages responses cannot
+be retrieved by message ID. Do not claim that diacritics caused this actual failure.
+
+New preparations durably record a writer intent before the call, then preserve the
+exact parsed JSON decision before normalization or validation. This is not a copy
+of provider transport bytes or hidden reasoning. Hash-bound context and draft
+files permit same-context reuse; missing, altered or uncertain output fails closed
+instead of issuing another writer call. Field-level diagnostics record path,
+index and code point without leaking the full draft into logs.
+
+Only ordinary Arabic vowel/tanween marks U+064B–U+0652 and U+0670 are removed from
+unapproved editorial text. Evidence and claim identifiers are untouched. All
+other invalid/control characters still fail validation. Original and normalized
+JSON plus a repair audit remain unapproved and not display-ready. The unchanged
+fixed template, actual text fit and independent review still apply.
+
+The separate `saved_research` request is restricted to the exact audited hold
+with one settled researcher receipt and one settled writer receipt. It requires
+unchanged selection, immutable failed run/head, original journal hash and expiry,
+then revalidates current source, timing, eligibility, evidence and downloaded
+images before consuming recovery through compare-and-swap. Saved research is
+reused only when the current evidence snapshot matches. The original receipts,
+package budget identity and full audit are retained. Request numbering continues
+at three; the replacement writer has one transport attempt, without a format
+retry. Normal subsequent review and visual stages retain their existing limits.
+
+`editorial/recovery/tawari-20261104-saved-research.json` describes that exact paid
+hold. It is not permission to execute. A separate authorized manual dispatch is
+required. This route does not erase receipts, automatically rerun, publish, send
+messages or relax owner approval. Offline fixture rendering is not the real
+falcon card and does not make that trial complete.

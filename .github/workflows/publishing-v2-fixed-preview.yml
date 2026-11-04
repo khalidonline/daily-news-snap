@@ -12,7 +12,7 @@ on:
         type: string
         required: true
       recovery:
-        description: Optional reviewed zero-call recovery request path (blank for a new attempt)
+        description: Optional reviewed held-recovery request path (blank for a new attempt)
         type: string
         required: false
 permissions:

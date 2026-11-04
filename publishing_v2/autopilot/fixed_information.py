@@ -68,33 +68,91 @@ Set any unsupported check false. Identify zero-based affected card indices for
 repair; never return success merely to advance the pipeline.'''
 
 
-def _text(value):
-    if (not isinstance(value, str) or not value.strip()
-            or any(unicodedata.category(c).startswith('C') for c in value)
-            or any('\u0610' <= c <= '\u061a' or '\u064b' <= c <= '\u065f'
-                   or c == '\u0670' or '\u06d6' <= c <= '\u06ed' for c in value)):
-        raise ValueError('invalid_fixed_information_text')
+class DraftTextError(ValueError):
+    """Safe field diagnostics: never include writer copy or private reasoning."""
+    def __init__(self, diagnostic):
+        self.diagnostic = diagnostic
+        details = ' '.join(f'{key}={value}' for key, value in diagnostic.items())
+        super().__init__('invalid_fixed_information_text: ' + details)
+
+
+def _forbidden_mark(char):
+    return ('\u0610' <= char <= '\u061a' or '\u064b' <= char <= '\u065f'
+            or char == '\u0670' or '\u06d6' <= char <= '\u06ed')
+
+
+def _text(value, path):
+    if not isinstance(value, str):
+        raise DraftTextError({'path': path, 'reason': 'non_text'})
+    if not value.strip():
+        raise DraftTextError({'path': path, 'reason': 'empty_text'})
+    for index, char in enumerate(value):
+        category = unicodedata.category(char)
+        if category.startswith('C') or _forbidden_mark(char):
+            raise DraftTextError({'path': path, 'index': index,
+                                  'codepoint': f'U+{ord(char):04X}', 'category': category,
+                                  'reason': 'control_or_nontext' if category.startswith('C')
+                                  else 'prohibited_arabic_mark'})
+
+
+def normalize_unapproved_draft(draft):
+    """Remove only vowel/tanween marks forbidden by the editorial master.
+
+    This is NOT a general Unicode cleanup. Combining hamza/maddah, Quranic
+    symbols, controls and malformed values remain intact for rejection. Do not
+    call on approved packages; validate_draft rejects all approval metadata.
+    Evidence and claim IDs are never traversed or changed.
+    """
+    result, changes = copy.deepcopy(draft), []
+    def normalize(value, path):
+        if not isinstance(value, str):
+            return value
+        kept = []
+        for index, char in enumerate(value):
+            if '\u064b' <= char <= '\u0652' or char == '\u0670':
+                changes.append({'path': path, 'index': index,
+                                'codepoint': f'U+{ord(char):04X}',
+                                'category': unicodedata.category(char),
+                                'action': 'remove_arabic_vowel_mark'})
+            else:
+                kept.append(char)
+        return ''.join(kept)
+    if not isinstance(result, dict):
+        return result, changes
+    if 'title' in result:
+        result['title'] = normalize(result['title'], 'title')
+    if isinstance(result.get('cards'), list):
+        for index, card in enumerate(result['cards']):
+            if not isinstance(card, dict):
+                continue
+            for key in ('title', 'punch', 'image_query', 'image_caption'):
+                if key in card:
+                    card[key] = normalize(card[key], f'cards[{index}].{key}')
+            if isinstance(card.get('bullets'), list):
+                card['bullets'] = [normalize(value, f'cards[{index}].bullets[{i}]')
+                                   for i, value in enumerate(card['bullets'])]
+    return result, changes
 
 
 def validate_draft(draft, research):
     """Validate the writer's exact contract, not editorial truth or pixel fit."""
     if not isinstance(draft, dict) or set(draft) != {'title', 'cards'}:
         raise ValueError('unexpected_fixed_draft_fields')
-    _text(draft['title'])
+    _text(draft['title'], 'title')
     cards = draft['cards']
     if not isinstance(cards, list) or not 1 <= len(cards) <= 2:
         raise ValueError('one_or_two_information_cards_required')
     known = {c['id'] for c in research['claims']}
-    for card in cards:
+    for index, card in enumerate(cards):
         if not isinstance(card, dict) or set(card) != set(TEXT_FIELDS) or card['kind'] != 'info':
             raise ValueError('unexpected_fixed_card_fields')
         for key in ('title', 'punch', 'image_query', 'image_caption'):
-            _text(card[key])
+            _text(card[key], f'cards[{index}].{key}')
         bullets = card['bullets']
         if not isinstance(bullets, list) or not 1 <= len(bullets) <= 4:
             raise ValueError('one_to_four_bullets_required')
-        for bullet in bullets:
-            _text(bullet)
+        for i, bullet in enumerate(bullets):
+            _text(bullet, f'cards[{index}].bullets[{i}]')
         ids = card['claim_ids']
         if (not isinstance(ids, list) or not ids
                 or any(not isinstance(i, str) or i not in known for i in ids)

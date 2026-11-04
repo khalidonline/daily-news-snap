@@ -505,10 +505,11 @@ def main():
     parser.add_argument('--selection', default=os.environ.get('AUTOPILOT_SELECTION_PATH'),
                         help='Free, source-bound editorial brief; required for new production')
     parser.add_argument('--output', default='autopilot-output')
-    parser.add_argument('--recover-zero-call-held', default=os.environ.get('AUTOPILOT_RECOVERY_REQUEST'),
+    parser.add_argument('--recover-held', '--recover-zero-call-held', dest='recovery_request',
+                        default=os.environ.get('AUTOPILOT_RECOVERY_REQUEST'),
                         help='Explicit reviewed recovery request; no automatic retry')
     args = parser.parse_args()
-    if args.recover_zero_call_held and args.mode != 'fixed-preview':
+    if args.recovery_request and args.mode != 'fixed-preview':
         raise ValueError('recovery_requires_fixed_preview')
     if args.lane == 'both':
         raise ValueError('produce_one_lane_per_run')
@@ -560,14 +561,16 @@ def main():
             from .fixed_preparation import FixedInformationPreparer
             fixed_prepare = FixedInformationPreparer(agent, renderer)
         recovery = None
-        if args.recover_zero_call_held:
+        if args.recovery_request:
             from .zero_call_recovery import load_recovery
-            recovery = load_recovery(args.recover_zero_call_held, store, mode=args.mode, lane=lane)
+            recovery = load_recovery(args.recovery_request, store, mode=args.mode, lane=lane)
         pipeline = Pipeline(agent=agent, sources=sources, render=renderer,
             store=store, publish=publish_package, output=output / lane, now=now, engine=engine,
             candidate_memory=candidate_memory, published_memory=published_memory,
             excluded_candidate_ids=sibling_candidate_ids, hooks=False, free_selection=free_selection,
-            fixed_prepare=fixed_prepare, zero_call_recovery=recovery)
+            fixed_prepare=fixed_prepare,
+            zero_call_recovery=recovery if recovery and recovery[0].get('kind') != 'saved_research' else None,
+            saved_research_recovery=recovery if recovery and recovery[0].get('kind') == 'saved_research' else None)
         result = pipeline.run(lane, args.mode, rollout_verified=verified)
         if result.get('status') in {'shadow_passed', 'approved', 'published'}:
             candidate_id = result.get('package', {}).get('candidate', {}).get('id')

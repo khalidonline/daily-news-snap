@@ -22,7 +22,7 @@ MIN_HOOK_SCORE = 7
 
 
 class Pipeline:
-    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None, fixed_prepare=None, zero_call_recovery=None):
+    def __init__(self, *, agent, sources, render, store, publish, output, now, engine='test', candidate_memory=None, published_memory=None, excluded_candidate_ids=None, hooks=False, free_selection=None, fixed_prepare=None, zero_call_recovery=None, saved_research_recovery=None):
         self.agent, self.sources, self.render = agent, sources, render
         # Owner 2026-09-26: three competing openings and a viewer-persona judge
         # before the writer. Off by default so fixture agents keep their scripts.
@@ -36,6 +36,7 @@ class Pipeline:
         self.free_selection = free_selection
         self.fixed_prepare = fixed_prepare
         self.zero_call_recovery = zero_call_recovery
+        self.saved_research_recovery = saved_research_recovery
 
     def save(self, state, event, **values):
         state.update(values)
@@ -69,22 +70,34 @@ class Pipeline:
         state = self.store.read()
         recovered = False
         resolved_selection = None
-        if self.zero_call_recovery is not None:
+        if self.zero_call_recovery is not None and self.saved_research_recovery is not None:
+            raise ValueError('one_recovery_request_required')
+        recovery_request = self.saved_research_recovery or self.zero_call_recovery
+        if recovery_request is not None:
             if mode != 'fixed-preview':
                 raise ValueError('recovery_requires_fixed_preview')
-            from .zero_call_recovery import prepare_recovery
-            request, original = self.zero_call_recovery
+            if self.saved_research_recovery is not None:
+                from .saved_research_recovery import prepare_recovery
+            else:
+                from .zero_call_recovery import prepare_recovery
+            request, original = recovery_request
             state = prepare_recovery(state, request, self.free_selection, original,
                                      now=self.now(), engine=self.engine)
             # A missing/drifting source must not consume an otherwise safe recovery.
             resolved_selection = self.sources.resolve_selection(self.free_selection, lane, self.now())
             if resolved_selection is None:
                 raise ValueError('selected_source_unverified')
+            if self.saved_research_recovery is not None:
+                resolved_selection = self.revalidate_saved_research(
+                    resolved_selection, state['recovery']['previous_state'])
             try:
                 self.store.save(state)  # Existing journal SHA CAS; no reset/new identity.
             except Exception:
                 raise PersistenceError('journal_write_unconfirmed') from None
             recovered = True
+            if self.saved_research_recovery is not None:
+                self.agent.request_attempt_offset = len(state['agent_receipts'])
+                self.agent.fixed_writer_recovery_once = True
         if state and not recovered:
             if state.get('engine') != self.engine:
                 raise ValueError('slot_engine_changed')
@@ -183,14 +196,23 @@ class Pipeline:
                                       'note':'Evidence feasibility, not a predicted audience score.'})
                     visual_options = []
                     self.save(state, 'selected', candidate_id=candidate['id'])
-                    research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
-                                                            'verified_timing': timing,
-                                                            'story_plan': self.free_selection.get('story') if free else None,
-                                                            'lane': lane, 'now': self.now().isoformat()})
-                    research, pruned_claim_ids = policy.prune_unsupported_number_claims(research, sources)
-                    if pruned_claim_ids:
-                        self.save(state, 'research_claims_pruned', candidate_id=candidate['id'],
-                                  pruned_claim_ids=pruned_claim_ids)
+                    if self.saved_research_recovery is not None:
+                        previous = state['recovery']['previous_state']
+                        research = copy.deepcopy(previous['research'])
+                        policy.validate_research(research, sources, lane, self.now())
+                        if policy.digest(policy.evidence_snapshot(research,sources)) != policy.digest(previous['sources']):
+                            raise ValueError('saved_research_evidence_changed')
+                        self.save(state,'saved_research_reused',candidate_id=candidate['id'],
+                                  saved_research_sha256=policy.digest(research))
+                    else:
+                        research = self.agent.run('researcher', {'candidate': candidate, 'sources': sources,
+                                                                'verified_timing': timing,
+                                                                'story_plan': self.free_selection.get('story') if free else None,
+                                                                'lane': lane, 'now': self.now().isoformat()})
+                        research, pruned_claim_ids = policy.prune_unsupported_number_claims(research, sources)
+                        if pruned_claim_ids:
+                            self.save(state, 'research_claims_pruned', candidate_id=candidate['id'],
+                                      pruned_claim_ids=pruned_claim_ids)
                     policy.validate_research(research, sources, lane, self.now())
                     original_sources = sources
                     sources = policy.evidence_snapshot(research, sources)
@@ -338,6 +360,39 @@ class Pipeline:
             details = {'budget_diagnostic': error.diagnostic} if isinstance(error, BudgetBlocked) else {}
             self.save(state, 'stopped', status='held', reason=str(error)[:250] if isinstance(error, ValueError) else type(error).__name__, **details)
         return state
+
+    def revalidate_saved_research(self, resolved, previous):
+        """All free gates run before committing a paid-stage recovery."""
+        from .free_selection import validate_story, validate_images
+        candidate = dict(copy.deepcopy(resolved), editorial=copy.deepcopy(self.free_selection['choice']))
+        reason = (self.published_memory.reason(candidate) if self.published_memory else None)
+        reason = reason or routine_trigger_rejection(candidate)
+        reason = reason or ('owner_rejected_trigger' if rejected_trigger(candidate) else None)
+        reason = reason or (self.candidate_memory.reason(candidate,self.engine) if self.candidate_memory else None)
+        if reason or candidate['id'] in self.excluded_candidate_ids:
+            raise ValueError('saved_research_candidate_no_longer_eligible')
+        policy.validate_editor_binding(candidate)
+        policy.validate_attention(candidate,self.now())
+        attention=[s for s in self.sources.attention(candidate) if attention_source(s,candidate)]
+        if not attention:
+            raise ValueError('attention_article_not_retrieved')
+        timing=self.free_selection.get('timing',{})
+        if timing != previous.get('timing'):
+            raise ValueError('saved_research_timing_changed')
+        policy.validate_timing(timing,attention,self.now())
+        sources=self.sources.research(candidate)
+        if not any(attention_source(s,candidate) for s in sources):
+            raise ValueError('attention_article_not_retrieved')
+        candidate['card_image_plan']=copy.deepcopy(self.free_selection.get('image_plan',[]))
+        screen=getattr(self.render,'screen_visuals',None)
+        if not screen or not screen(candidate):
+            raise ValueError('insufficient_subject_visuals_before_recovery')
+        validate_story(self.free_selection,sources)
+        validate_images(self.free_selection,candidate)
+        policy.validate_research(previous['research'],sources,previous['lane'],self.now())
+        if policy.digest(policy.evidence_snapshot(previous['research'],sources)) != policy.digest(previous['sources']):
+            raise ValueError('saved_research_evidence_changed')
+        return candidate
 
     def remember_rejection(self, candidate, reason):
         if self.candidate_memory:

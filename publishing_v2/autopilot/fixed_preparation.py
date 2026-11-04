@@ -5,6 +5,7 @@ acquisition require an independently authorized run; tests inject fixtures.
 """
 import copy
 import hashlib
+import json
 from pathlib import Path
 
 from publishing_v2.information_text_fit import prepare_text
@@ -14,6 +15,74 @@ from publishing_v2.publication import image_without_public_credit
 from .policy import digest, validate_image_variety
 from . import fixed_information as fixed
 from .information_bridge import stage
+
+
+def _json_bytes(value):
+    # ASCII escaping preserves even rejected surrogate/control codepoints.
+    return (json.dumps(value, ensure_ascii=True, sort_keys=True, indent=2,
+                       allow_nan=False) + '\n').encode('utf-8')
+
+
+def _persisted_writer_draft(agent, context, output):
+    """Persist the exact parsed provider result before any validation.
+
+    A durable intent prevents duplicate paid calls after uncertain interruption.
+    Never infer authorization to regenerate from an incomplete or changed file.
+    """
+    output.mkdir(parents=True, exist_ok=True)
+    paths = {key: output / f'fixed-writer-{key}.json' for key in
+             ('raw', 'context', 'normalized', 'repair')}
+    for path in paths.values():
+        safe_path(path)
+        if path.is_symlink():
+            raise ValueError('fixed_writer_recovery_unsafe_artifact')
+    context_sha = digest(context)
+    if any(path.exists() for path in paths.values()):
+        if not paths['context'].exists() or not paths['raw'].exists():
+            raise ValueError('fixed_writer_recovery_incomplete_no_regeneration')
+        try:
+            binding = json.loads(paths['context'].read_bytes())
+            raw_bytes = paths['raw'].read_bytes()
+            raw = json.loads(raw_bytes)
+            if (binding.get('context_sha256') != context_sha
+                    or binding.get('raw_sha256') != hashlib.sha256(raw_bytes).hexdigest()):
+                raise ValueError
+        except (ValueError, TypeError, AttributeError):
+            raise ValueError('fixed_writer_recovery_binding_mismatch') from None
+    else:
+        # Exclusive intent creation also prevents concurrent duplicate writers.
+        with paths['context'].open('xb') as stream:
+            stream.write(_json_bytes({'context_sha256': context_sha, 'status': 'writer_started'}))
+            stream.flush()
+            import os
+            os.fsync(stream.fileno())
+        raw = agent.run('fixed_information_writer', {
+            'candidate': context['candidate'], 'research': context['research'],
+            'verified_timing': context['verified_timing']})
+        raw_bytes = _json_bytes(raw)
+        atomic_write(paths['raw'], raw_bytes)
+        atomic_write(paths['context'], _json_bytes({
+            'context_sha256': context_sha, 'status': 'writer_saved',
+            'raw_sha256': hashlib.sha256(raw_bytes).hexdigest()}))
+    normalized, changes = fixed.normalize_unapproved_draft(raw)
+    normalized_bytes = _json_bytes(normalized)
+    atomic_write(paths['normalized'], normalized_bytes)
+    receipt = {'schema_version': 1, 'status': 'validated',
+               'context_sha256': context_sha,
+               'raw_sha256': hashlib.sha256(raw_bytes).hexdigest(),
+               'normalized_sha256': hashlib.sha256(normalized_bytes).hexdigest(),
+               'changes': changes, 'approved': False,
+               'publish_authorized': False, 'preview_allowed': False}
+    try:
+        fixed.validate_draft(normalized, context['research'])
+    except ValueError as exc:
+        receipt['status'] = 'rejected'
+        receipt['diagnostic'] = (exc.diagnostic if isinstance(exc, fixed.DraftTextError)
+                                 else {'reason': str(exc)})
+        atomic_write(paths['repair'], _json_bytes(receipt))
+        raise
+    atomic_write(paths['repair'], _json_bytes(receipt))
+    return normalized
 
 
 class FixedInformationPreparer:
@@ -26,10 +95,7 @@ class FixedInformationPreparer:
         # No model call or regeneration if a prior attempt already installed it.
         if (Path('approved')/name).exists():
             raise ValueError('Fixed package already exists; inspect original handoff, never regenerate')
-        draft = self.agent.run('fixed_information_writer', {
-            'candidate':context['candidate'], 'research':context['research'],
-            'verified_timing':context['verified_timing']})
-        fixed.validate_draft(draft, context['research'])
+        draft = _persisted_writer_draft(self.agent, context, output)
         for card in draft['cards']:
             fit = prepare_text(fixed.card_draft(card))
             if not fit['fit']:
