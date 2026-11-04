@@ -17,7 +17,8 @@ REASON = 'free_selection_not_in_current_pool'
 
 
 def prepare_recovery(state, request, selection, original_selection, *, now, engine):
-    if not isinstance(request, dict) or request.get('version') != 1:
+    if (not isinstance(request, dict) or request.get('version') != 1
+            or request.get('kind') not in (None,'zero_call')):
         raise ValueError('invalid_zero_call_recovery_request')
     if not isinstance(state, dict) or digest(state) != request.get('expected_state_sha256'):
         raise ValueError('zero_call_recovery_state_changed')
@@ -67,6 +68,8 @@ def load_recovery(path, journal, *, mode, lane):
             or not source.is_file() or source.stat().st_size > 64000):
         raise ValueError('repository_recovery_request_required')
     request=json.loads(source.read_text())
+    if request.get('kind') not in (None,'zero_call','saved_research'):
+        raise ValueError('unknown_held_recovery_kind')
     run_id=request.get('original_run_id'); head=request.get('original_head_sha','')
     original_path=request.get('original_selection_path','')
     if (type(run_id) is not int or run_id <= 0 or not re.fullmatch('[0-9a-f]{40}',head)

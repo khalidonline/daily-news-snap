@@ -650,7 +650,8 @@ class Agents:
         return self._run_uncached(role,data,images)
 
     def _run_uncached(self, role, data, images=()):
-        for attempt in range(2):
+        attempts = 1 if role == 'fixed_information_writer' and getattr(self, 'fixed_writer_recovery_once', False) else 2
+        for attempt in range(attempts):
             try:
                 return self._run_once(role, data, images, format_retry=bool(attempt))
             except BudgetBlocked as error:
@@ -660,7 +661,7 @@ class Agents:
                     error.diagnostic.setdefault('limit_micro_usd', limit)
                 raise
             except InvalidAgentResponse:
-                if attempt:
+                if attempt + 1 >= attempts:
                     raise
 
     def _run_once(self, role, data, images=(), *, format_retry=False):
@@ -731,7 +732,7 @@ class Agents:
             _, text_maximum = prepare(text_payload)
             maximum = text_maximum + len(images) * 8192 * PRICES[model][0]
         self.ledger.context = {'package_id':self.package_id,'stage':role,
-                              'request_attempt':len(self.receipts)+1}
+                              'request_attempt':getattr(self, 'request_attempt_offset', 0)+len(self.receipts)+1}
         token = self.ledger.reserve(maximum, 'autopilot:' + role)
         transport = self.transport or partial(providers._default_transport, timeout_seconds=180)
         status, body = providers._request(transport, 'POST', 'https://api.anthropic.com/v1/messages',
