@@ -10,15 +10,17 @@ m=read(old/'manifest.json')
 m.update(approved=False,title=copy['headline'],not_before='2026-11-04T00:00:00+00:00',expires_at='2026-11-05T20:59:59+00:00')
 m['media'][0].update(path=str(p/'card.png'),sha256=sha(p/'card.png'))
 asset=read(old/'sources.json')['image_assets'][0]
-m['media'][0]['source_assets']=[asset]
-m['owner_review']={'reference':'Design requested after measured shortened draft. Final export not yet approved for publication.','approved_media_sha256':[sha(p/'card.png')],'approved_source_sha256':[asset['sha256']]}
+trump={'path':str(p/'trump.jpg'),'sha256':sha(p/'trump.jpg'),'source_url':'https://commons.wikimedia.org/wiki/File:January_2025_Official_Presidential_Portrait_of_Donald_J._Trump.jpg','description':'January 2025 inaugural portrait by Daniel Torok; resized to 700px width.','rights_status':'public_domain','credit':'Daniel Torok','rights_basis':'Author public domain dedication, documented on Commons.','original_sha256':sha(Path('/workspace/scratch/6eccb5ef02c0/trump-original.jpg'))}
+m['media'][0]['source_assets']=[asset,trump]
+m['owner_review']={'reference':'Khalid requested adding Trump beside Capitol and publishing. Revised export undergoing preparation.','approved_media_sha256':[sha(p/'card.png')],'approved_source_sha256':[asset['sha256'],trump['sha256']]}
 save('manifest.json',m)
 a=read(old/'archive-approval.json')
-a.update(approved=False,manifest=str(p/'manifest.json'),manifest_sha256=sha(p/'manifest.json'),identity=sha(p/'card.png'),title=copy['headline'],expires_at=m['expires_at'],owner_authorization='Not authorized; design preview only.')
+from publishing_v2.information_request import identity
+a.update(approved=False,manifest=str(p/'manifest.json'),manifest_sha256=sha(p/'manifest.json'),identity=identity(m),title=copy['headline'],expires_at=m['expires_at'],owner_authorization='Awaiting hash-bound authorization staging for requested revision.')
 save('archive-approval.json',a)
-save('sources.json',{'facts':['https://www.axios.com/2026/11/03/election-day-midterm-trump-democrats-republicans','https://www.abc.net.au/news/2026-11-04/democrats-claim-victory-over-republicans-2026-midterm-elections/107338138'],'as_of_riyadh':'2026-11-04T09:35:39+03:00','image_assets':[asset],'image_treatment':'Upper panorama crop retaining full Capitol dome; archival 2011 photo, not election-day photo.','status':'Draft; no publication authorization'})
+save('sources.json',{'facts':['https://www.axios.com/2026/11/03/election-day-midterm-trump-democrats-republicans','https://www.abc.net.au/news/2026-11-04/democrats-claim-victory-over-republicans-2026-midterm-elections/107338138'],'as_of_riyadh':'2026-11-04T09:35:39+03:00','image_assets':[asset,trump],'image_treatment':'Capitol dome detail left; full Trump portrait contained without distortion right. Archival photographs, not election-day photos.','status':'Revised draft pending hash-bound authorization'})
 r=read(old/'design-review.json')
 r['settings_sha256']=sha(Path('publishing_v2/design-settings.json'))
 r['cards'][0].update(sha256=sha(p/'card.png'),blocks=read(p/'blocks.json'))
-r['review']['reference']='Inspected both final 390x693 Story and Saved Story simulations after upper crop correction. Full dome visible. Four two-line bullets, title/closing one line, CTA visible above lower simulated overlay. Actual device appearance not claimed. Exact measured shortened text retained.'
+r['review']['reference']='Inspected both final 390x693 Story and Saved Story simulations: Capitol dome left, Trump right with respective captions. Four two-line bullets; title and closing one line; CTA visible. Exact approved copy preserved. Overlay simulation, not live device measurement.'
 save('design-review.json',r)

@@ -2,13 +2,14 @@
   "version": 1,
   "status": "PREPARED_NOT_AUTHORIZED",
   "package": "approved/us-results-20261104",
-  "manifest_content_sha256": "9735bcb48108f4d85d4395f60c188c0a37e50362cbc4b77a7d40e8e06bca48fa",
-  "archive_content_sha256": "f3e480d7449e682a2d30ff62929c95c6f0af05c38a7fc327180a77d9b81c6459",
+  "manifest_content_sha256": "c3ef5918f2a36413db0985e4de113fe96a4ce200a973a6117482b441e3c52084",
+  "archive_content_sha256": "7e307da7bdebb699c0aca8c17db3b63a05f7f1202fbb0ed524b14fafda81aaa0",
   "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
-  "review_sha256": "7bc1d2121e64a7aa43c2f0b1f76cb632943b12df6bee128e6653148b39fd921b",
+  "review_sha256": "3dc01a4f0c6120703f5cf2bbfbf50e76985156dc8b639cc6479422291a507835",
   "assets": {
-    "approved/us-results-20261104/card.png": "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388",
-    "approved/us-midterms-20261101/capitol.jpg": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d"
+    "approved/us-results-20261104/card.png": "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3",
+    "approved/us-midterms-20261101/capitol.jpg": "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+    "approved/us-results-20261104/trump.jpg": "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c"
   },
-  "preparation_seconds": 0.003
+  "preparation_seconds": 0.004
 }

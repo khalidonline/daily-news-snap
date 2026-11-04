@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
 from publishing_v2.fixed_information_template import render
 from publishing_v2.information_text_fit import prepare_text
 
@@ -20,9 +20,10 @@ assert fit['fit'], fit
 for name, data in [('copy.json', copy), ('text-fit.json', fit)]:
     (p/name).write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n')
 photo = Image.open('approved/us-midterms-20261101/capitol.jpg')
-photo = photo.crop((0, 0, photo.width, round(photo.width*350/960)))
-im, blocks = render(copy['headline'], copy['bullets'], copy['closing'], [photo],
-                    ['مبنى الكونغرس الأمريكي — Architect of the Capitol'])
+photo = photo.crop((round(photo.width*.35), 0, round(photo.width*.82), round(photo.width*.47*350/468)))
+trump = ImageOps.pad(Image.open(p/'trump.jpg'), (468,350), color='#F7F7EB')
+im, blocks = render(copy['headline'], copy['bullets'], copy['closing'], [photo, trump],
+                    ['الكونغرس — AOC', 'ترامب — الحزب الجمهوري'])
 im.save(p/'card.png')
 (p/'blocks.json').write_text(json.dumps(blocks, ensure_ascii=False, indent=2)+'\n')
 for dest in ['story','saved-story']:

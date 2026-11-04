@@ -23,24 +23,46 @@
   },
   {
     "role": "caption",
-    "text": "مبنى الكونغرس الأمريكي — Architect of the Capitol",
+    "text": "الكونغرس — AOC",
     "color": "#7A7973",
     "font_size": 28,
     "font_weight": "Regular",
     "line_boxes": [
       [
-        248,
+        186,
         695,
-        831,
-        730
+        402,
+        723
       ]
     ],
     "line_count": 1,
     "box": [
-      248,
+      186,
       695,
-      831,
-      731
+      402,
+      724
+    ]
+  },
+  {
+    "role": "caption",
+    "text": "ترامب — الحزب الجمهوري",
+    "color": "#7A7973",
+    "font_size": 28,
+    "font_weight": "Regular",
+    "line_boxes": [
+      [
+        639,
+        695,
+        933,
+        726
+      ]
+    ],
+    "line_count": 1,
+    "box": [
+      639,
+      695,
+      933,
+      727
     ]
   },
   {

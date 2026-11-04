@@ -2,13 +2,13 @@
   "approved": false,
   "account": "executivesaudi",
   "manifest": "approved/us-results-20261104/manifest.json",
-  "manifest_sha256": "9ccc8d8eb3149ee80f15e2b53c188260e20a60a2eb6e8956511be5c03c3c0a57",
-  "identity": "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388",
+  "manifest_sha256": "d79142781bfd3d87a559e89195a8b316fe97898c149684ca36464b32ca586ceb",
+  "identity": "b06d1d6da96fdd06a51754cd0215713d8e46c33e5bc39f4ff88fd4d9b932c005",
   "public_indices": [
     1
   ],
   "title": "ترامب باقي… بس حزبه خسر الأغلبية!",
   "expires_at": "2026-11-05T20:59:59+00:00",
-  "owner_authorization": "Not authorized; design preview only.",
+  "owner_authorization": "Awaiting hash-bound authorization staging for requested revision.",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
 }

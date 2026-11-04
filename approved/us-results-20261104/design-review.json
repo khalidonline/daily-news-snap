@@ -6,7 +6,7 @@
   "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
   "cards": [
     {
-      "sha256": "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388",
+      "sha256": "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3",
       "blocks": [
         {
           "role": "headline",
@@ -32,24 +32,46 @@
         },
         {
           "role": "caption",
-          "text": "مبنى الكونغرس الأمريكي — Architect of the Capitol",
+          "text": "الكونغرس — AOC",
           "color": "#7A7973",
           "font_size": 28,
           "font_weight": "Regular",
           "line_boxes": [
             [
-              248,
+              186,
               695,
-              831,
-              730
+              402,
+              723
             ]
           ],
           "line_count": 1,
           "box": [
-            248,
+            186,
             695,
-            831,
-            731
+            402,
+            724
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "ترامب — الحزب الجمهوري",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              639,
+              695,
+              933,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            639,
+            695,
+            933,
+            727
           ]
         },
         {
@@ -236,7 +258,7 @@
     "SAVED_STORY"
   ],
   "review": {
-    "reference": "Inspected both final 390x693 Story and Saved Story simulations after upper crop correction. Full dome visible. Four two-line bullets, title/closing one line, CTA visible above lower simulated overlay. Actual device appearance not claimed. Exact measured shortened text retained.",
+    "reference": "Inspected both final 390x693 Story and Saved Story simulations: Capitol dome left, Trump right with respective captions. Four two-line bullets; title and closing one line; CTA visible. Exact approved copy preserved. Overlay simulation, not live device measurement.",
     "mobile_width": 390,
     "saudi_editorial": true,
     "approved_wording": true,

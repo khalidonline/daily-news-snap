@@ -13,8 +13,18 @@
       "rights_status": "public_domain",
       "credit": "Architect of the Capitol",
       "rights_basis": "US federal government work, Commons PD-USGov-AOC; requested credit included in visible caption."
+    },
+    {
+      "path": "approved/us-results-20261104/trump.jpg",
+      "sha256": "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c",
+      "source_url": "https://commons.wikimedia.org/wiki/File:January_2025_Official_Presidential_Portrait_of_Donald_J._Trump.jpg",
+      "description": "January 2025 inaugural portrait by Daniel Torok; resized to 700px width.",
+      "rights_status": "public_domain",
+      "credit": "Daniel Torok",
+      "rights_basis": "Author public domain dedication, documented on Commons.",
+      "original_sha256": "6a5ab860bd2bdfdacb324b7762482da7ba1dc7720fc0914d3b623ba095446b9a"
     }
   ],
-  "image_treatment": "Upper panorama crop retaining full Capitol dome; archival 2011 photo, not election-day photo.",
-  "status": "Draft; no publication authorization"
+  "image_treatment": "Capitol dome detail left; full Trump portrait contained without distortion right. Archival photographs, not election-day photos.",
+  "status": "Revised draft pending hash-bound authorization"
 }

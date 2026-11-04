@@ -12,19 +12,20 @@
   "expires_at": "2026-11-05T20:59:59+00:00",
   "story_duration": "ONE_WEEK",
   "owner_review": {
-    "reference": "Design requested after measured shortened draft. Final export not yet approved for publication.",
+    "reference": "Khalid requested adding Trump beside Capitol and publishing. Revised export undergoing preparation.",
     "approved_media_sha256": [
-      "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388"
+      "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3"
     ],
     "approved_source_sha256": [
-      "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d"
+      "a33ebea9feac971e9d2e8a8f5f5ccf2949455cd2a1adbe4760ac283076fa9a2d",
+      "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c"
     ]
   },
   "media": [
     {
       "kind": "info",
       "path": "approved/us-results-20261104/card.png",
-      "sha256": "db719bbf4fe3f8280c01ccc6fb02cac2955d7e0c09e17282c74a0f7524b27388",
+      "sha256": "26670e23255d1f2f87f983aa9d9e0bf89116732670125340bd809e98bff485d3",
       "provenance": {
         "usage": "mixed_editorial_composite",
         "generated_components": false
@@ -38,6 +39,16 @@
           "rights_status": "public_domain",
           "credit": "Architect of the Capitol",
           "rights_basis": "US federal government work, Commons PD-USGov-AOC; requested credit included in visible caption."
+        },
+        {
+          "path": "approved/us-results-20261104/trump.jpg",
+          "sha256": "7882fea2798f9832865099e1f74dda32c32de3960202bb27fd9a03d0b0e6691c",
+          "source_url": "https://commons.wikimedia.org/wiki/File:January_2025_Official_Presidential_Portrait_of_Donald_J._Trump.jpg",
+          "description": "January 2025 inaugural portrait by Daniel Torok; resized to 700px width.",
+          "rights_status": "public_domain",
+          "credit": "Daniel Torok",
+          "rights_basis": "Author public domain dedication, documented on Commons.",
+          "original_sha256": "6a5ab860bd2bdfdacb324b7762482da7ba1dc7720fc0914d3b623ba095446b9a"
         }
       ]
     }
