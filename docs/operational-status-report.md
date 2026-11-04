@@ -85,3 +85,12 @@ The combined tree passed 1,321 tests and 249 subtests in 337.53 seconds with
 deprecation warnings remain. Focused report, route-inventory and accounting
 compatibility checks passed 54 tests and 27 subtests. Independent review found
 no merge blockers. This records local verification, not merge or deployment.
+
+## Latest-main preservation check
+
+The report was also tested against main `a49284a9aad119eb7b30e8fabe785516b06aa224`
+after the Colmar recovery changes. Its delivery workflow, trigger and approved
+assets are unchanged by this report. The combined code passed 1,321 tests and
+249 subtests in 313.95 seconds, plus 54 focused tests and 27 subtests.
+A read-only receipt replay at 10:25:20 UTC again confirmed both destinations;
+the Story confirmation timestamp remains unrecorded. No publishing was invoked.
