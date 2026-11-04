@@ -1,0 +1,68 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-04",
+  "slot": "13:00",
+  "item": "D2",
+  "topic": "توقع المكان — كولمار",
+  "status": "POSTED_BOTH",
+  "next_item": "E2",
+  "next_topic": "المقارنات السياحية — غرف فنادق دبي ولاس فيغاس؛ تحقق توحيد السنة والنطاق ونوع الغرف وإلا احجب الموضوع",
+  "next_slot": "2026-11-04T19:00:00+03:00",
+  "completed_today": 1,
+  "completed_total": 9,
+  "remaining_topics": 16,
+  "video_sha256": "29fc597c5a54900ea2576708f812b39da3f38d99d07cea76f6030ee0b710ed1c",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "a414c58f-8434-4f2f-a9c7-65d8c782e1eb",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "5adfb1f3-6408-4606-9d35-94a80db62cde",
+          "mediaId": "5adfb1f3-6408-4606-9d35-94a80db62cde",
+          "mediaIds": [
+            "5adfb1f3-6408-4606-9d35-94a80db62cde"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "7a64cbcd-7f64-4e77-bc4a-d9062ee1da73",
+          "sourceUploadIds": [
+            "7a64cbcd-7f64-4e77-bc4a-d9062ee1da73"
+          ],
+          "mediaUploadedAt": "2026-11-04T10:07:15.944Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "29fc597c5a54900ea2576708f812b39da3f38d99d07cea76f6030ee0b710ed1c"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "6fe4f8d6-d502-4d29-b825-e099a96fb3d9",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYZWJmanl4ZXRtAaGmFDMBAaGmFDK_AAAAAA",
+          "mediaId": "8196de89-94d1-4754-957e-f8e1b6b099c3",
+          "mediaIds": [
+            "8196de89-94d1-4754-957e-f8e1b6b099c3"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "e8e0d826-3e5b-4695-972c-a5114b214422",
+          "sourceUploadIds": [
+            "e8e0d826-3e5b-4695-972c-a5114b214422"
+          ],
+          "mediaUploadedAt": "2026-11-04T10:21:24.182Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "29fc597c5a54900ea2576708f812b39da3f38d99d07cea76f6030ee0b710ed1c"
+    }
+  },
+  "receipt_path": "api-receipts/colmar-20261104-preflight.json",
+  "archive_sha256": "1720fc10fbfc16a8e3893bd7169df86feedcdbb3e6f6228d9232aa1e9d378173",
+  "new_paid_model_requests": 0,
+  "no_repeat": true,
+  "recovery": "GitHub HTTP500/502 receipt writes; exact STORY upload reconciled without resend; report initializer fixed to read/merge/save. Run41812727781 attempt3 succeeded."
+}
