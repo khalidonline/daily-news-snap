@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ — HP وديل",
+  "expires_at": "2026-11-06T16:06:28.950699+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/hp-dell-20261104/challenge.mp4",
+      "sha256": "900f2a0646ce5fd5d9fb49ecafede8e72f405f2c135c8990756a1ea167de9448",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "900f2a0646ce5fd5d9fb49ecafede8e72f405f2c135c8990756a1ea167de9448",
+      "reference": "Khalid approved A3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved A3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "900f2a0646ce5fd5d9fb49ecafede8e72f405f2c135c8990756a1ea167de9448",
+    "source_manifest": {
+      "path": "approved/hp-dell-20261104/source-approval.json",
+      "sha256": "8a892f56c222acf15febfcfebcf3da316497744fb744e63b1244529a46fdbdb2"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/hp-dell-20261104/frame-0.5.png",
+        "sha256": "26f582d0b7c1aa3f5d77a0b9edfcd045a7253dc4cb0f83e217f0429213826fbc"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/hp-dell-20261104/frame-3.5.png",
+        "sha256": "746d5596df59a6410e9cd5cbf25388e71c32b543ef8e5651cc51d9b5c9a913f6"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/hp-dell-20261104/frame-4.5.png",
+        "sha256": "2587ae7b3644a06c0bbd29cda8049fbee5fc0e553bc34c52cc706c8f8856c13c"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/hp-dell-20261104/frame-5.5.png",
+        "sha256": "6500b7bb62344fa09f747f02e5b75113ecf7140d7ba8304c1024034fb858440f"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/hp-dell-20261104/frame-6.5.png",
+        "sha256": "d29df204a2edfc1c96039fa976491cc462c68fb5a6a2394607858da17e62fa01"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/hp-dell-20261104/frame-7.5.png",
+        "sha256": "3082ba3e687046af053a6b848343cf99d577c009900a300df3ac3ba0845c3074"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/hp-dell-20261104/frame-8.5.png",
+        "sha256": "43f6b39e3d6c02063544185ef858c2840dd18cf9129f0055d98229ba964bb677"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/hp-dell-20261104/frame-11.5.png",
+        "sha256": "d24bdfd1780a20a65ace457aa872326617b8fcc8fcc687388c380a6fa019f854"
+      }
+    ]
+  }
+}
