@@ -13,7 +13,7 @@ class FixedPreviewWorkflowTests(unittest.TestCase):
         triggers = workflow.get('on', workflow.get(True))
         self.assertEqual(set(triggers), {'workflow_dispatch'})
         inputs = triggers['workflow_dispatch']['inputs']
-        self.assertEqual(set(inputs), {'lane', 'selection'})
+        self.assertEqual(set(inputs), {'lane', 'selection', 'recovery'})
         self.assertEqual(inputs['lane']['options'], ['daily', 'local'])
         self.assertTrue(inputs['selection']['required'])
         job = workflow['jobs']['preview']

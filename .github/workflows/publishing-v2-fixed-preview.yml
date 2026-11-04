@@ -11,6 +11,10 @@ on:
         description: Repository JSON path to a current source-bound evidence brief
         type: string
         required: true
+      recovery:
+        description: Optional reviewed zero-call recovery request path (blank for a new attempt)
+        type: string
+        required: false
 permissions:
   contents: read
 concurrency:
@@ -35,6 +39,7 @@ jobs:
         env:
           SELECTION: ${{ inputs.selection }}
           LANE: ${{ inputs.lane }}
+          RECOVERY: ${{ inputs.recovery }}
         run: |
           python - <<'PY'
           import os
@@ -47,6 +52,10 @@ jobs:
           brief = load_brief(path)
           if os.environ['LANE'] not in {'daily', 'local'} or brief.get('version') != 1 or brief.get('lane') != os.environ['LANE']:
               raise ValueError('matching_single_lane_brief_required')
+          if os.environ.get('RECOVERY'):
+              recovery = Path(os.environ['RECOVERY']).resolve()
+              if not recovery.is_relative_to(root / 'editorial/recovery') or not recovery.is_file():
+                  raise ValueError('repository_recovery_request_required')
           PY
       - name: Prepare one fixed information draft
         env:
@@ -54,6 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           DAILY_BUDGET_GITHUB_TOKEN: ${{ secrets.DAILY_BUDGET_GITHUB_TOKEN || github.token }}
           AUTOPILOT_SELECTION_PATH: ${{ inputs.selection }}
+          AUTOPILOT_RECOVERY_REQUEST: ${{ inputs.recovery }}
           AUTOPILOT_LANE: ${{ inputs.lane }}
           AUTOPILOT_MODE: fixed-preview
           AUTOPILOT_EDITOR_MODEL: claude-sonnet-5
