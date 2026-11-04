@@ -1,0 +1,102 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ — HP وديل",
+  "expires_at": "2026-11-06T19:55:42.798368+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/hp-dell-logos-20261104/challenge.mp4",
+      "sha256": "8755c525d2f34daecb5fa18b9214f8221c5f5bbb7163c762927ced4a9ab7dbfb",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "8755c525d2f34daecb5fa18b9214f8221c5f5bbb7163c762927ced4a9ab7dbfb",
+      "reference": "Khalid explicitly authorized corrected republication with company logos and question about company founding; predecessor remains published pending native deletion. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    },
+    "previous": {
+      "path": "approved/hp-dell-20261104/manifest.json",
+      "sha256": "6b9ed42f6325a690541d4376602c0a88136d0912d3cb6bc75d086217003bfc84"
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid explicitly authorized corrected republication with company logos and question about company founding; predecessor remains published pending native deletion. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "8755c525d2f34daecb5fa18b9214f8221c5f5bbb7163c762927ced4a9ab7dbfb",
+    "source_manifest": {
+      "path": "approved/hp-dell-logos-20261104/source-approval.json",
+      "sha256": "e65ad4246aebfc7ce658be0fbfd4a42b34bf68eb9e546eaa4c7fed3f81a2ada8"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/hp-dell-logos-20261104/frame-0.5.png",
+        "sha256": "c7545ab40f4f6b45d8265f52876df71560055918e637f807e8b89bce5ad25d72"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/hp-dell-logos-20261104/frame-3.5.png",
+        "sha256": "f3f8183670c361f1642e740d989c983f75633577c3ebcfe692285383b9a3ecd9"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/hp-dell-logos-20261104/frame-4.5.png",
+        "sha256": "846652701b0dc36d22af158b52facbf0287dafbfa6b2aa75bbfdb7e82a29ee37"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/hp-dell-logos-20261104/frame-5.5.png",
+        "sha256": "e9650693b9b8833a607afe7ea6e55f483252e1f2556a0860665168bc5a757d73"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/hp-dell-logos-20261104/frame-6.5.png",
+        "sha256": "87887ae463f93d811f58b0b3fbad0673a28bbc2ac723e65b23a3e57c9512f8ed"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/hp-dell-logos-20261104/frame-7.5.png",
+        "sha256": "a5d40598fcae792066e256ed9b1f49cf57cd319af06499f3ee69bf42aad86c08"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/hp-dell-logos-20261104/frame-8.5.png",
+        "sha256": "73cdac6dfca51e3fc7297847daa45a85ce719eafd2012c55a233132f37e42ec8"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/hp-dell-logos-20261104/frame-11.5.png",
+        "sha256": "cf31caf0c72d51c6436ea0df996ab47fb8b996a68722d3fac8ccacb07a8b6420"
+      }
+    ]
+  }
+}

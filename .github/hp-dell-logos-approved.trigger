@@ -1,0 +1,1 @@
+Owner explicitly authorized company-logo correction and publication, replacing old laptop imagery. Exact SHA256 8755c525d2f34daecb5fa18b9214f8221c5f5bbb7163c762927ced4a9ab7dbfb. Manual native deletion of old version required.
