@@ -11,7 +11,9 @@ identity,title,media=load_package(manifest)
 client=BundleClient();client.check()
 report=GitHubJournal('colmar-20261104-preflight')
 budget={'day':day_key(),'limit_usd':3,'new_paid_model_requests':0,'mode':'existing_media_delivery_only','total_daily_spend':'NOT_ASSERTED','cost_ledger_not_a_posting_prerequisite':True}
-report.save({'checked_at':datetime.now(timezone.utc).isoformat(),'video_sha256':hashlib.sha256(media[0][1]).hexdigest(),'budget':budget,'owner_authorization':'Owner approved 25-topic batch and two daily slots; D2 Colmar France versus Germany','destinations':['STORY','SPOTLIGHT']})
+initial=report.read()
+initial.update({'checked_at':datetime.now(timezone.utc).isoformat(),'video_sha256':hashlib.sha256(media[0][1]).hexdigest(),'budget':budget,'owner_authorization':'Owner approved 25-topic batch and two daily slots; D2 Colmar France versus Germany','destinations':['STORY','SPOTLIGHT']})
+report.save(initial)
 for destination in ['STORY','SPOTLIGHT']:
     key=identity if destination=='STORY' else hashlib.sha256((identity+':SPOTLIGHT').encode()).hexdigest()
     journal=GitHubJournal(key);existing=journal.read()

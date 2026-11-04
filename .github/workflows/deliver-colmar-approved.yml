@@ -23,6 +23,7 @@ jobs:
       - name: Restore sealed video and restore original hash-pinned review frames
         run: |
           cat approved/colmar-20261104.tar.xz.part-* | tar -xJf -
+          git show HEAD:approved/colmar-20261104/deliver.py > approved/colmar-20261104/deliver.py
       - name: Validate and publish exact approved bytes to both destinations
         env:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}

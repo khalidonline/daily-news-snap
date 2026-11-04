@@ -1,1 +1,1 @@
-Resume D2 after read-only exact upload reconciliation; preserve original video and receipt identities. 2026-11-04.
+Resume same Colmar video after confirmed existing STORY; preserve preflight receipt via read/merge/save.
