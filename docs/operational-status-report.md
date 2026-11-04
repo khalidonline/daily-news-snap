@@ -74,3 +74,14 @@ The local read-only command was exercised using repository reads:
 
 This is historical replay evidence, not a promise those sources remain current.
 The report demonstration did not create new content or send anything.
+
+## Combined-main verification
+
+On 4 November 2026, the report branch incorporated main commit
+`51b8bcdfc14a3cc54b144060a52a989cb387f0af`, preserving its approved aggregate-cap
+removal byte-for-byte. Only the six status-report files differ from that main.
+The combined tree passed 1,321 tests and 249 subtests in 337.53 seconds with
+`THEME=light FONT_FAMILY=Almarai python -m pytest -q`; two pre-existing
+deprecation warnings remain. Focused report, route-inventory and accounting
+compatibility checks passed 54 tests and 27 subtests. Independent review found
+no merge blockers. This records local verification, not merge or deployment.
