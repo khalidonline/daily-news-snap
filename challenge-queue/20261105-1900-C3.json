@@ -1,0 +1,25 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-05",
+  "slot": "19:00",
+  "item": "C3",
+  "topic": "نزل بالسوق؟ — Nike Adapt",
+  "status": "DISPATCHED_NOT_CONFIRMED",
+  "workflow_run_id": 42061495827,
+  "commit": "a53dfe567ba9bca8f8920672c0d3412df066ba8c",
+  "video_sha256": "f5e756726c64830ec97d9381d1375b7490318acc8be4cf3c1aa7093bb0a7473e",
+  "identity": "d906d204284422122cd7fa609ae60400a32db3704fc41aeb40e21d011efddc97",
+  "archive_sha256": "4f1292db1b2ab770bf5158ad466260d4995a167624290587b4ba4e472914fc68",
+  "receipt_path": "api-receipts/nike-adapt-20261105-preflight.json",
+  "next_item": "C3_RECONCILE_FIRST",
+  "after_confirmed_next_item": "D3",
+  "completed_total": 11,
+  "completed_today_confirmed": 1,
+  "blocked_items": [
+    "E2"
+  ],
+  "remaining_unconfirmed_topics": 13,
+  "new_paid_model_requests": 0,
+  "total_daily_spend": "UNKNOWN",
+  "reason": "Single second daily challenge dispatched. Reconcile existing run and receipts before retry."
+}
