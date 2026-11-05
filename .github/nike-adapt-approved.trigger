@@ -1,1 +1,1 @@
-C3 2026-11-05 19:00 Riyadh; one challenge only; publish sealed video in both destinations.
+Resume identical C3 video after failed dependency installation and pre-send GitHub500. Finite300s install without recommended packages. No duplicate topic.

@@ -18,8 +18,8 @@ jobs:
         with: {python-version: '3.12'}
       - run: timeout 120 python -m pip install pillow
       - name: Ensure FFmpeg with bounded installation
-        timeout-minutes: 3
-        run: command -v ffmpeg || (sudo timeout 90 apt-get update -qq && sudo timeout 90 apt-get install -y ffmpeg)
+        timeout-minutes: 7
+        run: command -v ffmpeg || (sudo timeout 90 apt-get update -qq && sudo timeout 300 apt-get install -y --no-install-recommends ffmpeg)
       - name: Restore sealed video and restore original hash-pinned review frames
         run: |
           tar -xJf approved/nike-adapt-20261105.tar.xz
