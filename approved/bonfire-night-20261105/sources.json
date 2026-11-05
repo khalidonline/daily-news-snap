@@ -1,0 +1,30 @@
+{
+  "facts": [
+    "https://www.parliament.uk/about/faqs/house-of-commons-faqs/gunpowder-plot/",
+    "https://www.gov.uk/government/news/government-backs-great-british-tradition-of-bonfire-night"
+  ],
+  "as_of_riyadh": "2026-11-05",
+  "image_assets": [
+    {
+      "path": "approved/bonfire-night-20261105/bonfire.jpg",
+      "sha256": "4f43e43da320929343458fa53529fbce1e62b32dfa3ba790573ee3101605f75b",
+      "source_url": "https://commons.wikimedia.org/wiki/File:131102-F-HA826-936_(10741284974).jpg",
+      "description": "Bonfire Night fireworks, Abbey Gardens, Bury St Edmunds, 2 November 2013. Not London and not 2026.",
+      "credit": "Dillon Johnston / U.S. Air Force",
+      "rights_status": "public_domain",
+      "rights_basis": "Official U.S. military photograph; Commons PD-USGov-Military. Thumbnail downloaded at 960px."
+    },
+    {
+      "path": "approved/bonfire-night-20261105/parliament.jpg",
+      "sha256": "0b40cf341ef0c0acf9519675b14cc8857f6efbc53757278b66e5e2a2681becf5",
+      "source_url": "https://www.parliament.uk/globalassets/house-of-commons/hoc-digital/news-story-images/palace-exterior/palace-of-westminster-2022.jpg",
+      "description": "Present Palace of Westminster and Elizabeth Tower from the Thames. Official exterior image, filename 2022. Not the 1605 building.",
+      "credit": "UK Parliament",
+      "rights_status": "not_verified",
+      "rights_basis": "Public official website source; no open-license claim. Reference retained internally per owner policy."
+    }
+  ],
+  "image_treatment": "Two real archival photos. Fireworks left captioned as 2013; current Parliament right. Normal panel cropping only, no fabricated celebration at Parliament.",
+  "excluded_candidate": "Huck Lewes 2023 image download returned 403; not used.",
+  "status": "DRAFT_NOT_AUTHORIZED"
+}

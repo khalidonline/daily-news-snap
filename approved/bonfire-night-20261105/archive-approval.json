@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/bonfire-night-20261105/manifest.json",
+  "manifest_sha256": "fb4ee77850e77fb325974f86421f397c2111f18285520bff1a3bd8acb062e5a6",
+  "identity": "8ff0878535c345ce5624279c00213d9fdc21c3def39bb54fa55840888a5931c1",
+  "public_indices": [
+    1
+  ],
+  "title": "احتفال بريطانيا اليوم… وراه محاولة تفجير!",
+  "expires_at": "2026-11-05T23:59:59+03:00",
+  "owner_authorization": "Not authorized; awaiting review of uploaded export.",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+}

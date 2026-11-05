@@ -1,0 +1,55 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "احتفال بريطانيا اليوم… وراه محاولة تفجير!",
+  "not_before": "2026-11-05T00:00:00+03:00",
+  "expires_at": "2026-11-05T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "reference": "Khalid approved shortened exact copy with تمام and requested design with كمل. Export awaits preview and publication approval.",
+    "approved_media_sha256": [
+      "1333285f8a9efb7f9c94bf0fbdab7ea6e118c2e34a265f6567626e54549b88c9"
+    ],
+    "approved_source_sha256": [
+      "4f43e43da320929343458fa53529fbce1e62b32dfa3ba790573ee3101605f75b",
+      "0b40cf341ef0c0acf9519675b14cc8857f6efbc53757278b66e5e2a2681becf5"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/bonfire-night-20261105/card.png",
+      "sha256": "1333285f8a9efb7f9c94bf0fbdab7ea6e118c2e34a265f6567626e54549b88c9",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/bonfire-night-20261105/bonfire.jpg",
+          "sha256": "4f43e43da320929343458fa53529fbce1e62b32dfa3ba790573ee3101605f75b",
+          "source_url": "https://commons.wikimedia.org/wiki/File:131102-F-HA826-936_(10741284974).jpg",
+          "description": "Bonfire Night fireworks, Abbey Gardens, Bury St Edmunds, 2 November 2013. Not London and not 2026.",
+          "credit": "Dillon Johnston / U.S. Air Force",
+          "rights_status": "public_domain",
+          "rights_basis": "Official U.S. military photograph; Commons PD-USGov-Military. Thumbnail downloaded at 960px."
+        },
+        {
+          "path": "approved/bonfire-night-20261105/parliament.jpg",
+          "sha256": "0b40cf341ef0c0acf9519675b14cc8857f6efbc53757278b66e5e2a2681becf5",
+          "source_url": "https://www.parliament.uk/globalassets/house-of-commons/hoc-digital/news-story-images/palace-exterior/palace-of-westminster-2022.jpg",
+          "description": "Present Palace of Westminster and Elizabeth Tower from the Thames. Official exterior image, filename 2022. Not the 1605 building.",
+          "credit": "UK Parliament",
+          "rights_status": "not_verified",
+          "rights_basis": "Public official website source; no open-license claim. Reference retained internally per owner policy."
+        }
+      ]
+    }
+  ]
+}

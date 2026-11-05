@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/bonfire-night-20261105",
+  "manifest_content_sha256": "7c53db45e81ee89a06bc13e8e06cbaaf45ef11cf12186c9f635c5757bb4b216c",
+  "archive_content_sha256": "30dd23558b5fecd574984e487e85fa1d48a5f47ab2e2c533a20f9228dcbdbfb4",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "6ca040f48b420d9f9400da115939a8b43385f6d4918f7f79b17af6e95d69dc51",
+  "assets": {
+    "approved/bonfire-night-20261105/card.png": "1333285f8a9efb7f9c94bf0fbdab7ea6e118c2e34a265f6567626e54549b88c9",
+    "approved/bonfire-night-20261105/bonfire.jpg": "4f43e43da320929343458fa53529fbce1e62b32dfa3ba790573ee3101605f75b",
+    "approved/bonfire-night-20261105/parliament.jpg": "0b40cf341ef0c0acf9519675b14cc8857f6efbc53757278b66e5e2a2681becf5"
+  },
+  "preparation_seconds": 0.003
+}
