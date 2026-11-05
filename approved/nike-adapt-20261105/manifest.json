@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — Nike Adapt",
+  "expires_at": "2026-11-07T16:06:18.298505+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/nike-adapt-20261105/challenge.mp4",
+      "sha256": "f5e756726c64830ec97d9381d1375b7490318acc8be4cf3c1aa7093bb0a7473e",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "f5e756726c64830ec97d9381d1375b7490318acc8be4cf3c1aa7093bb0a7473e",
+      "reference": "Khalid approved C3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved C3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "f5e756726c64830ec97d9381d1375b7490318acc8be4cf3c1aa7093bb0a7473e",
+    "source_manifest": {
+      "path": "approved/nike-adapt-20261105/source-approval.json",
+      "sha256": "b86003c6680cb7196dac49ea777c2d68db1bd00b7b264b551eecef88d0c78dcd"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/nike-adapt-20261105/frame-0.5.png",
+        "sha256": "a53e585ce7ed7544545de3480b76f33a7bfc1279b532008747617911a6815424"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/nike-adapt-20261105/frame-3.5.png",
+        "sha256": "a43311f45bc5d72d75f5dba402433b170500b69bda951c346ad7cb4deb38b820"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/nike-adapt-20261105/frame-4.5.png",
+        "sha256": "19ab857488c2affebba90088f4a075db40933d8555b6dcf84fdd12dd46182cfb"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/nike-adapt-20261105/frame-5.5.png",
+        "sha256": "0b24fa394d691d7c68deada05952ab4f917fe6104f879793c04ad8483f755437"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/nike-adapt-20261105/frame-6.5.png",
+        "sha256": "2f572b0a4bf1cd5a8a77d2ffabe5373935b839e70cb65d46715c6890d5a3176d"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/nike-adapt-20261105/frame-7.5.png",
+        "sha256": "b4d4225b2c5ec39cee03a78e9f5a8bd6fc044f07e25826be264a606915da4f66"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/nike-adapt-20261105/frame-8.5.png",
+        "sha256": "6b619f193afea055a7550652189f6311e264e273be716f054e13625efa22771b"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/nike-adapt-20261105/frame-11.5.png",
+        "sha256": "05fb3baec0c58afacf8ea11be5ea8f43a87b1d597d3fd1fe423eb4d09c3da203"
+      }
+    ]
+  }
+}
