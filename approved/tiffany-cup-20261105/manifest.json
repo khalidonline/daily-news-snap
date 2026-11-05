@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر — كوب تيفاني",
+  "expires_at": "2026-11-07T10:07:38.339381+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/tiffany-cup-20261105/challenge.mp4",
+      "sha256": "2a7f0753f887f7303736138017561a462d58e49469badb6a193794b6ea730c09",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "2a7f0753f887f7303736138017561a462d58e49469badb6a193794b6ea730c09",
+      "reference": "Khalid approved B3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "2a7f0753f887f7303736138017561a462d58e49469badb6a193794b6ea730c09",
+    "source_manifest": {
+      "path": "approved/tiffany-cup-20261105/source-approval.json",
+      "sha256": "19ce86ef72be01dcfedeee2265c29d2340147443c56f14d10cc4a08091aea5d6"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/tiffany-cup-20261105/frame-0.5.png",
+        "sha256": "fa346a26116b1c50b55ecc4f50afa85d9ea02f826d4fba82c8b162b8f2207753"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/tiffany-cup-20261105/frame-3.5.png",
+        "sha256": "39fcfb1ded19b04ee1449b0fde447bb381271325e389c7dafb3b7b2a0bf980c8"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/tiffany-cup-20261105/frame-4.5.png",
+        "sha256": "defee7df1b0b976dfc68f269951fc675cb215bc15c6e61ba1eec3956d271cba1"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/tiffany-cup-20261105/frame-5.5.png",
+        "sha256": "15fde61583887a5f4e77ae7eba8b90c88210e37a0178b0157ca0267e89f6e9f4"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/tiffany-cup-20261105/frame-6.5.png",
+        "sha256": "4107dafc00839f7e6bf2b878b2d8e3159b70e742d5041c85593151c00c6929d1"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/tiffany-cup-20261105/frame-7.5.png",
+        "sha256": "63922ad5efc469ead919ed7e7bfdfa33af8ad15189ab100f4793e78a29aa363f"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/tiffany-cup-20261105/frame-8.5.png",
+        "sha256": "9a70bed01cc82eeba248d268f1b105f6c5c8d550569d95d30ede9278cfbe3d94"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/tiffany-cup-20261105/frame-11.5.png",
+        "sha256": "e5b531a8583efafee54dd71932f58e02aec667be58734ed153f779ef6a88a9f1"
+      }
+    ]
+  }
+}
