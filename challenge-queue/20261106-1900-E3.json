@@ -1,0 +1,23 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-06",
+  "slot": "19:00",
+  "item": "E3",
+  "topic": "مقارنات سياحية — سنترال بارك وهايد بارك",
+  "status": "DISPATCHED_NOT_CONFIRMED",
+  "workflow_run_id": 42249051644,
+  "commit": "78a3622fc7024be370b9c0a3f97a1138871418a8",
+  "video_sha256": "4e8956daf8f23388b338ed6408a4bcbd628ff4cf8a9d5d5f37a7239c56bede89",
+  "identity": "0047d1ce79f55a0e600d5267e6fb877447ff70737c0b979b7e16d2850a579f14",
+  "archive_sha256": "5e1da92a3e5f2d7c879a004f219bb6baa7ea986c6d6c72e1499a189bcd6b6148",
+  "receipt_path": "api-receipts/park-areas-20261106-preflight.json",
+  "next_item": "E3_RECONCILE_FIRST",
+  "after_confirmed_next_item": "A4",
+  "completed_total": 13,
+  "completed_today_confirmed": 1,
+  "blocked_items": [
+    "E2"
+  ],
+  "new_paid_model_requests": 0,
+  "total_daily_spend": "UNKNOWN"
+}
