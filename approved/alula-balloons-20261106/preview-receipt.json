@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "644771c6843fff5998eeaa0832b737c071e8e0eb",
+  "assets": {
+    "approved/alula-balloons-20261106/card.png": "2dfc2b2f8b440755b70456394112dc747f47aa1863ce9d7d0ecf6496997adcb7",
+    "approved/alula-balloons-20261106/photo.jpg": "88ce6ccac115d9219e9951616dd7351c7014e77a32444299cdb38f6ead2e00fc"
+  },
+  "preview_paths": [
+    "approved/alula-balloons-20261106/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/alula-balloons-20261106/card.png": "2dfc2b2f8b440755b70456394112dc747f47aa1863ce9d7d0ecf6496997adcb7",
+    "approved/alula-balloons-20261106/photo.jpg": "88ce6ccac115d9219e9951616dd7351c7014e77a32444299cdb38f6ead2e00fc",
+    "approved/alula-balloons-20261106/manifest.json": "e0f2bbffc370656428e8da48906cb049549be3b53c5e0408dae97f0465c2a216",
+    "approved/alula-balloons-20261106/archive-approval.json": "e16c09918abd12ae3c5cac76e4cf2c16af8eadb60a99a3630420b8b6dc79ce32",
+    "approved/alula-balloons-20261106/design-review.json": "01f79597e77b7cae54ca6a8c3330f7cf53f1ff348299e7c54bd041c0dd8571f2",
+    "approved/alula-balloons-20261106/sources.json": "8d3b7c7fc7e8b0f18f53b702e65b8db3a5068749d0343407de512c909597cfbd",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/alula-balloons-20261106",
+    "manifest_content_sha256": "814d6d0d8bfe4ad83622b9d8161bbb3333370e5ad2fbc1b00e1bf00ef0fb8f5e",
+    "archive_content_sha256": "89d94396ccdb5956ca239ab3c376f4eca7150d161cf8399ce6b1caa6e8ff989f",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "01f79597e77b7cae54ca6a8c3330f7cf53f1ff348299e7c54bd041c0dd8571f2",
+    "assets": {
+      "approved/alula-balloons-20261106/card.png": "2dfc2b2f8b440755b70456394112dc747f47aa1863ce9d7d0ecf6496997adcb7",
+      "approved/alula-balloons-20261106/photo.jpg": "88ce6ccac115d9219e9951616dd7351c7014e77a32444299cdb38f6ead2e00fc"
+    }
+  }
+}

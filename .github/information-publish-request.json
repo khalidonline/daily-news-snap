@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "france-strike-20261104",
-  "identity": "8ce8c6b420e1608abcc7c25dd9521b8b4ba97d565cdf3066df274aebe7626bba",
+  "package": "alula-balloons-20261106",
+  "identity": "854a2da2c6f7dce05a30f0a8951bf4e71d266f0351a8e814bcad37dc77af9c64",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid explicitly requested on 2026-11-04: كمل نشر الإضراب. Continue publishing the final prepared labor strike card unchanged to Story and Saved Story.",
-  "approved_at": "2026-11-04T17:39:34.626743+00:00",
-  "expires_at": "2026-11-05T20:59:59+00:00",
-  "manifest_sha256": "976e5068548caec29bbf43b79680d5873385c04bc27191030947b4e0c61a3b4c",
-  "archive_sha256": "8749f3a6cd6199232ab3690c7d34e8249d2dc18e85ebd86d872dac43c2e3f39d",
-  "prepared_sha256": "1868e475d828d54bcdad3a2b3ba5afbebcc53acb567e5f010e98ac1015f8cc18",
-  "preview_receipt_sha256": "c464eeeadfb973c539a9fa8b8e77020e87ed6254fd3d82b15d85c529e39183f4"
+  "owner_reference": "خالد: انشر زي مانشرت امس — نفس بطاقة مناطيد العلا التي عرضت عليه",
+  "approved_at": "2026-11-06T16:24:17.866069+00:00",
+  "expires_at": "2026-11-06T23:59:59+03:00",
+  "manifest_sha256": "938bb8332fea5d6992837312e0f8890a947363098d97f290d462ae438ce7307b",
+  "archive_sha256": "4644ffbba2f9be1a7ecb124bed0676f2afd5080dc407af4d982a674fa609b139",
+  "prepared_sha256": "45aa3a551622f3b4ba8e95198d46abe11ba96efe945acbf64b6d77eed0309aa2",
+  "preview_receipt_sha256": "ca6b8c5c512ac3346805564384c92b321ca83461f3a46c788cde15d1504af2bd"
 }
