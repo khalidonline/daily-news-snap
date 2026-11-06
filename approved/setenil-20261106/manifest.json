@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان — بيوت تحت الصخرة",
+  "expires_at": "2026-11-08T10:00:21.319136+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/setenil-20261106/challenge.mp4",
+      "sha256": "c6a2cfa3354c29f3154a0760c4fadf77b431c17761970834f6e6311eab146314",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "c6a2cfa3354c29f3154a0760c4fadf77b431c17761970834f6e6311eab146314",
+      "reference": "Khalid approved D3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved D3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "c6a2cfa3354c29f3154a0760c4fadf77b431c17761970834f6e6311eab146314",
+    "source_manifest": {
+      "path": "approved/setenil-20261106/source-approval.json",
+      "sha256": "81842eac3f6280cc62b5088a20c82625ed959d9965cf4885fdddc5201f2ee974"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/setenil-20261106/frame-0.5.png",
+        "sha256": "ec3b4dac28a9f4f5b732b6b0d6ea5d3edc9e47550770e44cfeecfb16c2b1dbab"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/setenil-20261106/frame-3.5.png",
+        "sha256": "60fb817d0bf0067babcdad7e6b89eed33af7a74f5df551d9e29e41da92bc4c66"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/setenil-20261106/frame-4.5.png",
+        "sha256": "31d375417036d36a58511b42f91a14bccdd67ad69fded0fedc549aeb6c7f8123"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/setenil-20261106/frame-5.5.png",
+        "sha256": "8778dfa4bc78535b9aa7ae9713a50beb6c509335ec9281ccbbd859bc12c77b31"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/setenil-20261106/frame-6.5.png",
+        "sha256": "bac53c4681d228eb53a05541ba9d0079b6004de9d8a4df4f108b0283969cc2f8"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/setenil-20261106/frame-7.5.png",
+        "sha256": "f7ff12758261d47b0cd25a08808fdb7c156bdb8138f3df9508ba7f98103a75b8"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/setenil-20261106/frame-8.5.png",
+        "sha256": "e0013415f624c47e483f57f05eb263d422147e96fd206003e50610f7f846eef5"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/setenil-20261106/frame-11.5.png",
+        "sha256": "0a9c8e6c31d2452c75faf1101cc7fc10196fb2e3a312837f135b61ee63f64b67"
+      }
+    ]
+  }
+}
