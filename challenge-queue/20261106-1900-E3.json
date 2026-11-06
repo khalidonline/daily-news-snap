@@ -4,20 +4,71 @@
   "slot": "19:00",
   "item": "E3",
   "topic": "مقارنات سياحية — سنترال بارك وهايد بارك",
-  "status": "DISPATCHED_NOT_CONFIRMED",
+  "status": "POSTED_BOTH",
   "workflow_run_id": 42249051644,
   "commit": "78a3622fc7024be370b9c0a3f97a1138871418a8",
   "video_sha256": "4e8956daf8f23388b338ed6408a4bcbd628ff4cf8a9d5d5f37a7239c56bede89",
   "identity": "0047d1ce79f55a0e600d5267e6fb877447ff70737c0b979b7e16d2850a579f14",
   "archive_sha256": "5e1da92a3e5f2d7c879a004f219bb6baa7ea986c6d6c72e1499a189bcd6b6148",
   "receipt_path": "api-receipts/park-areas-20261106-preflight.json",
-  "next_item": "E3_RECONCILE_FIRST",
+  "next_item": "A4",
   "after_confirmed_next_item": "A4",
-  "completed_total": 13,
-  "completed_today_confirmed": 1,
+  "completed_total": 14,
+  "completed_today_confirmed": 2,
   "blocked_items": [
     "E2"
   ],
   "new_paid_model_requests": 0,
-  "total_daily_spend": "UNKNOWN"
+  "total_daily_spend": "UNKNOWN",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "5147f82c-3cb5-4e09-ae4d-dad370784254",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "04684811-65a6-4c51-9c55-e5c1c31d960d",
+          "mediaId": "04684811-65a6-4c51-9c55-e5c1c31d960d",
+          "mediaIds": [
+            "04684811-65a6-4c51-9c55-e5c1c31d960d"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "668618b9-e524-4528-8445-e661be2f1f43",
+          "sourceUploadIds": [
+            "668618b9-e524-4528-8445-e661be2f1f43"
+          ],
+          "mediaUploadedAt": "2026-11-06T16:07:26.798Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "4e8956daf8f23388b338ed6408a4bcbd628ff4cf8a9d5d5f37a7239c56bede89"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "c4262344-9913-4968-9aeb-e985644c8c2d",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYZW9udndwbGVqAaGxn1CdAaGxn1BfAAAAAA",
+          "mediaId": "25b30b7f-f048-41b0-a661-d71f652ca0cc",
+          "mediaIds": [
+            "25b30b7f-f048-41b0-a661-d71f652ca0cc"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "fc4c305d-2852-4a66-a4ed-6b47d6c733b1",
+          "sourceUploadIds": [
+            "fc4c305d-2852-4a66-a4ed-6b47d6c733b1"
+          ],
+          "mediaUploadedAt": "2026-11-06T16:09:10.704Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "4e8956daf8f23388b338ed6408a4bcbd628ff4cf8a9d5d5f37a7239c56bede89"
+    }
+  },
+  "completed_today": 2,
+  "no_repeat": true,
+  "remaining_unconfirmed_topics": 10
 }
