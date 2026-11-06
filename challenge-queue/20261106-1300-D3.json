@@ -1,0 +1,23 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-06",
+  "slot": "13:00",
+  "item": "D3",
+  "topic": "توقع المكان — سيتينيل",
+  "status": "DISPATCHED_NOT_CONFIRMED",
+  "workflow_run_id": 42199442976,
+  "commit": "f848470da12705cdf3101c2aec92c9df24de496f",
+  "video_sha256": "c6a2cfa3354c29f3154a0760c4fadf77b431c17761970834f6e6311eab146314",
+  "identity": "29524a459fd5fd74cdd89f7a2f15de1484d9852cfc4764edff723ea285d1e3f2",
+  "archive_sha256": "0a82c868c1aaa933515801786ef6b73e09266c221a0a89314486a32a90d29e31",
+  "receipt_path": "api-receipts/setenil-20261106-preflight.json",
+  "next_item": "D3_RECONCILE_FIRST",
+  "after_confirmed_next_item": "E3",
+  "completed_total": 12,
+  "completed_today_confirmed": 0,
+  "blocked_items": [
+    "E2"
+  ],
+  "new_paid_model_requests": 0,
+  "total_daily_spend": "UNKNOWN"
+}
