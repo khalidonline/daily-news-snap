@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "2dfc2b2f8b440755b70456394112dc747f47aa1863ce9d7d0ecf6496997adcb7",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "مناطيد العلا… كيف يلف الطيّار بدون دركسون؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              63,
+              215,
+              1020,
+              267
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            63,
+            215,
+            1020,
+            268
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "منطاد فوق العلا وقت الشروق",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              367,
+              695,
+              714,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            367,
+            695,
+            714,
+            725
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "من ٦ إلى ١٥ نوفمبر، فيه رحلة بالعلا تجمع ٣٠ منطاد فوق الحِجر وقت الشروق.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              199,
+              801,
+              980,
+              850
+            ],
+            [
+              392,
+              874,
+              980,
+              920
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            199,
+            801,
+            1015,
+            920
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تخيّل إنك تبي تروح يمين. الطيّار ما عنده دركسون، بس يقدر يرفع المنطاد أو ينزّله.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              80,
+              986,
+              980,
+              1039
+            ],
+            [
+              416,
+              1063,
+              980,
+              1124
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            80,
+            986,
+            1015,
+            1124
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الهوا فوق ممكن يمشي بغير اتجاه الهوا تحت. الطيّار يدوّر الارتفاع اللي يودّيه للجهة اللي يبيها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              151,
+              1191,
+              980,
+              1245
+            ],
+            [
+              134,
+              1269,
+              980,
+              1322
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            134,
+            1191,
+            1015,
+            1322
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "حتى مكان الإقلاع في العلا مو ثابت؛ كل يوم يختارونه على حسب الهوا.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              205,
+              1388,
+              980,
+              1442
+            ],
+            [
+              512,
+              1466,
+              980,
+              1509
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            205,
+            1388,
+            1015,
+            1509
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "يعني أحيانًا عشان تروح يمين… يبيلك تطلع فوق!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              132,
+              1575,
+              948,
+              1635
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            132,
+            1575,
+            948,
+            1636
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected 390px player safe area for Story and Saved Story. Approved AlUla image, text, CTA visible. Simulated, not live.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top0..39/bottom625..692 masked simulation; all essential text and CTA visible.",
+      "SAVED_STORY": "Inspected separate same-player masked simulation; essential text and CTA visible."
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "facts": [
+    "https://www.experiencealula.com/en/whats-on/events/alula-skyrise",
+    "https://www.abf.net.au/how-competition-works"
+  ],
+  "image_assets": [
+    {
+      "path": "approved/alula-balloons-20261106/photo.jpg",
+      "sha256": "88ce6ccac115d9219e9951616dd7351c7014e77a32444299cdb38f6ead2e00fc",
+      "source_url": "https://whatsonsaudiarabia.com/wp-content/uploads/2023/10/AlUla-hot-air-balloon.jpg",
+      "description": "Archival balloon over AlUla, not a photo taken today",
+      "credit": "What’s On Saudi Arabia",
+      "rights_status": "not_verified"
+    }
+  ]
+}

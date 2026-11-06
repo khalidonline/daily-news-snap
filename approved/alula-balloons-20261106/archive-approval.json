@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/alula-balloons-20261106/manifest.json",
+  "manifest_sha256": "e0f2bbffc370656428e8da48906cb049549be3b53c5e0408dae97f0465c2a216",
+  "identity": "854a2da2c6f7dce05a30f0a8951bf4e71d266f0351a8e814bcad37dc77af9c64",
+  "public_indices": [
+    1
+  ],
+  "title": "مناطيد العلا… كيف يلف الطيّار بدون دركسون؟",
+  "expires_at": "2026-11-06T23:59:59+03:00",
+  "owner_authorization": "Draft",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+}
