@@ -4,20 +4,71 @@
   "slot": "13:00",
   "item": "D3",
   "topic": "توقع المكان — سيتينيل",
-  "status": "DISPATCHED_NOT_CONFIRMED",
+  "status": "POSTED_BOTH",
   "workflow_run_id": 42199442976,
   "commit": "f848470da12705cdf3101c2aec92c9df24de496f",
   "video_sha256": "c6a2cfa3354c29f3154a0760c4fadf77b431c17761970834f6e6311eab146314",
   "identity": "29524a459fd5fd74cdd89f7a2f15de1484d9852cfc4764edff723ea285d1e3f2",
   "archive_sha256": "0a82c868c1aaa933515801786ef6b73e09266c221a0a89314486a32a90d29e31",
   "receipt_path": "api-receipts/setenil-20261106-preflight.json",
-  "next_item": "D3_RECONCILE_FIRST",
+  "next_item": "E3",
   "after_confirmed_next_item": "E3",
-  "completed_total": 12,
-  "completed_today_confirmed": 0,
+  "completed_total": 13,
+  "completed_today_confirmed": 1,
   "blocked_items": [
     "E2"
   ],
   "new_paid_model_requests": 0,
-  "total_daily_spend": "UNKNOWN"
+  "total_daily_spend": "UNKNOWN",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "3e1bfd74-e70a-45fd-b34d-5475b9b572dc",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "ccde9b05-1e40-44b5-82d6-c3b12ae414fc",
+          "mediaId": "ccde9b05-1e40-44b5-82d6-c3b12ae414fc",
+          "mediaIds": [
+            "ccde9b05-1e40-44b5-82d6-c3b12ae414fc"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "5b038a6d-7a12-4059-907f-f1127acdae6d",
+          "sourceUploadIds": [
+            "5b038a6d-7a12-4059-907f-f1127acdae6d"
+          ],
+          "mediaUploadedAt": "2026-11-06T10:03:14.825Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "c6a2cfa3354c29f3154a0760c4fadf77b431c17761970834f6e6311eab146314"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "35e66ce0-5291-42d5-b57a-f1410f8fcfe0",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYd3JjdGhmc2l1AaGwUXjtAaGwUXiuAAAAAA",
+          "mediaId": "de33a2e4-476d-4ee4-8ec3-b492ce99b1be",
+          "mediaIds": [
+            "de33a2e4-476d-4ee4-8ec3-b492ce99b1be"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "f1e4d732-2640-4b75-9a6a-d6724019ea2c",
+          "sourceUploadIds": [
+            "f1e4d732-2640-4b75-9a6a-d6724019ea2c"
+          ],
+          "mediaUploadedAt": "2026-11-06T10:04:31.948Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "c6a2cfa3354c29f3154a0760c4fadf77b431c17761970834f6e6311eab146314"
+    }
+  },
+  "completed_today": 1,
+  "no_repeat": true,
+  "remaining_unconfirmed_topics": 11
 }
