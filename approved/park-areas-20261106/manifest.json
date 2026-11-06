@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية — مساحة الحديقتين",
+  "expires_at": "2026-11-08T16:03:56.581965+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/park-areas-20261106/challenge.mp4",
+      "sha256": "4e8956daf8f23388b338ed6408a4bcbd628ff4cf8a9d5d5f37a7239c56bede89",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "4e8956daf8f23388b338ed6408a4bcbd628ff4cf8a9d5d5f37a7239c56bede89",
+      "reference": "Khalid approved E3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved E3 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "4e8956daf8f23388b338ed6408a4bcbd628ff4cf8a9d5d5f37a7239c56bede89",
+    "source_manifest": {
+      "path": "approved/park-areas-20261106/source-approval.json",
+      "sha256": "c122aa35f847c181a2186a1f562a32d9f8c9f110bd87f35a7561820209de1e4e"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/park-areas-20261106/frame-0.5.png",
+        "sha256": "bf611401feead32f3b45b59ee703d67a186d7d1b94d35cdedd6f6cf69151feb3"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/park-areas-20261106/frame-3.5.png",
+        "sha256": "d9b67da19925bd6d8597cd260d61ce13293a1ffa93be339a721ea7c36cbb98b0"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/park-areas-20261106/frame-4.5.png",
+        "sha256": "ab5c960f38834d53037ad8cdb8690b4f0ae67c6b1db1b78f92c340f785dfb193"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/park-areas-20261106/frame-5.5.png",
+        "sha256": "7dc464725cd813d1f4dc33628a4519cc884a56009d534d6ccc720871bda08214"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/park-areas-20261106/frame-6.5.png",
+        "sha256": "0bc7fa42ac39d2824e031ea956ec5808ccb5dd5b93229470e45d2a1d9091b97f"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/park-areas-20261106/frame-7.5.png",
+        "sha256": "488b9bbe98cb65ad003c3ac55ee951de87846d9c8647b075aa6d642b51cb39a5"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/park-areas-20261106/frame-8.5.png",
+        "sha256": "36812b9bfe347c51466d459ff7fb21659b8c2d3cc6707b9f6baaafdf9aff11f3"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/park-areas-20261106/frame-11.5.png",
+        "sha256": "498b703486eced3872812267b125faf753655424f4d2030264eac14d91daa885"
+      }
+    ]
+  }
+}
