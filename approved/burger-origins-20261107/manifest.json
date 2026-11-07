@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ — ماكدونالدز وبرجر كنج",
+  "expires_at": "2026-11-09T10:02:56.750935+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/burger-origins-20261107/challenge.mp4",
+      "sha256": "f7d80d8d2c5e1a79155b564fadc32e654044670f65fbf2489e0dd3c7a27dc51f",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "f7d80d8d2c5e1a79155b564fadc32e654044670f65fbf2489e0dd3c7a27dc51f",
+      "reference": "Khalid approved A4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved A4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "f7d80d8d2c5e1a79155b564fadc32e654044670f65fbf2489e0dd3c7a27dc51f",
+    "source_manifest": {
+      "path": "approved/burger-origins-20261107/source-approval.json",
+      "sha256": "6af379ca6e3fe4129b1f624304bb9cc600d4f42bc49972b020fac549609072a8"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/burger-origins-20261107/frame-0.5.png",
+        "sha256": "7596595948f481496581483a2ab2b7160c35cad62e6b3ebe3cce206840119fa8"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/burger-origins-20261107/frame-3.5.png",
+        "sha256": "3f6dbc2d26eb11188bcbf4b512303a130295924642786126cbef1556d56b6ab8"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/burger-origins-20261107/frame-4.5.png",
+        "sha256": "1833fbd8e5897fe83f8815542701af6ea6dac47937a7c2aaf4439298117d975f"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/burger-origins-20261107/frame-5.5.png",
+        "sha256": "84b30256456a6af395d38546e0cec60ffee749edc55e92500c41d445bb381346"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/burger-origins-20261107/frame-6.5.png",
+        "sha256": "82877cd32d58da4c4f314b54360cdc0725d78900910538e76ad996af9d47ea6a"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/burger-origins-20261107/frame-7.5.png",
+        "sha256": "8052cee115ba91532403cc74d63b586e4f08efd801da6944e742e4d51a9fa91e"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/burger-origins-20261107/frame-8.5.png",
+        "sha256": "f2fa00ef0ac47511b772fb89c081e7dbe203ea856c7e7670c3e83bb8bcee3117"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/burger-origins-20261107/frame-11.5.png",
+        "sha256": "d391fa46fe61c6b8f99e47a5dddf48df59662a0b2a21706c4ba0481c047bc102"
+      }
+    ]
+  }
+}
