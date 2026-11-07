@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "bulgari-pink-20261107",
-  "identity": "06702d079207ef1774396af324c8197740451c57f73a7157c57d28ff57fb5793",
+  "package": "hittin-london-20261107",
+  "identity": "0aebf2c860ea061b4c3756b1583f0916ce99fe20d5b81761383e0cd38b0d655f",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر الثنتين — بطاقتا الجزم وخاتم بلوغري المعروضتان",
-  "approved_at": "2026-11-07T10:06:04.633309+00:00",
+  "owner_reference": "خالد: انشر — النسخة الأخيرة من سالفة حطين صارت في لندن قبل، بتعليق قص شريط الافتتاح ١٩٩٣.",
+  "approved_at": "2026-11-07T17:17:26.327714+00:00",
   "expires_at": "2026-11-07T23:59:59+03:00",
-  "manifest_sha256": "95c306e851e7305050b6784fd5e2883624752715df8a8f5b09fa5d6ef96d51f8",
-  "archive_sha256": "f2b1c529eda913334ca5c2dcd018f008dfa22050ab84131ec4213df359475dd6",
-  "prepared_sha256": "0c007c23e20ebe6f6a82634c903ceda58e5f623dc392a9c9648c6ecd987cc62b",
-  "preview_receipt_sha256": "413a52a599effa6e5e04afd7728689f0cb86e65dde55fc0215d0dc559b0ddbdd"
+  "manifest_sha256": "3e7052d8181de11930650db2ee1bb7dcde78deef4c63c9c828f2f201c644677e",
+  "archive_sha256": "8d327c6c0e079cc7c4ddea39b83363d87175f8635d27e1a9bc2956ad0b62f060",
+  "prepared_sha256": "32c8d75a6a4f7078948c65e2348ca1bae038e97b0e579130502499de2a9feeb8",
+  "preview_receipt_sha256": "7df7d39c3474dc73e510f63204ba17752295c4212a2e7f7da3cc222fa63ee02c"
 }

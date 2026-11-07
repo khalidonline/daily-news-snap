@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/hittin-london-20261107/manifest.json",
-  "manifest_sha256": "1dc2b3a0b6154ca98097410acb67e4e973822f8ebcd0d49c71998bea95561b68",
+  "manifest_sha256": "3e7052d8181de11930650db2ee1bb7dcde78deef4c63c9c828f2f201c644677e",
   "identity": "0aebf2c860ea061b4c3756b1583f0916ce99fe20d5b81761383e0cd38b0d655f",
   "public_indices": [
     1
   ],
   "title": "سالفة حطين صارت في لندن قبل",
   "expires_at": "2026-11-07T23:59:59+03:00",
-  "owner_authorization": null,
+  "owner_authorization": "خالد: انشر — النسخة الأخيرة من سالفة حطين صارت في لندن قبل، بتعليق قص شريط الافتتاح ١٩٩٣.",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
 }

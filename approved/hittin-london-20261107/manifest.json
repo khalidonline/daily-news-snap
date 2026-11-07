@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "db1bd063cacf39205e946dee779f7f620515cdc568e9f590af68de07f098038c",
       "950bd73248e2853f72c285be17cdcb7afaaebc164e1cd8ba9e1fa784db76fe7a"
-    ]
+    ],
+    "reference": "خالد: انشر — النسخة الأخيرة من سالفة حطين صارت في لندن قبل، بتعليق قص شريط الافتتاح ١٩٩٣.",
+    "reviewed_at": "2026-11-07T17:17:26.327714+00:00"
   },
   "media": [
     {
