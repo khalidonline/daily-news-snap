@@ -1,0 +1,23 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-07",
+  "slot": "13:00",
+  "item": "A4",
+  "topic": "من بدأ أول؟ — ماكدونالدز وبرجر كنج",
+  "status": "DISPATCHED_NOT_CONFIRMED",
+  "workflow_run_id": 42362333639,
+  "commit": "b507bbea49e42c90383f8d2e006c6ed9225f991c",
+  "video_sha256": "f7d80d8d2c5e1a79155b564fadc32e654044670f65fbf2489e0dd3c7a27dc51f",
+  "identity": "ee2944d08fca09179a90472593fe483fe587ddadb98c9a4c93910f7a76e2f25f",
+  "archive_sha256": "fd341f26cadbedb459edd078646d533fc1a0a79fe95f26d0c9eb356b776c16ff",
+  "receipt_path": "api-receipts/burger-origins-20261107-preflight.json",
+  "next_item": "A4_RECONCILE_FIRST",
+  "after_confirmed_next_item": "B4",
+  "completed_total": 14,
+  "completed_today_confirmed": 0,
+  "blocked_items": [
+    "E2"
+  ],
+  "new_paid_model_requests": 0,
+  "total_daily_spend": "UNKNOWN"
+}
