@@ -1,0 +1,23 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-07",
+  "slot": "19:00",
+  "item": "B4",
+  "topic": "توقع السعر — شنطة بالنسياغا",
+  "status": "DISPATCHED_NOT_CONFIRMED",
+  "workflow_run_id": 42389760939,
+  "commit": "2f60e9ab536874afa0a845d53d1444f88100cc6e",
+  "video_sha256": "5d77989fe0bb27415b824048ddbf10606eb98a51280858c5f613e89e7037ba2f",
+  "identity": "c0ca73fb52d44c1e625b7daeb5ece4f8fa303fcbf09f06ef0d7665351df41f43",
+  "archive_sha256": "32231bb3e24cf58a8565d4c920c3eccd41c77eb7ef327c1b9a217a100af2a394",
+  "receipt_path": "api-receipts/trash-pouch-20261107-preflight.json",
+  "next_item": "B4_RECONCILE_FIRST",
+  "after_confirmed_next_item": "C4",
+  "completed_total": 15,
+  "completed_today_confirmed": 1,
+  "blocked_items": [
+    "E2"
+  ],
+  "new_paid_model_requests": 0,
+  "total_daily_spend": "UNKNOWN"
+}
