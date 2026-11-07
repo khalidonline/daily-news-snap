@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/bulgari-pink-20261107/manifest.json",
-  "manifest_sha256": "db63f7541908399aa71382f69d618d22ee1255826e0f1201aa57c10124d5d1d0",
+  "manifest_sha256": "95c306e851e7305050b6784fd5e2883624752715df8a8f5b09fa5d6ef96d51f8",
   "identity": "06702d079207ef1774396af324c8197740451c57f73a7157c57d28ff57fb5793",
   "public_indices": [
     1
   ],
   "title": "ألماسة من الهند… وش سوّت فيها بلوغري؟",
   "expires_at": "2026-11-07T23:59:59+03:00",
-  "owner_authorization": null,
+  "owner_authorization": "خالد: انشر الثنتين — بطاقتا الجزم وخاتم بلوغري المعروضتان",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
 }

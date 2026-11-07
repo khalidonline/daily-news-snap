@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "b7e54cbb4438e7b6fa89e1893804db21954bc260",
+  "assets": {
+    "approved/bulgari-pink-20261107/card.png": "123e34fe554cbfe82f667a31bd5f9efe7ffe6d3f1582d404840ff4f7c18d8c8a",
+    "approved/bulgari-pink-20261107/ring-photo.png": "7106fb91f279e7f106851555e8785554822f6cbfc59aa69c28c80134201793ee"
+  },
+  "preview_paths": [
+    "approved/bulgari-pink-20261107/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/bulgari-pink-20261107/card.png": "123e34fe554cbfe82f667a31bd5f9efe7ffe6d3f1582d404840ff4f7c18d8c8a",
+    "approved/bulgari-pink-20261107/ring-photo.png": "7106fb91f279e7f106851555e8785554822f6cbfc59aa69c28c80134201793ee",
+    "approved/bulgari-pink-20261107/manifest.json": "db63f7541908399aa71382f69d618d22ee1255826e0f1201aa57c10124d5d1d0",
+    "approved/bulgari-pink-20261107/archive-approval.json": "8372661354b45ee093664dc4ca75072ba7d1d903a85d75ba72a5c93aeda8c0b2",
+    "approved/bulgari-pink-20261107/design-review.json": "0bb6965d89e0bb901bdec511907af7b5aa159f4644595b9c265d53e62b2cf1eb",
+    "approved/bulgari-pink-20261107/sources.json": "eb48f938ef13d540b489dfd032b6828343291188072a7af863999ffc7f17263c",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/bulgari-pink-20261107",
+    "manifest_content_sha256": "7833ba928012af0317833158ecc6a0d490460a2ec021d24c91912ca0b9e6c64a",
+    "archive_content_sha256": "7ff9eb2a536479fa577be1ad2f2904f7a063d6acf6c5b24e883f934b885319cb",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "0bb6965d89e0bb901bdec511907af7b5aa159f4644595b9c265d53e62b2cf1eb",
+    "assets": {
+      "approved/bulgari-pink-20261107/card.png": "123e34fe554cbfe82f667a31bd5f9efe7ffe6d3f1582d404840ff4f7c18d8c8a",
+      "approved/bulgari-pink-20261107/ring-photo.png": "7106fb91f279e7f106851555e8785554822f6cbfc59aa69c28c80134201793ee"
+    }
+  }
+}

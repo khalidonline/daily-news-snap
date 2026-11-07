@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "shoe-xray-20261107",
-  "identity": "c2bd44238a9b027c8777d6dfbbc3e1f813f5b86f7d2c16e4fb6cae03708490bd",
+  "package": "bulgari-pink-20261107",
+  "identity": "06702d079207ef1774396af324c8197740451c57f73a7157c57d28ff57fb5793",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
   "owner_reference": "خالد: انشر الثنتين — بطاقتا الجزم وخاتم بلوغري المعروضتان",
-  "approved_at": "2026-11-07T10:05:58.556595+00:00",
+  "approved_at": "2026-11-07T10:06:04.633309+00:00",
   "expires_at": "2026-11-07T23:59:59+03:00",
-  "manifest_sha256": "63819cb837488e6ffdc9f874c9f5dde8b76120970d9fc095d3e7581b93f74f0e",
-  "archive_sha256": "9ed03e9138a1b405a51f704badefaddb775bcb9700f634e1f3df806874f7e806",
-  "prepared_sha256": "1af25d3f6214586ae986c651e447d1ff1c09b70c03c1505213e3147008b35c5d",
-  "preview_receipt_sha256": "3e6e36e2b178ddd8ac9bebe3fc5bca051d37790cb6599d44aab49fe73ee788d6"
+  "manifest_sha256": "95c306e851e7305050b6784fd5e2883624752715df8a8f5b09fa5d6ef96d51f8",
+  "archive_sha256": "f2b1c529eda913334ca5c2dcd018f008dfa22050ab84131ec4213df359475dd6",
+  "prepared_sha256": "0c007c23e20ebe6f6a82634c903ceda58e5f623dc392a9c9648c6ecd987cc62b",
+  "preview_receipt_sha256": "413a52a599effa6e5e04afd7728689f0cb86e65dde55fc0215d0dc559b0ddbdd"
 }
