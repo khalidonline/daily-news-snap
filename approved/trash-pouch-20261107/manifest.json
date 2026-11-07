@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر — شنطة بالنسياغا",
+  "expires_at": "2026-11-09T16:07:27.592588+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/trash-pouch-20261107/challenge.mp4",
+      "sha256": "5d77989fe0bb27415b824048ddbf10606eb98a51280858c5f613e89e7037ba2f",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "5d77989fe0bb27415b824048ddbf10606eb98a51280858c5f613e89e7037ba2f",
+      "reference": "Khalid approved B4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "5d77989fe0bb27415b824048ddbf10606eb98a51280858c5f613e89e7037ba2f",
+    "source_manifest": {
+      "path": "approved/trash-pouch-20261107/source-approval.json",
+      "sha256": "ffff954edba9ee7d527e731464ea5e40862b1038aa09e254bf88baf4db8fb064"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/trash-pouch-20261107/frame-0.5.png",
+        "sha256": "4e555d16da418a7929dcc9791fd567d4367a378b03aa2bdf779daf988cb4c825"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/trash-pouch-20261107/frame-3.5.png",
+        "sha256": "e9701976a356a16a78f0909609db1d3395f5747d179ffc4baeef548ed800c82e"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/trash-pouch-20261107/frame-4.5.png",
+        "sha256": "f2e3cc41f0e2d3fbea16721a35d24c3626a84958267699285f81c8966d101860"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/trash-pouch-20261107/frame-5.5.png",
+        "sha256": "13113d64186f9cdf32643c0ba5a869bc15b89a6567632aa18884a87de32232ac"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/trash-pouch-20261107/frame-6.5.png",
+        "sha256": "501bf1d910cbed4d3c5b5f19c9420e6f6b19c424d602420f4d7b4ae1d2efe9a6"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/trash-pouch-20261107/frame-7.5.png",
+        "sha256": "cc100c08ce3d2c73984cbea291d4007d1081302f79f13a264a71551979d2afd0"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/trash-pouch-20261107/frame-8.5.png",
+        "sha256": "29c89adcab706378ccba824207b340bdf6576f29dbdb7be306d02b16d1e24c24"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/trash-pouch-20261107/frame-11.5.png",
+        "sha256": "ec5aed582681e1fd401b09169a0e7f598762b08a9e27d8d453e335ad272a41fe"
+      }
+    ]
+  }
+}
