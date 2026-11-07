@@ -4,20 +4,71 @@
   "slot": "19:00",
   "item": "B4",
   "topic": "توقع السعر — شنطة بالنسياغا",
-  "status": "DISPATCHED_NOT_CONFIRMED",
+  "status": "POSTED_BOTH",
   "workflow_run_id": 42389760939,
   "commit": "2f60e9ab536874afa0a845d53d1444f88100cc6e",
   "video_sha256": "5d77989fe0bb27415b824048ddbf10606eb98a51280858c5f613e89e7037ba2f",
   "identity": "c0ca73fb52d44c1e625b7daeb5ece4f8fa303fcbf09f06ef0d7665351df41f43",
   "archive_sha256": "32231bb3e24cf58a8565d4c920c3eccd41c77eb7ef327c1b9a217a100af2a394",
   "receipt_path": "api-receipts/trash-pouch-20261107-preflight.json",
-  "next_item": "B4_RECONCILE_FIRST",
+  "next_item": "C4",
   "after_confirmed_next_item": "C4",
-  "completed_total": 15,
-  "completed_today_confirmed": 1,
+  "completed_total": 16,
+  "completed_today_confirmed": 2,
   "blocked_items": [
     "E2"
   ],
   "new_paid_model_requests": 0,
-  "total_daily_spend": "UNKNOWN"
+  "total_daily_spend": "UNKNOWN",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "055a718b-99bd-4429-bec6-e6fdc0fe9253",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "07fb425f-64c3-4cb4-b3f0-45af561c2265",
+          "mediaId": "07fb425f-64c3-4cb4-b3f0-45af561c2265",
+          "mediaIds": [
+            "07fb425f-64c3-4cb4-b3f0-45af561c2265"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "cb0e4ee6-0d1c-4776-ba4f-74aaadf3ca4b",
+          "sourceUploadIds": [
+            "cb0e4ee6-0d1c-4776-ba4f-74aaadf3ca4b"
+          ],
+          "mediaUploadedAt": "2026-11-07T16:10:55.442Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "5d77989fe0bb27415b824048ddbf10606eb98a51280858c5f613e89e7037ba2f"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "f75f7e01-a765-4a6d-9fcd-f9cad879001c",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYYnhkcmN0ZG9jAaG2yarIAaG2yaqcAAAAAA",
+          "mediaId": "d659f912-9c6e-4c11-8cb3-250237d751e4",
+          "mediaIds": [
+            "d659f912-9c6e-4c11-8cb3-250237d751e4"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "b2fd2e8a-e900-4741-a192-ceeaf45a6872",
+          "sourceUploadIds": [
+            "b2fd2e8a-e900-4741-a192-ceeaf45a6872"
+          ],
+          "mediaUploadedAt": "2026-11-07T16:13:32.597Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "5d77989fe0bb27415b824048ddbf10606eb98a51280858c5f613e89e7037ba2f"
+    }
+  },
+  "completed_today": 2,
+  "no_repeat": true,
+  "remaining_unconfirmed_topics": 8
 }
