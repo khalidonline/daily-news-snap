@@ -4,20 +4,71 @@
   "slot": "13:00",
   "item": "A4",
   "topic": "من بدأ أول؟ — ماكدونالدز وبرجر كنج",
-  "status": "DISPATCHED_NOT_CONFIRMED",
+  "status": "POSTED_BOTH",
   "workflow_run_id": 42362333639,
   "commit": "b507bbea49e42c90383f8d2e006c6ed9225f991c",
   "video_sha256": "f7d80d8d2c5e1a79155b564fadc32e654044670f65fbf2489e0dd3c7a27dc51f",
   "identity": "ee2944d08fca09179a90472593fe483fe587ddadb98c9a4c93910f7a76e2f25f",
   "archive_sha256": "fd341f26cadbedb459edd078646d533fc1a0a79fe95f26d0c9eb356b776c16ff",
   "receipt_path": "api-receipts/burger-origins-20261107-preflight.json",
-  "next_item": "A4_RECONCILE_FIRST",
+  "next_item": "B4",
   "after_confirmed_next_item": "B4",
-  "completed_total": 14,
-  "completed_today_confirmed": 0,
+  "completed_total": 15,
+  "completed_today_confirmed": 1,
   "blocked_items": [
     "E2"
   ],
   "new_paid_model_requests": 0,
-  "total_daily_spend": "UNKNOWN"
+  "total_daily_spend": "UNKNOWN",
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "e6a73026-85b9-429d-859a-920be3c224f0",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "6fc14a95-2990-470a-9e8c-78085256315e",
+          "mediaId": "6fc14a95-2990-470a-9e8c-78085256315e",
+          "mediaIds": [
+            "6fc14a95-2990-470a-9e8c-78085256315e"
+          ],
+          "type": "STORY",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "b1fbccfa-97cc-4645-84be-82dc99680b81",
+          "sourceUploadIds": [
+            "b1fbccfa-97cc-4645-84be-82dc99680b81"
+          ],
+          "mediaUploadedAt": "2026-11-07T10:05:50.012Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "f7d80d8d2c5e1a79155b564fadc32e654044670f65fbf2489e0dd3c7a27dc51f"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "04bebec8-56e3-4bba-be66-1542f86a1886",
+      "externalData": {
+        "SNAPCHAT": {
+          "id": "W7_EDlXWTBiXAEEniNoMPwAAYcnlkd2NyZGlpAaG1emSaAaG1emRrAAAAAA",
+          "mediaId": "dd6939d0-3565-48b9-8da8-dd3ec1cae6c0",
+          "mediaIds": [
+            "dd6939d0-3565-48b9-8da8-dd3ec1cae6c0"
+          ],
+          "type": "SPOTLIGHT",
+          "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+          "sourceUploadId": "ae425339-c824-455e-b5d9-60ba767328ed",
+          "sourceUploadIds": [
+            "ae425339-c824-455e-b5d9-60ba767328ed"
+          ],
+          "mediaUploadedAt": "2026-11-07T10:07:19.840Z",
+          "permalink": "https://www.snapchat.com/@executivesaudi",
+          "status": "PUBLISHED"
+        }
+      },
+      "media_sha256": "f7d80d8d2c5e1a79155b564fadc32e654044670f65fbf2489e0dd3c7a27dc51f"
+    }
+  },
+  "completed_today": 1,
+  "no_repeat": true,
+  "remaining_unconfirmed_topics": 9
 }
