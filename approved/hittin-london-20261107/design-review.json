@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "b918781f767f7786057c530859f61234949dad7306d28296d1e4d37a94ba3dc4",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "سالفة حطين صارت في لندن قبل",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              319,
+              215,
+              1020,
+              273
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            319,
+            215,
+            1020,
+            274
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "بيت في هامبستد",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              197,
+              695,
+              392,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            197,
+            695,
+            392,
+            727
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "قص شريط الافتتاح ١٩٩٣",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              643,
+              695,
+              930,
+              728
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            643,
+            695,
+            930,
+            729
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "عام ١٩٨٠، ماكدونالدز شروا محل في هامبستد، حي راقي يبعد عن هايد بارك حوالي ٥ كيلو.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              87,
+              800,
+              980,
+              854
+            ],
+            [
+              307,
+              878,
+              980,
+              930
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            87,
+            800,
+            1015,
+            930
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بعض أهل الحي اعترضوا. قالوا بتجينا ريحة القلي والشارع بيمتلي قراطيس",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              129,
+              995,
+              980,
+              1058
+            ],
+            [
+              521,
+              1082,
+              980,
+              1136
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            129,
+            995,
+            1015,
+            1136
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "البلدية رفضت، وراحت السالفة للمحكمة. وبعد ١٢ سنة، المحكمة وافقت وفتحوا الفرع.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              105,
+              1202,
+              980,
+              1245
+            ],
+            [
+              328,
+              1269,
+              980,
+              1319
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            105,
+            1202,
+            1015,
+            1319
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "واللي يضحك إن نفس المحل كان مكتبة، وقبل المكتبة كان مطعم برجر!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              144,
+              1384,
+              980,
+              1436
+            ],
+            [
+              542,
+              1460,
+              980,
+              1510
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            144,
+            1384,
+            1015,
+            1510
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "عندنا شاورما حطين، وعندهم برجر هامبستد.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              156,
+              1575,
+              924,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            156,
+            1575,
+            924,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع اللي تعجبه هذي المعلومه",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              200,
+              1674,
+              800,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            200,
+            1674,
+            800,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both simulated 390px destination overlays against this export: title, captions, body, closing and sharing CTA visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top0..39/bottom625..692 masked simulation; all essential text and CTA visible.",
+      "SAVED_STORY": "Inspected separate same-player masked simulation; essential text and CTA visible."
+    }
+  }
+}

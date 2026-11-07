@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/hittin-london-20261107",
+  "manifest_content_sha256": "982552509fc02094fe79a2528fd00d50fbe058820626d01002a6a5a37e95674f",
+  "archive_content_sha256": "6214d61a698b5e1ff6117337d23b743a61406a6192ecd30ddeda1fd01f7432fc",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "ad47c2bb1a8e7b239333cc8012dddd82a5f40a92af7dd21c93b28a7f39dc5d1a",
+  "assets": {
+    "approved/hittin-london-20261107/card.png": "b918781f767f7786057c530859f61234949dad7306d28296d1e4d37a94ba3dc4",
+    "approved/hittin-london-20261107/Hampstead-view-5.jpg": "db1bd063cacf39205e946dee779f7f620515cdc568e9f590af68de07f098038c",
+    "approved/hittin-london-20261107/event1.jpg": "950bd73248e2853f72c285be17cdcb7afaaebc164e1cd8ba9e1fa784db76fe7a"
+  },
+  "preparation_seconds": 0.002
+}

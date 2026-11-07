@@ -1,0 +1,25 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/hittin-london-20261107/Hampstead-view-5.jpg",
+      "sha256": "db1bd063cacf39205e946dee779f7f620515cdc568e9f590af68de07f098038c",
+      "source_url": "https://www.geograph.org.uk/photo/8076826",
+      "credit": "Jim Osley / CC BY-SA 2.0",
+      "description": "بيت في هامبستد",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/hittin-london-20261107/event1.jpg",
+      "sha256": "950bd73248e2853f72c285be17cdcb7afaaebc164e1cd8ba9e1fa784db76fe7a",
+      "source_url": "https://qz.com/1135251/mcdonalds-tried-to-make-me-their-poster-boy-instead-they-turned-me-vegan",
+      "credit": "Ben Williamson / Quartz",
+      "description": "صورة قص شريط الافتتاح الأصلية، استخدمت نسخة ملوّنة رقميا في البطاقة",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "facts": [
+    "https://www.alwatan.com.sa/article/1188666",
+    "https://www.washingtonpost.com/archive/politics/1992/11/04/letter-from-london/71ae8a88-b900-461b-8dff-c836b66cd77c/",
+    "https://www.camdennewjournal.co.uk/article/mcdonalds-set-leave-hampstead-high-street-branch-it-fought-open-12-years"
+  ]
+}
