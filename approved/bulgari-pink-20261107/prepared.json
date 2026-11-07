@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/bulgari-pink-20261107",
+  "manifest_content_sha256": "7833ba928012af0317833158ecc6a0d490460a2ec021d24c91912ca0b9e6c64a",
+  "archive_content_sha256": "7ff9eb2a536479fa577be1ad2f2904f7a063d6acf6c5b24e883f934b885319cb",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "0bb6965d89e0bb901bdec511907af7b5aa159f4644595b9c265d53e62b2cf1eb",
+  "assets": {
+    "approved/bulgari-pink-20261107/card.png": "123e34fe554cbfe82f667a31bd5f9efe7ffe6d3f1582d404840ff4f7c18d8c8a",
+    "approved/bulgari-pink-20261107/ring-photo.png": "7106fb91f279e7f106851555e8785554822f6cbfc59aa69c28c80134201793ee"
+  },
+  "preparation_seconds": 0.002
+}

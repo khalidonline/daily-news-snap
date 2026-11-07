@@ -1,0 +1,24 @@
+{
+  "facts": [
+    "https://www.cincymuseum.org/2019/06/27/an-x-ray-at-the-shoe-store/",
+    "https://www.cameramuseum.ch/en/discover/permanent-exhibition/the-plate-era/x-ray/"
+  ],
+  "image_assets": [
+    {
+      "path": "approved/shoe-xray-20261107/shoe-photo.jpg",
+      "sha256": "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
+      "credit": "The Henry Ford",
+      "source_url": "https://collections-media.thehenryford.org/CollectionImages/_detail/photos/thf803829.jpg",
+      "description": "جهاز قياس الجزم بالأشعة",
+      "rights_status": "not_verified"
+    },
+    {
+      "path": "approved/shoe-xray-20261107/shoe-history.jpg",
+      "sha256": "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb",
+      "credit": "Click Americana",
+      "source_url": "https://clickamericana.com/wp-content/uploads/People-lining-up-to-use-the-X-ray-shoe-fitting-machine-1920s.jpg",
+      "description": "تجربة الجهاز زمان",
+      "rights_status": "not_verified"
+    }
+  ]
+}

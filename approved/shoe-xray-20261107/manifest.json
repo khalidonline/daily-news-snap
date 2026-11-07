@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "جزمتك على مقاسك؟ خلّنا نشوف بالأشعة!",
+  "not_before": "2026-11-07T00:00:00+03:00",
+  "expires_at": "2026-11-07T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "7e19c3dd5af81e89be74b602b49e9d0edc9acec43246950cab4c5dd09b3063a2"
+    ],
+    "approved_source_sha256": [
+      "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
+      "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/shoe-xray-20261107/card.png",
+      "sha256": "7e19c3dd5af81e89be74b602b49e9d0edc9acec43246950cab4c5dd09b3063a2",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/shoe-xray-20261107/shoe-photo.jpg",
+          "sha256": "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
+          "credit": "The Henry Ford",
+          "source_url": "https://collections-media.thehenryford.org/CollectionImages/_detail/photos/thf803829.jpg",
+          "description": "جهاز قياس الجزم بالأشعة",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/shoe-xray-20261107/shoe-history.jpg",
+          "sha256": "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb",
+          "credit": "Click Americana",
+          "source_url": "https://clickamericana.com/wp-content/uploads/People-lining-up-to-use-the-X-ray-shoe-fitting-machine-1920s.jpg",
+          "description": "تجربة الجهاز زمان",
+          "rights_status": "not_verified"
+        }
+      ]
+    }
+  ]
+}

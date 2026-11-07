@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/shoe-xray-20261107/manifest.json",
+  "manifest_sha256": "0b4cdfafb2824c9826f39381176045443352c932b8f9a7d67a16c85fbbf7c353",
+  "identity": "c2bd44238a9b027c8777d6dfbbc3e1f813f5b86f7d2c16e4fb6cae03708490bd",
+  "public_indices": [
+    1
+  ],
+  "title": "جزمتك على مقاسك؟ خلّنا نشوف بالأشعة!",
+  "expires_at": "2026-11-07T23:59:59+03:00",
+  "owner_authorization": null,
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+}

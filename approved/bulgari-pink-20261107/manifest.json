@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "ألماسة من الهند… وش سوّت فيها بلوغري؟",
+  "not_before": "2026-11-07T00:00:00+03:00",
+  "expires_at": "2026-11-07T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "123e34fe554cbfe82f667a31bd5f9efe7ffe6d3f1582d404840ff4f7c18d8c8a"
+    ],
+    "approved_source_sha256": [
+      "7106fb91f279e7f106851555e8785554822f6cbfc59aa69c28c80134201793ee"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/bulgari-pink-20261107/card.png",
+      "sha256": "123e34fe554cbfe82f667a31bd5f9efe7ffe6d3f1582d404840ff4f7c18d8c8a",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/bulgari-pink-20261107/ring-photo.png",
+          "sha256": "7106fb91f279e7f106851555e8785554822f6cbfc59aa69c28c80134201793ee",
+          "credit": "Christie’s",
+          "source_url": "https://press.christies.com/wp-content/uploads/2026/10/af354e4e7b8634d7a16adea51105a490.png",
+          "description": "خاتم بلوغري بألماسته الوردية",
+          "rights_status": "not_verified"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/shoe-xray-20261107",
+  "manifest_content_sha256": "f53070ede18d0b5e9a5f194e2596f31305c1592dc98433f9b46af5df29d402ea",
+  "archive_content_sha256": "dff6beb041d71f5e17f48a03f92a1f3e61b2d4a21edb0819a78f549610dcf33c",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "4618670a06b7f8400fa60093e9be7c64d249a6adae7f6975478d54e51ba7bb9c",
+  "assets": {
+    "approved/shoe-xray-20261107/card.png": "7e19c3dd5af81e89be74b602b49e9d0edc9acec43246950cab4c5dd09b3063a2",
+    "approved/shoe-xray-20261107/shoe-photo.jpg": "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
+    "approved/shoe-xray-20261107/shoe-history.jpg": "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb"
+  },
+  "preparation_seconds": 0.002
+}

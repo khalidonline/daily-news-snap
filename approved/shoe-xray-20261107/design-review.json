@@ -1,0 +1,246 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "7e19c3dd5af81e89be74b602b49e9d0edc9acec43246950cab4c5dd09b3063a2",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "جزمتك على مقاسك؟ خلّنا نشوف بالأشعة!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              138,
+              215,
+              1020,
+              279
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            138,
+            215,
+            1020,
+            280
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "جهاز قياس الجزم بالأشعة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              147,
+              695,
+              441,
+              730
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            147,
+            695,
+            441,
+            731
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "تجربة الجهاز زمان",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              688,
+              695,
+              884,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            688,
+            695,
+            884,
+            723
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بكرة ٨ نوفمبر ذكرى اكتشاف الأشعة السينية عام ١٨٩٥. حتى محلات الجزم استخدموها!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              84,
+              847,
+              980,
+              902
+            ],
+            [
+              327,
+              926,
+              980,
+              975
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            84,
+            847,
+            1015,
+            975
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "كان الولد يجرّب الجزمة ويدخل رجله في جهاز. هو وأبوه والبيّاع يشوفون وين توصل أصابعه داخلها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              114,
+              1086,
+              980,
+              1139
+            ],
+            [
+              90,
+              1163,
+              980,
+              1224
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            90,
+            1086,
+            1015,
+            1224
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "يوم خافوا من تكرار الأشعة، بعض الولايات منعت الجهاز، ومع الوقت اختفى من المحلات.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              87,
+              1335,
+              980,
+              1390
+            ],
+            [
+              277,
+              1414,
+              980,
+              1463
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            87,
+            1335,
+            1015,
+            1463
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "كل هالأشعة عشان يعرفون إذا الجزمة ضيّقة!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              139,
+              1575,
+              941,
+              1625
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            139,
+            1575,
+            941,
+            1626
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both simulated 390px destination overlays against this export: title, captions, body, closing and sharing CTA visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top0..39/bottom625..692 masked simulation; all essential text and CTA visible.",
+      "SAVED_STORY": "Inspected separate same-player masked simulation; essential text and CTA visible."
+    }
+  }
+}

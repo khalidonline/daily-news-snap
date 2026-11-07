@@ -1,0 +1,246 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "123e34fe554cbfe82f667a31bd5f9efe7ffe6d3f1582d404840ff4f7c18d8c8a",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "ألماسة من الهند… وش سوّت فيها بلوغري؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              106,
+              215,
+              1020,
+              287
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            106,
+            215,
+            1020,
+            288
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "خاتم بلوغري بألماسته الوردية",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              379,
+              695,
+              700,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            379,
+            695,
+            700,
+            734
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قبل حوالي ٧٠ سنة، رجل من عايلة أوروبية نبيلة شرى ألماسة خام من الهند.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              144,
+              811,
+              980,
+              874
+            ],
+            [
+              476,
+              898,
+              980,
+              959
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            144,
+            811,
+            1015,
+            959
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ودّاها لبلوغري عشان يسوّون له خاتم، وركّبوا فيه الألماسة الوردية ووزنها ٢٤ قيراط.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              90,
+              1035,
+              980,
+              1096
+            ],
+            [
+              360,
+              1120,
+              980,
+              1169
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            90,
+            1035,
+            1015,
+            1169
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الخاتم بقى في العايلة، وتوارثوه جيل ورا جيل.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              184,
+              1245,
+              980,
+              1299
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            184,
+            1245,
+            1015,
+            1299
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الثلاثاء ١٠ نوفمبر ينعرض لأول مرة بمزاد في جنيف، وتقديره بحدود ٦٠ مليون ريال.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              88,
+              1375,
+              980,
+              1432
+            ],
+            [
+              452,
+              1456,
+              980,
+              1499
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            88,
+            1375,
+            1015,
+            1499
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "الجد شرى حجر… وخلّى لعياله خاتم بالملايين!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              170,
+              1575,
+              909,
+              1635
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            170,
+            1575,
+            909,
+            1636
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both simulated 390px destination overlays against this export: title, captions, body, closing and sharing CTA visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top0..39/bottom625..692 masked simulation; all essential text and CTA visible.",
+      "SAVED_STORY": "Inspected separate same-player masked simulation; essential text and CTA visible."
+    }
+  }
+}
