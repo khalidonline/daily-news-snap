@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "alula-balloons-20261106",
-  "identity": "854a2da2c6f7dce05a30f0a8951bf4e71d266f0351a8e814bcad37dc77af9c64",
+  "package": "shoe-xray-20261107",
+  "identity": "c2bd44238a9b027c8777d6dfbbc3e1f813f5b86f7d2c16e4fb6cae03708490bd",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر زي مانشرت امس — نفس بطاقة مناطيد العلا التي عرضت عليه",
-  "approved_at": "2026-11-06T16:25:31.747644+00:00",
-  "expires_at": "2026-11-06T23:59:59+03:00",
-  "manifest_sha256": "51f7f311ec03f7f689368ef341a441e9e49f1db0547308dd93ed33b9e114baca",
-  "archive_sha256": "93ddd45668d1773d72518c3204d074c1846ab8c605cab4d39a9c7cae69a68eb9",
-  "prepared_sha256": "62dc44aa7d8a3e87253127aa92402639bc7840580bcc440471d9c2a81ad8eeff",
-  "preview_receipt_sha256": "ca6b8c5c512ac3346805564384c92b321ca83461f3a46c788cde15d1504af2bd"
+  "owner_reference": "خالد: انشر الثنتين — بطاقتا الجزم وخاتم بلوغري المعروضتان",
+  "approved_at": "2026-11-07T10:05:58.556595+00:00",
+  "expires_at": "2026-11-07T23:59:59+03:00",
+  "manifest_sha256": "63819cb837488e6ffdc9f874c9f5dde8b76120970d9fc095d3e7581b93f74f0e",
+  "archive_sha256": "9ed03e9138a1b405a51f704badefaddb775bcb9700f634e1f3df806874f7e806",
+  "prepared_sha256": "1af25d3f6214586ae986c651e447d1ff1c09b70c03c1505213e3147008b35c5d",
+  "preview_receipt_sha256": "3e6e36e2b178ddd8ac9bebe3fc5bca051d37790cb6599d44aab49fe73ee788d6"
 }

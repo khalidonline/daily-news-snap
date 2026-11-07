@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "b7e54cbb4438e7b6fa89e1893804db21954bc260",
+  "assets": {
+    "approved/shoe-xray-20261107/card.png": "7e19c3dd5af81e89be74b602b49e9d0edc9acec43246950cab4c5dd09b3063a2",
+    "approved/shoe-xray-20261107/shoe-photo.jpg": "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
+    "approved/shoe-xray-20261107/shoe-history.jpg": "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb"
+  },
+  "preview_paths": [
+    "approved/shoe-xray-20261107/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/shoe-xray-20261107/card.png": "7e19c3dd5af81e89be74b602b49e9d0edc9acec43246950cab4c5dd09b3063a2",
+    "approved/shoe-xray-20261107/shoe-photo.jpg": "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
+    "approved/shoe-xray-20261107/shoe-history.jpg": "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb",
+    "approved/shoe-xray-20261107/manifest.json": "0b4cdfafb2824c9826f39381176045443352c932b8f9a7d67a16c85fbbf7c353",
+    "approved/shoe-xray-20261107/archive-approval.json": "4eab7c630445d5dfa9554f2630000685d7bdeac2dbee9b4046c621ab762be6ff",
+    "approved/shoe-xray-20261107/design-review.json": "4618670a06b7f8400fa60093e9be7c64d249a6adae7f6975478d54e51ba7bb9c",
+    "approved/shoe-xray-20261107/sources.json": "2a92571f59482855978be144406200122626672d65a01859e83d0fa81fa05d6a",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/shoe-xray-20261107",
+    "manifest_content_sha256": "f53070ede18d0b5e9a5f194e2596f31305c1592dc98433f9b46af5df29d402ea",
+    "archive_content_sha256": "dff6beb041d71f5e17f48a03f92a1f3e61b2d4a21edb0819a78f549610dcf33c",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "4618670a06b7f8400fa60093e9be7c64d249a6adae7f6975478d54e51ba7bb9c",
+    "assets": {
+      "approved/shoe-xray-20261107/card.png": "7e19c3dd5af81e89be74b602b49e9d0edc9acec43246950cab4c5dd09b3063a2",
+      "approved/shoe-xray-20261107/shoe-photo.jpg": "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
+      "approved/shoe-xray-20261107/shoe-history.jpg": "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb"
+    }
+  }
+}

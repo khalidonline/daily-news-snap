@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "7b0c2017bd3c3c58837323416e9b2bfcd9ec9ffe07f1b2ed47cab4f4a5e7832e",
       "e6680b8bb587a7c09992455208085a3e717d48912270c1f7504a065f898ffcdb"
-    ]
+    ],
+    "reference": "خالد: انشر الثنتين — بطاقتا الجزم وخاتم بلوغري المعروضتان",
+    "reviewed_at": "2026-11-07T10:05:58.556595+00:00"
   },
   "media": [
     {
