@@ -1,0 +1,15 @@
+{
+  "facts": [
+    "https://www.invent.org/blog/inventors/mary-anderson-windshield-wipers",
+    "https://www.capradio.org/news/npr/story/?storyid=536835744"
+  ],
+  "image_assets": [
+    {
+      "path": "approved/mary-anderson-20261108/owner-images.jpeg",
+      "sha256": "afd4d8876ac8ec954d2a60ae1265e54f737d5b0edf3c6d35a3382aeb0c194cd7",
+      "credit": "Owner-selected attachment",
+      "description": "Portrait and windshield wipers; exact uploaded composite",
+      "rights_status": "not_verified"
+    }
+  ]
+}

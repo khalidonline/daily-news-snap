@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "2e03320cd08272b38e1124ab74429afadf1ee0ba0dc4b87dc923572b0ceacddb",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "اخترعت مساحات سيارة وقالوا ماعندك سالفه",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              71,
+              215,
+              1020,
+              265
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            71,
+            215,
+            1020,
+            266
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "ماري أندرسون",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              212,
+              695,
+              376,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            212,
+            695,
+            376,
+            734
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "مسّاحات السيارة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              692,
+              695,
+              880,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            692,
+            695,
+            880,
+            723
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تخيّل السواق يطلّع راسه من الشباك عشان يشوف! هذا اللي شافته ماري في ترام بنيويورك.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              169,
+              797,
+              980,
+              858
+            ],
+            [
+              118,
+              882,
+              980,
+              936
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            118,
+            797,
+            1015,
+            936
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الثلج غطّى القزاز، وكان السواق أحيانًا يوقّف الترام كله عشان يمسحه.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              93,
+              999,
+              980,
+              1060
+            ],
+            [
+              629,
+              1084,
+              980,
+              1129
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            93,
+            999,
+            1015,
+            1129
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "رجعت البيت ورسمت مسّاحة يحرّكها السواق من داخل الترام، وهي تمسح القزاز من برا.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              87,
+              1191,
+              980,
+              1236
+            ],
+            [
+              306,
+              1260,
+              980,
+              1311
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            87,
+            1191,
+            1015,
+            1311
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "في ١٠ نوفمبر ١٩٠٣ أخذت ماري أندرسون براءة الاختراع. بعدها رفضت شركة تسوّق فكرتها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              176,
+              1374,
+              980,
+              1437
+            ],
+            [
+              180,
+              1461,
+              980,
+              1513
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            176,
+            1374,
+            1015,
+            1513
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "المسّاحات على سياراتنا… ورسالة الرفض عند عايلتها!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              92,
+              1575,
+              989,
+              1618
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            92,
+            1575,
+            989,
+            1619
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both simulated 390px destination overlays against this export: title, captions, body, closing and sharing CTA visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top0..39/bottom625..692 masked simulation; all essential text and CTA visible.",
+      "SAVED_STORY": "Inspected separate same-player masked simulation; essential text and CTA visible."
+    }
+  }
+}

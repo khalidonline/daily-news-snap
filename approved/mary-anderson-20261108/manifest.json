@@ -1,0 +1,42 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "اخترعت مساحات سيارة وقالوا ماعندك سالفه",
+  "not_before": "2026-11-08T00:00:00+03:00",
+  "expires_at": "2026-11-08T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "2e03320cd08272b38e1124ab74429afadf1ee0ba0dc4b87dc923572b0ceacddb"
+    ],
+    "approved_source_sha256": [
+      "afd4d8876ac8ec954d2a60ae1265e54f737d5b0edf3c6d35a3382aeb0c194cd7"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/mary-anderson-20261108/card.png",
+      "sha256": "2e03320cd08272b38e1124ab74429afadf1ee0ba0dc4b87dc923572b0ceacddb",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/mary-anderson-20261108/owner-images.jpeg",
+          "sha256": "afd4d8876ac8ec954d2a60ae1265e54f737d5b0edf3c6d35a3382aeb0c194cd7",
+          "credit": "Owner-selected attachment",
+          "description": "Portrait and windshield wipers; exact uploaded composite",
+          "rights_status": "not_verified"
+        }
+      ]
+    }
+  ]
+}

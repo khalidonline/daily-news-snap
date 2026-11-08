@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/mary-anderson-20261108/manifest.json",
+  "manifest_sha256": "9b02537c1c5335b74fd377db5c9a29f63ab0ce20079c65001f94629e8113089b",
+  "identity": "fd837cb2092f508fa7ad2f4da88fb478b58f46608c38c19a18ec5cf06c3de820",
+  "public_indices": [
+    1
+  ],
+  "title": "اخترعت مساحات سيارة وقالوا ماعندك سالفه",
+  "expires_at": "2026-11-08T23:59:59+03:00",
+  "owner_authorization": "",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+}
