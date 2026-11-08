@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -17,7 +17,9 @@
     ],
     "approved_source_sha256": [
       "afd4d8876ac8ec954d2a60ae1265e54f737d5b0edf3c6d35a3382aeb0c194cd7"
-    ]
+    ],
+    "reference": "خالد: انشر ثم كمل — نسخة ماري أندرسون بالصورتين للقصة العامة والحفظ في الملف العام",
+    "reviewed_at": "2026-11-08T08:16:34.124147+00:00"
   },
   "media": [
     {

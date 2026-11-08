@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "80ae2fe301c3a65ae24ec88817a338e132fda8e2",
+  "assets": {
+    "approved/mary-anderson-20261108/card.png": "2e03320cd08272b38e1124ab74429afadf1ee0ba0dc4b87dc923572b0ceacddb",
+    "approved/mary-anderson-20261108/owner-images.jpeg": "afd4d8876ac8ec954d2a60ae1265e54f737d5b0edf3c6d35a3382aeb0c194cd7"
+  },
+  "preview_paths": [
+    "approved/mary-anderson-20261108/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/mary-anderson-20261108/card.png": "2e03320cd08272b38e1124ab74429afadf1ee0ba0dc4b87dc923572b0ceacddb",
+    "approved/mary-anderson-20261108/owner-images.jpeg": "afd4d8876ac8ec954d2a60ae1265e54f737d5b0edf3c6d35a3382aeb0c194cd7",
+    "approved/mary-anderson-20261108/manifest.json": "9b02537c1c5335b74fd377db5c9a29f63ab0ce20079c65001f94629e8113089b",
+    "approved/mary-anderson-20261108/archive-approval.json": "b2cf72eafb67b87557e9cb94be9ff9ff83da2db703da102b0ba1b518e17ad8c0",
+    "approved/mary-anderson-20261108/design-review.json": "ec69a21e320e1ab4322f1e8be5b1567fe5d0db7b8c961fe5ca0fe3a75bce1f36",
+    "approved/mary-anderson-20261108/sources.json": "b82c620801ba3017a158f030421b8085f9cf71591e8102d666ea308455cb6262",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/mary-anderson-20261108",
+    "manifest_content_sha256": "783b3c56a3571fb04f40e2ae18c1e459181a777965b179e051f252c0fbcc4f92",
+    "archive_content_sha256": "d3e82dd8af5c6089906943654f51b8cdc63247877d3edaf7b2bcb9848caaf5d6",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "ec69a21e320e1ab4322f1e8be5b1567fe5d0db7b8c961fe5ca0fe3a75bce1f36",
+    "assets": {
+      "approved/mary-anderson-20261108/card.png": "2e03320cd08272b38e1124ab74429afadf1ee0ba0dc4b87dc923572b0ceacddb",
+      "approved/mary-anderson-20261108/owner-images.jpeg": "afd4d8876ac8ec954d2a60ae1265e54f737d5b0edf3c6d35a3382aeb0c194cd7"
+    }
+  }
+}

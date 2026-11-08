@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/mary-anderson-20261108/manifest.json",
-  "manifest_sha256": "9b02537c1c5335b74fd377db5c9a29f63ab0ce20079c65001f94629e8113089b",
+  "manifest_sha256": "60b085155aa82532be257cf160e52810ee215050cf4d82ffd6585011c516541a",
   "identity": "fd837cb2092f508fa7ad2f4da88fb478b58f46608c38c19a18ec5cf06c3de820",
   "public_indices": [
     1
   ],
   "title": "اخترعت مساحات سيارة وقالوا ماعندك سالفه",
   "expires_at": "2026-11-08T23:59:59+03:00",
-  "owner_authorization": "",
+  "owner_authorization": "خالد: انشر ثم كمل — نسخة ماري أندرسون بالصورتين للقصة العامة والحفظ في الملف العام",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
 }

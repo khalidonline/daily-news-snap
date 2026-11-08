@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "hittin-london-20261107",
-  "identity": "0aebf2c860ea061b4c3756b1583f0916ce99fe20d5b81761383e0cd38b0d655f",
+  "package": "mary-anderson-20261108",
+  "identity": "fd837cb2092f508fa7ad2f4da88fb478b58f46608c38c19a18ec5cf06c3de820",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر — النسخة الأخيرة من سالفة حطين صارت في لندن قبل، بتعليق قص شريط الافتتاح ١٩٩٣.",
-  "approved_at": "2026-11-07T17:17:26.327714+00:00",
-  "expires_at": "2026-11-07T23:59:59+03:00",
-  "manifest_sha256": "3e7052d8181de11930650db2ee1bb7dcde78deef4c63c9c828f2f201c644677e",
-  "archive_sha256": "8d327c6c0e079cc7c4ddea39b83363d87175f8635d27e1a9bc2956ad0b62f060",
-  "prepared_sha256": "32c8d75a6a4f7078948c65e2348ca1bae038e97b0e579130502499de2a9feeb8",
-  "preview_receipt_sha256": "7df7d39c3474dc73e510f63204ba17752295c4212a2e7f7da3cc222fa63ee02c"
+  "owner_reference": "خالد: انشر ثم كمل — نسخة ماري أندرسون بالصورتين للقصة العامة والحفظ في الملف العام",
+  "approved_at": "2026-11-08T08:16:34.124147+00:00",
+  "expires_at": "2026-11-08T23:59:59+03:00",
+  "manifest_sha256": "60b085155aa82532be257cf160e52810ee215050cf4d82ffd6585011c516541a",
+  "archive_sha256": "3dabf3ed7d94d733cb186e2d9ffd0aafd4d99c43f5aee207c6869dcc3c81a683",
+  "prepared_sha256": "1510397e5b10ef61dcb553f5b5af905103996dae279e011c95a810538b33032e",
+  "preview_receipt_sha256": "d7f49e83ee84d92dd7953e6e922a5bfd1352439a82bb3aad850b6e093e49f29d"
 }
