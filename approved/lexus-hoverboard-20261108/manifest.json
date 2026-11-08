@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — لوح لكزس الطائر",
+  "expires_at": "2026-11-10T10:01:15.712400+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/lexus-hoverboard-20261108/challenge.mp4",
+      "sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0",
+      "reference": "Khalid approved C4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved C4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0",
+    "source_manifest": {
+      "path": "approved/lexus-hoverboard-20261108/source-approval.json",
+      "sha256": "4c2dd73387e7da033e699fb658e5e8f6eaae316a03cafa5e1a04073611eef8b9"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-0.5.png",
+        "sha256": "e181b6ffcee02183ffd73e81ecd2d5a154e7ca587db2e37838786561eb581411"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-3.5.png",
+        "sha256": "b6b76d8d3db1b34f0cc59749217910347da946eb7878373807bca9165dc90a58"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-4.5.png",
+        "sha256": "51a7142f1be4966b32baa262742f61729205bb97aa474aeab57d0a841d35bfee"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-5.5.png",
+        "sha256": "b8485cb9acd7182aed47a76c25761ed5e63cc0a2611b5733ff4925be23d923c2"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-6.5.png",
+        "sha256": "16eca0c91671ce5abe4f4ad0d28bec83f6ee9d05060691ac1c4ffcbf92e8f843"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-7.5.png",
+        "sha256": "fa3e1c14d77332ee13620abbb42fa82a0db987ca65448376d3b6a6278bcd6686"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-8.5.png",
+        "sha256": "8ed45089e978ed524b6f7734699a20d18e7f54d44823432a1af17542deae7a95"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/lexus-hoverboard-20261108/frame-11.5.png",
+        "sha256": "875b401af607923ce9ea41e22f638448b72b797b084deba3af529226d043b553"
+      }
+    ]
+  }
+}
