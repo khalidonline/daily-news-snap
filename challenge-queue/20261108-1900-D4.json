@@ -1,0 +1,45 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-08",
+  "slot": "19:00",
+  "item": "D4",
+  "topic": "توقع المكان — باموكالي",
+  "status": "DEFERRED_DAILY_SEND_LIMIT",
+  "next_item": "D4",
+  "after_confirmed_next_item": "E4",
+  "completed_total": 17,
+  "completed_today_unique_topics": 1,
+  "challenge_submissions_today": 4,
+  "daily_challenge_submission_limit": 4,
+  "remaining_unconfirmed_topics": 7,
+  "blocked_items": [
+    "E2"
+  ],
+  "topic_blocked": false,
+  "delivery": {
+    "STORY": "NOT_SENT",
+    "SPOTLIGHT": "NOT_SENT"
+  },
+  "new_paid_model_requests": 0,
+  "spend": "UNKNOWN",
+  "reason": "Both versions of C4 independently published on both destinations. Second run of revision confirmed the same IDs, not new posts. Do not offset missed slots; keep D4 first pending next slot.",
+  "confirmed_versions": [
+    {
+      "item": "C4",
+      "sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0",
+      "STORY": "4b273ade-9f5f-4c15-a899-7807e23a5920",
+      "SPOTLIGHT": "0d04c8d0-ceb5-4a91-8f6d-a3e5588519ac",
+      "receipt": "api-receipts/lexus-hoverboard-20261108-preflight.json"
+    },
+    {
+      "item": "C4 revised",
+      "sha256": "0f2b66b22cf485d239b8cf3e5dda70bc327ec4b784cfec215c506bdd14e28cde",
+      "STORY": "c96bc587-757e-493a-9640-2782ff46d821",
+      "SPOTLIGHT": "94df76c4-d485-4a69-b788-db5802648483",
+      "proof_runs": [
+        42473936986,
+        42473987328
+      ]
+    }
+  ]
+}
