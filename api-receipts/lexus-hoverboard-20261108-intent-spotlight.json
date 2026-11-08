@@ -1,11 +1,1 @@
-{
-  "state": "INTENT_RECORDED",
-  "identity": "dc1775e23c42063d71964fcb4eb20483cb2751dfdb5a49c07aecba1fc6d5b1e2",
-  "account": "executivesaudi",
-  "package": "approved/lexus-hoverboard-20261108",
-  "approved_version": "3b2310dce77c29ec813912720b896e1b7788adc30cd1b8ef6a7723017033eff9",
-  "media_sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0",
-  "destination": "SPOTLIGHT",
-  "provider_journal_key": "80155d93dc69039f59801bdc908404a66bcb470af52ecdd7f3501e001aa1d19b",
-  "provider_post_id": null
-}
+{"state": "STARTED", "identity": "dc1775e23c42063d71964fcb4eb20483cb2751dfdb5a49c07aecba1fc6d5b1e2", "account": "executivesaudi", "package": "approved/lexus-hoverboard-20261108", "approved_version": "3b2310dce77c29ec813912720b896e1b7788adc30cd1b8ef6a7723017033eff9", "media_sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0", "destination": "SPOTLIGHT", "provider_journal_key": "80155d93dc69039f59801bdc908404a66bcb470af52ecdd7f3501e001aa1d19b", "provider_post_id": null}
