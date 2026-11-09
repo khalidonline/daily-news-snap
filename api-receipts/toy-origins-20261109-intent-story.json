@@ -1,13 +1,1 @@
-{
-  "batch": "approved-25-20261030",
-  "slot": "2026-11-09T13:00:00+03:00",
-  "item": "A5",
-  "identity": "f7274100deec10abfc525d5beb3deab0ca281bb707683b141c90db9d703a18b2",
-  "package": "toy-origins-20261109",
-  "approved_version": "38a6772251109b1ff3c671331a5eba8efe53a5c4dc027c8b6844d3274b9c278b",
-  "media_sha256": "1f1df604396c8bb344928ee5b4d660cca42ee538ee5287fe57cbbd7439e888b0",
-  "destination": "STORY",
-  "provider_journal_key": "f7274100deec10abfc525d5beb3deab0ca281bb707683b141c90db9d703a18b2",
-  "provider_post_id": null,
-  "state": "INTENT_RECORDED"
-}
+{"batch": "approved-25-20261030", "slot": "2026-11-09T13:00:00+03:00", "item": "A5", "identity": "f7274100deec10abfc525d5beb3deab0ca281bb707683b141c90db9d703a18b2", "package": "toy-origins-20261109", "approved_version": "38a6772251109b1ff3c671331a5eba8efe53a5c4dc027c8b6844d3274b9c278b", "media_sha256": "1f1df604396c8bb344928ee5b4d660cca42ee538ee5287fe57cbbd7439e888b0", "destination": "STORY", "provider_journal_key": "f7274100deec10abfc525d5beb3deab0ca281bb707683b141c90db9d703a18b2", "provider_post_id": null, "state": "STARTED"}
