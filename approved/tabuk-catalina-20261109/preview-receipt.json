@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "3398133c5ca336fa663abe578a20330631d6e366",
+  "assets": {
+    "approved/tabuk-catalina-20261109/card.png": "190c4fafe6f8fb8333307d32840f551f7d70453a059dd5fe6519d86838fb877c",
+    "approved/tabuk-catalina-20261109/wreck.jpg": "a5f9c548e998e76525c59a9e2e289444216a545a75df7f5f5fbd7f75975caf38",
+    "approved/tabuk-catalina-20261109/catalina-1959.jpg": "f7d9f405cd0439d8da22dca39b049a91eedeb32244953c82e5f2fd0ee8681533"
+  },
+  "preview_paths": [
+    "approved/tabuk-catalina-20261109/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/tabuk-catalina-20261109/card.png": "190c4fafe6f8fb8333307d32840f551f7d70453a059dd5fe6519d86838fb877c",
+    "approved/tabuk-catalina-20261109/wreck.jpg": "a5f9c548e998e76525c59a9e2e289444216a545a75df7f5f5fbd7f75975caf38",
+    "approved/tabuk-catalina-20261109/catalina-1959.jpg": "f7d9f405cd0439d8da22dca39b049a91eedeb32244953c82e5f2fd0ee8681533",
+    "approved/tabuk-catalina-20261109/manifest.json": "f4ba0ef9a48adc4052eb5b52cbb1740d1404bf8c43f5916cc184325063aca0a8",
+    "approved/tabuk-catalina-20261109/archive-approval.json": "985cc8f92a4ea7668c8ceca45a180425b680f49a4baa7a6c44c4a4d2e4c727a1",
+    "approved/tabuk-catalina-20261109/design-review.json": "865571c7e1fbcba51d9f0397d9fe0d9675e465ae683bbcac66d0ba021e9e5b6d",
+    "approved/tabuk-catalina-20261109/sources.json": "94319dc151745889ab5f7a7457def61a1bdbbad6e99ded400670cd31882aff3c",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/tabuk-catalina-20261109",
+    "manifest_content_sha256": "16b5d0b660be39edf4a5259a1399aea1aea1f7e4d949aef28dd948e6394a7d5e",
+    "archive_content_sha256": "694bb1e62c5802dc85cab4c8919e366fa15c02cfc0a2c918f40d322450f892fd",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "865571c7e1fbcba51d9f0397d9fe0d9675e465ae683bbcac66d0ba021e9e5b6d",
+    "assets": {
+      "approved/tabuk-catalina-20261109/card.png": "190c4fafe6f8fb8333307d32840f551f7d70453a059dd5fe6519d86838fb877c",
+      "approved/tabuk-catalina-20261109/wreck.jpg": "a5f9c548e998e76525c59a9e2e289444216a545a75df7f5f5fbd7f75975caf38",
+      "approved/tabuk-catalina-20261109/catalina-1959.jpg": "f7d9f405cd0439d8da22dca39b049a91eedeb32244953c82e5f2fd0ee8681533"
+    }
+  }
+}

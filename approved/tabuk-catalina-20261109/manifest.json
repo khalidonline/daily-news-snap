@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "a5f9c548e998e76525c59a9e2e289444216a545a75df7f5f5fbd7f75975caf38",
       "f7d9f405cd0439d8da22dca39b049a91eedeb32244953c82e5f2fd0ee8681533"
-    ]
+    ],
+    "reference": "خالد: انشر — بطاقة كاتالينا تبوك النهائية بصورتَي طيارة العائلة ١٩٥٩ وحطامها",
+    "reviewed_at": "2026-11-09T16:01:43.516350+00:00"
   },
   "media": [
     {
