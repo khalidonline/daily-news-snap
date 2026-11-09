@@ -1,0 +1,1 @@
+{"package":"toy-origins-20261109","manifest_sha256":"38a6772251109b1ff3c671331a5eba8efe53a5c4dc027c8b6844d3274b9c278b","intent_commit":"6ec74652b2becb27af86a685a0048e60f5d0aaf7","destinations":["STORY","SPOTLIGHT"],"slot":"2026-11-09T13:00:00+03:00"}

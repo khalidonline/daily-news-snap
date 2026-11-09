@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ — ليغو أو بلايموبيل",
+  "expires_at": "2026-11-11T10:11:36.541291+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/toy-origins-20261109/challenge.mp4",
+      "sha256": "1f1df604396c8bb344928ee5b4d660cca42ee538ee5287fe57cbbd7439e888b0",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "1f1df604396c8bb344928ee5b4d660cca42ee538ee5287fe57cbbd7439e888b0",
+      "reference": "Khalid approved A5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved A5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "1f1df604396c8bb344928ee5b4d660cca42ee538ee5287fe57cbbd7439e888b0",
+    "source_manifest": {
+      "path": "approved/toy-origins-20261109/source-approval.json",
+      "sha256": "a192bef66302c78e475ce6b6871ec2d8db35ad5a40c547099349ab795616b9eb"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/toy-origins-20261109/frame-0.5.png",
+        "sha256": "cbbe22180c0e065496b34acdd3453d5f02e4f308f837a82e73fdba3f8b0d9442"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/toy-origins-20261109/frame-3.5.png",
+        "sha256": "3e6797cdd406bd4071b45dc5719174c186935f5e56952149b9422d38f40bd564"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/toy-origins-20261109/frame-4.5.png",
+        "sha256": "0856633947d8f4f1b86f97c7137de9dc3e16b68034830345d221dbdb5ef302b7"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/toy-origins-20261109/frame-5.5.png",
+        "sha256": "5413902d27831fec2d391d5a635848d8d3b54e3b777aa36cbaf7e3815ae17ff3"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/toy-origins-20261109/frame-6.5.png",
+        "sha256": "4b53065ac7f1890238d5a3c978dc24c223fe8f85db21f69824ced0344114d1e9"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/toy-origins-20261109/frame-7.5.png",
+        "sha256": "d1c87ed25244c126b7255a31379cdba2829bd2302927373fd2902fb9a58f6eed"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/toy-origins-20261109/frame-8.5.png",
+        "sha256": "cf25373dbd075b5b49bb9d621ef4ae6f520e9553e2c60d708d959290b123bcd1"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/toy-origins-20261109/frame-11.5.png",
+        "sha256": "2daf6f9c17cf926bb598594cf7235085956839a3572e1d2daed7e005869a97e7"
+      }
+    ]
+  }
+}
