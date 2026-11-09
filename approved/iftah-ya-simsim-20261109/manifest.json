@@ -1,0 +1,62 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "أنيس وبدر أمريكان … ونعمان ولد الديرة!",
+  "not_before": "2026-11-09T00:00:00+03:00",
+  "expires_at": "2026-11-09T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "ef8bfe62ce232f7bffd9aa7c8d64522e30b9a78e580942bc4f2686c98c0b6f71"
+    ],
+    "approved_source_sha256": [
+      "f3daba006715fd51f67a37edcb55f4e57dec238d404e0c6c6667e3a08495ea7b",
+      "b7867de3583645ad267f779a2ed1303b1b9443b7cc4b5ac1d75d95198e0affab",
+      "7e95831fb7b451b677209a48d8542a88c3d7a5e0ba99e8e9175dc8d1494febc1",
+      "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/iftah-ya-simsim-20261109/card.png",
+      "sha256": "ef8bfe62ce232f7bffd9aa7c8d64522e30b9a78e580942bc4f2686c98c0b6f71",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/iftah-ya-simsim-20261109/simsim.jpg",
+          "sha256": "f3daba006715fd51f67a37edcb55f4e57dec238d404e0c6c6667e3a08495ea7b",
+          "credit": "كواليس البرنامج؛ الصورة المختارة",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/iftah-ya-simsim-20261109/simsim-cast.png",
+          "sha256": "b7867de3583645ad267f779a2ed1303b1b9443b7cc4b5ac1d75d95198e0affab",
+          "credit": "NPR / Iftah Ya Simsim",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/iftah-ya-simsim-20261109/bird.jpg",
+          "sha256": "7e95831fb7b451b677209a48d8542a88c3d7a5e0ba99e8e9175dc8d1494febc1",
+          "credit": "Daytime Confidential / Sesame Street",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/iftah-ya-simsim-20261109/apple-1f604.png",
+          "sha256": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a",
+          "credit": "iamcal/emoji-data Apple U+1F604",
+          "rights_status": "not_verified"
+        }
+      ]
+    }
+  ]
+}

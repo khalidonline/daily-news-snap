@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "ef8bfe62ce232f7bffd9aa7c8d64522e30b9a78e580942bc4f2686c98c0b6f71",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "أنيس وبدر أمريكان … ونعمان ولد الديرة!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              212,
+              215,
+              1020,
+              279
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            212,
+            215,
+            1020,
+            280
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "كواليس «افتح يا سمسم»",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              69,
+              695,
+              355,
+              727
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            69,
+            695,
+            355,
+            728
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "نعمان",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              504,
+              695,
+              576,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            504,
+            695,
+            576,
+            723
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "أنيس وبدر والطير الأصفر",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              727,
+              695,
+              1008,
+              729
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            727,
+            695,
+            1008,
+            730
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قبل حوالي ٥٧ سنة طلع «شارع سمسم» بأمريكا. أنيس اسمه «إرني» وبدر «بيرت».",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              86,
+              797,
+              980,
+              860
+            ],
+            [
+              389,
+              884,
+              980,
+              947
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            86,
+            797,
+            1015,
+            947
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بعد عشر سنين سوّوا «افتح يا سمسم» بالكويت. نفس الوجهين، بس هالمرة: أنيس وبدر.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              78,
+              1009,
+              980,
+              1061
+            ],
+            [
+              246,
+              1085,
+              980,
+              1140
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            78,
+            1009,
+            1015,
+            1140
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "أما الطير الأصفر، خلوه في امريكا وجابوا مكانه جمل سموه: نعمان.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              162,
+              1203,
+              980,
+              1266
+            ],
+            [
+              615,
+              1290,
+              980,
+              1333
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            162,
+            1203,
+            1015,
+            1333
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "يعني نعمان هو الوحيد اللي يقدر يقول: «منو يانا هالحزه؟» 😄",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              126,
+              1395,
+              980,
+              1446
+            ],
+            [
+              798,
+              1470,
+              980,
+              1513
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            126,
+            1395,
+            1015,
+            1513
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "أنيس وبدر نعرفهم من وجيههم… ونعمان ولدنا!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              123,
+              1575,
+              957,
+              1635
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            123,
+            1575,
+            957,
+            1636
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both simulated 390px destination overlays against this export: title, captions, body, closing and sharing CTA visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top0..39/bottom625..692 masked simulation; all essential text and CTA visible.",
+      "SAVED_STORY": "Inspected separate same-player masked simulation; essential text and CTA visible."
+    }
+  }
+}
