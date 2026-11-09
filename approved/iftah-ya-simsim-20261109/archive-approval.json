@@ -1,14 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/iftah-ya-simsim-20261109/manifest.json",
-  "manifest_sha256": "ba0f6591eaa48e1f610ec8727d31b9ca2d70cbb6c34b54359c569ba1695eefeb",
+  "manifest_sha256": "d1618ba39c71f128602379867be25cc39a860c4c4c7604b86976575e4dd9c7f9",
   "identity": "75369ab14b1a5043f1f195d54df7590d367c16a6f0df3c45b34dc485ed6b32c6",
   "public_indices": [
     1
   ],
   "title": "أنيس وبدر أمريكان … ونعمان ولد الديرة!",
   "expires_at": "2026-11-09T23:59:59+03:00",
-  "owner_authorization": "",
+  "owner_authorization": "خالد: مااشوفها. عموما إذا انت متأكد من تعديل الابتسامه ، انشر — تحققنا من 😄 بالملف النهائي",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
 }

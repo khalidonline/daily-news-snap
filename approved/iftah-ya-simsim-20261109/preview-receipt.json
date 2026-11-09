@@ -1,0 +1,45 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "77a3ac3b4224e5e6685100e260b8805504337df4",
+  "assets": {
+    "approved/iftah-ya-simsim-20261109/card.png": "ef8bfe62ce232f7bffd9aa7c8d64522e30b9a78e580942bc4f2686c98c0b6f71",
+    "approved/iftah-ya-simsim-20261109/simsim.jpg": "f3daba006715fd51f67a37edcb55f4e57dec238d404e0c6c6667e3a08495ea7b",
+    "approved/iftah-ya-simsim-20261109/simsim-cast.png": "b7867de3583645ad267f779a2ed1303b1b9443b7cc4b5ac1d75d95198e0affab",
+    "approved/iftah-ya-simsim-20261109/bird.jpg": "7e95831fb7b451b677209a48d8542a88c3d7a5e0ba99e8e9175dc8d1494febc1",
+    "approved/iftah-ya-simsim-20261109/apple-1f604.png": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
+  },
+  "preview_paths": [
+    "approved/iftah-ya-simsim-20261109/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/iftah-ya-simsim-20261109/card.png": "ef8bfe62ce232f7bffd9aa7c8d64522e30b9a78e580942bc4f2686c98c0b6f71",
+    "approved/iftah-ya-simsim-20261109/simsim.jpg": "f3daba006715fd51f67a37edcb55f4e57dec238d404e0c6c6667e3a08495ea7b",
+    "approved/iftah-ya-simsim-20261109/simsim-cast.png": "b7867de3583645ad267f779a2ed1303b1b9443b7cc4b5ac1d75d95198e0affab",
+    "approved/iftah-ya-simsim-20261109/bird.jpg": "7e95831fb7b451b677209a48d8542a88c3d7a5e0ba99e8e9175dc8d1494febc1",
+    "approved/iftah-ya-simsim-20261109/apple-1f604.png": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a",
+    "approved/iftah-ya-simsim-20261109/manifest.json": "ba0f6591eaa48e1f610ec8727d31b9ca2d70cbb6c34b54359c569ba1695eefeb",
+    "approved/iftah-ya-simsim-20261109/archive-approval.json": "1ed05f68947e29b4329fd9eeb90faa3e33abbdf3d8c777ed07aa5a832f35cdd9",
+    "approved/iftah-ya-simsim-20261109/design-review.json": "483289ce6f17a2787761a7f04c014d298f82c2016e3097492f25d05ec4649a9c",
+    "approved/iftah-ya-simsim-20261109/sources.json": "07b6af7660e2a930e4be585e3e84ba3ee3b3d350c22afe70c3aee0b5b00296be",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/iftah-ya-simsim-20261109",
+    "manifest_content_sha256": "5991ee4229db798619128ee0aa32a332ab2bf82d4921d58446246d40190248c8",
+    "archive_content_sha256": "60cd1a4762c99ee83403ffa64e22ed98e10f9cb67f2c4b4175f6db77119bcb4d",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "483289ce6f17a2787761a7f04c014d298f82c2016e3097492f25d05ec4649a9c",
+    "assets": {
+      "approved/iftah-ya-simsim-20261109/card.png": "ef8bfe62ce232f7bffd9aa7c8d64522e30b9a78e580942bc4f2686c98c0b6f71",
+      "approved/iftah-ya-simsim-20261109/simsim.jpg": "f3daba006715fd51f67a37edcb55f4e57dec238d404e0c6c6667e3a08495ea7b",
+      "approved/iftah-ya-simsim-20261109/simsim-cast.png": "b7867de3583645ad267f779a2ed1303b1b9443b7cc4b5ac1d75d95198e0affab",
+      "approved/iftah-ya-simsim-20261109/bird.jpg": "7e95831fb7b451b677209a48d8542a88c3d7a5e0ba99e8e9175dc8d1494febc1",
+      "approved/iftah-ya-simsim-20261109/apple-1f604.png": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
+    }
+  }
+}

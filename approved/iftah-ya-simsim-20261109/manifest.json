@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -20,7 +20,9 @@
       "b7867de3583645ad267f779a2ed1303b1b9443b7cc4b5ac1d75d95198e0affab",
       "7e95831fb7b451b677209a48d8542a88c3d7a5e0ba99e8e9175dc8d1494febc1",
       "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
-    ]
+    ],
+    "reference": "خالد: مااشوفها. عموما إذا انت متأكد من تعديل الابتسامه ، انشر — تحققنا من 😄 بالملف النهائي",
+    "reviewed_at": "2026-11-09T06:46:55.654893+00:00"
   },
   "media": [
     {

@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "mary-anderson-20261108",
-  "identity": "fd837cb2092f508fa7ad2f4da88fb478b58f46608c38c19a18ec5cf06c3de820",
+  "package": "iftah-ya-simsim-20261109",
+  "identity": "75369ab14b1a5043f1f195d54df7590d367c16a6f0df3c45b34dc485ed6b32c6",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر ثم كمل — نسخة ماري أندرسون بالصورتين للقصة العامة والحفظ في الملف العام",
-  "approved_at": "2026-11-08T08:16:34.124147+00:00",
-  "expires_at": "2026-11-08T23:59:59+03:00",
-  "manifest_sha256": "60b085155aa82532be257cf160e52810ee215050cf4d82ffd6585011c516541a",
-  "archive_sha256": "3dabf3ed7d94d733cb186e2d9ffd0aafd4d99c43f5aee207c6869dcc3c81a683",
-  "prepared_sha256": "1510397e5b10ef61dcb553f5b5af905103996dae279e011c95a810538b33032e",
-  "preview_receipt_sha256": "d7f49e83ee84d92dd7953e6e922a5bfd1352439a82bb3aad850b6e093e49f29d"
+  "owner_reference": "خالد: مااشوفها. عموما إذا انت متأكد من تعديل الابتسامه ، انشر — تحققنا من 😄 بالملف النهائي",
+  "approved_at": "2026-11-09T06:46:55.654893+00:00",
+  "expires_at": "2026-11-09T23:59:59+03:00",
+  "manifest_sha256": "d1618ba39c71f128602379867be25cc39a860c4c4c7604b86976575e4dd9c7f9",
+  "archive_sha256": "c08932573ba37ef5c0dc15229db02fcf139dd852affcdfafdc28450b81886947",
+  "prepared_sha256": "cc4c662628bca3fe680dee4dd502119e2ae588422143fe678b735a638fb15d69",
+  "preview_receipt_sha256": "aede0cdc5a59afeb496fd341b3f3fc7792bd060801b5bbaeb5c38d9cc419259c"
 }
