@@ -1,0 +1,18 @@
+{
+  "slot_riyadh": "2026-11-09T19:00:00+03:00",
+  "status": "SKIPPED_DAILY_CAP",
+  "item": null,
+  "next_item": "E4",
+  "remaining": 5,
+  "completed_total": 20,
+  "completed_today": 2,
+  "deliveries_today": 4,
+  "STORY": "NOT_SENT",
+  "SPOTLIGHT": "NOT_SENT",
+  "send_intents": 0,
+  "receipts": [
+    "api-receipts/rooms-dubai-vegas-20261109-preflight.json",
+    "api-receipts/toy-origins-20261109-preflight.json"
+  ],
+  "queue_reference": "challenge-queue/20261109-1300-A5.json"
+}
