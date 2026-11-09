@@ -1,0 +1,17 @@
+{
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-09",
+  "item": "E2",
+  "status": "POSTED",
+  "completed_total": 18,
+  "next_item": "D4",
+  "remaining_unconfirmed_topics": 7,
+  "blocked_items": [],
+  "supersedes": "blocked-E2-20261104.json",
+  "media_sha256": "d2f22c14d9367f2a827f46341046f824d8f4b8053f1f132e5f96d004cbf91298",
+  "receipt": "api-receipts/rooms-dubai-vegas-20261109-preflight.json",
+  "delivery": {
+    "STORY": "99035e10-8fc4-4424-95f6-f0f4e0035e52",
+    "SPOTLIGHT": "9dd02def-4917-439c-8fdd-67b914f6fc76"
+  }
+}
