@@ -1,0 +1,24 @@
+{
+  "item": "D4",
+  "topic": "باموكالي",
+  "aliases": [
+    "باموكلي",
+    "Pamukkale"
+  ],
+  "status": "PUBLISHED_OWNER_CONFIRMED",
+  "publication_date_riyadh": "2026-11-08",
+  "confirmed_by": "Khalid",
+  "confirmed_on": "2026-11-09",
+  "do_not_republish": true,
+  "destination_receipts": {
+    "STORY": null,
+    "SPOTLIGHT": null
+  },
+  "completed_total": 19,
+  "remaining": 6,
+  "next_item": "E4",
+  "supersedes_pending_in": [
+    "20261108-1900-D4.json",
+    "20261109-manual-E2.json"
+  ]
+}
