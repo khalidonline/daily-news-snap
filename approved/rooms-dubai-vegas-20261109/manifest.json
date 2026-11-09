@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية — وين الغرف الفندقية أكثر؟",
+  "expires_at": "2026-11-10T07:44:53.604352+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/rooms-dubai-vegas-20261109/challenge.mp4",
+      "sha256": "d2f22c14d9367f2a827f46341046f824d8f4b8053f1f132e5f96d004cbf91298",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "d2f22c14d9367f2a827f46341046f824d8f4b8053f1f132e5f96d004cbf91298",
+      "reference": "Khalid explicitly requested publication of the Dubai and Las Vegas comparison to Story and Spotlight. Agent inspected eight decoded frames and both modeled mobile overlays and verified the decoded audio against the reference.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid explicitly requested publication of the Dubai and Las Vegas comparison to Story and Spotlight. Agent inspected eight decoded frames and both modeled mobile overlays and verified the decoded audio against the reference.",
+    "video_sha256": "d2f22c14d9367f2a827f46341046f824d8f4b8053f1f132e5f96d004cbf91298",
+    "source_manifest": {
+      "path": "approved/rooms-dubai-vegas-20261109/source-approval.json",
+      "sha256": "f90adcaf08587486785ae7fc4717f82ca307bd75e52618a08d2c1d983ca4c14d"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-0.5.png",
+        "sha256": "ffdef4f3e0acc024dda1e9bc461f6a7ed32c2d2a3784c1c5ab4b8f454c343f6f"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-3.5.png",
+        "sha256": "9981a7d1e000373c5e7e23d3836be097ef075b659982723c487d3a6353ad8db8"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-4.5.png",
+        "sha256": "41b2b9fdc28204884bb3bac2608af1402896deb55856eb6d18fd6bcdcc83996f"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-5.5.png",
+        "sha256": "7ab63cbef949a667eebdf8a9b028ec440d2905138a1ea6ce2fc9f5cd8bfe459b"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-6.5.png",
+        "sha256": "c9d71e0db38099b69a7d8382f87c87487755f2ff795260ff0aae35ff5d572f6c"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-7.5.png",
+        "sha256": "ee8c3f859c67372513e1ca1dd678cede39cc6546979a5291fc4d35f147025882"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-8.5.png",
+        "sha256": "320b5ab21c93908b71cb894d3ec3f0f704fea3a5ad522c2851818f3619790058"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/rooms-dubai-vegas-20261109/frame-11.5.png",
+        "sha256": "af887c7ec6d6b64b36519f56beb2ead51180e2df707a3c1759f5ccae7d8c0119"
+      }
+    ]
+  }
+}
