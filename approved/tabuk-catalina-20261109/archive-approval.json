@@ -1,0 +1,13 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/tabuk-catalina-20261109/manifest.json",
+  "manifest_sha256": "f4ba0ef9a48adc4052eb5b52cbb1740d1404bf8c43f5916cc184325063aca0a8",
+  "identity": "a654d206072a4732bdb0e59418ad4b18a3cf49f29597081a446af102746e99b6",
+  "public_indices": [
+    1
+  ],
+  "title": "هبطت بتبوك قبل ٦٦ سنة وللحين ما أقلعت",
+  "expires_at": "2026-11-09T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+}

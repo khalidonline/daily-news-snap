@@ -1,0 +1,24 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/tabuk-catalina-20261109/wreck.jpg",
+      "sha256": "a5f9c548e998e76525c59a9e2e289444216a545a75df7f5f5fbd7f75975caf38",
+      "source_url": "https://www.birdsofsaudiarabia.com/2021/05/catalina-seaplane-wreckage-ras-al.html",
+      "credit": "Jem Babbington",
+      "description": "حطامها في رأس الشيخ حميد",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/tabuk-catalina-20261109/catalina-1959.jpg",
+      "sha256": "f7d9f405cd0439d8da22dca39b049a91eedeb32244953c82e5f2fd0ee8681533",
+      "source_url": "https://www.vintagewings.ca/stories/sweet-dreams-and-nightmares",
+      "credit": "Jeremy Hughes Collection",
+      "description": "الكاتالينا في لندن عام ١٩٥٩",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "story": [
+    "https://www.okaz.com.sa/variety/na/2031434",
+    "https://www.esquireme.com/culture/53270-why-is-there-a-seaplane-in-the-middle-of-the-saudi-arabian-desert"
+  ]
+}

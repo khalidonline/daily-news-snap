@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "190c4fafe6f8fb8333307d32840f551f7d70453a059dd5fe6519d86838fb877c",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "هبطت بتبوك قبل ٦٦ سنة وللحين ما أقلعت",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              103,
+              215,
+              1020,
+              279
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            103,
+            215,
+            1020,
+            280
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "حطامها في رأس الشيخ حميد",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              130,
+              695,
+              459,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            130,
+            695,
+            459,
+            734
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الكاتالينا في لندن عام ١٩٥٩",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              644,
+              695,
+              928,
+              727
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            644,
+            695,
+            928,
+            728
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "أمريكي اشترى طيارة عسكرية تهبط على الموية، وركب فيها مطبخ وطاولة أكل.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              113,
+              797,
+              980,
+              860
+            ],
+            [
+              419,
+              884,
+              980,
+              945
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            113,
+            797,
+            1015,
+            945
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "طلع مع عايلته يلفون العالم. وقفوا على شاطئ تبوك ينامون ليلة ويكملون الصبح.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              123,
+              1007,
+              980,
+              1059
+            ],
+            [
+              367,
+              1083,
+              980,
+              1133
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            123,
+            1007,
+            1015,
+            1133
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ثاني يوم، وهو يشيك على المكينة وعياله يلعبون بالموية، سمع صوت رصاص.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              115,
+              1195,
+              980,
+              1249
+            ],
+            [
+              463,
+              1273,
+              980,
+              1322
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            115,
+            1195,
+            1015,
+            1322
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "اللي شافوها حسبوها جاية تهاجمهم وأطلقوا عليها. سلمت العايلة وتعطلت الطيارة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              150,
+              1384,
+              980,
+              1447
+            ],
+            [
+              268,
+              1471,
+              980,
+              1513
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            150,
+            1384,
+            1015,
+            1513
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "رجعوا لأمريكا، وبقت طيارتهم على الشاطئ.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              160,
+              1575,
+              920,
+              1629
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            160,
+            1575,
+            920,
+            1630
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both simulated 390px destination overlays against this export: title, captions, body, closing and sharing CTA visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top0..39/bottom625..692 masked simulation; all essential text and CTA visible.",
+      "SAVED_STORY": "Inspected separate same-player masked simulation; essential text and CTA visible."
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "هبطت بتبوك قبل ٦٦ سنة وللحين ما أقلعت",
+  "not_before": "2026-11-09T00:00:00+03:00",
+  "expires_at": "2026-11-09T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "190c4fafe6f8fb8333307d32840f551f7d70453a059dd5fe6519d86838fb877c"
+    ],
+    "approved_source_sha256": [
+      "a5f9c548e998e76525c59a9e2e289444216a545a75df7f5f5fbd7f75975caf38",
+      "f7d9f405cd0439d8da22dca39b049a91eedeb32244953c82e5f2fd0ee8681533"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/tabuk-catalina-20261109/card.png",
+      "sha256": "190c4fafe6f8fb8333307d32840f551f7d70453a059dd5fe6519d86838fb877c",
+      "source_assets": [
+        {
+          "path": "approved/tabuk-catalina-20261109/wreck.jpg",
+          "sha256": "a5f9c548e998e76525c59a9e2e289444216a545a75df7f5f5fbd7f75975caf38",
+          "source_url": "https://www.birdsofsaudiarabia.com/2021/05/catalina-seaplane-wreckage-ras-al.html",
+          "credit": "Jem Babbington",
+          "description": "حطامها في رأس الشيخ حميد",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/tabuk-catalina-20261109/catalina-1959.jpg",
+          "sha256": "f7d9f405cd0439d8da22dca39b049a91eedeb32244953c82e5f2fd0ee8681533",
+          "source_url": "https://www.vintagewings.ca/stories/sweet-dreams-and-nightmares",
+          "credit": "Jeremy Hughes Collection",
+          "description": "الكاتالينا في لندن عام ١٩٥٩",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
