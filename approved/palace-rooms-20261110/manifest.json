@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية — أي قصر فيه غرف أكثر؟",
+  "expires_at": "2026-11-12T16:04:57.267574+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/palace-rooms-20261110/challenge.mp4",
+      "sha256": "707c41e0ede72d08c3d742ea819784bba51d80ba925a29295e9cae5fc77300fe",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "707c41e0ede72d08c3d742ea819784bba51d80ba925a29295e9cae5fc77300fe",
+      "reference": "Khalid approved E4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved E4 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "707c41e0ede72d08c3d742ea819784bba51d80ba925a29295e9cae5fc77300fe",
+    "source_manifest": {
+      "path": "approved/palace-rooms-20261110/source-approval.json",
+      "sha256": "bf1a0725eb7994176c3cba4a5b1f8a111f114ea740a1635313b3ae3a8acb91bc"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/palace-rooms-20261110/frame-0.5.png",
+        "sha256": "cb1f4d306d9bf90280667a3607e519b90ec5a677cf76bcc5d77561611b8061f3"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/palace-rooms-20261110/frame-3.5.png",
+        "sha256": "600c9f14e13fae29945d5f5795fd6ac5f15bb0389ca98e1a871950420ff7ff4d"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/palace-rooms-20261110/frame-4.5.png",
+        "sha256": "44349f1c606530dfb09f5e93880db41228c2cf995ecee385657f0bdba0702299"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/palace-rooms-20261110/frame-5.5.png",
+        "sha256": "f5668c5bdd2e4da07852c5addfc0783409708c181d8930e52808143b3a6bfb9e"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/palace-rooms-20261110/frame-6.5.png",
+        "sha256": "ff0599cf6c5e624733c06394556de1979d8c4754eecb698bb18fe56726dc0725"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/palace-rooms-20261110/frame-7.5.png",
+        "sha256": "ddbd9264149812c46192dbab54925bf2d2ea5969f93cf7a6d1ff6334fe092f2a"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/palace-rooms-20261110/frame-8.5.png",
+        "sha256": "e37d60c48a13f6c3695adf0e0250e4f53c6a1d3efc5e20a3294bf2659683328b"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/palace-rooms-20261110/frame-11.5.png",
+        "sha256": "4c4c257e54361231a71f3be484ce30b3dc82ab404181c386bfd72b91c8cfbd70"
+      }
+    ]
+  }
+}
