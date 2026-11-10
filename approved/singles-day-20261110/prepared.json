@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/singles-day-20261110",
+  "manifest_content_sha256": "ce9adaa7ccb4b7bca4da9496e07b8063ca7d6205297335a8ce7659bc781b992f",
+  "archive_content_sha256": "37529bb957d820e468eded1b6727b83302c782fb34f6689654f0adfe198629da",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "3bab19710ef48444cf82ea76a1aa7ed5d480a95e462706e87740a24903c02ed4",
+  "assets": {
+    "approved/singles-day-20261110/card.png": "89a514beeba3db856ae5f144d6b98662f2986419dbee825993c2126fe2784c01",
+    "approved/singles-day-20261110/photo.jpg": "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497"
+  },
+  "preparation_seconds": 0.003
+}

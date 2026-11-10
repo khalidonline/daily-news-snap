@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "cards": [
+    {
+      "sha256": "89a514beeba3db856ae5f144d6b98662f2986419dbee825993c2126fe2784c01",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "بكرة ١١/١١… وش دخل العزّاب بالتخفيضات؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              174,
+              215,
+              1020,
+              277
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            174,
+            215,
+            1020,
+            278
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "إعلان عروض يوم العزّاب في مترو شنغهاي",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              298,
+              695,
+              783,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            298,
+            695,
+            783,
+            734
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "السالفة بدت بين طلاب في الصين. اختاروا ١١/١١ لأن فيه أربع واحدات، وكل «واحد» لحاله!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              139,
+              798,
+              980,
+              849
+            ],
+            [
+              263,
+              873,
+              980,
+              934
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            139,
+            798,
+            1015,
+            934
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قبل ١٧ سنة، «علي بابا» دخلت على الخط: ليه تنتظر أحد يهديك؟ خذ لك هدية بنفسك.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              189,
+              997,
+              980,
+              1048
+            ],
+            [
+              259,
+              1072,
+              980,
+              1127
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            189,
+            997,
+            1015,
+            1127
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "كانت عروض يوم واحد و٢٧ ماركة. الحين يقعد أسابيع، وهالسنة فيه مليون ماركة!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              162,
+              1191,
+              980,
+              1241
+            ],
+            [
+              334,
+              1265,
+              980,
+              1326
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            162,
+            1191,
+            1015,
+            1326
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وإذا شفت «١١:١١» على إعلان متجر، معناته فيه تخفيض لك، حتى لو إنك متزوّج.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              163,
+              1389,
+              980,
+              1437
+            ],
+            [
+              423,
+              1461,
+              980,
+              1512
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            163,
+            1389,
+            1015,
+            1512
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "الاسم للعزّاب… والخصم للكل!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              283,
+              1575,
+              797,
+              1634
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            283,
+            1575,
+            797,
+            1635
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "review": {
+    "reference": "Final mobile export reviewed visually against approved edited copy and Shanghai metro photo.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "390px masked top and bottom simulation inspected; CTA clear.",
+      "SAVED_STORY": "Separate 390px same-player simulation inspected; caption and essential copy clear."
+    }
+  }
+}

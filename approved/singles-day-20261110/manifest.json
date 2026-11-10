@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "بكرة ١١/١١… وش دخل العزّاب بالتخفيضات؟",
+  "not_before": "2026-11-10T00:00:00+03:00",
+  "expires_at": "2026-11-10T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "89a514beeba3db856ae5f144d6b98662f2986419dbee825993c2126fe2784c01"
+    ],
+    "approved_source_sha256": [
+      "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/singles-day-20261110/card.png",
+      "sha256": "89a514beeba3db856ae5f144d6b98662f2986419dbee825993c2126fe2784c01",
+      "source_assets": [
+        {
+          "path": "approved/singles-day-20261110/photo.jpg",
+          "sha256": "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497",
+          "credit": "South China Morning Post",
+          "source_url": "https://www.scmp.com/tech/big-tech/article/3283414/alibaba-kicks-singles-day-direct-sales-apple-and-lululemon-seeing-strong-demand",
+          "description": "إعلان عروض يوم العزّاب في مترو شنغهاي",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

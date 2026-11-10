@@ -1,0 +1,13 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/singles-day-20261110/manifest.json",
+  "manifest_sha256": "a80733a7796214fb594f03ca81d77c8757fea148fcbb9ff5783725d459b701f8",
+  "identity": "7766c5e7cf3d3be74faa2189c06374e8444174b6efcff6fdaa74e1fe25c43b4f",
+  "public_indices": [
+    1
+  ],
+  "title": "بكرة ١١/١١… وش دخل العزّاب بالتخفيضات؟",
+  "expires_at": "2026-11-10T23:59:59+03:00",
+  "empty_profile_confirmation": "Previous stories recorded; verify provider inventory before any create. Not an empty-profile assertion."
+}
