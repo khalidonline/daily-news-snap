@@ -1,0 +1,29 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/bayt-al-shaar-rain-20261110/tent-interior.jpg",
+      "sha256": "98aeb26bc4e54b89891753a4a02c03dc533a61562d697968c1a367a0433ea0af",
+      "source_url": "https://pbs.twimg.com/media/DHa2VdJXUAAOhZh.jpg",
+      "credit": "شركة بادية للخيام",
+      "description": "داخل بيت شعر",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/bayt-al-shaar-rain-20261110/weaving.jpg",
+      "sha256": "89fa4d8ef86fd5654d61d239094df7e9db0546ed90e3f79726b6aacfd7cebfec",
+      "source_url": "https://backup.arabnews.com/sites/default/files/2025/09/13/4639206-1182515122.jpg",
+      "credit": "واس عبر Arab News",
+      "description": "حياكة نسيج بيت الشعر",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "story": [
+    "https://www.spa.gov.sa/N2395975",
+    "https://ithraeyat.ithra.com/editions/sustainability/bayt-al-sha-ar"
+  ],
+  "weather_trigger": {
+    "source_url": "https://www.akhbaar24.com/%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A7%D8%AA/%D8%A3%D9%85%D8%B7%D8%A7%D8%B1-%D9%85%D8%AA%D9%81%D8%A7%D9%88%D8%AA%D8%A9-%D8%B9%D9%84%D9%89-%D9%85%D8%AF%D9%8A%D9%86%D8%A9-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6-101303",
+    "published_at_riyadh": "2026-11-10T02:38:00+03:00",
+    "observation": "شهدت العاصمة الرياض فجر الثلاثاء هطول أمطار."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/bayt-al-shaar-rain-20261110",
+  "manifest_content_sha256": "7e9e231cc564be4e63aaf46f280c3ae6dfb0d11f45c5c621f75766356774f6d8",
+  "archive_content_sha256": "e42b94b2cc0dfcc99703b7277716dd006c76e7b8391cb79d7f7d400d8f90b371",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "9057cd09e658ed286c99fb978b40b56e4aa8fd7e025cef4a6fd77ee037739e11",
+  "assets": {
+    "approved/bayt-al-shaar-rain-20261110/card.png": "cd33be1bea8191e2ba2c62fa4a33896cb094943b23f103eb4e2965efe1f41e9b",
+    "approved/bayt-al-shaar-rain-20261110/tent-interior.jpg": "98aeb26bc4e54b89891753a4a02c03dc533a61562d697968c1a367a0433ea0af",
+    "approved/bayt-al-shaar-rain-20261110/weaving.jpg": "89fa4d8ef86fd5654d61d239094df7e9db0546ed90e3f79726b6aacfd7cebfec"
+  },
+  "preparation_seconds": 0.002
+}

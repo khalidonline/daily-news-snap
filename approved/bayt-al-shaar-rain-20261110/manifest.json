@@ -1,0 +1,54 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "ليه بيت الشعر ما يخرّ لا جا المطر؟",
+  "not_before": "2026-11-10T00:00:00+03:00",
+  "expires_at": "2026-11-11T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "cd33be1bea8191e2ba2c62fa4a33896cb094943b23f103eb4e2965efe1f41e9b"
+    ],
+    "approved_source_sha256": [
+      "98aeb26bc4e54b89891753a4a02c03dc533a61562d697968c1a367a0433ea0af",
+      "89fa4d8ef86fd5654d61d239094df7e9db0546ed90e3f79726b6aacfd7cebfec"
+    ],
+    "reference": "خالد: نشر مشروط عند أول رصد مطر فعلي في مدينة الرياض؛ استخدم آخر تصميم والنص المثبت مع تصحيح خشعر إلى شعر فقط.",
+    "reviewed_at": "2026-11-10T04:20:27+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/bayt-al-shaar-rain-20261110/card.png",
+      "sha256": "cd33be1bea8191e2ba2c62fa4a33896cb094943b23f103eb4e2965efe1f41e9b",
+      "source_assets": [
+        {
+          "path": "approved/bayt-al-shaar-rain-20261110/tent-interior.jpg",
+          "sha256": "98aeb26bc4e54b89891753a4a02c03dc533a61562d697968c1a367a0433ea0af",
+          "source_url": "https://pbs.twimg.com/media/DHa2VdJXUAAOhZh.jpg",
+          "credit": "شركة بادية للخيام",
+          "description": "داخل بيت شعر",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/bayt-al-shaar-rain-20261110/weaving.jpg",
+          "sha256": "89fa4d8ef86fd5654d61d239094df7e9db0546ed90e3f79726b6aacfd7cebfec",
+          "source_url": "https://backup.arabnews.com/sites/default/files/2025/09/13/4639206-1182515122.jpg",
+          "credit": "واس عبر Arab News",
+          "description": "حياكة نسيج بيت الشعر",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
