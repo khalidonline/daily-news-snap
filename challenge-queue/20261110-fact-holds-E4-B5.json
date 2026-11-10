@@ -1,19 +1,27 @@
 {
   "date": "2026-11-10",
-  "held": {
-    "E4": {
-      "reason": "Current main-building count cannot be determined; circa 1870 main building counted 307. Unspecified outbuildings make the 1441 vs 775 comparison unverifiable.",
-      "source": "https://www.schoenbrunn.at/ueber-schoenbrunn/wissenschaft-forschung/anzahl-der-raeume-des-schloss-schoenbrunns"
-    },
-    "B5": {
-      "reason": "Contemporary US launch reporting disagrees (3130 vs 3350 USD); no authoritative US launch price found.",
-      "sources": [
-        "https://ktvz.com/entertainment/cnn-style/2024/01/12/the-sandwich-bag-that-costs-more-than-3000/",
-        "https://www.purseblog.com/louis-vuitton/pharrells-first-collection-for-louis-vuitton-drops-today/"
-      ]
-    }
-  },
+  "held": {},
   "sent": false,
-  "next_eligible": "C5",
-  "completed_total": 20
+  "next_eligible": "E4",
+  "completed_total": 21,
+  "history": {
+    "original_holds": {
+      "E4": {
+        "reason": "Current main-building count cannot be determined; circa 1870 main building counted 307. Unspecified outbuildings make the 1441 vs 775 comparison unverifiable.",
+        "source": "https://www.schoenbrunn.at/ueber-schoenbrunn/wissenschaft-forschung/anzahl-der-raeume-des-schloss-schoenbrunns"
+      },
+      "B5": {
+        "reason": "Contemporary US launch reporting disagrees (3130 vs 3350 USD); no authoritative US launch price found.",
+        "sources": [
+          "https://ktvz.com/entertainment/cnn-style/2024/01/12/the-sandwich-bag-that-costs-more-than-3000/",
+          "https://www.purseblog.com/louis-vuitton/pharrells-first-collection-for-louis-vuitton-drops-today/"
+        ]
+      }
+    },
+    "original_next": "C5"
+  },
+  "resolution": {
+    "E4": "أي قصر تعلن إدارته إن فيه قرابة 800 غرفة؟ باكنغهام أو شونبرون؟ الجواب باكنغهام (775). لا حاجة لحسم إجمالي غرف شونبرون.",
+    "B5": "حوالي 12 ألف ريال وقت طرح شنطة الساندويتش؛ اختلاف سعر الطرح المنشور لا يغير الجواب التقريبي."
+  }
 }
