@@ -10,9 +10,36 @@
   "approved_version": "2afe4088e3003087c39f6e21ccb4175b2d015dd84085831d9f6c90c60a3a4acd",
   "media_sha256": "707c41e0ede72d08c3d742ea819784bba51d80ba925a29295e9cae5fc77300fe",
   "blocked_items": [],
-  "status": "INTENT_RECORDED",
-  "completed_total": 21,
-  "completed_today": 1,
-  "next_item": "E4_RECONCILE_FIRST",
-  "owner_correction": "challenge-queue/20261110-owner-correction-E4-B5-locations.json"
+  "status": "POSTED_BOTH",
+  "completed_total": 22,
+  "completed_today": 2,
+  "next_item": "B5",
+  "owner_correction": "challenge-queue/20261110-owner-correction-E4-B5-locations.json",
+  "deliveries_today": 4,
+  "day_cap_reached": true,
+  "remaining": 3,
+  "remaining_eligible": [
+    "B5",
+    "D5",
+    "E5"
+  ],
+  "receipt": "api-receipts/palace-rooms-20261110-preflight.json",
+  "production_commit": "a56e90f0c0e036eed5ebaf044d171b84429108b7",
+  "run_id": 42851185259,
+  "destinations": {
+    "STORY": {
+      "post_id": "146a599d-55f7-40b2-9add-71feb4d96fd8",
+      "snapchat_id": "864f8f93-04ff-443d-83bd-f39f9c9222de",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "media_sha256": "707c41e0ede72d08c3d742ea819784bba51d80ba925a29295e9cae5fc77300fe"
+    },
+    "SPOTLIGHT": {
+      "post_id": "f1e6e888-3cb5-463d-be4c-c644c29a6ba2",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYdm9xaWt4cGJoAaHGPjUGAaHGPjTNAAAAAA",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "media_sha256": "707c41e0ede72d08c3d742ea819784bba51d80ba925a29295e9cae5fc77300fe"
+    }
+  }
 }
