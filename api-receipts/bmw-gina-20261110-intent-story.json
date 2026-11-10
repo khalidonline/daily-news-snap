@@ -1,0 +1,23 @@
+{
+  "account": "executivesaudi",
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-10",
+  "slot_riyadh": "13:00",
+  "item": "C5",
+  "topic": "نزل بالسوق؟ — سيارة BMW GINA",
+  "package": "bmw-gina-20261110",
+  "identity": "6c4a29cb3065713c5ec0922e2a22478fbfb8a3f1fd76b4238f7875c8e9409e90",
+  "approved_version": "4aaf3a64389240ae1eda6ba744ed20cd507d2691248840311bb8f2b288f96381",
+  "media_sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d",
+  "blocked_items": [
+    "E4",
+    "B5"
+  ],
+  "status": "INTENT_RECORDED",
+  "completed_total": 20,
+  "next_item": "C5_RECONCILE_FIRST",
+  "destination": "STORY",
+  "state": "INTENT_RECORDED",
+  "provider_post_id": null,
+  "provider_journal_key": "6c4a29cb3065713c5ec0922e2a22478fbfb8a3f1fd76b4238f7875c8e9409e90"
+}
