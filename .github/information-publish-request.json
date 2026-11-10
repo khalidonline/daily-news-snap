@@ -7,10 +7,10 @@
     "SAVED_STORY"
   ],
   "owner_reference": "خالد: انشر — النسخة الأخيرة بإعلان أمازون السعودية وصورة مترو شنغهاي",
-  "approved_at": "2026-11-10T06:54:13.978753+00:00",
+  "approved_at": "2026-11-10T06:56:34.266313+00:00",
   "expires_at": "2026-11-10T23:59:59+03:00",
-  "manifest_sha256": "ba45e9dbf299ae9f506ae279c0db991217d14e37e2cd148846f2d8aaf0639504",
-  "archive_sha256": "1a668a087315c0f4fea6e8be9e77d8058d7390a5955e17f7065b7072ac6c67e9",
-  "prepared_sha256": "5d24a3960406efe7f050927f985934f7b4606b28de1e880c836c80d23e5adc31",
+  "manifest_sha256": "41e1b3c2a887b763deb44364ce8de6387596876669a6d525dd3f69f8e1f3c451",
+  "archive_sha256": "b98299e605c9ba86bf489690a697d6f81bb9e187de032f7958450b66306f9a2b",
+  "prepared_sha256": "b657a164cf12e6b1ec5267e72ed388bccb03596422ad7d0f9401a9f91dba2f98",
   "preview_receipt_sha256": "d86836b448129cd2727a7e1cc762fba2957344321fc30170cf3304648ec6be87"
 }
