@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "بكرة ١١/١١… وش دخل العزّاب بالتخفيضات؟",
+  "not_before": "2026-11-10T00:00:00+03:00",
+  "expires_at": "2026-11-10T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "062da5fa57fba79da81e9e9e5abb5f45db9581b563a106ab8361c6b08d4d6a94"
+    ],
+    "approved_source_sha256": [
+      "808da4ec3be962a85441db54d67fd188367c4429e9a8746e7af7211528218762",
+      "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/singles-day-20261110-r2/card.png",
+      "sha256": "062da5fa57fba79da81e9e9e5abb5f45db9581b563a106ab8361c6b08d4d6a94",
+      "source_assets": [
+        {
+          "path": "approved/singles-day-20261110-r2/amazon.png",
+          "sha256": "808da4ec3be962a85441db54d67fd188367c4429e9a8746e7af7211528218762",
+          "credit": "Amazon Saudi Arabia banner via Ajel",
+          "description": "تخفيضات 11.11 في أمازون السعودية",
+          "source_url": "https://english.ajel.sa/lifestyle/0hdt7uvu1",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/singles-day-20261110-r2/photo.jpg",
+          "sha256": "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497",
+          "credit": "South China Morning Post",
+          "source_url": "https://www.scmp.com/tech/big-tech/article/3283414/alibaba-kicks-singles-day-direct-sales-apple-and-lululemon-seeing-strong-demand",
+          "description": "إعلان عروض يوم العزّاب في مترو شنغهاي",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
