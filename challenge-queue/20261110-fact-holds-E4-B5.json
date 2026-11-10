@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-10",
+  "held": {
+    "E4": {
+      "reason": "Current main-building count cannot be determined; circa 1870 main building counted 307. Unspecified outbuildings make the 1441 vs 775 comparison unverifiable.",
+      "source": "https://www.schoenbrunn.at/ueber-schoenbrunn/wissenschaft-forschung/anzahl-der-raeume-des-schloss-schoenbrunns"
+    },
+    "B5": {
+      "reason": "Contemporary US launch reporting disagrees (3130 vs 3350 USD); no authoritative US launch price found.",
+      "sources": [
+        "https://ktvz.com/entertainment/cnn-style/2024/01/12/the-sandwich-bag-that-costs-more-than-3000/",
+        "https://www.purseblog.com/louis-vuitton/pharrells-first-collection-for-louis-vuitton-drops-today/"
+      ]
+    }
+  },
+  "sent": false,
+  "next_eligible": "C5",
+  "completed_total": 20
+}
