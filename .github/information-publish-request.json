@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "bayt-al-shaar-rain-20261110",
-  "identity": "6ea196ac60add4991b654af0eda777ee0e3b33e1e07efa8efca1c3506813e3b7",
+  "package": "singles-day-20261110-r2",
+  "identity": "839985431ea9c3c34e2c6b21bb4a3034a554a976611404a4102859c03e926a3e",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: طلب نشر بطاقة بيت الشعر مرة واحدة عند أول رصد مطر فعلي داخل مدينة الرياض يوم 10 أو 11 نوفمبر 2026؛ تحقق الشرط بتقرير أخبار24 المنشور 10 نوفمبر 2026 الساعة 02:38 بتوقيت الرياض: شهدت العاصمة الرياض فجر الثلاثاء هطول أمطار.",
-  "approved_at": "2026-11-10T04:24:45.884081+00:00",
-  "expires_at": "2026-11-11T23:59:59+03:00",
-  "manifest_sha256": "5152e0c835298a0c8cdd0986556c571882978a910ee9721ffc263c1f9ac2a076",
-  "archive_sha256": "d4eac05d73683911b9ef167f556cfc5712fb037d0cc2214f1e2fee04fada2281",
-  "prepared_sha256": "cf991a5465101f1dc8d90bd88ea4fb2947453203b1a87713be01b43b6cf589b0",
-  "preview_receipt_sha256": "ac6b1eb4e6659e3b159c245a95d0252301b507013106543baecdf78f81ed49f9"
+  "owner_reference": "خالد: انشر — النسخة الأخيرة بإعلان أمازون السعودية وصورة مترو شنغهاي",
+  "approved_at": "2026-11-10T06:54:13.978753+00:00",
+  "expires_at": "2026-11-10T23:59:59+03:00",
+  "manifest_sha256": "ba45e9dbf299ae9f506ae279c0db991217d14e37e2cd148846f2d8aaf0639504",
+  "archive_sha256": "1a668a087315c0f4fea6e8be9e77d8058d7390a5955e17f7065b7072ac6c67e9",
+  "prepared_sha256": "5d24a3960406efe7f050927f985934f7b4606b28de1e880c836c80d23e5adc31",
+  "preview_receipt_sha256": "d86836b448129cd2727a7e1cc762fba2957344321fc30170cf3304648ec6be87"
 }

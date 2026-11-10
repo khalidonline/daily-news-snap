@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "808da4ec3be962a85441db54d67fd188367c4429e9a8746e7af7211528218762",
       "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497"
-    ]
+    ],
+    "reference": "خالد: انشر — النسخة الأخيرة بإعلان أمازون السعودية وصورة مترو شنغهاي",
+    "reviewed_at": "2026-11-10T06:54:13.978753+00:00"
   },
   "media": [
     {

@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "71ebcddab3c2879c9f16e4cd2bab26795f13358d",
+  "assets": {
+    "approved/singles-day-20261110-r2/card.png": "062da5fa57fba79da81e9e9e5abb5f45db9581b563a106ab8361c6b08d4d6a94",
+    "approved/singles-day-20261110-r2/amazon.png": "808da4ec3be962a85441db54d67fd188367c4429e9a8746e7af7211528218762",
+    "approved/singles-day-20261110-r2/photo.jpg": "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497"
+  },
+  "preview_paths": [
+    "approved/singles-day-20261110-r2/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/singles-day-20261110-r2/card.png": "062da5fa57fba79da81e9e9e5abb5f45db9581b563a106ab8361c6b08d4d6a94",
+    "approved/singles-day-20261110-r2/amazon.png": "808da4ec3be962a85441db54d67fd188367c4429e9a8746e7af7211528218762",
+    "approved/singles-day-20261110-r2/photo.jpg": "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497",
+    "approved/singles-day-20261110-r2/manifest.json": "7abe1acd29254850fb70ec858b1da95eb0330fdd916f4182bfabdc4c626a619c",
+    "approved/singles-day-20261110-r2/archive-approval.json": "7fc52133176f5865e4458f82bb12fee6b4629931b0d6ef4dd699bed185c8cd8a",
+    "approved/singles-day-20261110-r2/design-review.json": "9f5b5a823ab4c80fa31383d193f40f3734974ea19dc0f3404ce4c640df073aed",
+    "approved/singles-day-20261110-r2/sources.json": "f9911603b73765e6c6a06cf236b57fe873aff00aa1b4b2a41e67af9e576d4154",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/singles-day-20261110-r2",
+    "manifest_content_sha256": "c9f7f837860d5b2d80c22d12942fcc915d1889527a02f40a0ab950e20b2ba263",
+    "archive_content_sha256": "c95774255ccd02429159ceaf35e092804635a85ced526212790d71be12ecfd35",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "9f5b5a823ab4c80fa31383d193f40f3734974ea19dc0f3404ce4c640df073aed",
+    "assets": {
+      "approved/singles-day-20261110-r2/card.png": "062da5fa57fba79da81e9e9e5abb5f45db9581b563a106ab8361c6b08d4d6a94",
+      "approved/singles-day-20261110-r2/amazon.png": "808da4ec3be962a85441db54d67fd188367c4429e9a8746e7af7211528218762",
+      "approved/singles-day-20261110-r2/photo.jpg": "b258501aa1fa5b8cd71e9f0c4a5694aabf827bdbe909bd5bd02a1793d5388497"
+    }
+  }
+}
