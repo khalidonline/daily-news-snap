@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "tabuk-catalina-20261109",
-  "identity": "a654d206072a4732bdb0e59418ad4b18a3cf49f29597081a446af102746e99b6",
+  "package": "bayt-al-shaar-rain-20261110",
+  "identity": "6ea196ac60add4991b654af0eda777ee0e3b33e1e07efa8efca1c3506813e3b7",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر — بطاقة كاتالينا تبوك النهائية بصورتَي طيارة العائلة ١٩٥٩ وحطامها",
-  "approved_at": "2026-11-09T16:01:43.516350+00:00",
-  "expires_at": "2026-11-09T23:59:59+03:00",
-  "manifest_sha256": "9cbec8c14f3fadef916fcad00e22fdc337fdd7e63eae40a44bfa5cb5f18dfe64",
-  "archive_sha256": "9291c4144e1693e0786ca900e2a699217eb87353432ed2fe80489527536e5598",
-  "prepared_sha256": "4d4397a12790f14938305302f3b11a0a373e4151155cc8787f285d22a110273f",
-  "preview_receipt_sha256": "5c3d1b4ed4e93fd06813467a38881e2f57d6b1cc73144fd5c9d181efa18a08f7"
+  "owner_reference": "خالد: طلب نشر بطاقة بيت الشعر مرة واحدة عند أول رصد مطر فعلي داخل مدينة الرياض يوم 10 أو 11 نوفمبر 2026؛ تحقق الشرط بتقرير أخبار24 المنشور 10 نوفمبر 2026 الساعة 02:38 بتوقيت الرياض: شهدت العاصمة الرياض فجر الثلاثاء هطول أمطار.",
+  "approved_at": "2026-11-10T04:24:45.884081+00:00",
+  "expires_at": "2026-11-11T23:59:59+03:00",
+  "manifest_sha256": "5152e0c835298a0c8cdd0986556c571882978a910ee9721ffc263c1f9ac2a076",
+  "archive_sha256": "d4eac05d73683911b9ef167f556cfc5712fb037d0cc2214f1e2fee04fada2281",
+  "prepared_sha256": "cf991a5465101f1dc8d90bd88ea4fb2947453203b1a87713be01b43b6cf589b0",
+  "preview_receipt_sha256": "ac6b1eb4e6659e3b159c245a95d0252301b507013106543baecdf78f81ed49f9"
 }

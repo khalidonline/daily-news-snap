@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/bayt-al-shaar-rain-20261110/manifest.json",
-  "manifest_sha256": "c9ce667def566e5e66547d7b922e7d09e1220c5d942faf10ee2f63eb5e56d05a",
+  "manifest_sha256": "5152e0c835298a0c8cdd0986556c571882978a910ee9721ffc263c1f9ac2a076",
   "identity": "6ea196ac60add4991b654af0eda777ee0e3b33e1e07efa8efca1c3506813e3b7",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "ليه بيت الشعر ما يخرّ لا جا المطر؟",
   "expires_at": "2026-11-11T23:59:59+03:00",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
-  "owner_authorization": "Pending uploaded-preview gate; user authorization is conditional on confirmed rain inside Riyadh city."
+  "owner_authorization": "خالد: طلب نشر بطاقة بيت الشعر مرة واحدة عند أول رصد مطر فعلي داخل مدينة الرياض يوم 10 أو 11 نوفمبر 2026؛ تحقق الشرط بتقرير أخبار24 المنشور 10 نوفمبر 2026 الساعة 02:38 بتوقيت الرياض: شهدت العاصمة الرياض فجر الثلاثاء هطول أمطار."
 }
