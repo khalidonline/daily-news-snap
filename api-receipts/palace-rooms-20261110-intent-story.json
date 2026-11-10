@@ -1,0 +1,22 @@
+{
+  "account": "executivesaudi",
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-10",
+  "slot_riyadh": "19:00",
+  "item": "E4",
+  "topic": "مقارنات سياحية — أي قصر فيه غرف أكثر؟",
+  "package": "palace-rooms-20261110",
+  "identity": "f35a7490418d8a0861b9224d03e1aa8d0ba96fff02620f9482a6cad986808c05",
+  "approved_version": "2afe4088e3003087c39f6e21ccb4175b2d015dd84085831d9f6c90c60a3a4acd",
+  "media_sha256": "707c41e0ede72d08c3d742ea819784bba51d80ba925a29295e9cae5fc77300fe",
+  "blocked_items": [],
+  "status": "INTENT_RECORDED",
+  "completed_total": 21,
+  "completed_today": 1,
+  "next_item": "E4_RECONCILE_FIRST",
+  "owner_correction": "challenge-queue/20261110-owner-correction-E4-B5-locations.json",
+  "destination": "STORY",
+  "state": "INTENT_RECORDED",
+  "provider_post_id": null,
+  "provider_journal_key": "f35a7490418d8a0861b9224d03e1aa8d0ba96fff02620f9482a6cad986808c05"
+}
