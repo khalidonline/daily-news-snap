@@ -1,0 +1,1 @@
+{"slot":"2026-11-10T13:00:00+03:00","item":"C5","intent_commit":"93716b5d20223d82ef6259b2c91f9cafb6810a0d","approved_version":"4aaf3a64389240ae1eda6ba744ed20cd507d2691248840311bb8f2b288f96381"}

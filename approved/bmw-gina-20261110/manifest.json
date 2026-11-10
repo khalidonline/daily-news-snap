@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — سيارة BMW GINA",
+  "expires_at": "2026-11-12T10:10:19.205741+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/bmw-gina-20261110/challenge.mp4",
+      "sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d",
+      "reference": "Khalid approved C5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved C5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d",
+    "source_manifest": {
+      "path": "approved/bmw-gina-20261110/source-approval.json",
+      "sha256": "d14d6a0de93248cc5a7664a085474bf6677963f31a8b837f0250867b234d21b2"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/bmw-gina-20261110/frame-0.5.png",
+        "sha256": "12cacf7496647f6c35dec0e68680692a5c635f92bc102f32d7a665620c183b11"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/bmw-gina-20261110/frame-3.5.png",
+        "sha256": "e2fbba98d99305373c9296cd09009a50d78e0c2322c4659ad19763a33609e9bb"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/bmw-gina-20261110/frame-4.5.png",
+        "sha256": "79999c20f9f580416c81c0e91923a24d91e83f16cd5c251171be2bac8ff1a17f"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/bmw-gina-20261110/frame-5.5.png",
+        "sha256": "229da9c3590ce25ca5f2658ea1ef69322d9fe246221d48373f2fb24989a19712"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/bmw-gina-20261110/frame-6.5.png",
+        "sha256": "855779adde315a2b380dc3c59f96554128053fe185aa101123bab512316b3f8b"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/bmw-gina-20261110/frame-7.5.png",
+        "sha256": "9a320b4cbfd0e0fe7e4f44c400607d1b78e1dc05ed3f10a10048f88794fe5340"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/bmw-gina-20261110/frame-8.5.png",
+        "sha256": "2e5d0d80368823b11d865e68c819b595dfdc84e38e576ef83e690df570657507"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/bmw-gina-20261110/frame-11.5.png",
+        "sha256": "0f53e717971d9716b468aa9931cfebce677aa23e3eb03146720c84366e7e9222"
+      }
+    ]
+  }
+}
