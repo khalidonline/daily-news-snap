@@ -13,7 +13,29 @@
     "E4",
     "B5"
   ],
-  "status": "INTENT_RECORDED",
-  "completed_total": 20,
-  "next_item": "C5_RECONCILE_FIRST"
+  "status": "POSTED_BOTH",
+  "completed_total": 21,
+  "next_item": "D5",
+  "completed_today": 1,
+  "remaining": 4,
+  "remaining_eligible": [
+    "D5",
+    "E5"
+  ],
+  "receipt": "api-receipts/bmw-gina-20261110-preflight.json",
+  "production_commit": "48852b3de5ae5e63563fbe28ea563ba3a7995a22",
+  "destinations": {
+    "STORY": {
+      "post_id": "0bcd9742-bb52-4325-8c21-face05078c5d",
+      "snapchat_status": "PUBLISHED",
+      "status": "POSTED",
+      "media_sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d"
+    },
+    "SPOTLIGHT": {
+      "post_id": "ef26f693-8d09-4609-ba20-7fb091cf4941",
+      "snapchat_status": "PUBLISHED",
+      "status": "POSTED",
+      "media_sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d"
+    }
+  }
 }
