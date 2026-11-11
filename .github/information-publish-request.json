@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "singles-day-20261110-r2",
-  "identity": "839985431ea9c3c34e2c6b21bb4a3034a554a976611404a4102859c03e926a3e",
+  "package": "rain-scent-20261111",
+  "identity": "003b2aa0bdd411cb1e14fe7aa3a6553908e618db3b42d06ea32d9e4ee0b9fc39",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر — النسخة الأخيرة بإعلان أمازون السعودية وصورة مترو شنغهاي",
-  "approved_at": "2026-11-10T06:56:34.266313+00:00",
-  "expires_at": "2026-11-10T23:59:59+03:00",
-  "manifest_sha256": "41e1b3c2a887b763deb44364ce8de6387596876669a6d525dd3f69f8e1f3c451",
-  "archive_sha256": "b98299e605c9ba86bf489690a697d6f81bb9e187de032f7958450b66306f9a2b",
-  "prepared_sha256": "b657a164cf12e6b1ec5267e72ed388bccb03596422ad7d0f9401a9f91dba2f98",
-  "preview_receipt_sha256": "d86836b448129cd2727a7e1cc762fba2957344321fc30170cf3304648ec6be87"
+  "owner_reference": "خالد: انشر — من وين تجي ريحة المطر؟ نسخة الصورتين المعروضة",
+  "approved_at": "2026-11-11T06:53:17.004197+00:00",
+  "expires_at": "2026-11-11T23:59:59+03:00",
+  "manifest_sha256": "cb3c78b573dfed970497efa24f12efd5a8b0b1d06daeca3c9a36abd1a2c9a769",
+  "archive_sha256": "d00568cc3bb352b3916aaeb1ce8a6419f652b429b71d4406093bd43358c9024e",
+  "prepared_sha256": "a2c8e56de759d7ab541fa059caa28ef565c7e0a1e8cd38f9d997a332a74539c6",
+  "preview_receipt_sha256": "50069e1f3b6842fb9b5283a16e3b3e5276aae9f0810a8c6c3d48e66be28ac91b"
 }

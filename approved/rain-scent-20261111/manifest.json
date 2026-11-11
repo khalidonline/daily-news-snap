@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,7 +19,9 @@
       "fd6586e4a56e60ed6f010385fb686159c8094188eb162eba17209bf1b5eaac19",
       "b732777550ea8ed3352fe03d926a4a6fd48344622b6db6e1f278cd987d94c633",
       "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
-    ]
+    ],
+    "reference": "خالد: انشر — من وين تجي ريحة المطر؟ نسخة الصورتين المعروضة",
+    "reviewed_at": "2026-11-11T06:53:17.004197+00:00"
   },
   "media": [
     {
