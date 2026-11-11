@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع السعر — شنطة الساندويتش من لويس فويتون",
+  "expires_at": "2026-11-13T10:05:55.485519+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/lv-sandwich-20261111/challenge.mp4",
+      "sha256": "90ba9ca88818f2d5191eb06ead1e8f1904da81e8de0c399b81f1128595f339ab",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "90ba9ca88818f2d5191eb06ead1e8f1904da81e8de0c399b81f1128595f339ab",
+      "reference": "Khalid approved B5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "90ba9ca88818f2d5191eb06ead1e8f1904da81e8de0c399b81f1128595f339ab",
+    "source_manifest": {
+      "path": "approved/lv-sandwich-20261111/source-approval.json",
+      "sha256": "eeb146f960b41297eda171a997fc54cc766c9acd247ed86fe8691fe397a336ce"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/lv-sandwich-20261111/frame-0.5.png",
+        "sha256": "a5dcd8fe9163a5d9550f06c8019035d981bcbc8a8dba902a98fc03e0f4495212"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/lv-sandwich-20261111/frame-3.5.png",
+        "sha256": "7c517a0b9ec97e5823c564097bddb7325ff79a72662bd42a47cf0f9ef1b1daad"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/lv-sandwich-20261111/frame-4.5.png",
+        "sha256": "6b1fcf72ebb122af50b9f99209c82adb7d322002c7428bd6ea0d09de21d083c0"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/lv-sandwich-20261111/frame-5.5.png",
+        "sha256": "5e566fe70a0957b3171300e859a0986a4f8b8096f41df011f613b508b2afdbe8"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/lv-sandwich-20261111/frame-6.5.png",
+        "sha256": "09952d96fd95df4a9caec59ec3ad5013f5931e80dae19a4d596045921ab47dd5"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/lv-sandwich-20261111/frame-7.5.png",
+        "sha256": "ff3e830933b04c366b8fed4967c6295f7731a3639c1898b4e66885ada92cb5b1"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/lv-sandwich-20261111/frame-8.5.png",
+        "sha256": "cf7560dedb6648409ca1648762c7b13cbaf820df150ec86bb5103d93ff248e01"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/lv-sandwich-20261111/frame-11.5.png",
+        "sha256": "e3a5c1d253ee25da90ec434828375b9d232b85c1b28af59a9af2420ec9f60fd1"
+      }
+    ]
+  }
+}

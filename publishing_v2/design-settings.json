@@ -41,7 +41,8 @@
     "workflow": "Finalize trigger, fact and story sequence before design. Lock one approved text version; change only requested elements. No design before selection and no publication before authorization.",
     "closing": "A strong relevant outcome, preferably where they reached today when verified. Do not force a question; optional questions must be gentle and never pressuring.",
     "cta_exact": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
-    "tables": "If a table is genuinely useful, add one introductory sentence and one closing sentence; label dates and units clearly."
+    "tables": "If a table is genuinely useful, add one introductory sentence and one closing sentence; label dates and units clearly.",
+    "pre_review_text_fit": "إجراء دائم لكل بطاقات الطواري والسوالف والمناسبات، الفردية والدفعات. قبل عرض البطاقة النصية لأول مرة وبعد كل تعديل، قس النص الفعلي بمحرّك القالب المعتمد وخطوطه ومساحة كل حقل، بما فيها تعليقات الصور. العنوان والقفلة سطر لكل منهما، والنقاط الأربع سطران كحد أقصى لكل نقطة. اختصر أي نص متجاوز وأعد القياس قبل العرض. بعد اعتماد خالد استخدم النص المقاس نفسه في التصميم."
   },
   "production_acceptance_gate": {
     "template_first_required": {
@@ -659,17 +660,65 @@
       "approval_basis": "Owner approved the template-balanced-spacing preview after requesting identical visible line gaps and equal spacing from the end of the photo-caption region to the start of the closing region.",
       "scope": "All future information/news/story previews and publishing. Challenges unchanged. No automatic republication.",
       "precedence": "This owner-approved layout supersedes older information geometry and fixed 66px line steps below. Legacy fields remain solely until renderer migration. Do not use legacy geometry for a new preview or publication.",
-      "canvas": [1080, 1920],
+      "canvas": [
+        1080,
+        1920
+      ],
       "regions_xyxy": {
-        "upper_left_logo": [70, 115, 165, 210],
-        "account_name": [925, 115, 1020, 210],
-        "title": [60, 215, 1020, 300],
-        "images": [60, 320, 1020, 670],
-        "captions": [60, 690, 1020, 735],
-        "body": [60, 760, 1020, 1545],
-        "closing": [60, 1575, 1020, 1640],
-        "cta": [60, 1665, 1020, 1730],
-        "footer_logo": [510, 1750, 570, 1810]
+        "upper_left_logo": [
+          70,
+          115,
+          165,
+          210
+        ],
+        "account_name": [
+          925,
+          115,
+          1020,
+          210
+        ],
+        "title": [
+          60,
+          215,
+          1020,
+          300
+        ],
+        "images": [
+          60,
+          320,
+          1020,
+          670
+        ],
+        "captions": [
+          60,
+          690,
+          1020,
+          735
+        ],
+        "body": [
+          60,
+          760,
+          1020,
+          1545
+        ],
+        "closing": [
+          60,
+          1575,
+          1020,
+          1640
+        ],
+        "cta": [
+          60,
+          1665,
+          1020,
+          1730
+        ],
+        "footer_logo": [
+          510,
+          1750,
+          570,
+          1810
+        ]
       },
       "typography": "Preserve pinned Almarai Bold 44px body, right-aligned on both lines, at most four bullets and two lines each. Preserve other approved role fonts and palette. Never shorten approved wording or shrink the body to fit.",
       "line_spacing": {
@@ -682,9 +731,20 @@
         "bottom_boundary": 1575,
         "rule": "Measure each paragraph as the sum of its ink-line heights plus 24px per internal line gap. Divide remaining height between boundaries into N+1 equal gaps: before first paragraph, between paragraphs, after last paragraph. Use cumulative rounding with at most 1px difference. Reject overflow; no text or font changes without approval.",
         "approved_example": {
-          "paragraph_ink_heights_px": [130, 122, 128, 139],
+          "paragraph_ink_heights_px": [
+            130,
+            122,
+            128,
+            139
+          ],
           "ideal_gap_px": 64.2,
-          "rounded_gaps_px": [64, 64, 65, 64, 64],
+          "rounded_gaps_px": [
+            64,
+            64,
+            65,
+            64,
+            64
+          ],
           "words": 53,
           "word_limit_note": "53 words describes this sample, not a universal maximum. Measure actual text."
         }
