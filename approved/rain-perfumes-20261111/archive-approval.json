@@ -1,13 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/rain-perfumes-20261111/manifest.json",
-  "manifest_sha256": "396c4ce1b25d98cb2c2528ef408e14571b8a23e41bf3bd8c56b533d3a0aefee1",
+  "manifest_sha256": "1f240baf7c05b5a4e16a9dcfdfcb1335390a9e033e7d224f81308ba34971e386",
   "identity": "049929bfde2dbcbab9af079eb8cd13108cac12126002fee2f86959a0ad8f6bfd",
   "public_indices": [
     1
   ],
   "title": "ريحة أول رشّة مطر… صارت عطر!",
   "expires_at": "2026-11-11T23:59:59+03:00",
-  "empty_profile_confirmation": "Previous stories recorded; verify provider inventory before any create. Not an empty-profile assertion."
+  "empty_profile_confirmation": "Previous stories recorded; verify provider inventory before any create. Not an empty-profile assertion.",
+  "owner_authorization": "Khalid: انشر then كمل, exact Rain-Perfumes-Final.png 47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738"
 }

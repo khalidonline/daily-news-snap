@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "7442ca65f76d7822e65c07e537246f453d72c0cf",
+  "assets": {
+    "approved/rain-perfumes-20261111/card.png": "47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
+    "approved/rain-perfumes-20261111/baie-box.jpg": "be70755bf41bcc56055f13839ac0bd3aacf5d3c8e5d3d090240dfe6adcb5c235",
+    "approved/rain-perfumes-20261111/demeter-product.png": "3889b9ee8ce01dab2b2f1bf7647650ab29f48256598bef482e780031942ec908"
+  },
+  "preview_paths": [
+    "approved/rain-perfumes-20261111/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/rain-perfumes-20261111/card.png": "47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
+    "approved/rain-perfumes-20261111/baie-box.jpg": "be70755bf41bcc56055f13839ac0bd3aacf5d3c8e5d3d090240dfe6adcb5c235",
+    "approved/rain-perfumes-20261111/demeter-product.png": "3889b9ee8ce01dab2b2f1bf7647650ab29f48256598bef482e780031942ec908",
+    "approved/rain-perfumes-20261111/manifest.json": "396c4ce1b25d98cb2c2528ef408e14571b8a23e41bf3bd8c56b533d3a0aefee1",
+    "approved/rain-perfumes-20261111/archive-approval.json": "b1876a14a95142e53e6a65bd8689ece728625c38677145114c0db951bbaf1dfa",
+    "approved/rain-perfumes-20261111/design-review.json": "f1564c8b9b955502edc444227a9b554a4e00c3fdffb33ca9f8c9b559408242dc",
+    "approved/rain-perfumes-20261111/sources.json": "ad979c73002fb6dd7c9e0c1ee1e47bce46cef3660db0846c2a9a6685b03094f4",
+    "publishing_v2/design-settings.json": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/rain-perfumes-20261111",
+    "manifest_content_sha256": "ad17e53d7feb2d7346ec31003d7d682ee10d130c09bac609bfe0011969e9325c",
+    "archive_content_sha256": "efd7480638024618d44fd04875c39f08b342cad1a000371f6d2cc59fc56cf263",
+    "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+    "review_sha256": "f1564c8b9b955502edc444227a9b554a4e00c3fdffb33ca9f8c9b559408242dc",
+    "assets": {
+      "approved/rain-perfumes-20261111/card.png": "47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
+      "approved/rain-perfumes-20261111/baie-box.jpg": "be70755bf41bcc56055f13839ac0bd3aacf5d3c8e5d3d090240dfe6adcb5c235",
+      "approved/rain-perfumes-20261111/demeter-product.png": "3889b9ee8ce01dab2b2f1bf7647650ab29f48256598bef482e780031942ec908"
+    }
+  }
+}

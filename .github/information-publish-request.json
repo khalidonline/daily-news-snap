@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "rain-scent-20261111",
-  "identity": "003b2aa0bdd411cb1e14fe7aa3a6553908e618db3b42d06ea32d9e4ee0b9fc39",
+  "package": "rain-perfumes-20261111",
+  "identity": "049929bfde2dbcbab9af079eb8cd13108cac12126002fee2f86959a0ad8f6bfd",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر — من وين تجي ريحة المطر؟ نسخة الصورتين المعروضة",
-  "approved_at": "2026-11-11T06:53:17.004197+00:00",
+  "owner_reference": "Khalid: انشر then كمل, exact Rain-Perfumes-Final.png 47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
+  "approved_at": "2026-11-11T07:51:15.084221+00:00",
   "expires_at": "2026-11-11T23:59:59+03:00",
-  "manifest_sha256": "cb3c78b573dfed970497efa24f12efd5a8b0b1d06daeca3c9a36abd1a2c9a769",
-  "archive_sha256": "d00568cc3bb352b3916aaeb1ce8a6419f652b429b71d4406093bd43358c9024e",
-  "prepared_sha256": "a2c8e56de759d7ab541fa059caa28ef565c7e0a1e8cd38f9d997a332a74539c6",
-  "preview_receipt_sha256": "50069e1f3b6842fb9b5283a16e3b3e5276aae9f0810a8c6c3d48e66be28ac91b"
+  "manifest_sha256": "1f240baf7c05b5a4e16a9dcfdfcb1335390a9e033e7d224f81308ba34971e386",
+  "archive_sha256": "b5241abb018a6630eb6de5cd83de9aa36bdec9a68ea12e4c996b0c83a358e726",
+  "prepared_sha256": "eb117979fe6c99815088e2f192ec0a02c4d41656ad336ddad3dda50b3cd3c488",
+  "preview_receipt_sha256": "837055309d3726362cbe5fd429f1b91eea007f2074be40087d9f98d79e3664d8"
 }
