@@ -1,0 +1,18 @@
+{
+  "account": "executivesaudi",
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-11",
+  "slot_riyadh": "13:00",
+  "item": "B5",
+  "topic": "توقع السعر — شنطة الساندويتش من لويس فويتون",
+  "package": "lv-sandwich-20261111",
+  "identity": "95f4e5e04d6a0854f999a1f2318ce6c10356e1fa61676d3a8d3387ea74512130",
+  "approved_version": "df30d1506751d67fed880ab2cbf4c3731fb52f345693c1e46ca6a0b15076499f",
+  "media_sha256": "90ba9ca88818f2d5191eb06ead1e8f1904da81e8de0c399b81f1128595f339ab",
+  "blocked_items": [],
+  "status": "INTENT_RECORDED",
+  "completed_total": 22,
+  "completed_today": 0,
+  "next_item": "B5_RECONCILE_FIRST",
+  "owner_correction": "challenge-queue/20261110-owner-correction-E4-B5-locations.json"
+}
