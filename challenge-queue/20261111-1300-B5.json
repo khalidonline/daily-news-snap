@@ -10,9 +10,34 @@
   "approved_version": "df30d1506751d67fed880ab2cbf4c3731fb52f345693c1e46ca6a0b15076499f",
   "media_sha256": "90ba9ca88818f2d5191eb06ead1e8f1904da81e8de0c399b81f1128595f339ab",
   "blocked_items": [],
-  "status": "INTENT_RECORDED",
-  "completed_total": 22,
-  "completed_today": 0,
-  "next_item": "B5_RECONCILE_FIRST",
-  "owner_correction": "challenge-queue/20261110-owner-correction-E4-B5-locations.json"
+  "status": "POSTED_BOTH",
+  "completed_total": 23,
+  "completed_today": 1,
+  "next_item": "D5",
+  "owner_correction": "challenge-queue/20261110-owner-correction-E4-B5-locations.json",
+  "deliveries_today": 2,
+  "remaining": 2,
+  "remaining_eligible": [
+    "D5",
+    "E5"
+  ],
+  "receipt": "api-receipts/lv-sandwich-20261111-preflight.json",
+  "production_commit": "f0c1602297fb1828a904d2f92a8052a89c01644c",
+  "run_id": 43000873948,
+  "destinations": {
+    "STORY": {
+      "post_id": "883edc85-3d42-4c55-8c57-a2b436a547db",
+      "snapchat_id": "9ca61f96-b01d-463b-9f8e-b0e2dafbdeb2",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "media_sha256": "90ba9ca88818f2d5191eb06ead1e8f1904da81e8de0c399b81f1128595f339ab"
+    },
+    "SPOTLIGHT": {
+      "post_id": "2f2be74d-b2d5-46e5-8785-1e4c70598397",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYbGFkbHB3dG55AaHKFss1AaHKFssJAAAAAA",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "media_sha256": "90ba9ca88818f2d5191eb06ead1e8f1904da81e8de0c399b81f1128595f339ab"
+    }
+  }
 }
