@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Agent inspected the final classroom card at 390px with Story masks.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Checked visible title, four bullets, closing and CTA on the 390px simulation."
+    }
+  },
+  "cards": [
+    {
+      "sha256": "5b789bc1c9b3b35c778f549cf66e52d00acfce1dd874cf6ed288ca66dded4b00",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "تذكر يوم كان الأربعاء آخر يوم مدرسة؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              245,
+              215,
+              1020,
+              280
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            245,
+            215,
+            1020,
+            281
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "فصل دراسي",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              467,
+              695,
+              614,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            467,
+            695,
+            614,
+            727
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "باقي ٩ أيام على إجازة الخريف. تذكر يوم كان الويكند يبدأ مع جرس الأربعاء؟",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              83,
+              792,
+              980,
+              855
+            ],
+            [
+              576,
+              879,
+              980,
+              940
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            83,
+            792,
+            1015,
+            940
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "كان الخميس والجمعة إجازة. ويوم الجمعة بالليل نضبط المنبّه، لأن السبت الصبح عندنا مدرسة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              115,
+              998,
+              980,
+              1048
+            ],
+            [
+              150,
+              1072,
+              980,
+              1127
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            115,
+            998,
+            1015,
+            1127
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وقتها ما يجتمع دوامنا مع الشركات اللي تعطّل السبت والأحد إلا ٣ أيام، من الاثنين للأربعاء.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              130,
+              1184,
+              980,
+              1238
+            ],
+            [
+              193,
+              1262,
+              980,
+              1323
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            130,
+            1184,
+            1015,
+            1323
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "في ٢٠١٣ صار الويكند جمعة وسبت. كسبت الشركات يوم مشترك، وصار الأحد أول يوم مدرسة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              240,
+              1381,
+              980,
+              1433
+            ],
+            [
+              85,
+              1457,
+              980,
+              1518
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            85,
+            1381,
+            1015,
+            1518
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "تذكر شعورك يوم الجمعة بالليل؟ 😄",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              255,
+              1575,
+              825,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            255,
+            1575,
+            825,
+            1627
+          ],
+          "emoji_box": [
+            205,
+            1577,
+            248,
+            1620
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ]
+}

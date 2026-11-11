@@ -1,0 +1,39 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "تذكر يوم كان الأربعاء آخر يوم مدرسة؟",
+  "expires_at": "2026-11-11T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "5b789bc1c9b3b35c778f549cf66e52d00acfce1dd874cf6ed288ca66dded4b00"
+    ],
+    "approved_source_sha256": [
+      "fe36bf15be19228cd7744db6b0033f461f03de085f2062eb6fef0eb61b319df8"
+    ],
+    "reviewed_at": "2026-11-11T11:37:00.451907+00:00",
+    "reference": "Khalid approved exact text, authorized scheduled design and STORY-only publication. Final raster reviewed by agent."
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/wednesday-weekend-20261111/card.png",
+      "sha256": "5b789bc1c9b3b35c778f549cf66e52d00acfce1dd874cf6ed288ca66dded4b00",
+      "source_assets": [
+        {
+          "path": "approved/wednesday-weekend-20261111/classroom.jpg",
+          "sha256": "fe36bf15be19228cd7744db6b0033f461f03de085f2062eb6fef0eb61b319df8"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": true
+      }
+    }
+  ]
+}
