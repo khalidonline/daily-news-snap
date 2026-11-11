@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/rain-perfumes-20261111",
+  "manifest_content_sha256": "ad17e53d7feb2d7346ec31003d7d682ee10d130c09bac609bfe0011969e9325c",
+  "archive_content_sha256": "efd7480638024618d44fd04875c39f08b342cad1a000371f6d2cc59fc56cf263",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "f1564c8b9b955502edc444227a9b554a4e00c3fdffb33ca9f8c9b559408242dc",
+  "assets": {
+    "approved/rain-perfumes-20261111/card.png": "47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
+    "approved/rain-perfumes-20261111/baie-box.jpg": "be70755bf41bcc56055f13839ac0bd3aacf5d3c8e5d3d090240dfe6adcb5c235",
+    "approved/rain-perfumes-20261111/demeter-product.png": "3889b9ee8ce01dab2b2f1bf7647650ab29f48256598bef482e780031942ec908"
+  },
+  "preparation_seconds": 0.002
+}

@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "cards": [
+    {
+      "sha256": "47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "ريحة أول رشّة مطر… صارت عطر!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              338,
+              215,
+              1020,
+              283
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            338,
+            215,
+            1020,
+            284
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "ريحة ورق الشجر عقب المطر",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              134,
+              695,
+              453,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            134,
+            695,
+            453,
+            725
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "ريحة التراب اليابس مع أول رشة مطر",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              580,
+              695,
+              990,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            580,
+            695,
+            990,
+            734
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تعرف ريحة المكان إذا طاحت أول قطرة على التراب؟ تخيّل تلقاها في عطر.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              194,
+              800,
+              980,
+              857
+            ],
+            [
+              460,
+              881,
+              980,
+              934
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            194,
+            800,
+            1015,
+            934
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ديميتر شركة عطور أمريكية سوّت «بتريكور» على ريحة التراب اليابس إذا جاه المطر.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              95,
+              999,
+              980,
+              1054
+            ],
+            [
+              385,
+              1078,
+              980,
+              1123
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            95,
+            999,
+            1015,
+            1123
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ولو لابو، دار عطور من نيويورك بأمريكا، سوّت عطر «باي ١٩» على ريحة ورق الشجر عقب المطر.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              156,
+              1188,
+              980,
+              1243
+            ],
+            [
+              116,
+              1267,
+              980,
+              1321
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            116,
+            1188,
+            1015,
+            1321
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وترا ما بالغنا بالوصف؛ كل شركة كاتبة بموقعها وش الريحة اللي تقصدها بعطرها",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              126,
+              1386,
+              980,
+              1432
+            ],
+            [
+              381,
+              1456,
+              980,
+              1510
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            126,
+            1386,
+            1015,
+            1510
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "هالمرة ترشّ العطر… وتشمّ المطر!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              240,
+              1575,
+              839,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            240,
+            1575,
+            839,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "review": {
+    "reference": "Inspected both 390px simulated placements. Correct boxed BAIE 19 left, Demeter right; changed fourth bullet visible; four two-line points and CTA readable.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "390px masked top and bottom simulation inspected; CTA clear.",
+      "SAVED_STORY": "Separate 390px same-player simulation inspected; caption and essential copy clear."
+    }
+  }
+}

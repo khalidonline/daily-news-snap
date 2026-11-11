@@ -1,0 +1,24 @@
+{
+  "assets": [
+    {
+      "path": "approved/rain-perfumes-20261111/baie-box.jpg",
+      "sha256": "be70755bf41bcc56055f13839ac0bd3aacf5d3c8e5d3d090240dfe6adcb5c235",
+      "source_url": "https://www.brownthomas.com/beauty/fragrance/women/baie-19-eau-de-parfum/151711627.html",
+      "credit": "Brown Thomas",
+      "description": "ريحة ورق الشجر عقب المطر",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/rain-perfumes-20261111/demeter-product.png",
+      "sha256": "3889b9ee8ce01dab2b2f1bf7647650ab29f48256598bef482e780031942ec908",
+      "source_url": "https://demeterfragrance.com/products/petrichor-cologne-spray",
+      "credit": "Demeter",
+      "description": "ريحة التراب اليابس مع أول رشة مطر",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "fact_sources": [
+    "https://demeterfragrance.com/products/petrichor-cologne-spray",
+    "https://www.lelabofragrances.com/baie-19-618.html"
+  ]
+}
