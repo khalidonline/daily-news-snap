@@ -1,0 +1,283 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "cards": [
+    {
+      "sha256": "c4599cb42b79a8e0d4a2334a3b2388ebb1a621cef86c6562f06fe251c9558152",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "من وين تجي ريحة المطر؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              499,
+              215,
+              1020,
+              273
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            499,
+            215,
+            1020,
+            274
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الأسهم تبيّن الرذاذ اللي طلع من القطرة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              71,
+              695,
+              517,
+              730
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            71,
+            695,
+            517,
+            731
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "أول رشّة على التراب",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              675,
+              695,
+              896,
+              731
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            675,
+            695,
+            896,
+            732
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تطلع بعد أول رشة وتقول: يا زين ريحة المطر! بس اللي تشمه فعليا هو ريحة التراب.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              152,
+              800,
+              980,
+              861
+            ],
+            [
+              304,
+              885,
+              980,
+              939
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            152,
+            800,
+            1015,
+            939
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "باحثين صوروا قطرة وهي تطيح على التراب. يوم لمسته، حبست تحتها فقاعات هوا صغيرة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              128,
+              1004,
+              980,
+              1058
+            ],
+            [
+              213,
+              1082,
+              980,
+              1125
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            128,
+            1004,
+            1015,
+            1125
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الفقاعات تطلع وتفقع عند سطح القطرة، وتنثر رذاذ يشيل معه ريحة التراب.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              119,
+              1189,
+              980,
+              1241
+            ],
+            [
+              475,
+              1265,
+              980,
+              1311
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            119,
+            1189,
+            1015,
+            1311
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "والغريب إنهم يوم جربوها، المطر الخفيف والمتوسط طلّع رذاذ أكثر من المطر الغزير.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              241,
+              1376,
+              980,
+              1425
+            ],
+            [
+              204,
+              1449,
+              980,
+              1510
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            204,
+            1376,
+            1015,
+            1510
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "نقول: يازين ريحة المطر والا ريحة التراب؟",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              198,
+              1575,
+              897,
+              1618
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            198,
+            1575,
+            897,
+            1619
+          ],
+          "trailing_emoji_asset": {
+            "text": "😄",
+            "box": [
+              157,
+              1578,
+              195,
+              1616
+            ]
+          }
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "review": {
+    "reference": "Inspected final two 390px simulated placements; both photos, matching captions, four two-line paragraphs, closing emoji, and CTA are visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "390px masked top and bottom simulation inspected; CTA clear.",
+      "SAVED_STORY": "Separate 390px same-player simulation inspected; caption and essential copy clear."
+    }
+  }
+}

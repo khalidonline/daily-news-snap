@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/rain-scent-20261111",
+  "manifest_content_sha256": "c4422857935fd20fc5a3dec161b9126b167609f760e6ecb5825eeddf36b7f558",
+  "archive_content_sha256": "d19a021b868956bdf961b0a539672262d17c88f124913409116035cccb0181a6",
+  "settings_sha256": "61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504",
+  "review_sha256": "f9f81cfd1bc2400c0fca8cfcaba452e7609e52e0faefcee6d5a0fe678e51b52f",
+  "assets": {
+    "approved/rain-scent-20261111/card.png": "c4599cb42b79a8e0d4a2334a3b2388ebb1a621cef86c6562f06fe251c9558152",
+    "approved/rain-scent-20261111/drop.jpg": "fd6586e4a56e60ed6f010385fb686159c8094188eb162eba17209bf1b5eaac19",
+    "approved/rain-scent-20261111/soil.jpg": "b732777550ea8ed3352fe03d926a4a6fd48344622b6db6e1f278cd987d94c633",
+    "approved/rain-scent-20261111/emoji.png": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
+  },
+  "preparation_seconds": 0.002
+}

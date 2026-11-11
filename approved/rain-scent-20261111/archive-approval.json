@@ -1,0 +1,13 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/rain-scent-20261111/manifest.json",
+  "manifest_sha256": "795000a8deb935a52a0298aa40f60390298daa920b1aef56c109569e625938ff",
+  "identity": "003b2aa0bdd411cb1e14fe7aa3a6553908e618db3b42d06ea32d9e4ee0b9fc39",
+  "public_indices": [
+    1
+  ],
+  "title": "من وين تجي ريحة المطر؟",
+  "expires_at": "2026-11-11T23:59:59+03:00",
+  "empty_profile_confirmation": "Previous stories recorded; verify provider inventory before any create. Not an empty-profile assertion."
+}

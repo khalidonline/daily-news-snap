@@ -1,0 +1,29 @@
+{
+  "assets": [
+    {
+      "path": "approved/rain-scent-20261111/drop.jpg",
+      "sha256": "fd6586e4a56e60ed6f010385fb686159c8094188eb162eba17209bf1b5eaac19",
+      "source_url": "https://news.mit.edu/2015/rainfall-can-release-aerosols-0114",
+      "credit": "MIT News",
+      "description": "الأسهم تبيّن الرذاذ اللي طلع من القطرة",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/rain-scent-20261111/soil.jpg",
+      "sha256": "b732777550ea8ed3352fe03d926a4a6fd48344622b6db6e1f278cd987d94c633",
+      "source_url": "https://ecologiaverde.elperiodico.com/petricor-u-olor-a-lluvia-que-es-de-donde-sale-y-por-que-nos-gusta-4720.html",
+      "credit": "EcologíaVerde",
+      "description": "أول رشّة على التراب",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/rain-scent-20261111/emoji.png",
+      "sha256": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a",
+      "source_url": "approved/iftah-ya-simsim-20261109/apple-1f604.png",
+      "credit": "Previously selected emoji asset",
+      "description": "😄",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "fact_source": "https://news.mit.edu/2015/rainfall-can-release-aerosols-0114"
+}
