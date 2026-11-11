@@ -6,11 +6,11 @@
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid: انشر then كمل, exact Rain-Perfumes-Final.png 47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
-  "approved_at": "2026-11-11T07:51:15.084221+00:00",
+  "owner_reference": "Khalid: انشر ثم كمل، نفس بطاقة العطر المعتمدة 47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
+  "approved_at": "2026-11-11T07:53:15.425803+00:00",
   "expires_at": "2026-11-11T23:59:59+03:00",
-  "manifest_sha256": "1f240baf7c05b5a4e16a9dcfdfcb1335390a9e033e7d224f81308ba34971e386",
-  "archive_sha256": "b5241abb018a6630eb6de5cd83de9aa36bdec9a68ea12e4c996b0c83a358e726",
-  "prepared_sha256": "eb117979fe6c99815088e2f192ec0a02c4d41656ad336ddad3dda50b3cd3c488",
+  "manifest_sha256": "ae266fadeb943911fae57d77f1da7ef5ff811696aabbe267bb1c694a779c48a4",
+  "archive_sha256": "f309be18e830c050e9d87781583cd1047fa81e8acaad6262871354064a7b07e4",
+  "prepared_sha256": "15d74d0e87141a8e294c655b4ebc14b871ad355a16a5ec121f22cab4c7470ab5",
   "preview_receipt_sha256": "837055309d3726362cbe5fd429f1b91eea007f2074be40087d9f98d79e3664d8"
 }
