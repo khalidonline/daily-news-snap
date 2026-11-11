@@ -10,8 +10,35 @@
   "approved_version": "53dbba975181822d7472870f2b576bf040402e6cd158012da379131adcff65aa",
   "media_sha256": "b828e6fb80e7e5799cf94d50d3b41d5f3ae4c11c3a8150af9015bc20393dfe47",
   "blocked_items": [],
-  "status": "INTENT_RECORDED",
-  "completed_total": 23,
-  "completed_today": 1,
-  "next_item": "D5_RECONCILE_FIRST"
+  "status": "POSTED_BOTH",
+  "completed_total": 24,
+  "completed_today": 2,
+  "next_item": "E5",
+  "deliveries_today": 4,
+  "day_cap_reached": true,
+  "remaining": 1,
+  "remaining_eligible": [
+    "E5"
+  ],
+  "receipt": "api-receipts/procida-20261111-preflight.json",
+  "production_commit": "631a53360cc9e4240ad225cf8b53c46198108057",
+  "delivery_commit": "b20f4a5f5740cc8fcb9d8d4dbdcf16358d46391d",
+  "run_id": 43056247609,
+  "recovery": "Ubuntu mirror DNS failure before any provider send; exact original media validated using upstream FFmpeg 7.1.5 on ubuntu-24.04.",
+  "destinations": {
+    "STORY": {
+      "post_id": "73ce77a0-9eab-4cc2-afa3-d58940fe7b20",
+      "snapchat_id": "96eb8945-a0d5-417a-be33-791ef5a5d438",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "media_sha256": "b828e6fb80e7e5799cf94d50d3b41d5f3ae4c11c3a8150af9015bc20393dfe47"
+    },
+    "SPOTLIGHT": {
+      "post_id": "3731f230-5e9e-4b7d-9933-690416a773b5",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYc3FycGJ2bmJrAaHLZ239AaHLZ23TAAAAAA",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "media_sha256": "b828e6fb80e7e5799cf94d50d3b41d5f3ae4c11c3a8150af9015bc20393dfe47"
+    }
+  }
 }
