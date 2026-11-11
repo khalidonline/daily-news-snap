@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان — وين هالجزيرة؟",
+  "expires_at": "2026-11-13T15:58:21.484434+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/procida-20261111/challenge.mp4",
+      "sha256": "b828e6fb80e7e5799cf94d50d3b41d5f3ae4c11c3a8150af9015bc20393dfe47",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "b828e6fb80e7e5799cf94d50d3b41d5f3ae4c11c3a8150af9015bc20393dfe47",
+      "reference": "Khalid approved D5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved D5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "b828e6fb80e7e5799cf94d50d3b41d5f3ae4c11c3a8150af9015bc20393dfe47",
+    "source_manifest": {
+      "path": "approved/procida-20261111/source-approval.json",
+      "sha256": "566528c8ef9b2da9a379c1fe1894b6badfb66e0fede2320eba204ea639b6122e"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/procida-20261111/frame-0.5.png",
+        "sha256": "ba1859a734f4db56454e1ddcc1fd0b2ac2e8418cbee948906dbd1cf70d07a9c0"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/procida-20261111/frame-3.5.png",
+        "sha256": "8b7c9fbbfcb851763d02949c5ecf6e8b26d6d5fa901a73969da468d00e2f1f33"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/procida-20261111/frame-4.5.png",
+        "sha256": "9cdb5942714bff5d3435182d92a75e4e1799d6a17182217aec592d4bf27ac7b8"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/procida-20261111/frame-5.5.png",
+        "sha256": "72f609ae190ab6473478b2b779b82228616c1054a8fffde23a4023ebdb010f1c"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/procida-20261111/frame-6.5.png",
+        "sha256": "2c5b72523481f951f3b6cde50a7a14cdb34e55f13388a07f052d27fe28ce9a9d"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/procida-20261111/frame-7.5.png",
+        "sha256": "0b831ebea57ce2177a2c6c1703fb66e68fa17834af971cb6b80084d12c6d7087"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/procida-20261111/frame-8.5.png",
+        "sha256": "a248c52b22fa9af1448fed4ae0e1ee06728993a97fcfc0bbe8f0e8bfe7c1f7da"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/procida-20261111/frame-11.5.png",
+        "sha256": "658808365cf4cf859f29b37af8273eddac3f724dfe30162391ff90da22fca5a5"
+      }
+    ]
+  }
+}
