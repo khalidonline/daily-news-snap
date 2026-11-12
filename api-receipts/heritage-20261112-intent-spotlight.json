@@ -1,0 +1,21 @@
+{
+  "account": "executivesaudi",
+  "batch": "approved-25-20261030",
+  "date_riyadh": "2026-11-12",
+  "slot_riyadh": "13:00",
+  "item": "E5",
+  "topic": "مقارنات سياحية — مواقع التراث العالمي في 2025",
+  "package": "heritage-20261112",
+  "identity": "735e115ac74a8465149f53308f590d112f6c5b48bba6946a1dac34caaa1cf2e0",
+  "approved_version": "96ba3a43c913a0d2cf157ebcfe4071bd89459d0d105228a9ca1cf04d880258d7",
+  "media_sha256": "94b9e07c3299a946bd6066c8bf12fd54e0564410e4550f2a174f24df2f9227a3",
+  "blocked_items": [],
+  "status": "INTENT_RECORDED",
+  "completed_total": 24,
+  "completed_today": 0,
+  "next_item": "E5_RECONCILE_FIRST",
+  "destination": "SPOTLIGHT",
+  "state": "INTENT_RECORDED",
+  "provider_post_id": null,
+  "provider_journal_key": "978705fb61998946495ccc7f1165ed9adb31d8dbac31f04b1f3c9b8925ea9ff8"
+}
