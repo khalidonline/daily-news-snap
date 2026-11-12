@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -17,7 +17,9 @@
     ],
     "approved_source_sha256": [
       "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a"
-    ]
+    ],
+    "reference": "خالد: انشر، ردا على تذكير نشر بطاقة برج المياه بالرياض بنوه من فوق لتحت",
+    "reviewed_at": "2026-11-12T14:26:56.284671+00:00"
   },
   "media": [
     {

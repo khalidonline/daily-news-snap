@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "ddf1dfe52a6ce7db5907dd919174769c7e31a033",
+  "assets": {
+    "approved/riyadh-water-20261112/card.png": "a694cffd9b750decdea29c255743afad965684b6e17b71daf23035b5908f2508",
+    "approved/riyadh-water-20261112/archive.jpg": "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a"
+  },
+  "preview_paths": [
+    "approved/riyadh-water-20261112/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/riyadh-water-20261112/card.png": "a694cffd9b750decdea29c255743afad965684b6e17b71daf23035b5908f2508",
+    "approved/riyadh-water-20261112/archive.jpg": "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a",
+    "approved/riyadh-water-20261112/manifest.json": "ab3816a023c05a36b353c6e0bdfc22ebe8a56d9709b60c52e464b5f2825d00c9",
+    "approved/riyadh-water-20261112/archive-approval.json": "84ff10d608f5b30a9a3e4cc7cbdda1140567fbb8dd5a40cb960bac74ff12c693",
+    "approved/riyadh-water-20261112/design-review.json": "c3942ba20e79be04c310d3d763222847445d2059c2528d9c0adb376826e2d448",
+    "approved/riyadh-water-20261112/sources.json": "e2fe737ecd798761cebf3cdf75d2d77d3d27354eb6fb845bf55f23eb187f9524",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/riyadh-water-20261112",
+    "manifest_content_sha256": "f6def6426086f15368cd94602bbd0e9eac305ed50834c601c87e61e7cda56273",
+    "archive_content_sha256": "0a9ffaadd4f63fda11e87c8b3436847a6a7b2a5d77f68fd5a19c57179616d617",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "c3942ba20e79be04c310d3d763222847445d2059c2528d9c0adb376826e2d448",
+    "assets": {
+      "approved/riyadh-water-20261112/card.png": "a694cffd9b750decdea29c255743afad965684b6e17b71daf23035b5908f2508",
+      "approved/riyadh-water-20261112/archive.jpg": "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a"
+    }
+  }
+}

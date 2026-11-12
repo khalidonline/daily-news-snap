@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/riyadh-water-20261112/manifest.json",
-  "manifest_sha256": "ab3816a023c05a36b353c6e0bdfc22ebe8a56d9709b60c52e464b5f2825d00c9",
+  "manifest_sha256": "031f2345463a1a02060c95332047cfd0b4f7f8340e4275b410433cc2e26fab1c",
   "identity": "a765f74adf1e33a9bc6e513d8d23cf36848622e02edc11de306790b5e7348890",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "برج المياه بالرياض بنوه من فوق لتحت!",
   "expires_at": "2026-11-12T23:59:59+03:00",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
-  "owner_authorization": ""
+  "owner_authorization": "خالد: انشر، ردا على تذكير نشر بطاقة برج المياه بالرياض بنوه من فوق لتحت"
 }

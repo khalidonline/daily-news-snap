@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "rain-perfumes-20261111",
-  "identity": "049929bfde2dbcbab9af079eb8cd13108cac12126002fee2f86959a0ad8f6bfd",
+  "package": "riyadh-water-20261112",
+  "identity": "a765f74adf1e33a9bc6e513d8d23cf36848622e02edc11de306790b5e7348890",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid: انشر ثم كمل، نفس بطاقة العطر المعتمدة 47425d9434f968cb0e49a76cd3a3f77b621cabbbf43bdd3b2da5633fe14ac738",
-  "approved_at": "2026-11-11T07:53:15.425803+00:00",
-  "expires_at": "2026-11-11T23:59:59+03:00",
-  "manifest_sha256": "ae266fadeb943911fae57d77f1da7ef5ff811696aabbe267bb1c694a779c48a4",
-  "archive_sha256": "f309be18e830c050e9d87781583cd1047fa81e8acaad6262871354064a7b07e4",
-  "prepared_sha256": "15d74d0e87141a8e294c655b4ebc14b871ad355a16a5ec121f22cab4c7470ab5",
-  "preview_receipt_sha256": "837055309d3726362cbe5fd429f1b91eea007f2074be40087d9f98d79e3664d8"
+  "owner_reference": "خالد: انشر، ردا على تذكير نشر بطاقة برج المياه بالرياض بنوه من فوق لتحت",
+  "approved_at": "2026-11-12T14:26:56.284671+00:00",
+  "expires_at": "2026-11-12T23:59:59+03:00",
+  "manifest_sha256": "031f2345463a1a02060c95332047cfd0b4f7f8340e4275b410433cc2e26fab1c",
+  "archive_sha256": "39dd487241c6c4b506a7449357bbef422f5ccbb117e378167329f241e69b9a41",
+  "prepared_sha256": "b81f03026ba8f31db2c55178e6eb4aa24118cd90e2bb9504c0d94c938c007c91",
+  "preview_receipt_sha256": "6393e5ec86c273e6b28370651cf6a83f642603ffdc0546a36cf5084e53ed8d21"
 }
