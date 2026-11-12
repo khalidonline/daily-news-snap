@@ -1,0 +1,14 @@
+{
+  "slot_riyadh": "2026-11-12T19:00:00+03:00",
+  "status": "NO_SEND_BEFORE_BATCH_START",
+  "completed_first_batch": 25,
+  "completed_second_batch": 0,
+  "next_item": "B2-01",
+  "first_eligible_riyadh": "2026-11-13T13:00:00+03:00",
+  "destinations": {
+    "STORY": "NOT_SENT",
+    "SPOTLIGHT": "NOT_SENT"
+  },
+  "send_intents": 0,
+  "queue_reference": "challenge-queue/batch-2-position.json"
+}
