@@ -1,0 +1,44 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "٣٠ منطاد فوق العلا",
+  "expires_at": "2026-11-12T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "b79878ff6b8c7be7c00bfb4ec78de48690031fd86b471e1144b59e6386cf8db1"
+    ],
+    "approved_source_sha256": [
+      "ce9e27b4393d928f1b4d4c7d7243938135dbe032c3ed8bf27646a2cdff2f161d",
+      "12d5a28a753e89f6f448f3750a015a8e166b353926825cbaecb81afc5b7571e2"
+    ],
+    "reviewed_at": "2026-11-12T11:36:14.439030+00:00",
+    "reference": "Khalid approved exact text, authorized scheduled design and STORY-only publication. Final raster reviewed by agent."
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/alula-balloons-20261112/card.png",
+      "sha256": "b79878ff6b8c7be7c00bfb4ec78de48690031fd86b471e1144b59e6386cf8db1",
+      "source_assets": [
+        {
+          "path": "approved/alula-balloons-20261112/day.jpg",
+          "sha256": "ce9e27b4393d928f1b4d4c7d7243938135dbe032c3ed8bf27646a2cdff2f161d"
+        },
+        {
+          "path": "approved/alula-balloons-20261112/glow2.jpg",
+          "sha256": "12d5a28a753e89f6f448f3750a015a8e166b353926825cbaecb81afc5b7571e2"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
