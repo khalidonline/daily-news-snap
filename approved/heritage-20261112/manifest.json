@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية — مواقع التراث العالمي في 2025",
+  "expires_at": "2026-11-14T10:07:12.589276+00:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/heritage-20261112/challenge.mp4",
+      "sha256": "94b9e07c3299a946bd6066c8bf12fd54e0564410e4550f2a174f24df2f9227a3",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "94b9e07c3299a946bd6066c8bf12fd54e0564410e4550f2a174f24df2f9227a3",
+      "reference": "Khalid approved E5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved E5 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "94b9e07c3299a946bd6066c8bf12fd54e0564410e4550f2a174f24df2f9227a3",
+    "source_manifest": {
+      "path": "approved/heritage-20261112/source-approval.json",
+      "sha256": "df277b0bd8b176d736dfbeaa5c04a34ea242bec66df6a226d7a29b3eba68e7de"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/heritage-20261112/frame-0.5.png",
+        "sha256": "4611957b0fac0b255900be13f32bb76e07596815da1ce22f1d1d90563fa1862f"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/heritage-20261112/frame-3.5.png",
+        "sha256": "c0e98a8fcb289c8413d4a6d378269163b69be72d5863c9c318f0081d0eab6dff"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/heritage-20261112/frame-4.5.png",
+        "sha256": "579e4ef0799afcb0e0a69c0f4e2d4770723d4b4f5fd6782c240bc3508e0493e7"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/heritage-20261112/frame-5.5.png",
+        "sha256": "d78619bfbeaf1e9cc4e785190ef1cf92c89ce42eaf92ca524fc2faf84157bb64"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/heritage-20261112/frame-6.5.png",
+        "sha256": "f6122b8120c0828fe7da82d66b091c12155488685fbbcb67f1b7cb5f63ef01f6"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/heritage-20261112/frame-7.5.png",
+        "sha256": "b813e9e56e3b85f45c1c44d7c313cfded933f2cfcb9de34f8d6701f20c428df1"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/heritage-20261112/frame-8.5.png",
+        "sha256": "f36b48d74ac664f01b936dd150dc8cccea0931ab64658dd7b6a6352223f81042"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/heritage-20261112/frame-11.5.png",
+        "sha256": "8f8f1268db1dda53e0033e9cc21c0c48c9965ae4f8c67935cac130d67986b451"
+      }
+    ]
+  }
+}
