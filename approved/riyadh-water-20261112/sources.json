@@ -1,0 +1,16 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/riyadh-water-20261112/archive.jpg",
+      "sha256": "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a",
+      "source_url": "https://pbs.twimg.com/media/E6YLxyzX0AEd4sc.jpg",
+      "credit": "أرشيف الصور المنشور عبر عبدالعزيز أحمد حنش",
+      "description": "الخزان قبل الرفع وأثناءه",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "story": [
+    "https://www.alriyadh.com/861857",
+    "https://al-jazirah.com/2000/20000809/fe1.htm"
+  ]
+}

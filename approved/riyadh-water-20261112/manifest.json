@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "برج المياه بالرياض بنوه من فوق لتحت!",
+  "not_before": "2026-11-12T00:00:00+03:00",
+  "expires_at": "2026-11-12T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "a694cffd9b750decdea29c255743afad965684b6e17b71daf23035b5908f2508"
+    ],
+    "approved_source_sha256": [
+      "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/riyadh-water-20261112/card.png",
+      "sha256": "a694cffd9b750decdea29c255743afad965684b6e17b71daf23035b5908f2508",
+      "source_assets": [
+        {
+          "path": "approved/riyadh-water-20261112/archive.jpg",
+          "sha256": "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a",
+          "source_url": "https://pbs.twimg.com/media/E6YLxyzX0AEd4sc.jpg",
+          "credit": "أرشيف الصور المنشور عبر عبدالعزيز أحمد حنش",
+          "description": "الخزان قبل الرفع وأثناءه",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

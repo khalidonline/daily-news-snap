@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "a694cffd9b750decdea29c255743afad965684b6e17b71daf23035b5908f2508",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "برج المياه بالرياض بنوه من فوق لتحت!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              236,
+              215,
+              1020,
+              272
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            236,
+            215,
+            1020,
+            273
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الخزان وقت الرفع",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              196,
+              695,
+              393,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            196,
+            695,
+            393,
+            727
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الخزان قبل الرفع",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              693,
+              695,
+              879,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            693,
+            695,
+            879,
+            727
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قبل ٥٥ سنة، بنوا برج المياه بالرياض عشان يقوى ضغط المياه في البيوت.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              92,
+              802,
+              980,
+              854
+            ],
+            [
+              549,
+              878,
+              980,
+              929
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            92,
+            802,
+            1015,
+            929
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "صبوا الخزان على الأرض، وحطوا تحته ٣٢ رافعة تشتغل مثل عفريتة السيارة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              144,
+              996,
+              980,
+              1045
+            ],
+            [
+              457,
+              1069,
+              980,
+              1115
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            144,
+            996,
+            1015,
+            1115
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "كل مرة يرفعونه ٢٠ سم ويحطون كتل خرسانية تحت الرافعات. الرفع أخذ ٤ شهور!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              139,
+              1181,
+              980,
+              1231
+            ],
+            [
+              365,
+              1255,
+              980,
+              1316
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            139,
+            1181,
+            1015,
+            1316
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الخزان يشيل ١٢ مليون لتر. تخيل ٤٠٠ وايت، كل واحد يشيل ٣٠ ألف لتر!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              168,
+              1383,
+              980,
+              1429
+            ],
+            [
+              576,
+              1453,
+              980,
+              1508
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            168,
+            1383,
+            1015,
+            1508
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "كل هالمياه فوق عمود واحد!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              293,
+              1575,
+              786,
+              1619
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            293,
+            1575,
+            786,
+            1620
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected final 1080x1920 raster and separate 390px Story/Saved Story overlay simulations; title, two sourced photos and captions, four bullets, closing and CTA are visible with no clipping.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top 0..39 and bottom 625..692 masked simulation; all essential text and CTA remain visible.",
+      "SAVED_STORY": "Inspected separately with the same player masks; all essential text and CTA remain visible."
+    }
+  }
+}

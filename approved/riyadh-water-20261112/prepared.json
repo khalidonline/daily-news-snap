@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/riyadh-water-20261112",
+  "manifest_content_sha256": "f6def6426086f15368cd94602bbd0e9eac305ed50834c601c87e61e7cda56273",
+  "archive_content_sha256": "0a9ffaadd4f63fda11e87c8b3436847a6a7b2a5d77f68fd5a19c57179616d617",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "c3942ba20e79be04c310d3d763222847445d2059c2528d9c0adb376826e2d448",
+  "assets": {
+    "approved/riyadh-water-20261112/card.png": "a694cffd9b750decdea29c255743afad965684b6e17b71daf23035b5908f2508",
+    "approved/riyadh-water-20261112/archive.jpg": "757d302daef8693821e4f403476ba0abdae912f55a79a6720cdc4dcf0484d44a"
+  },
+  "preparation_seconds": 0.002
+}
