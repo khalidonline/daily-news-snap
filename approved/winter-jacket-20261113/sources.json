@@ -1,0 +1,23 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/winter-jacket-20261113/jacket.png",
+      "sha256": "0e69e2d8736285329fbf881f180d66e4ab7bce63ca65da3c50fa5e0276c60368",
+      "source_url": "https://www.patagonia.com/on/demandware.static/Sites-patagonia-us-Site/Library-Sites-PatagoniaShared/en_US/PDF-US/GS_S26-021226.pdf",
+      "credit": "Patagonia p.19",
+      "description": "Full Houdini jacket",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/winter-jacket-20261113/knit.jpg",
+      "sha256": "b48e9ddb031328b359a3148da2a61aefa32385e82a77dcaf445423ad4ca2c36b",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Aran_cardigan.jpg",
+      "credit": "Wikimedia Commons, Aran cardigan",
+      "description": "Wool cardigan",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "story": [
+    "https://www.rei.com/learn/expert-advice/layering-basics.html"
+  ]
+}

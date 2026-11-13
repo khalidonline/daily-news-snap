@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/winter-jacket-20261113/manifest.json",
+  "manifest_sha256": "493faa42241d33fc3f00f91a2bcdff7d043dd40940c73108a3a107a99bfc4386",
+  "identity": "424d2ff4b8334eafb4a625d4b08e2f8aac57592aa4f590875ede7f2c32008073",
+  "public_indices": [
+    1
+  ],
+  "title": "وش يدفي اكثر الفروه والا الجاكيت الخفيف؟",
+  "expires_at": "2026-11-13T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

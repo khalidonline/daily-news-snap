@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "2279799d7c3dd2c4b89e57b7a58ffac4bf0dbaa4a49a9cbb255e92eff007c35e",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "وش يدفي اكثر الفروه والا الجاكيت الخفيف؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              126,
+              215,
+              1020,
+              276
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            126,
+            215,
+            1020,
+            277
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "جاكيت خفيف",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              220,
+              695,
+              368,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            220,
+            695,
+            368,
+            723
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "بلوفر",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              755,
+              695,
+              816,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            755,
+            695,
+            816,
+            723
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تخيّل إنك جالس برا، لابس بلوفر صوف أو سديري صوف فوق الثوب أو فروه",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              96,
+              801,
+              980,
+              864
+            ],
+            [
+              519,
+              888,
+              980,
+              943
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            96,
+            801,
+            1015,
+            943
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "إذا هبّ الهوا، بتحس بالبرد حتى وأنت لابس صوف لأن الخيوط بينها فراغات.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              86,
+              1009,
+              980,
+              1066
+            ],
+            [
+              524,
+              1090,
+              980,
+              1139
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            86,
+            1009,
+            1015,
+            1139
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "هنا جاكيت خفيف يصد الهوا ممكن يفيدك أكثر من البلوفر.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              78,
+              1204,
+              980,
+              1259
+            ],
+            [
+              847,
+              1283,
+              980,
+              1326
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            78,
+            1204,
+            1015,
+            1326
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "البلوفر يمسك الدفا حول جسمك، والجاكيت يمنع الهوا البارد يوصل لك.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              88,
+              1392,
+              980,
+              1442
+            ],
+            [
+              587,
+              1466,
+              980,
+              1509
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            88,
+            1392,
+            1015,
+            1509
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "مو كل برد يبي جاكيت أثقل؛ أحيان يبي جاكيت يصد الهوا",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              70,
+              1575,
+              1010,
+              1635
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            70,
+            1575,
+            1010,
+            1636
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected both player masks at 390px on the exact approved jacket card; complete jacket, sweater, labels and approved text are visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top 0..39 and bottom 625..692 masked simulation; all essential text and CTA remain visible.",
+      "SAVED_STORY": "Inspected separately with the same player masks; all essential text and CTA remain visible."
+    }
+  }
+}
