@@ -1,12 +1,1 @@
-{
-  "state": "INTENT_RECORDED",
-  "batch_id": "B2-01",
-  "identity": "62fbea9f7098ceb95bdeb58ba6bcc3a2a084ed6b7281a0aae68ce43e1504f9f8",
-  "package": "albaik-herfy-20261113",
-  "approved_version": "4dd181e134672b8bee5a15deb8220d7d8f332ea2ea10dab00fa661ff639afa88",
-  "media_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b",
-  "destination": "SPOTLIGHT",
-  "provider_journal_key": "7ced1facc5c3de30945005e556168186193896130b99ef893b59f41d218fd70b",
-  "reference_key": "B2-01-7ced1facc5c3de30945005e556168186193896130b99ef893b59f41d218fd70b",
-  "provider_post_id": null
-}
+{"state": "STARTED", "batch_id": "B2-01", "identity": "62fbea9f7098ceb95bdeb58ba6bcc3a2a084ed6b7281a0aae68ce43e1504f9f8", "package": "albaik-herfy-20261113", "approved_version": "4dd181e134672b8bee5a15deb8220d7d8f332ea2ea10dab00fa661ff639afa88", "media_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b", "destination": "SPOTLIGHT", "provider_journal_key": "7ced1facc5c3de30945005e556168186193896130b99ef893b59f41d218fd70b", "reference_key": "B2-01-7ced1facc5c3de30945005e556168186193896130b99ef893b59f41d218fd70b", "provider_post_id": null}
