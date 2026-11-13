@@ -1,0 +1,13 @@
+{
+  "slot": "2026-11-13T19:00:00+03:00",
+  "topic": "توقع المكان — مبنى مرايا",
+  "id": "B2-02",
+  "package": "maraya-20261113",
+  "approved_version": "493700e322040f8d484f70132477b926f694cff2d839e08bb8017d6c68a051b7",
+  "media_sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff",
+  "state": "INTENTS_RECORDED",
+  "destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ]
+}
