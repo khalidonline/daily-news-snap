@@ -1,4 +1,5 @@
 """Incomplete overlay evidence must fail before a preview seal is written."""
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -16,6 +17,16 @@ def draft(tmp_path,monkeypatch):
     shutil.copytree(source,p)
     (tmp_path/'publishing_v2').mkdir()
     shutil.copyfile(ROOT/'publishing_v2/design-settings.json',tmp_path/'publishing_v2/design-settings.json')
+    # This archived radio-card fixture predates the Nov 11 editorial-only master
+    # update. Rebind the TEMPORARY synthetic draft only, for the two reviewed
+    # byte identities; a future unknown master must still fail this fixture.
+    settings=(tmp_path/'publishing_v2/design-settings.json').read_bytes()
+    report_path=p/'design-review.json'
+    report=json.loads(report_path.read_text())
+    assert report['settings_sha256']=='61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504'
+    assert hashlib.sha256(settings).hexdigest()=='637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74'
+    report['settings_sha256']=hashlib.sha256(settings).hexdigest()
+    report_path.write_text(json.dumps(report))
     for name in ('manifest.json','archive-approval.json'):
         d=json.loads((p/name).read_text());d['approved']=False
         (p/name).write_text(json.dumps(d))
