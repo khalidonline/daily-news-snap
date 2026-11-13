@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ — البيك أو هرفي",
+  "expires_at": "2026-11-13T18:59:59+03:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/albaik-herfy-20261113/challenge.mp4",
+      "sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b",
+      "reference": "Khalid approved B2-01 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B2-01 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b",
+    "source_manifest": {
+      "path": "approved/albaik-herfy-20261113/source-approval.json",
+      "sha256": "dea32270a5cf25b4839414df83239bdf42c29c29db69fcc29fe0a071c0ac1785"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/albaik-herfy-20261113/frame-0.5.png",
+        "sha256": "5522947fac9b86236803b4575f6825e9d1764e4057bed23ac774e9e813dc7aa9"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/albaik-herfy-20261113/frame-3.5.png",
+        "sha256": "c94cd8d26d42b770d7fc6e69b54eff2f9660d6e88e430a1f769d1b349ee03f0c"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/albaik-herfy-20261113/frame-4.5.png",
+        "sha256": "2135825b92139db8959be1aa2121d6e2339d1603d7ca9899b48c47c6ad05bfb1"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/albaik-herfy-20261113/frame-5.5.png",
+        "sha256": "1d94773fc9afbbb67d51200656e02b49c5997b61ac0aaa88393b8855af0cfbe2"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/albaik-herfy-20261113/frame-6.5.png",
+        "sha256": "2aa788b14442782394af9909d7dfa8db4b635c38c66dc87fd5adf0a6ac5d50eb"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/albaik-herfy-20261113/frame-7.5.png",
+        "sha256": "07a41463b594578e614453d9f1d6080738daf3cc6d0a4fcc36ea6c60be4da7bd"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/albaik-herfy-20261113/frame-8.5.png",
+        "sha256": "48b5ea477cdc8f73edf87afc00b84ceaa643af32fb245b23aebb7859a7d3efdd"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/albaik-herfy-20261113/frame-11.5.png",
+        "sha256": "41a08828f632dfb7d52d70bebbf195d63ba6fbbade6110b4631a0fef7dcae692"
+      }
+    ]
+  }
+}
