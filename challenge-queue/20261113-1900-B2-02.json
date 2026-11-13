@@ -5,9 +5,29 @@
   "package": "maraya-20261113",
   "approved_version": "493700e322040f8d484f70132477b926f694cff2d839e08bb8017d6c68a051b7",
   "media_sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff",
-  "state": "INTENTS_RECORDED",
+  "state": "POSTED_BOTH",
   "destinations": [
     "STORY",
     "SPOTLIGHT"
-  ]
+  ],
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "post_id": "2344ce77-03b7-4318-aac0-c1e1e5480ca9",
+      "snapchat_id": "7d1cc5c4-8bc0-4d6b-baed-4e6e61b5e1e9",
+      "upload_id": "161acc60-be5c-4eda-8f09-8c75856b1505",
+      "media_sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "post_id": "59c34fd3-576e-493b-8159-b89587aaaf3d",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYbW9tdHljdml5AaHVsIwJAaHVsIvlAAAAAA",
+      "upload_id": "c310be7c-752a-4d9f-85d3-2db5803a33fc",
+      "media_sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff"
+    }
+  },
+  "completed_in_batch": 2,
+  "remaining_in_batch": 18
 }

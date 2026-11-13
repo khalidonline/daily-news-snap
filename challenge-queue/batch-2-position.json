@@ -1,13 +1,9 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "SLOT_RESERVED",
-  "next_item": "B2-02",
+  "status": "IN_PROGRESS",
+  "next_item": "B2-03",
   "remaining": [
-    {
-      "id": "B2-02",
-      "topic": "وين مبنى مرايا، العلا أو حايل؟ العلا. صورة بعيدة ثم كشف انعكاس الجبال."
-    },
     {
       "id": "B2-03",
       "topic": "ملعقة كيرين اللي تقوّي طعم الملح، انباعت أو كانت تجربة؟ انباعت في اليابان."
@@ -81,12 +77,11 @@
       "topic": "أي جسر أبراجه أبعد عن بعض، غولدن غيت أو أكاشي؟ أكاشي، قرابة كيلوين مقابل 1.3 كم."
     }
   ],
-  "completed": 1,
+  "completed": 2,
   "stop_after": "B2-20",
-  "next_slot_riyadh": "2026-11-13T19:00:00+03:00",
+  "next_slot_riyadh": "2026-11-14T13:00:00+03:00",
   "last_completed": {
-    "id": "B2-01",
-    "receipt": "api-receipts/albaik-herfy-20261113-preflight.json"
-  },
-  "reserved_version": "493700e322040f8d484f70132477b926f694cff2d839e08bb8017d6c68a051b7"
+    "id": "B2-02",
+    "receipt": "api-receipts/maraya-20261113-preflight.json"
+  }
 }
