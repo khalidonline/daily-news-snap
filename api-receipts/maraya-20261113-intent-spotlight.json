@@ -1,12 +1,1 @@
-{
-  "state": "INTENT_RECORDED",
-  "batch_id": "B2-02",
-  "identity": "70808e49884886f58b3efd2522f6c08a07669bf4edce0c733394205d0ce9035d",
-  "package": "maraya-20261113",
-  "approved_version": "493700e322040f8d484f70132477b926f694cff2d839e08bb8017d6c68a051b7",
-  "media_sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff",
-  "destination": "SPOTLIGHT",
-  "provider_journal_key": "b5a735d8914027fa204739448c508435e3cbb279f4ed25dad381685c3026de6d",
-  "reference_key": "B2-02-b5a735d8914027fa204739448c508435e3cbb279f4ed25dad381685c3026de6d",
-  "provider_post_id": null
-}
+{"state": "STARTED", "batch_id": "B2-02", "identity": "70808e49884886f58b3efd2522f6c08a07669bf4edce0c733394205d0ce9035d", "package": "maraya-20261113", "approved_version": "493700e322040f8d484f70132477b926f694cff2d839e08bb8017d6c68a051b7", "media_sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff", "destination": "SPOTLIGHT", "provider_journal_key": "b5a735d8914027fa204739448c508435e3cbb279f4ed25dad381685c3026de6d", "reference_key": "B2-02-b5a735d8914027fa204739448c508435e3cbb279f4ed25dad381685c3026de6d", "provider_post_id": null}
