@@ -5,9 +5,29 @@
   "package": "albaik-herfy-20261113",
   "approved_version": "4dd181e134672b8bee5a15deb8220d7d8f332ea2ea10dab00fa661ff639afa88",
   "media_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b",
-  "state": "INTENTS_RECORDED",
+  "state": "POSTED_BOTH",
   "destinations": [
     "STORY",
     "SPOTLIGHT"
-  ]
+  ],
+  "receipts": {
+    "STORY": {
+      "post_id": "71e71342-202e-4c30-b177-d2a5c4ca3838",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "snapchat_id": "c281c1dc-d54d-460d-b95e-5ac1af741067",
+      "upload_id": "abd89948-71b4-4da7-b5f6-24a0bc5b0729",
+      "media_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b"
+    },
+    "SPOTLIGHT": {
+      "post_id": "5d52769e-5ef4-48b3-b409-0f79f642b7e1",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYd2Z0amVsYXNiAaHUcXyLAaHUcXxCAAAAAA",
+      "upload_id": "69e4d69c-0b18-499f-be70-8c92db9e5efc",
+      "media_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b"
+    }
+  },
+  "completed_in_batch": 1,
+  "remaining_in_batch": 19
 }
