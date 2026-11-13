@@ -1,7 +1,7 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "APPROVED_NOT_STARTED",
+  "status": "SLOT_RESERVED",
   "next_item": "B2-01",
   "remaining": [
     {
@@ -86,5 +86,6 @@
     }
   ],
   "completed": 0,
-  "stop_after": "B2-20"
+  "stop_after": "B2-20",
+  "reserved_version": "4dd181e134672b8bee5a15deb8220d7d8f332ea2ea10dab00fa661ff639afa88"
 }

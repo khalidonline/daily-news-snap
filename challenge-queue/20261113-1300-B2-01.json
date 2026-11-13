@@ -1,0 +1,13 @@
+{
+  "slot": "2026-11-13T13:00:00+03:00",
+  "topic": "من بدأ أول؟ — البيك أو هرفي",
+  "id": "B2-01",
+  "package": "albaik-herfy-20261113",
+  "approved_version": "4dd181e134672b8bee5a15deb8220d7d8f332ea2ea10dab00fa661ff639afa88",
+  "media_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b",
+  "state": "INTENTS_RECORDED",
+  "destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ]
+}
