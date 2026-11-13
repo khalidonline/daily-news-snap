@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "0e69e2d8736285329fbf881f180d66e4ab7bce63ca65da3c50fa5e0276c60368",
       "b48e9ddb031328b359a3148da2a61aefa32385e82a77dcaf445423ad4ca2c36b"
-    ]
+    ],
+    "reference": "خالد: انشر ثم كمل؛ النسخة النهائية بعنوان وش يدفي اكثر الفروه والا الجاكيت الخفيف؟",
+    "reviewed_at": "2026-11-13T11:25:00.336155+00:00"
   },
   "media": [
     {

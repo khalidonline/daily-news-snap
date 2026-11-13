@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "53ae3b99e5fba0b44d90de7e0fb270bc140bdbdf",
+  "assets": {
+    "approved/winter-jacket-20261113/card.png": "2279799d7c3dd2c4b89e57b7a58ffac4bf0dbaa4a49a9cbb255e92eff007c35e",
+    "approved/winter-jacket-20261113/jacket.png": "0e69e2d8736285329fbf881f180d66e4ab7bce63ca65da3c50fa5e0276c60368",
+    "approved/winter-jacket-20261113/knit.jpg": "b48e9ddb031328b359a3148da2a61aefa32385e82a77dcaf445423ad4ca2c36b"
+  },
+  "preview_paths": [
+    "approved/winter-jacket-20261113/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/winter-jacket-20261113/card.png": "2279799d7c3dd2c4b89e57b7a58ffac4bf0dbaa4a49a9cbb255e92eff007c35e",
+    "approved/winter-jacket-20261113/jacket.png": "0e69e2d8736285329fbf881f180d66e4ab7bce63ca65da3c50fa5e0276c60368",
+    "approved/winter-jacket-20261113/knit.jpg": "b48e9ddb031328b359a3148da2a61aefa32385e82a77dcaf445423ad4ca2c36b",
+    "approved/winter-jacket-20261113/manifest.json": "493faa42241d33fc3f00f91a2bcdff7d043dd40940c73108a3a107a99bfc4386",
+    "approved/winter-jacket-20261113/archive-approval.json": "99bec978a3d3cd1f71033c8cd37acabb909654561b669959f3275d0b84b8d9ae",
+    "approved/winter-jacket-20261113/design-review.json": "128d064def06c5456632399dcd71bf088cd75b61f18766453d2785808213c1fa",
+    "approved/winter-jacket-20261113/sources.json": "34c84a9534bc5e3feffbed394cebf55ecd73ebe2ba0a203ccf60e18571753650",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/winter-jacket-20261113",
+    "manifest_content_sha256": "bf33aef3bae351bfa72d18bd8b45fd902101793962db32d4a1eff014ce892510",
+    "archive_content_sha256": "33dba527de918858318e0fc7a2bfd24803df9d8b50d1f832cbdcf3de3e414604",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "128d064def06c5456632399dcd71bf088cd75b61f18766453d2785808213c1fa",
+    "assets": {
+      "approved/winter-jacket-20261113/card.png": "2279799d7c3dd2c4b89e57b7a58ffac4bf0dbaa4a49a9cbb255e92eff007c35e",
+      "approved/winter-jacket-20261113/jacket.png": "0e69e2d8736285329fbf881f180d66e4ab7bce63ca65da3c50fa5e0276c60368",
+      "approved/winter-jacket-20261113/knit.jpg": "b48e9ddb031328b359a3148da2a61aefa32385e82a77dcaf445423ad4ca2c36b"
+    }
+  }
+}
