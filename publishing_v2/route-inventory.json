@@ -27,6 +27,7 @@
   ".github/workflows/deliver-lexus-hoverboard-approved.yml": "f178b9f0bad1157029ffb30ac13fa7db62cf0081267135e0b3f4912d8c0e879f",
   ".github/workflows/deliver-lexus-hoverboard-v2.yml": "80e38aef284b0aa60593a049aed849d6b9356d9597ad273c235a6c8d212fbd36",
   ".github/workflows/deliver-lv-sandwich-approved.yml": "e4dbfc8ca920702908fe36ae6c7b108e5b718c7feeedc485804b06f15b6c2088",
+  ".github/workflows/deliver-maraya-approved.yml": "1f06b3705149a11c6808a8183912cd3b58cfe8a435c092d86091103fdb3d83f6",
   ".github/workflows/deliver-michelin-cities-approved.yml": "41bc11d930e3e8b2caee1d2490af9149a2070ac3ffcedee34343358516e864ab",
   ".github/workflows/deliver-nike-adapt-approved.yml": "c52b178b299d132031dcd8232ca58877cef8938fc9af857910f935a89f71c9c0",
   ".github/workflows/deliver-palace-rooms-approved.yml": "2db838a114fdb1ba7d34a31ce9499a8fb776076bf4306dc57f4b419c381371f1",

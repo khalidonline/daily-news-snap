@@ -1,0 +1,51 @@
+name: Deliver approved B2-02 Maraya challenge only
+on:
+  push:
+    branches: [main]
+    paths: ['.github/maraya-approved.trigger']
+permissions:
+  contents: write
+concurrency:
+  group: executivesaudi-approved-api
+  cancel-in-progress: false
+jobs:
+  deliver:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: timeout 120 python -m pip install pillow
+      - name: Check reviewed executable inventory before restoring media
+        run: python -m publishing_v2.route_inventory
+      - name: Build pinned upstream FFmpeg on Ubuntu 24.04
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          if command -v ffmpeg && command -v ffprobe; then exit 0; fi
+          src="$RUNNER_TEMP/maraya-ffmpeg"
+          prefix="$RUNNER_TEMP/maraya-tools"
+          timeout 100 git clone --quiet --depth 1 --branch n7.1.5 https://github.com/FFmpeg/FFmpeg.git "$src"
+          cd "$src"
+          test "$(git rev-parse HEAD)" = 3a0867c2bfda4a4d4309ca1a8cbdc6175e67f587
+          asm=()
+          if ! command -v nasm >/dev/null; then asm=(--disable-x86asm); fi
+          timeout 80 ./configure --prefix="$prefix" --disable-doc --disable-debug --disable-autodetect --disable-network --disable-everything --enable-zlib --enable-ffmpeg --enable-ffprobe --enable-protocol=file,pipe --enable-demuxer=mov --enable-decoder=h264,aac --enable-parser=h264,aac --enable-encoder=png,pcm_s16le,wrapped_avframe --enable-muxer=image2,pcm_s16le,null --enable-filter=scale,format,aresample,aformat,volumedetect,trim,atrim --enable-swscale --enable-swresample "${asm[@]}" > "$RUNNER_TEMP/maraya-config.log"
+          timeout 330 make -j"$(nproc)" ffmpeg ffprobe > "$RUNNER_TEMP/maraya-build.log"
+          mkdir -p "$prefix/bin"
+          install -m755 ffmpeg ffprobe "$prefix/bin/"
+          echo "$prefix/bin" >> "$GITHUB_PATH"
+          "$prefix/bin/ffmpeg" -version
+      - name: Restore sealed video and restore original hash-pinned review frames
+        run: |
+          cat approved/maraya-20261113.tar.xz.part-* | tar -xJf -
+      - name: Validate and publish exact approved bytes to both destinations
+        env:
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python -m approved.maraya-20261113.deliver

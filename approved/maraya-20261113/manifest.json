@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان — مبنى مرايا",
+  "expires_at": "2026-11-13T23:59:59+03:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/maraya-20261113/challenge.mp4",
+      "sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff",
+      "reference": "Khalid approved B2-02 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B2-02 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "5642b61dde904f17c984126f46d77409a5205b0602e737d5069cc30d909121ff",
+    "source_manifest": {
+      "path": "approved/maraya-20261113/source-approval.json",
+      "sha256": "54ec0c970bd1b9e83a7594d719671ff032c9d775d5fbbbc1d34f035e6cae56df"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/maraya-20261113/frame-0.5.png",
+        "sha256": "72717deca7d8550ed302c20983fda396f9060ce0c20c0f9b4095e1f09612afec"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/maraya-20261113/frame-3.5.png",
+        "sha256": "bfdf886099fc869965176294114ea5395823cc88f636850aa5823b454f86e422"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/maraya-20261113/frame-4.5.png",
+        "sha256": "2321b755fea288b63ba2715567efe294ebfa864d48208566ca90e2863d0f1b62"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/maraya-20261113/frame-5.5.png",
+        "sha256": "a48c852163d5dca56b7defc13b71956187b6c87fbaafb312043ee33b2da8f9a1"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/maraya-20261113/frame-6.5.png",
+        "sha256": "1ed8472825941c53a842f337c6fd467a87a6ea924d752f80ec8b19e671cfe727"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/maraya-20261113/frame-7.5.png",
+        "sha256": "3206267799664c7b0d79b87f73778fb7c7ae14be48d74ad26dd62d7b14aa8e68"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/maraya-20261113/frame-8.5.png",
+        "sha256": "c7650c391adfddbead227efbfe3d5e4af57446c39a8dcc1dd53901f3a9065b38"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/maraya-20261113/frame-11.5.png",
+        "sha256": "e41fb058b73933b324d44cc6de3ede92f3407c83f603362deb8225277bb41653"
+      }
+    ]
+  }
+}
