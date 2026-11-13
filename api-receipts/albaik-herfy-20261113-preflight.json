@@ -1,4 +1,1 @@
-{
-  "state_on_creation": "NOT_SENT",
-  "video_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b"
-}
+{"state_on_creation": "NOT_SENT", "video_sha256": "4a7e9087d2d0f4020222198c8ec18b68f1651e938d3e2484e7316e75ac5d9f3b", "budget": {"new_paid_model_requests": 0, "total_daily_spend": "UNKNOWN", "limit_usd": 3}}
