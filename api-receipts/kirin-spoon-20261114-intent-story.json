@@ -1,12 +1,1 @@
-{
-  "state": "INTENT_RECORDED",
-  "batch_id": "B2-03",
-  "identity": "06e86ad412bca3e264192bc4e9cdd834a37c0c1b2de8fbf3f5177529153cac45",
-  "package": "kirin-spoon-20261114",
-  "approved_version": "3b9240fc6096cac6bbfdfcbb1f4f895f94bad601d946f3711ce054ee16345a61",
-  "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647",
-  "destination": "STORY",
-  "provider_journal_key": "06e86ad412bca3e264192bc4e9cdd834a37c0c1b2de8fbf3f5177529153cac45",
-  "reference_key": "B2-03-06e86ad412bca3e264192bc4e9cdd834a37c0c1b2de8fbf3f5177529153cac45",
-  "provider_post_id": null
-}
+{"state": "STARTED", "batch_id": "B2-03", "identity": "06e86ad412bca3e264192bc4e9cdd834a37c0c1b2de8fbf3f5177529153cac45", "package": "kirin-spoon-20261114", "approved_version": "3b9240fc6096cac6bbfdfcbb1f4f895f94bad601d946f3711ce054ee16345a61", "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647", "destination": "STORY", "provider_journal_key": "06e86ad412bca3e264192bc4e9cdd834a37c0c1b2de8fbf3f5177529153cac45", "reference_key": "B2-03-06e86ad412bca3e264192bc4e9cdd834a37c0c1b2de8fbf3f5177529153cac45", "provider_post_id": null}
