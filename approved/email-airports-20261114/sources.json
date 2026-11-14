@@ -1,0 +1,20 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/email-airports-20261114/airport.png",
+      "sha256": "6ea766fae3dc12f5aaf2d9587c700b5550e4e90df1ed9f7ee1b4753f438209a2",
+      "source_url": "https://apnews.com/article/f81b0904331dafad6133f291e5f531a8",
+      "credit": "AP/Tom Brenner",
+      "description": "Waiting passengers at Reagan National",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/email-airports-20261114/offices.png",
+      "sha256": "98dc8c8b3d17abdc95023063066935ae9a132ce44b8cddbcd3fb1b6cbf06fac0",
+      "source_url": "https://ca.finance.yahoo.com/news/faxes-phones-bluetooth-microsoft-outage-150126199.html",
+      "credit": "Reuters/Gonzalo Fuentes",
+      "description": "Microsoft offices near Paris, archive photo",
+      "rights_status": "source_recorded"
+    }
+  ]
+}

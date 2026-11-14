@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/email-airports-20261114/manifest.json",
+  "manifest_sha256": "4105b0fbbdac9f4cb77d2c03cbeedaa29235d6c20ccb7cdd0a52631e5f0880f8",
+  "identity": "b762a3d2b5ddf71710c7fd46d1cff03bdf40b3466dcefca83c6617eb4f4e2555",
+  "public_indices": [
+    1
+  ],
+  "title": "وش صاير بالعالم؟",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

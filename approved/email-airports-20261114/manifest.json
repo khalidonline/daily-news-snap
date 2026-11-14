@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "وش صاير بالعالم؟",
+  "not_before": "2026-11-14T00:00:00+03:00",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "5c3989bdf45c407080b9552fe65f8014eb7d0bd0cf70c6f1bd7f741808acbb94"
+    ],
+    "approved_source_sha256": [
+      "6ea766fae3dc12f5aaf2d9587c700b5550e4e90df1ed9f7ee1b4753f438209a2",
+      "98dc8c8b3d17abdc95023063066935ae9a132ce44b8cddbcd3fb1b6cbf06fac0"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/email-airports-20261114/card.png",
+      "sha256": "5c3989bdf45c407080b9552fe65f8014eb7d0bd0cf70c6f1bd7f741808acbb94",
+      "source_assets": [
+        {
+          "path": "approved/email-airports-20261114/airport.png",
+          "sha256": "6ea766fae3dc12f5aaf2d9587c700b5550e4e90df1ed9f7ee1b4753f438209a2",
+          "source_url": "https://apnews.com/article/f81b0904331dafad6133f291e5f531a8",
+          "credit": "AP/Tom Brenner",
+          "description": "Waiting passengers at Reagan National",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/email-airports-20261114/offices.png",
+          "sha256": "98dc8c8b3d17abdc95023063066935ae9a132ce44b8cddbcd3fb1b6cbf06fac0",
+          "source_url": "https://ca.finance.yahoo.com/news/faxes-phones-bluetooth-microsoft-outage-150126199.html",
+          "credit": "Reuters/Gonzalo Fuentes",
+          "description": "Microsoft offices near Paris, archive photo",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
