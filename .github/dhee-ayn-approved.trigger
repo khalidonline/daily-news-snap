@@ -1,5 +1,4 @@
 {
-  "reservation": "5b42027e7c837c75cec71c1ee2bb0ee129afd49a",
   "slot": "2026-11-14T19:00:00+03:00",
   "topic": "توقع المكان — قرية ذي عين",
   "id": "B2-04",
@@ -10,5 +9,7 @@
   "destinations": [
     "STORY",
     "SPOTLIGHT"
-  ]
+  ],
+  "reservation": "5b42027e7c837c75cec71c1ee2bb0ee129afd49a",
+  "reconciliation": "Pre-send gate stopped with both journals empty. Added independently verified three Saved Story provider IDs from other packages; same manifest and video."
 }
