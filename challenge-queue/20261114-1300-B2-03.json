@@ -5,9 +5,29 @@
   "package": "kirin-spoon-20261114",
   "approved_version": "3b9240fc6096cac6bbfdfcbb1f4f895f94bad601d946f3711ce054ee16345a61",
   "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647",
-  "state": "SLOT_RESERVED",
+  "state": "POSTED_BOTH",
   "destinations": [
     "STORY",
     "SPOTLIGHT"
-  ]
+  ],
+  "receipts": {
+    "STORY": {
+      "status": "POSTED",
+      "post_id": "70b79a74-ee77-4076-a25b-5ce382536b57",
+      "snapchat_status": "PUBLISHED",
+      "snapchat_id": "52879ecc-47df-49e4-bf1f-1ed42b70f890",
+      "upload_id": "fd3c67b0-6e46-4a65-bf60-93fbf623f3b0",
+      "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647"
+    },
+    "SPOTLIGHT": {
+      "status": "POSTED",
+      "post_id": "3c3f88e6-e238-4877-9167-527df532c948",
+      "snapchat_status": "PUBLISHED",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYcHJhcW1ia2V1AaHZhpakAaHZhpZxAAAAAA",
+      "upload_id": "d4b74f1c-f453-4086-9399-1599ba07b0fe",
+      "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647"
+    }
+  },
+  "completed_in_batch": 3,
+  "remaining_in_batch": 17
 }
