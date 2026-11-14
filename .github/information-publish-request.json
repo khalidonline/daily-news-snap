@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "abu-walad-20261114",
-  "identity": "81c505a7960cfa9fb9a80af01554701201982131b2669a8e3896ccdac159bb91",
+  "package": "al-ahsa-20261114",
+  "identity": "8b3129eb12b0a53c2e2a80e981de4715d778cf0b8c5fd3e36793c6b3f2e4b30f",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: طبقها على القالب المعتمد وانشر، القصة العامة أسبوع والحفظ المعتاد",
-  "approved_at": "2026-11-14T14:00:55.322865+00:00",
+  "owner_reference": "خالد: انشر الاحساء اليوم الساعه ٧ م حسب اعتمادي لك للصوره والنص، القصة العامة والحفظ بالملف العام",
+  "approved_at": "2026-11-14T16:06:53.162740+00:00",
   "expires_at": "2026-11-14T23:59:59+03:00",
-  "manifest_sha256": "65aa6008f41f46ef069fef8aeb97e6c3058444845ba8ae37383f38aadc6eb6ec",
-  "archive_sha256": "0e3ca5a309e248058f0b0a4964d4dfae90f133309299678068a7a516e87d4b62",
-  "prepared_sha256": "e00a672b54dff1fa3c485f8b6e845c20af892bf6eeebf85e4b0a941ac55488ef",
-  "preview_receipt_sha256": "a524a62caf7508c21b6aa9d1f2342e942dce122dc00a3d95a0cd46cbec0a5865"
+  "manifest_sha256": "3301fab1a49dd9e2ef0a32cd9254830821afa77790b952e8bd1ea22ac870f9fe",
+  "archive_sha256": "97a6d74a9ff975498b8000b24cd433e7a425478576527967fb1621aae45f48a9",
+  "prepared_sha256": "af144947d843dd4dfc6ee1bb60af45ec057894bf7d254845591bddfee7731855",
+  "preview_receipt_sha256": "cc363927b1d6300b0224a171c361c3d89a4078431e783dc772e1420cad1ce62e"
 }

@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "8ee8a50a82b1ad36dc335bd02fa010f18ccce2ef3b9626ed31b6dca34fc6bb7b",
       "855f43a4c4c6ae9366a07735af1e7f82b913c8fed7d7a72008e6e32f08ee900c"
-    ]
+    ],
+    "reference": "خالد: انشر الاحساء اليوم الساعه ٧ م حسب اعتمادي لك للصوره والنص، القصة العامة والحفظ بالملف العام",
+    "reviewed_at": "2026-11-14T16:06:53.162740+00:00"
   },
   "media": [
     {
