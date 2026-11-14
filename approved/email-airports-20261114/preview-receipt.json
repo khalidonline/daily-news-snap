@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "8839e5dc614c6d7d55e57ff38f265eb506663ddf",
+  "assets": {
+    "approved/email-airports-20261114/card.png": "5c3989bdf45c407080b9552fe65f8014eb7d0bd0cf70c6f1bd7f741808acbb94",
+    "approved/email-airports-20261114/airport.png": "6ea766fae3dc12f5aaf2d9587c700b5550e4e90df1ed9f7ee1b4753f438209a2",
+    "approved/email-airports-20261114/offices.png": "98dc8c8b3d17abdc95023063066935ae9a132ce44b8cddbcd3fb1b6cbf06fac0"
+  },
+  "preview_paths": [
+    "approved/email-airports-20261114/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/email-airports-20261114/card.png": "5c3989bdf45c407080b9552fe65f8014eb7d0bd0cf70c6f1bd7f741808acbb94",
+    "approved/email-airports-20261114/airport.png": "6ea766fae3dc12f5aaf2d9587c700b5550e4e90df1ed9f7ee1b4753f438209a2",
+    "approved/email-airports-20261114/offices.png": "98dc8c8b3d17abdc95023063066935ae9a132ce44b8cddbcd3fb1b6cbf06fac0",
+    "approved/email-airports-20261114/manifest.json": "4105b0fbbdac9f4cb77d2c03cbeedaa29235d6c20ccb7cdd0a52631e5f0880f8",
+    "approved/email-airports-20261114/archive-approval.json": "9737ad115a45e924b27b1812c15d382bd60571bb26ae13ea98a542d3e4072449",
+    "approved/email-airports-20261114/design-review.json": "6d73c2ed2ec7d3b18c6a4504f3b73e0a8b2e4fb50de802c7cebb11339e9779b2",
+    "approved/email-airports-20261114/sources.json": "6f2f80f96bd1dc2e181d0b361df6b43f35d7de60645c256ab18c491d32ef53ab",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/email-airports-20261114",
+    "manifest_content_sha256": "8984d3c78295544e97933f3d56232becda59adac45a1a136a5b04629185788ee",
+    "archive_content_sha256": "9df76f8cb91b621146de277694c93ca57b862ce84e8e050c1693808e8c1290f0",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "6d73c2ed2ec7d3b18c6a4504f3b73e0a8b2e4fb50de802c7cebb11339e9779b2",
+    "assets": {
+      "approved/email-airports-20261114/card.png": "5c3989bdf45c407080b9552fe65f8014eb7d0bd0cf70c6f1bd7f741808acbb94",
+      "approved/email-airports-20261114/airport.png": "6ea766fae3dc12f5aaf2d9587c700b5550e4e90df1ed9f7ee1b4753f438209a2",
+      "approved/email-airports-20261114/offices.png": "98dc8c8b3d17abdc95023063066935ae9a132ce44b8cddbcd3fb1b6cbf06fac0"
+    }
+  }
+}

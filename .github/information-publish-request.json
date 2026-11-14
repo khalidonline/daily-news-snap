@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "winter-jacket-20261113",
-  "identity": "424d2ff4b8334eafb4a625d4b08e2f8aac57592aa4f590875ede7f2c32008073",
+  "package": "email-airports-20261114",
+  "identity": "b762a3d2b5ddf71710c7fd46d1cff03bdf40b3466dcefca83c6617eb4f4e2555",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر ثم كمل؛ النسخة النهائية بعنوان وش يدفي اكثر الفروه والا الجاكيت الخفيف؟",
-  "approved_at": "2026-11-13T11:25:00.336155+00:00",
-  "expires_at": "2026-11-13T23:59:59+03:00",
-  "manifest_sha256": "37361a49089518426314e2510171bcd45c36c62b4e4327cb3f098cc56287b69c",
-  "archive_sha256": "74f62db71519e79f851b4c062780c506b656f9e8948bfeccf410326462cee9f1",
-  "prepared_sha256": "604706755ee0a968905ed5dd6d9df0b5b73f1aae79320813ff38f014086c808d",
-  "preview_receipt_sha256": "29e5d0793daf1e18872eb36703293167c788ac17ab90c657c62d931d2c9cd798"
+  "owner_reference": "خالد: انشر ثم كمل لنفس تصميم وش صاير بالعالم؟",
+  "approved_at": "2026-11-14T10:26:38.785138+00:00",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "manifest_sha256": "97b774293eac19702eaad9e8e0dd083ddd6dc00ca292cc8a9ef68663da7c26a7",
+  "archive_sha256": "1e361cf61a49e54e19b2d5a749890b6b341c3d2992190c714fae93eacce0bfc2",
+  "prepared_sha256": "322df7fb710d70b9e8bf87d6c1247e097e57c2881de5c7a71d742c6b17db2562",
+  "preview_receipt_sha256": "4b7782c0a514f2e5d8912c5442cdab7bb185465cb814352917bd791258e16f26"
 }

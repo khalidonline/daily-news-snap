@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "6ea766fae3dc12f5aaf2d9587c700b5550e4e90df1ed9f7ee1b4753f438209a2",
       "98dc8c8b3d17abdc95023063066935ae9a132ce44b8cddbcd3fb1b6cbf06fac0"
-    ]
+    ],
+    "reference": "خالد: انشر ثم كمل لنفس تصميم وش صاير بالعالم؟",
+    "reviewed_at": "2026-11-14T10:26:38.785138+00:00"
   },
   "media": [
     {
