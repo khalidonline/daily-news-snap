@@ -1,0 +1,18 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/al-ahsa-20261114/inside.png",
+      "sha256": "8ee8a50a82b1ad36dc335bd02fa010f18ccce2ef3b9626ed31b6dca34fc6bb7b",
+      "credit": "Approved Al-Ahsa-Updated.png",
+      "description": "inside view cropped from approved card",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/al-ahsa-20261114/outside.png",
+      "sha256": "855f43a4c4c6ae9366a07735af1e7f82b913c8fed7d7a72008e6e32f08ee900c",
+      "credit": "Approved Al-Ahsa-Updated.png",
+      "description": "outside view cropped from approved card",
+      "rights_status": "source_recorded"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/al-ahsa-20261114",
+  "manifest_content_sha256": "58e0b7fef6d6aa91e93a0537c76a371a890b5a3615282e3d6dc7cf651a6098e8",
+  "archive_content_sha256": "3c41ac9181e2c70153639dc4118dc5b300db1b5d0358d6b13a764e581b183189",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "6de7bc382bfebb3d9226f8a1160e224d3a2ad44d995b11f5ab3a6b2fd5c07f18",
+  "assets": {
+    "approved/al-ahsa-20261114/card.png": "59818d498864257bf63a3181559ca23f8abe88243df47e54c8b002db21e7e910",
+    "approved/al-ahsa-20261114/inside.png": "8ee8a50a82b1ad36dc335bd02fa010f18ccce2ef3b9626ed31b6dca34fc6bb7b",
+    "approved/al-ahsa-20261114/outside.png": "855f43a4c4c6ae9366a07735af1e7f82b913c8fed7d7a72008e6e32f08ee900c"
+  },
+  "preparation_seconds": 0.003
+}

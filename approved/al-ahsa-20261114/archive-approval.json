@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/al-ahsa-20261114/manifest.json",
+  "manifest_sha256": "a96dc24264268eaf85ebc300577b5d8d978ed43216b4b1fa9d8d07b8e84e0270",
+  "identity": "8b3129eb12b0a53c2e2a80e981de4715d778cf0b8c5fd3e36793c6b3f2e4b30f",
+  "public_indices": [
+    1
+  ],
+  "title": "بعز الصيف… الأحساء تنافس موسكو؟",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

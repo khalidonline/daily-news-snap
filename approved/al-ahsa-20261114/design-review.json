@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "59818d498864257bf63a3181559ca23f8abe88243df47e54c8b002db21e7e910",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "بعز الصيف… الأحساء تنافس موسكو؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              244,
+              215,
+              1017,
+              272
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            244,
+            215,
+            1017,
+            272
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "داخل مغارات جبل القارة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              161,
+              695,
+              427,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            161,
+            695,
+            427,
+            722
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "جبل القارة من برا",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              693,
+              695,
+              880,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            693,
+            695,
+            880,
+            722
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "في جبل القارة بالأحساء فيه غار يسمونه غار الناقة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              184,
+              806,
+              980,
+              863
+            ],
+            [
+              869,
+              887,
+              980,
+              920
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            184,
+            806,
+            1015,
+            920
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "طيب ليه سموه الناقة؟ والله حاولت أعرف بس ما لقيت سبب 😄",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              92,
+              990,
+              980,
+              1049
+            ],
+            [
+              719,
+              1073,
+              980,
+              1114
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            92,
+            990,
+            1015,
+            1114
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "والصحيح ان الغار يوسع ٤٠٠ شخص، وبعز الصيف تنزل الحرارة تحت ٢٠ درجة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              106,
+              1185,
+              980,
+              1237
+            ],
+            [
+              527,
+              1261,
+              980,
+              1304
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            106,
+            1185,
+            1015,
+            1304
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "فيه مكان سموه «الثلاجة»، ومكان ثاني أصغر سموه «الفريزر».",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              166,
+              1374,
+              980,
+              1437
+            ],
+            [
+              673,
+              1461,
+              980,
+              1504
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            166,
+            1374,
+            1015,
+            1504
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "تدخل الجبل بعز الحر وتدور الدفا!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              267,
+              1575,
+              812,
+              1618
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            267,
+            1575,
+            812,
+            1618
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected approved Al-Ahsa PNG at 390px with player masks, measured final ink and verified captions and CTA.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top 0..39 and bottom 625..692 masked simulation; all essential text and CTA remain visible.",
+      "SAVED_STORY": "Inspected separately with the same player masks; all essential text and CTA remain visible."
+    }
+  }
+}

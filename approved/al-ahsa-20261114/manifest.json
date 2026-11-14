@@ -1,0 +1,50 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "بعز الصيف… الأحساء تنافس موسكو؟",
+  "not_before": "2026-11-14T00:00:00+03:00",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "59818d498864257bf63a3181559ca23f8abe88243df47e54c8b002db21e7e910"
+    ],
+    "approved_source_sha256": [
+      "8ee8a50a82b1ad36dc335bd02fa010f18ccce2ef3b9626ed31b6dca34fc6bb7b",
+      "855f43a4c4c6ae9366a07735af1e7f82b913c8fed7d7a72008e6e32f08ee900c"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/al-ahsa-20261114/card.png",
+      "sha256": "59818d498864257bf63a3181559ca23f8abe88243df47e54c8b002db21e7e910",
+      "source_assets": [
+        {
+          "path": "approved/al-ahsa-20261114/inside.png",
+          "sha256": "8ee8a50a82b1ad36dc335bd02fa010f18ccce2ef3b9626ed31b6dca34fc6bb7b",
+          "credit": "Approved Al-Ahsa-Updated.png",
+          "description": "inside view cropped from approved card",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/al-ahsa-20261114/outside.png",
+          "sha256": "855f43a4c4c6ae9366a07735af1e7f82b913c8fed7d7a72008e6e32f08ee900c",
+          "credit": "Approved Al-Ahsa-Updated.png",
+          "description": "outside view cropped from approved card",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
