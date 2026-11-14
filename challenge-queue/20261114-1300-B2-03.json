@@ -1,0 +1,13 @@
+{
+  "slot": "2026-11-14T13:00:00+03:00",
+  "topic": "نزل بالسوق؟ — ملعقة كيرين الكهربائية",
+  "id": "B2-03",
+  "package": "kirin-spoon-20261114",
+  "approved_version": "3b9240fc6096cac6bbfdfcbb1f4f895f94bad601d946f3711ce054ee16345a61",
+  "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647",
+  "state": "SLOT_RESERVED",
+  "destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ]
+}

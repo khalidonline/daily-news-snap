@@ -1,7 +1,7 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "IN_PROGRESS",
+  "status": "SLOT_RESERVED",
   "next_item": "B2-03",
   "remaining": [
     {
@@ -83,5 +83,6 @@
   "last_completed": {
     "id": "B2-02",
     "receipt": "api-receipts/maraya-20261113-preflight.json"
-  }
+  },
+  "reserved_version": "3b9240fc6096cac6bbfdfcbb1f4f895f94bad601d946f3711ce054ee16345a61"
 }
