@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/sushi-algerian-20261114",
+  "manifest_content_sha256": "315cca540c578f8a5b2b2294c512ab2b6e438b94239eece1837d3836192e9640",
+  "archive_content_sha256": "97902f1b1675d2cce8c30832565566427e9025059432a9b70c6c40342e5fc9e9",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "e245b36eb20a449bf1f742637a6f020e1a4e3c26e364f9f4146626fb14255643",
+  "assets": {
+    "approved/sushi-algerian-20261114/card.png": "d027d0b09610bcaa398425ee646206ad318fbd88cda334d1dbfc5264ca246429",
+    "approved/sushi-algerian-20261114/sauce.png": "3fa0e16efa65fa11fc37baadd5581cf059646b6d6c8c3042ed6a265e46e4bc07",
+    "approved/sushi-algerian-20261114/sushi.png": "65cb90dee4b1697a2ba9b8029a742d6199e852d3e08d29a9ed8898e2f80d140f"
+  },
+  "preparation_seconds": 0.003
+}

@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/sushi-algerian-20261114/manifest.json",
+  "manifest_sha256": "fb117b19638fa7d23de7f252c9a98fa25c19d8ebbec1a6047acfd79a12b457f0",
+  "identity": "be4f3496d3e7dbc8019c53d68eb7a0de1539a7ecbf8ad8f135e7eff143e93353",
+  "public_indices": [
+    1
+  ],
+  "title": "السوشي صار جزائري",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

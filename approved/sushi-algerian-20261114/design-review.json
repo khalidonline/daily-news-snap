@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "d027d0b09610bcaa398425ee646206ad318fbd88cda334d1dbfc5264ca246429",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "السوشي صار جزائري",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              591,
+              215,
+              1020,
+              277
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            591,
+            215,
+            1020,
+            278
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الصوص الجزائري على الأكل",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              142,
+              695,
+              446,
+              730
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            142,
+            695,
+            446,
+            731
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "السوشي مع الصوص الجزائري",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              618,
+              695,
+              954,
+              728
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            618,
+            695,
+            954,
+            729
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "فرنسي جزائري رجع من اليابان. يوم وصل فرنسا غمس السوشي بصوص البطاطس الجزائري.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              122,
+              798,
+              980,
+              851
+            ],
+            [
+              155,
+              875,
+              980,
+              929
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            122,
+            798,
+            1015,
+            929
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "نزل الصورة على إكس يطقطق. يقول أنا بفرنسا وأغمس على كيفي، وش بيسوون لي اليابانيين؟",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              111,
+              992,
+              980,
+              1049
+            ],
+            [
+              120,
+              1073,
+              980,
+              1136
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            111,
+            992,
+            1015,
+            1136
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "التغريدة تعدت ١٣ مليون مشاهدة، واليابانيين تفاعلوا مع التغميسة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              152,
+              1200,
+              980,
+              1246
+            ],
+            [
+              583,
+              1270,
+              980,
+              1319
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            152,
+            1200,
+            1015,
+            1319
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "حتى «سوشيرو»، سلسلة مطاعم يابانية شهيرة، حطت السوشي بالصوص الجزائري في المنيو.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              92,
+              1382,
+              980,
+              1434
+            ],
+            [
+              163,
+              1458,
+              980,
+              1512
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            92,
+            1382,
+            1015,
+            1512
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "التغميسه طلعت في فرنسا لكن وصلت لليابان.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              129,
+              1575,
+              950,
+              1625
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            129,
+            1575,
+            950,
+            1626
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Final 390px mobile review of owner-selected sushi copy, original photos, captions, CTA and one-line closing.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top 0..39 and bottom 625..692 masked simulation; all essential text and CTA remain visible.",
+      "SAVED_STORY": "Inspected separately with the same player masks; all essential text and CTA remain visible."
+    }
+  }
+}
