@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — ملعقة كيرين الكهربائية",
+  "expires_at": "2026-11-14T18:59:59+03:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/kirin-spoon-20261114/challenge.mp4",
+      "sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647",
+      "reference": "Khalid approved B2-03 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B2-03 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647",
+    "source_manifest": {
+      "path": "approved/kirin-spoon-20261114/source-approval.json",
+      "sha256": "6a9a28ee67720b735ea44151c16cb0a46a6c1658066cde5d4b3e5e02079a949f"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/kirin-spoon-20261114/frame-0.5.png",
+        "sha256": "2de416329e2665d0eee0e606fd8c7af7a55168fad6594e58493dcafb64d8d24d"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/kirin-spoon-20261114/frame-3.5.png",
+        "sha256": "5097924e0f68399d9bc0e411b61abeff0e3b803167ad553c82fb3e5774bbcc4d"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/kirin-spoon-20261114/frame-4.5.png",
+        "sha256": "90a10df2ba5bc9aabfe4b6a1653c6f47a9633b7e256355cc7ee7c63fe6ba4184"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/kirin-spoon-20261114/frame-5.5.png",
+        "sha256": "de535f37fc1db15df956ac8aaeb07aeb2097381161adcb97cad88a3c6c25516f"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/kirin-spoon-20261114/frame-6.5.png",
+        "sha256": "c076810909c46c19496951bdc6d21163fcb51ca78f5a2a025cd39f0d083dacf1"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/kirin-spoon-20261114/frame-7.5.png",
+        "sha256": "2b4286fe661d3f50f9e73f455069a9d6681132b8374b618e9445ce4366e3f582"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/kirin-spoon-20261114/frame-8.5.png",
+        "sha256": "d69912f154525f663d3325c09bc107de7381dd9b8b06d0a5e6fdabddd43a0ee0"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/kirin-spoon-20261114/frame-11.5.png",
+        "sha256": "c01385730f6a5f003d418c45d75581c9469af0367f124b701a9824fe1bf2e898"
+      }
+    ]
+  }
+}
