@@ -1,12 +1,1 @@
-{
-  "state": "INTENT_RECORDED",
-  "batch_id": "B2-04",
-  "identity": "5d49ff6364b9d082ecd73da5b3b6d52a4ea7085e65e901d692d37dadd9064e0e",
-  "package": "dhee-ayn-20261114",
-  "approved_version": "660d1632560d8cc7ae3fb42bde74cbc854c052e2b69d057023da4f3cbcb11426",
-  "media_sha256": "9ccd7988301fac042546ded2bad25cdc2e23b2f17e189438fa848fb4c0b9f3cf",
-  "destination": "STORY",
-  "provider_journal_key": "5d49ff6364b9d082ecd73da5b3b6d52a4ea7085e65e901d692d37dadd9064e0e",
-  "reference_key": "B2-04-5d49ff6364b9d082ecd73da5b3b6d52a4ea7085e65e901d692d37dadd9064e0e",
-  "provider_post_id": null
-}
+{"state": "STARTED", "batch_id": "B2-04", "identity": "5d49ff6364b9d082ecd73da5b3b6d52a4ea7085e65e901d692d37dadd9064e0e", "package": "dhee-ayn-20261114", "approved_version": "660d1632560d8cc7ae3fb42bde74cbc854c052e2b69d057023da4f3cbcb11426", "media_sha256": "9ccd7988301fac042546ded2bad25cdc2e23b2f17e189438fa848fb4c0b9f3cf", "destination": "STORY", "provider_journal_key": "5d49ff6364b9d082ecd73da5b3b6d52a4ea7085e65e901d692d37dadd9064e0e", "reference_key": "B2-04-5d49ff6364b9d082ecd73da5b3b6d52a4ea7085e65e901d692d37dadd9064e0e", "provider_post_id": null}
