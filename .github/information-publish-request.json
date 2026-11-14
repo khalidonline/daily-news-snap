@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "email-airports-20261114",
-  "identity": "b762a3d2b5ddf71710c7fd46d1cff03bdf40b3466dcefca83c6617eb4f4e2555",
+  "package": "sushi-algerian-20261114",
+  "identity": "be4f3496d3e7dbc8019c53d68eb7a0de1539a7ecbf8ad8f135e7eff143e93353",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر ثم كمل لنفس تصميم وش صاير بالعالم؟",
-  "approved_at": "2026-11-14T10:26:38.785138+00:00",
+  "owner_reference": "خالد: انشر. لا النسخه اللي قبل. لاتدقق مره في المعلومات. كمل رفع النسخة السابقة والنشر.",
+  "approved_at": "2026-11-14T13:30:37.950343+00:00",
   "expires_at": "2026-11-14T23:59:59+03:00",
-  "manifest_sha256": "97b774293eac19702eaad9e8e0dd083ddd6dc00ca292cc8a9ef68663da7c26a7",
-  "archive_sha256": "1e361cf61a49e54e19b2d5a749890b6b341c3d2992190c714fae93eacce0bfc2",
-  "prepared_sha256": "322df7fb710d70b9e8bf87d6c1247e097e57c2881de5c7a71d742c6b17db2562",
-  "preview_receipt_sha256": "4b7782c0a514f2e5d8912c5442cdab7bb185465cb814352917bd791258e16f26"
+  "manifest_sha256": "c0bc61e6198e03034287276489111d442eed787b07fbb627756379a9672fe7e8",
+  "archive_sha256": "108b40d00f65328ff577f8413b6b95e2ee3c46b6a7d81025b8995290d6880f0c",
+  "prepared_sha256": "faac26519092bebf1dc1d1c00201ffaefe0c9bdb8f289cea30a83aac0cad9287",
+  "preview_receipt_sha256": "d0b2f5e01e6a7dda6e483c1e62fb6b6b5341c72a3df84897505b6b62492e68c7"
 }

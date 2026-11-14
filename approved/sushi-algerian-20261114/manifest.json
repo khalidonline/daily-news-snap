@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "3fa0e16efa65fa11fc37baadd5581cf059646b6d6c8c3042ed6a265e46e4bc07",
       "65cb90dee4b1697a2ba9b8029a742d6199e852d3e08d29a9ed8898e2f80d140f"
-    ]
+    ],
+    "reference": "خالد: انشر. لا النسخه اللي قبل. لاتدقق مره في المعلومات. كمل رفع النسخة السابقة والنشر.",
+    "reviewed_at": "2026-11-14T13:30:37.950343+00:00"
   },
   "media": [
     {
