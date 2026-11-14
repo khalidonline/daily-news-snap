@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -17,7 +17,9 @@
     ],
     "approved_source_sha256": [
       "1df521abdde0ece297fcac630d7c0e2d6443927831dd3c0a6ce68f2f94bb0ed4"
-    ]
+    ],
+    "reference": "خالد: طبقها على القالب المعتمد وانشر، القصة العامة أسبوع والحفظ المعتاد",
+    "reviewed_at": "2026-11-14T14:00:55.322865+00:00"
   },
   "media": [
     {

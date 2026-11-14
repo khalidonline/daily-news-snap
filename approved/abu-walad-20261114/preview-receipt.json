@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "1b78e3f174710696697d5b740ac2a8577aaa4019",
+  "assets": {
+    "approved/abu-walad-20261114/card.png": "2d03c52065b1ee83ca4d3ea13a89b359a5863cf1f7a0949094ff8d57d89cdbf6",
+    "approved/abu-walad-20261114/original.jpg": "1df521abdde0ece297fcac630d7c0e2d6443927831dd3c0a6ce68f2f94bb0ed4"
+  },
+  "preview_paths": [
+    "approved/abu-walad-20261114/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/abu-walad-20261114/card.png": "2d03c52065b1ee83ca4d3ea13a89b359a5863cf1f7a0949094ff8d57d89cdbf6",
+    "approved/abu-walad-20261114/original.jpg": "1df521abdde0ece297fcac630d7c0e2d6443927831dd3c0a6ce68f2f94bb0ed4",
+    "approved/abu-walad-20261114/manifest.json": "acce06e352de750435c2fe0e792ed13b272088869511fae11eb3be0f4c09cf5a",
+    "approved/abu-walad-20261114/archive-approval.json": "24ec2803e706d1d289863fb33d0864b2107aa5a3cb484a5db8b0f6d9b850d1bf",
+    "approved/abu-walad-20261114/design-review.json": "8ec9899f80435a8fa410f7d08453a60105f23f5221549ea4524a3b03705f61ca",
+    "approved/abu-walad-20261114/sources.json": "4ea74f4e8a365d482184e257f1b5bb5a51c20d311cf317b96465f742d0e9d2d2",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/abu-walad-20261114",
+    "manifest_content_sha256": "59953ebd9f6ab488faaeba30a0987d831322cb9fa98c039477ada9f994f896f9",
+    "archive_content_sha256": "278c5ff7aef1695bdbacbce1bc1c6307d4c22e3f66ca79891f9f5d60982a44db",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "8ec9899f80435a8fa410f7d08453a60105f23f5221549ea4524a3b03705f61ca",
+    "assets": {
+      "approved/abu-walad-20261114/card.png": "2d03c52065b1ee83ca4d3ea13a89b359a5863cf1f7a0949094ff8d57d89cdbf6",
+      "approved/abu-walad-20261114/original.jpg": "1df521abdde0ece297fcac630d7c0e2d6443927831dd3c0a6ce68f2f94bb0ed4"
+    }
+  }
+}

@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "sushi-algerian-20261114",
-  "identity": "be4f3496d3e7dbc8019c53d68eb7a0de1539a7ecbf8ad8f135e7eff143e93353",
+  "package": "abu-walad-20261114",
+  "identity": "81c505a7960cfa9fb9a80af01554701201982131b2669a8e3896ccdac159bb91",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر. لا النسخه اللي قبل. لاتدقق مره في المعلومات. كمل رفع النسخة السابقة والنشر.",
-  "approved_at": "2026-11-14T13:30:37.950343+00:00",
+  "owner_reference": "خالد: طبقها على القالب المعتمد وانشر، القصة العامة أسبوع والحفظ المعتاد",
+  "approved_at": "2026-11-14T14:00:55.322865+00:00",
   "expires_at": "2026-11-14T23:59:59+03:00",
-  "manifest_sha256": "c0bc61e6198e03034287276489111d442eed787b07fbb627756379a9672fe7e8",
-  "archive_sha256": "108b40d00f65328ff577f8413b6b95e2ee3c46b6a7d81025b8995290d6880f0c",
-  "prepared_sha256": "faac26519092bebf1dc1d1c00201ffaefe0c9bdb8f289cea30a83aac0cad9287",
-  "preview_receipt_sha256": "d0b2f5e01e6a7dda6e483c1e62fb6b6b5341c72a3df84897505b6b62492e68c7"
+  "manifest_sha256": "65aa6008f41f46ef069fef8aeb97e6c3058444845ba8ae37383f38aadc6eb6ec",
+  "archive_sha256": "0e3ca5a309e248058f0b0a4964d4dfae90f133309299678068a7a516e87d4b62",
+  "prepared_sha256": "e00a672b54dff1fa3c485f8b6e845c20af892bf6eeebf85e4b0a941ac55488ef",
+  "preview_receipt_sha256": "a524a62caf7508c21b6aa9d1f2342e942dce122dc00a3d95a0cd46cbec0a5865"
 }
