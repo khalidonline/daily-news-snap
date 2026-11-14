@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "بسكوت «أبو ولد» جاب لهم بيت هديه",
+  "not_before": "2026-11-14T00:00:00+03:00",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "2d03c52065b1ee83ca4d3ea13a89b359a5863cf1f7a0949094ff8d57d89cdbf6"
+    ],
+    "approved_source_sha256": [
+      "1df521abdde0ece297fcac630d7c0e2d6443927831dd3c0a6ce68f2f94bb0ed4"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/abu-walad-20261114/card.png",
+      "sha256": "2d03c52065b1ee83ca4d3ea13a89b359a5863cf1f7a0949094ff8d57d89cdbf6",
+      "source_assets": [
+        {
+          "path": "approved/abu-walad-20261114/original.jpg",
+          "sha256": "1df521abdde0ece297fcac630d7c0e2d6443927831dd3c0a6ce68f2f94bb0ed4",
+          "source_url": "https://cratersky.org/photos/092026/6a9fa2b27e009.jpeg",
+          "credit": "Crater Sky",
+          "description": "Ali and biscuit wrapper",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

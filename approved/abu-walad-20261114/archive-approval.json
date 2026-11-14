@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/abu-walad-20261114/manifest.json",
+  "manifest_sha256": "acce06e352de750435c2fe0e792ed13b272088869511fae11eb3be0f4c09cf5a",
+  "identity": "81c505a7960cfa9fb9a80af01554701201982131b2669a8e3896ccdac159bb91",
+  "public_indices": [
+    1
+  ],
+  "title": "بسكوت «أبو ولد» جاب لهم بيت هديه",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

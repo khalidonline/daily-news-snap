@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/abu-walad-20261114",
+  "manifest_content_sha256": "59953ebd9f6ab488faaeba30a0987d831322cb9fa98c039477ada9f994f896f9",
+  "archive_content_sha256": "278c5ff7aef1695bdbacbce1bc1c6307d4c22e3f66ca79891f9f5d60982a44db",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "8ec9899f80435a8fa410f7d08453a60105f23f5221549ea4524a3b03705f61ca",
+  "assets": {
+    "approved/abu-walad-20261114/card.png": "2d03c52065b1ee83ca4d3ea13a89b359a5863cf1f7a0949094ff8d57d89cdbf6",
+    "approved/abu-walad-20261114/original.jpg": "1df521abdde0ece297fcac630d7c0e2d6443927831dd3c0a6ce68f2f94bb0ed4"
+  },
+  "preparation_seconds": 0.003
+}

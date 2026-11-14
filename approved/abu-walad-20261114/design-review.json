@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "2d03c52065b1ee83ca4d3ea13a89b359a5863cf1f7a0949094ff8d57d89cdbf6",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "بسكوت «أبو ولد» جاب لهم بيت هديه",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              249,
+              215,
+              1020,
+              286
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            249,
+            215,
+            1020,
+            287
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "علي منصور",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              229,
+              695,
+              357,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            229,
+            695,
+            357,
+            727
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الولد على غلاف البسكوت",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              644,
+              695,
+              928,
+              723
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            644,
+            695,
+            928,
+            724
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تذكر بسكوت «أبو ولد»؟ صورة الولد على غلافه من أكثر من ٥٠ سنة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              141,
+              796,
+              980,
+              851
+            ],
+            [
+              617,
+              875,
+              980,
+              930
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            141,
+            796,
+            1015,
+            930
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "في اليمن انتشرت صورة طفل اسمه علي منصور. شف الشبه في الضحكة وقصة الشعر!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              86,
+              991,
+              980,
+              1045
+            ],
+            [
+              284,
+              1069,
+              980,
+              1123
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            86,
+            991,
+            1015,
+            1123
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وصلت الصورة للشركة اللي تسوي البسكوت. كرموا علي وعطوه منحة يكمل فيها دراسته.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              155,
+              1185,
+              980,
+              1239
+            ],
+            [
+              185,
+              1263,
+              980,
+              1315
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            155,
+            1185,
+            1015,
+            1315
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وفي نفس الحفل أعلنوا عن هدية لأهله بعد… بيت في مدينتهم!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              81,
+              1376,
+              980,
+              1439
+            ],
+            [
+              750,
+              1463,
+              980,
+              1514
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            81,
+            1376,
+            1015,
+            1514
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "من يتوقع إن ابتسامة علي فيها بيت لأهله؟",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              166,
+              1575,
+              915,
+              1629
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            166,
+            1575,
+            915,
+            1630
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "390px player mask check on exact approved Abu-Walad PNG: title, photographs, captions, four bullets, closing and CTA visible.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top 0..39 and bottom 625..692 masked simulation; all essential text and CTA remain visible.",
+      "SAVED_STORY": "Inspected separately with the same player masks; all essential text and CTA remain visible."
+    }
+  }
+}
