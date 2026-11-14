@@ -1,0 +1,14 @@
+{
+  "reservation": "5b42027e7c837c75cec71c1ee2bb0ee129afd49a",
+  "slot": "2026-11-14T19:00:00+03:00",
+  "topic": "توقع المكان — قرية ذي عين",
+  "id": "B2-04",
+  "package": "dhee-ayn-20261114",
+  "approved_version": "660d1632560d8cc7ae3fb42bde74cbc854c052e2b69d057023da4f3cbcb11426",
+  "media_sha256": "9ccd7988301fac042546ded2bad25cdc2e23b2f17e189438fa848fb4c0b9f3cf",
+  "state": "SLOT_RESERVED",
+  "destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ]
+}

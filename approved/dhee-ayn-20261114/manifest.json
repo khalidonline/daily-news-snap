@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان — قرية ذي عين",
+  "expires_at": "2026-11-14T23:59:59+03:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/dhee-ayn-20261114/challenge.mp4",
+      "sha256": "9ccd7988301fac042546ded2bad25cdc2e23b2f17e189438fa848fb4c0b9f3cf",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "9ccd7988301fac042546ded2bad25cdc2e23b2f17e189438fa848fb4c0b9f3cf",
+      "reference": "Khalid approved B2-04 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B2-04 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "9ccd7988301fac042546ded2bad25cdc2e23b2f17e189438fa848fb4c0b9f3cf",
+    "source_manifest": {
+      "path": "approved/dhee-ayn-20261114/source-approval.json",
+      "sha256": "9a9a7722ee5313d62a368ea60bf0bc8f3b8c8d3ca557a8cc9527d21384665467"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/dhee-ayn-20261114/frame-0.5.png",
+        "sha256": "23a9cf9369e28ef867708140456a8829defdbf6e1c89e4f6478f3e9d6a0bfde8"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/dhee-ayn-20261114/frame-3.5.png",
+        "sha256": "d029afc98e09d006b151a7f0f5d905c125a09c9ec7ffc83d38f6241a92d0205c"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/dhee-ayn-20261114/frame-4.5.png",
+        "sha256": "ce9690e47f1c94feb1e192fda133884fc6bb490663ae9d9c5ee2d259d8c111bb"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/dhee-ayn-20261114/frame-5.5.png",
+        "sha256": "81e325194e10f9f8449e52f10d24ff8cdc945ce6b785e12e7494387d921d7f23"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/dhee-ayn-20261114/frame-6.5.png",
+        "sha256": "7fafd924ab3ba393f5305ef987aa1a9ee95dbeaf3774dbf86466d89004c4373a"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/dhee-ayn-20261114/frame-7.5.png",
+        "sha256": "0e22c2d23196b3a36b4fbc23b57841f5089c2d6136b7f9e9b2f65795c49a4900"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/dhee-ayn-20261114/frame-8.5.png",
+        "sha256": "18135fd4588b4a8ef9ad7205ac75deca83f5dc9e3f71176a2689eb39feb368bb"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/dhee-ayn-20261114/frame-11.5.png",
+        "sha256": "10f907e94b7cc61cab6a7b7e6d95bda5204394e6a24a8519a5a08fc3d9ac71af"
+      }
+    ]
+  }
+}

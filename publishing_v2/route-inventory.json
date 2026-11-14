@@ -14,6 +14,7 @@
   ".github/workflows/deliver-cafes-approved-20261030.yml": "a42e8480c024ff5e3cef930caf8b253dd85053e90912cbd0bea256309b95989a",
   ".github/workflows/deliver-carrefour-walmart-approved.yml": "d16f1e8b8c29a98bba3e717d9a1f31f0e0cef9935da606d38a81d53e39431044",
   ".github/workflows/deliver-colmar-approved.yml": "a58c95ed5544bf8ac13657aa5a0c6539576129facd3bdb1576ecb73519a7dc57",
+  ".github/workflows/deliver-dhee-ayn-approved.yml": "a33ed6d949fc751cbf703888f3ee719c4b7ffa11d8fb793587f6e0bb9789f1eb",
   ".github/workflows/deliver-dunkin-starbucks-approved.yml": "ae9ca0fc2f854ce6c1b3fe1030e6a021227acb748b8c577dd34df9e88541c3c9",
   ".github/workflows/deliver-ember-mug-approved.yml": "1aa53e9b3b6fe0088fc4f695a186a41dc808f51b8ac14859a74b502add99a9e4",
   ".github/workflows/deliver-global-entry-20261028.yml": "2e6f50af6b63a0b7262d79131bc619384aaa599c879b2a2a9e108197da4b7271",
