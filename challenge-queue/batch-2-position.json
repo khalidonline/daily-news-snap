@@ -1,7 +1,7 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "IN_PROGRESS",
+  "status": "SLOT_RESERVED",
   "next_item": "B2-04",
   "remaining": [
     {
@@ -79,5 +79,6 @@
   "last_completed": {
     "id": "B2-03",
     "receipt": "api-receipts/kirin-spoon-20261114-preflight.json"
-  }
+  },
+  "reserved_version": "660d1632560d8cc7ae3fb42bde74cbc854c052e2b69d057023da4f3cbcb11426"
 }
