@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "record_type": "OWNER_AUTHORIZED_SCHEDULE_CHANGE",
+  "recorded_at": "2026-11-15T16:10:38Z",
+  "owner_request": {
+    "text": "عدل جدولة التحدي إلى مره وحده يوميا بداية من اليوم",
+    "created_at": "2026-11-15T15:28:02.231896Z",
+    "url": "https://chatgpt.com/c/6af8892d-089c-83eb-8b7b-00eb50d7ad53?messageId=c32e78b0-f72b-4018-b217-c185783a1444"
+  },
+  "already_notified": {
+    "text": "عدلت الجدول إلى **تحدي واحد يوميا**، واخترت موعد **١ الظهر بتوقيت الرياض**. تحدي العجلتين اللي نُشر الظهر هو تحدي اليوم، وألغيت موعد الليلة.\n\nالتحدي الجاي بكرة الاثنين الساعة ١ الظهر: **«وش نزل أول، إنستقرام أو سناب؟»**",
+    "created_at": "2026-11-15T15:29:49.669482Z",
+    "url": "https://chatgpt.com/c/6af8892d-089c-83eb-8b7b-00eb50d7ad53?messageId=d5c20cb2-f944-5576-82a1-b00810f518e7"
+  },
+  "cadence": {
+    "timezone": "Asia/Riyadh",
+    "time": "13:00",
+    "max_challenges_per_day": 1,
+    "effective_date": "2026-11-15",
+    "first_remaining_slot": "2026-11-16T13:00:00+03:00",
+    "cancelled_slot": "2026-11-15T19:00:00+03:00",
+    "catch_up_batch": false
+  },
+  "today_completed": {
+    "id": "B2-05",
+    "slot": "2026-11-15T13:00:00+03:00",
+    "receipt": "challenge-queue/20261115-1300-B2-05.json"
+  },
+  "remaining_schedule": [
+    {
+      "id": "B2-06",
+      "topic": "من نزل أول، إنستقرام أو سناب؟ إنستقرام 2010، وسناب 2011.",
+      "slot_riyadh": "2026-11-16T13:00:00+03:00"
+    },
+    {
+      "id": "B2-08",
+      "topic": "كرسي فولكس واجن اللي تسوقه بالممر، انباع أو كان للاستعراض؟ للاستعراض.",
+      "slot_riyadh": "2026-11-17T13:00:00+03:00"
+    },
+    {
+      "id": "B2-09",
+      "topic": "هالبيوت وسط الجبال في تركيا أو سويسرا؟ تركيا! مرتفعات بوكوت، منطقة ريزة. أخفِ الاسم والموقع لين الكشف.",
+      "slot_riyadh": "2026-11-18T13:00:00+03:00"
+    },
+    {
+      "id": "B2-10",
+      "topic": "أي نفق أطول بكامل مساره، نفق بريطانيا وفرنسا أو سيكان الياباني؟ سيكان، قرابة 54 كم.",
+      "slot_riyadh": "2026-11-19T13:00:00+03:00"
+    },
+    {
+      "id": "B2-11",
+      "topic": "جرير أو إكسترا، من بدأ أول؟ جرير 1974، إكسترا 2003.",
+      "slot_riyadh": "2026-11-20T13:00:00+03:00"
+    },
+    {
+      "id": "B2-12",
+      "topic": "ليه مصعد سانتا جوستا واقف وسط الشارع في لشبونة؟ يوصّل لحي أعلى أو لمحطة قطار؟ لحي أعلى.",
+      "slot_riyadh": "2026-11-21T13:00:00+03:00"
+    },
+    {
+      "id": "B2-13",
+      "topic": "سكوتر هوندا اللي ينطوي مثل الشنطة، انباع أو كان للمعارض؟ انباع. صورتين مطوي وأحد راكبه.",
+      "slot_riyadh": "2026-11-22T13:00:00+03:00"
+    },
+    {
+      "id": "B2-14",
+      "topic": "قرية القنوات والقوارب، هولندا أو بلجيكا؟ غيتهورن في هولندا.",
+      "slot_riyadh": "2026-11-23T13:00:00+03:00"
+    },
+    {
+      "id": "B2-15",
+      "topic": "أي هرم أعلى، اللوفر أو فندق الأقصر في لاس فيقاس؟ فندق الأقصر، حوالي 107 متر مقابل 21.",
+      "slot_riyadh": "2026-11-24T13:00:00+03:00"
+    },
+    {
+      "id": "B2-16",
+      "topic": "القيم بوي أو أول بلايستيشن، من نزل أول؟ القيم بوي 1989، بلايستيشن 1994 في اليابان.",
+      "slot_riyadh": "2026-11-25T13:00:00+03:00"
+    },
+    {
+      "id": "B2-17",
+      "topic": "وين السوق اللي يلمّون بسطاتهم وقت يمر القطار، تايلند أو فيتنام؟ سوق ماي كلونغ في تايلند.",
+      "slot_riyadh": "2026-11-26T13:00:00+03:00"
+    },
+    {
+      "id": "B2-18",
+      "topic": "شبشب نيسان اللي يرجع لمكانه، باعوه للناس أو جرّبوه في فندق؟ جرّبوه في فندق ياباني.",
+      "slot_riyadh": "2026-11-27T13:00:00+03:00"
+    },
+    {
+      "id": "B2-19",
+      "topic": "بلدة على صخرة عند البحر، إيطاليا أو اليونان؟ مونيمفاسيا في اليونان. صورة من فوق.",
+      "slot_riyadh": "2026-11-28T13:00:00+03:00"
+    }
+  ],
+  "total": 18,
+  "completed": 5,
+  "remaining": 13,
+  "stop_after": "B2-19",
+  "excluded": [
+    "B2-07",
+    "B2-20"
+  ],
+  "unchanged": [
+    "All challenge IDs, topics, ordering, template, audio, countdown, source references, destination requirements, and existing delivery receipts.",
+    "B2-09 Pokut replacement remains; only its date moves to 2026-11-18 13:00 Riyadh.",
+    "No dispatch, media production, posting, receipt alteration, or old-automation reactivation."
+  ],
+  "supersedes": "All older planned challenge dates and twice-daily cadence, including the old B2-09 slot in 20261115-owner-replacement-B2-09.json; historical delivery dates and receipts remain authoritative and unchanged."
+}

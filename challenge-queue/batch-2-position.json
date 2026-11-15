@@ -59,7 +59,7 @@
   ],
   "completed": 5,
   "stop_after": "B2-19",
-  "next_slot_riyadh": "2026-11-15T19:00:00+03:00",
+  "next_slot_riyadh": "2026-11-16T13:00:00+03:00",
   "last_completed": {
     "id": "B2-05",
     "receipt": "api-receipts/wheel-heights-20261115-preflight.json"
