@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "21253906e14f34f254e1c8a4a998a6a2817756556be92a88ce4ce94a3e69adf6",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "في اسكتلندا تركب المصعد وأنت بقاربك!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              186,
+              215,
+              1020,
+              287
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            186,
+            215,
+            1020,
+            288
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "يكمل مشواره فوق",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              103,
+              695,
+              320,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            103,
+            695,
+            320,
+            725
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "العجلة ترفع القارب",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              434,
+              695,
+              645,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            434,
+            695,
+            645,
+            727
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "القارب يدخل من تحت",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              747,
+              695,
+              988,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            747,
+            695,
+            988,
+            723
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "في فالكيرك باسكتلندا فيه قناتين، وحدة فوق ووحدة تحت. وش يطلع قاربك لفوق؟",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              164,
+              804,
+              980,
+              856
+            ],
+            [
+              302,
+              880,
+              980,
+              932
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            164,
+            804,
+            1015,
+            932
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بينهم عجلة كبيرة فيها حوضين. تدخل بقاربك في الحوض اللي تحت وتقعد مكانك.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              104,
+              1001,
+              980,
+              1053
+            ],
+            [
+              404,
+              1077,
+              980,
+              1129
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            104,
+            1001,
+            1015,
+            1129
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تلف العجلة نص لفة. حوضك يطلع والثاني ينزل، وقاربك يطفو على الموية.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              123,
+              1197,
+              980,
+              1251
+            ],
+            [
+              512,
+              1275,
+              980,
+              1318
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            123,
+            1197,
+            1015,
+            1318
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "لا وصلت فوق، يفتح لك الباب وتطلع بقاربك وتكمل مشوارك.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              182,
+              1387,
+              980,
+              1436
+            ],
+            [
+              668,
+              1460,
+              980,
+              1506
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            182,
+            1387,
+            1015,
+            1506
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "حتى قاربك يوصلك للدور اللي تبيه",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              253,
+              1575,
+              828,
+              1624
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            253,
+            1575,
+            828,
+            1625
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Approved native Falkirk still; source file_000000009f8c81f49d9ac1e6108c241e.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top 0..39 and bottom 625..692 masked simulation; all essential text and CTA remain visible.",
+      "SAVED_STORY": "Inspected separately with the same player masks; all essential text and CTA remain visible."
+    }
+  }
+}

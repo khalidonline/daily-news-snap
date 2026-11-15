@@ -1,0 +1,61 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "في اسكتلندا تركب المصعد وأنت بقاربك!",
+  "not_before": "2026-11-15T00:00:00+03:00",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "21253906e14f34f254e1c8a4a998a6a2817756556be92a88ce4ce94a3e69adf6"
+    ],
+    "approved_source_sha256": [
+      "953fa7f0648ea18f047aca710203687fae563119489e32f44a3c2a84712037de",
+      "8afd3344de1f7ff24ad5df074b7ff475d5e5a4ed0493be12e27f4f71c1111952",
+      "8cedc45b956cb4bcab8f952bbe2bd8438bc093fbf20f1ddd453120d0ddf0d322"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/falkirk-wheel-20261115/card.png",
+      "sha256": "21253906e14f34f254e1c8a4a998a6a2817756556be92a88ce4ce94a3e69adf6",
+      "source_assets": [
+        {
+          "path": "approved/falkirk-wheel-20261115/photo-0.png",
+          "sha256": "953fa7f0648ea18f047aca710203687fae563119489e32f44a3c2a84712037de",
+          "source_url": "https://www.geograph.org.uk/photo/142581",
+          "credit": "https://www.geograph.org.uk/photo/142581",
+          "description": "خروج القارب — crop from approved artwork",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/falkirk-wheel-20261115/photo-1.png",
+          "sha256": "8afd3344de1f7ff24ad5df074b7ff475d5e5a4ed0493be12e27f4f71c1111952",
+          "source_url": "https://www.geograph.org.uk/photo/2574669",
+          "credit": "https://www.geograph.org.uk/photo/2574669",
+          "description": "دوران العجلة — crop from approved artwork",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/falkirk-wheel-20261115/photo-2.png",
+          "sha256": "8cedc45b956cb4bcab8f952bbe2bd8438bc093fbf20f1ddd453120d0ddf0d322",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Falkirk_Wheel_Boat_Entry_SMC.jpg",
+          "credit": "https://commons.wikimedia.org/wiki/File:Falkirk_Wheel_Boat_Entry_SMC.jpg",
+          "description": "دخول القارب — crop from approved artwork",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

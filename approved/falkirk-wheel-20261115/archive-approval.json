@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/falkirk-wheel-20261115/manifest.json",
+  "manifest_sha256": "b11cc813c75b32352220c20c974543561485bfc7e11347e99890ca0611e8bc3f",
+  "identity": "10a90ffd8764f216773a1fce88b133450a2d692c537526a5e271d49c7e23cdf9",
+  "public_indices": [
+    1
+  ],
+  "title": "في اسكتلندا تركب المصعد وأنت بقاربك!",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

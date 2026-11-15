@@ -1,0 +1,28 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/falkirk-wheel-20261115/photo-0.png",
+      "sha256": "953fa7f0648ea18f047aca710203687fae563119489e32f44a3c2a84712037de",
+      "source_url": "https://www.geograph.org.uk/photo/142581",
+      "credit": "https://www.geograph.org.uk/photo/142581",
+      "description": "خروج القارب — crop from approved artwork",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/falkirk-wheel-20261115/photo-1.png",
+      "sha256": "8afd3344de1f7ff24ad5df074b7ff475d5e5a4ed0493be12e27f4f71c1111952",
+      "source_url": "https://www.geograph.org.uk/photo/2574669",
+      "credit": "https://www.geograph.org.uk/photo/2574669",
+      "description": "دوران العجلة — crop from approved artwork",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/falkirk-wheel-20261115/photo-2.png",
+      "sha256": "8cedc45b956cb4bcab8f952bbe2bd8438bc093fbf20f1ddd453120d0ddf0d322",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Falkirk_Wheel_Boat_Entry_SMC.jpg",
+      "credit": "https://commons.wikimedia.org/wiki/File:Falkirk_Wheel_Boat_Entry_SMC.jpg",
+      "description": "دخول القارب — crop from approved artwork",
+      "rights_status": "source_recorded"
+    }
+  ]
+}
