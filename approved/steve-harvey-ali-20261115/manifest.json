@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "ولد مذيع أمريكي شهير قال لأبوه إنه يبي يسلم",
+  "not_before": "2026-11-15T00:00:00+03:00",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "1d1a2412f7e8bd65e0779bbc8697acc3813ba99a3b376914068c33e02c7d0c15"
+    ],
+    "approved_source_sha256": [
+      "047ef78a74bd4ff79b547f0c14e6e022655bba55b8d80e75c96b0252cab75299"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/steve-harvey-ali-20261115/card.png",
+      "sha256": "1d1a2412f7e8bd65e0779bbc8697acc3813ba99a3b376914068c33e02c7d0c15",
+      "source_assets": [
+        {
+          "path": "approved/steve-harvey-ali-20261115/photo.jpg",
+          "sha256": "047ef78a74bd4ff79b547f0c14e6e022655bba55b8d80e75c96b0252cab75299",
+          "source_url": "https://medium.com/@SteveHarvey/what-i-told-my-son-before-college-a461a954bcb3",
+          "credit": "Steve Harvey",
+          "description": "Steve Harvey with Wynton Ali",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

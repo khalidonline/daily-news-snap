@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/steve-harvey-ali-20261115",
+  "manifest_content_sha256": "6790140d5f104e886b03be6bd02ae40ebdab607e21c1fadc860abf92a3567383",
+  "archive_content_sha256": "d32014c092b6a0615276dcbbb75347f94f808887e24313b88436e687afed8570",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "e1bc761efaef5f4862ae2ab4ede7bb5ae5fe7b86a3c74b3edc83bfe51661d270",
+  "assets": {
+    "approved/steve-harvey-ali-20261115/card.png": "1d1a2412f7e8bd65e0779bbc8697acc3813ba99a3b376914068c33e02c7d0c15",
+    "approved/steve-harvey-ali-20261115/photo.jpg": "047ef78a74bd4ff79b547f0c14e6e022655bba55b8d80e75c96b0252cab75299"
+  },
+  "preparation_seconds": 0.001
+}

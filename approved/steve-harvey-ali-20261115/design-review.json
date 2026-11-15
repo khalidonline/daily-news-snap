@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "1d1a2412f7e8bd65e0779bbc8697acc3813ba99a3b376914068c33e02c7d0c15",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "ولد مذيع أمريكي شهير قال لأبوه إنه يبي يسلم",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              78,
+              215,
+              1020,
+              287
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            78,
+            215,
+            1020,
+            288
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "ستيف هارفي مع ولده علي",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              390,
+              695,
+              689,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            390,
+            695,
+            689,
+            727
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ستيف هارفي مذيع أمريكي معروف. يوم انولد ولده الأصغر، اختار له اسم «علي».",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              168,
+              794,
+              980,
+              857
+            ],
+            [
+              378,
+              881,
+              980,
+              938
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            168,
+            794,
+            1015,
+            938
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "يقول من وقتها وهو يحس إن ولده بيكون له صلة بالشرق الأوسط.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              81,
+              998,
+              980,
+              1044
+            ],
+            [
+              666,
+              1068,
+              980,
+              1117
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            81,
+            998,
+            1015,
+            1117
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "مرت السنين، وكبر علي وجا لأبوه يستشيره. كان يبي يدخل الإسلام ويهمه رأي أبوه.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              112,
+              1176,
+              980,
+              1233
+            ],
+            [
+              366,
+              1257,
+              980,
+              1320
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            112,
+            1176,
+            1015,
+            1320
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ستيف يقول إن كلام ولده ما فاجأه، وقال له إنه معه في قراره.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              134,
+              1380,
+              980,
+              1441
+            ],
+            [
+              722,
+              1465,
+              980,
+              1516
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            134,
+            1380,
+            1015,
+            1516
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "علي كان يبي يعرف موقف أبوه، ولقاه واقف معه.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              115,
+              1575,
+              966,
+              1635
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            115,
+            1575,
+            966,
+            1636
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Approved Steve Harvey and Ali still.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected top 0..39 and bottom 625..692 masked simulation; all essential text and CTA remain visible.",
+      "SAVED_STORY": "Inspected separately with the same player masks; all essential text and CTA remain visible."
+    }
+  }
+}

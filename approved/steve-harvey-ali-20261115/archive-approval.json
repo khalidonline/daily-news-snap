@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/steve-harvey-ali-20261115/manifest.json",
+  "manifest_sha256": "7dd1f69c15ce1d93faa6afe943e0e4a8482eb17f741977c37f313194e680f44e",
+  "identity": "b1131113558e19e49495422b5d07e8e22ce4d953bf482fb2e4d48ba0768284a3",
+  "public_indices": [
+    1
+  ],
+  "title": "ولد مذيع أمريكي شهير قال لأبوه إنه يبي يسلم",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}
