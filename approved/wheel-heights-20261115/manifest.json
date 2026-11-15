@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية — عين لندن أو عجلة سنغافورة، أي عجلة أعلى؟",
+  "expires_at": "2026-11-15T18:59:59+03:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/wheel-heights-20261115/challenge.mp4",
+      "sha256": "ef2999bfeb7b1f655bde39e77f8dfad18239995d0adb7253a6530e15c825ed11",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "ef2999bfeb7b1f655bde39e77f8dfad18239995d0adb7253a6530e15c825ed11",
+      "reference": "Khalid approved B2-05 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B2-05 and delegated production/publication. Agent reviewed eight decoded states and separate modeled390px Story/Spotlight overlays. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "ef2999bfeb7b1f655bde39e77f8dfad18239995d0adb7253a6530e15c825ed11",
+    "source_manifest": {
+      "path": "approved/wheel-heights-20261115/source-approval.json",
+      "sha256": "dd9c2a2eb4ffe680626f06cd473c1b976cecdfaa7fef2c3a645a06ea1d2ea4ec"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/wheel-heights-20261115/frame-0.5.png",
+        "sha256": "bb1b50c34463a1e171bb1c28fda8bb8e3de5c45742d73b8ce85457820f24e01f"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/wheel-heights-20261115/frame-3.5.png",
+        "sha256": "8fd0dede7096a8ed412f746035c142b26d7df2cd08f4a84a498100d19b493f3a"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/wheel-heights-20261115/frame-4.5.png",
+        "sha256": "a89ea99ef5cf5385c81b86467343c631c915411756e0aa87fe6ed5e1693fba6a"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/wheel-heights-20261115/frame-5.5.png",
+        "sha256": "a94bb454b4fcd43325a2ea0bf1d29a070ac17469569ed8ecf56d13abdf35d27f"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/wheel-heights-20261115/frame-6.5.png",
+        "sha256": "5def5ded56805dc7e05c223ed4f062c72aa21fb34693b5bb43b04e1f67421c62"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/wheel-heights-20261115/frame-7.5.png",
+        "sha256": "45a49dca8f5858010e392f8068c930e7a0a5d7a40b2664d9d53c8203e8e09bd4"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/wheel-heights-20261115/frame-8.5.png",
+        "sha256": "163b2c82efd311ec688dc762ac9b5d7279414fd1808ede583f4d3b962af360ff"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/wheel-heights-20261115/frame-11.5.png",
+        "sha256": "2ebbbe06b060577edd88bb2bcd7e93f3a4010aed6aa552ee5e50c83ccdca14f7"
+      }
+    ]
+  }
+}
