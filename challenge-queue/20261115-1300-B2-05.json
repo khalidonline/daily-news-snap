@@ -5,9 +5,29 @@
   "package": "wheel-heights-20261115",
   "approved_version": "a59580c92966e2d4050103290a5aeae6648d1663ce007d071c5130c10fc2b90c",
   "media_sha256": "ef2999bfeb7b1f655bde39e77f8dfad18239995d0adb7253a6530e15c825ed11",
-  "state": "SLOT_RESERVED",
+  "state": "POSTED_BOTH",
   "destinations": [
     "STORY",
     "SPOTLIGHT"
-  ]
+  ],
+  "receipts": {
+    "STORY": {
+      "post_id": "8a806eca-621c-4030-9bdb-6d4fbd02829b",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "snapchat_id": "0542109d-fe3d-43bd-94e7-fdce996203a3",
+      "upload_id": "0ad4c7ad-4454-42d2-b1bb-cd8a08088685",
+      "media_sha256": "ef2999bfeb7b1f655bde39e77f8dfad18239995d0adb7253a6530e15c825ed11"
+    },
+    "SPOTLIGHT": {
+      "post_id": "b294ee19-e0d5-4c57-b14e-55ff7046591b",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYYmpid2d0bm9mAaHeq0BRAaHeq0AqAAAAAA",
+      "upload_id": "1e93eeb4-771b-4467-b6ad-859f93aed061",
+      "media_sha256": "ef2999bfeb7b1f655bde39e77f8dfad18239995d0adb7253a6530e15c825ed11"
+    }
+  },
+  "completed_in_batch": 5,
+  "remaining_in_batch": 13
 }

@@ -1,13 +1,9 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "SLOT_RESERVED",
-  "next_item": "B2-05",
+  "status": "IN_PROGRESS",
+  "next_item": "B2-06",
   "remaining": [
-    {
-      "id": "B2-05",
-      "topic": "أي عجلة أعلى، عين لندن أو عجلة سنغافورة؟ سنغافورة 165 متر."
-    },
     {
       "id": "B2-06",
       "topic": "من نزل أول، إنستقرام أو سناب؟ إنستقرام 2010، وسناب 2011."
@@ -61,12 +57,11 @@
       "topic": "بلدة على صخرة عند البحر، إيطاليا أو اليونان؟ مونيمفاسيا في اليونان. صورة من فوق."
     }
   ],
-  "completed": 4,
+  "completed": 5,
   "stop_after": "B2-19",
-  "next_slot_riyadh": "2026-11-15T13:00:00+03:00",
+  "next_slot_riyadh": "2026-11-15T19:00:00+03:00",
   "last_completed": {
-    "id": "B2-04",
-    "receipt": "api-receipts/dhee-ayn-20261114-preflight.json"
-  },
-  "reserved_version": "a59580c92966e2d4050103290a5aeae6648d1663ce007d071c5130c10fc2b90c"
+    "id": "B2-05",
+    "receipt": "api-receipts/wheel-heights-20261115-preflight.json"
+  }
 }
