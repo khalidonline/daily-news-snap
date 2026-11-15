@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -17,7 +17,9 @@
     ],
     "approved_source_sha256": [
       "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb"
-    ]
+    ],
+    "reference": "خالد: انشر بطاقة الكافيين على القصة لأسبوع والحفظ في الملف العام، خله صورة بالرسم البياني حسب آخر التعديلات.",
+    "reviewed_at": "2026-11-15T07:33:38.294364+00:00"
   },
   "media": [
     {

@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "falkirk-wheel-20261115",
-  "identity": "10a90ffd8764f216773a1fce88b133450a2d692c537526a5e271d49c7e23cdf9",
+  "package": "caffeine-comparison-20261115",
+  "identity": "44c734596cc99365806fa54504ab327f502f98a6d1c7be2bca9789ee3b8d2c5a",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشرها بكره الصبح؛ خلها صوره ليه فيديو. القصة لأسبوع والحفظ في الملف العام.",
-  "approved_at": "2026-11-15T05:49:57.867627+00:00",
+  "owner_reference": "خالد: انشر بطاقة الكافيين على القصة لأسبوع والحفظ في الملف العام، خله صورة بالرسم البياني حسب آخر التعديلات.",
+  "approved_at": "2026-11-15T07:33:38.294364+00:00",
   "expires_at": "2026-11-15T23:59:59+03:00",
-  "manifest_sha256": "2b90e1427eb5eb5da53cf3b30608b74a647e8471e246a01baad7c7c57a03c5ba",
-  "archive_sha256": "a080cde64b325fb8787680e2d8bbe37cc4b636852e0225e963eed4ca7a22ec58",
-  "prepared_sha256": "bbc4d9b8b7c790dd8221a560f14d4b2d9f2c022518339621aa90aa637e0da0cc",
-  "preview_receipt_sha256": "d79a0e0cebb19aedd67b264c204f14bf906d03d250ed246f158a452f2364ccab"
+  "manifest_sha256": "1a2e0afe293b6cc08227a4a6e763ffffadf730681c7ee799f51216d5c1976c65",
+  "archive_sha256": "d13c1b842af1a6615c2a980d88539208caf3624cfb534855b43e759a281232e7",
+  "prepared_sha256": "c50ef828029824f7f04d39a91a3b7d17d5395024d96645f090d151324c77da4c",
+  "preview_receipt_sha256": "828ceb705d572a6bc3fd4d359f96e42335551da0522c11d3110edbc3a6d71c4a"
 }

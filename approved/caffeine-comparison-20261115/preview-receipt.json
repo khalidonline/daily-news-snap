@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "branch": "main",
+  "repository": "khalidonline/daily-news-snap",
+  "commit": "c1f914a5f90c7b2bbf55541baa9703fd6aff9ea3",
+  "assets": {
+    "approved/caffeine-comparison-20261115/card.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+    "assets/comparison/reference.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb"
+  },
+  "preview_paths": [
+    "approved/caffeine-comparison-20261115/card.png"
+  ],
+  "files": {
+    "approved/caffeine-comparison-20261115/sources.json": "eab730ac71ac3fa26674a7270fa02b9e557f1b5063a44da8af5d9d6a8b509066",
+    "approved/caffeine-comparison-20261115/card.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+    "assets/comparison/reference.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "approved/caffeine-comparison-20261115/manifest.json": "c14acf014f0f6dadff51ac010686a1cc326264852b9c11b63b261c850eb9d21a",
+    "approved/caffeine-comparison-20261115/design-review.json": "cf55abb70f8d72ddb097534a014e1d47f23ad328cd2c3f839c8ae4667b3721d6",
+    "approved/caffeine-comparison-20261115/archive-approval.json": "12ada82285fd0be9af7cdc3f6f3ef0d62d97c403e431e223ad0313482fa23d0e"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/caffeine-comparison-20261115",
+    "manifest_content_sha256": "9b5a430b2bf356b5767e403c25f42bbf18b72d6fa652d47cf0c05e7e2a8511a7",
+    "archive_content_sha256": "ccf5db9d8e886ea28f1dbb6671aa482a31e0ba5cc715aa910e54c1e00f7e2fd8",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "cf55abb70f8d72ddb097534a014e1d47f23ad328cd2c3f839c8ae4667b3721d6",
+    "assets": {
+      "approved/caffeine-comparison-20261115/card.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+      "assets/comparison/reference.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb"
+    }
+  }
+}
