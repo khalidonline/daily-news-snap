@@ -45,7 +45,10 @@ def render(spec, icons):
     label(540,1578,spec['note'],35,'#63665D','mm')
     return image
 
-def validate(image,spec):
+def validate(image,spec,*,raw=None):
+    if isinstance(spec,dict) and 'variant' in spec:
+        from .comparison_variants import validate_reference_variant
+        return validate_reference_variant(image,spec,raw=raw)
     # The original approved export is authoritative for the reference example.
     reference = Image.open(REFERENCE).convert('RGB')
     if spec == EXAMPLE and ImageChops.difference(image,reference).getbbox() is None:

@@ -66,7 +66,7 @@ def validate_design(media, report, placement):
         _flat_palette(image,card.get('palette_samples'),settings)
         if card.get('template') == 'comparison':
             from .comparison_template import validate
-            validate(image, card['comparison'])
+            validate(image, card['comparison'], raw=raw)
         else:
             _pixels(image,card.get('blocks'),settings)
     return {'status':'validated','sha256':[hashlib.sha256(raw).hexdigest() for _,raw in media]}
@@ -276,6 +276,12 @@ class DeliveryReview:
             report=json.loads(self.raw)
             if placement not in self.media.snapshot.get('approved_destinations',[]):fail('destination not approved')
             if report.get('content_type')!=self.media.snapshot.get('content_type'):fail('content type mismatch')
+            from .comparison_variants import validate_manifest_binding
+            cards=report.get('cards',[])
+            frames=self.media.snapshot.get('media',[])
+            if len(cards)!=len(frames):fail('review and manifest media count mismatch')
+            for card,frame in zip(cards,frames):
+                validate_manifest_binding(card,frame)
             return validate_design(self.media,report,placement)
         except (OSError,ValueError,KeyError,TypeError):fail('invalid final design report')
 
