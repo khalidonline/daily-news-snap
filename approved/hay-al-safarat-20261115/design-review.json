@@ -1,0 +1,247 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      },
+      "template": "information",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "خذ معلومتين خفيفه عن حي السفارات.",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              216,
+              215,
+              1020,
+              273
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            216,
+            215,
+            1020,
+            274
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "قصر طويق بحي السفارات، اكتمل بناؤه عام ١٩٨٥",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              274,
+              695,
+              806,
+              727
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            274,
+            695,
+            806,
+            728
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وزعوا أراضي حي السفارات بالرياض بالقرعة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              195,
+              810,
+              980,
+              873
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            195,
+            810,
+            1015,
+            873
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "سووا القرعة في جدة، وكان سفير الكاميرون يسحب اسم سفارة لكل أرض.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              176,
+              948,
+              980,
+              1000
+            ],
+            [
+              429,
+              1024,
+              980,
+              1085
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            176,
+            948,
+            1015,
+            1085
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وفي نفس الحي، تنافس فريق من الرياض وفريق من ألمانيا على تصميم قصر طويق.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              97,
+              1161,
+              980,
+              1212
+            ],
+            [
+              363,
+              1236,
+              980,
+              1297
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            97,
+            1161,
+            1015,
+            1297
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "أعجبهم التصميمين، وطلبوا من الفريقين يصممون القصر سوا.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              237,
+              1372,
+              980,
+              1433
+            ],
+            [
+              592,
+              1457,
+              980,
+              1500
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            237,
+            1372,
+            1015,
+            1500
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "دخلوا المسابقة منافسين وطلعوا منها شركاء!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              131,
+              1575,
+              950,
+              1620
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            131,
+            1575,
+            950,
+            1621
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ]
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Hay-AlSafarat-Approved-Template.png",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Approved static information card with safe overlay margins",
+      "SAVED_STORY": "Approved static information card with safe overlay margins"
+    }
+  }
+}

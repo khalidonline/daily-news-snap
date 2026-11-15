@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/hay-al-safarat-20261115",
+  "manifest_content_sha256": "249b169a21c1cc9772f20dcc89a1be8c9ffb561070a7e82f643ce5a7880e7d37",
+  "archive_content_sha256": "6d5cb5522aac36489b87de370794c50cded362f4716c0088b392e0f5db6196dd",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "254955331a9c353f462f09cd51acf986d5dbd3420ad253f12c8e67cff5090176",
+  "assets": {
+    "approved/hay-al-safarat-20261115/card.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+    "assets/information/hay-al-safarat-reference.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b"
+  },
+  "preparation_seconds": 0.002
+}

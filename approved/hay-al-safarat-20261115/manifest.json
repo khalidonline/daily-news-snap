@@ -1,0 +1,45 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "خذ معلومتين خفيفه عن حي السفارات.",
+  "not_before": "2026-11-15T00:00:00+03:00",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b"
+    ],
+    "approved_source_sha256": [
+      "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b"
+    ],
+    "reference": "خالد: بطاقة حي السفارات المعتمدة بصورتها الأصلية.",
+    "reviewed_at": "2026-11-15T16:26:55.753406+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/hay-al-safarat-20261115/card.png",
+      "sha256": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+      "source_assets": [
+        {
+          "path": "assets/information/hay-al-safarat-reference.png",
+          "sha256": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_fde3_f-cab1bd6ba39081918cd7ade1ccec9231_caf305c17d148191b336ceff647730cb&account_id=personal",
+          "credit": "Executive Summary",
+          "description": "Owner-approved Hay Al Safarat information card",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
