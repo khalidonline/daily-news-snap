@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "branch": "main",
+  "repository": "khalidonline/daily-news-snap",
+  "commit": "d6dacf73219e311342df8422761ae7aa0f2a4ef3",
+  "assets": {
+    "approved/falkirk-wheel-20261115/card.png": "21253906e14f34f254e1c8a4a998a6a2817756556be92a88ce4ce94a3e69adf6",
+    "approved/falkirk-wheel-20261115/photo-0.png": "953fa7f0648ea18f047aca710203687fae563119489e32f44a3c2a84712037de",
+    "approved/falkirk-wheel-20261115/photo-1.png": "8afd3344de1f7ff24ad5df074b7ff475d5e5a4ed0493be12e27f4f71c1111952",
+    "approved/falkirk-wheel-20261115/photo-2.png": "8cedc45b956cb4bcab8f952bbe2bd8438bc093fbf20f1ddd453120d0ddf0d322"
+  },
+  "preview_paths": [
+    "approved/falkirk-wheel-20261115/card.png"
+  ],
+  "files": {
+    "approved/falkirk-wheel-20261115/design-review.json": "77a6dc2f6164a6030181a953005ce58d57a7a174c1eee3c3da9cac88b048d3f2",
+    "approved/falkirk-wheel-20261115/card.png": "21253906e14f34f254e1c8a4a998a6a2817756556be92a88ce4ce94a3e69adf6",
+    "approved/falkirk-wheel-20261115/archive-approval.json": "41f2468475ab92485b2b03cbb3babee8aaefb43979d74bfbbe7d787764dc525a",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "approved/falkirk-wheel-20261115/photo-2.png": "8cedc45b956cb4bcab8f952bbe2bd8438bc093fbf20f1ddd453120d0ddf0d322",
+    "approved/falkirk-wheel-20261115/manifest.json": "b11cc813c75b32352220c20c974543561485bfc7e11347e99890ca0611e8bc3f",
+    "approved/falkirk-wheel-20261115/photo-0.png": "953fa7f0648ea18f047aca710203687fae563119489e32f44a3c2a84712037de",
+    "approved/falkirk-wheel-20261115/photo-1.png": "8afd3344de1f7ff24ad5df074b7ff475d5e5a4ed0493be12e27f4f71c1111952",
+    "approved/falkirk-wheel-20261115/sources.json": "446fa77e4b39c3188368b128d3afb83a64391295a43d69487be48115097de9d6"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/falkirk-wheel-20261115",
+    "manifest_content_sha256": "4874d9f87b1386a2763a7066a6e9d1e69216e8e652f2d43cba0e5b59d074807e",
+    "archive_content_sha256": "52e988addfe755c9a8ce7276cf20d94a24fe76b7d3a9eefc6bafdeaa4b7c34f3",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "77a6dc2f6164a6030181a953005ce58d57a7a174c1eee3c3da9cac88b048d3f2",
+    "assets": {
+      "approved/falkirk-wheel-20261115/card.png": "21253906e14f34f254e1c8a4a998a6a2817756556be92a88ce4ce94a3e69adf6",
+      "approved/falkirk-wheel-20261115/photo-0.png": "953fa7f0648ea18f047aca710203687fae563119489e32f44a3c2a84712037de",
+      "approved/falkirk-wheel-20261115/photo-1.png": "8afd3344de1f7ff24ad5df074b7ff475d5e5a4ed0493be12e27f4f71c1111952",
+      "approved/falkirk-wheel-20261115/photo-2.png": "8cedc45b956cb4bcab8f952bbe2bd8438bc093fbf20f1ddd453120d0ddf0d322"
+    }
+  }
+}

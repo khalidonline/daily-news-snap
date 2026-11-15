@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "al-ahsa-20261114",
-  "identity": "8b3129eb12b0a53c2e2a80e981de4715d778cf0b8c5fd3e36793c6b3f2e4b30f",
+  "package": "falkirk-wheel-20261115",
+  "identity": "10a90ffd8764f216773a1fce88b133450a2d692c537526a5e271d49c7e23cdf9",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر الاحساء اليوم الساعه ٧ م حسب اعتمادي لك للصوره والنص، القصة العامة والحفظ بالملف العام",
-  "approved_at": "2026-11-14T16:06:53.162740+00:00",
-  "expires_at": "2026-11-14T23:59:59+03:00",
-  "manifest_sha256": "3301fab1a49dd9e2ef0a32cd9254830821afa77790b952e8bd1ea22ac870f9fe",
-  "archive_sha256": "97a6d74a9ff975498b8000b24cd433e7a425478576527967fb1621aae45f48a9",
-  "prepared_sha256": "af144947d843dd4dfc6ee1bb60af45ec057894bf7d254845591bddfee7731855",
-  "preview_receipt_sha256": "cc363927b1d6300b0224a171c361c3d89a4078431e783dc772e1420cad1ce62e"
+  "owner_reference": "خالد: انشرها بكره الصبح؛ خلها صوره ليه فيديو. القصة لأسبوع والحفظ في الملف العام.",
+  "approved_at": "2026-11-15T05:49:57.867627+00:00",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "manifest_sha256": "2b90e1427eb5eb5da53cf3b30608b74a647e8471e246a01baad7c7c57a03c5ba",
+  "archive_sha256": "a080cde64b325fb8787680e2d8bbe37cc4b636852e0225e963eed4ca7a22ec58",
+  "prepared_sha256": "bbc4d9b8b7c790dd8221a560f14d4b2d9f2c022518339621aa90aa637e0da0cc",
+  "preview_receipt_sha256": "d79a0e0cebb19aedd67b264c204f14bf906d03d250ed246f158a452f2364ccab"
 }
