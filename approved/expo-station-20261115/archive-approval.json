@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/expo-station-20261115/manifest.json",
+  "manifest_sha256": "e3127ffc2416927e721070974d955d4fad8aefbceece2e01c0b007a1929543d7",
+  "identity": "490af0b3e28465a58f3bef61d28bb469919f1eef9d35202e371caeb3f719af44",
+  "public_indices": [
+    1
+  ],
+  "title": "شجر الطلح ألهم تصميم محطة إكسبو",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

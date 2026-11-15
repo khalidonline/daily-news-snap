@@ -1,0 +1,20 @@
+{
+  "image_assets": [
+    {
+      "path": "approved/expo-station-20261115/photo-0.png",
+      "sha256": "2c1d4439815c0eb8c94a3768be649a625c275458ae8daf223c59812686a6ce78",
+      "source_url": "https://www.rcrc.gov.sa/rcrc-riyadh-metro-expo-station/",
+      "credit": "الهيئة الملكية لمدينة الرياض",
+      "description": "أعمدة على شكل أغصان الطلح",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/expo-station-20261115/photo-1.png",
+      "sha256": "2152f8b458bc8cbf56e9966d0ac8de980e29cfadb48bc12c2aeaf2dc2e20f46d",
+      "source_url": "https://www.rcrc.gov.sa/rcrc-riyadh-metro-expo-station/",
+      "credit": "الهيئة الملكية لمدينة الرياض",
+      "description": "تصميم المحطة من فوق",
+      "rights_status": "source_recorded"
+    }
+  ]
+}

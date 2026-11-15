@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "شجر الطلح ألهم تصميم محطة إكسبو",
+  "not_before": "2026-11-15T00:00:00+03:00",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "1b5410e338a2d3183f6de89573e4717584a5b0b7c7b686b465b3b10f8a14bbf2"
+    ],
+    "approved_source_sha256": [
+      "2c1d4439815c0eb8c94a3768be649a625c275458ae8daf223c59812686a6ce78",
+      "2152f8b458bc8cbf56e9966d0ac8de980e29cfadb48bc12c2aeaf2dc2e20f46d"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/expo-station-20261115/card.png",
+      "sha256": "1b5410e338a2d3183f6de89573e4717584a5b0b7c7b686b465b3b10f8a14bbf2",
+      "source_assets": [
+        {
+          "path": "approved/expo-station-20261115/photo-0.png",
+          "sha256": "2c1d4439815c0eb8c94a3768be649a625c275458ae8daf223c59812686a6ce78",
+          "source_url": "https://www.rcrc.gov.sa/rcrc-riyadh-metro-expo-station/",
+          "credit": "الهيئة الملكية لمدينة الرياض",
+          "description": "أعمدة على شكل أغصان الطلح",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/expo-station-20261115/photo-1.png",
+          "sha256": "2152f8b458bc8cbf56e9966d0ac8de980e29cfadb48bc12c2aeaf2dc2e20f46d",
+          "source_url": "https://www.rcrc.gov.sa/rcrc-riyadh-metro-expo-station/",
+          "credit": "الهيئة الملكية لمدينة الرياض",
+          "description": "تصميم المحطة من فوق",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

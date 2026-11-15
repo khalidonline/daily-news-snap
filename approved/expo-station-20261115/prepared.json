@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/expo-station-20261115",
+  "manifest_content_sha256": "b078d9ff7ca33cb31b4bbfb7e8982fe7e40c679de30e7d9914ecfe6746e3344d",
+  "archive_content_sha256": "b28398790ced1a67791f08b40ec35c3c4c817e42e5192f9782cc979b01face66",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "5b8f1e91be699705c376ed5dfa34b99f92a0a5c88b5c345ba374b3ddec8c8ea1",
+  "assets": {
+    "approved/expo-station-20261115/card.png": "1b5410e338a2d3183f6de89573e4717584a5b0b7c7b686b465b3b10f8a14bbf2",
+    "approved/expo-station-20261115/photo-0.png": "2c1d4439815c0eb8c94a3768be649a625c275458ae8daf223c59812686a6ce78",
+    "approved/expo-station-20261115/photo-1.png": "2152f8b458bc8cbf56e9966d0ac8de980e29cfadb48bc12c2aeaf2dc2e20f46d"
+  },
+  "preparation_seconds": 0.002
+}
