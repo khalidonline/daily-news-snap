@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "expo-station-20261115",
-  "identity": "490af0b3e28465a58f3bef61d28bb469919f1eef9d35202e371caeb3f719af44",
+  "package": "steve-harvey-ali-20261115",
+  "identity": "b1131113558e19e49495422b5d07e8e22ce4d953bf482fb2e4d48ba0768284a3",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر صورة محطة إكسبو بعد تعديل العنوان. القصة لأسبوع والحفظ في الملف العام.",
-  "approved_at": "2026-11-15T14:53:05.809947+00:00",
+  "owner_reference": "خالد: انشر بطاقة ستيف هارفي وولده علي.",
+  "approved_at": "2026-11-15T15:15:03.817725+00:00",
   "expires_at": "2026-11-15T23:59:59+03:00",
-  "manifest_sha256": "8ed625db94c0998f9c48f4cdc843a67c2d8634f6ba947ee4b660bc00dfa8b1e4",
-  "archive_sha256": "415f62fbcf8de94dfac423844ec1ad4425985ff3aea2ac9e63b8bba99454f5b4",
-  "prepared_sha256": "9698c501a3922af10c7d1f9c35ad3739e92b065550613cf44dd71e13a198dac1",
-  "preview_receipt_sha256": "493107b0ccd68820bd162e86a6fbcdccfeb4fc34b109f60559c1a0cd270bc4d6"
+  "manifest_sha256": "b50d05df128a6398337e2e20a7e7d4229cbe685c0a0e3e0dff3833864b89f618",
+  "archive_sha256": "921b1a045cff3a40b43187bc3d9c94b787696f0608e707b2dfc925b95715d17c",
+  "prepared_sha256": "4f798d9ac74154507d28afcc2176aa03c526b5ab54fc906792893da51cf7eda7",
+  "preview_receipt_sha256": "80a9102b8ad459e28b1b6ee60458bbae469ea2fae93f8fcbfa48fd55d306a389"
 }

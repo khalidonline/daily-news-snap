@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -17,7 +17,9 @@
     ],
     "approved_source_sha256": [
       "047ef78a74bd4ff79b547f0c14e6e022655bba55b8d80e75c96b0252cab75299"
-    ]
+    ],
+    "reference": "خالد: انشر بطاقة ستيف هارفي وولده علي.",
+    "reviewed_at": "2026-11-15T15:15:03.817725+00:00"
   },
   "media": [
     {
