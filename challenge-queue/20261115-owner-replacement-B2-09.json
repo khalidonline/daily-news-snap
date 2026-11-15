@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "record_type": "OWNER_AUTHORIZED_TOPIC_REPLACEMENT",
+  "recorded_at": "2026-11-15T12:29:27Z",
+  "item_id": "B2-09",
+  "slot_riyadh": "2026-11-16T19:00:00+03:00",
+  "previous_topic": "الممرات الصخرية، الأحساء أو العلا؟ جبل القارة في الأحساء.",
+  "replacement_topic": "هالبيوت وسط الجبال في تركيا أو سويسرا؟ تركيا! مرتفعات بوكوت، منطقة ريزة. أخفِ الاسم والموقع لين الكشف.",
+  "reason": "A published Al-Ahsa card explicitly identified Jabal Al-Qarah in Al-Ahsa and spoiled the old challenge's answer.",
+  "owner_authorization": {
+    "question": "تبي نستبدل التحدي أو نخليه مثل ما هو؟",
+    "reply": "ايه بدله",
+    "scope": "Replace B2-09 only; retain its existing approved format and scheduled slot."
+  },
+  "replacement": {
+    "category": "توقّع المكان",
+    "question": "هالبيوت وسط الجبال في تركيا أو سويسرا؟",
+    "options": [
+      "تركيا",
+      "سويسرا"
+    ],
+    "correct_answer": "تركيا",
+    "reveal_location": "مرتفعات بوكوت، منطقة ريزة، تركيا",
+    "location_visibility": "Only after countdown, with answer reveal."
+  },
+  "fact_source": {
+    "url": "https://www.kulturportali.gov.tr/turkiye/rize/gezilecekyer/pokut-yaylasi",
+    "publisher": "Türkiye Ministry of Culture and Tourism / Rize Provincial Culture and Tourism Directorate",
+    "verified": "Official page identifies Pokut Yaylası in Rize, south of Çamlıhemşin, with traditional wooden houses."
+  },
+  "reference_image": {
+    "url": "https://www.kulturportali.gov.tr/repoKulturPortali/large/25022013/2ee08089-0ca7-4b15-b08b-e4d6ad82e304.JPG",
+    "sha256": "b47addf94098a73cac2813427e1e3634c03c0036b1d1e36604df3e9734a639b5",
+    "width": 1000,
+    "height": 664,
+    "credit": "Rize İl Kültür ve Turizm Müdürlüğü Fotoğraf Arşivi",
+    "visual_review": "Viewed actual full-resolution image. Wooden houses on a green mountain ridge; no visible place name, flag, or sign that reveals the answer.",
+    "role": "Verified editorial reference; not a rendered video or approval to bypass existing media requirements."
+  },
+  "duplicate_check": {
+    "publication_log_version": 46,
+    "published_topic_matches": 0,
+    "live_queue_other_topic_matches": 0,
+    "existing_B2_09_asset_or_receipt_found": false,
+    "checked_at": "2026-11-15T12:29:27Z"
+  },
+  "constraints": {
+    "publish_early": false,
+    "dispatch_now": false,
+    "preserve_item_id": true,
+    "preserve_other_slots": true,
+    "preserve_template_audio_countdown": true,
+    "normal_production_and_receipt_checks_required": true
+  },
+  "unchanged_queue": {
+    "next_item": "B2-06",
+    "next_slot_riyadh": "2026-11-15T19:00:00+03:00",
+    "completed": 5,
+    "total": 18,
+    "remaining": 13,
+    "stop_after": "B2-19"
+  },
+  "supersedes": "Only the former B2-09 Al-Ahsa/AlUla topic wherever it remains in older planning records; never reproduce or publish that old challenge.",
+  "publication_status": "NOT_STARTED"
+}
