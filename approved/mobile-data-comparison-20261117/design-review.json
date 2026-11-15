@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "ae3f0e81f86231260e4052f33fc8abc3dfd05a04235da698de21003306080d1d",
+      "template": "comparison",
+      "comparison": {
+        "variant": "annotated-range-v1",
+        "reference_sha256": "ae3f0e81f86231260e4052f33fc8abc3dfd05a04235da698de21003306080d1d",
+        "title": "ساعة على جوالك كم تسحب من باقتك؟",
+        "subtitle": "ساعة كاملة لكل تطبيق",
+        "unit": "بالميقا تقريبا",
+        "basis": {
+          "quantity": 1,
+          "unit": "hour"
+        },
+        "note": "استهلاك الفيديو يتغير حسب الجودة والمقاطع.",
+        "rows": [
+          {
+            "label": "تيك توك",
+            "low": 500,
+            "high": 1000,
+            "usage": "تصفح المقاطع"
+          },
+          {
+            "label": "سناب",
+            "low": 360,
+            "high": 1200,
+            "usage": "مقاطع الأضواء والستوري"
+          },
+          {
+            "label": "يوتيوب",
+            "low": 240,
+            "high": 500,
+            "usage": "الجودة التلقائية إذا اختارت 480p"
+          },
+          {
+            "label": "إكس",
+            "low": 50,
+            "high": 60,
+            "usage": "قراءة تغريدات بدون فيديو"
+          },
+          {
+            "label": "خرائط قوقل",
+            "low": 30,
+            "high": 50,
+            "usage": "تتبع الطريق"
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 1200,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            80,
+            1005
+          ],
+          "bar_y": [
+            604,
+            807,
+            1010,
+            1213,
+            1416
+          ]
+        }
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Agent inspected exact export, all chart values, annotations and labels, original typography, sharing CTA, full-size and390px diagnostic previews on2026-11-15. Not a new owner approval or factual research certification.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Agent inspected390px simulated Story chrome top0..105 and bottom1830..1920; title, chart, notes and CTA unobstructed. Simulation only, not actual platform screenshot or universal device safe-zone guarantee."
+    }
+  }
+}

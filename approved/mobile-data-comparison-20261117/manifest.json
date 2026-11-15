@@ -1,0 +1,111 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "ساعة على جوالك كم تسحب من باقتك؟",
+  "not_before": "2026-11-17T09:00:00+03:00",
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "ae3f0e81f86231260e4052f33fc8abc3dfd05a04235da698de21003306080d1d"
+    ],
+    "approved_source_sha256": [
+      "ae3f0e81f86231260e4052f33fc8abc3dfd05a04235da698de21003306080d1d"
+    ],
+    "reference": "Owner approved this exact latest Library export: https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19?messageId=5dde95fb-0571-4c80-bb4a-042e52042668 ; daily09:00 Riyadh Story schedule: message601d5ce4-f5ed-4926-9381-ed29ade2194e. Story only; dispatch at scheduled time, not before. No Saved Story approval claimed.",
+    "reviewed_at": "2026-11-15T08:16:33.352650+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/mobile-data-comparison-20261117/card.png",
+      "sha256": "ae3f0e81f86231260e4052f33fc8abc3dfd05a04235da698de21003306080d1d",
+      "template": "comparison",
+      "comparison": {
+        "variant": "annotated-range-v1",
+        "reference_sha256": "ae3f0e81f86231260e4052f33fc8abc3dfd05a04235da698de21003306080d1d",
+        "title": "ساعة على جوالك كم تسحب من باقتك؟",
+        "subtitle": "ساعة كاملة لكل تطبيق",
+        "unit": "بالميقا تقريبا",
+        "basis": {
+          "quantity": 1,
+          "unit": "hour"
+        },
+        "note": "استهلاك الفيديو يتغير حسب الجودة والمقاطع.",
+        "rows": [
+          {
+            "label": "تيك توك",
+            "low": 500,
+            "high": 1000,
+            "usage": "تصفح المقاطع"
+          },
+          {
+            "label": "سناب",
+            "low": 360,
+            "high": 1200,
+            "usage": "مقاطع الأضواء والستوري"
+          },
+          {
+            "label": "يوتيوب",
+            "low": 240,
+            "high": 500,
+            "usage": "الجودة التلقائية إذا اختارت 480p"
+          },
+          {
+            "label": "إكس",
+            "low": 50,
+            "high": 60,
+            "usage": "قراءة تغريدات بدون فيديو"
+          },
+          {
+            "label": "خرائط قوقل",
+            "low": 30,
+            "high": 50,
+            "usage": "تتبع الطريق"
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 1200,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            80,
+            1005
+          ],
+          "bar_y": [
+            604,
+            807,
+            1010,
+            1213,
+            1416
+          ]
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/mobile-data-comparison-20261117/card.png",
+          "sha256": "ae3f0e81f86231260e4052f33fc8abc3dfd05a04235da698de21003306080d1d",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_fde3_f-9142af0b48e88191ac157ca583e58838_caf305c17d148191b336ceff647730cb&account_id=personal",
+          "credit": "Executive Summary",
+          "description": "Unchanged owner-selected comparison chart export; Library version 2",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

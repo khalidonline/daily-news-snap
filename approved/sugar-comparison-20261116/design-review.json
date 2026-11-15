@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "6c10247642fe38b6fc615a9fa88be579fcd19ce3727a578c510d09fe8150a021",
+      "template": "comparison",
+      "comparison": {
+        "variant": "pictogram-count-v1",
+        "reference_sha256": "6c10247642fe38b6fc615a9fa88be579fcd19ce3727a578c510d09fe8150a021",
+        "title": "كم ملعقة سكر في مشروبك؟",
+        "subtitle": "في كل 250 مل من المشروب",
+        "unit": "ملاعق صغيرة تقريبا",
+        "basis": {
+          "quantity": 250,
+          "unit": "ml"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "ريد بول",
+            "count": 7
+          },
+          {
+            "label": "كوكاكولا",
+            "count": 7
+          },
+          {
+            "label": "برتقال معصور طازج",
+            "count": 5
+          },
+          {
+            "label": "كراميل ماكياتو من ستاربكس",
+            "count": 4
+          }
+        ],
+        "pictogram": {
+          "kind": "teaspoon",
+          "capacity": 7,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "row_step": 286,
+          "pictogram_y": [
+            620,
+            906,
+            1192,
+            1478
+          ]
+        }
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Agent inspected exact export, all chart values, annotations and labels, original typography, sharing CTA, full-size and390px diagnostic previews on2026-11-15. Not a new owner approval or factual research certification.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Agent inspected390px simulated Story chrome top0..105 and bottom1830..1920; title, chart, notes and CTA unobstructed. Simulation only, not actual platform screenshot or universal device safe-zone guarantee."
+    }
+  }
+}

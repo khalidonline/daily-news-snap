@@ -1,0 +1,93 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "كم ملعقة سكر في مشروبك؟",
+  "not_before": "2026-11-16T09:00:00+03:00",
+  "expires_at": "2026-11-16T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "6c10247642fe38b6fc615a9fa88be579fcd19ce3727a578c510d09fe8150a021"
+    ],
+    "approved_source_sha256": [
+      "6c10247642fe38b6fc615a9fa88be579fcd19ce3727a578c510d09fe8150a021"
+    ],
+    "reference": "Owner approved this exact latest Library export: https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19?messageId=bd75b924-11f6-48fd-abb5-95e52c905ad4 ; daily09:00 Riyadh Story schedule: message601d5ce4-f5ed-4926-9381-ed29ade2194e. Story only; dispatch at scheduled time, not before. No Saved Story approval claimed.",
+    "reviewed_at": "2026-11-15T08:06:29.247715+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/sugar-comparison-20261116/card.png",
+      "sha256": "6c10247642fe38b6fc615a9fa88be579fcd19ce3727a578c510d09fe8150a021",
+      "template": "comparison",
+      "comparison": {
+        "variant": "pictogram-count-v1",
+        "reference_sha256": "6c10247642fe38b6fc615a9fa88be579fcd19ce3727a578c510d09fe8150a021",
+        "title": "كم ملعقة سكر في مشروبك؟",
+        "subtitle": "في كل 250 مل من المشروب",
+        "unit": "ملاعق صغيرة تقريبا",
+        "basis": {
+          "quantity": 250,
+          "unit": "ml"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "ريد بول",
+            "count": 7
+          },
+          {
+            "label": "كوكاكولا",
+            "count": 7
+          },
+          {
+            "label": "برتقال معصور طازج",
+            "count": 5
+          },
+          {
+            "label": "كراميل ماكياتو من ستاربكس",
+            "count": 4
+          }
+        ],
+        "pictogram": {
+          "kind": "teaspoon",
+          "capacity": 7,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "row_step": 286,
+          "pictogram_y": [
+            620,
+            906,
+            1192,
+            1478
+          ]
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/sugar-comparison-20261116/card.png",
+          "sha256": "6c10247642fe38b6fc615a9fa88be579fcd19ce3727a578c510d09fe8150a021",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a21452424a488191837a737f8c690f84_caf305c17d148191b336ceff647730cb&account_id=personal",
+          "credit": "Executive Summary",
+          "description": "Unchanged owner-selected comparison chart export; Library version 2",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
