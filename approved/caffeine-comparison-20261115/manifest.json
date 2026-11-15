@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "وش اكثر مشروب يصحصحك ؟",
+  "not_before": "2026-11-15T00:00:00+03:00",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb"
+    ],
+    "approved_source_sha256": [
+      "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/caffeine-comparison-20261115/card.png",
+      "sha256": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+      "source_assets": [
+        {
+          "path": "assets/comparison/reference.png",
+          "sha256": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b33024e70b248191bfecbdfd7e31e405_caf305c17d148191b336ceff647730cb&account_id=personal",
+          "credit": "Executive Summary",
+          "description": "Owner-approved comparison chart",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

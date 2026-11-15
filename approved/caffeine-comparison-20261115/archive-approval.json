@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/caffeine-comparison-20261115/manifest.json",
+  "manifest_sha256": "c14acf014f0f6dadff51ac010686a1cc326264852b9c11b63b261c850eb9d21a",
+  "identity": "44c734596cc99365806fa54504ab327f502f98a6d1c7be2bca9789ee3b8d2c5a",
+  "public_indices": [
+    1
+  ],
+  "title": "وش اكثر مشروب يصحصحك ؟",
+  "expires_at": "2026-11-15T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

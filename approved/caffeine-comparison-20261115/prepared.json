@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/caffeine-comparison-20261115",
+  "manifest_content_sha256": "9b5a430b2bf356b5767e403c25f42bbf18b72d6fa652d47cf0c05e7e2a8511a7",
+  "archive_content_sha256": "ccf5db9d8e886ea28f1dbb6671aa482a31e0ba5cc715aa910e54c1e00f7e2fd8",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "cf55abb70f8d72ddb097534a014e1d47f23ad328cd2c3f839c8ae4667b3721d6",
+  "assets": {
+    "approved/caffeine-comparison-20261115/card.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+    "assets/comparison/reference.png": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb"
+  },
+  "preparation_seconds": 0.001
+}

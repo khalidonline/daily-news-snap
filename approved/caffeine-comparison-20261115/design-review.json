@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "81d777e199e8e022100e1613a4ce9469155584b54cf156d4738b49e50aa285bb",
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      },
+      "template": "comparison",
+      "comparison": {
+        "title": "وش اكثر مشروب يصحصحك ؟",
+        "subtitle": "كمية الكافيين في كل 100 مل",
+        "unit": "بالملغ",
+        "note": "الأرقام تقريبية لنفس كمية المشروب",
+        "rows": [
+          [
+            "إسبريسو",
+            210,
+            210
+          ],
+          [
+            "قهوة سعودية",
+            40,
+            50
+          ],
+          [
+            "قهوة سوداء",
+            41,
+            41
+          ],
+          [
+            "شاهي أسود",
+            20,
+            20
+          ],
+          [
+            "شاهي أخضر",
+            12,
+            12
+          ],
+          [
+            "كوكاكولا",
+            10,
+            10
+          ]
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "قالب المقارنات — Caffeine-Comparison-Final.png",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Approved static chart with original header, margins and sharing footer",
+      "SAVED_STORY": "Approved static chart with original header, margins and sharing footer"
+    }
+  }
+}

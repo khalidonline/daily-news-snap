@@ -64,7 +64,11 @@ def validate_design(media, report, placement):
         except (OSError,ValueError):fail('invalid image')
         if image.size!=(1080,1920):fail('dimensions must be 1080x1920')
         _flat_palette(image,card.get('palette_samples'),settings)
-        _pixels(image,card.get('blocks'),settings)
+        if card.get('template') == 'comparison':
+            from .comparison_template import validate
+            validate(image, card['comparison'])
+        else:
+            _pixels(image,card.get('blocks'),settings)
     return {'status':'validated','sha256':[hashlib.sha256(raw).hexdigest() for _,raw in media]}
 
 
