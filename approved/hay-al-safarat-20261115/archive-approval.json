@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/hay-al-safarat-20261115/manifest.json",
-  "manifest_sha256": "bc01fe8c36b3550e1955bf430b99e3ed609b00684d2e873fe60f4cd5491e3106",
+  "manifest_sha256": "143022f416e1ccc747b9d43516324e666af7f9e2eabf58e2695b0815b418d803",
   "identity": "cfcf58ea6d14204fbafaa230fd143f441f097c68f929ea05300a1c5d36946bf7",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "خذ معلومتين خفيفه عن حي السفارات.",
   "expires_at": "2026-11-15T23:59:59+03:00",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
-  "owner_authorization": ""
+  "owner_authorization": "خالد: انشر صورة بطاقة حي السفارات المعتمدة Hay-AlSafarat-Approved-Template.png على قصة @executivesaudi لمدة أسبوع واحفظها في الملف العام. الفيديو والصوت والعداد للتحديات فقط."
 }

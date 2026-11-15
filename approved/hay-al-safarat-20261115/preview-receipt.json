@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "0f67773e674e3604cdbd8fdca4ef7d7669934148",
+  "assets": {
+    "approved/hay-al-safarat-20261115/card.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+    "assets/information/hay-al-safarat-reference.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b"
+  },
+  "preview_paths": [
+    "approved/hay-al-safarat-20261115/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/hay-al-safarat-20261115/card.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+    "assets/information/hay-al-safarat-reference.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+    "approved/hay-al-safarat-20261115/manifest.json": "bc01fe8c36b3550e1955bf430b99e3ed609b00684d2e873fe60f4cd5491e3106",
+    "approved/hay-al-safarat-20261115/archive-approval.json": "e7313bbff733afa5000ddb4a4deefa4f51623a32038b186837f010f6ff9fe03d",
+    "approved/hay-al-safarat-20261115/design-review.json": "254955331a9c353f462f09cd51acf986d5dbd3420ad253f12c8e67cff5090176",
+    "approved/hay-al-safarat-20261115/sources.json": "738990b04fb59d443889f79eb42488501cc1294fb8ff703abcbf8c1adb008931",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/hay-al-safarat-20261115",
+    "manifest_content_sha256": "249b169a21c1cc9772f20dcc89a1be8c9ffb561070a7e82f643ce5a7880e7d37",
+    "archive_content_sha256": "6d5cb5522aac36489b87de370794c50cded362f4716c0088b392e0f5db6196dd",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "254955331a9c353f462f09cd51acf986d5dbd3420ad253f12c8e67cff5090176",
+    "assets": {
+      "approved/hay-al-safarat-20261115/card.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b",
+      "assets/information/hay-al-safarat-reference.png": "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b"
+    }
+  }
+}

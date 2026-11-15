@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,8 +18,8 @@
     "approved_source_sha256": [
       "9ed8fe70ce8fdc1107961e2a347fe7b92e26e2b3f0f0a93b85885f47d53cdf1b"
     ],
-    "reference": "خالد: بطاقة حي السفارات المعتمدة بصورتها الأصلية.",
-    "reviewed_at": "2026-11-15T16:26:55.753406+00:00"
+    "reference": "خالد: انشر صورة بطاقة حي السفارات المعتمدة Hay-AlSafarat-Approved-Template.png على قصة @executivesaudi لمدة أسبوع واحفظها في الملف العام. الفيديو والصوت والعداد للتحديات فقط.",
+    "reviewed_at": "2026-11-15T16:30:10.016202+00:00"
   },
   "media": [
     {

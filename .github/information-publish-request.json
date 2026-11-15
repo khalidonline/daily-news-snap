@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "steve-harvey-ali-20261115",
-  "identity": "b1131113558e19e49495422b5d07e8e22ce4d953bf482fb2e4d48ba0768284a3",
+  "package": "hay-al-safarat-20261115",
+  "identity": "cfcf58ea6d14204fbafaa230fd143f441f097c68f929ea05300a1c5d36946bf7",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر بطاقة ستيف هارفي وولده علي.",
-  "approved_at": "2026-11-15T15:15:03.817725+00:00",
+  "owner_reference": "خالد: انشر صورة بطاقة حي السفارات المعتمدة Hay-AlSafarat-Approved-Template.png على قصة @executivesaudi لمدة أسبوع واحفظها في الملف العام. الفيديو والصوت والعداد للتحديات فقط.",
+  "approved_at": "2026-11-15T16:30:10.016202+00:00",
   "expires_at": "2026-11-15T23:59:59+03:00",
-  "manifest_sha256": "b50d05df128a6398337e2e20a7e7d4229cbe685c0a0e3e0dff3833864b89f618",
-  "archive_sha256": "921b1a045cff3a40b43187bc3d9c94b787696f0608e707b2dfc925b95715d17c",
-  "prepared_sha256": "4f798d9ac74154507d28afcc2176aa03c526b5ab54fc906792893da51cf7eda7",
-  "preview_receipt_sha256": "80a9102b8ad459e28b1b6ee60458bbae469ea2fae93f8fcbfa48fd55d306a389"
+  "manifest_sha256": "143022f416e1ccc747b9d43516324e666af7f9e2eabf58e2695b0815b418d803",
+  "archive_sha256": "4b3c7d55aece9b3b42610ca4bf2098f6b295fd70997c16f099a587fa943b6c3e",
+  "prepared_sha256": "b307b20443130e78ea8970980bf09ede21e021f5a66dc5fa09e4cba59f539af9",
+  "preview_receipt_sha256": "1f3c46f845b101fefab6b1f3ce7be4a2eefdedc971a912ddb0dbf22c6124c92c"
 }
