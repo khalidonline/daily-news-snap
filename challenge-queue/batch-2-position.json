@@ -1,7 +1,7 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "IN_PROGRESS",
+  "status": "SLOT_RESERVED",
   "next_item": "B2-05",
   "remaining": [
     {
@@ -67,5 +67,6 @@
   "last_completed": {
     "id": "B2-04",
     "receipt": "api-receipts/dhee-ayn-20261114-preflight.json"
-  }
+  },
+  "reserved_version": "a59580c92966e2d4050103290a5aeae6648d1663ce007d071c5130c10fc2b90c"
 }
