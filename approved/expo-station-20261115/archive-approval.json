@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/expo-station-20261115/manifest.json",
-  "manifest_sha256": "e3127ffc2416927e721070974d955d4fad8aefbceece2e01c0b007a1929543d7",
+  "manifest_sha256": "8ed625db94c0998f9c48f4cdc843a67c2d8634f6ba947ee4b660bc00dfa8b1e4",
   "identity": "490af0b3e28465a58f3bef61d28bb469919f1eef9d35202e371caeb3f719af44",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "شجر الطلح ألهم تصميم محطة إكسبو",
   "expires_at": "2026-11-15T23:59:59+03:00",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
-  "owner_authorization": ""
+  "owner_authorization": "خالد: انشر صورة محطة إكسبو بعد تعديل العنوان. القصة لأسبوع والحفظ في الملف العام."
 }

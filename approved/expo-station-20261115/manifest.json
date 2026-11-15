@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "2c1d4439815c0eb8c94a3768be649a625c275458ae8daf223c59812686a6ce78",
       "2152f8b458bc8cbf56e9966d0ac8de980e29cfadb48bc12c2aeaf2dc2e20f46d"
-    ]
+    ],
+    "reference": "خالد: انشر صورة محطة إكسبو بعد تعديل العنوان. القصة لأسبوع والحفظ في الملف العام.",
+    "reviewed_at": "2026-11-15T14:53:05.809947+00:00"
   },
   "media": [
     {

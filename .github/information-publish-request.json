@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "caffeine-comparison-20261115",
-  "identity": "44c734596cc99365806fa54504ab327f502f98a6d1c7be2bca9789ee3b8d2c5a",
+  "package": "expo-station-20261115",
+  "identity": "490af0b3e28465a58f3bef61d28bb469919f1eef9d35202e371caeb3f719af44",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر بطاقة الكافيين على القصة لأسبوع والحفظ في الملف العام، خله صورة بالرسم البياني حسب آخر التعديلات.",
-  "approved_at": "2026-11-15T07:33:38.294364+00:00",
+  "owner_reference": "خالد: انشر صورة محطة إكسبو بعد تعديل العنوان. القصة لأسبوع والحفظ في الملف العام.",
+  "approved_at": "2026-11-15T14:53:05.809947+00:00",
   "expires_at": "2026-11-15T23:59:59+03:00",
-  "manifest_sha256": "1a2e0afe293b6cc08227a4a6e763ffffadf730681c7ee799f51216d5c1976c65",
-  "archive_sha256": "d13c1b842af1a6615c2a980d88539208caf3624cfb534855b43e759a281232e7",
-  "prepared_sha256": "c50ef828029824f7f04d39a91a3b7d17d5395024d96645f090d151324c77da4c",
-  "preview_receipt_sha256": "828ceb705d572a6bc3fd4d359f96e42335551da0522c11d3110edbc3a6d71c4a"
+  "manifest_sha256": "8ed625db94c0998f9c48f4cdc843a67c2d8634f6ba947ee4b660bc00dfa8b1e4",
+  "archive_sha256": "415f62fbcf8de94dfac423844ec1ad4425985ff3aea2ac9e63b8bba99454f5b4",
+  "prepared_sha256": "9698c501a3922af10c7d1f9c35ad3739e92b065550613cf44dd71e13a198dac1",
+  "preview_receipt_sha256": "493107b0ccd68820bd162e86a6fbcdccfeb4fc34b109f60559c1a0cd270bc4d6"
 }
