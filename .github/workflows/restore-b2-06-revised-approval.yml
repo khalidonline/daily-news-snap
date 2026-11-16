@@ -25,13 +25,12 @@ jobs:
                   obj = json.loads(data)
                   if isinstance(obj, dict) and obj.get('approved') is True and 'expires_at' in obj:
                       files.append((path, data))
-          assert len(files) == 1, [str(p) for p, _ in files]
-          path, data = files[0]
-          print(path)
-          assert not path.exists() and path.parts[0] == 'approved'
-          path.parent.mkdir(parents=True, exist_ok=True)
-          path.write_bytes(data)
-          subprocess.run(['git', 'add', '--', str(path)], check=True)
+          assert {str(p) for p, _ in files} == {'approved/app-origins-revised/manifest.json', 'approved/app-origins-revised/source-approval.json'}
+          for path, data in files:
+              assert not path.exists()
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_bytes(data)
+              subprocess.run(['git', 'add', '-f', '--', str(path)], check=True)
           PY
           git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -m "Restore exact B2-06 revised publication approval"
           git push origin HEAD:main
