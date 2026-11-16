@@ -6,6 +6,7 @@
   ".github/workflows/cancel-hotel-stalled-preparation.yml": "b8a753361b9f0606cd49337fc9764a71584321318c22fec8a5bba33575c54361",
   ".github/workflows/deliver-aerofurniture-approved.yml": "06012f38e24b9520755ccd24868a93c67b29061d46796be54cd5b18568d45b0a",
   ".github/workflows/deliver-albaik-herfy-approved.yml": "e6c632c6ec5628b0c817fdd9541e57fd83f80b038ef0c2b807bdc379375d77d2",
+  ".github/workflows/deliver-app-origins-approved.yml": "3853b4f887110f0bd247f9beeef2c3db56482e9345a9f3a4d6d71ca5932bfb8d",
   ".github/workflows/deliver-beaches-approved-20261029.yml": "65de7c29a85775ef366d207bb9b4904e5b1de71327160b14d46af92ab26b592c",
   ".github/workflows/deliver-bmw-gina-approved.yml": "553d3714feff67fc10f3bec10a64ed882b391f0d3da4637c48867ff99bccd961",
   ".github/workflows/deliver-bridges-approved-20261027.yml": "58377f458db2e2c2afe6ba2cae1cff6d6c5d730ada55086b2444842fff22bed9",
