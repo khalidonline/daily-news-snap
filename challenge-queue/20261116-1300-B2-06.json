@@ -1,0 +1,25 @@
+{
+  "id": "B2-06",
+  "slot": "2026-11-16T13:00:00+03:00",
+  "package": "app-origins-20261116",
+  "approved_version": "5b244eaa3d1569136e17e0cad74cb3e81449bf8918ca9978640189d84db8c6de",
+  "topic": "وش نزل أول، إنستقرام أو سناب؟",
+  "state": "POSTED_BOTH",
+  "receipts": {
+    "STORY": {
+      "post_id": "110812ff-7eb6-4557-8e03-0a6dfa91a919",
+      "snapchat_id": "10f888c6-1a39-42f8-bdad-1c3209c53a40",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "upload_id": "9bbf240c-da22-440a-91ad-e50504f09a3e"
+    },
+    "SPOTLIGHT": {
+      "post_id": "fcb30a71-6315-45c9-a131-1fa63f741a45",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYYm55ZHF6dnV5AaHj51lmAaHj51krAAAAAA",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "upload_id": "9867ce99-7958-4fb8-b08d-a1b470e5ce64"
+    }
+  },
+  "media_sha256": "5b6ad554ebb2583412ebf10963a96e9076e4c26950641ac6b289c924af8562dd"
+}
