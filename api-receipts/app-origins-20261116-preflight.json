@@ -1,1 +1,1 @@
-{"budget": {"new_paid_model_requests": 0, "total_daily_spend": "UNKNOWN", "limit_usd": 3}}
+{"budget": {"new_paid_model_requests": 0, "total_daily_spend": "UNKNOWN", "limit_usd": 3}, "quota_STORY": {"date": "2026-11-16T00:00:00.000Z", "socialAccountId": "e2b8c159-fc3b-4220-bb57-e2d9aa2cb779", "type": "SNAPCHAT", "posts": {"used": 1, "limit": 20, "remaining": 19}, "comments": {"used": 0, "limit": 24, "remaining": 24}}}
