@@ -307,5 +307,6 @@
   "topic_delivery_guard.py": "2bdd02b3227fe7a641f051f90cd6d0f8c0c1a9b67c66429a21e62195c4e23836",
   "topic_editorial.py": "e72c3a892ba1db04201ad1b59486ce714070cfcf2906dca1ebdcec160bde151b",
   "topic_snapchat.py": "cab8fc89b76764eaa386f862fffa0eba6ef49b36919f9606245f87aaa9e58323",
-  "validate_saved_local_20260926.py": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51"
+  "validate_saved_local_20260926.py": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51",
+  ".github/workflows/deliver-app-origins-revised.yml": "e0f5b92b5e21c3d1e685884735be6c59f3dcda69c2593ff78f194c4ac3925f95"
 }
