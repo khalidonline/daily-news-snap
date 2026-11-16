@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,7 +19,9 @@
       "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
       "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
       "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4"
-    ]
+    ],
+    "reference": "خالد عن بطاقة الكولا بالقفلة المعدلة: كمل الين تنشر",
+    "reviewed_at": "2026-11-16T14:57:54.759239+00:00"
   },
   "media": [
     {

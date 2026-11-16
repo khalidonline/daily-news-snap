@@ -1,0 +1,42 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "15bbd8fec54c438baec5a969abfc992ec3957a47",
+  "assets": {
+    "approved/cola-cacao-20261116/card.png": "875d33716f01f1d603d4f478bef438ae22286d54a73f39e953f876ead309c3a4",
+    "approved/cola-cacao-20261116/modern.png": "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
+    "approved/cola-cacao-20261116/cacao.png": "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
+    "approved/cola-cacao-20261116/prototype.jpg": "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4"
+  },
+  "preview_paths": [
+    "approved/cola-cacao-20261116/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/cola-cacao-20261116/card.png": "875d33716f01f1d603d4f478bef438ae22286d54a73f39e953f876ead309c3a4",
+    "approved/cola-cacao-20261116/modern.png": "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
+    "approved/cola-cacao-20261116/cacao.png": "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
+    "approved/cola-cacao-20261116/prototype.jpg": "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4",
+    "approved/cola-cacao-20261116/manifest.json": "1a75a6334f9073fdcbd20a14a9a267dbf8a4dbb4168048770243154861d4b0e9",
+    "approved/cola-cacao-20261116/archive-approval.json": "0b27171a544db616f51077ccfcdbd405ac2e3303cd1d8dd79eeaae1fa96e4518",
+    "approved/cola-cacao-20261116/design-review.json": "da2d2986679d51ac2dd6be38ea000966f7aa39d72ceb5c71f13a3a1ccbd76301",
+    "approved/cola-cacao-20261116/sources.json": "c93ffe6b40aa980a9ece03c3e6ce3d32934cce40fd601698574bac6fda9dbdfb",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/cola-cacao-20261116",
+    "manifest_content_sha256": "96b3d803090e490343116cce839e85184e1e8f54782f915be5d81356a9ea5836",
+    "archive_content_sha256": "d654d7270214a61b8c6ca999e82f843f9f7d2ee78e5ef1eef254351b97b6fa8b",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "da2d2986679d51ac2dd6be38ea000966f7aa39d72ceb5c71f13a3a1ccbd76301",
+    "assets": {
+      "approved/cola-cacao-20261116/card.png": "875d33716f01f1d603d4f478bef438ae22286d54a73f39e953f876ead309c3a4",
+      "approved/cola-cacao-20261116/modern.png": "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
+      "approved/cola-cacao-20261116/cacao.png": "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
+      "approved/cola-cacao-20261116/prototype.jpg": "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4"
+    }
+  }
+}

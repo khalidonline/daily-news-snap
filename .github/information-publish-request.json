@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "hay-al-safarat-20261115",
-  "identity": "cfcf58ea6d14204fbafaa230fd143f441f097c68f929ea05300a1c5d36946bf7",
+  "package": "cola-cacao-20261116",
+  "identity": "f4bdba872dfca57319cfd57c7d4b850778a4325bbd475383de4021f7a7964c1c",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: انشر صورة بطاقة حي السفارات المعتمدة Hay-AlSafarat-Approved-Template.png على قصة @executivesaudi لمدة أسبوع واحفظها في الملف العام. الفيديو والصوت والعداد للتحديات فقط.",
-  "approved_at": "2026-11-15T16:30:10.016202+00:00",
-  "expires_at": "2026-11-15T23:59:59+03:00",
-  "manifest_sha256": "143022f416e1ccc747b9d43516324e666af7f9e2eabf58e2695b0815b418d803",
-  "archive_sha256": "4b3c7d55aece9b3b42610ca4bf2098f6b295fd70997c16f099a587fa943b6c3e",
-  "prepared_sha256": "b307b20443130e78ea8970980bf09ede21e021f5a66dc5fa09e4cba59f539af9",
-  "preview_receipt_sha256": "1f3c46f845b101fefab6b1f3ce7be4a2eefdedc971a912ddb0dbf22c6124c92c"
+  "owner_reference": "خالد عن بطاقة الكولا بالقفلة المعدلة: كمل الين تنشر",
+  "approved_at": "2026-11-16T14:57:54.759239+00:00",
+  "expires_at": "2026-11-16T23:59:59+03:00",
+  "manifest_sha256": "288f679974356a4ddc60710bacd27621d56417ff9fed21e9c4874f1f4554d324",
+  "archive_sha256": "570e4becc3d1a2c49de7872851010a030a5634c8bc7838b113203ccccf470458",
+  "prepared_sha256": "521283c42d700835f93b756d8c50a17ce4c12982cf08fc0f06ea8f66349f7595",
+  "preview_receipt_sha256": "44f10b6b8f7c60544da5a120b12f9a6b04ec46ee68f31b527835347ed961144b"
 }
