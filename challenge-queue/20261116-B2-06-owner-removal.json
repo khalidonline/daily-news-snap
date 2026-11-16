@@ -1,0 +1,9 @@
+{
+  "id": "B2-06",
+  "original_sha256": "5b6ad554ebb2583412ebf10963a96e9076e4c26950641ac6b289c924af8562dd",
+  "owner_report": "حذفت تحدي سناب لانه مكتوب كلمة شعار تحت الصورتين",
+  "removed_destinations": "not individually specified",
+  "editorial_rule": "في مقارنة التطبيقات اكتف باسم كل تطبيق في الخيار تحت صورته، واحذف تعليق شعار سناب وشعار إنستقرام.",
+  "replacement_delivery": "unconfirmed; reconcile before another send",
+  "queue_change": false
+}
