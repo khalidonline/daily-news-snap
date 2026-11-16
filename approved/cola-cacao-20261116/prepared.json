@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/cola-cacao-20261116",
+  "manifest_content_sha256": "96b3d803090e490343116cce839e85184e1e8f54782f915be5d81356a9ea5836",
+  "archive_content_sha256": "d654d7270214a61b8c6ca999e82f843f9f7d2ee78e5ef1eef254351b97b6fa8b",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "da2d2986679d51ac2dd6be38ea000966f7aa39d72ceb5c71f13a3a1ccbd76301",
+  "assets": {
+    "approved/cola-cacao-20261116/card.png": "875d33716f01f1d603d4f478bef438ae22286d54a73f39e953f876ead309c3a4",
+    "approved/cola-cacao-20261116/modern.png": "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
+    "approved/cola-cacao-20261116/cacao.png": "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
+    "approved/cola-cacao-20261116/prototype.jpg": "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4"
+  },
+  "preparation_seconds": 0.008
+}

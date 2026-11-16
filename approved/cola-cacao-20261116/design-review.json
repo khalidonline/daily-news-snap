@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "875d33716f01f1d603d4f478bef438ae22286d54a73f39e953f876ead309c3a4",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "وش دخل الشوكولاتة بقارورة الكولا؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              249,
+              215,
+              1020,
+              268
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            249,
+            215,
+            1020,
+            269
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "قارورة اليوم",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              145,
+              695,
+              280,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            145,
+            695,
+            280,
+            727
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "ثمرة الكاكاو",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              475,
+              695,
+              604,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            475,
+            695,
+            604,
+            725
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "أول تصميم",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              806,
+              695,
+              931,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            806,
+            695,
+            931,
+            734
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قبل حوالي ١١٠ سنين، كوكاكولا تبي قارورة تعرفها من لمستها حتى لو المكان ظلام.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              95,
+              802,
+              980,
+              854
+            ],
+            [
+              384,
+              878,
+              980,
+              928
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            95,
+            802,
+            1015,
+            928
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "اللي صممها شاف رسمة ثمرة كاكاو، وأخذ الخطوط اللي على قشرتها وحطها على الزجاج.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              225,
+              995,
+              980,
+              1058
+            ],
+            [
+              146,
+              1082,
+              980,
+              1136
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            146,
+            995,
+            1015,
+            1136
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بس أول قارورة كانت عريضة من النص وقاعدتها صغيرة، فما كانت تثبت زين.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              97,
+              1203,
+              980,
+              1258
+            ],
+            [
+              484,
+              1282,
+              980,
+              1328
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            97,
+            1203,
+            1015,
+            1328
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "نحفوا وسطها ووسعوا قاعدتها، وبهالشكل نزلت السوق.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              160,
+              1395,
+              980,
+              1441
+            ],
+            [
+              742,
+              1465,
+              980,
+              1508
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            160,
+            1395,
+            1015,
+            1508
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "اتوقع بعد المعلومه هذي بتحب الكولا اكثر من البيبسي",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              67,
+              1575,
+              1013,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            67,
+            1575,
+            1013,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Cola cacao updated closing; exact PNG compared to renderer.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "390px player mask simulation: all text and three photo captions visible.",
+      "SAVED_STORY": "390px player mask simulation: all text and three photo captions visible."
+    }
+  }
+}

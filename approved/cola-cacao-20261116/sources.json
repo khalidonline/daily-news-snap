@@ -1,0 +1,21 @@
+{
+  "images": [
+    {
+      "path": "approved/cola-cacao-20261116/modern.png",
+      "sha256": "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
+      "description": "قارورة اليوم"
+    },
+    {
+      "path": "approved/cola-cacao-20261116/cacao.png",
+      "sha256": "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
+      "description": "ثمرة الكاكاو"
+    },
+    {
+      "path": "approved/cola-cacao-20261116/prototype.jpg",
+      "sha256": "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4",
+      "description": "أول تصميم"
+    }
+  ],
+  "prototype_source": "https://www.thehistoryblog.com/wp-content/uploads/2019/04/Dean-sketch-and-original-Root-prototype.jpg",
+  "rights": "No new rights assertion"
+}

@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "وش دخل الشوكولاتة بقارورة الكولا؟",
+  "not_before": "2026-11-16T00:00:00+03:00",
+  "expires_at": "2026-11-16T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "875d33716f01f1d603d4f478bef438ae22286d54a73f39e953f876ead309c3a4"
+    ],
+    "approved_source_sha256": [
+      "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
+      "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
+      "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/cola-cacao-20261116/card.png",
+      "sha256": "875d33716f01f1d603d4f478bef438ae22286d54a73f39e953f876ead309c3a4",
+      "source_assets": [
+        {
+          "path": "approved/cola-cacao-20261116/modern.png",
+          "sha256": "431a28173ec398ff138d891ac61f4da96933b56e1bc3cc9d3564c0d4ed9140ae",
+          "description": "قارورة اليوم"
+        },
+        {
+          "path": "approved/cola-cacao-20261116/cacao.png",
+          "sha256": "b2fae3323d6863ad6fd57904deee6ded4c62ed75e05520715b59f0bb598b9801",
+          "description": "ثمرة الكاكاو"
+        },
+        {
+          "path": "approved/cola-cacao-20261116/prototype.jpg",
+          "sha256": "58e8bf80302c2c5dbc2d8afa9f60d9e1b3484eae09634faff82021146d0f36b4",
+          "description": "أول تصميم"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/cola-cacao-20261116/manifest.json",
+  "identity": "f4bdba872dfca57319cfd57c7d4b850778a4325bbd475383de4021f7a7964c1c",
+  "public_indices": [
+    1
+  ],
+  "title": "وش دخل الشوكولاتة بقارورة الكولا؟",
+  "expires_at": "2026-11-16T23:59:59+03:00",
+  "empty_profile_confirmation": "Prior stories recorded. Require live provider inventory and overlap checks; no empty profile assertion."
+}
