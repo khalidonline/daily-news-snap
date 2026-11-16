@@ -1,0 +1,47 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ — إنستقرام أو سناب",
+  "expires_at": "2026-11-16T23:59:59+03:00",
+  "media": [
+    {
+      "path": "approved/app-origins-revised/source.png",
+      "sha256": "3600269804e549be09edc12a92a7fdf5c3bdc60ecc5221fb935e6e768c6d8583",
+      "kind": "info",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/app-origins-revised/product.jpg",
+          "sha256": "4a8f31ee1a75fc3c805a1174542192c29264b98fcb1560dd27b5cd830dfae491",
+          "source_url": "https://github.com/simple-icons/simple-icons/blob/13.0.0/icons/instagram.svg",
+          "rights_status": "owner_accepted_editorial_use",
+          "description": "Application brand mark from Simple Icons. Editorial selection under owner delegation; no blanket license claimed.",
+          "owner_reference": "Khalid approved B2-06 and delegated brand asset selection, production and publication."
+        },
+        {
+          "path": "approved/app-origins-revised/detail.jpg",
+          "sha256": "18c74ac3da12cf45b0dd7c85ac221d39029ee29d6472268a08ed01ed52e00aee",
+          "source_url": "https://github.com/simple-icons/simple-icons/blob/13.0.0/icons/snapchat.svg",
+          "rights_status": "owner_accepted_editorial_use",
+          "description": "Application brand mark from Simple Icons. Editorial selection under owner delegation; no blanket license claimed.",
+          "owner_reference": "Khalid approved B2-06 and delegated brand asset selection, production and publication."
+        }
+      ]
+    }
+  ],
+  "owner_review": {
+    "reference": "Khalid approved B2-06 and delegated production/publication. Owner requested correction removing both redundant captions and republication. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "reviewed_at": "2026-11-16T18:46:37.814834+00:00",
+    "approved_media_sha256": [
+      "3600269804e549be09edc12a92a7fdf5c3bdc60ecc5221fb935e6e768c6d8583"
+    ],
+    "approved_source_sha256": [
+      "4a8f31ee1a75fc3c805a1174542192c29264b98fcb1560dd27b5cd830dfae491",
+      "18c74ac3da12cf45b0dd7c85ac221d39029ee29d6472268a08ed01ed52e00aee"
+    ]
+  }
+}

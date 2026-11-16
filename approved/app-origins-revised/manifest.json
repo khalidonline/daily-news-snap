@@ -1,0 +1,98 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "من بدأ أول؟ — إنستقرام أو سناب",
+  "expires_at": "2026-11-16T23:59:59+03:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/app-origins-revised/challenge.mp4",
+      "sha256": "25d6af6caca0f7e3d0bcc10e7d2cb8b7ad87ca9525f09f1156be5db8dea0e85d",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "sha256": "25d6af6caca0f7e3d0bcc10e7d2cb8b7ad87ca9525f09f1156be5db8dea0e85d",
+      "reference": "Khalid approved B2-06 and delegated production/publication. Owner requested correction removing both redundant captions and republication. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved B2-06 and delegated production/publication. Owner requested correction removing both redundant captions and republication. Approved audio PCM compared unchanged; no subjective listening or owner viewing claimed.",
+    "video_sha256": "25d6af6caca0f7e3d0bcc10e7d2cb8b7ad87ca9525f09f1156be5db8dea0e85d",
+    "source_manifest": {
+      "path": "approved/app-origins-revised/source-approval.json",
+      "sha256": "a053fc1dfdf2ebe8b6f72a12d6ea90b82f92917c896a1e75fc6c0c69e237e9fd"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Audio extracted losslessly from owner-approved final Library version 1, itself original approved effects amplified on owner's request. No claim that agent listened."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/app-origins-revised/frame-0.5.png",
+        "sha256": "da5c9f294752be44827a4be39db9b103b465ce72e94f9045b573d9bc3a5c4870"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/app-origins-revised/frame-3.5.png",
+        "sha256": "5c8ad528db1dfb6b8589b578f8b3428627fa2e6c5ca58bde3702d48b67be5d25"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/app-origins-revised/frame-4.5.png",
+        "sha256": "f832aaa483f59903b5ed442e724911a4a628ac776b7e6127d2b728c03f6818ef"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/app-origins-revised/frame-5.5.png",
+        "sha256": "80816133c8b9c9fec60b9804bdf171e33ea751e51ceb5c181e4307f699969305"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/app-origins-revised/frame-6.5.png",
+        "sha256": "31e669b51f36e2528a1a68be65b066f3087d24963a5f158a9efb127d8dc6b5e9"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/app-origins-revised/frame-7.5.png",
+        "sha256": "b01c35fdc5b83f90fb6f86665e6a7b48404d4af046ad772dcfeb27eb7da67295"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/app-origins-revised/frame-8.5.png",
+        "sha256": "53f2c9a66f47c8f3e5e6d168ba8fa340bd1c42756bdefe8b534120bcab753cf9"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/app-origins-revised/frame-11.5.png",
+        "sha256": "3945a82d65fbe9d2475f03dc4ca8a3e090afa4ef2f199945b2a58a8c955792bc"
+      }
+    ]
+  }
+}
