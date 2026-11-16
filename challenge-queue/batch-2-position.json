@@ -1,7 +1,7 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "IN_PROGRESS",
+  "status": "SLOT_RESERVED",
   "next_item": "B2-06",
   "remaining": [
     {
@@ -63,5 +63,7 @@
   "last_completed": {
     "id": "B2-05",
     "receipt": "api-receipts/wheel-heights-20261115-preflight.json"
-  }
+  },
+  "reserved_version": "5b244eaa3d1569136e17e0cad74cb3e81449bf8918ca9978640189d84db8c6de",
+  "reserved_package": "app-origins-20261116"
 }
