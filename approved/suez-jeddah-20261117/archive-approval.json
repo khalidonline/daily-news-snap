@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/suez-jeddah-20261117/manifest.json",
+  "manifest_sha256": "413f57ae834451271ac61c815b6c2f5617e90ae20912c83613585a374965fdc2",
+  "identity": "fcb06eef8d652faed26ef1d40353e6f66917398d94c68199e79129d8e69a9a4b",
+  "public_indices": [
+    1
+  ],
+  "title": "قناة السويس اختصرت مشوار جدة لليونان",
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": ""
+}

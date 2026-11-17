@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/suez-jeddah-20261117",
+  "manifest_content_sha256": "887b2f67f3978b4392f2baec36625e34972c627deb2b92bfbfbbf49ae9f7367e",
+  "archive_content_sha256": "8a3107e59abfa758f0ec3a89159078637ea42205bf687e0e161834b2f6f47c22",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "06ba79e52aab8d2ebccf52e97ad3644c9f7f4e210dc9dae5bb245a31f8703da5",
+  "assets": {
+    "approved/suez-jeddah-20261117/card.png": "ca97dfe1b0f5e711b2aa823f9784d158c6f299cb98dc8ec8a64b94182c56b7c6",
+    "approved/suez-jeddah-20261117/port.jpg": "1dace46263e3a5d9c170127a408c93122527c4d9bf5a23cf02662f1162e8ff03",
+    "approved/suez-jeddah-20261117/steam.jpg": "c77aeabd186b2d6f8d07507d717400fee11f0dab6b8f30cf6d4f53caea15750f"
+  },
+  "preparation_seconds": 0.001
+}

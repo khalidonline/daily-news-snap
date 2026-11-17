@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "قناة السويس اختصرت مشوار جدة لليونان",
+  "not_before": "2026-11-17T00:00:00+03:00",
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "ca97dfe1b0f5e711b2aa823f9784d158c6f299cb98dc8ec8a64b94182c56b7c6"
+    ],
+    "approved_source_sha256": [
+      "1dace46263e3a5d9c170127a408c93122527c4d9bf5a23cf02662f1162e8ff03",
+      "c77aeabd186b2d6f8d07507d717400fee11f0dab6b8f30cf6d4f53caea15750f"
+    ]
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/suez-jeddah-20261117/card.png",
+      "sha256": "ca97dfe1b0f5e711b2aa823f9784d158c6f299cb98dc8ec8a64b94182c56b7c6",
+      "source_assets": [
+        {
+          "path": "approved/suez-jeddah-20261117/port.jpg",
+          "sha256": "1dace46263e3a5d9c170127a408c93122527c4d9bf5a23cf02662f1162e8ff03",
+          "source_url": "https://eol.jsc.nasa.gov/Collections/EarthFromSpace/photoinfo.pl?PHOTO=ISS013-E-44847",
+          "credit": "NASA",
+          "description": "السفن طالعة للمتوسط",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/suez-jeddah-20261117/steam.jpg",
+          "sha256": "c77aeabd186b2d6f8d07507d717400fee11f0dab6b8f30cf6d4f53caea15750f",
+          "source_url": "https://www.loc.gov/item/2019703162/",
+          "credit": "Library of Congress",
+          "description": "باخرة تعبر قناة السويس",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

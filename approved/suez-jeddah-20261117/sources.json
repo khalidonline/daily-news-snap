@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "path": "approved/suez-jeddah-20261117/port.jpg",
+      "sha256": "1dace46263e3a5d9c170127a408c93122527c4d9bf5a23cf02662f1162e8ff03",
+      "source_url": "https://eol.jsc.nasa.gov/Collections/EarthFromSpace/photoinfo.pl?PHOTO=ISS013-E-44847",
+      "credit": "NASA",
+      "description": "السفن طالعة للمتوسط",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/suez-jeddah-20261117/steam.jpg",
+      "sha256": "c77aeabd186b2d6f8d07507d717400fee11f0dab6b8f30cf6d4f53caea15750f",
+      "source_url": "https://www.loc.gov/item/2019703162/",
+      "credit": "Library of Congress",
+      "description": "باخرة تعبر قناة السويس",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "route": "https://www.suezcanal.gov.eg/English/About/Pages/WhySuezCanal.aspx",
+  "history": "https://www.loc.gov/item/today-in-history/november-17/"
+}
