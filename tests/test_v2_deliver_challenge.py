@@ -43,7 +43,7 @@ def test_before_due_blocks_all_provider_and_journal_work():
 
 def test_validate_returns_without_clients_or_journals():
     m=module()
-    with patch.object(m,'validate_package',return_value=('identity','title',[],data())), patch.object(m,'BundleClient',side_effect=AssertionError('provider initialized')), patch.object(m,'GitHubJournal',side_effect=AssertionError('journal initialized')):
+    with patch('publishing_v2.challenge_visual_review.validate_challenge_images'), patch.object(m,'validate_package',return_value=('identity','title',[],data())), patch.object(m,'BundleClient',side_effect=AssertionError('provider initialized')), patch.object(m,'GitHubJournal',side_effect=AssertionError('journal initialized')):
         result=m.run('sample-package',DIGEST)
     assert result['status']=='VALIDATED_NOT_PUBLISHED' and result['sha256']==DIGEST
 
@@ -76,6 +76,7 @@ def test_two_destinations_publish_once_and_reconcile_without_duplicate(tmp_path,
     # Real publish state transitions; isolated shared visual/approval checks already have dedicated tests.
     monkeypatch.setattr('publishing_v2.bundle_api.check_delivery_approval',lambda media:None)
     monkeypatch.setattr('publishing_v2.challenge_contract.validate_challenge',lambda title,media:None)
+    monkeypatch.setattr('publishing_v2.challenge_visual_review.validate_challenge_images',lambda media:None)
     monkeypatch.setattr(m,'require_for_new_delivery',lambda *args:None)
     media=ApprovedMedia([(tmp_path/'final.mp4',b'exact-video')],Path.cwd()/'test-manifest.json',data())
     m.deliver(client,journals,'title',media,DIGEST)

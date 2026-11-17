@@ -27,6 +27,13 @@ def test_approved_video_uses_spotlight_and_reconciles_without_repeat(monkeypatch
         def create(self, title, upload):
             raise AssertionError('Wrong destination')
     client, journal = SpotlightClient(), Journal()
+    # Historical approval never exempts a NEW send from current photo evidence.
+    with pytest.raises(BundleError, match='image review'):
+        publish(client, journal, title, media, placement='SPOTLIGHT')
+    assert client.sent == [] and journal.state == {}
+    # Isolate destination/idempotency behavior below; image-gate integrity has
+    # its own actual-video tests. Never alter the old package or production gate.
+    monkeypatch.setattr('publishing_v2.challenge_visual_review.validate_challenge_images', lambda media: None)
     publish(client, journal, title, media, placement='SPOTLIGHT')
     publish(client, journal, title, media, placement='SPOTLIGHT')
     assert client.sent == [('SPOTLIGHT', 'upload')]

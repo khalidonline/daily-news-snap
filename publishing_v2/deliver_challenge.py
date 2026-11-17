@@ -243,6 +243,8 @@ def run(package, expected, *, action='validate', now=None):
         raise BundleError('Explicit validate or publish action required')
     identity, title, media, data = validate_package(package, expected)
     if action == 'validate':
+        from .challenge_visual_review import validate_challenge_images
+        validate_challenge_images(media)
         return {'status': 'VALIDATED_NOT_PUBLISHED', 'package': package,
                 'identity': identity, 'sha256': expected, 'not_before': data['not_before'],
                 'destinations': list(DESTINATIONS)}

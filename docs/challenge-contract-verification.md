@@ -156,3 +156,113 @@ Limitations: final video visual/audio review remains a real reviewer responsibil
 - `tests/test_v2_readability.py::OptionalIntroTests::test_present_intro_still_rejects_small_font`
 - `tests/test_v2_sharealike_credit.py::test_sharealike_requires_explicit_unmodified_collection_and_full_notice`
 
+
+## Image-level evidence for new challenges (17 November 2026)
+
+`publishing_v2.challenge_visual_review.validate_challenge_images(media)` is a
+mandatory gate in shared `bundle_api.publish` whenever a challenge needs a NEW
+send. It runs before capacity, upload, journal intent or create. Existing POSTED
+and known pending operation IDs retain reconciliation behavior; unknown intents
+still block. `deliver_challenge --action validate` also requires the evidence.
+Historical package loading and final-video-contract validation are unchanged.
+There is no optional schema flag or history allow-list. Grouped two-card delivery
+cannot accept the existing one-MP4 challenge contract.
+
+The manifest adds `video_review.image_review: {"path": "approved/<package>/image-review.json",
+"sha256": "<report-file-sha256>"}`. All references are repository-relative paths,
+with no traversal, absolute paths or symlinks. The report schema is:
+
+```json
+{
+  "version": 1,
+  "video_sha256": "<exact-final-MP4-sha256>",
+  "source_manifest": {"path": "<existing-video_review.source_manifest-path>", "sha256": "<same-sha256>"},
+  "source_assets": [
+    {"path": "<first-source-path>", "sha256": "<first-source-sha256>"},
+    {"path": "<second-source-path>", "sha256": "<second-source-sha256>"}
+  ],
+  "reviewer": "<actual reviewer identity or role>",
+  "assessment": "passed",
+  "mobile_width": 390,
+  "mobile_layout": "<actual full-layout review at 390px, not a generic success statement>",
+  "photos": [
+    {
+      "source": {"path": "<first-source-path>", "sha256": "<first-source-sha256>"},
+      "box": [72, 505, 528, 915],
+      "crops": [
+        {"at": 0.5, "rgb_sha256": "<decoded-crop-RGB-byte-sha256>", "mean_luma": 123.456789, "dark_fraction": 0.012345},
+        {"at": 11.5, "rgb_sha256": "<decoded-crop-RGB-byte-sha256>", "mean_luma": 124.456789, "dark_fraction": 0.012345}
+      ],
+      "assessment": "passed",
+      "observations": {
+        "subject": "<specific visible subject/features in the selected source and final crop>",
+        "relevance": "<why these visible details help this exact challenge>",
+        "crop_visibility": "<what remains visible or is cut off at both reviewed times>",
+        "brightness": "<whether subject details remain readable on mobile>",
+        "spoiler_risk": "<whether a label, landmark or other clue reveals the answer>"
+      },
+      "low_light_resolution": "<required only when a low-light diagnostic fires>"
+    },
+    "<second photo object with its own source, right_photo box, crops and independent observations>"
+  ],
+  "pair_metrics": [
+    {"at": 0.5, "similarity": 0.654321},
+    {"at": 11.5, "similarity": 0.654321}
+  ],
+  "pair": {
+    "assessment": "passed",
+    "distinct_information": "<specific complementary visible information, not merely different camera angles>",
+    "answer_spoiler": "<explicit combined-pair spoiler assessment>",
+    "similarity_resolution": "<required only when a high-similarity diagnostic fires>"
+  }
+}
+```
+
+This is a schema illustration, not valid review evidence: placeholders, the
+abbreviated second photo and illustrative metric values must not be submitted.
+Exactly two photos cover the full flattened `source_manifest.media[].source_assets`
+list once, in its original order. Only path/hash fields from those source entries
+are copied to `source_assets` and `photos[].source`. Repeated source hashes fail.
+Boxes must exactly match ordered `left_photo` and `right_photo` regions in the
+CURRENT shared design master's approved challenge geometry, not a bright portion
+of the template. These example coordinates reflect the current master, not a
+second configuration authority.
+
+The reviewer must actually inspect each selected source, its final decoded crops
+at 0.5 and 11.5 seconds, and the full video layout at 390px. Frozen PNG references
+come from existing `video_review.frames`; both their file hashes and exact RGB
+pixels must match a fresh decode of the actual upload MP4 bytes. Crop hashes are
+SHA256 of row-major RGB pixel bytes, not PNG bytes. All source, source-manifest,
+report, frame, crop and metric bindings are rechecked. Reports/manifest sources
+are bounded and malformed metadata fails closed.
+
+`image_review_diagnostics(media, photos)` accepts the ordered two source/box
+objects and returns only `photos` (source, box, measured crops) plus `pair_metrics`.
+It never supplies pass flags, reviewer identity, observations or resolutions.
+For each crop, Pillow RGB-to-L luminance is measured as mean luma (0–255) and
+fraction of pixels below 40. A mean below 65 OR dark fraction above 0.60 prompts
+an explicit `low_light_resolution` for that photo. Pair similarity is
+`1 - mean_absolute_RGB_difference/255` after BILINEAR resizing each photo crop to
+32×32, independently at both times. Similarity at or above 0.94 prompts an explicit
+`similarity_resolution`. Metrics are rounded to six decimals and compared exactly;
+booleans, NaN and infinity are not measurements. These deliberately simple,
+conservative diagnostics can flag legitimate photos or miss semantic redundancy.
+They never establish identity, relevance, exposure quality or pair usefulness.
+A warning requires reviewer adjudication, not rejection solely by a score.
+
+Every observation/resolution needs at least 32 characters, six words and five
+distinct words; exact normalized copies are rejected across the report. These
+are completeness/copy checks, not semantic proof. A well-written fabricated
+review could still pass. Do not mistake the validator or a synthetic test for a
+human/agent having looked, or for owner approval, subjective audio listening,
+publication permission or a replacement for the existing audio/timer/design gates.
+
+Pair editorial rule: a different crop, zoom, scale or angle of the same view is
+NOT evidence of complementary information. The reviewer must name a genuinely
+distinct scene or specific new visible information beyond scale/angle. In the
+18-November preparation review, a wide/detail pair of the same hillside looked
+different to the simple pixel metric but was rejected by the owner as essentially
+the same picture. This is a semantic-review failure, not a reason to tune the
+numeric threshold until that pair happens to fail. Replace a redundant photo;
+do not manufacture a resolution note to rescue it. Neither diagnostics nor a
+complete evidence report can override an owner's actual rejection.

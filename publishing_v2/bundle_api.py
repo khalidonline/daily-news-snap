@@ -330,6 +330,10 @@ def publish(client, journal, title, media, *, placement='STORY'):
     if required:
         from .challenge_contract import validate_challenge
         validate_challenge(title, media)
+        from .challenge_contract import is_challenge
+        if is_challenge(title, getattr(media, 'snapshot', {})):
+            from .challenge_visual_review import validate_challenge_images
+            validate_challenge_images(media)
     if required: client.ensure_capacity(required + 2)
     for index, item in enumerate(media):
         key = str(index + 1)

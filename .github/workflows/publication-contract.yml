@@ -15,4 +15,6 @@ jobs:
       - run: >-
           python -m pytest tests/test_v2_design_contract.py tests/test_v2_route_inventory.py
           tests/test_v2_prepared_information.py tests/test_v2_deliver_information.py
-          tests/test_v2_bundle.py tests/test_v2_bundle_group.py tests/test_v2_saved_story_api.py -q
+          tests/test_v2_bundle.py tests/test_v2_bundle_group.py tests/test_v2_saved_story_api.py
+          tests/test_v2_challenge_contract.py tests/test_v2_challenge_visual_review.py
+          tests/test_v2_deliver_challenge.py tests/test_v2_challenge_request.py -q
