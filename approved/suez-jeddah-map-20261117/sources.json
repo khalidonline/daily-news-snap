@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "path": "approved/suez-jeddah-map-20261117/lake.jpg",
+      "sha256": "c3a0008cc8b4aeba6ef75b4cdf6ff6f7284062416087b8c5bd917931b612dd50",
+      "source_url": "https://science.nasa.gov/earth/earth-observatory/great-bitter-lake-egypt-40884/",
+      "credit": "NASA Earth Observatory",
+      "description": "سفن تنتظر دورها بالبحيرة",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/suez-jeddah-map-20261117/routes.png",
+      "sha256": "a6d42cb584e5bb0c32d4cc8a411ce32ba9653a5d26a2bd1d69ea5db8a80c2001",
+      "source_url": "https://www.naturalearthdata.com/",
+      "credit": "Natural Earth public domain coastlines; schematic routes by editor",
+      "description": "الأخضر طريق القناة",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "route": "https://www.suezcanal.gov.eg/English/About/Pages/WhySuezCanal.aspx",
+  "history": "https://www.loc.gov/item/today-in-history/november-17/"
+}

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/suez-jeddah-map-20261117",
+  "manifest_content_sha256": "2c00deb0385f73d36836fbe91798010a300409ffef2be1372e68f778950ce3c4",
+  "archive_content_sha256": "2a68dc8a04b2d1e3ff73a3992769bd4425a34a0f3f6ad752b50e1a7823c85bfa",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "a8dc6346989715b10cd5086f5d9f11186a7e9ac927998a3a70262232db9a8d7f",
+  "assets": {
+    "approved/suez-jeddah-map-20261117/card.png": "224562cd372f1a4a436b255d5a1a4b32b27ba13c3d2f1d145e351010ce492ab8",
+    "approved/suez-jeddah-map-20261117/lake.jpg": "c3a0008cc8b4aeba6ef75b4cdf6ff6f7284062416087b8c5bd917931b612dd50",
+    "approved/suez-jeddah-map-20261117/routes.png": "a6d42cb584e5bb0c32d4cc8a411ce32ba9653a5d26a2bd1d69ea5db8a80c2001"
+  },
+  "preparation_seconds": 0.002
+}
