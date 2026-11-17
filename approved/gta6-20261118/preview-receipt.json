@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "4c4d20b7b812a86edb273dcce8dcfef111c6e111",
+  "assets": {
+    "approved/gta6-20261118/card.png": "83548668365535c956257c948c4ef74a01f49edce7de54fd43224604aa0f0441",
+    "approved/gta6-20261118/police.jpg": "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
+    "approved/gta6-20261118/vice-city.jpg": "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259"
+  },
+  "preview_paths": [
+    "approved/gta6-20261118/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/gta6-20261118/card.png": "83548668365535c956257c948c4ef74a01f49edce7de54fd43224604aa0f0441",
+    "approved/gta6-20261118/police.jpg": "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
+    "approved/gta6-20261118/vice-city.jpg": "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259",
+    "approved/gta6-20261118/manifest.json": "0d6715d5756a7964e5e68e9cecc535fc9c48c0a6cb8237e9fe23610ebe3dd432",
+    "approved/gta6-20261118/archive-approval.json": "98f1b5bffef91ba13f96404cbc27506529ff6465202a33103e76d0a499a492e5",
+    "approved/gta6-20261118/design-review.json": "a9cc489f2a4197041e95cf13d5f4e526fc8db26b42aaccb8318731175a42cfc8",
+    "approved/gta6-20261118/sources.json": "e22b8fb2271bcd5effaebf3584b2ee7271ce94c0c32c15e95a462e43bc953d61",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/gta6-20261118",
+    "manifest_content_sha256": "337a8b57f846063cde0feabedc4e6280520e210e5c30f30191b8277ce14b65bd",
+    "archive_content_sha256": "3c30b08496d0c44546b7c78eb2e20905f5af2ca239a2a197b7a51bf007b41ff5",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "a9cc489f2a4197041e95cf13d5f4e526fc8db26b42aaccb8318731175a42cfc8",
+    "assets": {
+      "approved/gta6-20261118/card.png": "83548668365535c956257c948c4ef74a01f49edce7de54fd43224604aa0f0441",
+      "approved/gta6-20261118/police.jpg": "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
+      "approved/gta6-20261118/vice-city.jpg": "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259"
+    }
+  }
+}
