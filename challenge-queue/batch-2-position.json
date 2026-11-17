@@ -2,23 +2,8 @@
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
   "status": "IN_PROGRESS",
-  "next_item": "B2-08",
+  "next_item": "B2-09",
   "remaining": [
-    {
-      "id": "B2-08",
-      "topic": "كرسي فولكس واجن اللي تسوقه بالممر، انباع أو كان للاستعراض؟ سووه للاستعراض، ما انباع.",
-      "display_text": {
-        "question": "كرسي فولكس واجن اللي تسوقه بالممر، انباع أو كان للاستعراض؟",
-        "options": [
-          "انباع",
-          "للاستعراض"
-        ],
-        "answer": "سووه للاستعراض، ما انباع."
-      },
-      "production_notes": [
-        "لا تضف وصفا بديهيا مثل «صورة الكرسي» أو «شعار فولكس واجن»."
-      ]
-    },
     {
       "id": "B2-09",
       "topic": "هالبيوت وسط الجبال في تركيا أو سويسرا؟ تركيا! مرتفعات بوكوت، منطقة ريزة.",
@@ -220,12 +205,12 @@
       ]
     }
   ],
-  "completed": 6,
+  "completed": 7,
   "stop_after": "B2-19",
-  "next_slot_riyadh": "2026-11-17T13:00:00+03:00",
+  "next_slot_riyadh": "2026-11-18T13:00:00+03:00",
   "last_completed": {
-    "id": "B2-06",
-    "receipt": "challenge-queue/20261116-1300-B2-06.json"
+    "id": "B2-08",
+    "receipt": "challenge-queue/20261117-1300-B2-08.json"
   },
   "editorial_review": {
     "date_riyadh": "2026-11-16",
