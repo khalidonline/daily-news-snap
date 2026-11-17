@@ -1,0 +1,29 @@
+{
+  "id": "B2-08",
+  "slot": "2026-11-17T13:00:00+03:00",
+  "package": "volkswagen-chair-20261117",
+  "approved_version": "9c15fce5b262b33b88e666246c4da992e47f10db795161f8038b0f162ef6899d",
+  "package_identity": "9c15fce5b262b33b88e666246c4da992e47f10db795161f8038b0f162ef6899d",
+  "topic": "كرسي فولكس واجن اللي تسوقه بالممر، انباع أو كان للاستعراض؟",
+  "state": "POSTED_BOTH",
+  "receipts": {
+    "STORY": {
+      "post_id": "ed168a22-ec39-4cae-bc54-69764458f738",
+      "snapchat_id": "ebc6e200-4d05-469d-8dd0-42fc4abeb62a",
+      "media_id": "ebc6e200-4d05-469d-8dd0-42fc4abeb62a",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "upload_id": "616501da-4354-412e-a412-97054c394225"
+    },
+    "SPOTLIGHT": {
+      "post_id": "907719b4-fe22-49a9-a566-793ab26917d2",
+      "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYc2x6YmNiZHdmAaHo_M8gAaHo_M79AAAAAA",
+      "media_id": "25c50605-addc-4da1-aa84-28b20236f8fb",
+      "status": "POSTED",
+      "snapchat_status": "PUBLISHED",
+      "upload_id": "466f77b5-e06c-405d-8fa6-ecc203fe3e1c"
+    }
+  },
+  "media_sha256": "451d6f39b7e3e3d5b42ac1e727adeb3d4011facf00782f187a95fe911ba9e5c3",
+  "workflow_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/44061606911"
+}
