@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "action": "validate",
+  "action": "publish",
   "package": "volkswagen-chair-20261117",
   "expected_video_sha256": "451d6f39b7e3e3d5b42ac1e727adeb3d4011facf00782f187a95fe911ba9e5c3",
   "not_before": "2026-11-17T10:00:00Z",
