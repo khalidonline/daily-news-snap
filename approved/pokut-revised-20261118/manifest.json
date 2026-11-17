@@ -1,0 +1,219 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان | تركيا أو سويسرا؟",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "not_before": "2026-11-18T10:00:00Z",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "intended_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "editorial_id": "B2-09",
+  "owner_viewed_this_export": false,
+  "authorization_context": "Khalid approved the displayed replacement photos and requested «اعتمد هذي الصور. صلح كل شي وخله جاهز للنشر» on17November2026. Prepared for18November13:00 Asia/Riyadh only under existing STORY/SPOTLIGHT batch authorization; no immediate send. Assistant viewed actual sources and final decoded countdown/reveal frames, and checked numerical PCM against approved audio. No subjective listening claim.",
+  "media": [
+    {
+      "path": "approved/pokut-revised-20261118/Pokut-Challenge.mp4",
+      "sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true,
+      "sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+      "reference": "Khalid approved the displayed replacement photos and requested «اعتمد هذي الصور. صلح كل شي وخله جاهز للنشر» on17November2026. Prepared for18November13:00 Asia/Riyadh only under existing STORY/SPOTLIGHT batch authorization; no immediate send. Assistant viewed actual sources and final decoded countdown/reveal frames, and checked numerical PCM against approved audio. No subjective listening claim."
+    },
+    "previous": {
+      "path": "approved/pokut-revised-20261118/previous-manifest.json",
+      "sha256": "2ad28b4933c5a7168acea065a758fae831e174fe2f9e5d95ffa8d36614556cca"
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid approved the displayed replacement photos and requested «اعتمد هذي الصور. صلح كل شي وخله جاهز للنشر» on17November2026. Prepared for18November13:00 Asia/Riyadh only under existing STORY/SPOTLIGHT batch authorization; no immediate send. Assistant viewed actual sources and final decoded countdown/reveal frames, and checked numerical PCM against approved audio. No subjective listening claim.",
+    "video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+    "source_manifest": {
+      "path": "approved/pokut-revised-20261118/source-approval.json",
+      "sha256": "b636538647e8957f93ab035a3db215ad93687dd3da05f9708edbc4ef697a9873"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Original owner-approved audio; exact PCM verified numerically, no subjective listening claim."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/pokut-revised-20261118/frame-0.5.png",
+        "sha256": "1664dde29e9cdafbb7c0bffcc6585f1e70566f8571b49783a93f62a59820aec2"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/pokut-revised-20261118/frame-3.5.png",
+        "sha256": "1703bae601da2b00bad739e1c5df382ab88b2f15dbab1e8f1c34e4fbe683cae2"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/pokut-revised-20261118/frame-4.5.png",
+        "sha256": "dd4f0cce0bfe8b19a5d03ade0c884d836301a56c47a1029f1ec1b576cc74eeec"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/pokut-revised-20261118/frame-5.5.png",
+        "sha256": "b1f08cc218dbd233057b37e5d0f92fc51d956c16b472fd4086822a2a6f5c811b"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/pokut-revised-20261118/frame-6.5.png",
+        "sha256": "39dffcfa5971e140a6b0e66aa32bb46033d491bf8ff78218bf6d5112c5510232"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/pokut-revised-20261118/frame-7.5.png",
+        "sha256": "fe1d0e941cfc77f08ff7a7f501e2f56a75def6755ec8c7d56133a6f6c72fdcb0"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/pokut-revised-20261118/frame-8.5.png",
+        "sha256": "044ed922ae10cceb11e5b0d65c1d9eb912d3d08dd2acb5af7311d43e2747b6c0"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/pokut-revised-20261118/frame-11.5.png",
+        "sha256": "87d82a2844d62bff6b0cfc6f5135c7b68826a4cbce94150aa6050071f0c1c37a"
+      }
+    ],
+    "image_review": {
+      "path": "approved/pokut-revised-20261118/image-review.json",
+      "sha256": "2beb141fd7f569426a4fb4a6d25c9c3c2e6c8ffbfc3411aee29298df135e555c"
+    }
+  },
+  "status": "REVIEWED_SCHEDULED_NOT_DISPATCHED",
+  "owner_correction": "Previous panorama/closer-ridge pair was rejected as similar; current right photo replaced with close wooden facade. Khalid approved these replacement photos and requested preparation for scheduled publication.",
+  "owner_approved_photos": true,
+  "asset_archive": {
+    "path": "approved/pokut-revised-20261118.tar.xz",
+    "sha256": "a8102d69c259befa57c46374201f9ce589ab772b2eba4f4a132441a1d669d330",
+    "parts": [
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-000",
+        "sha256": "0936b311f447c00517497e5a85391fe613bd992983ed0efbe57705abd2748082"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-001",
+        "sha256": "4de985be1d40af153c54fb30ed1b7f5f2ea45acafb504634c89c8b8ae7f9d7ec"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-002",
+        "sha256": "e354f877341e1bcc96e9d15cc9a6a4275850033a7617325a5a7156f996c7b105"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-003",
+        "sha256": "7e9ad2813936cbca61fafd88b43c4ffa8e05463231a9a5d99d00a676e9789750"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-004",
+        "sha256": "6a85a8528114b511e4653e5daa0c5f8ad26557fcc26551d3e3cec34dd652df45"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-005",
+        "sha256": "dd6519c411ae0386b2442e419a32975e94a8cdc2a0a5de31a8014327f688209e"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-006",
+        "sha256": "9c0a662cf77506061ef4811d17afce3ab8a401581e3cf2ad016623f5132ec4c8"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-007",
+        "sha256": "03ad16a84e4a95b31ffa0fa0c481dbf19e89d8d9776be61bf6f217c797669c6e"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-008",
+        "sha256": "08f7bc90af38a13575344fa07068940804c6ae51257c3f8746f8b844ea734c69"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-009",
+        "sha256": "be7a5e9e28ed01629e53fce2d809756e3d69e9956e8eb11215d237bae527103a"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-010",
+        "sha256": "e7f64a5851ab10b0e0b6e6ac037e583d0e8664dd4d1bc16e8f19ddcba69a620f"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-011",
+        "sha256": "bca44f30cb7d708d4359d81c576b5c5e6f601eb7683656ef0dfb924225213904"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-012",
+        "sha256": "e698f40e52e567dec6a950290df6bea61a8cc1305e0d26436ac9bf903ffc3c90"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-013",
+        "sha256": "9282d72521f13aa0012070aeaa11ca6b447fb1ab87b599bb62eeba171b4dc160"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-014",
+        "sha256": "292e0743feb28667249ae55e7314542493646c91b9dcdc0c26453f1521a9269d"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-015",
+        "sha256": "a422b2b95d99248907ee553bb44cf5701101591f6ee66ba172014b29b0ce3b6c"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-016",
+        "sha256": "7016ce4fead0e868ae4971e7836b03f1b9aaea2a0a1642b41dc2ab544d48702a"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-017",
+        "sha256": "1c995d5e50297ce5fdad74c4890c55c4546edf2edb3af0a42374146cb8fbe700"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-018",
+        "sha256": "245904f136ed8f9de2c48962e6818ee26a05221af3b7b7e26ce8bb0dafbcf852"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-019",
+        "sha256": "68f655498f2eb9172df15171b741df90be9a38054343cb459c62e6b4803c2ec0"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-020",
+        "sha256": "5e47dec1521595c3ad9dd274568dce255cd9db5bff40a83ebf35f06c4ff092f9"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-021",
+        "sha256": "0e9aaa3033c73be6bfce5fd5a0fd74d02ce04ca3f9722e793c1e4df8aa63054c"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-022",
+        "sha256": "cb27032e492771c6c0622d7e040ea0666d5326eb132ca6daf9e02e9fc8d4c356"
+      },
+      {
+        "path": "approved/pokut-revised-20261118.tar.xz.part-023",
+        "sha256": "9b6993de214d5218d6561e38ae663f45e9b421d4fa1574f2f89c00b439097ddd"
+      }
+    ]
+  }
+}

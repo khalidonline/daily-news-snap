@@ -1,0 +1,44 @@
+{
+  "selected": [
+    {
+      "file": "approved/pokut-revised-20261118/place.jpg",
+      "url": "https://www.kulturportali.gov.tr/repoKulturPortali/large/25022013/2ee08089-0ca7-4b15-b08b-e4d6ad82e304.JPG",
+      "size": [
+        1000,
+        664
+      ],
+      "sha256": "b47addf94098a73cac2813427e1e3634c03c0036b1d1e36604df3e9734a639b5",
+      "source_page": "https://www.kulturportali.gov.tr/turkiye/rize/gezilecekyer/pokut-yaylasi",
+      "credit": "Rize İl Kültür ve Turizm Müdürlüğü Fotoğraf Arşivi",
+      "identity_confidence": "High: individually captioned Pokut Yaylası by Turkish Ministry culture portal",
+      "rights": "No open reuse licence verified; site states all rights reserved"
+    },
+    {
+      "file": "detail.jpg",
+      "url": "https://www.vestaturizm.com/Arsiv/Turlar/1649844513_2.jpg",
+      "source_page": "https://www.vestaturizm.com/tur/pokut-sal-yaylasi-turu-4.html",
+      "sha256": "0b396db085efbf0f7ed6af4d96f91e0dc6ab9621666a7ed6b200d38108ae8751",
+      "identity_confidence": "Tour provider gallery identifies Pokut-Sal; distinctive ridge visually matches official Pokut image",
+      "rights": "No open reuse licence verified; source retained internally"
+    }
+  ],
+  "rejected": [
+    {
+      "asset_url": "https://www.kulturportali.gov.tr/repoKulturPortali/large/25022013/fa3d5f0c-2b52-48b2-8506-d6a07cd22657.JPG",
+      "reason": "Visually too similar to the wide ridge view; no additional useful detail."
+    },
+    {
+      "asset_url": "https://www.kulturportali.gov.tr/repoKulturPortali/large/25022013/023ea716-e0a7-4a65-8005-53773a2b48bc.JPG",
+      "reason": "Houses lie in heavy shadow; mountains are bright but subject readability is poor at mobile scale."
+    }
+  ],
+  "fact_source": "https://www.kulturportali.gov.tr/turkiye/rize/gezilecekyer/pokut-yaylasi",
+  "fact_review": "Official Ministry portal identifies Pokut Yaylası in Rize, Turkey, and individually captions all selected images as Pokut. No current-season claim.",
+  "rights_note": "Official archive photos selected for brief editorial challenge; no open licence, permission grant or blanket reuse right verified. Attribution and source retained internally, no false generated-image claim.",
+  "crop": {
+    "left": "ImageOps.fit centered0.5,0.5 to456x410 with approved1.000..1.025 zoom",
+    "right": "Right-centered .95,.5 crop preserves sunlit wooden facade and shutters, distinctly different from village panorama"
+  },
+  "not_published": true,
+  "review": "Rejected prior closer view because same ridge repeats composition. Selected wooden facade for complementary architecture detail. Text/audio/countdown unchanged. Not published."
+}

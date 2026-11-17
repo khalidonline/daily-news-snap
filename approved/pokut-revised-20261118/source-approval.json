@@ -1,0 +1,48 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "توقع المكان | تركيا أو سويسرا؟",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "review_state": "REJECTED_PAIR_AFTER_OWNER_CORRECTION",
+  "owner_review": {
+    "reference": "Khalid approved the displayed replacement photos and requested «اعتمد هذي الصور. صلح كل شي وخله جاهز للنشر» on17November2026. Prepared for18November13:00 Asia/Riyadh only under existing STORY/SPOTLIGHT batch authorization; no immediate send. Assistant viewed actual sources and final decoded countdown/reveal frames, and checked numerical PCM against approved audio. No subjective listening claim.",
+    "reviewed_at": "2026-11-17T11:26:36.889354+00:00",
+    "approved_media_sha256": [
+      "109e90e30fc5a5d0759f9ac2560c047c2e632e6c66e92816349ec03339265b13"
+    ],
+    "approved_source_sha256": [
+      "b47addf94098a73cac2813427e1e3634c03c0036b1d1e36604df3e9734a639b5",
+      "0b396db085efbf0f7ed6af4d96f91e0dc6ab9621666a7ed6b200d38108ae8751"
+    ]
+  },
+  "media": [
+    {
+      "path": "approved/pokut-revised-20261118/source.png",
+      "sha256": "109e90e30fc5a5d0759f9ac2560c047c2e632e6c66e92816349ec03339265b13",
+      "kind": "info",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/pokut-revised-20261118/place.jpg",
+          "sha256": "b47addf94098a73cac2813427e1e3634c03c0036b1d1e36604df3e9734a639b5",
+          "source_url": "https://www.kulturportali.gov.tr/repoKulturPortali/large/25022013/2ee08089-0ca7-4b15-b08b-e4d6ad82e304.JPG",
+          "source_page": "https://www.kulturportali.gov.tr/turkiye/rize/gezilecekyer/pokut-yaylasi",
+          "description": "Pokut mountain settlement wide view",
+          "rights_status": "official_archive_editorial_selection_no_open_license_or_blanket_permission_claimed"
+        },
+        {
+          "path": "approved/pokut-revised-20261118/detail.jpg",
+          "sha256": "0b396db085efbf0f7ed6af4d96f91e0dc6ab9621666a7ed6b200d38108ae8751",
+          "source_url": "https://www.vestaturizm.com/Arsiv/Turlar/1649844513_2.jpg",
+          "source_page": "https://www.vestaturizm.com/tur/pokut-sal-yaylasi-turu-4.html",
+          "description": "Close sunlit wooden facade and shutters, distinct from ridge panorama",
+          "rights_status": "editorial_selection_no_open_license_or_blanket_permission_claimed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "status": "REVIEW_CANDIDATE_NOT_AUTHORIZED_NOT_PUBLISHED",
+  "sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+  "dimensions": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "frames": 360,
+  "duration": 12,
+  "audio": {
+    "codec": "aac",
+    "channels": 2,
+    "sample_rate": "48000",
+    "decoded_pcm_equal": true,
+    "pcm_sha256": "699953dd21aa255326d0e64089e351862b54c89d0ff2ed3091c7169b0cadb00b",
+    "mean_dbfs": -26.44131725146345,
+    "peak_dbfs": -6.927271549453904,
+    "listened": false,
+    "verification": "Exact numeric PCM comparison with approved reference; no subjective listening claim"
+  },
+  "countdown": {
+    "all150_decoded_frames_match_expected_digit": true,
+    "max_mean_pixel_error": 0.49498971193415636,
+    "timing": [
+      3,
+      8
+    ],
+    "digits": [
+      "5",
+      "4",
+      "3",
+      "2",
+      "1"
+    ],
+    "pulse": [
+      100,
+      88
+    ]
+  },
+  "answer": {
+    "correct_option": "تركيا",
+    "first_green_frame": 240,
+    "reveal_at": 8,
+    "hold_to": 12
+  },
+  "text_geometry": [
+    {
+      "role": "series",
+      "text": "توقع المكان",
+      "size": 34,
+      "ink_box": [
+        452,
+        272,
+        629,
+        310
+      ]
+    },
+    {
+      "role": "question",
+      "text": "هالبيوت وسط الجبال",
+      "size": 64,
+      "ink_box": [
+        246,
+        316,
+        834,
+        378
+      ]
+    },
+    {
+      "role": "question",
+      "text": "في تركيا أو سويسرا؟",
+      "size": 64,
+      "ink_box": [
+        261,
+        392,
+        819,
+        484
+      ]
+    },
+    {
+      "role": "option",
+      "text": "تركيا",
+      "size": 54,
+      "ink_box": [
+        248,
+        1084,
+        351,
+        1137
+      ]
+    },
+    {
+      "role": "option",
+      "text": "سويسرا",
+      "size": 54,
+      "ink_box": [
+        680,
+        1085,
+        880,
+        1137
+      ]
+    },
+    {
+      "role": "instruction",
+      "text": "اختر قبل كشف الإجابة",
+      "size": 38,
+      "ink_box": [
+        363,
+        1262,
+        717,
+        1305
+      ]
+    },
+    {
+      "role": "answer",
+      "text": "تركيا! مرتفعات بوكوت",
+      "size": 54,
+      "ink_box": [
+        286,
+        1259,
+        794,
+        1312
+      ]
+    },
+    {
+      "role": "location",
+      "text": "منطقة ريزة، تركيا",
+      "size": 42,
+      "ink_box": [
+        387,
+        1374,
+        694,
+        1415
+      ]
+    }
+  ],
+  "frame_hashes": {
+    "0.5": "1664dde29e9cdafbb7c0bffcc6585f1e70566f8571b49783a93f62a59820aec2",
+    "3.5": "1703bae601da2b00bad739e1c5df382ab88b2f15dbab1e8f1c34e4fbe683cae2",
+    "4.5": "dd4f0cce0bfe8b19a5d03ade0c884d836301a56c47a1029f1ec1b576cc74eeec",
+    "5.5": "b1f08cc218dbd233057b37e5d0f92fc51d956c16b472fd4086822a2a6f5c811b",
+    "6.5": "39dffcfa5971e140a6b0e66aa32bb46033d491bf8ff78218bf6d5112c5510232",
+    "7.5": "fe1d0e941cfc77f08ff7a7f501e2f56a75def6755ec8c7d56133a6f6c72fdcb0",
+    "8.5": "044ed922ae10cceb11e5b0d65c1d9eb912d3d08dd2acb5af7311d43e2747b6c0",
+    "11.5": "87d82a2844d62bff6b0cfc6f5135c7b68826a4cbce94150aa6050071f0c1c37a"
+  },
+  "template_reference": "2026-10-31-master-14 and owner-approved render-v2.py",
+  "visual_review_pending": false,
+  "publication_performed": false,
+  "visual_review": {
+    "viewed": [
+      "source.png",
+      "review.png"
+    ],
+    "result": "PASS: left panoramic ridge and right close wooden facade complementary; bright details, no labels before answer; extracted frames confirm countdown and reveal visible"
+  }
+}

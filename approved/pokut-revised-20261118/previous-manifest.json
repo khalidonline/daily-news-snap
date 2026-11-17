@@ -1,0 +1,194 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": false,
+  "account": "executivesaudi",
+  "title": "توقع المكان | تركيا أو سويسرا؟",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "not_before": "2026-11-18T10:00:00Z",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "intended_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "editorial_id": "B2-09",
+  "owner_viewed_this_export": false,
+  "authorization_context": "Khalid authorized the challenge batch and specifically requested actual image/final-video review before the next challenge on17November2026. B2-09 Pokut is scheduled18November2026 at13:00 Asia/Riyadh. Assistant and independent reviewer inspected source photos, final decoded0.5/11.5-second crops, all numeral/reveal review frames and separate modeled Story/Spotlight overlays at390px. Numeric PCM matches the approved audio exactly. No claim Khalid personally viewed this export or of subjective audio listening. No early publication authorized.",
+  "media": [
+    {
+      "path": "approved/pokut-20261118/Pokut-Challenge.mp4",
+      "sha256": "e7b8b5c8fc73d6768970143b00a016c821be1773aeddae7d541bb364fa72fc29",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true,
+      "sha256": "e7b8b5c8fc73d6768970143b00a016c821be1773aeddae7d541bb364fa72fc29",
+      "reference": "Khalid authorized the challenge batch and specifically requested actual image/final-video review before the next challenge on17November2026. B2-09 Pokut is scheduled18November2026 at13:00 Asia/Riyadh. Assistant and independent reviewer inspected source photos, final decoded0.5/11.5-second crops, all numeral/reveal review frames and separate modeled Story/Spotlight overlays at390px. Numeric PCM matches the approved audio exactly. No claim Khalid personally viewed this export or of subjective audio listening. No early publication authorized."
+    }
+  },
+  "video_review": {
+    "approved": false,
+    "authorization": "Khalid authorized the challenge batch and specifically requested actual image/final-video review before the next challenge on17November2026. B2-09 Pokut is scheduled18November2026 at13:00 Asia/Riyadh. Assistant and independent reviewer inspected source photos, final decoded0.5/11.5-second crops, all numeral/reveal review frames and separate modeled Story/Spotlight overlays at390px. Numeric PCM matches the approved audio exactly. No claim Khalid personally viewed this export or of subjective audio listening. No early publication authorized.",
+    "video_sha256": "e7b8b5c8fc73d6768970143b00a016c821be1773aeddae7d541bb364fa72fc29",
+    "source_manifest": {
+      "path": "approved/pokut-20261118/source-approval.json",
+      "sha256": "02253136f0cf2ba8c78412408a35b8c0aba1870ed2cb259ae0a525d86307658e"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Original owner-approved audio; exact PCM verified numerically, no subjective listening claim."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/pokut-20261118/frame-0.5.png",
+        "sha256": "976c7cd5ad79dc1f3d463de10ac49a9aafbd89d3372f15852fa943e2b7d00a50"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/pokut-20261118/frame-3.5.png",
+        "sha256": "37690ce3c075135f3ae50422c99d8499b55d0ea1d556efbefdb361fb18b46078"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/pokut-20261118/frame-4.5.png",
+        "sha256": "d9b66bdcd05f00e5efa637f83cfc071657df25af8b1d673a5f69ff6d950ec2b2"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/pokut-20261118/frame-5.5.png",
+        "sha256": "f8b30e3d3646b7a0000dbba1662e5cc833f5f6846561ac247a46d9fae52a5399"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/pokut-20261118/frame-6.5.png",
+        "sha256": "e20378833571e656189816a05392077676602d7fb1abdb4065cee7348f26f124"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/pokut-20261118/frame-7.5.png",
+        "sha256": "abeb07169b02259a8d23aa49224915d310aaed19794ed51762f2d320edf9261d"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/pokut-20261118/frame-8.5.png",
+        "sha256": "d57a6787f0e2049bddd42016f88e8e2a0649e92d65d75852c19132eaf3cc8ccb"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/pokut-20261118/frame-11.5.png",
+        "sha256": "c9a8a6b22b6acfbf571584727377c5e2880c555d493e74eef4dbaa7917820665"
+      }
+    ],
+    "image_review": {
+      "path": "approved/pokut-20261118/image-review.json",
+      "sha256": "c59603ed092679a892039e7d9a995add60e8f7678bdeb632b015d6ec53fcc4a8"
+    }
+  },
+  "status": "SUPERSEDED_OWNER_REJECTED_SIMILAR_PHOTOS",
+  "asset_archive": {
+    "path": "approved/pokut-20261118.tar.xz",
+    "sha256": "5196c7afca5bda684ec493efa26c33badcea3a9b1dbd62941e808a6b3bb715b3",
+    "parts": [
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-000",
+        "sha256": "4121b102c04a6fd83bc1e00a221d499f094970f55c8d8197dae343f0e1e69a1e"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-001",
+        "sha256": "fc99da1b0075ad354b5cfdc62d6045af6e3e2187eb72d8567c652b8fee4637db"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-002",
+        "sha256": "c212fd35001ba9fb1a11b16655d7493436db6c0b3103fffe7df6343b36fea054"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-003",
+        "sha256": "6a94717e394d67c3e90f182a7a079b2e3c45b402aa82a4124017c33351394e36"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-004",
+        "sha256": "10fd399b654d1ebaa4c84db7db016c1489ec386745987cc3d31da8b21a6011bf"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-005",
+        "sha256": "e1fc49ef36db9aa53745a3c37da41a71657a4a3c25dd441bf40a28fa2b1599da"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-006",
+        "sha256": "118c38b0e481e1b4a8a7f87e12538abb2c02199edd591e120a37d1d30b2ad50b"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-007",
+        "sha256": "4eb2df1df88c6bcbf8ae771e761560472032a2f9de323b8d186070ac7358eb44"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-008",
+        "sha256": "75b49a54214c6463f48696fe7acd9277de2e2898f9694b19b939b12718e6560d"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-009",
+        "sha256": "dc92270a6eddfc32698abdb33058bdf1dd9f847ef855d475e15a33b5fe995464"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-010",
+        "sha256": "d4959d375fe90987910380c3b939130c01dfa817d865a6a03ed7ef40e48d6fae"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-011",
+        "sha256": "dc629dcb66a559f2ff8d0f7342dd6e14f6a2169fe3a15483c71a2173e8118082"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-012",
+        "sha256": "d21f3a8cefd961440a101477b8937b7aa899a11991ce5e00809a10a90986e0ef"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-013",
+        "sha256": "aca7e581769e2253170965c65740e4904746fee6a7619f93bc14d783077aaf36"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-014",
+        "sha256": "7e73db427dca9d9c010159434eac0edfdedd35e4082d208ae1362fdf51ef06fa"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-015",
+        "sha256": "0068c315f3355946352e09cfe10c88e3b19404b4394b814eb5540a43103a0955"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-016",
+        "sha256": "4141075714308c0ed1703d5337d751956e9e3f0de2c2d7cb46e309e2582b7964"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-017",
+        "sha256": "6b0dd9965ea99832577bd1002f342e7cf0ae4b2aa905d6141ce89ed3a331fc99"
+      },
+      {
+        "path": "approved/pokut-20261118.tar.xz.part-018",
+        "sha256": "30d067eca8ca8d27274743931cbe309989d7da9c452424efbba5505d35b273bc"
+      }
+    ]
+  },
+  "owner_correction": "Khalid saw the preview and said «الصورتين زي بعض تقريبا». A closer view of the same ridge does not provide enough visual distinction; previous assistant acceptance is withdrawn."
+}

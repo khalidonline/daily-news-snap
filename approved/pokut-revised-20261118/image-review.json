@@ -1,0 +1,109 @@
+{
+  "photos": [
+    {
+      "source": {
+        "path": "approved/pokut-revised-20261118/place.jpg",
+        "sha256": "b47addf94098a73cac2813427e1e3634c03c0036b1d1e36604df3e9734a639b5"
+      },
+      "box": [
+        72,
+        505,
+        528,
+        915
+      ],
+      "crops": [
+        {
+          "at": 0.5,
+          "rgb_sha256": "fafe972c586ba007fc78f6b948c2df05384a6959288e28197dd825771e7c1487",
+          "mean_luma": 154.531584,
+          "dark_fraction": 0.022796
+        },
+        {
+          "at": 11.5,
+          "rgb_sha256": "09b67082f4f0abe676d5eff7c910c8cfd6788fcd9206f3d448f5bf0ffc487244",
+          "mean_luma": 154.609836,
+          "dark_fraction": 0.023374
+        }
+      ],
+      "assessment": "passed",
+      "observations": {
+        "subject": "Multiple wooden houses sit across a sunlit green ridge with forested mountains and clouds visible behind them.",
+        "relevance": "The wide image visibly establishes the mountain settlement described by the question rather than a generic landscape without houses.",
+        "crop_visibility": "The final centered crop retains the house cluster, ridge and mountain backdrop at both introduction and final zoom; small facade details are not the intended subject.",
+        "brightness": "Daylight separates pale roofs and green hillside clearly at390px; natural dark house facades do not obscure the settlement or its setting.",
+        "spoiler_risk": "No visible place name, flag or readable location sign appears in the original image or either final crop before the answer reveal."
+      }
+    },
+    {
+      "source": {
+        "path": "approved/pokut-revised-20261118/detail.jpg",
+        "sha256": "0b396db085efbf0f7ed6af4d96f91e0dc6ab9621666a7ed6b200d38108ae8751"
+      },
+      "box": [
+        552,
+        505,
+        1008,
+        915
+      ],
+      "crops": [
+        {
+          "at": 0.5,
+          "rgb_sha256": "c67e62c8efa7abe48cf189bdbf0522e490cf270a19f75514f4191ee1e906a120",
+          "mean_luma": 122.139939,
+          "dark_fraction": 0.147898
+        },
+        {
+          "at": 11.5,
+          "rgb_sha256": "cdc1303f25d281e7e3c67991b0bd6bc3362c0930a57a3e5b8ebfd85435ece021",
+          "mean_luma": 122.792924,
+          "dark_fraction": 0.147433
+        }
+      ],
+      "assessment": "passed",
+      "observations": {
+        "subject": "A sunlit wooden house facade fills the right side, with distinct shuttered windows and warm timber grain.",
+        "relevance": "The close house wall provides architectural detail for the homes mentioned in the question, rather than repeating the village layout.",
+        "crop_visibility": "The final right-biased crop preserves the principal wooden shutters and stone base throughout the subtle zoom; partial building framing is intentional.",
+        "brightness": "Warm sunlit timber, pale stone and blue sky remain distinguishable at phone width; shadow under the eave does not obscure the main shutters.",
+        "spoiler_risk": "No visible location name, flag or readable sign identifies the country in the facade photo before the answer appears."
+      }
+    }
+  ],
+  "pair_metrics": [
+    {
+      "at": 0.5,
+      "similarity": 0.712024
+    },
+    {
+      "at": 11.5,
+      "similarity": 0.710275
+    }
+  ],
+  "version": 1,
+  "video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+  "source_manifest": {
+    "path": "approved/pokut-revised-20261118/source-approval.json",
+    "sha256": "b636538647e8957f93ab035a3db215ad93687dd3da05f9708edbc4ef697a9873"
+  },
+  "source_assets": [
+    {
+      "path": "approved/pokut-revised-20261118/place.jpg",
+      "sha256": "b47addf94098a73cac2813427e1e3634c03c0036b1d1e36604df3e9734a639b5"
+    },
+    {
+      "path": "approved/pokut-revised-20261118/detail.jpg",
+      "sha256": "0b396db085efbf0f7ed6af4d96f91e0dc6ab9621666a7ed6b200d38108ae8751"
+    }
+  ],
+  "reviewer": "Assistant actual source and final-frame inspection; owner subsequently approved displayed replacement photos",
+  "assessment": "passed",
+  "mobile_width": 390,
+  "mobile_layout": "Both final modeled mobile overlays preserve the question, photo subjects, choices, countdown and answer; top branding and far right arrow edge can be covered by modeled UI.",
+  "pair": {
+    "assessment": "passed",
+    "distinct_information": "The left image explains the settlement across a mountain ridge; the right concentrates on wood grain and shutters on a much larger house facade. The previous repeat ridge image was replaced.",
+    "answer_spoiler": "Neither photograph contains a country label or national flag, and the location remains hidden until the approved reveal at second eight."
+  },
+  "reviewed_at": "2026-11-17T11:27:51.906633+00:00",
+  "limitations": "Source and cropped images visually inspected. Diagnostic metrics are only supporting evidence; no subjective audio listening or independent human video review claimed."
+}
