@@ -1,0 +1,33 @@
+{
+  "selected": [
+    {
+      "file": "independent.jpg",
+      "source_page": "https://www.independent.co.uk/tv/lifestyle/car-office-electric-chair-volkswagen-b2230865.html",
+      "url": "https://static.independent.co.uk/2022/11/22/19/poster-1.jpgwidth720?fit=crop&height=1200&width=1200",
+      "dimensions": [
+        1200,
+        1200
+      ],
+      "description": "Actual empty Volkswagen motorized office chair in bright white corridor; full chair, belt, wheels and pedals visible.",
+      "sha256": "87ed5f943b0802eb39f9d26215da3897f4548335019c3717fd5795e77afc39b2",
+      "size_bytes": 70069,
+      "local_render_file": "product.jpg"
+    },
+    {
+      "file": "corridor.jpg",
+      "source_page": "https://genk.vn/volkswagen-che-tao-ghe-van-phong-nhieu-cong-nghe-nhu-xe-hoi-co-the-chay-voi-toc-do-20km-h-trang-bi-ca-day-an-toan-coi-camera-360-do-20221117003131542.chn",
+      "url": "https://genk.mediacdn.vn/139269124445442048/2022/11/17/ghe-3-1668590567092332188755-1668619786589-1668619786719988924766.png",
+      "dimensions": [
+        820,
+        601
+      ],
+      "description": "Man riding same motorized chair in bright white corridor; belt worn, feet on pedals, headlights lit. PNG bytes despite local jpg extension.",
+      "sha256": "e2a60d4294f97b7fbaf39d385a8655834c03de37932f80f1a76cb24e34be108c",
+      "size_bytes": 485241,
+      "local_render_file": "detail.jpg"
+    }
+  ],
+  "official_context": "https://www.globenewswire.com/news-release/2022/11/10/2553417/0/en/volkswagen-builds-an-all-electric-office-chair.html",
+  "official_video": "https://youtu.be/um7Ihij9vk0",
+  "review": "Both images inspected visually. Identifiable same VW Norway prototype. No generation, recoloring, brightness edit or alteration performed. Third-party reproductions/video still; no blanket or open license claimed."
+}

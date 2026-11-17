@@ -1,0 +1,1463 @@
+{
+  "version": 1,
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "content_type": "challenge",
+  "review": {
+    "reference": "Khalid requested replacing both dark similar photos, was shown this revised export and preview in the challenges conversation, then explicitly requested «اعد نشرها» on17November2026. Authorized one republication to STORY and SPOTLIGHT; no deletion of old posts. Assistant and independent reviewer checked actual decoded frames, photo crop/readability, countdown and reveal, and exact approved PCM numerically. No claim of subjective audio listening or that Khalid watched all video frames.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "approved_typography": true,
+    "overlay_destinations": {
+      "STORY": "Actual decoded intro/answer at390px reviewed under modeled top230/bottom180 overlay; critical photo, text and CTA unobscured. Preexisting upper brand area covered. Not live Snapchat UI.",
+      "SPOTLIGHT": "Actual decoded intro/answer at390px reviewed under modeled top230/bottom180/right80 overlay; right photo edge touched, person and text unobscured. Preexisting upper brand area covered. Not live Snapchat UI."
+    }
+  },
+  "cards": [
+    {
+      "sha256": "1017aa7e6d81590dfa1ee88c73ec822fff37f76aa51934c5f560c4270472501a",
+      "frame_designs": [
+        {
+          "at": 0.5,
+          "sha256": "d336c5dc9e758844768ad5fe1f2dee9386ef80d11ac182d9be7eee00586f562d",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ]
+            },
+            {
+              "role": "answer",
+              "box": [
+                361,
+                1260,
+                719,
+                1307
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 38,
+              "line_boxes": [
+                [
+                  363,
+                  1262,
+                  717,
+                  1305
+                ]
+              ]
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        },
+        {
+          "at": 3.5,
+          "sha256": "eb00d58c3d22052764e638d5464aef71635b6fe895b6f762c7a773f99ca3bcfe",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ]
+            },
+            {
+              "role": "answer",
+              "box": [
+                361,
+                1260,
+                719,
+                1307
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 38,
+              "line_boxes": [
+                [
+                  363,
+                  1262,
+                  717,
+                  1305
+                ]
+              ]
+            },
+            {
+              "role": "countdown",
+              "box": [
+                518,
+                1375,
+                562,
+                1444
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 88,
+              "line_boxes": [
+                [
+                  520,
+                  1377,
+                  560,
+                  1442
+                ]
+              ]
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        },
+        {
+          "at": 4.5,
+          "sha256": "ca2483cfc201f207a0b68d99ed795cd3127dfa35337585dc70c5755430d62eb8",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ]
+            },
+            {
+              "role": "answer",
+              "box": [
+                361,
+                1260,
+                719,
+                1307
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 38,
+              "line_boxes": [
+                [
+                  363,
+                  1262,
+                  717,
+                  1305
+                ]
+              ]
+            },
+            {
+              "role": "countdown",
+              "box": [
+                514,
+                1375,
+                565,
+                1443
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 88,
+              "line_boxes": [
+                [
+                  516,
+                  1377,
+                  563,
+                  1441
+                ]
+              ]
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        },
+        {
+          "at": 5.5,
+          "sha256": "fe1f0a00d3ba9844d2b3b62cb584034a32d2572a6cd36b8502119efcb5b37f6c",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ]
+            },
+            {
+              "role": "answer",
+              "box": [
+                361,
+                1260,
+                719,
+                1307
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 38,
+              "line_boxes": [
+                [
+                  363,
+                  1262,
+                  717,
+                  1305
+                ]
+              ]
+            },
+            {
+              "role": "countdown",
+              "box": [
+                516,
+                1374,
+                564,
+                1444
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 88,
+              "line_boxes": [
+                [
+                  518,
+                  1376,
+                  562,
+                  1442
+                ]
+              ]
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        },
+        {
+          "at": 6.5,
+          "sha256": "8bf007fe4bbe5e0da5b13495d656a9519dbf7bab64181fa1bd7354a6b145def2",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ]
+            },
+            {
+              "role": "answer",
+              "box": [
+                361,
+                1260,
+                719,
+                1307
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 38,
+              "line_boxes": [
+                [
+                  363,
+                  1262,
+                  717,
+                  1305
+                ]
+              ]
+            },
+            {
+              "role": "countdown",
+              "box": [
+                516,
+                1374,
+                563,
+                1443
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 88,
+              "line_boxes": [
+                [
+                  518,
+                  1376,
+                  561,
+                  1441
+                ]
+              ]
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        },
+        {
+          "at": 7.5,
+          "sha256": "cae0a8328778f47aede31ef7c00e1d86dd2672cfedb097ec6dfb844aa0387e3b",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ]
+            },
+            {
+              "role": "answer",
+              "box": [
+                361,
+                1260,
+                719,
+                1307
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 38,
+              "line_boxes": [
+                [
+                  363,
+                  1262,
+                  717,
+                  1305
+                ]
+              ]
+            },
+            {
+              "role": "countdown",
+              "box": [
+                521,
+                1375,
+                560,
+                1443
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 88,
+              "line_boxes": [
+                [
+                  523,
+                  1377,
+                  558,
+                  1441
+                ]
+              ]
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        },
+        {
+          "at": 8.5,
+          "sha256": "614cccbd62f13ca65d89fcb5571e6b4763484d334797ed44507d2adea12907f4",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#F7F7EB",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ],
+              "filled_correct_option": true
+            },
+            {
+              "role": "answer",
+              "box": [
+                224,
+                1258,
+                856,
+                1322
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  226,
+                  1260,
+                  854,
+                  1320
+                ]
+              ],
+              "answer_reveal": true
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        },
+        {
+          "at": 11.5,
+          "sha256": "e687e9048fab09347fee7e1a011511895f971ecf64fbb66becfe1e0c26ad78a9",
+          "blocks": [
+            {
+              "role": "headline",
+              "box": [
+                444,
+                271,
+                637,
+                308
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 34,
+              "line_boxes": [
+                [
+                  446,
+                  273,
+                  635,
+                  306
+                ]
+              ]
+            },
+            {
+              "role": "question",
+              "box": [
+                169,
+                363,
+                910,
+                441
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 64,
+              "line_boxes": [
+                [
+                  171,
+                  365,
+                  908,
+                  439
+                ]
+              ]
+            },
+            {
+              "role": "caption",
+              "box": [
+                292,
+                943,
+                787,
+                985
+              ],
+              "color": "#7A7973",
+              "line_count": 1,
+              "font_size": 32,
+              "line_boxes": [
+                [
+                  294,
+                  945,
+                  785,
+                  983
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                250,
+                1083,
+                351,
+                1147
+              ],
+              "color": "#0B3656",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  252,
+                  1085,
+                  349,
+                  1145
+                ]
+              ]
+            },
+            {
+              "role": "option",
+              "box": [
+                640,
+                1083,
+                921,
+                1139
+              ],
+              "color": "#F7F7EB",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  642,
+                  1085,
+                  919,
+                  1137
+                ]
+              ],
+              "filled_correct_option": true
+            },
+            {
+              "role": "answer",
+              "box": [
+                224,
+                1258,
+                856,
+                1322
+              ],
+              "color": "#0C5F46",
+              "line_count": 1,
+              "font_size": 54,
+              "line_boxes": [
+                [
+                  226,
+                  1260,
+                  854,
+                  1320
+                ]
+              ],
+              "answer_reveal": true
+            },
+            {
+              "role": "cta",
+              "box": [
+                140,
+                1640,
+                880,
+                1720
+              ],
+              "color": "#B60E32",
+              "line_count": 1,
+              "font_size": 40,
+              "line_boxes": [
+                [
+                  219,
+                  1663,
+                  801,
+                  1709
+                ]
+              ]
+            }
+          ],
+          "palette_samples": {
+            "background": [
+              60,
+              1120,
+              80,
+              1140
+            ],
+            "green": [
+              850,
+              126,
+              870,
+              136
+            ],
+            "cta_background": [
+              100,
+              1670,
+              120,
+              1690
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

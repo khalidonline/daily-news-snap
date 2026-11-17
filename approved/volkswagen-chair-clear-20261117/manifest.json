@@ -1,0 +1,165 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — كرسي فولكس واجن",
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "intended_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "media": [
+    {
+      "path": "approved/volkswagen-chair-clear-20261117/Volkswagen-Chair-Challenge.mp4",
+      "sha256": "1017aa7e6d81590dfa1ee88c73ec822fff37f76aa51934c5f560c4270472501a",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true,
+      "sha256": "1017aa7e6d81590dfa1ee88c73ec822fff37f76aa51934c5f560c4270472501a",
+      "reference": "Khalid requested replacing both dark similar photos, was shown this revised export and preview in the challenges conversation, then explicitly requested «اعد نشرها» on17November2026. Authorized one republication to STORY and SPOTLIGHT; no deletion of old posts. Assistant and independent reviewer checked actual decoded frames, photo crop/readability, countdown and reveal, and exact approved PCM numerically. No claim of subjective audio listening or that Khalid watched all video frames."
+    },
+    "previous": {
+      "path": "approved/volkswagen-chair-20261117/manifest.json",
+      "sha256": "c502e2c91af1346177637042d4d9cc3ea261d1d7e1ceb3b6fb14cd8c2a92f868"
+    }
+  },
+  "video_review": {
+    "approved": true,
+    "authorization": "Khalid requested replacing both dark similar photos, was shown this revised export and preview in the challenges conversation, then explicitly requested «اعد نشرها» on17November2026. Authorized one republication to STORY and SPOTLIGHT; no deletion of old posts. Assistant and independent reviewer checked actual decoded frames, photo crop/readability, countdown and reveal, and exact approved PCM numerically. No claim of subjective audio listening or that Khalid watched all video frames.",
+    "video_sha256": "1017aa7e6d81590dfa1ee88c73ec822fff37f76aa51934c5f560c4270472501a",
+    "source_manifest": {
+      "path": "approved/volkswagen-chair-clear-20261117/source-approval.json",
+      "sha256": "322706e54c667ba3da02c3c22f6465252a4504e9c23280b2e30c744d6cfc9e95"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Exact existing owner-approved audio, unchanged PCM; no subjective listening claim."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-0.5.png",
+        "sha256": "d336c5dc9e758844768ad5fe1f2dee9386ef80d11ac182d9be7eee00586f562d"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-3.5.png",
+        "sha256": "eb00d58c3d22052764e638d5464aef71635b6fe895b6f762c7a773f99ca3bcfe"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-4.5.png",
+        "sha256": "ca2483cfc201f207a0b68d99ed795cd3127dfa35337585dc70c5755430d62eb8"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-5.5.png",
+        "sha256": "fe1f0a00d3ba9844d2b3b62cb584034a32d2572a6cd36b8502119efcb5b37f6c"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-6.5.png",
+        "sha256": "8bf007fe4bbe5e0da5b13495d656a9519dbf7bab64181fa1bd7354a6b145def2"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-7.5.png",
+        "sha256": "cae0a8328778f47aede31ef7c00e1d86dd2672cfedb097ec6dfb844aa0387e3b"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-8.5.png",
+        "sha256": "614cccbd62f13ca65d89fcb5571e6b4763484d334797ed44507d2adea12907f4"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/volkswagen-chair-clear-20261117/frame-11.5.png",
+        "sha256": "e687e9048fab09347fee7e1a011511895f971ecf64fbb66becfe1e0c26ad78a9"
+      }
+    ]
+  },
+  "status": "AUTHORIZED_REPUBLICATION_NOT_DISPATCHED",
+  "not_before": "2026-11-17T10:35:39Z",
+  "editorial_id": "B2-08-PHOTO-REVISION",
+  "owner_viewed_this_export": false,
+  "authorization_context": "Explicit republication request after displayed revised preview; no claim owner personally watched the complete export.",
+  "asset_archive": {
+    "path": "approved/volkswagen-chair-clear-20261117.tar.xz",
+    "sha256": "27445f6994840d2cef0960e914f03d8f8bd3d359c22cd782809d8616bb4b1adb",
+    "parts": [
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-000",
+        "sha256": "babdc74a69007233bfb54227883bc7f16212ca2d4c824678984ee95604d9b1d4"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-001",
+        "sha256": "37fbd8a376624d8ea0e7edecc800f30247735a47de700e0f0c3456abf7b3a61b"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-002",
+        "sha256": "55d50afcedc56cac1fb3e45e7fd1059e7724a28c79a87f378fb2646ab056c838"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-003",
+        "sha256": "5251902a89e22c1692e830b2a3915e26c5e5f42349cea12c1b04b98875120034"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-004",
+        "sha256": "f15a908ff69cc500cfdaef6da9b33c8c0c6dd58a593e655eb1990bd6b53c8c7a"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-005",
+        "sha256": "222659eecf133288cc64b7b979d15fff51bde4abe9d66b5ed7d0227bb79b7acc"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-006",
+        "sha256": "3db5ef2ed1a7a437c0febe12404bc265fe613d80325eff29cbd2965c7cdc762b"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-007",
+        "sha256": "38fa308d767a172879e27a3a3762a5649a89f2a3bcbfe80f27dc27110408a873"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-008",
+        "sha256": "0a25361b896446230493fd2372ce90d888770d13d3a2b2af9c7fb6271b77155a"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-009",
+        "sha256": "94edfcac56a4e551814555840dfeb0b99ecb9d62d3dec774d73b42ab075a4da2"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-010",
+        "sha256": "6cd885d95673b27079a840724e22ec426b9136805251438b1f91e626095212ce"
+      },
+      {
+        "path": "approved/volkswagen-chair-clear-20261117.tar.xz.part-011",
+        "sha256": "e7ea4621c309870b57a9d67be9ac34e7f7708fe11aef8711e5abb48d3176204e"
+      }
+    ]
+  }
+}

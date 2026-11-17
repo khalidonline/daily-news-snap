@@ -1,0 +1,53 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — كرسي فولكس واجن",
+  "media": [
+    {
+      "path": "approved/volkswagen-chair-clear-20261117/source.png",
+      "sha256": "01ce241ecac79725b16c1a27669e5c2b45182dd0ddfe755643b95abde80623e3",
+      "kind": "info",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/volkswagen-chair-clear-20261117/product.jpg",
+          "sha256": "87ed5f943b0802eb39f9d26215da3897f4548335019c3717fd5795e77afc39b2",
+          "source_url": "https://static.independent.co.uk/2022/11/22/19/poster-1.jpgwidth720?fit=crop&height=1200&width=1200",
+          "source_page": "https://www.independent.co.uk/tv/lifestyle/car-office-electric-chair-volkswagen-b2230865.html",
+          "description": "Actual empty Volkswagen motorized office chair in bright white corridor; full chair, belt, wheels and pedals visible.",
+          "rights_status": "news_reproduction_of_real_campaign_image_editorial_selection_no_open_or_blanket_license_claimed"
+        },
+        {
+          "path": "approved/volkswagen-chair-clear-20261117/detail.jpg",
+          "sha256": "e2a60d4294f97b7fbaf39d385a8655834c03de37932f80f1a76cb24e34be108c",
+          "source_url": "https://genk.mediacdn.vn/139269124445442048/2022/11/17/ghe-3-1668590567092332188755-1668619786589-1668619786719988924766.png",
+          "source_page": "https://genk.vn/volkswagen-che-tao-ghe-van-phong-nhieu-cong-nghe-nhu-xe-hoi-co-the-chay-voi-toc-do-20km-h-trang-bi-ca-day-an-toan-coi-camera-360-do-20221117003131542.chn",
+          "description": "Man riding same motorized chair in bright white corridor; belt worn, feet on pedals, headlights lit. PNG bytes despite local jpg extension.",
+          "rights_status": "news_reproduction_of_real_campaign_image_editorial_selection_no_open_or_blanket_license_claimed"
+        }
+      ]
+    }
+  ],
+  "review_state": "OWNER_AUTHORIZED_REPUBLICATION_OF_SHOWN_PHOTO_REVISION",
+  "facts": {
+    "source": "https://kommunikasjon.ntb.no/pressemelding/17955244/400-millioner-har-sett-denne-norske-nyvinningen?publisherId=16056407",
+    "source_date": "2023-02-06",
+    "meaning": "Marketing demonstration chair, not offered as a mass-produced retail product. Do not imply a claim about every possible private sale."
+  },
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "owner_review": {
+    "reference": "Khalid requested replacing both dark similar photos, was shown this revised export and preview in the challenges conversation, then explicitly requested «اعد نشرها» on17November2026. Authorized one republication to STORY and SPOTLIGHT; no deletion of old posts. Assistant and independent reviewer checked actual decoded frames, photo crop/readability, countdown and reveal, and exact approved PCM numerically. No claim of subjective audio listening or that Khalid watched all video frames.",
+    "reviewed_at": "2026-11-17T10:34:00+00:00",
+    "approved_media_sha256": [
+      "01ce241ecac79725b16c1a27669e5c2b45182dd0ddfe755643b95abde80623e3"
+    ],
+    "approved_source_sha256": [
+      "87ed5f943b0802eb39f9d26215da3897f4548335019c3717fd5795e77afc39b2",
+      "e2a60d4294f97b7fbaf39d385a8655834c03de37932f80f1a76cb24e34be108c"
+    ]
+  }
+}

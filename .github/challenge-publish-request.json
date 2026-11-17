@@ -1,11 +1,11 @@
 {
   "version": 1,
   "action": "publish",
-  "package": "volkswagen-chair-20261117",
-  "expected_video_sha256": "451d6f39b7e3e3d5b42ac1e727adeb3d4011facf00782f187a95fe911ba9e5c3",
-  "not_before": "2026-11-17T10:00:00Z",
-  "manifest_sha256": "c502e2c91af1346177637042d4d9cc3ea261d1d7e1ceb3b6fb14cd8c2a92f868",
-  "design_review_sha256": "e179448d4dd030257186f138fd333e92d05bc45ee5820076e229936210440c92",
-  "source_manifest_sha256": "7297f9d951ee4c95662d32a5092fbd2c683e465eedd3ff7efc43d1215d12f3f9",
-  "media_archive_sha256": "579e63a87f0a32a60acbcbf95d73aa34ec33a05e58746e4e5cb1efb5c43d4152"
+  "package": "volkswagen-chair-clear-20261117",
+  "expected_video_sha256": "1017aa7e6d81590dfa1ee88c73ec822fff37f76aa51934c5f560c4270472501a",
+  "not_before": "2026-11-17T10:35:39Z",
+  "manifest_sha256": "7bfa33d0a1773525416eed39edcb85e918a80fc5db5101f34eb6e2cd7e13bfd8",
+  "design_review_sha256": "4af650042775411d1b52621cd88ff2222982d732e375b86f4a4305f69b00d26a",
+  "source_manifest_sha256": "322706e54c667ba3da02c3c22f6465252a4504e9c23280b2e30c744d6cfc9e95",
+  "media_archive_sha256": "27445f6994840d2cef0960e914f03d8f8bd3d359c22cd782809d8616bb4b1adb"
 }

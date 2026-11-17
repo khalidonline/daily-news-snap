@@ -1,0 +1,171 @@
+{
+  "status": "REVIEWED_IMAGE_REVISION_DRAFT_NOT_PUBLISHED",
+  "sha256": "1017aa7e6d81590dfa1ee88c73ec822fff37f76aa51934c5f560c4270472501a",
+  "dimensions": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "frames": 360,
+  "duration": 12,
+  "audio": {
+    "codec": "aac",
+    "channels": 2,
+    "sample_rate": "48000",
+    "decoded_pcm_equal": true,
+    "pcm_sha256": "699953dd21aa255326d0e64089e351862b54c89d0ff2ed3091c7169b0cadb00b",
+    "mean_dbfs": -26.44131725146345,
+    "peak_dbfs": -6.927271549453904,
+    "listened": false,
+    "verification": "Exact numeric PCM comparison with approved reference; no subjective listening claim"
+  },
+  "countdown": {
+    "all150_decoded_frames_match_expected_digit": true,
+    "max_mean_pixel_error": 0.4924074074074074,
+    "timing": [
+      3,
+      8
+    ],
+    "digits": [
+      "5",
+      "4",
+      "3",
+      "2",
+      "1"
+    ],
+    "pulse": [
+      100,
+      88
+    ]
+  },
+  "answer": {
+    "correct_option": "للاستعراض",
+    "first_green_frame": 240,
+    "reveal_at": 8,
+    "hold_to": 12
+  },
+  "text_geometry": [
+    {
+      "role": "series",
+      "text": "نزل بالسوق؟",
+      "size": 34,
+      "ink_box": [
+        446,
+        273,
+        635,
+        306
+      ]
+    },
+    {
+      "role": "question",
+      "text": "كرسي فولكس واجن، انباع؟",
+      "size": 64,
+      "ink_box": [
+        171,
+        365,
+        908,
+        439
+      ]
+    },
+    {
+      "role": "caption",
+      "text": "كرسي مكتب تقدر تسوقه بدواستين",
+      "size": 32,
+      "ink_box": [
+        294,
+        945,
+        785,
+        983
+      ]
+    },
+    {
+      "role": "option",
+      "text": "انباع",
+      "size": 54,
+      "ink_box": [
+        252,
+        1085,
+        349,
+        1145
+      ]
+    },
+    {
+      "role": "option",
+      "text": "للاستعراض",
+      "size": 54,
+      "ink_box": [
+        642,
+        1085,
+        919,
+        1137
+      ]
+    },
+    {
+      "role": "instruction",
+      "text": "اختر قبل كشف الإجابة",
+      "size": 38,
+      "ink_box": [
+        363,
+        1262,
+        717,
+        1305
+      ]
+    },
+    {
+      "role": "answer",
+      "text": "سووه للاستعراض، ما انباع.",
+      "size": 54,
+      "ink_box": [
+        226,
+        1260,
+        854,
+        1320
+      ]
+    }
+  ],
+  "frame_hashes": {
+    "0.5": "d336c5dc9e758844768ad5fe1f2dee9386ef80d11ac182d9be7eee00586f562d",
+    "3.5": "eb00d58c3d22052764e638d5464aef71635b6fe895b6f762c7a773f99ca3bcfe",
+    "4.5": "ca2483cfc201f207a0b68d99ed795cd3127dfa35337585dc70c5755430d62eb8",
+    "5.5": "fe1f0a00d3ba9844d2b3b62cb584034a32d2572a6cd36b8502119efcb5b37f6c",
+    "6.5": "8bf007fe4bbe5e0da5b13495d656a9519dbf7bab64181fa1bd7354a6b145def2",
+    "7.5": "cae0a8328778f47aede31ef7c00e1d86dd2672cfedb097ec6dfb844aa0387e3b",
+    "8.5": "614cccbd62f13ca65d89fcb5571e6b4763484d334797ed44507d2adea12907f4",
+    "11.5": "e687e9048fab09347fee7e1a011511895f971ecf64fbb66becfe1e0c26ad78a9"
+  },
+  "template_reference": "2026-10-31-master-14 and owner-approved render-v2.py",
+  "visual_review_pending": false,
+  "publication_performed": false,
+  "visual_review": {
+    "actual_decoded_frames_reviewed_seconds": [
+      0.5,
+      3.5,
+      4.5,
+      5.5,
+      6.5,
+      7.5,
+      8.5,
+      11.5
+    ],
+    "contact_sheet_width_per_frame": 390,
+    "modeled_story_and_spotlight_overlays_reviewed": true,
+    "findings": "Bright corridor photos show full empty chair and person riding it. Distinct product/use views. Chair, wheels, feet/pedals and head are retained within crop. Text, option labels, countdown and answer readable. No subjective audio listening claimed."
+  },
+  "unchanged_content_check": {
+    "content_json_equal": true,
+    "source_pixels_different_outside_two_photo_boxes": 0,
+    "source_changed_bbox": [
+      72,
+      505,
+      1007,
+      914
+    ]
+  },
+  "published_predecessor_sha256": "451d6f39b7e3e3d5b42ac1e727adeb3d4011facf00782f187a95fe911ba9e5c3",
+  "publication_authorized_for_revision": false,
+  "independent_visual_review": {
+    "passed_for_requested_photo_revision": true,
+    "findings": "Both replacement images brighter and functionally distinct: empty full chair and person riding. Shared bright corridor background does not obscure scene difference. Head, wheels and feet retained. Question, caption, options and answer unchanged. Numeric audio equality reported, not listened to.",
+    "preexisting_template_note": "Modeled UI masks cover upper brand area; Spotlight right rail touches photo edge without hiding person or text. No new obstruction from image revision."
+  }
+}
