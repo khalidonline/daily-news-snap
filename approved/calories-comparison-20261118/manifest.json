@@ -1,0 +1,110 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "وش فيه سعرات أكثر إذا الوزن واحد؟",
+  "not_before": "2026-11-18T09:00:00+03:00",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35"
+    ],
+    "approved_source_sha256": [
+      "0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35"
+    ],
+    "reference": "Khalid approved calories package and Arabic direction with English digits on2026-11-17T09:08:52Z: https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19?messageId=59d846b4-643b-4238-aae0-0d640bd2ca2b . Existing daily09:00 Riyadh schedule, Story only for one week; no early publish.",
+    "reviewed_at": "2026-11-17T09:08:52+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/calories-comparison-20261118/card.png",
+      "sha256": "0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35",
+      "template": "comparison",
+      "comparison": {
+        "variant": "calories-rtl-v1",
+        "reference_sha256": "0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35",
+        "title": "وش فيه سعرات أكثر إذا الوزن واحد؟",
+        "subtitle": "السعرات التقريبية في كل 100 غرام",
+        "unit": "kcal",
+        "basis": {
+          "quantity": 100,
+          "unit": "g"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "برجر لحم بالجبن",
+            "low": 310,
+            "high": 310
+          },
+          {
+            "label": "ساندوتش شاورما دجاج",
+            "low": 245,
+            "high": 245
+          },
+          {
+            "label": "ساندوتش فطور بيض وجبن",
+            "low": 230,
+            "high": 230
+          },
+          {
+            "label": "كبسة دجاج",
+            "low": 150,
+            "high": 150
+          },
+          {
+            "label": "مكرونة باللحم المفروم وصلصة الطماطم",
+            "low": 120,
+            "high": 120
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 310,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            75,
+            897
+          ],
+          "bar_y": [
+            594,
+            814,
+            1034,
+            1254,
+            1474
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/calories-comparison-20261118/card.png",
+          "sha256": "0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ee8ddc563d4c8191a9a546150ae8dea0_caf305c17d148191b336ceff647730cb",
+          "description": "Exact approved export, Library version1; no rendering or pixel modification",
+          "credit": "Executive Summary",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

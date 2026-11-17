@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35",
+      "template": "comparison",
+      "comparison": {
+        "variant": "calories-rtl-v1",
+        "reference_sha256": "0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35",
+        "title": "وش فيه سعرات أكثر إذا الوزن واحد؟",
+        "subtitle": "السعرات التقريبية في كل 100 غرام",
+        "unit": "kcal",
+        "basis": {
+          "quantity": 100,
+          "unit": "g"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "برجر لحم بالجبن",
+            "low": 310,
+            "high": 310
+          },
+          {
+            "label": "ساندوتش شاورما دجاج",
+            "low": 245,
+            "high": 245
+          },
+          {
+            "label": "ساندوتش فطور بيض وجبن",
+            "low": 230,
+            "high": 230
+          },
+          {
+            "label": "كبسة دجاج",
+            "low": 150,
+            "high": 150
+          },
+          {
+            "label": "مكرونة باللحم المفروم وصلصة الطماطم",
+            "low": 120,
+            "high": 120
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 310,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            75,
+            897
+          ],
+          "bar_y": [
+            594,
+            814,
+            1034,
+            1254,
+            1474
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Agent inspected actual full-size PNG on2026-11-17: Arabic text and English digits100/310/245/230/150/120, right-anchored bars, approved labels and CTA. Khalid approved calories package and Arabic direction with English digits on2026-11-17T09:08:52Z: https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19?messageId=59d846b4-643b-4238-aae0-0d640bd2ca2b . Existing daily09:00 Riyadh schedule, Story only for one week; no early publish.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Actual PNG viewed at full size; title begins below y207, CTA ends y1731, away from modeled top0..105/bottom1830..1920. Not a live platform screenshot."
+    }
+  }
+}

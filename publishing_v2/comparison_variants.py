@@ -1,6 +1,6 @@
 """Closed, immutable reference variants, not a general chart renderer.
 
-Only the two specifically reviewed exports and their complete semantic specs
+Only the specifically reviewed exports and their complete semantic specs
 are accepted. A changed/new design requires a new separately reviewed variant;
 caller-provided hashes/paths cannot authorize it. Publication still requires
 all existing source, approval, account, quota and idempotency checks.
@@ -59,6 +59,26 @@ SPECS = {'pictogram-count-v1': {'variant': 'pictogram-count-v1',
                                    'bar_y': [604, 807, 1010, 1213, 1416]}}}
 FILES = {'pictogram-count-v1': 'sugar-pictogram.png', 'annotated-range-v1': 'mobile-data-ranges.png'}
 
+SPECS['calories-rtl-v1'] = {'variant': 'calories-rtl-v1',
+ 'reference_sha256': '0be204f564ee6287d99a752f7d5f816df77c43f4ec322bc810781c1bbbaf2d35',
+ 'title': 'وش فيه سعرات أكثر إذا الوزن واحد؟',
+ 'subtitle': 'السعرات التقريبية في كل 100 غرام',
+ 'unit': 'kcal',
+ 'basis': {'quantity': 100, 'unit': 'g'},
+ 'note': '',
+ 'rows': [{'label': 'برجر لحم بالجبن', 'low': 310, 'high': 310},
+          {'label': 'ساندوتش شاورما دجاج', 'low': 245, 'high': 245},
+          {'label': 'ساندوتش فطور بيض وجبن', 'low': 230, 'high': 230},
+          {'label': 'كبسة دجاج', 'low': 150, 'high': 150},
+          {'label': 'مكرونة باللحم المفروم وصلصة الطماطم',
+           'low': 120,
+           'high': 120}],
+ 'scale': {'min': 0, 'max': 310, 'direction': 'rtl'},
+ 'layout': {'canvas': [1080, 1920],
+            'bar_axis': [75, 897],
+            'bar_y': [594, 814, 1034, 1254, 1474]},
+ 'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
+FILES['calories-rtl-v1'] = 'calories-rtl.png'
 
 def validate_reference_variant(image, spec, *, raw=None):
     if not isinstance(spec,dict):raise ValueError('Comparison variant spec must be an object')
