@@ -1,0 +1,54 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "بعد انتظار 13 سنة.. الخميس تنزل لعبة GTA 6!",
+  "not_before": "2026-11-18T05:00:00Z",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "83548668365535c956257c948c4ef74a01f49edce7de54fd43224604aa0f0441"
+    ],
+    "approved_source_sha256": [
+      "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
+      "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259"
+    ],
+    "reference": "Draft built from exact owner-approved copy and scheduled publication request; owner has not reviewed this export.",
+    "reviewed_at": "2026-11-17T14:20:00Z"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/gta6-20261118/card.png",
+      "sha256": "83548668365535c956257c948c4ef74a01f49edce7de54fd43224604aa0f0441",
+      "source_assets": [
+        {
+          "path": "approved/gta6-20261118/police.jpg",
+          "sha256": "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
+          "source_url": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_17.0er79m2u3nygs.jpg",
+          "credit": "Rockstar Games",
+          "description": "Official GTA VI screenshot, explicitly captioned as game imagery",
+          "rights_status": "source_recorded"
+        },
+        {
+          "path": "approved/gta6-20261118/vice-city.jpg",
+          "sha256": "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259",
+          "source_url": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_15.11tb0mz68edqo.jpg",
+          "credit": "Rockstar Games",
+          "description": "Official GTA VI screenshot, explicitly captioned as game imagery",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/gta6-20261118/manifest.json",
+  "manifest_sha256": "0d6715d5756a7964e5e68e9cecc535fc9c48c0a6cb8237e9fe23610ebe3dd432",
+  "identity": "64a4307229cee9437afd13e0e4ba6210146855fe61a093e6b5a11b27e15345aa",
+  "public_indices": [
+    1
+  ],
+  "title": "بعد انتظار 13 سنة.. الخميس تنزل لعبة GTA 6!",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": "Pending exact export review; text and tomorrow-morning publication requested by owner."
+}

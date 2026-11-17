@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/gta6-20261118",
+  "manifest_content_sha256": "337a8b57f846063cde0feabedc4e6280520e210e5c30f30191b8277ce14b65bd",
+  "archive_content_sha256": "3c30b08496d0c44546b7c78eb2e20905f5af2ca239a2a197b7a51bf007b41ff5",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "a9cc489f2a4197041e95cf13d5f4e526fc8db26b42aaccb8318731175a42cfc8",
+  "assets": {
+    "approved/gta6-20261118/card.png": "83548668365535c956257c948c4ef74a01f49edce7de54fd43224604aa0f0441",
+    "approved/gta6-20261118/police.jpg": "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
+    "approved/gta6-20261118/vice-city.jpg": "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259"
+  },
+  "preparation_seconds": 0.005
+}

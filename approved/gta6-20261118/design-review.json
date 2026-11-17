@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "83548668365535c956257c948c4ef74a01f49edce7de54fd43224604aa0f0441",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "بعد انتظار 13 سنة.. الخميس تنزل لعبة GTA 6!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              78,
+              215,
+              1020,
+              266
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            78,
+            215,
+            1020,
+            267
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "دوريات الشرطة داخل اللعبة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              136,
+              695,
+              452,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            136,
+            695,
+            452,
+            725
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "فايس سيتي داخل اللعبة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              649,
+              695,
+              924,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            649,
+            695,
+            924,
+            727
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قبل 11 سنة راح فريق اللعبة لميامي. علشان اللعبة وشوارعها مستوحاة منها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              187,
+              801,
+              980,
+              855
+            ],
+            [
+              377,
+              879,
+              980,
+              925
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            187,
+            801,
+            1015,
+            925
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تخيل بالجزء الخامس أخذوا ربع مليون صورة في لوس أنجلوس، وصوروا آلاف الساعات فيديو.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              133,
+              991,
+              980,
+              1054
+            ],
+            [
+              161,
+              1078,
+              980,
+              1133
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            133,
+            991,
+            1015,
+            1133
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وهالمرة صوروا ميامي من هليكوبتر، وحتى ركبوا مع دورية شرطة ولفوا شوارعها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              126,
+              1198,
+              980,
+              1250
+            ],
+            [
+              375,
+              1274,
+              980,
+              1326
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            126,
+            1198,
+            1015,
+            1326
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "اشتغل عليها قرابة 5 آلاف شخص، وتكلفتها حسب التقديرات فوق 3.75 مليار ريال.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              181,
+              1392,
+              980,
+              1442
+            ],
+            [
+              310,
+              1466,
+              980,
+              1509
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            181,
+            1392,
+            1015,
+            1509
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "اللي انتظرها 13 سنة.. تتوقع ينام ليلة الخميس؟",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              142,
+              1575,
+              938,
+              1624
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            142,
+            1575,
+            938,
+            1625
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Viewed final card at 390px: distinct official skyline and police street screenshots, explicitly game captions; exact approved copy, headline and closing fit one line; 4 two-line bullets; CTA visible. Top and bottom UI masks checked.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Checked 390px final card with top 0..39 and bottom 625..692 mask; essential content remains unobscured.",
+      "SAVED_STORY": "Checked 390px final card with top 0..39 and bottom 625..692 mask; essential content remains unobscured."
+    }
+  }
+}

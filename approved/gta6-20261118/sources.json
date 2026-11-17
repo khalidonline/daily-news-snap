@@ -1,0 +1,27 @@
+{
+  "images": [
+    {
+      "path": "approved/gta6-20261118/police.jpg",
+      "sha256": "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
+      "source_url": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_17.0er79m2u3nygs.jpg",
+      "credit": "Rockstar Games",
+      "description": "Official GTA VI screenshot, explicitly captioned as game imagery",
+      "rights_status": "source_recorded"
+    },
+    {
+      "path": "approved/gta6-20261118/vice-city.jpg",
+      "sha256": "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259",
+      "source_url": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_15.11tb0mz68edqo.jpg",
+      "credit": "Rockstar Games",
+      "description": "Official GTA VI screenshot, explicitly captioned as game imagery",
+      "rights_status": "source_recorded"
+    }
+  ],
+  "release_date": {
+    "url": "https://www.rockstargames.com/VI",
+    "observed": "2026-11-17",
+    "date": "2026-11-19"
+  },
+  "copy_approval": "https://chatgpt.com/c/6afbe0c8-2dbc-83ed-9c1f-af08fe6a387e?messageId=9fc55449-658f-4007-bfe2-58c320984239",
+  "publish_request": "https://chatgpt.com/c/6afbe0c8-2dbc-83ed-9c1f-af08fe6a387e?messageId=cd976358-fac2-4fb3-89e5-a558514957bb"
+}
