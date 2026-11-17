@@ -4,7 +4,7 @@ name: Publish an owner-approved package
 on:
   push:
     branches: [main]
-    paths: ['.github/information-publish-request.json']
+    paths: ['.github/information-publish-request.json', '.github/challenge-publish-request.json']
   workflow_dispatch:
     inputs:
       package:
@@ -19,6 +19,19 @@ on:
         options:
           - prepared-information
           - legacy-story
+          - reviewed-challenge
+      challenge_action:
+        description: Reviewed challenge validation is offline; publish requires scheduled authorization
+        required: false
+        default: validate
+        type: choice
+        options:
+          - validate
+          - publish
+      expected_video_sha256:
+        description: Exact reviewed MP4 SHA256, required for reviewed-challenge mode
+        required: false
+        type: string
 permissions:
   contents: write
 concurrency:
@@ -27,7 +40,7 @@ concurrency:
 jobs:
   publish:
     if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -40,7 +53,7 @@ jobs:
       - name: Resolve explicit approval request from push
         if: github.event_name == 'push'
         id: request
-        run: python -m publishing_v2.information_request resolve-push --event "$GITHUB_EVENT_PATH" >> "$GITHUB_OUTPUT"
+        run: python -m publishing_v2.publication_request resolve-push --event "$GITHUB_EVENT_PATH" >> "$GITHUB_OUTPUT"
       - name: Resolve the package folder
         id: pkg
         env:
@@ -66,7 +79,7 @@ jobs:
           DRY_RUN: '0'
         run: python -m publishing_v2.bundle_api publish --manifest "${{ steps.pkg.outputs.manifest }}"
       - name: Deliver prepared information and public archive
-        if: github.event_name == 'push' || inputs.mode == 'prepared-information'
+        if: (github.event_name == 'push' && steps.request.outputs.mode == 'prepared-information') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'prepared-information')
         env:
           PACKAGE: ${{ github.event_name == 'push' && steps.request.outputs.package || inputs.package }}
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
@@ -75,3 +88,30 @@ jobs:
           POST_TO_SNAPCHAT: '1'
           DRY_RUN: '0'
         run: python -m publishing_v2.deliver_information --package "$PACKAGE"
+
+      - name: Verify reviewed challenge tooling and executable inventory
+        if: (github.event_name == 'push' && steps.request.outputs.mode == 'reviewed-challenge') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'reviewed-challenge')
+        timeout-minutes: 5
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            timeout 90 sudo apt-get update
+            timeout 120 sudo apt-get install -y ffmpeg
+          fi
+          python -m publishing_v2.route_inventory
+      - name: Validate exact reviewed challenge without provider calls
+        if: (github.event_name == 'push' && steps.request.outputs.mode == 'reviewed-challenge') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'reviewed-challenge')
+        env:
+          PACKAGE: ${{ github.event_name == 'push' && steps.request.outputs.package || inputs.package }}
+          EXPECTED_VIDEO_SHA256: ${{ github.event_name == 'push' && steps.request.outputs.expected_video_sha256 || inputs.expected_video_sha256 }}
+        run: python -m publishing_v2.deliver_challenge --package "$PACKAGE" --expected-video-sha256 "$EXPECTED_VIDEO_SHA256" --action validate
+      - name: Deliver scheduled exact challenge to Story and Spotlight
+        if: (github.event_name == 'push' && steps.request.outputs.mode == 'reviewed-challenge' && steps.request.outputs.challenge_action == 'publish') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'reviewed-challenge' && inputs.challenge_action == 'publish')
+        env:
+          PACKAGE: ${{ github.event_name == 'push' && steps.request.outputs.package || inputs.package }}
+          EXPECTED_VIDEO_SHA256: ${{ github.event_name == 'push' && steps.request.outputs.expected_video_sha256 || inputs.expected_video_sha256 }}
+          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
+          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          POST_TO_SNAPCHAT: '1'
+          DRY_RUN: '0'
+        run: python -m publishing_v2.deliver_challenge --package "$PACKAGE" --expected-video-sha256 "$EXPECTED_VIDEO_SHA256" --action publish

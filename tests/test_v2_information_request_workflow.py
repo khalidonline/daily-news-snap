@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 def test_workflow_registration_is_explicit_and_preserves_recovery():
     w=yaml.safe_load((ROOT/'.github/workflows/publish-approved-package.yml').read_text())
     events=w.get('on',w.get(True))
-    assert events.get('push')=={'branches':['main'],'paths':['.github/information-publish-request.json']}
+    assert events.get('push')=={'branches':['main'],'paths':['.github/information-publish-request.json','.github/challenge-publish-request.json']}
     assert 'workflow_dispatch' in events
     assert w['concurrency']=={'group':'executivesaudi-approved-api','cancel-in-progress':False}
     checkout=w['jobs']['publish']['steps'][0]
@@ -26,12 +26,12 @@ def test_workflow_registration_is_explicit_and_preserves_recovery():
     steps=job['steps']
     resolver=next(step for step in steps if step.get('id')=='request')
     assert resolver['if']=="github.event_name == 'push'"
-    assert resolver['run']=='python -m publishing_v2.information_request resolve-push --event "$GITHUB_EVENT_PATH" >> "$GITHUB_OUTPUT"'
+    assert resolver['run']=='python -m publishing_v2.publication_request resolve-push --event "$GITHUB_EVENT_PATH" >> "$GITHUB_OUTPUT"'
     assert not resolver.get('continue-on-error',False)
     delivery=next(step for step in steps if 'publishing_v2.deliver_information' in step.get('run',''))
     assert steps.index(resolver)<steps.index(delivery)
     assert delivery['env']['PACKAGE']=="${{ github.event_name == 'push' && steps.request.outputs.package || inputs.package }}"
-    assert delivery['if']=="github.event_name == 'push' || inputs.mode == 'prepared-information'"
+    assert delivery['if']=="(github.event_name == 'push' && steps.request.outputs.mode == 'prepared-information') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'prepared-information')"
 
 def event(root,before):
     return {'ref':'refs/heads/main','before':before,'after':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),

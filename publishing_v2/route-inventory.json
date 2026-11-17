@@ -53,7 +53,7 @@
   ".github/workflows/publish-alula-balloons-20261112-revised.yml": "eaab242e4a3ab72b4f44e3d11d475a9e10096a99eb0602f1a26793d8e1c1a967",
   ".github/workflows/publish-alula-balloons-20261112.yml": "0be1c83d371c012e68616394fe868afecec8aa4ec083be86857f541905d8dba3",
   ".github/workflows/publish-apple-ai-approved.yml": "33ea28920896b652d733fdfbc707ec3ca355b16988c69952faf3a99456885bc3",
-  ".github/workflows/publish-approved-package.yml": "72eff73efb7fc506c818595adf5a90ab9f60932bcd5b2a764416b701557e7dc7",
+  ".github/workflows/publish-approved-package.yml": "1829bb24cee67f39eeb0392025d488b27b52e7ad13055baa97308c3002d0bedf",
   ".github/workflows/publish-defense-tech-approved.yml": "75db3829a800ca5fc60d5267a392a476c25c56261c46b1df3f5c6229a2ea266e",
   ".github/workflows/publish-horse-approved.yml": "dd68220cd22ef10d14b9c392c133978c30f1872e993ec1910d92dc8fb9f6acbc",
   ".github/workflows/publish-wednesday-weekend-20261111.yml": "bd2c5f93ffd17d6f09c609564d1adf23a30743e136b1e468e9920ca18c5ab0f4",
@@ -308,5 +308,7 @@
   "topic_editorial.py": "e72c3a892ba1db04201ad1b59486ce714070cfcf2906dca1ebdcec160bde151b",
   "topic_snapchat.py": "cab8fc89b76764eaa386f862fffa0eba6ef49b36919f9606245f87aaa9e58323",
   "validate_saved_local_20260926.py": "6b935e5d556c44dd7c4ae340ab9873664bd57ef3815b405eb964a8116bb77b51",
-  ".github/workflows/deliver-app-origins-revised.yml": "e0f5b92b5e21c3d1e685884735be6c59f3dcda69c2593ff78f194c4ac3925f95"
+  ".github/workflows/deliver-app-origins-revised.yml": "e0f5b92b5e21c3d1e685884735be6c59f3dcda69c2593ff78f194c4ac3925f95",
+  "publishing_v2/deliver_challenge.py": "d4c388c33777be4f794e371ec1bc68d40ed0f2c09f9053a0147f77d71d062ec2",
+  "publishing_v2/publication_request.py": "56970cdf3cec76d4050d4d79e5b5b8d16dce4ba23b96383b64d9b262f69d0604"
 }

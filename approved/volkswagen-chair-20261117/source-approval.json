@@ -1,0 +1,51 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "نزل بالسوق؟ — كرسي فولكس واجن",
+  "media": [
+    {
+      "path": "approved/volkswagen-chair-20261117/source.png",
+      "sha256": "1c290d6544058180b1da6061db3d800808b60a37999c312d41e03c99764d8e2e",
+      "kind": "info",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/volkswagen-chair-20261117/product.jpg",
+          "sha256": "b7df8aa56cb363b0fa0c86647fb43c42d26a26693f66eeea612b84a1413911d9",
+          "source_url": "https://kommunikasjon.ntb.no/data/images/00720/6892075e-77ee-4042-b8bb-667ab45a0ad1.jpg",
+          "description": "Official Volkswagen Norway campaign chair, three-quarter view, with pedals and motorized wheels.",
+          "rights_status": "official_press_asset_editorial_selection_no_blanket_license_claimed"
+        },
+        {
+          "path": "approved/volkswagen-chair-20261117/detail.jpg",
+          "sha256": "212909d5d55edc17675d8e7236cc6f3c6cf16287e7c0360e259d06f2bde60c9d",
+          "source_url": "https://kommunikasjon.ntb.no/data/images/00705/8aff971f-cd0f-4995-ad52-4e9950fc9b14.jpg",
+          "description": "Same official chair, front view showing pedals, seatbelt, wheels.",
+          "rights_status": "official_press_asset_editorial_selection_no_blanket_license_claimed"
+        }
+      ]
+    }
+  ],
+  "review_state": "ASSISTANT_REVIEW_UNDER_STANDING_BATCH_AUTHORIZATION",
+  "facts": {
+    "source": "https://kommunikasjon.ntb.no/pressemelding/17955244/400-millioner-har-sett-denne-norske-nyvinningen?publisherId=16056407",
+    "source_date": "2023-02-06",
+    "meaning": "Marketing demonstration chair, not offered as a mass-produced retail product. Do not imply a claim about every possible private sale."
+  },
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "owner_review": {
+    "reference": "Khalid standing batch-2 authorization for one daily STORY and SPOTLIGHT challenge at13:00 Riyadh remains active. On17November Khalid requested assistant review before publication, then explicitly approved adding the caption كرسي مكتب تقدر تسوقه بدواستين and said prepare everything for13:00. Assistant and independent assistant reviewed final video and exact PCM. No claim that Khalid personally watched or individually approved this export. Do not send before2026-11-17T10:00:00Z.",
+    "reviewed_at": "2026-11-17T07:20:00+00:00",
+    "approved_media_sha256": [
+      "1c290d6544058180b1da6061db3d800808b60a37999c312d41e03c99764d8e2e"
+    ],
+    "approved_source_sha256": [
+      "b7df8aa56cb363b0fa0c86647fb43c42d26a26693f66eeea612b84a1413911d9",
+      "212909d5d55edc17675d8e7236cc6f3c6cf16287e7c0360e259d06f2bde60c9d"
+    ]
+  }
+}

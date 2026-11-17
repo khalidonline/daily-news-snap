@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "action": "validate",
+  "package": "volkswagen-chair-20261117",
+  "expected_video_sha256": "451d6f39b7e3e3d5b42ac1e727adeb3d4011facf00782f187a95fe911ba9e5c3",
+  "not_before": "2026-11-17T10:00:00Z",
+  "manifest_sha256": "c502e2c91af1346177637042d4d9cc3ea261d1d7e1ceb3b6fb14cd8c2a92f868",
+  "design_review_sha256": "e179448d4dd030257186f138fd333e92d05bc45ee5820076e229936210440c92",
+  "source_manifest_sha256": "7297f9d951ee4c95662d32a5092fbd2c683e465eedd3ff7efc43d1215d12f3f9",
+  "media_archive_sha256": "579e63a87f0a32a60acbcbf95d73aa34ec33a05e58746e4e5cb1efb5c43d4152"
+}
