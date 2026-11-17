@@ -49,7 +49,7 @@
   ".github/workflows/model-benchmark-offline.yml": "dd32f552cb0af74ef93651a7e6711925c54662f45e108f0c5a47a0b003dd3add",
   ".github/workflows/model-quality-benchmark.yml": "0e68320aa47d1892ca5e698c9365e3f023719aa6cc5f84066a712b089f5a48ef",
   ".github/workflows/model-role-experiment.yml": "d6e2300e6ca1976ba7e85cb476ad4bc1979fd003297bbd4f2278f195e419365b",
-  ".github/workflows/publication-contract.yml": "08445e94845fc55e8ef655c4b790a9a47501ace4a4c400dffe90c276c1b84e71",
+  ".github/workflows/publication-contract.yml": "cb7fcdb68cc4dbf32ef57a92e74d7a1efe61b8da060875a9cb8ee31c3acfa736",
   ".github/workflows/publish-alula-balloons-20261112-revised.yml": "eaab242e4a3ab72b4f44e3d11d475a9e10096a99eb0602f1a26793d8e1c1a967",
   ".github/workflows/publish-alula-balloons-20261112.yml": "0be1c83d371c012e68616394fe868afecec8aa4ec083be86857f541905d8dba3",
   ".github/workflows/publish-apple-ai-approved.yml": "33ea28920896b652d733fdfbc707ec3ca355b16988c69952faf3a99456885bc3",
