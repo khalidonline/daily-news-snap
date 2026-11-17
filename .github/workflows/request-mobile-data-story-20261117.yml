@@ -1,0 +1,17 @@
+name: Request approved mobile data Story on 17 November
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/request-mobile-data-story-20261117.yml']
+permissions:
+  actions: write
+jobs:
+  request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request the approved Story publisher once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(TZ=Asia/Riyadh date +%F)" = 2026-11-17
+          gh workflow run publish-approved-package.yml --repo khalidonline/daily-news-snap --ref main -f package=mobile-data-comparison-20261117 -f mode=legacy-story
