@@ -1,0 +1,15 @@
+{
+  "images": [
+    {
+      "path": "approved/phone-rice-20261117/source.png",
+      "sha256": "62e78c82e94f0107b0a237a3c477c4aa17a36f101b8d412410693b077c387467",
+      "description": "AI-generated illustrative camera and rice pouch explicitly identified as generated to owner before approval",
+      "rights_status": "generated",
+      "source_url": "https://chatgpt.com/c/6af86a38-3570-83eb-908a-18f39ee217a6?messageId=8a5f6d0f-35b9-5d9d-9d19-6fe35b0c9446"
+    }
+  ],
+  "final_library_id": "libfile_fde3_f-307d64525024819190ac4eda0a335d1e_caf305c17d148191b336ceff647730cb",
+  "source_library_id": "libfile_fde3_f-c3a7012505888191a03932c9735628a2_caf305c17d148191b336ceff647730cb",
+  "publish_request": "https://chatgpt.com/c/6af86a38-3570-83eb-908a-18f39ee217a6?messageId=02823c1c-f795-4c02-a51b-1d72814efffd",
+  "notes": "Preserved exact owner-approved card and original generated source from Library; no paid generation or edited export. Historical factual references not available from retrieved conversation citations; not fabricated."
+}

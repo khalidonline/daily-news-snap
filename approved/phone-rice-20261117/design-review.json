@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "67395f539dcaeda79cb64606fd1da0c828b240ad8cd9f2df77b9c4bcf4107f44",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "مين دخل الجوال في كيس الرز؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              374,
+              215,
+              1020,
+              275
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            374,
+            215,
+            1020,
+            276
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "كيس رز ني مع الكاميرا والأفلام",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              368,
+              695,
+              713,
+              730
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            368,
+            695,
+            713,
+            731
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "زمان نصحوا المصورين يحطون كيس رز ني مع الكاميرا والأفلام، عشان يمتص رطوبة الجو حولها.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              146,
+              794,
+              980,
+              846
+            ],
+            [
+              84,
+              870,
+              980,
+              925
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            84,
+            794,
+            1015,
+            925
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وبعدها بسنين، طاح بلاكبيري لصحفي أمريكي في الحمام. حطه في رز، ورجع يشتغل!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              106,
+              985,
+              980,
+              1048
+            ],
+            [
+              365,
+              1072,
+              980,
+              1126
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            106,
+            985,
+            1015,
+            1126
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "كتب تجربته في واشنطن بوست، ونقلتها مواقع تقنية. وانتشرت نصيحة «حط جوالك في رز!»",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              100,
+              1185,
+              980,
+              1239
+            ],
+            [
+              190,
+              1263,
+              980,
+              1317
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            100,
+            1185,
+            1015,
+            1317
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بس ممكن الجوال نشف مع الوقت واشتغل، والناس حسبت الرز هو اللي أنقذه.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              156,
+              1377,
+              980,
+              1429
+            ],
+            [
+              363,
+              1453,
+              980,
+              1516
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            156,
+            1377,
+            1015,
+            1516
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "من نصيحة للمصورين.. إلى كيس رز يستقبل الجوالات",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              104,
+              1575,
+              1008,
+              1621
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            104,
+            1575,
+            1008,
+            1622
+          ],
+          "trailing_emoji_asset": {
+            "text": "😄",
+            "box": [
+              64,
+              1576,
+              104,
+              1622
+            ],
+            "provenance": "Preserved embedded appearance in exact owner-approved Library PNG; no redraw."
+          }
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Viewed exact Library PNG at 390px, compared shared template text geometry. Original final PNG unchanged; generated illustration disclosed and approved by owner. Four two-line bullets, one-line headline and closing, CTA clear. Separate masks checked.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected exact 390px card with top 0..39 and bottom 625..692 masks: all essential content and CTA visible.",
+      "SAVED_STORY": "Inspected exact 390px card with top 0..39 and bottom 625..692 masks: all essential content and CTA visible."
+    }
+  }
+}

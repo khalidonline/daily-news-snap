@@ -1,0 +1,44 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "مين دخل الجوال في كيس الرز؟",
+  "not_before": "2026-11-17T16:52:54Z",
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "67395f539dcaeda79cb64606fd1da0c828b240ad8cd9f2df77b9c4bcf4107f44"
+    ],
+    "approved_source_sha256": [
+      "62e78c82e94f0107b0a237a3c477c4aa17a36f101b8d412410693b077c387467"
+    ],
+    "reference": "https://chatgpt.com/c/6af86a38-3570-83eb-908a-18f39ee217a6?messageId=02823c1c-f795-4c02-a51b-1d72814efffd",
+    "reviewed_at": "2026-11-17T16:52:54.497671Z"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/phone-rice-20261117/card.png",
+      "sha256": "67395f539dcaeda79cb64606fd1da0c828b240ad8cd9f2df77b9c4bcf4107f44",
+      "source_assets": [
+        {
+          "path": "approved/phone-rice-20261117/source.png",
+          "sha256": "62e78c82e94f0107b0a237a3c477c4aa17a36f101b8d412410693b077c387467",
+          "description": "AI-generated illustrative camera and rice pouch explicitly identified as generated to owner before approval",
+          "rights_status": "generated",
+          "source_url": "https://chatgpt.com/c/6af86a38-3570-83eb-908a-18f39ee217a6?messageId=8a5f6d0f-35b9-5d9d-9d19-6fe35b0c9446"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": true
+      }
+    }
+  ]
+}

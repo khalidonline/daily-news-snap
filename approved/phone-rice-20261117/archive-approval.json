@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/phone-rice-20261117/manifest.json",
+  "manifest_sha256": "1dc474657d18a097f28e30ca1dd674d3f83abf53ffae9993c5029bc715d62887",
+  "identity": "7af101a3cdb05bba4e1ce7dbff2996bde3d69dd6a25213f6af7125615e6b700a",
+  "public_indices": [
+    1
+  ],
+  "title": "مين دخل الجوال في كيس الرز؟",
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": "https://chatgpt.com/c/6af86a38-3570-83eb-908a-18f39ee217a6?messageId=02823c1c-f795-4c02-a51b-1d72814efffd"
+}
