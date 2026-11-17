@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "c3a0008cc8b4aeba6ef75b4cdf6ff6f7284062416087b8c5bd917931b612dd50",
       "a6d42cb584e5bb0c32d4cc8a411ce32ba9653a5d26a2bd1d69ea5db8a80c2001"
-    ]
+    ],
+    "reference": "خالد: انشر بطاقة قناة السويس بنسخة الخريطة المحدثة",
+    "reviewed_at": "2026-11-17T06:23:38.762305+00:00"
   },
   "media": [
     {

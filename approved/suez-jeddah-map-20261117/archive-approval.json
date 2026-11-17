@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/suez-jeddah-map-20261117/manifest.json",
-  "manifest_sha256": "52e236600103cc4ad5a9dfea900785699439afd68815288ed826145b3d73af53",
+  "manifest_sha256": "07f05e3964f4e29609edd7e336e9d15acb05efa68259cccd41b3714fa62bd594",
   "identity": "aa1ecaa8d83e3a34dca06b979027e9f3849faa67a9d6e9c07df0df907df3554c",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "قناة السويس اختصرت مشوار جدة لليونان",
   "expires_at": "2026-11-17T23:59:59+03:00",
   "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
-  "owner_authorization": ""
+  "owner_authorization": "خالد: انشر بطاقة قناة السويس بنسخة الخريطة المحدثة"
 }

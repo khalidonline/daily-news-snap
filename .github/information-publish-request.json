@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "cola-cacao-20261116",
-  "identity": "f4bdba872dfca57319cfd57c7d4b850778a4325bbd475383de4021f7a7964c1c",
+  "package": "suez-jeddah-map-20261117",
+  "identity": "aa1ecaa8d83e3a34dca06b979027e9f3849faa67a9d6e9c07df0df907df3554c",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد عن بطاقة الكولا بالقفلة المعدلة: كمل الين تنشر",
-  "approved_at": "2026-11-16T14:57:54.759239+00:00",
-  "expires_at": "2026-11-16T23:59:59+03:00",
-  "manifest_sha256": "288f679974356a4ddc60710bacd27621d56417ff9fed21e9c4874f1f4554d324",
-  "archive_sha256": "570e4becc3d1a2c49de7872851010a030a5634c8bc7838b113203ccccf470458",
-  "prepared_sha256": "521283c42d700835f93b756d8c50a17ce4c12982cf08fc0f06ea8f66349f7595",
-  "preview_receipt_sha256": "44f10b6b8f7c60544da5a120b12f9a6b04ec46ee68f31b527835347ed961144b"
+  "owner_reference": "خالد: انشر بطاقة قناة السويس بنسخة الخريطة المحدثة",
+  "approved_at": "2026-11-17T06:23:38.762305+00:00",
+  "expires_at": "2026-11-17T23:59:59+03:00",
+  "manifest_sha256": "07f05e3964f4e29609edd7e336e9d15acb05efa68259cccd41b3714fa62bd594",
+  "archive_sha256": "e891978f7e01349efe70998f3ecacd92c5a57a508b9c8beec6d7dd8367d10e47",
+  "prepared_sha256": "ad14cad9a05745e378b86c3aa95a972128a1d3e20eb2c4a6e3cb086312d337f1",
+  "preview_receipt_sha256": "aeb96919692801bca21df1f16be93d86e1144c4f9cc4dd025cae3a4d1e31bba2"
 }
