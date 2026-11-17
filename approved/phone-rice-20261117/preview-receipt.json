@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "3e1b0fbdf459b56b0473b3e8e4509013443af290",
+  "assets": {
+    "approved/phone-rice-20261117/card.png": "67395f539dcaeda79cb64606fd1da0c828b240ad8cd9f2df77b9c4bcf4107f44",
+    "approved/phone-rice-20261117/source.png": "62e78c82e94f0107b0a237a3c477c4aa17a36f101b8d412410693b077c387467"
+  },
+  "preview_paths": [
+    "approved/phone-rice-20261117/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/phone-rice-20261117/card.png": "67395f539dcaeda79cb64606fd1da0c828b240ad8cd9f2df77b9c4bcf4107f44",
+    "approved/phone-rice-20261117/source.png": "62e78c82e94f0107b0a237a3c477c4aa17a36f101b8d412410693b077c387467",
+    "approved/phone-rice-20261117/manifest.json": "1dc474657d18a097f28e30ca1dd674d3f83abf53ffae9993c5029bc715d62887",
+    "approved/phone-rice-20261117/archive-approval.json": "6b5a7f74ae53353f53d14b87825d1ece6f38f0bafebabc42f6b5f3b2e297be7f",
+    "approved/phone-rice-20261117/design-review.json": "734b86b4d45acef5bd922306b34aa4365c486255254f48a259b0afbb777a9a93",
+    "approved/phone-rice-20261117/sources.json": "eea05938b9494f0ab633367dbfd750bb648f12c751869fe21c35dd8242b3d3f7",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/phone-rice-20261117",
+    "manifest_content_sha256": "5b78824a5848afbffcaa93589234e7fea2c56a363a592410b84825a15b291833",
+    "archive_content_sha256": "c57c097d6b9381099c20b11b0346fd4f42aa5e0982c2d4d5e65b38a4bed45625",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "734b86b4d45acef5bd922306b34aa4365c486255254f48a259b0afbb777a9a93",
+    "assets": {
+      "approved/phone-rice-20261117/card.png": "67395f539dcaeda79cb64606fd1da0c828b240ad8cd9f2df77b9c4bcf4107f44",
+      "approved/phone-rice-20261117/source.png": "62e78c82e94f0107b0a237a3c477c4aa17a36f101b8d412410693b077c387467"
+    }
+  }
+}
