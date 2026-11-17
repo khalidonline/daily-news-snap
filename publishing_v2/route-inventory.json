@@ -70,7 +70,7 @@
   ".github/workflows/publishing-v2-saved-replay.yml": "56733ecc14bf158f7ebe000b76ef589cbc024ee6ff5f1d34bdee42b8de54d997",
   ".github/workflows/publishing-v2-snapchat.yml": "b1f5185c5d3536ffcb5d57989c82be8404e5507c02d01237ae5fb2790f588367",
   ".github/workflows/publishing-v2-source-probe.yml": "1cbe9ea7ae9eb409fac296fac0bf99a2892e3c6ccb03d7925373e65e02619046",
-  ".github/workflows/publishing-v2-tests.yml": "554500a9ce2b251c77335b60741a3b44946cd5923845e3ac43f375cde1922aff",
+  ".github/workflows/publishing-v2-tests.yml": "f1b97aca93c324e7154d88cb5648cc0353c369fef1993af2097f9de8dd4df0d2",
   ".github/workflows/recover-held-reviewer.yml": "54685c85eb36855b15f11a886ef21d7d2fb98b1d8fc2acfb7442debec2f384f0",
   ".github/workflows/replace-local-package.yml": "f76365037d259cc8bac4c13f8fddb7cb576e7eae7d4acd7887179f1e9ca5d6fc",
   ".github/workflows/resume-budget-blocked-local-review.yml": "258d71f902b289243cfef2047a58e7d616a3583706cd3388fe451062b2654fd6",
