@@ -1,0 +1,13 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/uber-eats-houston-20261118/manifest.json",
+  "manifest_sha256": "04b9f9637a495f4eb1fdfb0d96791dab3d10b42b0adf9b6424761c3ada12c4d8",
+  "identity": "0222584aab25c49b011dd6ba9d9b28ecabd3c823be5cda7a57fbe422b96b6384",
+  "public_indices": [
+    1
+  ],
+  "title": "أوبر تطير بعشاك.. بس كيف ينزل؟",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+}

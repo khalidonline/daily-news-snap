@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "80136f313b9908ea67c17e16196f59046c6d28c53b27430b8d96b5d9f1dc6151",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "أوبر تطير بعشاك.. بس كيف ينزل؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              314,
+              215,
+              1020,
+              279
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            314,
+            215,
+            1020,
+            280
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الصندوق فوق الكيس الأخضر، والطيّارة للحين بالجو.",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              258,
+              695,
+              821,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            258,
+            695,
+            821,
+            727
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "أمس بدأت أوبر إيتس توصل الأكل بالدرون في هيوستن.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              138,
+              802,
+              980,
+              865
+            ],
+            [
+              801,
+              889,
+              980,
+              930
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            138,
+            802,
+            1015,
+            930
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تختار المطعم وتحدّد مكان فاضي بالحوش عشان يحطّون فيه طلبك.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              98,
+              997,
+              980,
+              1051
+            ],
+            [
+              635,
+              1075,
+              980,
+              1120
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            98,
+            997,
+            1015,
+            1120
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تتوقع الطيّارة تنزل؟ تبقى فوق على ارتفاع حوالي ١٠٠ متر، وتنزّل صندوق الأكل بحبل.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              118,
+              1188,
+              980,
+              1241
+            ],
+            [
+              379,
+              1265,
+              980,
+              1319
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            118,
+            1188,
+            1015,
+            1319
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وإذا وصل طلبك، تقدر تقيّم التوصيل، بس ما فيه خيار إكرامية للطيّارة!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              100,
+              1386,
+              980,
+              1437
+            ],
+            [
+              618,
+              1461,
+              980,
+              1508
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            100,
+            1386,
+            1015,
+            1508
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "هالمرّة إذا قالوا «طلبك قريب».. طالع فوق!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              167,
+              1575,
+              913,
+              1624
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            167,
+            1575,
+            913,
+            1625
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Inspected the exact exported PNG at 390px with the shared player top and bottom masks: unobstructed title, photo, caption, four bullets, smiling Apple emoji and CTA.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Checked 390px final card with top 0..39 and bottom 625..692 mask; essential content remains unobscured.",
+      "SAVED_STORY": "Checked 390px final card with top 0..39 and bottom 625..692 mask; essential content remains unobscured."
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "أوبر تطير بعشاك.. بس كيف ينزل؟",
+  "not_before": "2026-11-18T05:00:00Z",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "80136f313b9908ea67c17e16196f59046c6d28c53b27430b8d96b5d9f1dc6151"
+    ],
+    "approved_source_sha256": [
+      "93b107acced560c130169fac68ccd6b216c3bf4f2d2aa50eb4351c0e223fbc48",
+      "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
+    ]
+  },
+  "media": [
+    {
+      "path": "approved/uber-eats-houston-20261118/card.png",
+      "kind": "info",
+      "sha256": "80136f313b9908ea67c17e16196f59046c6d28c53b27430b8d96b5d9f1dc6151",
+      "source_assets": [
+        {
+          "path": "approved/uber-eats-houston-20261118/zipline-uber.jpg",
+          "sha256": "93b107acced560c130169fac68ccd6b216c3bf4f2d2aa50eb4351c0e223fbc48",
+          "credit": "Zipline / Uber Eats press image",
+          "source_url": "https://www.zipline.com/newsroom/zipline-is-now-delivering-to-uber-eats-customers-in-houston",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/uber-eats-houston-20261118/apple-1f604.png",
+          "sha256": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a",
+          "credit": "iamcal/emoji-data Apple U+1F604",
+          "source_url": "https://github.com/iamcal/emoji-data",
+          "rights_status": "not_verified"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

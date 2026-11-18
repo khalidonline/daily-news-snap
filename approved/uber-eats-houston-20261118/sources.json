@@ -1,0 +1,22 @@
+{
+  "assets": [
+    {
+      "path": "approved/uber-eats-houston-20261118/zipline-uber.jpg",
+      "sha256": "93b107acced560c130169fac68ccd6b216c3bf4f2d2aa50eb4351c0e223fbc48",
+      "credit": "Zipline / Uber Eats press image",
+      "source_url": "https://www.zipline.com/newsroom/zipline-is-now-delivering-to-uber-eats-customers-in-houston",
+      "rights_status": "not_verified"
+    },
+    {
+      "path": "approved/uber-eats-houston-20261118/apple-1f604.png",
+      "sha256": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a",
+      "credit": "iamcal/emoji-data Apple U+1F604",
+      "source_url": "https://github.com/iamcal/emoji-data",
+      "rights_status": "not_verified"
+    }
+  ],
+  "references": [
+    "https://www.zipline.com/newsroom/zipline-is-now-delivering-to-uber-eats-customers-in-houston",
+    "https://www.theverge.com/transportation/1034794/uber-eats-zipline-drone-delivery-launch-texas-houston-dallas"
+  ]
+}
