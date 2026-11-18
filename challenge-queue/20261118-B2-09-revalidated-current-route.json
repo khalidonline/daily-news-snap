@@ -1,0 +1,50 @@
+{
+  "id": "B2-09",
+  "slot": "2026-11-18T13:00:00+03:00",
+  "package": "pokut-revised-20261118",
+  "state": "REVALIDATED_NOT_SENT",
+  "validated_commit": "5694ed751f4d6583aba6c9a75cd7f7354cefd234",
+  "validation": {
+    "status": "VALIDATED_NOT_PUBLISHED",
+    "package": "pokut-revised-20261118",
+    "identity": "c071f93bc12bfa6f44446dad69ab0ce3de6c433546937636dbe798da7abdf8f2",
+    "sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+    "not_before": "2026-11-18T10:00:00Z",
+    "destinations": [
+      "STORY",
+      "SPOTLIGHT"
+    ]
+  },
+  "route_explanation": "Changes since original package validation are mandatory exact-byte image-review evidence gates deployed and independently tested 17 Nov; no challenge route or package changes after 9f7e485. No rollback or bypass. Old scheduled binding was stale.",
+  "route_hashes": {
+    "publishing_v2/bundle_api.py": "b4ed6065ee567d1f7644c1d1a8bae493c5aae79fbfbed6b8452fffaf5de84c1e",
+    "publishing_v2/challenge_visual_review.py": "0951442a3a51d4065b0ac026062eb73a625ff456f63fb5a5de518d4f9e4b1fff",
+    "publishing_v2/deliver_challenge.py": "1fe6a2c62f8cde0b668f3d016c0aef4084130a50a0d07ac55f3022115714df27",
+    "publishing_v2/publication_request.py": "56970cdf3cec76d4050d4d79e5b5b8d16dce4ba23b96383b64d9b262f69d0604",
+    "publishing_v2/route-inventory.json": "c6ac697079efc8441391effb6dc6c57ceb6879a76f98b0ed402e53c79d318b8c",
+    ".github/workflows/publish-approved-package.yml": "1829bb24cee67f39eeb0392025d488b27b52e7ad13055baa97308c3002d0bedf"
+  },
+  "request": {
+    "version": 1,
+    "action": "validate",
+    "package": "pokut-revised-20261118",
+    "expected_video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+    "not_before": "2026-11-18T10:00:00Z",
+    "manifest_sha256": "a7f08fe63bbf8df5b6a8ea8550cb152ad791be009a5855112004095727a72d39",
+    "design_review_sha256": "8603f2a114792a084cf998b4c15696f7a6bb41e8de00562481668c43484643e7",
+    "source_manifest_sha256": "b636538647e8957f93ab035a3db215ad93687dd3da05f9708edbc4ef697a9873",
+    "media_archive_sha256": "a8102d69c259befa57c46374201f9ce589ab772b2eba4f4a132441a1d669d330"
+  },
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "visual_review": "Reinspected final eight-stage sheet: wide ridge and distinct wooden-house facade; countdown5..1 and Turkey/Pokut/Rize reveal match approved version. Original source and decoded-frame review hash-bound unchanged. No new subjective audio-listening claim.",
+  "provider_operations": {
+    "STORY": null,
+    "SPOTLIGHT": null
+  },
+  "receipts": {
+    "STORY": null,
+    "SPOTLIGHT": null
+  },
+  "queue_advanced": false,
+  "supersedes_block_reason_only": "challenge-queue/20261118-1300-B2-09-blocked.json"
+}
