@@ -1,7 +1,7 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "PAUSED_PENDING_OWNER_REVIEW",
+  "status": "IN_PROGRESS",
   "next_item": "B2-11",
   "remaining": [
     {
@@ -171,28 +171,19 @@
     }
   ],
   "review_hold": {
-    "reason": "Owner requested review of all remaining topics; other items not cancelled.",
-    "cancelled_ids": [
-      "B2-10"
-    ],
-    "remaining_review_pending": true,
-    "no_publish_until_review_resolved": true,
-    "pending_decision_ids": [
+    "active": false,
+    "remaining_review_pending": false,
+    "no_publish_until_review_resolved": false,
+    "resolved_at": "2026-11-18T13:23:44.660Z",
+    "approved_remaining_ids": [
+      "B2-11",
       "B2-14",
+      "B2-15",
+      "B2-16",
       "B2-17",
       "B2-19"
     ],
-    "retained_ids": [
-      "B2-11",
-      "B2-15",
-      "B2-16"
-    ],
-    "transferred_to_tawari_ids": [
-      "B2-12",
-      "B2-13",
-      "B2-18"
-    ],
-    "owner_correction": "Most remaining topics liked. Louvre retained because familiar. Lisbon lift, Honda scooter and Nissan slippers move to one-image Tawari salfa drafts. Only B2-10 cancelled."
+    "approval_scope": "Topic queue approval and resume one daily challenge; not a claim that final exports have been reviewed."
   },
   "transferred_to_stories": [
     {
@@ -267,5 +258,92 @@
       "authority": "Owner requested conversion to a one-image salfa in Tawari, not cancellation.",
       "transferred_at": "2026-11-18T13:20:55.335Z"
     }
-  ]
+  ],
+  "review_history": [
+    {
+      "reason": "Owner requested review of all remaining topics; other items not cancelled.",
+      "cancelled_ids": [
+        "B2-10"
+      ],
+      "remaining_review_pending": true,
+      "no_publish_until_review_resolved": true,
+      "pending_decision_ids": [
+        "B2-14",
+        "B2-17",
+        "B2-19"
+      ],
+      "retained_ids": [
+        "B2-11",
+        "B2-15",
+        "B2-16"
+      ],
+      "transferred_to_tawari_ids": [
+        "B2-12",
+        "B2-13",
+        "B2-18"
+      ],
+      "owner_correction": "Most remaining topics liked. Louvre retained because familiar. Lisbon lift, Honda scooter and Nissan slippers move to one-image Tawari salfa drafts. Only B2-10 cancelled.",
+      "resolved_at": "2026-11-18T13:23:44.660Z",
+      "resolution": "Owner approved all three remaining geography topics: «اوكي كل ال٣ تمام». Louvre, Jarir/eXtra and GameBoy/PlayStation retained; B2-12/13/18 transferred to Tawari drafts; B2-10 cancelled."
+    }
+  ],
+  "schedule_policy": {
+    "timezone": "Asia/Riyadh",
+    "local_time": "13:00",
+    "maximum_challenges_per_day": 1,
+    "no_publication_during_this_update": true,
+    "stop_after": "B2-19",
+    "skip_ids": [
+      "B2-10",
+      "B2-12",
+      "B2-13",
+      "B2-18"
+    ],
+    "on_blocker": "Stop the current slot and report; do not substitute or publish multiple items to catch up.",
+    "final_media_and_delivery_gates_unchanged": true
+  },
+  "planned_slots": [
+    {
+      "id": "B2-11",
+      "scheduled_at": "2026-11-19T13:00:00+03:00",
+      "status": "PLANNED_NOT_PUBLISHED",
+      "requires_final_package_review": true
+    },
+    {
+      "id": "B2-14",
+      "scheduled_at": "2026-11-20T13:00:00+03:00",
+      "status": "PLANNED_NOT_PUBLISHED",
+      "requires_final_package_review": true
+    },
+    {
+      "id": "B2-15",
+      "scheduled_at": "2026-11-21T13:00:00+03:00",
+      "status": "PLANNED_NOT_PUBLISHED",
+      "requires_final_package_review": true
+    },
+    {
+      "id": "B2-16",
+      "scheduled_at": "2026-11-22T13:00:00+03:00",
+      "status": "PLANNED_NOT_PUBLISHED",
+      "requires_final_package_review": true
+    },
+    {
+      "id": "B2-17",
+      "scheduled_at": "2026-11-23T13:00:00+03:00",
+      "status": "PLANNED_NOT_PUBLISHED",
+      "requires_final_package_review": true
+    },
+    {
+      "id": "B2-19",
+      "scheduled_at": "2026-11-24T13:00:00+03:00",
+      "status": "PLANNED_NOT_PUBLISHED",
+      "requires_final_package_review": true
+    }
+  ],
+  "last_queue_update": {
+    "at": "2026-11-18T13:23:44.660Z",
+    "reason": "Owner approved the three geography topics and all remaining selections; resume daily queue from B2-11.",
+    "publication_performed": false,
+    "completed_count_unchanged": 8
+  }
 }
