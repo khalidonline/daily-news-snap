@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "e87c52df041451e495735881369dba59ef4ab42d",
+  "assets": {
+    "approved/entrecote-20261119/card.png": "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8",
+    "approved/entrecote-20261119/restaurant.png": "78a1caa9ff163d99c131ff4e80a3c606e5e5188758c9fbb8cdb650bb9418c59e",
+    "approved/entrecote-20261119/steak.png": "5a32891eb206654876248fe0a44b289845a5ec2a29c8d6b4a0807f5516eb184c"
+  },
+  "preview_paths": [
+    "approved/entrecote-20261119/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/entrecote-20261119/card.png": "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8",
+    "approved/entrecote-20261119/restaurant.png": "78a1caa9ff163d99c131ff4e80a3c606e5e5188758c9fbb8cdb650bb9418c59e",
+    "approved/entrecote-20261119/steak.png": "5a32891eb206654876248fe0a44b289845a5ec2a29c8d6b4a0807f5516eb184c",
+    "approved/entrecote-20261119/manifest.json": "5c52dcd5c5d015c52f9dae24154a3c81bcfabf99872181055f06990a1eb16d9e",
+    "approved/entrecote-20261119/archive-approval.json": "4392ac482035bd41db89992860237fe1a30bba0bcea0c2ba9f131ddb0bce9a37",
+    "approved/entrecote-20261119/design-review.json": "5083d2100052b8467c90724f0a8b3bdbdc0da784f819c7261c2b2f5b15d3f004",
+    "approved/entrecote-20261119/sources.json": "81aefff749d23df4e84a5df6a3a409d109dfcd05c6aeea0db175858339a2ee09",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/entrecote-20261119",
+    "manifest_content_sha256": "79cd9863daf74aaa2b0d4dcc919f7aab78195af2d3c0c72083834c5024ef6a28",
+    "archive_content_sha256": "af23b1483c442f2960b1b2a4d8a6588c97fc6a94ed6f2359b786377b057281eb",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "5083d2100052b8467c90724f0a8b3bdbdc0da784f819c7261c2b2f5b15d3f004",
+    "assets": {
+      "approved/entrecote-20261119/card.png": "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8",
+      "approved/entrecote-20261119/restaurant.png": "78a1caa9ff163d99c131ff4e80a3c606e5e5188758c9fbb8cdb650bb9418c59e",
+      "approved/entrecote-20261119/steak.png": "5a32891eb206654876248fe0a44b289845a5ec2a29c8d6b4a0807f5516eb184c"
+    }
+  }
+}
