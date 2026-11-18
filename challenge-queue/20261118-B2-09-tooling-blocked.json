@@ -1,0 +1,36 @@
+{
+  "id": "B2-09",
+  "slot": "2026-11-18T13:00:00+03:00",
+  "package": "pokut-revised-20261118",
+  "state": "BLOCKED_NOT_SENT",
+  "reason": "FFMPEG_APT_INSTALL_TIMEOUT_BEFORE_PROVIDER",
+  "video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+  "publish_request_commit": "d10c479a13c2976d675d7f507c4ccf6f5131302a",
+  "run": "https://github.com/khalidonline/daily-news-snap/actions/runs/44284338245",
+  "attempts": [
+    {
+      "attempt": 1,
+      "job_id": 134732989268,
+      "exit_code": 124
+    },
+    {
+      "attempt": 2,
+      "job_id": 134735090567,
+      "exit_code": 124
+    }
+  ],
+  "revalidated_on_current_route": true,
+  "revalidation_record": "challenge-queue/20261118-B2-09-revalidated-current-route.json",
+  "local_tests": "107 passed",
+  "provider_operations": {
+    "STORY": null,
+    "SPOTLIGHT": null
+  },
+  "receipts": {
+    "STORY": null,
+    "SPOTLIGHT": null
+  },
+  "live_send_step": "skipped in both attempts",
+  "queue_advanced": false,
+  "note": "Both attempts failed while installing ffmpeg before validation/provider steps. No third retry. Main request now action=publish, do not create another identity or assume publication. Repair bounded tooling setup before another attempt; preserve all guards and same video."
+}
