@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "phone-rice-20261117",
-  "identity": "7af101a3cdb05bba4e1ce7dbff2996bde3d69dd6a25213f6af7125615e6b700a",
+  "package": "gta6-20261118",
+  "identity": "64a4307229cee9437afd13e0e4ba6210146855fe61a093e6b5a11b27e15345aa",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد طلب انشر للبطاقة الأصلية دون تغيير: https://chatgpt.com/c/6af86a38-3570-83eb-908a-18f39ee217a6?messageId=02823c1c-f795-4c02-a51b-1d72814efffd ; Exact Library PNG 67395f539dcaeda79cb64606fd1da0c828b240ad8cd9f2df77b9c4bcf4107f44",
-  "approved_at": "2026-11-17T17:21:48.070539+00:00",
-  "expires_at": "2026-11-17T23:59:59+03:00",
-  "manifest_sha256": "a5c49e30be4e3c4ba55260eaa319cda4c666f73dd7502b399d877b3dc0f051b4",
-  "archive_sha256": "c45e7bff23ee53b225448af4a6c9e91e2b78a4d19702b2ca94d396a2f48b1536",
-  "prepared_sha256": "1460f0a1b39370c835684d15ea2d7ab52a6edb93024a6fb9f96c9d9f493877ca",
-  "preview_receipt_sha256": "c2605798ca533384fa6a91c7592ccf8463efa2923fef743ac54344bc3754605e"
+  "owner_reference": "Scheduled owner publication authorization: https://chatgpt.com/c/6afbe0c8-2dbc-83ed-9c1f-af08fe6a387e?messageId=cd976358-fac2-4fb3-89e5-a558514957bb . Exact approved text and assistant-reviewed template export; do not claim owner personally viewed export. Scheduled instructions verified 18 November. Rockstar release date confirmed 19 November 2026.",
+  "approved_at": "2026-11-18T05:10:29.620918+00:00",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "manifest_sha256": "82d53074c91833b53f27f4b703c6708397155767668106fbb70656946f905636",
+  "archive_sha256": "2058d2765716a4cb2c71ab610aa4eb62b469df645147c60eb3042623b044b13a",
+  "prepared_sha256": "8ecf82a21f6f2b36ab06b9d7ceacc0fbc712e732053e3cc6fdad4a4a10f79f20",
+  "preview_receipt_sha256": "f889ea287fbaa20391410e461ca0af1af8281dfd91d5f7759c7780120d91b450"
 }

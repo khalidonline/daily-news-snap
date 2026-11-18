@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,8 +19,8 @@
       "9c7a0e7617604bee25c9b4b74aac47da294036dd16b7d22605f7b10530e8f14a",
       "bcdd989596461c2c0178326055ed75c9cad231ac67895fced8c31237dd51b259"
     ],
-    "reference": "Draft built from exact owner-approved copy and scheduled publication request; owner has not reviewed this export.",
-    "reviewed_at": "2026-11-17T14:20:00Z"
+    "reference": "Scheduled owner publication authorization: https://chatgpt.com/c/6afbe0c8-2dbc-83ed-9c1f-af08fe6a387e?messageId=cd976358-fac2-4fb3-89e5-a558514957bb . Exact approved text and assistant-reviewed template export; do not claim owner personally viewed export. Scheduled instructions verified 18 November. Rockstar release date confirmed 19 November 2026.",
+    "reviewed_at": "2026-11-18T05:10:29.620918+00:00"
   },
   "media": [
     {
