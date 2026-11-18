@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "action": "validate",
+  "action": "publish",
   "package": "pokut-revised-20261118",
   "expected_video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
   "not_before": "2026-11-18T10:00:00Z",
