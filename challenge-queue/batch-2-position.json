@@ -223,5 +223,12 @@
     "pending_fact_check_ids": [
       "B2-11"
     ]
+  },
+  "last_attempt": {
+    "id": "B2-09",
+    "slot": "2026-11-18T13:00:00+03:00",
+    "result": "BLOCKED_NOT_SENT",
+    "record": "challenge-queue/20261118-1300-B2-09-blocked.json",
+    "queue_advanced": false
   }
 }
