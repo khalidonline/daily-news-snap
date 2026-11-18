@@ -1,0 +1,27 @@
+{
+  "assets": [
+    {
+      "path": "approved/qr-menu-20261118/hara.jpg",
+      "sha256": "3fcba654c795939be2cc6e4ad450eecec970bd7c0c025192fa08044e37afcbd3",
+      "credit": "DENSO WAVE official photograph",
+      "source_url": "https://www.denso-wave.com/en/technology/vol1.html",
+      "rights_status": "not_verified"
+    },
+    {
+      "path": "approved/qr-menu-20261118/menu.png",
+      "sha256": "d451f8b8d72dda67051f8cedbdc7f5e15d79439dd0ead60affab0fba6afef866",
+      "credit": "Digitalnomenu.bg gallery; photographer not identified",
+      "source_url": "https://digitalnomenu.bg/",
+      "rights_status": "not_verified"
+    }
+  ],
+  "references": [
+    "https://www.qrcode.com/en/history/",
+    "https://www.denso-wave.com/en/technology/vol1.html"
+  ],
+  "image_notes": "Original downloaded photographs, visually inspected. Hara identified in DENSO source. Menu is a contemporary illustrative example, not claimed Saudi, original, or historic. No licensing claim.",
+  "source_image_urls": [
+    "https://www.denso-wave.com/fsys/en/technology/vol1/img1.jpg",
+    "https://digitalnomenu.bg/assets/images/gallery/image%20%2815%29.png"
+  ]
+}

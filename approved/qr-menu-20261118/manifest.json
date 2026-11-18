@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "طلبت المنيو.. عطاك اختراع للسيارات!",
+  "not_before": "2026-11-18T15:10:40Z",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "7da8732effd1846207def4b8b43c41f0ea895e4616bd0341ec38815ec9e9bea5"
+    ],
+    "approved_source_sha256": [
+      "3fcba654c795939be2cc6e4ad450eecec970bd7c0c025192fa08044e37afcbd3",
+      "d451f8b8d72dda67051f8cedbdc7f5e15d79439dd0ead60affab0fba6afef866"
+    ],
+    "reference": "Topic selected by Khalid; agent preparation under explicit delegated publication request. No claim owner has reviewed this export.",
+    "reviewed_at": "2026-11-18T15:10:40Z"
+  },
+  "media": [
+    {
+      "path": "approved/qr-menu-20261118/card.png",
+      "kind": "info",
+      "sha256": "7da8732effd1846207def4b8b43c41f0ea895e4616bd0341ec38815ec9e9bea5",
+      "source_assets": [
+        {
+          "path": "approved/qr-menu-20261118/hara.jpg",
+          "sha256": "3fcba654c795939be2cc6e4ad450eecec970bd7c0c025192fa08044e37afcbd3",
+          "credit": "DENSO WAVE official photograph",
+          "source_url": "https://www.denso-wave.com/en/technology/vol1.html",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/qr-menu-20261118/menu.png",
+          "sha256": "d451f8b8d72dda67051f8cedbdc7f5e15d79439dd0ead60affab0fba6afef866",
+          "credit": "Digitalnomenu.bg gallery; photographer not identified",
+          "source_url": "https://digitalnomenu.bg/",
+          "rights_status": "not_verified"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

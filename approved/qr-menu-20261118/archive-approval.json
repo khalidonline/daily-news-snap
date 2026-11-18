@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/qr-menu-20261118/manifest.json",
+  "manifest_sha256": "1133fc4fb2cf32914784f0e8e84808dc6b9a2c52a306057cb77882c9f5e752bf",
+  "identity": "0b06b9903ace2315ec1512d2125b147ae90bd399d68b9cb939eb124314f90dc6",
+  "public_indices": [
+    1
+  ],
+  "title": "طلبت المنيو.. عطاك اختراع للسيارات!",
+  "expires_at": "2026-11-18T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
+  "owner_authorization": "Not yet staged; delegated one-story publication request will be recorded after exact-byte preparation."
+}

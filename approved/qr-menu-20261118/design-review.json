@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "7da8732effd1846207def4b8b43c41f0ea895e4616bd0341ec38815ec9e9bea5",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "طلبت المنيو.. عطاك اختراع للسيارات!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              258,
+              215,
+              1020,
+              272
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            258,
+            215,
+            1020,
+            273
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "هارا، قائد فريق تطوير الكود",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              143,
+              695,
+              445,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            143,
+            695,
+            445,
+            725
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "كود QR لفتح المنيو",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              677,
+              695,
+              894,
+              727
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            677,
+            695,
+            894,
+            728
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تجلس بالمطعم وتطلب المنيو، يقولون لك: امسح الكود. بس وش دخل السيارات؟",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              188,
+              801,
+              980,
+              850
+            ],
+            [
+              271,
+              874,
+              980,
+              926
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            188,
+            801,
+            1015,
+            926
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "في اليابان، عمال مصانع السيارات كانوا يمسحون عدة باركودات للقطعة، والشغلة تاخذ وقت.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              92,
+              992,
+              980,
+              1044
+            ],
+            [
+              186,
+              1068,
+              980,
+              1114
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            92,
+            992,
+            1015,
+            1114
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "عام 1994، فريق بشركة دينسو لقطع السيارات صنع كود يشيل معلومات أكثر وينقري بسرعة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              137,
+              1181,
+              980,
+              1233
+            ],
+            [
+              139,
+              1257,
+              980,
+              1320
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            137,
+            1181,
+            1015,
+            1320
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "فتحوا استخدامه للكل، ومع كاميرات الجوال طلع من المصانع ووصل لطاولات المطاعم.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              103,
+              1386,
+              980,
+              1436
+            ],
+            [
+              280,
+              1460,
+              980,
+              1509
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            103,
+            1386,
+            1015,
+            1509
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "من قطع السيارات.. إلى اختيار عشاك!",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              218,
+              1575,
+              862,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            218,
+            1575,
+            862,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Agent visually inspected exact final raster 7da8732effd1846207def4b8b43c41f0ea895e4616bd0341ec38815ec9e9bea5 at 390px, original source images and both identical player masks. Owner selected the topic and delegated publishing, not a claim owner viewed exact export. Four paragraphs each two lines; full Hara face and menu QR retained, matching captions; closing summarizes without new fact.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected 390px exact export with top 0..39 and bottom 625..692 player masks; title, captions, all paragraphs, closing and CTA are unobscured.",
+      "SAVED_STORY": "Separately checked same final 390px export against Saved Story player top 0..39 and bottom 625..692 masks; essential content unobscured."
+    }
+  }
+}
