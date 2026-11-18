@@ -203,3 +203,35 @@ def test_total_part_bytes_are_bounded_before_combining():
     spec={'path':'approved/sample-package.tar.xz','sha256':'0'*64,'parts':[{'path':f'approved/sample-package.tar.xz.part-{i:03d}','sha256':digest} for i in range(128)]}
     with pytest.raises(BundleError,match='exceeds limit'):
         m.read_archive_bytes('sample-package',spec,reader=lambda path,maximum:chunk)
+
+@pytest.mark.parametrize('failure_kind', ['http503', 'lost_response'])
+def test_ambiguous_story_blocks_both_destinations_on_restart(tmp_path, monkeypatch, failure_kind):
+    from publishing_v2.bundle_api import HTTPFailure
+    m=module(); client=Client(); journals={'STORY':Journal(),'SPOTLIGHT':Journal()}
+    monkeypatch.setattr('publishing_v2.bundle_api.check_delivery_approval',lambda media:None)
+    monkeypatch.setattr('publishing_v2.challenge_contract.validate_challenge',lambda title,media:None)
+    monkeypatch.setattr('publishing_v2.challenge_visual_review.validate_challenge_images',lambda media:None)
+    monkeypatch.setattr(m,'require_for_new_delivery',lambda *args:None)
+    def uncertain(title, upload):
+        client.sent.append('STORY')
+        raise HTTPFailure(503) if failure_kind=='http503' else BundleError('response lost')
+    client.create=uncertain
+    media=ApprovedMedia([(tmp_path/'final.mp4',b'exact-video')],Path.cwd()/'test-manifest.json',data())
+    with pytest.raises(BundleError):m.deliver(client,journals,'title',media,DIGEST)
+    assert journals['STORY'].read()['1']['status']=='SENDING'
+    assert 'post_id' not in journals['STORY'].read()['1']
+    with pytest.raises(BundleError,match='Uncertain'):m.deliver(client,journals,'title',media,DIGEST)
+    assert client.sent==['STORY'] and len(client.uploads)==1
+    assert journals['SPOTLIGHT'].read()=={}
+
+
+def test_known_pending_id_resumes_reads_without_recreate(tmp_path, monkeypatch):
+    m=module(); client=Client()
+    journals={'STORY':Journal({'1':{'status':'SENDING','post_id':'story-post','upload_id':'upload-1','placement':'STORY'}}),
+              'SPOTLIGHT':Journal({'1':{'status':'POSTED','post_id':'spot-post','upload_id':'upload-2','placement':'SPOTLIGHT'}})}
+    monkeypatch.setattr('publishing_v2.bundle_api.check_delivery_approval',lambda media:None)
+    monkeypatch.setattr(m,'require_for_new_delivery',lambda *args:None)
+    media=ApprovedMedia([(tmp_path/'final.mp4',b'exact-video')],Path.cwd()/'test-manifest.json',data())
+    result=m.deliver(client,journals,'title',media,DIGEST)
+    assert all(row['status']=='POSTED' for row in result.values())
+    assert client.sent==[] and client.uploads==[]

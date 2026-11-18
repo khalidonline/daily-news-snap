@@ -77,13 +77,22 @@ def check_delivery_approval(media):
 def request(url, headers, method='GET', data=None):
     # Do not log response bodies, credentials, or raw transport exceptions.
     req = urllib.request.Request(url, headers=headers, method=method, data=data)
-    try:
-        with urllib.request.urlopen(req, timeout=45) as response:
-            return json.load(response)
-    except urllib.error.HTTPError as exc:
-        raise HTTPFailure(exc.code) from None
-    except (OSError, ValueError):
-        raise BundleError('API connection or response failure; do not blindly retry publishing') from None
+    # Only reads may be retried. A failed mutation may already have taken
+    # effect; its durable intent must be reconciled, never blindly replayed.
+    attempts = 3 if method.upper() == 'GET' and data is None else 1
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=45) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as exc:
+            if exc.code not in {502, 503, 504} or attempt + 1 == attempts:
+                raise HTTPFailure(exc.code) from None
+        except OSError:
+            if attempt + 1 == attempts:
+                raise BundleError('API connection or response failure; do not blindly retry publishing') from None
+        except ValueError:
+            raise BundleError('API connection or response failure; do not blindly retry publishing') from None
+        time.sleep(attempt + 1)
 
 
 def verify_account(account, team):
