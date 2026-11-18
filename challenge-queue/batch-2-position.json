@@ -48,40 +48,6 @@
       }
     },
     {
-      "id": "B2-12",
-      "topic": "هالمصعد في لشبونة مصمم يوصلك لوين؟ لحي فوق.",
-      "display_text": {
-        "question": "هالمصعد في لشبونة مصمم يوصلك لوين؟",
-        "options": [
-          "لحي فوق",
-          "لمحطة قطار"
-        ],
-        "answer": "لحي فوق."
-      },
-      "production_notes": [
-        "مصعد سانتا جوستا؛ أظهر «لشبونة، البرتغال». حافظ على معنى الوصول إلى الحي الأعلى دون تفاصيل جديدة.",
-        "تنبيه حالة تشغيل، تحقق 2026-11-17: صفحتا Visit Lisboa وCARRIS تعرضان إغلاق مصعد سانتا جوستا مؤقتا. تحقق مجددا من حالة التشغيل لدى CARRIS وقت إنتاج التحدي؛ لا تقدم دعوة لركوبه أو توحِ بأنه يعمل حاليا دون تحقق. السؤال عن وجهة المصعد المصمم لها، لا عن توفر خدمته اليوم؛ الجواب المعتمد «لحي فوق» لا يتغير. لا تستنتج موعد إعادة الفتح من المواعيد العامة المعروضة.",
-        "مصادر داخلية: https://www.visitlisboa.com/en/places/elevador-de-santa-justa (إغلاق مؤقت؛ يربط Rua do Ouro بـ Largo do Carmo)؛ https://www.carris.pt/en/discover/fleet/lift/ (المشغل يذكر Temporarily closed). هذه ملاحظة إنتاج وليست نصا ظاهرا أو تغييرا للجدول."
-      ]
-    },
-    {
-      "id": "B2-13",
-      "topic": "سكوتر هوندا اللي ينطوي مثل الشنطة، انباع أو كان للمعارض؟ انباع.",
-      "display_text": {
-        "question": "سكوتر هوندا اللي ينطوي مثل الشنطة، انباع أو كان للمعارض؟",
-        "options": [
-          "انباع",
-          "للمعارض"
-        ],
-        "answer": "انباع."
-      },
-      "production_notes": [
-        "استخدم صورتين: السكوتر مطوي وشخص راكبه. هذه تعليمات صور لا نص ظاهر. لا تكتب «صورتين» أو وصفا بديهيا للصورة.",
-        "تنبيه مطابقة الطراز: Honda Motocompo الأصلي وHonda Motocompacto الكهربائي طرازان مختلفان طُرح كلاهما للبيع؛ جواب «انباع» لا يتغير. حدد الطراز المقصود وطابق صورته مطويا وصورته أثناء الركوب مع الطراز نفسه قبل إضافة أي سنة أو مواصفات، ولا تخلط صور الطرازين. لم تُفحص أصول الصور ضمن هذه المراجعة.",
-        "مصادر التحقق الداخلي: https://global.honda/jp/news/1981/2811029.html (إعلان طرح Motocompo الأصلي للبيع)؛ https://global.honda/en/topics/2024/ce_2024-04-10eng.html (تمييز الطراز الكهربائي الحديث عن الأصل)؛ https://hondanews.com/en-US/electrification/releases/release-17db0ac392e05757a316a011940d7d88-fun-fresh-and-foldable-honda-motocompacto-now-available-for-purchase (إتاحة Motocompacto للبيع في 2023). هذه الملاحظة والمصادر للإنتاج فقط وليست نصا ظاهرا."
-      ]
-    },
-    {
       "id": "B2-14",
       "topic": "هالقرية اللي يتنقلون فيها بالقوارب، هولندا أو بلجيكا؟ غيتهورن في هولندا.",
       "display_text": {
@@ -139,23 +105,6 @@
       },
       "production_notes": [
         "اسم السوق وموقعه في الكشف فقط؛ لا تكشفهما قبل العد."
-      ]
-    },
-    {
-      "id": "B2-18",
-      "topic": "شبشب نيسان اللي يرجع لمكانه، باعوه للناس أو جربوه في فندق؟ جربوه في فندق ياباني.",
-      "display_text": {
-        "question": "شبشب نيسان اللي يرجع لمكانه، باعوه للناس أو جربوه في فندق؟",
-        "options": [
-          "باعوه للناس",
-          "جربوه في فندق"
-        ],
-        "answer": "جربوه في فندق ياباني."
-      },
-      "production_notes": [
-        "لا تكرر اسم نيسان في تسمية للصورة إذا كان ظاهرا بالفعل في السؤال.",
-        "توثيق داخلي: بيان نيسان بتاريخ 25 يناير 2018 يصف تجربة نعال تعود إلى مكانها آليا في نزل ProPILOT Park Ryokan في هاكونه، اليابان. هذا توثيق لتجربة عام 2018، وليس دليلا على توفرها الآن أو على أنها لم تُبع مطلقا؛ تجنب الادعاءين. قبل النشر، افحص تطابق الصور والفيديو المختارين مع تجربة نيسان المقصودة، ولا تخلطها بمنتجات أخرى. لم تُفحص أصول الصور أو الفيديو ضمن مراجعة النص.",
-        "المصدر الداخلي: https://global.nissannews.com/en/releases/release-0a3c17000171b2fc662bfd35f7000704-180125-01-e ؛ فيديو نيسان المرتبط بالبيان للمطابقة: https://youtu.be/tazFfEP_NcY . هذه تعليمات إنتاج ومصادر وليست نصا ظاهرا."
       ]
     },
     {
@@ -227,6 +176,96 @@
       "B2-10"
     ],
     "remaining_review_pending": true,
-    "no_publish_until_review_resolved": true
-  }
+    "no_publish_until_review_resolved": true,
+    "pending_decision_ids": [
+      "B2-14",
+      "B2-17",
+      "B2-19"
+    ],
+    "retained_ids": [
+      "B2-11",
+      "B2-15",
+      "B2-16"
+    ],
+    "transferred_to_tawari_ids": [
+      "B2-12",
+      "B2-13",
+      "B2-18"
+    ],
+    "owner_correction": "Most remaining topics liked. Louvre retained because familiar. Lisbon lift, Honda scooter and Nissan slippers move to one-image Tawari salfa drafts. Only B2-10 cancelled."
+  },
+  "transferred_to_stories": [
+    {
+      "id": "B2-12",
+      "status": "TRANSFERRED_TO_TAWARI_DRAFT",
+      "draft_path": "drafts/stories/b2-12-tawari-20261118.md",
+      "original_challenge": {
+        "id": "B2-12",
+        "topic": "هالمصعد في لشبونة مصمم يوصلك لوين؟ لحي فوق.",
+        "display_text": {
+          "question": "هالمصعد في لشبونة مصمم يوصلك لوين؟",
+          "options": [
+            "لحي فوق",
+            "لمحطة قطار"
+          ],
+          "answer": "لحي فوق."
+        },
+        "production_notes": [
+          "مصعد سانتا جوستا؛ أظهر «لشبونة، البرتغال». حافظ على معنى الوصول إلى الحي الأعلى دون تفاصيل جديدة.",
+          "تنبيه حالة تشغيل، تحقق 2026-11-17: صفحتا Visit Lisboa وCARRIS تعرضان إغلاق مصعد سانتا جوستا مؤقتا. تحقق مجددا من حالة التشغيل لدى CARRIS وقت إنتاج التحدي؛ لا تقدم دعوة لركوبه أو توحِ بأنه يعمل حاليا دون تحقق. السؤال عن وجهة المصعد المصمم لها، لا عن توفر خدمته اليوم؛ الجواب المعتمد «لحي فوق» لا يتغير. لا تستنتج موعد إعادة الفتح من المواعيد العامة المعروضة.",
+          "مصادر داخلية: https://www.visitlisboa.com/en/places/elevador-de-santa-justa (إغلاق مؤقت؛ يربط Rua do Ouro بـ Largo do Carmo)؛ https://www.carris.pt/en/discover/fleet/lift/ (المشغل يذكر Temporarily closed). هذه ملاحظة إنتاج وليست نصا ظاهرا أو تغييرا للجدول."
+        ]
+      },
+      "authority": "Owner requested conversion to a one-image salfa in Tawari, not cancellation.",
+      "transferred_at": "2026-11-18T13:20:55.335Z"
+    },
+    {
+      "id": "B2-13",
+      "status": "TRANSFERRED_TO_TAWARI_DRAFT",
+      "draft_path": "drafts/stories/b2-13-tawari-20261118.md",
+      "original_challenge": {
+        "id": "B2-13",
+        "topic": "سكوتر هوندا اللي ينطوي مثل الشنطة، انباع أو كان للمعارض؟ انباع.",
+        "display_text": {
+          "question": "سكوتر هوندا اللي ينطوي مثل الشنطة، انباع أو كان للمعارض؟",
+          "options": [
+            "انباع",
+            "للمعارض"
+          ],
+          "answer": "انباع."
+        },
+        "production_notes": [
+          "استخدم صورتين: السكوتر مطوي وشخص راكبه. هذه تعليمات صور لا نص ظاهر. لا تكتب «صورتين» أو وصفا بديهيا للصورة.",
+          "تنبيه مطابقة الطراز: Honda Motocompo الأصلي وHonda Motocompacto الكهربائي طرازان مختلفان طُرح كلاهما للبيع؛ جواب «انباع» لا يتغير. حدد الطراز المقصود وطابق صورته مطويا وصورته أثناء الركوب مع الطراز نفسه قبل إضافة أي سنة أو مواصفات، ولا تخلط صور الطرازين. لم تُفحص أصول الصور ضمن هذه المراجعة.",
+          "مصادر التحقق الداخلي: https://global.honda/jp/news/1981/2811029.html (إعلان طرح Motocompo الأصلي للبيع)؛ https://global.honda/en/topics/2024/ce_2024-04-10eng.html (تمييز الطراز الكهربائي الحديث عن الأصل)؛ https://hondanews.com/en-US/electrification/releases/release-17db0ac392e05757a316a011940d7d88-fun-fresh-and-foldable-honda-motocompacto-now-available-for-purchase (إتاحة Motocompacto للبيع في 2023). هذه الملاحظة والمصادر للإنتاج فقط وليست نصا ظاهرا."
+        ]
+      },
+      "authority": "Owner requested conversion to a one-image salfa in Tawari, not cancellation.",
+      "transferred_at": "2026-11-18T13:20:55.335Z"
+    },
+    {
+      "id": "B2-18",
+      "status": "TRANSFERRED_TO_TAWARI_DRAFT",
+      "draft_path": "drafts/stories/b2-18-tawari-20261118.md",
+      "original_challenge": {
+        "id": "B2-18",
+        "topic": "شبشب نيسان اللي يرجع لمكانه، باعوه للناس أو جربوه في فندق؟ جربوه في فندق ياباني.",
+        "display_text": {
+          "question": "شبشب نيسان اللي يرجع لمكانه، باعوه للناس أو جربوه في فندق؟",
+          "options": [
+            "باعوه للناس",
+            "جربوه في فندق"
+          ],
+          "answer": "جربوه في فندق ياباني."
+        },
+        "production_notes": [
+          "لا تكرر اسم نيسان في تسمية للصورة إذا كان ظاهرا بالفعل في السؤال.",
+          "توثيق داخلي: بيان نيسان بتاريخ 25 يناير 2018 يصف تجربة نعال تعود إلى مكانها آليا في نزل ProPILOT Park Ryokan في هاكونه، اليابان. هذا توثيق لتجربة عام 2018، وليس دليلا على توفرها الآن أو على أنها لم تُبع مطلقا؛ تجنب الادعاءين. قبل النشر، افحص تطابق الصور والفيديو المختارين مع تجربة نيسان المقصودة، ولا تخلطها بمنتجات أخرى. لم تُفحص أصول الصور أو الفيديو ضمن مراجعة النص.",
+          "المصدر الداخلي: https://global.nissannews.com/en/releases/release-0a3c17000171b2fc662bfd35f7000704-180125-01-e ؛ فيديو نيسان المرتبط بالبيان للمطابقة: https://youtu.be/tazFfEP_NcY . هذه تعليمات إنتاج ومصادر وليست نصا ظاهرا."
+        ]
+      },
+      "authority": "Owner requested conversion to a one-image salfa in Tawari, not cancellation.",
+      "transferred_at": "2026-11-18T13:20:55.335Z"
+    }
+  ]
 }
