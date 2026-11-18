@@ -7,5 +7,6 @@
   "manifest_sha256": "a7f08fe63bbf8df5b6a8ea8550cb152ad791be009a5855112004095727a72d39",
   "design_review_sha256": "8603f2a114792a084cf998b4c15696f7a6bb41e8de00562481668c43484643e7",
   "source_manifest_sha256": "b636538647e8957f93ab035a3db215ad93687dd3da05f9708edbc4ef697a9873",
-  "media_archive_sha256": "a8102d69c259befa57c46374201f9ce589ab772b2eba4f4a132441a1d669d330"
+  "media_archive_sha256": "a8102d69c259befa57c46374201f9ce589ab772b2eba4f4a132441a1d669d330",
+  "retry_reason": "Owner confirmed Story absent; one retry after provider CREATE 503 and four inventory checks."
 }
