@@ -1,0 +1,33 @@
+{
+  "id": "B2-09",
+  "slot": "2026-11-18T13:00:00+03:00",
+  "package": "pokut-revised-20261118",
+  "state": "AMBIGUOUS_STORY_CREATE_NO_RETRY",
+  "video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+  "publish_commit": "8545ddfebe60ebaac43241af93b7d481c8a1f3ee",
+  "run": "https://github.com/khalidonline/daily-news-snap/actions/runs/44286098509",
+  "job_id": 134739050037,
+  "STORY": {
+    "status": "SENDING",
+    "upload_id": "42b2be28-a762-414e-8e98-1954a624a817",
+    "placement": "STORY",
+    "media_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+    "package": "pokut-revised-20261118",
+    "reference_key": "reviewed-challenge-cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353-STORY",
+    "not_before": "2026-11-18T10:00:00Z",
+    "error": {
+      "operation": "create",
+      "http_status": 503,
+      "at": "2026-11-18T10:33:28.872475+00:00"
+    }
+  },
+  "SPOTLIGHT": {
+    "state": "NOT_STARTED",
+    "receipt": null
+  },
+  "queue_advanced": false,
+  "tooling_repaired": true,
+  "revalidated_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/44285718821",
+  "next_action": "Read-only provider inventory by exact reference key and upload ID. Do not retry create, erase receipt or change identity. Do not start Spotlight while Story intent is unresolved.",
+  "schedule": "still paused"
+}
