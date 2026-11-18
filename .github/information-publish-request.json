@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "uber-eats-houston-20261118",
-  "identity": "0222584aab25c49b011dd6ba9d9b28ecabd3c823be5cda7a57fbe422b96b6384",
+  "package": "qr-menu-20261118",
+  "identity": "0b06b9903ace2315ec1512d2125b147ae90bd399d68b9cb939eb124314f90dc6",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد: اعتمد وانشر مع ابتسامة الآيفون https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d0d246f7-78bd-4f8e-bdd6-d5a74bc79b7e ثم كمل ثم أعد النص على القالب المعتمد https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d020f40b-a678-4e3e-92ef-d54bd553e759 . This export implements requested corrections under continuing publication authorization; assistant verified exact template and Apple emoji, not a claim of separate owner image review.",
-  "approved_at": "2026-11-18T08:13:33.041164+00:00",
+  "owner_reference": "خالد اختار سالفتي QR والمايكرويف في Sentinel_b2dab92f39948191bdc432aabca72fe4 ثم قال خل ننشر وحده اليوم في Sentinel_21836092549c8191b76935ffa93aebd7 بتاريخ 2026-11-18T15:10:40Z؛ اختير QR وأبلغه المنسق في Sentinel_b34699eff08c8191ba1a99c2dcd5c7f6. تفويض نشر سالفة واحدة اليوم بالقالب المعتمد في القصة والمحفوظة، لا المايكرويف. فحص الوكيل هذا التصدير النهائي، وليس ادعاء أن خالد شاهد الصورة النهائية.",
+  "approved_at": "2026-11-18T15:20:13.066607+00:00",
   "expires_at": "2026-11-18T23:59:59+03:00",
-  "manifest_sha256": "e78f7f8d3a1b05b18c0037783466a3b21257444e8b289307690905fa6eeb73e0",
-  "archive_sha256": "3795927d11c12502167a3dedac58995c2df0d4ef38968682b670a4b97053be53",
-  "prepared_sha256": "2b9e7b62468a81c73e48d73221ff441eddbdd2f4ffdf86721bf7175bd0b823b6",
-  "preview_receipt_sha256": "769a880a7d50dda252346fe194f3a05a2775b315adfb2fb18eef00623d563217"
+  "manifest_sha256": "d103f76f3390f328be23c72f84813697dbac81db5fe596d2bcc3950812b91f94",
+  "archive_sha256": "21d408d4ba9e194d0f4192edb5b6bba4b566784e5964353f58eb429391955064",
+  "prepared_sha256": "72dfc1d7e794166cda77ca2dfb2d748d16164148d3ad96584720dcc703183eaa",
+  "preview_receipt_sha256": "6d68f3ca1f86f827c6b2294b161a1c3c352555976337d8e0ec5e8f0b0d6f5759"
 }

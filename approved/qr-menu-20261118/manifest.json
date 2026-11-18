@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,8 +19,8 @@
       "3fcba654c795939be2cc6e4ad450eecec970bd7c0c025192fa08044e37afcbd3",
       "d451f8b8d72dda67051f8cedbdc7f5e15d79439dd0ead60affab0fba6afef866"
     ],
-    "reference": "Topic selected by Khalid; agent preparation under explicit delegated publication request. No claim owner has reviewed this export.",
-    "reviewed_at": "2026-11-18T15:10:40Z"
+    "reference": "خالد اختار سالفتي QR والمايكرويف في Sentinel_b2dab92f39948191bdc432aabca72fe4 ثم قال خل ننشر وحده اليوم في Sentinel_21836092549c8191b76935ffa93aebd7 بتاريخ 2026-11-18T15:10:40Z؛ اختير QR وأبلغه المنسق في Sentinel_b34699eff08c8191ba1a99c2dcd5c7f6. تفويض نشر سالفة واحدة اليوم بالقالب المعتمد في القصة والمحفوظة، لا المايكرويف. فحص الوكيل هذا التصدير النهائي، وليس ادعاء أن خالد شاهد الصورة النهائية.",
+    "reviewed_at": "2026-11-18T15:20:13.066607+00:00"
   },
   "media": [
     {

@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "2939b9ac27a33d8ea1dcfe219b94876fdba4ceb3",
+  "assets": {
+    "approved/qr-menu-20261118/card.png": "7da8732effd1846207def4b8b43c41f0ea895e4616bd0341ec38815ec9e9bea5",
+    "approved/qr-menu-20261118/hara.jpg": "3fcba654c795939be2cc6e4ad450eecec970bd7c0c025192fa08044e37afcbd3",
+    "approved/qr-menu-20261118/menu.png": "d451f8b8d72dda67051f8cedbdc7f5e15d79439dd0ead60affab0fba6afef866"
+  },
+  "preview_paths": [
+    "approved/qr-menu-20261118/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/qr-menu-20261118/card.png": "7da8732effd1846207def4b8b43c41f0ea895e4616bd0341ec38815ec9e9bea5",
+    "approved/qr-menu-20261118/hara.jpg": "3fcba654c795939be2cc6e4ad450eecec970bd7c0c025192fa08044e37afcbd3",
+    "approved/qr-menu-20261118/menu.png": "d451f8b8d72dda67051f8cedbdc7f5e15d79439dd0ead60affab0fba6afef866",
+    "approved/qr-menu-20261118/manifest.json": "1133fc4fb2cf32914784f0e8e84808dc6b9a2c52a306057cb77882c9f5e752bf",
+    "approved/qr-menu-20261118/archive-approval.json": "81524dd2219c71005ae8c8e5985bbee8a38d988d5f35283463e0f066c6b96a7c",
+    "approved/qr-menu-20261118/design-review.json": "f6146982c94209a43a014c2978983cf4af1ff02b01fb388b22d6cdd0b8ef43ff",
+    "approved/qr-menu-20261118/sources.json": "63cd3236908ecdf55ad7ad553db7bf4406f5cca76e7c02746494d586204c4cd3",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/qr-menu-20261118",
+    "manifest_content_sha256": "23d83f3d5a60223ccf7aa5a2e5f3b39890ec62475536e7c8a514ffb688d1ffaa",
+    "archive_content_sha256": "1a38e0b0524b242952c5a0d342f7d9bb409e57eaa9c19c0cf1fbd80c694a6730",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "f6146982c94209a43a014c2978983cf4af1ff02b01fb388b22d6cdd0b8ef43ff",
+    "assets": {
+      "approved/qr-menu-20261118/card.png": "7da8732effd1846207def4b8b43c41f0ea895e4616bd0341ec38815ec9e9bea5",
+      "approved/qr-menu-20261118/hara.jpg": "3fcba654c795939be2cc6e4ad450eecec970bd7c0c025192fa08044e37afcbd3",
+      "approved/qr-menu-20261118/menu.png": "d451f8b8d72dda67051f8cedbdc7f5e15d79439dd0ead60affab0fba6afef866"
+    }
+  }
+}

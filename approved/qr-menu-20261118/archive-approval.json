@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/qr-menu-20261118/manifest.json",
-  "manifest_sha256": "1133fc4fb2cf32914784f0e8e84808dc6b9a2c52a306057cb77882c9f5e752bf",
+  "manifest_sha256": "d103f76f3390f328be23c72f84813697dbac81db5fe596d2bcc3950812b91f94",
   "identity": "0b06b9903ace2315ec1512d2125b147ae90bd399d68b9cb939eb124314f90dc6",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "طلبت المنيو.. عطاك اختراع للسيارات!",
   "expires_at": "2026-11-18T23:59:59+03:00",
   "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
-  "owner_authorization": "Not yet staged; delegated one-story publication request will be recorded after exact-byte preparation."
+  "owner_authorization": "خالد اختار سالفتي QR والمايكرويف في Sentinel_b2dab92f39948191bdc432aabca72fe4 ثم قال خل ننشر وحده اليوم في Sentinel_21836092549c8191b76935ffa93aebd7 بتاريخ 2026-11-18T15:10:40Z؛ اختير QR وأبلغه المنسق في Sentinel_b34699eff08c8191ba1a99c2dcd5c7f6. تفويض نشر سالفة واحدة اليوم بالقالب المعتمد في القصة والمحفوظة، لا المايكرويف. فحص الوكيل هذا التصدير النهائي، وليس ادعاء أن خالد شاهد الصورة النهائية."
 }
