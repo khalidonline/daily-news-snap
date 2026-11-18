@@ -245,7 +245,7 @@
   "publishing_v2/autopilot/sources.py": "4722260ebacda733679fe61c55ce9f9eb08b9a1bbad6e29f8f4746e67f203b9b",
   "publishing_v2/autopilot/video.py": "996dccf6d5e8a765d09fc5c5810b101a2eb720ee28cb1f5501303108e07119b4",
   "publishing_v2/autopilot/zero_call_recovery.py": "9e13528b0cef306f999d10fd3333109ed7cbd4d59fc4b6027748bbe405f0955f",
-  "publishing_v2/bundle_api.py": "5f6b5390c7242c1a0740a61bd76888fa4f21748492fd9a573059e2e23d240ebb",
+  "publishing_v2/bundle_api.py": "b67aede5cd2515eec7ea921394ea4595fd197eb36ac4e2fe22dd437a3cbb9094",
   "publishing_v2/challenge_contract.py": "51bffda3e15727156a4d44a1f68dfa17593cdc4f0154438adec0cc95fcc4f097",
   "publishing_v2/challenge_visual_review.py": "0951442a3a51d4065b0ac026062eb73a625ff456f63fb5a5de518d4f9e4b1fff",
   "publishing_v2/cloud_permissions.py": "8670290feb60c8202e1031e9ea9f270e92636c3d7b6b907cf090302546f90a0d",
