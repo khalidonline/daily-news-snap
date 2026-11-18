@@ -68,7 +68,7 @@
   ".github/workflows/publishing-v2-fixed-preview.yml": "6bff3c1ce35444e512986a23488c51e2da5a7a05e3aee940fe72beaa469a0f93",
   ".github/workflows/publishing-v2-public-images.yml": "90a28a6678561af4884d27c70a397bb27df53d9bbfdd76d41339b75f86ed4001",
   ".github/workflows/publishing-v2-saved-replay.yml": "56733ecc14bf158f7ebe000b76ef589cbc024ee6ff5f1d34bdee42b8de54d997",
-  ".github/workflows/publishing-v2-snapchat.yml": "b1f5185c5d3536ffcb5d57989c82be8404e5507c02d01237ae5fb2790f588367",
+  ".github/workflows/publishing-v2-snapchat.yml": "9d1fffa936bede491be889cfab639d6ef524438c52bb251f244c30bef3374d1e",
   ".github/workflows/publishing-v2-source-probe.yml": "1cbe9ea7ae9eb409fac296fac0bf99a2892e3c6ccb03d7925373e65e02619046",
   ".github/workflows/publishing-v2-tests.yml": "f1b97aca93c324e7154d88cb5648cc0353c369fef1993af2097f9de8dd4df0d2",
   ".github/workflows/recover-held-reviewer.yml": "54685c85eb36855b15f11a886ef21d7d2fb98b1d8fc2acfb7442debec2f384f0",
