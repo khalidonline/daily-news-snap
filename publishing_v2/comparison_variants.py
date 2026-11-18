@@ -80,6 +80,9 @@ SPECS['calories-rtl-v1'] = {'variant': 'calories-rtl-v1',
  'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
 FILES['calories-rtl-v1'] = 'calories-rtl.png'
 
+SPECS['protein-rtl-v1']={'variant': 'protein-rtl-v1', 'reference_sha256': 'ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6', 'title': 'وش فيه بروتين أكثر؟', 'subtitle': 'البروتين التقريبي في كل 100 غرام', 'unit': 'g protein', 'basis': {'quantity': 100, 'unit': 'g'}, 'note': '', 'rows': [{'label': 'صدر دجاج مشوي بدون جلد', 'low': 32, 'high': 32}, {'label': 'تونة معلبة بالماء والملح', 'low': 25, 'high': 25}, {'label': 'فول سوداني محمص', 'low': 24, 'high': 24}, {'label': 'بيض مسلوق', 'low': 14, 'high': 14}, {'label': 'فول مدمس سادة', 'low': 8, 'high': 8}], 'scale': {'min': 0, 'max': 32, 'direction': 'rtl'}, 'layout': {'canvas': [1080, 1920], 'bar_axis': [74, 892], 'bar_y': [545, 766, 987, 1209, 1430]}, 'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
+FILES['protein-rtl-v1']='protein-rtl.png'
+
 def validate_reference_variant(image, spec, *, raw=None):
     if not isinstance(spec,dict):raise ValueError('Comparison variant spec must be an object')
     variant=spec.get('variant')

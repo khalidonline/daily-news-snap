@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6",
+      "template": "comparison",
+      "comparison": {
+        "variant": "protein-rtl-v1",
+        "reference_sha256": "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6",
+        "title": "وش فيه بروتين أكثر؟",
+        "subtitle": "البروتين التقريبي في كل 100 غرام",
+        "unit": "g protein",
+        "basis": {
+          "quantity": 100,
+          "unit": "g"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "صدر دجاج مشوي بدون جلد",
+            "low": 32,
+            "high": 32
+          },
+          {
+            "label": "تونة معلبة بالماء والملح",
+            "low": 25,
+            "high": 25
+          },
+          {
+            "label": "فول سوداني محمص",
+            "low": 24,
+            "high": 24
+          },
+          {
+            "label": "بيض مسلوق",
+            "low": 14,
+            "high": 14
+          },
+          {
+            "label": "فول مدمس سادة",
+            "low": 8,
+            "high": 8
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 32,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            74,
+            892
+          ],
+          "bar_y": [
+            545,
+            766,
+            987,
+            1209,
+            1430
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Actual original PNG inspected 2026-11-18: right-aligned Arabic text, English digits 100/32/25/24/14/8, correct prepared food labels and matching illustrations, right-anchored bars, readable CTA, no overlaps. Khalid approved the revised protein card with roasted peanuts and plain fava beans: https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19?messageId=948851fa-2576-4674-9dcd-f90ee93b532a . Next daily slot 2026-11-19 09:00 Asia/Riyadh, STORY only for ONE_WEEK. Do not send early.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Actual full-size PNG inspected; title below y207 and CTA ending y1731 clear of modeled top 0..105 and bottom 1830..1920. Not a live platform screenshot."
+    }
+  }
+}

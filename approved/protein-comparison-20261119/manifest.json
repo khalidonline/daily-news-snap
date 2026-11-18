@@ -1,0 +1,110 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "وش فيه بروتين أكثر؟",
+  "not_before": "2026-11-19T09:00:00+03:00",
+  "expires_at": "2026-11-19T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6"
+    ],
+    "approved_source_sha256": [
+      "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6"
+    ],
+    "reference": "Khalid approved the revised protein card with roasted peanuts and plain fava beans: https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19?messageId=948851fa-2576-4674-9dcd-f90ee93b532a . Next daily slot 2026-11-19 09:00 Asia/Riyadh, STORY only for ONE_WEEK. Do not send early.",
+    "reviewed_at": "2026-11-18T06:25:36+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/protein-comparison-20261119/card.png",
+      "sha256": "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6",
+      "template": "comparison",
+      "comparison": {
+        "variant": "protein-rtl-v1",
+        "reference_sha256": "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6",
+        "title": "وش فيه بروتين أكثر؟",
+        "subtitle": "البروتين التقريبي في كل 100 غرام",
+        "unit": "g protein",
+        "basis": {
+          "quantity": 100,
+          "unit": "g"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "صدر دجاج مشوي بدون جلد",
+            "low": 32,
+            "high": 32
+          },
+          {
+            "label": "تونة معلبة بالماء والملح",
+            "low": 25,
+            "high": 25
+          },
+          {
+            "label": "فول سوداني محمص",
+            "low": 24,
+            "high": 24
+          },
+          {
+            "label": "بيض مسلوق",
+            "low": 14,
+            "high": 14
+          },
+          {
+            "label": "فول مدمس سادة",
+            "low": 8,
+            "high": 8
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 32,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            74,
+            892
+          ],
+          "bar_y": [
+            545,
+            766,
+            987,
+            1209,
+            1430
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/protein-comparison-20261119/card.png",
+          "sha256": "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6",
+          "source_url": "https://chatgpt.com/api/library/files/libfile_fde3_f-3b9f9f1589b0819189935a671f404328_caf305c17d148191b336ceff647730cb/download",
+          "description": "Exact approved export, Library version1; no rendering or pixel modification",
+          "credit": "Executive Summary",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

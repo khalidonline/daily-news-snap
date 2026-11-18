@@ -1,0 +1,57 @@
+{
+  "original_draft_metadata": {
+    "approval_status": "DRAFT_REQUIRES_KHALID_APPROVAL",
+    "title": "وش فيه بروتين أكثر؟",
+    "subtitle": "البروتين التقريبي في كل 100 غرام",
+    "basis_g": 100,
+    "unit": "g protein",
+    "source": "https://www.nutrition.org.uk/media/yh2botxi/protein-in-the-diet_resource.pdf",
+    "additional_sources": {
+      "peanuts": "USDA SR 16390",
+      "fava": "USDA FDC 173753"
+    },
+    "source_description": "British Nutrition Foundation, Protein in the diet (2021), based on UK food composition tables. All displayed amounts rounded to nearest gram; foods identified in prepared state.",
+    "rows": [
+      {
+        "label": "صدر دجاج مشوي بدون جلد",
+        "display_g": 32,
+        "source_g_per_100g": 32.0
+      },
+      {
+        "label": "تونة معلبة بالماء والملح",
+        "display_g": 25,
+        "source_g_per_100g": 24.9
+      },
+      {
+        "label": "فول سوداني محمص",
+        "display_g": 24,
+        "source_g_per_100g": 24.35
+      },
+      {
+        "label": "بيض مسلوق",
+        "display_g": 14,
+        "source_g_per_100g": 14.1
+      },
+      {
+        "label": "فول مدمس سادة",
+        "display_g": 8,
+        "source_g_per_100g": 7.6
+      }
+    ],
+    "font": "Almarai",
+    "direction": "rtl",
+    "digits": "English",
+    "scale": {
+      "min": 0,
+      "max": 32,
+      "direction": "rtl"
+    },
+    "image_sha256": "ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6",
+    "publication_authorized": false
+  },
+  "approval_supersedes_draft_status": "Khalid approved the revised protein card with roasted peanuts and plain fava beans: https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19?messageId=948851fa-2576-4674-9dcd-f90ee93b532a . Next daily slot 2026-11-19 09:00 Asia/Riyadh, STORY only for ONE_WEEK. Do not send early.",
+  "library_image_version": 1,
+  "library_package_id": "libfile_fde3_f-cc240c460d688191aba08f590337d553_caf305c17d148191b336ceff647730cb",
+  "package_sha256": "019abdf2b2c957e2962cc81eb0ac91e485d25385261782a1172e1e9c2e136b7c",
+  "illustrations": "Drawn food illustrations in owner-approved export; not photographs; no image generation performed during preparation."
+}
