@@ -269,6 +269,18 @@ class BundleClient:
             status = result.get('status')
             if status == 'POSTED': return
             if status not in ('SCHEDULED', 'PUBLISHING', 'PROCESSING', 'PENDING'):
+                errors = result.get('errorsVerbose')
+                snap = errors.get('SNAPCHAT') if isinstance(errors, dict) else None
+                if status == 'ERROR' and isinstance(snap, dict) and snap.get('code') == 'PUBLISH:INTERRUPTED':
+                    data = result.get('data')
+                    dest = data.get('SNAPCHAT') if isinstance(data, dict) else None
+                    kind = dest.get('type') if isinstance(dest, dict) else None
+                    label = 'الستوري' if kind == 'STORY' else 'الأضواء' if kind == 'SPOTLIGHT' else 'سناب'
+                    # Same provider code for two outcomes. Unknown wording is ambiguous.
+                    if snap.get('message') == ('Publishing was interrupted while the media was uploading. '
+                                               'Nothing was published, so it is safe to retry.'):
+                        raise BundleError(f'{label}: بحسب Bundle، ما اننشر المحتوى؛ انقطع رفع الملف. ما أعدنا الإرسال.')
+                    raise BundleError(f'{label}: ممكن يكون اننشر. تحقّق من الحساب قبل أي إعادة إرسال.')
                 raise BundleError('Post not confirmed; inspect saved receipt before recovery')
             time.sleep(5)
         raise BundleError('Post still pending; rerun polls the saved ID without recreating it')
