@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/entrecote-20261119/manifest.json",
+  "manifest_sha256": "5c52dcd5c5d015c52f9dae24154a3c81bcfabf99872181055f06990a1eb16d9e",
+  "identity": "7627dc94e96136881de39d2867911c4907c0c9dc2e17d8f2b18fb911b22abe1d",
+  "public_indices": [
+    1
+  ],
+  "title": "الإنتريكوت.. سر الشهرة في الصوص",
+  "expires_at": "2026-11-19T12:00:00+03:00",
+  "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
+  "owner_authorization": "Scheduled tomorrow morning only per Sentinel_63bdb3d84c188191b176c55d1bef5fb2. No authorization request staged now."
+}

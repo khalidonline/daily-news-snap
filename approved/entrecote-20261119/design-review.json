@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "الإنتريكوت.. سر الشهرة في الصوص",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              261,
+              215,
+              1020,
+              276
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            261,
+            215,
+            1020,
+            277
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "مطعم كافيه دي باريس في جنيف",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              108,
+              695,
+              481,
+              727
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            108,
+            695,
+            481,
+            728
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "الإنتريكوت بصوص كافيه دي باريس",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              587,
+              695,
+              986,
+              727
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            587,
+            695,
+            986,
+            728
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قبل حوالي 96 سنة، طلع صوص زبدة سري في جنيف بسويسرا، وسموه «كافيه دي باريس»!",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              137,
+              803,
+              980,
+              854
+            ],
+            [
+              163,
+              878,
+              980,
+              930
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            137,
+            803,
+            1015,
+            930
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "قدموه مع ستيك وبطاطس وسلطة، وصار هذا الطبق الرئيسي الوحيد في المطعم.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              108,
+              997,
+              980,
+              1046
+            ],
+            [
+              348,
+              1070,
+              980,
+              1123
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            108,
+            997,
+            1015,
+            1123
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "الناس حبت الستيك مع الصوص، وصار المطعم معروف باسم «إنتريكوت كافيه دي باريس».",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              118,
+              1191,
+              980,
+              1240
+            ],
+            [
+              189,
+              1264,
+              980,
+              1316
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            118,
+            1191,
+            1015,
+            1316
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وبعدها ظهرت مطاعم لانتريكوت بباريس بنفس فكرة الطبق، لكنها مو نفس مطعم جنيف.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              93,
+              1383,
+              980,
+              1433
+            ],
+            [
+              217,
+              1457,
+              980,
+              1507
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            93,
+            1383,
+            1015,
+            1507
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "بدأ من جنيف وانتشر إلى العالم",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              280,
+              1575,
+              800,
+              1635
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            280,
+            1575,
+            800,
+            1636
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Agent inspected exact final export, source photographs, mobile 390px and both separate player masks. Owner text approval preserved including exact closing; owner has not been claimed to review unseen export. Contemporary Geneva restaurant and its dish, not historical scenes. Palette exact interior pixels verified for all six roles.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Inspected exact export at390px with top0..39 and bottom625..692 masks; all essential content unobscured.",
+      "SAVED_STORY": "Separately inspected exact export at390px with saved-player top0..39 and bottom625..692 masks; all essential content unobscured."
+    }
+  }
+}

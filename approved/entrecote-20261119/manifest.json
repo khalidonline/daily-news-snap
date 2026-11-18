@@ -1,0 +1,52 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "الإنتريكوت.. سر الشهرة في الصوص",
+  "not_before": "2026-11-19T07:00:00+03:00",
+  "expires_at": "2026-11-19T12:00:00+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8"
+    ],
+    "approved_source_sha256": [
+      "78a1caa9ff163d99c131ff4e80a3c606e5e5188758c9fbb8cdb650bb9418c59e",
+      "5a32891eb206654876248fe0a44b289845a5ec2a29c8d6b4a0807f5516eb184c"
+    ],
+    "reference": "Owner approved text with closing Sentinel_8516f4405c048191aea8c43d7b250477 and requested tomorrow morning publication in Sentinel_63bdb3d84c188191b176c55d1bef5fb2. Agent-prepared design; no claim owner saw this export. Authorization left false until scheduled action.",
+    "reviewed_at": "2026-11-18T19:55:35Z"
+  },
+  "media": [
+    {
+      "path": "approved/entrecote-20261119/card.png",
+      "kind": "info",
+      "sha256": "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8",
+      "source_assets": [
+        {
+          "path": "approved/entrecote-20261119/restaurant.png",
+          "sha256": "78a1caa9ff163d99c131ff4e80a3c606e5e5188758c9fbb8cdb650bb9418c59e",
+          "credit": "Chez Boubier official website; photographer not identified",
+          "source_url": "https://chezboubier.com/",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/entrecote-20261119/steak.png",
+          "sha256": "5a32891eb206654876248fe0a44b289845a5ec2a29c8d6b4a0807f5516eb184c",
+          "credit": "Chez Boubier official website; photographer not identified",
+          "source_url": "https://chezboubier.com/",
+          "rights_status": "not_verified"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
