@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "542a666739ab9befeb66ebaa42ea7b778c306ca2",
+  "assets": {
+    "approved/uber-eats-houston-20261118/card.png": "80136f313b9908ea67c17e16196f59046c6d28c53b27430b8d96b5d9f1dc6151",
+    "approved/uber-eats-houston-20261118/zipline-uber.jpg": "93b107acced560c130169fac68ccd6b216c3bf4f2d2aa50eb4351c0e223fbc48",
+    "approved/uber-eats-houston-20261118/apple-1f604.png": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
+  },
+  "preview_paths": [
+    "approved/uber-eats-houston-20261118/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/uber-eats-houston-20261118/card.png": "80136f313b9908ea67c17e16196f59046c6d28c53b27430b8d96b5d9f1dc6151",
+    "approved/uber-eats-houston-20261118/zipline-uber.jpg": "93b107acced560c130169fac68ccd6b216c3bf4f2d2aa50eb4351c0e223fbc48",
+    "approved/uber-eats-houston-20261118/apple-1f604.png": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a",
+    "approved/uber-eats-houston-20261118/manifest.json": "04b9f9637a495f4eb1fdfb0d96791dab3d10b42b0adf9b6424761c3ada12c4d8",
+    "approved/uber-eats-houston-20261118/archive-approval.json": "6c95d6991a108ed473a6b32b44f5cf6a61e4c6be76eaf471ad850784d14ca9d7",
+    "approved/uber-eats-houston-20261118/design-review.json": "19ac82a13e6d9758116e3d2ccbd9b509bd102b126015d2f98b0f1c227052a38f",
+    "approved/uber-eats-houston-20261118/sources.json": "6cf38b721f17c6d65f77794e1eda875925a21ffe9a7a8bd28fc3fb7a1ad4945d",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/uber-eats-houston-20261118",
+    "manifest_content_sha256": "3d142271e00729da717d0db5c3663282291484323c000bfa09142dfe62741d42",
+    "archive_content_sha256": "081724b9b9f494f76918065aadadc844ad70d74de0c441cbabc701f167046de5",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "19ac82a13e6d9758116e3d2ccbd9b509bd102b126015d2f98b0f1c227052a38f",
+    "assets": {
+      "approved/uber-eats-houston-20261118/card.png": "80136f313b9908ea67c17e16196f59046c6d28c53b27430b8d96b5d9f1dc6151",
+      "approved/uber-eats-houston-20261118/zipline-uber.jpg": "93b107acced560c130169fac68ccd6b216c3bf4f2d2aa50eb4351c0e223fbc48",
+      "approved/uber-eats-houston-20261118/apple-1f604.png": "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
+    }
+  }
+}

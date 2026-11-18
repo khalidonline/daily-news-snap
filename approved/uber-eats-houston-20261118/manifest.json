@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,7 +18,9 @@
     "approved_source_sha256": [
       "93b107acced560c130169fac68ccd6b216c3bf4f2d2aa50eb4351c0e223fbc48",
       "d9b6f4dff20866fc9a08d1eb48d327c82dd9e1cdcba75e1bcbc854c083fc9a3a"
-    ]
+    ],
+    "reference": "خالد: اعتمد وانشر مع ابتسامة الآيفون https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d0d246f7-78bd-4f8e-bdd6-d5a74bc79b7e ثم كمل ثم أعد النص على القالب المعتمد https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d020f40b-a678-4e3e-92ef-d54bd553e759 . This export implements requested corrections under continuing publication authorization; assistant verified exact template and Apple emoji, not a claim of separate owner image review.",
+    "reviewed_at": "2026-11-18T08:13:33.041164+00:00"
   },
   "media": [
     {

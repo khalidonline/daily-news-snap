@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "gta6-20261118",
-  "identity": "64a4307229cee9437afd13e0e4ba6210146855fe61a093e6b5a11b27e15345aa",
+  "package": "uber-eats-houston-20261118",
+  "identity": "0222584aab25c49b011dd6ba9d9b28ecabd3c823be5cda7a57fbe422b96b6384",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Scheduled owner publication authorization: https://chatgpt.com/c/6afbe0c8-2dbc-83ed-9c1f-af08fe6a387e?messageId=cd976358-fac2-4fb3-89e5-a558514957bb . Exact approved text and assistant-reviewed template export; do not claim owner personally viewed export. Scheduled instructions verified 18 November. Rockstar release date confirmed 19 November 2026.",
-  "approved_at": "2026-11-18T05:10:29.620918+00:00",
+  "owner_reference": "خالد: اعتمد وانشر مع ابتسامة الآيفون https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d0d246f7-78bd-4f8e-bdd6-d5a74bc79b7e ثم كمل ثم أعد النص على القالب المعتمد https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d020f40b-a678-4e3e-92ef-d54bd553e759 . This export implements requested corrections under continuing publication authorization; assistant verified exact template and Apple emoji, not a claim of separate owner image review.",
+  "approved_at": "2026-11-18T08:13:33.041164+00:00",
   "expires_at": "2026-11-18T23:59:59+03:00",
-  "manifest_sha256": "82d53074c91833b53f27f4b703c6708397155767668106fbb70656946f905636",
-  "archive_sha256": "2058d2765716a4cb2c71ab610aa4eb62b469df645147c60eb3042623b044b13a",
-  "prepared_sha256": "8ecf82a21f6f2b36ab06b9d7ceacc0fbc712e732053e3cc6fdad4a4a10f79f20",
-  "preview_receipt_sha256": "f889ea287fbaa20391410e461ca0af1af8281dfd91d5f7759c7780120d91b450"
+  "manifest_sha256": "e78f7f8d3a1b05b18c0037783466a3b21257444e8b289307690905fa6eeb73e0",
+  "archive_sha256": "3795927d11c12502167a3dedac58995c2df0d4ef38968682b670a4b97053be53",
+  "prepared_sha256": "392a752a98c897fb556562b39a09fc9225b536e971e647ac19985fb0b0cfac72",
+  "preview_receipt_sha256": "769a880a7d50dda252346fe194f3a05a2775b315adfb2fb18eef00623d563217"
 }

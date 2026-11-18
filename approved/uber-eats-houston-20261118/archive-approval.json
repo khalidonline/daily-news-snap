@@ -1,13 +1,14 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/uber-eats-houston-20261118/manifest.json",
-  "manifest_sha256": "04b9f9637a495f4eb1fdfb0d96791dab3d10b42b0adf9b6424761c3ada12c4d8",
+  "manifest_sha256": "e78f7f8d3a1b05b18c0037783466a3b21257444e8b289307690905fa6eeb73e0",
   "identity": "0222584aab25c49b011dd6ba9d9b28ecabd3c823be5cda7a57fbe422b96b6384",
   "public_indices": [
     1
   ],
   "title": "أوبر تطير بعشاك.. بس كيف ينزل؟",
   "expires_at": "2026-11-18T23:59:59+03:00",
-  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion."
+  "empty_profile_confirmation": "Existing profile has previous stories; check current provider inventory and overlap before any create; not an empty-profile assertion.",
+  "owner_authorization": "خالد: اعتمد وانشر مع ابتسامة الآيفون https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d0d246f7-78bd-4f8e-bdd6-d5a74bc79b7e ثم كمل ثم أعد النص على القالب المعتمد https://chatgpt.com/c/6afd3485-5ed0-83eb-abc5-cfab7dd8a379?messageId=d020f40b-a678-4e3e-92ef-d54bd553e759 . This export implements requested corrections under continuing publication authorization; assistant verified exact template and Apple emoji, not a claim of separate owner image review."
 }
