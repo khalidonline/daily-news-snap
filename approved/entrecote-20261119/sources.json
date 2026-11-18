@@ -8,20 +8,21 @@
       "rights_status": "not_verified"
     },
     {
-      "path": "approved/entrecote-20261119/steak.png",
-      "sha256": "5a32891eb206654876248fe0a44b289845a5ec2a29c8d6b4a0807f5516eb184c",
-      "credit": "Chez Boubier official website; photographer not identified",
-      "source_url": "https://chezboubier.com/",
+      "path": "approved/entrecote-20261119/steak-sa.jpg",
+      "sha256": "2d71323e7ddb69bb0fd3215e70ef23f20d514a79ae2f070b3c784af8c1b5bd94",
+      "credit": "Entrecote Cafe de Paris Saudi Arabia official menu; photographer not identified",
+      "source_url": "https://entrecote.sa/en/menu",
       "rights_status": "not_verified"
     }
   ],
   "references": [
     "https://chezboubier.com/",
-    "https://www.relaisdelentrecote.com/fr/histoire"
+    "https://www.relaisdelentrecote.com/fr/histoire",
+    "https://entrecote.sa/en/menu"
   ],
   "source_image_urls": [
     "https://chezboubier.com/wp-content/uploads/2023/07/home-section-2-1a-min.webp",
-    "https://chezboubier.com/wp-content/uploads/2023/07/home-slider-2-min.webp"
+    "https://entrecote.sa/images/home/card-reservation.jpg"
   ],
-  "notes": "Contemporary restaurant and dish photographs from official Geneva Cafe de Paris site, not historic 1930 photographs. Original downloaded files; no AI generation. No rights or licensing claim. Fact check: official Geneva site states butter developed in Geneva in 1930, secret ingredients, steak/salad/fries single main dish and overseas restaurants; Paris Relais official history separately dates its formula to 1959. 96 years = 2026 minus 1930. PNG source copies are lossless decodes of archived original WEBP downloads."
+  "notes": "Left: contemporary Geneva restaurant from chezboubier.com, original WEBP and lossless PNG decode. Right: real meal photograph from Saudi official menu, steak in Cafe de Paris sauce with salad and fries. No cups, bottles or alcoholic drinks. No historical photo, AI generation or licensing claim. Geneva official history:1930 butter, secret recipe, single main dish and overseas expansion. Separate Paris Relais official history:1959."
 }

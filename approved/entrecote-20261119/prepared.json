@@ -2,14 +2,14 @@
   "version": 1,
   "status": "PREPARED_NOT_AUTHORIZED",
   "package": "approved/entrecote-20261119",
-  "manifest_content_sha256": "79cd9863daf74aaa2b0d4dcc919f7aab78195af2d3c0c72083834c5024ef6a28",
-  "archive_content_sha256": "af23b1483c442f2960b1b2a4d8a6588c97fc6a94ed6f2359b786377b057281eb",
+  "manifest_content_sha256": "6e8d5fe12167a58974cf90b685a3f681cea4693fea84278e56d38734a18703e5",
+  "archive_content_sha256": "4672910143c6a64fd0162037a1a037d98d977a10092119ededa2b87c6d15a378",
   "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
-  "review_sha256": "5083d2100052b8467c90724f0a8b3bdbdc0da784f819c7261c2b2f5b15d3f004",
+  "review_sha256": "0d8cbbc5c440aa247cffb82d8e5a530f57a35a354fe147abf6c63968e3ff5c07",
   "assets": {
-    "approved/entrecote-20261119/card.png": "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8",
+    "approved/entrecote-20261119/card.png": "f33a7f5ae96b4b8ffd04f975b5e1e1afd013176f12ef38491f82bca9d0e06329",
     "approved/entrecote-20261119/restaurant.png": "78a1caa9ff163d99c131ff4e80a3c606e5e5188758c9fbb8cdb650bb9418c59e",
-    "approved/entrecote-20261119/steak.png": "5a32891eb206654876248fe0a44b289845a5ec2a29c8d6b4a0807f5516eb184c"
+    "approved/entrecote-20261119/steak-sa.jpg": "2d71323e7ddb69bb0fd3215e70ef23f20d514a79ae2f070b3c784af8c1b5bd94"
   },
-  "preparation_seconds": 0.006
+  "preparation_seconds": 0.005
 }

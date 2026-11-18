@@ -2,8 +2,8 @@
   "approved": false,
   "account": "executivesaudi",
   "manifest": "approved/entrecote-20261119/manifest.json",
-  "manifest_sha256": "5c52dcd5c5d015c52f9dae24154a3c81bcfabf99872181055f06990a1eb16d9e",
-  "identity": "7627dc94e96136881de39d2867911c4907c0c9dc2e17d8f2b18fb911b22abe1d",
+  "manifest_sha256": "11425cc8c1b921499c517913fe47f7147e57cebe62fd77b4ce86304b501dc9e9",
+  "identity": "fd98132afe9797f417c0847a22106a4fb8b7643081300bef6411c6c62d0bc4e5",
   "public_indices": [
     1
   ],

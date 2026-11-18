@@ -6,7 +6,7 @@
   "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
   "cards": [
     {
-      "sha256": "4ff987971f528d0b4905696e08c6c48f98f46939b5bb0615919e185ea3fa2bb8",
+      "sha256": "f33a7f5ae96b4b8ffd04f975b5e1e1afd013176f12ef38491f82bca9d0e06329",
       "blocks": [
         {
           "role": "headline",
@@ -258,7 +258,7 @@
     "SAVED_STORY"
   ],
   "review": {
-    "reference": "Agent inspected exact final export, source photographs, mobile 390px and both separate player masks. Owner text approval preserved including exact closing; owner has not been claimed to review unseen export. Contemporary Geneva restaurant and its dish, not historical scenes. Palette exact interior pixels verified for all six roles.",
+    "reference": "Agent inspected exact revised export f33a7f5ae96b4b8ffd04f975b5e1e1afd013176f12ef38491f82bca9d0e06329 at390px and separately both player overlays. Source photo viewed at full size: official Saudi menu meal, no cups/bottles/alcohol. Geneva restaurant remains left; dish right with correct captions. Approved text unchanged, closing exact; no claim owner saw final export.",
     "mobile_width": 390,
     "saudi_editorial": true,
     "approved_wording": true,
@@ -267,8 +267,8 @@
     "cta_visible": true,
     "overlay_checked": true,
     "overlay_destinations": {
-      "STORY": "Inspected exact export at390px with top0..39 and bottom625..692 masks; all essential content unobscured.",
-      "SAVED_STORY": "Separately inspected exact export at390px with saved-player top0..39 and bottom625..692 masks; all essential content unobscured."
+      "STORY": "Inspected 390px exact export with top 0..39 and bottom 625..692 player masks; title, captions, all paragraphs, closing and CTA are unobscured.",
+      "SAVED_STORY": "Separately checked same final 390px export against Saved Story player top 0..39 and bottom 625..692 masks; essential content unobscured."
     }
   }
 }
