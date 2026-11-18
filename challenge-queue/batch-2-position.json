@@ -2,23 +2,8 @@
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
   "status": "IN_PROGRESS",
-  "next_item": "B2-09",
+  "next_item": "B2-10",
   "remaining": [
-    {
-      "id": "B2-09",
-      "topic": "هالبيوت وسط الجبال في تركيا أو سويسرا؟ تركيا! مرتفعات بوكوت، منطقة ريزة.",
-      "display_text": {
-        "question": "هالبيوت وسط الجبال في تركيا أو سويسرا؟",
-        "options": [
-          "تركيا",
-          "سويسرا"
-        ],
-        "answer": "تركيا! مرتفعات بوكوت، منطقة ريزة."
-      },
-      "production_notes": [
-        "أخف اسم بوكوت وموقعها قبل العد؛ أظهر «منطقة ريزة، تركيا» مع الكشف فقط. استخدم مرجع الاستبدال المعتمد."
-      ]
-    },
     {
       "id": "B2-10",
       "topic": "أي نفق أطول بكامل مساره؟ سيكان أطول: حوالي 53.9 كم، مقابل 50.5 كم لنفق المانش.",
@@ -205,12 +190,12 @@
       ]
     }
   ],
-  "completed": 7,
+  "completed": 8,
   "stop_after": "B2-19",
-  "next_slot_riyadh": "2026-11-18T13:00:00+03:00",
+  "next_slot_riyadh": "2026-11-19T13:00:00+03:00",
   "last_completed": {
-    "id": "B2-08",
-    "receipt": "challenge-queue/20261117-1300-B2-08.json"
+    "id": "B2-09",
+    "receipt": "challenge-queue/20261118-1300-B2-09.json"
   },
   "editorial_review": {
     "date_riyadh": "2026-11-16",
@@ -227,8 +212,8 @@
   "last_attempt": {
     "id": "B2-09",
     "slot": "2026-11-18T13:00:00+03:00",
-    "result": "BLOCKED_NOT_SENT",
-    "record": "challenge-queue/20261118-1300-B2-09-blocked.json",
-    "queue_advanced": false
+    "result": "POSTED_BOTH",
+    "record": "challenge-queue/20261118-1300-B2-09.json",
+    "queue_advanced": true
   }
 }
