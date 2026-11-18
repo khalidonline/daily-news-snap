@@ -345,5 +345,27 @@
     "reason": "Owner approved the three geography topics and all remaining selections; resume daily queue from B2-11.",
     "publication_performed": false,
     "completed_count_unchanged": 8
-  }
+  },
+  "disabled_challenge_categories": [
+    {
+      "name": "نزل بالسوق؟",
+      "status": "RETIRED_BY_OWNER",
+      "retired_at": "2026-11-18T13:26:31.461Z",
+      "scope": "All sold-vs-prototype/experiment challenge ideas. Move unpublished topics to Tawari salfa drafts; published topics remain history, do not repeat.",
+      "unpublished_transferred_ids": [
+        "B2-13",
+        "B2-18"
+      ],
+      "published_history_ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "B2-03",
+        "B2-08"
+      ],
+      "canonical_list": "drafts/stories/unified-salfa-list-20261118.json"
+    }
+  ]
 }

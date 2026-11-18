@@ -1,0 +1,363 @@
+{
+  "version": 1,
+  "updated_at": "2026-11-18T13:26:31.461Z",
+  "status": "SALFA_IDEA_LIST_NOT_PUBLICATION_QUEUE",
+  "owner_decision": "نلغي تحديات نزل بالسوق؟ ونحولها كلها إلى مسار السوالف ونكمل هناك بقائمة جديده",
+  "rules": [
+    "Retire the category as challenges, including future additions.",
+    "Unpublished ideas become single-image Tawari salfa drafts; complete source/image/text-fit/final review before any publish.",
+    "Published ideas listed only to prevent repeats. No automatic republish as salfa.",
+    "No publication or new schedule is authorized by creating this list."
+  ],
+  "active_drafts": [
+    {
+      "id": "falkirk-wheel",
+      "title": "عجلة فالكيرك التي ترفع القوارب",
+      "path": "drafts/stories/falkirk-wheel.md",
+      "origin": "Previously saved salfa draft; not part of retired category",
+      "status": "DRAFT_IDEA_NOT_READY",
+      "publication_approved": false
+    },
+    {
+      "id": "B2-12",
+      "title": "مصعد لشبونة الذي يصل شارعًا بحي أعلى",
+      "path": "drafts/stories/b2-12-tawari-20261118.md",
+      "origin": "Owner transferred tourism challenge to single-image salfa",
+      "status": "DRAFT_IDEA_NOT_READY",
+      "publication_approved": false
+    },
+    {
+      "id": "B2-13",
+      "title": "سكوتر هوندا الذي ينطوي مثل الشنطة",
+      "path": "drafts/stories/b2-13-tawari-20261118.md",
+      "origin": "Unpublished retired-category idea; already transferred",
+      "status": "DRAFT_IDEA_NOT_READY",
+      "publication_approved": false
+    },
+    {
+      "id": "B2-18",
+      "title": "شبشب نيسان الذي يرجع لمكانه",
+      "path": "drafts/stories/b2-18-tawari-20261118.md",
+      "origin": "Unpublished retired-category idea; already transferred",
+      "status": "DRAFT_IDEA_NOT_READY",
+      "publication_approved": false
+    }
+  ],
+  "retired_category_history": [
+    {
+      "id": "C1",
+      "title": "نزل بالسوق؟ — LG StanbyME Go",
+      "status": "POSTED_BOTH_DO_NOT_REPEAT",
+      "receipt": "challenge-queue/20261101-1300-C1.json",
+      "receipts": {
+        "STORY": {
+          "status": "POSTED",
+          "post_id": "ea3a7598-7a2c-455f-a085-e8206c8ff298",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "8ad9611f-daf9-4bfa-8648-80e33df00a26",
+              "mediaId": "8ad9611f-daf9-4bfa-8648-80e33df00a26",
+              "mediaIds": [
+                "8ad9611f-daf9-4bfa-8648-80e33df00a26"
+              ],
+              "type": "STORY",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "5362cf93-cc27-49b4-96f6-6e46532c87ab",
+              "sourceUploadIds": [
+                "5362cf93-cc27-49b4-96f6-6e46532c87ab"
+              ],
+              "mediaUploadedAt": "2026-11-01T10:11:16.859Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030"
+        },
+        "SPOTLIGHT": {
+          "status": "POSTED",
+          "post_id": "2bfeafaf-1fd3-4cb4-b60f-80c1051f9836",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "W7_EDlXWTBiXAEEniNoMPwAAYZWRqbmV1b3BoAaGWmWQFAaGWmWPZAAAAAA",
+              "mediaId": "07501b4f-d388-44c2-bdf0-dbe65b242a76",
+              "mediaIds": [
+                "07501b4f-d388-44c2-bdf0-dbe65b242a76"
+              ],
+              "type": "SPOTLIGHT",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "1bb24ffa-2180-422c-9b23-339437b3d761",
+              "sourceUploadIds": [
+                "1bb24ffa-2180-422c-9b23-339437b3d761"
+              ],
+              "mediaUploadedAt": "2026-11-01T10:12:57.746Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "d9e77585c14d31babd57068d5fe06a95d77f48321493b32e84d7bbc64ce51030"
+        }
+      }
+    },
+    {
+      "id": "C2",
+      "title": "نزل بالسوق؟ — LG AeroFurniture",
+      "status": "POSTED_BOTH_DO_NOT_REPEAT",
+      "receipt": "challenge-queue/20261103-1900-C2.json",
+      "receipts": {
+        "STORY": {
+          "status": "POSTED",
+          "post_id": "e40d3c25-f017-4a48-8615-39664ed07626",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "4fe437bf-f40f-49cc-9e2f-40bf70a89a9c",
+              "mediaId": "4fe437bf-f40f-49cc-9e2f-40bf70a89a9c",
+              "mediaIds": [
+                "4fe437bf-f40f-49cc-9e2f-40bf70a89a9c"
+              ],
+              "type": "STORY",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "fa25a129-85af-43b2-91dc-f61645f0c4d5",
+              "sourceUploadIds": [
+                "fa25a129-85af-43b2-91dc-f61645f0c4d5"
+              ],
+              "mediaUploadedAt": "2026-11-03T16:06:51.964Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c"
+        },
+        "SPOTLIGHT": {
+          "status": "POSTED",
+          "post_id": "11adda76-2e8e-489f-8fd5-a489554c546f",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "W7_EDlXWTBiXAEEniNoMPwAAYY2NxY2tnZ2ZuAaGiK1B4AaGiK1AzAAAAAA",
+              "mediaId": "6b1fe8cb-7fb3-47b3-b546-64e8d481be1d",
+              "mediaIds": [
+                "6b1fe8cb-7fb3-47b3-b546-64e8d481be1d"
+              ],
+              "type": "SPOTLIGHT",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "6ef0aec6-152a-42fb-902b-d99bc509b499",
+              "sourceUploadIds": [
+                "6ef0aec6-152a-42fb-902b-d99bc509b499"
+              ],
+              "mediaUploadedAt": "2026-11-03T16:08:10.108Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "e7b1044158a6590a9c3fd6b4eaf67dbf808ecb87898b1cceb8c378c29535e06c"
+        }
+      }
+    },
+    {
+      "id": "C3",
+      "title": "نزل بالسوق؟ — Nike Adapt",
+      "status": "POSTED_BOTH_DO_NOT_REPEAT",
+      "receipt": "challenge-queue/20261105-1900-C3.json",
+      "receipts": {
+        "STORY": {
+          "status": "POSTED",
+          "post_id": "94a5fd91-6644-4e60-bd4c-8a3f96ea66e4",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "243a3935-ddb2-464f-b4b5-3d85958d14f9",
+              "mediaId": "243a3935-ddb2-464f-b4b5-3d85958d14f9",
+              "mediaIds": [
+                "243a3935-ddb2-464f-b4b5-3d85958d14f9"
+              ],
+              "type": "STORY",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "b39e19c1-718a-4b16-9d7b-f722f6846ffe",
+              "sourceUploadIds": [
+                "b39e19c1-718a-4b16-9d7b-f722f6846ffe"
+              ],
+              "mediaUploadedAt": "2026-11-05T16:18:19.932Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "f5e756726c64830ec97d9381d1375b7490318acc8be4cf3c1aa7093bb0a7473e"
+        },
+        "SPOTLIGHT": {
+          "status": "POSTED",
+          "post_id": "bc907747-02e3-4bbd-b87f-d86c2d141da8",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "W7_EDlXWTBiXAEEniNoMPwAAYcmxycnd6d2d0AaGsgrGNAaGsgrFcAAAAAA",
+              "mediaId": "a2672269-f030-4e07-8a55-05d5f475e605",
+              "mediaIds": [
+                "a2672269-f030-4e07-8a55-05d5f475e605"
+              ],
+              "type": "SPOTLIGHT",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "1573ab96-f61e-4dbd-8b6f-5f5963cf6ed7",
+              "sourceUploadIds": [
+                "1573ab96-f61e-4dbd-8b6f-5f5963cf6ed7"
+              ],
+              "mediaUploadedAt": "2026-11-05T16:19:48.875Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "f5e756726c64830ec97d9381d1375b7490318acc8be4cf3c1aa7093bb0a7473e"
+        }
+      }
+    },
+    {
+      "id": "C4",
+      "title": "نزل بالسوق؟ — لوح لكزس الطائر",
+      "status": "POSTED_BOTH_DO_NOT_REPEAT",
+      "receipt": "challenge-queue/20261108-1300-C4.json",
+      "receipts": {
+        "STORY": {
+          "status": "POSTED",
+          "post_id": "4b273ade-9f5f-4c15-a899-7807e23a5920",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "354c023f-a9e2-4219-9059-db9525306f22",
+              "mediaId": "354c023f-a9e2-4219-9059-db9525306f22",
+              "mediaIds": [
+                "354c023f-a9e2-4219-9059-db9525306f22"
+              ],
+              "type": "STORY",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "7445f8b0-7f27-49ec-aaa2-fb2ac1c2004a",
+              "sourceUploadIds": [
+                "7445f8b0-7f27-49ec-aaa2-fb2ac1c2004a"
+              ],
+              "mediaUploadedAt": "2026-11-08T10:04:46.097Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0"
+        },
+        "SPOTLIGHT": {
+          "status": "POSTED",
+          "post_id": "0d04c8d0-ceb5-4a91-8f6d-a3e5588519ac",
+          "externalData": {
+            "SNAPCHAT": {
+              "id": "W7_EDlXWTBiXAEEniNoMPwAAYZm5reGpveWRrAaG6n_EWAaG6n_DsAAAAAA",
+              "mediaId": "01b302e8-de45-4ebf-bfe8-28909d690966",
+              "mediaIds": [
+                "01b302e8-de45-4ebf-bfe8-28909d690966"
+              ],
+              "type": "SPOTLIGHT",
+              "profileId": "cd0ffc18-1462-4f19-a1ae-8c91174faaa7",
+              "sourceUploadId": "5814873d-5c02-40be-917a-e0784244ee84",
+              "sourceUploadIds": [
+                "5814873d-5c02-40be-917a-e0784244ee84"
+              ],
+              "mediaUploadedAt": "2026-11-08T10:06:26.914Z",
+              "permalink": "https://www.snapchat.com/@executivesaudi",
+              "status": "PUBLISHED"
+            }
+          },
+          "media_sha256": "14d5fc08bca4af38675f823dfe23eaf44d449d8cb7903f696b23c11460d28cc0"
+        }
+      }
+    },
+    {
+      "id": "C5",
+      "title": "نزل بالسوق؟ — سيارة BMW GINA",
+      "status": "POSTED_BOTH_DO_NOT_REPEAT",
+      "receipt": "challenge-queue/20261110-1300-C5.json",
+      "receipts": {
+        "STORY": {
+          "post_id": "0bcd9742-bb52-4325-8c21-face05078c5d",
+          "snapchat_status": "PUBLISHED",
+          "status": "POSTED",
+          "media_sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d"
+        },
+        "SPOTLIGHT": {
+          "post_id": "ef26f693-8d09-4609-ba20-7fb091cf4941",
+          "snapchat_status": "PUBLISHED",
+          "status": "POSTED",
+          "media_sha256": "66656901598b5be22adabab73ffadd4efbc8e7a3b610bf37ad278094e4748b9d"
+        }
+      }
+    },
+    {
+      "id": "B2-03",
+      "title": "نزل بالسوق؟ — ملعقة كيرين الكهربائية",
+      "status": "POSTED_BOTH_DO_NOT_REPEAT",
+      "receipt": "challenge-queue/20261114-1300-B2-03.json",
+      "receipts": {
+        "STORY": {
+          "status": "POSTED",
+          "post_id": "70b79a74-ee77-4076-a25b-5ce382536b57",
+          "snapchat_status": "PUBLISHED",
+          "snapchat_id": "52879ecc-47df-49e4-bf1f-1ed42b70f890",
+          "upload_id": "fd3c67b0-6e46-4a65-bf60-93fbf623f3b0",
+          "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647"
+        },
+        "SPOTLIGHT": {
+          "status": "POSTED",
+          "post_id": "3c3f88e6-e238-4877-9167-527df532c948",
+          "snapchat_status": "PUBLISHED",
+          "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYcHJhcW1ia2V1AaHZhpakAaHZhpZxAAAAAA",
+          "upload_id": "d4b74f1c-f453-4086-9399-1599ba07b0fe",
+          "media_sha256": "6e90572f08bbfb3620d7592caf0d42b97b4dc5b8921d612cbc1f261a4afa9647"
+        }
+      }
+    },
+    {
+      "id": "B2-08",
+      "title": "كرسي فولكس واجن اللي تسوقه بالممر، انباع أو كان للاستعراض؟",
+      "status": "POSTED_BOTH_DO_NOT_REPEAT",
+      "receipt": "challenge-queue/20261117-1300-B2-08.json",
+      "receipts": {
+        "STORY": {
+          "post_id": "ed168a22-ec39-4cae-bc54-69764458f738",
+          "snapchat_id": "ebc6e200-4d05-469d-8dd0-42fc4abeb62a",
+          "media_id": "ebc6e200-4d05-469d-8dd0-42fc4abeb62a",
+          "status": "POSTED",
+          "snapchat_status": "PUBLISHED",
+          "upload_id": "616501da-4354-412e-a412-97054c394225"
+        },
+        "SPOTLIGHT": {
+          "post_id": "907719b4-fe22-49a9-a566-793ab26917d2",
+          "snapchat_id": "W7_EDlXWTBiXAEEniNoMPwAAYc2x6YmNiZHdmAaHo_M8gAaHo_M79AAAAAA",
+          "media_id": "25c50605-addc-4da1-aa84-28b20236f8fb",
+          "status": "POSTED",
+          "snapchat_status": "PUBLISHED",
+          "upload_id": "466f77b5-e06c-405d-8fa6-ecc203fe3e1c"
+        }
+      }
+    }
+  ],
+  "retained_challenges": [
+    {
+      "id": "B2-11",
+      "topic": "جرير أو إكسترا، من بدأ أول؟ جرير بدأت قبل إكسترا."
+    },
+    {
+      "id": "B2-14",
+      "topic": "هالقرية اللي يتنقلون فيها بالقوارب، هولندا أو بلجيكا؟ غيتهورن في هولندا."
+    },
+    {
+      "id": "B2-15",
+      "topic": "أي هرم أعلى؟ لوكسور، حوالي 107 متر مقابل 21 متر للوفر."
+    },
+    {
+      "id": "B2-16",
+      "topic": "أول قيم بوي أو أول بلايستيشن، من نزل أول؟ القيم بوي 1989، بلايستيشن 1994."
+    },
+    {
+      "id": "B2-17",
+      "topic": "وين السوق اللي يلمون بسطاتهم إذا مر القطار؟ سوق ماي كلونغ في تايلند."
+    },
+    {
+      "id": "B2-19",
+      "topic": "هالبلدة فوق صخرة عند البحر، إيطاليا أو اليونان؟ مونيمفاسيا في اليونان."
+    }
+  ],
+  "challenge_schedule_unchanged": {
+    "next_item": "B2-11",
+    "next_slot_riyadh": "2026-11-19T13:00:00+03:00",
+    "daily_maximum": 1
+  }
+}
