@@ -1,0 +1,29 @@
+{
+  "status": "AMBIGUOUS_NOT_RETRIED",
+  "package": "pokut-revised-20261118",
+  "placement": "STORY",
+  "video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+  "upload_id": "42b2be28-a762-414e-8e98-1954a624a817",
+  "reference_key": "reviewed-challenge-cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353-STORY",
+  "audit_run": 44286910173,
+  "audits": [
+    {
+      "job": 134741811290,
+      "at": "2026-11-18T10:36:19Z",
+      "inventory_count": 561,
+      "matches": []
+    },
+    {
+      "job": 134744091130,
+      "at": "2026-11-18T10:40:37Z",
+      "inventory_count": 561,
+      "matches": []
+    }
+  ],
+  "absence_is_not_retry_permission": true,
+  "spotlight": "NOT_STARTED",
+  "queue_advanced": false,
+  "direct_account_check": "Available cloud browser displays Snapchat login. No signed-in session available.",
+  "temporary_audit_removed_from_main": "2fa9e940f691050ab8a18186b5eee2c77fd4c38f",
+  "next_action": "GET-only delayed inventory checks. Do not retry create or reset SENDING journal."
+}
