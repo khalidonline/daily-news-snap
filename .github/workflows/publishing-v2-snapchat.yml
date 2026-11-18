@@ -34,38 +34,6 @@ jobs:
           BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
           BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
         run: python -m publishing_v2.bundle_api check
-      - name: Reconcile Pokut ambiguous Story read only
-        if: github.event_name == 'push'
-        env:
-          BUNDLE_API_KEY: ${{ secrets.BUNDLE_API_KEY }}
-          BUNDLE_TEAM_ID: ${{ secrets.BUNDLE_TEAM_ID }}
-        run: |
-          python - <<'PY'
-          import json
-          import urllib.parse
-          from publishing_v2.bundle_api import BundleClient, BundleError
-          from publishing_v2.group_recovery import inventory
-          DIGEST = 'cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353'
-          UPLOAD = '42b2be28-a762-414e-8e98-1954a624a817'
-          KEY = 'reviewed-challenge-' + DIGEST + '-STORY'
-          class ReadOnly(BundleClient):
-              def call(self, path, method='GET', data=None, content_type='application/json'):
-                  if method != 'GET' or data is not None:
-                      raise BundleError('Reconciliation is GET-only; mutation forbidden')
-                  return super().call(path, method, data, content_type)
-          client = ReadOnly()
-          rows = inventory(client)
-          matches = []
-          for row in rows:
-              snap = (row.get('data') or {}).get('SNAPCHAT') or {}
-              ext = (row.get('externalData') or {}).get('SNAPCHAT') or {}
-              if row.get('referenceKey') == KEY or UPLOAD in (snap.get('uploadIds') or []) or UPLOAD in (ext.get('sourceUploadIds') or []):
-                  detail = client.call('/post/' + urllib.parse.quote(row['id'], safe=''))
-                  if detail.get('teamId') != client.team or detail.get('id') != row['id']:
-                      raise BundleError('Read-only detail identity mismatch')
-                  matches.append({k: detail.get(k) for k in ('id','referenceKey','status','deletedAt','createdAt','postDate','data','externalData')})
-          print(json.dumps({'mode':'READ_ONLY_NO_SEND','inventory_count':len(rows),'reference_key':KEY,'upload_id':UPLOAD,'matches':matches,'absence_is_not_retry_permission':True}, ensure_ascii=False))
-          PY
   validate:
     if: github.repository == 'khalidonline/daily-news-snap' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && (inputs.mode == 'validate' || inputs.mode == 'publish')
     runs-on: ubuntu-latest
