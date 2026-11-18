@@ -1,0 +1,14 @@
+{
+  "status": "CANCELLED_NOT_SENT",
+  "id": "B2-10",
+  "slot": "2026-11-19T13:00:00+03:00",
+  "owner_instruction": "مااعجبني التحدي. ابي تحديات معروفه عند الناس ومألوفه. أنا شخصيا اول مره اعرف اسماء النفقين. الغه وراجع قائمة التحديات الباقيه وعطني اي تحدي غير مناسب علشان نلغيه",
+  "recorded_at": "2026-11-18T13:16:39.297Z",
+  "draft_commit": "67a9b00556d2fe7770bf4bd49eb9fa55e20e8656",
+  "draft_package": "tunnels-cc0-preview-20261119",
+  "video_sha256": "61468d71bbd297a16ba6c6ff6fb8b5d93b3da51443bb6ce2e02a317af8cdcc33",
+  "publication_requested": false,
+  "publication_performed": false,
+  "other_items_cancelled": false,
+  "completed_count_unchanged": 8
+}

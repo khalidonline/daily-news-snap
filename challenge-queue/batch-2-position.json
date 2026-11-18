@@ -1,25 +1,9 @@
 {
   "source": "challenge-queue/approved-next-20-20261109.md",
   "first_slot_riyadh": "2026-11-13T13:00:00+03:00",
-  "status": "IN_PROGRESS",
-  "next_item": "B2-10",
+  "status": "PAUSED_PENDING_OWNER_REVIEW",
+  "next_item": "B2-11",
   "remaining": [
-    {
-      "id": "B2-10",
-      "topic": "أي نفق أطول بكامل مساره؟ سيكان أطول: حوالي 53.9 كم، مقابل 50.5 كم لنفق المانش.",
-      "display_text": {
-        "question": "أي نفق أطول بكامل مساره؟",
-        "options": [
-          "نفق بريطانيا وفرنسا",
-          "نفق سيكان الياباني"
-        ],
-        "answer": "سيكان أطول: حوالي 53.9 كم، مقابل 50.5 كم لنفق المانش."
-      },
-      "production_notes": [
-        "قارن طول المسار كاملا، لا الجزء البحري وحده: سيكان 53.85 كم، مقابل 50.5 كم لنفق المانش (بريطانيا وفرنسا). أظهر الطولين تقريبا في الكشف وموقع كل نفق بوضوح. المقارنة بالجزء تحت البحر وحده تقلب النتيجة لصالح المانش، فلا تبدل معيار السؤال.",
-        "مصادر التحقق الداخلي: https://www.jrtt.go.jp/corporate/public_relations/asset/announcement_YouTube_seikanENG.pdf (JRTT: الطول الكلي لسيكان 53.850 كم والجزء تحت البحر 23.300 كم، الصفحة 2)؛ https://www.leshuttle.com/uk-en/discover/why-choose-leshuttle/build/the-channel-tunnel (LeShuttle: الطول الكلي للمانش 50.5 كم، والجزء البحري أطول من سيكان). المصادر وتعليمات الإنتاج ليست نصا ظاهرا."
-      ]
-    },
     {
       "id": "B2-11",
       "topic": "جرير أو إكسترا، من بدأ أول؟ جرير بدأت قبل إكسترا.",
@@ -215,5 +199,34 @@
     "result": "POSTED_BOTH",
     "record": "challenge-queue/20261118-1300-B2-09.json",
     "queue_advanced": true
+  },
+  "cancelled": [
+    {
+      "id": "B2-10",
+      "topic": "أي نفق أطول بكامل مساره؟ سيكان أطول: حوالي 53.9 كم، مقابل 50.5 كم لنفق المانش.",
+      "display_text": {
+        "question": "أي نفق أطول بكامل مساره؟",
+        "options": [
+          "نفق بريطانيا وفرنسا",
+          "نفق سيكان الياباني"
+        ],
+        "answer": "سيكان أطول: حوالي 53.9 كم، مقابل 50.5 كم لنفق المانش."
+      },
+      "production_notes": [
+        "قارن طول المسار كاملا، لا الجزء البحري وحده: سيكان 53.85 كم، مقابل 50.5 كم لنفق المانش (بريطانيا وفرنسا). أظهر الطولين تقريبا في الكشف وموقع كل نفق بوضوح. المقارنة بالجزء تحت البحر وحده تقلب النتيجة لصالح المانش، فلا تبدل معيار السؤال.",
+        "مصادر التحقق الداخلي: https://www.jrtt.go.jp/corporate/public_relations/asset/announcement_YouTube_seikanENG.pdf (JRTT: الطول الكلي لسيكان 53.850 كم والجزء تحت البحر 23.300 كم، الصفحة 2)؛ https://www.leshuttle.com/uk-en/discover/why-choose-leshuttle/build/the-channel-tunnel (LeShuttle: الطول الكلي للمانش 50.5 كم، والجزء البحري أطول من سيكان). المصادر وتعليمات الإنتاج ليست نصا ظاهرا."
+      ],
+      "status": "CANCELLED_BY_OWNER",
+      "cancelled_at": "2026-11-18T13:16:39.296Z",
+      "reason": "Owner rejected unfamiliar tunnel names and requested familiar challenges; explicit cancellation of B2-10 only."
+    }
+  ],
+  "review_hold": {
+    "reason": "Owner requested review of all remaining topics; other items not cancelled.",
+    "cancelled_ids": [
+      "B2-10"
+    ],
+    "remaining_review_pending": true,
+    "no_publish_until_review_resolved": true
   }
 }
