@@ -1,0 +1,285 @@
+{
+  "format": "reviewed-challenge-video-v1",
+  "content_type": "challenge",
+  "approved": false,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية | أي نفق أطول؟",
+  "expires_at": "2026-11-19T23:59:59+03:00",
+  "not_before": "2026-11-19T10:00:00Z",
+  "approved_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "intended_destinations": [
+    "STORY",
+    "SPOTLIGHT"
+  ],
+  "story_duration": "ONE_WEEK",
+  "settings_revision": "2026-10-31-master-14",
+  "editorial_id": "B2-10",
+  "owner_viewed_this_export": false,
+  "authorization_context": "Owner-approved B2 daily batch, B2-10 intended 2026-11-19 13:00 Asia/Riyadh. Root authorized packaging and validation-only upload. NOT permission to publish now. Current final-audio listening requirement remains unfulfilled; no live readiness claimed.",
+  "media": [
+    {
+      "path": "approved/tunnels-cc0-preview-20261119/challenge.mp4",
+      "sha256": "61468d71bbd297a16ba6c6ff6fb8b5d93b3da51443bb6ce2e02a317af8cdcc33",
+      "kind": "info"
+    }
+  ],
+  "challenge_contract": {
+    "version": 1,
+    "presentation": {
+      "countdown_start": 3,
+      "countdown_end": 8,
+      "answer_at": 8,
+      "audio_reference": "approved/wheels-video-20261025/owner-approved-audio.m4a"
+    },
+    "final_video_review": {
+      "audio_audible": true,
+      "countdown_visible_and_running": true,
+      "answer_reveal_correct": true,
+      "brand_colors_match": true,
+      "safe_area_checked": true,
+      "sharing_cta_visible": true,
+      "no_diacritics": true,
+      "text_readable": true,
+      "sha256": "61468d71bbd297a16ba6c6ff6fb8b5d93b3da51443bb6ce2e02a317af8cdcc33",
+      "reference": "Assistant inspected the actual CC0 source photographs, final decoded eight-stage frames and 390px Story/Spotlight modeled overlays. New short question explicitly requested by owner. No assertion owner viewed new export or that assistant listened to audio."
+    }
+  },
+  "video_review": {
+    "approved": false,
+    "authorization": "Owner-approved B2 daily batch, B2-10 intended 2026-11-19 13:00 Asia/Riyadh. Root authorized packaging and validation-only upload. NOT permission to publish now. Current final-audio listening requirement remains unfulfilled; no live readiness claimed.",
+    "video_sha256": "61468d71bbd297a16ba6c6ff6fb8b5d93b3da51443bb6ce2e02a317af8cdcc33",
+    "source_manifest": {
+      "path": "approved/tunnels-cc0-preview-20261119/source-approval.json",
+      "sha256": "4d5dc2d3c01aa6f4f97d1d0f8fb8f363ae1a637e883218a8b741eeaf66b2b335"
+    },
+    "audio_reference": {
+      "path": "approved/wheels-video-20261025/owner-approved-audio.m4a",
+      "sha256": "fa1c75e2a61fdfcfdcf7fe532a249faad9aa23c3c88a6dc8793dce141b320a48",
+      "authorization": "Existing owner-approved audio retained; exact PCM measured locally; no subjective listening claim."
+    },
+    "frames": [
+      {
+        "at": 0.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-0.5.png",
+        "sha256": "57ec209f1ebf4c8e7611e4527f3523a74cce9cf438d738aece3ec7bbaa0589c5"
+      },
+      {
+        "at": 3.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-3.5.png",
+        "sha256": "4ea4795753401e2646f85800d26ad25158f25a5acc550cfa613e44b2eb89ca88"
+      },
+      {
+        "at": 4.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-4.5.png",
+        "sha256": "10d13f41aa684d196473fb3e842e540f845e543a43c37cfb8d7acdefc927ea58"
+      },
+      {
+        "at": 5.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-5.5.png",
+        "sha256": "e18cf37744b9ba91eb575550007e467acfded80c8d8b19bb618a989dff6f629f"
+      },
+      {
+        "at": 6.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-6.5.png",
+        "sha256": "c71759565390f6f2c08a97aa2e1d39314c09a9ae6d021271a676769120bf99e9"
+      },
+      {
+        "at": 7.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-7.5.png",
+        "sha256": "d9012840e66f01742ef141101f26c3820072ddd7c9b2c1c229b9ca1818d33a0f"
+      },
+      {
+        "at": 8.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-8.5.png",
+        "sha256": "446a94cc86ad6fd58569012d114fa78ebda6fe25ed78b7c1f887618cf93fa694"
+      },
+      {
+        "at": 11.5,
+        "path": "approved/tunnels-cc0-preview-20261119/frame-11.5.png",
+        "sha256": "8c8ca0d3d3c564e6aa80efb8992b218dbabf788b7d7e5afc83c019359cc7693f"
+      }
+    ],
+    "image_review": {
+      "path": "approved/tunnels-cc0-preview-20261119/image-review.json",
+      "sha256": "5df5011d50a283e6b4d4fb7e1eb05c6430d0f8ede2f05d608034694e6875ee27"
+    }
+  },
+  "status": "LOCAL_REVIEW_PACKAGE_NOT_DISPATCHED",
+  "asset_archive": {
+    "path": "approved/tunnels-cc0-preview-20261119.tar.xz",
+    "sha256": "f5415460a4e37a8ab403f650623e366469ccecab75272e96e673c0fa363abf0c",
+    "parts": [
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-000",
+        "sha256": "7cdb41358a142c6548d03f3cec935a3f6c081f1d463c9fc60a7e75f3b5f664e4"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-001",
+        "sha256": "0578865a9e83209e5e99814a23d2f10a02c542a7014409f7836dd6b1551130da"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-002",
+        "sha256": "986688ec9b71418000593bb29d95d13915cc87e7a040aa28f72f8eb323efac03"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-003",
+        "sha256": "040534e2cf8d9cb6330467e70eef3715bc0242a3e66faecf57e393a69a204d40"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-004",
+        "sha256": "2d9c54aebeceaae6e0f2912f3fc262d018e270806c61e29b41fb915b4fe57f89"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-005",
+        "sha256": "bc1834f451c32f65a285cd0989e97d3e170a3f039360b40f06e5fad5250e7dc2"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-006",
+        "sha256": "7ea82af9be70536f3f82441f346f85f4d62df36a6f5ed8d1fee70f4c36baf198"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-007",
+        "sha256": "82ad29a7b27301b2e511f8cf065fd6c27e5423681ad1cc02a9c026c8b29b347a"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-008",
+        "sha256": "b99461aa86ba202e962164986bbacff44ee6ca916d28b20a010794a61075d6e1"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-009",
+        "sha256": "2882a1cd1b99de0b1ae83e2ae457809e7f307395a47d522b8b3b7345f13b584b"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-010",
+        "sha256": "d804486f14809c222a4df00abb235df7ce8dcd61dd7bc83d200c92c644686eec"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-011",
+        "sha256": "7cffe3970a3ac867b63420446ff880d1fbe250b54212a254368aa19dba78c99b"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-012",
+        "sha256": "656f67d4cf680314b4a21cd33f2e1f3a7ec7686e76bb78b70c2fda0fb71236b3"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-013",
+        "sha256": "5ccab25e2b33afdabf0316cd0def6c1d7e83255508065f654140ec79943f7f84"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-014",
+        "sha256": "e886ae23ca57dcf3696a1d3e8a1480d7add7561fcb01b1affa0716f625853f60"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-015",
+        "sha256": "847a1ab959bb56cce1cc25d4393780c2a551beb8ba2b8f5bad4d65b96f55cbbb"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-016",
+        "sha256": "e067a1494d663100c03962d76485d125437d3ff2fa1a134871f94d3c0e8be940"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-017",
+        "sha256": "b5ecb63d637e1729670f534d911de60f864d5d1eebb009afa0225729e06484d9"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-018",
+        "sha256": "5bc6a6d5935e4f1f4fccffd569aad10ebf7934263b4eab4d6970c66d23a1ed52"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-019",
+        "sha256": "d3164faf5291e8050a4cd98ce9410eb405e2d255638b378288812ca2314b44c9"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-020",
+        "sha256": "2427bc985ec68ac06a53ea5eb128b710cc2f4808a3fa741ead857ef02117901c"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-021",
+        "sha256": "aca7637ae693101ada74b9afe7ba73beba24d5a70ae4612fe97c212d378f6637"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-022",
+        "sha256": "d84dc58adcdccdadc49fc5857eba7946619a741cb2c1de9fc7a99dec1074639a"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-023",
+        "sha256": "b1722f7379bca1389b049fee377bbb37b00d654314d3b396a12f3d9dcf7d4c65"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-024",
+        "sha256": "a60b90182e92ff8a21c45d342771bcff2e2c829bb831106b2ed7a5a1aa4228c6"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-025",
+        "sha256": "1433f492d18329b6975d6c1cd97082a63477356f90b296a62e6cb57424426ff9"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-026",
+        "sha256": "00fffd0a450fa74d9fe414635895b92a9eb73e822493b176f15266ae1797fe4f"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-027",
+        "sha256": "3aab0324c611ffe806efef1a3f527c39a97bffe59e7b3d4f5cae80d85349f097"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-028",
+        "sha256": "0388c969bef42f7078e38f48d441822e7d909ac7beeb166289741c93bb107eeb"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-029",
+        "sha256": "2f8e12c7b5b719edfeb49a7505e54d4a5b080ba57ae846675e4186032167f82d"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-030",
+        "sha256": "1def5ea3a6a5e4bc108f58de21d2be448a8926f42514c39602c3dfb0cb2ddc09"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-031",
+        "sha256": "3417b3ec4abe8a2debc41128f64024fe6cb395d7d3e829fc7c55b4fc8ad38773"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-032",
+        "sha256": "a06878ff2ede0b2a077848311f2d13deedf86ed4ecbc4d74c6f1d07992cdaabf"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-033",
+        "sha256": "4fdcfdb5599aab26936f6db4e29810728876282b1268d9a93509c5ae39f0893f"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-034",
+        "sha256": "ac1223caedbe7c86f5685edb50720bba418d529ab3e52c172c14270264f88c24"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-035",
+        "sha256": "b5c139e89c34cc73e01b7ebfb70d3f207dece898e3f94bde7c75690a1698e7eb"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-036",
+        "sha256": "3936d6261817f5c6d24901949ecc6b98ffb3e50c4e564a60a7ace177af3a30f7"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-037",
+        "sha256": "13f1ec1725bd6785e14d8912e8e7f169079ae19b0dcb4444ca5a981a25295a9a"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-038",
+        "sha256": "4f0e10cc36a0749310d7b10531a5b72a688373ac38488cf433f0e565087de58b"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-039",
+        "sha256": "3e5cf2e64f26bb135094cee7826568038e8e3999e8ea79b69dc76303133df830"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-040",
+        "sha256": "2aeda7ab2418f2cbf0d0dec4b3705caaf3f0c76adbba72c408fc104364885839"
+      },
+      {
+        "path": "approved/tunnels-cc0-preview-20261119.tar.xz.part-041",
+        "sha256": "76107a5962b75ac053fee2f0cb2741d4ebb110ee342b48e57df0ae6893f279eb"
+      }
+    ]
+  }
+}

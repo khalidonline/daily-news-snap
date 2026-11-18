@@ -1,0 +1,109 @@
+{
+  "photos": [
+    {
+      "source": {
+        "path": "approved/tunnels-cc0-preview-20261119/channel.jpg",
+        "sha256": "9bac64bffe0c12f05ba07c37af01204a474b1f30a935c50675307dcac7272c37"
+      },
+      "box": [
+        72,
+        505,
+        528,
+        915
+      ],
+      "crops": [
+        {
+          "at": 0.5,
+          "rgb_sha256": "a1daf77cb762577e82b47610969ad7cb4b21f1b876d59cffd0e9f605b2e76e04",
+          "mean_luma": 106.903921,
+          "dark_fraction": 0.102337
+        },
+        {
+          "at": 11.5,
+          "rgb_sha256": "de3ccb7220dc448e24ab678599e18790996b5ffe969667dbb90663739fe7fb60",
+          "mean_luma": 106.17477,
+          "dark_fraction": 0.106402
+        }
+      ],
+      "assessment": "passed",
+      "observations": {
+        "subject": "Inside a vehicle-carrying LeShuttle carriage with cars visible in the center.",
+        "relevance": "Actual Channel Tunnel journey photograph, labeled inside LeShuttle rather than tunnel interior. CC0 source verified.",
+        "crop_visibility": "Lit carriage interior and central cars remain visible.",
+        "brightness": "Warm illuminated carriage remains recognizable at390px.",
+        "spoiler_risk": "No length shown."
+      }
+    },
+    {
+      "source": {
+        "path": "approved/tunnels-cc0-preview-20261119/seikan.jpg",
+        "sha256": "e36657c0dd89c09f3fe59c9b58fe7fdbd59b8123bf566c4a3bbeec149243da16"
+      },
+      "box": [
+        552,
+        505,
+        1008,
+        915
+      ],
+      "crops": [
+        {
+          "at": 0.5,
+          "rgb_sha256": "0000d69cebeb4a4833fe07df6067d19de941a3c9b75b0395359898db22de63c5",
+          "mean_luma": 147.695748,
+          "dark_fraction": 0.050562
+        },
+        {
+          "at": 11.5,
+          "rgb_sha256": "5621f401e2d6bbddb13905e1b42db6bd5c628a3b161def76d90c44da1fc1089e",
+          "mean_luma": 147.812115,
+          "dark_fraction": 0.051471
+        }
+      ],
+      "assessment": "passed",
+      "observations": {
+        "subject": "E5 Hayabusa train photographed approaching Omiya in2011.",
+        "relevance": "Representative train type used on Hokkaido Shinkansen crossing Seikan, not a photograph of Seikan itself; caption names Hayabusa. CC0 verified.",
+        "crop_visibility": "Distinct bluegreen nose and long silver side remain visible; leftmost nose edge slightly cropped, not identity changing.",
+        "brightness": "Daylight clearly distinguishes nose, side and rails.",
+        "spoiler_risk": "Train length is not tunnel length and no tunnel-length answer is shown."
+      }
+    }
+  ],
+  "pair_metrics": [
+    {
+      "at": 0.5,
+      "similarity": 0.727639
+    },
+    {
+      "at": 11.5,
+      "similarity": 0.725131
+    }
+  ],
+  "assessment": "passed",
+  "reviewer": "Assistant actual source and final decoded-frame inspection",
+  "mobile_width": 390,
+  "mobile_layout": "Distinct warm interior vehicle-carrying LeShuttle carriage versus blue/green E5 train exterior. Both retain recognizable subjects through mildzoom. Labels explicitly describe train photographs, not tunnel portals.",
+  "pair": {
+    "assessment": "passed",
+    "distinct_information": "Interior of car-carrying Channel crossing service versus outside view of Japanese high-speed train type. Clearly distinct real imagery, not duplicate tunnel angles.",
+    "answer_spoiler": "Neither supplies tunnel lengths; right answer only appears fromsecond8."
+  },
+  "version": 1,
+  "video_sha256": "61468d71bbd297a16ba6c6ff6fb8b5d93b3da51443bb6ce2e02a317af8cdcc33",
+  "source_manifest": {
+    "path": "approved/tunnels-cc0-preview-20261119/source-approval.json",
+    "sha256": "4d5dc2d3c01aa6f4f97d1d0f8fb8f363ae1a637e883218a8b741eeaf66b2b335"
+  },
+  "source_assets": [
+    {
+      "path": "approved/tunnels-cc0-preview-20261119/channel.jpg",
+      "sha256": "9bac64bffe0c12f05ba07c37af01204a474b1f30a935c50675307dcac7272c37"
+    },
+    {
+      "path": "approved/tunnels-cc0-preview-20261119/seikan.jpg",
+      "sha256": "e36657c0dd89c09f3fe59c9b58fe7fdbd59b8123bf566c4a3bbeec149243da16"
+    }
+  ],
+  "reviewed_at": "2026-11-18T13:12:15.021291+00:00",
+  "limitations": "No subjective audio listening; decoded PCM equals original approved audio and is non-silent. Modeled overlays only, not live UI. No owner-viewed-new-export claim. Publication approval remains false pending final review completion."
+}

@@ -1,0 +1,66 @@
+{
+  "final_video_sha256": "61468d71bbd297a16ba6c6ff6fb8b5d93b3da51443bb6ce2e02a317af8cdcc33",
+  "reference": "Assistant inspected the actual CC0 source photographs, final decoded eight-stage frames and 390px Story/Spotlight modeled overlays. New short question explicitly requested by owner. No assertion owner viewed new export or that assistant listened to audio.",
+  "authorization_context": "Owner-approved B2 daily batch, B2-10 intended 2026-11-19 13:00 Asia/Riyadh. Root authorized packaging and validation-only upload. NOT permission to publish now. Current final-audio listening requirement remains unfulfilled; no live readiness claimed.",
+  "reviewed_at": "2026-11-18T13:12:15.021291+00:00",
+  "publication_approved": false,
+  "source_approved": true,
+  "video_review_approved": false,
+  "owner_viewed_this_export": false,
+  "final_video_review": {
+    "audio_audible": true,
+    "countdown_visible_and_running": true,
+    "answer_reveal_correct": true,
+    "brand_colors_match": true,
+    "safe_area_checked": true,
+    "sharing_cta_visible": true,
+    "no_diacritics": true,
+    "text_readable": true
+  },
+  "design_review": {
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "approved_typography": true,
+    "overlay_destinations": {
+      "STORY": "Inspected final intro and reveal at390px with modeled top/bottomUI. Question, images, captions, options, countdown, reveal and sharingCTA unobscured; top branding under modeledUI. Not liveUI evidence.",
+      "SPOTLIGHT": "Inspected final intro and reveal at390px with modeled top/bottomUI and right-side controls. Question, images, captions, options, countdown, reveal and sharingCTA unobscured; top branding under modeledUI. Not liveUI evidence."
+    }
+  },
+  "image_review": {
+    "assessment": "passed",
+    "reviewer": "Assistant actual source and final decoded-frame inspection",
+    "mobile_width": 390,
+    "mobile_layout": "Distinct warm interior vehicle-carrying LeShuttle carriage versus blue/green E5 train exterior. Both retain recognizable subjects through mildzoom. Labels explicitly describe train photographs, not tunnel portals.",
+    "photos": [
+      {
+        "assessment": "passed",
+        "observations": {
+          "subject": "Inside a vehicle-carrying LeShuttle carriage with cars visible in the center.",
+          "relevance": "Actual Channel Tunnel journey photograph, labeled inside LeShuttle rather than tunnel interior. CC0 source verified.",
+          "crop_visibility": "Lit carriage interior and central cars remain visible.",
+          "brightness": "Warm illuminated carriage remains recognizable at390px.",
+          "spoiler_risk": "No length shown."
+        }
+      },
+      {
+        "assessment": "passed",
+        "observations": {
+          "subject": "E5 Hayabusa train photographed approaching Omiya in2011.",
+          "relevance": "Representative train type used on Hokkaido Shinkansen crossing Seikan, not a photograph of Seikan itself; caption names Hayabusa. CC0 verified.",
+          "crop_visibility": "Distinct bluegreen nose and long silver side remain visible; leftmost nose edge slightly cropped, not identity changing.",
+          "brightness": "Daylight clearly distinguishes nose, side and rails.",
+          "spoiler_risk": "Train length is not tunnel length and no tunnel-length answer is shown."
+        }
+      }
+    ],
+    "pair": {
+      "assessment": "passed",
+      "distinct_information": "Interior of car-carrying Channel crossing service versus outside view of Japanese high-speed train type. Clearly distinct real imagery, not duplicate tunnel angles.",
+      "answer_spoiler": "Neither supplies tunnel lengths; right answer only appears fromsecond8."
+    }
+  },
+  "limitations": "No subjective audio listening; decoded PCM equals original approved audio and is non-silent. Modeled overlays only, not live UI. No owner-viewed-new-export claim. Publication approval remains false pending final review completion."
+}

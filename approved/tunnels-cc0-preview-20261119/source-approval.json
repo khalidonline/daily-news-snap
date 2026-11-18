@@ -1,0 +1,41 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "title": "مقارنات سياحية | أي نفق أطول؟",
+  "expires_at": "2026-11-19T23:59:59+03:00",
+  "owner_viewed_this_export": false,
+  "review_state": "ASSISTANT_REVIEW_UNDER_BATCH_AUTHORITY",
+  "owner_review": {
+    "reference": "Assistant inspected the actual CC0 source photographs, final decoded eight-stage frames and 390px Story/Spotlight modeled overlays. New short question explicitly requested by owner. No assertion owner viewed new export or that assistant listened to audio.",
+    "reviewed_at": "2026-11-18T13:12:15.021291+00:00",
+    "approved_media_sha256": [
+      "4b5b88cba513ec324f7e8e386256951c1bc8eaf5ea2e7856a5712c1280e826a9"
+    ],
+    "approved_source_sha256": [
+      "9bac64bffe0c12f05ba07c37af01204a474b1f30a935c50675307dcac7272c37",
+      "e36657c0dd89c09f3fe59c9b58fe7fdbd59b8123bf566c4a3bbeec149243da16"
+    ]
+  },
+  "media": [
+    {
+      "path": "approved/tunnels-cc0-preview-20261119/source.png",
+      "sha256": "4b5b88cba513ec324f7e8e386256951c1bc8eaf5ea2e7856a5712c1280e826a9",
+      "kind": "info",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/tunnels-cc0-preview-20261119/channel.jpg",
+          "sha256": "9bac64bffe0c12f05ba07c37af01204a474b1f30a935c50675307dcac7272c37"
+        },
+        {
+          "path": "approved/tunnels-cc0-preview-20261119/seikan.jpg",
+          "sha256": "e36657c0dd89c09f3fe59c9b58fe7fdbd59b8123bf566c4a3bbeec149243da16"
+        }
+      ]
+    }
+  ]
+}

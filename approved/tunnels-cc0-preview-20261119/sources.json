@@ -1,0 +1,38 @@
+{
+  "comparison": "Total physical route lengths researched internally; on-screen wording shortened at owner request. Correct Seikan53.85km vsChannel50.5km.",
+  "facts": [
+    "https://www.jrtt.go.jp/corporate/public_relations/asset/announcement_YouTube_seikanENG.pdf",
+    "https://www.leshuttle.com/uk-en/discover/why-choose-leshuttle/build/the-channel-tunnel"
+  ],
+  "photos": [
+    {
+      "source_url": "https://www.publicdomainpictures.net/en/view-image.php?image=311943&picture=channel-tunnel-crossing",
+      "license_evidence_url": "https://www.publicdomainpictures.net/en/free-download.php?id=311943&image=channel-tunnel-crossing",
+      "download_url": "https://www.publicdomainpictures.net/pictures/320000/velka/channel-tunnel-crossing-1576834089faB.jpg",
+      "author": "Vera Kratochvil",
+      "license": "CC0",
+      "attribution_required": false,
+      "sha256": "9bac64bffe0c12f05ba07c37af01204a474b1f30a935c50675307dcac7272c37",
+      "visual_review": "Real photograph inside LeShuttle vehicle transport carriage carrying cars. It depicts the Channel Tunnel journey, not the tunnel structure. Do not label it as tunnel interior. Distinct from green E5 exterior photograph.",
+      "reviewed_date": "2026-11-18"
+    },
+    {
+      "file": "/tmp/b210-assets/seikan-train-cc0.jpg",
+      "sha256": "e36657c0dd89c09f3fe59c9b58fe7fdbd59b8123bf566c4a3bbeec149243da16",
+      "source": "https://commons.wikimedia.org/wiki/File:JRE-TEC-E5_omiya.JPG",
+      "download": "https://upload.wikimedia.org/wikipedia/commons/b/b4/JRE-TEC-E5_omiya.JPG",
+      "author": "Toshinori baba",
+      "license": "CC0 1.0 Universal Public Domain Dedication",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "dimensions": [
+        3552,
+        2463
+      ],
+      "date_taken": "2011-03-06",
+      "actual_subject": "JR East E5 set U3 Hayabusa 4 approaching Omiya Station",
+      "usage_caveat": "Real photograph of a train type used on the Hokkaido Shinkansen, NOT a photograph of the Seikan tunnel, its portal, or a train inside it. Photo predates Hokkaido Shinkansen opening. Label as representative train of route, not tunnel photo.",
+      "route_primary_source": "https://www.jrhokkaido.co.jp/corporate/shinkansen/",
+      "visual_review": "Viewed resized full image. Clear turquoise/green E5 nose on left, carriages recede right; no generated content claimed; original photographer and camera metadata recorded by Commons. Crop left-weighted to retain full nose."
+    }
+  ]
+}

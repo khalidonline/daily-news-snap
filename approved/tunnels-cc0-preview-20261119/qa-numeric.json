@@ -1,0 +1,29 @@
+{
+  "status": "NUMERIC_DIAGNOSTICS_NOT_VISUAL_APPROVAL",
+  "sha256": "61468d71bbd297a16ba6c6ff6fb8b5d93b3da51443bb6ce2e02a317af8cdcc33",
+  "dimensions": [
+    1080,
+    1920
+  ],
+  "fps": "30/1",
+  "frames": "360",
+  "duration": "12.000000",
+  "audio": {
+    "decoded_pcm_equal": true,
+    "pcm_sha256": "699953dd21aa255326d0e64089e351862b54c89d0ff2ed3091c7169b0cadb00b",
+    "mean_dbfs": -26.44131725146345,
+    "peak_dbfs": -6.927271549453904,
+    "listened": false
+  },
+  "frame_hashes": {
+    "0.5": "57ec209f1ebf4c8e7611e4527f3523a74cce9cf438d738aece3ec7bbaa0589c5",
+    "3.5": "4ea4795753401e2646f85800d26ad25158f25a5acc550cfa613e44b2eb89ca88",
+    "4.5": "10d13f41aa684d196473fb3e842e540f845e543a43c37cfb8d7acdefc927ea58",
+    "5.5": "e18cf37744b9ba91eb575550007e467acfded80c8d8b19bb618a989dff6f629f",
+    "6.5": "c71759565390f6f2c08a97aa2e1d39314c09a9ae6d021271a676769120bf99e9",
+    "7.5": "d9012840e66f01742ef141101f26c3820072ddd7c9b2c1c229b9ca1818d33a0f",
+    "8.5": "446a94cc86ad6fd58569012d114fa78ebda6fe25ed78b7c1f887618cf93fa694",
+    "11.5": "8c8ca0d3d3c564e6aa80efb8992b218dbabf788b7d7e5afc83c019359cc7693f"
+  },
+  "publication_performed": false
+}
