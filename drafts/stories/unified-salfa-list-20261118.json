@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-18T13:26:31.461Z",
+  "updated_at": "2026-11-18T15:16:47.312Z",
   "status": "SALFA_IDEA_LIST_NOT_PUBLICATION_QUEUE",
   "owner_decision": "نلغي تحديات نزل بالسوق؟ ونحولها كلها إلى مسار السوالف ونكمل هناك بقائمة جديده",
   "rules": [
@@ -10,14 +10,6 @@
     "No publication or new schedule is authorized by creating this list."
   ],
   "active_drafts": [
-    {
-      "id": "falkirk-wheel",
-      "title": "عجلة فالكيرك التي ترفع القوارب",
-      "path": "drafts/stories/falkirk-wheel.md",
-      "origin": "Previously saved salfa draft; not part of retired category",
-      "status": "DRAFT_IDEA_NOT_READY",
-      "publication_approved": false
-    },
     {
       "id": "B2-12",
       "title": "مصعد لشبونة الذي يصل شارعًا بحي أعلى",
@@ -359,5 +351,44 @@
     "next_item": "B2-11",
     "next_slot_riyadh": "2026-11-19T13:00:00+03:00",
     "daily_maximum": 1
-  }
+  },
+  "published_salfa_history": [
+    {
+      "id": "falkirk-wheel",
+      "title": "عجلة فالكيرك التي ترفع القوارب",
+      "path": "drafts/stories/falkirk-wheel.md",
+      "origin": "Previously saved salfa draft; not part of retired category",
+      "status": "POSTED_STORY_AND_SAVED_STORY_DO_NOT_REPEAT",
+      "publication_approved": false,
+      "no_repeat": true,
+      "package": "approved/falkirk-wheel-20261115",
+      "media_sha256": "21253906e14f34f254e1c8a4a998a6a2817756556be92a88ce4ce94a3e69adf6",
+      "identity": "10a90ffd8764f216773a1fce88b133450a2d692c537526a5e271d49c7e23cdf9",
+      "published_at_riyadh": "2026-11-15T08:52:03+03:00",
+      "evidence": {
+        "STORY": {
+          "path": "api-receipts/10a90ffd8764f216773a1fce88b133450a2d692c537526a5e271d49c7e23cdf9.json",
+          "post_id": "fb27a2ae-80be-4464-89a8-957479948f45",
+          "status": "POSTED"
+        },
+        "SAVED_STORY": {
+          "path": "saved-story-receipts/10a90ffd8764f216773a1fce88b133450a2d692c537526a5e271d49c7e23cdf9.json",
+          "post_id": "4956b687-0759-4232-ab07-749fa6a3f956",
+          "status": "POSTED",
+          "snapchat_status": "PUBLISHED",
+          "confirmed_at": "2026-11-15T05:52:03.047991+00:00"
+        }
+      },
+      "correction": "Previously misclassified active from stale draft file; exact media hash links approved package to posted receipts. Removed from active candidates; preserved for history only."
+    }
+  ],
+  "corrections": [
+    {
+      "at": "2026-11-18T15:16:47.312Z",
+      "id": "falkirk-wheel",
+      "from": "DRAFT_IDEA_NOT_READY",
+      "to": "POSTED_STORY_AND_SAVED_STORY_DO_NOT_REPEAT",
+      "reason": "Previously misclassified active from stale draft file; exact media hash links approved package to posted receipts. Removed from active candidates; preserved for history only."
+    }
+  ]
 }
