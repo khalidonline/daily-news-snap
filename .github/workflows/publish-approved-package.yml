@@ -91,11 +91,11 @@ jobs:
 
       - name: Verify reviewed challenge tooling and executable inventory
         if: (github.event_name == 'push' && steps.request.outputs.mode == 'reviewed-challenge') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'reviewed-challenge')
-        timeout-minutes: 5
+        timeout-minutes: 8
         run: |
           if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
             timeout 90 sudo apt-get update
-            timeout 120 sudo apt-get install -y ffmpeg
+            timeout 300 sudo apt-get install -y --no-install-recommends ffmpeg
           fi
           python -m publishing_v2.route_inventory
       - name: Validate exact reviewed challenge without provider calls
