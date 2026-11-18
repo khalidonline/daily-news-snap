@@ -1,0 +1,33 @@
+{
+  "id": "B2-09",
+  "slot": "2026-11-18T13:00:00+03:00",
+  "package": "pokut-revised-20261118",
+  "state": "BLOCKED_NOT_SENT",
+  "reason": "PUBLISHING_ROUTE_CHANGED_AFTER_VALIDATION",
+  "validation_run": "https://github.com/khalidonline/daily-news-snap/actions/runs/44074806691",
+  "validated_commit": "85ef37a279e64969ef20abf45f625f17173b5402",
+  "current_main_commit": "5694ed751f4d6583aba6c9a75cd7f7354cefd234",
+  "changed_route_files": [
+    "publishing_v2/bundle_api.py",
+    "publishing_v2/challenge_visual_review.py",
+    "publishing_v2/deliver_challenge.py",
+    "publishing_v2/route-inventory.json"
+  ],
+  "package_hashes": {
+    "video_sha256": "cc31b981ab811e6325a0c5e35b0206900210d150cc51f11deb05d65126d18353",
+    "manifest_sha256": "a7f08fe63bbf8df5b6a8ea8550cb152ad791be009a5855112004095727a72d39",
+    "design_review_sha256": "8603f2a114792a084cf998b4c15696f7a6bb41e8de00562481668c43484643e7",
+    "source_manifest_sha256": "b636538647e8957f93ab035a3db215ad93687dd3da05f9708edbc4ef697a9873",
+    "media_archive_sha256": "a8102d69c259befa57c46374201f9ce589ab772b2eba4f4a132441a1d669d330"
+  },
+  "provider_operations": {
+    "STORY": null,
+    "SPOTLIGHT": null
+  },
+  "receipts": {
+    "STORY": null,
+    "SPOTLIGHT": null
+  },
+  "queue_advanced": false,
+  "note": "No provider call was made. The live request remains action=validate. Revalidation or a new explicit owner binding is required before any send."
+}
