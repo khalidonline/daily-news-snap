@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "recorded_at": "2026-11-19T10:05:55.167Z",
+  "slot_riyadh": "2026-11-19T13:00:00+03:00",
+  "challenge_id": "B2-11",
+  "title": "جرير أو إكسترا، من بدأ أول؟",
+  "result": "BLOCKED_NOT_SENT",
+  "queue_advanced": false,
+  "approved_media": {
+    "library_file_id": "libfile_fde3_f-776b670c22e08191bf6562a8f90c7aab_caf305c17d148191b336ceff647730cb",
+    "filename": "B2-11-Jarir-Extra-Years-Review.mp4",
+    "sha256": "526168af7014894dfbd395d08e625204afb92ae4adafc87d32c83cfdce8c6f81",
+    "owner_approval": "تمام اعتمد",
+    "approval_reference": "Sentinel_64d5ebab9af88191bfe238f32337a381"
+  },
+  "completed_checks": {
+    "file_identity": "MATCHED_APPROVED_SHA256",
+    "video": "1080x1920, H.264, 30 fps, 12.0 seconds",
+    "audio_stream": "AAC stereo 48 kHz; technically present and non-silent",
+    "visual_review": "Question, options, 5-to-1 countdown, green Jarir reveal, years 1974 and 2003, and CTA observed; no stray «شعار» or production labels observed"
+  },
+  "blockers": [
+    {
+      "code": "ACTUAL_AUDIO_LISTENING_NOT_COMPLETED",
+      "detail": "This execution environment could inspect the audio stream numerically but could not play it back to the reviewer. The owner instruction explicitly says numeric/PCM evidence does not prove listening."
+    },
+    {
+      "code": "SEALED_PUBLISH_PACKAGE_MISSING",
+      "detail": "No new B2-11 ApprovedMedia package, manifest, validated publish request, or validation run was present on latest main. The prior Pokut request is completed history and was not reused."
+    }
+  ],
+  "destinations": {
+    "STORY": {
+      "state": "NOT_SENT",
+      "provider_request_id": null,
+      "snapchat_state": null,
+      "evidence": "No provider call was started."
+    },
+    "SPOTLIGHT": {
+      "state": "NOT_SENT",
+      "provider_request_id": null,
+      "snapchat_state": null,
+      "evidence": "No provider call was started."
+    }
+  },
+  "safety": {
+    "no_render_retry": true,
+    "no_substitute_topic": true,
+    "no_duplicate_send": true,
+    "no_provider_request_started": true,
+    "prior_completed_requests_not_reused": true
+  },
+  "resume_requires": [
+    "Actual sound listening proof for this exact SHA256.",
+    "A sealed and validated B2-11 package on the shared ApprovedMedia path.",
+    "Fresh live-state, quota, and duplicate checks before any send."
+  ]
+}
