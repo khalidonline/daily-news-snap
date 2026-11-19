@@ -1,0 +1,19 @@
+name: Request approved protein Story on 19 November
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/request-protein-story-20261119.yml']
+permissions:
+  actions: write
+jobs:
+  request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch the approved Story publisher once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$(TZ=Asia/Riyadh date +%F)" = 2026-11-19
+          test "$(date -u +%s)" -ge "$(date -u -d '2026-11-19T06:00:00Z' +%s)"
+          gh workflow run publish-approved-package.yml --repo khalidonline/daily-news-snap --ref main -f package=protein-comparison-20261119 -f mode=legacy-story
