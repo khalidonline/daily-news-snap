@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "entrecote-20261119",
-  "identity": "fd98132afe9797f417c0847a22106a4fb8b7643081300bef6411c6c62d0bc4e5",
+  "package": "bathroom-drain-20261119",
+  "identity": "0bae883b7203db030a122ad5faced76d2ef0e1abcf58d2d264c251801b7a0b3c",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد اعتمد قفلة «بدأ من جنيف وانتشر إلى العالم» ثم طلب صراحة «تمام. انشرها بكره الصباح» في Sentinel_63bdb3d84c188191b176c55d1bef5fb2. نشر في صباح 19 نوفمبر 2026 في القصة العامة والمحفوظة حسب المسار المعتاد. التصدير النهائي فحصه الوكيل؛ لا ادعاء بمشاهدة خالد للصورة النهائية.",
-  "approved_at": "2026-11-19T05:10:59.363897+00:00",
-  "expires_at": "2026-11-19T12:00:00+03:00",
-  "manifest_sha256": "952d1a47dd13cb2a7f402ad80df8fe545e13107d52cf2d22a50ee54f970c2d86",
-  "archive_sha256": "902fbe107564bc52a90ff130d5608d3acce76c5784a59d0d0b2a641ab43fdf04",
-  "prepared_sha256": "af4ba84d7575205b3bba7a9af0e075f63504c081576e6b975397d1d004a3f7a6",
-  "preview_receipt_sha256": "ff11de688a5865a732fe13cfb28d39354a75c992dd286b409a7cc5ddaa39b9dd"
+  "owner_reference": "خالد طلب صراحة «غير إلى اليوم العالمي لدورات المياه وانشر» في Sentinel_bd3cfd95ad848191a50bdaefc4e723e7 بعد عرض رسمة البالوعة والنص، مع تطبيق التعديل وحده على القالب المعتمد. فحص المساعد الإخراج النهائي دون ادعاء أن خالد شاهده.",
+  "approved_at": "2026-11-19T06:47:00.827844+00:00",
+  "expires_at": "2026-11-19T23:59:59+03:00",
+  "manifest_sha256": "1333022bd7f0d8e50d87263829416e6232d422bb19f671975fe2654b2ad6a2ba",
+  "archive_sha256": "8ea0a5bf1c91e148fbac1dc107ccbd2972c76f47cd2cd81c7c4e53c65f4383b8",
+  "prepared_sha256": "4286f0cfc1c2cceab4bf4adae25207b5fb6bd19a6db3fc9733083c1efc526df9",
+  "preview_receipt_sha256": "6822822e0bc3f0735a0b2e2fef4afe22dc2a0a9a0262709da7a5798c78961358"
 }

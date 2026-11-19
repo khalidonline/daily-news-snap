@@ -1,0 +1,36 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "163cdfae9a699650fd468b95fb4482f7a4bcf1a2",
+  "assets": {
+    "approved/bathroom-drain-20261119/card.png": "7a17795b8ef6eb0d8b8c9f207f811476c7b0e47cc382eaef3651fe2086a1a353",
+    "approved/bathroom-drain-20261119/drain-trap.png": "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb"
+  },
+  "preview_paths": [
+    "approved/bathroom-drain-20261119/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/bathroom-drain-20261119/card.png": "7a17795b8ef6eb0d8b8c9f207f811476c7b0e47cc382eaef3651fe2086a1a353",
+    "approved/bathroom-drain-20261119/drain-trap.png": "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb",
+    "approved/bathroom-drain-20261119/manifest.json": "6b3295b38b55c7ff3a995a19b74457575b0b8ec52fb39007dea4cf8dc98c9c42",
+    "approved/bathroom-drain-20261119/archive-approval.json": "12454c50bc259de27aec46860d90ceb64af0b6f55f602c7b2a065ab180015cf5",
+    "approved/bathroom-drain-20261119/design-review.json": "9dc3258397e24dcc58b7ca260d1f0873d7d06d75a11bc307224ff8a2af45536a",
+    "approved/bathroom-drain-20261119/sources.json": "ea40e8db47be62f683cc339c17eace9062f6033eb1f4b8f0e0a6032a64b2c4af",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/bathroom-drain-20261119",
+    "manifest_content_sha256": "f9ce2e7a24c94c4ffdf0d26efc8a37438da31e1332e0e87a0273186171858cb0",
+    "archive_content_sha256": "59cfc29b7e51b591af955f92a14259b7fbe10bd48de9f927fa70f7fe75d032e2",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "9dc3258397e24dcc58b7ca260d1f0873d7d06d75a11bc307224ff8a2af45536a",
+    "assets": {
+      "approved/bathroom-drain-20261119/card.png": "7a17795b8ef6eb0d8b8c9f207f811476c7b0e47cc382eaef3651fe2086a1a353",
+      "approved/bathroom-drain-20261119/drain-trap.png": "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb"
+    }
+  }
+}
