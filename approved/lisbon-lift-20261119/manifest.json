@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,8 +19,8 @@
       "a74905a91584a63ace0318d4939e2875798043a68c6dfe07550e3d7316a88c92",
       "486a43ba702df2f23d3e50130544dc53e87cf60eaa5799a9a01cbb4f7afd9aa8"
     ],
-    "reference": "Draft; no approval recorded here",
-    "reviewed_at": null
+    "reference": "خالد طلب «انشر» في Sentinel_fa7db6c9f068819199fec3f5d6aa9160 بعد عرض النسخة النهائية لمصعد لشبونة على القالب المعتمد، دون أي تغيير في الملف.",
+    "reviewed_at": "2026-11-19T07:07:26.801597+00:00"
   },
   "media": [
     {
