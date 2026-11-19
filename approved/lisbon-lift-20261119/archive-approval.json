@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/lisbon-lift-20261119/manifest.json",
+  "manifest_sha256": "23022bacab11a2d2e0ed873abca2729c8bce00383cd7341dd17b1d5c6103ff85",
+  "identity": "5ff59f27d3f999fbd089a5ea1269c87315dc8a06494cd510ec56264e099d4485",
+  "public_indices": [
+    1
+  ],
+  "title": "في لشبونة.. المصعد يوديك لحي ثاني!",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
+  "owner_authorization": null
+}

@@ -1,0 +1,21 @@
+{
+  "assets": [
+    {
+      "path": "approved/lisbon-lift-20261119/lift.jpg",
+      "sha256": "a74905a91584a63ace0318d4939e2875798043a68c6dfe07550e3d7316a88c92",
+      "credit": "Owner-selected earlier Lisbon review photograph; photographer unverified",
+      "rights_status": "not_verified"
+    },
+    {
+      "path": "approved/lisbon-lift-20261119/hills.jpg",
+      "sha256": "486a43ba702df2f23d3e50130544dc53e87cf60eaa5799a9a01cbb4f7afd9aa8",
+      "credit": "Owner-selected earlier Lisbon review photograph; photographer unverified",
+      "rights_status": "not_verified"
+    }
+  ],
+  "references": [
+    "https://www.carris.pt/en/discover/fleet/lift/",
+    "https://www.visitlisboa.com/en/places/elevador-de-santa-justa"
+  ],
+  "notes": "Exact previously selected Lisbon photos. Left: lift from street; right: a separate Lisbon slope, not the same street. No assertion the attraction is operating today."
+}

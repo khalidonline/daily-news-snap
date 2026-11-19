@@ -1,0 +1,50 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "في لشبونة.. المصعد يوديك لحي ثاني!",
+  "not_before": "2026-11-19T09:00:00+03:00",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "a7fa87cd9a241a5caa1e019f5e35dd62810a61425cdc221166645b1c70877121"
+    ],
+    "approved_source_sha256": [
+      "a74905a91584a63ace0318d4939e2875798043a68c6dfe07550e3d7316a88c92",
+      "486a43ba702df2f23d3e50130544dc53e87cf60eaa5799a9a01cbb4f7afd9aa8"
+    ],
+    "reference": "Draft; no approval recorded here",
+    "reviewed_at": null
+  },
+  "media": [
+    {
+      "path": "approved/lisbon-lift-20261119/card.png",
+      "kind": "info",
+      "sha256": "a7fa87cd9a241a5caa1e019f5e35dd62810a61425cdc221166645b1c70877121",
+      "source_assets": [
+        {
+          "path": "approved/lisbon-lift-20261119/lift.jpg",
+          "sha256": "a74905a91584a63ace0318d4939e2875798043a68c6dfe07550e3d7316a88c92",
+          "credit": "Owner-selected earlier Lisbon review photograph; photographer unverified",
+          "rights_status": "not_verified"
+        },
+        {
+          "path": "approved/lisbon-lift-20261119/hills.jpg",
+          "sha256": "486a43ba702df2f23d3e50130544dc53e87cf60eaa5799a9a01cbb4f7afd9aa8",
+          "credit": "Owner-selected earlier Lisbon review photograph; photographer unverified",
+          "rights_status": "not_verified"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

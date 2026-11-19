@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "a7fa87cd9a241a5caa1e019f5e35dd62810a61425cdc221166645b1c70877121",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "في لشبونة.. المصعد يوديك لحي ثاني!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              254,
+              215,
+              1020,
+              276
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            254,
+            215,
+            1020,
+            277
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "مصعد سانتا جوستا، لشبونة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              138,
+              695,
+              449,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            138,
+            695,
+            449,
+            725
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "طلعات لشبونة، البرتغال",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              649,
+              695,
+              923,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            649,
+            695,
+            923,
+            725
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "لشبونة بالبرتغال فيها طلعات كثيرة، وكان الانتقال من وسطها للحي اللي فوق يتعب الناس.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              205,
+              819,
+              980,
+              865
+            ],
+            [
+              83,
+              889,
+              980,
+              940
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            83,
+            819,
+            1015,
+            940
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "فلقوا لها حل غير معتاد: مصعد وسط المدينة، يرفع الناس من الشارع للحي اللي فوق.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              144,
+              1023,
+              980,
+              1066
+            ],
+            [
+              280,
+              1090,
+              980,
+              1144
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            144,
+            1023,
+            1015,
+            1144
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "ومن فوقه، كان الممر يوصلهم لساحة كارمو.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              165,
+              1228,
+              980,
+              1278
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            165,
+            1228,
+            1015,
+            1278
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "واللي انبنى عشان يسهل التنقل، صار معلم يروحون له السياح عشان التجربة والإطلالة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              193,
+              1361,
+              980,
+              1415
+            ],
+            [
+              195,
+              1439,
+              980,
+              1491
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            193,
+            1361,
+            1015,
+            1491
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "مصعد بين أحياء.. مو بين أدوار",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              282,
+              1575,
+              796,
+              1629
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            282,
+            1575,
+            796,
+            1630
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Exact final export inspected at mobile width using both local destination overlays; same previously selected Lisbon photos, original copy preserved; placement-only revision on the standard template. No claim of owner approval for this new arrangement.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Exact 390px card visually checked with player top 0–39px and bottom 625–692px masks; photos, captions, all four points, closing and CTA visible.",
+      "SAVED_STORY": "Exact 390px card visually checked with player top 0–39px and bottom 625–692px masks; photos, captions, all four points, closing and CTA visible."
+    }
+  }
+}
