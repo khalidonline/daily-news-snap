@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/bathroom-drain-20261119/manifest.json",
-  "manifest_sha256": "a38871532baeead291db78bc0fa55d288c47cde2d143347927dd0947b488e516",
+  "manifest_sha256": "29b4c8e6638b97006ab239bd4f046bbe6c0ea1befae256f2e0ec785226b20968",
   "identity": "0bae883b7203db030a122ad5faced76d2ef0e1abcf58d2d264c251801b7a0b3c",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "ليه حمام الضيوف تطلع منه ريحة وهو نظيف؟",
   "expires_at": "2026-11-19T23:59:59+03:00",
   "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
-  "owner_authorization": null
+  "owner_authorization": "خالد طلب «غير إلى اليوم العالمي لدورات المياه وانشر» Sentinel_bd3cfd95ad848191a50bdaefc4e723e7. نفس البطاقة والرسمة والبصمة؛ لم تبدأ المحاولة الأولى الإرسال. فحص المساعد التصدير النهائي."
 }

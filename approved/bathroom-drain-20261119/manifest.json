@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,8 +18,8 @@
     "approved_source_sha256": [
       "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb"
     ],
-    "reference": "Draft; no approval recorded here",
-    "reviewed_at": null
+    "reference": "خالد طلب «غير إلى اليوم العالمي لدورات المياه وانشر» Sentinel_bd3cfd95ad848191a50bdaefc4e723e7. نفس البطاقة والرسمة والبصمة؛ لم تبدأ المحاولة الأولى الإرسال. فحص المساعد التصدير النهائي.",
+    "reviewed_at": "2026-11-19T06:49:39.381208+00:00"
   },
   "media": [
     {

@@ -6,11 +6,11 @@
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد طلب صراحة «غير إلى اليوم العالمي لدورات المياه وانشر» في Sentinel_bd3cfd95ad848191a50bdaefc4e723e7 بعد عرض رسمة البالوعة والنص، مع تطبيق التعديل وحده على القالب المعتمد. فحص المساعد الإخراج النهائي دون ادعاء أن خالد شاهده.",
-  "approved_at": "2026-11-19T06:47:00.827844+00:00",
+  "owner_reference": "خالد طلب «غير إلى اليوم العالمي لدورات المياه وانشر» Sentinel_bd3cfd95ad848191a50bdaefc4e723e7. نفس البطاقة والرسمة والبصمة؛ لم تبدأ المحاولة الأولى الإرسال. فحص المساعد التصدير النهائي.",
+  "approved_at": "2026-11-19T06:49:39.381208+00:00",
   "expires_at": "2026-11-19T23:59:59+03:00",
-  "manifest_sha256": "1333022bd7f0d8e50d87263829416e6232d422bb19f671975fe2654b2ad6a2ba",
-  "archive_sha256": "8ea0a5bf1c91e148fbac1dc107ccbd2972c76f47cd2cd81c7c4e53c65f4383b8",
-  "prepared_sha256": "4286f0cfc1c2cceab4bf4adae25207b5fb6bd19a6db3fc9733083c1efc526df9",
-  "preview_receipt_sha256": "6822822e0bc3f0735a0b2e2fef4afe22dc2a0a9a0262709da7a5798c78961358"
+  "manifest_sha256": "29b4c8e6638b97006ab239bd4f046bbe6c0ea1befae256f2e0ec785226b20968",
+  "archive_sha256": "0515457ba5187c4fbf9bd8875d47d7a101aec9ec4c5c5f88c8289461ed1a858c",
+  "prepared_sha256": "77886d0b4ee129d3705e854432c9f1bc799fd06e0fecb3a02c3a6ccf10d058a1",
+  "preview_receipt_sha256": "2a96aa5973ceb541c9d52d06f67edacbcc1b89f81ad8679a011fdcd6af64c835"
 }
