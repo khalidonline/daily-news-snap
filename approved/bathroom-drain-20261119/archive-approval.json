@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/bathroom-drain-20261119/manifest.json",
+  "manifest_sha256": "6b3295b38b55c7ff3a995a19b74457575b0b8ec52fb39007dea4cf8dc98c9c42",
+  "identity": "0bae883b7203db030a122ad5faced76d2ef0e1abcf58d2d264c251801b7a0b3c",
+  "public_indices": [
+    1
+  ],
+  "title": "ليه حمام الضيوف تطلع منه ريحة وهو نظيف؟",
+  "expires_at": "2026-11-19T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
+  "owner_authorization": null
+}

@@ -1,0 +1,43 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "ليه حمام الضيوف تطلع منه ريحة وهو نظيف؟",
+  "not_before": "2026-11-19T09:00:00+03:00",
+  "expires_at": "2026-11-19T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "7a17795b8ef6eb0d8b8c9f207f811476c7b0e47cc382eaef3651fe2086a1a353"
+    ],
+    "approved_source_sha256": [
+      "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb"
+    ],
+    "reference": "Draft; no approval recorded here",
+    "reviewed_at": null
+  },
+  "media": [
+    {
+      "path": "approved/bathroom-drain-20261119/card.png",
+      "kind": "info",
+      "sha256": "7a17795b8ef6eb0d8b8c9f207f811476c7b0e47cc382eaef3651fe2086a1a353",
+      "source_assets": [
+        {
+          "path": "approved/bathroom-drain-20261119/drain-trap.png",
+          "sha256": "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb",
+          "credit": "Original in-house schematic drawn for this card",
+          "rights_status": "original"
+        }
+      ],
+      "provenance": {
+        "usage": "original_editorial_diagram",
+        "generated_components": false
+      }
+    }
+  ]
+}
