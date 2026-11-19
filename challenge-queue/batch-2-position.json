@@ -143,11 +143,19 @@
     ]
   },
   "last_attempt": {
-    "id": "B2-09",
-    "slot": "2026-11-18T13:00:00+03:00",
-    "result": "POSTED_BOTH",
-    "record": "challenge-queue/20261118-1300-B2-09.json",
-    "queue_advanced": true
+    "id": "B2-11",
+    "slot": "2026-11-19T13:00:00+03:00",
+    "result": "BLOCKED_NOT_SENT",
+    "record": "challenge-queue/20261119-1300-B2-11-blocked.json",
+    "queue_advanced": false,
+    "destinations": {
+      "STORY": "NOT_SENT",
+      "SPOTLIGHT": "NOT_SENT"
+    },
+    "blockers": [
+      "ACTUAL_AUDIO_LISTENING_NOT_COMPLETED",
+      "SEALED_PUBLISH_PACKAGE_MISSING"
+    ]
   },
   "cancelled": [
     {
@@ -306,8 +314,10 @@
     {
       "id": "B2-11",
       "scheduled_at": "2026-11-19T13:00:00+03:00",
-      "status": "PLANNED_NOT_PUBLISHED",
-      "requires_final_package_review": true
+      "status": "BLOCKED_NOT_SENT",
+      "requires_final_package_review": true,
+      "block_record": "challenge-queue/20261119-1300-B2-11-blocked.json",
+      "queue_advanced": false
     },
     {
       "id": "B2-14",
@@ -341,10 +351,11 @@
     }
   ],
   "last_queue_update": {
-    "at": "2026-11-18T13:23:44.660Z",
-    "reason": "Owner approved the three geography topics and all remaining selections; resume daily queue from B2-11.",
+    "at": "2026-11-19T10:05:55.167Z",
+    "reason": "B2-11 stopped before sending because actual audio listening was not possible and no sealed validated B2-11 publish package existed.",
     "publication_performed": false,
-    "completed_count_unchanged": 8
+    "completed_count_unchanged": 8,
+    "next_item_unchanged": "B2-11"
   },
   "disabled_challenge_categories": [
     {
