@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "qr-menu-20261118",
-  "identity": "0b06b9903ace2315ec1512d2125b147ae90bd399d68b9cb939eb124314f90dc6",
+  "package": "entrecote-20261119",
+  "identity": "fd98132afe9797f417c0847a22106a4fb8b7643081300bef6411c6c62d0bc4e5",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد اختار سالفتي QR والمايكرويف في Sentinel_b2dab92f39948191bdc432aabca72fe4 ثم قال خل ننشر وحده اليوم في Sentinel_21836092549c8191b76935ffa93aebd7 بتاريخ 2026-11-18T15:10:40Z؛ اختير QR وأبلغه المنسق في Sentinel_b34699eff08c8191ba1a99c2dcd5c7f6. تفويض نشر سالفة واحدة اليوم بالقالب المعتمد في القصة والمحفوظة، لا المايكرويف. فحص الوكيل هذا التصدير النهائي، وليس ادعاء أن خالد شاهد الصورة النهائية.",
-  "approved_at": "2026-11-18T15:20:13.066607+00:00",
-  "expires_at": "2026-11-18T23:59:59+03:00",
-  "manifest_sha256": "d103f76f3390f328be23c72f84813697dbac81db5fe596d2bcc3950812b91f94",
-  "archive_sha256": "21d408d4ba9e194d0f4192edb5b6bba4b566784e5964353f58eb429391955064",
-  "prepared_sha256": "72dfc1d7e794166cda77ca2dfb2d748d16164148d3ad96584720dcc703183eaa",
-  "preview_receipt_sha256": "6d68f3ca1f86f827c6b2294b161a1c3c352555976337d8e0ec5e8f0b0d6f5759"
+  "owner_reference": "خالد اعتمد قفلة «بدأ من جنيف وانتشر إلى العالم» ثم طلب صراحة «تمام. انشرها بكره الصباح» في Sentinel_63bdb3d84c188191b176c55d1bef5fb2. نشر في صباح 19 نوفمبر 2026 في القصة العامة والمحفوظة حسب المسار المعتاد. التصدير النهائي فحصه الوكيل؛ لا ادعاء بمشاهدة خالد للصورة النهائية.",
+  "approved_at": "2026-11-19T05:10:59.363897+00:00",
+  "expires_at": "2026-11-19T12:00:00+03:00",
+  "manifest_sha256": "952d1a47dd13cb2a7f402ad80df8fe545e13107d52cf2d22a50ee54f970c2d86",
+  "archive_sha256": "902fbe107564bc52a90ff130d5608d3acce76c5784a59d0d0b2a641ab43fdf04",
+  "prepared_sha256": "af4ba84d7575205b3bba7a9af0e075f63504c081576e6b975397d1d004a3f7a6",
+  "preview_receipt_sha256": "ff11de688a5865a732fe13cfb28d39354a75c992dd286b409a7cc5ddaa39b9dd"
 }
