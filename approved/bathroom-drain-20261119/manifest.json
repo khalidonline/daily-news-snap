@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": true,
+  "approved": false,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -18,8 +18,8 @@
     "approved_source_sha256": [
       "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb"
     ],
-    "reference": "خالد طلب صراحة «غير إلى اليوم العالمي لدورات المياه وانشر» في Sentinel_bd3cfd95ad848191a50bdaefc4e723e7 بعد عرض رسمة البالوعة والنص، مع تطبيق التعديل وحده على القالب المعتمد. فحص المساعد الإخراج النهائي دون ادعاء أن خالد شاهده.",
-    "reviewed_at": "2026-11-19T06:47:00.827844+00:00"
+    "reference": "Draft; no approval recorded here",
+    "reviewed_at": null
   },
   "media": [
     {
@@ -35,7 +35,7 @@
         }
       ],
       "provenance": {
-        "usage": "original_editorial_diagram",
+        "usage": "mixed_editorial_composite",
         "generated_components": false
       }
     }
