@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,8 +19,8 @@
       "4b6b96b173ecef952596b03b3c3a4030111ed71d23551741b86908f386a4def6",
       "6bd78cdf2aea4cc1ddeb98d0173544d46d8f7553839f19836d5b5b3ccdd8ea8b"
     ],
-    "reference": "Exact rendered PNG preserved; upload/preview verification pending; not authorized by this draft.",
-    "reviewed_at": "2026-11-20T07:36:02.644921+00:00"
+    "reference": "Khalid directly requested «انشر سنابة السفاره» in Sentinel_cfe6da6c6f608191b8324d6fc9ce9d37 after seeing the exact historical Crewe House export, then replied «موافق» in Sentinel_ed57e2656f7081918f0acbc2ba7b0cbd after explicit confirmation of public GitHub staging and then publishing to Snapchat Story and Saved Story.",
+    "reviewed_at": "2026-11-20T07:39:41.439308+00:00"
   },
   "media": [
     {

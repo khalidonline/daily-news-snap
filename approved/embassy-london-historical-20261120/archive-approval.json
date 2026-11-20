@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/embassy-london-historical-20261120/manifest.json",
-  "manifest_sha256": "2509642b45b605029d23027c3e90e9388ba6cf17aecf2cb1a6e223e5ab6d02bf",
+  "manifest_sha256": "f1e308ef39cb164ef92c109ed27eb8184ca90a0f22e3fcec91f0cd71335a3e3a",
   "identity": "adbb10ffa52fe3d11f8ec4c55242f358c818fee526ffb2e574d2cb7ddba86b8e",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "تدري إن سفارتنا بلندن كانت بيت لورد؟",
   "expires_at": "2026-11-20T23:59:59+03:00",
   "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
-  "owner_authorization": null
+  "owner_authorization": "Khalid directly requested «انشر سنابة السفاره» in Sentinel_cfe6da6c6f608191b8324d6fc9ce9d37 after seeing the exact historical Crewe House export, then replied «موافق» in Sentinel_ed57e2656f7081918f0acbc2ba7b0cbd after explicit confirmation of public GitHub staging and then publishing to Snapchat Story and Saved Story."
 }
