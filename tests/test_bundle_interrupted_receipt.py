@@ -7,7 +7,7 @@ from publishing_v2.bundle_api import BundleClient, BundleError
 class InterruptedReceiptTests(unittest.TestCase):
     def receipt(self, message, expected, *, placement='STORY', **overrides):
         row = dict(id='p', teamId='t', status='ERROR', data={'SNAPCHAT': {'type': placement}},
-                   errorsVerbose={'SNAPCHAT': {'code': 'PUBLISH:INTERRUPTED', 'message': message}})
+                   errorsVerbose={'SNAPCHAT': {'code': 'PUBLISH:INTERRUPTED', 'userFacingMessage': message}})
         row.update(overrides)
         client = Mock(team='t')
         client.call.return_value = row
@@ -27,6 +27,16 @@ class InterruptedReceiptTests(unittest.TestCase):
 
     def test_unknown_message_or_destination(self):
         self.receipt('sensitive', 'سناب: ممكن يكون اننشر', placement=None)
+
+    def test_undocumented_message_is_not_evidence_of_no_publication(self):
+        self.receipt(None, 'الستوري: ممكن يكون اننشر',
+                     errorsVerbose={'SNAPCHAT': {'code': 'PUBLISH:INTERRUPTED',
+                                                 'message': 'Publishing was interrupted while the media was uploading. '
+                                                            'Nothing was published, so it is safe to retry.'}})
+
+    def test_missing_user_facing_message_is_ambiguous(self):
+        self.receipt(None, 'الستوري: ممكن يكون اننشر',
+                     errorsVerbose={'SNAPCHAT': {'code': 'PUBLISH:INTERRUPTED'}})
 
     def test_identity_first(self):
         self.receipt('sensitive', 'Receipt identity mismatch', teamId='wrong')

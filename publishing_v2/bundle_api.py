@@ -277,7 +277,7 @@ class BundleClient:
                     kind = dest.get('type') if isinstance(dest, dict) else None
                     label = 'الستوري' if kind == 'STORY' else 'الأضواء' if kind == 'SPOTLIGHT' else 'سناب'
                     # Same provider code for two outcomes. Unknown wording is ambiguous.
-                    if snap.get('message') == ('Publishing was interrupted while the media was uploading. '
+                    if snap.get('userFacingMessage') == ('Publishing was interrupted while the media was uploading. '
                                                'Nothing was published, so it is safe to retry.'):
                         raise BundleError(f'{label}: بحسب Bundle، ما اننشر المحتوى؛ انقطع رفع الملف. ما أعدنا الإرسال.')
                     raise BundleError(f'{label}: ممكن يكون اننشر. تحقّق من الحساب قبل أي إعادة إرسال.')
