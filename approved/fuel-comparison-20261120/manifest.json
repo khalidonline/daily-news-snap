@@ -1,0 +1,110 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "مشوار 300 كم، كم يحتاج بنزين؟",
+  "not_before": "2026-11-20T09:00:00+03:00",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f"
+    ],
+    "approved_source_sha256": [
+      "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f"
+    ],
+    "reference": "Khalid approved the latest fuel image for publication («انشر البنزين»), 2026-11-20, https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19",
+    "reviewed_at": "2026-11-20T07:15:27.498073+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/fuel-comparison-20261120/card.png",
+      "sha256": "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f",
+      "template": "comparison",
+      "comparison": {
+        "variant": "fuel-rtl-v1",
+        "reference_sha256": "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f",
+        "title": "مشوار 300 كم، كم يحتاج بنزين؟",
+        "subtitle": "صرف البنزين التقريبي لموديلات 2026",
+        "unit": "L",
+        "basis": {
+          "quantity": 300,
+          "unit": "km"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "كامري هايبرد LE",
+            "low": 10.8,
+            "high": 10.8
+          },
+          {
+            "label": "أكسنت L",
+            "low": 15.9,
+            "high": 15.9
+          },
+          {
+            "label": "لاندكروزر GXR1",
+            "low": 29.7,
+            "high": 29.7
+          },
+          {
+            "label": "نيسان باترول XE",
+            "low": 30.9,
+            "high": 30.9
+          },
+          {
+            "label": "جمس يوكون إليفيشن 5.3",
+            "low": 33.7,
+            "high": 33.7
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 34,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            74,
+            892
+          ],
+          "bar_y": [
+            545,
+            766,
+            987,
+            1209,
+            1430
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/fuel-comparison-20261120/card.png",
+          "sha256": "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f",
+          "source_url": "https://chatgpt.com/api/library/files/libfile_fde3_f-eb0667f0b3648191be2f47523e937d08_caf305c17d148191b336ceff647730cb/download",
+          "description": "Exact approved fuel export, version 2",
+          "credit": "Executive Summary",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

@@ -251,7 +251,7 @@
   "publishing_v2/cloud_permissions.py": "8670290feb60c8202e1031e9ea9f270e92636c3d7b6b907cf090302546f90a0d",
   "publishing_v2/cloud_smoke.py": "855fd0587fbaa1a3d9e760736edf6ba75f641b5274d5c12b167585cbc76cd8f0",
   "publishing_v2/comparison_template.py": "8052f80c2a09f327530ce1b1796064fca671d2699112b0411e1ca24503c93c43",
-  "publishing_v2/comparison_variants.py": "77f83f588c963b5b31ab95d7fa2c1dde9836ecfc2e1526e39248738a9c0910a9",
+  "publishing_v2/comparison_variants.py": "5c8dbfae17eec2789968e65e9a594718219b6d90830cf25551506d5eb4b4f98f",
   "publishing_v2/deliver_challenge.py": "1fe6a2c62f8cde0b668f3d016c0aef4084130a50a0d07ac55f3022115714df27",
   "publishing_v2/deliver_information.py": "035bd6b96980254b995af387b3501c8bd334346c76df8b13a165396581570752",
   "publishing_v2/delivery.py": "5444b4c5cf6a8e7f2536695851d90f17ddd3fe4ca432e631fd6f76213b1d5a9b",

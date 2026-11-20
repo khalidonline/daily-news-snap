@@ -1,0 +1,14 @@
+{
+  "library_id": "libfile_fde3_f-eb0667f0b3648191be2f47523e937d08_caf305c17d148191b336ceff647730cb",
+  "version": 2,
+  "sha256": "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f",
+  "basis_km": 300,
+  "efficiency_km_per_litre": [
+    27.7,
+    18.9,
+    10.1,
+    9.7,
+    8.9
+  ],
+  "owner_review": "Khalid approved the latest fuel image for publication («انشر البنزين»), 2026-11-20, https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19"
+}

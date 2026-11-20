@@ -19,6 +19,23 @@ FILES['calories-rtl-v1']='calories-rtl.png'
 SPECS['protein-rtl-v1']={'variant': 'protein-rtl-v1', 'reference_sha256': 'ac65db3587d19adbeb60dcc782d4db0bfadc54b4c912e0710bf7abcbed4329b6', 'title': 'وش فيه بروتين أكثر؟', 'subtitle': 'البروتين التقريبي في كل 100 غرام', 'unit': 'g protein', 'basis': {'quantity': 100, 'unit': 'g'}, 'note': '', 'rows': [{'label': 'صدر دجاج مشوي بدون جلد', 'low': 32, 'high': 32}, {'label': 'تونة معلبة بالماء والملح', 'low': 25, 'high': 25}, {'label': 'فول سوداني محمص', 'low': 24, 'high': 24}, {'label': 'بيض مسلوق', 'low': 14, 'high': 14}, {'label': 'فول مدمس سادة', 'low': 8, 'high': 8}], 'scale': {'min': 0, 'max': 32, 'direction': 'rtl'}, 'layout': {'canvas': [1080, 1920], 'bar_axis': [74, 892], 'bar_y': [545, 766, 987, 1209, 1430]}, 'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
 FILES['protein-rtl-v1']='protein-rtl.png'
 
+SPECS['fuel-rtl-v1'] = {'variant': 'fuel-rtl-v1',
+ 'reference_sha256': '9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f',
+ 'title': 'مشوار 300 كم، كم يحتاج بنزين؟',
+ 'subtitle': 'صرف البنزين التقريبي لموديلات 2026',
+ 'unit': 'L',
+ 'basis': {'quantity': 300, 'unit': 'km'},
+ 'note': '',
+ 'rows': [{'label': 'كامري هايبرد LE', 'low': 10.8, 'high': 10.8},
+          {'label': 'أكسنت L', 'low': 15.9, 'high': 15.9},
+          {'label': 'لاندكروزر GXR1', 'low': 29.7, 'high': 29.7},
+          {'label': 'نيسان باترول XE', 'low': 30.9, 'high': 30.9},
+          {'label': 'جمس يوكون إليفيشن 5.3', 'low': 33.7, 'high': 33.7}],
+ 'scale': {'min': 0, 'max': 34, 'direction': 'rtl'},
+ 'layout': {'canvas': [1080, 1920], 'bar_axis': [74, 892], 'bar_y': [545, 766, 987, 1209, 1430]},
+ 'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
+FILES['fuel-rtl-v1'] = 'fuel-rtl.png'
+
 def case(variant):
  raw=(ROOT/'assets/comparison/variants'/FILES[variant]).read_bytes()
  return raw,Image.open(io.BytesIO(raw)).convert('RGB'),copy.deepcopy(SPECS[variant])
