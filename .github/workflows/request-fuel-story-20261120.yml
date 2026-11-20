@@ -1,0 +1,18 @@
+name: Request approved fuel Story on 20 November
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/request-fuel-story-20261120.yml']
+permissions:
+  actions: write
+jobs:
+  request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch the approved Story publisher once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$(TZ=Asia/Riyadh date +%F)" = 2026-11-20
+          gh workflow run publish-approved-package.yml --repo khalidonline/daily-news-snap --ref main -f package=fuel-comparison-20261120 -f mode=legacy-story
