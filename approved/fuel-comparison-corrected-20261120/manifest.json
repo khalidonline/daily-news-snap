@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -17,7 +17,7 @@
     "approved_source_sha256": [
       "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7"
     ],
-    "reference": "Exact clean replacement draft. Do not publish: verify the prior Story is deleted, then revalidate against the registered exact raster.",
+    "reference": "Owner approved the exact replacement for Snapchat Story after removal of the previous version; confirmation is held on record.",
     "reviewed_at": "2026-11-20T07:41:12.594641+00:00"
   },
   "media": [

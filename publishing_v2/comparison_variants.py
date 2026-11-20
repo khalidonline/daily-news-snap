@@ -100,6 +100,26 @@ SPECS['fuel-rtl-v1'] = {'variant': 'fuel-rtl-v1',
  'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
 FILES['fuel-rtl-v1'] = 'fuel-rtl.png'
 
+# Clean November 20 replacement: retain the prior registered export and add only this exact new raster.
+SPECS['fuel-rtl-corrected-v1'] = {'variant': 'fuel-rtl-corrected-v1',
+ 'reference_sha256': '95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7',
+ 'title': 'مشوار 300 كم، كم يحتاج بنزين؟',
+ 'subtitle': 'صرف البنزين التقريبي لموديلات 2026',
+ 'unit': 'L',
+ 'basis': {'quantity': 300, 'unit': 'km'},
+ 'note': '',
+ 'rows': [{'label': 'كامري هايبرد LE', 'low': 10.8, 'high': 10.8},
+          {'label': 'أكسنت L', 'low': 15.9, 'high': 15.9},
+          {'label': 'لاندكروزر GXR1', 'low': 29.7, 'high': 29.7},
+          {'label': 'جمس يوكون إليفيشن 5.3', 'low': 30.9, 'high': 30.9},
+          {'label': 'نيسان باترول XE', 'low': 31.6, 'high': 31.6}],
+ 'scale': {'min': 0, 'max': 31.6, 'direction': 'rtl'},
+ 'layout': {'canvas': [1080, 1920],
+            'bar_axis': [74, 892],
+            'bar_y': [545, 766, 987, 1209, 1430]},
+ 'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
+FILES['fuel-rtl-corrected-v1'] = 'fuel-rtl-corrected.png'
+
 def validate_reference_variant(image, spec, *, raw=None):
     if not isinstance(spec,dict):raise ValueError('Comparison variant spec must be an object')
     variant=spec.get('variant')
