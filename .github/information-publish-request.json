@@ -7,10 +7,10 @@
     "SAVED_STORY"
   ],
   "owner_reference": "Khalid directly requested «انشر سنابة السفاره» in Sentinel_cfe6da6c6f608191b8324d6fc9ce9d37 after seeing the exact historical Crewe House export, then replied «موافق» in Sentinel_ed57e2656f7081918f0acbc2ba7b0cbd after explicit confirmation of public GitHub staging and then publishing to Snapchat Story and Saved Story.",
-  "approved_at": "2026-11-20T07:39:41.439308+00:00",
+  "approved_at": "2026-11-20T07:41:31.681723+00:00",
   "expires_at": "2026-11-20T23:59:59+03:00",
-  "manifest_sha256": "f1e308ef39cb164ef92c109ed27eb8184ca90a0f22e3fcec91f0cd71335a3e3a",
-  "archive_sha256": "88955987133b2b8b325fea026d2353b89233053812fb7b7a6e16127a846e5241",
-  "prepared_sha256": "7ef22fdb8fbdef11f861ea2716d2764187aeddbcb44ff83a77a520557bad7167",
+  "manifest_sha256": "361ae83344f62f69641abd3f3a616046f3c0be030bf8cb50c0d497b046c6ae61",
+  "archive_sha256": "2710d8d41935f258ff6da46347a8f6fe943acf48d539763d85916bc43731b760",
+  "prepared_sha256": "ea06cb0155cd7759b2bb1a9f8447cf9eaf2e8eccec96e3bf542363ab1df9add8",
   "preview_receipt_sha256": "3642269214711c40329b132b8e96fa05521af1ea916ce2b9de22cd27c5a79573"
 }

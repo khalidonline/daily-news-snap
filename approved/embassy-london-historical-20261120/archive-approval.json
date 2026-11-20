@@ -2,7 +2,7 @@
   "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/embassy-london-historical-20261120/manifest.json",
-  "manifest_sha256": "f1e308ef39cb164ef92c109ed27eb8184ca90a0f22e3fcec91f0cd71335a3e3a",
+  "manifest_sha256": "361ae83344f62f69641abd3f3a616046f3c0be030bf8cb50c0d497b046c6ae61",
   "identity": "adbb10ffa52fe3d11f8ec4c55242f358c818fee526ffb2e574d2cb7ddba86b8e",
   "public_indices": [
     1
