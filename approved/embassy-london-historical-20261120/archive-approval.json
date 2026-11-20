@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/embassy-london-historical-20261120/manifest.json",
+  "manifest_sha256": "2509642b45b605029d23027c3e90e9388ba6cf17aecf2cb1a6e223e5ab6d02bf",
+  "identity": "adbb10ffa52fe3d11f8ec4c55242f358c818fee526ffb2e574d2cb7ddba86b8e",
+  "public_indices": [
+    1
+  ],
+  "title": "تدري إن سفارتنا بلندن كانت بيت لورد؟",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
+  "owner_authorization": null
+}

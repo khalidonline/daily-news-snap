@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "fde2fb01a7825dc23d35577ea47050ceb37ac57ee4754829009d5c9579d2a79d",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "تدري إن سفارتنا بلندن كانت بيت لورد؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              239,
+              215,
+              1020,
+              275
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            239,
+            215,
+            1020,
+            276
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "كرو هاوس (مقر السفارة)",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              148,
+              695,
+              440,
+              723
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            148,
+            695,
+            440,
+            724
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "كرو هاوس قبل أكثر من ١٠٠ سنة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              608,
+              695,
+              964,
+              729
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            608,
+            695,
+            964,
+            730
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تخيل تمر من سوق شيبرد بلندن. البيت اللي قدامه بناه نفس اللي بنى السوق، قبل ٣٠٠ سنة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              198,
+              817,
+              980,
+              871
+            ],
+            [
+              116,
+              895,
+              980,
+              946
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            116,
+            817,
+            1015,
+            946
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وبعد ١٠٠ سنة انباع البيت بما يعادل ٦٠ ألف ريال.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              146,
+              1028,
+              980,
+              1089
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            146,
+            1028,
+            1015,
+            1089
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بعد ٨٠ سنة شراه السياسي البريطاني اللورد كرو، ومنه جا اسم «كرو هاوس».",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              94,
+              1170,
+              980,
+              1224
+            ],
+            [
+              477,
+              1248,
+              980,
+              1298
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            94,
+            1170,
+            1015,
+            1298
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "وبعدين شرته السعودية ضمن صفقة تعادل ١٨٠ مليون ريال، وصار مقر سفارتنا.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              109,
+              1380,
+              980,
+              1426
+            ],
+            [
+              419,
+              1450,
+              980,
+              1493
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            109,
+            1380,
+            1015,
+            1493
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "من بيت لورد إلى عنوان السعودية في لندن.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              165,
+              1575,
+              916,
+              1624
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            165,
+            1575,
+            916,
+            1625
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Exact stored PNG visually inspected at mobile width using modeled Story and Saved Story overlay masks. No change to pixels or copy; no claim of remote preview readiness.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "STORY: exact 390px rendering inspected with separate model, top rows 0–38 and bottom rows 625–692 masked; photographs, captions, all four bullet points, closing, and CTA wording are visible. Not a signed-in live player check.",
+      "SAVED_STORY": "SAVED_STORY: exact 390px rendering inspected with separate model, top rows 0–38 and bottom rows 625–692 masked; photographs, captions, all four bullet points, closing, and CTA wording are visible. Not a signed-in live player check."
+    }
+  }
+}
