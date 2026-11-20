@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,8 +19,8 @@
       "78a1caa9ff163d99c131ff4e80a3c606e5e5188758c9fbb8cdb650bb9418c59e",
       "2d71323e7ddb69bb0fd3215e70ef23f20d514a79ae2f070b3c784af8c1b5bd94"
     ],
-    "reference": "Owner approved text with closing Sentinel_8516f4405c048191aea8c43d7b250477 and requested tomorrow morning publication in Sentinel_63bdb3d84c188191b176c55d1bef5fb2. Agent-prepared design; no claim owner saw this export. Authorization left false until scheduled action.",
-    "reviewed_at": "2026-11-18T19:55:35Z"
+    "reference": "خالد اعتمد قفلة «بدأ من جنيف وانتشر إلى العالم» ثم طلب صراحة «تمام. انشرها بكره الصباح» في Sentinel_63bdb3d84c188191b176c55d1bef5fb2. نشر في صباح 19 نوفمبر 2026 في القصة العامة والمحفوظة حسب المسار المعتاد. التصدير النهائي فحصه الوكيل؛ لا ادعاء بمشاهدة خالد للصورة النهائية.",
+    "reviewed_at": "2026-11-19T05:10:59.363897+00:00"
   },
   "media": [
     {

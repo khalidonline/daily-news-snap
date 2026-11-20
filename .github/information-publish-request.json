@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "qr-menu-20261118",
-  "identity": "0b06b9903ace2315ec1512d2125b147ae90bd399d68b9cb939eb124314f90dc6",
+  "package": "fuel-comparison-final-20261120",
+  "identity": "648cabf60cc8ab18ddbfaec90dbdb7b76478cdea833f8c7248079b80285d90ac",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "خالد اختار سالفتي QR والمايكرويف في Sentinel_b2dab92f39948191bdc432aabca72fe4 ثم قال خل ننشر وحده اليوم في Sentinel_21836092549c8191b76935ffa93aebd7 بتاريخ 2026-11-18T15:10:40Z؛ اختير QR وأبلغه المنسق في Sentinel_b34699eff08c8191ba1a99c2dcd5c7f6. تفويض نشر سالفة واحدة اليوم بالقالب المعتمد في القصة والمحفوظة، لا المايكرويف. فحص الوكيل هذا التصدير النهائي، وليس ادعاء أن خالد شاهد الصورة النهائية.",
-  "approved_at": "2026-11-18T15:20:13.066607+00:00",
-  "expires_at": "2026-11-18T23:59:59+03:00",
-  "manifest_sha256": "d103f76f3390f328be23c72f84813697dbac81db5fe596d2bcc3950812b91f94",
-  "archive_sha256": "21d408d4ba9e194d0f4192edb5b6bba4b566784e5964353f58eb429391955064",
-  "prepared_sha256": "72dfc1d7e794166cda77ca2dfb2d748d16164148d3ad96584720dcc703183eaa",
-  "preview_receipt_sha256": "6d68f3ca1f86f827c6b2294b161a1c3c352555976337d8e0ec5e8f0b0d6f5759"
+  "owner_reference": "Account owner explicitly approved sending this exact clean replacement to both Snapchat Story and Saved Story through the established prepared route. Prior Story removal was owner-confirmed.",
+  "approved_at": "2026-11-20T09:12:19.217363+00:00",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "manifest_sha256": "8257e6e99088449c0152d91b3203af966ed996153978b9a3f348e720fb404d91",
+  "archive_sha256": "d206c17f78989201178ee37eb17deb042ac7608bae18b340e0b0c346ae61098b",
+  "prepared_sha256": "452a0d01d531f4d57bd4463b44561c26e7f4313aed947fdd95f67f0988213e71",
+  "preview_receipt_sha256": "6969f7d16e7d03de4251ad9ad155110ea677e68bc8116aa0d3945adc85130f8a"
 }

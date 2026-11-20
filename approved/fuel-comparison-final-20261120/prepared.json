@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/fuel-comparison-final-20261120",
+  "manifest_content_sha256": "b607ac413d3de35eba9934ffe6f5578273eb2303514bb0a9d9b10c603f283fc2",
+  "archive_content_sha256": "5f3f12f2e444f47876d8be0308078fd53e1180d124ebb48ae292305e9c4269f8",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "1391647b316a84e065ba3cd93edbbf05e0c51a7d3f65e3c09b862db5a40b7bb0",
+  "assets": {
+    "approved/fuel-comparison-final-20261120/card.png": "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7"
+  },
+  "preparation_seconds": 0.001
+}

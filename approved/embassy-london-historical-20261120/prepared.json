@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/embassy-london-historical-20261120",
+  "manifest_content_sha256": "31492d5ac437a33290a08bb2cc5a55cbd28457a219ac3047a59abd56f0364966",
+  "archive_content_sha256": "377ed2827f8c625efa666df1e014ae61c02a5b692648fbb79147d744ad86c810",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "review_sha256": "4152f1e2cbd03223d9cdf4487b3a2f4f5ccad6749317f666643d9068468bd4b0",
+  "assets": {
+    "approved/embassy-london-historical-20261120/card.png": "fde2fb01a7825dc23d35577ea47050ceb37ac57ee4754829009d5c9579d2a79d",
+    "approved/embassy-london-historical-20261120/palace.jpg": "4b6b96b173ecef952596b03b3c3a4030111ed71d23551741b86908f386a4def6",
+    "approved/embassy-london-historical-20261120/historic-crewe.jpg": "6bd78cdf2aea4cc1ddeb98d0173544d46d8f7553839f19836d5b5b3ccdd8ea8b"
+  },
+  "preparation_seconds": 0.014
+}

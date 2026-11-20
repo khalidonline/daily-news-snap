@@ -1,0 +1,37 @@
+{
+  "baseline": "300 km; litres = 300 ÷ certified or manufacturer/authorised-dealer km/L. Figures rounded to one decimal.",
+  "sources": [
+    [
+      "Toyota Camry LE HEV (27.7 km/L)",
+      "https://www.toyota.com.sa/ar/vehicles/camry"
+    ],
+    [
+      "Al Wallan Accent L (18.9 km/L)",
+      "https://ksa.motory.com/en/new-cars/hyundai/accent/2026/hyundai-accent-l-2026-268653/"
+    ],
+    [
+      "GSO Accent 1.5L CVT 18.9 label variant (registry has another configuration at 18.1)",
+      "https://www.gso.org.sa/cc/v/mv/182780"
+    ],
+    [
+      "Toyota Land Cruiser GXR1 (10.1 km/L)",
+      "https://www.toyota.com.sa/ar/vehicles/lc300/lc300-specs"
+    ],
+    [
+      "GSO GMC Yukon 5.3 AWD, non-XL (9.7 km/L)",
+      "https://www.gso.org.sa/cc/v/mv/191266"
+    ],
+    [
+      "Saudi physical fuel label in seller gallery (9.7 km/L)",
+      "https://haraj.com.sa/en/11190810408/GMC_Yukon_Elevation_4x4_2026/"
+    ],
+    [
+      "GSO Nissan Patrol 3.8 4WD (9.5 km/L)",
+      "https://www.gso.org.sa/cc/v/mv/182956"
+    ],
+    [
+      "GSO Nissan Patrol 3.8 4WD second variant (9.5 km/L)",
+      "https://www.gso.org.sa/cc/v/mv/182957"
+    ]
+  ]
+}

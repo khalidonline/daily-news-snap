@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "7a17795b8ef6eb0d8b8c9f207f811476c7b0e47cc382eaef3651fe2086a1a353",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "ليه حمام الضيوف تطلع منه ريحة وهو نظيف؟",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              88,
+              215,
+              1020,
+              272
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            88,
+            215,
+            1020,
+            273
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "لفة الماسورة تحت البالوعة",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              391,
+              695,
+              689,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            391,
+            695,
+            689,
+            723
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "اليوم هو اليوم العالمي لدورات المياه. قد فتحت حمام الضيوف وشميت ريحة مجاري؟",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              135,
+              802,
+              980,
+              853
+            ],
+            [
+              330,
+              877,
+              980,
+              931
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            135,
+            802,
+            1015,
+            931
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "تحت البالوعة فيه لفة بالماسورة تمسك شوي موية وتمنع الريحة تطلع.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              141,
+              998,
+              980,
+              1052
+            ],
+            [
+              536,
+              1076,
+              980,
+              1125
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            141,
+            998,
+            1015,
+            1125
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "إذا ما استخدمت الحمام فترة، الموية تنشف وتطلع الريحة من البالوعة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              201,
+              1192,
+              980,
+              1244
+            ],
+            [
+              507,
+              1268,
+              980,
+              1317
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            201,
+            1192,
+            1015,
+            1317
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "جرب تصب شوي موية في البالوعة. إذا كانت ناشفة، الموية تسد طريق الريحة.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              192,
+              1384,
+              980,
+              1438
+            ],
+            [
+              378,
+              1462,
+              980,
+              1508
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            192,
+            1384,
+            1015,
+            1508
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "يمكن حمام الضيوف ما يبي معطر، يبي شوي موية.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              106,
+              1575,
+              973,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            106,
+            1575,
+            973,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Agent visually checked exact export at 390px after the owner-requested one-phrase replacement, with original cross-section showing floor drain, water seal and sewer odor arrow; rest of the approved wording and template unchanged. No claim that owner saw final composite.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Visually checked exact final 390px export with Story player masks (top 0–39, bottom 625–692); essential text and artwork clear.",
+      "SAVED_STORY": "Visually checked exact final 390px export with Saved Story player masks (top 0–39, bottom 625–692); essential text and artwork clear."
+    }
+  }
+}

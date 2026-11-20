@@ -1,0 +1,33 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "58034b99f1fc17c41c9d86473528ac95533d5b48",
+  "assets": {
+    "approved/fuel-comparison-final-20261120/card.png": "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7"
+  },
+  "preview_paths": [
+    "approved/fuel-comparison-final-20261120/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/fuel-comparison-final-20261120/card.png": "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7",
+    "approved/fuel-comparison-final-20261120/manifest.json": "760fc36f60b0c9c68b3f60c0ae0cbe5b2da604e1a2fc3bd99db23ad695555e83",
+    "approved/fuel-comparison-final-20261120/archive-approval.json": "be2b6cfdc3ef180e866cf3ef7ce974dac79a2553bb2a932cbb0ceefada47ccdf",
+    "approved/fuel-comparison-final-20261120/design-review.json": "1391647b316a84e065ba3cd93edbbf05e0c51a7d3f65e3c09b862db5a40b7bb0",
+    "approved/fuel-comparison-final-20261120/sources.json": "4719ae43e1fa04b90695f915b4128895239ed3bcf78d71386f7489330d2a942d",
+    "publishing_v2/design-settings.json": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/fuel-comparison-final-20261120",
+    "manifest_content_sha256": "b607ac413d3de35eba9934ffe6f5578273eb2303514bb0a9d9b10c603f283fc2",
+    "archive_content_sha256": "5f3f12f2e444f47876d8be0308078fd53e1180d124ebb48ae292305e9c4269f8",
+    "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+    "review_sha256": "1391647b316a84e065ba3cd93edbbf05e0c51a7d3f65e3c09b862db5a40b7bb0",
+    "assets": {
+      "approved/fuel-comparison-final-20261120/card.png": "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7"
+    }
+  }
+}

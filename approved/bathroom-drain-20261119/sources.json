@@ -1,0 +1,15 @@
+{
+  "assets": [
+    {
+      "path": "approved/bathroom-drain-20261119/drain-trap.png",
+      "sha256": "65a174953f3b2d25417551178c461f882cbbb3bca46910eca541754335d700fb",
+      "credit": "Original in-house schematic drawn for this card",
+      "rights_status": "original"
+    }
+  ],
+  "references": [
+    "https://www.un.org/en/observances/toilet-day/background",
+    "https://www.sdsdut.gov/what-s-that-smell-understanding-sewer-odors-and-p-traps"
+  ],
+  "notes": "Original explanatory cross-section, not a photo or claim that all drains share the same design."
+}

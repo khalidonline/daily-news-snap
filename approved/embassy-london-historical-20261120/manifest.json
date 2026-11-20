@@ -1,0 +1,53 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "تدري إن سفارتنا بلندن كانت بيت لورد؟",
+  "not_before": "2026-11-20T00:00:00+03:00",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "fde2fb01a7825dc23d35577ea47050ceb37ac57ee4754829009d5c9579d2a79d"
+    ],
+    "approved_source_sha256": [
+      "4b6b96b173ecef952596b03b3c3a4030111ed71d23551741b86908f386a4def6",
+      "6bd78cdf2aea4cc1ddeb98d0173544d46d8f7553839f19836d5b5b3ccdd8ea8b"
+    ],
+    "reference": "Khalid directly requested «انشر سنابة السفاره» in Sentinel_cfe6da6c6f608191b8324d6fc9ce9d37 after seeing the exact historical Crewe House export, then replied «موافق» in Sentinel_ed57e2656f7081918f0acbc2ba7b0cbd after explicit confirmation of public GitHub staging and then publishing to Snapchat Story and Saved Story.",
+    "reviewed_at": "2026-11-20T07:41:31.681723+00:00"
+  },
+  "media": [
+    {
+      "path": "approved/embassy-london-historical-20261120/card.png",
+      "sha256": "fde2fb01a7825dc23d35577ea47050ceb37ac57ee4754829009d5c9579d2a79d",
+      "kind": "info",
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      },
+      "source_assets": [
+        {
+          "path": "approved/embassy-london-historical-20261120/palace.jpg",
+          "sha256": "4b6b96b173ecef952596b03b3c3a4030111ed71d23551741b86908f386a4def6",
+          "credit": "Ricardalovesmonuments; Palace on Curzon Street London; cropped/resized in card.",
+          "rights_status": "CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Palace_on_Curzon_Street_London.jpg",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        {
+          "path": "approved/embassy-london-historical-20261120/historic-crewe.jpg",
+          "sha256": "6bd78cdf2aea4cc1ddeb98d0173544d46d8f7553839f19836d5b5b3ccdd8ea8b",
+          "credit": "Unattributed archive photograph reproduced in Campbell Stuart, Secrets of Crewe House (1921), between pp. 8–9; extracted and cropped/resized.",
+          "rights_status": "reproduced_in_1921_edition",
+          "source_url": "https://dev.gutenberg.org/cache/epub/77798/pg77798-images.html"
+        }
+      ]
+    }
+  ]
+}

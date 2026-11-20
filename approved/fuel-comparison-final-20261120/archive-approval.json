@@ -1,0 +1,14 @@
+{
+  "approved": true,
+  "account": "executivesaudi",
+  "manifest": "approved/fuel-comparison-final-20261120/manifest.json",
+  "identity": "648cabf60cc8ab18ddbfaec90dbdb7b76478cdea833f8c7248079b80285d90ac",
+  "public_indices": [
+    1
+  ],
+  "title": "مشوار 300 كم، كم يحتاج بنزين؟",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "empty_profile_confirmation": "Profile has existing public archives; live overlap/inventory check required; this is not an empty-profile claim.",
+  "owner_authorization": "Account owner explicitly approved sending this exact clean replacement to both Snapchat Story and Saved Story through the established prepared route. Prior Story removal was owner-confirmed.",
+  "manifest_sha256": "8257e6e99088449c0152d91b3203af966ed996153978b9a3f348e720fb404d91"
+}

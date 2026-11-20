@@ -1,0 +1,114 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "مشوار 300 كم، كم يحتاج بنزين؟",
+  "not_before": "2026-11-20T07:41:12.594641+00:00",
+  "expires_at": "2026-11-20T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7"
+    ],
+    "approved_source_sha256": [
+      "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7"
+    ],
+    "reference": "Account owner explicitly approved sending this exact clean replacement to both Snapchat Story and Saved Story through the established prepared route. Prior Story removal was owner-confirmed.",
+    "reviewed_at": "2026-11-20T09:12:19.217363+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/fuel-comparison-final-20261120/card.png",
+      "sha256": "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7",
+      "template": "comparison",
+      "comparison": {
+        "variant": "fuel-rtl-corrected-v1",
+        "reference_sha256": "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7",
+        "title": "مشوار 300 كم، كم يحتاج بنزين؟",
+        "subtitle": "صرف البنزين التقريبي لموديلات 2026",
+        "unit": "L",
+        "basis": {
+          "quantity": 300,
+          "unit": "km"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "كامري هايبرد LE",
+            "low": 10.8,
+            "high": 10.8
+          },
+          {
+            "label": "أكسنت L",
+            "low": 15.9,
+            "high": 15.9
+          },
+          {
+            "label": "لاندكروزر GXR1",
+            "low": 29.7,
+            "high": 29.7
+          },
+          {
+            "label": "جمس يوكون إليفيشن 5.3",
+            "low": 30.9,
+            "high": 30.9
+          },
+          {
+            "label": "نيسان باترول XE",
+            "low": 31.6,
+            "high": 31.6
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 31.6,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            74,
+            892
+          ],
+          "bar_y": [
+            545,
+            766,
+            987,
+            1209,
+            1430
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/fuel-comparison-final-20261120/card.png",
+          "sha256": "95135dd4199b3223faa78c4c08053eeba9722e5a9bbade64373a25e8807987a7",
+          "source_url": "https://github.com/khalidonline/daily-news-snap/blob/main/approved/fuel-comparison-final-20261120/card.png",
+          "description": "Exact clean replacement export from the established comparison renderer, no correction footer",
+          "credit": "Executive Summary",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ],
+  "predecessors": [
+    "eaea4d4fe91188511a185ab869967c713d4e3c2d619f96bca494500093cd4b3a"
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f",
+      "template": "comparison",
+      "comparison": {
+        "variant": "fuel-rtl-v1",
+        "reference_sha256": "9db7bba5027d57c5de07d0faf72113fcbaf2c1cd81e3d7c9fc482f03823aea3f",
+        "title": "مشوار 300 كم، كم يحتاج بنزين؟",
+        "subtitle": "صرف البنزين التقريبي لموديلات 2026",
+        "unit": "L",
+        "basis": {
+          "quantity": 300,
+          "unit": "km"
+        },
+        "note": "",
+        "rows": [
+          {
+            "label": "كامري هايبرد LE",
+            "low": 10.8,
+            "high": 10.8
+          },
+          {
+            "label": "أكسنت L",
+            "low": 15.9,
+            "high": 15.9
+          },
+          {
+            "label": "لاندكروزر GXR1",
+            "low": 29.7,
+            "high": 29.7
+          },
+          {
+            "label": "نيسان باترول XE",
+            "low": 30.9,
+            "high": 30.9
+          },
+          {
+            "label": "جمس يوكون إليفيشن 5.3",
+            "low": 33.7,
+            "high": 33.7
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 34,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            74,
+            892
+          ],
+          "bar_y": [
+            545,
+            766,
+            987,
+            1209,
+            1430
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Khalid approved the latest fuel image for publication («انشر البنزين»), 2026-11-20, https://chatgpt.com/c/6af9616d-e4fc-83eb-a709-ada59ca28f19",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Actual full-size PNG inspected; title below y207 and CTA ending y1731 clear of modeled top 0..105 and bottom 1830..1920. Not a live platform screenshot."
+    }
+  }
+}

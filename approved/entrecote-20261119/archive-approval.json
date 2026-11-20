@@ -1,8 +1,8 @@
 {
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "manifest": "approved/entrecote-20261119/manifest.json",
-  "manifest_sha256": "11425cc8c1b921499c517913fe47f7147e57cebe62fd77b4ce86304b501dc9e9",
+  "manifest_sha256": "952d1a47dd13cb2a7f402ad80df8fe545e13107d52cf2d22a50ee54f970c2d86",
   "identity": "fd98132afe9797f417c0847a22106a4fb8b7643081300bef6411c6c62d0bc4e5",
   "public_indices": [
     1
@@ -10,5 +10,5 @@
   "title": "الإنتريكوت.. سر الشهرة في الصوص",
   "expires_at": "2026-11-19T12:00:00+03:00",
   "empty_profile_confirmation": "Existing account has prior Saved Stories. Check live inventory and overlap; not an empty-profile claim.",
-  "owner_authorization": "Scheduled tomorrow morning only per Sentinel_63bdb3d84c188191b176c55d1bef5fb2. No authorization request staged now."
+  "owner_authorization": "خالد اعتمد قفلة «بدأ من جنيف وانتشر إلى العالم» ثم طلب صراحة «تمام. انشرها بكره الصباح» في Sentinel_63bdb3d84c188191b176c55d1bef5fb2. نشر في صباح 19 نوفمبر 2026 في القصة العامة والمحفوظة حسب المسار المعتاد. التصدير النهائي فحصه الوكيل؛ لا ادعاء بمشاهدة خالد للصورة النهائية."
 }
