@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "embassy-london-historical-20261120",
-  "identity": "adbb10ffa52fe3d11f8ec4c55242f358c818fee526ffb2e574d2cb7ddba86b8e",
+  "package": "fuel-comparison-final-20261120",
+  "identity": "648cabf60cc8ab18ddbfaec90dbdb7b76478cdea833f8c7248079b80285d90ac",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid directly requested «انشر سنابة السفاره» in Sentinel_cfe6da6c6f608191b8324d6fc9ce9d37 after seeing the exact historical Crewe House export, then replied «موافق» in Sentinel_ed57e2656f7081918f0acbc2ba7b0cbd after explicit confirmation of public GitHub staging and then publishing to Snapchat Story and Saved Story.",
-  "approved_at": "2026-11-20T07:41:31.681723+00:00",
+  "owner_reference": "Account owner explicitly approved sending this exact clean replacement to both Snapchat Story and Saved Story through the established prepared route. Prior Story removal was owner-confirmed.",
+  "approved_at": "2026-11-20T09:12:19.217363+00:00",
   "expires_at": "2026-11-20T23:59:59+03:00",
-  "manifest_sha256": "361ae83344f62f69641abd3f3a616046f3c0be030bf8cb50c0d497b046c6ae61",
-  "archive_sha256": "2710d8d41935f258ff6da46347a8f6fe943acf48d539763d85916bc43731b760",
-  "prepared_sha256": "ea06cb0155cd7759b2bb1a9f8447cf9eaf2e8eccec96e3bf542363ab1df9add8",
-  "preview_receipt_sha256": "3642269214711c40329b132b8e96fa05521af1ea916ce2b9de22cd27c5a79573"
+  "manifest_sha256": "8257e6e99088449c0152d91b3203af966ed996153978b9a3f348e720fb404d91",
+  "archive_sha256": "d206c17f78989201178ee37eb17deb042ac7608bae18b340e0b0c346ae61098b",
+  "prepared_sha256": "452a0d01d531f4d57bd4463b44561c26e7f4313aed947fdd95f67f0988213e71",
+  "preview_receipt_sha256": "6969f7d16e7d03de4251ad9ad155110ea677e68bc8116aa0d3945adc85130f8a"
 }
