@@ -1,0 +1,104 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "وجبة الدجاج المشوي من كودو بكم؟",
+  "not_before": "2026-11-21T10:15:10.203057+00:00",
+  "expires_at": "2026-11-21T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3"
+    ],
+    "approved_source_sha256": [
+      "1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3"
+    ],
+    "reference": "Khalid approved this exact corrected Kudu card for publication («انشر»), 2026-11-21.",
+    "reviewed_at": "2026-11-21T10:15:10.203057+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/kudu-comparison-20261121/card.png",
+      "sha256": "1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3",
+      "template": "comparison",
+      "comparison": {
+        "variant": "kudu-prices-rtl-v1",
+        "reference_sha256": "1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3",
+        "title": "وجبة الدجاج المشوي من كودو بكم؟",
+        "subtitle": "سعر الوجبة في الرياض قبل رسوم التوصيل",
+        "unit": "SAR",
+        "basis": {
+          "quantity": 1,
+          "unit": "meal"
+        },
+        "note": "اسعار تطبيقات التوصيل - بدون رسوم توصيل - 😯",
+        "rows": [
+          {
+            "label": "استلام من الفرع",
+            "low": 30,
+            "high": 30
+          },
+          {
+            "label": "تويو",
+            "low": 35,
+            "high": 35
+          },
+          {
+            "label": "هنقرستيشن",
+            "low": 39,
+            "high": 39
+          },
+          {
+            "label": "نينجا",
+            "low": 39,
+            "high": 39
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 39,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            80,
+            991
+          ],
+          "bar_y": [
+            621,
+            866,
+            1111,
+            1356
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/kudu-comparison-20261121/card.png",
+          "sha256": "1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3",
+          "source_url": "https://chatgpt.com/api/library/files/libfile_fde3_f-50c65e12d9fc8191bfdd704f18328601_caf305c17d148191b336ceff647730cb/download",
+          "description": "Approved Kudu comparison",
+          "credit": "Executive Summary",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

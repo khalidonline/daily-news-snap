@@ -120,6 +120,24 @@ SPECS['fuel-rtl-corrected-v1'] = {'variant': 'fuel-rtl-corrected-v1',
  'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
 FILES['fuel-rtl-corrected-v1'] = 'fuel-rtl-corrected.png'
 
+SPECS['kudu-prices-rtl-v1'] = {'variant': 'kudu-prices-rtl-v1',
+ 'reference_sha256': '1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3',
+ 'title': 'وجبة الدجاج المشوي من كودو بكم؟',
+ 'subtitle': 'سعر الوجبة في الرياض قبل رسوم التوصيل',
+ 'unit': 'SAR',
+ 'basis': {'quantity': 1, 'unit': 'meal'},
+ 'note': 'اسعار تطبيقات التوصيل - بدون رسوم توصيل - 😯',
+ 'rows': [{'label': 'استلام من الفرع', 'low': 30, 'high': 30},
+          {'label': 'تويو', 'low': 35, 'high': 35},
+          {'label': 'هنقرستيشن', 'low': 39, 'high': 39},
+          {'label': 'نينجا', 'low': 39, 'high': 39}],
+ 'scale': {'min': 0, 'max': 39, 'direction': 'rtl'},
+ 'layout': {'canvas': [1080, 1920],
+            'bar_axis': [80, 991],
+            'bar_y': [621, 866, 1111, 1356]},
+ 'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
+FILES['kudu-prices-rtl-v1'] = 'kudu-prices-rtl.png'
+
 def validate_reference_variant(image, spec, *, raw=None):
     if not isinstance(spec,dict):raise ValueError('Comparison variant spec must be an object')
     variant=spec.get('variant')

@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3",
+      "template": "comparison",
+      "comparison": {
+        "variant": "kudu-prices-rtl-v1",
+        "reference_sha256": "1c72f6593616426d476f82a429d435cb5a7571feea5d9ff1917521f9e59923e3",
+        "title": "وجبة الدجاج المشوي من كودو بكم؟",
+        "subtitle": "سعر الوجبة في الرياض قبل رسوم التوصيل",
+        "unit": "SAR",
+        "basis": {
+          "quantity": 1,
+          "unit": "meal"
+        },
+        "note": "اسعار تطبيقات التوصيل - بدون رسوم توصيل - 😯",
+        "rows": [
+          {
+            "label": "استلام من الفرع",
+            "low": 30,
+            "high": 30
+          },
+          {
+            "label": "تويو",
+            "low": 35,
+            "high": 35
+          },
+          {
+            "label": "هنقرستيشن",
+            "low": 39,
+            "high": 39
+          },
+          {
+            "label": "نينجا",
+            "low": 39,
+            "high": 39
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 39,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            80,
+            991
+          ],
+          "bar_y": [
+            621,
+            866,
+            1111,
+            1356
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Khalid approved this exact corrected Kudu card for publication («انشر»), 2026-11-21.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Actual full-size PNG inspected; title below y207 and CTA ending y1731 clear of modeled top 0..105 and bottom 1830..1920. Not a live platform screenshot."
+    }
+  }
+}
