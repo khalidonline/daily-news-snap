@@ -138,6 +138,61 @@ SPECS['kudu-prices-rtl-v1'] = {'variant': 'kudu-prices-rtl-v1',
  'number_format': {'digits': 'english', 'text_direction': 'rtl'}}
 FILES['kudu-prices-rtl-v1'] = 'kudu-prices-rtl.png'
 
+SPECS['commute-rtl-v1'] = {
+    "variant": "commute-rtl-v1",
+    "reference_sha256": "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e",
+    "title": "وش أوفر للدوام بالرياض: السيارة أو المترو؟",
+    "subtitle": "20 يوم دوام، 20 كم روحة و20 كم رجعة",
+    "unit": "SAR",
+    "basis": {
+        "quantity": 20,
+        "unit": "workdays"
+    },
+    "note": "حسبناها على سيارة تمشي 15 كم بلتر بنزين 91",
+    "rows": [
+        {
+            "label": "بنزين السيارة فقط",
+            "low": 116,
+            "high": 116
+        },
+        {
+            "label": "المترو باشتراك 30 يوم",
+            "low": 140,
+            "high": 140
+        },
+        {
+            "label": "المترو بتذكرتين كل يوم",
+            "low": 160,
+            "high": 160
+        }
+    ],
+    "scale": {
+        "min": 0,
+        "max": 160,
+        "direction": "rtl"
+    },
+    "layout": {
+        "canvas": [
+            1080,
+            1920
+        ],
+        "bar_axis": [
+            85,
+            995
+        ],
+        "bar_y": [
+            670,
+            940,
+            1210
+        ]
+    },
+    "number_format": {
+        "digits": "english",
+        "text_direction": "rtl"
+    }
+}
+FILES['commute-rtl-v1'] = 'commute-rtl.png'
+
 def validate_reference_variant(image, spec, *, raw=None):
     if not isinstance(spec,dict):raise ValueError('Comparison variant spec must be an object')
     variant=spec.get('variant')

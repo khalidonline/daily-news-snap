@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e",
+      "template": "comparison",
+      "comparison": {
+        "variant": "commute-rtl-v1",
+        "reference_sha256": "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e",
+        "title": "وش أوفر للدوام بالرياض: السيارة أو المترو؟",
+        "subtitle": "20 يوم دوام، 20 كم روحة و20 كم رجعة",
+        "unit": "SAR",
+        "basis": {
+          "quantity": 20,
+          "unit": "workdays"
+        },
+        "note": "حسبناها على سيارة تمشي 15 كم بلتر بنزين 91",
+        "rows": [
+          {
+            "label": "بنزين السيارة فقط",
+            "low": 116,
+            "high": 116
+          },
+          {
+            "label": "المترو باشتراك 30 يوم",
+            "low": 140,
+            "high": 140
+          },
+          {
+            "label": "المترو بتذكرتين كل يوم",
+            "low": 160,
+            "high": 160
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 160,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            85,
+            995
+          ],
+          "bar_y": [
+            670,
+            940,
+            1210
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Khalid approved this exact commute card in chat: «تمام انشر المترو».",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Actual full-size PNG inspected; title below y207 and CTA ending y1731 clear of modeled top 0..105 and bottom 1830..1920. Not a live platform screenshot."
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "وش أوفر للدوام بالرياض: السيارة أو المترو؟",
+  "not_before": "2026-11-22T06:45:01+00:00",
+  "expires_at": "2026-11-22T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e"
+    ],
+    "approved_source_sha256": [
+      "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e"
+    ],
+    "reference": "Khalid approved this exact commute card in chat: «تمام انشر المترو».",
+    "reviewed_at": "2026-11-22T06:45:01+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/commute-comparison-20261122/card.png",
+      "sha256": "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e",
+      "template": "comparison",
+      "comparison": {
+        "variant": "commute-rtl-v1",
+        "reference_sha256": "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e",
+        "title": "وش أوفر للدوام بالرياض: السيارة أو المترو؟",
+        "subtitle": "20 يوم دوام، 20 كم روحة و20 كم رجعة",
+        "unit": "SAR",
+        "basis": {
+          "quantity": 20,
+          "unit": "workdays"
+        },
+        "note": "حسبناها على سيارة تمشي 15 كم بلتر بنزين 91",
+        "rows": [
+          {
+            "label": "بنزين السيارة فقط",
+            "low": 116,
+            "high": 116
+          },
+          {
+            "label": "المترو باشتراك 30 يوم",
+            "low": 140,
+            "high": 140
+          },
+          {
+            "label": "المترو بتذكرتين كل يوم",
+            "low": 160,
+            "high": 160
+          }
+        ],
+        "scale": {
+          "min": 0,
+          "max": 160,
+          "direction": "rtl"
+        },
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "bar_axis": [
+            85,
+            995
+          ],
+          "bar_y": [
+            670,
+            940,
+            1210
+          ]
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        }
+      },
+      "source_assets": [
+        {
+          "path": "approved/commute-comparison-20261122/card.png",
+          "sha256": "0fc5b6646606d69feb3469d80456dd5f774c51a0db78a758a74e1d8d31ce239e",
+          "source_url": "https://chatgpt.com/api/library/files/libfile_fde3_f-6ef255a9f6948191b9d30bd639762ad5_caf305c17d148191b336ceff647730cb/download",
+          "description": "Owner-approved commute comparison",
+          "credit": "Executive Summary",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}
