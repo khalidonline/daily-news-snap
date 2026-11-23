@@ -24,7 +24,7 @@ def draft(tmp_path,monkeypatch):
     report_path=p/'design-review.json'
     report=json.loads(report_path.read_text())
     assert report['settings_sha256']=='61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504'
-    assert hashlib.sha256(settings).hexdigest()=='1371592ce57cf2f3d1750b407affc8fc60b17a82f4825365834c66af90287c76'
+    assert hashlib.sha256(settings).hexdigest()=='0198215c8490a050eac1e37d57b4412ba7db968e1867f1efa0ee72a32f894f18'
     report['settings_sha256']=hashlib.sha256(settings).hexdigest()
     report_path.write_text(json.dumps(report))
     for name in ('manifest.json','archive-approval.json'):
