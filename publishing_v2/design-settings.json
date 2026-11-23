@@ -625,7 +625,7 @@
     "asset_status": "PENDING_EXACT_ASSET",
     "asset_path": null,
     "asset_sha256": null,
-    "rule": "Before next emoji-containing design, obtain exact approved-appearance asset with permitted use, inspect and hash-pin it. Do not claim Apple/device look from Unicode alone. Preserve user choice; do not replace with 🙂 or 😂."
+    "rule": "Render only emoji present in the exact owner-approved copy. Use Apple Color Emoji artwork or an exact authorized Apple asset only, like the pinned text typeface. Obtain permitted use, visually inspect the exact artwork, and hash-pin before using it. If the exact asset is unavailable, hold the emoji-containing export for review; do not redraw, add, substitute, use system fallback, or infer the Apple look from Unicode alone."
   },
   "approved_visual_master": {
     "filename": "Oxford-Template-Preview.png",
