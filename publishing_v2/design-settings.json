@@ -621,11 +621,17 @@
     "unicode": "U+1F604",
     "maximum_per_information_card": 1,
     "rendering": "Independent transparent pinned asset composited after layout. Never ask image generation to redraw it; never rely on viewer device font.",
-    "appearance_reference": "Owner-supplied 😄 example in conversation 26 October 2026",
+    "appearance_reference": "Apple iOS 18.4 U+1F604 shown in the November 23 WhatsApp card; owner reconfirmed this exact appearance.",
     "asset_status": "PENDING_EXACT_ASSET",
     "asset_path": null,
     "asset_sha256": null,
-    "rule": "Render only emoji present in the exact owner-approved copy. Use Apple Color Emoji artwork or an exact authorized Apple asset only, like the pinned text typeface. Obtain permitted use, visually inspect the exact artwork, and hash-pin before using it. If the exact asset is unavailable, hold the emoji-containing export for review; do not redraw, add, substitute, use system fallback, or infer the Apple look from Unicode alone."
+    "rule": "Render only emoji present in the exact owner-approved copy. Use Apple Color Emoji artwork or an exact authorized Apple asset only, like the pinned text typeface. Obtain permitted use, visually inspect the exact artwork, and hash-pin before using it. If the exact asset is unavailable, hold the emoji-containing export for review; do not redraw, add, substitute, use system fallback, or infer the Apple look from Unicode alone.",
+    "appearance_reference_url": "https://emojipedia.org/apple/ios-18.4/grinning-face-with-smiling-eyes",
+    "closing_size_px_at_1080": 46,
+    "closing_gap_px_at_1080": 12,
+    "closing_layout_rule": "Measure the one-line RTL closing with its emoji. Use a 46 px longest ink edge at 1080 px canvas width, with a 12 px gap. Keep the group centered and within the existing closing slot; never shrink the fixed text or move other regions.",
+    "default_smile_scope": "Use this exact iPhone smile when the approved copy calls for a smile; never insert one automatically into emoji-free copy.",
+    "approval_source": "2026-11-23 owner: «ثبت الايموجي هذا دايم في القالب المعتمد وكبره شوي لانه مو واضح»."
   },
   "approved_visual_master": {
     "filename": "Oxford-Template-Preview.png",
