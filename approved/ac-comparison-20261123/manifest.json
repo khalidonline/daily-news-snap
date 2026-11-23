@@ -1,0 +1,106 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": true,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY"
+  ],
+  "title": "أي مكيف أخف على فاتورة الكهرب؟",
+  "not_before": "2026-11-23T07:26:25.716729+00:00",
+  "expires_at": "2026-11-23T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7"
+    ],
+    "approved_source_sha256": [
+      "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7"
+    ],
+    "reference": "Khalid approved the exact table with logos: «ممتاز انشر», then «انشر لاتوقف».",
+    "reviewed_at": "2026-11-23T07:26:25.716729+00:00"
+  },
+  "media": [
+    {
+      "kind": "info",
+      "path": "approved/ac-comparison-20261123/card.png",
+      "sha256": "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7",
+      "template": "comparison",
+      "comparison": {
+        "variant": "ac-table-rtl-v1",
+        "reference_sha256": "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7",
+        "title": "أي مكيف أخف على فاتورة الكهرب؟",
+        "subtitle": "6 مكيفات بنفس قوة التبريد · 18,000 وحدة",
+        "basis": {
+          "quantity": 18000,
+          "unit": "BTU/h"
+        },
+        "unit": "SAR",
+        "columns": [
+          "نوع المكيف",
+          "سعره",
+          "تكلفة الكهرباء بالسنة"
+        ],
+        "rows": [
+          {
+            "label": "كولاين برو إكس · سبليت",
+            "price": 1999,
+            "annual_cost": 818
+          },
+          {
+            "label": "سوبر جنرال · سبليت",
+            "price": 1699,
+            "annual_cost": 917
+          },
+          {
+            "label": "جري أي آي برو · سبليت",
+            "price": 3200,
+            "annual_cost": 939
+          },
+          {
+            "label": "الزامل كلاسيك · شباك إنفرتر",
+            "price": 2300,
+            "annual_cost": 1136
+          },
+          {
+            "label": "هام الذهبي · سبليت",
+            "price": 1539,
+            "annual_cost": 1230
+          },
+          {
+            "label": "الزامل كلاسيك · شباك عادي",
+            "price": 1898,
+            "annual_cost": 1464
+          }
+        ],
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "type": "table",
+          "direction": "rtl"
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        },
+        "note": "تقدير على 18 هللة للكيلوواط ساعة + الضريبة"
+      },
+      "source_assets": [
+        {
+          "path": "approved/ac-comparison-20261123/card.png",
+          "sha256": "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7",
+          "source_url": "https://chatgpt.com/library?file_id=libfile_fde3_f-f4412a0527188191911d7fda5a2dba70_caf305c17d148191b336ceff647730cb&account_id=personal",
+          "description": "Approved AC comparison table with brand logos, version 2",
+          "credit": "Executive Summary",
+          "rights_status": "source_recorded"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

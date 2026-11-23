@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "1371592ce57cf2f3d1750b407affc8fc60b17a82f4825365834c66af90287c76",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7",
+      "template": "comparison",
+      "comparison": {
+        "variant": "ac-table-rtl-v1",
+        "reference_sha256": "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7",
+        "title": "أي مكيف أخف على فاتورة الكهرب؟",
+        "subtitle": "6 مكيفات بنفس قوة التبريد · 18,000 وحدة",
+        "basis": {
+          "quantity": 18000,
+          "unit": "BTU/h"
+        },
+        "unit": "SAR",
+        "columns": [
+          "نوع المكيف",
+          "سعره",
+          "تكلفة الكهرباء بالسنة"
+        ],
+        "rows": [
+          {
+            "label": "كولاين برو إكس · سبليت",
+            "price": 1999,
+            "annual_cost": 818
+          },
+          {
+            "label": "سوبر جنرال · سبليت",
+            "price": 1699,
+            "annual_cost": 917
+          },
+          {
+            "label": "جري أي آي برو · سبليت",
+            "price": 3200,
+            "annual_cost": 939
+          },
+          {
+            "label": "الزامل كلاسيك · شباك إنفرتر",
+            "price": 2300,
+            "annual_cost": 1136
+          },
+          {
+            "label": "هام الذهبي · سبليت",
+            "price": 1539,
+            "annual_cost": 1230
+          },
+          {
+            "label": "الزامل كلاسيك · شباك عادي",
+            "price": 1898,
+            "annual_cost": 1464
+          }
+        ],
+        "layout": {
+          "canvas": [
+            1080,
+            1920
+          ],
+          "type": "table",
+          "direction": "rtl"
+        },
+        "number_format": {
+          "digits": "english",
+          "text_direction": "rtl"
+        },
+        "note": "تقدير على 18 هللة للكيلوواط ساعة + الضريبة"
+      },
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY"
+  ],
+  "review": {
+    "reference": "Khalid approved the exact table with logos: «ممتاز انشر», then «انشر لاتوقف».",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Actual full-size PNG inspected; title below y207 and CTA ending y1731 clear of modeled top 0..105 and bottom 1830..1920. Not a live platform screenshot."
+    }
+  }
+}

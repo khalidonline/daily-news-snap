@@ -193,6 +193,69 @@ SPECS['commute-rtl-v1'] = {
 }
 FILES['commute-rtl-v1'] = 'commute-rtl.png'
 
+SPECS['ac-table-rtl-v1'] = {
+    "variant": "ac-table-rtl-v1",
+    "reference_sha256": "d5d90e7e76507deb724aea452af01ab03c2ff9fa6aecec5303b881a45b3d68f7",
+    "title": "أي مكيف أخف على فاتورة الكهرب؟",
+    "subtitle": "6 مكيفات بنفس قوة التبريد · 18,000 وحدة",
+    "basis": {
+        "quantity": 18000,
+        "unit": "BTU/h"
+    },
+    "unit": "SAR",
+    "columns": [
+        "نوع المكيف",
+        "سعره",
+        "تكلفة الكهرباء بالسنة"
+    ],
+    "rows": [
+        {
+            "label": "كولاين برو إكس · سبليت",
+            "price": 1999,
+            "annual_cost": 818
+        },
+        {
+            "label": "سوبر جنرال · سبليت",
+            "price": 1699,
+            "annual_cost": 917
+        },
+        {
+            "label": "جري أي آي برو · سبليت",
+            "price": 3200,
+            "annual_cost": 939
+        },
+        {
+            "label": "الزامل كلاسيك · شباك إنفرتر",
+            "price": 2300,
+            "annual_cost": 1136
+        },
+        {
+            "label": "هام الذهبي · سبليت",
+            "price": 1539,
+            "annual_cost": 1230
+        },
+        {
+            "label": "الزامل كلاسيك · شباك عادي",
+            "price": 1898,
+            "annual_cost": 1464
+        }
+    ],
+    "layout": {
+        "canvas": [
+            1080,
+            1920
+        ],
+        "type": "table",
+        "direction": "rtl"
+    },
+    "number_format": {
+        "digits": "english",
+        "text_direction": "rtl"
+    },
+    "note": "تقدير على 18 هللة للكيلوواط ساعة + الضريبة"
+}
+FILES['ac-table-rtl-v1'] = 'ac-table-rtl.png'
+
 def validate_reference_variant(image, spec, *, raw=None):
     if not isinstance(spec,dict):raise ValueError('Comparison variant spec must be an object')
     variant=spec.get('variant')

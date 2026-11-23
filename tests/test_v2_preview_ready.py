@@ -17,14 +17,14 @@ def draft(tmp_path,monkeypatch):
     shutil.copytree(source,p)
     (tmp_path/'publishing_v2').mkdir()
     shutil.copyfile(ROOT/'publishing_v2/design-settings.json',tmp_path/'publishing_v2/design-settings.json')
-    # This archived radio-card fixture predates the Nov 11 editorial-only master
+    # This archived radio-card fixture predates the Nov 23 emoji guidance
     # update. Rebind the TEMPORARY synthetic draft only, for the two reviewed
     # byte identities; a future unknown master must still fail this fixture.
     settings=(tmp_path/'publishing_v2/design-settings.json').read_bytes()
     report_path=p/'design-review.json'
     report=json.loads(report_path.read_text())
     assert report['settings_sha256']=='61a6ea74222fe325f213526db5ace3a734b85dc0456c1fa072f85c82e0f16504'
-    assert hashlib.sha256(settings).hexdigest()=='637f0112adda4b391cbe2a3bbf5668afd9f970a8692147f09eac858a9198ec74'
+    assert hashlib.sha256(settings).hexdigest()=='1371592ce57cf2f3d1750b407affc8fc60b17a82f4825365834c66af90287c76'
     report['settings_sha256']=hashlib.sha256(settings).hexdigest()
     report_path.write_text(json.dumps(report))
     for name in ('manifest.json','archive-approval.json'):

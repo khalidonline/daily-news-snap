@@ -1,0 +1,28 @@
+name: Request approved ac Story on 23 November
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/request-ac-story-20261123.yml']
+permissions:
+  actions: write
+  checks: read
+jobs:
+  request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch the approved Story publisher once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$(TZ=Asia/Riyadh date +%F)" = 2026-11-23
+          for attempt in {1..70}; do
+            conclusion=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/check-runs" --jq '[.check_runs[] | select(.name == "contract" or .name == "offline")] | if length != 2 or any(.conclusion == null) then "pending" elif all(.conclusion == "success") then "success" else "failed" end')
+            case "$conclusion" in
+              success) break ;;
+              pending) sleep 10 ;;
+              *) exit 1 ;;
+            esac
+          done
+          test "$conclusion" = success
+          gh workflow run publish-approved-package.yml --repo khalidonline/daily-news-snap --ref main -f package=ac-comparison-20261123 -f mode=legacy-story
