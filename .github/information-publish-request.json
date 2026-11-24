@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "fuel-comparison-final-20261120",
-  "identity": "648cabf60cc8ab18ddbfaec90dbdb7b76478cdea833f8c7248079b80285d90ac",
+  "package": "walmart-muse-20261124",
+  "identity": "2f560b062a1c5d52b7643f388a9eb345dd3d1b01ba01552711ff8108f14f1ade",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Account owner explicitly approved sending this exact clean replacement to both Snapchat Story and Saved Story through the established prepared route. Prior Story removal was owner-confirmed.",
-  "approved_at": "2026-11-20T09:12:19.217363+00:00",
-  "expires_at": "2026-11-20T23:59:59+03:00",
-  "manifest_sha256": "8257e6e99088449c0152d91b3203af966ed996153978b9a3f348e720fb404d91",
-  "archive_sha256": "d206c17f78989201178ee37eb17deb042ac7608bae18b340e0b0c346ae61098b",
-  "prepared_sha256": "452a0d01d531f4d57bd4463b44561c26e7f4313aed947fdd95f67f0988213e71",
-  "preview_receipt_sha256": "6969f7d16e7d03de4251ad9ad155110ea677e68bc8116aa0d3945adc85130f8a"
+  "owner_reference": "Khalid Aldkhaeel: انشر; ChatGPT owner message Sentinel_8a36317fcc608191a1ae98deb4613ee8; exact reviewed preview Sentinel_42d0b1531c2081919023673a902b1ac0; Story and Saved Story",
+  "approved_at": "2026-11-24T06:32:24.908882+00:00",
+  "expires_at": "2026-11-26T23:59:59+03:00",
+  "manifest_sha256": "a2a90af08badcd6c916b62435309297f00e4d9d95a320d9cbdf7212be7cf85ce",
+  "archive_sha256": "345a4711b979248f21407b43be496c2b4a13c643260e9c55a7a112bbc6293387",
+  "prepared_sha256": "a895e663d59f8bd5e2a2403fc84ac78be7deff96ad0fea9e07858e6d5201b978",
+  "preview_receipt_sha256": "4f401429419e8545dc0569af7a3c094b3774397cd47fbf9cd0feddd6141e8067"
 }

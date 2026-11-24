@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,8 +19,8 @@
       "ff41896a5c5d08e9f76ffbcd853cf7d9544681d3269cddbde26838f98a67732e",
       "d79e28dad42842efad09a34f483b3815fac46bccc642f6cfe3395bc1eade2ff2"
     ],
-    "reference": "Draft; no publication approval recorded here",
-    "reviewed_at": null
+    "reference": "Khalid Aldkhaeel: انشر; ChatGPT owner message Sentinel_8a36317fcc608191a1ae98deb4613ee8; exact reviewed preview Sentinel_42d0b1531c2081919023673a902b1ac0; Story and Saved Story",
+    "reviewed_at": "2026-11-24T06:32:24.908882+00:00"
   },
   "media": [
     {
