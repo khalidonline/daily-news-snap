@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "0198215c8490a050eac1e37d57b4412ba7db968e1867f1efa0ee72a32f894f18",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "a324f88cbf73f31247acf0351db8b1915c947f27719b5a45d665a5f9380a2435",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "تخيل تعطي جوالك مصروف ويتسوق عنك!",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              136,
+              215,
+              1020,
+              273
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            136,
+            215,
+            1020,
+            274
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "كيف يشتغل الحد؟",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              192,
+              695,
+              395,
+              724
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            192,
+            695,
+            395,
+            725
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "وولمارت في أمريكا",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              681,
+              695,
+              891,
+              733
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            681,
+            695,
+            891,
+            734
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "في وولمارت بأمريكا، تقدر تقول لمساعد ميتا «ميوز»: دور لي عرض على تلفزيون.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              175,
+              799,
+              980,
+              862
+            ],
+            [
+              350,
+              886,
+              980,
+              937
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            175,
+            799,
+            1015,
+            937
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "يدور لك، ويحط التلفزيون بالسلة، ويقدر يكمل الطلب بالبطاقة المحفوظة بحسابك.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              150,
+              1001,
+              980,
+              1045
+            ],
+            [
+              307,
+              1069,
+              980,
+              1112
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            150,
+            1001,
+            1015,
+            1112
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "أنت تختار: يا يستأذنك قبل كل طلب، يا تسمح له يشتري ضمن مبلغ تحدده أنت.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              106,
+              1177,
+              980,
+              1238
+            ],
+            [
+              438,
+              1262,
+              980,
+              1325
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            106,
+            1177,
+            1015,
+            1325
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "إذا تعدى السعر الحد اللي حطيته، ما يقدر يكمل الشراء من نفسه.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              141,
+              1389,
+              980,
+              1441
+            ],
+            [
+              654,
+              1465,
+              980,
+              1511
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            141,
+            1389,
+            1015,
+            1511
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "أول جوالك يوريك العرض، الحين يقدر يشتريه عنك.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              101,
+              1575,
+              980,
+              1629
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            101,
+            1575,
+            980,
+            1630
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Visually inspected exact 390px preview and both player mask versions. The contextual photo matches the company and the original left explainer shows the verified limit logic. Checked copy against source; no owner publication approval claimed.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Visually inspected exact 390px export with player masks, top 0–38 and bottom 625–692. Heading, captions, all bullets, conclusion and CTA visible.",
+      "SAVED_STORY": "Visually inspected exact 390px export with player masks, top 0–38 and bottom 625–692. Heading, captions, all bullets, conclusion and CTA visible."
+    }
+  }
+}

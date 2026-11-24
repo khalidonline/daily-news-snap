@@ -1,0 +1,26 @@
+{
+  "assets": [
+    {
+      "path": "approved/walmart-muse-20261124/spending-rules.png",
+      "sha256": "ff41896a5c5d08e9f76ffbcd853cf7d9544681d3269cddbde26838f98a67732e",
+      "credit": "Original in-house spending-limit explainer, not an app screenshot",
+      "rights_status": "original",
+      "source_url": "https://corporate.walmart.com/news/2026/10/Making-It-Possible-for-Agents-to-Shop-on-Behalf-of-Customers"
+    },
+    {
+      "path": "approved/walmart-muse-20261124/store-crop.jpg",
+      "sha256": "d79e28dad42842efad09a34f483b3815fac46bccc642f6cfe3395bc1eade2ff2",
+      "credit": "Glenn Samonte, Wikimedia Commons, CC BY 2.0 Generic (cropped)",
+      "rights_status": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Walmart_Erie,_PA.jpg"
+    }
+  ],
+  "references": [
+    "https://corporate.walmart.com/news/2026/10/Making-It-Possible-for-Agents-to-Shop-on-Behalf-of-Customers",
+    "https://www.walmart.com/help/article/walmart-agentic-access-terms/d048fc229d7549738d7c05a4317e24d7",
+    "https://commons.wikimedia.org/wiki/File:Walmart_Erie,_PA.jpg",
+    "https://www.flickr.com/photos/201160655@N06/53959543970/",
+    "https://creativecommons.org/licenses/by/2.0/"
+  ],
+  "notes": "Storefront photo from August 25, 2024 in Erie, Pennsylvania, cropped. Context only; shopping is online. Explanatory graphic is original and not an actual interface. Under-limit approval may still be required; beyond-limit autonomous completion is not authorized. No rollout date or broad access asserted."
+}

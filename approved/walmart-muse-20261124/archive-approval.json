@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/walmart-muse-20261124/manifest.json",
+  "manifest_sha256": "947d5f1dda0b962e8a6bfff711d21839e0b1d9abe79c48bcbc5436878681d59f",
+  "identity": "2f560b062a1c5d52b7643f388a9eb345dd3d1b01ba01552711ff8108f14f1ade",
+  "public_indices": [
+    1
+  ],
+  "title": "تخيل تعطي جوالك مصروف ويتسوق عنك!",
+  "expires_at": "2026-11-26T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing account has prior Saved Stories. Verify live inventory and overlap before any authorized delivery.",
+  "owner_authorization": null
+}

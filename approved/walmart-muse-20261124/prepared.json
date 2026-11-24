@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "package": "approved/walmart-muse-20261124",
+  "manifest_content_sha256": "5af73d63b985adc4e4e156dcf1092f45543d98372f844bc3cc7641656c5d70ad",
+  "archive_content_sha256": "4cce1a7edd518038cf128d2432d1514dc23fe45c8006ef3a7160b501f896d359",
+  "settings_sha256": "0198215c8490a050eac1e37d57b4412ba7db968e1867f1efa0ee72a32f894f18",
+  "review_sha256": "5413e2d30ae79d4149e1010103ef5908efa10f9508112fd7e8342cc64d0c2f13",
+  "assets": {
+    "approved/walmart-muse-20261124/card.png": "a324f88cbf73f31247acf0351db8b1915c947f27719b5a45d665a5f9380a2435",
+    "approved/walmart-muse-20261124/spending-rules.png": "ff41896a5c5d08e9f76ffbcd853cf7d9544681d3269cddbde26838f98a67732e",
+    "approved/walmart-muse-20261124/store-crop.jpg": "d79e28dad42842efad09a34f483b3815fac46bccc642f6cfe3395bc1eade2ff2"
+  },
+  "preparation_seconds": 0.002
+}
