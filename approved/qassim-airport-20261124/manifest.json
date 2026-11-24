@@ -1,6 +1,6 @@
 {
   "format": "owner-reviewed-composite-v1",
-  "approved": false,
+  "approved": true,
   "account": "executivesaudi",
   "content_type": "information",
   "approved_destinations": [
@@ -19,8 +19,8 @@
       "b2c9c90079a572cf99693898f0723900c1b9ce2a173c9483b074c3303717e71a",
       "d2b983f1dbc8fd211d8b0382f80584eade802fa90df89ea0420e2449a04886a4"
     ],
-    "reference": "Draft; no publication approval recorded here",
-    "reviewed_at": null
+    "reference": "Khalid Aldkhaeel written publish-all request Sentinel_6135ae079c0481918770511ad6df53e9; verified owner yes (thumbs up) to exact preview and both destinations Sentinel_08662bc32ba881918b9b5cc427472006",
+    "reviewed_at": "2026-11-24T06:37:53.426753+00:00"
   },
   "media": [
     {

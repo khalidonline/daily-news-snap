@@ -1,0 +1,39 @@
+{
+  "status": "UPLOADED_PREVIEW_READY_NOT_AUTHORIZED",
+  "repository": "khalidonline/daily-news-snap",
+  "branch": "main",
+  "commit": "f69343e5ff7a0422274a4b791ba10406cc4c1fcb",
+  "assets": {
+    "approved/qassim-airport-20261124/card.png": "7166cf4f78536f769c8e11108dd5ffa37d14cf922482f386e04d409e5bca7bc8",
+    "approved/qassim-airport-20261124/elq-crop.jpg": "b2c9c90079a572cf99693898f0723900c1b9ce2a173c9483b074c3303717e71a",
+    "approved/qassim-airport-20261124/ruh-crop.jpg": "d2b983f1dbc8fd211d8b0382f80584eade802fa90df89ea0420e2449a04886a4"
+  },
+  "preview_paths": [
+    "approved/qassim-airport-20261124/card.png"
+  ],
+  "version": 1,
+  "files": {
+    "approved/qassim-airport-20261124/card.png": "7166cf4f78536f769c8e11108dd5ffa37d14cf922482f386e04d409e5bca7bc8",
+    "approved/qassim-airport-20261124/elq-crop.jpg": "b2c9c90079a572cf99693898f0723900c1b9ce2a173c9483b074c3303717e71a",
+    "approved/qassim-airport-20261124/ruh-crop.jpg": "d2b983f1dbc8fd211d8b0382f80584eade802fa90df89ea0420e2449a04886a4",
+    "approved/qassim-airport-20261124/manifest.json": "3d7b5a44477c55ea852e3bca61a31513637a5cab3963ed794559caf5900f77fa",
+    "approved/qassim-airport-20261124/archive-approval.json": "c6d4a431df0525ad5dfa49cb021d0f473d5f9995bb1762d58314c9aa77397206",
+    "approved/qassim-airport-20261124/design-review.json": "564c3965bbc8e29303f4d4dc77094c4b7e4dd1a88a4295cfb2c4dc9cd6a1cb3f",
+    "approved/qassim-airport-20261124/sources.json": "5682444b1fa626d1b53b7081a9383ba240b0bd8846a793efd26571ff5b26d608",
+    "publishing_v2/design-settings.json": "0198215c8490a050eac1e37d57b4412ba7db968e1867f1efa0ee72a32f894f18"
+  },
+  "prepared_content": {
+    "version": 1,
+    "status": "PREPARED_NOT_AUTHORIZED",
+    "package": "approved/qassim-airport-20261124",
+    "manifest_content_sha256": "a5b200d6af747bcd91d246d6776cbff16b050adfa232fe760a9bf31ee1eeb742",
+    "archive_content_sha256": "afc6c1cf286a04980d00d4255643d3bebbd599c0e543766eaa8628c72d57bea6",
+    "settings_sha256": "0198215c8490a050eac1e37d57b4412ba7db968e1867f1efa0ee72a32f894f18",
+    "review_sha256": "564c3965bbc8e29303f4d4dc77094c4b7e4dd1a88a4295cfb2c4dc9cd6a1cb3f",
+    "assets": {
+      "approved/qassim-airport-20261124/card.png": "7166cf4f78536f769c8e11108dd5ffa37d14cf922482f386e04d409e5bca7bc8",
+      "approved/qassim-airport-20261124/elq-crop.jpg": "b2c9c90079a572cf99693898f0723900c1b9ce2a173c9483b074c3303717e71a",
+      "approved/qassim-airport-20261124/ruh-crop.jpg": "d2b983f1dbc8fd211d8b0382f80584eade802fa90df89ea0420e2449a04886a4"
+    }
+  }
+}

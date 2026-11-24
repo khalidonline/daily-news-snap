@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "package": "walmart-muse-20261124",
-  "identity": "2f560b062a1c5d52b7643f388a9eb345dd3d1b01ba01552711ff8108f14f1ade",
+  "package": "qassim-airport-20261124",
+  "identity": "a700c98c738e0b657cd98eb2e3745aca0b51ecd65917b6a0d68c8a81403f7f06",
   "destinations": [
     "STORY",
     "SAVED_STORY"
   ],
-  "owner_reference": "Khalid Aldkhaeel: انشر; ChatGPT owner message Sentinel_8a36317fcc608191a1ae98deb4613ee8; exact reviewed preview Sentinel_42d0b1531c2081919023673a902b1ac0; Story and Saved Story",
-  "approved_at": "2026-11-24T06:32:24.908882+00:00",
-  "expires_at": "2026-11-26T23:59:59+03:00",
-  "manifest_sha256": "a2a90af08badcd6c916b62435309297f00e4d9d95a320d9cbdf7212be7cf85ce",
-  "archive_sha256": "345a4711b979248f21407b43be496c2b4a13c643260e9c55a7a112bbc6293387",
-  "prepared_sha256": "813cd44e923b742ac3602ad91c899ae6dcb11acdfaba8d7a2653e9f2fdc31412",
-  "preview_receipt_sha256": "4f401429419e8545dc0569af7a3c094b3774397cd47fbf9cd0feddd6141e8067"
+  "owner_reference": "Khalid Aldkhaeel written publish-all request Sentinel_6135ae079c0481918770511ad6df53e9; verified owner yes (thumbs up) to exact preview and both destinations Sentinel_08662bc32ba881918b9b5cc427472006",
+  "approved_at": "2026-11-24T06:37:53.426753+00:00",
+  "expires_at": "2026-11-25T23:59:59+03:00",
+  "manifest_sha256": "3c2cc18eb717fe2a0c786be4cb7d4bfca61a6f32751c1a15ac55fc1289651179",
+  "archive_sha256": "b2ab81091cd3cee5a4ec869ddd52d6ba7f51f1ad857dd733cf277e85873cd8c6",
+  "prepared_sha256": "ba7d88b2a161a6c315c423584ca5984190a2062ba36b783af9f3ae18202642ec",
+  "preview_receipt_sha256": "8dbbd32cba5f3b12b188a9b80f2db8f862fded7d62be93484210cfd553008b06"
 }
