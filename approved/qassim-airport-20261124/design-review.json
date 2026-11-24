@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "content_type": "information",
+  "settings_revision": "2026-10-31-master-14",
+  "settings_sha256": "0198215c8490a050eac1e37d57b4412ba7db968e1867f1efa0ee72a32f894f18",
+  "status": "DESIGN_REVIEWED_NOT_AUTHORIZED",
+  "cards": [
+    {
+      "sha256": "7166cf4f78536f769c8e11108dd5ffa37d14cf922482f386e04d409e5bca7bc8",
+      "blocks": [
+        {
+          "role": "headline",
+          "text": "حجزك من الرياض؟ شيك من وين تقلع",
+          "color": "#B60E32",
+          "font_size": 52,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              222,
+              215,
+              1020,
+              275
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            222,
+            215,
+            1020,
+            276
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "مطار القصيم (ELQ)",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              181,
+              695,
+              407,
+              726
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            181,
+            695,
+            407,
+            727
+          ]
+        },
+        {
+          "role": "caption",
+          "text": "مطار الملك خالد (RUH)",
+          "color": "#7A7973",
+          "font_size": 28,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              653,
+              695,
+              918,
+              722
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            653,
+            695,
+            918,
+            723
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "بعض الحجوزات من الرياض، بس الإقلاع من القصيم.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              183,
+              820,
+              980,
+              869
+            ],
+            [
+              837,
+              893,
+              980,
+              942
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            183,
+            820,
+            1015,
+            942
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "شيك الرمز: RUH مطار الملك خالد، وELQ مطار القصيم.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              114,
+              1027,
+              980,
+              1073
+            ],
+            [
+              837,
+              1097,
+              980,
+              1146
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            114,
+            1027,
+            1015,
+            1146
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "إذا حجزت نقل طيران ناس للقصيم، يطلع قبل الإقلاع بـ٧ ساعات.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              153,
+              1232,
+              980,
+              1281
+            ],
+            [
+              645,
+              1305,
+              980,
+              1354
+            ]
+          ],
+          "line_count": 2,
+          "box": [
+            153,
+            1232,
+            1015,
+            1354
+          ]
+        },
+        {
+          "role": "bullet",
+          "text": "يعني لو طيارتك ٩ الليل، نقلهم يطلع ٢ الظهر.",
+          "color": "#0B3656",
+          "font_size": 44,
+          "font_weight": "Bold",
+          "line_boxes": [
+            [
+              147,
+              1439,
+              980,
+              1490
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            147,
+            1439,
+            1015,
+            1490
+          ]
+        },
+        {
+          "role": "closing",
+          "text": "شيك رمز المطار قبل ما تطلع من البيت.",
+          "color": "#B60E32",
+          "font_size": 44,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              188,
+              1575,
+              892,
+              1626
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            188,
+            1575,
+            892,
+            1627
+          ]
+        },
+        {
+          "role": "cta",
+          "text": "شاركها مع صديقك اللي تعجبه هذي المعلومة.",
+          "color": "#B60E32",
+          "font_size": 40,
+          "font_weight": "Regular",
+          "line_boxes": [
+            [
+              127,
+              1674,
+              874,
+              1721
+            ]
+          ],
+          "line_count": 1,
+          "box": [
+            127,
+            1674,
+            874,
+            1722
+          ]
+        }
+      ],
+      "palette_samples": {
+        "background": [
+          10,
+          10,
+          30,
+          30
+        ],
+        "green": [
+          935,
+          142,
+          1005,
+          144
+        ],
+        "cta_background": [
+          70,
+          1680,
+          80,
+          1710
+        ]
+      }
+    }
+  ],
+  "destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "review": {
+    "reference": "Visually inspected exact 390px preview and both player mask versions. Both authentic airport photos match their respective captions and airport codes; photos are location context, not pickup instructions. Checked copy against source; no owner publication approval claimed.",
+    "mobile_width": 390,
+    "saudi_editorial": true,
+    "approved_wording": true,
+    "approved_typography": true,
+    "photos_and_captions": true,
+    "cta_visible": true,
+    "overlay_checked": true,
+    "overlay_destinations": {
+      "STORY": "Visually inspected exact 390px export with player masks, top 0–38 and bottom 625–692. Heading, captions, all bullets, conclusion and CTA visible.",
+      "SAVED_STORY": "Visually inspected exact 390px export with player masks, top 0–38 and bottom 625–692. Heading, captions, all bullets, conclusion and CTA visible."
+    }
+  }
+}

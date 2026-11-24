@@ -1,0 +1,54 @@
+{
+  "format": "owner-reviewed-composite-v1",
+  "approved": false,
+  "account": "executivesaudi",
+  "content_type": "information",
+  "approved_destinations": [
+    "STORY",
+    "SAVED_STORY"
+  ],
+  "title": "حجزك من الرياض؟ شيك من وين تقلع",
+  "not_before": "2026-11-24T09:00:00+03:00",
+  "expires_at": "2026-11-25T23:59:59+03:00",
+  "story_duration": "ONE_WEEK",
+  "owner_review": {
+    "approved_media_sha256": [
+      "7166cf4f78536f769c8e11108dd5ffa37d14cf922482f386e04d409e5bca7bc8"
+    ],
+    "approved_source_sha256": [
+      "b2c9c90079a572cf99693898f0723900c1b9ce2a173c9483b074c3303717e71a",
+      "d2b983f1dbc8fd211d8b0382f80584eade802fa90df89ea0420e2449a04886a4"
+    ],
+    "reference": "Draft; no publication approval recorded here",
+    "reviewed_at": null
+  },
+  "media": [
+    {
+      "path": "approved/qassim-airport-20261124/card.png",
+      "kind": "info",
+      "sha256": "7166cf4f78536f769c8e11108dd5ffa37d14cf922482f386e04d409e5bca7bc8",
+      "source_assets": [
+        {
+          "path": "approved/qassim-airport-20261124/elq-crop.jpg",
+          "sha256": "b2c9c90079a572cf99693898f0723900c1b9ce2a173c9483b074c3303717e71a",
+          "credit": "Kskhh, Wikimedia Commons, February 2020, cropped and resized",
+          "rights_status": "CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Prince_Naif_bin_Abdulaziz_International_Airport.jpg",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        {
+          "path": "approved/qassim-airport-20261124/ruh-crop.jpg",
+          "sha256": "d2b983f1dbc8fd211d8b0382f80584eade802fa90df89ea0420e2449a04886a4",
+          "credit": "Kharbaan Ghaltaan, Wikimedia Commons, June 2025, cropped and resized",
+          "rights_status": "CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Riyadh_1749852957748.jpg",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+        }
+      ],
+      "provenance": {
+        "usage": "mixed_editorial_composite",
+        "generated_components": false
+      }
+    }
+  ]
+}

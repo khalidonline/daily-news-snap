@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "account": "executivesaudi",
+  "manifest": "approved/qassim-airport-20261124/manifest.json",
+  "manifest_sha256": "3d7b5a44477c55ea852e3bca61a31513637a5cab3963ed794559caf5900f77fa",
+  "identity": "a700c98c738e0b657cd98eb2e3745aca0b51ecd65917b6a0d68c8a81403f7f06",
+  "public_indices": [
+    1
+  ],
+  "title": "حجزك من الرياض؟ شيك من وين تقلع",
+  "expires_at": "2026-11-25T23:59:59+03:00",
+  "empty_profile_confirmation": "Existing account has prior Saved Stories. Verify live inventory and overlap before any authorized delivery.",
+  "owner_authorization": null
+}

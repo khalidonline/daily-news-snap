@@ -1,0 +1,28 @@
+{
+  "assets": [
+    {
+      "path": "approved/qassim-airport-20261124/elq-crop.jpg",
+      "sha256": "b2c9c90079a572cf99693898f0723900c1b9ce2a173c9483b074c3303717e71a",
+      "credit": "Kskhh, Wikimedia Commons, February 2020, cropped and resized",
+      "rights_status": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Prince_Naif_bin_Abdulaziz_International_Airport.jpg",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    {
+      "path": "approved/qassim-airport-20261124/ruh-crop.jpg",
+      "sha256": "d2b983f1dbc8fd211d8b0382f80584eade802fa90df89ea0420e2449a04886a4",
+      "credit": "Kharbaan Ghaltaan, Wikimedia Commons, June 2025, cropped and resized",
+      "rights_status": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Riyadh_1749852957748.jpg",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  ],
+  "references": [
+    "https://www.flynas.com/en/riyadh-qassim-transfer",
+    "https://www.riyadhair.com/en-sa/travel-update/ruh-elq",
+    "https://commons.wikimedia.org/wiki/File:Prince_Naif_bin_Abdulaziz_International_Airport.jpg",
+    "https://commons.wikimedia.org/wiki/File:Riyadh_1749852957748.jpg",
+    "https://creativecommons.org/licenses/by-sa/4.0/"
+  ],
+  "notes": "Context photos of each airport, not necessarily current terminals or pickup locations. Each photograph is included as an individually credited image in a collection; its separately supplied crop retains CC BY-SA 4.0. Flynas booked bus or private car from Riyadh leaves 7 hours before the flight; 2 pm for a 9 pm takeoff. Flynas asks passengers to arrive 15 minutes early. Not applicable to other operators."
+}
